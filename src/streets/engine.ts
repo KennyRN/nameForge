@@ -43,7 +43,7 @@ import {
 } from "../routes/engine";
 import { buildingName, type BuildingKind } from "../buildings/engine";
 import { breaksInnWords, hasChristianSign, INN_SETTINGS, innBlockForms, innBlockSet, innCapitals, type InnSetting } from "../inns/engine";
-import { monumentBlockSet } from "../monuments/engine";
+import { monumentBlockSet, monumentName } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, contextTown, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 
@@ -108,6 +108,9 @@ interface StreetData {
   series: { mainMarket: Record<string, string>; firstDistrict: Record<string, string>; scifiMainStreet: string; towns: number; routeFrom: number; landmarkOnceFrom: number };
   /** Monuments brief §9.1: what is named after a monument. */
   monumentNeighbours: NeighbourShape[];
+  /** Monuments brief §11.1: monuments among the landmarks and the district draws, and monument districts. */
+  monuments: { landmarkShare: number; districtShare: number };
+  monumentDistricts: StreetShape[];
   cap: number;
   safeguards: { block: string[]; flag: string[]; flagListBlocks: boolean; banned: string[]; religious: string[]; christian: string[] };
 }
@@ -164,6 +167,9 @@ export interface StreetOptions {
   routeSafeguards?: GroupSafeguards;
   /** Buildings brief §11: merged building safeguard lists, for `{landmark}`. */
   landmarkSafeguards?: GroupSafeguards;
+  /** Monuments brief §11: merged monument safeguard lists and extra honourees, for the monuments among the landmarks. */
+  monumentSafeguards?: GroupSafeguards;
+  honourees?: string[];
   /** Settlement kit §4: the settlement's neighbours, founder, saint, trades, goods, road and landmarks. */
   context?: SettlementContext;
   /** RN §3.3: the pools merged with vocabulary packs. */
@@ -227,7 +233,7 @@ const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("
 const CASTE = new Set(["indian", "west-african"]);
 const TRADE_TOKENS = /\{(trade|tradeSg)[}:]/;
 /** Tokens that name a pool of their own under another name. */
-const POOL_OF: Record<string, string> = { sw: "streetWord", aw: "alleyWord", dw: "districtWord" };
+const POOL_OF: Record<string, string> = { sw: "streetWord", aw: "alleyWord", dw: "districtWord", jw: "junctionWord" };
 const SF_LISTS = new Set(["star", "greek", "stationDirection"]);
 
 const where = (ctx: Ctx, region = ctx.region) => ({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region });
@@ -357,16 +363,53 @@ function destination(ctx: Ctx): string | undefined {
 }
 
 /** Buildings brief §11.1: the landmark kinds a street is named after. */
-export const STREET_LANDMARK_KINDS: BuildingKind[] = ["defence", "faith", "crossing", "water", "monument"];
+export const STREET_LANDMARK_KINDS: BuildingKind[] = ["defence", "faith", "crossing", "water"];
 
-/** Buildings brief §11.1: `{landmark}`: one building of 3 words or fewer, without "the"; in a series of 8
- * or more, once. */
+/** Monuments brief §11: one monument for a street, square or district: one of the settlement's own in a
+ * kit (of 3 words or fewer; district-worthy when asked), otherwise a fresh draw of any kind. */
+function monumentFor(ctx: Ctx, worthyOnly = false): { text: string; site: string; districtWorthy: boolean } | undefined {
+  const o = ctx.options;
+  if (o.context) {
+    const own = o.context.monuments.filter((m) => m.site.split(" ").length <= 3 && (!worthyOnly || m.districtWorthy));
+    return own.length > 0 ? own[Math.floor(ctx.rng() * own.length)] : undefined;
+  }
+  return monumentName({
+    culture: ctx.culture.key,
+    era: ctx.era,
+    fantastic: ctx.fantastic,
+    region: ctx.region,
+    people: ctx.mode,
+    rng: ctx.rng,
+    safeguards: o.monumentSafeguards,
+    honourees: o.honourees,
+    vocab: o.vocab,
+  });
+}
+
+/** Buildings brief §11.1, Monuments brief §11.1: `{landmark}`: one building of 3 words or fewer, without
+ * "the" (25% of draws a monument instead); in a series of 8 or more, once. */
 function landmark(ctx: Ctx): string | undefined {
   const o = ctx.options;
+  const once = o.series && o.count >= STREET_DATA.series.landmarkOnceFrom;
   // Settlement kit §4: one of the settlement's own landmarks, never a fresh building.
-  const w = o.context
-    ? contextLandmark(o.context, ctx.rng)
-    : buildingName({
+  if (o.context) {
+    const w = contextLandmark(o.context, ctx.rng);
+    if (!w) return undefined;
+    ctx.words.push({ pool: "landmark", word: w });
+    if (once) ctx.uses.push("landmark");
+    return w;
+  }
+  if (ctx.rng() < STREET_DATA.monuments.landmarkShare) {
+    const m = monumentFor(ctx);
+    if (m) {
+      const w = m.text.replace(/^the /, "");
+      ctx.words.push({ pool: "landmark", word: w });
+      // A landmark counts once as a landmark and once as a monument.
+      if (once) ctx.uses.push("landmark", "monument");
+      return w;
+    }
+  }
+  const w = buildingName({
     culture: ctx.culture.key,
     era: ctx.era,
     fantastic: ctx.fantastic,
@@ -379,8 +422,20 @@ function landmark(ctx: Ctx): string | undefined {
   });
   if (!w) return undefined;
   ctx.words.push({ pool: "landmark", word: w });
-  if (o.series && o.count >= STREET_DATA.series.landmarkOnceFrom) ctx.uses.push("landmark");
+  if (once) ctx.uses.push("landmark");
   return w;
+}
+
+/** Monuments brief §11.1: `{monumentSite}`: the site of one monument; a bare one only for a district-worthy site. */
+function monumentSite(ctx: Ctx, worthyOnly: boolean): string | undefined {
+  for (let i = 0; i < (ctx.options.context ? 1 : 4); i++) {
+    const m = monumentFor(ctx, worthyOnly);
+    if (!m || (worthyOnly && !m.districtWorthy)) continue;
+    ctx.words.push({ pool: "monumentSite", word: m.site });
+    if (ctx.options.series && ctx.options.count >= STREET_DATA.series.landmarkOnceFrom) ctx.uses.push("monument");
+    return m.site;
+  }
+  return undefined;
 }
 
 const directionKey = (w: string) => w.replace(/ern$/, "");
@@ -452,6 +507,8 @@ function token(ctx: Ctx, name: string, alt: (dialect: string) => void, pattern: 
       return gnWord(ctx, name);
     case "landmark":
       return landmark(ctx);
+    case "monumentSite":
+      return monumentSite(ctx, pattern === "{monumentSite}");
     case "mainStreet": {
       // §10: a town has one main street.
       const w = vocabWord(ctx, name);
@@ -578,6 +635,11 @@ function streetShapes(ctx: Ctx, only?: string): [StreetShape, number][] {
 /** §7.2–§7.3: a function's district shapes; in the near future and beyond, sci-fi shapes 60% of the time. */
 function districtShapes(ctx: Ctx, only?: string): [StreetShape, number][] {
   const d = STREET_DATA;
+  // Monuments brief §11.1: with function Any, 8% of district draws are monument districts (never in a village).
+  if (!only && !ctx.options.function && ctx.size !== "village" && ctx.rng() < d.monuments.districtShare) {
+    const monument = live(ctx, d.monumentDistricts);
+    if (monument.length > 0) return monument;
+  }
   if (isFuture(ctx.era) && !only && ctx.rng() < d.scifiDistricts.share) return live(ctx, d.scifiDistricts.shapes);
   const fn = ctx.fn!;
   return live(
@@ -587,7 +649,7 @@ function districtShapes(ctx: Ctx, only?: string): [StreetShape, number][] {
       ...d.cultureDistricts.filter((s) => s.culture === ctx.culture.key && (s.fn === fn || s.fn === "any")),
       ...d.steampunkDistricts,
       { p: "{districtFixed}", w: d.districtFixedWeight },
-      ...(only ? d.scifiDistricts.shapes : []),
+      ...(only ? [...d.monumentDistricts, ...d.scifiDistricts.shapes] : []),
     ],
     only,
   );

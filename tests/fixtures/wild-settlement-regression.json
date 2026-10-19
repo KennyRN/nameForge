@@ -1313,8 +1313,8 @@
    ],
    [
     "Old Town",
-    "Lower Town",
-    "Pilgrims' District"
+    "Foundry District",
+    "Weavers' Side"
    ],
    [
     "High Street",
@@ -1336,12 +1336,12 @@
     "the Thorn and Highwayman"
    ],
    [
-    "the Old Quarry",
+    "King's Fountain",
     "Red Hall",
     "Old Court Fort",
     "the Crooked Grange",
     "Bear Bridge",
-    "Saint Elfrida's Monastery"
+    "Saint Elfrida's Church"
    ],
    [
     "Poor Friars of the Lamb",
@@ -1374,22 +1374,22 @@
    ],
    [
     "Old Town",
-    "Temple Quarter",
-    "Goldsmiths' End"
+    "Lower Town",
+    "Barracks Precinct"
    ],
    [
     "High Street",
-    "Ropemakers' Lane",
-    "Bridge Hill",
-    "South-East Lane",
-    "Bakers' Close",
-    "Market Place",
-    "Shoemakers' Lane",
-    "Salt Way"
+    "Salt Way",
+    "Fisher Street",
+    "Saint Mildred's Lane",
+    "Harbour Gate",
+    "South Street",
+    "Tin Lane",
+    "Shoemakers' Lane"
    ],
    [
-    "Market Square",
-    "Cloth Market"
+    "Market Place",
+    "Market Square"
    ],
    [
     "the Lazy Lily",
@@ -1397,12 +1397,12 @@
     "the Five Otters Inn"
    ],
    [
-    "Holy Well",
+    "Saint Mildred's Bridge",
     "the Golden Lantern",
-    "Saint Mildred's Chapel",
+    "Bridge Homestead Manor",
     "Bridge Homestead Gatehouse",
-    "the Red Cross",
-    "the Round Court"
+    "Bridge Homestead Forge",
+    "Bridge Homestead Sanctuary"
    ],
    [
     "the Gate Order",
@@ -1435,8 +1435,8 @@
    ],
    [
     "Old Town",
-    "Kiln End",
-    "Cutlers' Quarter"
+    "Foundry Ward",
+    "Standing Stones Quarter"
    ],
    [
     "Long Street",
@@ -1450,7 +1450,7 @@
    ],
    [
     "Market Place",
-    "Tin Exchange"
+    "Market Cross"
    ],
    [
     "the Pied Needle",
@@ -1506,7 +1506,7 @@
     "the Shark's Head"
    ],
    [
-    "the Old Quarry",
+    "King's Fountain",
     "the Red Shrine",
     "New Lookout Fort"
    ],
@@ -1538,7 +1538,7 @@
     "High Street",
     "Goldsmith Street",
     "Chandler Street",
-    "Saint Hilde's Lane"
+    "Salt Way"
    ],
    [
     "Market Place"
@@ -1549,7 +1549,7 @@
    [
     "Holy Well",
     "the Golden Lantern",
-    "Flax Farm House"
+    "Flax Farm Fort"
    ],
    [
     "the Gate Order"
@@ -1589,7 +1589,7 @@
    ],
    [
     "Copper Bastion",
-    "Little Warm Valley Mint",
+    "Little Warm Valley Cathedral",
     "Little Warm Valley Cistern"
    ],
    [
@@ -1620,28 +1620,28 @@
    ],
    [
     "Inner City",
-    "Eastern Ward",
-    "11th Ward",
     "Outer City",
-    "Southern Ward"
+    "Pilgrims' District",
+    "Southern Ward",
+    "Western Ward"
    ],
    [
     "Long Street",
     "South of the Ru Road",
     "Wharf Row",
-    "Tanners' Way",
+    "Merchants' Way",
     "North Gate Street",
     "Spring Street",
-    "Merchants' Way",
+    "Drapers' Lane",
     "Smiths Street",
     "West Road",
-    "Queen's Lane",
+    "Silk Lane",
     "South Gate Street",
-    "Market Alley"
+    "Queen's Street"
    ],
    [
     "Market Square",
-    "Eastern Market",
+    "Prince's Square",
     "King's Square"
    ],
    [
@@ -1652,12 +1652,12 @@
     "Golden Crane Wine House"
    ],
    [
-    "the Old Quarry",
+    "the Old Fountain",
     "Red Hall",
-    "Hall of Listening Pines",
+    "Bell Tower",
     "Shrine of the Heavenly Prince of Kinship",
-    "Dragon Tower",
-    "[founder]'s Spring",
+    "Duke's Manor",
+    "[founder]'s Quarry",
     "Order Prefecture Library",
     "Violet Bridge",
     "Osprey Light"
@@ -1698,10 +1698,10 @@
    ],
    [
     "Inner City",
-    "Northern Ward",
-    "Millers' Side",
-    "69th Ward",
-    "28th Ward"
+    "[people] Quarter",
+    "Outer City",
+    "Lower Town",
+    "Court Ward"
    ],
    [
     "Long Street",
@@ -1730,15 +1730,15 @@
     "Plum Blossom Tea House"
    ],
    [
-    "Grey Spring",
+    "Marquis's Bridge",
     "the Golden Lantern",
-    "Lasting Order Shrine",
+    "Lasting Order House",
     "Autumn Moon Tower",
-    "King's Hall",
+    "New Temple",
     "the Upper Hall",
-    "Broken Bridge",
+    "the Broken Well",
     "[founder]'s Gaol",
-    "the Burnt Arch"
+    "the Burnt Forge"
    ],
    [
     "the Gate Order",
@@ -1776,10 +1776,10 @@
    ],
    [
     "Inner City",
-    "Outer City",
-    "College Ward",
-    "Temple End",
-    "Barracks Ward"
+    "4th Ward",
+    "Citadel End",
+    "Merchant Nations' Town",
+    "82nd Ward"
    ],
    [
     "Long Street",
@@ -1789,7 +1789,7 @@
     "Monastery Road",
     "King's Road",
     "Hall Way",
-    "Great Stepping Stones Street",
+    "Dragon Spring Street",
     "Bakers Street",
     "Hold the East Road",
     "Vintners Street",
@@ -1809,14 +1809,14 @@
    ],
    [
     "West Gate",
-    "the Great Stepping Stones",
-    "Subdue the South Treasury",
+    "the Great Mint",
+    "Subdue the South Stepping Stones",
     "the Ruined Hermitage",
     "the Purple Lantern",
     "Subdue the South Kiln",
-    "Memorial Gate of [founder]",
-    "Academy of [founder]",
-    "Pavilion of Magpie"
+    "Dragon Spring",
+    "Queen's Lock-Up",
+    "Subdue the South School"
    ],
    [
     "Sisters of the Blessed Lantern",
@@ -1855,36 +1855,36 @@
    ],
    [
     "Castle Town",
-    "Outer Town",
-    "Holy Well District",
-    "College End",
-    "Foundry Ward",
-    "Vintners' Ward",
-    "[people] District"
+    "Below the Wall",
+    "Library Ward",
+    "Temple Town",
+    "Court End",
+    "Kiln End",
+    "Mercers' Ward"
    ],
    [
     "Long Street",
-    "Capital of Peace and Brightness Road",
-    "First Block",
-    "Weavers' Ward Street",
-    "Mercers' Ward Street",
-    "Holy Well Street",
+    "Wharf Row",
+    "Third Block",
+    "Warehouse Street",
     "Spring Street",
+    "Mercers' Lane",
     "Back Lane",
-    "Glovers' Passage",
-    "Spice and Horse Road",
+    "West Road",
+    "Leather Lane",
     "Fifth Block",
-    "Queen's Street",
-    "Potters' Street",
-    "Ford Alley",
-    "Wall Alley",
-    "Shrine Street"
+    "Silk Street",
+    "Spice and Horse Road",
+    "Shrine Lane",
+    "East Row",
+    "Shrine Street",
+    "Sixth Block"
    ],
    [
     "Market Square",
     "Prince's Square",
-    "King's Square",
-    "Eighth-Day Market"
+    "Ford Place",
+    "Smithy Square"
    ],
    [
     "Golden Crane Inn",
@@ -1896,17 +1896,17 @@
     "Capital of Brightness and Tranquillity Inn"
    ],
    [
-    "the Old Quarry",
+    "the Old Fountain",
     "Red Hall",
-    "Autumn Moon Villa",
+    "Kite Castle",
     "Shrine of the Heavenly Prince of Kinship",
-    "Watchtower of [founder]",
-    "the Broken Spring",
+    "Duke's Manor",
+    "[founder]'s Quarry",
     "Capital of Brightness and Tranquillity Library",
     "Violet Bridge",
     "Osprey Light",
-    "Capital of Brightness and Tranquillity Barrow",
-    "Capital of Brightness and Tranquillity Prison",
+    "Capital of Brightness and Tranquillity Gaol",
+    "Capital of Brightness and Tranquillity Bastion",
     "Capital of Brightness and Tranquillity Toll House"
    ],
    [
@@ -1951,11 +1951,11 @@
    [
     "Castle Town",
     "[people] Quarter",
-    "Masons' Side",
-    "Garrison Town",
     "Temple Town",
-    "Below the Wall",
-    "Tannery Side"
+    "Barracks District",
+    "Ruined End",
+    "Foundry Quarter",
+    "Fishers' Side"
    ],
    [
     "Long Street",
@@ -1971,15 +1971,15 @@
     "Well Street",
     "Millers' Road",
     "Holy Isle Street",
-    "South Close",
     "Bright Slope Road",
+    "Back Lane",
     "Water Lane"
    ],
    [
     "Market Square",
     "Wool Market",
     "Rice Court",
-    "Toll House Court"
+    "New Market"
    ],
    [
     "Capital of Virtue and Prosperity Inn",
@@ -1991,18 +1991,18 @@
     "Autumn Moon Inn"
    ],
    [
-    "Grey Spring",
+    "Lord's Bridge",
     "the Golden Lantern",
-    "Capital of Virtue and Prosperity Shrine",
+    "Capital of Virtue and Prosperity House",
     "Amber Crane Castle",
     "Capital of Virtue and Prosperity Hall",
-    "the Upper Hall",
-    "Broken Bridge",
+    "the Upper Temple",
+    "the Broken Well",
     "[founder]'s Gaol",
-    "the Burnt Arch",
+    "the Burnt Forge",
     "Capital of Virtue and Prosperity School",
-    "Prince's Kiln",
-    "Capital of Virtue and Prosperity Mint"
+    "[founder]'s Customs House",
+    "King's Hermitage"
    ],
    [
     "the Gate Order",
@@ -2045,12 +2045,12 @@
    ],
    [
     "Castle Town",
-    "Lower Town",
-    "Potters' Quarter",
-    "Cemetery Quarter",
-    "Retainers' Quarter",
-    "[people] Town",
-    "High Town"
+    "Kiln End",
+    "Coopers' End",
+    "Barracks Town",
+    "Hill Town",
+    "Post Town",
+    "Palace Precinct"
    ],
    [
     "Long Street",
@@ -2061,7 +2061,7 @@
     "Monastery Road",
     "Corn Road",
     "Hall Way",
-    "Small Slope Well Street",
+    "Dragon Spring Street",
     "Back Lane",
     "Cattle Row",
     "Well Lane",
@@ -2072,9 +2072,9 @@
    ],
    [
     "Market Square",
-    "Causeway Place",
-    "Bath House Square",
-    "Wharf Square"
+    "Third-Day Market",
+    "Monastery Court",
+    "Rice Hall"
    ],
    [
     "Maple Inn",
@@ -2087,17 +2087,17 @@
    ],
    [
     "Kite Castle",
-    "the Great Stepping Stones",
-    "Small Slope Treasury",
+    "the Great Mint",
+    "Small Slope Stepping Stones",
     "the Ruined Hermitage",
     "the Purple Lantern",
     "Small Slope Kiln",
-    "[founder]'s Pillar",
-    "the Black Scriptorium",
-    "Small Slope Well",
-    "Small Slope Prison",
-    "Magpie Pavilion",
-    "the Little Exchange"
+    "Dragon Spring",
+    "Queen's Lock-Up",
+    "Small Slope School",
+    "Palace of [dynasty]",
+    "the Drowned Toll House",
+    "Little Shrine"
    ],
    [
     "Sisters of the Blessed Lantern",

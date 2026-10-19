@@ -193,6 +193,9 @@ export function isVocabularyPackContent(content: string): boolean {
   return !!fm && new RegExp(`^type:\\s*["']?${VOCABULARY_TYPE}["']?\\s*$`, "m").test(fm[1]);
 }
 
+/** Monuments brief §10.5: pools a pack heading may still name; the section is ignored with a notice. */
+const RETIRED_POOLS = ["buildingWord:monument", "buildingFixed:monument"];
+
 export interface VocabPackSection {
   pool: string;
   culture?: string;
@@ -277,6 +280,11 @@ export function parseVocabularyPack(content: string, note: string): { sections: 
     if (heading) {
       current = null;
       const [pool, ...parts] = heading[1].split(/\s*·\s*/).map((p) => p.trim());
+      // Monuments brief §10.5: the building monument pools moved to monuments and statues.
+      if (RETIRED_POOLS.includes(pool)) {
+        problems.push("Monument words now belong to monuments and statues: use monumentWord:‹kind› or monumentFixed:‹kind›.");
+        continue;
+      }
       if (!SETTLEMENT_VOCAB.pools[pool]) {
         problems.push(`Unknown pool “${pool}” in vocabulary pack “${note}”.`);
         continue;

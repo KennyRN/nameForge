@@ -174,13 +174,13 @@ test("§12.4: sensitive cultures draw no light, grim or fantastic entries", () =
 
 // ── §15.5 Series and safeguards ─────────────────────────────────────────────
 
-test("§15.5: a series of 11 with kind Any: every kind once, one town, the founder at most 3 times, no qualifier twice", () => {
+test("§15.5: a series of 10 with kind Any: every kind once, one town, the founder at most 3 times, no qualifier twice", () => {
   for (let seed = 1; seed <= 20; seed++) {
     for (const people of ["placeholders", "invented"] as const) {
-      const b = generateBuildingNames({ culture: "norman-british", era: "MD", people, series: true, count: 11, seed });
+      const b = generateBuildingNames({ culture: "norman-british", era: "MD", people, series: true, count: 10, seed });
       const where = b.names.map((n) => n.text).join(", ");
-      assert.equal(b.names.length, 11, where);
-      assert.equal(new Set(b.names.map((n) => n.kind)).size, 11, where);
+      assert.equal(b.names.length, 10, where);
+      assert.equal(new Set(b.names.map((n) => n.kind)).size, 10, where);
       assert.ok(b.names.filter((n) => n.uses.includes("founder")).length <= 3, where);
       const q = b.names.flatMap(qualifierUses);
       assert.equal(new Set(q).size, q.length, where);

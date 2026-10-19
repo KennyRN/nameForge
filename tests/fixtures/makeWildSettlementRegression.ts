@@ -24,6 +24,6 @@ for (const terrain of TERRAINS)
 for (const [culture, size] of [["norman-british", "town"], ["norman-british", "village"], ["chinese", "city"], ["japanese", "great"]] as const)
   for (const seed of [1, 2, 3]) {
     const k = generateKit({ culture, size, seed });
-    out[`kit ${culture} ${size} ${seed}`] = { town: k.context.town, neighbours: k.context.neighbours, sections: k.sections.map((s) => s.entries.map((e) => e.text)) };
+    out[`kit ${culture} ${size} ${seed}`] = { town: k.context.town, neighbours: k.context.neighbours, sections: k.sections.filter((s) => s.key !== "neighbours").map((s) => s.entries.map((e) => e.text)) };
   }
 writeFileSync(process.argv[2], JSON.stringify(out, null, 1));

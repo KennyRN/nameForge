@@ -10,7 +10,6 @@
     {"key": "crossing", "menu": "Bridges and crossings", "plural": "bridges and crossings", "description": "Bridges, fords, ferries and causeways", "era": {"AN": 8, "MD": 10, "EM": 10, "ST": 10, "MO": 8, "NF": 5, "IS": 0}},
     {"key": "water", "menu": "Wells and water", "plural": "wells and springs", "description": "Wells, springs, fountains and conduits", "era": {"AN": 10, "MD": 10, "EM": 8, "ST": 5, "MO": 2, "NF": 5, "IS": 5}},
     {"key": "works", "menu": "Mills and works", "plural": "mills and works", "description": "Mills, forges, kilns, mines and works", "era": {"AN": 5, "MD": 8, "EM": 10, "ST": 20, "MO": 10, "NF": 10, "IS": 10}},
-    {"key": "monument", "menu": "Monuments and follies", "plural": "monuments and follies", "description": "Crosses, columns, standing stones, memorials and follies", "era": {"AN": 10, "MD": 5, "EM": 10, "ST": 10, "MO": 10, "NF": 5, "IS": 5}},
     {"key": "learning", "menu": "Learning and healing", "plural": "schools, libraries and infirmaries", "description": "Schools, colleges, libraries, infirmaries and hospitals", "era": {"AN": 4, "MD": 4, "EM": 6, "ST": 10, "MO": 15, "NF": 10, "IS": 10}},
     {"key": "confinement", "menu": "Gaols and lock-ups", "plural": "gaols", "description": "Gaols, prisons, lock-ups and tolbooths", "era": {"AN": 2, "MD": 2, "EM": 3, "ST": 5, "MO": 5, "NF": 3, "IS": 3}},
     {"key": "maritime", "menu": "Lighthouses and beacons", "plural": "lighthouses and beacons", "description": "Lighthouses, lights, beacons and daymarks", "era": {"AN": 3, "MD": 3, "EM": 4, "ST": 5, "MO": 5, "NF": 0, "IS": 0}}
@@ -18,9 +17,9 @@
   "settingX": {
     "anywhere": {},
     "town": {"civic": 2, "faith": 1.5, "learning": 1.5, "confinement": 1.5, "works": 0.7},
-    "country": {"defence": 1.5, "works": 1.5, "water": 1.5, "monument": 1.5, "civic": 0.3, "learning": 0.3, "confinement": 0.3},
+    "country": {"defence": 1.5, "works": 1.5, "water": 1.5, "civic": 0.3, "learning": 0.3, "confinement": 0.3},
     "port": {"maritime": 5, "civic": 1.2, "crossing": 0.5},
-    "road": {"crossing": 3, "water": 1.5, "monument": 1.5, "confinement": 0.5}
+    "road": {"crossing": 3, "water": 1.5, "confinement": 0.5}
   },
   "shared": [
     {"p": "{town} {bw}", "w": 20, "t": ["plain"], "self": true},
@@ -85,15 +84,6 @@
       {"p": "{town} {bw}", "w": 15, "t": ["plain"], "self": true},
       {"p": "{fixed}", "w": 0}
     ],
-    "monument": [
-      {"p": "{follyOwner:poss} Folly", "w": 15, "e": ["EM", "ST"], "c": ["british", "general"], "t": ["light"]},
-      {"p": "{founder:poss} {bw}", "w": 15, "bw": ["Column", "Arch", "Cross", "Pillar"], "t": ["grand"]},
-      {"p": "{town} Cross", "w": 5, "e": ["MD", "EM"], "c": ["british"], "self": true},
-      {"p": "{event} Memorial", "w": 8, "e": ["ST", "MO"], "t": ["grim"]},
-      {"p": "{town} Milestone", "w": 3, "e": ["EM", "ST"], "c": ["british"], "t": ["plain"], "sx": {"road": 3}, "self": true},
-      {"p": "{number} Mile Stone", "w": 3, "e": ["EM", "ST"], "c": ["british"], "t": ["plain"], "sx": {"road": 3}},
-      {"p": "{fixed}", "w": 0}
-    ],
     "learning": [
       {"p": "{town} {bw}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"], "self": true},
       {"p": "{surname} {bw}", "w": 10, "e": ["EM", "ST", "MO", "NF", "IS"], "t": ["plain"]},
@@ -118,8 +108,7 @@
       {"p": "Hall of {eastVirtue}", "w": 15, "kind": "residence"},
       {"p": "Pavilion of {eastNature}", "w": 15, "kind": "residence"},
       {"p": "{direction} Gate", "w": 15, "kind": "defence"},
-      {"p": "{eastNature} Tower", "w": 15, "kind": "defence"},
-      {"p": "Memorial Gate of {founder}", "w": 15, "kind": "monument"}
+      {"p": "{eastNature} Tower", "w": 15, "kind": "defence"}
     ],
     "japanese": [
       {"p": "{town} Castle", "w": 15, "kind": "defence", "self": true},
@@ -197,8 +186,7 @@
     ],
     "ethiopian": [
       {"p": "Palace of the {figure}", "w": 15, "kind": "residence"},
-      {"p": "{town} Castle", "w": 15, "kind": "residence", "e": ["EM"], "self": true},
-      {"p": "{founder:poss} Stele", "w": 15, "kind": "monument"}
+      {"p": "{town} Castle", "w": 15, "kind": "residence", "e": ["EM"], "self": true}
     ],
     "aztec": [
       {"p": "Temple of {god}", "w": 15, "kind": "faith"},
@@ -274,7 +262,7 @@
   "cap": 7,
   "safeguards": {
     "block": ["Tower of London", "White Tower", "Bloody Tower", "Windsor Castle", "Edinburgh Castle", "Stirling Castle", "Caernarfon Castle", "Conwy Castle", "Dover Castle", "Warwick Castle", "Bamburgh Castle", "Tintagel", "Glastonbury Tor", "Stonehenge", "Avebury", "Hadrian's Wall", "Offa's Dyke", "Antonine Wall", "Westminster Abbey", "Westminster Hall", "York Minster", "Canterbury Cathedral", "Durham Cathedral", "Saint Paul's", "St Paul's", "Tower Bridge", "London Bridge", "Iron Bridge", "Ironbridge", "Forth Bridge", "Clifton Suspension Bridge", "Royal Exchange", "Mansion House", "the Guildhall", "Old Bailey", "Newgate", "Marshalsea", "Clink", "Bedlam", "Bethlem", "Fleet Prison", "Old Tolbooth", "Eddystone", "Bell Rock", "Longships", "Smeaton's Tower", "Big Ben", "Crystal Palace", "Blackpool Tower", "Martello Tower", "Eleanor Cross", "Charing Cross", "Marble Arch", "Nelson's Column", "Cleopatra's Needle", "Brighton Pavilion", "Royal Pavilion", "Sutton Hoo", "Maeshowe", "Skara Brae", "Forbidden City", "Hall of Supreme Harmony", "Hall of Central Harmony", "Hall of Preserving Harmony", "Palace of Heavenly Purity", "Temple of Heaven", "Yellow Crane Tower", "Great Wall", "Golden Pavilion", "Silver Pavilion", "Himeji Castle", "White Egret Castle", "White Heron Castle", "Crow Castle", "Matsumoto Castle", "Osaka Castle", "Gyeongbokgung", "Palace Greatly Blessed by Heaven", "Red Fort", "Palace of Winds", "Hawa Mahal", "Taj Mahal", "Amber Fort", "Lotus Temple", "Alhambra", "Red Fortress", "Court of the Lions", "Hagia Sophia", "Holy Wisdom", "Great Pyramid", "Sphinx", "Karnak", "Luxor", "Valley of the Kings", "Colosseum", "Pantheon", "Parthenon", "Acropolis", "Tower of the Winds", "Baths of Caracalla", "Pont du Gard", "Kremlin", "Palace of Facets", "Saint Basil's", "Winter Palace", "Hermitage", "Great Enclosure", "Great Zimbabwe", "Fasil Ghebbi", "Lalibela", "Great Mosque of Djenné", "Temple of the Great Jaguar", "Temple of the Inscriptions", "House of the Eagles", "Templo Mayor", "Pyramid of the Sun", "Pyramid of the Moon", "Coricancha", "Machu Picchu", "Sacsayhuamán", "Eiffel Tower", "Leaning Tower", "Statue of Liberty", "Empire State", "Kremlin Wall", "Brandenburg Gate", "Arc de Triomphe", "Orthanc", "Barad-dûr", "Minas Tirith", "Helm's Deep", "Hogwarts", "Azkaban", "Gringotts", "Castle Black", "the Red Keep", "Winterfell", "Casterly Rock", "Harrenhal", "Dragonstone", "Unseen University", "Tower of Art", "Castle Greyskull", "Castle Dracula", "Barad Dur", "Isengard", "Weathertop", "Rivendell", "Tower of Sorcery", "High Hrothgar", "Dragonsreach", "Candlekeep", "Baldur's Gate", "Citadel of Ricks"],
-    "flag": ["Old Bridge", "Market Cross", "High Cross", "Lady Well", "Holy Well", "Grey Tower", "Red Tower", "Black Tower", "Round Tower", "Old Gaol", "Town Hall", "Corn Exchange", "Devil's Bridge", "King's Hall", "Moot Hall", "Wishing Well", "Gatehouse", "Keep", "Guildhall", "Market Hall", "Folly"],
+    "flag": ["Old Bridge", "Market Cross", "High Cross", "Lady Well", "Holy Well", "Grey Tower", "Red Tower", "Black Tower", "Round Tower", "Old Gaol", "Town Hall", "Corn Exchange", "Devil's Bridge", "King's Hall", "Moot Hall", "Wishing Well", "Gatehouse", "Keep", "Guildhall", "Market Hall"],
     "flagListBlocks": false,
     "banned": ["Asylum", "Lunatic", "Madhouse", "Leper House", "Bedlam", "Concentration Camp", "Labour Camp", "Slave", "Plantation"],
     "religious": ["Mosque", "Synagogue", "Gurdwara", "Pagoda", "Stupa", "Mandir", "Wat"],

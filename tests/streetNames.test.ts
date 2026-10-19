@@ -340,3 +340,80 @@ test("Buildings §11.1: a one-town series of 8 or more uses {landmark} at most o
     assert.ok(b.names.filter((n) => n.words.some((w) => w.pool === "landmark")).length <= 1, b.names.map((n) => n.text).join(", "));
   }
 });
+
+// ── Monuments brief §11.1: monument back-links ──────────────────────────────
+
+import { monumentBlockSet } from "../src/monuments/engine";
+import { STREET_LANDMARK_KINDS } from "../src/streets/engine";
+
+test("Monuments §11.1: landmarks no longer include monuments; {landmark} is a quarter monuments, the rest buildings", () => {
+  assert.ok(!(STREET_LANDMARK_KINDS as string[]).includes("monument"));
+  assert.equal(STREET_DATA.monuments.landmarkShare, 0.25);
+  const shapes = (STREET_DATA.streets as { p: string; w: number }[]).filter((s) => s.p === "{monumentSite} {sw}");
+  assert.deepEqual(shapes.map((s) => s.w), [3]);
+  const squares = (STREET_DATA.squares as { p: string; w: number; e?: string[] }[]).find((s) => s.p === "{monumentSite} {jw}")!;
+  assert.equal(squares.w, 8);
+  assert.deepEqual(squares.e, ["MD", "EM", "ST", "MO", "NF", "IS"]);
+  assert.deepEqual(STREET_DATA.monumentDistricts.map((s) => [s.p, s.w]), [["{monumentSite}", 6], ["{monumentSite} {dw}", 4]]);
+  assert.equal(STREET_DATA.monuments.districtShare, 0.08);
+});
+
+test("Monuments §11.1: monument sites on streets, squares and districts are 3 words or fewer and pass the street and monument safeguards", () => {
+  const block = monumentBlockSet();
+  let street = 0;
+  let square = 0;
+  let district = 0;
+  for (const culture of ["norman-british", "japanese", "general"]) {
+    for (let seed = 1; seed <= 40; seed++) {
+      for (const [kind, shape] of [["streets", "{monumentSite} {sw}"], ["squares", "{monumentSite} {jw}"], ["districts", "{monumentSite}"], ["districts", "{monumentSite} {dw}"]] as const) {
+        for (const n of generateStreetNames({ culture, era: "ST", kind, size: "city", people: "invented", shape, count: 4, seed }).names) {
+          const site = n.words.find((w) => w.pool === "monumentSite");
+          assert.ok(site, n.text);
+          assert.ok(site!.word.split(" ").length <= 3 && !/^the /i.test(site!.word), n.text);
+          assert.ok(!block.has(routeNorm(n.plain)) && !breaksStreetWords(n.plain), n.text);
+          if (shape === "{monumentSite}") assert.equal(n.plain, site!.word);
+          if (kind === "streets") street++;
+          else if (kind === "squares") square++;
+          else district++;
+        }
+      }
+    }
+  }
+  assert.ok(street > 50 && square > 50 && district > 50, `${street} ${square} ${district}`);
+});
+
+test("Monuments §11.1: with function Any about 8% of district draws are monument districts, never with a function chosen or in the ancient age", () => {
+  const share = (o: { function?: string; era: RouteEra }) => {
+    let monument = 0;
+    let total = 0;
+    for (let seed = 1; seed <= 150; seed++) {
+      for (const n of generateStreetNames({ culture: "norman-british", era: o.era, kind: "districts", function: o.function, size: "city", people: "invented", count: 10, seed }).names) {
+        total++;
+        if (n.words.some((w) => w.pool === "monumentSite")) monument++;
+      }
+    }
+    return monument / total;
+  };
+  const any = share({ era: "ST" });
+  assert.ok(any > 0.04 && any < 0.12, `${any}`);
+  assert.equal(share({ era: "ST", function: "commercial" }), 0);
+  assert.equal(share({ era: "AN" }), 0);
+});
+
+test("Monuments §11.1: a village is never offered monument districts", () => {
+  for (let seed = 1; seed <= 60; seed++) {
+    const b = generateStreetNames({ culture: "norman-british", era: "ST", kind: "districts", size: "village", people: "invented", count: 10, seed });
+    assert.ok(b.names.every((n) => n.shape !== "{monumentSite}" && n.shape !== "{monumentSite} {dw}"), b.names.map((n) => n.text).join(", "));
+    assert.ok(b.notices.some((x) => x.includes("village")));
+  }
+});
+
+test("Monuments §11.1: a one-town series of 8 or more uses a monument (landmark or site) at most once", () => {
+  for (let seed = 1; seed <= 40; seed++) {
+    for (const kind of ["streets", "squares", "districts"] as const) {
+      const b = generateStreetNames({ culture: "norman-british", era: "ST", kind, size: "city", people: "invented", series: true, count: 12, seed });
+      const monuments = b.names.filter((n) => n.uses.includes("monument")).length;
+      assert.ok(monuments <= 1, `${kind}: ${b.names.map((n) => n.text).join(", ")}`);
+    }
+  }
+});

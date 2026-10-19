@@ -466,3 +466,7 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 ## Buildings back-link
 
 Added by the buildings and landmarks brief (§11.2): the location anchor gains `the {landmark}` at 20% of location draws (weight 25 beside 60 and 40), with `{landmark}` one `buildingName()` of kind defence, crossing, water or monument, without "the" and of 3 words or fewer (*the Grey Tower*, *the Lady Well*). Roadside shapes gain `the {landmark} Inn` (weight 3, no house word), kinds crossing and monument (*the Old Bridge Inn*, *the Four Mile Stone Inn*). Landmarks pass the building safeguards.
+
+## Monuments back-link
+
+Added by the monuments and statues brief (§11.2): the location anchor's `the {landmark}` is a monument (`monumentName()`, any kind) 25% of the time and otherwise a building of kind defence, crossing or water; the roadside `the {landmark} Inn` is half a crossing and half a cross or standing stone (*the Weeping Cross Inn*). The landmark kinds no longer include `monument`. Inn names taken from a monument's site (`the {site}`, district-worthy sites only, MD–MO) come from `monumentNeighbours()` in the streets engine and pass the inn safeguards.

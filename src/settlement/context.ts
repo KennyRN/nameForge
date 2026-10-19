@@ -195,6 +195,7 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
     goods,
     throughRoute: null,
     landmarks: [],
+    monuments: [],
     setting,
     tradition: groupTraditionFor(o.culture),
     vesselCulture: vesselCultureFor(o.culture),

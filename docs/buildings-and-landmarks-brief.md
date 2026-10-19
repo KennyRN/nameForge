@@ -460,3 +460,7 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 ## Deities back-link
 
 Added by the deities and sacred places brief (§10.1): a faith shape `Temple of the {deity}` (weight 15) for every culture but the sensitive ones, with `{deity}` from `deityTitle()` (archetype, A, B or D; any gender; the culture's style); christian cultures take it at weight 3 and only with fantastic on. `Shrine of the {deity}` sits beside `Shrine of the {holySite}` at the same weight (6). In the settlement kit both use the context's deity.
+
+## Monuments back-link
+
+Added by the monuments and statues brief (§10): the `monument` kind (Monuments and follies) left this module for monuments and statues (`docs/monuments-and-statues-brief.md`). `BuildingKind` loses `"monument"`; the `buildingWord:monument` and `buildingFixed:monument` pools, the kind's shapes and its two culture shapes (Chinese `Memorial Gate of {founder}`, Ethiopian `{founder:poss} Stele`) went with it, and "Folly" left the flag list. The real monuments on this block list stay on it as well as on monuments'. With any remaining kind chosen, the same seed gives the same names as before; kind Any draws from ten kinds. A buildings preset with `kind: monument` loads as Any ("Monuments and follies have moved to monuments and statues."), and a vocabulary pack heading for the two retired pools is ignored with a notice. Streets and inns draw their monument landmarks from monuments and statues (§11).

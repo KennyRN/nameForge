@@ -1,6 +1,6 @@
 // Buildings and landmarks (docs/buildings-and-landmarks-brief.md): the named buildings and
 // landmarks of a settlement and its country – defences, halls, houses of faith, civic buildings,
-// crossings, wells, works, monuments, schools, gaols and lights – for route names' 22 cultures and
+// crossings, wells, works, schools, gaols and lights – for route names' 22 cultures and
 // seven eras. Words come from the shared settlement pools (settlement/vocab.ts, with vocabulary
 // packs); places, people, gods and figures come from the route engine, creatures and colours from
 // group names, dynasties from realms, and the settings and rendering from inns. No Obsidian imports.
@@ -41,7 +41,7 @@ import { BUILT_IN_VOCAB, cultureAllowed, type Vocabulary } from "../settlement/v
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
-export type BuildingKind = "defence" | "residence" | "faith" | "civic" | "crossing" | "water" | "works" | "monument" | "learning" | "confinement" | "maritime";
+export type BuildingKind = "defence" | "residence" | "faith" | "civic" | "crossing" | "water" | "works" | "learning" | "confinement" | "maritime";
 export type BuildingSource = "shared" | "kind" | "culture" | "era" | "scifi" | "fixed";
 
 export interface BuildingShape {

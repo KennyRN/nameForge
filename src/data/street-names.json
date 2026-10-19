@@ -44,6 +44,7 @@
     {"p": "{mainStreet}", "w": 6, "g": ["mainStreet"]},
     {"p": "{direction} {sw}", "w": 6, "t": ["plain"]},
     {"p": "{landmark} {sw}", "w": 4},
+    {"p": "{monumentSite} {sw}", "w": 3},
     {"p": "{direction}gate", "w": 4, "e": ["MD", "EM"], "c": ["anglo-saxon", "norse", "norman-british"], "rx": {"NTH": 3, "EMD": 3}},
     {"p": "{destination} Road", "w": 8, "t": ["plain"]},
     {"p": "{route}", "w": 4},
@@ -115,6 +116,7 @@
     ]
   },
   "squares": [
+    {"p": "{monumentSite} {jw}", "w": 8, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
     {"p": "{squareFixed}", "w": 20},
     {"p": "{streetGoods} {marketWord}", "w": 20, "t": ["plain"]},
     {"p": "{weekday} Market", "w": 10, "e": ["MD", "EM", "ST", "MO", "NF", "IS"], "c": ["british", "slavic", "west-african"], "t": ["plain"], "cx": {"west-african": 3}},
@@ -296,6 +298,11 @@
     "routeFrom": 8,
     "landmarkOnceFrom": 8
   },
+  "monuments": {"landmarkShare": 0.25, "districtShare": 0.08},
+  "monumentDistricts": [
+    {"p": "{monumentSite}", "w": 6, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
+    {"p": "{monumentSite} {dw}", "w": 4, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]}
+  ],
   "monumentNeighbours": [
     {"kind": "junction", "p": "{site} {jw}", "w": 30, "e": ["MD", "EM", "ST", "MO", "NF", "IS"]},
     {"kind": "street", "p": "{site} {sw}", "w": 25},

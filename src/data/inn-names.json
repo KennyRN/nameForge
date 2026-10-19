@@ -223,6 +223,7 @@
     "dragonDouble": ["WAL"]
   },
   "series": {"from": 6},
+  "monuments": {"landmarkShare": 0.25, "roadShare": 0.5, "roadKinds": ["cross", "stone"]},
   "cap": 7,
   "safeguards": {
     "block": ["Prancing Pony", "Green Dragon", "Leaky Cauldron", "Three Broomsticks", "Hog's Head", "Hogs Head", "Winchester", "Slaughtered Lamb", "Admiral Benbow", "Jamaica Inn", "Mended Drum", "Drum", "Broken Drum", "Queen Vic", "Queen Victoria", "Rovers Return", "Woolpack", "Moe's", "Cheers", "Mos Eisley Cantina", "Ten Forward", "Quark's", "Restaurant at the End of the Universe", "Afterlife", "Golden Perch", "Bannered Mare", "Sleeping Giant", "Yawning Portal", "Elfsong Tavern", "Ye Olde Trip to Jerusalem", "Ye Olde Cheshire Cheese", "Ye Olde Fighting Cocks", "Prospect of Whitby", "George Inn", "Raffles", "Savoy", "Ritz", "Langham", "Adelphi", "Crystal Palace", "Café Royal", "Lloyd's", "Garrick Club", "Reform Club", "Athenaeum", "Carlton Club", "White's", "Boodle's", "Hellfire Club"],

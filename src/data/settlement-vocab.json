@@ -1519,25 +1519,6 @@
         {"w": "Factory", "e": ["MO"]}
       ]
     },
-    "buildingWord:monument": {
-      "entries": [
-        {"w": "Cross", "x": 2, "c": ["british", "christian"]},
-        {"w": "Column"},
-        {"w": "Obelisk", "c": ["egyptian"]},
-        {"w": "Obelisk", "e": ["ST"], "c": ["!egyptian"]},
-        {"w": "Standing Stone", "e": ["AN", "MD"]},
-        {"w": "Stones", "e": ["AN"]},
-        {"w": "Barrow", "e": ["AN", "MD"]},
-        {"w": "Arch"},
-        {"w": "Memorial", "e": ["ST", "MO"]},
-        {"w": "Statue", "e": ["EM", "ST", "MO", "NF", "IS"]},
-        {"w": "Folly", "x": 2, "e": ["EM", "ST"], "c": ["british", "general"]},
-        {"w": "Monument"},
-        {"w": "Pillar"},
-        {"w": "Memorial Gate", "c": ["chinese", "japanese"]},
-        {"w": "Stele", "c": ["egyptian", "maya", "ethiopian"]}
-      ]
-    },
     "buildingWord:learning": {
       "entries": [
         {"w": "School", "x": 2},
@@ -1746,11 +1727,6 @@
     },
     "buildingFixed:works": {
       "entries": []
-    },
-    "buildingFixed:monument": {
-      "entries": [
-        {"w": "Market Cross", "x": 5, "e": ["MD", "EM"], "c": ["british"]}
-      ]
     },
     "buildingFixed:learning": {
       "entries": []

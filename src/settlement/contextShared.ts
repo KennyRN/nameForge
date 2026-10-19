@@ -17,8 +17,10 @@ export interface SettlementContext {
   goods: string[];
   /** §6 step 3: the road, drove or trade route through the town. */
   throughRoute: string | null;
-  /** §6 step 4: the buildings section's defences, crossings, water and monuments. */
+  /** §6 step 4: the buildings section's defences, crossings and water, and the monuments (Monuments brief §12.2). */
   landmarks: string[];
+  /** Monuments brief §12.2: the Monuments section, with the names places around them take. */
+  monuments: { text: string; site: string; districtWorthy: boolean }[];
   setting: GroupSetting;
   /** GN's tribal tradition for the culture. */
   tradition: string;

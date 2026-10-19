@@ -13,9 +13,9 @@
   "Friary Street",
   "Horses Road",
   "Horse Fair",
-  "Bastion of [founder] Road",
-  "Lead Street",
-  "Kiln Alley (Kiln Wynd)",
+  "Round Fort Lane",
+  "Bridge Court",
+  "South Street",
   "Bridge Lane",
   "[place] Road",
   "Market Street",
@@ -38,7 +38,7 @@
   "Castle of [founder]",
   "the Black Hill Fort",
   "[founder]'s Tower",
-  "King's Quarry",
+  "King's Fountain",
   "[place] School"
  ],
  "routes norman-british AN invented": [
@@ -55,13 +55,13 @@
   "Quay Lane",
   "Church Street",
   "Smithy Way",
-  "Long Street",
-  "Ridgeway",
+  "North-East Street",
+  "New Market",
   "Milk Hall",
   "Market Square",
-  "New Town",
-  "Bread Exchange",
-  "Lead Hall"
+  "Dock End",
+  "White Memorial Row",
+  "Tithe Barn Court (Tithe Barn Vennel)"
  ],
  "inns norman-british AN invented": [
   "the Golden Wyvern Way Station",
@@ -75,13 +75,13 @@
  ],
  "buildings norman-british AN invented": [
   "the Grey Shrine",
-  "the Lower Mill",
+  "the Lower Well",
   "the White Fortress",
-  "the Green Hall",
+  "the Green Castle",
   "the Burnt Academy",
   "Morcant Hill Fort",
   "the Great Tower",
-  "Little Gallows Watermill"
+  "Little Gallows Well"
  ],
  "routes norman-british MD placeholders": [
   "Road to [place]",
@@ -96,19 +96,19 @@
  "streets norman-british MD placeholders": [
   "Leather Market",
   "Staithe Lane",
-  "Smiths' Precinct",
-  "Green Street",
-  "Kiln Gate",
-  "Lower Town",
-  "High Street",
-  "[place] Bridge Street",
-  "Prince's Hill",
-  "Duke's Green"
+  "Millers' Quarter",
+  "Shambles",
+  "Bakers' Lane",
+  "Mercers' Entry (Mercers' Lonning)",
+  "Market Lane",
+  "Bridge Hill",
+  "Cattle Gate",
+  "[place] Road"
  ],
  "inns norman-british MD placeholders": [
   "the Apple",
-  "the [holy person]'s Well",
-  "the Three Roebucks Hostelry",
+  "the Ashen Tower Way Station",
+  "the Hare's Sett",
   "the Castle",
   "the Piper and Moon Inn",
   "the Lone Ship Alehouse",
@@ -137,10 +137,10 @@
  ],
  "streets norman-british MD invented": [
   "Shambles",
-  "Long Gatehouse Lane",
-  "Landing Alley (Landing Wynd)",
-  "Moss Island Street",
-  "Pilgrims' Side",
+  "Red Standing Stone Road",
+  "Foundry Quarter",
+  "Great Assart of the Ash Road",
+  "Ruined Side",
   "Water Lane",
   "Market Square",
   "Friar's Square",
@@ -158,12 +158,12 @@
   "the Fern and Oak Tavern"
  ],
  "buildings norman-british MD invented": [
-  "Deer Copse Guildhall",
-  "Queen's Mine",
+  "Saint Juthwara's Temple",
+  "Lord's Fountain",
   "Brown Graveyard Mill",
   "Pear Water Church Mill",
   "Saint Mildred's Bridge",
-  "the Green Stepping Stones",
+  "the Green Treasury",
   "the Lower Toll House",
   "Midgrove Bridge"
  ],
@@ -181,13 +181,13 @@
   "Horse Close",
   "Cutlers' Street",
   "Lower Town",
-  "Merchants' Liberty",
-  "Lead Market Quarter",
+  "Draper Street",
+  "Old Town",
   "Cutlers' Hill",
   "Queen Close",
   "Quarry Way",
   "Warehouse Yard (Warehouse Wynd)",
-  "Abbot's Row"
+  "Old Bastion Way"
  ],
  "inns norman-british EM placeholders": [
   "the Dyers' Arms",
@@ -200,14 +200,14 @@
   "the Boar and Horn Inn"
  ],
  "buildings norman-british EM placeholders": [
-  "[place] Cross",
-  "[place] Hall",
-  "[place] Guildhall",
-  "Leaning Library",
-  "Mad [surname]'s Folly",
-  "[surname] Mill",
-  "[founder]'s Guildhall",
-  "[place] Minster"
+  "[surname] Library",
+  "[place] House",
+  "Lord's Academy",
+  "Earl's Saltworks",
+  "[surname] Works",
+  "[founder]'s Fountain",
+  "the Drowned Hall",
+  "Round Library"
  ],
  "routes norman-british EM invented": [
   "Old Track",
@@ -226,10 +226,10 @@
   "Smiths' Row",
   "Main Street",
   "Hall Alley (Hall Snicket)",
-  "Lower Town",
-  "Inn Yard (Inn Opening)",
+  "Mill District",
+  "Outer Town",
   "Ford Close",
-  "New Market"
+  "Grey Gateway Square"
  ],
  "inns norman-british EM invented": [
   "the Two Cockatrices Public House",
@@ -242,11 +242,11 @@
   "the Firkin and Talisman"
  ],
  "buildings norman-british EM invented": [
-  "Lady Well",
+  "Honeyhouse Bridge",
   "South Pit Church",
   "the Round Brewery",
   "Gallows Temple",
-  "Bee Bridge",
+  "Cutlers' Hall",
   "Great Little Moor Hall",
   "Thistle Marsh Lock-Up",
   "White Court"
@@ -263,9 +263,9 @@
  ],
  "streets norman-british ST placeholders": [
   "Rookery",
-  "[surname] Mews",
-  "Love Lane",
-  "[place] Road",
+  "Abbot's Circus",
+  "Old Market",
+  "Green Walk",
   "Lower Town",
   "Cooper Street",
   "Lime Terrace",
@@ -284,14 +284,14 @@
   "the Lady"
  ],
  "buildings norman-british ST placeholders": [
-  "[founder]'s Cross",
-  "[place] Stepping Stones",
-  "[place] Town Hall",
+  "Corn Works",
+  "[place] Infirmary",
+  "[surname] Market Hall",
+  "Grey Lighthouse",
   "[founder]'s Quarry",
   "[place] Institute",
   "[place] Light",
-  "Gaol of [founder]",
-  "[founder]'s Mine"
+  "Gaol of [founder]"
  ],
  "routes norman-british ST invented": [
   "Vale Way",
@@ -308,12 +308,12 @@
   "Sanctuary Alley (Sanctuary Ope)",
   "South Street",
   "Ingram Place",
-  "Tannery Side",
-  "Exchange Square",
-  "Horse Fair",
-  "Abbot Hill",
-  "Shoemakers' Entry (Shoemakers' Lonning)",
-  "Station Road"
+  "Lower Town",
+  "Wool Row",
+  "Station Row",
+  "Back Lane",
+  "Sunday Market",
+  "Drapers' End"
  ],
  "inns norman-british ST invented": [
   "the Wise Roebuck",
@@ -329,11 +329,11 @@
   "Earl's Ropewalk",
   "High Chapel",
   "Otter Hospital",
-  "the Great Memorial",
+  "the Great Mine",
   "Bear Quarry",
   "Goosedge Farmstead School",
   "Old Cottage Town Hall",
-  "Reed Farm Engine House"
+  "Reed Farm Reservoir"
  ],
  "routes norman-british MO placeholders": [
   "Eastern Highway",
@@ -349,13 +349,13 @@
   "Market Square",
   "Cross Square",
   "Bridge Entry (Bridge Ope)",
-  "Market Place",
-  "[place] Bypass",
-  "[royal] Street",
+  "[place] Obelisk Junction",
+  "[place] Road",
+  "Long Street",
   "Church Street",
-  "Shrine Ward",
-  "[holy person]'s Spring Lane",
-  "[surname] Place"
+  "Weavers' Lane",
+  "High Street",
+  "Bread Market"
  ],
  "inns norman-british MO placeholders": [
   "the Falcon and Flail",
@@ -372,10 +372,10 @@
   "[place] Bridge",
   "Silver Hall",
   "[surname] Library",
-  "the Lower Daymark",
-  "[place] Exchange",
+  "Friary of [founder]",
+  "the Old Gaol",
   "[surname] Building",
-  "the White Statue"
+  "[founder]'s Windmill"
  ],
  "routes norman-british MO invented": [
   "A5505",
@@ -389,15 +389,15 @@
  ],
  "streets norman-british MO invented": [
   "Wednesday Market",
-  "Little Warm Clearing Road",
-  "Jessop Cross Way",
-  "Chapel Lane",
-  "Larkin Crescent",
-  "Saint Edith's Street",
-  "Saint Cuthwin's Cross",
-  "Smith Street",
+  "Spider Needle Street",
+  "Goldsmiths' Alley (Goldsmiths' Wynd)",
+  "Marshal's Road",
+  "Queen's Square",
+  "Bakers' Way",
+  "Salt Market Ward",
   "Queen's Lane",
-  "Kiln End"
+  "Tannery Side",
+  "Wool Lane"
  ],
  "inns norman-british MO invented": [
   "the Lark and Dove",
@@ -416,8 +416,8 @@
   "Old Cottage Civic Centre",
   "Lacey House",
   "Big Headland Manor",
-  "Queen's Cistern",
-  "the Green Cross"
+  "Queen's Stepping Stones",
+  "Venn School"
  ],
  "routes norman-british NF placeholders": [
   "Salt Road",
@@ -435,11 +435,11 @@
   "Lift Cross",
   "Reactor Lane",
   "Deck 17 Concourse",
-  "Deck 37",
+  "Reactor Sector",
   "Ross 623 Plaza",
   "Smith Street",
-  "Hubward Sector",
-  "Market Place"
+  "[place] Bust",
+  "Deck 11 Concourse"
  ],
  "inns norman-british NF placeholders": [
   "the Bird in Hand",
@@ -474,14 +474,14 @@
  "streets norman-british NF invented": [
   "Hydroponics Row",
   "Hubward Lift",
-  "Butchers' Ward",
+  "Deck 13",
   "Deck 10 Concourse",
-  "67th Ring",
+  "Old Dome",
   "Concourse Rho",
   "Market Place",
   "Rimward Walk",
   "Recycler Street",
-  "Cross Court"
+  "Monday Market"
  ],
  "inns norman-british NF invented": [
   "the Pulsar Hawk",
@@ -494,11 +494,11 @@
   "the Airlock"
  ],
  "buildings norman-british NF invented": [
-  "the Blessed Aldric's Conduit",
+  "Bear Causeway",
   "Trailing Arc Sky Elevator",
   "Regulus Arcology",
   "Ladder Foot Nu",
-  "the Little Spring",
+  "the Little Bridge",
   "Hab Module 16",
   "Pagett Library",
   "Fifth Hydroponic Bay"
@@ -519,11 +519,11 @@
   "Spine Kappa",
   "Prince's Green",
   "Reactor Lane",
-  "[holy person]'s Place",
-  "Spine Lambda",
+  "Bishop's Square",
+  "Old Market",
   "Market Place",
   "[holy person]'s Walk",
-  "Warehouse Quarter"
+  "Wool Market End"
  ],
  "inns norman-british IS placeholders": [
   "the Hare and Horn Canteen",
@@ -557,15 +557,15 @@
  ],
  "streets norman-british IS invented": [
   "Cloth Market",
-  "Ruined Ring",
+  "Old Dome",
   "Spoke Place",
   "Cargo Bay Lane",
-  "Kiln End",
-  "Silversmiths' Row",
-  "Deck 6 Concourse",
-  "Sirius Promenade",
-  "Ring Road",
-  "Reactor Lane"
+  "Reactor Sector",
+  "Old Spoke Road",
+  "Spine Theta",
+  "Antispinward Sector",
+  "Reactor Lane",
+  "Northern Promenade"
  ],
  "inns norman-british IS invented": [
   "the Five Hares",
@@ -582,7 +582,7 @@
   "Altair Ladder Foot",
   "Thirteenth Hydroponic Bay",
   "Garrick Hall",
-  "Mira Cross",
+  "Mira Mill",
   "Procyon Dome",
   "Coreward Disc Sky Elevator",
   "Pathfinder Dome"
@@ -605,9 +605,9 @@
   "Custom House Lane",
   "Silver Court",
   "Long Street",
-  "Lower Town",
-  "Cloth Exchange",
-  "Cistern Street"
+  "Poor Precinct",
+  "Milk Street",
+  "Granary Lane"
  ],
  "inns general AN placeholders": [
   "the Firkin and Lantern Way Station",
@@ -620,14 +620,14 @@
   "the Jolly Sea-Lion"
  ],
  "buildings general AN placeholders": [
-  "the Long Forge",
-  "[place] Lighthouse",
+  "[place] Well",
+  "Shrine of the Father of Eclipses",
   "[founder]'s Citadel",
   "the Jade Lantern",
   "[place] Manor",
-  "[place] Kiln",
+  "[place] Spring",
   "the Lower Hall",
-  "[place] Pillar"
+  "[place] Conduit"
  ],
  "routes general AN invented": [
   "Baron's Army Road",
@@ -642,14 +642,14 @@
  "streets general AN invented": [
   "Bridge Street",
   "Horse Way",
+  "Lonely Mound Street",
+  "Market Square",
+  "Timber and Lead Road",
   "Round Valley Road",
-  "Slope Hut Road",
-  "West Road",
-  "Shrine Road",
-  "Causeway Close",
-  "Millers' Quarter",
-  "Gardens Row",
-  "Cattle Exchange"
+  "Bridge Row",
+  "Poor District",
+  "Broad Street",
+  "New Town"
  ],
  "inns general AN invented": [
   "the Plum Nook Arms",
@@ -663,13 +663,13 @@
  ],
  "buildings general AN invented": [
   "Queen's Fort",
-  "the Burnt Bridge",
-  "Black Mire Tannery",
-  "Big Mountain Temple",
-  "Palace of Vantrell",
-  "the Old Shrine",
-  "the Red House",
-  "Palace of Wyvenhoe"
+  "Crane Scrub Hall",
+  "Upper Spring",
+  "the Little Forge",
+  "Fields Citadel",
+  "the Great Manor",
+  "the Long Citadel",
+  "the High Hermitage"
  ],
  "routes general MD placeholders": [
   "North-East Road",
@@ -683,15 +683,15 @@
  ],
  "streets general MD placeholders": [
   "Packmen's Way",
-  "Shrine Town",
-  "Ropemakers' Lane",
-  "Duke's Road",
-  "Temple Ward",
-  "Vintner Street",
-  "West Way",
+  "Lower Town",
+  "White Barrow Street",
+  "Guildhall Square",
+  "Glovers' Lane",
+  "Warehouse Side",
   "Wool Market",
   "South-West Road",
-  "Kiln Row"
+  "Kiln Row",
+  "Panther Stone"
  ],
  "inns general MD placeholders": [
   "the Crown and Hogshead",
@@ -710,8 +710,8 @@
   "the Crooked Bastion",
   "[founder]'s Manor",
   "Shrine of the Holy Mountain",
-  "King's Fountain",
-  "Queen's House"
+  "[founder]'s Bridge",
+  "the Black Cistern"
  ],
  "routes general MD invented": [
   "Old Road",
@@ -725,15 +725,15 @@
  ],
  "streets general MD invented": [
   "Dock Place",
-  "Garrison Quarter",
-  "Free Peasant Golden Lookout Road",
-  "Potters' Road",
-  "Ford Road",
+  "Barracks Quarter",
+  "Shrine Lane",
+  "Tanner Street",
+  "Long Street",
   "East Row",
   "Water Lane",
-  "Lower Town",
-  "Long Street",
-  "Hay Market End"
+  "Temple Quarter",
+  "Upper Assart Road",
+  "Quarry Close"
  ],
  "inns general MD invented": [
   "the Hero's Head Way Station",
@@ -747,12 +747,12 @@
  ],
  "buildings general MD invented": [
   "Rook Fountain",
-  "the Drowned Market Hall",
+  "the Drowned Shrine",
   "Queen's Great House",
   "Moss Island Guildhall",
   "Temple of the Burning Master",
   "East Gate",
-  "Warm Pool Monument",
+  "the Great Mine",
   "the Golden Bridge"
  ],
  "routes general EM placeholders": [
@@ -767,15 +767,15 @@
  ],
  "streets general EM placeholders": [
   "[place] Road",
-  "Lower Town",
-  "Saddlers' Lane",
-  "Duke's Square",
-  "Ford Lane",
-  "Spice and Copper Road",
-  "Poor Side",
-  "Inn Row",
-  "[founder]'s Tower Street",
-  "Long Street"
+  "Temple District",
+  "Road to [place]",
+  "Tannery Side",
+  "Sanctuary Lane",
+  "Corn Court",
+  "Merchants' Quarter",
+  "Market Way",
+  "Fuller Street",
+  "Silver Row"
  ],
  "inns general EM placeholders": [
   "the Stork and Cock Tavern",
@@ -789,13 +789,13 @@
  ],
  "buildings general EM placeholders": [
   "[place] Gatehouse",
-  "Lord [surname]'s Folly",
+  "Butter Mill",
   "Crooked Watchtower",
-  "[place] Mill",
-  "the White Bridge",
+  "[place] Well",
+  "the White Hall",
   "[surname] Bridge",
   "[place] House of Learning",
-  "Queen's Kiln"
+  "the White Spring"
  ],
  "routes general EM invented": [
   "Black Lake Road",
@@ -809,15 +809,15 @@
  ],
  "streets general EM invented": [
   "Kiln Square",
-  "Burnt Pillar Street",
-  "Gardens Lane",
-  "Butter Market",
-  "Pump Street",
-  "King Hill",
-  "Old Market",
-  "Horse Market",
-  "Market Alley",
-  "Warehouse Lane"
+  "Lynx Sanctuary Lane",
+  "Back Lane",
+  "Milk Lane",
+  "Bridge Hill",
+  "Brewers' Street",
+  "Lower Town",
+  "Chandlers' Alley",
+  "Pilgrims' Quarter",
+  "Duke's Lane"
  ],
  "inns general EM invented": [
   "the Star and Roebuck",
@@ -851,15 +851,15 @@
  ],
  "streets general ST placeholders": [
   "Cattle Road",
-  "Pleasure Gardens Court",
-  "Exhibition Walk",
-  "Tannery Side",
-  "Waterworks Lane",
+  "Lord Close",
+  "North-West Way",
+  "Cemetery Quarter",
+  "Treasury Way",
+  "Lower Town",
+  "Great Arch Row",
   "Station Square",
-  "Sanctuary Place",
-  "Lord Road",
-  "Old Well Road",
-  "Kiln End"
+  "Ford Hill",
+  "Temple Precinct"
  ],
  "inns general ST placeholders": [
   "the Smiling Candle Tavern",
@@ -875,11 +875,11 @@
   "[place] Hermitage",
   "[place] Foundry",
   "Masons' Hall",
-  "Grey Ferry",
-  "the Little Tower",
-  "the New Workhouse",
-  "the Burnt Grange",
-  "Otter Bridge"
+  "[surname] Toll House",
+  "[place] Quarry",
+  "the Drowned Temple",
+  "[place] Grange",
+  "the Burnt Grange"
  ],
  "routes general ST invented": [
   "Southern Line",
@@ -894,14 +894,14 @@
  "streets general ST invented": [
   "Viaduct Way",
   "Leather Market",
-  "Corn Close",
+  "Herdsman Landing Road",
   "Storehouse Square",
   "Tanners' Close",
   "Water Lane",
   "Lower Town",
-  "Goldsmith Street",
-  "Mason Street",
-  "Long Street"
+  "King's Lane",
+  "Chandler Street",
+  "Corrie Grove"
  ],
  "inns general ST invented": [
   "Quarrie's Dining Rooms",
@@ -914,12 +914,12 @@
   "the Compass Tavern"
  ],
  "buildings general ST invented": [
-  "East Farm Well",
+  "East Farm Bridge",
   "Duke's Palace",
   "Art Valley Bridge",
   "Temple of the Lady of Ancestors",
-  "Larkin College",
-  "the High Fountain",
+  "Beacon of the Box Gaol",
+  "the High Ferry",
   "Abbot Hall Bastion",
   "Bishop Arr Farm Mill"
  ],
@@ -935,15 +935,15 @@
  ],
  "streets general MO placeholders": [
   "Mason Street",
-  "Lower Town",
-  "Potters' Row",
-  "Ford Hill",
+  "Mill District",
   "[place] Road",
-  "Tailors' Road",
-  "Warehouse End",
-  "Court Hill",
-  "Kiln End",
-  "Old Spring Lane"
+  "Well Lane",
+  "Wool Market End",
+  "Ash Grove",
+  "Market Square",
+  "New Town",
+  "Broad Street",
+  "Chestnut Parade"
  ],
  "inns general MO placeholders": [
   "the Little Trout",
@@ -956,13 +956,13 @@
   "the Eight Ermines"
  ],
  "buildings general MO placeholders": [
-  "[founder]'s Monument",
+  "[founder]'s Observatory",
   "the Pale Lantern",
-  "[founder]'s Arch",
+  "[surname] Library",
   "[founder]'s Hermitage",
   "[surname] Observatory",
   "the Silver School",
-  "[founder]'s Cistern",
+  "[surname] Stepping Stones",
   "Lord's Causeway"
  ],
  "routes general MO invented": [
@@ -976,16 +976,16 @@
   "Weir of the Ox Ring Road"
  ],
  "streets general MO invented": [
-  "Lower Town",
+  "Outer Town",
   "Custom House Street",
   "Station Road",
   "Cheese Court",
   "Queen Road",
-  "Old Market",
-  "Leather Hill",
-  "Old Bath House Street",
-  "Pier Plaza",
-  "Mill Street"
+  "Fairweather Corner",
+  "Burial Ground Court",
+  "Lower Town",
+  "Mayor's Square",
+  "Masons' Alley"
  ],
  "inns general MO invented": [
   "the Ship and Shovel",
@@ -1002,10 +1002,10 @@
   "the Golden Observatory",
   "Honeyhouse Library",
   "Boxfold Lighthouse",
-  "the Lower Pillar",
-  "Long Stone Farm Arch",
-  "the Long Market Hall",
-  "Rook Gaol"
+  "Corrie Mill",
+  "Horse Gate Light",
+  "Great Mill",
+  "the Drowned Toll House"
  ],
  "routes general NF placeholders": [
   "Bridge Run",
@@ -1019,14 +1019,14 @@
  ],
  "streets general NF placeholders": [
   "Reactor Lane",
-  "Reactor Square",
-  "[place] Road",
-  "Deck 33",
-  "Ring Road",
-  "Concourse Psi",
-  "Spine Kappa",
-  "Lift Lane",
-  "Wolf 1024 Promenade",
+  "Hay Market",
+  "Smiths' Street",
+  "Market Square",
+  "Ross 90 Promenade",
+  "Hubward Concourse",
+  "Exchange Square",
+  "Merchants' Ward",
+  "Weavers' Yard",
   "Spine Epsilon"
  ],
  "inns general NF placeholders": [
@@ -1045,9 +1045,9 @@
   "[place] Observatory",
   "Martlet Exchange",
   "Hab Module 29",
-  "[surname] Statue",
-  "Chi Arietis Relay Mast",
-  "HIP 29177 Dome"
+  "[surname] Mill",
+  "Mintaka Tether Head",
+  "[place] Sky Elevator"
  ],
  "routes general NF invented": [
   "LHS 2061 Turnpike",
@@ -1069,7 +1069,7 @@
   "Cargo Bay Way",
   "Rimward Walk",
   "Exchange Square",
-  "New Town"
+  "Warehouse Precinct"
  ],
  "inns general NF invented": [
   "the Old Market Canteen",
@@ -1102,12 +1102,12 @@
   "The Quiet Lane"
  ],
  "streets general IS placeholders": [
-  "Hydroponics Ring",
-  "Warehouse Precinct",
-  "Van Maanen's Star Plaza",
+  "Lower Town",
+  "Lift Court",
+  "Reactor Lane",
   "Hydroponics Row",
-  "College Court",
-  "Ring Road",
+  "Hay Hall",
+  "Dyers' Ward",
   "Altair Promenade",
   "Deck 27 Concourse",
   "Lord's Square",
@@ -1127,7 +1127,7 @@
   "Gliese 146 Ice Works",
   "Deneb Ice Works",
   "[place] Sky Elevator",
-  "[place] Watermill",
+  "[place] Well",
   "Alcor Observation Ring",
   "Sixth Hydroponic Bay",
   "[founder]'s School",
@@ -1144,15 +1144,15 @@
   "42nd Jump Route"
  ],
  "streets general IS invented": [
-  "82nd Ring",
+  "Reactor Sector",
   "Western Promenade",
-  "Hydroponics Ring",
-  "Gravity Street",
+  "Pilgrims' Quarter",
   "Undercity",
   "Dock Arm Square",
   "Hubward Walk",
   "Hadar 10 Road",
   "Hydroponics Row",
+  "Gravity Street",
   "Antispinward Walk"
  ],
  "inns general IS invented": [
@@ -1160,9 +1160,9 @@
   "Dock 4 Bunkhouse",
   "the Stork and Executioner",
   "Deck 10 Bar",
-  "the King's Fountain",
-  "the Sign of the Wild Scroll",
-  "the Heron",
+  "the Hab Module 35",
+  "the Last Toast Before HIP 3647",
+  "the Ermine Tavern",
   "the Scorpion"
  ],
  "buildings general IS invented": [
@@ -1188,14 +1188,14 @@
  "streets japanese AN placeholders": [
   "Market Square",
   "Salt Hall",
-  "Merchants' Ward",
-  "Monastery Lane",
-  "Barn Way",
-  "Dock Quarter",
-  "New Market",
-  "Mill Precinct",
-  "Vintners' Ward Street",
-  "Third Block"
+  "Merchants' Quarter",
+  "Silversmiths' Ward Street",
+  "North Way",
+  "Twelfth Block",
+  "Silver Way",
+  "Cloth Street",
+  "Foundry Town",
+  "Old Market"
  ],
  "inns japanese AN placeholders": [
   "Way Station of [place]",
@@ -1208,14 +1208,14 @@
   "Cherry Blossom Inn"
  ],
  "buildings japanese AN placeholders": [
-  "[founder]'s Market Hall",
+  "Temple of the Dawn Elder",
   "[founder]'s Bastion",
-  "Panther Bridge",
-  "Palace of [dynasty]",
-  "Swallow Castle",
-  "Golden Crane Villa",
+  "Panther Market Hall",
+  "[place] Causeway",
+  "the Ruined Bridge",
   "Crane Well",
-  "[place] Bridge"
+  "[founder]'s Treasury",
+  "[place] Manor"
  ],
  "routes japanese AN invented": [
   "Old Road",
@@ -1232,7 +1232,7 @@
   "East Road",
   "Post House Row",
   "Market Square",
-  "Drapers' Quarter",
+  "Lower Town",
   "Ferry Square",
   "Oracle Street",
   "Fish Market",
@@ -1252,12 +1252,12 @@
  "buildings japanese AN invented": [
   "Ashen Egret Castle",
   "High Valley Shrine",
-  "Tenjin Bay Bridge",
+  "Tenjin Bay Exchange",
   "New Mountain Tower",
-  "Heron Ford Well",
+  "Heron Ford Bridge",
   "Golden Spring",
-  "the Upper Arch",
-  "the Old Bridge"
+  "the Upper Academy",
+  "Hundred Horses Exchange"
  ],
  "routes japanese MD placeholders": [
   "Northern Sea Road",
@@ -1278,8 +1278,8 @@
   "Tailors' Ward Street",
   "Broad Street",
   "Bakers' Ward Street",
-  "Old Market",
-  "Cattle Road"
+  "[place] Standing Stone Cross",
+  "Eighth Block"
  ],
  "inns japanese MD placeholders": [
   "[place] Inn",
@@ -1293,13 +1293,13 @@
  ],
  "buildings japanese MD placeholders": [
   "Ferry of [founder]",
-  "[place] Saltworks",
+  "[place] Conduit",
   "[place] Gatehouse",
   "Gull Shrine",
   "[place] Monastery",
   "Bridge of [founder]",
   "[place] Great House",
-  "Lord's Tannery"
+  "Lord's Conduit"
  ],
  "routes japanese MD invented": [
   "Old Road",
@@ -1318,10 +1318,10 @@
   "Thirteenth Block",
   "Rice Hall",
   "Sake Brewers' Lane",
-  "Temple Town",
-  "Tortoise Pond Bridge Road",
-  "Hall Square",
-  "Treasury Street"
+  "Shrine Ward",
+  "Tailors' Ward Street",
+  "Sixth-Day Market",
+  "High Cairn Cross"
  ],
  "inns japanese MD invented": [
   "Willow Bank Tea House",
@@ -1336,12 +1336,12 @@
  "buildings japanese MD invented": [
   "Kite Castle",
   "Vintners' Hall",
-  "Lower Slope Hermitage",
+  "Lower Slope Lodge",
   "Blue Mountain House",
   "the Golden Hall",
   "the Crooked Temple",
   "Blessing Peak Castle",
-  "Cherry Cape Treasury"
+  "Cherry Cape Relic Mound"
  ],
  "routes japanese EM placeholders": [
   "Pilgrims' Road to the Sacred Spring",
@@ -1355,15 +1355,15 @@
  ],
  "streets japanese EM placeholders": [
   "Causeway Lane",
-  "Corn Market Town",
-  "Wool Market",
+  "Rice Market End",
+  "Millers' Row",
+  "Market Square",
+  "Fifth Block",
+  "Potters' Ward Street",
+  "Burial Ground Square",
   "Spring Square",
-  "Corn Exchange",
-  "Paper Makers' Ward Street",
-  "Mercers' Side",
-  "Smithy Yard",
-  "Old Bath House Lane",
-  "[founder]'s Citadel Lane"
+  "Fourth Block",
+  "Sacred Spring Street"
  ],
  "inns japanese EM placeholders": [
   "[owner]'s Post House",
@@ -1376,14 +1376,14 @@
   "Snow Country Inn"
  ],
  "buildings japanese EM placeholders": [
-  "Queen's Conduit",
-  "[place] Monument",
-  "Gull Ropewalk",
-  "[place] Memorial Gate",
-  "Owl Sanctuary",
-  "the Crooked Fortress",
-  "the Black Lantern",
-  "[place] Bridge"
+  "[founder]'s Bridge",
+  "Wool Works",
+  "Ferry of [founder]",
+  "[place] Ropewalk",
+  "Bronze Crane Castle",
+  "the Lower Prison",
+  "[place] Bridge",
+  "Lord's Ropewalk"
  ],
  "routes japanese EM invented": [
   "Sea Road to Nine Moors",
@@ -1396,8 +1396,8 @@
   "Grain Road"
  ],
  "streets japanese EM invented": [
-  "Old Mill Close",
-  "Ferry Street",
+  "Butter Street",
+  "Drapers' Quarter",
   "Salt Hall",
   "Hall Street",
   "Shoemakers' Ward Street",
@@ -1420,10 +1420,10 @@
  "buildings japanese EM invented": [
   "White Mountain Castle Town Redoubt",
   "Bright Mountain Light",
-  "Lord's Monastery",
-  "the Hollow Toll House",
+  "Unicorn Grange",
+  "Hollow Monastery",
   "Egret Castle",
-  "Temple of the Smith",
+  "Spring Rain Pavilion",
   "New Shore Lighthouse",
   "Black Pass Observatory"
  ],
@@ -1441,13 +1441,13 @@
   "Eighth Block",
   "Corn Exchange Road",
   "Broad Street",
-  "Market Square",
-  "South-West Lane",
+  "[place] Arch Green",
+  "Holy Mountain Street",
   "Market Street",
-  "Bread Row",
+  "Timber Road",
   "Standing Stones Street",
   "Temple Street",
-  "Cutlers' Entry"
+  "Gasworks Passage"
  ],
  "inns japanese ST placeholders": [
   "Spring Rain Tea House",
@@ -1463,7 +1463,7 @@
   "the Burnt Foundry",
   "[founder]'s Hall",
   "[founder]'s Gaol",
-  "[place] Obelisk",
+  "[place] Mill",
   "[place] Corn Exchange",
   "the Great Institute",
   "[place] School",
@@ -1489,7 +1489,7 @@
   "First Block",
   "Station Street",
   "Market Square",
-  "Merchants' Town"
+  "Lower Town"
  ],
  "inns japanese ST invented": [
   "Three Foxes Inn",
@@ -1502,14 +1502,14 @@
   "Post House of Cherry Island"
  ],
  "buildings japanese ST invented": [
-  "Middle of the Valley Mill",
-  "the White Bridge",
-  "Ebisu Paddy Mill",
-  "the Golden Spring",
-  "the Grey Mill",
-  "Crane Pond Station",
-  "[surname] Hospital",
-  "Upper Cape Observatory"
+  "High Spring",
+  "the Black Manor",
+  "Plum Valley Fortress",
+  "the Golden Mine",
+  "Tortoise Moor Waterworks",
+  "Wide Pond Town Hall",
+  "Hawk Moor Workhouse",
+  "Queen's Brewery"
  ],
  "routes japanese MO placeholders": [
   "[place]–[place] Railway",
@@ -1523,15 +1523,15 @@
  ],
  "streets japanese MO placeholders": [
   "Fan Makers' Ward Street",
-  "Warehouse Ward",
-  "Tenth Block",
-  "Glovers' Lane",
-  "Fifth Block",
-  "Old Smithy Street",
-  "Post Town",
-  "Potters' Ward Street",
-  "Hay Exchange",
-  "Thirteenth Block"
+  "Dock End",
+  "King's Square",
+  "Broad Street",
+  "Market Square",
+  "[founder] Street",
+  "Lower Town",
+  "Silk Market",
+  "Station Close",
+  "Merchants' Town"
  ],
  "inns japanese MO placeholders": [
   "[place] Inn",
@@ -1546,12 +1546,12 @@
  "buildings japanese MO placeholders": [
   "[place] Pavilion",
   "[surname] Building",
-  "[place] Tower",
-  "[place] Memorial",
-  "[place] Town Hall",
-  "Argent Tower",
+  "[founder]'s Sanctuary",
+  "the Long Shrine",
+  "the Lower Mine",
   "the Hollow Library",
-  "the Golden Lantern"
+  "the Golden Lantern",
+  "the New Conduit"
  ],
  "routes japanese MO invented": [
   "Amaterasu Marsh–New Ferry Railway",
@@ -1565,15 +1565,15 @@
  ],
  "streets japanese MO invented": [
   "Post Town",
-  "Armoury End",
-  "Long Street",
-  "East Way",
-  "Warehouse Road",
-  "Jubilee Lane",
-  "Gate Alley",
-  "Castle Row",
-  "Coopers' Ward Street",
-  "Standing Stones Street"
+  "Salamander Bastion Lane",
+  "Market Square",
+  "Goldsmiths' Ward Street",
+  "Twelfth Block",
+  "Temple Lane",
+  "Duke's Street",
+  "Corn Row",
+  "Shoemakers' Ward Street",
+  "Peace Arch Roundabout"
  ],
  "inns japanese MO invented": [
   "Magpie Inn",
@@ -1587,13 +1587,13 @@
  ],
  "buildings japanese MO invented": [
   "Tortoise Paddy General Hospital",
-  "Thousand Years Pass Factory",
-  "Deep Field Castle Town Spring",
-  "[surname] Building",
-  "the Red Academy",
-  "Wool Mill",
-  "White Bridge",
-  "[surname] House"
+  "Thousand Years Pass Stepping Stones",
+  "Deep Field Castle Town Bridge",
+  "Shrine of the Jade Mistress of Lakes",
+  "Pheasant Cape Town Hall",
+  "Heron Cape Stepping Stones",
+  "Small Bank Great House",
+  "Long Pond Tower"
  ],
  "routes japanese NF placeholders": [
   "[place] Ladder",
@@ -1607,15 +1607,15 @@
  ],
  "streets japanese NF placeholders": [
   "East Road",
-  "Undercity",
-  "Deck 9 Concourse",
-  "Merchants' Town",
-  "Exchange Square",
-  "Hab Block Gamma",
-  "Wolf 215 Promenade",
-  "Spinward Sector",
-  "Horse Market",
-  "Lord's Square"
+  "Antispinward Sector",
+  "Hadar Promenade",
+  "Exchange Alley",
+  "Deck 23",
+  "Shrine Street",
+  "Old Road",
+  "Ring Road",
+  "Cloth Hall",
+  "Post Town"
  ],
  "inns japanese NF placeholders": [
   "the Quantum Gull",
@@ -1631,9 +1631,9 @@
   "Arcology Tau",
   "Hab Module 1",
   "[place] Sky Elevator",
-  "[place] Well",
+  "[place] Bridge",
   "[place] Watermill",
-  "[founder]'s Column",
+  "[place] Mill",
   "Seventh Hydroponic Bay",
   "Gliese 622 Ladder Foot"
  ],
@@ -1653,10 +1653,10 @@
   "Sacred Spring Street",
   "Eastern Promenade",
   "Wool Exchange",
-  "Leather Market",
-  "Market Square",
-  "Deck 9 Concourse",
-  "Deck 20 Concourse",
+  "New Market",
+  "Butchers' Ward Street",
+  "Antispinward Concourse",
+  "Spine Delta",
   "Ring Road"
  ],
  "inns japanese NF invented": [
@@ -1672,12 +1672,12 @@
  "buildings japanese NF invented": [
   "Kepler-1233 Array",
   "Psi Draconis Dock Ring",
-  "Wyvern Station Arch",
-  "Palace of [dynasty]",
+  "the Leaning Observatory",
+  "Ninth Hydroponic Bay",
   "Chi Hydrae Spire",
   "Inner Knot Tower",
   "Hab Module 28",
-  "Queen's Bridge"
+  "the Red Exchange"
  ],
  "routes japanese IS placeholders": [
   "Groombridge 1224 Pilgrim Road",
@@ -1696,8 +1696,8 @@
   "Hubward Lift",
   "Dock Arm Place",
   "Shoemakers' Ward Street",
-  "King's Place",
-  "Tannery Side",
+  "Exchange Square",
+  "Temple Street",
   "K2-96 Promenade",
   "Recycler Court"
  ],
@@ -1738,10 +1738,10 @@
   "Ring Road",
   "Betelgeuse Promenade",
   "Gravity Street",
-  "Armoury Quarter",
-  "Hab Block Sigma",
-  "Silver Market",
-  "Queen's Square"
+  "Rimward Sector",
+  "Eastern Promenade",
+  "Market Square",
+  "Hydroponics Row"
  ],
  "inns japanese IS invented": [
   "the Last Glass Before HD 60587",
@@ -1774,15 +1774,15 @@
   "[place] Post Road"
  ],
  "streets arabic-persian AN placeholders": [
-  "Shrine Precinct",
-  "Horse Row",
-  "[place] Road",
-  "Corn Hill",
+  "Holy Mountain District",
+  "Market of the Potters",
+  "Temple Entry",
   "Lower Town",
-  "Pilgrims' Road to the Valley of the Eye of Marriage",
+  "Lane of the Salt Pans",
+  "Market of the Ropemakers",
   "Fountain Place",
-  "Tannery Side",
-  "Bread Market",
+  "[place] Needle Lane",
+  "[place] Road",
   "Bridge Street"
  ],
  "inns arabic-persian AN placeholders": [
@@ -1797,13 +1797,13 @@
  ],
  "buildings arabic-persian AN placeholders": [
   "[place] Prison",
-  "[place] Bridge",
+  "[patron]'s Caravan Court",
   "[founder]'s Watchtower",
-  "[place] Pillar",
-  "[place] Stepping Stones",
+  "[place] Baths",
+  "[place] Treasury",
   "[place] Light",
   "[founder]'s Manor",
-  "Owl Mill"
+  "Conduit of [founder]"
  ],
  "routes arabic-persian AN invented": [
   "Road to Mountain of Abbas",
@@ -1819,13 +1819,13 @@
   "Lane of the Court",
   "Market Square",
   "Market of the Ropemakers",
-  "Palace of Uqba Road",
-  "Valley of Wolves Road",
-  "South Lane",
-  "Brewers' District",
+  "Column of Shah Lane",
+  "Queen's Cairn Lane",
+  "Pilgrims' Road to the Forbidden Well",
   "Back Lane",
   "Caravan Court",
-  "Landing Court"
+  "Landing Court",
+  "Mill Road"
  ],
  "inns arabic-persian AN invented": [
   "Way Station of Mountain of Uqba",
@@ -1838,14 +1838,14 @@
   "House of the Hundred Wells"
  ],
  "buildings arabic-persian AN invented": [
-  "the Hollow Bridge",
+  "the Hollow Hall",
   "Temple of the Hearth Kin",
   "Gold Hill Fort",
-  "Crooked Hermitage",
+  "Osprey Courtyard Palace",
   "Abode of Wisdom Academy",
-  "Bitter Island Spring",
-  "Palace of Saif Saltworks",
-  "the Crooked Temple"
+  "Bitter Island Bridge",
+  "King's Cistern",
+  "the Crooked Hall"
  ],
  "routes arabic-persian MD placeholders": [
   "Shepherds' Way",
@@ -1858,14 +1858,14 @@
   "Drove Road"
  ],
  "streets arabic-persian MD placeholders": [
-  "[dynasty] Castle Lane",
-  "Lane of the Fountain",
-  "Little Well Lane",
-  "Outer Town",
-  "Tailors' Road",
-  "Long Street",
-  "Duke's Lane",
-  "Monastery Square",
+  "Silver Bridge Road",
+  "Dock Ward",
+  "[place] Road",
+  "Cemetery Quarter",
+  "Silk Lane",
+  "New Market",
+  "Spice Hall",
+  "Back Lane",
   "Market of the Chandlers",
   "Market Square"
  ],
@@ -1880,14 +1880,14 @@
   "House of the Ten Wells"
  ],
  "buildings arabic-persian MD placeholders": [
-  "[place] Guildhall",
+  "[founder]'s Shrine",
   "[place] Sanctuary",
   "Temple of the Unsleeping Keeper",
   "King's Gatehouse",
   "[place] Shrine",
   "Garden of Lunar",
-  "the Long Court House",
-  "[place] College"
+  "[place] Covered Market",
+  "the New Hall"
  ],
  "routes arabic-persian MD invented": [
   "Vizier's Road",
@@ -1901,15 +1901,15 @@
  ],
  "streets arabic-persian MD invented": [
   "Camp of Harun Road",
-  "Outer Town",
-  "Warehouse Street",
-  "Smithy Street",
-  "King's Road",
-  "Water Lane",
-  "Drovers' Way",
-  "Market of the Potters",
-  "Lane of the Causeway",
-  "Father of the Wells Road"
+  "Ruined Quarter",
+  "Ford Square",
+  "Fish Lane",
+  "Saddlers' Street",
+  "Queen's Square",
+  "Cloth Lanes",
+  "Dates Street",
+  "Old Market",
+  "Prince's Court"
  ],
  "inns arabic-persian MD invented": [
   "Coffee House of the Crescent",
@@ -1922,7 +1922,7 @@
   "Coffee House of the Two Stars"
  ],
  "buildings arabic-persian MD invented": [
-  "the Broken Brewery",
+  "the Broken Baths",
   "Grey Tower",
   "the Great Water Channel",
   "the Red Hall",
@@ -1947,11 +1947,11 @@
   "Library Road",
   "Causeway Lane",
   "Water Channel Place",
-  "Long Street",
-  "Ropewalk Street",
-  "New Town",
+  "South-West Street",
+  "North-West Street",
+  "Covered Market Quarter",
   "New Market",
-  "Pilgrims' Precinct"
+  "Temple Ward"
  ],
  "inns arabic-persian EM placeholders": [
   "Caravan Court of the Western Gate",
@@ -1967,9 +1967,9 @@
   "Gaol of [founder]",
   "[founder]'s Shrine",
   "Hall of [founder]",
-  "Arch of [founder]",
+  "Wool Mill",
   "[place] Castle",
-  "Crooked Hall",
+  "the Crooked Temple",
   "the Old Gaol",
   "Temple of the Father of Thunder"
  ],
@@ -1984,16 +1984,16 @@
   "Old Road"
  ],
  "streets arabic-persian EM invented": [
-  "Queen's Road",
-  "Dates Market",
+  "Old Exchange Row",
+  "Lane of the Stepping Stones",
+  "Market of the Fullers",
   "Lower Town",
-  "South-West Road",
-  "West Road",
-  "Lane of the Shrine",
-  "Outer Town",
-  "Lane of the Bath House",
-  "Spice Market",
-  "Prince's Square"
+  "Lane of the Ford",
+  "Lane of the Monastery",
+  "Queen's Street",
+  "Queen's Court",
+  "Tannery Side",
+  "Covered Market"
  ],
  "inns arabic-persian EM invented": [
   "Caravan Court of the Southern Gate",
@@ -2006,11 +2006,11 @@
   "Caravan Court of Guarded"
  ],
  "buildings arabic-persian EM invented": [
-  "Garden of Elder",
+  "Citadel of Palace of Zubayda",
   "the Round Court House",
   "the New Temple",
   "the Lower Well",
-  "Palace of Saif Bridge",
+  "Palace of Saif Market Hall",
   "Palace of the Fountains",
   "Broken Hall",
   "Well-Protected City Observatory"
@@ -2029,8 +2029,8 @@
   "[place] Road",
   "Chandlers' Way",
   "Lane of the Market",
-  "Queen's Lane",
-  "Mill District",
+  "Old Market Walk",
+  "Old Market",
   "Market of the Bakers",
   "Ropewalk Place",
   "Market Square",
@@ -2071,13 +2071,13 @@
   "Station Road",
   "Victory Place",
   "Basin Lane",
-  "Old Well Lane",
+  "Grey Memorial Lane",
   "Coal Yard Walk",
   "Incense Road",
   "Railway Square",
-  "Kiln End",
-  "Brewers' Precinct",
-  "Ruined Side"
+  "Lower Town",
+  "Holy Well Entry",
+  "Water Lane"
  ],
  "inns arabic-persian ST invented": [
   "Inn of the Horse Merchants",
@@ -2091,8 +2091,8 @@
  ],
  "buildings arabic-persian ST invented": [
   "the Old Beacon",
-  "White City Column",
-  "Mountain of Yusuf Bridge",
+  "White City Mill",
+  "Mountain of Yusuf Corn Exchange",
   "Mother of Palms Exchange",
   "[surname] Memorial Library",
   "Abode of Plenty Bridge",
@@ -2115,11 +2115,11 @@
   "Glovers' Street",
   "Temple Lane",
   "Station Road",
-  "Warehouse Quarter",
-  "Silver Market",
-  "Water Lane",
-  "Tannery Side",
-  "Back Lane"
+  "Incense Market District",
+  "Potters' Way",
+  "Outer Town",
+  "Back Lane",
+  "Market of the Shoemakers"
  ],
  "inns arabic-persian MO placeholders": [
   "[patron]'s Caravan Court",
@@ -2135,10 +2135,10 @@
   "[patron]'s Caravan Court",
   "the Black Lantern",
   "Old Manor",
-  "[place] Power Station",
+  "[place] Bridge",
   "[founder]'s Bridge",
   "[place] Tower",
-  "[place] Factory",
+  "[place] Stepping Stones",
   "[place] School"
  ],
  "routes arabic-persian MO invented": [
@@ -2175,7 +2175,7 @@
  ],
  "buildings arabic-persian MO invented": [
   "Gold Fortress",
-  "Lord's Academy",
+  "Lord's Gaol",
   "the Old Civic Centre",
   "Little Island Exchange",
   "Harbour of Abbas Lock-Up",
@@ -2237,15 +2237,15 @@
  ],
  "streets arabic-persian NF invented": [
   "Ring Road",
-  "Deck 26",
+  "Upper Spire",
   "Zeta Aquilae Plaza",
   "Deck 39 Concourse",
   "Reactor Lane",
   "Hydroponics Square",
   "Hydroponics Row",
   "Lane of the Airlock",
-  "Hydroponics Ring",
-  "Southern Promenade"
+  "Armoury Ward",
+  "Butter Lanes"
  ],
  "inns arabic-persian NF invented": [
   "Caravan Court of the Eastern Gate",
@@ -2278,16 +2278,16 @@
   "Sea Road to Beta Leonis"
  ],
  "streets arabic-persian IS placeholders": [
-  "Reactor Sector",
-  "Concourse Iota",
-  "Lane of the Hydroponics",
-  "Reactor Lane",
-  "Upper Spire",
-  "Dock Arm Hill",
-  "13th Corridor",
+  "Outer Town",
+  "Hydroponics Row",
+  "Rimward Sector",
+  "Armoury Ring",
+  "Spice Sellers' Street",
+  "Spinward Walk",
   "Ring Road",
-  "[place] Road",
-  "Reactor Entry"
+  "[hero] Sector",
+  "Cheese Lane",
+  "Leather Hall"
  ],
  "inns arabic-persian IS placeholders": [
   "[owner]'s Bar",
@@ -2320,16 +2320,16 @@
   "Epsilon Aurigae–Delta Orionis Lane"
  ],
  "streets arabic-persian IS invented": [
-  "50th Ring",
-  "Temple Town",
+  "Old Dome",
+  "Hydroponics Ring",
   "Hubward Walk",
   "Gravity Street",
   "Market Street",
   "Spine Omicron",
   "Hubward Lift",
   "Reactor Lane",
-  "Rimward Shell Bypass",
-  "Market Square"
+  "Vertex Station Road",
+  "Ardent Station Obelisk Corner"
  ],
  "inns arabic-persian IS invented": [
   "the Low Knot Rest",
@@ -2367,10 +2367,10 @@
   "Shoemakers' End",
   "Church Street",
   "Wool Market",
-  "Armoury Ward",
-  "Well Place",
-  "Treasury Road",
-  "Mill Close",
+  "Armoury Quarter",
+  "Honey Market",
+  "Ropemakers' End",
+  "Butchers' End",
   "Well Hill"
  ],
  "inns slavic AN placeholders": [
@@ -2384,12 +2384,12 @@
   "the Lucky Glove"
  ],
  "buildings slavic AN placeholders": [
-  "[founder]'s Column",
-  "Round Conduit",
-  "[place] Monastery",
-  "Standing Stone of [founder]",
+  "[place] Forge",
+  "[founder]'s Bridge",
+  "the New Well",
+  "Watermill of [founder]",
   "[place] Watch Tower",
-  "[place] Column",
+  "[place] Mill",
   "the Red Castle",
   "Citadel of [place]"
  ],
@@ -2405,15 +2405,15 @@
  ],
  "streets slavic AN invented": [
   "Town on the Kotoluga Road",
-  "Tanners' Ward",
-  "Poor Quarter",
-  "Honey Row",
-  "Market Road",
-  "Town on the Kly Road",
-  "Igor's Beyond the Marsh Road",
-  "Brewers' End",
-  "Rostislav's Beyond the Steppe Road",
-  "Olga's Beyond the Hills Road"
+  "Smiths' Town",
+  "Merchants' District",
+  "Mill District",
+  "Ropemakers' End",
+  "Tannery Square",
+  "Lower Town",
+  "Butter Lane",
+  "Mouth of the Uvobol Road",
+  "Yaroslav's Road"
  ],
  "inns slavic AN invented": [
   "the Pelican and Dolphin",
@@ -2426,13 +2426,13 @@
   "Rogvolod's Beyond the Lake Post House"
  ],
  "buildings slavic AN invented": [
-  "the Silver Mill",
+  "the Silver Well",
   "Town on the Vychelaya Castle",
-  "Mstislav's Town Well",
-  "Wren Hall",
-  "Saint Leofric Monastery",
+  "Mstislav's Town Bridge",
+  "Saint Petroc Monastery",
+  "Hollow Fortress",
   "the Silver Library",
-  "Town on the Vychora Column",
+  "Town on the Vychora Well",
   "Town on the Chusovaga Stepping Stones"
  ],
  "routes slavic MD placeholders": [
@@ -2447,15 +2447,15 @@
  ],
  "streets slavic MD placeholders": [
   "Amber Market",
-  "Lower Town",
+  "Outer Town",
   "[place] Road",
-  "Thursday Market",
-  "Masons' Lane",
-  "Long Street",
+  "Cheese Market",
+  "Milk Street",
+  "[holy person]'s Close",
   "Silversmiths' Lane",
-  "Tannery Street",
-  "Tannery Side",
-  "Mill Precinct"
+  "East Street",
+  "Lower Town",
+  "Tannery Side"
  ],
  "inns slavic MD placeholders": [
   "Post House of the Prince's Highway",
@@ -2469,7 +2469,7 @@
  ],
  "buildings slavic MD placeholders": [
   "[holy person]'s Cistern",
-  "[place] Kiln",
+  "[place] Spring",
   "[place] Castle",
   "Russet Tower",
   "Lord's Fortress",
@@ -2488,14 +2488,14 @@
   "Road to Elk Hill"
  ],
  "streets slavic MD invented": [
-  "Foundry Town",
-  "Mouth of the Dnina Road",
-  "Vintners' Way",
+  "Lower Town",
+  "Wednesday Market",
+  "Boris's Beyond the Marsh Road",
   "New Market",
   "Potters' End",
-  "Free Settlement",
-  "Silversmiths' Road",
-  "Hall Road",
+  "Dock Quarter",
+  "Silver Market",
+  "Ropemakers' End",
   "Town on the Mstvertsa Road",
   "Burial Ground Row"
  ],
@@ -2514,7 +2514,7 @@
   "Church of Saint Felix",
   "Iron Bastion",
   "Ruined Mill",
-  "Clay Town Saltworks",
+  "the Old Fountain",
   "Scarlet Bridge",
   "Saint Ysolde's Church",
   "the Burnt Light"
@@ -2531,15 +2531,15 @@
  ],
  "streets slavic EM placeholders": [
   "Saturday Market",
-  "Minster Ward",
+  "[holy person]'s Close",
   "Wax Market",
-  "Trading Town",
-  "East Row",
-  "Market Square",
-  "[place] Road",
+  "Merchants' Ward",
+  "Water Lane",
+  "[founder] Hill",
   "[holy person]'s Place",
   "Shoemakers' End",
-  "Wall Close"
+  "Wall Close",
+  "Fishers' End"
  ],
  "inns slavic EM placeholders": [
   "the Golden Trumpet Tavern",
@@ -2554,10 +2554,10 @@
  "buildings slavic EM placeholders": [
   "[holy person]'s Library",
   "Palace of [dynasty]",
-  "Lady Well",
-  "[place] Watermill",
-  "[place] Tannery",
-  "[founder]'s Stepping Stones",
+  "[place] Bridge",
+  "[founder]'s Hall",
+  "[place] Priory",
+  "Duke's Brewery",
   "[place] Mansion",
   "the Red House"
  ],
@@ -2572,16 +2572,16 @@
   "Post Road"
  ],
  "streets slavic EM invented": [
-  "Lower Town",
+  "Tailors' Quarter",
+  "Town on the Tvert Road",
   "Market Square",
-  "Amber Market",
-  "Crane Ford Road",
-  "Spring Close",
+  "Coopers' Ward",
   "Below the Wall",
-  "Trading Town",
-  "Horse Row",
-  "Spring Square",
-  "Mstislav's Beyond the Marsh Road"
+  "Warehouse District",
+  "Tailors' End",
+  "Mouth of the Dvinieper Road",
+  "Milk Market",
+  "Jubilee Obelisk Street"
  ],
  "inns slavic EM invented": [
   "the Red Falcon Inn",
@@ -2595,11 +2595,11 @@
  ],
  "buildings slavic EM invented": [
   "the Broken Tannery",
-  "the Lower Windmill",
+  "the Lower Spring",
   "Saint Juthwara Monastery",
   "Horse Hill Manor",
-  "the Great Causeway",
-  "Mouth of the Torosl Monument",
+  "the Great Mint",
+  "Mouth of the Torosl Tannery",
   "Palace of [dynasty]",
   "Aurochs Ford Redoubt"
  ],
@@ -2616,14 +2616,14 @@
  "streets slavic ST placeholders": [
   "Citadel Square",
   "New Market",
-  "Exchange Quarter",
-  "Merchants' Precinct",
-  "Station Square",
-  "Wax Street",
-  "Causeway Street",
-  "Market Square",
+  "Honey Market Quarter",
+  "Silversmiths' Entry",
+  "Church Walk",
+  "Butchers' Lane",
+  "Bakers' Way",
+  "Silversmiths' Lane",
   "[place] Road",
-  "Silversmiths' Lane"
+  "Glovers' Row"
  ],
  "inns slavic ST placeholders": [
   "the Golden Comet Tavern",
@@ -2638,12 +2638,12 @@
  "buildings slavic ST placeholders": [
   "Lower Saltworks",
   "[place] Toll House",
-  "King's Church",
-  "Fire Memorial",
-  "[place] Mansion",
-  "[founder]'s Forge",
-  "Little Spring",
-  "Ness Light"
+  "the New House",
+  "[surname] Memorial Library",
+  "[place] College",
+  "[place] Lock-Up",
+  "[place] Corn Exchange",
+  "[holy person] Monastery"
  ],
  "routes slavic ST invented": [
   "Sea Road to Town on the Chusovatl",
@@ -2656,16 +2656,16 @@
   "Sacred Way to the Singing Grove"
  ],
  "streets slavic ST invented": [
-  "Well Alley",
-  "Drove Road",
-  "Drapers' Row",
-  "Empire Lane",
+  "King's Street",
+  "Glovers' Way",
+  "Viaduct Yard",
+  "Fullers' Passage",
   "Arcade Lane",
   "Harbour Street",
   "Coronation Square",
-  "Old Ford Street",
-  "Conduit Road",
-  "Strand Walk"
+  "Hay Lane",
+  "Tanners' Alley",
+  "Duke's Street"
  ],
  "inns slavic ST invented": [
   "the Torch and Hops Inn",
@@ -2682,9 +2682,9 @@
   "Vladimir's Beyond the River Tower",
   "Boar Ford Hall",
   "Honey Town Tannery",
-  "Swan Memorial",
+  "Rogvolod's Beyond the Steppe Tannery",
   "the Drowned Saltworks",
-  "Boar Forge",
+  "Saint Aldric's Spring",
   "Vyacheslav's Beyond the Woods Hall"
  ],
  "routes slavic MO placeholders": [
@@ -2698,16 +2698,16 @@
   "Sea Road to [place]"
  ],
  "streets slavic MO placeholders": [
-  "Standing Stones Side",
-  "Tannery Side",
-  "Silversmiths' End",
-  "Chandlers' End",
-  "[place] Road",
-  "Dyers' End",
+  "Shrine Side",
+  "Foundry Side",
+  "Saturday Market",
+  "Mercers' Alley",
+  "Market Square",
+  "[holy person]'s Lane",
   "Cutlers' Street",
-  "Smiths' Street",
-  "Millers' Hill",
-  "Station Road"
+  "[hero] Street",
+  "Broad Street",
+  "Gardens Entry"
  ],
  "inns slavic MO placeholders": [
   "the Merchant",
@@ -2721,13 +2721,13 @@
  ],
  "buildings slavic MO placeholders": [
   "Hollow Gaol",
-  "[place] Statue",
-  "Bear Ferry",
+  "the Broken Windmill",
+  "[place] Observatory",
   "[place] Toll House",
-  "[place] Bridge",
+  "[place] Civic Centre",
   "the Old Exchange",
-  "Peace Memorial",
-  "[place] Power Station"
+  "[surname] Building",
+  "[place] Town Hall"
  ],
  "routes slavic MO invented": [
   "Eastern Express",
@@ -2742,14 +2742,14 @@
  "streets slavic MO invented": [
   "Rostislav's Town Road",
   "Hill Way",
-  "Millers' Estate",
+  "Fullers' End",
   "National Road 194",
   "Trading Town",
-  "King's Lane",
-  "East Hill",
-  "Saint Juthwara's Street",
-  "Peace Square",
-  "Market Square"
+  "Mill Lane",
+  "Mouth of the Volkhor Road",
+  "Silver Row",
+  "Tannery Side",
+  "South Walk"
  ],
  "inns slavic MO invented": [
   "the Black Coronet",
@@ -2762,14 +2762,14 @@
   "Hotel of Town on the Desnya"
  ],
  "buildings slavic MO invented": [
-  "Juniper Tower",
+  "Oleg's Beyond the River Bridge",
   "Elk Ford Town Hall",
   "Town on the Vag Chapel",
   "Hound Bridge",
-  "Bishop's Column",
-  "Yuri's Beyond the Rapids Monastery",
-  "Wolf Hill Quarry",
-  "Fire Memorial"
+  "[surname] House of Learning",
+  "Boar Ford Exchange",
+  "Gleb's Beyond the Steppe Town Hall",
+  "Juniper Tower"
  ],
  "routes slavic NF placeholders": [
   "[place]–Arcadia Lane",
@@ -2782,16 +2782,16 @@
   "Parking Transfer"
  ],
  "streets slavic NF placeholders": [
-  "Abbot's Square",
-  "Wednesday Market",
-  "Smiths' End",
-  "8th Corridor",
-  "Chandlers' Row",
-  "Reactor Sector",
-  "5th Corridor",
-  "Northern Promenade",
-  "Concourse Epsilon",
-  "Free Settlement"
+  "Airlock Court",
+  "Rimward Walk",
+  "Salt Market",
+  "Spine Omega",
+  "Hydroponics Row",
+  "Trading Town",
+  "Spine Nu",
+  "Deck 33 Concourse",
+  "Old Dome",
+  "Concourse Omega"
  ],
  "inns slavic NF placeholders": [
   "the Airlock",
@@ -2828,12 +2828,12 @@
   "Exchange Deck",
   "HD 214118 11 Road",
   "Greyfield Station Road",
-  "Below the Wall",
-  "Deck 18",
+  "Ruined Level",
+  "11th Corridor",
   "Northern Promenade",
-  "Hydroponics Ring",
-  "8th Corridor",
-  "Spine Zeta"
+  "Old Burial Mound Quarter",
+  "Deck 24 Concourse",
+  "30th Corridor"
  ],
  "inns slavic NF invented": [
   "Ashen Count's Star Transit Hostel",
@@ -2851,7 +2851,7 @@
   "Spica Sky Elevator",
   "the Lower Windmill",
   "HD 151316 Mill",
-  "Cattle Works",
+  "Hermit's Well",
   "Spica School",
   "Grey Grange"
  ],
@@ -2869,13 +2869,13 @@
   "Denebola Promenade",
   "North Walk",
   "Observation Deck Square",
-  "[place] Ring Road",
-  "Deck 1 Concourse",
   "[place] Road",
+  "First Rover Square",
   "Ring Road",
-  "Cargo Bay Walk",
-  "Long Street",
-  "Upper Spire"
+  "[holy person]'s Square",
+  "Rimward Walk",
+  "Upper Spire",
+  "Lower Town"
  ],
  "inns slavic IS placeholders": [
   "[holy person]'s Inn",
@@ -2891,7 +2891,7 @@
   "[person]'s Star Hydroponic Bay",
   "Tenth Hydroponic Bay",
   "the Burnt Lock-Up",
-  "[place] Statue",
+  "[place] Quarry",
   "Reactor Hall Pi",
   "Pioneer Dome",
   "[founder]'s Mint",
@@ -2914,10 +2914,10 @@
   "Gravity Street",
   "HD 105093 Road",
   "Deck 22 Concourse",
-  "Warehouse Level",
+  "Reactor Sector",
   "Antispinward Walk",
   "2nd Corridor",
-  "Garrison Quarter"
+  "Barracks Quarter"
  ],
  "inns slavic IS invented": [
   "the Scholar",
@@ -2952,14 +2952,14 @@
  "streets polynesian AN placeholders": [
   "Old Market",
   "Cloth Market",
-  "Meeting Ground",
   "Lower Town",
-  "Pilgrims' Precinct",
-  "[place] Road",
+  "Meeting Ground",
+  "Wool Road",
   "Gardens Road",
   "Back Lane",
-  "Mill Court",
-  "Canoe Houses"
+  "[place] Colossus Hill",
+  "Long Street",
+  "Merchants' District"
  ],
  "inns polynesian AN placeholders": [
   "[owner]'s Tavern",
@@ -2972,14 +2972,14 @@
   "Eating House of [place]"
  ],
  "buildings polynesian AN placeholders": [
-  "[place] Pillar",
+  "[place] Cistern",
   "Lion Hold",
   "the Silver Tower",
   "the Red Grange",
-  "New Ford",
-  "[founder]'s Arch",
-  "the New Library",
-  "the Round Barrow"
+  "[founder]'s Hall",
+  "[place] Bridge",
+  "King's College",
+  "Dragon Tower"
  ],
  "routes polynesian AN invented": [
   "Star Path to Southstead",
@@ -2995,13 +2995,13 @@
   "Back Lane",
   "Feather Row",
   "Library Path",
-  "Potters' Ward",
-  "Lower Town",
-  "Kiln Street",
-  "Great Bridge Street",
-  "Ironbridge Road",
-  "Warehouse Path",
-  "Mill Row"
+  "Canoe Houses",
+  "Tannery Path",
+  "Market Square",
+  "Black Column Lane",
+  "Ford Road",
+  "Meeting Ground",
+  "Butchers' End"
  ],
  "inns polynesian AN invented": [
   "Tavern of Saltmoor",
@@ -3015,13 +3015,13 @@
  ],
  "buildings polynesian AN invented": [
   "New Toll House",
-  "Ironhaven Mill",
+  "Ironhaven Well",
   "Blue Castle",
   "Hollow Palace",
   "Green Conduit",
   "Elmgate Keep",
   "the New Citadel",
-  "Old Arch"
+  "Old Library"
  ],
  "routes polynesian MD placeholders": [
   "Star Path to [place]",
@@ -3034,16 +3034,16 @@
   "Grain Way"
  ],
  "streets polynesian MD placeholders": [
-  "Old Market",
-  "School Lane",
+  "[place] Gateway Cross",
+  "Forge Path",
   "Canoe Houses",
-  "Market Lane",
-  "Hall Path",
-  "Treasury Path",
-  "Butchers' Way",
-  "South Lane",
-  "Weavers' Way",
-  "Causeway Street"
+  "[place] Road",
+  "Broad Street",
+  "Meeting Ground",
+  "Granary Lane",
+  "Glovers' Street",
+  "Smiths' Alley",
+  "Spring Path"
  ],
  "inns polynesian MD placeholders": [
   "[owner]'s Tavern",
@@ -3060,10 +3060,10 @@
   "[place] Bastion",
   "Canoe House of [place]",
   "[founder]'s Academy",
-  "Chief's Bridge",
-  "[founder]'s Spring",
-  "the Great Barrow",
-  "[place] Gaol"
+  "Hold of [founder]",
+  "[place] Bridge",
+  "[place] Manor",
+  "[place] Well"
  ],
  "routes polynesian MD invented": [
   "Evening Star Path",
@@ -3077,12 +3077,12 @@
  ],
  "streets polynesian MD invented": [
   "Long Street",
-  "Saltmen's Way",
+  "Ironmoor Road",
   "Market Square",
   "Whitewick Road",
   "Butter Street",
   "East Road",
-  "Drapers' Town",
+  "Lower Town",
   "Butter Lane",
   "Bridge Path",
   "Meeting Ground"
@@ -3100,7 +3100,7 @@
  "buildings polynesian MD invented": [
   "Blackhaven Bridge",
   "Curlew Citadel",
-  "Thornmoor Mine",
+  "Thornmoor Fountain",
   "the New Bridge",
   "Easthaven Fort",
   "Round Bastion",
@@ -3118,16 +3118,16 @@
   "Sea Road to [place]"
  ],
  "streets polynesian EM placeholders": [
-  "Mill End",
-  "Bread Street",
-  "Stone Market",
-  "Butter Way",
+  "Golden Statue Precinct",
+  "Barn Way",
+  "Castle Way",
   "Smithy Path",
   "East Road",
   "Treasury Path",
-  "New Town",
+  "Canoe Houses",
   "King's Square",
-  "Market Path"
+  "Market Path",
+  "Lock Square"
  ],
  "inns polynesian EM placeholders": [
   "Inn of [place]",
@@ -3142,12 +3142,12 @@
  "buildings polynesian EM placeholders": [
   "[place] House of Learning",
   "Copper Tower",
-  "the White Bridge",
+  "Queen's Hall",
   "[place] Prison",
-  "Black Fountain",
-  "King's Quarry",
-  "Upper Great House",
-  "Lodge of [founder]"
+  "[founder]'s Bridge",
+  "Queen's Well",
+  "[place] Bridge",
+  "[place] Mill"
  ],
  "routes polynesian EM invented": [
   "Star Path to Redfell",
@@ -3161,15 +3161,15 @@
  ],
  "streets polynesian EM invented": [
   "Holy Well Street",
-  "Ashholt Bridge Lane",
-  "Cattle Market",
-  "Long Street",
-  "Old Sanctuary Lane",
-  "Market Street",
-  "Coopers' Street",
-  "Butchers' Ward",
-  "Blackbridge Road",
-  "Well Lane"
+  "Prince's Spring Row",
+  "Exchange Passage",
+  "Shoemakers' Road",
+  "Potters' Street",
+  "North Street",
+  "Causeway Lane",
+  "Kiln Lane",
+  "Well Path",
+  "Causeway Row"
  ],
  "inns polynesian EM invented": [
   "Inn of Elmmere",
@@ -3185,11 +3185,11 @@
   "Ashbridge Guildhall",
   "Stonebridge Light",
   "Northmoor Infirmary",
-  "Greenstead Guildhall",
+  "Greenstead Hall",
   "Ashhaven Bastion",
-  "Lord's Lodge",
-  "Queen's Well",
-  "Swallow Grange"
+  "[dynasty] Battery",
+  "Duke's Windmill",
+  "Thornfell Grange"
  ],
  "routes polynesian ST placeholders": [
   "Southern Line",
@@ -3205,7 +3205,7 @@
   "Ferry Row",
   "Reservoir Street",
   "Old Bonded Store Road",
-  "High Statue Street",
+  "[hero] Street",
   "Silk Market",
   "Market Square",
   "Railway Place",
@@ -3226,10 +3226,10 @@
  "buildings polynesian ST placeholders": [
   "[place] Grange",
   "[surname] Memorial Library",
-  "Raven Arch",
-  "[place] Mint",
-  "King's Bridge",
-  "[place] Gaol",
+  "Cheese Works",
+  "[founder]'s Hall",
+  "the Red Mill",
+  "High Chief's Bridge",
   "[place] Lodge",
   "Point Light"
  ],
@@ -3251,9 +3251,9 @@
   "Market Yard",
   "Lower Town",
   "Canoe Houses",
-  "Leather Street",
-  "Cloth Hall",
-  "Ropewalk Street"
+  "Quay Road",
+  "Market Square",
+  "Corn Close"
  ],
  "inns polynesian ST invented": [
   "Dining Rooms of Elmmere",
@@ -3266,13 +3266,13 @@
   "Tavern of Westhaven"
  ],
  "buildings polynesian ST invented": [
-  "the Green Gaol",
+  "Green Light",
   "the Grey Mint",
   "[dynasty] Mansion",
   "Northholt Corn Exchange",
   "the Great Watermill",
   "Greywater Bridge",
-  "Duke's Prison",
+  "Ironcombe Lighthouse",
   "Whitefell Lock-Up"
  ],
  "routes polynesian MO placeholders": [
@@ -3311,11 +3311,11 @@
   "[place] General Hospital",
   "[place] Civic Centre",
   "[founder]'s Lodge",
-  "Saltire Tower",
-  "[place] Tower",
+  "[surname] House",
+  "[place] Prison",
   "the Black Lighthouse",
-  "Mayor's Memorial",
-  "[place] Museum"
+  "[place] Brewery",
+  "[place] Bridge"
  ],
  "routes polynesian MO invented": [
   "Star Path to Westholt",
@@ -3329,9 +3329,9 @@
  ],
  "streets polynesian MO invented": [
   "Old Market",
-  "Salt Pans Passage",
-  "Station Street",
-  "Mill Hill",
+  "Queen's Walk",
+  "Reservoir Row",
+  "Spring Street",
   "Meeting Ground",
   "Market Entry",
   "Market Square",
@@ -3352,10 +3352,10 @@
  "buildings polynesian MO invented": [
   "Red Bridge",
   "Raven School",
-  "the New Customs House",
-  "Oakgate Arch",
-  "[surname] Academy",
-  "Owl Bridge",
+  "Eastwick Palace",
+  "Vertex Tower",
+  "Monarch Tower",
+  "Cockatrice Treasury",
   "Wolfholt Town Hall",
   "Duke's Kiln"
  ],
@@ -3372,11 +3372,11 @@
  "streets polynesian NF placeholders": [
   "Butter Market",
   "Hydroponics Row",
-  "Hydroponics Ring",
-  "Lift Row",
-  "Market Square",
+  "Canoe Houses",
+  "Hub",
+  "Duke's Square",
   "Hubward Walk",
-  "Cattle Court",
+  "Observation Deck Court",
   "Eastern Promenade",
   "Concourse Gamma",
   "Alcor Plaza"
@@ -3419,9 +3419,9 @@
   "Fish Hall",
   "Airlock Path",
   "Ring Road",
-  "Lord's Road",
-  "70th Corridor",
-  "Spoke Street"
+  "Old Airlock Lane",
+  "Omega Cancri Promenade",
+  "Market Square"
  ],
  "inns polynesian NF invented": [
   "Regulus Transit Hostel",
@@ -3437,11 +3437,11 @@
   "Gliese 966 House",
   "Seventh Hydroponic Bay",
   "Upper Great House",
-  "the High House of Learning",
-  "Electra Array",
-  "Eagle's Star Dome",
-  "[dynasty] Fort",
-  "Ross 750 Dome"
+  "Lalande 24208 Gaol",
+  "Canoe House of Luyten's Star 11",
+  "Kepler-1030 Mine",
+  "Ross 750 Dome",
+  "Tau Ceti Array"
  ],
  "routes polynesian IS placeholders": [
   "The Ice Road",
@@ -3455,12 +3455,12 @@
  ],
  "streets polynesian IS placeholders": [
   "Deck 23 Concourse",
-  "Hydroponics Ring",
-  "Hubward Lift",
-  "King's Square",
-  "9th Corridor",
-  "Canoe Houses",
-  "Antispinward Concourse",
+  "Meeting Ground",
+  "Prince's Street",
+  "Spine Beta",
+  "Water Lane",
+  "Deck 28 Concourse",
+  "Rimward Walk",
   "21st Corridor",
   "Saddlers' Close",
   "Bath House Path"
@@ -3480,10 +3480,10 @@
   "[place] Sky Elevator",
   "the Round Mine",
   "[founder]'s Grange",
-  "Ross 711 Sky Elevator",
+  "Red Hall",
+  "Endeavour Dome",
   "Seventh Hydroponic Bay",
-  "Sky Elevator Theta",
-  "Horizon Dome"
+  "Sky Elevator Theta"
  ],
  "routes polynesian IS invented": [
   "Star Path to Gliese 712",
@@ -3501,11 +3501,11 @@
   "Mu Tucanae Promenade",
   "Barnard's Star 9 Road",
   "Water Lane",
-  "Canoe Houses",
-  "5th Corridor",
-  "11th Ring",
-  "Delta Andromedae Plaza",
-  "Dock Arm Square"
+  "Deck 15",
+  "Deneb Promenade",
+  "Hydroponics Row",
+  "Hydroponics Ring",
+  "Concourse Eta"
  ],
  "inns polynesian IS invented": [
   "Bar of Pollux 9",
@@ -3523,7 +3523,7 @@
   "Gull's Star Archive Core",
   "Little College",
   "Palace of [dynasty]",
-  "Teegarden's Star 12 Mill",
+  "Teegarden's Star 12 Well",
   "Bellatrix Shipyard",
   "New Fields School"
  ],

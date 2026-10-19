@@ -579,3 +579,7 @@ Run `npm test` and `npm run build` at the end of each; both must pass before com
 ## Buildings back-link
 
 Added by the buildings and landmarks brief (§11.1): a street shape `{landmark} {streetWord}`, weight 4, all eras. `{landmark}` is one `buildingName()` of kind defence, faith, crossing, water or monument for the same culture, era, fantastic, region and people, without a leading "the" and only if it has 3 words or fewer (*Red Tower Lane*, *Saint Anne's Well Street*). It passes the building safeguards. In the one-town series, a batch of 8 or more uses `{landmark}` at most once.
+
+## Monuments back-link
+
+Added by the monuments and statues brief (§11.1, §9): `{landmark}` is a monument 25% of the time (`monumentName()`, any kind, without "the") and otherwise a building of kind defence, faith, crossing or water. Streets gain `{monumentSite} {streetWord}` (weight 3, all eras: *Fenwick Street*), squares `{monumentSite} {junctionWord}` (weight 8, MD on: *Fenwick Roundabout*), and with function Any 8% of district draws are monument districts (MD on, never in a village): `{monumentSite}` (district-worthy sites only, weight 6) and `{monumentSite} {districtWord}` (weight 4). `monumentNeighbours(site, districtWorthy, options)` gives a monument two nearby names of two different kinds (junction, street, district, inn) from the `monumentNeighbours` shapes in `street-names.json`. In the one-town series a batch of 8 or more uses a monument (as landmark or site) at most once; in the settlement kit sites come from the context's monuments only.

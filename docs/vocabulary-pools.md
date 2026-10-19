@@ -121,7 +121,6 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `buildingWord:crossing` | building words for crossings: Bridge, Ford, Causeway | x, t, e, c | buildings and landmarks |
 | `buildingWord:water` | building words for water: Well, Spring, Conduit | x, e, c | buildings and landmarks |
 | `buildingWord:works` | building words for works: Mill, Forge, Pithead | x, e | buildings and landmarks |
-| `buildingWord:monument` | building words for monuments: Cross, Column, Folly | x, e, c | buildings and landmarks |
 | `buildingWord:learning` | building words for learning and healing: School, Library, Infirmary | x, e, c | buildings and landmarks |
 | `buildingWord:confinement` | building words for gaols: Gaol, Lock-up, Tolbooth | x, t, e, c, h, rx | buildings and landmarks |
 | `buildingWord:maritime` | building words for lights: Lighthouse, Light, Daymark | x, e | buildings and landmarks |
@@ -132,7 +131,6 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `buildingFixed:crossing` | whole crossing names: Devil's Bridge; the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |
 | `buildingFixed:water` | whole water names: Wishing Well; the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |
 | `buildingFixed:works` | whole works names (empty: for packs); the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |
-| `buildingFixed:monument` | whole monument names: Market Cross; the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |
 | `buildingFixed:learning` | whole learning names (empty: for packs); the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |
 | `buildingFixed:confinement` | whole confinement names (empty: for packs); the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |
 | `buildingFixed:maritime` | whole maritime names (empty: for packs); the `{fixed}` shape's weight is the sum of their x | x, t, e, c | buildings and landmarks |

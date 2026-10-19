@@ -276,3 +276,36 @@ test("Buildings §11.2: the landmark is a fifth of location draws", () => {
   assert.equal(loc.find((s) => s.p === "the {landmark}")!.w / total, 0.2);
   assert.equal(INN_DATA.signs.find((a) => a.key === "roadside")!.shapes.find((s) => s.p === "the {roadLandmark} Inn")?.w, 3);
 });
+
+// ── Monuments brief §11.2: monument back-links ──────────────────────────────
+
+import { INN_LANDMARK_KINDS, INN_ROAD_LANDMARK_KINDS } from "../src/inns/engine";
+import { monumentBlockSet } from "../src/monuments/engine";
+
+test("Monuments §11.2: no monument kind in the landmark kinds; a quarter of location landmarks and half of roadside ones are monuments", () => {
+  assert.deepEqual(INN_LANDMARK_KINDS, ["defence", "crossing", "water"]);
+  assert.deepEqual(INN_ROAD_LANDMARK_KINDS, ["crossing"]);
+  assert.deepEqual(INN_DATA.monuments, { landmarkShare: 0.25, roadShare: 0.5, roadKinds: ["cross", "stone"] });
+});
+
+test("Monuments §11.2: monument landmarks on inn signs are 3 words or fewer and pass the inn and monument safeguards; roadside ones are crosses and stones", () => {
+  const block = monumentBlockSet();
+  const crossOrStone = /\b(Cross|Crosses|Stone|Stones|Milestone|Stele|Slab|Row|Circle|Sisters|Maidens|Pipers|Dancers|Ladies|Men|Kings|Sentinels|Brothers)\b/;
+  let roadMonuments = 0;
+  let road = 0;
+  for (let seed = 1; seed <= 80; seed++) {
+    for (const shape of ["the {landmark}", "the {roadLandmark} Inn"]) {
+      for (const n of generateInnNames({ culture: "norman-british", era: "EM", people: "invented", shape, count: 4, seed }).names) {
+        const lm = n.words.find((w) => w.pool === "landmark")!;
+        assert.ok(lm.word.split(" ").length <= 3 && !/^the /i.test(lm.word), n.text);
+        assert.ok(!block.has(routeNorm(lm.word).replace(/^the /, "")), n.text);
+        assert.ok(!breaksInnWords(n.text), n.text);
+        if (shape !== "the {landmark}") {
+          road++;
+          if (crossOrStone.test(lm.word)) roadMonuments++;
+        }
+      }
+    }
+  }
+  assert.ok(road > 100 && roadMonuments / road > 0.3 && roadMonuments / road < 0.7, `${roadMonuments}/${road}`);
+});

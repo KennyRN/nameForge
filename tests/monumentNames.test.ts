@@ -23,6 +23,9 @@ import { STREET_DATA, breaksStreetWords, monumentNeighbours, streetBlockSet } fr
 import { ROUTE_CULTURES, ROUTE_ERAS, routeNorm, type RouteEra } from "../src/routes/engine";
 import { mulberry32 } from "../src/markov";
 import monumentData from "../src/data/monument-names.json";
+import { BUILDING_DATA, BUILDING_KINDS } from "../src/buildings/engine";
+import { parseModulePreset } from "../src/presets";
+import { parseVocabularyPack } from "../src/settlement/vocab";
 
 /** Names from small batches (each batch holds a word once, so big batches skew shares). */
 function many(o: Omit<MonumentOptions, "count" | "seed">, n: number, size = 10): MonumentName[] {
@@ -347,4 +350,38 @@ test("street data: the neighbour shapes are the brief's", () => {
   assert.deepEqual(shapes.map((s) => [s.kind, s.p, s.w]), [
     ["junction", "{site} {jw}", 30], ["street", "{site} {sw}", 25], ["district", "{site}", 20], ["district", "{site} {dw}", 10], ["inn", "the {site}", 10],
   ]);
+});
+
+// ── §15.9 Buildings ─────────────────────────────────────────────────────────
+
+test("§15.9: BUILDING_KINDS has no monument; the pools and shapes went with it", () => {
+  assert.ok(!BUILDING_KINDS.some((k) => (k.key as string) === "monument"));
+  assert.equal(BUILDING_KINDS.length, 10);
+  assert.ok(!SETTLEMENT_VOCAB.pools["buildingWord:monument"] && !SETTLEMENT_VOCAB.pools["buildingFixed:monument"]);
+  assert.ok(SETTLEMENT_VOCAB.pools.follyOwner);
+  // Folly left buildings' flag list; the real monuments stay on its block list as well as ours.
+  const flag = BUILDING_DATA.safeguards.flag;
+  assert.ok(!flag.includes("Folly") && MONUMENT_DATA.safeguards.flag.includes("Folly"));
+  const block = new Set(BUILDING_DATA.safeguards.block.map(bare));
+  const ours = monumentBlockSet();
+  for (const w of ["Eleanor Cross", "Charing Cross", "Marble Arch", "Nelson's Column", "Cleopatra's Needle", "Stonehenge", "Avebury", "Glastonbury Tor"]) {
+    assert.ok(block.has(bare(w)) && ours.has(bare(w)), w);
+  }
+});
+
+test("§10.4: a buildings preset with kind: monument loads as Any with the problem line", () => {
+  const note = ["---", "type: module-preset", "module: building-names", "packName: Old", "kind: monument", "era: MD", "---", "", "Buildings."].join("\n");
+  const { building, problems } = parseModulePreset(note, "Old");
+  assert.equal(building?.buildingKind, "any");
+  assert.deepEqual(problems, ["Monuments and follies have moved to monuments and statues."]);
+  // Another kind is untouched.
+  assert.equal(parseModulePreset(note.replace("monument", "faith"), "Old").building?.buildingKind, "faith");
+});
+
+test("§10.5: a vocabulary pack heading for the retired monument pools is ignored with a notice", () => {
+  const pack = ["---", "type: vocabulary", "---", "", "## buildingWord:monument", "- Gibbet", "", "## buildingFixed:monument", "- Gallows Cross", "", "## monumentWord:cross", "- Calvary"].join("\n");
+  const { sections, problems } = parseVocabularyPack(pack, "P");
+  assert.deepEqual(sections.map((s) => s.pool), ["monumentWord:cross"]);
+  assert.equal(problems.length, 2);
+  assert.ok(problems.every((p) => p === "Monument words now belong to monuments and statues: use monumentWord:‹kind› or monumentFixed:‹kind›."));
 });

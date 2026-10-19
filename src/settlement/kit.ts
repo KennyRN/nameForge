@@ -177,7 +177,7 @@ export function shipsModule(position: KitPosition, era: RouteEra): VesselModule 
 const norm = (s: string) => s.toLowerCase().replace(/^the /, "").trim();
 // Events brief §10: History runs after Groups and before Ships, on a step of its own.
 const STEPS: Record<KitSectionKey | "context" | "ruler", number> = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11, neighbours: 12 };
-const LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water", "monument"];
+const LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water"];
 /** §3: the route kinds that run through a town. */
 const THROUGH_KINDS = ["road", "drove", "trade"];
 
@@ -484,7 +484,7 @@ export function generateKit(options: KitOptions): Kit {
   }
 }
 
-/** §3: the buildings' defences, crossings, water and monuments of 3 words or fewer, without "the". */
+/** §3: the buildings' defences, crossings and water of 3 words or fewer, without "the". */
 export function landmarksOf(entries: KitEntry[]): string[] {
   return entries
     .filter((e) => LANDMARK_KINDS.includes(e.kind as BuildingKind))

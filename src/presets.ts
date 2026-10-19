@@ -814,7 +814,10 @@ function parseBuildingPreset(values: Record<string, string>, body: string, fileN
     return false;
   };
   const era = pick<RouteEra>("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
-  let kind = pick<"any" | BuildingKind>("kind", "any", (v) => v === "any" || BUILDING_KINDS.some((k) => k.key === v));
+  // Monuments brief §10.4: the retired monument kind loads as Any (the note itself is not rewritten).
+  const retired = values.kind === "monument";
+  if (retired) problems.push("Monuments and follies have moved to monuments and statues.");
+  let kind = retired ? "any" : pick<"any" | BuildingKind>("kind", "any", (v) => v === "any" || BUILDING_KINDS.some((k) => k.key === v));
   if (kind !== "any" && !(BUILDING_KINDS.find((k) => k.key === kind)!.era[era] > 0)) {
     problems.push(`Kind “${kind}” isn't offered in the ${routeEraLabel(era)} era.`);
     kind = "any";

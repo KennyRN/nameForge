@@ -48,7 +48,7 @@
   {"key": "coast", "text": "on the coast", "sf": "on an ocean world", "summary": "on the coast", "sfSummary": "on an ocean world", "setting": "port", "ships": "any",
    "effects": {"buildingKindX": {"maritime": 5}, "componentX": {"compWaterside": 3}}},
   {"key": "crossroads", "text": "at a crossroads", "sf": "on a station", "summary": "at a crossroads", "sfSummary": "on a station", "setting": "road", "roadsExtra": 1,
-   "effects": {"roadsideX": 2, "buildingKindX": {"crossing": 1.5, "monument": 1.5}},
+   "effects": {"roadsideX": 2, "buildingKindX": {"crossing": 1.5}, "monumentKindX": {"cross": 1.5, "stone": 1.5}},
    "sfStation": {"setting": "port", "ships": "any", "effects": {"buildingKindX": {"maritime": 5}, "componentX": {"compWaterside": 3}}}}
  ],
  "vessels": {"ships": {"AN": "T2", "MD": "T3", "EM": "T4", "ST": "T5", "MO": "T7", "NF": "T7"}, "spacecraft": {"NF": "S1", "IS": "S3"}},

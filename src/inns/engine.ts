@@ -44,6 +44,7 @@ import {
 } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { buildingName, type BuildingKind } from "../buildings/engine";
+import { monumentName, type MonumentKind } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { breaksStreetWords, STREET_DATA } from "../streets/engine";
 
@@ -104,6 +105,8 @@ interface InnData {
   };
   regionRules: { armsHalf: string[]; dragonDouble: string[] };
   series: { from: number };
+  /** Monuments brief §11.2: the monuments' share of the location anchor's landmarks and of roadside houses'. */
+  monuments: { landmarkShare: number; roadShare: number; roadKinds: MonumentKind[] };
   cap: number;
   safeguards: { block: string[]; flag: string[]; flagListBlocks: boolean; banned: string[]; racialSigns: string[]; christian: string[] };
 }
@@ -159,6 +162,9 @@ export interface InnOptions {
   routeSafeguards?: GroupSafeguards;
   /** Buildings brief §11: merged building safeguard lists, for `{landmark}`. */
   landmarkSafeguards?: GroupSafeguards;
+  /** Monuments brief §11.2: merged monument safeguard lists and extra honourees, for the monuments among the landmarks. */
+  monumentSafeguards?: GroupSafeguards;
+  honourees?: string[];
   /** Settlement kit §4: the settlement's town, neighbours, founder, saint, trades, goods, road and landmarks. */
   context?: SettlementContext;
   vocab?: Vocabulary;
@@ -311,26 +317,44 @@ function route(ctx: Ctx): string | undefined {
 }
 
 /** Buildings brief §11.2: the landmark kinds for the location anchor, and for roadside houses. */
-export const INN_LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water", "monument"];
-export const INN_ROAD_LANDMARK_KINDS: BuildingKind[] = ["crossing", "monument"];
+export const INN_LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water"];
+export const INN_ROAD_LANDMARK_KINDS: BuildingKind[] = ["crossing"];
 
-/** Buildings brief §11.2: `{landmark}`: one building of 3 words or fewer, without "the". */
-function landmark(ctx: Ctx, kinds: BuildingKind[]): string | undefined {
+/** Buildings brief §11.2, Monuments brief §11.2: `{landmark}`: one building of 3 words or fewer, without
+ * "the"; `monumentShare` of the draws a monument instead (of the given kinds, any when absent). */
+function landmark(ctx: Ctx, kinds: BuildingKind[], monumentShare: number, monumentKinds?: MonumentKind[]): string | undefined {
   const o = ctx.options;
-  // Settlement kit §4: one of the settlement's own landmarks, never a fresh building.
-  const w = o.context
-    ? contextLandmark(o.context, ctx.rng)
-    : buildingName({
-    culture: ctx.culture.key,
-    era: ctx.era,
-    fantastic: ctx.fantastic,
-    region: ctx.region,
-    people: ctx.mode,
-    kinds,
-    rng: ctx.rng,
-    safeguards: o.landmarkSafeguards,
-    vocab: o.vocab,
-  });
+  let w: string | undefined;
+  if (o.context) {
+    // Settlement kit §4: one of the settlement's own landmarks, never a fresh building.
+    w = contextLandmark(o.context, ctx.rng);
+  } else {
+    if (ctx.rng() < monumentShare) {
+      w = monumentName({
+        culture: ctx.culture.key,
+        era: ctx.era,
+        fantastic: ctx.fantastic,
+        region: ctx.region,
+        people: ctx.mode,
+        kinds: monumentKinds,
+        rng: ctx.rng,
+        safeguards: o.monumentSafeguards,
+        honourees: o.honourees,
+        vocab: o.vocab,
+      })?.text.replace(/^the /, "");
+    }
+    w ??= buildingName({
+      culture: ctx.culture.key,
+      era: ctx.era,
+      fantastic: ctx.fantastic,
+      region: ctx.region,
+      people: ctx.mode,
+      kinds,
+      rng: ctx.rng,
+      safeguards: o.landmarkSafeguards,
+      vocab: o.vocab,
+    });
+  }
   if (!w) return undefined;
   ctx.words.push({ pool: "landmark", word: w });
   ctx.uses.push(`landmark:${w}`);
@@ -371,9 +395,9 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "route":
       return route(ctx);
     case "landmark":
-      return landmark(ctx, INN_LANDMARK_KINDS);
+      return landmark(ctx, INN_LANDMARK_KINDS, INN_DATA.monuments.landmarkShare);
     case "roadLandmark":
-      return landmark(ctx, INN_ROAD_LANDMARK_KINDS);
+      return landmark(ctx, INN_ROAD_LANDMARK_KINDS, INN_DATA.monuments.roadShare, INN_DATA.monuments.roadKinds);
     case "destination":
     case "town":
       // Settlement kit §4: this place, or one of its neighbours.
