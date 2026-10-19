@@ -290,3 +290,54 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `sageWord` | Teacher, Sage, Master, Elder, Seer, Hermit, Pilgrim | x | books and writings |
 | `bookSecret` | Night, Ash, Bones, Stars, Keys, Names, Tides… | x, t | books and writings |
 | `officeWord` | Exchequer, Treasury, Admiralty, Chancery, Wardrobe… | x | books and writings |
+| `moodOf` | explorers' moods that can follow "of": Plenty, Hope, Disappointment, Farewell | x, t | wild lands |
+| `wildColour` | colours: Black, White, Red, Grey, Green | x, t | wild lands |
+| `wildQuality` | plain adjectives: Great, Little, High, Long, Old | x, c, t | wild lands |
+| `wildFuse` | first halves of fused words: Ash- and Raven- (Ashdale, Ravenhurst) | – | wild lands |
+| `wildWeather` | weather and sky: Wind, Storm, Mist, Frost | x, bt, t | wild lands |
+| `wildShape` | shapes a feature resembles: Saddle, Anvil, Horn, Needle | x, c, t | wild lands |
+| `rangeBody` | body words of a range: Spine, Backbone, Teeth, Wall | x | wild lands |
+| `wildMetal` | metals and stones worked: Silver, Copper, Lead, Coal, Slate | x, bt, c | wild lands |
+| `mythBeast` | fantastic beasts: Dragon, Wyrm, Griffin, Giant, Troll (fantastic only) | x, h, t | wild lands |
+| `mythFuse` | fantastic first halves: Elf-, Fey-, Troll-, Dwarf- (fantastic only) | x, h | wild lands |
+| `leapWho` | whose leap: Maiden's, Lover's, Giant's, Hart's | x, e, t | wild lands |
+| `iceWord` | ice features: River, Stair, Tongue, Wall | – | wild lands |
+| `mtWork` | mountain trades: Shepherds', Drovers', Miners', Pilgrims' | x, e, t | wild lands |
+| `mtRiverWord` | mountain river words: Swift, Rush, Roar, Tumble | x | wild lands |
+| `mtRiverAdj` | mountain river adjectives: Roaring, Rushing, Tumbling | x | wild lands |
+| `mtBeast` | mountain creatures: Eagle, Raven, Goat, Ptarmigan, Ibex | x, bt, c, t | wild lands |
+| `fstQuality` | forest adjectives: Dark, Deep, Green, Old | x, t | wild lands |
+| `fstNoun` | what a forest holds: Shadows, Whispers, Thorns | t | wild lands |
+| `fstOwner` | forest owners: King's, Queen's, Bishop's, Earl's | x, e | wild lands |
+| `fstWork` | forest trades: Charcoal Burners', Woodcutters', Foresters' | x, t | wild lands |
+| `fstKeeper` | forest officers: Keeper's, Verderer's, Ranger's | x | wild lands |
+| `fstFlora` | forest plants: Bluebell, Primrose, Bracken, Fern | x, bt, c | wild lands |
+| `fstFestival` | festivals: Midsummer, May, Harvest, Beltane | x, c, t | wild lands |
+| `fstSprite` | forest sprites: Fairy, Pixie, Elf, Goblin, Puck | x, t | wild lands |
+| `fstRiverWord` | forest river words: Shade, Leaf, Hush, Moss | x | wild lands |
+| `fstPond` | pond kinds: Hammer, Mill, Furnace, Fish, Dew | x, e | wild lands |
+| `treeFunc` | what a named tree or stone was for: Gospel, Hanging, Moot, Boundary, Wishing | x, c, e, t | wild lands |
+| `fstBeast` | forest creatures: Deer, Boar, Wolf, Fox, Owl | x, bt, c, t | wild lands |
+| `wildTree` | trees: Oak, Ash, Beech, Elm, Pine (biome-tagged) | x, bt, c | wild lands |
+| `dsrQuality` | desert adjectives: Empty, Great, Burning, Red, Thirsty | x, t | wild lands |
+| `dsrStuff` | what a desert is: Sand, Stones, Gravel, Salt | x, t | wild lands |
+| `dsrStone` | desert ground: Flint, Gravel, Pebble, Stone | t | wild lands |
+| `dsrOasisWord` | oasis words: Palm, Date, Green, Twin, Lone | x, t | wild lands |
+| `dsrGoods` | caravan goods: Salt, Gold, Incense, Spice | x | wild lands |
+| `dsrDays` | days' journey: Forty, Ten, Seven, Twenty | x | wild lands |
+| `dsrWork` | desert trades: Caravan, Pilgrims', Salt Traders' | x, t | wild lands |
+| `dsrBeast` | desert creatures: Camel, Jackal, Scorpion, Gazelle | x, bt, c, t | wild lands |
+| `mrQuality` | moor adjectives: Bleak, Black, Wild, High | x, t | wild lands |
+| `mrFlora` | moorland plants: Heather, Gorse, Bracken, Bilberry | x, bt | wild lands |
+| `mrWork` | moorland trades: Peat Cutters', Shepherds', Miners' | x, t | wild lands |
+| `mrBeast` | moorland creatures: Grouse, Curlew, Lapwing, Merlin | x, pl, t | wild lands |
+| `wetQuality` | wetland adjectives: Black, Still, Wide, Sour | x, t | wild lands |
+| `wetNoun` | what a wetland holds: Mists, Reeds, Whispers, Lights | t | wild lands |
+| `wetFlora` | wetland plants: Reed, Rush, Sedge, Willow, Cypress | x, bt | wild lands |
+| `wetWork` | wetland trades: Reed Cutters', Eelers', Fowlers' | x, t | wild lands |
+| `wetBeast` | wetland creatures: Heron, Bittern, Crane, Eel, Frog | x, bt, e, pl, t | wild lands |
+| `drainFeet` | widths of a drain: Forty, Twenty, Sixteen, Hundred | x | wild lands |
+| `grsQuality` | grassland adjectives: Wide, Open, Green, Golden | x, bt, t | wild lands |
+| `grsFlora` | grassland plants: Grass, Clover, Cowslip, Poppy | x, bt | wild lands |
+| `grsWork` | grassland trades: Drovers', Shepherds', Herders' | x | wild lands |
+| `grsBeast` | grassland creatures: Horse, Hare, Lark, Bison | x, bt, pl | wild lands |

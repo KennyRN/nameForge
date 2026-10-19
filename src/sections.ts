@@ -86,10 +86,20 @@ export type NameForgeSection =
   | "seasLakes"
   | "coastsIslands"
   | "seaCharts"
-  | "hyperspaceCharts";
+  | "hyperspaceCharts"
+  // Wild lands brief §1.1: the wild lands group, after seas and coasts.
+  | "mountainNames"
+  | "forestNames"
+  | "desertNames"
+  | "moorNames"
+  | "wetlandNames"
+  | "grasslandNames";
 
 /** Seas and coasts brief §1.1: the four waters modules, in order. */
 export const WATERS_SECTIONS: NameForgeSection[] = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
+
+/** Wild lands brief §1.1: the six terrain modules, in order. */
+export const WILDS_SECTIONS: NameForgeSection[] = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 
 /** Ships brief §1.1: the vessel modules, in order (aircraft and land vehicles added by their brief). */
 export const VESSEL_SECTIONS: NameForgeSection[] = ["ships", "spacecraft", "aircraft", "landVehicles"];
@@ -126,6 +136,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "sacredPlaces",
   ...URBAN_SECTIONS,
   ...WATERS_SECTIONS,
+  ...WILDS_SECTIONS,
   ...GROUP_NAMES_ORDER,
   "deityNames",
   ...BYNAME_SECTIONS,
@@ -141,13 +152,15 @@ export const SECTION_ORDER: NameForgeSection[] = [
 
 /** Groups in the section switcher: picking one opens its last-used module, and the box beside the
  * trigger then chooses between the group's modules. */
-export type SectionGroup = "placeNames" | "urban" | "seasCoasts" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
+export type SectionGroup = "placeNames" | "urban" | "seasCoasts" | "wildLands" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
   placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "sacredPlaces"],
   // Urban brief §1.1: straight after place names.
   urban: URBAN_SECTIONS,
   seasCoasts: WATERS_SECTIONS,
+  // Wild lands brief §1.1.
+  wildLands: WILDS_SECTIONS,
   groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
   bynames: BYNAME_SECTIONS,
   // Line-up brief §1: ships and spacecraft get a group of their own.
@@ -161,6 +174,7 @@ export const GROUP_LABELS: Record<SectionGroup, string> = {
   placeNames: "place names",
   urban: "urban",
   seasCoasts: "seas and coasts",
+  wildLands: "wild lands",
   groupNames: "group names",
   bynames: "bynames and titles",
   vehicles: "vehicles",
@@ -169,7 +183,7 @@ export const GROUP_LABELS: Record<SectionGroup, string> = {
 };
 
 /** The switcher's line-up: modules and groups. */
-export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "urban", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
+export const SWITCHER_ORDER: (NameForgeSection | SectionGroup)[] = ["markov", "placeNames", "urban", "seasCoasts", "wildLands", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
 
 /** The group a module belongs to, if any. */
 export function sectionGroup(section: NameForgeSection): SectionGroup | undefined {
@@ -221,6 +235,12 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   coastsIslands: "coasts and islands",
   seaCharts: "sea charts",
   hyperspaceCharts: "hyperspace charts",
+  mountainNames: "mountains",
+  forestNames: "forests and woods",
+  desertNames: "deserts",
+  moorNames: "moors and heaths",
+  wetlandNames: "wetlands",
+  grasslandNames: "grasslands",
 };
 
 /** History labels for new runs of the place-name and river modules. */
@@ -282,6 +302,8 @@ export function historySection(packName: string): NameForgeSection {
   for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Ships brief §1.2: "{module label} · {setting} · {culture} · {technology}…".
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  // Wild lands brief §1.3: "{module} · {era} · {culture}…".
+  for (const section of WILDS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Seas and coasts brief §1.3: "{module} · {era} · {culture}…".
   for (const section of WATERS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";

@@ -1,0 +1,9893 @@
+{
+ "$comment": "Wild lands brief (docs/wild-lands-brief.md). Six terrain modules sharing one engine (src/wilds/engine.ts). Fixed data: don't re-derive or reweight. Pools live in settlement-vocab.json.",
+ "version": 1,
+ "regions": [
+  "COR",
+  "WCY",
+  "SEA",
+  "EAN",
+  "WMM",
+  "WAL",
+  "EMD",
+  "NTH",
+  "SBL",
+  "SLO",
+  "SHH",
+  "NSI"
+ ],
+ "biomes": [
+  "temperate",
+  "moorland",
+  "boreal",
+  "cool-rainforest",
+  "mediterranean",
+  "steppe",
+  "desert",
+  "savannah",
+  "rainforest",
+  "monsoon",
+  "tropical-islands",
+  "highland"
+ ],
+ "where": {
+  "mood": {
+   "home": 0.1,
+   "new": 4
+  },
+  "sai": {
+   "home": 1,
+   "new": 2
+  },
+  "per": {
+   "home": 0.5,
+   "new": 2
+  }
+ },
+ "regionTags": {
+  "ben": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0.3,
+   "SLO": 1,
+   "SHH": 3,
+   "NSI": 0.5
+  },
+  "corrie": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0.5,
+   "SBL": 0,
+   "SLO": 1,
+   "SHH": 3,
+   "NSI": 0.3
+  },
+  "glen": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0.3,
+   "SBL": 1.5,
+   "SLO": 2,
+   "SHH": 2.5,
+   "NSI": 0.5
+  },
+  "fell": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0.3,
+   "NTH": 3,
+   "SBL": 1.5,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0.5
+  },
+  "pike": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0.3,
+   "WAL": 0,
+   "EMD": 0.5,
+   "NTH": 3,
+   "SBL": 1,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "beck": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0.5,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 1,
+   "NTH": 3,
+   "SBL": 0.5,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "force": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 3,
+   "SBL": 0.5,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "ghyll": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0.5,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0.5,
+   "NTH": 3,
+   "SBL": 1,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "hause": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 2,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "knott": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 2,
+   "SBL": 0.5,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "tor": {
+   "COR": 3,
+   "WCY": 3,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0.3,
+   "EMD": 1,
+   "NTH": 0.3,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "law": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0.5,
+   "SBL": 3,
+   "SLO": 2,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "cwm": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 1,
+   "WAL": 3,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "combe": {
+   "COR": 1.5,
+   "WCY": 3,
+   "SEA": 1,
+   "EAN": 0,
+   "WMM": 0.5,
+   "WAL": 0.3,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "clough": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0.5,
+   "WAL": 0,
+   "EMD": 2,
+   "NTH": 2.5,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "edge": {
+   "COR": 0.5,
+   "WCY": 0.5,
+   "SEA": 0.5,
+   "EAN": 0.5,
+   "WMM": 1.5,
+   "WAL": 0.5,
+   "EMD": 2.5,
+   "NTH": 1.5,
+   "SBL": 0.5,
+   "SLO": 0.5,
+   "SHH": 0.5,
+   "NSI": 0.5
+  },
+  "scar": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0.5,
+   "NTH": 2.5,
+   "SBL": 0.5,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "linn": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 1.5,
+   "SLO": 2.5,
+   "SHH": 1,
+   "NSI": 0
+  },
+  "burn": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 1,
+   "SBL": 3,
+   "SLO": 3,
+   "SHH": 2,
+   "NSI": 1
+  },
+  "crag": {
+   "COR": 0.5,
+   "WCY": 0.5,
+   "SEA": 0.3,
+   "EAN": 0.3,
+   "WMM": 0.5,
+   "WAL": 1,
+   "EMD": 1,
+   "NTH": 2,
+   "SBL": 1.5,
+   "SLO": 1,
+   "SHH": 1,
+   "NSI": 0.3
+  },
+  "dale": {
+   "COR": 0.2,
+   "WCY": 0.2,
+   "SEA": 0.2,
+   "EAN": 0.2,
+   "WMM": 0.2,
+   "WAL": 0.2,
+   "EMD": 2,
+   "NTH": 3,
+   "SBL": 1,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "mount": {
+   "COR": 0.3,
+   "WCY": 0.3,
+   "SEA": 0.3,
+   "EAN": 0.3,
+   "WMM": 0.3,
+   "WAL": 0.3,
+   "EMD": 0.3,
+   "NTH": 0.3,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "oldMan": {
+   "COR": 0.3,
+   "WCY": 0.3,
+   "SEA": 0.3,
+   "EAN": 0.3,
+   "WMM": 0.3,
+   "WAL": 0.3,
+   "EMD": 0.3,
+   "NTH": 2,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 1.5,
+   "NSI": 2
+  },
+  "pot": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0.5,
+   "NTH": 3,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "shieling": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 1.5,
+   "SBL": 2,
+   "SLO": 2,
+   "SHH": 3,
+   "NSI": 1
+  },
+  "hope": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 1,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 2,
+   "SBL": 2.5,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "tarn": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 3,
+   "SBL": 1,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "loch": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0.5,
+   "SLO": 2,
+   "SHH": 3,
+   "NSI": 1
+  },
+  "lochan": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0.3,
+   "SLO": 1.5,
+   "SHH": 3,
+   "NSI": 1
+  },
+  "mere": {
+   "COR": 0,
+   "WCY": 0.5,
+   "SEA": 0.5,
+   "EAN": 2,
+   "WMM": 3,
+   "WAL": 0.2,
+   "EMD": 1,
+   "NTH": 2,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "broad": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 3,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "lakeLake": {
+   "COR": 0.3,
+   "WCY": 0.5,
+   "SEA": 0.5,
+   "EAN": 0.5,
+   "WMM": 0.5,
+   "WAL": 0.5,
+   "EMD": 0.5,
+   "NTH": 0.5,
+   "SBL": 0.3,
+   "SLO": 0.1,
+   "SHH": 0.1,
+   "NSI": 0.1
+  },
+  "lakeWater": {
+   "COR": 0.2,
+   "WCY": 0.2,
+   "SEA": 0.2,
+   "EAN": 0.2,
+   "WMM": 0.2,
+   "WAL": 0.2,
+   "EMD": 0.2,
+   "NTH": 3,
+   "SBL": 1,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "saltings": {
+   "COR": 0,
+   "WCY": 0.5,
+   "SEA": 2,
+   "EAN": 2,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "moor": {
+   "COR": 2,
+   "WCY": 2.5,
+   "SEA": 0.3,
+   "EAN": 0.2,
+   "WMM": 1,
+   "WAL": 1,
+   "EMD": 1.5,
+   "NTH": 2.5,
+   "SBL": 1.5,
+   "SLO": 1,
+   "SHH": 0.5,
+   "NSI": 0.5
+  },
+  "muir": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 1.5,
+   "SLO": 2.5,
+   "SHH": 1,
+   "NSI": 0
+  },
+  "rigg": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 2.5,
+   "SBL": 1,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "howe": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 2.5,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "cleave": {
+   "COR": 1,
+   "WCY": 3,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "moss": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0.5,
+   "WAL": 0,
+   "EMD": 1,
+   "NTH": 2.5,
+   "SBL": 2,
+   "SLO": 2,
+   "SHH": 1,
+   "NSI": 1
+  },
+  "flow": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0.5,
+   "SHH": 3,
+   "NSI": 2
+  },
+  "heath": {
+   "COR": 0.3,
+   "WCY": 1.5,
+   "SEA": 3,
+   "EAN": 2.5,
+   "WMM": 1,
+   "WAL": 0.3,
+   "EMD": 1,
+   "NTH": 0.3,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "common": {
+   "COR": 1,
+   "WCY": 1.5,
+   "SEA": 2,
+   "EAN": 1.5,
+   "WMM": 1.5,
+   "WAL": 1,
+   "EMD": 1,
+   "NTH": 0.5,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "fen": {
+   "COR": 0.1,
+   "WCY": 0.1,
+   "SEA": 0.5,
+   "EAN": 3,
+   "WMM": 0.5,
+   "WAL": 0.1,
+   "EMD": 2,
+   "NTH": 0.1,
+   "SBL": 0.1,
+   "SLO": 0.1,
+   "SHH": 0.1,
+   "NSI": 0.1
+  },
+  "carr": {
+   "COR": 0.2,
+   "WCY": 0.2,
+   "SEA": 0.2,
+   "EAN": 2.5,
+   "WMM": 0.2,
+   "WAL": 0.2,
+   "EMD": 1.5,
+   "NTH": 2,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "levels": {
+   "COR": 0,
+   "WCY": 3,
+   "SEA": 0.5,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 1.5,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "rhyne": {
+   "COR": 0,
+   "WCY": 3,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "lode": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 3,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 1,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "ings": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 1,
+   "NTH": 2.5,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "drain": {
+   "COR": 0.5,
+   "WCY": 1,
+   "SEA": 0.5,
+   "EAN": 2,
+   "WMM": 0.5,
+   "WAL": 0.5,
+   "EMD": 2,
+   "NTH": 0.5,
+   "SBL": 0.5,
+   "SLO": 0.5,
+   "SHH": 0.5,
+   "NSI": 0.5
+  },
+  "marsh": {
+   "COR": 0.5,
+   "WCY": 1.5,
+   "SEA": 2,
+   "EAN": 1.5,
+   "WMM": 1,
+   "WAL": 1,
+   "EMD": 1,
+   "NTH": 1,
+   "SBL": 0.5,
+   "SLO": 0.5,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "holme": {
+   "COR": 0.3,
+   "WCY": 0.3,
+   "SEA": 0.3,
+   "EAN": 1.5,
+   "WMM": 0.3,
+   "WAL": 0.3,
+   "EMD": 2,
+   "NTH": 2,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "eyot": {
+   "COR": 0.5,
+   "WCY": 0.5,
+   "SEA": 2,
+   "EAN": 1.5,
+   "WMM": 1,
+   "WAL": 0.5,
+   "EMD": 0.5,
+   "NTH": 0.5,
+   "SBL": 0.5,
+   "SLO": 0.5,
+   "SHH": 0.5,
+   "NSI": 0.5
+  },
+  "causeway": {
+   "COR": 1,
+   "WCY": 1.5,
+   "SEA": 1,
+   "EAN": 3,
+   "WMM": 1,
+   "WAL": 2,
+   "EMD": 1.5,
+   "NTH": 1,
+   "SBL": 1,
+   "SLO": 1,
+   "SHH": 1,
+   "NSI": 1
+  },
+  "down": {
+   "COR": 0.3,
+   "WCY": 2.5,
+   "SEA": 3,
+   "EAN": 0.3,
+   "WMM": 0.5,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "wold": {
+   "COR": 0.2,
+   "WCY": 0.2,
+   "SEA": 0.2,
+   "EAN": 1,
+   "WMM": 1.5,
+   "WAL": 0.2,
+   "EMD": 3,
+   "NTH": 2,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "strath": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0.5,
+   "SLO": 2,
+   "SHH": 3,
+   "NSI": 1
+  },
+  "haugh": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 1,
+   "SBL": 3,
+   "SLO": 2,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "carse": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 3,
+   "SHH": 0.5,
+   "NSI": 0
+  },
+  "bourne": {
+   "COR": 0.2,
+   "WCY": 2.5,
+   "SEA": 3,
+   "EAN": 1,
+   "WMM": 1,
+   "WAL": 0.2,
+   "EMD": 0.5,
+   "NTH": 0.2,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "drove": {
+   "COR": 1,
+   "WCY": 1,
+   "SEA": 0.5,
+   "EAN": 0.5,
+   "WMM": 1.5,
+   "WAL": 3,
+   "EMD": 1,
+   "NTH": 2,
+   "SBL": 3,
+   "SLO": 2,
+   "SHH": 3,
+   "NSI": 2
+  },
+  "hanger": {
+   "COR": 0,
+   "WCY": 1,
+   "SEA": 3,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "hurst": {
+   "COR": 0.2,
+   "WCY": 1,
+   "SEA": 3,
+   "EAN": 0.5,
+   "WMM": 0.5,
+   "WAL": 0.2,
+   "EMD": 0.2,
+   "NTH": 0.2,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "den": {
+   "COR": 0.2,
+   "WCY": 0.2,
+   "SEA": 3,
+   "EAN": 0.3,
+   "WMM": 0.2,
+   "WAL": 0.2,
+   "EMD": 0.2,
+   "NTH": 1.5,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "holt": {
+   "COR": 0.3,
+   "WCY": 0.3,
+   "SEA": 1,
+   "EAN": 3,
+   "WMM": 0.3,
+   "WAL": 0.3,
+   "EMD": 1,
+   "NTH": 0.3,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "slade": {
+   "COR": 0.3,
+   "WCY": 1,
+   "SEA": 1,
+   "EAN": 0.3,
+   "WMM": 2,
+   "WAL": 0.3,
+   "EMD": 2,
+   "NTH": 0.3,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "frith": {
+   "COR": 0.2,
+   "WCY": 0.2,
+   "SEA": 1,
+   "EAN": 0.2,
+   "WMM": 2.5,
+   "WAL": 1,
+   "EMD": 0.2,
+   "NTH": 0.2,
+   "SBL": 0.2,
+   "SLO": 0.2,
+   "SHH": 0.2,
+   "NSI": 0.2
+  },
+  "walk": {
+   "COR": 0.3,
+   "WCY": 1,
+   "SEA": 3,
+   "EAN": 0.3,
+   "WMM": 1.5,
+   "WAL": 0.3,
+   "EMD": 0.3,
+   "NTH": 0.3,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "shaw": {
+   "COR": 0.5,
+   "WCY": 0.5,
+   "SEA": 2,
+   "EAN": 0.5,
+   "WMM": 0.5,
+   "WAL": 0.5,
+   "EMD": 1,
+   "NTH": 1.5,
+   "SBL": 0.5,
+   "SLO": 0.5,
+   "SHH": 0.5,
+   "NSI": 0.5
+  },
+  "spinney": {
+   "COR": 0.3,
+   "WCY": 0.3,
+   "SEA": 1,
+   "EAN": 1.5,
+   "WMM": 1.5,
+   "WAL": 0.3,
+   "EMD": 2.5,
+   "NTH": 0.3,
+   "SBL": 0.3,
+   "SLO": 0.3,
+   "SHH": 0.3,
+   "NSI": 0.3
+  },
+  "weald": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 3,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 0,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  },
+  "chase": {
+   "COR": 0.5,
+   "WCY": 0.5,
+   "SEA": 1,
+   "EAN": 0.5,
+   "WMM": 2,
+   "WAL": 0.5,
+   "EMD": 1.5,
+   "NTH": 1,
+   "SBL": 0.5,
+   "SLO": 0.5,
+   "SHH": 0.5,
+   "NSI": 0.5
+  }
+ },
+ "biomeTags": {
+  "cold": {
+   "temperate": 0.5,
+   "moorland": 1,
+   "boreal": 3,
+   "cool-rainforest": 1,
+   "mediterranean": 0,
+   "steppe": 0.3,
+   "desert": 0,
+   "savannah": 0,
+   "rainforest": 0,
+   "monsoon": 0,
+   "tropical-islands": 0,
+   "highland": 2
+  },
+  "hot": {
+   "temperate": 0,
+   "moorland": 0,
+   "boreal": 0,
+   "cool-rainforest": 0,
+   "mediterranean": 0.5,
+   "steppe": 0,
+   "desert": 1.5,
+   "savannah": 2,
+   "rainforest": 2,
+   "monsoon": 2,
+   "tropical-islands": 2,
+   "highland": 0
+  },
+  "dry": {
+   "temperate": 0,
+   "moorland": 0,
+   "boreal": 0,
+   "cool-rainforest": 0,
+   "mediterranean": 1,
+   "steppe": 2,
+   "desert": 4,
+   "savannah": 1.5,
+   "rainforest": 0,
+   "monsoon": 0.3,
+   "tropical-islands": 0,
+   "highland": 0.5
+  },
+  "alpine": {
+   "temperate": 0.5,
+   "moorland": 0.3,
+   "boreal": 1.5,
+   "cool-rainforest": 1.5,
+   "mediterranean": 0.5,
+   "steppe": 0.5,
+   "desert": 0.5,
+   "savannah": 0,
+   "rainforest": 0,
+   "monsoon": 0,
+   "tropical-islands": 0,
+   "highland": 3
+  },
+  "volcanic": {
+   "temperate": 0.3,
+   "moorland": 1,
+   "boreal": 0.5,
+   "cool-rainforest": 1.5,
+   "mediterranean": 0.3,
+   "steppe": 0,
+   "desert": 0.5,
+   "savannah": 0.3,
+   "rainforest": 0.3,
+   "monsoon": 0.3,
+   "tropical-islands": 3,
+   "highland": 1.5
+  },
+  "jungle": {
+   "temperate": 0,
+   "moorland": 0,
+   "boreal": 0,
+   "cool-rainforest": 0,
+   "mediterranean": 0,
+   "steppe": 0,
+   "desert": 0,
+   "savannah": 0.3,
+   "rainforest": 3,
+   "monsoon": 2,
+   "tropical-islands": 1.5,
+   "highland": 0
+  },
+  "conifer": {
+   "temperate": 1,
+   "moorland": 0.5,
+   "boreal": 3,
+   "cool-rainforest": 2,
+   "mediterranean": 0.7,
+   "steppe": 0.3,
+   "desert": 0,
+   "savannah": 0,
+   "rainforest": 0,
+   "monsoon": 0.3,
+   "tropical-islands": 0,
+   "highland": 1.5
+  },
+  "broadleaf": {
+   "temperate": 3,
+   "moorland": 0.3,
+   "boreal": 0.5,
+   "cool-rainforest": 1,
+   "mediterranean": 1,
+   "steppe": 0.3,
+   "desert": 0,
+   "savannah": 0.3,
+   "rainforest": 0.3,
+   "monsoon": 0.5,
+   "tropical-islands": 0.3,
+   "highland": 0.3
+  },
+  "grass": {
+   "temperate": 1,
+   "moorland": 0.5,
+   "boreal": 0.3,
+   "cool-rainforest": 0.3,
+   "mediterranean": 0.7,
+   "steppe": 3,
+   "desert": 0.3,
+   "savannah": 3,
+   "rainforest": 0.1,
+   "monsoon": 0.7,
+   "tropical-islands": 0.3,
+   "highland": 1
+  },
+  "steppe": {
+   "temperate": 0.3,
+   "moorland": 0,
+   "boreal": 0.3,
+   "cool-rainforest": 0,
+   "mediterranean": 0.3,
+   "steppe": 4,
+   "desert": 0.5,
+   "savannah": 0,
+   "rainforest": 0,
+   "monsoon": 0,
+   "tropical-islands": 0,
+   "highland": 0.5
+  },
+  "sand": {
+   "temperate": 0.2,
+   "moorland": 0,
+   "boreal": 0,
+   "cool-rainforest": 0,
+   "mediterranean": 0.7,
+   "steppe": 1,
+   "desert": 4,
+   "savannah": 0.7,
+   "rainforest": 0,
+   "monsoon": 0.3,
+   "tropical-islands": 1,
+   "highland": 0.3
+  },
+  "salt": {
+   "temperate": 0.2,
+   "moorland": 0.2,
+   "boreal": 0.2,
+   "cool-rainforest": 0,
+   "mediterranean": 1,
+   "steppe": 3,
+   "desert": 3,
+   "savannah": 1,
+   "rainforest": 0,
+   "monsoon": 0.2,
+   "tropical-islands": 0.2,
+   "highland": 2
+  },
+  "peat": {
+   "temperate": 1,
+   "moorland": 3,
+   "boreal": 2,
+   "cool-rainforest": 1,
+   "mediterranean": 0,
+   "steppe": 0,
+   "desert": 0,
+   "savannah": 0,
+   "rainforest": 0,
+   "monsoon": 0,
+   "tropical-islands": 0,
+   "highland": 1
+  },
+  "swamp": {
+   "temperate": 0.7,
+   "moorland": 0.2,
+   "boreal": 0.5,
+   "cool-rainforest": 0.5,
+   "mediterranean": 0.3,
+   "steppe": 0.3,
+   "desert": 0,
+   "savannah": 1.5,
+   "rainforest": 3,
+   "monsoon": 3,
+   "tropical-islands": 2,
+   "highland": 0.3
+  },
+  "mangrove": {
+   "temperate": 0,
+   "moorland": 0,
+   "boreal": 0,
+   "cool-rainforest": 0,
+   "mediterranean": 0,
+   "steppe": 0,
+   "desert": 0,
+   "savannah": 0.5,
+   "rainforest": 2,
+   "monsoon": 3,
+   "tropical-islands": 3,
+   "highland": 0
+  },
+  "heathland": {
+   "temperate": 2,
+   "moorland": 2,
+   "boreal": 0.5,
+   "cool-rainforest": 0.2,
+   "mediterranean": 1,
+   "steppe": 0.2,
+   "desert": 0.2,
+   "savannah": 0.2,
+   "rainforest": 0.2,
+   "monsoon": 0.2,
+   "tropical-islands": 0.2,
+   "highland": 0.2
+  }
+ },
+ "cultureMult": {
+  "general": {},
+  "anglo-saxon": {
+   "of": 0.7,
+   "dir": 1.5,
+   "ppl": 1.5,
+   "crt": 1.5,
+   "flora": 1.5,
+   "sai": 1.5,
+   "unc": 1.5
+  },
+  "norse": {
+   "of": 0.5,
+   "dir": 2,
+   "col": 1.5,
+   "god": 1.5,
+   "crt": 1.5,
+   "unc": 2
+  },
+  "celtic": {
+   "of": 2,
+   "per": 1.5,
+   "crt": 1.5,
+   "flora": 1.5,
+   "sai": 2,
+   "unc": 2
+  },
+  "norman-british": {
+   "of": 1.2,
+   "dir": 1.5,
+   "per": 1.5,
+   "god": 0,
+   "sai": 1.5,
+   "work": 1.5
+  },
+  "roman": {
+   "of": 2.5,
+   "dir": 1.5,
+   "col": 0.7,
+   "ppl": 3,
+   "crt": 0.5,
+   "shp": 0.5
+  },
+  "greek-byzantine": {
+   "of": 2,
+   "ppl": 1.5,
+   "per": 3,
+   "god": 2,
+   "crt": 0.7
+  },
+  "slavic": {
+   "col": 2,
+   "ppl": 2,
+   "god": 0,
+   "flora": 1.5
+  },
+  "steppe": {
+   "of": 0.7,
+   "col": 3,
+   "per": 0.5,
+   "god": 0,
+   "crt": 1.5
+  },
+  "arabic-persian": {
+   "of": 3,
+   "col": 1.5,
+   "ppl": 3,
+   "god": 0
+  },
+  "indian": {
+   "of": 1.5,
+   "per": 2,
+   "flora": 1.5
+  },
+  "chinese": {
+   "of": 0.3,
+   "dir": 3,
+   "col": 2,
+   "ppl": 0.5,
+   "per": 0.5,
+   "god": 0.5,
+   "shp": 2,
+   "crt": 1.5
+  },
+  "japanese": {
+   "of": 0.5,
+   "dir": 2,
+   "col": 1.5,
+   "ppl": 0.5,
+   "per": 0.5,
+   "god": 0.5,
+   "shp": 3,
+   "flora": 2
+  },
+  "korean": {
+   "of": 0.3,
+   "dir": 4,
+   "col": 1.5,
+   "ppl": 0.5,
+   "per": 0.5,
+   "god": 0.5
+  },
+  "egyptian": {
+   "col": 2,
+   "ppl": 0.5,
+   "per": 0.5,
+   "god": 3
+  },
+  "ethiopian": {
+   "of": 1.5,
+   "col": 2,
+   "sai": 1.5
+  },
+  "bantu": {
+   "of": 1.5,
+   "god": 1.5,
+   "crt": 2
+  },
+  "west-african": {
+   "crt": 1.5,
+   "flora": 1.5
+  },
+  "aztec": {
+   "col": 1.5,
+   "per": 0.5,
+   "god": 3,
+   "crt": 1.5
+  },
+  "maya": {
+   "col": 1.5,
+   "per": 0.5,
+   "god": 3,
+   "crt": 1.5
+  },
+  "polynesian": {
+   "of": 2,
+   "per": 1.5,
+   "god": 0,
+   "crt": 1.5
+  },
+  "andean": {
+   "per": 0.5,
+   "god": 0
+  }
+ },
+ "eraMult": {
+  "mood": {
+   "AN": 0.2,
+   "MD": 0.5,
+   "EM": 2,
+   "ST": 1.5,
+   "MO": 0.5,
+   "NF": 1,
+   "IS": 1
+  },
+  "per": {
+   "AN": 0.5,
+   "MD": 0.7,
+   "EM": 1.5,
+   "ST": 2,
+   "MO": 1.5,
+   "NF": 1,
+   "IS": 1
+  },
+  "work": {
+   "AN": 0.5,
+   "MD": 1,
+   "EM": 1.5,
+   "ST": 2,
+   "MO": 1.5,
+   "NF": 1,
+   "IS": 1
+  },
+  "alien": {
+   "AN": 0,
+   "MD": 0,
+   "EM": 0,
+   "ST": 0,
+   "MO": 0,
+   "NF": 6,
+   "IS": 6
+  }
+ },
+ "kindMult": {
+  "britishHome": {
+   "mountainNames.ice": 0,
+   "wetlandNames.swamp": 0.2,
+   "wetlandNames.delta": 0.5,
+   "grasslandNames.plain": 0.5
+  },
+  "biome": {
+   "mountainNames.ice": "alpine",
+   "wetlandNames.swamp": "swamp",
+   "desertNames.dune": "sand",
+   "grasslandNames.heath": "heathland"
+  }
+ },
+ "homeland": {
+  "general": "temperate",
+  "norman-british": "britain",
+  "anglo-saxon": "britain",
+  "celtic": "britain",
+  "greek-byzantine": "mediterranean",
+  "steppe": "steppe",
+  "polynesian": "tropical-islands",
+  "andean": "highland",
+  "norse": "boreal",
+  "roman": "mediterranean",
+  "chinese": "temperate",
+  "egyptian": "desert",
+  "aztec": "highland",
+  "bantu": "savannah",
+  "slavic": "temperate",
+  "arabic-persian": "desert",
+  "indian": "monsoon",
+  "japanese": "temperate",
+  "west-african": "savannah",
+  "maya": "rainforest",
+  "korean": "temperate",
+  "ethiopian": "highland"
+ },
+ "modules": {
+  "mountainNames": {
+   "label": "mountains",
+   "any": "mountain features of any kind",
+   "seriesText": "in one range",
+   "terrain": "mountains",
+   "defaultBiome": "highland",
+   "biomes": [
+    "temperate",
+    "moorland",
+    "boreal",
+    "cool-rainforest",
+    "mediterranean",
+    "steppe",
+    "desert",
+    "savannah",
+    "rainforest",
+    "monsoon",
+    "tropical-islands",
+    "highland"
+   ],
+   "region": true,
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "range",
+     "menu": "Ranges and massifs",
+     "plural": "ranges and massifs",
+     "weight": 16
+    },
+    {
+     "key": "peak",
+     "menu": "Peaks and summits",
+     "plural": "peaks and summits",
+     "weight": 22
+    },
+    {
+     "key": "ridge",
+     "menu": "Ridges, edges and crags",
+     "plural": "ridges, edges and crags",
+     "weight": 12
+    },
+    {
+     "key": "pass",
+     "menu": "Passes and cols",
+     "plural": "passes and cols",
+     "weight": 12
+    },
+    {
+     "key": "gorge",
+     "menu": "Gorges and ravines",
+     "plural": "gorges and ravines",
+     "weight": 7
+    },
+    {
+     "key": "valley",
+     "menu": "Valleys, glens and corries",
+     "plural": "valleys, glens and corries",
+     "weight": 10
+    },
+    {
+     "key": "stream",
+     "menu": "Streams and falls",
+     "plural": "streams and falls",
+     "weight": 8
+    },
+    {
+     "key": "river",
+     "menu": "Mountain rivers",
+     "plural": "mountain rivers",
+     "weight": 4
+    },
+    {
+     "key": "tarn",
+     "menu": "Tarns and lakes",
+     "plural": "tarns and lakes",
+     "weight": 6
+    },
+    {
+     "key": "ice",
+     "menu": "Glaciers and snowfields",
+     "plural": "glaciers and snowfields",
+     "weight": 3
+    },
+    {
+     "key": "cave",
+     "menu": "Caves and mines",
+     "plural": "caves and mines",
+     "weight": 4
+    },
+    {
+     "key": "settlement",
+     "menu": "Mountain settlements",
+     "plural": "mountain settlements",
+     "weight": 6
+    }
+   ]
+  },
+  "forestNames": {
+   "label": "forests and woods",
+   "any": "forest features of any kind",
+   "seriesText": "in one forest",
+   "terrain": "forest",
+   "defaultBiome": "temperate",
+   "biomes": [
+    "temperate",
+    "moorland",
+    "boreal",
+    "cool-rainforest",
+    "mediterranean",
+    "steppe",
+    "savannah",
+    "rainforest",
+    "monsoon",
+    "tropical-islands",
+    "highland"
+   ],
+   "region": true,
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "forest",
+     "menu": "Forests and woods",
+     "plural": "forests and woods",
+     "weight": 22
+    },
+    {
+     "key": "grove",
+     "menu": "Groves, copses and thickets",
+     "plural": "groves, copses and thickets",
+     "weight": 14
+    },
+    {
+     "key": "clearing",
+     "menu": "Clearings, glades and dells",
+     "plural": "clearings, glades and dells",
+     "weight": 12
+    },
+    {
+     "key": "ride",
+     "menu": "Rides, paths and forest roads",
+     "plural": "rides, paths and forest roads",
+     "weight": 10
+    },
+    {
+     "key": "stream",
+     "menu": "Streams and springs",
+     "plural": "streams and springs",
+     "weight": 9
+    },
+    {
+     "key": "river",
+     "menu": "Forest rivers",
+     "plural": "forest rivers",
+     "weight": 4
+    },
+    {
+     "key": "pool",
+     "menu": "Pools, ponds and lakes",
+     "plural": "pools, ponds and lakes",
+     "weight": 7
+    },
+    {
+     "key": "tree",
+     "menu": "Named trees and stones",
+     "plural": "named trees and stones",
+     "weight": 8
+    },
+    {
+     "key": "walk",
+     "menu": "Walks, parks and coverts",
+     "plural": "walks, parks and coverts",
+     "weight": 6
+    },
+    {
+     "key": "settlement",
+     "menu": "Forest settlements",
+     "plural": "forest settlements",
+     "weight": 8
+    }
+   ]
+  },
+  "desertNames": {
+   "label": "deserts",
+   "any": "desert features of any kind",
+   "seriesText": "in one desert",
+   "terrain": "plains",
+   "defaultBiome": "desert",
+   "biomes": [
+    "desert",
+    "steppe",
+    "highland",
+    "savannah",
+    "mediterranean"
+   ],
+   "region": false,
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "desert",
+     "menu": "Deserts and sand seas",
+     "plural": "deserts and sand seas",
+     "weight": 18
+    },
+    {
+     "key": "dune",
+     "menu": "Dunes and sandhills",
+     "plural": "dunes and sandhills",
+     "weight": 10
+    },
+    {
+     "key": "plain",
+     "menu": "Stony plains and salt flats",
+     "plural": "stony plains and salt flats",
+     "weight": 12
+    },
+    {
+     "key": "rock",
+     "menu": "Mesas, buttes and rocks",
+     "plural": "mesas, buttes and rocks",
+     "weight": 10
+    },
+    {
+     "key": "canyon",
+     "menu": "Canyons and wadis",
+     "plural": "canyons and wadis",
+     "weight": 12
+    },
+    {
+     "key": "oasis",
+     "menu": "Oases, wells and springs",
+     "plural": "oases, wells and springs",
+     "weight": 14
+    },
+    {
+     "key": "lake",
+     "menu": "Salt lakes and dry lakes",
+     "plural": "salt lakes and dry lakes",
+     "weight": 6
+    },
+    {
+     "key": "route",
+     "menu": "Tracks and caravan roads",
+     "plural": "tracks and caravan roads",
+     "weight": 8
+    },
+    {
+     "key": "landmark",
+     "menu": "Landmarks and lost places",
+     "plural": "landmarks and lost places",
+     "weight": 5
+    },
+    {
+     "key": "settlement",
+     "menu": "Desert settlements",
+     "plural": "desert settlements",
+     "weight": 10
+    }
+   ]
+  },
+  "moorNames": {
+   "label": "moors and heaths",
+   "any": "moorland features of any kind",
+   "seriesText": "on one moor",
+   "terrain": "hills",
+   "defaultBiome": "moorland",
+   "biomes": [
+    "moorland",
+    "temperate",
+    "boreal",
+    "highland",
+    "cool-rainforest"
+   ],
+   "region": true,
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "moor",
+     "menu": "Moors and fells",
+     "plural": "moors and fells",
+     "weight": 20
+    },
+    {
+     "key": "hill",
+     "menu": "Tors, riggs and hills",
+     "plural": "tors, riggs and hills",
+     "weight": 14
+    },
+    {
+     "key": "bog",
+     "menu": "Mosses, mires and flows",
+     "plural": "mosses, mires and flows",
+     "weight": 10
+    },
+    {
+     "key": "clough",
+     "menu": "Cloughs, combes and hopes",
+     "plural": "cloughs, combes and hopes",
+     "weight": 8
+    },
+    {
+     "key": "stream",
+     "menu": "Becks, gills and burns",
+     "plural": "becks, gills and burns",
+     "weight": 10
+    },
+    {
+     "key": "pool",
+     "menu": "Tarns and pools",
+     "plural": "tarns and pools",
+     "weight": 6
+    },
+    {
+     "key": "stone",
+     "menu": "Stones, cairns and crosses",
+     "plural": "stones, cairns and crosses",
+     "weight": 10
+    },
+    {
+     "key": "track",
+     "menu": "Tracks and ways",
+     "plural": "tracks and ways",
+     "weight": 8
+    },
+    {
+     "key": "settlement",
+     "menu": "Moorland settlements",
+     "plural": "moorland settlements",
+     "weight": 8
+    }
+   ]
+  },
+  "wetlandNames": {
+   "label": "wetlands",
+   "any": "wetland features of any kind",
+   "seriesText": "in one marsh",
+   "terrain": "wetland",
+   "defaultBiome": "temperate",
+   "biomes": [
+    "temperate",
+    "moorland",
+    "boreal",
+    "cool-rainforest",
+    "mediterranean",
+    "steppe",
+    "savannah",
+    "rainforest",
+    "monsoon",
+    "tropical-islands",
+    "highland"
+   ],
+   "region": true,
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "marsh",
+     "menu": "Marshes and fens",
+     "plural": "marshes and fens",
+     "weight": 20
+    },
+    {
+     "key": "bog",
+     "menu": "Bogs and mires",
+     "plural": "bogs and mires",
+     "weight": 10
+    },
+    {
+     "key": "swamp",
+     "menu": "Swamps and backwaters",
+     "plural": "swamps and backwaters",
+     "weight": 10
+    },
+    {
+     "key": "reed",
+     "menu": "Reedbeds and carrs",
+     "plural": "reedbeds and carrs",
+     "weight": 8
+    },
+    {
+     "key": "water",
+     "menu": "Meres, broads and pools",
+     "plural": "meres, broads and pools",
+     "weight": 10
+    },
+    {
+     "key": "channel",
+     "menu": "Creeks, lodes and drains",
+     "plural": "creeks, lodes and drains",
+     "weight": 10
+    },
+    {
+     "key": "isle",
+     "menu": "Islands and holmes",
+     "plural": "islands and holmes",
+     "weight": 8
+    },
+    {
+     "key": "causeway",
+     "menu": "Causeways and crossings",
+     "plural": "causeways and crossings",
+     "weight": 6
+    },
+    {
+     "key": "delta",
+     "menu": "Deltas and saltmarshes",
+     "plural": "deltas and saltmarshes",
+     "weight": 6
+    },
+    {
+     "key": "settlement",
+     "menu": "Wetland settlements",
+     "plural": "wetland settlements",
+     "weight": 8
+    }
+   ]
+  },
+  "grasslandNames": {
+   "label": "grasslands",
+   "any": "grassland features of any kind",
+   "seriesText": "on one plain",
+   "terrain": "plains",
+   "defaultBiome": "steppe",
+   "biomes": [
+    "temperate",
+    "steppe",
+    "savannah",
+    "mediterranean",
+    "highland",
+    "monsoon"
+   ],
+   "region": true,
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "plain",
+     "menu": "Plains, steppes and prairies",
+     "plural": "plains, steppes and prairies",
+     "weight": 20
+    },
+    {
+     "key": "down",
+     "menu": "Downs and wolds",
+     "plural": "downs and wolds",
+     "weight": 14
+    },
+    {
+     "key": "meadow",
+     "menu": "Meadows, leas and pastures",
+     "plural": "meadows, leas and pastures",
+     "weight": 14
+    },
+    {
+     "key": "heath",
+     "menu": "Heaths and commons",
+     "plural": "heaths and commons",
+     "weight": 8
+    },
+    {
+     "key": "vale",
+     "menu": "Vales and straths",
+     "plural": "vales and straths",
+     "weight": 10
+    },
+    {
+     "key": "stream",
+     "menu": "Streams and waterholes",
+     "plural": "streams and waterholes",
+     "weight": 8
+    },
+    {
+     "key": "lake",
+     "menu": "Lakes and ponds",
+     "plural": "lakes and ponds",
+     "weight": 5
+    },
+    {
+     "key": "track",
+     "menu": "Droves, trails and tracks",
+     "plural": "droves, trails and tracks",
+     "weight": 8
+    },
+    {
+     "key": "landmark",
+     "menu": "Mounds, barrows and lone trees",
+     "plural": "mounds, barrows and lone trees",
+     "weight": 7
+    },
+    {
+     "key": "settlement",
+     "menu": "Grassland settlements",
+     "plural": "grassland settlements",
+     "weight": 8
+    }
+   ]
+  }
+ },
+ "shapes": {
+  "mountainNames": {
+   "range": [
+    {
+     "p": "The {wildColour} Mountains",
+     "w": 14,
+     "f": "col"
+    },
+    {
+     "p": "The {wildColour} Hills",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "The {wildQuality} Mountains",
+     "w": 6,
+     "f": "qual"
+    },
+    {
+     "p": "The {directionAdj} Mountains",
+     "w": 6,
+     "f": "dir"
+    },
+    {
+     "p": "The {directionAdj} Fells",
+     "w": 5,
+     "f": "dir",
+     "rt": "fell"
+    },
+    {
+     "p": "The {town} Mountains",
+     "w": 8,
+     "f": "twn"
+    },
+    {
+     "p": "The {town} Hills",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Fells",
+     "w": 4,
+     "f": "twn",
+     "rt": "fell"
+    },
+    {
+     "p": "The {beast} Mountains",
+     "w": 5,
+     "f": "crt"
+    },
+    {
+     "p": "Mountains of the {beast:pl}",
+     "w": 3,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "Mountains of the {wildWeather:pl}",
+     "w": 4,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "The {wildColour} {rangeBody}",
+     "w": 5,
+     "f": "shp"
+    },
+    {
+     "p": "The {rangeBody} of the World",
+     "w": 1,
+     "f": "shp",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "The {number} Peaks",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "The {folkUncanny} Teeth",
+     "w": 2,
+     "f": "unc",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "Mountains of the {folk}",
+     "w": 3,
+     "f": "ppl",
+     "of": true
+    },
+    {
+     "p": "The {kingdom} Mountains",
+     "w": 2,
+     "f": "ppl"
+    },
+    {
+     "p": "{person} Range",
+     "w": 3,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 1.5
+    },
+    {
+     "p": "The {person} Mountains",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{explorerMood} Range",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "Mountains of {god}",
+     "w": 2,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "The {mythBeast} Mountains",
+     "w": 3,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Mountains of {mariaWord}",
+     "w": 4,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "peak": [
+    {
+     "p": "Mount {town}",
+     "w": 10,
+     "f": "twn",
+     "rt": "mount"
+    },
+    {
+     "p": "{town} Peak",
+     "w": 6,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Pike",
+     "w": 6,
+     "f": "twn",
+     "rt": "pike"
+    },
+    {
+     "p": "{town} Fell",
+     "w": 5,
+     "f": "twn",
+     "rt": "fell"
+    },
+    {
+     "p": "Ben {town}",
+     "w": 6,
+     "f": "twn",
+     "rt": "ben"
+    },
+    {
+     "p": "{town} Tor",
+     "w": 3,
+     "f": "twn",
+     "rt": "tor"
+    },
+    {
+     "p": "{town} Law",
+     "w": 4,
+     "f": "twn",
+     "rt": "law"
+    },
+    {
+     "p": "{wildColour} Peak",
+     "w": 8,
+     "f": "col"
+    },
+    {
+     "p": "{wildColour} Pike",
+     "w": 6,
+     "f": "col",
+     "rt": "pike"
+    },
+    {
+     "p": "{wildColour} Fell",
+     "w": 4,
+     "f": "col",
+     "rt": "fell"
+    },
+    {
+     "p": "{wildColour} Tor",
+     "w": 6,
+     "f": "col",
+     "rt": "tor"
+    },
+    {
+     "p": "{wildColour} Law",
+     "w": 4,
+     "f": "col",
+     "rt": "law"
+    },
+    {
+     "p": "{wildColour} Knott",
+     "w": 3,
+     "f": "col",
+     "rt": "knott"
+    },
+    {
+     "p": "{wildColour} Horn",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "{wildFuse}fell",
+     "w": 4,
+     "f": "qual",
+     "rt": "fell"
+    },
+    {
+     "p": "{beast} Peak",
+     "w": 6,
+     "f": "crt"
+    },
+    {
+     "p": "{beast} Tor",
+     "w": 4,
+     "f": "crt",
+     "rt": "tor"
+    },
+    {
+     "p": "{beast} Horn",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{wildQuality} Peak",
+     "w": 6,
+     "f": "qual"
+    },
+    {
+     "p": "{wildWeather} Peak",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "The {wildShape}",
+     "w": 5,
+     "f": "shp"
+    },
+    {
+     "p": "{wildColour} {wildShape}",
+     "w": 3,
+     "f": "shp"
+    },
+    {
+     "p": "The Old Man of {town}",
+     "w": 2,
+     "f": "fixed",
+     "rt": "oldMan",
+     "t": [
+      "light"
+     ]
+    },
+    {
+     "p": "{direction} Peak",
+     "w": 4,
+     "f": "dir"
+    },
+    {
+     "p": "{directionAdj} Peak",
+     "w": 2,
+     "f": "dir"
+    },
+    {
+     "p": "{person:poss} Peak",
+     "w": 4,
+     "f": "per"
+    },
+    {
+     "p": "{person:poss} Seat",
+     "w": 2,
+     "f": "per",
+     "c": [
+      "british"
+     ]
+    },
+    {
+     "p": "Mount {person}",
+     "w": 5,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 1.5
+    },
+    {
+     "p": "Mount {explorerMood}",
+     "w": 4,
+     "f": "mood"
+    },
+    {
+     "p": "{holy:poss} Peak",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "Seat of {god}",
+     "w": 2,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{god:poss} Throne",
+     "w": 2,
+     "f": "god",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{folkUncanny} Peak",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "Fire Mountain",
+     "w": 2,
+     "f": "fixed",
+     "bt": "volcanic"
+    },
+    {
+     "p": "The {wildColour} Cone",
+     "w": 2,
+     "f": "col",
+     "bt": "volcanic"
+    },
+    {
+     "p": "{mythBeast} Peak",
+     "w": 3,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "{mythBeast:poss} Tooth",
+     "w": 2,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Mount {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "ridge": [
+    {
+     "p": "{wildColour} Edge",
+     "w": 6,
+     "f": "col",
+     "rt": "edge"
+    },
+    {
+     "p": "{town} Edge",
+     "w": 6,
+     "f": "twn",
+     "rt": "edge"
+    },
+    {
+     "p": "{wildQuality} Edge",
+     "w": 3,
+     "f": "qual",
+     "rt": "edge"
+    },
+    {
+     "p": "{wildColour} Ridge",
+     "w": 6,
+     "f": "col"
+    },
+    {
+     "p": "{town} Ridge",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Ridge",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{wildShape} Ridge",
+     "w": 4,
+     "f": "shp"
+    },
+    {
+     "p": "{beast} Crag",
+     "w": 7,
+     "f": "crt",
+     "rt": "crag"
+    },
+    {
+     "p": "{wildColour} Crag",
+     "w": 5,
+     "f": "col",
+     "rt": "crag"
+    },
+    {
+     "p": "{town} Crag",
+     "w": 3,
+     "f": "twn",
+     "rt": "crag"
+    },
+    {
+     "p": "{wildColour} Scar",
+     "w": 4,
+     "f": "col",
+     "rt": "scar"
+    },
+    {
+     "p": "{town} Scar",
+     "w": 3,
+     "f": "twn",
+     "rt": "scar"
+    },
+    {
+     "p": "{wildShape} Rock",
+     "w": 3,
+     "f": "shp"
+    },
+    {
+     "p": "{folkUncanny} {devilFeature}",
+     "w": 3,
+     "f": "unc",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "The {wildColour} Wall",
+     "w": 3,
+     "f": "shp"
+    },
+    {
+     "p": "{beast} Buttress",
+     "w": 2,
+     "f": "crt",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{mythBeast:poss} Back",
+     "w": 2,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "pass": [
+    {
+     "p": "{beast} Pass",
+     "w": 8,
+     "f": "crt"
+    },
+    {
+     "p": "Pass of the {beast:pl}",
+     "w": 4,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{town} Pass",
+     "w": 8,
+     "f": "twn"
+    },
+    {
+     "p": "Pass of {town}",
+     "w": 4,
+     "f": "twn",
+     "of": true
+    },
+    {
+     "p": "{wildColour} Pass",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "{wildQuality} Pass",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{wildWeather} Pass",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Gap",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "{town} Gap",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Gap",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{wildWeather} Gap",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Col",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{direction} Col",
+     "w": 2,
+     "f": "dir",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{beast} Hause",
+     "w": 3,
+     "f": "crt",
+     "rt": "hause"
+    },
+    {
+     "p": "{town} Hause",
+     "w": 3,
+     "f": "twn",
+     "rt": "hause"
+    },
+    {
+     "p": "{mtWork} Pass",
+     "w": 4,
+     "f": "work"
+    },
+    {
+     "p": "{mtWork} Gap",
+     "w": 2,
+     "f": "work"
+    },
+    {
+     "p": "{gateWord} Gate",
+     "w": 3,
+     "f": "shp"
+    },
+    {
+     "p": "Gate of {kingdom}",
+     "w": 2,
+     "f": "ppl",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{person:poss} Pass",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{person} Pass",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{explorerMood} Pass",
+     "w": 3,
+     "f": "mood"
+    },
+    {
+     "p": "{folkUncanny} Staircase",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{holy:poss} Pass",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "{mythBeast} Pass",
+     "w": 2,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "{mythBeast:poss} Gate",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "gorge": [
+    {
+     "p": "{wildColour} Gorge",
+     "w": 6,
+     "f": "col"
+    },
+    {
+     "p": "{town} Gorge",
+     "w": 6,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Gorge",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{wildQuality} Gorge",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{folkUncanny} Gorge",
+     "w": 3,
+     "f": "unc"
+    },
+    {
+     "p": "{folkUncanny} {devilFeature}",
+     "w": 2,
+     "f": "unc",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "{wildColour} Cleft",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "The {wildColour} Chasm",
+     "w": 2,
+     "f": "col",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{town} Clough",
+     "w": 4,
+     "f": "twn",
+     "rt": "clough"
+    },
+    {
+     "p": "{wildColour} Clough",
+     "w": 3,
+     "f": "col",
+     "rt": "clough"
+    },
+    {
+     "p": "{beast} Ravine",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Ravine",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Canyon",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "dry"
+    },
+    {
+     "p": "{wildColour} Canyon",
+     "w": 3,
+     "f": "col",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "dry"
+    },
+    {
+     "p": "Gorge of the {number} Falls",
+     "w": 1,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "Gorge of {moodOf}",
+     "w": 1,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "{mythBeast} Gorge",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "valley": [
+    {
+     "p": "{wildFuse}dale",
+     "w": 8,
+     "f": "qual",
+     "rt": "dale",
+     "st": "hv"
+    },
+    {
+     "p": "Glen {town}",
+     "w": 6,
+     "f": "twn",
+     "rt": "glen",
+     "st": "hv"
+    },
+    {
+     "p": "{wildColour} Glen",
+     "w": 3,
+     "f": "col",
+     "rt": "glen"
+    },
+    {
+     "p": "{beast} Corrie",
+     "w": 4,
+     "f": "crt",
+     "rt": "corrie"
+    },
+    {
+     "p": "{wildColour} Corrie",
+     "w": 3,
+     "f": "col",
+     "rt": "corrie"
+    },
+    {
+     "p": "Cwm {town}",
+     "w": 4,
+     "f": "twn",
+     "rt": "cwm",
+     "st": "hv"
+    },
+    {
+     "p": "{town} Combe",
+     "w": 5,
+     "f": "twn",
+     "rt": "combe",
+     "st": "hv"
+    },
+    {
+     "p": "{wildFuse}combe",
+     "w": 4,
+     "f": "qual",
+     "rt": "combe",
+     "st": "hv"
+    },
+    {
+     "p": "{wildQuality} Valley",
+     "w": 5,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Valley",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{town} Valley",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Valley",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "Valley of the {beast:pl}",
+     "w": 3,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "Valley of {moodOf}",
+     "w": 2,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "{wildQuality} Hollow",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "Valley of the {folk}",
+     "w": 2,
+     "f": "ppl",
+     "of": true
+    },
+    {
+     "p": "Valley of {god}",
+     "w": 1,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "Valley of {mariaWord}",
+     "w": 2,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "stream": [
+    {
+     "p": "{wildColour} Beck",
+     "w": 5,
+     "f": "col",
+     "rt": "beck"
+    },
+    {
+     "p": "{beast} Beck",
+     "w": 3,
+     "f": "crt",
+     "rt": "beck"
+    },
+    {
+     "p": "{town} Beck",
+     "w": 3,
+     "f": "twn",
+     "rt": "beck"
+    },
+    {
+     "p": "{wildFuse}beck",
+     "w": 3,
+     "f": "qual",
+     "rt": "beck",
+     "st": "hv"
+    },
+    {
+     "p": "{wildColour} Burn",
+     "w": 4,
+     "f": "col",
+     "rt": "burn"
+    },
+    {
+     "p": "{town} Burn",
+     "w": 3,
+     "f": "twn",
+     "rt": "burn"
+    },
+    {
+     "p": "{wildFuse}burn",
+     "w": 2,
+     "f": "qual",
+     "rt": "burn",
+     "st": "hv"
+    },
+    {
+     "p": "{wildColour} Ghyll",
+     "w": 4,
+     "f": "col",
+     "rt": "ghyll"
+    },
+    {
+     "p": "{wildColour} Force",
+     "w": 4,
+     "f": "col",
+     "rt": "force"
+    },
+    {
+     "p": "{town} Force",
+     "w": 3,
+     "f": "twn",
+     "rt": "force"
+    },
+    {
+     "p": "Linn of {town}",
+     "w": 3,
+     "f": "twn",
+     "of": true,
+     "rt": "linn"
+    },
+    {
+     "p": "{wildColour} Falls",
+     "w": 6,
+     "f": "col"
+    },
+    {
+     "p": "{town} Falls",
+     "w": 6,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Falls",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{wildQuality} Falls",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildWeather} Falls",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{person} Falls",
+     "w": 3,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 1.5
+    },
+    {
+     "p": "{leapWho} Leap",
+     "w": 3,
+     "f": "unc"
+    },
+    {
+     "p": "{wildColour} Veil",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{wildColour} Water",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Spring",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{holy:poss} Well",
+     "w": 2,
+     "f": "sai"
+    }
+   ],
+   "river": [
+    {
+     "p": "{river}",
+     "w": 40,
+     "f": "riv"
+    },
+    {
+     "p": "River {mtRiverWord}",
+     "w": 12,
+     "f": "qual"
+    },
+    {
+     "p": "{mtRiverAdj} Water",
+     "w": 12,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Water",
+     "w": 10,
+     "f": "col"
+    },
+    {
+     "p": "{wildFuse}water",
+     "w": 8,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Water",
+     "w": 6,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} River",
+     "w": 6,
+     "f": "col"
+    },
+    {
+     "p": "{town} River",
+     "w": 6,
+     "f": "twn"
+    }
+   ],
+   "tarn": [
+    {
+     "p": "{wildColour} Tarn",
+     "w": 8,
+     "f": "col",
+     "rt": "tarn"
+    },
+    {
+     "p": "{beast} Tarn",
+     "w": 5,
+     "f": "crt",
+     "rt": "tarn"
+    },
+    {
+     "p": "{town} Tarn",
+     "w": 4,
+     "f": "twn",
+     "rt": "tarn"
+    },
+    {
+     "p": "{wildQuality} Tarn",
+     "w": 4,
+     "f": "qual",
+     "rt": "tarn"
+    },
+    {
+     "p": "Loch {town}",
+     "w": 4,
+     "f": "twn",
+     "rt": "loch"
+    },
+    {
+     "p": "{wildColour} Lochan",
+     "w": 4,
+     "f": "col",
+     "rt": "lochan"
+    },
+    {
+     "p": "{beast} Lochan",
+     "w": 3,
+     "f": "crt",
+     "rt": "lochan"
+    },
+    {
+     "p": "{lakeQuality} Lake",
+     "w": 5,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Lake",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "Lake {town}",
+     "w": 5,
+     "f": "twn",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "{wildFuse}water",
+     "w": 4,
+     "f": "qual",
+     "rt": "lakeWater"
+    },
+    {
+     "p": "{lakeCreature} Lake",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "Lake of the {lakeCreature:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{lakeShape} Lake",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{folkUncanny} Pool",
+     "w": 1,
+     "f": "unc"
+    },
+    {
+     "p": "{mythBeast} Lake",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "ice": [
+    {
+     "p": "{wildColour} Glacier",
+     "w": 8,
+     "f": "col",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Glacier",
+     "w": 8,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person} Glacier",
+     "w": 4,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 2
+    },
+    {
+     "p": "{wildQuality} Glacier",
+     "w": 4,
+     "f": "qual",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{beast} Glacier",
+     "w": 2,
+     "f": "crt",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{explorerMood} Glacier",
+     "w": 2,
+     "f": "mood",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "The {wildQuality} Icefall",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Icefield",
+     "w": 3,
+     "f": "col",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Icefield",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "The Frozen {iceWord}",
+     "w": 3,
+     "f": "shp"
+    },
+    {
+     "p": "The Ice {iceWord}",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "The {wildQuality} Snows",
+     "w": 3,
+     "f": "qual"
+    }
+   ],
+   "cave": [
+    {
+     "p": "{folkUncanny} Cave",
+     "w": 4,
+     "f": "unc"
+    },
+    {
+     "p": "{folkUncanny} Hole",
+     "w": 3,
+     "f": "unc"
+    },
+    {
+     "p": "{beast} Cave",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Cave",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "Cave of the {wildWeather:pl}",
+     "w": 2,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "{town} Cavern",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildQuality} Cavern",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Pot",
+     "w": 3,
+     "f": "twn",
+     "rt": "pot"
+    },
+    {
+     "p": "{wildMetal} Mine",
+     "w": 5,
+     "f": "work"
+    },
+    {
+     "p": "{town} Mine",
+     "w": 4,
+     "f": "work",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{wildMetal} Level",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person:poss} Level",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{wildMetal} Workings",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{holy:poss} Cave",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "Hermit's Cave",
+     "w": 1,
+     "f": "fixed"
+    },
+    {
+     "p": "Cave of {god}",
+     "w": 1,
+     "f": "god",
+     "of": true
+    },
+    {
+     "p": "{mythBeast:poss} Lair",
+     "w": 2,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "The Deep Halls of {town}",
+     "w": 2,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Caverns of {mariaWord}",
+     "w": 2,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ]
+    }
+   ],
+   "settlement": [
+    {
+     "p": "{@pass} Fort",
+     "w": 6,
+     "f": "set",
+     "sz": "vt"
+    },
+    {
+     "p": "Fort {town}",
+     "w": 3,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{@pass} Hospice",
+     "w": 3,
+     "f": "set",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "Hospice of the Snows",
+     "w": 1,
+     "f": "set",
+     "e": [
+      "MD",
+      "EM",
+      "ST"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{@pass} Inn",
+     "w": 3,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@pass} Town",
+     "w": 3,
+     "f": "set",
+     "sz": "vt"
+    },
+    {
+     "p": "{@pass} Tower",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@peak} Watch",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{town} under {@peak}",
+     "w": 3,
+     "f": "set",
+     "c": [
+      "british"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{@valley} Head",
+     "w": 4,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@valley} End",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@valley} Foot",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@tarn} Side",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@gorge} Bridge",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{wildMetal} Town",
+     "w": 3,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "vt"
+    },
+    {
+     "p": "{wildMetal} Camp",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{wildMetal} Mines",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "v"
+    },
+    {
+     "p": "{mtWork} Huts",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{town} Shieling",
+     "w": 3,
+     "f": "set",
+     "rt": "shieling",
+     "sz": "h"
+    },
+    {
+     "p": "High {town}",
+     "w": 4,
+     "f": "set",
+     "sz": "hvt"
+    },
+    {
+     "p": "Upper {town}",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{holy:poss} Hermitage",
+     "w": 2,
+     "f": "sai",
+     "sz": "h"
+    },
+    {
+     "p": "Monastery of {holy}",
+     "w": 2,
+     "f": "sai",
+     "of": true,
+     "sz": "hv"
+    },
+    {
+     "p": "{wildWeather} Monastery",
+     "w": 2,
+     "f": "set",
+     "c": [
+      "chinese",
+      "japanese",
+      "korean",
+      "indian"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{wildWeather} Temple",
+     "w": 2,
+     "f": "set",
+     "c": [
+      "chinese",
+      "japanese",
+      "korean",
+      "indian"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{@peak} Observatory",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Station",
+     "w": 3,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{@peak} Base",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Hold",
+     "w": 3,
+     "f": "myth",
+     "h": true,
+     "sz": "vtc"
+    },
+    {
+     "p": "{wildMetal} Hold",
+     "w": 2,
+     "f": "myth",
+     "h": true,
+     "sz": "tc"
+    },
+    {
+     "p": "Halls of {town}",
+     "w": 2,
+     "f": "myth",
+     "of": true,
+     "h": true,
+     "sz": "tc"
+    }
+   ]
+  },
+  "forestNames": {
+   "forest": [
+    {
+     "p": "The {fstQuality} Forest",
+     "w": 10,
+     "f": "qual"
+    },
+    {
+     "p": "The {fstQuality} Wood",
+     "w": 8,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Forest",
+     "w": 10,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Wood",
+     "w": 8,
+     "f": "twn"
+    },
+    {
+     "p": "Forest of {town}",
+     "w": 5,
+     "f": "twn",
+     "of": true
+    },
+    {
+     "p": "{town} Chase",
+     "w": 4,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ],
+     "rt": "chase"
+    },
+    {
+     "p": "{town} Frith",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM",
+      "ST"
+     ],
+     "rt": "frith"
+    },
+    {
+     "p": "The {fstQuality} Weald",
+     "w": 2,
+     "f": "qual",
+     "rt": "weald"
+    },
+    {
+     "p": "{wildFuse}wood",
+     "w": 6,
+     "f": "qual",
+     "st": "hv"
+    },
+    {
+     "p": "{tree} Wood",
+     "w": 6,
+     "f": "flora"
+    },
+    {
+     "p": "The {tree} Woods",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{tree} Forest",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "Forest of the {beast:pl}",
+     "w": 3,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{beast} Wood",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "The {wildColour} Forest",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{kingdom} Forest",
+     "w": 2,
+     "f": "ppl"
+    },
+    {
+     "p": "Forest of the {folk}",
+     "w": 2,
+     "f": "ppl",
+     "of": true
+    },
+    {
+     "p": "The {fstOwner} Forest",
+     "w": 3,
+     "f": "fixed",
+     "e": [
+      "MD",
+      "EM"
+     ]
+    },
+    {
+     "p": "{fstOwner} Wood",
+     "w": 3,
+     "f": "fixed"
+    },
+    {
+     "p": "{person:poss} Wood",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{person} Forest",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{explorerMood} Forest",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "{explorerMood} Wood",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "{holy:poss} Wood",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "Forest of {god}",
+     "w": 1,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "Forest of {fstNoun}",
+     "w": 3,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "{mythFuse}wood",
+     "w": 3,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "The {fstQuality} Jungle",
+     "w": 3,
+     "f": "qual",
+     "bt": "jungle"
+    },
+    {
+     "p": "The Green Hell",
+     "w": 1,
+     "f": "fixed",
+     "bt": "jungle",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "The {fstQuality} Taiga",
+     "w": 2,
+     "f": "qual",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "cold"
+    },
+    {
+     "p": "Forest of {mariaWord}",
+     "w": 2,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "grove": [
+    {
+     "p": "{tree} Grove",
+     "w": 6,
+     "f": "flora"
+    },
+    {
+     "p": "Grove of the {number} {tree:pl}",
+     "w": 3,
+     "f": "flora",
+     "of": true
+    },
+    {
+     "p": "{town} Grove",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Spinney",
+     "w": 4,
+     "f": "crt",
+     "rt": "spinney"
+    },
+    {
+     "p": "{tree} Spinney",
+     "w": 3,
+     "f": "flora",
+     "rt": "spinney"
+    },
+    {
+     "p": "{tree} Copse",
+     "w": 5,
+     "f": "flora"
+    },
+    {
+     "p": "{beast} Copse",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Copse",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{tree} Shaw",
+     "w": 3,
+     "f": "flora",
+     "rt": "shaw"
+    },
+    {
+     "p": "{wildColour} Shaw",
+     "w": 2,
+     "f": "col",
+     "rt": "shaw"
+    },
+    {
+     "p": "{fstFlora} Hanger",
+     "w": 3,
+     "f": "flora",
+     "rt": "hanger"
+    },
+    {
+     "p": "{tree} Hanger",
+     "w": 3,
+     "f": "flora",
+     "rt": "hanger"
+    },
+    {
+     "p": "{wildFuse}hurst",
+     "w": 4,
+     "f": "qual",
+     "rt": "hurst",
+     "st": "hvt"
+    },
+    {
+     "p": "{wildFuse}holt",
+     "w": 3,
+     "f": "qual",
+     "rt": "holt",
+     "st": "hv"
+    },
+    {
+     "p": "{town} Holt",
+     "w": 2,
+     "f": "twn",
+     "rt": "holt"
+    },
+    {
+     "p": "{fstFlora} Thicket",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "The {fstQuality} Thicket",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{tree} Carr",
+     "w": 3,
+     "f": "flora",
+     "rt": "carr"
+    },
+    {
+     "p": "Sacred Grove of {god}",
+     "w": 2,
+     "f": "god",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "Grove of {god}",
+     "w": 2,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{holy:poss} Grove",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "{folkUncanny} Grove",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{mythFuse} Grove",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Grove of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "clearing": [
+    {
+     "p": "{beast} Glade",
+     "w": 6,
+     "f": "crt",
+     "st": "h"
+    },
+    {
+     "p": "{fstFlora} Glade",
+     "w": 4,
+     "f": "flora"
+    },
+    {
+     "p": "{wildColour} Glade",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{tree} Glade",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "The {fstQuality} Glade",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{fstFestival} Glade",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildQuality} Clearing",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Clearing",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Clearing",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{beast} Dell",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Dell",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{fstFlora} Dell",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{tree} Lawn",
+     "w": 2,
+     "f": "flora",
+     "rt": "walk"
+    },
+    {
+     "p": "{town} Lawn",
+     "w": 2,
+     "f": "twn",
+     "rt": "walk"
+    },
+    {
+     "p": "{wildQuality} Lawn",
+     "w": 2,
+     "f": "qual",
+     "rt": "walk"
+    },
+    {
+     "p": "{beast} Slade",
+     "w": 3,
+     "f": "crt",
+     "rt": "slade"
+    },
+    {
+     "p": "{town} Slade",
+     "w": 2,
+     "f": "twn",
+     "rt": "slade"
+    },
+    {
+     "p": "{town} Den",
+     "w": 3,
+     "f": "twn",
+     "rt": "den"
+    },
+    {
+     "p": "{wildFuse}den",
+     "w": 3,
+     "f": "qual",
+     "rt": "den",
+     "st": "hv"
+    },
+    {
+     "p": "Hollow of the {beast:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{fstSprite} Ring",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{fstSprite} Glade",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Glade of {moodOf}",
+     "w": 2,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "Glade of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "ride": [
+    {
+     "p": "{fstOwner} Ride",
+     "w": 4,
+     "f": "fixed",
+     "e": [
+      "MD",
+      "EM",
+      "ST"
+     ]
+    },
+    {
+     "p": "{wildColour} Ride",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{tree} Ride",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{town} Ride",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{direction} Ride",
+     "w": 2,
+     "f": "dir"
+    },
+    {
+     "p": "{fstWork} Track",
+     "w": 4,
+     "f": "work"
+    },
+    {
+     "p": "{fstWork} Path",
+     "w": 3,
+     "f": "work"
+    },
+    {
+     "p": "{fstWork} Way",
+     "w": 2,
+     "f": "work"
+    },
+    {
+     "p": "{town} Holloway",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Run",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{beast} Path",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Road",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Drove",
+     "w": 2,
+     "f": "twn",
+     "rt": "drove"
+    },
+    {
+     "p": "{fstQuality} Way",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{tree} Avenue",
+     "w": 2,
+     "f": "flora",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{holy:poss} Path",
+     "w": 1,
+     "f": "sai"
+    },
+    {
+     "p": "{fstSprite} Path",
+     "w": 1,
+     "f": "unc"
+    },
+    {
+     "p": "{mythFuse} Road",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "stream": [
+    {
+     "p": "{tree} Brook",
+     "w": 6,
+     "f": "flora"
+    },
+    {
+     "p": "{beast} Brook",
+     "w": 5,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Brook",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{town} Brook",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildFuse}brook",
+     "w": 3,
+     "f": "qual",
+     "st": "hv"
+    },
+    {
+     "p": "{fstQuality} Brook",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Bourne",
+     "w": 3,
+     "f": "crt",
+     "rt": "bourne"
+    },
+    {
+     "p": "{wildFuse}bourne",
+     "w": 3,
+     "f": "qual",
+     "rt": "bourne",
+     "st": "hv"
+    },
+    {
+     "p": "{tree} Spring",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{holy:poss} Well",
+     "w": 4,
+     "f": "sai"
+    },
+    {
+     "p": "Lady Well",
+     "w": 1,
+     "f": "sai",
+     "c": [
+      "christian"
+     ]
+    },
+    {
+     "p": "{wildColour} Water",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Creek",
+     "w": 2,
+     "f": "crt",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 2
+    },
+    {
+     "p": "{explorerMood} Brook",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "{fstSprite} Spring",
+     "w": 1,
+     "f": "unc",
+     "t": [
+      "light"
+     ]
+    },
+    {
+     "p": "{god:poss} Spring",
+     "w": 1,
+     "f": "god"
+    }
+   ],
+   "river": [
+    {
+     "p": "{river}",
+     "w": 40,
+     "f": "riv"
+    },
+    {
+     "p": "{wildFuse}water",
+     "w": 12,
+     "f": "qual"
+    },
+    {
+     "p": "River {fstRiverWord}",
+     "w": 10,
+     "f": "qual"
+    },
+    {
+     "p": "The {fstQuality} River",
+     "w": 8,
+     "f": "qual"
+    },
+    {
+     "p": "{tree} River",
+     "w": 6,
+     "f": "flora"
+    },
+    {
+     "p": "{beast} River",
+     "w": 6,
+     "f": "crt"
+    },
+    {
+     "p": "{fstQuality} Water",
+     "w": 6,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} River",
+     "w": 6,
+     "f": "col"
+    },
+    {
+     "p": "River of {fstNoun}",
+     "w": 6,
+     "f": "qual",
+     "of": true
+    }
+   ],
+   "pool": [
+    {
+     "p": "{town} Pond",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{fstPond} Pond",
+     "w": 6,
+     "f": "work"
+    },
+    {
+     "p": "{wildColour} Pool",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Pool",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{tree} Pool",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{fstQuality} Pool",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{lakeQuality} Lake",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{lakeCreature} Lake",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "Lake of the {lakeCreature:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{lakeFuse}mere",
+     "w": 3,
+     "f": "qual",
+     "rt": "mere"
+    },
+    {
+     "p": "Mere of the {lakeCreature:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true,
+     "rt": "mere"
+    },
+    {
+     "p": "{folkUncanny} Pool",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{holy:poss} Pool",
+     "w": 1,
+     "f": "sai"
+    }
+   ],
+   "tree": [
+    {
+     "p": "The {fstOwner} {tree}",
+     "w": 5,
+     "f": "fixed"
+    },
+    {
+     "p": "The {treeFunc} {tree}",
+     "w": 12,
+     "f": "flora"
+    },
+    {
+     "p": "{person:poss} {tree}",
+     "w": 4,
+     "f": "per"
+    },
+    {
+     "p": "The {number} Sisters",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "The {wildColour} Stone",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "The {beast} Stone",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "The {folkUncanny} Stone",
+     "w": 3,
+     "f": "unc"
+    },
+    {
+     "p": "The {treeFunc} Stone",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "The {fstOwner} Stone",
+     "w": 2,
+     "f": "fixed"
+    },
+    {
+     "p": "{holy:poss} Cross",
+     "w": 3,
+     "f": "sai"
+    },
+    {
+     "p": "{god:poss} {tree}",
+     "w": 2,
+     "f": "god",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "The {mythFuse} Tree",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "walk": [
+    {
+     "p": "{town} Walk",
+     "w": 5,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ],
+     "c": [
+      "norman-british",
+      "general"
+     ],
+     "rt": "walk"
+    },
+    {
+     "p": "{tree} Inclosure",
+     "w": 4,
+     "f": "flora",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "c": [
+      "norman-british",
+      "general"
+     ],
+     "rt": "walk"
+    },
+    {
+     "p": "{town} Inclosure",
+     "w": 4,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "c": [
+      "norman-british",
+      "general"
+     ],
+     "rt": "walk"
+    },
+    {
+     "p": "{direction} Bailiwick",
+     "w": 3,
+     "f": "dir",
+     "e": [
+      "MD",
+      "EM"
+     ],
+     "c": [
+      "norman-british",
+      "general"
+     ],
+     "rt": "walk"
+    },
+    {
+     "p": "{town} Bailiwick",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM"
+     ],
+     "c": [
+      "norman-british",
+      "general"
+     ],
+     "rt": "walk"
+    },
+    {
+     "p": "{beast} Covert",
+     "w": 4,
+     "f": "crt",
+     "e": [
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{town} Covert",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{fstOwner} Park",
+     "w": 4,
+     "f": "fixed",
+     "e": [
+      "MD",
+      "EM",
+      "ST"
+     ]
+    },
+    {
+     "p": "{beast} Park",
+     "w": 3,
+     "f": "crt",
+     "e": [
+      "MD",
+      "EM",
+      "ST"
+     ]
+    },
+    {
+     "p": "{town} Park",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{fstOwner} Warren",
+     "w": 2,
+     "f": "fixed",
+     "e": [
+      "MD",
+      "EM"
+     ]
+    },
+    {
+     "p": "{beast} Warren",
+     "w": 2,
+     "f": "crt",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{fstOwner} Hunting Ground",
+     "w": 2,
+     "f": "fixed",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{town} Plantation",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{tree} Plantation",
+     "w": 3,
+     "f": "flora",
+     "e": [
+      "ST",
+      "MO"
+     ]
+    }
+   ],
+   "settlement": [
+    {
+     "p": "{@forest} Lodge",
+     "w": 4,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{fstKeeper} Lodge",
+     "w": 3,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{fstKeeper} Cottage",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{fstOwner} Hunting Lodge",
+     "w": 3,
+     "f": "set",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{fstWork} End",
+     "w": 3,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{fstWork} Camp",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{town} Green",
+     "w": 4,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@forest} Gate",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@forest} Side",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@forest} End",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@stream} Mill",
+     "w": 3,
+     "f": "set",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Lodge",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{holy:poss} Hermitage",
+     "w": 2,
+     "f": "sai",
+     "sz": "h"
+    },
+    {
+     "p": "{tree} Abbey",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "MD",
+      "EM"
+     ],
+     "c": [
+      "christian"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Sawmills",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Timber Camp",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{tree} Village",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "Hall of the {tree:pl}",
+     "w": 2,
+     "f": "myth",
+     "of": true,
+     "h": true,
+     "sz": "vt"
+    },
+    {
+     "p": "{mythFuse}home",
+     "w": 2,
+     "f": "myth",
+     "h": true,
+     "sz": "vt"
+    },
+    {
+     "p": "{@forest} Station",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    }
+   ]
+  },
+  "desertNames": {
+   "desert": [
+    {
+     "p": "The {dsrQuality} Desert",
+     "w": 12,
+     "f": "qual"
+    },
+    {
+     "p": "The {wildColour} Desert",
+     "w": 8,
+     "f": "col"
+    },
+    {
+     "p": "The {directionAdj} Desert",
+     "w": 4,
+     "f": "dir"
+    },
+    {
+     "p": "{town} Desert",
+     "w": 6,
+     "f": "twn"
+    },
+    {
+     "p": "{person} Desert",
+     "w": 4,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 2
+    },
+    {
+     "p": "The {dsrQuality} Waste",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "The {dsrQuality} Wastes",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "The {wildColour} Waste",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "Sea of {dsrStuff}",
+     "w": 4,
+     "f": "shp",
+     "of": true
+    },
+    {
+     "p": "The {wildColour} Sands",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "The {dsrQuality} Sands",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "Land of {dsrStuff}",
+     "w": 2,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "The {dsrQuality} Quarter",
+     "w": 2,
+     "f": "qual",
+     "cx": {
+      "arabic-persian": 3
+     }
+    },
+    {
+     "p": "Desert of the {folk}",
+     "w": 3,
+     "f": "ppl",
+     "of": true
+    },
+    {
+     "p": "The {kingdom} Desert",
+     "w": 2,
+     "f": "ppl"
+    },
+    {
+     "p": "Desert of {moodOf}",
+     "w": 2,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "Desert of {god}",
+     "w": 1,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "The {mythBeast:poss} Waste",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Desert of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "The {wildColour} Dust",
+     "w": 2,
+     "f": "alien",
+     "e": [
+      "NF",
+      "IS"
+     ]
+    }
+   ],
+   "dune": [
+    {
+     "p": "The {wildColour} Dunes",
+     "w": 6,
+     "f": "col"
+    },
+    {
+     "p": "The {dsrQuality} Dunes",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Dunes",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Dunes",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "The {wildShape} Dune",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "The {number} Sisters",
+     "w": 1,
+     "f": "shp"
+    },
+    {
+     "p": "The Star Dunes",
+     "w": 1,
+     "f": "fixed"
+    },
+    {
+     "p": "Sand Sea of {town}",
+     "w": 2,
+     "f": "twn",
+     "of": true
+    },
+    {
+     "p": "The {wildColour} Sandhills",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{person:poss} Dune",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{folkUncanny} Dune",
+     "w": 1,
+     "f": "unc"
+    }
+   ],
+   "plain": [
+    {
+     "p": "The {dsrQuality} Plain",
+     "w": 5,
+     "f": "qual"
+    },
+    {
+     "p": "The {wildColour} Plain",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{town} Plain",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{dsrStone} Plain",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Salt Pan",
+     "w": 4,
+     "f": "twn",
+     "bt": "salt"
+    },
+    {
+     "p": "The {wildColour} Pan",
+     "w": 3,
+     "f": "col",
+     "bt": "salt"
+    },
+    {
+     "p": "{town} Salt Flats",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "salt"
+    },
+    {
+     "p": "The {dsrQuality} Flats",
+     "w": 3,
+     "f": "qual",
+     "bt": "salt"
+    },
+    {
+     "p": "The {wildColour} Flats",
+     "w": 2,
+     "f": "col",
+     "bt": "salt"
+    },
+    {
+     "p": "Plain of {dsrStuff}",
+     "w": 2,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "Plain of {moodOf}",
+     "w": 2,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "{explorerMood} Plain",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "Plain of the {beast:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{mythBeast} Plain",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Plain of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ]
+    }
+   ],
+   "rock": [
+    {
+     "p": "{wildColour} Mesa",
+     "w": 5,
+     "f": "col",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{wildColour} Table",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{town} Table",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Butte",
+     "w": 3,
+     "f": "col",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Butte",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{wildColour} Rock",
+     "w": 6,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Rock",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Rock",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{person:poss} Rock",
+     "w": 3,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{wildShape} Rock",
+     "w": 4,
+     "f": "shp"
+    },
+    {
+     "p": "The {wildShape}",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "The {wildColour} Pillars",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{folkUncanny} {devilFeature}",
+     "w": 2,
+     "f": "unc",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "{god:poss} Seat",
+     "w": 1,
+     "f": "god",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{mythBeast} Rock",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "canyon": [
+    {
+     "p": "{wildColour} Canyon",
+     "w": 6,
+     "f": "col",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{wildColour} Gorge",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{town} Canyon",
+     "w": 5,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{beast} Canyon",
+     "w": 3,
+     "f": "crt",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{dsrQuality} Canyon",
+     "w": 3,
+     "f": "qual",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person:poss} Canyon",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "Canyon of the {beast:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true,
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Wadi",
+     "w": 4,
+     "f": "twn",
+     "c": [
+      "arabic-persian",
+      "egyptian",
+      "ethiopian",
+      "west-african"
+     ],
+     "bt": "dry"
+    },
+    {
+     "p": "{town} Creek",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "The {dsrQuality} Gully",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Gully",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "Valley of {dsrStuff}",
+     "w": 2,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "Valley of {moodOf}",
+     "w": 1,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "{wildColour} Cleft",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "The {wildColour} Gate",
+     "w": 1,
+     "f": "shp"
+    },
+    {
+     "p": "{folkUncanny} Gulch",
+     "w": 1,
+     "f": "unc",
+     "e": [
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{town} Gulch",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "Valley of {mariaWord}",
+     "w": 2,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ]
+    }
+   ],
+   "oasis": [
+    {
+     "p": "{town} Oasis",
+     "w": 8,
+     "f": "twn",
+     "st": "vt"
+    },
+    {
+     "p": "Oasis of {town}",
+     "w": 4,
+     "f": "twn",
+     "of": true
+    },
+    {
+     "p": "{dsrOasisWord} Oasis",
+     "w": 6,
+     "f": "qual",
+     "st": "hv"
+    },
+    {
+     "p": "{beast} Well",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Wells",
+     "w": 4,
+     "f": "twn",
+     "st": "hvt"
+    },
+    {
+     "p": "{dsrOasisWord} Well",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{person:poss} Well",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{holy:poss} Well",
+     "w": 1,
+     "f": "sai"
+    },
+    {
+     "p": "{number} Wells",
+     "w": 3,
+     "f": "fixed",
+     "st": "hv"
+    },
+    {
+     "p": "{wildColour} Spring",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{dsrOasisWord} Spring",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{dsrOasisWord} Water",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{explorerMood} Well",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "Well of {moodOf}",
+     "w": 2,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "{god:poss} Spring",
+     "w": 1,
+     "f": "god"
+    },
+    {
+     "p": "{folkUncanny} Well",
+     "w": 1,
+     "f": "unc"
+    }
+   ],
+   "lake": [
+    {
+     "p": "Lake {town}",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Salt Lake",
+     "w": 4,
+     "f": "twn",
+     "bt": "salt"
+    },
+    {
+     "p": "{wildColour} Lake",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{dsrQuality} Lake",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{lakeQuality} Lake",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Dry Lake",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{dsrStuff} Lake",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Lake",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "Lake {explorerMood}",
+     "w": 3,
+     "f": "mood"
+    },
+    {
+     "p": "Lake {person}",
+     "w": 3,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 2
+    },
+    {
+     "p": "{folkUncanny} Lake",
+     "w": 1,
+     "f": "unc"
+    }
+   ],
+   "route": [
+    {
+     "p": "{dsrGoods} Road",
+     "w": 5,
+     "f": "work"
+    },
+    {
+     "p": "{town} Track",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Road",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Track",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{dsrDays} Days' Road",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{dsrWork} Way",
+     "w": 3,
+     "f": "work"
+    },
+    {
+     "p": "{person:poss} Track",
+     "w": 3,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person} Stock Route",
+     "w": 1,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "Road of {dsrStuff}",
+     "w": 2,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "{wildColour} Road",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{explorerMood} Track",
+     "w": 1,
+     "f": "mood"
+    }
+   ],
+   "landmark": [
+    {
+     "p": "{town} Cairn",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "The {wildColour} Cairn",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{person:poss} Cairn",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "The Lost City of {town}",
+     "w": 2,
+     "f": "qual",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "The Dead City of {town}",
+     "w": 2,
+     "f": "qual",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "{town} Ruins",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "The Buried City",
+     "w": 1,
+     "f": "fixed",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "City of {wildMetal}",
+     "w": 2,
+     "f": "qual",
+     "of": true,
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "The {wildColour} Pillar",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{folkUncanny} Chair",
+     "w": 1,
+     "f": "unc"
+    },
+    {
+     "p": "{beast} Stone",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "The {number} Graves",
+     "w": 1,
+     "f": "fixed",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "The {wildColour} Crater",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{town} Crater",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{dsrQuality} Sinkhole",
+     "w": 1,
+     "f": "qual",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person:poss} Tomb",
+     "w": 2,
+     "f": "per"
+    },
+    {
+     "p": "{god:poss} Gate",
+     "w": 1,
+     "f": "god",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{folkUncanny} Bones",
+     "w": 1,
+     "f": "unc"
+    },
+    {
+     "p": "{mythBeast:poss} Bones",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "{mariaWord} Crater",
+     "w": 2,
+     "f": "alien",
+     "e": [
+      "NF",
+      "IS"
+     ]
+    }
+   ],
+   "settlement": [
+    {
+     "p": "Fort {town}",
+     "w": 4,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{@oasis} Fort",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@route} Fort",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "Caravanserai of {town}",
+     "w": 2,
+     "f": "set",
+     "of": true,
+     "e": [
+      "MD",
+      "EM",
+      "ST"
+     ],
+     "c": [
+      "arabic-persian",
+      "steppe",
+      "indian",
+      "greek-byzantine",
+      "general"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{@route} Halt",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@oasis} Market",
+     "w": 2,
+     "f": "set",
+     "sz": "vt"
+    },
+    {
+     "p": "{@canyon} Town",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{wildMetal} Town",
+     "w": 3,
+     "f": "work",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "vt"
+    },
+    {
+     "p": "{wildMetal} Camp",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Diggings",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Station",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{person:poss} Station",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} of the Sands",
+     "w": 2,
+     "f": "set",
+     "sz": "tc"
+    },
+    {
+     "p": "The {wildColour} City",
+     "w": 2,
+     "f": "set",
+     "sz": "tc"
+    },
+    {
+     "p": "{@lake} Salt Works",
+     "w": 1,
+     "f": "work",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{holy:poss} Monastery",
+     "w": 2,
+     "f": "sai",
+     "sz": "hv"
+    },
+    {
+     "p": "City of {wildMetal}",
+     "w": 2,
+     "f": "myth",
+     "of": true,
+     "h": true,
+     "sz": "c"
+    },
+    {
+     "p": "{town} Base",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{@plain} Station",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{@desert} Outpost",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    }
+   ]
+  },
+  "moorNames": {
+   "moor": [
+    {
+     "p": "{town} Moor",
+     "w": 10,
+     "f": "twn",
+     "rt": "moor"
+    },
+    {
+     "p": "The {mrQuality} Moor",
+     "w": 6,
+     "f": "qual",
+     "rt": "moor"
+    },
+    {
+     "p": "{wildColour} Moor",
+     "w": 6,
+     "f": "col",
+     "rt": "moor"
+    },
+    {
+     "p": "{beast} Moor",
+     "w": 4,
+     "f": "crt",
+     "rt": "moor"
+    },
+    {
+     "p": "{wildFuse}moor",
+     "w": 5,
+     "f": "qual",
+     "rt": "moor",
+     "st": "hv"
+    },
+    {
+     "p": "{town} Fell",
+     "w": 5,
+     "f": "twn",
+     "rt": "fell"
+    },
+    {
+     "p": "{wildColour} Fell",
+     "w": 3,
+     "f": "col",
+     "rt": "fell"
+    },
+    {
+     "p": "The {mrQuality} Fells",
+     "w": 3,
+     "f": "qual",
+     "rt": "fell"
+    },
+    {
+     "p": "Muir of {town}",
+     "w": 4,
+     "f": "twn",
+     "of": true,
+     "rt": "muir"
+    },
+    {
+     "p": "{town} Heath",
+     "w": 5,
+     "f": "twn",
+     "rt": "heath"
+    },
+    {
+     "p": "{wildColour} Heath",
+     "w": 3,
+     "f": "col",
+     "rt": "heath"
+    },
+    {
+     "p": "{beast} Heath",
+     "w": 2,
+     "f": "crt",
+     "rt": "heath"
+    },
+    {
+     "p": "{mrFlora} Heath",
+     "w": 2,
+     "f": "flora",
+     "rt": "heath"
+    },
+    {
+     "p": "{town} Common",
+     "w": 4,
+     "f": "twn",
+     "rt": "common"
+    },
+    {
+     "p": "{wildColour} Common",
+     "w": 2,
+     "f": "col",
+     "rt": "common"
+    },
+    {
+     "p": "Forest of {town}",
+     "w": 2,
+     "f": "twn",
+     "of": true,
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "Moor of the {beast:pl}",
+     "w": 1,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{explorerMood} Moor",
+     "w": 1,
+     "f": "mood"
+    },
+    {
+     "p": "Moor of {moodOf}",
+     "w": 2,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "Fells of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "The {mrQuality} Barrens",
+     "w": 3,
+     "f": "qual",
+     "bt": "cold"
+    },
+    {
+     "p": "The {mrQuality} Tundra",
+     "w": 2,
+     "f": "qual",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "cold"
+    },
+    {
+     "p": "{mythBeast} Moor",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Moor of {mariaWord}",
+     "w": 1,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ]
+    }
+   ],
+   "hill": [
+    {
+     "p": "{wildColour} Tor",
+     "w": 6,
+     "f": "col",
+     "rt": "tor"
+    },
+    {
+     "p": "{beast} Tor",
+     "w": 5,
+     "f": "crt",
+     "rt": "tor"
+    },
+    {
+     "p": "{town} Tor",
+     "w": 4,
+     "f": "twn",
+     "rt": "tor"
+    },
+    {
+     "p": "{wildShape} Tor",
+     "w": 3,
+     "f": "shp",
+     "rt": "tor"
+    },
+    {
+     "p": "{wildColour} Rigg",
+     "w": 3,
+     "f": "col",
+     "rt": "rigg"
+    },
+    {
+     "p": "{town} Rigg",
+     "w": 3,
+     "f": "twn",
+     "rt": "rigg"
+    },
+    {
+     "p": "{beast} Rigg",
+     "w": 2,
+     "f": "crt",
+     "rt": "rigg"
+    },
+    {
+     "p": "{town} Howe",
+     "w": 3,
+     "f": "twn",
+     "rt": "howe"
+    },
+    {
+     "p": "{wildColour} Howe",
+     "w": 2,
+     "f": "col",
+     "rt": "howe"
+    },
+    {
+     "p": "{wildColour} Hill",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Hill",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Hill",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{mrQuality} Hill",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Law",
+     "w": 3,
+     "f": "col",
+     "rt": "law"
+    },
+    {
+     "p": "{town} Law",
+     "w": 2,
+     "f": "twn",
+     "rt": "law"
+    },
+    {
+     "p": "{wildColour} Knott",
+     "w": 2,
+     "f": "col",
+     "rt": "knott"
+    },
+    {
+     "p": "{wildColour} Pike",
+     "w": 2,
+     "f": "col",
+     "rt": "pike"
+    },
+    {
+     "p": "{wildColour} Cleave",
+     "w": 2,
+     "f": "col",
+     "rt": "cleave"
+    },
+    {
+     "p": "{town} Cleave",
+     "w": 2,
+     "f": "twn",
+     "rt": "cleave"
+    },
+    {
+     "p": "{folkUncanny} Hill",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{holy:poss} Hill",
+     "w": 1,
+     "f": "sai"
+    },
+    {
+     "p": "{god:poss} Hill",
+     "w": 1,
+     "f": "god"
+    },
+    {
+     "p": "{explorerMood} Hill",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "Heights of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "bog": [
+    {
+     "p": "{town} Moss",
+     "w": 6,
+     "f": "twn",
+     "rt": "moss"
+    },
+    {
+     "p": "{wildColour} Moss",
+     "w": 4,
+     "f": "col",
+     "rt": "moss"
+    },
+    {
+     "p": "{beast} Moss",
+     "w": 3,
+     "f": "crt",
+     "rt": "moss"
+    },
+    {
+     "p": "{town} Mire",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Mire",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{mrQuality} Mire",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Flow",
+     "w": 3,
+     "f": "twn",
+     "rt": "flow"
+    },
+    {
+     "p": "The {wildColour} Flow",
+     "w": 2,
+     "f": "col",
+     "rt": "flow"
+    },
+    {
+     "p": "{town} Bog",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Bog",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{folkUncanny} Bog",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{folkUncanny} Mire",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{wildColour} Hags",
+     "w": 2,
+     "f": "col",
+     "bt": "peat"
+    },
+    {
+     "p": "Mire of the {beast:pl}",
+     "w": 1,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{explorerMood} Mire",
+     "w": 1,
+     "f": "mood"
+    },
+    {
+     "p": "Mire of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "clough": [
+    {
+     "p": "{town} Clough",
+     "w": 5,
+     "f": "twn",
+     "rt": "clough"
+    },
+    {
+     "p": "{wildColour} Clough",
+     "w": 4,
+     "f": "col",
+     "rt": "clough"
+    },
+    {
+     "p": "{beast} Clough",
+     "w": 3,
+     "f": "crt",
+     "rt": "clough"
+    },
+    {
+     "p": "{town} Combe",
+     "w": 4,
+     "f": "twn",
+     "rt": "combe",
+     "st": "hv"
+    },
+    {
+     "p": "{wildFuse}combe",
+     "w": 3,
+     "f": "qual",
+     "rt": "combe",
+     "st": "hv"
+    },
+    {
+     "p": "{wildColour} Gill",
+     "w": 3,
+     "f": "col",
+     "rt": "ghyll"
+    },
+    {
+     "p": "{town} Hope",
+     "w": 2,
+     "f": "twn",
+     "rt": "hope",
+     "st": "hv"
+    },
+    {
+     "p": "{wildFuse}dale",
+     "w": 3,
+     "f": "qual",
+     "rt": "dale",
+     "st": "hv"
+    },
+    {
+     "p": "{mrQuality} Hollow",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Bottom",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "Glen {town}",
+     "w": 2,
+     "f": "twn",
+     "rt": "glen",
+     "st": "hv"
+    }
+   ],
+   "stream": [
+    {
+     "p": "{wildColour} Beck",
+     "w": 5,
+     "f": "col",
+     "rt": "beck"
+    },
+    {
+     "p": "{beast} Beck",
+     "w": 3,
+     "f": "crt",
+     "rt": "beck"
+    },
+    {
+     "p": "{town} Beck",
+     "w": 3,
+     "f": "twn",
+     "rt": "beck"
+    },
+    {
+     "p": "{wildFuse}beck",
+     "w": 3,
+     "f": "qual",
+     "rt": "beck",
+     "st": "hv"
+    },
+    {
+     "p": "{wildColour} Burn",
+     "w": 4,
+     "f": "col",
+     "rt": "burn"
+    },
+    {
+     "p": "{town} Burn",
+     "w": 3,
+     "f": "twn",
+     "rt": "burn"
+    },
+    {
+     "p": "{beast} Burn",
+     "w": 2,
+     "f": "crt",
+     "rt": "burn"
+    },
+    {
+     "p": "{wildColour} Gill",
+     "w": 3,
+     "f": "col",
+     "rt": "ghyll"
+    },
+    {
+     "p": "{town} Gill",
+     "w": 2,
+     "f": "twn",
+     "rt": "ghyll"
+    },
+    {
+     "p": "{wildColour} Water",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{town} Water",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Brook",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Brook",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Spring",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{holy:poss} Well",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "{river}",
+     "w": 6,
+     "f": "riv"
+    }
+   ],
+   "pool": [
+    {
+     "p": "{wildColour} Tarn",
+     "w": 5,
+     "f": "col",
+     "rt": "tarn"
+    },
+    {
+     "p": "{beast} Tarn",
+     "w": 3,
+     "f": "crt",
+     "rt": "tarn"
+    },
+    {
+     "p": "{wildQuality} Tarn",
+     "w": 2,
+     "f": "qual",
+     "rt": "tarn"
+    },
+    {
+     "p": "{wildColour} Pool",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Pool",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Pool",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{folkUncanny} Pool",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{wildColour} Lochan",
+     "w": 3,
+     "f": "col",
+     "rt": "lochan"
+    },
+    {
+     "p": "{wildColour} Mere",
+     "w": 2,
+     "f": "col",
+     "rt": "mere"
+    },
+    {
+     "p": "{lakeFuse}mere",
+     "w": 2,
+     "f": "qual",
+     "rt": "mere"
+    },
+    {
+     "p": "{wildColour} Pond",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{fstPond} Pond",
+     "w": 2,
+     "f": "work"
+    }
+   ],
+   "stone": [
+    {
+     "p": "The {wildColour} Stone",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Stone",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "The {treeFunc} Stone",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "The {number} Stones",
+     "w": 4,
+     "f": "fixed"
+    },
+    {
+     "p": "The {number} {stackGroup}",
+     "w": 4,
+     "f": "shp"
+    },
+    {
+     "p": "The {stackGroup}",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{town} Cairn",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Cairn",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{person:poss} Cairn",
+     "w": 2,
+     "f": "per"
+    },
+    {
+     "p": "{holy:poss} Cross",
+     "w": 3,
+     "f": "sai"
+    },
+    {
+     "p": "{town} Cross",
+     "w": 3,
+     "f": "twn",
+     "c": [
+      "christian"
+     ]
+    },
+    {
+     "p": "{wildColour} Cross",
+     "w": 2,
+     "f": "col",
+     "c": [
+      "christian"
+     ]
+    },
+    {
+     "p": "{folkUncanny} Chair",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{folkUncanny} Stone",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{town} Barrow",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Barrow",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{folkUncanny} Grave",
+     "w": 1,
+     "f": "unc",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "{god:poss} Stone",
+     "w": 1,
+     "f": "god"
+    },
+    {
+     "p": "{mythBeast} Stone",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "track": [
+    {
+     "p": "{mrWork} Track",
+     "w": 4,
+     "f": "work"
+    },
+    {
+     "p": "{mrWork} Road",
+     "w": 3,
+     "f": "work"
+    },
+    {
+     "p": "{mrWork} Way",
+     "w": 2,
+     "f": "work"
+    },
+    {
+     "p": "{town} Road",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Track",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Road",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "Packhorse Road",
+     "w": 2,
+     "f": "fixed",
+     "e": [
+      "MD",
+      "EM",
+      "ST"
+     ]
+    },
+    {
+     "p": "{beast} Path",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Path",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{holy:poss} Way",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "{fstOwner} Way",
+     "w": 2,
+     "f": "fixed"
+    }
+   ],
+   "settlement": [
+    {
+     "p": "{@moor} Farm",
+     "w": 4,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@moor} Gate",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@moor} Side",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@moor} Edge",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@moor} Head",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@hill} Farm",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{town} Shieling",
+     "w": 3,
+     "f": "set",
+     "rt": "shieling",
+     "sz": "h"
+    },
+    {
+     "p": "{mrWork} Cottages",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{wildMetal} Mines",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "Warren House",
+     "w": 1,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@track} Inn",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "Lower {town}",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "Higher {town}",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@moor} Station",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{mythFuse}hold",
+     "w": 1,
+     "f": "myth",
+     "h": true,
+     "sz": "hv"
+    }
+   ]
+  },
+  "wetlandNames": {
+   "marsh": [
+    {
+     "p": "{town} Marsh",
+     "w": 8,
+     "f": "twn",
+     "rt": "marsh"
+    },
+    {
+     "p": "{wildColour} Marsh",
+     "w": 5,
+     "f": "col",
+     "rt": "marsh"
+    },
+    {
+     "p": "The {wetQuality} Marsh",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Marsh",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Fen",
+     "w": 6,
+     "f": "twn",
+     "rt": "fen"
+    },
+    {
+     "p": "{wildColour} Fen",
+     "w": 3,
+     "f": "col",
+     "rt": "fen"
+    },
+    {
+     "p": "{wildFuse}fen",
+     "w": 4,
+     "f": "qual",
+     "rt": "fen",
+     "st": "hv"
+    },
+    {
+     "p": "{beast} Fen",
+     "w": 3,
+     "f": "crt",
+     "rt": "fen"
+    },
+    {
+     "p": "The {wetQuality} Fens",
+     "w": 3,
+     "f": "qual",
+     "rt": "fen"
+    },
+    {
+     "p": "The {directionAdj} Fens",
+     "w": 2,
+     "f": "dir",
+     "rt": "fen"
+    },
+    {
+     "p": "{town} Levels",
+     "w": 3,
+     "f": "twn",
+     "rt": "levels"
+    },
+    {
+     "p": "{town} Moor",
+     "w": 2,
+     "f": "twn",
+     "rt": "levels"
+    },
+    {
+     "p": "{town} Ings",
+     "w": 3,
+     "f": "twn",
+     "rt": "ings"
+    },
+    {
+     "p": "{wildColour} Marshes",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "Marsh of the {beast:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "Marshes of {moodOf}",
+     "w": 1,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "{folkUncanny} Marsh",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "The {wetQuality} Marshes",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{kingdom} Marshes",
+     "w": 1,
+     "f": "ppl"
+    },
+    {
+     "p": "Marshes of the {folk}",
+     "w": 2,
+     "f": "ppl",
+     "of": true
+    },
+    {
+     "p": "{mythBeast} Marsh",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Marsh of {mariaWord}",
+     "w": 4,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "bog": [
+    {
+     "p": "{town} Bog",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Bog",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{wetQuality} Bog",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Moss",
+     "w": 4,
+     "f": "twn",
+     "rt": "moss"
+    },
+    {
+     "p": "{wildColour} Moss",
+     "w": 3,
+     "f": "col",
+     "rt": "moss"
+    },
+    {
+     "p": "{town} Mire",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Mire",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{wetQuality} Mire",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Flow",
+     "w": 2,
+     "f": "twn",
+     "rt": "flow"
+    },
+    {
+     "p": "{folkUncanny} Bog",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{folkUncanny} Mire",
+     "w": 1,
+     "f": "unc"
+    },
+    {
+     "p": "{beast} Bog",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{wetFlora} Bog",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{town} Slough",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "Slough of {moodOf}",
+     "w": 1,
+     "f": "mood",
+     "of": true
+    }
+   ],
+   "swamp": [
+    {
+     "p": "{town} Swamp",
+     "w": 6,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Swamp",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{wetQuality} Swamp",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Swamp",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{wetFlora} Swamp",
+     "w": 4,
+     "f": "flora"
+    },
+    {
+     "p": "{town} Bayou",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "hot"
+    },
+    {
+     "p": "{town} Backwater",
+     "w": 3,
+     "f": "twn",
+     "bt": "hot"
+    },
+    {
+     "p": "The {wetQuality} Backwaters",
+     "w": 2,
+     "f": "qual",
+     "bt": "hot"
+    },
+    {
+     "p": "The {wildColour} Mangroves",
+     "w": 3,
+     "f": "col",
+     "bt": "mangrove"
+    },
+    {
+     "p": "{town} Mangroves",
+     "w": 2,
+     "f": "twn",
+     "bt": "mangrove"
+    },
+    {
+     "p": "{folkUncanny} Swamp",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "Swamp of {wetNoun}",
+     "w": 2,
+     "f": "qual",
+     "of": true
+    },
+    {
+     "p": "{explorerMood} Swamp",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "{person:poss} Swamp",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{mythBeast} Swamp",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Swamp of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "reed": [
+    {
+     "p": "{town} Reeds",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "The {wetQuality} Reeds",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Reeds",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Reedbed",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wetFlora} Carr",
+     "w": 4,
+     "f": "flora",
+     "rt": "carr"
+    },
+    {
+     "p": "{town} Carr",
+     "w": 4,
+     "f": "twn",
+     "rt": "carr"
+    },
+    {
+     "p": "{wetFlora} Beds",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{wetFlora} Holt",
+     "w": 2,
+     "f": "flora",
+     "rt": "holt"
+    },
+    {
+     "p": "{wildColour} Rushes",
+     "w": 2,
+     "f": "col"
+    }
+   ],
+   "water": [
+    {
+     "p": "{town} Mere",
+     "w": 4,
+     "f": "twn",
+     "rt": "mere"
+    },
+    {
+     "p": "{lakeFuse}mere",
+     "w": 4,
+     "f": "qual",
+     "rt": "mere"
+    },
+    {
+     "p": "{wildColour} Mere",
+     "w": 3,
+     "f": "col",
+     "rt": "mere"
+    },
+    {
+     "p": "Mere of the {lakeCreature:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true,
+     "rt": "mere"
+    },
+    {
+     "p": "{town} Broad",
+     "w": 4,
+     "f": "twn",
+     "rt": "broad"
+    },
+    {
+     "p": "{lakeQuality} Broad",
+     "w": 2,
+     "f": "qual",
+     "rt": "broad"
+    },
+    {
+     "p": "{wildColour} Pool",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Pool",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{folkUncanny} Pool",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{lakeCreature} Lake",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{lakeQuality} Lake",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "Lake {town}",
+     "w": 2,
+     "f": "twn",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "{wetFlora} Pond",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{fstPond} Pond",
+     "w": 2,
+     "f": "work"
+    },
+    {
+     "p": "{town} Lagoon",
+     "w": 2,
+     "f": "twn",
+     "bt": "hot"
+    },
+    {
+     "p": "{town} Oxbow",
+     "w": 1,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "Mere of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "channel": [
+    {
+     "p": "{town} Lode",
+     "w": 4,
+     "f": "twn",
+     "rt": "lode"
+    },
+    {
+     "p": "{wildColour} Lode",
+     "w": 2,
+     "f": "col",
+     "rt": "lode"
+    },
+    {
+     "p": "{town} Drain",
+     "w": 4,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "rt": "drain"
+    },
+    {
+     "p": "{direction} Drain",
+     "w": 2,
+     "f": "dir",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "rt": "drain"
+    },
+    {
+     "p": "{person:poss} Drain",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "rt": "drain"
+    },
+    {
+     "p": "{drainFeet} Foot Drain",
+     "w": 2,
+     "f": "fixed",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "rt": "drain"
+    },
+    {
+     "p": "{town} Cut",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Dyke",
+     "w": 3,
+     "f": "twn",
+     "rt": "drain"
+    },
+    {
+     "p": "{wildColour} Dyke",
+     "w": 2,
+     "f": "col",
+     "rt": "drain"
+    },
+    {
+     "p": "{town} Rhyne",
+     "w": 3,
+     "f": "twn",
+     "rt": "rhyne"
+    },
+    {
+     "p": "{town} Creek",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Creek",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Creek",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{town} Channel",
+     "w": 2,
+     "f": "twn"
+    }
+   ],
+   "isle": [
+    {
+     "p": "{town} Holme",
+     "w": 4,
+     "f": "twn",
+     "rt": "holme"
+    },
+    {
+     "p": "{wildFuse}holme",
+     "w": 3,
+     "f": "qual",
+     "rt": "holme",
+     "st": "hv"
+    },
+    {
+     "p": "{town} Eyot",
+     "w": 3,
+     "f": "twn",
+     "rt": "eyot"
+    },
+    {
+     "p": "{beast} Eyot",
+     "w": 2,
+     "f": "crt",
+     "rt": "eyot"
+    },
+    {
+     "p": "Isle of {town}",
+     "w": 4,
+     "f": "twn",
+     "of": true
+    },
+    {
+     "p": "{beast} Island",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Island",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{wetFlora} Island",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{holy:poss} Isle",
+     "w": 3,
+     "f": "sai"
+    },
+    {
+     "p": "{wetQuality} Island",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Island",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "Isle of the {beast:pl}",
+     "w": 2,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{folkUncanny} Island",
+     "w": 1,
+     "f": "unc"
+    }
+   ],
+   "causeway": [
+    {
+     "p": "{town} Causeway",
+     "w": 5,
+     "f": "twn",
+     "rt": "causeway"
+    },
+    {
+     "p": "{wildColour} Causeway",
+     "w": 2,
+     "f": "col",
+     "rt": "causeway"
+    },
+    {
+     "p": "{holy:poss} Causeway",
+     "w": 2,
+     "f": "sai"
+    },
+    {
+     "p": "{fstOwner} Causeway",
+     "w": 2,
+     "f": "fixed"
+    },
+    {
+     "p": "{town} Ford",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Ford",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{fordBeast} Ford",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Ferry",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Bridge",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Bridge",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{town} Staithe",
+     "w": 2,
+     "f": "twn",
+     "rt": "broad",
+     "st": "hv"
+    },
+    {
+     "p": "The Drowned Way",
+     "w": 1,
+     "f": "fixed",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "{town} Trackway",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "AN",
+      "MD"
+     ]
+    },
+    {
+     "p": "{folkUncanny} Bridge",
+     "w": 2,
+     "f": "unc"
+    }
+   ],
+   "delta": [
+    {
+     "p": "{town} Delta",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "The {wildColour} Delta",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{river} Delta",
+     "w": 4,
+     "f": "riv"
+    },
+    {
+     "p": "Mouths of the {river}",
+     "w": 2,
+     "f": "riv",
+     "of": true
+    },
+    {
+     "p": "{town} Saltings",
+     "w": 3,
+     "f": "twn",
+     "rt": "saltings"
+    },
+    {
+     "p": "{town} Salt Marsh",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Saltmarsh",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{town} Flats",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "The {wildColour} Flats",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Marshes",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "The {wetQuality} Delta",
+     "w": 2,
+     "f": "qual"
+    }
+   ],
+   "settlement": [
+    {
+     "p": "{@causeway} End",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@causeway} Head",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@marsh} Side",
+     "w": 3,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@marsh} End",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@marsh} Gate",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{wetWork} Huts",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{wetWork} Row",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Decoy",
+     "w": 2,
+     "f": "work",
+     "e": [
+      "EM",
+      "ST"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{holy:poss} Abbey",
+     "w": 2,
+     "f": "sai",
+     "e": [
+      "MD",
+      "EM"
+     ],
+     "c": [
+      "christian"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Lake Village",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "AN"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Water Village",
+     "w": 2,
+     "f": "set",
+     "bt": "hot",
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Pumping Station",
+     "w": 1,
+     "f": "work",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{@channel} Sluice",
+     "w": 1,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Hydro Station",
+     "w": 1,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{@marsh} Station",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    }
+   ]
+  },
+  "grasslandNames": {
+   "plain": [
+    {
+     "p": "The {grsQuality} Plain",
+     "w": 6,
+     "f": "qual"
+    },
+    {
+     "p": "The {grsQuality} Plains",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Plain",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "The {wildColour} Plain",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "The {grsQuality} Steppe",
+     "w": 4,
+     "f": "qual",
+     "bt": "steppe"
+    },
+    {
+     "p": "The {grsQuality} Prairie",
+     "w": 3,
+     "f": "qual",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "grass"
+    },
+    {
+     "p": "The {grsQuality} Savannah",
+     "w": 3,
+     "f": "qual",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "bt": "hot"
+    },
+    {
+     "p": "The {grsQuality} Grasslands",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "Sea of {grsFlora}",
+     "w": 2,
+     "f": "shp",
+     "of": true
+    },
+    {
+     "p": "Plains of the {folk}",
+     "w": 3,
+     "f": "ppl",
+     "of": true
+    },
+    {
+     "p": "The {kingdom} Steppe",
+     "w": 1,
+     "f": "ppl",
+     "bt": "steppe"
+    },
+    {
+     "p": "Plains of the {beast:pl}",
+     "w": 3,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{person} Plains",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{explorerMood} Plains",
+     "w": 2,
+     "f": "mood"
+    },
+    {
+     "p": "The {directionAdj} Plains",
+     "w": 3,
+     "f": "dir"
+    },
+    {
+     "p": "{god:poss} Pasture",
+     "w": 1,
+     "f": "god",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{mythBeast} Plains",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    },
+    {
+     "p": "Plain of {mariaWord}",
+     "w": 2,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ]
+    }
+   ],
+   "down": [
+    {
+     "p": "{town} Down",
+     "w": 6,
+     "f": "twn",
+     "rt": "down"
+    },
+    {
+     "p": "{town} Downs",
+     "w": 4,
+     "f": "twn",
+     "rt": "down"
+    },
+    {
+     "p": "{wildColour} Down",
+     "w": 3,
+     "f": "col",
+     "rt": "down"
+    },
+    {
+     "p": "The {grsQuality} Downs",
+     "w": 3,
+     "f": "qual",
+     "rt": "down"
+    },
+    {
+     "p": "{beast} Down",
+     "w": 2,
+     "f": "crt",
+     "rt": "down"
+    },
+    {
+     "p": "{town} Wold",
+     "w": 5,
+     "f": "twn",
+     "rt": "wold"
+    },
+    {
+     "p": "The {directionAdj} Wolds",
+     "w": 3,
+     "f": "dir",
+     "rt": "wold"
+    },
+    {
+     "p": "{wildColour} Wold",
+     "w": 2,
+     "f": "col",
+     "rt": "wold"
+    },
+    {
+     "p": "{wildFuse}wold",
+     "w": 2,
+     "f": "qual",
+     "rt": "wold",
+     "st": "hv"
+    },
+    {
+     "p": "{wildColour} Hill",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Hill",
+     "w": 2,
+     "f": "crt",
+     "rt": "down"
+    },
+    {
+     "p": "{town} Ridge",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "The {grsQuality} Hills",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Hills",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{folkUncanny} Dyke",
+     "w": 2,
+     "f": "unc",
+     "rt": "down"
+    },
+    {
+     "p": "{holy:poss} Down",
+     "w": 1,
+     "f": "sai",
+     "rt": "down"
+    }
+   ],
+   "meadow": [
+    {
+     "p": "{town} Meadow",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{grsFlora} Meadow",
+     "w": 5,
+     "f": "flora"
+    },
+    {
+     "p": "{grsQuality} Meadow",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{beast} Lea",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{grsFlora} Lea",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{town} Lea",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{wildFuse}ley",
+     "w": 4,
+     "f": "qual",
+     "st": "hvt"
+    },
+    {
+     "p": "{town} Mead",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{grsFlora} Mead",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{wildFuse}mead",
+     "w": 2,
+     "f": "qual",
+     "st": "hv"
+    },
+    {
+     "p": "{town} Pasture",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{stock} Pasture",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Ings",
+     "w": 2,
+     "f": "twn",
+     "rt": "ings"
+    },
+    {
+     "p": "{town} Haugh",
+     "w": 3,
+     "f": "twn",
+     "rt": "haugh"
+    },
+    {
+     "p": "{fstOwner} Meadow",
+     "w": 2,
+     "f": "fixed"
+    },
+    {
+     "p": "{holy:poss} Meadow",
+     "w": 1,
+     "f": "sai"
+    },
+    {
+     "p": "{town} Summer Pasture",
+     "w": 2,
+     "f": "twn",
+     "bt": "alpine"
+    }
+   ],
+   "heath": [
+    {
+     "p": "{town} Heath",
+     "w": 6,
+     "f": "twn",
+     "rt": "heath"
+    },
+    {
+     "p": "{wildColour} Heath",
+     "w": 3,
+     "f": "col",
+     "rt": "heath"
+    },
+    {
+     "p": "{grsFlora} Heath",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{beast} Heath",
+     "w": 2,
+     "f": "crt",
+     "rt": "heath"
+    },
+    {
+     "p": "The {grsQuality} Heath",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Common",
+     "w": 5,
+     "f": "twn",
+     "rt": "common"
+    },
+    {
+     "p": "{grsFlora} Common",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{wildColour} Common",
+     "w": 2,
+     "f": "col",
+     "rt": "common"
+    },
+    {
+     "p": "{folkUncanny} Heath",
+     "w": 1,
+     "f": "unc"
+    },
+    {
+     "p": "{town} Waste",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM"
+     ]
+    },
+    {
+     "p": "{explorerMood} Heath",
+     "w": 1,
+     "f": "mood"
+    },
+    {
+     "p": "{mythBeast} Heath",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "vale": [
+    {
+     "p": "Vale of {town}",
+     "w": 6,
+     "f": "twn",
+     "of": true
+    },
+    {
+     "p": "Vale of the {wildColour} {beast}",
+     "w": 3,
+     "f": "crt",
+     "of": true
+    },
+    {
+     "p": "{town} Vale",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{grsQuality} Vale",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Vale",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "Strath {town}",
+     "w": 4,
+     "f": "twn",
+     "rt": "strath"
+    },
+    {
+     "p": "{wildColour} Strath",
+     "w": 2,
+     "f": "col",
+     "rt": "strath"
+    },
+    {
+     "p": "Carse of {town}",
+     "w": 3,
+     "f": "twn",
+     "of": true,
+     "rt": "carse"
+    },
+    {
+     "p": "{town} Valley",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{grsQuality} Valley",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Bottom",
+     "w": 2,
+     "f": "twn",
+     "rt": "down"
+    },
+    {
+     "p": "{beast} Bottom",
+     "w": 2,
+     "f": "crt",
+     "rt": "down"
+    },
+    {
+     "p": "Vale of {moodOf}",
+     "w": 1,
+     "f": "mood",
+     "of": true
+    },
+    {
+     "p": "The {grsFlora} Valley",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "Vale of {mariaWord}",
+     "w": 3,
+     "f": "alien",
+     "of": true,
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "strange"
+     ]
+    }
+   ],
+   "stream": [
+    {
+     "p": "{town} Brook",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Brook",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{grsFlora} Brook",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{wildColour} Brook",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{town} Bourne",
+     "w": 3,
+     "f": "twn",
+     "rt": "bourne"
+    },
+    {
+     "p": "{wildFuse}bourne",
+     "w": 3,
+     "f": "qual",
+     "rt": "bourne",
+     "st": "hv"
+    },
+    {
+     "p": "{beast} Waterhole",
+     "w": 3,
+     "f": "crt",
+     "bt": "hot"
+    },
+    {
+     "p": "{town} Waterhole",
+     "w": 2,
+     "f": "twn",
+     "bt": "hot"
+    },
+    {
+     "p": "{beast} Creek",
+     "w": 3,
+     "f": "crt",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Creek",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{beast} Spring",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Well",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{river}",
+     "w": 8,
+     "f": "riv"
+    },
+    {
+     "p": "{wildColour} Water",
+     "w": 2,
+     "f": "col"
+    }
+   ],
+   "lake": [
+    {
+     "p": "{beast} Pond",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Pond",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{fstPond} Pond",
+     "w": 3,
+     "f": "work"
+    },
+    {
+     "p": "{lakeQuality} Lake",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{lakeCreature} Lake",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "Lake {town}",
+     "w": 2,
+     "f": "twn",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "{wildColour} Lake",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{town} Mere",
+     "w": 2,
+     "f": "twn",
+     "rt": "mere"
+    },
+    {
+     "p": "{lakeFuse}mere",
+     "w": 2,
+     "f": "qual",
+     "rt": "mere"
+    },
+    {
+     "p": "{town} Slough",
+     "w": 1,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Salt Lake",
+     "w": 1,
+     "f": "twn",
+     "bt": "salt"
+    }
+   ],
+   "track": [
+    {
+     "p": "{town} Drove",
+     "w": 4,
+     "f": "twn",
+     "rt": "drove"
+    },
+    {
+     "p": "{stock} Drove",
+     "w": 3,
+     "f": "crt",
+     "rt": "drove"
+    },
+    {
+     "p": "{wildColour} Drove",
+     "w": 2,
+     "f": "col",
+     "rt": "drove"
+    },
+    {
+     "p": "{town} Trail",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 2
+    },
+    {
+     "p": "{stock} Trail",
+     "w": 3,
+     "f": "crt",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person:poss} Trail",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{grsWork} Way",
+     "w": 3,
+     "f": "work"
+    },
+    {
+     "p": "{grsWork} Road",
+     "w": 2,
+     "f": "work"
+    },
+    {
+     "p": "{wildColour} Way",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{town} Way",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Ridgeway",
+     "w": 2,
+     "f": "twn",
+     "rt": "down"
+    },
+    {
+     "p": "{town} Road",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{explorerMood} Trail",
+     "w": 1,
+     "f": "mood"
+    },
+    {
+     "p": "Road of the {folk}",
+     "w": 1,
+     "f": "ppl",
+     "of": true
+    }
+   ],
+   "landmark": [
+    {
+     "p": "{town} Barrow",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Barrow",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "The {number} Barrows",
+     "w": 2,
+     "f": "fixed"
+    },
+    {
+     "p": "{town} Mound",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{folkUncanny} Mound",
+     "w": 2,
+     "f": "unc"
+    },
+    {
+     "p": "{folkUncanny} Grave",
+     "w": 1,
+     "f": "unc",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "{beast} Stone",
+     "w": 2,
+     "f": "crt"
+    },
+    {
+     "p": "The {wildColour} Stone",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "The {treeFunc} Stone",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "The Lone {tree}",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "The {treeFunc} {tree}",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "The {wildColour} {stock}",
+     "w": 2,
+     "f": "shp",
+     "rt": "down"
+    },
+    {
+     "p": "The {wildColour} Mound",
+     "w": 1,
+     "f": "col",
+     "bt": "steppe"
+    },
+    {
+     "p": "{town} Cross",
+     "w": 1,
+     "f": "twn",
+     "c": [
+      "christian"
+     ]
+    },
+    {
+     "p": "{god:poss} Mound",
+     "w": 1,
+     "f": "god"
+    },
+    {
+     "p": "{mythBeast:poss} Barrow",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "settlement": [
+    {
+     "p": "{@meadow} Farm",
+     "w": 3,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@plain} Farm",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@track} Inn",
+     "w": 2,
+     "f": "set",
+     "sz": "h"
+    },
+    {
+     "p": "{@track} End",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{@heath} End",
+     "w": 2,
+     "f": "set",
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Station",
+     "w": 3,
+     "f": "set",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{person:poss} Station",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Ranch",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "nx": 2,
+     "sz": "h"
+    },
+    {
+     "p": "{person:poss} Ranch",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Camp",
+     "w": 2,
+     "f": "set",
+     "bt": "steppe",
+     "sz": "h"
+    },
+    {
+     "p": "{folk} Camp",
+     "w": 2,
+     "f": "ppl",
+     "bt": "steppe",
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Trading Post",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST"
+     ],
+     "nx": 2,
+     "sz": "h"
+    },
+    {
+     "p": "Fort {town}",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST"
+     ],
+     "nx": 2,
+     "sz": "hv"
+    },
+    {
+     "p": "{town} Stockade",
+     "w": 1,
+     "f": "set",
+     "e": [
+      "EM",
+      "ST"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "Upper {town}",
+     "w": 2,
+     "f": "set",
+     "c": [
+      "british"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "Nether {town}",
+     "w": 2,
+     "f": "set",
+     "c": [
+      "british"
+     ],
+     "sz": "hv"
+    },
+    {
+     "p": "{@plain} Station",
+     "w": 2,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Agridome",
+     "w": 1,
+     "f": "set",
+     "e": [
+      "NF",
+      "IS"
+     ],
+     "sz": "h"
+    },
+    {
+     "p": "{town} Riders' Hall",
+     "w": 1,
+     "f": "myth",
+     "h": true,
+     "sz": "v"
+    }
+   ]
+  }
+ },
+ "cultureShapes": [
+  {
+   "p": "Giants' Home",
+   "w": 3,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "norse",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "Troll Wall",
+   "w": 3,
+   "f": "fixed",
+   "t": [
+    "strange"
+   ],
+   "culture": "norse",
+   "module": "mountainNames",
+   "kind": "ridge"
+  },
+  {
+   "p": "Troll Peak",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "strange"
+   ],
+   "culture": "norse",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Smoking Mountain",
+   "w": 3,
+   "f": "fixed",
+   "bt": "volcanic",
+   "culture": "aztec",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "White Woman",
+   "w": 3,
+   "f": "fixed",
+   "culture": "aztec",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Snake Mountain",
+   "w": 2,
+   "f": "fixed",
+   "culture": "aztec",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Old Mountain",
+   "w": 3,
+   "f": "fixed",
+   "culture": "andean",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Young Mountain",
+   "w": 2,
+   "f": "fixed",
+   "culture": "andean",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Holy Mountain",
+   "w": 2,
+   "f": "fixed",
+   "e": [
+    "MD",
+    "EM",
+    "ST",
+    "MO"
+   ],
+   "culture": "greek-byzantine",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Mountain of the Muses",
+   "w": 2,
+   "f": "fixed",
+   "e": [
+    "AN"
+   ],
+   "t": [
+    "grand"
+   ],
+   "culture": "greek-byzantine",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Abode of Snow",
+   "w": 3,
+   "f": "fixed",
+   "bt": "alpine",
+   "t": [
+    "grand"
+   ],
+   "culture": "indian",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "Abode of Clouds",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "indian",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "{wildColour} Head Mountain",
+   "w": 3,
+   "f": "fixed",
+   "culture": "korean",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Mountain of the {wildColour} Dragon",
+   "w": 3,
+   "f": "fixed",
+   "culture": "chinese",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Heavenly Mountains",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "chinese",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "Peak of the {number} Immortals",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "strange"
+   ],
+   "culture": "chinese",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Heavenly Mountains",
+   "w": 3,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "steppe",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "Stone Belt",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "slavic",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "Mountains of the Moon",
+   "w": 2,
+   "f": "fixed",
+   "e": [
+    "AN",
+    "MD"
+   ],
+   "t": [
+    "strange"
+   ],
+   "culture": "arabic-persian",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "Mountains of the Moon",
+   "w": 2,
+   "f": "fixed",
+   "e": [
+    "AN",
+    "MD"
+   ],
+   "t": [
+    "strange"
+   ],
+   "culture": "egyptian",
+   "module": "mountainNames",
+   "kind": "range"
+  },
+  {
+   "p": "Shining Mountain",
+   "w": 3,
+   "f": "fixed",
+   "culture": "bantu",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "House of {god}",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "bantu",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Sacred Hill",
+   "w": 2,
+   "f": "fixed",
+   "culture": "west-african",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Water Mountain",
+   "w": 3,
+   "f": "fixed",
+   "culture": "maya",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Pure Mountain",
+   "w": 2,
+   "f": "fixed",
+   "culture": "egyptian",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Horizon of {god}",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "egyptian",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "White Mountain",
+   "w": 3,
+   "f": "fixed",
+   "culture": "polynesian",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Long Mountain",
+   "w": 3,
+   "f": "fixed",
+   "culture": "polynesian",
+   "module": "mountainNames",
+   "kind": "peak"
+  },
+  {
+   "p": "Primeval Forest",
+   "w": 2,
+   "f": "fixed",
+   "culture": "slavic",
+   "module": "forestNames",
+   "kind": "forest"
+  },
+  {
+   "p": "Sacred Forest of {town}",
+   "w": 3,
+   "f": "fixed",
+   "culture": "west-african",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "Forest of the Ancestors",
+   "w": 3,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "bantu",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "Spirit Wood",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "strange"
+   ],
+   "culture": "bantu",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "Spirit Wood",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "strange"
+   ],
+   "culture": "west-african",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "{town} Bamboo Forest",
+   "w": 3,
+   "f": "fixed",
+   "culture": "chinese",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "{town} Bamboo Forest",
+   "w": 3,
+   "f": "fixed",
+   "culture": "japanese",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "{town} Bamboo Forest",
+   "w": 2,
+   "f": "fixed",
+   "culture": "korean",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "Sacred Grove of {town}",
+   "w": 2,
+   "f": "fixed",
+   "culture": "japanese",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "Iron Wood",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "strange"
+   ],
+   "culture": "norse",
+   "module": "forestNames",
+   "kind": "forest"
+  },
+  {
+   "p": "Forest of the Sages",
+   "w": 2,
+   "f": "fixed",
+   "e": [
+    "AN"
+   ],
+   "t": [
+    "grand"
+   ],
+   "culture": "indian",
+   "module": "forestNames",
+   "kind": "forest"
+  },
+  {
+   "p": "Sacred Wood of {town}",
+   "w": 2,
+   "f": "fixed",
+   "culture": "roman",
+   "module": "forestNames",
+   "kind": "grove"
+  },
+  {
+   "p": "Cloud Forest of {town}",
+   "w": 2,
+   "f": "fixed",
+   "culture": "andean",
+   "module": "forestNames",
+   "kind": "forest"
+  },
+  {
+   "p": "Forest of the Birds",
+   "w": 2,
+   "f": "fixed",
+   "culture": "polynesian",
+   "module": "forestNames",
+   "kind": "forest"
+  },
+  {
+   "p": "Red Land",
+   "w": 6,
+   "f": "fixed",
+   "e": [
+    "AN"
+   ],
+   "t": [
+    "grand"
+   ],
+   "culture": "egyptian",
+   "module": "desertNames",
+   "kind": "desert"
+  },
+  {
+   "p": "Sea of Death",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grim"
+   ],
+   "culture": "chinese",
+   "module": "desertNames",
+   "kind": "desert"
+  },
+  {
+   "p": "The Flowing Sands",
+   "w": 2,
+   "f": "fixed",
+   "culture": "chinese",
+   "module": "desertNames",
+   "kind": "desert"
+  },
+  {
+   "p": "Moving Sands",
+   "w": 2,
+   "f": "fixed",
+   "culture": "chinese",
+   "module": "desertNames",
+   "kind": "dune"
+  },
+  {
+   "p": "The Waterless Place",
+   "w": 2,
+   "f": "fixed",
+   "culture": "steppe",
+   "module": "desertNames",
+   "kind": "desert"
+  },
+  {
+   "p": "Shore of the Sands",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "west-african",
+   "module": "desertNames",
+   "kind": "desert"
+  },
+  {
+   "p": "Land of Death",
+   "w": 2,
+   "f": "fixed",
+   "t": [
+    "grim"
+   ],
+   "culture": "indian",
+   "module": "desertNames",
+   "kind": "desert"
+  },
+  {
+   "p": "Salt Desert of {town}",
+   "w": 2,
+   "f": "fixed",
+   "culture": "andean",
+   "module": "desertNames",
+   "kind": "plain"
+  },
+  {
+   "p": "Field of Reeds",
+   "w": 4,
+   "f": "fixed",
+   "e": [
+    "AN"
+   ],
+   "t": [
+    "grand"
+   ],
+   "culture": "egyptian",
+   "module": "wetlandNames",
+   "kind": "marsh"
+  },
+  {
+   "p": "Place of Reeds",
+   "w": 3,
+   "f": "fixed",
+   "culture": "aztec",
+   "module": "wetlandNames",
+   "kind": "reed"
+  },
+  {
+   "p": "{town} Floating Gardens",
+   "w": 3,
+   "f": "fixed",
+   "sz": "hv",
+   "culture": "aztec",
+   "module": "wetlandNames",
+   "kind": "settlement"
+  },
+  {
+   "p": "Beautiful Forest",
+   "w": 2,
+   "f": "fixed",
+   "bt": "mangrove",
+   "culture": "indian",
+   "module": "wetlandNames",
+   "kind": "swamp"
+  },
+  {
+   "p": "Isle of Eels",
+   "w": 2,
+   "f": "fixed",
+   "culture": "anglo-saxon",
+   "module": "wetlandNames",
+   "kind": "isle"
+  },
+  {
+   "p": "Land of the {number} Rivers",
+   "w": 3,
+   "f": "fixed",
+   "culture": "steppe",
+   "module": "grasslandNames",
+   "kind": "plain"
+  },
+  {
+   "p": "High Plain",
+   "w": 4,
+   "f": "fixed",
+   "culture": "andean",
+   "module": "grasslandNames",
+   "kind": "plain"
+  },
+  {
+   "p": "Wild Field",
+   "w": 3,
+   "f": "fixed",
+   "e": [
+    "EM"
+   ],
+   "culture": "slavic",
+   "module": "grasslandNames",
+   "kind": "plain"
+  },
+  {
+   "p": "Thing Field",
+   "w": 2,
+   "f": "fixed",
+   "e": [
+    "MD"
+   ],
+   "culture": "norse",
+   "module": "grasslandNames",
+   "kind": "meadow"
+  },
+  {
+   "p": "Plain of High Heaven",
+   "w": 1,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ],
+   "culture": "japanese",
+   "module": "grasslandNames",
+   "kind": "plain"
+  }
+ ],
+ "settlementLink": {
+  "purposeBuiltShare": 0.6,
+  "terrainToModule": [
+   {
+    "terrain": "mountains",
+    "module": "mountainNames"
+   },
+   {
+    "terrain": "forest",
+    "module": "forestNames"
+   },
+   {
+    "terrain": "wetland",
+    "module": "wetlandNames"
+   },
+   {
+    "terrain": "plains",
+    "module": "grasslandNames",
+    "byBiome": {
+     "desert": "desertNames",
+     "moorland": "moorNames"
+    }
+   },
+   {
+    "terrain": "hills",
+    "module": "grasslandNames",
+    "byBiome": {
+     "desert": "desertNames",
+     "moorland": "moorNames",
+     "boreal": "moorNames",
+     "highland": "moorNames"
+    },
+    "split": {
+     "britain": {
+      "moorNames": 50,
+      "grasslandNames": 50
+     },
+     "temperate": {
+      "moorNames": 50,
+      "grasslandNames": 50
+     }
+    }
+   }
+  ],
+  "nativeLand": {
+   "mountainNames": {
+    "terrain": "mountains"
+   },
+   "forestNames": {
+    "terrain": "forest"
+   },
+   "wetlandNames": {
+    "terrain": "wetland"
+   },
+   "grasslandNames": {
+    "terrain": "plains"
+   },
+   "moorNames": {
+    "terrain": "hills",
+    "biomeIfUnset": "moorland"
+   },
+   "desertNames": {
+    "terrain": "plains",
+    "biomeIfUnset": "desert"
+   }
+  },
+  "worldEraToRoute": {
+   "anglo-saxon": {
+    "old-english": "MD",
+    "modern": "MO"
+   },
+   "norse": {
+    "viking": "MD"
+   },
+   "celtic": {
+    "pagan": "AN",
+    "saints": "MD"
+   },
+   "roman": {
+    "imperial": "AN",
+    "medieval": "MD"
+   },
+   "chinese": {
+    "imperial": "MD",
+    "modern": "MO"
+   },
+   "egyptian": {
+    "pharaonic": "AN",
+    "graeco-roman": "AN"
+   },
+   "aztec": {
+    "mexica": "MD",
+    "colonial": "EM"
+   },
+   "bantu": {
+    "kingdoms": "MD"
+   },
+   "slavic": {
+    "rus": "MD",
+    "imperial": "EM",
+    "soviet": "MO"
+   },
+   "arabic-persian": {
+    "arabic": "MD",
+    "persian": "MD"
+   },
+   "indian": {
+    "ancient": "AN",
+    "modern": "MO"
+   },
+   "japanese": {
+    "samurai": "MD",
+    "modern": "MO"
+   },
+   "west-african": {
+    "sahel-and-forest": "MD"
+   },
+   "maya": {
+    "classic": "AN"
+   },
+   "korean": {
+    "joseon": "EM"
+   },
+   "ethiopian": {
+    "aksum-and-abyssinia": "MD"
+   }
+  },
+  "colonialToCulture": {
+   "general": {
+    "culture": "general",
+    "era": "EM"
+   },
+   "roman": {
+    "culture": "roman",
+    "era": "AN"
+   },
+   "hellenistic": {
+    "culture": "greek-byzantine",
+    "era": "AN"
+   },
+   "phoenician": {
+    "culture": "general",
+    "era": "AN"
+   },
+   "spanish": {
+    "culture": "general",
+    "era": "EM"
+   },
+   "portuguese": {
+    "culture": "general",
+    "era": "EM"
+   },
+   "french": {
+    "culture": "general",
+    "era": "EM"
+   },
+   "italian": {
+    "culture": "general",
+    "era": "ST"
+   },
+   "belgian": {
+    "culture": "general",
+    "era": "ST"
+   },
+   "dutch": {
+    "culture": "general",
+    "era": "EM"
+   },
+   "british-imperial": {
+    "culture": "norman-british",
+    "era": "ST"
+   },
+   "english-speaking-settler": {
+    "culture": "norman-british",
+    "era": "ST"
+   },
+   "german": {
+    "culture": "general",
+    "era": "ST"
+   },
+   "danish": {
+    "culture": "general",
+    "era": "EM"
+   },
+   "swedish": {
+    "culture": "general",
+    "era": "EM"
+   },
+   "russian": {
+    "culture": "slavic",
+    "era": "ST"
+   },
+   "arab": {
+    "culture": "arabic-persian",
+    "era": "MD"
+   },
+   "ottoman": {
+    "culture": "arabic-persian",
+    "era": "EM"
+   },
+   "chinese": {
+    "culture": "chinese",
+    "era": "MD"
+   },
+   "japanese": {
+    "culture": "japanese",
+    "era": "ST"
+   }
+  },
+  "cultureToColonial": {
+   "general": "general",
+   "norman-british": "british-imperial",
+   "anglo-saxon": "british-imperial",
+   "celtic": "british-imperial",
+   "roman": "roman",
+   "greek-byzantine": "hellenistic",
+   "slavic": "russian",
+   "arabic-persian": "arab",
+   "chinese": "chinese",
+   "japanese": "japanese"
+  }
+ },
+ "sources": {
+  "beast": {
+   "pool": 0.6,
+   "biome": 0.4,
+   "biomeLists": {
+    "wildAnimals": 60,
+    "birds": 40
+   }
+  },
+  "tree": {
+   "pool": 0.5,
+   "biome": 0.5,
+   "biomeLists": {
+    "trees": 100
+   }
+  },
+  "stock": {
+   "biome": 1,
+   "biomeLists": {
+    "livestock": 100
+   }
+  }
+ },
+ "beastPools": {
+  "mountainNames": "mtBeast",
+  "forestNames": "fstBeast",
+  "desertNames": "dsrBeast",
+  "moorNames": "mrBeast",
+  "wetlandNames": "wetBeast",
+  "grasslandNames": "grsBeast"
+ },
+ "safeguards": {
+  "mountainNames": [
+   "Misty Mountains",
+   "Lonely Mountain",
+   "Mount Doom",
+   "Mountains of Madness",
+   "Mountains of Shadow",
+   "Spine of the World",
+   "Throat of the World",
+   "Paths of the Dead",
+   "Weathertop",
+   "Gap of Rohan",
+   "Iron Hills",
+   "Grey Mountains",
+   "Mount Sinai",
+   "Mount Zion",
+   "Mount Moriah",
+   "Mount of Olives",
+   "Mount Hira",
+   "Mount Arafat",
+   "Mount Kailash",
+   "Mount Meru",
+   "Mount Ararat",
+   "Mount Olympus"
+  ],
+  "forestNames": [
+   "Mirkwood",
+   "Fangorn",
+   "Lothlórien",
+   "Lothlorien",
+   "Forbidden Forest",
+   "Hundred Acre Wood",
+   "Chetwood",
+   "Old Forest Road",
+   "Wildwood",
+   "Elfwood"
+  ],
+  "desertNames": [
+   "Dune Sea",
+   "Jundland Wastes",
+   "Deep Desert",
+   "Great Pit of Carkoon",
+   "Arrakis",
+   "Tatooine",
+   "Desert of Desolation"
+  ],
+  "moorNames": [
+   "Barrow-downs",
+   "Barrow Downs",
+   "Grimpen Mire",
+   "Wuthering Heights",
+   "Weather Hills",
+   "Midgewater"
+  ],
+  "wetlandNames": [
+   "Dead Marshes",
+   "Midgewater Marshes",
+   "Swamp of Sorrows",
+   "Swamps of Sadness",
+   "Fire Swamp",
+   "Bog of Eternal Stench",
+   "Dagobah"
+  ],
+  "grasslandNames": [
+   "Rohan",
+   "Riddermark",
+   "Pelennor Fields",
+   "Plains of Rohan",
+   "Dothraki Sea",
+   "Westfold",
+   "Eastfold"
+  ],
+  "bannedWords": [
+   "Squaw"
+  ]
+ },
+ "cap": 6
+}

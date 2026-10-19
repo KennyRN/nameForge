@@ -1,4 +1,5 @@
 // Seas and coasts: seas and lakes, coasts and islands, sea charts (Seas and coasts brief §17.1–§17.3, §17.5).
+import { WILDS_DATA } from "../src/wilds/engine";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 // The deities engine registers the hooks `{god}` reads, as the app loads it.
@@ -57,7 +58,8 @@ test("§17.1: every shape's tokens resolve; every region and biome tag and cultu
     }
   }
   for (const pool of Object.values(SETTLEMENT_VOCAB.pools)) for (const e of pool.entries) {
-    if (e.bt) assert.ok(WATERS_DATA.biomeTags[e.bt], `${e.w}: bt ${e.bt}`);
+    // Wild lands brief §3.4: its pools carry the wild lands biome tags, kept in wilds.json so the two tables can drift apart.
+    if (e.bt) assert.ok(WATERS_DATA.biomeTags[e.bt] || WILDS_DATA.biomeTags[e.bt], `${e.w}: bt ${e.bt}`);
     if (e.rt && !["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat"].includes(e.rt)) assert.ok(WATERS_DATA.regionTags[e.rt], `${e.w}: rt ${e.rt}`);
   }
   assert.equal(WATERS_DATA.regionTags.ness.NSI, 3);

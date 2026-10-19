@@ -4857,6 +4857,872 @@
         {"w": "Wardrobe"},
         {"w": "Household"}
       ]
+    },
+    "moodOf": {
+      "entries": [
+        {"w": "Plenty", "x": 2},
+        {"w": "Hope", "x": 2},
+        {"w": "Good Hope"},
+        {"w": "Disappointment", "x": 2},
+        {"w": "Desolation", "x": 2, "t": ["grim"]},
+        {"w": "Farewell", "x": 2},
+        {"w": "Deliverance"},
+        {"w": "Providence"},
+        {"w": "Mercy"},
+        {"w": "Fortune"},
+        {"w": "Patience"},
+        {"w": "Welcome"},
+        {"w": "Refuge"},
+        {"w": "Rescue"},
+        {"w": "Despair", "t": ["grim"]},
+        {"w": "Tribulation", "t": ["grim"]},
+        {"w": "Poverty", "t": ["grim"]},
+        {"w": "Flattery", "t": ["light"]},
+        {"w": "Contentment", "t": ["light"]}
+      ]
+    },
+    "wildColour": {
+      "entries": [
+        {"w": "Black", "x": 3},
+        {"w": "White", "x": 2},
+        {"w": "Red", "x": 2},
+        {"w": "Grey", "x": 2},
+        {"w": "Green", "x": 2},
+        {"w": "Blue"},
+        {"w": "Yellow"},
+        {"w": "Brown"},
+        {"w": "Dun"},
+        {"w": "Pale"},
+        {"w": "Golden", "t": ["grand"]},
+        {"w": "Silver", "t": ["grand"]}
+      ]
+    },
+    "wildQuality": {
+      "entries": [
+        {"w": "Great", "x": 3},
+        {"w": "Little", "x": 2},
+        {"w": "High", "x": 2},
+        {"w": "Long", "x": 2},
+        {"w": "Old", "x": 2},
+        {"w": "Broad"},
+        {"w": "Low"},
+        {"w": "Lone"},
+        {"w": "Bare"},
+        {"w": "Wild"},
+        {"w": "Fair"},
+        {"w": "Cold"},
+        {"w": "Quiet"},
+        {"w": "Lonely", "t": ["grim"]},
+        {"w": "Bleak", "t": ["grim"]},
+        {"w": "Hidden", "t": ["strange"]},
+        {"w": "Holy", "c": ["christian"]}
+      ]
+    },
+    "wildFuse": {
+      "entries": [
+        {"w": "Ash"},
+        {"w": "Black"},
+        {"w": "Dark"},
+        {"w": "Deep"},
+        {"w": "Long"},
+        {"w": "Grey"},
+        {"w": "Hart"},
+        {"w": "Raven"},
+        {"w": "Wolf"},
+        {"w": "Hawk"},
+        {"w": "Oak"},
+        {"w": "Thorn"},
+        {"w": "Cold"},
+        {"w": "Stone"},
+        {"w": "Green"},
+        {"w": "Red"},
+        {"w": "White"},
+        {"w": "Holly"},
+        {"w": "Elder"},
+        {"w": "Brock"},
+        {"w": "Fox"},
+        {"w": "Swin"},
+        {"w": "Birk"},
+        {"w": "Hazel"},
+        {"w": "Elm"},
+        {"w": "Crow"},
+        {"w": "Wether"},
+        {"w": "Kettle"}
+      ]
+    },
+    "wildWeather": {
+      "entries": [
+        {"w": "Wind", "x": 2},
+        {"w": "Storm", "x": 2},
+        {"w": "Thunder"},
+        {"w": "Snow"},
+        {"w": "Mist"},
+        {"w": "Cloud"},
+        {"w": "Rain"},
+        {"w": "Frost", "bt": "cold"},
+        {"w": "Ice", "bt": "cold"},
+        {"w": "Sun"},
+        {"w": "Moon"},
+        {"w": "Dawn"},
+        {"w": "Echo"},
+        {"w": "Lightning", "t": ["grand"]}
+      ]
+    },
+    "wildShape": {
+      "entries": [
+        {"w": "Saddle", "x": 2},
+        {"w": "Anvil", "x": 2},
+        {"w": "Horn"},
+        {"w": "Tooth"},
+        {"w": "Needle"},
+        {"w": "Fang"},
+        {"w": "Crown"},
+        {"w": "Throne"},
+        {"w": "Chair"},
+        {"w": "Helm"},
+        {"w": "Comb"},
+        {"w": "Cockscomb"},
+        {"w": "Sugarloaf"},
+        {"w": "Haystack"},
+        {"w": "Pulpit"},
+        {"w": "Pillar"},
+        {"w": "Table"},
+        {"w": "Thumb"},
+        {"w": "Castle"},
+        {"w": "Steeple"},
+        {"w": "Crescent"},
+        {"w": "Bishop", "c": ["christian"]},
+        {"w": "Nose", "t": ["light"]}
+      ]
+    },
+    "rangeBody": {
+      "entries": [
+        {"w": "Spine", "x": 2},
+        {"w": "Backbone"},
+        {"w": "Teeth"},
+        {"w": "Wall"},
+        {"w": "Shoulders"},
+        {"w": "Crown"},
+        {"w": "Saw"},
+        {"w": "Fence"},
+        {"w": "Roof"}
+      ]
+    },
+    "wildMetal": {
+      "entries": [
+        {"w": "Silver", "x": 2},
+        {"w": "Copper", "x": 2},
+        {"w": "Gold", "x": 2},
+        {"w": "Lead", "x": 2},
+        {"w": "Tin"},
+        {"w": "Iron"},
+        {"w": "Coal"},
+        {"w": "Salt", "bt": "dry"},
+        {"w": "Jet"},
+        {"w": "Flint"},
+        {"w": "Slate"},
+        {"w": "Marble"},
+        {"w": "Garnet"},
+        {"w": "Brass"},
+        {"w": "Turquoise", "bt": "dry"},
+        {"w": "Jade", "c": ["chinese", "korean", "japanese", "aztec", "maya"]},
+        {"w": "Obsidian", "bt": "volcanic"}
+      ]
+    },
+    "mythBeast": {
+      "entries": [
+        {"w": "Dragon", "x": 3, "h": true},
+        {"w": "Wyrm", "h": true},
+        {"w": "Griffin", "h": true},
+        {"w": "Giant", "h": true},
+        {"w": "Troll", "h": true},
+        {"w": "Roc", "h": true},
+        {"w": "Wyvern", "h": true},
+        {"w": "Basilisk", "t": ["grim"], "h": true},
+        {"w": "Phoenix", "t": ["grand"], "h": true}
+      ]
+    },
+    "mythFuse": {
+      "entries": [
+        {"w": "Elf", "x": 2, "h": true},
+        {"w": "Fey", "h": true},
+        {"w": "Witch", "h": true},
+        {"w": "Wyrm", "h": true},
+        {"w": "Troll", "h": true},
+        {"w": "Dwarf", "h": true},
+        {"w": "Moon", "h": true}
+      ]
+    },
+    "leapWho": {
+      "entries": [
+        {"w": "Maiden's", "x": 2},
+        {"w": "Lover's"},
+        {"w": "Giant's"},
+        {"w": "Hunter's"},
+        {"w": "Shepherd's"},
+        {"w": "Hart's"},
+        {"w": "Stag's"},
+        {"w": "Devil's"},
+        {"w": "Soldier's", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Robber's", "t": ["light"]}
+      ]
+    },
+    "iceWord": {
+      "entries": [
+        {"w": "River"},
+        {"w": "Stair"},
+        {"w": "Tongue"},
+        {"w": "Wall"},
+        {"w": "Road"},
+        {"w": "Sea"}
+      ]
+    },
+    "mtWork": {
+      "entries": [
+        {"w": "Shepherds'", "x": 2},
+        {"w": "Drovers'", "x": 2},
+        {"w": "Miners'"},
+        {"w": "Hunters'"},
+        {"w": "Herdsmen's"},
+        {"w": "Packmen's"},
+        {"w": "Smugglers'", "t": ["light"]},
+        {"w": "Guides'", "e": ["ST", "MO", "NF", "IS"]},
+        {"w": "Robbers'", "t": ["grim"]},
+        {"w": "Pilgrims'", "x": 1}
+      ]
+    },
+    "mtRiverWord": {
+      "entries": [
+        {"w": "Swift", "x": 2},
+        {"w": "Rush"},
+        {"w": "Roar"},
+        {"w": "Tumble"},
+        {"w": "Foam"},
+        {"w": "Leap"},
+        {"w": "Spate"},
+        {"w": "Brawl"},
+        {"w": "Clatter"},
+        {"w": "Thunder"}
+      ]
+    },
+    "mtRiverAdj": {
+      "entries": [
+        {"w": "Roaring", "x": 2},
+        {"w": "Rushing", "x": 2},
+        {"w": "Tumbling"},
+        {"w": "Foaming"},
+        {"w": "Leaping"},
+        {"w": "Singing"},
+        {"w": "Thundering"},
+        {"w": "White"},
+        {"w": "Cold"}
+      ]
+    },
+    "mtBeast": {
+      "entries": [
+        {"w": "Eagle", "x": 3},
+        {"w": "Raven", "x": 3},
+        {"w": "Hawk", "x": 2},
+        {"w": "Goat", "x": 2},
+        {"w": "Wolf", "x": 2},
+        {"w": "Bear", "bt": "cold"},
+        {"w": "Crow"},
+        {"w": "Chough"},
+        {"w": "Buzzard"},
+        {"w": "Falcon"},
+        {"w": "Kite"},
+        {"w": "Ptarmigan", "bt": "cold"},
+        {"w": "Ibex", "bt": "alpine"},
+        {"w": "Lynx"},
+        {"w": "Stag"},
+        {"w": "Hart"},
+        {"w": "Ram"},
+        {"w": "Fox"},
+        {"w": "Wildcat"},
+        {"w": "Marmot", "bt": "alpine"},
+        {"w": "Chamois", "bt": "alpine"},
+        {"w": "Snow Leopard", "t": ["grand"], "bt": "alpine"},
+        {"w": "Condor", "c": ["andean"]},
+        {"w": "Vulture", "t": ["grim"]},
+        {"w": "Yak", "bt": "alpine"},
+        {"w": "Llama", "c": ["andean"]}
+      ]
+    },
+    "fstQuality": {
+      "entries": [
+        {"w": "Dark", "x": 3},
+        {"w": "Deep", "x": 2},
+        {"w": "Green", "x": 2},
+        {"w": "Old", "x": 2},
+        {"w": "Wild"},
+        {"w": "Great"},
+        {"w": "Little"},
+        {"w": "Tangled"},
+        {"w": "Shady"},
+        {"w": "Hidden"},
+        {"w": "Black"},
+        {"w": "Silent", "t": ["strange"]},
+        {"w": "Whispering", "t": ["strange"]},
+        {"w": "Bright", "t": ["light"]},
+        {"w": "Merry", "t": ["light"]},
+        {"w": "Haunted", "t": ["grim", "strange"]}
+      ]
+    },
+    "fstNoun": {
+      "entries": [
+        {"w": "Shadows", "t": ["grim"]},
+        {"w": "Whispers", "t": ["strange"]},
+        {"w": "Dreams", "t": ["strange"]},
+        {"w": "Echoes", "t": ["strange"]},
+        {"w": "Silence", "t": ["strange"]},
+        {"w": "Thorns"},
+        {"w": "Night", "t": ["grim"]},
+        {"w": "Songs", "t": ["light"]},
+        {"w": "Sorrows", "t": ["grim"]}
+      ]
+    },
+    "fstOwner": {
+      "entries": [
+        {"w": "King's", "x": 3},
+        {"w": "Queen's", "x": 2},
+        {"w": "Bishop's"},
+        {"w": "Abbot's"},
+        {"w": "Earl's"},
+        {"w": "Lord's"},
+        {"w": "Prince's"},
+        {"w": "Duke's", "e": ["MD", "EM", "ST"]}
+      ]
+    },
+    "fstWork": {
+      "entries": [
+        {"w": "Charcoal Burners'", "x": 2},
+        {"w": "Woodcutters'", "x": 2},
+        {"w": "Foresters'"},
+        {"w": "Verderers'"},
+        {"w": "Keepers'"},
+        {"w": "Poachers'", "t": ["light"]},
+        {"w": "Outlaws'", "t": ["grim"]},
+        {"w": "Hunters'"},
+        {"w": "Bodgers'"},
+        {"w": "Swineherds'"},
+        {"w": "Colliers'"}
+      ]
+    },
+    "fstKeeper": {
+      "entries": [
+        {"w": "Keeper's", "x": 2},
+        {"w": "Verderer's"},
+        {"w": "Ranger's"},
+        {"w": "Forester's"},
+        {"w": "Woodward's"},
+        {"w": "Hunter's"}
+      ]
+    },
+    "fstFlora": {
+      "entries": [
+        {"w": "Bluebell", "x": 2},
+        {"w": "Primrose"},
+        {"w": "Bracken"},
+        {"w": "Fern"},
+        {"w": "Bramble"},
+        {"w": "Ivy"},
+        {"w": "Foxglove"},
+        {"w": "Violet"},
+        {"w": "Mistletoe"},
+        {"w": "Moss"},
+        {"w": "Hazel"},
+        {"w": "Orchid", "bt": "jungle"},
+        {"w": "Liana", "bt": "jungle"},
+        {"w": "Bamboo", "c": ["chinese", "japanese", "korean", "indian"]}
+      ]
+    },
+    "fstFestival": {
+      "entries": [
+        {"w": "Midsummer", "x": 2},
+        {"w": "May"},
+        {"w": "Midwinter"},
+        {"w": "Harvest"},
+        {"w": "Beltane", "c": ["celtic"]},
+        {"w": "Lammas", "c": ["christian"]},
+        {"w": "Moonlight", "t": ["strange"]}
+      ]
+    },
+    "fstSprite": {
+      "entries": [
+        {"w": "Fairy", "x": 2},
+        {"w": "Pixie"},
+        {"w": "Elf"},
+        {"w": "Goblin"},
+        {"w": "Hob"},
+        {"w": "Puck"},
+        {"w": "Brownie", "t": ["light"]}
+      ]
+    },
+    "fstRiverWord": {
+      "entries": [
+        {"w": "Shade", "x": 2},
+        {"w": "Shadow"},
+        {"w": "Leaf"},
+        {"w": "Green"},
+        {"w": "Hush"},
+        {"w": "Still"},
+        {"w": "Slow"},
+        {"w": "Dark"},
+        {"w": "Fern"},
+        {"w": "Moss"},
+        {"w": "Dapple"}
+      ]
+    },
+    "fstPond": {
+      "entries": [
+        {"w": "Hammer", "x": 2},
+        {"w": "Mill", "x": 2},
+        {"w": "Furnace"},
+        {"w": "Fish"},
+        {"w": "Stew"},
+        {"w": "Decoy"},
+        {"w": "Dew"},
+        {"w": "Ice", "e": ["EM", "ST", "MO", "NF", "IS"]}
+      ]
+    },
+    "treeFunc": {
+      "entries": [
+        {"w": "Gospel", "x": 2, "c": ["christian"]},
+        {"w": "Hanging", "t": ["grim"]},
+        {"w": "Gallows", "t": ["grim"]},
+        {"w": "Moot"},
+        {"w": "Meeting"},
+        {"w": "Boundary"},
+        {"w": "Mark"},
+        {"w": "Parliament", "e": ["EM", "ST", "MO", "NF", "IS"]},
+        {"w": "Wishing", "t": ["light"]},
+        {"w": "Kissing", "t": ["light"]},
+        {"w": "Lightning"},
+        {"w": "Lone"},
+        {"w": "Hollow"},
+        {"w": "Crooked"},
+        {"w": "Great"},
+        {"w": "Old", "x": 2},
+        {"w": "Fairy", "t": ["strange"]},
+        {"w": "Witch", "t": ["strange"]},
+        {"w": "Lovers'", "t": ["light"]},
+        {"w": "Cuckoo", "t": ["light"]}
+      ]
+    },
+    "fstBeast": {
+      "entries": [
+        {"w": "Deer", "x": 3},
+        {"w": "Boar", "x": 2},
+        {"w": "Wolf", "x": 2},
+        {"w": "Fox"},
+        {"w": "Badger"},
+        {"w": "Owl"},
+        {"w": "Woodpecker"},
+        {"w": "Squirrel"},
+        {"w": "Hare"},
+        {"w": "Hart"},
+        {"w": "Stag"},
+        {"w": "Roe"},
+        {"w": "Jay"},
+        {"w": "Nightingale"},
+        {"w": "Bear", "bt": "cold"},
+        {"w": "Lynx", "bt": "conifer"},
+        {"w": "Elk", "bt": "cold"},
+        {"w": "Marten", "bt": "conifer"},
+        {"w": "Tiger", "bt": "jungle"},
+        {"w": "Monkey", "bt": "jungle"},
+        {"w": "Parrot", "bt": "jungle"},
+        {"w": "Jaguar", "bt": "jungle"},
+        {"w": "Leopard", "bt": "hot"},
+        {"w": "Peacock", "c": ["indian"]},
+        {"w": "Cuckoo", "t": ["light"]}
+      ]
+    },
+    "wildTree": {
+      "entries": [
+        {"w": "Oak", "x": 3},
+        {"w": "Ash", "x": 2},
+        {"w": "Beech", "x": 2, "bt": "broadleaf"},
+        {"w": "Elm"},
+        {"w": "Hazel"},
+        {"w": "Holly"},
+        {"w": "Yew"},
+        {"w": "Birch"},
+        {"w": "Alder"},
+        {"w": "Willow"},
+        {"w": "Lime", "bt": "broadleaf"},
+        {"w": "Maple", "bt": "broadleaf"},
+        {"w": "Hornbeam", "bt": "broadleaf"},
+        {"w": "Rowan"},
+        {"w": "Elder"},
+        {"w": "Thorn"},
+        {"w": "Chestnut", "bt": "broadleaf"},
+        {"w": "Pine", "bt": "conifer"},
+        {"w": "Fir", "bt": "conifer"},
+        {"w": "Spruce", "bt": "conifer"},
+        {"w": "Larch", "bt": "conifer"},
+        {"w": "Cedar", "bt": "conifer"},
+        {"w": "Teak", "bt": "jungle"},
+        {"w": "Mahogany", "bt": "jungle"},
+        {"w": "Kapok", "bt": "jungle"},
+        {"w": "Ebony", "bt": "jungle"},
+        {"w": "Palm", "bt": "hot"},
+        {"w": "Fig", "bt": "hot"},
+        {"w": "Banyan", "c": ["indian"]},
+        {"w": "Cork", "bt": "dry"},
+        {"w": "Bamboo", "c": ["chinese", "japanese", "korean"]}
+      ]
+    },
+    "dsrQuality": {
+      "entries": [
+        {"w": "Empty", "x": 2},
+        {"w": "Great", "x": 2},
+        {"w": "Burning"},
+        {"w": "Red"},
+        {"w": "White"},
+        {"w": "Black"},
+        {"w": "Thirsty"},
+        {"w": "Dry"},
+        {"w": "Golden"},
+        {"w": "Shifting"},
+        {"w": "Endless", "t": ["grand"]},
+        {"w": "Silent", "t": ["strange"]},
+        {"w": "Singing", "t": ["strange"]},
+        {"w": "Bitter", "t": ["grim"]},
+        {"w": "Howling", "t": ["grim"]},
+        {"w": "Forbidden", "t": ["grim", "strange"]}
+      ]
+    },
+    "dsrStuff": {
+      "entries": [
+        {"w": "Sand", "x": 2},
+        {"w": "Stones"},
+        {"w": "Gravel"},
+        {"w": "Salt"},
+        {"w": "Dunes"},
+        {"w": "Thirst", "t": ["grim"]},
+        {"w": "Silence", "t": ["strange"]}
+      ]
+    },
+    "dsrStone": {
+      "entries": [
+        {"w": "Flint"},
+        {"w": "Gravel"},
+        {"w": "Pebble"},
+        {"w": "Stone"},
+        {"w": "Iron"},
+        {"w": "Glass", "t": ["strange"]},
+        {"w": "Black Stone"}
+      ]
+    },
+    "dsrOasisWord": {
+      "entries": [
+        {"w": "Palm", "x": 2},
+        {"w": "Date", "x": 2},
+        {"w": "Green"},
+        {"w": "Twin"},
+        {"w": "Lone"},
+        {"w": "Golden"},
+        {"w": "Sweet", "t": ["light"]},
+        {"w": "Hidden", "t": ["strange"]},
+        {"w": "Bitter", "t": ["grim"]},
+        {"w": "Last", "t": ["grim"]}
+      ]
+    },
+    "dsrGoods": {
+      "entries": [
+        {"w": "Salt", "x": 3},
+        {"w": "Gold", "x": 2},
+        {"w": "Incense", "x": 2},
+        {"w": "Spice"},
+        {"w": "Ivory"},
+        {"w": "Copper"},
+        {"w": "Turquoise"},
+        {"w": "Dates"}
+      ]
+    },
+    "dsrDays": {
+      "entries": [
+        {"w": "Forty", "x": 2},
+        {"w": "Ten"},
+        {"w": "Seven"},
+        {"w": "Twenty"},
+        {"w": "Three"}
+      ]
+    },
+    "dsrWork": {
+      "entries": [
+        {"w": "Caravan", "x": 3},
+        {"w": "Pilgrims'"},
+        {"w": "Salt Traders'"},
+        {"w": "Herders'"},
+        {"w": "Raiders'", "t": ["grim"]},
+        {"w": "Smugglers'", "t": ["light"]}
+      ]
+    },
+    "dsrBeast": {
+      "entries": [
+        {"w": "Camel", "x": 3},
+        {"w": "Jackal", "x": 2},
+        {"w": "Scorpion", "t": ["grim"]},
+        {"w": "Vulture", "t": ["grim"]},
+        {"w": "Lizard"},
+        {"w": "Snake"},
+        {"w": "Gazelle"},
+        {"w": "Oryx"},
+        {"w": "Ostrich"},
+        {"w": "Hyena", "t": ["grim"]},
+        {"w": "Lion"},
+        {"w": "Fox"},
+        {"w": "Hawk"},
+        {"w": "Falcon"},
+        {"w": "Coyote", "c": ["general", "aztec", "maya"]},
+        {"w": "Wild Ass", "bt": "dry"},
+        {"w": "Locust", "t": ["grim"]}
+      ]
+    },
+    "mrQuality": {
+      "entries": [
+        {"w": "Bleak", "x": 2, "t": ["grim"]},
+        {"w": "Black", "x": 2},
+        {"w": "Wild"},
+        {"w": "High"},
+        {"w": "Long"},
+        {"w": "Bare"},
+        {"w": "Cold"},
+        {"w": "Grey"},
+        {"w": "Brown"},
+        {"w": "Broad"},
+        {"w": "Wet"},
+        {"w": "Lonely", "t": ["grim"]},
+        {"w": "Lost", "t": ["grim"]},
+        {"w": "Windy", "t": ["light"]}
+      ]
+    },
+    "mrFlora": {
+      "entries": [
+        {"w": "Heather", "x": 3},
+        {"w": "Gorse", "x": 2},
+        {"w": "Bracken"},
+        {"w": "Bilberry"},
+        {"w": "Cotton Grass"},
+        {"w": "Rush"},
+        {"w": "Ling"},
+        {"w": "Broom"},
+        {"w": "Juniper"},
+        {"w": "Cloudberry", "bt": "cold"},
+        {"w": "Crowberry", "bt": "cold"}
+      ]
+    },
+    "mrWork": {
+      "entries": [
+        {"w": "Peat Cutters'", "x": 2},
+        {"w": "Shepherds'", "x": 2},
+        {"w": "Miners'"},
+        {"w": "Drovers'"},
+        {"w": "Packmen's"},
+        {"w": "Tinners'"},
+        {"w": "Quarrymen's"},
+        {"w": "Smugglers'", "t": ["light"]}
+      ]
+    },
+    "mrBeast": {
+      "entries": [
+        {"w": "Grouse", "x": 3, "pl": "Grouse"},
+        {"w": "Curlew", "x": 2},
+        {"w": "Lapwing"},
+        {"w": "Plover"},
+        {"w": "Snipe", "pl": "Snipe"},
+        {"w": "Merlin"},
+        {"w": "Raven"},
+        {"w": "Hare"},
+        {"w": "Fox"},
+        {"w": "Adder", "t": ["grim"]},
+        {"w": "Pony"},
+        {"w": "Skylark"},
+        {"w": "Stag"},
+        {"w": "Wolf", "x": 0.5}
+      ]
+    },
+    "wetQuality": {
+      "entries": [
+        {"w": "Black", "x": 2},
+        {"w": "Still"},
+        {"w": "Wide"},
+        {"w": "Grey"},
+        {"w": "Green"},
+        {"w": "Sour"},
+        {"w": "Misty"},
+        {"w": "Sunken"},
+        {"w": "Hollow"},
+        {"w": "Lost"},
+        {"w": "Drowned", "t": ["grim"]},
+        {"w": "Rotten", "t": ["grim"]},
+        {"w": "Treacherous", "t": ["grim"]},
+        {"w": "Whispering", "t": ["strange"]}
+      ]
+    },
+    "wetNoun": {
+      "entries": [
+        {"w": "Mists"},
+        {"w": "Reeds"},
+        {"w": "Shadows", "t": ["grim"]},
+        {"w": "Whispers", "t": ["strange"]},
+        {"w": "Lost Souls", "t": ["grim"]},
+        {"w": "Fevers", "t": ["grim"]},
+        {"w": "Ghosts", "t": ["grim", "strange"]},
+        {"w": "Frogs", "t": ["light"]},
+        {"w": "Lights", "t": ["strange"]}
+      ]
+    },
+    "wetFlora": {
+      "entries": [
+        {"w": "Reed", "x": 3},
+        {"w": "Rush", "x": 2},
+        {"w": "Sedge"},
+        {"w": "Willow"},
+        {"w": "Alder"},
+        {"w": "Osier"},
+        {"w": "Bulrush"},
+        {"w": "Iris"},
+        {"w": "Flag"},
+        {"w": "Myrtle"},
+        {"w": "Cotton Grass", "bt": "peat"},
+        {"w": "Cypress", "bt": "swamp"},
+        {"w": "Mangrove", "bt": "mangrove"},
+        {"w": "Papyrus", "bt": "hot"},
+        {"w": "Lotus", "bt": "hot"}
+      ]
+    },
+    "wetWork": {
+      "entries": [
+        {"w": "Reed Cutters'", "x": 2},
+        {"w": "Eelers'", "x": 2},
+        {"w": "Fowlers'"},
+        {"w": "Wildfowlers'"},
+        {"w": "Fishers'"},
+        {"w": "Salters'"},
+        {"w": "Turf Cutters'"},
+        {"w": "Ferrymen's"},
+        {"w": "Smugglers'", "t": ["light"]}
+      ]
+    },
+    "wetBeast": {
+      "entries": [
+        {"w": "Heron", "x": 3},
+        {"w": "Bittern", "x": 2},
+        {"w": "Crane"},
+        {"w": "Duck"},
+        {"w": "Goose", "pl": "Geese"},
+        {"w": "Swan"},
+        {"w": "Eel"},
+        {"w": "Pike", "pl": "Pike"},
+        {"w": "Frog"},
+        {"w": "Toad"},
+        {"w": "Otter"},
+        {"w": "Snipe", "pl": "Snipe"},
+        {"w": "Teal", "pl": "Teal"},
+        {"w": "Coot"},
+        {"w": "Moorhen"},
+        {"w": "Kingfisher"},
+        {"w": "Dragonfly"},
+        {"w": "Midge", "t": ["light"]},
+        {"w": "Leech", "t": ["grim"]},
+        {"w": "Crocodile", "t": ["grim"], "bt": "hot"},
+        {"w": "Alligator", "bt": "swamp"},
+        {"w": "Hippo", "bt": "hot"},
+        {"w": "Flamingo", "bt": "salt"},
+        {"w": "Ibis", "bt": "hot"},
+        {"w": "Beaver", "e": ["AN", "MD"]}
+      ]
+    },
+    "drainFeet": {
+      "entries": [
+        {"w": "Forty", "x": 2},
+        {"w": "Twenty"},
+        {"w": "Sixteen"},
+        {"w": "Thirty"},
+        {"w": "Hundred"}
+      ]
+    },
+    "grsQuality": {
+      "entries": [
+        {"w": "Wide", "x": 2},
+        {"w": "Open", "x": 2},
+        {"w": "Green"},
+        {"w": "Golden"},
+        {"w": "Great"},
+        {"w": "Long"},
+        {"w": "High"},
+        {"w": "Rolling"},
+        {"w": "Windy"},
+        {"w": "Empty"},
+        {"w": "Bare"},
+        {"w": "Endless", "t": ["grand"]},
+        {"w": "Sweet", "t": ["light"]},
+        {"w": "Red", "bt": "hot"}
+      ]
+    },
+    "grsFlora": {
+      "entries": [
+        {"w": "Grass", "x": 2},
+        {"w": "Clover", "x": 2},
+        {"w": "Cowslip"},
+        {"w": "Poppy"},
+        {"w": "Thistle"},
+        {"w": "Gorse"},
+        {"w": "Broom"},
+        {"w": "Thyme"},
+        {"w": "Flax"},
+        {"w": "Cornflower"},
+        {"w": "Buttercup"},
+        {"w": "Harebell"},
+        {"w": "Feather Grass", "bt": "steppe"},
+        {"w": "Wormwood", "bt": "dry"},
+        {"w": "Sage", "bt": "dry"},
+        {"w": "Acacia", "bt": "hot"},
+        {"w": "Baobab", "bt": "hot"},
+        {"w": "Tussock", "bt": "cold"}
+      ]
+    },
+    "grsWork": {
+      "entries": [
+        {"w": "Drovers'", "x": 3},
+        {"w": "Shepherds'", "x": 2},
+        {"w": "Herders'"},
+        {"w": "Horsemen's"},
+        {"w": "Cowherds'"},
+        {"w": "Riders'"},
+        {"w": "Reapers'"},
+        {"w": "Mowers'"}
+      ]
+    },
+    "grsBeast": {
+      "entries": [
+        {"w": "Horse", "x": 3},
+        {"w": "Hare"},
+        {"w": "Lark"},
+        {"w": "Skylark"},
+        {"w": "Bustard"},
+        {"w": "Partridge"},
+        {"w": "Quail", "pl": "Quail"},
+        {"w": "Kite"},
+        {"w": "Hawk"},
+        {"w": "Falcon"},
+        {"w": "Crane"},
+        {"w": "Wolf"},
+        {"w": "Fox"},
+        {"w": "Wild Horse", "bt": "steppe"},
+        {"w": "Saiga", "pl": "Saiga", "bt": "steppe"},
+        {"w": "Marmot", "bt": "steppe"},
+        {"w": "Bison", "pl": "Bison", "bt": "grass"},
+        {"w": "Antelope", "bt": "hot"},
+        {"w": "Gazelle", "bt": "hot"},
+        {"w": "Zebra", "bt": "hot"},
+        {"w": "Lion", "bt": "hot"},
+        {"w": "Elephant", "bt": "hot"},
+        {"w": "Buffalo", "pl": "Buffalo", "bt": "hot"}
+      ]
     }
   },
   "regions": ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"],

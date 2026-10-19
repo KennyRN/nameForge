@@ -243,6 +243,36 @@ export const ICON_URBAN = "nameforge-urban";
 const ICON_URBAN_SVG =
   '<g transform="scale(2.08333)"><path d="M0 0h48v48H0z" fill="none" /><defs><mask id="nameforge-urban-mask"><g fill="none"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 42h40" /><rect width="8" height="16" x="8" y="26" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path stroke="#fff" stroke-linecap="square" stroke-linejoin="round" stroke-width="4" d="M12 34h1" /><rect width="24" height="38" x="16" y="4" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path fill="#fff" d="M22 10h4v4h-4zm8 0h4v4h-4zm-8 7h4v4h-4zm8 0h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z" /></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#nameforge-urban-mask)" /></g>';
 
+export const ICON_MOUNTAINS = "nameforge-mountains";
+// Mingcute — mountain-2-fill. Scaled for Obsidian's 100×100 viewBox.
+const ICON_MOUNTAINS_SVG =
+  '<g transform="scale(4.16667)"><path fill="currentColor" fill-rule="evenodd" d="M8.701 5.75c.577-1 2.02-1 2.598 0l3.5 6.062l.902-1.562c.577-1 2.02-1 2.598 0l4.33 7.5A1.5 1.5 0 0 1 21.33 20H17v-.002l-.072.002H3.072a1.5 1.5 0 0 1-1.3-2.25zm-.91 5.576l.709.472l.945-.63a1 1 0 0 1 1.11 0l.945.63l.709-.472L10 7.5z" clip-rule="evenodd" /></g>';
+
+export const ICON_FORESTS = "nameforge-forests";
+// Health Icons — forest. Scaled for Obsidian's 100×100 viewBox.
+const ICON_FORESTS_SVG =
+  '<g transform="scale(2.08333)"><path fill="currentColor" d="M24 18c0 6.177-3.5 11.264-8 11.927V39h16v-8.954h-4.727a3.273 3.273 0 0 1-1.468-6.199a4.09 4.09 0 0 1 2.411-4.968a4.909 4.909 0 1 1 9.568 0a4.09 4.09 0 0 1 2.411 4.968a3.273 3.273 0 0 1-1.468 6.199H34V39h6.5a1.5 1.5 0 0 1 0 3h-33a1.5 1.5 0 0 1 0-3H14v-9.073C9.5 29.264 6 24.177 6 18c0-6.627 4.03-12 9-12s9 5.373 9 12" /></g>';
+
+export const ICON_DESERTS = "nameforge-deserts";
+// Phosphor — cactus-duotone. Scaled for Obsidian's 100×100 viewBox.
+const ICON_DESERTS_SVG =
+  '<g transform="scale(0.390625)"><g fill="currentColor"><path d="M232 116a60 60 0 0 1-60 60h-12v40H96v-80H84a60 60 0 0 1-60-60a20 20 0 0 1 20-20a20 20 0 0 1 20 20a20 20 0 0 0 20 20h12V56a32 32 0 0 1 32-32a32 32 0 0 1 32 32v80h12a20 20 0 0 0 20-20a20 20 0 0 1 20-20a20 20 0 0 1 20 20" opacity=".2" /><path d="M216 208h-48v-24h4a68.07 68.07 0 0 0 68-68a28 28 0 0 0-56 0a12 12 0 0 1-12 12h-4V56a40 40 0 0 0-80 0v32h-4a12 12 0 0 1-12-12a28 28 0 0 0-56 0a68.07 68.07 0 0 0 68 68h4v64H40a8 8 0 0 0 0 16h176a8 8 0 0 0 0-16M96 128H84a52.06 52.06 0 0 1-52-52a12 12 0 0 1 24 0a28 28 0 0 0 28 28h12a8 8 0 0 0 8-8V56a24 24 0 0 1 48 0v80a8 8 0 0 0 8 8h12a28 28 0 0 0 28-28a12 12 0 0 1 24 0a52.06 52.06 0 0 1-52 52h-12a8 8 0 0 0-8 8v32h-48v-72a8 8 0 0 0-8-8" /></g></g>';
+
+export const ICON_MOORS = "nameforge-moors";
+// Iconoven — moss. Scaled for Obsidian's 100×100 viewBox.
+const ICON_MOORS_SVG =
+  '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="1.5" d="M2.75 20.25c0-2.75 2.75-4.75 6-4.75h6.5c3.25 0 6 2 6 4.75a1 1 0 0 1-1 1H3.75a1 1 0 0 1-1-1M7.5 15.5v-4c0-.75-.5-1.25-1.25-1.5M12 15.5V7c0-.75.5-1.25 1.25-1.5m3.25 10V10c0-.75.5-1.25 1.25-1.5" /><path stroke-width="2" d="M6.25 10h.01m6.99-4.5h.01m4.49 3h.01" /></g></g>';
+
+export const ICON_WETLANDS = "nameforge-wetlands";
+// Fluent UI — plant-cattail-24-regular. Scaled for Obsidian's 100×100 viewBox.
+const ICON_WETLANDS_SVG =
+  '<g transform="scale(4.16667)"><path fill="currentColor" d="M12 2a3 3 0 0 0-3 3v4c0 1.398.956 2.573 2.25 2.906v2.783l-3.47-3.47a.75.75 0 0 0-1.06 1.061l4.53 4.53v1.44a.75.75 0 0 0 1.5 0v-1.44l4.53-4.53a.75.75 0 1 0-1.06-1.06l-3.47 3.47v-2.784A3 3 0 0 0 15 9V5a3 3 0 0 0-3-3m-1.5 3a1.5 1.5 0 0 1 3 0v4a1.5 1.5 0 0 1-3 0zM5.891 15.004a12 12 0 0 1 1.631-.507l1.269 1.269a12.2 12.2 0 0 0-2.35.634c-.695.273-1.206.58-1.532.884c-.324.302-.409.544-.409.716s.085.414.41.716c.325.303.836.61 1.531.884c1.386.546 3.35.9 5.559.9s4.173-.354 5.559-.9c.695-.274 1.206-.58 1.531-.884c.325-.302.41-.544.41-.716s-.085-.414-.41-.716c-.325-.303-.836-.61-1.531-.884a12.2 12.2 0 0 0-2.35-.634l1.269-1.269c.59.142 1.137.312 1.63.507c.799.314 1.495.707 2.005 1.182c.51.476.887 1.088.887 1.814s-.376 1.338-.887 1.814c-.51.474-1.206.867-2.005 1.182c-1.6.63-3.76 1.004-6.108 1.004s-4.508-.374-6.109-1.004c-.798-.315-1.494-.708-2.004-1.182C3.377 19.338 3 18.726 3 18s.376-1.338.887-1.814c.51-.475 1.206-.868 2.004-1.182" /></g>';
+
+export const ICON_GRASSLANDS = "nameforge-grasslands";
+// Andrsrxn — grass. Scaled for Obsidian's 100×100 viewBox.
+const ICON_GRASSLANDS_SVG =
+  '<g transform="scale(4.16667)"><g fill="none"><path fill="currentColor" d="M6.1 3.84c.8 4.8 1.46 12.08 1.46 12.08l.6 4.33c.05.45.08.68.25.82s.4.13.86.13h3.37c.34 0 .51 0 .64-.09c.12-.08.16-.24.25-.55l2.85-10.42l1.47-4.56c.12-.36.18-.54.1-.71s-.25-.27-.62-.48l-.1-.07c-.35-.2-.53-.3-.7-.28c-.18.02-.3.15-.55.4l-2.9 3c-.42.43-.63.65-.88.61c-.26-.03-.45-.31-.84-.88a13 13 0 0 0-2.01-2.35c-1.73-1.44-2.6-1.58-3.01-1.5c-.06 0-.08.01-.18.16s-.1.21-.07.36" opacity=".2" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M1.7 21h20.6m-19.12-.27s.33-2.82 0-5.44q-.16-1.14-.4-2.18c-.36-1.48-.53-2.21.1-2.6c.62-.37 1.07.03 1.98.82c.72.64 1.45 1.5 2.04 2.68c1.33 2.64 1.33 6.46 1.33 6.46m12.26.26s-.41-3.53 0-6.81c.16-1.28.44-2.53.73-3.62c.4-1.5.61-2.24.03-2.64c-.59-.4-1.1-.02-2.15.73a11 11 0 0 0-3.27 3.92c-1.66 3.31-1.66 8.1-1.66 8.1M12.08 8.25A11 11 0 0 0 8.5 4.03c-1.07-.75-1.6-1.12-2.17-.72c-.58.4-.37 1.16.04 2.66a25 25 0 0 1 .94 8.7" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.72 10.75c.19-1.5.54-3.01.89-4.3c.4-1.43.59-2.15 0-2.55c-.58-.4-1.1-.03-2.11.71c-1.23.9-2.65 2.3-3.91 4.44c-3.1 5.25-3.37 11.02-3.37 11.02" /></g></g>';
+
 export const ICON_VEHICLES = "nameforge-vehicles";
 // Font Awesome 6 solid — car-side (CC BY 4.0). Fitted to Obsidian's 100×100 viewBox from its 640×512 one, centred vertically.
 const ICON_VEHICLES_SVG =
@@ -292,6 +322,12 @@ export function registerNameForgeIcons(): void {
   addIcon(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
   addIcon(ICON_INNS, ICON_INNS_SVG);
   addIcon(ICON_VEHICLES, ICON_VEHICLES_SVG);
+  addIcon(ICON_MOUNTAINS, ICON_MOUNTAINS_SVG);
+  addIcon(ICON_FORESTS, ICON_FORESTS_SVG);
+  addIcon(ICON_DESERTS, ICON_DESERTS_SVG);
+  addIcon(ICON_MOORS, ICON_MOORS_SVG);
+  addIcon(ICON_WETLANDS, ICON_WETLANDS_SVG);
+  addIcon(ICON_GRASSLANDS, ICON_GRASSLANDS_SVG);
   addIcon(ICON_URBAN, ICON_URBAN_SVG);
   addIcon(ICON_STREETS, ICON_STREETS_SVG);
   addIcon(ICON_ROUTES, ICON_ROUTES_SVG);

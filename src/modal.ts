@@ -41,6 +41,12 @@ import {
   ICON_SHIPS,
   ICON_HISTORY,
   ICON_VEHICLES,
+  ICON_MOUNTAINS,
+  ICON_FORESTS,
+  ICON_DESERTS,
+  ICON_MOORS,
+  ICON_WETLANDS,
+  ICON_GRASSLANDS,
   ICON_URBAN,
   ICON_ROUTES,
   ICON_SEAS_COASTS,
@@ -136,6 +142,8 @@ import { isRealmSafeguardPackContent } from "./realms/safeguardPacks";
 import { AIR_LAND, generateVesselNames, moduleFunctions, VESSEL_CULTURES, VESSEL_DATA, type VesselModule } from "./vessels/engine";
 import { chooseVessel, defaultVesselState, vesselHistory, vesselSentence, vesselSentenceText, type VesselSentenceState } from "./vessels/sentence";
 import { isVesselSafeguardPackContent } from "./vessels/safeguardPacks";
+import { generateWildsNames, WILDS_DATA, wildsWordBlocked, type WildsModule } from "./wilds/engine";
+import { chooseWilds, defaultWildsState, wildsHistoryLabel, wildsSentence, type WildsSentenceState } from "./wilds/sentence";
 import { HyperspaceGuideModal } from "./waters/guide";
 import { generateWatersNames, WATERS_DATA, watersWordBlocked, type WatersModule } from "./waters/engine";
 import { chooseWaters, defaultWatersState, watersHistoryLabel, watersSentence, watersSentenceText, type WatersSentenceState } from "./waters/sentence";
@@ -245,6 +253,7 @@ import {
   VESSEL_SECTIONS,
   THING_SECTIONS,
   WATERS_SECTIONS,
+  WILDS_SECTIONS,
   TRIBAL_NAMES_HISTORY_NAME,
   WORLD_PLACE_NAMES_HISTORY_NAME,
   SETTLEMENT_NAMES_HISTORY_NAME,
@@ -279,6 +288,13 @@ const withRegion = (label: string, regionCode: string | undefined) => {
 const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
+  // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
+  mountainNames: ICON_MOUNTAINS,
+  forestNames: ICON_FORESTS,
+  desertNames: ICON_DESERTS,
+  moorNames: ICON_MOORS,
+  wetlandNames: ICON_WETLANDS,
+  grasslandNames: ICON_GRASSLANDS,
   // Urban brief §1.3: settlement names wears the urban group icon.
   settlementNames: ICON_URBAN,
   // Route names brief §1.1.
@@ -345,6 +361,7 @@ const GROUP_ICONS: Record<SectionGroup, string> = {
   placeNames: ICON_PLACE_SHAPES,
   urban: ICON_URBAN,
   seasCoasts: ICON_SEAS_COASTS,
+  wildLands: ICON_BIOME,
   groupNames: ICON_GROUP_NAMES,
   bynames: ICON_BYNAMES,
   vehicles: ICON_VEHICLES,
@@ -751,6 +768,8 @@ export class NameForgeModal extends Modal {
   private vesselStates: Partial<Record<VesselModule, VesselSentenceState>> = {};
   /** Seas and coasts brief §2: each waters module's choices, session only. */
   private watersStates: Partial<Record<WatersModule, WatersSentenceState>> = {};
+  /** Wild lands brief §2.4: each terrain module's choices, session only. */
+  private wildsStates: Partial<Record<WildsModule, WildsSentenceState>> = {};
   /** Realms brief §2.4: the realms sentence's choices, session only. */
   private realmState: RealmSentenceState = { ...DEFAULT_REALM_STATE };
   /** Route names brief §2.4: the route sentence's choices, session only. */
@@ -783,7 +802,7 @@ export class NameForgeModal extends Modal {
   /** Line-up brief §2.3: the sacred places module's own choices. */
   private sacredPlaceState: SacredPlaceSentenceState = { ...DEFAULT_SACRED_PLACE_STATE };
   /** Each switcher group's last-used module (session only). */
-  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
+  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", wildLands: "mountainNames", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
   private tribal: {
     tradition: string;
     register: TribalRegister;
@@ -1238,7 +1257,7 @@ export class NameForgeModal extends Modal {
     this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
     // In the colonial sections the guide button takes the create button's slot instead.
     // Tribes and kin groups and the group-name modules set everything in their sentences.
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart || section === "hyperspaceCharts");
@@ -1561,6 +1580,7 @@ export class NameForgeModal extends Modal {
     else if (BYNAME_SECTIONS.includes(section)) this.renderBynameSentence(row, section as BynameModule);
     else if (VESSEL_SECTIONS.includes(section)) this.renderVesselSentence(row, section as VesselModule);
     else if (WATERS_SECTIONS.includes(section)) this.renderWatersSentence(row, section as WatersModule);
+    else if (WILDS_SECTIONS.includes(section)) this.renderWildsSentence(row, section as WildsModule);
     else if (section === "realms") this.renderRealmSentence(row);
     else if (section === "peoplesTongues") this.renderPeopleSentence(row);
     else if (section === "routeNames") this.renderRouteSentence(row);
@@ -4082,6 +4102,58 @@ export class NameForgeModal extends Modal {
     await this.runWaters(waters.watersModule, this.watersPresetState(waters), `${SECTION_LABELS[waters.watersModule]} · ${waters.packName}`, problems);
   }
 
+  // ── Wild lands (Wild lands brief) ─────────────────────────────────────────
+
+  /** §2.4: a terrain module's choices, session only. */
+  private wildsState(module: WildsModule): WildsSentenceState {
+    return (this.wildsStates[module] ??= defaultWildsState(module));
+  }
+
+  /** §2: the module's sentence. */
+  private renderWildsSentence(row: HTMLElement, module: WildsModule) {
+    const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment of wildsSentence(this.wildsState(module), module)) {
+      if (typeof segment === "string") {
+        sentence.appendText(segment);
+        continue;
+      }
+      this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
+        this.wildsStates[module] = chooseWilds(this.wildsState(module), segment.field, id, module);
+      });
+    }
+  }
+
+  /** The finished strings only; history "{module} · {era} · {culture}…". */
+  private async runWilds(module: WildsModule, state = this.wildsState(module), label?: string, problems: string[] = []) {
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    const guards = await this.loadSettlementSafeguards({ block: WILDS_DATA.safeguards[module], flag: [], flagListBlocks: false });
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, wildsWordBlocked);
+    const result = generateWildsNames({
+      module,
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      where: state.where,
+      fantastic: state.fantastic,
+      region: state.region,
+      biome: state.biome,
+      tone: state.tone,
+      people: state.people,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      vocab: vocab.vocab,
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
+      "none",
+    );
+    await this.recordGenerationHistory(result.names.length, label ?? wildsHistoryLabel(module, state, SECTION_LABELS[module]));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
+
   // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
 
   /** §2.4: a vessel module's choices, session only. */
@@ -6119,6 +6191,10 @@ export class NameForgeModal extends Modal {
     }
     if (VESSEL_SECTIONS.includes(this.activeSection)) {
       await this.runVessels(this.activeSection as VesselModule);
+      return;
+    }
+    if (WILDS_SECTIONS.includes(this.activeSection)) {
+      await this.runWilds(this.activeSection as WildsModule);
       return;
     }
     if (WATERS_SECTIONS.includes(this.activeSection)) {
