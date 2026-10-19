@@ -28,6 +28,7 @@ import { PEOPLE_CULTURES, type PeopleDetail, type PeopleGiving } from "./peoples
 import { placesOffered, type PeopleSource } from "./peoples/sentence";
 import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_SKY, type TimeKind, type TimeModule, type TimeWords } from "./timesky/data";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
+import { findWildsCulture, findWildsKind, wildsBiomes, wildsDefaultCulture, wildsEras, wildsKindsAt, type WildsEra, type WildsModule, type WildsWhere } from "./wilds/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { AIR_LAND, availableStyles, findVesselCulture, isAirLand, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule, type VesselNaming } from "./vessels/engine";
@@ -92,7 +93,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; peoples?: PeoplePreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; wilds?: WildsPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; peoples?: PeoplePreset; deity?: DeityPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -105,6 +106,8 @@ export function parseModulePreset(
   if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
   // Seas and coasts brief §15: waters presets too.
   if (values.module === WATERS_PRESET_MODULE) return parseWatersPreset(values, body, fileName);
+  // Wild lands brief §14: terrain module presets too.
+  if (values.module in WILDS_PRESET_MODULES) return parseWildsPreset(values, body, fileName);
   // Realms brief §13: realm presets too.
   if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
   // Route names brief §13: route presets too.
@@ -164,7 +167,8 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | PeoplePreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | WildsPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | PeoplePreset | DeityPreset): string {
+  if ("wildsModule" in preset) return wildsPresetContent(preset);
   if ("peopleSource" in preset) return peoplePresetContent(preset);
   if ("thingModule" in preset) return thingPresetContent(preset);
   if ("timeModule" in preset) return timePresetContent(preset);
@@ -1392,6 +1396,107 @@ function watersPresetContent(preset: WatersPreset): string {
     `tone: ${preset.tone}`,
     `people: ${preset.people}`,
     ...(watersHasSeries(preset.watersModule) ? [`series: ${preset.series}`] : []),
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Wild lands presets (Wild lands brief §14) ───────────────────────────────
+
+/** §14: the preset module keys, one per terrain module. */
+export const WILDS_PRESET_MODULES: Record<string, WildsModule> = {
+  "mountain-names": "mountainNames",
+  "forest-names": "forestNames",
+  "desert-names": "desertNames",
+  "moor-names": "moorNames",
+  "wetland-names": "wetlandNames",
+  "grassland-names": "grasslandNames",
+};
+export const wildsPresetKey = (module: WildsModule): string => Object.entries(WILDS_PRESET_MODULES).find(([, m]) => m === module)![0];
+
+export interface WildsPreset {
+  packName: string;
+  setting: string;
+  description: string;
+  wildsModule: WildsModule;
+  culture: string;
+  /** "any" or a kind key. */
+  wildsKind: string;
+  era: WildsEra;
+  where: WildsWhere;
+  fantastic: boolean;
+  /** "all" or a place-shape region code. */
+  region: string;
+  /** "any" or a biome id. */
+  biome: string;
+  tone: GroupToneChoice;
+  people: GroupPeople;
+  series: boolean;
+}
+
+function parseWildsPreset(values: Record<string, string>, body: string, fileName: string): { wilds?: WildsPreset; problems: string[] } {
+  const problems: string[] = [];
+  const module = WILDS_PRESET_MODULES[values.module];
+  const pick = <T extends string>(key: string, fallback: T, ok: (v: string) => boolean): T => {
+    const v = values[key];
+    if (v === undefined || v === "") return fallback;
+    if (ok(v)) return v as T;
+    problems.push(`Unknown ${key} “${v}”.`);
+    return fallback;
+  };
+  const flag = (key: string): boolean => {
+    const v = values[key];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key} “${v}”.`);
+    return false;
+  };
+  const era = pick<WildsEra>("era", "MD", (v) => wildsEras(module).includes(v as WildsEra));
+  let kind = pick<string>("kind", "any", (v) => v === "any" || !!findWildsKind(module, v));
+  // §14: a kind not live in the era runs as any.
+  if (kind !== "any" && !wildsKindsAt(module, era).some((k) => k.key === kind)) {
+    problems.push(`Kind “${kind}” isn't offered in that era.`);
+    kind = "any";
+  }
+  return {
+    wilds: {
+      packName: values.packName || fileName,
+      setting: values.setting ?? "",
+      description: body.trim(),
+      wildsModule: module,
+      culture: pick("culture", wildsDefaultCulture(module), (v) => !!findWildsCulture(v)),
+      wildsKind: kind,
+      era,
+      where: pick<WildsWhere>("where", "home", (v) => v === "home" || v === "new"),
+      fantastic: flag("fantastic"),
+      region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      biome: pick("biome", "any", (v) => v === "any" || wildsBiomes(module).some((b) => b.id === v)),
+      tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
+      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series"),
+    },
+    problems,
+  };
+}
+
+function wildsPresetContent(preset: WildsPreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${wildsPresetKey(preset.wildsModule)}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.wildsKind}`,
+    `era: ${preset.era}`,
+    `where: ${preset.where}`,
+    `fantastic: ${preset.fantastic}`,
+    `region: ${preset.region}`,
+    `biome: ${preset.biome}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
     "---",
     "",
     preset.description.trim(),
