@@ -247,12 +247,16 @@ import {
   WATERS_SECTIONS,
   TRIBAL_NAMES_HISTORY_NAME,
   WORLD_PLACE_NAMES_HISTORY_NAME,
+  SETTLEMENT_NAMES_HISTORY_NAME,
   GROUP_LABELS,
   SECTION_GROUPS,
   type SectionGroup,
   sectionGroup,
   SWITCHER_ORDER,
 } from "./sections";
+import { SETTLEMENT_SIZES, sizeLabel, type SizeKey } from "./settlement/data";
+import { generateSettlementNames, type SettlementNamesOptions, type SettlementSetting } from "./settlement/names";
+import { SETTLEMENT_SETTINGS, settingLabel, settlementSentenceText, sizeChoices } from "./settlement/sentence";
 import { ALIEN_CHOICES, biomePhrase, explorersPhrase, incomersPhrase, regionPhrase, SPACE_HEADING_TIP, terrainPhrase, UNKNOWN_COUNTRY, wizardSentenceText } from "./colonialSentence";
 
 /** History label for british place names runs; older "place name shapes" entries keep theirs. */
@@ -357,6 +361,15 @@ type SentenceChoice = { id: string | undefined; label: string; title?: string; /
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
  * section trigger. */
 /** Place names' first-box choice for the British generator; every other choice is a world culture id. */
+/** The land state keys a native sentence uses: place names' own, and settlement names' (urban brief §3). */
+interface NativeLandKeys {
+  britain: string;
+  world: (cultureId: string) => string;
+  interstellar: string;
+}
+const PLACE_LAND_KEYS: NativeLandKeys = { britain: "britain", world: (id) => `world:${id}`, interstellar: "world:interstellar" };
+const SETTLEMENT_LAND_KEYS: NativeLandKeys = { britain: "settlement:british", world: (id) => `settlement:world:${id}`, interstellar: "settlement:world:interstellar" };
+
 const PLACE_BRITAIN = "britain";
 /** Place names' first-box choice for British river names (the river engine's British setting). */
 const PLACE_BRITISH_RIVERS = "british-rivers";
@@ -799,6 +812,19 @@ export class NameForgeModal extends Modal {
   /** Stellar brief §5.8: alien life under a space biome, per colonial part (session only). */
   private colonialAliens: Record<ColonialPart, boolean> = { "2": false, "2a": false };
   private selectedContext: Record<ColonialPart, string | undefined> = { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] };
+  /** Urban brief §3: settlement names' own choices; changing them never changes place names or the colonial modules. Session only. */
+  private settlementState = {
+    size: "any" as SizeKey,
+    setting: "native" as SettlementSetting,
+    culture: "britain",
+    eras: {} as Record<string, string>,
+    region: undefined as string | undefined,
+    tradition: { "2": undefined, "2a": undefined } as Record<ColonialPart, string | undefined>,
+    context: { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] } as Record<ColonialPart, string | undefined>,
+    aliens: { "2": false, "2a": false } as Record<ColonialPart, boolean>,
+  };
+  /** The loaded recipe preset's shape, when it is a settlement names preset (it then opens in settlement names). */
+  private settlementPreset: Partial<RecipeSettings["shape"]> | undefined = undefined;
   private contextRowEl: HTMLElement | null = null;
   private quantityToggleEl: HTMLElement | null = null;
   private generatePillEl: HTMLElement | null = null;
@@ -1205,14 +1231,14 @@ export class NameForgeModal extends Modal {
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSentenceEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
     this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
-    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset"));
+    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || (this.currentPackType === "recipePack" && !!this.settlementPreset)));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
     const colonialPart = COLONIAL_SECTION_PART[section];
     this.createPacksButton?.toggleClass("is-placeholder", section !== "markov");
     // In the colonial sections the guide button takes the create button's slot instead.
     // Tribes and kin groups and the group-name modules set everything in their sentences.
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
     this.createPacksButton?.toggle(!colonialPart && !tribal);
     this.landButton?.refresh();
     this.guideButton?.toggle(!!colonialPart || section === "hyperspaceCharts");
@@ -1541,6 +1567,7 @@ export class NameForgeModal extends Modal {
     else if (section === "streetNames") this.renderStreetSentence(row);
     else if (section === "innNames") this.renderInnSentence(row);
     else if (section === "buildingNames") this.renderBuildingSentence(row);
+    else if (section === "settlementNames") this.renderSettlementSentence(row);
     else if (section === "settlementKit") this.renderKitSentence(row);
     else if (section === "eventNames") this.renderEventSentence(row);
     else if (section === "moneyNames") this.renderMoneySentence(row);
@@ -1687,7 +1714,7 @@ export class NameForgeModal extends Modal {
       async () => {
         const custom = [...(await this.loadCustomBiomes())].sort((x, y) => x.label.localeCompare(y.label));
         // Stellar brief §5.1: exploration and expansion list the space biomes last, under a Space heading.
-        const space = part !== "organic" && key.startsWith("colonial:") ? SPACE_BIOMES.map((b, i): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide, ...(i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {}) })) : [];
+        const space = part !== "organic" && key.includes("colonial:") ? SPACE_BIOMES.map((b, i): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide, ...(i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {}) })) : [];
         return [
           { id: undefined, label: defaultPhrase },
           ...[...(britainAsDefault ? [] : [BRITAIN]), ...BIOMES, ...custom].map((b) => ({ id: b.custom?.path ?? b.id, label: b.phrase })),
@@ -1721,19 +1748,48 @@ export class NameForgeModal extends Modal {
       this.worldCulture = id ?? PLACE_BRITAIN;
       this.refreshRiverOptions();
     });
-    if (!this.placeIsWorld()) {
-      sentence.appendText(this.placeIsRivers() ? " names from " : " place names from ");
-      const regions: SentenceChoice[] = [{ id: undefined, label: "all of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: regionPhrase(r.code), title: r.counties }))];
-      this.sentenceLink(sentence, regionPhrase(this.selectedRegion), "Region: weights the names towards it", () => regions, this.selectedRegion, (id) => (this.selectedRegion = id));
-      if (this.placeIsRivers()) return;
-      sentence.appendText(", set in ");
-      this.landClause(sentence, "britain", BRITAIN.phrase, "organic", true);
+    if (this.placeIsRivers()) {
+      sentence.appendText(" names from ");
+      this.regionLink(sentence, this.selectedRegion, (id) => (this.selectedRegion = id));
       return;
     }
-    sentence.appendText(" place names");
-    const world = findCulture(this.worldCulture);
+    this.nativeClauses(sentence, {
+      britain: this.placeIsBritain(),
+      cultureId: this.worldCulture,
+      eras: this.worldEras,
+      region: this.selectedRegion,
+      setRegion: (id) => (this.selectedRegion = id),
+      words: " place names",
+      land: PLACE_LAND_KEYS,
+    });
+  }
+
+  /** The region link: "‹all of Britain›", "‹the North›". */
+  private regionLink(sentence: HTMLElement, region: string | undefined, set: (id: string | undefined) => void) {
+    const regions: SentenceChoice[] = [{ id: undefined, label: "all of Britain" }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: regionPhrase(r.code), title: r.counties }))];
+    this.sentenceLink(sentence, regionPhrase(region), "Region: weights the names towards it", () => regions, region, set);
+  }
+
+  /**
+   * What follows the culture link, shared by native place names and settlement names (urban brief §3):
+   * British "from ‹region›, set in ‹land›"; a world culture "from the ‹era› era, set in ‹land›".
+   * `words` is " place names" for place names and nothing for settlement names.
+   */
+  private nativeClauses(
+    sentence: HTMLElement,
+    o: { britain: boolean; cultureId: string; eras: Record<string, string>; region: string | undefined; setRegion: (id: string | undefined) => void; words: string; land: NativeLandKeys },
+  ) {
+    if (o.britain) {
+      sentence.appendText(`${o.words} from `);
+      this.regionLink(sentence, o.region, o.setRegion);
+      sentence.appendText(", set in ");
+      this.landClause(sentence, o.land.britain, BRITAIN.phrase, "organic", true);
+      return;
+    }
+    sentence.appendText(o.words);
+    const world = findCulture(o.cultureId);
     if (world.eras.length > 1) {
-      const era = findEra(world, this.worldEras[world.id]);
+      const era = findEra(world, o.eras[world.id]);
       sentence.appendText(" from the ");
       this.sentenceLink(
         sentence,
@@ -1742,19 +1798,19 @@ export class NameForgeModal extends Modal {
         () => world.eras.map((e) => ({ id: e.id, label: e.label, title: e.guide })),
         era.id,
         (id) => {
-          if (id) this.worldEras[world.id] = id;
+          if (id) o.eras[world.id] = id;
         },
       );
       sentence.appendText(" era");
     }
-    const worldEra = findEra(world, this.worldEras[world.id]);
+    const worldEra = findEra(world, o.eras[world.id]);
     if (!eraUsesLand(world.id, worldEra.id)) return;
     sentence.appendText(", set in ");
     if (worldEra.id === INTERSTELLAR_ERA) {
-      this.spaceClause(sentence, "world:interstellar");
+      this.spaceClause(sentence, o.land.interstellar);
       return;
     }
-    this.landClause(sentence, `world:${world.id}`, "their homeland", "new-land", false);
+    this.landClause(sentence, o.land.world(world.id), "their homeland", "new-land", false);
   }
 
   /**
@@ -1764,42 +1820,232 @@ export class NameForgeModal extends Modal {
    */
   private renderColonialSentence(row: HTMLElement, part: ColonialPart) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    this.colonialClauses(sentence, part, {
+      tradition: this.selectedTradition[part],
+      setTradition: (id) => (this.selectedTradition[part] = id),
+      context: this.selectedContext[part],
+      setContext: (id) => (this.selectedContext[part] = id),
+      aliens: this.colonialAliens[part],
+      setAliens: (on) => (this.colonialAliens[part] = on),
+      landKey: `colonial:${part}`,
+    });
+  }
+
+  /** Exploration's and expansion's clauses, shared with settlement names (urban brief §3). */
+  private colonialClauses(
+    sentence: HTMLElement,
+    part: ColonialPart,
+    o: {
+      tradition: string | undefined;
+      setTradition: (id: string | undefined) => void;
+      context: string | undefined;
+      setContext: (id: string | undefined) => void;
+      aliens: boolean;
+      setAliens: (on: boolean) => void;
+      landKey: string;
+    },
+  ) {
     const phrase = part === "2" ? explorersPhrase : incomersPhrase;
-    const tradition = COLONIAL_TRADITIONS.find((t) => t.id === (this.selectedTradition[part] ?? "general"))!;
+    const tradition = COLONIAL_TRADITIONS.find((t) => t.id === (o.tradition ?? "general"))!;
     this.sentenceLink(
       sentence,
       phrase(tradition.id, tradition.label),
       tradition.guide,
       () => COLONIAL_TRADITIONS.filter((t) => isTraditionAvailable(t.id, part)).map((t) => ({ id: t.id, label: phrase(t.id, t.label), title: t.guide })),
       tradition.id,
-      (id) => (this.selectedTradition[part] = id === "general" ? undefined : id),
+      (id) => o.setTradition(id === "general" ? undefined : id),
     );
     sentence.appendText(part === "2" ? " in " : " who are ");
-    const spaceBiome = findBiome(this.land(`colonial:${part}`).biome, this.customBiomes)?.space;
+    const spaceBiome = findBiome(this.land(o.landKey).biome, this.customBiomes)?.space;
     const contexts = contextPhrasesFor(part, !!spaceBiome).filter(([id]) => colonialContexts(part).some((c) => c.id === id));
-    const context = contexts.find(([id]) => id === this.selectedContext[part]) ?? contexts[0];
+    const context = contexts.find(([id]) => id === o.context) ?? contexts[0];
     this.sentenceLink(
       sentence,
       context[1],
       colonialContexts(part).find((c) => c.id === context[0])?.label ?? "",
       () => contexts.map(([id, text]) => ({ id, label: text })),
       context[0],
-      (id) => (this.selectedContext[part] = id),
+      o.setContext,
     );
     sentence.appendText(" across ");
-    this.landClause(sentence, `colonial:${part}`, UNKNOWN_COUNTRY, part === "2" ? "new-land" : "established", false);
+    this.landClause(sentence, o.landKey, UNKNOWN_COUNTRY, part === "2" ? "new-land" : "established", false);
     // Stellar brief §5.8: alien life, under a space biome only.
     if (spaceBiome) {
       sentence.appendText(", with ");
       this.sentenceLink(
         sentence,
-        ALIEN_CHOICES[this.colonialAliens[part] ? 1 : 0].label,
+        ALIEN_CHOICES[o.aliens ? 1 : 0].label,
         "Alien life: whether native-people and local-god slots name aliens, and half of native places become alien places",
         () => ALIEN_CHOICES.map((c) => ({ id: c.id, label: c.label })),
-        this.colonialAliens[part] ? "on" : "off",
-        (id) => (this.colonialAliens[part] = id === "on"),
+        o.aliens ? "on" : "off",
+        (id) => o.setAliens(id === "on"),
       );
     }
+  }
+
+  /**
+   * Settlement names (urban brief §3): "‹Village› names, ‹in new lands›: ‹General explorers› in ‹wild and
+   * unsettled lands› across ‹any part› of ‹unknown country›". After the colon, the source module's own clauses.
+   */
+  private renderSettlementSentence(row: HTMLElement) {
+    const s = this.settlementState;
+    const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    const size = sizeChoices().find((c) => c.id === s.size) ?? sizeChoices()[0];
+    this.sentenceLink(
+      sentence,
+      size.label,
+      "Size: steers the names towards a hamlet, village, town, city or great city",
+      () => sizeChoices().map((c) => ({ id: c.id, label: c.label })),
+      s.size,
+      (id) => (s.size = (id as SizeKey | undefined) ?? "any"),
+    );
+    sentence.appendText(" names, ");
+    this.sentenceLink(
+      sentence,
+      settingLabel(s.setting),
+      "Setting: native place names, exploration into new lands, or expansion into settled lands",
+      () => SETTLEMENT_SETTINGS.map((c) => ({ id: c.id, label: c.label })),
+      s.setting,
+      (id) => (s.setting = (id as SettlementSetting | undefined) ?? "native"),
+    );
+    sentence.appendText(": ");
+    if (s.setting === "native") {
+      const cultures: SentenceChoice[] = [{ id: PLACE_BRITAIN, label: "British" }, ...WORLD_CULTURES.map((c) => ({ id: c.id, label: c.label, title: c.guide }))];
+      const culture = cultures.find((c) => c.id === s.culture) ?? cultures[0];
+      this.sentenceLink(sentence, culture.label, "Culture", () => cultures, s.culture, (id) => (s.culture = id ?? PLACE_BRITAIN));
+      this.nativeClauses(sentence, {
+        britain: culture.id === PLACE_BRITAIN,
+        cultureId: s.culture,
+        eras: s.eras,
+        region: s.region,
+        setRegion: (id) => (s.region = id),
+        words: "",
+        land: SETTLEMENT_LAND_KEYS,
+      });
+      return;
+    }
+    const part: ColonialPart = s.setting === "new-lands" ? "2" : "2a";
+    this.colonialClauses(sentence, part, {
+      tradition: s.tradition[part],
+      setTradition: (id) => (s.tradition[part] = id),
+      context: s.context[part],
+      setContext: (id) => (s.context[part] = id),
+      aliens: s.aliens[part],
+      setAliens: (on) => (s.aliens[part] = on),
+      landKey: `settlement:colonial:${part}`,
+    });
+  }
+
+  /** Whether the settlement names setup can be saved as a preset: British, in new lands or in settled lands (urban brief §8). */
+  private settlementPresetable(): boolean {
+    const s = this.settlementState;
+    return s.setting !== "native" || s.culture === PLACE_BRITAIN;
+  }
+
+  /**
+   * Urban brief §3, §8: settlement names, run through the source module's engine with the size.
+   * History: "settlement names · ‹size› · ‹the source module's label without its base name›".
+   */
+  private async runSettlementNames() {
+    const s = this.settlementState;
+    const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
+    await this.loadCustomBiomes();
+    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness };
+    let options: SettlementNamesOptions;
+    let tail: string;
+    if (s.setting === "native" && s.culture === PLACE_BRITAIN) {
+      const land = this.land(SETTLEMENT_LAND_KEYS.britain);
+      const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
+      options = { ...base, setting: "native", culture: "britain", region: s.region, biome: biome?.custom ? undefined : land.biome, customBiome: biome?.custom ? biome : undefined, terrain: land.terrain };
+      tail = withRegion("British", s.region) + landHistorySuffix(land, this.customBiomes);
+    } else if (s.setting === "native") {
+      const era = s.eras[s.culture];
+      const interstellar = findEra(findCulture(s.culture), era).id === INTERSTELLAR_ERA;
+      const key = interstellar ? SETTLEMENT_LAND_KEYS.interstellar : cultureUsesBiomes(s.culture) ? SETTLEMENT_LAND_KEYS.world(s.culture) : undefined;
+      const land = key ? this.land(key) : DEFAULT_LAND;
+      // The world engine takes the biome itself, built-in or a pack.
+      options = { ...base, setting: "native", culture: s.culture, era, customBiome: findBiome(land.biome, this.customBiomes), terrain: land.terrain };
+      tail = worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, s.culture, era).slice(WORLD_PLACE_NAMES_HISTORY_NAME.length + 3) + landHistorySuffix(land, this.customBiomes);
+    } else {
+      const part: ColonialPart = s.setting === "new-lands" ? "2" : "2a";
+      const land = this.land(`settlement:colonial:${part}`);
+      const found = findBiome(land.biome, this.customBiomes);
+      const custom = found?.custom ? await this.readyBiome(found) : undefined;
+      const biome = custom ? undefined : land.biome;
+      options = { ...base, setting: s.setting, tradition: s.tradition[part], context: s.context[part], biome, customBiome: custom, terrain: land.terrain, aliens: !!found?.space && s.aliens[part] };
+      tail =
+        colonialHistoryLabel(settingLabel(s.setting), part, s.tradition[part], s.context[part], custom ? undefined : biome) +
+        landHistorySuffix(land, this.customBiomes, !!custom) +
+        (found?.space && s.aliens[part] ? " · alien life" : "");
+    }
+    const result = this.tryLand(() => generateSettlementNames(options));
+    if (!result) return;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names, "module");
+    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} · ${sizeLabel(result.size)} · ${tail}`);
+    this.setStatus(result.notices.join(" "));
+  }
+
+  /** Urban brief §8: a settlement names preset, saved as the source module's recipe with the size. */
+  private async openSaveSettlementPreset() {
+    const s = this.settlementState;
+    if (!this.settlementPresetable()) return;
+    const custom = await this.loadCustomBiomes();
+    const colonialPart: ColonialPart | undefined = s.setting === "native" ? undefined : s.setting === "new-lands" ? "2" : "2a";
+    const land = this.land(colonialPart ? `settlement:colonial:${colonialPart}` : SETTLEMENT_LAND_KEYS.britain);
+    const found = findBiome(land.biome, custom);
+    const biome = found ? (found.custom ? `[[${found.label}]]` : found.id) : undefined;
+    const tradition = colonialPart ? s.tradition[colonialPart] : undefined;
+    const context = colonialPart ? s.context[colonialPart] : undefined;
+    const aliens = !!colonialPart && !!found?.space && s.aliens[colonialPart];
+    const recipe: RecipeSettings = colonialPart
+      ? colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, aliens)
+      : britishPlaceNamesRecipe(s.region, biome, land.terrain);
+    recipe.shape.settlement = s.size;
+    const nameParts = colonialPart
+      ? (() => {
+          const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition ?? "general"))!;
+          return [settingLabel(s.setting), traditionLabel(colonialPart, t.id, t.label), colonialContexts(colonialPart).find((c) => c.id === context)?.label.toLowerCase()];
+        })()
+      : ["British", regionPhrase(s.region), found ? biomeInline(found) : undefined];
+    const name = [sizeLabel(s.size), ...nameParts].filter(Boolean).join(" · ");
+    const description = settlementSentenceText({ size: s.size, setting: s.setting, region: s.region, tradition, context, biome, terrain: land.terrain, aliens }, custom);
+    new PresetSaveModal(this.app, name, `${description}.`, async (presetName, text) => {
+      if (!presetName) {
+        new Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = `---\n${stringifyYaml(recipeToFrontmatter(recipe))}---\n\n${text}\n`;
+      return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
+    }).open();
+  }
+
+  /** Urban brief §8: loading a settlement names preset opens settlement names with its setting, size and choices. */
+  private async openSettlementPreset(shape: Partial<RecipeSettings["shape"]>, from: string) {
+    const s = this.settlementState;
+    s.size = (SETTLEMENT_SIZES.find((x) => x.key === shape.settlement)?.key ?? "any") as SizeKey;
+    let biome: string | undefined = shape.biome && shape.biome !== "unknown" ? shape.biome : undefined;
+    if (biome?.startsWith("[[")) {
+      const name = biome.slice(2, -2);
+      const target = this.app.metadataCache.getFirstLinkpathDest(name, from);
+      const found = (await this.loadCustomBiomes()).find((b) => b.custom?.path === target?.path || b.label === name);
+      biome = found?.custom?.path;
+    }
+    const land = { biome, terrain: shape.terrain || "any" };
+    if (shape.part === "organic") {
+      s.setting = "native";
+      s.culture = PLACE_BRITAIN;
+      s.region = PLACE_SHAPE_REGIONS.some((r) => r.code === shape.region) ? shape.region : undefined;
+      this.landStates[SETTLEMENT_LAND_KEYS.britain] = land;
+    } else {
+      const part: ColonialPart = shape.part === "new-land" ? "2" : "2a";
+      s.setting = part === "2" ? "new-lands" : "settled-lands";
+      s.tradition[part] = shape.tradition && shape.tradition !== "general" ? shape.tradition : undefined;
+      s.context[part] = shape.context || CONTEXT_PHRASES[part][0][0];
+      s.aliens[part] = !!shape.aliens;
+      this.landStates[`settlement:colonial:${part}`] = land;
+    }
+    this.switchSection("settlementNames");
   }
 
   /** Name ageing: "Age the name towards ‹target pack›". */
@@ -1916,6 +2162,10 @@ export class NameForgeModal extends Modal {
 
   /** Presets brief §9: "Open in tribes and kin groups" applies the preset's choices for this session. */
   private async openPresetInModule() {
+    if (this.currentPackType === "recipePack" && this.settlementPreset) {
+      await this.openSettlementPreset(this.settlementPreset, this.currentRecipePath ?? "");
+      return;
+    }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof TFile)) return;
     const { preset, group, byname, vessel, waters, realm, route, street, inn, building, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
@@ -4155,6 +4405,7 @@ export class NameForgeModal extends Modal {
         section === "streetNames" ||
         section === "innNames" ||
         section === "buildingNames" ||
+        (section === "settlementNames" && this.settlementPresetable()) ||
         section === "settlementKit" ||
         section === "eventNames" ||
         section === "moneyNames" ||
@@ -4170,6 +4421,10 @@ export class NameForgeModal extends Modal {
 
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
   private async openSavePreset() {
+    if (this.activeSection === "settlementNames") {
+      await this.openSaveSettlementPreset();
+      return;
+    }
     const groupFamily = familyForSection(this.activeSection);
     if (groupFamily) {
       this.openSaveGroupPreset(groupFamily);
@@ -5440,7 +5695,11 @@ export class NameForgeModal extends Modal {
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
     this.updatePackDropdownTrigger(file.path, "recipePack");
-    const { problems } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    // Urban brief §8: a settlement names preset opens in settlement names, not the markov generator's recipe editor.
+    this.settlementPreset = recipe.shape?.settlement ? recipe.shape : undefined;
+    this.openPresetButton?.toggle(this.activeSection === "markov" && !!this.settlementPreset);
+    if (this.settlementPreset) this.openPresetButton?.setAttribute("title", `Open in ${SECTION_LABELS.settlementNames}`);
     this.setStatus(problems.join(" "));
   }
 
@@ -5746,6 +6005,10 @@ export class NameForgeModal extends Modal {
   }
 
   private async generateSelectedCount() {
+    if (this.activeSection === "settlementNames") {
+      await this.runSettlementNames();
+      return;
+    }
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
       // River brief §2: rendered names from the fixed built-in recipe, shown as recipe results.
       const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;

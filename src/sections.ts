@@ -227,6 +227,8 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
 export const BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
 export const RIVER_NAMES_HISTORY_NAME = "river names";
 export const WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
+/** Urban brief §2: "settlement names · {size} · {the source module's label without its base name}". */
+export const SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
 export const TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
 /** History rows from before the rename to tribes and kin groups. */
 export const OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
@@ -246,6 +248,8 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
   // Route names brief §1.2: "route names · {era} · {culture}…".
   if (starts(SECTION_LABELS.routeNames)) return "routeNames";
+  // Urban brief §2: "settlement names · …" (never "settlement kit · …": the two prefixes differ after "settlement ").
+  if (starts(SETTLEMENT_NAMES_HISTORY_NAME)) return "settlementNames";
   // Streets brief §1.2: "streets and districts · {era} · {culture}…".
   if (starts(SECTION_LABELS.streetNames)) return "streetNames";
   // Inns brief §1.2: "inns and taverns · {era} · {culture}…".

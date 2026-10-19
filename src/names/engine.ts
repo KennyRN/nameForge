@@ -1122,6 +1122,8 @@ export function generatePlaceNames(options: NameGenerateOptions): NameGenerateRe
  */
 export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generator<number, NameGenerateResult> {
   const { recipe } = options;
+  // Urban brief §8: a settlement names preset carries its size in the recipe.
+  const settlement = options.settlement ?? (recipe.shape.settlement ? { size: recipe.shape.settlement as SizeKey } : undefined);
   const seed =
     options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const organic = recipe.shape.part === "organic";
@@ -1170,7 +1172,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
   let renderOne: (i: number) => GeneratedName;
   let shapeCount: number;
   if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement: options.settlement });
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement });
     renderOne = (i) => renderer.render(shapes[i], rng);
     shapeCount = shapes.length;
   } else {
@@ -1183,7 +1185,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
       feature: recipe.shape.feature,
       excludedCategories,
       environment,
-      settlement: options.settlement,
+      settlement,
       ...(spaceScale ? { space: { scale: spaceScale, aliens: !!recipe.shape.aliens } } : {}),
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);

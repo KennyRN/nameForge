@@ -4,10 +4,11 @@
 import { type Biome, findBiome } from "../biomes";
 import { type GeneratedName, generatePlaceNames, type NameGenerateResult } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
+import { SETTLEMENT_NAMES_HISTORY_NAME } from "../sections";
 import { findCulture, generateWorldPlaceNames } from "../world/engine";
 import { type SizeKey, sizeLabel, sizesToTry } from "./data";
 
-export const SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
+export { SETTLEMENT_NAMES_HISTORY_NAME };
 
 export type SettlementSetting = "native" | "new-lands" | "settled-lands";
 

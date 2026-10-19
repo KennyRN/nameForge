@@ -1,6 +1,7 @@
 // Recipe packs (names-reference §6–§7). No Obsidian imports: the host parses the frontmatter YAML
 // into a plain object and hands it here.
 
+import { SETTLEMENT_SIZES } from "../settlement/data";
 import { findBiome, TERRAIN_CHOICES } from "../biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "../tribes/engine";
 import type { TribalSlotFields } from "../tribes/slotFill";
@@ -42,7 +43,7 @@ export interface RecipeSettings {
   /** `biome` (Tribal brief §19.1): a biome id, or "unknown" for native placeholders. */
   /** `terrain` (Land brief §4.1): a terrain id, a custom terrain id or "any". A biome pack is a
    * link, "[[Salt Marshes]]". */
-  shape: { part: ShapePart; region: string; tradition: string; context: string; biome: string; terrain: string; feature: string; /** Stellar brief §5.8: alien life under a space biome (absent: none). */ aliens?: boolean };
+  shape: { part: ShapePart; region: string; tradition: string; context: string; biome: string; terrain: string; feature: string; /** Stellar brief §5.8: alien life under a space biome (absent: none). */ aliens?: boolean; /** Urban brief §8: a settlement names preset's size key; draws settlement names at that size. */ settlement?: string };
   slots: Record<string, SlotSetting>;
   generics: Record<string, string>;
   register: Register;
@@ -194,6 +195,10 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
     // Stellar brief §5.8: the alien life link, saved as aliens: true; absent means none.
     const aliens = bool(fm.shape.aliens);
     if (aliens !== undefined) shape.aliens = aliens;
+    // Urban brief §8: a settlement names preset's size.
+    const settlement = str(fm.shape.settlement);
+    if (settlement && SETTLEMENT_SIZES.some((s) => s.key === settlement)) shape.settlement = settlement;
+    else if (settlement) problems.push(`Unknown settlement size “${settlement}”.`);
     recipe.shape = shape;
   }
   if (isObject(fm.slots)) {
