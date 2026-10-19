@@ -51,6 +51,9 @@ import {
 import { contextTown, selfPatterns, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, type Vocabulary } from "../settlement/vocab";
 import { monumentNeighbours, STREET_DATA, type NeighbourOptions } from "../streets/engine";
+
+/** §9.1: what's named after a monument lives in the streets engine, which streets, inns and the kit share. */
+export { monumentNeighbours };
 import { deityHooks } from "../deities/hook";
 
 /** Deities brief §10.1: the christian cultures' deity weight, with fantastic on. */
