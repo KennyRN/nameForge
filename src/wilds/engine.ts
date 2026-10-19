@@ -27,6 +27,7 @@ import {
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { riverFill, type RiverSetting } from "../rivers/engine";
+import { townSource } from "../bynames/engine";
 import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, personNames, ROUTE_CULTURES, ROUTE_ERAS, routeCapitals, routeFolk, routeKingdom, routeNorm, routePlace, routeSetting, type RouteCulture, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
@@ -168,6 +169,80 @@ export interface WildsOptions {
   settlementSize?: string;
 }
 
+// ── Town stems (§4.1) ───────────────────────────────────────────────────────
+
+const FEATURE_STOP = "Hill Hills Ridge Edge Island Isle Isles Marsh Marshes Fen Fens Moor Moors Lake Mere Pool Pond Water Waters River Brook Beck Burn Dale Valley Vale Wood Woods Forest Heath Down Downs Pass Gap Bank Bay Shore Cape Point Head Ness Cliff Cliffs Crag Rock Rocks Stone Stones Holm Spring Springs Well Wells Mound Knoll Slope Spur Top Moss Mount Mountain Mountains Peak Glen Combe Fell Tor Gorge Field Fields Meadow Meadows Plain Plains Common Wash Creek Sands Dune Dunes Oasis Grove Copse Clearing Glade Lawn Hollow Cove Sound Bottom Bottoms Barrow Cave Caves Fjord Waterfall Falls Paddy Mouth Source";
+const HABITATION_STOP = "Village Town City Market Manor Farm Cottages Cottage Enclosure County District Prefecture Fort Fortress Camp Homestead Estate Court Hall House Houses Temple Church Chapel Minster Abbey Priory Castle Palace Mansion Seat Station Post Harbour Port Haven Landing";
+const STOP_WORDS = new Set(`${FEATURE_STOP} ${HABITATION_STOP}`.toLowerCase().split(" "));
+const isStopWord = (w: string) => STOP_WORDS.has(w.toLowerCase());
+const letters = (w: string) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+const capitalised = (w: string) => /^\p{Lu}/u.test(w);
+
+/** §4.1: a stem's weight (one word ×3, two words ×1, for non-British sources only), or 0 when it isn't a stem. */
+export function stemWeight(name: string, british: boolean): number {
+  if (name.includes("[") || name.includes("'") || name.includes("’")) return 0;
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) {
+    const w = words[0];
+    const l = w.toLowerCase();
+    if (!capitalised(w) || letters(w) > 10) return 0;
+    if (isStopWord(w) || (l.endsWith("s") && STOP_WORDS.has(l.slice(0, -1)))) return 0;
+    if (/(village|hamlet|homestead|headland|pasture)$/.test(l) || ["moot", "bath", "isthmus"].includes(l)) return 0;
+    return 3;
+  }
+  if (words.length === 2 && !british) {
+    if (!words.every(capitalised) || words[0].toLowerCase() === "the" || isStopWord(words[1])) return 0;
+    return 1;
+  }
+  return 0;
+}
+
+const STEM_POOLS = new Map<string, [string, number][]>();
+
+/** §4.1: the cached stem pool for a stem source ("britain" or a world culture) and, for Britain, a region. */
+export function wildsStemPool(source: string, region?: string): [string, number][] {
+  const key = `${source}|${region ?? ""}`;
+  let pool = STEM_POOLS.get(key);
+  if (!pool) {
+    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 600, seed: 1789, region: source === "britain" ? region : undefined, wilds: false }).names.map((n) => n.text);
+    const seen = new Set<string>();
+    pool = [];
+    for (const name of names) {
+      const w = stemWeight(name, source === "britain");
+      if (w > 0 && !seen.has(name.toLowerCase())) {
+        seen.add(name.toLowerCase());
+        pool.push([name, w]);
+      }
+    }
+    STEM_POOLS.set(key, pool);
+  }
+  return pool;
+}
+
+/** §4.1: a culture's stem source, or undefined for Greek & Byzantine, steppe, Polynesian and Andean. */
+export const stemSourceOf = (culture: RouteCulture): string | undefined => (culture.sensitive ? undefined : townSource(culture.key));
+
+/** §4.1: the resolved biome's one-word wild animals and trees, title case: the fallback stems. */
+export function biomeStems(biome: Biome): string[] {
+  const out: string[] = [];
+  for (const list of ["wildAnimals", "trees"] as BiomeList[])
+    for (const [word] of biomeWords(biome, list)) {
+      const title = biomeTitleCase(word.toLowerCase());
+      if (!/\s/.test(title) && !title.includes("'") && !isStopWord(title) && !out.includes(title)) out.push(title);
+    }
+  return out;
+}
+
+/** The literal words of a pattern (what the `{town}` stem stands beside), lower case. */
+const literalWords = (pattern: string): string[] => pattern.replace(/\{[^}]*\}/g, " ").toLowerCase().split(/[^\p{L}]+/u).filter(Boolean);
+
+/** §4.1 clash guard: the stem's last word, or its fused ending, repeats the shape's generic. */
+function clashes(stem: string, generics: string[]): boolean {
+  const words = stem.toLowerCase().split(/\s+/);
+  const last = words[words.length - 1];
+  return generics.some((g) => words.includes(g) || (g.length >= 3 && last.endsWith(g)));
+}
+
 /** Test seam (§16.5): called with the settlement names options each time the native branch asks for a batch. */
 export const wildsHooks: { onNativeCall?: (options: SettlementNamesOptions) => void } = {};
 
@@ -259,6 +334,20 @@ interface Ctx {
   anchorDecided: boolean;
   anchored: boolean;
   forceAnchor: boolean;
+  /** §4.1: the batch's town stems. */
+  stems: Stems;
+  /** The literal words of the pattern being rendered, for the clash guard. */
+  generics: string[];
+}
+
+/** §4.1: where `{town}` stems come from in this batch. */
+interface Stems {
+  pool: [string, number][];
+  extras: string[];
+  /** Fewer than 20 stems: biome animals and trees join, and `twn` shapes are ×0.5. */
+  thin: boolean;
+  /** No stem source: the filtered `routePlace` draw. */
+  route: boolean;
 }
 
 const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
@@ -346,6 +435,23 @@ function anchored(ctx: Ctx, free: () => string | undefined): string | undefined 
   return free();
 }
 
+/** §4.1: one `{town}` stem; the biome fallback when nothing fits. */
+function drawStem(ctx: Ctx, guard: boolean): string | undefined {
+  const st = ctx.stems;
+  for (let i = 0; i < 10; i++) {
+    let stem: string | undefined;
+    if (st.route) {
+      const t = routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      stem = t && stemWeight(t, false) > 0 ? t : undefined;
+    } else {
+      const entries: [string, number][] = st.thin ? [...st.pool, ...st.extras.map((e): [string, number] => [e, 1])] : st.pool;
+      stem = pickWeighted(entries, ctx.rng);
+    }
+    if (stem && !(guard && clashes(stem, ctx.generics))) return stem;
+  }
+  return st.extras.length > 0 ? pickOne(st.extras, ctx.rng) : undefined;
+}
+
 function listWord(ctx: Ctx, list: string): string | undefined {
   const items = groupListWords(list, ctx.setting, "any")
     .filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w))))
@@ -401,7 +507,7 @@ function token(ctx: Ctx, name: string): VocabEntry | string | undefined {
   if (name.startsWith("@")) return featureRef(ctx, name.slice(1));
   switch (name) {
     case "town": {
-      const free = () => (placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng));
+      const free = () => (placeholders ? "[place]" : drawStem(ctx, true));
       const t = anchored(ctx, free);
       if (t) ctx.words.push({ pool: "town", word: t });
       return t;
@@ -439,6 +545,8 @@ function renderPattern(ctx: Ctx, pattern: string, nested = false): string | unde
     ctx.anchorDecided = false;
     ctx.anchored = false;
   }
+  const outer = ctx.generics;
+  ctx.generics = literalWords(pattern);
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw: string) => {
     if (failed) return "";
@@ -454,6 +562,7 @@ function renderPattern(ctx: Ctx, pattern: string, nested = false): string | unde
     if (mod === "poss") return groupPossessive(text, PLURAL_POOLS.has(name));
     return text;
   });
+  ctx.generics = outer;
   return failed ? undefined : out;
 }
 
@@ -530,7 +639,7 @@ function shapeWeight(ctx: Ctx, s: WildsShape, hardOnly = false): number {
   if (hardOnly) return s.w;
   const cm = WILDS_DATA.cultureMult[c.key] ?? {};
   const family = (cm[s.f] ?? 1) * (s.of ? cm.of ?? 1 : 1);
-  const where = WILDS_DATA.where[s.f]?.[ctx.where] ?? 1;
+  const where = (WILDS_DATA.where[s.f]?.[ctx.where] ?? 1) * (s.f === "twn" && ctx.stems.thin ? 0.5 : 1);
   const era = WILDS_DATA.eraMult[s.f]?.[ctx.era] ?? 1;
   const extra = (s.cx?.[c.key] ?? 1) * (ctx.where === "new" ? s.nx ?? 1 : 1);
   return s.w * family * where * era * extra * regionMult(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor(s.t ?? [], ctx.tone);
@@ -606,6 +715,10 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const count = Math.max(0, Math.floor(options.count));
   const block = blockSet(module, options.safeguards);
   const forcedKind = options.settlementSize ? "settlement" : options.kind;
+  // §4.1: the batch's town stems.
+  const source = stemSourceOf(culture);
+  const pool = source ? wildsStemPool(source, homeBritish ? region : undefined) : [];
+  const stems: Stems = { pool, extras: biomeStems(resolved.biome), thin: !!source && pool.length < 20, route: !source };
 
   const newCtx = (): Ctx => ({
     rng,
@@ -627,6 +740,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     anchorDecided: false,
     anchored: false,
     forceAnchor: false,
+    stems,
+    generics: [],
   });
 
   /** §10.2: a settlement size filter keeps only the shapes suiting it. */
@@ -683,7 +798,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     if (mode === "placeholders") anchor = "[place]";
     else {
       const ctx = newCtx();
-      for (let i = 0; i < 40 && !anchor; i++) anchor = routePlace(culture.key, ctx.setting, rng);
+      for (let i = 0; i < 40 && !anchor; i++) anchor = drawStem(ctx, false);
     }
   }
 

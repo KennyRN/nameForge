@@ -147,3 +147,86 @@ test("sentence: the default reads as the brief's example, and resets follow §2.
   assert.equal(chooseWilds({ ...defaultWildsState("forestNames"), kind: "walk" }, "era", "AN", "forestNames").kind, undefined);
   assert.match(wildsHistoryLabel("mountainNames", { ...state, where: "new", region: "NTH", kind: "pass", tone: "grim", series: true }, "mountains"), /^mountains · medieval · Norman & British · new country · .*passes and cols · grim · series$/);
 });
+
+// ── Town stems (§4.1) ──────────────────────────────────────────────────────
+
+import { biomeStems, resolveWildsBiome, stemSourceOf, stemWeight, wildsStemPool } from "../src/wilds/engine";
+
+const STOP = new Set(
+  "Hill Hills Ridge Edge Island Isle Isles Marsh Marshes Fen Fens Moor Moors Lake Mere Pool Pond Water Waters River Brook Beck Burn Dale Valley Vale Wood Woods Forest Heath Down Downs Pass Gap Bank Bay Shore Cape Point Head Ness Cliff Cliffs Crag Rock Rocks Stone Stones Holm Spring Springs Well Wells Mound Knoll Slope Spur Top Moss Mount Mountain Mountains Peak Glen Combe Fell Tor Gorge Field Fields Meadow Meadows Plain Plains Common Wash Creek Sands Dune Dunes Oasis Grove Copse Clearing Glade Lawn Hollow Cove Sound Bottom Bottoms Barrow Cave Caves Fjord Waterfall Falls Paddy Mouth Source Village Town City Market Manor Farm Cottages Cottage Enclosure County District Prefecture Fort Fortress Camp Homestead Estate Court Hall House Houses Temple Church Chapel Minster Abbey Priory Castle Palace Mansion Seat Station Post Harbour Port Haven Landing"
+    .toLowerCase()
+    .split(" "),
+);
+const townFills = (names: { words: { pool: string; word: string }[] }[]) => names.flatMap((n) => n.words.filter((w) => w.pool === "town").map((w) => w.word));
+
+test("stems: across 5,000 invented names per module and every culture, a fill is one or two capitalised words with no apostrophe, never ends in a stop word and never repeats its generic", () => {
+  const eras: WildsEra[] = ["AN", "MD", "EM", "ST", "MO", "NF", "IS"];
+  for (const module of WILDS_MODULES) {
+    let total = 0;
+    let fills = 0;
+    for (let i = 0; total < 5000; i++) {
+      const culture = WILDS_CULTURES[i % WILDS_CULTURES.length].key;
+      const names = generateWildsNames({ module, culture, era: eras[i % eras.length], where: i % 3 === 0 ? "new" : "home", people: "invented", count: 100, seed: 4000 + i }).names;
+      total += names.length;
+      for (const n of names) {
+        for (const w of n.words.filter((x) => x.pool === "town")) {
+          fills++;
+          const words = w.word.split(/\s+/);
+          const where = `${module} ${culture}: ${w.word} in ${n.text}`;
+          assert.ok(words.length <= 2, where);
+          assert.ok(!/['’]/.test(w.word), where);
+          assert.ok(words.every((x) => /^\p{Lu}/u.test(x)), where);
+          assert.ok(!STOP.has(words[words.length - 1].toLowerCase()), where);
+        }
+        if (n.words.some((x) => x.pool.startsWith("@"))) continue;
+        // The generic: the pattern's literal words.
+        const generics = n.shape.replace(/\{[^}]*\}/g, " ").toLowerCase().split(/[^\p{L}]+/u).filter(Boolean);
+        for (const w of n.words.filter((x) => x.pool === "town")) {
+          const last = w.word.toLowerCase().split(/\s+/).pop()!;
+          for (const g of generics) assert.ok(last !== g && !(g.length >= 3 && last.endsWith(g)), `${module}: ${n.text}`);
+        }
+      }
+    }
+    assert.ok(fills > 500, `${module}: ${fills} fills`);
+  }
+});
+
+test("stems: the Norse and Japanese stem pools hold at least 40 names and the British one at least 35, before any fallback", () => {
+  assert.ok(wildsStemPool("norse").length >= 40, `norse ${wildsStemPool("norse").length}`);
+  assert.ok(wildsStemPool("japanese").length >= 40, `japanese ${wildsStemPool("japanese").length}`);
+  assert.ok(wildsStemPool("britain").length >= 35, `britain ${wildsStemPool("britain").length}`);
+  // Weights: one word ×3, two words ×1 (non-British only); three words, apostrophes and the generics never.
+  assert.equal(stemWeight("Oxdale", true), 3);
+  assert.equal(stemWeight("Wide Bridge", false), 1);
+  assert.equal(stemWeight("Wide Bridge", true), 0);
+  for (const bad of ["Badger Edge Hill", "Lord's Ford", "Fort", "Hills", "Moot", "Hartvillage", "Peacock City", "The Ford", "Wide hill", "Overlongname1", "Longestname"]) assert.equal(stemWeight(bad, false), 0, bad);
+  // Greek & Byzantine, steppe, Polynesian and Andean have no stem source.
+  for (const key of ["greek-byzantine", "steppe", "polynesian", "andean"]) assert.equal(stemSourceOf(WILDS_CULTURES.find((c) => c.key === key)!), undefined, key);
+});
+
+test("stems: Roman has no usable stems so every fill is a biome animal or tree; Norse's are its own", () => {
+  const biome = resolveWildsBiome("mountainNames", "roman", "home", "mediterranean").biome;
+  const extras = new Set(biomeStems(biome));
+  const roman = townFills(generateWildsNames({ module: "mountainNames", culture: "roman", biome: "mediterranean", people: "invented", count: 300, seed: 5 }).names);
+  assert.ok(roman.length > 50);
+  assert.ok(roman.every((f) => extras.has(f)), roman.filter((f) => !extras.has(f)).join(", "));
+  const boreal = new Set(biomeStems(resolveWildsBiome("mountainNames", "norse", "home", "boreal").biome));
+  const norse = townFills(generateWildsNames({ module: "mountainNames", culture: "norse", biome: "boreal", people: "invented", count: 300, seed: 5 }).names);
+  assert.ok(norse.length > 50);
+  assert.ok(norse.every((f) => !boreal.has(f)), norse.filter((f) => boreal.has(f)).join(", "));
+});
+
+test("stems: placeholders mode still gives [place]", () => {
+  const fills = townFills(generateWildsNames({ module: "mountainNames", culture: "norman-british", people: "placeholders", count: 200, seed: 6 }).names);
+  assert.ok(fills.length > 20);
+  assert.ok(fills.every((f) => f === "[place]"));
+});
+
+test("stems: the series anchor comes from the stem pool", () => {
+  const pool = new Set(wildsStemPool("norse").map(([n]) => n));
+  for (let seed = 1; seed <= 20; seed++) {
+    const first = generateWildsNames({ module: "mountainNames", culture: "norse", people: "invented", series: true, count: 3, seed }).names[0];
+    const fill = first.words.find((w) => w.pool === "town")!.word;
+    assert.ok(pool.has(fill), `${seed}: ${first.text}`);
+  }
+});

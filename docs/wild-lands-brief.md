@@ -388,6 +388,67 @@ These tokens are filled from a source rather than a pool. Everything else in bra
 - **Biome words:** for Britain, `{beast}`, `{tree}` and `{stock}` read the built-in `name-words.json` lists through `biomeEntries` (LB §2.6), taking the modern form.
 - **Shared stream:** each source's 60/40 or 50/50 split is drawn on the batch stream.
 
+
+### 4.1 Town stems (added 19 October 2026)
+
+In wild lands, `{town}` is a **stem**: a short name that reads well in front of a generic (*Oxdale Pike*, *Wide Bridge Pass*) or after one (*Lake Gosport*, *Fort Redstone*). It is never a whole translated place name. Full names such as *Badger Edge*, *Cattle Market*, *Forum of Flavius* or *Peacock City* gave results like *Island of the Abbot Gorge* and *Lake Lower Ridge*.
+
+This applies to wild lands only. Route names, seas and coasts and every other module keep `routePlace` as now.
+
+**The pool.** Build one pool per stem source, plus the region for British sources, and cache it:
+
+- Call `generateSettlementNames` with:
+  - setting native
+  - culture `townSource(culture)`
+  - size village
+  - count 600
+  - seed 1789
+  - the region for British sources
+  - `wilds: false`
+- Keep a **one-word name** if all of these are true:
+  - it has 10 letters or fewer
+  - it has no apostrophe
+  - it isn't a stop word (below), or a stop word plus *s*
+  - it doesn't end in *village*, *hamlet*, *homestead*, *headland* or *pasture*
+  - it isn't *Moot*, *Bath* or *Isthmus*
+- Keep a **two-word name** only for non-British sources, and only if all of these are true:
+  - both words are capitalised
+  - it has no apostrophe
+  - it doesn't begin with *The*
+  - its second word isn't a stop word
+- Never keep a name of three words or more.
+- **Weights:** one-word names ×3, two-word names ×1.
+
+**Stop words: feature generics.** Hill, Hills, Ridge, Edge, Island, Isle, Isles, Marsh, Marshes, Fen, Fens, Moor, Moors, Lake, Mere, Pool, Pond, Water, Waters, River, Brook, Beck, Burn, Dale, Valley, Vale, Wood, Woods, Forest, Heath, Down, Downs, Pass, Gap, Bank, Bay, Shore, Cape, Point, Head, Ness, Cliff, Cliffs, Crag, Rock, Rocks, Stone, Stones, Holm, Spring, Springs, Well, Wells, Mound, Knoll, Slope, Spur, Top, Moss, Mount, Mountain, Mountains, Peak, Glen, Combe, Fell, Tor, Gorge, Field, Fields, Meadow, Meadows, Plain, Plains, Common, Wash, Creek, Sands, Dune, Dunes, Oasis, Grove, Copse, Clearing, Glade, Lawn, Hollow, Cove, Sound, Bottom, Bottoms, Barrow, Cave, Caves, Fjord, Waterfall, Falls, Paddy, Mouth, Source.
+
+**Stop words: habitation generics.** Village, Town, City, Market, Manor, Farm, Cottages, Cottage, Enclosure, County, District, Prefecture, Fort, Fortress, Camp, Homestead, Estate, Court, Hall, House, Houses, Temple, Church, Chapel, Minster, Abbey, Priory, Castle, Palace, Mansion, Seat, Station, Post, Harbour, Port, Haven, Landing.
+
+**Thin pools.** If a pool keeps fewer than 20 names, add the resolved biome's one-word wild animals and trees, title case, at weight 1 each (*Jackal Pass*, *Cedar Mountains*). For those cultures, `twn` shapes are also ×0.5, so they don't crowd out the `crt` shapes. On the current data, these cultures fall below 20:
+
+- Roman
+- Egyptian
+- Aztec
+- Bantu
+- Arabic & Persian
+- Indian
+- Ethiopian
+- Chinese
+- Slavic
+- West African
+
+British, Norse, Japanese, Korean and Maya kept 40 or more.
+
+**No stem source.** Greek & Byzantine, steppe, Polynesian and Andean have no stem source. They keep their current `routePlace` draw, filtered by the same rules. A draw that fails goes to the biome fallback.
+
+**Clash guard.** Reject a stem whose last word, or whose fused ending, repeats the shape's generic: *Oxdale Dale*, *Redstone Stone*, *Falcon Ford Ford*. Redraw up to 10 times, then use the biome fallback.
+
+**Unchanged:**
+
+- **Placeholders:** placeholders mode still gives `[place]`.
+- **Series:** the anchor is drawn from this pool.
+- **Shared stream:** draws use the batch stream; the pools are fixed-seed and cached.
+- **Settlements:** the native settlement branch (§9.4) and settlement names' own output are unchanged. They produce whole names and never use `{town}`.
+
 ---
 
 ## 5. Pools

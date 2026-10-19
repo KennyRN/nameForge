@@ -31306,10 +31306,10 @@ function buildInventory(targetNames, extraEndings = []) {
   const names = targetNames.map((n) => n.trim().toLowerCase()).filter((n) => n.length > 0);
   const vowelCounts = /* @__PURE__ */ new Map();
   const consonantUnits = /* @__PURE__ */ new Set();
-  const letters = /* @__PURE__ */ new Set();
+  const letters2 = /* @__PURE__ */ new Set();
   const endingCounts = /* @__PURE__ */ new Map();
   for (const name of names) {
-    for (const ch of Array.from(name)) if (!SEPARATOR.test(ch)) letters.add(ch);
+    for (const ch of Array.from(name)) if (!SEPARATOR.test(ch)) letters2.add(ch);
     const words = splitForm(name).filter((p) => !SEPARATOR.test(p));
     for (const word of words) {
       for (const seg of segment(word)) {
@@ -31336,7 +31336,7 @@ function buildInventory(targetNames, extraEndings = []) {
   const minNames = Math.max(AGEING.endingMinNames, AGEING.endingMinShare * names.length);
   const endings = byCount(endingCounts).filter(([, n]) => n >= minNames).slice(0, AGEING.endingInventorySize).map(([e]) => e);
   for (const e of extraEndings.map((x) => x.toLowerCase())) if (!endings.includes(e)) endings.push(e);
-  return { vowelRuns, consonantUnits, letters, endings };
+  return { vowelRuns, consonantUnits, letters: letters2, endings };
 }
 var AGEING_MOVES = /* @__PURE__ */ new Set(["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9"]);
 var TAKEOVER_MOVES = /* @__PURE__ */ new Set(["M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11"]);
@@ -31447,11 +31447,11 @@ function formVariantsDetailed(form, inv, moves, skipWord, allow, variantsOf = (w
 function formVariants(form, inv) {
   return formVariantsDetailed(form, inv, AGEING_MOVES).map((v) => v.form);
 }
-function alphabetFit(form, letters) {
+function alphabetFit(form, letters2) {
   return Array.from(form).map((ch) => {
-    if (SEPARATOR.test(ch) || letters.has(ch)) return ch;
+    if (SEPARATOR.test(ch) || letters2.has(ch)) return ch;
     const to = ALPHABET_FIT[ch];
-    return to && Array.from(to).every((t) => letters.has(t)) ? to : ch;
+    return to && Array.from(to).every((t) => letters2.has(t)) ? to : ch;
   }).join("");
 }
 function validateSource(source) {
@@ -55092,9 +55092,9 @@ function catalogueName(rng) {
 function planetLetter(rng) {
   return ` ${weighted2(Object.entries(STARS.planetLetters), rng)}`;
 }
-function catalogueWorld(rng, letters = true) {
+function catalogueWorld(rng, letters2 = true) {
   const name = catalogueName(rng);
-  return letters && rng() < STARS.planetLetterChance ? name + planetLetter(rng) : name;
+  return letters2 && rng() < STARS.planetLetterChance ? name + planetLetter(rng) : name;
 }
 function bayerName(rng) {
   const greek = LISTS.greek.map((e) => [e.w, STARS.greekHeavy.letters.includes(e.w) ? STARS.greekHeavy.weight : STARS.greekHeavy.other]);
@@ -60781,8 +60781,8 @@ function ancientName(options, rng) {
       seed
     }).names[0];
     if (!name) continue;
-    const letters = letterCount2(name);
-    if (letters < minLetters || letters > maxLetters || REAL_NAMES.has(name.trim().toLowerCase())) continue;
+    const letters2 = letterCount2(name);
+    if (letters2 < minLetters || letters2 > maxLetters || REAL_NAMES.has(name.trim().toLowerCase())) continue;
     return titleCase2(name.trim().toLowerCase());
   }
   return null;
@@ -64031,8 +64031,8 @@ var WorldRenderer = class {
       }).names[0];
       if (!raw) continue;
       const name = titleWord2(raw.trim());
-      const letters = letterCount4(name);
-      if (letters < source.min || letters > source.max) continue;
+      const letters2 = letterCount4(name);
+      if (letters2 < source.min || letters2 > source.max) continue;
       if (real.has(name.toLowerCase()) || avoid.includes(name)) continue;
       return name;
     }
@@ -64712,10 +64712,10 @@ function initialsToken(ctx, type) {
     const shape = pickWeighted5(formal.map((s) => [s, shapeWeight(ctx, s)]), ctx.rng);
     const text = renderPattern(ctx, shape.p, type, shape);
     if (!text || text.includes("[")) continue;
-    const letters = initialsOf(capitalise(text, true));
-    if (letters.length < 3 || letters.length > 5) continue;
-    if (BLOCKED_INITIALS.has(letters) || ctx.block.has(norm2(letters)) || BANNED.some((re) => re.test(letters))) continue;
-    return { text: letters, plural: false };
+    const letters2 = initialsOf(capitalise(text, true));
+    if (letters2.length < 3 || letters2.length > 5) continue;
+    if (BLOCKED_INITIALS.has(letters2) || ctx.block.has(norm2(letters2)) || BANNED.some((re) => re.test(letters2))) continue;
+    return { text: letters2, plural: false };
   }
   return void 0;
 }
@@ -89979,14 +89979,14 @@ function generateVesselNames(options) {
         const shape = pickOne2(shapes, rng);
         const range2 = /\{romanNumeral\}/.test(shape.p) ? [1, 8] : /\{n23\}/.test(shape.p) ? [10, 999] : /\{n100\}/.test(shape.p) ? [1, 100] : [1, 99];
         if (range2[1] - range2[0] + 1 < count) continue;
-        const letters = shape.p.includes("{AA}") ? baseTokenLetters(2) : shape.p.includes("{A}") ? baseTokenLetters(1) : "";
+        const letters2 = shape.p.includes("{AA}") ? baseTokenLetters(2) : shape.p.includes("{A}") ? baseTokenLetters(1) : "";
         const pool3 = Array.from({ length: range2[1] - range2[0] + 1 }, (_x, i) => range2[0] + i);
         for (let i = pool3.length - 1; i > 0; i--) {
           const j = Math.floor(rng() * (i + 1));
           [pool3[i], pool3[j]] = [pool3[j], pool3[i]];
         }
         for (const n of pool3.slice(0, count).sort((a, b) => a - b)) {
-          const text = shape.p.replace(/\{AA?\}/, letters).replace(/\{(n|n23|n100)\}/, String(n)).replace("{romanNumeral}", (_c4 = (_b4 = AIR_LAND.lists.romanNumeral[n - 1]) == null ? void 0 : _b4.w) != null ? _c4 : "");
+          const text = shape.p.replace(/\{AA?\}/, letters2).replace(/\{(n|n23|n100)\}/, String(n)).replace("{romanNumeral}", (_c4 = (_b4 = AIR_LAND.lists.romanNumeral[n - 1]) == null ? void 0 : _b4.w) != null ? _c4 : "");
           const built = { name: vesselCapitals(text), plan: { route: "type", role: "designation", p: shape.p, tones: shape.t }, tones: [], record: [] };
           add2(result(ctx, built, info));
         }
@@ -97357,8 +97357,8 @@ function token5(ctx, name) {
       return w && `the ${w}`;
     }
     case "roadLetter": {
-      const letters = Object.entries((_c3 = (_b3 = ctx.shape) == null ? void 0 : _b3.letters) != null ? _c3 : { A: 1 });
-      return ctx.letter = pickWeighted5(letters, rng);
+      const letters2 = Object.entries((_c3 = (_b3 = ctx.shape) == null ? void 0 : _b3.letters) != null ? _c3 : { A: 1 });
+      return ctx.letter = pickWeighted5(letters2, rng);
     }
     case "n":
       return roadNumber(ctx, (_d3 = ctx.letter) != null ? _d3 : "route");
@@ -115375,6 +115375,64 @@ function wildsKindLive(module2, kind, era) {
 }
 var wildsKindsAt = (module2, era) => wildsKinds(module2).filter((k) => wildsKindLive(module2, k.key, era));
 var PLURAL_POOLS = /* @__PURE__ */ new Set();
+var FEATURE_STOP = "Hill Hills Ridge Edge Island Isle Isles Marsh Marshes Fen Fens Moor Moors Lake Mere Pool Pond Water Waters River Brook Beck Burn Dale Valley Vale Wood Woods Forest Heath Down Downs Pass Gap Bank Bay Shore Cape Point Head Ness Cliff Cliffs Crag Rock Rocks Stone Stones Holm Spring Springs Well Wells Mound Knoll Slope Spur Top Moss Mount Mountain Mountains Peak Glen Combe Fell Tor Gorge Field Fields Meadow Meadows Plain Plains Common Wash Creek Sands Dune Dunes Oasis Grove Copse Clearing Glade Lawn Hollow Cove Sound Bottom Bottoms Barrow Cave Caves Fjord Waterfall Falls Paddy Mouth Source";
+var HABITATION_STOP = "Village Town City Market Manor Farm Cottages Cottage Enclosure County District Prefecture Fort Fortress Camp Homestead Estate Court Hall House Houses Temple Church Chapel Minster Abbey Priory Castle Palace Mansion Seat Station Post Harbour Port Haven Landing";
+var STOP_WORDS = new Set(`${FEATURE_STOP} ${HABITATION_STOP}`.toLowerCase().split(" "));
+var isStopWord = (w) => STOP_WORDS.has(w.toLowerCase());
+var letters = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
+var capitalised = (w) => /^\p{Lu}/u.test(w);
+function stemWeight(name, british) {
+  if (name.includes("[") || name.includes("'") || name.includes("\u2019")) return 0;
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) {
+    const w = words[0];
+    const l = w.toLowerCase();
+    if (!capitalised(w) || letters(w) > 10) return 0;
+    if (isStopWord(w) || l.endsWith("s") && STOP_WORDS.has(l.slice(0, -1))) return 0;
+    if (/(village|hamlet|homestead|headland|pasture)$/.test(l) || ["moot", "bath", "isthmus"].includes(l)) return 0;
+    return 3;
+  }
+  if (words.length === 2 && !british) {
+    if (!words.every(capitalised) || words[0].toLowerCase() === "the" || isStopWord(words[1])) return 0;
+    return 1;
+  }
+  return 0;
+}
+var STEM_POOLS = /* @__PURE__ */ new Map();
+function wildsStemPool(source, region) {
+  const key2 = `${source}|${region != null ? region : ""}`;
+  let pool3 = STEM_POOLS.get(key2);
+  if (!pool3) {
+    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 600, seed: 1789, region: source === "britain" ? region : void 0, wilds: false }).names.map((n) => n.text);
+    const seen = /* @__PURE__ */ new Set();
+    pool3 = [];
+    for (const name of names) {
+      const w = stemWeight(name, source === "britain");
+      if (w > 0 && !seen.has(name.toLowerCase())) {
+        seen.add(name.toLowerCase());
+        pool3.push([name, w]);
+      }
+    }
+    STEM_POOLS.set(key2, pool3);
+  }
+  return pool3;
+}
+var stemSourceOf = (culture) => culture.sensitive ? void 0 : townSource(culture.key);
+function biomeStems(biome) {
+  const out = [];
+  for (const list of ["wildAnimals", "trees"])
+    for (const [word] of biomeWords(biome, list)) {
+      const title = biomeTitleCase(word.toLowerCase());
+      if (!/\s/.test(title) && !title.includes("'") && !isStopWord(title) && !out.includes(title)) out.push(title);
+    }
+  return out;
+}
+var literalWords = (pattern) => pattern.replace(/\{[^}]*\}/g, " ").toLowerCase().split(/[^\p{L}]+/u).filter(Boolean);
+function clashes(stem, generics) {
+  const words = stem.toLowerCase().split(/\s+/);
+  const last = words[words.length - 1];
+  return generics.some((g) => words.includes(g) || g.length >= 3 && last.endsWith(g));
+}
 var wildsHooks = {};
 function wildsModulesForTerrain(terrain, biome) {
   var _a5, _b3;
@@ -115480,6 +115538,21 @@ function anchored(ctx, free) {
   }
   return free();
 }
+function drawStem(ctx, guard) {
+  const st = ctx.stems;
+  for (let i = 0; i < 10; i++) {
+    let stem;
+    if (st.route) {
+      const t = routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      stem = t && stemWeight(t, false) > 0 ? t : void 0;
+    } else {
+      const entries = st.thin ? [...st.pool, ...st.extras.map((e) => [e, 1])] : st.pool;
+      stem = pickWeighted5(entries, ctx.rng);
+    }
+    if (stem && !(guard && clashes(stem, ctx.generics))) return stem;
+  }
+  return st.extras.length > 0 ? pickOne8(st.extras, ctx.rng) : void 0;
+}
 function listWord5(ctx, list) {
   const items = groupListWords(list, ctx.setting, "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
@@ -115522,7 +115595,7 @@ function token9(ctx, name) {
   if (name.startsWith("@")) return featureRef(ctx, name.slice(1));
   switch (name) {
     case "town": {
-      const free = () => placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
+      const free = () => placeholders ? "[place]" : drawStem(ctx, true);
       const t = anchored(ctx, free);
       if (t) ctx.words.push({ pool: "town", word: t });
       return t;
@@ -115560,6 +115633,8 @@ function renderPattern7(ctx, pattern, nested = false) {
     ctx.anchorDecided = false;
     ctx.anchored = false;
   }
+  const outer = ctx.generics;
+  ctx.generics = literalWords(pattern);
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
@@ -115575,6 +115650,7 @@ function renderPattern7(ctx, pattern, nested = false) {
     if (mod === "poss") return groupPossessive(text, PLURAL_POOLS.has(name));
     return text;
   });
+  ctx.generics = outer;
   return failed ? void 0 : out;
 }
 var stripThe = (s) => s.replace(/^the /, "");
@@ -115630,7 +115706,7 @@ function shapeWeight5(ctx, s, hardOnly = false) {
   if (hardOnly) return s.w;
   const cm = (_a5 = WILDS_DATA.cultureMult[c.key]) != null ? _a5 : {};
   const family = ((_b3 = cm[s.f]) != null ? _b3 : 1) * (s.of ? (_c3 = cm.of) != null ? _c3 : 1 : 1);
-  const where2 = (_e3 = (_d3 = WILDS_DATA.where[s.f]) == null ? void 0 : _d3[ctx.where]) != null ? _e3 : 1;
+  const where2 = ((_e3 = (_d3 = WILDS_DATA.where[s.f]) == null ? void 0 : _d3[ctx.where]) != null ? _e3 : 1) * (s.f === "twn" && ctx.stems.thin ? 0.5 : 1);
   const era = (_g = (_f = WILDS_DATA.eraMult[s.f]) == null ? void 0 : _f[ctx.era]) != null ? _g : 1;
   const extra = ((_i = (_h = s.cx) == null ? void 0 : _h[c.key]) != null ? _i : 1) * (ctx.where === "new" ? (_j = s.nx) != null ? _j : 1 : 1);
   return s.w * family * where2 * era * extra * regionMult2(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor((_k = s.t) != null ? _k : [], ctx.tone);
@@ -115692,6 +115768,9 @@ function generateWildsNames(options) {
   const count = Math.max(0, Math.floor(options.count));
   const block = blockSet(module2, options.safeguards);
   const forcedKind = options.settlementSize ? "settlement" : options.kind;
+  const source = stemSourceOf(culture);
+  const pool3 = source ? wildsStemPool(source, homeBritish ? region : void 0) : [];
+  const stems = { pool: pool3, extras: biomeStems(resolved.biome), thin: !!source && pool3.length < 20, route: !source };
   const newCtx3 = () => {
     var _a6, _b4;
     return {
@@ -115713,7 +115792,9 @@ function generateWildsNames(options) {
       words: [],
       anchorDecided: false,
       anchored: false,
-      forceAnchor: false
+      forceAnchor: false,
+      stems,
+      generics: []
     };
   };
   const sizeOk = (s) => {
@@ -115760,7 +115841,7 @@ function generateWildsNames(options) {
     if (mode === "placeholders") anchor = "[place]";
     else {
       const ctx = newCtx3();
-      for (let i = 0; i < 40 && !anchor; i++) anchor = routePlace(culture.key, ctx.setting, rng);
+      for (let i = 0; i < 40 && !anchor; i++) anchor = drawStem(ctx, false);
     }
   }
   const acceptable7 = (text) => {
