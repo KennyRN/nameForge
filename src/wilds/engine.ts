@@ -6,7 +6,8 @@
 // fixtures can't move. No Obsidian imports.
 
 import wildsData from "../data/wilds.json";
-import { BIOMES, BRITAIN, biomeTitleCase, biomeWords, pluralOf, type Biome, type BiomeList } from "../biomes";
+import { BIOMES, BRITAIN, biomeTitleCase, biomeWords, findBiome, pluralOf, type Biome, type BiomeList } from "../biomes";
+import { INTERSTELLAR_ERA, WORLD_CULTURES } from "../world/engine";
 import { deityHooks } from "../deities/hook";
 import {
   type GroupPeople,
@@ -28,6 +29,7 @@ import { mulberry32 } from "../markov";
 import { riverFill, type RiverSetting } from "../rivers/engine";
 import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, personNames, ROUTE_CULTURES, ROUTE_ERAS, routeCapitals, routeFolk, routeKingdom, routeNorm, routePlace, routeSetting, type RouteCulture, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
+import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -164,18 +166,51 @@ export interface WildsOptions {
   purposeBuiltOnly?: boolean;
   /** §10.2: the settlement names size (a letter of `h v t c g`); only shapes suiting it are drawn. Kind is forced to settlement. */
   settlementSize?: string;
-  /** §9.4: draws the native settlement names for the terrain modules' native branch; supplied by settlement names. */
-  nativeNames?: (count: number, seed: number, ctx: NativeRequest) => string[];
 }
 
-/** What the native branch asks settlement names for (§9.4). */
-export interface NativeRequest {
-  module: WildsModule;
-  culture: string;
-  era: WildsEra;
-  where: WildsWhere;
-  region?: string;
-  biome?: string;
+/** Test seam (§16.5): called with the settlement names options each time the native branch asks for a batch. */
+export const wildsHooks: { onNativeCall?: (options: SettlementNamesOptions) => void } = {};
+
+/**
+ * §10.1: the terrain modules a settlement names terrain and biome send names to, with weights; undefined for
+ * any other terrain. `biome` is the biome id, "britain" for the British default, or undefined for none.
+ */
+export function wildsModulesForTerrain(terrain: string | undefined, biome: string | undefined): [WildsModule, number][] | undefined {
+  const row = WILDS_DATA.settlementLink.terrainToModule.find((t) => t.terrain === terrain);
+  if (!row) return undefined;
+  const split = biome ? row.split?.[biome] : undefined;
+  if (split) return Object.entries(split).map(([m, w]): [WildsModule, number] => [m as WildsModule, w]);
+  return [[(biome && row.byBiome?.[biome]) || row.module, 1]];
+}
+
+/** The settlement names size keys as the data's size letters. */
+export const SIZE_LETTER: Record<string, string> = { any: "any", hamlet: "h", village: "v", town: "t", city: "c", great: "g" };
+
+/** §9.4: what the native branch asks settlement names for, or undefined where it isn't available. */
+export function nativeSettlementRequest(
+  module: WildsModule,
+  culture: string,
+  era: WildsEra,
+  where: WildsWhere,
+  region: string | undefined,
+  chosenBiome: string | undefined,
+  mode: GroupPeople,
+): SettlementNamesOptions | undefined {
+  const link = WILDS_DATA.settlementLink;
+  if (mode === "placeholders" || era === "NF" || era === "IS") return undefined;
+  const land = link.nativeLand[module];
+  const biome = chosenBiome ?? land.biomeIfUnset;
+  const base = { size: "any" as const, count: 0, terrain: land.terrain, biome, wilds: false };
+  if (where === "new") {
+    const tradition = link.cultureToColonial[culture];
+    return tradition ? { ...base, setting: "new-lands", tradition: tradition === "general" ? undefined : tradition } : undefined;
+  }
+  if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : undefined };
+  const worldCulture = WORLD_CULTURES.find((c) => c.id === culture);
+  if (!worldCulture) return undefined;
+  const eras = worldCulture.eras.filter((e) => e.id !== INTERSTELLAR_ERA);
+  const match = eras.find((e) => link.worldEraToRoute[culture]?.[e.id] === era) ?? eras[0];
+  return { ...base, setting: "native", culture, era: match?.id, biome: undefined, customBiome: biome ? findBiome(biome) : undefined };
 }
 
 export interface WildsName {
@@ -662,6 +697,27 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     return true;
   };
 
+  // §9.4: the native branch, asked for once per batch, the first time it is needed.
+  const nativeRequest = options.purposeBuiltOnly ? undefined : nativeSettlementRequest(module, culture.key, era, where, region, homeBritish ? undefined : options.biome, mode);
+  let nativeQueue: string[] | undefined;
+  const nextNative = (): string | undefined => {
+    if (!nativeRequest) return undefined;
+    if (!nativeQueue) {
+      const request: SettlementNamesOptions = { ...nativeRequest, count, seed: Math.floor(rng() * 0x100000000) >>> 0 };
+      wildsHooks.onNativeCall?.(request);
+      try {
+        nativeQueue = generateSettlementNames(request).names.map((n) => n.text);
+      } catch {
+        nativeQueue = [];
+      }
+    }
+    while (nativeQueue.length > 0) {
+      const text = nativeQueue.shift()!;
+      if (acceptable(text)) return text;
+    }
+    return undefined;
+  };
+
   let first = true;
   const oneName = (): WildsName | undefined => {
     const parent = options.series && first && !chosenKind;
@@ -670,6 +726,11 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
       if (chosenKind) kindKey = chosenKind.key;
       else if (parent) kindKey = PARENT_KIND[module];
       else kindKey = pickWeighted(kindWeights(), rng);
+      // §9.1: a settlement is native 40% of the time (the 0.6 draw is made before anything else for the name).
+      if (kindKey === "settlement" && nativeRequest && rng() >= WILDS_DATA.settlementLink.purposeBuiltShare) {
+        const text = nextNative();
+        if (text) return { text, kind: "settlement", shape: "native", era, tones: [], words: [], source: "native" };
+      }
       let list: [Plan, number][] | undefined = kindKey ? plans().get(kindKey) : undefined;
       if (parent && list) {
         const twn = list.filter(([p]) => p.shape.f === "twn" && p.shape.p.includes("{town}"));
