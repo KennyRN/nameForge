@@ -178,7 +178,7 @@ test("§13.3: a village has no districts; places only and people only; inland ha
   assert.ok(texts(places, "streets").length > 0);
   const people = generateKit({ culture: "norman-british", position: "coast", contents: "people", seed: 4 });
   assert.ok(people.ruler && texts(people, "groups").length === 4);
-  assert.deepEqual(people.sections.map((s) => s.key), ["groups", "history"]);
+  assert.deepEqual(people.sections.map((s) => s.key), ["groups", "neighbours", "history"]);
   assert.equal(section(generateKit({ culture: "norman-british", seed: 4 }), "ships"), undefined);
 });
 
@@ -405,7 +405,8 @@ test("Events §10: History follows Groups with §5.1-style counts; a history of 
       assert.equal(sectionCount("history", size, "standard"), counts[size]);
       assert.equal(history.entries.length, counts[size], where);
       const keys = kit.sections.map((s) => s.key);
-      assert.equal(keys.indexOf("history"), keys.indexOf("groups") + 1, where);
+      assert.equal(keys.indexOf("history"), keys.indexOf("neighbours") + 1, where);
+      assert.equal(keys.indexOf("neighbours"), keys.indexOf("groups") + 1, where);
       if (counts[size] >= 3) assert.equal(history.entries[0].text, `Founding of ${kit.context.town}`, where);
     }
   }

@@ -38,6 +38,7 @@ import {
   ICON_GROUP_NAMES,
   ICON_TRIBAL_NAMES,
   ICON_BYNAMES,
+  ICON_FAMILY_NAMES,
   ICON_SHIPS,
   ICON_HISTORY,
   ICON_VEHICLES,
@@ -351,7 +352,7 @@ const SECTION_ICONS: Record<NameForgeSection, string> = {
   // Bynames brief §1.1: Lucide icons.
   epithets: ICON_EPITHETS,
   titles: "crown",
-  familyNames: ICON_BYNAMES,
+  familyNames: ICON_FAMILY_NAMES,
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
   spacecraft: ICON_SPACECRAFT,
@@ -3636,9 +3637,12 @@ export class NameForgeModal extends Modal {
       if (section.entries.length === 0) continue;
       const head = view.createDiv({ cls: "nameforge-kit__heading" });
       head.createSpan({ text: section.title });
-      const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
-      setIcon(reroll, ICON_DICE);
-      reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
+      // The neighbours belong to the settlement's context, so they have no reroll.
+      if (section.key !== "neighbours") {
+        const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
+        setIcon(reroll, ICON_DICE);
+        reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
+      }
       const list = view.createEl("ul", { cls: "nameforge-kit__list" });
       for (const e of section.entries) {
         const item = list.createEl("li");

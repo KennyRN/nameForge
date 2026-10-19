@@ -2462,7 +2462,9 @@ var ICON_TRIBAL_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0
 var ICON_GROUP_NAMES = "nameforge-group-names";
 var ICON_GROUP_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m16.719 19.752l-.64-5.124A3 3 0 0 0 13.101 12h-2.204a3 3 0 0 0-2.976 2.628l-.641 5.124A2 2 0 0 0 9.266 22h5.468a2 2 0 0 0 1.985-2.248" /><circle cx="12" cy="5" r="3" /><circle cx="4" cy="9" r="2" /><circle cx="20" cy="9" r="2" /><path stroke-linecap="round" stroke-linejoin="round" d="M4 14h-.306a2 2 0 0 0-1.973 1.671l-.333 2A2 2 0 0 0 3.361 20H7m13-6h.306a2 2 0 0 1 1.973 1.671l.333 2A2 2 0 0 1 20.639 20H17" /></g></g>';
 var ICON_BYNAMES = "nameforge-bynames";
-var ICON_BYNAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
+var ICON_BYNAMES_SVG = '<g transform="scale(3.125)"><path fill="currentColor" d="M15 16a7 7 0 1 0 0-14a7 7 0 0 0 0 14m-8.5 2A3.5 3.5 0 0 0 3 21.5v.5c0 2.393 1.523 4.417 3.685 5.793C8.859 29.177 11.802 30 15 30q1.118-.001 2.185-.13A8.98 8.98 0 0 1 14 23c0-1.85.558-3.57 1.516-5zm24 5a7.5 7.5 0 1 1-15 0a7.5 7.5 0 0 1 15 0m-8.212-4.862l-.94 2.828h-2.994c-.731 0-1.03.938-.434 1.361l2.406 1.707l-.929 2.792c-.228.687.555 1.267 1.146.848L23 25.931l2.457 1.743c.591.42 1.374-.16 1.146-.848l-.93-2.792l2.407-1.707c.597-.423.297-1.361-.434-1.361h-2.994l-.94-2.828c-.228-.684-1.196-.684-1.424 0" /></g>';
+var ICON_FAMILY_NAMES = "nameforge-family-names";
+var ICON_FAMILY_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
 var ICON_SHIPS = "nameforge-ships";
 var ICON_SHIPS_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M8.75 2a.75.75 0 0 0-.75.75V5H5.75a.75.75 0 0 0-.75.75v4.765l-1.46.534a.75.75 0 0 0-.423 1.02l2.335 5.019a1.75 1.75 0 0 1 2.22 1.143q0 .006.009.027q.018.053.067.165c.068.15.171.344.308.527c.276.367.564.55.944.55s.668-.182.943-.55a2.8 2.8 0 0 0 .384-.718a1.75 1.75 0 0 1 3.342-.005l.01.028q.018.053.067.165c.069.151.172.345.31.529c.278.37.567.551.944.551s.665-.182.943-.55a3 3 0 0 0 .386-.721a1.75 1.75 0 0 1 2.294-1.114l2.468-5.031a.75.75 0 0 0-.421-1.037L19 10.451V5.75a.75.75 0 0 0-.75-.75H16V2.75a.75.75 0 0 0-.75-.75zm5.75 3h-5V3.5h5zm3 1.5v3.416l-4.397-1.569a3.25 3.25 0 0 0-2.21.01L6.5 9.964V6.5zm1.227 12.064l-.003-.01a.75.75 0 0 0-1.441-.023v.002l-.004.009l-.02.058q-.03.082-.096.232c-.09.199-.228.46-.42.718c-.388.515-.94.950-1.743.950s-1.356-.435-1.743-.950a3.9 3.9 0 0 1-.538-1.009l-.003-.009a.75.75 0 0 0-1.435.001v.001l-.004.01l-.02.057a3.8 3.8 0 0 1-.514.950c-.386.514-.937.949-1.743.949s-1.358-.435-1.744-.950a3.8 3.8 0 0 1-.535-1.007l-.003-.011a.75.75 0 0 0-1.441.020l-.003.009l-.018.054a3.3 3.3 0 0 1-.504.922c-.384.490-.996.963-2.002.963a.75.75 0 0 0 0 1.5c1.574 0 2.587-.777 3.183-1.537L6 20.374l.056.076C6.608 21.185 7.556 22 9 22s2.392-.815 2.943-1.55l.057-.078l.058.079C12.610 21.185 13.558 22 15 22s2.390-.815 2.942-1.55l.055-.075q.032.044.066.087c.595.761 1.610 1.538 3.187 1.538a.75.75 0 0 0 0-1.5c-1.012 0-1.623-.473-2.005-.962a3.3 3.3 0 0 1-.518-.974" /></g>';
 var ICON_HISTORY = "nameforge-history";
@@ -2556,6 +2558,7 @@ var ICON_PENCIL_SVG = '<g transform="scale(4.16667)"><g fill="none"><rect width=
 function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_MEEPLE, MEEPLE_SVG);
   (0, import_obsidian4.addIcon)(ICON_BYNAMES, ICON_BYNAMES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_FAMILY_NAMES, ICON_FAMILY_NAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_GROUP_NAMES, ICON_GROUP_NAMES_SVG);
   (0, import_obsidian4.addIcon)(ICON_SHIPS, ICON_SHIPS_SVG);
   (0, import_obsidian4.addIcon)(ICON_HISTORY, ICON_HISTORY_SVG);
@@ -127250,7 +127253,8 @@ var settlement_kit_default = {
     buildings: { village: 3, town: 6, city: 9, great: 12 },
     groups: { village: 1, town: 4, city: 7, great: 10 },
     ships: { village: 2, town: 3, city: 4, great: 6 },
-    history: { village: 2, town: 3, city: 4, great: 5 }
+    history: { village: 2, town: 3, city: 4, great: 5 },
+    neighbours: { village: 0, town: 0, city: 0, great: 0 }
   },
   detail: { brief: 0.5, standard: 1, full: 1.5 },
   sections: [
@@ -127261,6 +127265,7 @@ var settlement_kit_default = {
     { key: "inns", title: "Inns", step: 8 },
     { key: "buildings", title: "Buildings and landmarks", step: 4 },
     { key: "groups", title: "Groups", step: 9 },
+    { key: "neighbours", title: "Neighbouring settlements", step: 12 },
     { key: "history", title: "History", step: 11 },
     { key: "ships", title: "Ships", step: 10 }
   ],
@@ -127461,7 +127466,7 @@ function sectionsFor(contents, position, era) {
   const all = KIT_DATA.sections.map((s) => s.key);
   if (contents === "people") return ["groups", "history"];
   const water = shipsModule(position, era) !== void 0;
-  return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships" || k === "history")) && !(k === "ships" && !water));
+  return all.filter((k) => k !== "neighbours").filter((k) => !(contents === "places" && (k === "groups" || k === "ships" || k === "history")) && !(k === "ships" && !water));
 }
 function positionInfo(position, era, size) {
   var _a5;
@@ -127477,7 +127482,7 @@ function shipsModule(position, era) {
   return "ships";
 }
 var norm3 = (s) => s.toLowerCase().replace(/^the /, "").trim();
-var STEPS = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11 };
+var STEPS = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11, neighbours: 12 };
 var LANDMARK_KINDS = ["defence", "crossing", "water", "monument"];
 var THROUGH_KINDS = ["road", "drove", "trade"];
 var subSeed = (seed, step, rerolls = 0) => step * KIT_DATA.seedStep + seed + rerolls * KIT_DATA.rerollStep >>> 0;
@@ -127635,6 +127640,9 @@ function generateKit(options) {
     if (kept.has("groups")) sections.set("groups", kept.get("groups"));
     else groupsSection(want("groups"));
   }
+  if (context.neighbours.length > 0) {
+    sections.set("neighbours", { key: "neighbours", title: title("neighbours"), entries: context.neighbours.map((text) => ({ text })), wanted: context.neighbours.length });
+  }
   if (want("history") > 0) {
     const scale = KIT_SIZES.indexOf(o.size) <= KIT_SIZES.indexOf(KIT_DATA.history.localUpTo) ? "local" : "realm";
     const events = (seed, count, extra = {}) => generateEventNames({ ...common, scale, series: !extra.shape, count, seed, safeguards: g.event, ...extra });
@@ -127748,7 +127756,7 @@ function rerollKit(kit, key2, options = {}) {
   const rerolls = { ...kit.rerolls };
   for (const k of rerollTargets(key2)) rerolls[k] = ((_a5 = rerolls[k]) != null ? _a5 : 0) + 1;
   const redo = rerollTargets(key2);
-  const keep = { sections: kit.sections.filter((s) => !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
+  const keep = { sections: kit.sections.filter((s) => s.key !== "neighbours" && !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
   const next = generateKit({ ...kit.options, ...options, rerolls, keep });
   const others = rerollTargets(key2).filter((k) => k !== key2 && next.sections.some((s) => s.key === k));
   const note2 = others.length > 0 ? `${others.map((k) => KIT_DATA.sections.find((s) => s.key === k).title.toLowerCase()).join(" and ").replace(/^./, (c) => c.toUpperCase())} were redone to match.` : void 0;
@@ -135924,7 +135932,7 @@ var SECTION_ICONS = {
   // Bynames brief §1.1: Lucide icons.
   epithets: ICON_EPITHETS,
   titles: "crown",
-  familyNames: ICON_BYNAMES,
+  familyNames: ICON_FAMILY_NAMES,
   // Ships brief §1.1, with the supplied ship icon for ships and boats.
   ships: ICON_SHIPS,
   spacecraft: ICON_SPACECRAFT,
@@ -138934,9 +138942,11 @@ ${n.origin}${also}${echo}` };
       if (section.entries.length === 0) continue;
       const head = view.createDiv({ cls: "nameforge-kit__heading" });
       head.createSpan({ text: section.title });
-      const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
-      (0, import_obsidian14.setIcon)(reroll, ICON_DICE);
-      reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
+      if (section.key !== "neighbours") {
+        const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
+        (0, import_obsidian14.setIcon)(reroll, ICON_DICE);
+        reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
+      }
       const list = view.createEl("ul", { cls: "nameforge-kit__list" });
       for (const e of section.entries) {
         const item2 = list.createEl("li");

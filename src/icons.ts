@@ -145,8 +145,13 @@ const ICON_GROUP_NAMES_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m16.719 19.752l-.64-5.124A3 3 0 0 0 13.101 12h-2.204a3 3 0 0 0-2.976 2.628l-.641 5.124A2 2 0 0 0 9.266 22h5.468a2 2 0 0 0 1.985-2.248" /><circle cx="12" cy="5" r="3" /><circle cx="4" cy="9" r="2" /><circle cx="20" cy="9" r="2" /><path stroke-linecap="round" stroke-linejoin="round" d="M4 14h-.306a2 2 0 0 0-1.973 1.671l-.333 2A2 2 0 0 0 3.361 20H7m13-6h.306a2 2 0 0 1 1.973 1.671l.333 2A2 2 0 0 1 20.639 20H17" /></g></g>';
 
 export const ICON_BYNAMES = "nameforge-bynames";
-// Iconmind — family-tree-outline-regular. Scaled for Obsidian's 100×100 viewBox from its 24×24 one.
+// Fluent UI System Icons — person-star-32-filled (MIT). Scaled for Obsidian's 100×100 viewBox from its 32×32 one.
 const ICON_BYNAMES_SVG =
+  '<g transform="scale(3.125)"><path fill="currentColor" d="M15 16a7 7 0 1 0 0-14a7 7 0 0 0 0 14m-8.5 2A3.5 3.5 0 0 0 3 21.5v.5c0 2.393 1.523 4.417 3.685 5.793C8.859 29.177 11.802 30 15 30q1.118-.001 2.185-.13A8.98 8.98 0 0 1 14 23c0-1.85.558-3.57 1.516-5zm24 5a7.5 7.5 0 1 1-15 0a7.5 7.5 0 0 1 15 0m-8.212-4.862l-.94 2.828h-2.994c-.731 0-1.03.938-.434 1.361l2.406 1.707l-.929 2.792c-.228.687.555 1.267 1.146.848L23 25.931l2.457 1.743c.591.42 1.374-.16 1.146-.848l-.93-2.792l2.407-1.707c.597-.423.297-1.361-.434-1.361h-2.994l-.94-2.828c-.228-.684-1.196-.684-1.424 0" /></g>';
+
+export const ICON_FAMILY_NAMES = "nameforge-family-names";
+// Iconmind — family-tree-outline-regular. Scaled for Obsidian's 100×100 viewBox from its 24×24 one.
+const ICON_FAMILY_NAMES_SVG =
   '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 5a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M4 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M16 17a2 2 0 1 0 4 0 2 2 0 1 0 -4 0" /><path d="M12 7v4H6v4" /><path d="M12 11h6v4" /></g></g>';
 
 export const ICON_SHIPS = "nameforge-ships";
@@ -376,6 +381,7 @@ const ICON_PENCIL_SVG =
 export function registerNameForgeIcons(): void {
   addIcon(ICON_MEEPLE, MEEPLE_SVG);
   addIcon(ICON_BYNAMES, ICON_BYNAMES_SVG);
+  addIcon(ICON_FAMILY_NAMES, ICON_FAMILY_NAMES_SVG);
   addIcon(ICON_GROUP_NAMES, ICON_GROUP_NAMES_SVG);
   addIcon(ICON_SHIPS, ICON_SHIPS_SVG);
   addIcon(ICON_HISTORY, ICON_HISTORY_SVG);

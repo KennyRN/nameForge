@@ -22,7 +22,7 @@ export type KitSize = StreetSize;
 export type KitPosition = "inland" | "river" | "coast" | "crossroads";
 export type KitContents = "whole" | "places" | "people";
 export type KitDetail = "brief" | "standard" | "full";
-export type KitSectionKey = "roads" | "districts" | "streets" | "squares" | "inns" | "buildings" | "groups" | "history" | "ships";
+export type KitSectionKey = "roads" | "districts" | "streets" | "squares" | "inns" | "buildings" | "groups" | "neighbours" | "history" | "ships";
 
 interface PositionData {
   key: KitPosition;
@@ -152,7 +152,8 @@ export function sectionsFor(contents: KitContents, position: KitPosition, era: R
   const all = KIT_DATA.sections.map((s) => s.key);
   if (contents === "people") return ["groups", "history"];
   const water = shipsModule(position, era) !== undefined;
-  return all.filter((k) => !(contents === "places" && (k === "groups" || k === "ships" || k === "history")) && !(k === "ships" && !water));
+  // Neighbours are drawn with the context, not counted: they sit outside this list and are added after Groups.
+  return all.filter((k) => k !== "neighbours").filter((k) => !(contents === "places" && (k === "groups" || k === "ships" || k === "history")) && !(k === "ships" && !water));
 }
 
 /** §7.1: the position's settings and effects (NF–IS: the station counts as the coast). */
@@ -175,7 +176,7 @@ export function shipsModule(position: KitPosition, era: RouteEra): VesselModule 
 
 const norm = (s: string) => s.toLowerCase().replace(/^the /, "").trim();
 // Events brief §10: History runs after Groups and before Ships, on a step of its own.
-const STEPS: Record<KitSectionKey | "context" | "ruler", number> = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11 };
+const STEPS: Record<KitSectionKey | "context" | "ruler", number> = { context: 1, ruler: 2, roads: 3, buildings: 4, districts: 5, streets: 6, squares: 7, inns: 8, groups: 9, ships: 10, history: 11, neighbours: 12 };
 const LANDMARK_KINDS: BuildingKind[] = ["defence", "crossing", "water", "monument"];
 /** §3: the route kinds that run through a town. */
 const THROUGH_KINDS = ["road", "drove", "trade"];
@@ -364,6 +365,11 @@ export function generateKit(options: KitOptions): Kit {
     else groupsSection(want("groups"));
   }
 
+  // The six neighbours the context drew, listed so they are easy to see; the context never redraws them.
+  if (context.neighbours.length > 0) {
+    sections.set("neighbours", { key: "neighbours", title: title("neighbours"), entries: context.neighbours.map((text) => ({ text })), wanted: context.neighbours.length });
+  }
+
   // Events brief §10: History, as one history, local for a village or town; founded first.
   if (want("history") > 0) {
     const scale = KIT_SIZES.indexOf(o.size) <= KIT_SIZES.indexOf(KIT_DATA.history.localUpTo) ? "local" : "realm";
@@ -499,7 +505,7 @@ export function rerollKit(kit: Kit, key: KitSectionKey, options: Omit<KitOptions
   const rerolls = { ...kit.rerolls };
   for (const k of rerollTargets(key)) rerolls[k] = (rerolls[k] ?? 0) + 1;
   const redo = rerollTargets(key);
-  const keep = { sections: kit.sections.filter((s) => !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
+  const keep = { sections: kit.sections.filter((s) => s.key !== "neighbours" && !redo.includes(s.key)), ruler: kit.ruler, throughRoute: kit.context.throughRoute, landmarks: kit.context.landmarks };
   const next = generateKit({ ...kit.options, ...options, rerolls, keep });
   const others = rerollTargets(key).filter((k) => k !== key && next.sections.some((s) => s.key === k));
   const note = others.length > 0 ? `${others.map((k) => KIT_DATA.sections.find((s) => s.key === k)!.title.toLowerCase()).join(" and ").replace(/^./, (c) => c.toUpperCase())} were redone to match.` : undefined;

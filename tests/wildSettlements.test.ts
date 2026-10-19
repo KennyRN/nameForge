@@ -137,7 +137,7 @@ test("unchanged: any other terrain and the settlement kit give identical output 
   for (const [culture, size] of [["norman-british", "town"], ["norman-british", "village"], ["chinese", "city"], ["japanese", "great"]] as const)
     for (const seed of [1, 2, 3]) {
       const k = generateKit({ culture, size, seed });
-      assert.deepEqual({ town: k.context.town, neighbours: k.context.neighbours, sections: k.sections.map((s) => s.entries.map((e) => e.text)) }, saved[`kit ${culture} ${size} ${seed}`], `kit ${culture} ${size} ${seed}`);
+      assert.deepEqual({ town: k.context.town, neighbours: k.context.neighbours, sections: k.sections.filter((s) => s.key !== "neighbours").map((s) => s.entries.map((e) => e.text)) }, saved[`kit ${culture} ${size} ${seed}`], `kit ${culture} ${size} ${seed}`);
       checked++;
     }
   assert.equal(checked, Object.keys(saved).length);
