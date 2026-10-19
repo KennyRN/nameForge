@@ -188,3 +188,7 @@ Expect the kit's existing seeded tests to change their town names. Update those 
 - **Other `{town}` slots:** route names, group names and bynames drawing their `{town}` from settlement names.
 - **Kit era:** the kit choosing the world culture's era from its own era rather than always the first.
 - **World presets:** presets for the world native cultures, here and in native place names.
+
+## Notes
+
+- **2026-10-19:** settlement names with one of five terrains (mountains, forest, wetland, plains, hills) now draws 60% of its names from the wild lands modules (`docs/wild-lands-brief.md` §10); every other terrain, and the settlement kit, are unchanged.

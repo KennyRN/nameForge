@@ -461,19 +461,19 @@ function stripInlineMarkup(s) {
 function parseNameTokens(text) {
   const tokens = text.split(/[\n,;]/).flatMap((t) => splitOnJoiners(t)).flatMap((t) => splitSpaceSeparatedList(t)).map((t) => t.trim()).filter((t) => t.length > 0);
   const names = [];
-  for (const token15 of tokens) {
-    const cleaned = cleanToken(stripLeadingConjunction(token15));
+  for (const token16 of tokens) {
+    const cleaned = cleanToken(stripLeadingConjunction(token16));
     if (cleaned === "" || isNoise(cleaned)) continue;
     names.push(cleaned);
   }
   return dedupe(names);
 }
-function splitSpaceSeparatedList(token15) {
-  const parts = splitOnUnquotedWhitespace(token15);
+function splitSpaceSeparatedList(token16) {
+  const parts = splitOnUnquotedWhitespace(token16);
   if (parts.length >= 3) return parts;
-  const loose = unwrapOuterQuotes(token15.trim()).split(/\s+/).filter((p) => p.length > 0);
+  const loose = unwrapOuterQuotes(token16.trim()).split(/\s+/).filter((p) => p.length > 0);
   if (loose.length >= 3) return loose;
-  return [token15];
+  return [token16];
 }
 function unwrapOuterQuotes(s) {
   const pairs = [
@@ -489,11 +489,11 @@ function unwrapOuterQuotes(s) {
   }
   return s;
 }
-function splitOnUnquotedWhitespace(token15) {
+function splitOnUnquotedWhitespace(token16) {
   const parts = [];
   let current = "";
   let quote2 = null;
-  for (const char of token15) {
+  for (const char of token16) {
     if (quote2) {
       current += char;
       if (char === matchingQuote(quote2)) quote2 = null;
@@ -519,8 +519,8 @@ function matchingQuote(open) {
   if (open === "\u2018") return "\u2019";
   return open;
 }
-function splitOnJoiners(token15) {
-  let parts = [token15];
+function splitOnJoiners(token16) {
+  let parts = [token16];
   for (const joiner of JOINERS) {
     const next = [];
     for (const part of parts) {
@@ -536,12 +536,12 @@ function splitOnJoiners(token15) {
   }
   return parts;
 }
-function stripLeadingConjunction(token15) {
-  const lower3 = token15.toLowerCase();
+function stripLeadingConjunction(token16) {
+  const lower3 = token16.toLowerCase();
   for (const lead of LEADERS) {
-    if (lower3.startsWith(lead)) return token15.slice(lead.length).trim();
+    if (lower3.startsWith(lead)) return token16.slice(lead.length).trim();
   }
-  return token15;
+  return token16;
 }
 function cleanToken(s) {
   let t = s.trim();
@@ -1310,9 +1310,9 @@ function toEntry(header, row) {
   const modern = col("modern");
   if (blank(modern)) return null;
   const traditional = blank(col("traditional")) ? void 0 : col("traditional");
-  const plural3 = blank(col("plural")) ? `${modern}s` : col("plural");
+  const plural4 = blank(col("plural")) ? `${modern}s` : col("plural");
   const forms = blank(col("combining forms")) ? [modern] : col("combining forms").split(",").map((f) => f.trim().replace(/-$/, "")).filter((f) => f.length > 0);
-  return { modern, ...traditional ? { traditional } : {}, plural: plural3, combiningForms: forms, fuses: parseFuses(col("fuses")) };
+  return { modern, ...traditional ? { traditional } : {}, plural: plural4, combiningForms: forms, fuses: parseFuses(col("fuses")) };
 }
 function splitTags(text) {
   const match = text.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
@@ -2501,6 +2501,18 @@ var ICON_INFO = "nameforge-info";
 var ICON_INFO_SVG = '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
 var ICON_URBAN = "nameforge-urban";
 var ICON_URBAN_SVG = '<g transform="scale(2.08333)"><path d="M0 0h48v48H0z" fill="none" /><defs><mask id="nameforge-urban-mask"><g fill="none"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 42h40" /><rect width="8" height="16" x="8" y="26" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path stroke="#fff" stroke-linecap="square" stroke-linejoin="round" stroke-width="4" d="M12 34h1" /><rect width="24" height="38" x="16" y="4" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path fill="#fff" d="M22 10h4v4h-4zm8 0h4v4h-4zm-8 7h4v4h-4zm8 0h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z" /></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#nameforge-urban-mask)" /></g>';
+var ICON_MOUNTAINS = "nameforge-mountains";
+var ICON_MOUNTAINS_SVG = '<g transform="scale(4.16667)"><path fill="currentColor" fill-rule="evenodd" d="M8.701 5.75c.577-1 2.02-1 2.598 0l3.5 6.062l.902-1.562c.577-1 2.02-1 2.598 0l4.33 7.5A1.5 1.5 0 0 1 21.33 20H17v-.002l-.072.002H3.072a1.5 1.5 0 0 1-1.3-2.25zm-.91 5.576l.709.472l.945-.63a1 1 0 0 1 1.11 0l.945.63l.709-.472L10 7.5z" clip-rule="evenodd" /></g>';
+var ICON_FORESTS = "nameforge-forests";
+var ICON_FORESTS_SVG = '<g transform="scale(2.08333)"><path fill="currentColor" d="M24 18c0 6.177-3.5 11.264-8 11.927V39h16v-8.954h-4.727a3.273 3.273 0 0 1-1.468-6.199a4.09 4.09 0 0 1 2.411-4.968a4.909 4.909 0 1 1 9.568 0a4.09 4.09 0 0 1 2.411 4.968a3.273 3.273 0 0 1-1.468 6.199H34V39h6.5a1.5 1.5 0 0 1 0 3h-33a1.5 1.5 0 0 1 0-3H14v-9.073C9.5 29.264 6 24.177 6 18c0-6.627 4.03-12 9-12s9 5.373 9 12" /></g>';
+var ICON_DESERTS = "nameforge-deserts";
+var ICON_DESERTS_SVG = '<g transform="scale(0.390625)"><g fill="currentColor"><path d="M232 116a60 60 0 0 1-60 60h-12v40H96v-80H84a60 60 0 0 1-60-60a20 20 0 0 1 20-20a20 20 0 0 1 20 20a20 20 0 0 0 20 20h12V56a32 32 0 0 1 32-32a32 32 0 0 1 32 32v80h12a20 20 0 0 0 20-20a20 20 0 0 1 20-20a20 20 0 0 1 20 20" opacity=".2" /><path d="M216 208h-48v-24h4a68.07 68.07 0 0 0 68-68a28 28 0 0 0-56 0a12 12 0 0 1-12 12h-4V56a40 40 0 0 0-80 0v32h-4a12 12 0 0 1-12-12a28 28 0 0 0-56 0a68.07 68.07 0 0 0 68 68h4v64H40a8 8 0 0 0 0 16h176a8 8 0 0 0 0-16M96 128H84a52.06 52.06 0 0 1-52-52a12 12 0 0 1 24 0a28 28 0 0 0 28 28h12a8 8 0 0 0 8-8V56a24 24 0 0 1 48 0v80a8 8 0 0 0 8 8h12a28 28 0 0 0 28-28a12 12 0 0 1 24 0a52.06 52.06 0 0 1-52 52h-12a8 8 0 0 0-8 8v32h-48v-72a8 8 0 0 0-8-8" /></g></g>';
+var ICON_MOORS = "nameforge-moors";
+var ICON_MOORS_SVG = '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="1.5" d="M2.75 20.25c0-2.75 2.75-4.75 6-4.75h6.5c3.25 0 6 2 6 4.75a1 1 0 0 1-1 1H3.75a1 1 0 0 1-1-1M7.5 15.5v-4c0-.75-.5-1.25-1.25-1.5M12 15.5V7c0-.75.5-1.25 1.25-1.5m3.25 10V10c0-.75.5-1.25 1.25-1.5" /><path stroke-width="2" d="M6.25 10h.01m6.99-4.5h.01m4.49 3h.01" /></g></g>';
+var ICON_WETLANDS = "nameforge-wetlands";
+var ICON_WETLANDS_SVG = '<g transform="scale(4.16667)"><path fill="currentColor" d="M12 2a3 3 0 0 0-3 3v4c0 1.398.956 2.573 2.25 2.906v2.783l-3.47-3.47a.75.75 0 0 0-1.06 1.061l4.53 4.53v1.44a.75.75 0 0 0 1.5 0v-1.44l4.53-4.53a.75.75 0 1 0-1.06-1.06l-3.47 3.47v-2.784A3 3 0 0 0 15 9V5a3 3 0 0 0-3-3m-1.5 3a1.5 1.5 0 0 1 3 0v4a1.5 1.5 0 0 1-3 0zM5.891 15.004a12 12 0 0 1 1.631-.507l1.269 1.269a12.2 12.2 0 0 0-2.35.634c-.695.273-1.206.58-1.532.884c-.324.302-.409.544-.409.716s.085.414.41.716c.325.303.836.61 1.531.884c1.386.546 3.35.9 5.559.9s4.173-.354 5.559-.9c.695-.274 1.206-.58 1.531-.884c.325-.302.41-.544.41-.716s-.085-.414-.41-.716c-.325-.303-.836-.61-1.531-.884a12.2 12.2 0 0 0-2.35-.634l1.269-1.269c.59.142 1.137.312 1.63.507c.799.314 1.495.707 2.005 1.182c.51.476.887 1.088.887 1.814s-.376 1.338-.887 1.814c-.51.474-1.206.867-2.005 1.182c-1.6.63-3.76 1.004-6.108 1.004s-4.508-.374-6.109-1.004c-.798-.315-1.494-.708-2.004-1.182C3.377 19.338 3 18.726 3 18s.376-1.338.887-1.814c.51-.475 1.206-.868 2.004-1.182" /></g>';
+var ICON_GRASSLANDS = "nameforge-grasslands";
+var ICON_GRASSLANDS_SVG = '<g transform="scale(4.16667)"><g fill="none"><path fill="currentColor" d="M6.1 3.84c.8 4.8 1.46 12.08 1.46 12.08l.6 4.33c.05.45.08.68.25.82s.4.13.86.13h3.37c.34 0 .51 0 .64-.09c.12-.08.16-.24.25-.55l2.85-10.42l1.47-4.56c.12-.36.18-.54.1-.71s-.25-.27-.62-.48l-.1-.07c-.35-.2-.53-.3-.7-.28c-.18.02-.3.15-.55.4l-2.9 3c-.42.43-.63.65-.88.61c-.26-.03-.45-.31-.84-.88a13 13 0 0 0-2.01-2.35c-1.73-1.44-2.6-1.58-3.01-1.5c-.06 0-.08.01-.18.16s-.1.21-.07.36" opacity=".2" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M1.7 21h20.6m-19.12-.27s.33-2.82 0-5.44q-.16-1.14-.4-2.18c-.36-1.48-.53-2.21.1-2.6c.62-.37 1.07.03 1.98.82c.72.64 1.45 1.5 2.04 2.68c1.33 2.64 1.33 6.46 1.33 6.46m12.26.26s-.41-3.53 0-6.81c.16-1.28.44-2.53.73-3.62c.4-1.5.61-2.24.03-2.64c-.59-.4-1.1-.02-2.15.73a11 11 0 0 0-3.27 3.92c-1.66 3.31-1.66 8.1-1.66 8.1M12.08 8.25A11 11 0 0 0 8.5 4.03c-1.07-.75-1.6-1.12-2.17-.72c-.58.4-.37 1.16.04 2.66a25 25 0 0 1 .94 8.7" /><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.72 10.75c.19-1.5.54-3.01.89-4.3c.4-1.43.59-2.15 0-2.55c-.58-.4-1.1-.03-2.11.71c-1.23.9-2.65 2.3-3.91 4.44c-3.1 5.25-3.37 11.02-3.37 11.02" /></g></g>';
 var ICON_VEHICLES = "nameforge-vehicles";
 var ICON_VEHICLES_SVG = '<g transform="translate(0 10) scale(0.15625)"><path d="M0 0h640v512H0z" fill="none" /><path fill="currentColor" d="M171.3 96H224v96H111.3l30.4-75.9C146.5 104 158.2 96 171.3 96M272 192V96h81.2c9.7 0 18.9 4.4 25 12l67.2 84zm256.2 1l-100-125c-18.2-22.8-45.8-36-75-36H171.3C132 32 96.7 55.9 82.2 92.3L40.6 196.4C16.8 205.8 0 228.9 0 256v112c0 17.7 14.3 32 32 32h33.3c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h130.7c7.6 45.4 47.1 80 94.7 80s87.1-34.6 94.7-80h33.3c17.7 0 32-14.3 32-32v-48c0-65.2-48.8-119-111.8-127zm-93.5 175a48 48 0 1 1 90.5 32a48 48 0 1 1-90.5-32M160 336a48 48 0 1 1 0 96a48 48 0 1 1 0-96" /></g>';
 var ICON_SEAS_COASTS = "nameforge-seas-coasts";
@@ -2532,6 +2544,12 @@ function registerNameForgeIcons() {
   (0, import_obsidian4.addIcon)(ICON_BUILDINGS, ICON_BUILDINGS_SVG);
   (0, import_obsidian4.addIcon)(ICON_INNS, ICON_INNS_SVG);
   (0, import_obsidian4.addIcon)(ICON_VEHICLES, ICON_VEHICLES_SVG);
+  (0, import_obsidian4.addIcon)(ICON_MOUNTAINS, ICON_MOUNTAINS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_FORESTS, ICON_FORESTS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_DESERTS, ICON_DESERTS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_MOORS, ICON_MOORS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_WETLANDS, ICON_WETLANDS_SVG);
+  (0, import_obsidian4.addIcon)(ICON_GRASSLANDS, ICON_GRASSLANDS_SVG);
   (0, import_obsidian4.addIcon)(ICON_URBAN, ICON_URBAN_SVG);
   (0, import_obsidian4.addIcon)(ICON_STREETS, ICON_STREETS_SVG);
   (0, import_obsidian4.addIcon)(ICON_ROUTES, ICON_ROUTES_SVG);
@@ -24439,7 +24457,7 @@ var PlaceShapeFormatter = class {
   }
   /** Part 1 wording: every generic as its bracketed Meaning. */
   format(shape) {
-    return this.layout(shape, (id, plural3) => `${bracket(this.generics.get(id))}${plural3 ? " (plural)" : ""}`);
+    return this.layout(shape, (id, plural4) => `${bracket(this.generics.get(id))}${plural4 ? " (plural)" : ""}`);
   }
   /**
    * Part 1a wording: generics as plain words, with dropped generics rewritten and regional
@@ -24453,12 +24471,12 @@ var PlaceShapeFormatter = class {
       categoryId: rewrite.category,
       structure: (_a5 = rewrite.structure) != null ? _a5 : shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure
     } : shape;
-    return this.layout(effective, (id, plural3) => {
-      if (rewrite && id === shape.genericId) return plural3 ? rewrite.plural || rewrite.word : rewrite.word;
+    return this.layout(effective, (id, plural4) => {
+      if (rewrite && id === shape.genericId) return plural4 ? rewrite.plural || rewrite.word : rewrite.word;
       const entry = this.words.words[id];
       if (!entry) return bracket(this.generics.get(id));
       const i = entry.words.length > 1 ? Math.floor(pick4() * entry.words.length) : 0;
-      const usePlural = plural3 && entry.plurals[i] !== "";
+      const usePlural = plural4 && entry.plurals[i] !== "";
       const word = usePlural ? entry.plurals[i] : entry.words[i];
       const variant = region ? this.words.variants.find((v) => v.generic === id && v.regions.includes(region)) : void 0;
       return variant ? `${word} (${usePlural ? variant.plural : variant.variant})` : word;
@@ -24476,7 +24494,7 @@ var PlaceShapeFormatter = class {
     };
     return this.layout(
       shape,
-      (id, plural3) => `${bracket(this.generics.get(id))}${plural3 ? " (plural)" : ""}`,
+      (id, plural4) => `${bracket(this.generics.get(id))}${plural4 ? " (plural)" : ""}`,
       withFill(shape.categoryId, specificFill),
       ((_a5 = shape.affix) == null ? void 0 : _a5.form.slotCategory) ? withFill(shape.affix.form.slotCategory, affixFill) : void 0
     );
@@ -60950,8 +60968,8 @@ function repeatsWord(text) {
 function pluralise(word) {
   const parts = word.split(" ");
   const last = parts.pop();
-  const plural3 = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
-  return [...parts, plural3].join(" ");
+  const plural4 = /s$/i.test(last) ? last : /[^aeiou]y$/i.test(last) ? `${last.slice(0, -1)}ies` : `${last}s`;
+  return [...parts, plural4].join(" ");
 }
 var placeholderText = (categoryId) => {
   var _a5, _b3;
@@ -61283,25 +61301,25 @@ var NameRenderer = class {
     }
   }
   /** The generic's word (§3.1): variant replaces the plain word in its regions; recipe overrides last. */
-  genericWord(genericId, plural3, rng) {
+  genericWord(genericId, plural4, rng) {
     var _a5, _b3, _c3;
     if (LOCAL_GENERICS.has(genericId)) return this.localGeneric(genericId, rng);
     const colonial = NAME_WORDS.colonialGenerics[genericId];
     if (colonial) {
       const word2 = pickUniform4(colonial, rng);
-      const chosen = plural3 ? pluralise(word2) : word2;
+      const chosen = plural4 ? pluralise(word2) : word2;
       return (_a5 = this.recipe.generics[chosen.toLowerCase()]) != null ? _a5 : chosen;
     }
     const rewrite = PLACE_SHAPE_WORD_DATA.rewrites.find((r) => r.generic === genericId);
     let word;
     if (rewrite) {
-      word = plural3 ? rewrite.plural || rewrite.word : rewrite.word;
+      word = plural4 ? rewrite.plural || rewrite.word : rewrite.word;
     } else {
       const entry = PLACE_SHAPE_WORD_DATA.words[genericId];
       const i = entry && entry.words.length > 1 ? Math.floor(rng() * entry.words.length) : 0;
-      word = entry ? plural3 && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
+      word = entry ? plural4 && entry.plurals[i] ? entry.plurals[i] : entry.words[i] : genericId;
       const variant = this.region ? PLACE_SHAPE_WORD_DATA.variants.find((v) => v.generic === genericId && v.regions.includes(this.region)) : void 0;
-      if (variant) word = plural3 && ((_b3 = entry == null ? void 0 : entry.plurals[i]) != null ? _b3 : "") !== "" ? variant.plural : variant.variant;
+      if (variant) word = plural4 && ((_b3 = entry == null ? void 0 : entry.plurals[i]) != null ? _b3 : "") !== "" ? variant.plural : variant.variant;
     }
     return (_c3 = this.recipe.generics[word.toLowerCase()]) != null ? _c3 : word;
   }
@@ -61338,7 +61356,7 @@ var NameRenderer = class {
    */
   join(fill, categoryId, genericId, rng) {
     var _a5;
-    let plural3 = false;
+    let plural4 = false;
     let forceFuse = false;
     let neverFuse = false;
     let modifier = NAMES.packStem;
@@ -61356,7 +61374,7 @@ var NameRenderer = class {
       }
       if (spacedNumber) {
         neverFuse = true;
-        plural3 = true;
+        plural4 = true;
       }
       if (f === "mile") {
         const generic2 = this.genericWord(genericId, false, rng);
@@ -61364,7 +61382,7 @@ var NameRenderer = class {
       }
       modifier = fill.traditional ? NAMES.traditionalWord : NAMES.modernWord;
     }
-    const generic = this.genericWord(genericId, plural3, rng);
+    const generic = this.genericWord(genericId, plural4, rng);
     const spaced = { text: capitaliseSpaced(`${fillWord(fill)} ${generic}`), fused: false };
     if (LOCAL_GENERICS.has(genericId) && fill.kind !== "placeholder" && !generic.startsWith("[")) {
       const specific2 = fill.kind === "word" ? this.combiningForm(fill, rng) : fillWord(fill);
@@ -63743,8 +63761,8 @@ var letterCount4 = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
 function parseEntry(raw) {
   const noFuse = raw.endsWith("~");
   const body = noFuse ? raw.slice(0, -1) : raw;
-  const [word, plural3] = body.split("|");
-  return { word, plural: plural3, noFuse };
+  const [word, plural4] = body.split("|");
+  return { word, plural: plural4, noFuse };
 }
 function pluralise2(word) {
   if (/(s|x|z|ch|sh)$/i.test(word)) return `${word}es`;
@@ -63818,9 +63836,9 @@ var WorldRenderer = class {
     return { scale, biome, terrain };
   }
   /** Stellar brief §12.5: one space slot, resolved from the name's scale and biome. */
-  spaceSlot(token15, rng) {
+  spaceSlot(token16, rng) {
     var _a5;
-    const key2 = `@${token15.key}`;
+    const key2 = `@${token16.key}`;
     const state = this.space;
     if (!this.interstellar || !state) {
       this.notices.add(`Space slot {${key2}} is only used in the Interstellar era.`);
@@ -63830,7 +63848,7 @@ var WorldRenderer = class {
     const title = (w) => w.split(" ").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
     let word;
     let fusable = true;
-    switch (token15.key) {
+    switch (token16.key) {
       case "land": {
         const terrain = (_a5 = state.terrain) != null ? _a5 : pickWeighted4(
           Object.entries(terrainWeights(biome, "any")).filter(([t, w]) => w > 0 && shortWords(biome, "land", t).length > 0),
@@ -63877,10 +63895,10 @@ var WorldRenderer = class {
         return { text: `[${key2}]`, etym: `[${key2}]`, fusable: false };
     }
     let text = word;
-    if (token15.form === "pl") text = title(pluralOf(word.toLowerCase()));
-    if (token15.form === "pos") text = possessive(word);
-    const shown = token15.form === "pos" ? word : text;
-    return { text, etym: `[${this.label(key2)}: ${shown}]${token15.form === "pos" ? possessiveTail(word) : ""}`, fusable: fusable && !/\s/.test(text) && token15.form !== "pos" };
+    if (token16.form === "pl") text = title(pluralOf(word.toLowerCase()));
+    if (token16.form === "pos") text = possessive(word);
+    const shown = token16.form === "pos" ? word : text;
+    return { text, etym: `[${this.label(key2)}: ${shown}]${token16.form === "pos" ? possessiveTail(word) : ""}`, fusable: fusable && !/\s/.test(text) && token16.form !== "pos" };
   }
   buildSwaps() {
     var _a5;
@@ -63979,35 +63997,35 @@ var WorldRenderer = class {
     return pickUniform5(source.corpus, rng);
   }
   /** A list word, expanding any template held in the entry. */
-  slot(token15, rng, depth) {
+  slot(token16, rng, depth) {
     var _a5, _b3;
-    if (token15.space) return this.spaceSlot(token15, rng);
-    if (token15.markov) {
-      const name = this.markovName(token15.key, rng);
-      const text2 = token15.form === "pos" ? possessive(name) : name;
-      return { text: text2, etym: `[${this.label(token15.key)}: ${name}]${token15.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
+    if (token16.space) return this.spaceSlot(token16, rng);
+    if (token16.markov) {
+      const name = this.markovName(token16.key, rng);
+      const text2 = token16.form === "pos" ? possessive(name) : name;
+      return { text: text2, etym: `[${this.label(token16.key)}: ${name}]${token16.form === "pos" ? possessiveTail(name) : ""}`, fusable: false };
     }
-    const list = this.lists[token15.key];
+    const list = this.lists[token16.key];
     if (!list || list.length === 0) {
-      this.notices.add(`No word list "${token15.key}" for ${this.culture.label}.`);
-      return { text: `[${token15.key}]`, etym: `[${token15.key}]`, fusable: false };
+      this.notices.add(`No word list "${token16.key}" for ${this.culture.label}.`);
+      return { text: `[${token16.key}]`, etym: `[${token16.key}]`, fusable: false };
     }
-    const entry = parseEntry((_a5 = this.swapEntry(token15.key, rng)) != null ? _a5 : pickUniform5(list, rng));
+    const entry = parseEntry((_a5 = this.swapEntry(token16.key, rng)) != null ? _a5 : pickUniform5(list, rng));
     if (entry.word.includes("{") && depth < WORLD_PLACE_NAMES.maxDepth) {
       const inner = this.render(entry.word, rng, depth + 1);
       const single = /^\{[^}]+\}$/.test(entry.word);
-      const text2 = token15.form === "pos" ? possessive(inner.text) : inner.text;
-      const etym = single ? inner.etym : `[${this.label(token15.key)}: ${inner.text}]`;
-      return { text: text2, etym: token15.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
+      const text2 = token16.form === "pos" ? possessive(inner.text) : inner.text;
+      const etym = single ? inner.etym : `[${this.label(token16.key)}: ${inner.text}]`;
+      return { text: text2, etym: token16.form === "pos" ? `${etym}${possessiveTail(inner.text)}` : etym, fusable: single && inner.fusable };
     }
     let text = entry.word;
-    if (token15.form === "pl") text = (_b3 = entry.plural) != null ? _b3 : pluralise2(entry.word);
-    if (token15.form === "pos") text = possessive(entry.word);
-    const shown = token15.form === "pos" ? entry.word : text;
+    if (token16.form === "pl") text = (_b3 = entry.plural) != null ? _b3 : pluralise2(entry.word);
+    if (token16.form === "pos") text = possessive(entry.word);
+    const shown = token16.form === "pos" ? entry.word : text;
     return {
       text,
-      etym: `[${this.label(token15.key)}: ${shown}]${token15.form === "pos" ? possessiveTail(entry.word) : ""}`,
-      fusable: !entry.noFuse && token15.form !== "pos"
+      etym: `[${this.label(token16.key)}: ${shown}]${token16.form === "pos" ? possessiveTail(entry.word) : ""}`,
+      fusable: !entry.noFuse && token16.form !== "pos"
     };
   }
   /** Renders a template: slots filled, "+" groups fused or spaced. */
@@ -64021,14 +64039,14 @@ var WorldRenderer = class {
       out.push(group.length === 1 ? group[0] : this.fuse(group, rng));
       group = [];
     };
-    for (const token15 of tokens) {
-      if (token15.kind === "fuse") {
+    for (const token16 of tokens) {
+      if (token16.kind === "fuse") {
         joinNext = true;
         continue;
       }
       let piece;
-      if (token15.kind === "text") piece = { text: token15.text, etym: token15.text.toLowerCase(), fusable: !/\s/.test(token15.text) };
-      else piece = this.slot(token15, rng, depth);
+      if (token16.kind === "text") piece = { text: token16.text, etym: token16.text.toLowerCase(), fusable: !/\s/.test(token16.text) };
+      else piece = this.slot(token16, rng, depth);
       if (!joinNext) flush();
       group.push(piece);
       joinNext = false;
@@ -64222,8 +64240,8 @@ function groupPlural(word) {
   const lower3 = pluralOf(word.toLowerCase());
   return word.charAt(0) + lower3.slice(1);
 }
-function groupPossessive(word, plural3) {
-  if (plural3 && word.endsWith("s")) return `${word}'`;
+function groupPossessive(word, plural4) {
+  if (plural4 && word.endsWith("s")) return `${word}'`;
   return `${word}'s`;
 }
 function initialsOf(text) {
@@ -64310,9 +64328,9 @@ function pool(ctx, name, type, filter) {
       if (weights.has(word)) weights.set(word, weights.get(word) * 3);
       else add2(word, 3);
     }
-    const boost = (words, mult, plural3 = false) => {
+    const boost = (words, mult, plural4 = false) => {
       for (const raw of words != null ? words : []) {
-        const word = plural3 ? groupPlural(raw) : raw;
+        const word = plural4 ? groupPlural(raw) : raw;
         if (weights.has(word)) weights.set(word, weights.get(word) * mult);
         else add2(word, mult);
       }
@@ -96013,6 +96031,872 @@ var settlement_vocab_default = {
         { w: "Wardrobe" },
         { w: "Household" }
       ]
+    },
+    moodOf: {
+      entries: [
+        { w: "Plenty", x: 2 },
+        { w: "Hope", x: 2 },
+        { w: "Good Hope" },
+        { w: "Disappointment", x: 2 },
+        { w: "Desolation", x: 2, t: ["grim"] },
+        { w: "Farewell", x: 2 },
+        { w: "Deliverance" },
+        { w: "Providence" },
+        { w: "Mercy" },
+        { w: "Fortune" },
+        { w: "Patience" },
+        { w: "Welcome" },
+        { w: "Refuge" },
+        { w: "Rescue" },
+        { w: "Despair", t: ["grim"] },
+        { w: "Tribulation", t: ["grim"] },
+        { w: "Poverty", t: ["grim"] },
+        { w: "Flattery", t: ["light"] },
+        { w: "Contentment", t: ["light"] }
+      ]
+    },
+    wildColour: {
+      entries: [
+        { w: "Black", x: 3 },
+        { w: "White", x: 2 },
+        { w: "Red", x: 2 },
+        { w: "Grey", x: 2 },
+        { w: "Green", x: 2 },
+        { w: "Blue" },
+        { w: "Yellow" },
+        { w: "Brown" },
+        { w: "Dun" },
+        { w: "Pale" },
+        { w: "Golden", t: ["grand"] },
+        { w: "Silver", t: ["grand"] }
+      ]
+    },
+    wildQuality: {
+      entries: [
+        { w: "Great", x: 3 },
+        { w: "Little", x: 2 },
+        { w: "High", x: 2 },
+        { w: "Long", x: 2 },
+        { w: "Old", x: 2 },
+        { w: "Broad" },
+        { w: "Low" },
+        { w: "Lone" },
+        { w: "Bare" },
+        { w: "Wild" },
+        { w: "Fair" },
+        { w: "Cold" },
+        { w: "Quiet" },
+        { w: "Lonely", t: ["grim"] },
+        { w: "Bleak", t: ["grim"] },
+        { w: "Hidden", t: ["strange"] },
+        { w: "Holy", c: ["christian"] }
+      ]
+    },
+    wildFuse: {
+      entries: [
+        { w: "Ash" },
+        { w: "Black" },
+        { w: "Dark" },
+        { w: "Deep" },
+        { w: "Long" },
+        { w: "Grey" },
+        { w: "Hart" },
+        { w: "Raven" },
+        { w: "Wolf" },
+        { w: "Hawk" },
+        { w: "Oak" },
+        { w: "Thorn" },
+        { w: "Cold" },
+        { w: "Stone" },
+        { w: "Green" },
+        { w: "Red" },
+        { w: "White" },
+        { w: "Holly" },
+        { w: "Elder" },
+        { w: "Brock" },
+        { w: "Fox" },
+        { w: "Swin" },
+        { w: "Birk" },
+        { w: "Hazel" },
+        { w: "Elm" },
+        { w: "Crow" },
+        { w: "Wether" },
+        { w: "Kettle" }
+      ]
+    },
+    wildWeather: {
+      entries: [
+        { w: "Wind", x: 2 },
+        { w: "Storm", x: 2 },
+        { w: "Thunder" },
+        { w: "Snow" },
+        { w: "Mist" },
+        { w: "Cloud" },
+        { w: "Rain" },
+        { w: "Frost", bt: "cold" },
+        { w: "Ice", bt: "cold" },
+        { w: "Sun" },
+        { w: "Moon" },
+        { w: "Dawn" },
+        { w: "Echo" },
+        { w: "Lightning", t: ["grand"] }
+      ]
+    },
+    wildShape: {
+      entries: [
+        { w: "Saddle", x: 2 },
+        { w: "Anvil", x: 2 },
+        { w: "Horn" },
+        { w: "Tooth" },
+        { w: "Needle" },
+        { w: "Fang" },
+        { w: "Crown" },
+        { w: "Throne" },
+        { w: "Chair" },
+        { w: "Helm" },
+        { w: "Comb" },
+        { w: "Cockscomb" },
+        { w: "Sugarloaf" },
+        { w: "Haystack" },
+        { w: "Pulpit" },
+        { w: "Pillar" },
+        { w: "Table" },
+        { w: "Thumb" },
+        { w: "Castle" },
+        { w: "Steeple" },
+        { w: "Crescent" },
+        { w: "Bishop", c: ["christian"] },
+        { w: "Nose", t: ["light"] }
+      ]
+    },
+    rangeBody: {
+      entries: [
+        { w: "Spine", x: 2 },
+        { w: "Backbone" },
+        { w: "Teeth" },
+        { w: "Wall" },
+        { w: "Shoulders" },
+        { w: "Crown" },
+        { w: "Saw" },
+        { w: "Fence" },
+        { w: "Roof" }
+      ]
+    },
+    wildMetal: {
+      entries: [
+        { w: "Silver", x: 2 },
+        { w: "Copper", x: 2 },
+        { w: "Gold", x: 2 },
+        { w: "Lead", x: 2 },
+        { w: "Tin" },
+        { w: "Iron" },
+        { w: "Coal" },
+        { w: "Salt", bt: "dry" },
+        { w: "Jet" },
+        { w: "Flint" },
+        { w: "Slate" },
+        { w: "Marble" },
+        { w: "Garnet" },
+        { w: "Brass" },
+        { w: "Turquoise", bt: "dry" },
+        { w: "Jade", c: ["chinese", "korean", "japanese", "aztec", "maya"] },
+        { w: "Obsidian", bt: "volcanic" }
+      ]
+    },
+    mythBeast: {
+      entries: [
+        { w: "Dragon", x: 3, h: true },
+        { w: "Wyrm", h: true },
+        { w: "Griffin", h: true },
+        { w: "Giant", h: true },
+        { w: "Troll", h: true },
+        { w: "Roc", h: true },
+        { w: "Wyvern", h: true },
+        { w: "Basilisk", t: ["grim"], h: true },
+        { w: "Phoenix", t: ["grand"], h: true }
+      ]
+    },
+    mythFuse: {
+      entries: [
+        { w: "Elf", x: 2, h: true },
+        { w: "Fey", h: true },
+        { w: "Witch", h: true },
+        { w: "Wyrm", h: true },
+        { w: "Troll", h: true },
+        { w: "Dwarf", h: true },
+        { w: "Moon", h: true }
+      ]
+    },
+    leapWho: {
+      entries: [
+        { w: "Maiden's", x: 2 },
+        { w: "Lover's" },
+        { w: "Giant's" },
+        { w: "Hunter's" },
+        { w: "Shepherd's" },
+        { w: "Hart's" },
+        { w: "Stag's" },
+        { w: "Devil's" },
+        { w: "Soldier's", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Robber's", t: ["light"] }
+      ]
+    },
+    iceWord: {
+      entries: [
+        { w: "River" },
+        { w: "Stair" },
+        { w: "Tongue" },
+        { w: "Wall" },
+        { w: "Road" },
+        { w: "Sea" }
+      ]
+    },
+    mtWork: {
+      entries: [
+        { w: "Shepherds'", x: 2 },
+        { w: "Drovers'", x: 2 },
+        { w: "Miners'" },
+        { w: "Hunters'" },
+        { w: "Herdsmen's" },
+        { w: "Packmen's" },
+        { w: "Smugglers'", t: ["light"] },
+        { w: "Guides'", e: ["ST", "MO", "NF", "IS"] },
+        { w: "Robbers'", t: ["grim"] },
+        { w: "Pilgrims'", x: 1 }
+      ]
+    },
+    mtRiverWord: {
+      entries: [
+        { w: "Swift", x: 2 },
+        { w: "Rush" },
+        { w: "Roar" },
+        { w: "Tumble" },
+        { w: "Foam" },
+        { w: "Leap" },
+        { w: "Spate" },
+        { w: "Brawl" },
+        { w: "Clatter" },
+        { w: "Thunder" }
+      ]
+    },
+    mtRiverAdj: {
+      entries: [
+        { w: "Roaring", x: 2 },
+        { w: "Rushing", x: 2 },
+        { w: "Tumbling" },
+        { w: "Foaming" },
+        { w: "Leaping" },
+        { w: "Singing" },
+        { w: "Thundering" },
+        { w: "White" },
+        { w: "Cold" }
+      ]
+    },
+    mtBeast: {
+      entries: [
+        { w: "Eagle", x: 3 },
+        { w: "Raven", x: 3 },
+        { w: "Hawk", x: 2 },
+        { w: "Goat", x: 2 },
+        { w: "Wolf", x: 2 },
+        { w: "Bear", bt: "cold" },
+        { w: "Crow" },
+        { w: "Chough" },
+        { w: "Buzzard" },
+        { w: "Falcon" },
+        { w: "Kite" },
+        { w: "Ptarmigan", bt: "cold" },
+        { w: "Ibex", bt: "alpine" },
+        { w: "Lynx" },
+        { w: "Stag" },
+        { w: "Hart" },
+        { w: "Ram" },
+        { w: "Fox" },
+        { w: "Wildcat" },
+        { w: "Marmot", bt: "alpine" },
+        { w: "Chamois", bt: "alpine" },
+        { w: "Snow Leopard", t: ["grand"], bt: "alpine" },
+        { w: "Condor", c: ["andean"] },
+        { w: "Vulture", t: ["grim"] },
+        { w: "Yak", bt: "alpine" },
+        { w: "Llama", c: ["andean"] }
+      ]
+    },
+    fstQuality: {
+      entries: [
+        { w: "Dark", x: 3 },
+        { w: "Deep", x: 2 },
+        { w: "Green", x: 2 },
+        { w: "Old", x: 2 },
+        { w: "Wild" },
+        { w: "Great" },
+        { w: "Little" },
+        { w: "Tangled" },
+        { w: "Shady" },
+        { w: "Hidden" },
+        { w: "Black" },
+        { w: "Silent", t: ["strange"] },
+        { w: "Whispering", t: ["strange"] },
+        { w: "Bright", t: ["light"] },
+        { w: "Merry", t: ["light"] },
+        { w: "Haunted", t: ["grim", "strange"] }
+      ]
+    },
+    fstNoun: {
+      entries: [
+        { w: "Shadows", t: ["grim"] },
+        { w: "Whispers", t: ["strange"] },
+        { w: "Dreams", t: ["strange"] },
+        { w: "Echoes", t: ["strange"] },
+        { w: "Silence", t: ["strange"] },
+        { w: "Thorns" },
+        { w: "Night", t: ["grim"] },
+        { w: "Songs", t: ["light"] },
+        { w: "Sorrows", t: ["grim"] }
+      ]
+    },
+    fstOwner: {
+      entries: [
+        { w: "King's", x: 3 },
+        { w: "Queen's", x: 2 },
+        { w: "Bishop's" },
+        { w: "Abbot's" },
+        { w: "Earl's" },
+        { w: "Lord's" },
+        { w: "Prince's" },
+        { w: "Duke's", e: ["MD", "EM", "ST"] }
+      ]
+    },
+    fstWork: {
+      entries: [
+        { w: "Charcoal Burners'", x: 2 },
+        { w: "Woodcutters'", x: 2 },
+        { w: "Foresters'" },
+        { w: "Verderers'" },
+        { w: "Keepers'" },
+        { w: "Poachers'", t: ["light"] },
+        { w: "Outlaws'", t: ["grim"] },
+        { w: "Hunters'" },
+        { w: "Bodgers'" },
+        { w: "Swineherds'" },
+        { w: "Colliers'" }
+      ]
+    },
+    fstKeeper: {
+      entries: [
+        { w: "Keeper's", x: 2 },
+        { w: "Verderer's" },
+        { w: "Ranger's" },
+        { w: "Forester's" },
+        { w: "Woodward's" },
+        { w: "Hunter's" }
+      ]
+    },
+    fstFlora: {
+      entries: [
+        { w: "Bluebell", x: 2 },
+        { w: "Primrose" },
+        { w: "Bracken" },
+        { w: "Fern" },
+        { w: "Bramble" },
+        { w: "Ivy" },
+        { w: "Foxglove" },
+        { w: "Violet" },
+        { w: "Mistletoe" },
+        { w: "Moss" },
+        { w: "Hazel" },
+        { w: "Orchid", bt: "jungle" },
+        { w: "Liana", bt: "jungle" },
+        { w: "Bamboo", c: ["chinese", "japanese", "korean", "indian"] }
+      ]
+    },
+    fstFestival: {
+      entries: [
+        { w: "Midsummer", x: 2 },
+        { w: "May" },
+        { w: "Midwinter" },
+        { w: "Harvest" },
+        { w: "Beltane", c: ["celtic"] },
+        { w: "Lammas", c: ["christian"] },
+        { w: "Moonlight", t: ["strange"] }
+      ]
+    },
+    fstSprite: {
+      entries: [
+        { w: "Fairy", x: 2 },
+        { w: "Pixie" },
+        { w: "Elf" },
+        { w: "Goblin" },
+        { w: "Hob" },
+        { w: "Puck" },
+        { w: "Brownie", t: ["light"] }
+      ]
+    },
+    fstRiverWord: {
+      entries: [
+        { w: "Shade", x: 2 },
+        { w: "Shadow" },
+        { w: "Leaf" },
+        { w: "Green" },
+        { w: "Hush" },
+        { w: "Still" },
+        { w: "Slow" },
+        { w: "Dark" },
+        { w: "Fern" },
+        { w: "Moss" },
+        { w: "Dapple" }
+      ]
+    },
+    fstPond: {
+      entries: [
+        { w: "Hammer", x: 2 },
+        { w: "Mill", x: 2 },
+        { w: "Furnace" },
+        { w: "Fish" },
+        { w: "Stew" },
+        { w: "Decoy" },
+        { w: "Dew" },
+        { w: "Ice", e: ["EM", "ST", "MO", "NF", "IS"] }
+      ]
+    },
+    treeFunc: {
+      entries: [
+        { w: "Gospel", x: 2, c: ["christian"] },
+        { w: "Hanging", t: ["grim"] },
+        { w: "Gallows", t: ["grim"] },
+        { w: "Moot" },
+        { w: "Meeting" },
+        { w: "Boundary" },
+        { w: "Mark" },
+        { w: "Parliament", e: ["EM", "ST", "MO", "NF", "IS"] },
+        { w: "Wishing", t: ["light"] },
+        { w: "Kissing", t: ["light"] },
+        { w: "Lightning" },
+        { w: "Lone" },
+        { w: "Hollow" },
+        { w: "Crooked" },
+        { w: "Great" },
+        { w: "Old", x: 2 },
+        { w: "Fairy", t: ["strange"] },
+        { w: "Witch", t: ["strange"] },
+        { w: "Lovers'", t: ["light"] },
+        { w: "Cuckoo", t: ["light"] }
+      ]
+    },
+    fstBeast: {
+      entries: [
+        { w: "Deer", x: 3 },
+        { w: "Boar", x: 2 },
+        { w: "Wolf", x: 2 },
+        { w: "Fox" },
+        { w: "Badger" },
+        { w: "Owl" },
+        { w: "Woodpecker" },
+        { w: "Squirrel" },
+        { w: "Hare" },
+        { w: "Hart" },
+        { w: "Stag" },
+        { w: "Roe" },
+        { w: "Jay" },
+        { w: "Nightingale" },
+        { w: "Bear", bt: "cold" },
+        { w: "Lynx", bt: "conifer" },
+        { w: "Elk", bt: "cold" },
+        { w: "Marten", bt: "conifer" },
+        { w: "Tiger", bt: "jungle" },
+        { w: "Monkey", bt: "jungle" },
+        { w: "Parrot", bt: "jungle" },
+        { w: "Jaguar", bt: "jungle" },
+        { w: "Leopard", bt: "hot" },
+        { w: "Peacock", c: ["indian"] },
+        { w: "Cuckoo", t: ["light"] }
+      ]
+    },
+    wildTree: {
+      entries: [
+        { w: "Oak", x: 3 },
+        { w: "Ash", x: 2 },
+        { w: "Beech", x: 2, bt: "broadleaf" },
+        { w: "Elm" },
+        { w: "Hazel" },
+        { w: "Holly" },
+        { w: "Yew" },
+        { w: "Birch" },
+        { w: "Alder" },
+        { w: "Willow" },
+        { w: "Lime", bt: "broadleaf" },
+        { w: "Maple", bt: "broadleaf" },
+        { w: "Hornbeam", bt: "broadleaf" },
+        { w: "Rowan" },
+        { w: "Elder" },
+        { w: "Thorn" },
+        { w: "Chestnut", bt: "broadleaf" },
+        { w: "Pine", bt: "conifer" },
+        { w: "Fir", bt: "conifer" },
+        { w: "Spruce", bt: "conifer" },
+        { w: "Larch", bt: "conifer" },
+        { w: "Cedar", bt: "conifer" },
+        { w: "Teak", bt: "jungle" },
+        { w: "Mahogany", bt: "jungle" },
+        { w: "Kapok", bt: "jungle" },
+        { w: "Ebony", bt: "jungle" },
+        { w: "Palm", bt: "hot" },
+        { w: "Fig", bt: "hot" },
+        { w: "Banyan", c: ["indian"] },
+        { w: "Cork", bt: "dry" },
+        { w: "Bamboo", c: ["chinese", "japanese", "korean"] }
+      ]
+    },
+    dsrQuality: {
+      entries: [
+        { w: "Empty", x: 2 },
+        { w: "Great", x: 2 },
+        { w: "Burning" },
+        { w: "Red" },
+        { w: "White" },
+        { w: "Black" },
+        { w: "Thirsty" },
+        { w: "Dry" },
+        { w: "Golden" },
+        { w: "Shifting" },
+        { w: "Endless", t: ["grand"] },
+        { w: "Silent", t: ["strange"] },
+        { w: "Singing", t: ["strange"] },
+        { w: "Bitter", t: ["grim"] },
+        { w: "Howling", t: ["grim"] },
+        { w: "Forbidden", t: ["grim", "strange"] }
+      ]
+    },
+    dsrStuff: {
+      entries: [
+        { w: "Sand", x: 2 },
+        { w: "Stones" },
+        { w: "Gravel" },
+        { w: "Salt" },
+        { w: "Dunes" },
+        { w: "Thirst", t: ["grim"] },
+        { w: "Silence", t: ["strange"] }
+      ]
+    },
+    dsrStone: {
+      entries: [
+        { w: "Flint" },
+        { w: "Gravel" },
+        { w: "Pebble" },
+        { w: "Stone" },
+        { w: "Iron" },
+        { w: "Glass", t: ["strange"] },
+        { w: "Black Stone" }
+      ]
+    },
+    dsrOasisWord: {
+      entries: [
+        { w: "Palm", x: 2 },
+        { w: "Date", x: 2 },
+        { w: "Green" },
+        { w: "Twin" },
+        { w: "Lone" },
+        { w: "Golden" },
+        { w: "Sweet", t: ["light"] },
+        { w: "Hidden", t: ["strange"] },
+        { w: "Bitter", t: ["grim"] },
+        { w: "Last", t: ["grim"] }
+      ]
+    },
+    dsrGoods: {
+      entries: [
+        { w: "Salt", x: 3 },
+        { w: "Gold", x: 2 },
+        { w: "Incense", x: 2 },
+        { w: "Spice" },
+        { w: "Ivory" },
+        { w: "Copper" },
+        { w: "Turquoise" },
+        { w: "Dates" }
+      ]
+    },
+    dsrDays: {
+      entries: [
+        { w: "Forty", x: 2 },
+        { w: "Ten" },
+        { w: "Seven" },
+        { w: "Twenty" },
+        { w: "Three" }
+      ]
+    },
+    dsrWork: {
+      entries: [
+        { w: "Caravan", x: 3 },
+        { w: "Pilgrims'" },
+        { w: "Salt Traders'" },
+        { w: "Herders'" },
+        { w: "Raiders'", t: ["grim"] },
+        { w: "Smugglers'", t: ["light"] }
+      ]
+    },
+    dsrBeast: {
+      entries: [
+        { w: "Camel", x: 3 },
+        { w: "Jackal", x: 2 },
+        { w: "Scorpion", t: ["grim"] },
+        { w: "Vulture", t: ["grim"] },
+        { w: "Lizard" },
+        { w: "Snake" },
+        { w: "Gazelle" },
+        { w: "Oryx" },
+        { w: "Ostrich" },
+        { w: "Hyena", t: ["grim"] },
+        { w: "Lion" },
+        { w: "Fox" },
+        { w: "Hawk" },
+        { w: "Falcon" },
+        { w: "Coyote", c: ["general", "aztec", "maya"] },
+        { w: "Wild Ass", bt: "dry" },
+        { w: "Locust", t: ["grim"] }
+      ]
+    },
+    mrQuality: {
+      entries: [
+        { w: "Bleak", x: 2, t: ["grim"] },
+        { w: "Black", x: 2 },
+        { w: "Wild" },
+        { w: "High" },
+        { w: "Long" },
+        { w: "Bare" },
+        { w: "Cold" },
+        { w: "Grey" },
+        { w: "Brown" },
+        { w: "Broad" },
+        { w: "Wet" },
+        { w: "Lonely", t: ["grim"] },
+        { w: "Lost", t: ["grim"] },
+        { w: "Windy", t: ["light"] }
+      ]
+    },
+    mrFlora: {
+      entries: [
+        { w: "Heather", x: 3 },
+        { w: "Gorse", x: 2 },
+        { w: "Bracken" },
+        { w: "Bilberry" },
+        { w: "Cotton Grass" },
+        { w: "Rush" },
+        { w: "Ling" },
+        { w: "Broom" },
+        { w: "Juniper" },
+        { w: "Cloudberry", bt: "cold" },
+        { w: "Crowberry", bt: "cold" }
+      ]
+    },
+    mrWork: {
+      entries: [
+        { w: "Peat Cutters'", x: 2 },
+        { w: "Shepherds'", x: 2 },
+        { w: "Miners'" },
+        { w: "Drovers'" },
+        { w: "Packmen's" },
+        { w: "Tinners'" },
+        { w: "Quarrymen's" },
+        { w: "Smugglers'", t: ["light"] }
+      ]
+    },
+    mrBeast: {
+      entries: [
+        { w: "Grouse", x: 3, pl: "Grouse" },
+        { w: "Curlew", x: 2 },
+        { w: "Lapwing" },
+        { w: "Plover" },
+        { w: "Snipe", pl: "Snipe" },
+        { w: "Merlin" },
+        { w: "Raven" },
+        { w: "Hare" },
+        { w: "Fox" },
+        { w: "Adder", t: ["grim"] },
+        { w: "Pony" },
+        { w: "Skylark" },
+        { w: "Stag" },
+        { w: "Wolf", x: 0.5 }
+      ]
+    },
+    wetQuality: {
+      entries: [
+        { w: "Black", x: 2 },
+        { w: "Still" },
+        { w: "Wide" },
+        { w: "Grey" },
+        { w: "Green" },
+        { w: "Sour" },
+        { w: "Misty" },
+        { w: "Sunken" },
+        { w: "Hollow" },
+        { w: "Lost" },
+        { w: "Drowned", t: ["grim"] },
+        { w: "Rotten", t: ["grim"] },
+        { w: "Treacherous", t: ["grim"] },
+        { w: "Whispering", t: ["strange"] }
+      ]
+    },
+    wetNoun: {
+      entries: [
+        { w: "Mists" },
+        { w: "Reeds" },
+        { w: "Shadows", t: ["grim"] },
+        { w: "Whispers", t: ["strange"] },
+        { w: "Lost Souls", t: ["grim"] },
+        { w: "Fevers", t: ["grim"] },
+        { w: "Ghosts", t: ["grim", "strange"] },
+        { w: "Frogs", t: ["light"] },
+        { w: "Lights", t: ["strange"] }
+      ]
+    },
+    wetFlora: {
+      entries: [
+        { w: "Reed", x: 3 },
+        { w: "Rush", x: 2 },
+        { w: "Sedge" },
+        { w: "Willow" },
+        { w: "Alder" },
+        { w: "Osier" },
+        { w: "Bulrush" },
+        { w: "Iris" },
+        { w: "Flag" },
+        { w: "Myrtle" },
+        { w: "Cotton Grass", bt: "peat" },
+        { w: "Cypress", bt: "swamp" },
+        { w: "Mangrove", bt: "mangrove" },
+        { w: "Papyrus", bt: "hot" },
+        { w: "Lotus", bt: "hot" }
+      ]
+    },
+    wetWork: {
+      entries: [
+        { w: "Reed Cutters'", x: 2 },
+        { w: "Eelers'", x: 2 },
+        { w: "Fowlers'" },
+        { w: "Wildfowlers'" },
+        { w: "Fishers'" },
+        { w: "Salters'" },
+        { w: "Turf Cutters'" },
+        { w: "Ferrymen's" },
+        { w: "Smugglers'", t: ["light"] }
+      ]
+    },
+    wetBeast: {
+      entries: [
+        { w: "Heron", x: 3 },
+        { w: "Bittern", x: 2 },
+        { w: "Crane" },
+        { w: "Duck" },
+        { w: "Goose", pl: "Geese" },
+        { w: "Swan" },
+        { w: "Eel" },
+        { w: "Pike", pl: "Pike" },
+        { w: "Frog" },
+        { w: "Toad" },
+        { w: "Otter" },
+        { w: "Snipe", pl: "Snipe" },
+        { w: "Teal", pl: "Teal" },
+        { w: "Coot" },
+        { w: "Moorhen" },
+        { w: "Kingfisher" },
+        { w: "Dragonfly" },
+        { w: "Midge", t: ["light"] },
+        { w: "Leech", t: ["grim"] },
+        { w: "Crocodile", t: ["grim"], bt: "hot" },
+        { w: "Alligator", bt: "swamp" },
+        { w: "Hippo", bt: "hot" },
+        { w: "Flamingo", bt: "salt" },
+        { w: "Ibis", bt: "hot" },
+        { w: "Beaver", e: ["AN", "MD"] }
+      ]
+    },
+    drainFeet: {
+      entries: [
+        { w: "Forty", x: 2 },
+        { w: "Twenty" },
+        { w: "Sixteen" },
+        { w: "Thirty" },
+        { w: "Hundred" }
+      ]
+    },
+    grsQuality: {
+      entries: [
+        { w: "Wide", x: 2 },
+        { w: "Open", x: 2 },
+        { w: "Green" },
+        { w: "Golden" },
+        { w: "Great" },
+        { w: "Long" },
+        { w: "High" },
+        { w: "Rolling" },
+        { w: "Windy" },
+        { w: "Empty" },
+        { w: "Bare" },
+        { w: "Endless", t: ["grand"] },
+        { w: "Sweet", t: ["light"] },
+        { w: "Red", bt: "hot" }
+      ]
+    },
+    grsFlora: {
+      entries: [
+        { w: "Grass", x: 2 },
+        { w: "Clover", x: 2 },
+        { w: "Cowslip" },
+        { w: "Poppy" },
+        { w: "Thistle" },
+        { w: "Gorse" },
+        { w: "Broom" },
+        { w: "Thyme" },
+        { w: "Flax" },
+        { w: "Cornflower" },
+        { w: "Buttercup" },
+        { w: "Harebell" },
+        { w: "Feather Grass", bt: "steppe" },
+        { w: "Wormwood", bt: "dry" },
+        { w: "Sage", bt: "dry" },
+        { w: "Acacia", bt: "hot" },
+        { w: "Baobab", bt: "hot" },
+        { w: "Tussock", bt: "cold" }
+      ]
+    },
+    grsWork: {
+      entries: [
+        { w: "Drovers'", x: 3 },
+        { w: "Shepherds'", x: 2 },
+        { w: "Herders'" },
+        { w: "Horsemen's" },
+        { w: "Cowherds'" },
+        { w: "Riders'" },
+        { w: "Reapers'" },
+        { w: "Mowers'" }
+      ]
+    },
+    grsBeast: {
+      entries: [
+        { w: "Horse", x: 3 },
+        { w: "Hare" },
+        { w: "Lark" },
+        { w: "Skylark" },
+        { w: "Bustard" },
+        { w: "Partridge" },
+        { w: "Quail", pl: "Quail" },
+        { w: "Kite" },
+        { w: "Hawk" },
+        { w: "Falcon" },
+        { w: "Crane" },
+        { w: "Wolf" },
+        { w: "Fox" },
+        { w: "Wild Horse", bt: "steppe" },
+        { w: "Saiga", pl: "Saiga", bt: "steppe" },
+        { w: "Marmot", bt: "steppe" },
+        { w: "Bison", pl: "Bison", bt: "grass" },
+        { w: "Antelope", bt: "hot" },
+        { w: "Gazelle", bt: "hot" },
+        { w: "Zebra", bt: "hot" },
+        { w: "Lion", bt: "hot" },
+        { w: "Elephant", bt: "hot" },
+        { w: "Buffalo", pl: "Buffalo", bt: "hot" }
+      ]
     }
   },
   regions: ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"],
@@ -96289,30 +97173,30 @@ function regionMult(ctx, tag, eras) {
   if (eras && !eras.includes(ctx.era)) return 1;
   return (_b3 = (_a5 = ROUTE_DATA.regions[tag]) == null ? void 0 : _a5[ctx.region]) != null ? _b3 : 1;
 }
-function vocabPool(ctx, pool3, token15) {
+function vocabPool(ctx, pool3, token16) {
   var _a5, _b3, _c3;
   const shape = ctx.shape;
-  const only = (_a5 = shape == null ? void 0 : shape.only) == null ? void 0 : _a5[token15];
-  const cw = (_c3 = (_b3 = shape == null ? void 0 : shape.cw) == null ? void 0 : _b3[ctx.culture.key]) == null ? void 0 : _c3[token15];
+  const only = (_a5 = shape == null ? void 0 : shape.only) == null ? void 0 : _a5[token16];
+  const cw = (_c3 = (_b3 = shape == null ? void 0 : shape.cw) == null ? void 0 : _b3[ctx.culture.key]) == null ? void 0 : _c3[token16];
   return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, scale: ctx.scale }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t))).map(([e, w]) => {
     var _a6, _b4;
     let n = w * toneFactor((_a6 = e.t) != null ? _a6 : [], ctx.tone) * regionMult(ctx, e.rt) * ((_b4 = cw == null ? void 0 : cw[e.w]) != null ? _b4 : 1);
-    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token15 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
+    if ((shape == null ? void 0 : shape.rw) && shape.rw.token === token16 && shape.rw.word === e.w) n *= regionMult(ctx, shape.rw.r);
     return [e, n];
   }).filter(([, n]) => n > 0);
 }
-function vocabWord(ctx, pool3, token15, keep) {
+function vocabWord(ctx, pool3, token16, keep) {
   var _a5;
-  const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token15)).filter(([e2]) => !keep || keep(e2.w));
+  const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token16)).filter(([e2]) => !keep || keep(e2.w));
   const e = pickWeighted5(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_a5 = e.t) != null ? _a5 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
-function gnWord2(ctx, token15) {
+function gnWord2(ctx, token16) {
   var _a5, _b3, _c3;
-  if (token15 === "star") {
+  if (token16 === "star") {
     let star = groupStarIn((_a5 = ctx.scale) != null ? _a5 : "any", ctx.mode, ctx.rng);
     for (let i = 0; i < 5 && ctx.stars.includes(star); i++) star = groupStarIn((_b3 = ctx.scale) != null ? _b3 : "any", ctx.mode, ctx.rng);
     ctx.stars.push(star);
@@ -96320,8 +97204,8 @@ function gnWord2(ctx, token15) {
     ctx.words.push({ pool: "star", word: star });
     return star;
   }
-  const list = GN_LISTS2[token15];
-  const setting = SF_LISTS.has(token15) ? "SF" : ctx.setting;
+  const list = GN_LISTS2[token16];
+  const setting = SF_LISTS.has(token16) ? "SF" : ctx.setting;
   const items = groupListWords(list, setting, (_c3 = ctx.scale) != null ? _c3 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
@@ -96580,11 +97464,11 @@ var DIRECTION_TOKENS = /* @__PURE__ */ new Set([...Object.keys(COMPASS), "spaceD
 var PLACEHOLDER_TOKENS3 = /* @__PURE__ */ new Set(["destination", "town", "folk", "person", "founder", "patron", "kingdom", "holy"]);
 var NEVER_ANCHORS3 = /* @__PURE__ */ new Set(["person", "founder", "patron", "holy", "n"]);
 var kindOf3 = (name) => NEVER_ANCHORS3.has(name) ? "never" : name === "destination" ? "owner" : seriesTokenKind(name);
-function compassValues(ctx, token15) {
+function compassValues(ctx, token16) {
   var _a5;
-  if (token15 === "spaceDirection") return SPACE_DATA.directions.compass[(_a5 = ctx.scale) != null ? _a5 : "Pl"];
-  const live4 = poolEntries(ctx.vocab, token15, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
-  return [...COMPASS[token15].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token15].includes(w))];
+  if (token16 === "spaceDirection") return SPACE_DATA.directions.compass[(_a5 = ctx.scale) != null ? _a5 : "Pl"];
+  const live4 = poolEntries(ctx.vocab, token16, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).map(([e]) => e.w);
+  return [...COMPASS[token16].filter((w) => live4.includes(w)), ...live4.filter((w) => !COMPASS[token16].includes(w))];
 }
 function generateRouteNames(options) {
   var _a5;
@@ -97593,19 +98477,19 @@ function normaliseName(raw) {
   const shown = raw.trim().replace(/\s+/g, " ");
   let s = shown.replace(/\([^)]*\)/g, "").replace(/\s+/g, " ").trim();
   let the = false;
-  const stripThe2 = () => {
+  const stripThe3 = () => {
     const m = s.match(/^the\s+(.+)$/i);
     if (m) {
       s = m[1];
       the = true;
     }
   };
-  stripThe2();
+  stripThe3();
   for (let i = 0; i < 3; i++) {
     const m = s.match(/^(.+?) of (.+)$/i);
     if (!m || !endsWithForm(m[1])) break;
     s = m[2];
-    stripThe2();
+    stripThe3();
   }
   s = s.replace(/-(?:on|upon|by|under|in|le|next-the)-.+$/i, "");
   s = capitalWords(s);
@@ -98622,8 +99506,8 @@ function token7(ctx, name) {
     }
     case "divineVerb": {
       const v = fromPool2(ctx, name);
-      const plural3 = ctx.gender === "n" || ((_d3 = ctx.shape) == null ? void 0 : _d3.kind) === "pantheon";
-      return v && plural3 ? v.replace(/^(\w+)/, (w) => /ies$/.test(w) ? w.replace(/ies$/, "y") : /(ch|sh|ss|x)es$/.test(w) ? w.slice(0, -2) : w.replace(/s$/, "")) : v;
+      const plural4 = ctx.gender === "n" || ((_d3 = ctx.shape) == null ? void 0 : _d3.kind) === "pantheon";
+      return v && plural4 ? v.replace(/^(\w+)/, (w) => /ies$/.test(w) ? w.replace(/ies$/, "y") : /(ch|sh|ss|x)es$/.test(w) ? w.slice(0, -2) : w.replace(/s$/, "")) : v;
     }
     case "deityRef":
       return deityRef(ctx);
@@ -104207,6 +105091,10907 @@ Names to allow, though they echo a real or well-known vessel.
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
+// src/data/wilds.json
+var wilds_default = {
+  $comment: "Wild lands brief (docs/wild-lands-brief.md). Six terrain modules sharing one engine (src/wilds/engine.ts). Fixed data: don't re-derive or reweight. Pools live in settlement-vocab.json.",
+  version: 1,
+  regions: [
+    "COR",
+    "WCY",
+    "SEA",
+    "EAN",
+    "WMM",
+    "WAL",
+    "EMD",
+    "NTH",
+    "SBL",
+    "SLO",
+    "SHH",
+    "NSI"
+  ],
+  biomes: [
+    "temperate",
+    "moorland",
+    "boreal",
+    "cool-rainforest",
+    "mediterranean",
+    "steppe",
+    "desert",
+    "savannah",
+    "rainforest",
+    "monsoon",
+    "tropical-islands",
+    "highland"
+  ],
+  where: {
+    mood: {
+      home: 0.1,
+      new: 4
+    },
+    sai: {
+      home: 1,
+      new: 2
+    },
+    per: {
+      home: 0.5,
+      new: 2
+    }
+  },
+  regionTags: {
+    ben: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0.3,
+      SLO: 1,
+      SHH: 3,
+      NSI: 0.5
+    },
+    corrie: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0.5,
+      SBL: 0,
+      SLO: 1,
+      SHH: 3,
+      NSI: 0.3
+    },
+    glen: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0.3,
+      SBL: 1.5,
+      SLO: 2,
+      SHH: 2.5,
+      NSI: 0.5
+    },
+    fell: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0.3,
+      NTH: 3,
+      SBL: 1.5,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0.5
+    },
+    pike: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0.3,
+      WAL: 0,
+      EMD: 0.5,
+      NTH: 3,
+      SBL: 1,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    beck: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0.5,
+      WMM: 0,
+      WAL: 0,
+      EMD: 1,
+      NTH: 3,
+      SBL: 0.5,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    force: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 3,
+      SBL: 0.5,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    ghyll: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0.5,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0.5,
+      NTH: 3,
+      SBL: 1,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    hause: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 2,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    knott: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 2,
+      SBL: 0.5,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    tor: {
+      COR: 3,
+      WCY: 3,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0.3,
+      EMD: 1,
+      NTH: 0.3,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    law: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0.5,
+      SBL: 3,
+      SLO: 2,
+      SHH: 0,
+      NSI: 0
+    },
+    cwm: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 1,
+      WAL: 3,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    combe: {
+      COR: 1.5,
+      WCY: 3,
+      SEA: 1,
+      EAN: 0,
+      WMM: 0.5,
+      WAL: 0.3,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    clough: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0.5,
+      WAL: 0,
+      EMD: 2,
+      NTH: 2.5,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    edge: {
+      COR: 0.5,
+      WCY: 0.5,
+      SEA: 0.5,
+      EAN: 0.5,
+      WMM: 1.5,
+      WAL: 0.5,
+      EMD: 2.5,
+      NTH: 1.5,
+      SBL: 0.5,
+      SLO: 0.5,
+      SHH: 0.5,
+      NSI: 0.5
+    },
+    scar: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0.5,
+      NTH: 2.5,
+      SBL: 0.5,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    linn: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 1.5,
+      SLO: 2.5,
+      SHH: 1,
+      NSI: 0
+    },
+    burn: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 1,
+      SBL: 3,
+      SLO: 3,
+      SHH: 2,
+      NSI: 1
+    },
+    crag: {
+      COR: 0.5,
+      WCY: 0.5,
+      SEA: 0.3,
+      EAN: 0.3,
+      WMM: 0.5,
+      WAL: 1,
+      EMD: 1,
+      NTH: 2,
+      SBL: 1.5,
+      SLO: 1,
+      SHH: 1,
+      NSI: 0.3
+    },
+    dale: {
+      COR: 0.2,
+      WCY: 0.2,
+      SEA: 0.2,
+      EAN: 0.2,
+      WMM: 0.2,
+      WAL: 0.2,
+      EMD: 2,
+      NTH: 3,
+      SBL: 1,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    mount: {
+      COR: 0.3,
+      WCY: 0.3,
+      SEA: 0.3,
+      EAN: 0.3,
+      WMM: 0.3,
+      WAL: 0.3,
+      EMD: 0.3,
+      NTH: 0.3,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    oldMan: {
+      COR: 0.3,
+      WCY: 0.3,
+      SEA: 0.3,
+      EAN: 0.3,
+      WMM: 0.3,
+      WAL: 0.3,
+      EMD: 0.3,
+      NTH: 2,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 1.5,
+      NSI: 2
+    },
+    pot: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0.5,
+      NTH: 3,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    shieling: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 1.5,
+      SBL: 2,
+      SLO: 2,
+      SHH: 3,
+      NSI: 1
+    },
+    hope: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 1,
+      WAL: 0,
+      EMD: 0,
+      NTH: 2,
+      SBL: 2.5,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    tarn: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 3,
+      SBL: 1,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    loch: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0.5,
+      SLO: 2,
+      SHH: 3,
+      NSI: 1
+    },
+    lochan: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0.3,
+      SLO: 1.5,
+      SHH: 3,
+      NSI: 1
+    },
+    mere: {
+      COR: 0,
+      WCY: 0.5,
+      SEA: 0.5,
+      EAN: 2,
+      WMM: 3,
+      WAL: 0.2,
+      EMD: 1,
+      NTH: 2,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    broad: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 3,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    lakeLake: {
+      COR: 0.3,
+      WCY: 0.5,
+      SEA: 0.5,
+      EAN: 0.5,
+      WMM: 0.5,
+      WAL: 0.5,
+      EMD: 0.5,
+      NTH: 0.5,
+      SBL: 0.3,
+      SLO: 0.1,
+      SHH: 0.1,
+      NSI: 0.1
+    },
+    lakeWater: {
+      COR: 0.2,
+      WCY: 0.2,
+      SEA: 0.2,
+      EAN: 0.2,
+      WMM: 0.2,
+      WAL: 0.2,
+      EMD: 0.2,
+      NTH: 3,
+      SBL: 1,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    saltings: {
+      COR: 0,
+      WCY: 0.5,
+      SEA: 2,
+      EAN: 2,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    moor: {
+      COR: 2,
+      WCY: 2.5,
+      SEA: 0.3,
+      EAN: 0.2,
+      WMM: 1,
+      WAL: 1,
+      EMD: 1.5,
+      NTH: 2.5,
+      SBL: 1.5,
+      SLO: 1,
+      SHH: 0.5,
+      NSI: 0.5
+    },
+    muir: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 1.5,
+      SLO: 2.5,
+      SHH: 1,
+      NSI: 0
+    },
+    rigg: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 2.5,
+      SBL: 1,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    howe: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 2.5,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    cleave: {
+      COR: 1,
+      WCY: 3,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    moss: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0.5,
+      WAL: 0,
+      EMD: 1,
+      NTH: 2.5,
+      SBL: 2,
+      SLO: 2,
+      SHH: 1,
+      NSI: 1
+    },
+    flow: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0.5,
+      SHH: 3,
+      NSI: 2
+    },
+    heath: {
+      COR: 0.3,
+      WCY: 1.5,
+      SEA: 3,
+      EAN: 2.5,
+      WMM: 1,
+      WAL: 0.3,
+      EMD: 1,
+      NTH: 0.3,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    common: {
+      COR: 1,
+      WCY: 1.5,
+      SEA: 2,
+      EAN: 1.5,
+      WMM: 1.5,
+      WAL: 1,
+      EMD: 1,
+      NTH: 0.5,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    fen: {
+      COR: 0.1,
+      WCY: 0.1,
+      SEA: 0.5,
+      EAN: 3,
+      WMM: 0.5,
+      WAL: 0.1,
+      EMD: 2,
+      NTH: 0.1,
+      SBL: 0.1,
+      SLO: 0.1,
+      SHH: 0.1,
+      NSI: 0.1
+    },
+    carr: {
+      COR: 0.2,
+      WCY: 0.2,
+      SEA: 0.2,
+      EAN: 2.5,
+      WMM: 0.2,
+      WAL: 0.2,
+      EMD: 1.5,
+      NTH: 2,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    levels: {
+      COR: 0,
+      WCY: 3,
+      SEA: 0.5,
+      EAN: 0,
+      WMM: 0,
+      WAL: 1.5,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    rhyne: {
+      COR: 0,
+      WCY: 3,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    lode: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 3,
+      WMM: 0,
+      WAL: 0,
+      EMD: 1,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    ings: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 1,
+      NTH: 2.5,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    drain: {
+      COR: 0.5,
+      WCY: 1,
+      SEA: 0.5,
+      EAN: 2,
+      WMM: 0.5,
+      WAL: 0.5,
+      EMD: 2,
+      NTH: 0.5,
+      SBL: 0.5,
+      SLO: 0.5,
+      SHH: 0.5,
+      NSI: 0.5
+    },
+    marsh: {
+      COR: 0.5,
+      WCY: 1.5,
+      SEA: 2,
+      EAN: 1.5,
+      WMM: 1,
+      WAL: 1,
+      EMD: 1,
+      NTH: 1,
+      SBL: 0.5,
+      SLO: 0.5,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    holme: {
+      COR: 0.3,
+      WCY: 0.3,
+      SEA: 0.3,
+      EAN: 1.5,
+      WMM: 0.3,
+      WAL: 0.3,
+      EMD: 2,
+      NTH: 2,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    eyot: {
+      COR: 0.5,
+      WCY: 0.5,
+      SEA: 2,
+      EAN: 1.5,
+      WMM: 1,
+      WAL: 0.5,
+      EMD: 0.5,
+      NTH: 0.5,
+      SBL: 0.5,
+      SLO: 0.5,
+      SHH: 0.5,
+      NSI: 0.5
+    },
+    causeway: {
+      COR: 1,
+      WCY: 1.5,
+      SEA: 1,
+      EAN: 3,
+      WMM: 1,
+      WAL: 2,
+      EMD: 1.5,
+      NTH: 1,
+      SBL: 1,
+      SLO: 1,
+      SHH: 1,
+      NSI: 1
+    },
+    down: {
+      COR: 0.3,
+      WCY: 2.5,
+      SEA: 3,
+      EAN: 0.3,
+      WMM: 0.5,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    wold: {
+      COR: 0.2,
+      WCY: 0.2,
+      SEA: 0.2,
+      EAN: 1,
+      WMM: 1.5,
+      WAL: 0.2,
+      EMD: 3,
+      NTH: 2,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    strath: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0.5,
+      SLO: 2,
+      SHH: 3,
+      NSI: 1
+    },
+    haugh: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 1,
+      SBL: 3,
+      SLO: 2,
+      SHH: 0,
+      NSI: 0
+    },
+    carse: {
+      COR: 0,
+      WCY: 0,
+      SEA: 0,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 3,
+      SHH: 0.5,
+      NSI: 0
+    },
+    bourne: {
+      COR: 0.2,
+      WCY: 2.5,
+      SEA: 3,
+      EAN: 1,
+      WMM: 1,
+      WAL: 0.2,
+      EMD: 0.5,
+      NTH: 0.2,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    drove: {
+      COR: 1,
+      WCY: 1,
+      SEA: 0.5,
+      EAN: 0.5,
+      WMM: 1.5,
+      WAL: 3,
+      EMD: 1,
+      NTH: 2,
+      SBL: 3,
+      SLO: 2,
+      SHH: 3,
+      NSI: 2
+    },
+    hanger: {
+      COR: 0,
+      WCY: 1,
+      SEA: 3,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    hurst: {
+      COR: 0.2,
+      WCY: 1,
+      SEA: 3,
+      EAN: 0.5,
+      WMM: 0.5,
+      WAL: 0.2,
+      EMD: 0.2,
+      NTH: 0.2,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    den: {
+      COR: 0.2,
+      WCY: 0.2,
+      SEA: 3,
+      EAN: 0.3,
+      WMM: 0.2,
+      WAL: 0.2,
+      EMD: 0.2,
+      NTH: 1.5,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    holt: {
+      COR: 0.3,
+      WCY: 0.3,
+      SEA: 1,
+      EAN: 3,
+      WMM: 0.3,
+      WAL: 0.3,
+      EMD: 1,
+      NTH: 0.3,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    slade: {
+      COR: 0.3,
+      WCY: 1,
+      SEA: 1,
+      EAN: 0.3,
+      WMM: 2,
+      WAL: 0.3,
+      EMD: 2,
+      NTH: 0.3,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    frith: {
+      COR: 0.2,
+      WCY: 0.2,
+      SEA: 1,
+      EAN: 0.2,
+      WMM: 2.5,
+      WAL: 1,
+      EMD: 0.2,
+      NTH: 0.2,
+      SBL: 0.2,
+      SLO: 0.2,
+      SHH: 0.2,
+      NSI: 0.2
+    },
+    walk: {
+      COR: 0.3,
+      WCY: 1,
+      SEA: 3,
+      EAN: 0.3,
+      WMM: 1.5,
+      WAL: 0.3,
+      EMD: 0.3,
+      NTH: 0.3,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    shaw: {
+      COR: 0.5,
+      WCY: 0.5,
+      SEA: 2,
+      EAN: 0.5,
+      WMM: 0.5,
+      WAL: 0.5,
+      EMD: 1,
+      NTH: 1.5,
+      SBL: 0.5,
+      SLO: 0.5,
+      SHH: 0.5,
+      NSI: 0.5
+    },
+    spinney: {
+      COR: 0.3,
+      WCY: 0.3,
+      SEA: 1,
+      EAN: 1.5,
+      WMM: 1.5,
+      WAL: 0.3,
+      EMD: 2.5,
+      NTH: 0.3,
+      SBL: 0.3,
+      SLO: 0.3,
+      SHH: 0.3,
+      NSI: 0.3
+    },
+    weald: {
+      COR: 0,
+      WCY: 0,
+      SEA: 3,
+      EAN: 0,
+      WMM: 0,
+      WAL: 0,
+      EMD: 0,
+      NTH: 0,
+      SBL: 0,
+      SLO: 0,
+      SHH: 0,
+      NSI: 0
+    },
+    chase: {
+      COR: 0.5,
+      WCY: 0.5,
+      SEA: 1,
+      EAN: 0.5,
+      WMM: 2,
+      WAL: 0.5,
+      EMD: 1.5,
+      NTH: 1,
+      SBL: 0.5,
+      SLO: 0.5,
+      SHH: 0.5,
+      NSI: 0.5
+    }
+  },
+  biomeTags: {
+    cold: {
+      temperate: 0.5,
+      moorland: 1,
+      boreal: 3,
+      "cool-rainforest": 1,
+      mediterranean: 0,
+      steppe: 0.3,
+      desert: 0,
+      savannah: 0,
+      rainforest: 0,
+      monsoon: 0,
+      "tropical-islands": 0,
+      highland: 2
+    },
+    hot: {
+      temperate: 0,
+      moorland: 0,
+      boreal: 0,
+      "cool-rainforest": 0,
+      mediterranean: 0.5,
+      steppe: 0,
+      desert: 1.5,
+      savannah: 2,
+      rainforest: 2,
+      monsoon: 2,
+      "tropical-islands": 2,
+      highland: 0
+    },
+    dry: {
+      temperate: 0,
+      moorland: 0,
+      boreal: 0,
+      "cool-rainforest": 0,
+      mediterranean: 1,
+      steppe: 2,
+      desert: 4,
+      savannah: 1.5,
+      rainforest: 0,
+      monsoon: 0.3,
+      "tropical-islands": 0,
+      highland: 0.5
+    },
+    alpine: {
+      temperate: 0.5,
+      moorland: 0.3,
+      boreal: 1.5,
+      "cool-rainforest": 1.5,
+      mediterranean: 0.5,
+      steppe: 0.5,
+      desert: 0.5,
+      savannah: 0,
+      rainforest: 0,
+      monsoon: 0,
+      "tropical-islands": 0,
+      highland: 3
+    },
+    volcanic: {
+      temperate: 0.3,
+      moorland: 1,
+      boreal: 0.5,
+      "cool-rainforest": 1.5,
+      mediterranean: 0.3,
+      steppe: 0,
+      desert: 0.5,
+      savannah: 0.3,
+      rainforest: 0.3,
+      monsoon: 0.3,
+      "tropical-islands": 3,
+      highland: 1.5
+    },
+    jungle: {
+      temperate: 0,
+      moorland: 0,
+      boreal: 0,
+      "cool-rainforest": 0,
+      mediterranean: 0,
+      steppe: 0,
+      desert: 0,
+      savannah: 0.3,
+      rainforest: 3,
+      monsoon: 2,
+      "tropical-islands": 1.5,
+      highland: 0
+    },
+    conifer: {
+      temperate: 1,
+      moorland: 0.5,
+      boreal: 3,
+      "cool-rainforest": 2,
+      mediterranean: 0.7,
+      steppe: 0.3,
+      desert: 0,
+      savannah: 0,
+      rainforest: 0,
+      monsoon: 0.3,
+      "tropical-islands": 0,
+      highland: 1.5
+    },
+    broadleaf: {
+      temperate: 3,
+      moorland: 0.3,
+      boreal: 0.5,
+      "cool-rainforest": 1,
+      mediterranean: 1,
+      steppe: 0.3,
+      desert: 0,
+      savannah: 0.3,
+      rainforest: 0.3,
+      monsoon: 0.5,
+      "tropical-islands": 0.3,
+      highland: 0.3
+    },
+    grass: {
+      temperate: 1,
+      moorland: 0.5,
+      boreal: 0.3,
+      "cool-rainforest": 0.3,
+      mediterranean: 0.7,
+      steppe: 3,
+      desert: 0.3,
+      savannah: 3,
+      rainforest: 0.1,
+      monsoon: 0.7,
+      "tropical-islands": 0.3,
+      highland: 1
+    },
+    steppe: {
+      temperate: 0.3,
+      moorland: 0,
+      boreal: 0.3,
+      "cool-rainforest": 0,
+      mediterranean: 0.3,
+      steppe: 4,
+      desert: 0.5,
+      savannah: 0,
+      rainforest: 0,
+      monsoon: 0,
+      "tropical-islands": 0,
+      highland: 0.5
+    },
+    sand: {
+      temperate: 0.2,
+      moorland: 0,
+      boreal: 0,
+      "cool-rainforest": 0,
+      mediterranean: 0.7,
+      steppe: 1,
+      desert: 4,
+      savannah: 0.7,
+      rainforest: 0,
+      monsoon: 0.3,
+      "tropical-islands": 1,
+      highland: 0.3
+    },
+    salt: {
+      temperate: 0.2,
+      moorland: 0.2,
+      boreal: 0.2,
+      "cool-rainforest": 0,
+      mediterranean: 1,
+      steppe: 3,
+      desert: 3,
+      savannah: 1,
+      rainforest: 0,
+      monsoon: 0.2,
+      "tropical-islands": 0.2,
+      highland: 2
+    },
+    peat: {
+      temperate: 1,
+      moorland: 3,
+      boreal: 2,
+      "cool-rainforest": 1,
+      mediterranean: 0,
+      steppe: 0,
+      desert: 0,
+      savannah: 0,
+      rainforest: 0,
+      monsoon: 0,
+      "tropical-islands": 0,
+      highland: 1
+    },
+    swamp: {
+      temperate: 0.7,
+      moorland: 0.2,
+      boreal: 0.5,
+      "cool-rainforest": 0.5,
+      mediterranean: 0.3,
+      steppe: 0.3,
+      desert: 0,
+      savannah: 1.5,
+      rainforest: 3,
+      monsoon: 3,
+      "tropical-islands": 2,
+      highland: 0.3
+    },
+    mangrove: {
+      temperate: 0,
+      moorland: 0,
+      boreal: 0,
+      "cool-rainforest": 0,
+      mediterranean: 0,
+      steppe: 0,
+      desert: 0,
+      savannah: 0.5,
+      rainforest: 2,
+      monsoon: 3,
+      "tropical-islands": 3,
+      highland: 0
+    },
+    heathland: {
+      temperate: 2,
+      moorland: 2,
+      boreal: 0.5,
+      "cool-rainforest": 0.2,
+      mediterranean: 1,
+      steppe: 0.2,
+      desert: 0.2,
+      savannah: 0.2,
+      rainforest: 0.2,
+      monsoon: 0.2,
+      "tropical-islands": 0.2,
+      highland: 0.2
+    }
+  },
+  cultureMult: {
+    general: {},
+    "anglo-saxon": {
+      of: 0.7,
+      dir: 1.5,
+      ppl: 1.5,
+      crt: 1.5,
+      flora: 1.5,
+      sai: 1.5,
+      unc: 1.5
+    },
+    norse: {
+      of: 0.5,
+      dir: 2,
+      col: 1.5,
+      god: 1.5,
+      crt: 1.5,
+      unc: 2
+    },
+    celtic: {
+      of: 2,
+      per: 1.5,
+      crt: 1.5,
+      flora: 1.5,
+      sai: 2,
+      unc: 2
+    },
+    "norman-british": {
+      of: 1.2,
+      dir: 1.5,
+      per: 1.5,
+      god: 0,
+      sai: 1.5,
+      work: 1.5
+    },
+    roman: {
+      of: 2.5,
+      dir: 1.5,
+      col: 0.7,
+      ppl: 3,
+      crt: 0.5,
+      shp: 0.5
+    },
+    "greek-byzantine": {
+      of: 2,
+      ppl: 1.5,
+      per: 3,
+      god: 2,
+      crt: 0.7
+    },
+    slavic: {
+      col: 2,
+      ppl: 2,
+      god: 0,
+      flora: 1.5
+    },
+    steppe: {
+      of: 0.7,
+      col: 3,
+      per: 0.5,
+      god: 0,
+      crt: 1.5
+    },
+    "arabic-persian": {
+      of: 3,
+      col: 1.5,
+      ppl: 3,
+      god: 0
+    },
+    indian: {
+      of: 1.5,
+      per: 2,
+      flora: 1.5
+    },
+    chinese: {
+      of: 0.3,
+      dir: 3,
+      col: 2,
+      ppl: 0.5,
+      per: 0.5,
+      god: 0.5,
+      shp: 2,
+      crt: 1.5
+    },
+    japanese: {
+      of: 0.5,
+      dir: 2,
+      col: 1.5,
+      ppl: 0.5,
+      per: 0.5,
+      god: 0.5,
+      shp: 3,
+      flora: 2
+    },
+    korean: {
+      of: 0.3,
+      dir: 4,
+      col: 1.5,
+      ppl: 0.5,
+      per: 0.5,
+      god: 0.5
+    },
+    egyptian: {
+      col: 2,
+      ppl: 0.5,
+      per: 0.5,
+      god: 3
+    },
+    ethiopian: {
+      of: 1.5,
+      col: 2,
+      sai: 1.5
+    },
+    bantu: {
+      of: 1.5,
+      god: 1.5,
+      crt: 2
+    },
+    "west-african": {
+      crt: 1.5,
+      flora: 1.5
+    },
+    aztec: {
+      col: 1.5,
+      per: 0.5,
+      god: 3,
+      crt: 1.5
+    },
+    maya: {
+      col: 1.5,
+      per: 0.5,
+      god: 3,
+      crt: 1.5
+    },
+    polynesian: {
+      of: 2,
+      per: 1.5,
+      god: 0,
+      crt: 1.5
+    },
+    andean: {
+      per: 0.5,
+      god: 0
+    }
+  },
+  eraMult: {
+    mood: {
+      AN: 0.2,
+      MD: 0.5,
+      EM: 2,
+      ST: 1.5,
+      MO: 0.5,
+      NF: 1,
+      IS: 1
+    },
+    per: {
+      AN: 0.5,
+      MD: 0.7,
+      EM: 1.5,
+      ST: 2,
+      MO: 1.5,
+      NF: 1,
+      IS: 1
+    },
+    work: {
+      AN: 0.5,
+      MD: 1,
+      EM: 1.5,
+      ST: 2,
+      MO: 1.5,
+      NF: 1,
+      IS: 1
+    },
+    alien: {
+      AN: 0,
+      MD: 0,
+      EM: 0,
+      ST: 0,
+      MO: 0,
+      NF: 6,
+      IS: 6
+    }
+  },
+  kindMult: {
+    britishHome: {
+      "mountainNames.ice": 0,
+      "wetlandNames.swamp": 0.2,
+      "wetlandNames.delta": 0.5,
+      "grasslandNames.plain": 0.5
+    },
+    biome: {
+      "mountainNames.ice": "alpine",
+      "wetlandNames.swamp": "swamp",
+      "desertNames.dune": "sand",
+      "grasslandNames.heath": "heathland"
+    }
+  },
+  homeland: {
+    general: "temperate",
+    "norman-british": "britain",
+    "anglo-saxon": "britain",
+    celtic: "britain",
+    "greek-byzantine": "mediterranean",
+    steppe: "steppe",
+    polynesian: "tropical-islands",
+    andean: "highland",
+    norse: "boreal",
+    roman: "mediterranean",
+    chinese: "temperate",
+    egyptian: "desert",
+    aztec: "highland",
+    bantu: "savannah",
+    slavic: "temperate",
+    "arabic-persian": "desert",
+    indian: "monsoon",
+    japanese: "temperate",
+    "west-african": "savannah",
+    maya: "rainforest",
+    korean: "temperate",
+    ethiopian: "highland"
+  },
+  modules: {
+    mountainNames: {
+      label: "mountains",
+      any: "mountain features of any kind",
+      seriesText: "in one range",
+      terrain: "mountains",
+      defaultBiome: "highland",
+      biomes: [
+        "temperate",
+        "moorland",
+        "boreal",
+        "cool-rainforest",
+        "mediterranean",
+        "steppe",
+        "desert",
+        "savannah",
+        "rainforest",
+        "monsoon",
+        "tropical-islands",
+        "highland"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "range",
+          menu: "Ranges and massifs",
+          plural: "ranges and massifs",
+          weight: 16
+        },
+        {
+          key: "peak",
+          menu: "Peaks and summits",
+          plural: "peaks and summits",
+          weight: 22
+        },
+        {
+          key: "ridge",
+          menu: "Ridges, edges and crags",
+          plural: "ridges, edges and crags",
+          weight: 12
+        },
+        {
+          key: "pass",
+          menu: "Passes and cols",
+          plural: "passes and cols",
+          weight: 12
+        },
+        {
+          key: "gorge",
+          menu: "Gorges and ravines",
+          plural: "gorges and ravines",
+          weight: 7
+        },
+        {
+          key: "valley",
+          menu: "Valleys, glens and corries",
+          plural: "valleys, glens and corries",
+          weight: 10
+        },
+        {
+          key: "stream",
+          menu: "Streams and falls",
+          plural: "streams and falls",
+          weight: 8
+        },
+        {
+          key: "river",
+          menu: "Mountain rivers",
+          plural: "mountain rivers",
+          weight: 4
+        },
+        {
+          key: "tarn",
+          menu: "Tarns and lakes",
+          plural: "tarns and lakes",
+          weight: 6
+        },
+        {
+          key: "ice",
+          menu: "Glaciers and snowfields",
+          plural: "glaciers and snowfields",
+          weight: 3
+        },
+        {
+          key: "cave",
+          menu: "Caves and mines",
+          plural: "caves and mines",
+          weight: 4
+        },
+        {
+          key: "settlement",
+          menu: "Mountain settlements",
+          plural: "mountain settlements",
+          weight: 6
+        }
+      ]
+    },
+    forestNames: {
+      label: "forests and woods",
+      any: "forest features of any kind",
+      seriesText: "in one forest",
+      terrain: "forest",
+      defaultBiome: "temperate",
+      biomes: [
+        "temperate",
+        "moorland",
+        "boreal",
+        "cool-rainforest",
+        "mediterranean",
+        "steppe",
+        "savannah",
+        "rainforest",
+        "monsoon",
+        "tropical-islands",
+        "highland"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "forest",
+          menu: "Forests and woods",
+          plural: "forests and woods",
+          weight: 22
+        },
+        {
+          key: "grove",
+          menu: "Groves, copses and thickets",
+          plural: "groves, copses and thickets",
+          weight: 14
+        },
+        {
+          key: "clearing",
+          menu: "Clearings, glades and dells",
+          plural: "clearings, glades and dells",
+          weight: 12
+        },
+        {
+          key: "ride",
+          menu: "Rides, paths and forest roads",
+          plural: "rides, paths and forest roads",
+          weight: 10
+        },
+        {
+          key: "stream",
+          menu: "Streams and springs",
+          plural: "streams and springs",
+          weight: 9
+        },
+        {
+          key: "river",
+          menu: "Forest rivers",
+          plural: "forest rivers",
+          weight: 4
+        },
+        {
+          key: "pool",
+          menu: "Pools, ponds and lakes",
+          plural: "pools, ponds and lakes",
+          weight: 7
+        },
+        {
+          key: "tree",
+          menu: "Named trees and stones",
+          plural: "named trees and stones",
+          weight: 8
+        },
+        {
+          key: "walk",
+          menu: "Walks, parks and coverts",
+          plural: "walks, parks and coverts",
+          weight: 6
+        },
+        {
+          key: "settlement",
+          menu: "Forest settlements",
+          plural: "forest settlements",
+          weight: 8
+        }
+      ]
+    },
+    desertNames: {
+      label: "deserts",
+      any: "desert features of any kind",
+      seriesText: "in one desert",
+      terrain: "plains",
+      defaultBiome: "desert",
+      biomes: [
+        "desert",
+        "steppe",
+        "highland",
+        "savannah",
+        "mediterranean"
+      ],
+      region: false,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "desert",
+          menu: "Deserts and sand seas",
+          plural: "deserts and sand seas",
+          weight: 18
+        },
+        {
+          key: "dune",
+          menu: "Dunes and sandhills",
+          plural: "dunes and sandhills",
+          weight: 10
+        },
+        {
+          key: "plain",
+          menu: "Stony plains and salt flats",
+          plural: "stony plains and salt flats",
+          weight: 12
+        },
+        {
+          key: "rock",
+          menu: "Mesas, buttes and rocks",
+          plural: "mesas, buttes and rocks",
+          weight: 10
+        },
+        {
+          key: "canyon",
+          menu: "Canyons and wadis",
+          plural: "canyons and wadis",
+          weight: 12
+        },
+        {
+          key: "oasis",
+          menu: "Oases, wells and springs",
+          plural: "oases, wells and springs",
+          weight: 14
+        },
+        {
+          key: "lake",
+          menu: "Salt lakes and dry lakes",
+          plural: "salt lakes and dry lakes",
+          weight: 6
+        },
+        {
+          key: "route",
+          menu: "Tracks and caravan roads",
+          plural: "tracks and caravan roads",
+          weight: 8
+        },
+        {
+          key: "landmark",
+          menu: "Landmarks and lost places",
+          plural: "landmarks and lost places",
+          weight: 5
+        },
+        {
+          key: "settlement",
+          menu: "Desert settlements",
+          plural: "desert settlements",
+          weight: 10
+        }
+      ]
+    },
+    moorNames: {
+      label: "moors and heaths",
+      any: "moorland features of any kind",
+      seriesText: "on one moor",
+      terrain: "hills",
+      defaultBiome: "moorland",
+      biomes: [
+        "moorland",
+        "temperate",
+        "boreal",
+        "highland",
+        "cool-rainforest"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "moor",
+          menu: "Moors and fells",
+          plural: "moors and fells",
+          weight: 20
+        },
+        {
+          key: "hill",
+          menu: "Tors, riggs and hills",
+          plural: "tors, riggs and hills",
+          weight: 14
+        },
+        {
+          key: "bog",
+          menu: "Mosses, mires and flows",
+          plural: "mosses, mires and flows",
+          weight: 10
+        },
+        {
+          key: "clough",
+          menu: "Cloughs, combes and hopes",
+          plural: "cloughs, combes and hopes",
+          weight: 8
+        },
+        {
+          key: "stream",
+          menu: "Becks, gills and burns",
+          plural: "becks, gills and burns",
+          weight: 10
+        },
+        {
+          key: "pool",
+          menu: "Tarns and pools",
+          plural: "tarns and pools",
+          weight: 6
+        },
+        {
+          key: "stone",
+          menu: "Stones, cairns and crosses",
+          plural: "stones, cairns and crosses",
+          weight: 10
+        },
+        {
+          key: "track",
+          menu: "Tracks and ways",
+          plural: "tracks and ways",
+          weight: 8
+        },
+        {
+          key: "settlement",
+          menu: "Moorland settlements",
+          plural: "moorland settlements",
+          weight: 8
+        }
+      ]
+    },
+    wetlandNames: {
+      label: "wetlands",
+      any: "wetland features of any kind",
+      seriesText: "in one marsh",
+      terrain: "wetland",
+      defaultBiome: "temperate",
+      biomes: [
+        "temperate",
+        "moorland",
+        "boreal",
+        "cool-rainforest",
+        "mediterranean",
+        "steppe",
+        "savannah",
+        "rainforest",
+        "monsoon",
+        "tropical-islands",
+        "highland"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "marsh",
+          menu: "Marshes and fens",
+          plural: "marshes and fens",
+          weight: 20
+        },
+        {
+          key: "bog",
+          menu: "Bogs and mires",
+          plural: "bogs and mires",
+          weight: 10
+        },
+        {
+          key: "swamp",
+          menu: "Swamps and backwaters",
+          plural: "swamps and backwaters",
+          weight: 10
+        },
+        {
+          key: "reed",
+          menu: "Reedbeds and carrs",
+          plural: "reedbeds and carrs",
+          weight: 8
+        },
+        {
+          key: "water",
+          menu: "Meres, broads and pools",
+          plural: "meres, broads and pools",
+          weight: 10
+        },
+        {
+          key: "channel",
+          menu: "Creeks, lodes and drains",
+          plural: "creeks, lodes and drains",
+          weight: 10
+        },
+        {
+          key: "isle",
+          menu: "Islands and holmes",
+          plural: "islands and holmes",
+          weight: 8
+        },
+        {
+          key: "causeway",
+          menu: "Causeways and crossings",
+          plural: "causeways and crossings",
+          weight: 6
+        },
+        {
+          key: "delta",
+          menu: "Deltas and saltmarshes",
+          plural: "deltas and saltmarshes",
+          weight: 6
+        },
+        {
+          key: "settlement",
+          menu: "Wetland settlements",
+          plural: "wetland settlements",
+          weight: 8
+        }
+      ]
+    },
+    grasslandNames: {
+      label: "grasslands",
+      any: "grassland features of any kind",
+      seriesText: "on one plain",
+      terrain: "plains",
+      defaultBiome: "steppe",
+      biomes: [
+        "temperate",
+        "steppe",
+        "savannah",
+        "mediterranean",
+        "highland",
+        "monsoon"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "plain",
+          menu: "Plains, steppes and prairies",
+          plural: "plains, steppes and prairies",
+          weight: 20
+        },
+        {
+          key: "down",
+          menu: "Downs and wolds",
+          plural: "downs and wolds",
+          weight: 14
+        },
+        {
+          key: "meadow",
+          menu: "Meadows, leas and pastures",
+          plural: "meadows, leas and pastures",
+          weight: 14
+        },
+        {
+          key: "heath",
+          menu: "Heaths and commons",
+          plural: "heaths and commons",
+          weight: 8
+        },
+        {
+          key: "vale",
+          menu: "Vales and straths",
+          plural: "vales and straths",
+          weight: 10
+        },
+        {
+          key: "stream",
+          menu: "Streams and waterholes",
+          plural: "streams and waterholes",
+          weight: 8
+        },
+        {
+          key: "lake",
+          menu: "Lakes and ponds",
+          plural: "lakes and ponds",
+          weight: 5
+        },
+        {
+          key: "track",
+          menu: "Droves, trails and tracks",
+          plural: "droves, trails and tracks",
+          weight: 8
+        },
+        {
+          key: "landmark",
+          menu: "Mounds, barrows and lone trees",
+          plural: "mounds, barrows and lone trees",
+          weight: 7
+        },
+        {
+          key: "settlement",
+          menu: "Grassland settlements",
+          plural: "grassland settlements",
+          weight: 8
+        }
+      ]
+    }
+  },
+  shapes: {
+    mountainNames: {
+      range: [
+        {
+          p: "The {wildColour} Mountains",
+          w: 14,
+          f: "col"
+        },
+        {
+          p: "The {wildColour} Hills",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "The {wildQuality} Mountains",
+          w: 6,
+          f: "qual"
+        },
+        {
+          p: "The {directionAdj} Mountains",
+          w: 6,
+          f: "dir"
+        },
+        {
+          p: "The {directionAdj} Fells",
+          w: 5,
+          f: "dir",
+          rt: "fell"
+        },
+        {
+          p: "The {town} Mountains",
+          w: 8,
+          f: "twn"
+        },
+        {
+          p: "The {town} Hills",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Fells",
+          w: 4,
+          f: "twn",
+          rt: "fell"
+        },
+        {
+          p: "The {beast} Mountains",
+          w: 5,
+          f: "crt"
+        },
+        {
+          p: "Mountains of the {beast:pl}",
+          w: 3,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "Mountains of the {wildWeather:pl}",
+          w: 4,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "The {wildColour} {rangeBody}",
+          w: 5,
+          f: "shp"
+        },
+        {
+          p: "The {rangeBody} of the World",
+          w: 1,
+          f: "shp",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "The {number} Peaks",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "The {folkUncanny} Teeth",
+          w: 2,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "Mountains of the {folk}",
+          w: 3,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "The {kingdom} Mountains",
+          w: 2,
+          f: "ppl"
+        },
+        {
+          p: "{person} Range",
+          w: 3,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "The {person} Mountains",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{explorerMood} Range",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "Mountains of {god}",
+          w: 2,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "The {mythBeast} Mountains",
+          w: 3,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Mountains of {mariaWord}",
+          w: 4,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      peak: [
+        {
+          p: "Mount {town}",
+          w: 10,
+          f: "twn",
+          rt: "mount"
+        },
+        {
+          p: "{town} Peak",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{town} Pike",
+          w: 6,
+          f: "twn",
+          rt: "pike"
+        },
+        {
+          p: "{town} Fell",
+          w: 5,
+          f: "twn",
+          rt: "fell"
+        },
+        {
+          p: "Ben {town}",
+          w: 6,
+          f: "twn",
+          rt: "ben"
+        },
+        {
+          p: "{town} Tor",
+          w: 3,
+          f: "twn",
+          rt: "tor"
+        },
+        {
+          p: "{town} Law",
+          w: 4,
+          f: "twn",
+          rt: "law"
+        },
+        {
+          p: "{wildColour} Peak",
+          w: 8,
+          f: "col"
+        },
+        {
+          p: "{wildColour} Pike",
+          w: 6,
+          f: "col",
+          rt: "pike"
+        },
+        {
+          p: "{wildColour} Fell",
+          w: 4,
+          f: "col",
+          rt: "fell"
+        },
+        {
+          p: "{wildColour} Tor",
+          w: 6,
+          f: "col",
+          rt: "tor"
+        },
+        {
+          p: "{wildColour} Law",
+          w: 4,
+          f: "col",
+          rt: "law"
+        },
+        {
+          p: "{wildColour} Knott",
+          w: 3,
+          f: "col",
+          rt: "knott"
+        },
+        {
+          p: "{wildColour} Horn",
+          w: 5,
+          f: "col"
+        },
+        {
+          p: "{wildFuse}fell",
+          w: 4,
+          f: "qual",
+          rt: "fell"
+        },
+        {
+          p: "{beast} Peak",
+          w: 6,
+          f: "crt"
+        },
+        {
+          p: "{beast} Tor",
+          w: 4,
+          f: "crt",
+          rt: "tor"
+        },
+        {
+          p: "{beast} Horn",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{wildQuality} Peak",
+          w: 6,
+          f: "qual"
+        },
+        {
+          p: "{wildWeather} Peak",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "The {wildShape}",
+          w: 5,
+          f: "shp"
+        },
+        {
+          p: "{wildColour} {wildShape}",
+          w: 3,
+          f: "shp"
+        },
+        {
+          p: "The Old Man of {town}",
+          w: 2,
+          f: "fixed",
+          rt: "oldMan",
+          t: [
+            "light"
+          ]
+        },
+        {
+          p: "{direction} Peak",
+          w: 4,
+          f: "dir"
+        },
+        {
+          p: "{directionAdj} Peak",
+          w: 2,
+          f: "dir"
+        },
+        {
+          p: "{person:poss} Peak",
+          w: 4,
+          f: "per"
+        },
+        {
+          p: "{person:poss} Seat",
+          w: 2,
+          f: "per",
+          c: [
+            "british"
+          ]
+        },
+        {
+          p: "Mount {person}",
+          w: 5,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "Mount {explorerMood}",
+          w: 4,
+          f: "mood"
+        },
+        {
+          p: "{holy:poss} Peak",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "Seat of {god}",
+          w: 2,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{god:poss} Throne",
+          w: 2,
+          f: "god",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{folkUncanny} Peak",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "Fire Mountain",
+          w: 2,
+          f: "fixed",
+          bt: "volcanic"
+        },
+        {
+          p: "The {wildColour} Cone",
+          w: 2,
+          f: "col",
+          bt: "volcanic"
+        },
+        {
+          p: "{mythBeast} Peak",
+          w: 3,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "{mythBeast:poss} Tooth",
+          w: 2,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Mount {mariaWord}",
+          w: 3,
+          f: "alien",
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      ridge: [
+        {
+          p: "{wildColour} Edge",
+          w: 6,
+          f: "col",
+          rt: "edge"
+        },
+        {
+          p: "{town} Edge",
+          w: 6,
+          f: "twn",
+          rt: "edge"
+        },
+        {
+          p: "{wildQuality} Edge",
+          w: 3,
+          f: "qual",
+          rt: "edge"
+        },
+        {
+          p: "{wildColour} Ridge",
+          w: 6,
+          f: "col"
+        },
+        {
+          p: "{town} Ridge",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{beast} Ridge",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{wildShape} Ridge",
+          w: 4,
+          f: "shp"
+        },
+        {
+          p: "{beast} Crag",
+          w: 7,
+          f: "crt",
+          rt: "crag"
+        },
+        {
+          p: "{wildColour} Crag",
+          w: 5,
+          f: "col",
+          rt: "crag"
+        },
+        {
+          p: "{town} Crag",
+          w: 3,
+          f: "twn",
+          rt: "crag"
+        },
+        {
+          p: "{wildColour} Scar",
+          w: 4,
+          f: "col",
+          rt: "scar"
+        },
+        {
+          p: "{town} Scar",
+          w: 3,
+          f: "twn",
+          rt: "scar"
+        },
+        {
+          p: "{wildShape} Rock",
+          w: 3,
+          f: "shp"
+        },
+        {
+          p: "{folkUncanny} {devilFeature}",
+          w: 3,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "The {wildColour} Wall",
+          w: 3,
+          f: "shp"
+        },
+        {
+          p: "{beast} Buttress",
+          w: 2,
+          f: "crt",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{mythBeast:poss} Back",
+          w: 2,
+          f: "myth",
+          h: true
+        }
+      ],
+      pass: [
+        {
+          p: "{beast} Pass",
+          w: 8,
+          f: "crt"
+        },
+        {
+          p: "Pass of the {beast:pl}",
+          w: 4,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{town} Pass",
+          w: 8,
+          f: "twn"
+        },
+        {
+          p: "Pass of {town}",
+          w: 4,
+          f: "twn",
+          of: true
+        },
+        {
+          p: "{wildColour} Pass",
+          w: 5,
+          f: "col"
+        },
+        {
+          p: "{wildQuality} Pass",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{wildWeather} Pass",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Gap",
+          w: 5,
+          f: "col"
+        },
+        {
+          p: "{town} Gap",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{beast} Gap",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{wildWeather} Gap",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Col",
+          w: 3,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{direction} Col",
+          w: 2,
+          f: "dir",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{beast} Hause",
+          w: 3,
+          f: "crt",
+          rt: "hause"
+        },
+        {
+          p: "{town} Hause",
+          w: 3,
+          f: "twn",
+          rt: "hause"
+        },
+        {
+          p: "{mtWork} Pass",
+          w: 4,
+          f: "work"
+        },
+        {
+          p: "{mtWork} Gap",
+          w: 2,
+          f: "work"
+        },
+        {
+          p: "{gateWord} Gate",
+          w: 3,
+          f: "shp"
+        },
+        {
+          p: "Gate of {kingdom}",
+          w: 2,
+          f: "ppl",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{person:poss} Pass",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{person} Pass",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{explorerMood} Pass",
+          w: 3,
+          f: "mood"
+        },
+        {
+          p: "{folkUncanny} Staircase",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{holy:poss} Pass",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{mythBeast} Pass",
+          w: 2,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "{mythBeast:poss} Gate",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      gorge: [
+        {
+          p: "{wildColour} Gorge",
+          w: 6,
+          f: "col"
+        },
+        {
+          p: "{town} Gorge",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{beast} Gorge",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{wildQuality} Gorge",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{folkUncanny} Gorge",
+          w: 3,
+          f: "unc"
+        },
+        {
+          p: "{folkUncanny} {devilFeature}",
+          w: 2,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{wildColour} Cleft",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "The {wildColour} Chasm",
+          w: 2,
+          f: "col",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{town} Clough",
+          w: 4,
+          f: "twn",
+          rt: "clough"
+        },
+        {
+          p: "{wildColour} Clough",
+          w: 3,
+          f: "col",
+          rt: "clough"
+        },
+        {
+          p: "{beast} Ravine",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{town} Ravine",
+          w: 2,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Canyon",
+          w: 3,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "dry"
+        },
+        {
+          p: "{wildColour} Canyon",
+          w: 3,
+          f: "col",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "dry"
+        },
+        {
+          p: "Gorge of the {number} Falls",
+          w: 1,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "Gorge of {moodOf}",
+          w: 1,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "{mythBeast} Gorge",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      valley: [
+        {
+          p: "{wildFuse}dale",
+          w: 8,
+          f: "qual",
+          rt: "dale",
+          st: "hv"
+        },
+        {
+          p: "Glen {town}",
+          w: 6,
+          f: "twn",
+          rt: "glen",
+          st: "hv"
+        },
+        {
+          p: "{wildColour} Glen",
+          w: 3,
+          f: "col",
+          rt: "glen"
+        },
+        {
+          p: "{beast} Corrie",
+          w: 4,
+          f: "crt",
+          rt: "corrie"
+        },
+        {
+          p: "{wildColour} Corrie",
+          w: 3,
+          f: "col",
+          rt: "corrie"
+        },
+        {
+          p: "Cwm {town}",
+          w: 4,
+          f: "twn",
+          rt: "cwm",
+          st: "hv"
+        },
+        {
+          p: "{town} Combe",
+          w: 5,
+          f: "twn",
+          rt: "combe",
+          st: "hv"
+        },
+        {
+          p: "{wildFuse}combe",
+          w: 4,
+          f: "qual",
+          rt: "combe",
+          st: "hv"
+        },
+        {
+          p: "{wildQuality} Valley",
+          w: 5,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Valley",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{town} Valley",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{beast} Valley",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "Valley of the {beast:pl}",
+          w: 3,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "Valley of {moodOf}",
+          w: 2,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "{wildQuality} Hollow",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "Valley of the {folk}",
+          w: 2,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "Valley of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "Valley of {mariaWord}",
+          w: 2,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      stream: [
+        {
+          p: "{wildColour} Beck",
+          w: 5,
+          f: "col",
+          rt: "beck"
+        },
+        {
+          p: "{beast} Beck",
+          w: 3,
+          f: "crt",
+          rt: "beck"
+        },
+        {
+          p: "{town} Beck",
+          w: 3,
+          f: "twn",
+          rt: "beck"
+        },
+        {
+          p: "{wildFuse}beck",
+          w: 3,
+          f: "qual",
+          rt: "beck",
+          st: "hv"
+        },
+        {
+          p: "{wildColour} Burn",
+          w: 4,
+          f: "col",
+          rt: "burn"
+        },
+        {
+          p: "{town} Burn",
+          w: 3,
+          f: "twn",
+          rt: "burn"
+        },
+        {
+          p: "{wildFuse}burn",
+          w: 2,
+          f: "qual",
+          rt: "burn",
+          st: "hv"
+        },
+        {
+          p: "{wildColour} Ghyll",
+          w: 4,
+          f: "col",
+          rt: "ghyll"
+        },
+        {
+          p: "{wildColour} Force",
+          w: 4,
+          f: "col",
+          rt: "force"
+        },
+        {
+          p: "{town} Force",
+          w: 3,
+          f: "twn",
+          rt: "force"
+        },
+        {
+          p: "Linn of {town}",
+          w: 3,
+          f: "twn",
+          of: true,
+          rt: "linn"
+        },
+        {
+          p: "{wildColour} Falls",
+          w: 6,
+          f: "col"
+        },
+        {
+          p: "{town} Falls",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{beast} Falls",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{wildQuality} Falls",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildWeather} Falls",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{person} Falls",
+          w: 3,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{leapWho} Leap",
+          w: 3,
+          f: "unc"
+        },
+        {
+          p: "{wildColour} Veil",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{wildColour} Water",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{beast} Spring",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{holy:poss} Well",
+          w: 2,
+          f: "sai"
+        }
+      ],
+      river: [
+        {
+          p: "{river}",
+          w: 40,
+          f: "riv"
+        },
+        {
+          p: "River {mtRiverWord}",
+          w: 12,
+          f: "qual"
+        },
+        {
+          p: "{mtRiverAdj} Water",
+          w: 12,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Water",
+          w: 10,
+          f: "col"
+        },
+        {
+          p: "{wildFuse}water",
+          w: 8,
+          f: "qual"
+        },
+        {
+          p: "{beast} Water",
+          w: 6,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} River",
+          w: 6,
+          f: "col"
+        },
+        {
+          p: "{town} River",
+          w: 6,
+          f: "twn"
+        }
+      ],
+      tarn: [
+        {
+          p: "{wildColour} Tarn",
+          w: 8,
+          f: "col",
+          rt: "tarn"
+        },
+        {
+          p: "{beast} Tarn",
+          w: 5,
+          f: "crt",
+          rt: "tarn"
+        },
+        {
+          p: "{town} Tarn",
+          w: 4,
+          f: "twn",
+          rt: "tarn"
+        },
+        {
+          p: "{wildQuality} Tarn",
+          w: 4,
+          f: "qual",
+          rt: "tarn"
+        },
+        {
+          p: "Loch {town}",
+          w: 4,
+          f: "twn",
+          rt: "loch"
+        },
+        {
+          p: "{wildColour} Lochan",
+          w: 4,
+          f: "col",
+          rt: "lochan"
+        },
+        {
+          p: "{beast} Lochan",
+          w: 3,
+          f: "crt",
+          rt: "lochan"
+        },
+        {
+          p: "{lakeQuality} Lake",
+          w: 5,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Lake",
+          w: 5,
+          f: "col"
+        },
+        {
+          p: "Lake {town}",
+          w: 5,
+          f: "twn",
+          rt: "lakeLake"
+        },
+        {
+          p: "{wildFuse}water",
+          w: 4,
+          f: "qual",
+          rt: "lakeWater"
+        },
+        {
+          p: "{lakeCreature} Lake",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "Lake of the {lakeCreature:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{lakeShape} Lake",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{folkUncanny} Pool",
+          w: 1,
+          f: "unc"
+        },
+        {
+          p: "{mythBeast} Lake",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      ice: [
+        {
+          p: "{wildColour} Glacier",
+          w: 8,
+          f: "col",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Glacier",
+          w: 8,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{person} Glacier",
+          w: 4,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 2
+        },
+        {
+          p: "{wildQuality} Glacier",
+          w: 4,
+          f: "qual",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{beast} Glacier",
+          w: 2,
+          f: "crt",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{explorerMood} Glacier",
+          w: 2,
+          f: "mood",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "The {wildQuality} Icefall",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Icefield",
+          w: 3,
+          f: "col",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Icefield",
+          w: 2,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "The Frozen {iceWord}",
+          w: 3,
+          f: "shp"
+        },
+        {
+          p: "The Ice {iceWord}",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "The {wildQuality} Snows",
+          w: 3,
+          f: "qual"
+        }
+      ],
+      cave: [
+        {
+          p: "{folkUncanny} Cave",
+          w: 4,
+          f: "unc"
+        },
+        {
+          p: "{folkUncanny} Hole",
+          w: 3,
+          f: "unc"
+        },
+        {
+          p: "{beast} Cave",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Cave",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "Cave of the {wildWeather:pl}",
+          w: 2,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "{town} Cavern",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Cavern",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Pot",
+          w: 3,
+          f: "twn",
+          rt: "pot"
+        },
+        {
+          p: "{wildMetal} Mine",
+          w: 5,
+          f: "work"
+        },
+        {
+          p: "{town} Mine",
+          w: 4,
+          f: "work",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{wildMetal} Level",
+          w: 2,
+          f: "work",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{person:poss} Level",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{wildMetal} Workings",
+          w: 2,
+          f: "work",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{holy:poss} Cave",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "Hermit's Cave",
+          w: 1,
+          f: "fixed"
+        },
+        {
+          p: "Cave of {god}",
+          w: 1,
+          f: "god",
+          of: true
+        },
+        {
+          p: "{mythBeast:poss} Lair",
+          w: 2,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "The Deep Halls of {town}",
+          w: 2,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Caverns of {mariaWord}",
+          w: 2,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ]
+        }
+      ],
+      settlement: [
+        {
+          p: "{@pass} Fort",
+          w: 6,
+          f: "set",
+          sz: "vt"
+        },
+        {
+          p: "Fort {town}",
+          w: 3,
+          f: "set",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{@pass} Hospice",
+          w: 3,
+          f: "set",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "Hospice of the Snows",
+          w: 1,
+          f: "set",
+          e: [
+            "MD",
+            "EM",
+            "ST"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{@pass} Inn",
+          w: 3,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@pass} Town",
+          w: 3,
+          f: "set",
+          sz: "vt"
+        },
+        {
+          p: "{@pass} Tower",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@peak} Watch",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{town} under {@peak}",
+          w: 3,
+          f: "set",
+          c: [
+            "british"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{@valley} Head",
+          w: 4,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@valley} End",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@valley} Foot",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@tarn} Side",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@gorge} Bridge",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{wildMetal} Town",
+          w: 3,
+          f: "set",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "vt"
+        },
+        {
+          p: "{wildMetal} Camp",
+          w: 2,
+          f: "set",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{wildMetal} Mines",
+          w: 2,
+          f: "set",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "v"
+        },
+        {
+          p: "{mtWork} Huts",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{town} Shieling",
+          w: 3,
+          f: "set",
+          rt: "shieling",
+          sz: "h"
+        },
+        {
+          p: "High {town}",
+          w: 4,
+          f: "set",
+          sz: "hvt"
+        },
+        {
+          p: "Upper {town}",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{holy:poss} Hermitage",
+          w: 2,
+          f: "sai",
+          sz: "h"
+        },
+        {
+          p: "Monastery of {holy}",
+          w: 2,
+          f: "sai",
+          of: true,
+          sz: "hv"
+        },
+        {
+          p: "{wildWeather} Monastery",
+          w: 2,
+          f: "set",
+          c: [
+            "chinese",
+            "japanese",
+            "korean",
+            "indian"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{wildWeather} Temple",
+          w: 2,
+          f: "set",
+          c: [
+            "chinese",
+            "japanese",
+            "korean",
+            "indian"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{@peak} Observatory",
+          w: 2,
+          f: "set",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Station",
+          w: 3,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{@peak} Base",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Hold",
+          w: 3,
+          f: "myth",
+          h: true,
+          sz: "vtc"
+        },
+        {
+          p: "{wildMetal} Hold",
+          w: 2,
+          f: "myth",
+          h: true,
+          sz: "tc"
+        },
+        {
+          p: "Halls of {town}",
+          w: 2,
+          f: "myth",
+          of: true,
+          h: true,
+          sz: "tc"
+        }
+      ]
+    },
+    forestNames: {
+      forest: [
+        {
+          p: "The {fstQuality} Forest",
+          w: 10,
+          f: "qual"
+        },
+        {
+          p: "The {fstQuality} Wood",
+          w: 8,
+          f: "qual"
+        },
+        {
+          p: "{town} Forest",
+          w: 10,
+          f: "twn"
+        },
+        {
+          p: "{town} Wood",
+          w: 8,
+          f: "twn"
+        },
+        {
+          p: "Forest of {town}",
+          w: 5,
+          f: "twn",
+          of: true
+        },
+        {
+          p: "{town} Chase",
+          w: 4,
+          f: "twn",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ],
+          rt: "chase"
+        },
+        {
+          p: "{town} Frith",
+          w: 2,
+          f: "twn",
+          e: [
+            "MD",
+            "EM",
+            "ST"
+          ],
+          rt: "frith"
+        },
+        {
+          p: "The {fstQuality} Weald",
+          w: 2,
+          f: "qual",
+          rt: "weald"
+        },
+        {
+          p: "{wildFuse}wood",
+          w: 6,
+          f: "qual",
+          st: "hv"
+        },
+        {
+          p: "{tree} Wood",
+          w: 6,
+          f: "flora"
+        },
+        {
+          p: "The {tree} Woods",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{tree} Forest",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "Forest of the {beast:pl}",
+          w: 3,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{beast} Wood",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "The {wildColour} Forest",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{kingdom} Forest",
+          w: 2,
+          f: "ppl"
+        },
+        {
+          p: "Forest of the {folk}",
+          w: 2,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "The {fstOwner} Forest",
+          w: 3,
+          f: "fixed",
+          e: [
+            "MD",
+            "EM"
+          ]
+        },
+        {
+          p: "{fstOwner} Wood",
+          w: 3,
+          f: "fixed"
+        },
+        {
+          p: "{person:poss} Wood",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{person} Forest",
+          w: 2,
+          f: "per",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{explorerMood} Forest",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "{explorerMood} Wood",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "{holy:poss} Wood",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "Forest of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "Forest of {fstNoun}",
+          w: 3,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "{mythFuse}wood",
+          w: 3,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "The {fstQuality} Jungle",
+          w: 3,
+          f: "qual",
+          bt: "jungle"
+        },
+        {
+          p: "The Green Hell",
+          w: 1,
+          f: "fixed",
+          bt: "jungle",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "The {fstQuality} Taiga",
+          w: 2,
+          f: "qual",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "cold"
+        },
+        {
+          p: "Forest of {mariaWord}",
+          w: 2,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      grove: [
+        {
+          p: "{tree} Grove",
+          w: 6,
+          f: "flora"
+        },
+        {
+          p: "Grove of the {number} {tree:pl}",
+          w: 3,
+          f: "flora",
+          of: true
+        },
+        {
+          p: "{town} Grove",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{beast} Spinney",
+          w: 4,
+          f: "crt",
+          rt: "spinney"
+        },
+        {
+          p: "{tree} Spinney",
+          w: 3,
+          f: "flora",
+          rt: "spinney"
+        },
+        {
+          p: "{tree} Copse",
+          w: 5,
+          f: "flora"
+        },
+        {
+          p: "{beast} Copse",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{town} Copse",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{tree} Shaw",
+          w: 3,
+          f: "flora",
+          rt: "shaw"
+        },
+        {
+          p: "{wildColour} Shaw",
+          w: 2,
+          f: "col",
+          rt: "shaw"
+        },
+        {
+          p: "{fstFlora} Hanger",
+          w: 3,
+          f: "flora",
+          rt: "hanger"
+        },
+        {
+          p: "{tree} Hanger",
+          w: 3,
+          f: "flora",
+          rt: "hanger"
+        },
+        {
+          p: "{wildFuse}hurst",
+          w: 4,
+          f: "qual",
+          rt: "hurst",
+          st: "hvt"
+        },
+        {
+          p: "{wildFuse}holt",
+          w: 3,
+          f: "qual",
+          rt: "holt",
+          st: "hv"
+        },
+        {
+          p: "{town} Holt",
+          w: 2,
+          f: "twn",
+          rt: "holt"
+        },
+        {
+          p: "{fstFlora} Thicket",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "The {fstQuality} Thicket",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{tree} Carr",
+          w: 3,
+          f: "flora",
+          rt: "carr"
+        },
+        {
+          p: "Sacred Grove of {god}",
+          w: 2,
+          f: "god",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "Grove of {god}",
+          w: 2,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{holy:poss} Grove",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{folkUncanny} Grove",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{mythFuse} Grove",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Grove of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      clearing: [
+        {
+          p: "{beast} Glade",
+          w: 6,
+          f: "crt",
+          st: "h"
+        },
+        {
+          p: "{fstFlora} Glade",
+          w: 4,
+          f: "flora"
+        },
+        {
+          p: "{wildColour} Glade",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{tree} Glade",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "The {fstQuality} Glade",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{fstFestival} Glade",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildQuality} Clearing",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{town} Clearing",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{beast} Clearing",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{beast} Dell",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Dell",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{fstFlora} Dell",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{tree} Lawn",
+          w: 2,
+          f: "flora",
+          rt: "walk"
+        },
+        {
+          p: "{town} Lawn",
+          w: 2,
+          f: "twn",
+          rt: "walk"
+        },
+        {
+          p: "{wildQuality} Lawn",
+          w: 2,
+          f: "qual",
+          rt: "walk"
+        },
+        {
+          p: "{beast} Slade",
+          w: 3,
+          f: "crt",
+          rt: "slade"
+        },
+        {
+          p: "{town} Slade",
+          w: 2,
+          f: "twn",
+          rt: "slade"
+        },
+        {
+          p: "{town} Den",
+          w: 3,
+          f: "twn",
+          rt: "den"
+        },
+        {
+          p: "{wildFuse}den",
+          w: 3,
+          f: "qual",
+          rt: "den",
+          st: "hv"
+        },
+        {
+          p: "Hollow of the {beast:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{fstSprite} Ring",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{fstSprite} Glade",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Glade of {moodOf}",
+          w: 2,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "Glade of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      ride: [
+        {
+          p: "{fstOwner} Ride",
+          w: 4,
+          f: "fixed",
+          e: [
+            "MD",
+            "EM",
+            "ST"
+          ]
+        },
+        {
+          p: "{wildColour} Ride",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{tree} Ride",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{town} Ride",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{direction} Ride",
+          w: 2,
+          f: "dir"
+        },
+        {
+          p: "{fstWork} Track",
+          w: 4,
+          f: "work"
+        },
+        {
+          p: "{fstWork} Path",
+          w: 3,
+          f: "work"
+        },
+        {
+          p: "{fstWork} Way",
+          w: 2,
+          f: "work"
+        },
+        {
+          p: "{town} Holloway",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{beast} Run",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{beast} Path",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{town} Road",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{town} Drove",
+          w: 2,
+          f: "twn",
+          rt: "drove"
+        },
+        {
+          p: "{fstQuality} Way",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{tree} Avenue",
+          w: 2,
+          f: "flora",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{holy:poss} Path",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{fstSprite} Path",
+          w: 1,
+          f: "unc"
+        },
+        {
+          p: "{mythFuse} Road",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      stream: [
+        {
+          p: "{tree} Brook",
+          w: 6,
+          f: "flora"
+        },
+        {
+          p: "{beast} Brook",
+          w: 5,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Brook",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{town} Brook",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildFuse}brook",
+          w: 3,
+          f: "qual",
+          st: "hv"
+        },
+        {
+          p: "{fstQuality} Brook",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{beast} Bourne",
+          w: 3,
+          f: "crt",
+          rt: "bourne"
+        },
+        {
+          p: "{wildFuse}bourne",
+          w: 3,
+          f: "qual",
+          rt: "bourne",
+          st: "hv"
+        },
+        {
+          p: "{tree} Spring",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{holy:poss} Well",
+          w: 4,
+          f: "sai"
+        },
+        {
+          p: "Lady Well",
+          w: 1,
+          f: "sai",
+          c: [
+            "christian"
+          ]
+        },
+        {
+          p: "{wildColour} Water",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{beast} Creek",
+          w: 2,
+          f: "crt",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 2
+        },
+        {
+          p: "{explorerMood} Brook",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "{fstSprite} Spring",
+          w: 1,
+          f: "unc",
+          t: [
+            "light"
+          ]
+        },
+        {
+          p: "{god:poss} Spring",
+          w: 1,
+          f: "god"
+        }
+      ],
+      river: [
+        {
+          p: "{river}",
+          w: 40,
+          f: "riv"
+        },
+        {
+          p: "{wildFuse}water",
+          w: 12,
+          f: "qual"
+        },
+        {
+          p: "River {fstRiverWord}",
+          w: 10,
+          f: "qual"
+        },
+        {
+          p: "The {fstQuality} River",
+          w: 8,
+          f: "qual"
+        },
+        {
+          p: "{tree} River",
+          w: 6,
+          f: "flora"
+        },
+        {
+          p: "{beast} River",
+          w: 6,
+          f: "crt"
+        },
+        {
+          p: "{fstQuality} Water",
+          w: 6,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} River",
+          w: 6,
+          f: "col"
+        },
+        {
+          p: "River of {fstNoun}",
+          w: 6,
+          f: "qual",
+          of: true
+        }
+      ],
+      pool: [
+        {
+          p: "{town} Pond",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{fstPond} Pond",
+          w: 6,
+          f: "work"
+        },
+        {
+          p: "{wildColour} Pool",
+          w: 5,
+          f: "col"
+        },
+        {
+          p: "{beast} Pool",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{tree} Pool",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{fstQuality} Pool",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{lakeQuality} Lake",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{lakeCreature} Lake",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "Lake of the {lakeCreature:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{lakeFuse}mere",
+          w: 3,
+          f: "qual",
+          rt: "mere"
+        },
+        {
+          p: "Mere of the {lakeCreature:pl}",
+          w: 2,
+          f: "crt",
+          of: true,
+          rt: "mere"
+        },
+        {
+          p: "{folkUncanny} Pool",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{holy:poss} Pool",
+          w: 1,
+          f: "sai"
+        }
+      ],
+      tree: [
+        {
+          p: "The {fstOwner} {tree}",
+          w: 5,
+          f: "fixed"
+        },
+        {
+          p: "The {treeFunc} {tree}",
+          w: 12,
+          f: "flora"
+        },
+        {
+          p: "{person:poss} {tree}",
+          w: 4,
+          f: "per"
+        },
+        {
+          p: "The {number} Sisters",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "The {wildColour} Stone",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "The {beast} Stone",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "The {folkUncanny} Stone",
+          w: 3,
+          f: "unc"
+        },
+        {
+          p: "The {treeFunc} Stone",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "The {fstOwner} Stone",
+          w: 2,
+          f: "fixed"
+        },
+        {
+          p: "{holy:poss} Cross",
+          w: 3,
+          f: "sai"
+        },
+        {
+          p: "{god:poss} {tree}",
+          w: 2,
+          f: "god",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "The {mythFuse} Tree",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      walk: [
+        {
+          p: "{town} Walk",
+          w: 5,
+          f: "twn",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ],
+          c: [
+            "norman-british",
+            "general"
+          ],
+          rt: "walk"
+        },
+        {
+          p: "{tree} Inclosure",
+          w: 4,
+          f: "flora",
+          e: [
+            "ST",
+            "MO"
+          ],
+          c: [
+            "norman-british",
+            "general"
+          ],
+          rt: "walk"
+        },
+        {
+          p: "{town} Inclosure",
+          w: 4,
+          f: "twn",
+          e: [
+            "ST",
+            "MO"
+          ],
+          c: [
+            "norman-british",
+            "general"
+          ],
+          rt: "walk"
+        },
+        {
+          p: "{direction} Bailiwick",
+          w: 3,
+          f: "dir",
+          e: [
+            "MD",
+            "EM"
+          ],
+          c: [
+            "norman-british",
+            "general"
+          ],
+          rt: "walk"
+        },
+        {
+          p: "{town} Bailiwick",
+          w: 2,
+          f: "twn",
+          e: [
+            "MD",
+            "EM"
+          ],
+          c: [
+            "norman-british",
+            "general"
+          ],
+          rt: "walk"
+        },
+        {
+          p: "{beast} Covert",
+          w: 4,
+          f: "crt",
+          e: [
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{town} Covert",
+          w: 3,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{fstOwner} Park",
+          w: 4,
+          f: "fixed",
+          e: [
+            "MD",
+            "EM",
+            "ST"
+          ]
+        },
+        {
+          p: "{beast} Park",
+          w: 3,
+          f: "crt",
+          e: [
+            "MD",
+            "EM",
+            "ST"
+          ]
+        },
+        {
+          p: "{town} Park",
+          w: 2,
+          f: "twn",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{fstOwner} Warren",
+          w: 2,
+          f: "fixed",
+          e: [
+            "MD",
+            "EM"
+          ]
+        },
+        {
+          p: "{beast} Warren",
+          w: 2,
+          f: "crt",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{fstOwner} Hunting Ground",
+          w: 2,
+          f: "fixed",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{town} Plantation",
+          w: 3,
+          f: "twn",
+          e: [
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{tree} Plantation",
+          w: 3,
+          f: "flora",
+          e: [
+            "ST",
+            "MO"
+          ]
+        }
+      ],
+      settlement: [
+        {
+          p: "{@forest} Lodge",
+          w: 4,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{fstKeeper} Lodge",
+          w: 3,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{fstKeeper} Cottage",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{fstOwner} Hunting Lodge",
+          w: 3,
+          f: "set",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{fstWork} End",
+          w: 3,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{fstWork} Camp",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{town} Green",
+          w: 4,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@forest} Gate",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@forest} Side",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@forest} End",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@stream} Mill",
+          w: 3,
+          f: "set",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Lodge",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{holy:poss} Hermitage",
+          w: 2,
+          f: "sai",
+          sz: "h"
+        },
+        {
+          p: "{tree} Abbey",
+          w: 2,
+          f: "set",
+          e: [
+            "MD",
+            "EM"
+          ],
+          c: [
+            "christian"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{town} Sawmills",
+          w: 2,
+          f: "work",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{town} Timber Camp",
+          w: 2,
+          f: "work",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{tree} Village",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "Hall of the {tree:pl}",
+          w: 2,
+          f: "myth",
+          of: true,
+          h: true,
+          sz: "vt"
+        },
+        {
+          p: "{mythFuse}home",
+          w: 2,
+          f: "myth",
+          h: true,
+          sz: "vt"
+        },
+        {
+          p: "{@forest} Station",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        }
+      ]
+    },
+    desertNames: {
+      desert: [
+        {
+          p: "The {dsrQuality} Desert",
+          w: 12,
+          f: "qual"
+        },
+        {
+          p: "The {wildColour} Desert",
+          w: 8,
+          f: "col"
+        },
+        {
+          p: "The {directionAdj} Desert",
+          w: 4,
+          f: "dir"
+        },
+        {
+          p: "{town} Desert",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{person} Desert",
+          w: 4,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 2
+        },
+        {
+          p: "The {dsrQuality} Waste",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "The {dsrQuality} Wastes",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "The {wildColour} Waste",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "Sea of {dsrStuff}",
+          w: 4,
+          f: "shp",
+          of: true
+        },
+        {
+          p: "The {wildColour} Sands",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "The {dsrQuality} Sands",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "Land of {dsrStuff}",
+          w: 2,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "The {dsrQuality} Quarter",
+          w: 2,
+          f: "qual",
+          cx: {
+            "arabic-persian": 3
+          }
+        },
+        {
+          p: "Desert of the {folk}",
+          w: 3,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "The {kingdom} Desert",
+          w: 2,
+          f: "ppl"
+        },
+        {
+          p: "Desert of {moodOf}",
+          w: 2,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "Desert of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "The {mythBeast:poss} Waste",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Desert of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "The {wildColour} Dust",
+          w: 2,
+          f: "alien",
+          e: [
+            "NF",
+            "IS"
+          ]
+        }
+      ],
+      dune: [
+        {
+          p: "The {wildColour} Dunes",
+          w: 6,
+          f: "col"
+        },
+        {
+          p: "The {dsrQuality} Dunes",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{town} Dunes",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{beast} Dunes",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "The {wildShape} Dune",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "The {number} Sisters",
+          w: 1,
+          f: "shp"
+        },
+        {
+          p: "The Star Dunes",
+          w: 1,
+          f: "fixed"
+        },
+        {
+          p: "Sand Sea of {town}",
+          w: 2,
+          f: "twn",
+          of: true
+        },
+        {
+          p: "The {wildColour} Sandhills",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{person:poss} Dune",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{folkUncanny} Dune",
+          w: 1,
+          f: "unc"
+        }
+      ],
+      plain: [
+        {
+          p: "The {dsrQuality} Plain",
+          w: 5,
+          f: "qual"
+        },
+        {
+          p: "The {wildColour} Plain",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{town} Plain",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{dsrStone} Plain",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{town} Salt Pan",
+          w: 4,
+          f: "twn",
+          bt: "salt"
+        },
+        {
+          p: "The {wildColour} Pan",
+          w: 3,
+          f: "col",
+          bt: "salt"
+        },
+        {
+          p: "{town} Salt Flats",
+          w: 3,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "salt"
+        },
+        {
+          p: "The {dsrQuality} Flats",
+          w: 3,
+          f: "qual",
+          bt: "salt"
+        },
+        {
+          p: "The {wildColour} Flats",
+          w: 2,
+          f: "col",
+          bt: "salt"
+        },
+        {
+          p: "Plain of {dsrStuff}",
+          w: 2,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "Plain of {moodOf}",
+          w: 2,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "{explorerMood} Plain",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "Plain of the {beast:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{mythBeast} Plain",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Plain of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ]
+        }
+      ],
+      rock: [
+        {
+          p: "{wildColour} Mesa",
+          w: 5,
+          f: "col",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{wildColour} Table",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{town} Table",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Butte",
+          w: 3,
+          f: "col",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Butte",
+          w: 3,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{wildColour} Rock",
+          w: 6,
+          f: "col"
+        },
+        {
+          p: "{beast} Rock",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{town} Rock",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{person:poss} Rock",
+          w: 3,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{wildShape} Rock",
+          w: 4,
+          f: "shp"
+        },
+        {
+          p: "The {wildShape}",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "The {wildColour} Pillars",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{folkUncanny} {devilFeature}",
+          w: 2,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{god:poss} Seat",
+          w: 1,
+          f: "god",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{mythBeast} Rock",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      canyon: [
+        {
+          p: "{wildColour} Canyon",
+          w: 6,
+          f: "col",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{wildColour} Gorge",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{town} Canyon",
+          w: 5,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{beast} Canyon",
+          w: 3,
+          f: "crt",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{dsrQuality} Canyon",
+          w: 3,
+          f: "qual",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{person:poss} Canyon",
+          w: 2,
+          f: "per",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "Canyon of the {beast:pl}",
+          w: 2,
+          f: "crt",
+          of: true,
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Wadi",
+          w: 4,
+          f: "twn",
+          c: [
+            "arabic-persian",
+            "egyptian",
+            "ethiopian",
+            "west-african"
+          ],
+          bt: "dry"
+        },
+        {
+          p: "{town} Creek",
+          w: 2,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "The {dsrQuality} Gully",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{beast} Gully",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "Valley of {dsrStuff}",
+          w: 2,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "Valley of {moodOf}",
+          w: 1,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "{wildColour} Cleft",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "The {wildColour} Gate",
+          w: 1,
+          f: "shp"
+        },
+        {
+          p: "{folkUncanny} Gulch",
+          w: 1,
+          f: "unc",
+          e: [
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{town} Gulch",
+          w: 2,
+          f: "twn",
+          e: [
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "Valley of {mariaWord}",
+          w: 2,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ]
+        }
+      ],
+      oasis: [
+        {
+          p: "{town} Oasis",
+          w: 8,
+          f: "twn",
+          st: "vt"
+        },
+        {
+          p: "Oasis of {town}",
+          w: 4,
+          f: "twn",
+          of: true
+        },
+        {
+          p: "{dsrOasisWord} Oasis",
+          w: 6,
+          f: "qual",
+          st: "hv"
+        },
+        {
+          p: "{beast} Well",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{town} Wells",
+          w: 4,
+          f: "twn",
+          st: "hvt"
+        },
+        {
+          p: "{dsrOasisWord} Well",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{person:poss} Well",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{holy:poss} Well",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{number} Wells",
+          w: 3,
+          f: "fixed",
+          st: "hv"
+        },
+        {
+          p: "{wildColour} Spring",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{dsrOasisWord} Spring",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{dsrOasisWord} Water",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{explorerMood} Well",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "Well of {moodOf}",
+          w: 2,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "{god:poss} Spring",
+          w: 1,
+          f: "god"
+        },
+        {
+          p: "{folkUncanny} Well",
+          w: 1,
+          f: "unc"
+        }
+      ],
+      lake: [
+        {
+          p: "Lake {town}",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Salt Lake",
+          w: 4,
+          f: "twn",
+          bt: "salt"
+        },
+        {
+          p: "{wildColour} Lake",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{dsrQuality} Lake",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{lakeQuality} Lake",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Dry Lake",
+          w: 2,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{dsrStuff} Lake",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{beast} Lake",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "Lake {explorerMood}",
+          w: 3,
+          f: "mood"
+        },
+        {
+          p: "Lake {person}",
+          w: 3,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 2
+        },
+        {
+          p: "{folkUncanny} Lake",
+          w: 1,
+          f: "unc"
+        }
+      ],
+      route: [
+        {
+          p: "{dsrGoods} Road",
+          w: 5,
+          f: "work"
+        },
+        {
+          p: "{town} Track",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Road",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{beast} Track",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{dsrDays} Days' Road",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{dsrWork} Way",
+          w: 3,
+          f: "work"
+        },
+        {
+          p: "{person:poss} Track",
+          w: 3,
+          f: "per",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{person} Stock Route",
+          w: 1,
+          f: "per",
+          e: [
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "Road of {dsrStuff}",
+          w: 2,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "{wildColour} Road",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{explorerMood} Track",
+          w: 1,
+          f: "mood"
+        }
+      ],
+      landmark: [
+        {
+          p: "{town} Cairn",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "The {wildColour} Cairn",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{person:poss} Cairn",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "The Lost City of {town}",
+          w: 2,
+          f: "qual",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "The Dead City of {town}",
+          w: 2,
+          f: "qual",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "{town} Ruins",
+          w: 3,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "The Buried City",
+          w: 1,
+          f: "fixed",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "City of {wildMetal}",
+          w: 2,
+          f: "qual",
+          of: true,
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "The {wildColour} Pillar",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{folkUncanny} Chair",
+          w: 1,
+          f: "unc"
+        },
+        {
+          p: "{beast} Stone",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "The {number} Graves",
+          w: 1,
+          f: "fixed",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "The {wildColour} Crater",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Crater",
+          w: 2,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{dsrQuality} Sinkhole",
+          w: 1,
+          f: "qual",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{person:poss} Tomb",
+          w: 2,
+          f: "per"
+        },
+        {
+          p: "{god:poss} Gate",
+          w: 1,
+          f: "god",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{folkUncanny} Bones",
+          w: 1,
+          f: "unc"
+        },
+        {
+          p: "{mythBeast:poss} Bones",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "{mariaWord} Crater",
+          w: 2,
+          f: "alien",
+          e: [
+            "NF",
+            "IS"
+          ]
+        }
+      ],
+      settlement: [
+        {
+          p: "Fort {town}",
+          w: 4,
+          f: "set",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{@oasis} Fort",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@route} Fort",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "Caravanserai of {town}",
+          w: 2,
+          f: "set",
+          of: true,
+          e: [
+            "MD",
+            "EM",
+            "ST"
+          ],
+          c: [
+            "arabic-persian",
+            "steppe",
+            "indian",
+            "greek-byzantine",
+            "general"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{@route} Halt",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@oasis} Market",
+          w: 2,
+          f: "set",
+          sz: "vt"
+        },
+        {
+          p: "{@canyon} Town",
+          w: 2,
+          f: "set",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{wildMetal} Town",
+          w: 3,
+          f: "work",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "vt"
+        },
+        {
+          p: "{wildMetal} Camp",
+          w: 2,
+          f: "work",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Diggings",
+          w: 2,
+          f: "work",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{town} Station",
+          w: 2,
+          f: "set",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{person:poss} Station",
+          w: 2,
+          f: "per",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} of the Sands",
+          w: 2,
+          f: "set",
+          sz: "tc"
+        },
+        {
+          p: "The {wildColour} City",
+          w: 2,
+          f: "set",
+          sz: "tc"
+        },
+        {
+          p: "{@lake} Salt Works",
+          w: 1,
+          f: "work",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{holy:poss} Monastery",
+          w: 2,
+          f: "sai",
+          sz: "hv"
+        },
+        {
+          p: "City of {wildMetal}",
+          w: 2,
+          f: "myth",
+          of: true,
+          h: true,
+          sz: "c"
+        },
+        {
+          p: "{town} Base",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{@plain} Station",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{@desert} Outpost",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        }
+      ]
+    },
+    moorNames: {
+      moor: [
+        {
+          p: "{town} Moor",
+          w: 10,
+          f: "twn",
+          rt: "moor"
+        },
+        {
+          p: "The {mrQuality} Moor",
+          w: 6,
+          f: "qual",
+          rt: "moor"
+        },
+        {
+          p: "{wildColour} Moor",
+          w: 6,
+          f: "col",
+          rt: "moor"
+        },
+        {
+          p: "{beast} Moor",
+          w: 4,
+          f: "crt",
+          rt: "moor"
+        },
+        {
+          p: "{wildFuse}moor",
+          w: 5,
+          f: "qual",
+          rt: "moor",
+          st: "hv"
+        },
+        {
+          p: "{town} Fell",
+          w: 5,
+          f: "twn",
+          rt: "fell"
+        },
+        {
+          p: "{wildColour} Fell",
+          w: 3,
+          f: "col",
+          rt: "fell"
+        },
+        {
+          p: "The {mrQuality} Fells",
+          w: 3,
+          f: "qual",
+          rt: "fell"
+        },
+        {
+          p: "Muir of {town}",
+          w: 4,
+          f: "twn",
+          of: true,
+          rt: "muir"
+        },
+        {
+          p: "{town} Heath",
+          w: 5,
+          f: "twn",
+          rt: "heath"
+        },
+        {
+          p: "{wildColour} Heath",
+          w: 3,
+          f: "col",
+          rt: "heath"
+        },
+        {
+          p: "{beast} Heath",
+          w: 2,
+          f: "crt",
+          rt: "heath"
+        },
+        {
+          p: "{mrFlora} Heath",
+          w: 2,
+          f: "flora",
+          rt: "heath"
+        },
+        {
+          p: "{town} Common",
+          w: 4,
+          f: "twn",
+          rt: "common"
+        },
+        {
+          p: "{wildColour} Common",
+          w: 2,
+          f: "col",
+          rt: "common"
+        },
+        {
+          p: "Forest of {town}",
+          w: 2,
+          f: "twn",
+          of: true,
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "Moor of the {beast:pl}",
+          w: 1,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{explorerMood} Moor",
+          w: 1,
+          f: "mood"
+        },
+        {
+          p: "Moor of {moodOf}",
+          w: 2,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "Fells of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "The {mrQuality} Barrens",
+          w: 3,
+          f: "qual",
+          bt: "cold"
+        },
+        {
+          p: "The {mrQuality} Tundra",
+          w: 2,
+          f: "qual",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "cold"
+        },
+        {
+          p: "{mythBeast} Moor",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Moor of {mariaWord}",
+          w: 1,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ]
+        }
+      ],
+      hill: [
+        {
+          p: "{wildColour} Tor",
+          w: 6,
+          f: "col",
+          rt: "tor"
+        },
+        {
+          p: "{beast} Tor",
+          w: 5,
+          f: "crt",
+          rt: "tor"
+        },
+        {
+          p: "{town} Tor",
+          w: 4,
+          f: "twn",
+          rt: "tor"
+        },
+        {
+          p: "{wildShape} Tor",
+          w: 3,
+          f: "shp",
+          rt: "tor"
+        },
+        {
+          p: "{wildColour} Rigg",
+          w: 3,
+          f: "col",
+          rt: "rigg"
+        },
+        {
+          p: "{town} Rigg",
+          w: 3,
+          f: "twn",
+          rt: "rigg"
+        },
+        {
+          p: "{beast} Rigg",
+          w: 2,
+          f: "crt",
+          rt: "rigg"
+        },
+        {
+          p: "{town} Howe",
+          w: 3,
+          f: "twn",
+          rt: "howe"
+        },
+        {
+          p: "{wildColour} Howe",
+          w: 2,
+          f: "col",
+          rt: "howe"
+        },
+        {
+          p: "{wildColour} Hill",
+          w: 5,
+          f: "col"
+        },
+        {
+          p: "{beast} Hill",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{town} Hill",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{mrQuality} Hill",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Law",
+          w: 3,
+          f: "col",
+          rt: "law"
+        },
+        {
+          p: "{town} Law",
+          w: 2,
+          f: "twn",
+          rt: "law"
+        },
+        {
+          p: "{wildColour} Knott",
+          w: 2,
+          f: "col",
+          rt: "knott"
+        },
+        {
+          p: "{wildColour} Pike",
+          w: 2,
+          f: "col",
+          rt: "pike"
+        },
+        {
+          p: "{wildColour} Cleave",
+          w: 2,
+          f: "col",
+          rt: "cleave"
+        },
+        {
+          p: "{town} Cleave",
+          w: 2,
+          f: "twn",
+          rt: "cleave"
+        },
+        {
+          p: "{folkUncanny} Hill",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{holy:poss} Hill",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{god:poss} Hill",
+          w: 1,
+          f: "god"
+        },
+        {
+          p: "{explorerMood} Hill",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "Heights of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      bog: [
+        {
+          p: "{town} Moss",
+          w: 6,
+          f: "twn",
+          rt: "moss"
+        },
+        {
+          p: "{wildColour} Moss",
+          w: 4,
+          f: "col",
+          rt: "moss"
+        },
+        {
+          p: "{beast} Moss",
+          w: 3,
+          f: "crt",
+          rt: "moss"
+        },
+        {
+          p: "{town} Mire",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Mire",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{mrQuality} Mire",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Flow",
+          w: 3,
+          f: "twn",
+          rt: "flow"
+        },
+        {
+          p: "The {wildColour} Flow",
+          w: 2,
+          f: "col",
+          rt: "flow"
+        },
+        {
+          p: "{town} Bog",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Bog",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{folkUncanny} Bog",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{folkUncanny} Mire",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{wildColour} Hags",
+          w: 2,
+          f: "col",
+          bt: "peat"
+        },
+        {
+          p: "Mire of the {beast:pl}",
+          w: 1,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{explorerMood} Mire",
+          w: 1,
+          f: "mood"
+        },
+        {
+          p: "Mire of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      clough: [
+        {
+          p: "{town} Clough",
+          w: 5,
+          f: "twn",
+          rt: "clough"
+        },
+        {
+          p: "{wildColour} Clough",
+          w: 4,
+          f: "col",
+          rt: "clough"
+        },
+        {
+          p: "{beast} Clough",
+          w: 3,
+          f: "crt",
+          rt: "clough"
+        },
+        {
+          p: "{town} Combe",
+          w: 4,
+          f: "twn",
+          rt: "combe",
+          st: "hv"
+        },
+        {
+          p: "{wildFuse}combe",
+          w: 3,
+          f: "qual",
+          rt: "combe",
+          st: "hv"
+        },
+        {
+          p: "{wildColour} Gill",
+          w: 3,
+          f: "col",
+          rt: "ghyll"
+        },
+        {
+          p: "{town} Hope",
+          w: 2,
+          f: "twn",
+          rt: "hope",
+          st: "hv"
+        },
+        {
+          p: "{wildFuse}dale",
+          w: 3,
+          f: "qual",
+          rt: "dale",
+          st: "hv"
+        },
+        {
+          p: "{mrQuality} Hollow",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Bottom",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "Glen {town}",
+          w: 2,
+          f: "twn",
+          rt: "glen",
+          st: "hv"
+        }
+      ],
+      stream: [
+        {
+          p: "{wildColour} Beck",
+          w: 5,
+          f: "col",
+          rt: "beck"
+        },
+        {
+          p: "{beast} Beck",
+          w: 3,
+          f: "crt",
+          rt: "beck"
+        },
+        {
+          p: "{town} Beck",
+          w: 3,
+          f: "twn",
+          rt: "beck"
+        },
+        {
+          p: "{wildFuse}beck",
+          w: 3,
+          f: "qual",
+          rt: "beck",
+          st: "hv"
+        },
+        {
+          p: "{wildColour} Burn",
+          w: 4,
+          f: "col",
+          rt: "burn"
+        },
+        {
+          p: "{town} Burn",
+          w: 3,
+          f: "twn",
+          rt: "burn"
+        },
+        {
+          p: "{beast} Burn",
+          w: 2,
+          f: "crt",
+          rt: "burn"
+        },
+        {
+          p: "{wildColour} Gill",
+          w: 3,
+          f: "col",
+          rt: "ghyll"
+        },
+        {
+          p: "{town} Gill",
+          w: 2,
+          f: "twn",
+          rt: "ghyll"
+        },
+        {
+          p: "{wildColour} Water",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{town} Water",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Brook",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{beast} Brook",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Spring",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{holy:poss} Well",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{river}",
+          w: 6,
+          f: "riv"
+        }
+      ],
+      pool: [
+        {
+          p: "{wildColour} Tarn",
+          w: 5,
+          f: "col",
+          rt: "tarn"
+        },
+        {
+          p: "{beast} Tarn",
+          w: 3,
+          f: "crt",
+          rt: "tarn"
+        },
+        {
+          p: "{wildQuality} Tarn",
+          w: 2,
+          f: "qual",
+          rt: "tarn"
+        },
+        {
+          p: "{wildColour} Pool",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{beast} Pool",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{town} Pool",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{folkUncanny} Pool",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{wildColour} Lochan",
+          w: 3,
+          f: "col",
+          rt: "lochan"
+        },
+        {
+          p: "{wildColour} Mere",
+          w: 2,
+          f: "col",
+          rt: "mere"
+        },
+        {
+          p: "{lakeFuse}mere",
+          w: 2,
+          f: "qual",
+          rt: "mere"
+        },
+        {
+          p: "{wildColour} Pond",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{fstPond} Pond",
+          w: 2,
+          f: "work"
+        }
+      ],
+      stone: [
+        {
+          p: "The {wildColour} Stone",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{beast} Stone",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "The {treeFunc} Stone",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "The {number} Stones",
+          w: 4,
+          f: "fixed"
+        },
+        {
+          p: "The {number} {stackGroup}",
+          w: 4,
+          f: "shp"
+        },
+        {
+          p: "The {stackGroup}",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{town} Cairn",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Cairn",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{person:poss} Cairn",
+          w: 2,
+          f: "per"
+        },
+        {
+          p: "{holy:poss} Cross",
+          w: 3,
+          f: "sai"
+        },
+        {
+          p: "{town} Cross",
+          w: 3,
+          f: "twn",
+          c: [
+            "christian"
+          ]
+        },
+        {
+          p: "{wildColour} Cross",
+          w: 2,
+          f: "col",
+          c: [
+            "christian"
+          ]
+        },
+        {
+          p: "{folkUncanny} Chair",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{folkUncanny} Stone",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{town} Barrow",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Barrow",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{folkUncanny} Grave",
+          w: 1,
+          f: "unc",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "{god:poss} Stone",
+          w: 1,
+          f: "god"
+        },
+        {
+          p: "{mythBeast} Stone",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      track: [
+        {
+          p: "{mrWork} Track",
+          w: 4,
+          f: "work"
+        },
+        {
+          p: "{mrWork} Road",
+          w: 3,
+          f: "work"
+        },
+        {
+          p: "{mrWork} Way",
+          w: 2,
+          f: "work"
+        },
+        {
+          p: "{town} Road",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Track",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Road",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "Packhorse Road",
+          w: 2,
+          f: "fixed",
+          e: [
+            "MD",
+            "EM",
+            "ST"
+          ]
+        },
+        {
+          p: "{beast} Path",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Path",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{holy:poss} Way",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{fstOwner} Way",
+          w: 2,
+          f: "fixed"
+        }
+      ],
+      settlement: [
+        {
+          p: "{@moor} Farm",
+          w: 4,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@moor} Gate",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@moor} Side",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@moor} Edge",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@moor} Head",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@hill} Farm",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{town} Shieling",
+          w: 3,
+          f: "set",
+          rt: "shieling",
+          sz: "h"
+        },
+        {
+          p: "{mrWork} Cottages",
+          w: 2,
+          f: "set",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{wildMetal} Mines",
+          w: 2,
+          f: "work",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "Warren House",
+          w: 1,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@track} Inn",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "Lower {town}",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "Higher {town}",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@moor} Station",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{mythFuse}hold",
+          w: 1,
+          f: "myth",
+          h: true,
+          sz: "hv"
+        }
+      ]
+    },
+    wetlandNames: {
+      marsh: [
+        {
+          p: "{town} Marsh",
+          w: 8,
+          f: "twn",
+          rt: "marsh"
+        },
+        {
+          p: "{wildColour} Marsh",
+          w: 5,
+          f: "col",
+          rt: "marsh"
+        },
+        {
+          p: "The {wetQuality} Marsh",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{beast} Marsh",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{town} Fen",
+          w: 6,
+          f: "twn",
+          rt: "fen"
+        },
+        {
+          p: "{wildColour} Fen",
+          w: 3,
+          f: "col",
+          rt: "fen"
+        },
+        {
+          p: "{wildFuse}fen",
+          w: 4,
+          f: "qual",
+          rt: "fen",
+          st: "hv"
+        },
+        {
+          p: "{beast} Fen",
+          w: 3,
+          f: "crt",
+          rt: "fen"
+        },
+        {
+          p: "The {wetQuality} Fens",
+          w: 3,
+          f: "qual",
+          rt: "fen"
+        },
+        {
+          p: "The {directionAdj} Fens",
+          w: 2,
+          f: "dir",
+          rt: "fen"
+        },
+        {
+          p: "{town} Levels",
+          w: 3,
+          f: "twn",
+          rt: "levels"
+        },
+        {
+          p: "{town} Moor",
+          w: 2,
+          f: "twn",
+          rt: "levels"
+        },
+        {
+          p: "{town} Ings",
+          w: 3,
+          f: "twn",
+          rt: "ings"
+        },
+        {
+          p: "{wildColour} Marshes",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "Marsh of the {beast:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "Marshes of {moodOf}",
+          w: 1,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "{folkUncanny} Marsh",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "The {wetQuality} Marshes",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{kingdom} Marshes",
+          w: 1,
+          f: "ppl"
+        },
+        {
+          p: "Marshes of the {folk}",
+          w: 2,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "{mythBeast} Marsh",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Marsh of {mariaWord}",
+          w: 4,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      bog: [
+        {
+          p: "{town} Bog",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Bog",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{wetQuality} Bog",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Moss",
+          w: 4,
+          f: "twn",
+          rt: "moss"
+        },
+        {
+          p: "{wildColour} Moss",
+          w: 3,
+          f: "col",
+          rt: "moss"
+        },
+        {
+          p: "{town} Mire",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Mire",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{wetQuality} Mire",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Flow",
+          w: 2,
+          f: "twn",
+          rt: "flow"
+        },
+        {
+          p: "{folkUncanny} Bog",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{folkUncanny} Mire",
+          w: 1,
+          f: "unc"
+        },
+        {
+          p: "{beast} Bog",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{wetFlora} Bog",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{town} Slough",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "Slough of {moodOf}",
+          w: 1,
+          f: "mood",
+          of: true
+        }
+      ],
+      swamp: [
+        {
+          p: "{town} Swamp",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Swamp",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{wetQuality} Swamp",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{beast} Swamp",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{wetFlora} Swamp",
+          w: 4,
+          f: "flora"
+        },
+        {
+          p: "{town} Bayou",
+          w: 3,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "hot"
+        },
+        {
+          p: "{town} Backwater",
+          w: 3,
+          f: "twn",
+          bt: "hot"
+        },
+        {
+          p: "The {wetQuality} Backwaters",
+          w: 2,
+          f: "qual",
+          bt: "hot"
+        },
+        {
+          p: "The {wildColour} Mangroves",
+          w: 3,
+          f: "col",
+          bt: "mangrove"
+        },
+        {
+          p: "{town} Mangroves",
+          w: 2,
+          f: "twn",
+          bt: "mangrove"
+        },
+        {
+          p: "{folkUncanny} Swamp",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "Swamp of {wetNoun}",
+          w: 2,
+          f: "qual",
+          of: true
+        },
+        {
+          p: "{explorerMood} Swamp",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "{person:poss} Swamp",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{mythBeast} Swamp",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Swamp of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      reed: [
+        {
+          p: "{town} Reeds",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "The {wetQuality} Reeds",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{beast} Reeds",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{town} Reedbed",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wetFlora} Carr",
+          w: 4,
+          f: "flora",
+          rt: "carr"
+        },
+        {
+          p: "{town} Carr",
+          w: 4,
+          f: "twn",
+          rt: "carr"
+        },
+        {
+          p: "{wetFlora} Beds",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{wetFlora} Holt",
+          w: 2,
+          f: "flora",
+          rt: "holt"
+        },
+        {
+          p: "{wildColour} Rushes",
+          w: 2,
+          f: "col"
+        }
+      ],
+      water: [
+        {
+          p: "{town} Mere",
+          w: 4,
+          f: "twn",
+          rt: "mere"
+        },
+        {
+          p: "{lakeFuse}mere",
+          w: 4,
+          f: "qual",
+          rt: "mere"
+        },
+        {
+          p: "{wildColour} Mere",
+          w: 3,
+          f: "col",
+          rt: "mere"
+        },
+        {
+          p: "Mere of the {lakeCreature:pl}",
+          w: 2,
+          f: "crt",
+          of: true,
+          rt: "mere"
+        },
+        {
+          p: "{town} Broad",
+          w: 4,
+          f: "twn",
+          rt: "broad"
+        },
+        {
+          p: "{lakeQuality} Broad",
+          w: 2,
+          f: "qual",
+          rt: "broad"
+        },
+        {
+          p: "{wildColour} Pool",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{beast} Pool",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{folkUncanny} Pool",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{lakeCreature} Lake",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{lakeQuality} Lake",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "Lake {town}",
+          w: 2,
+          f: "twn",
+          rt: "lakeLake"
+        },
+        {
+          p: "{wetFlora} Pond",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{fstPond} Pond",
+          w: 2,
+          f: "work"
+        },
+        {
+          p: "{town} Lagoon",
+          w: 2,
+          f: "twn",
+          bt: "hot"
+        },
+        {
+          p: "{town} Oxbow",
+          w: 1,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "Mere of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      channel: [
+        {
+          p: "{town} Lode",
+          w: 4,
+          f: "twn",
+          rt: "lode"
+        },
+        {
+          p: "{wildColour} Lode",
+          w: 2,
+          f: "col",
+          rt: "lode"
+        },
+        {
+          p: "{town} Drain",
+          w: 4,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          rt: "drain"
+        },
+        {
+          p: "{direction} Drain",
+          w: 2,
+          f: "dir",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          rt: "drain"
+        },
+        {
+          p: "{person:poss} Drain",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          rt: "drain"
+        },
+        {
+          p: "{drainFeet} Foot Drain",
+          w: 2,
+          f: "fixed",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          rt: "drain"
+        },
+        {
+          p: "{town} Cut",
+          w: 2,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Dyke",
+          w: 3,
+          f: "twn",
+          rt: "drain"
+        },
+        {
+          p: "{wildColour} Dyke",
+          w: 2,
+          f: "col",
+          rt: "drain"
+        },
+        {
+          p: "{town} Rhyne",
+          w: 3,
+          f: "twn",
+          rt: "rhyne"
+        },
+        {
+          p: "{town} Creek",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{beast} Creek",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Creek",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{town} Channel",
+          w: 2,
+          f: "twn"
+        }
+      ],
+      isle: [
+        {
+          p: "{town} Holme",
+          w: 4,
+          f: "twn",
+          rt: "holme"
+        },
+        {
+          p: "{wildFuse}holme",
+          w: 3,
+          f: "qual",
+          rt: "holme",
+          st: "hv"
+        },
+        {
+          p: "{town} Eyot",
+          w: 3,
+          f: "twn",
+          rt: "eyot"
+        },
+        {
+          p: "{beast} Eyot",
+          w: 2,
+          f: "crt",
+          rt: "eyot"
+        },
+        {
+          p: "Isle of {town}",
+          w: 4,
+          f: "twn",
+          of: true
+        },
+        {
+          p: "{beast} Island",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Island",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{wetFlora} Island",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{holy:poss} Isle",
+          w: 3,
+          f: "sai"
+        },
+        {
+          p: "{wetQuality} Island",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Island",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "Isle of the {beast:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{folkUncanny} Island",
+          w: 1,
+          f: "unc"
+        }
+      ],
+      causeway: [
+        {
+          p: "{town} Causeway",
+          w: 5,
+          f: "twn",
+          rt: "causeway"
+        },
+        {
+          p: "{wildColour} Causeway",
+          w: 2,
+          f: "col",
+          rt: "causeway"
+        },
+        {
+          p: "{holy:poss} Causeway",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{fstOwner} Causeway",
+          w: 2,
+          f: "fixed"
+        },
+        {
+          p: "{town} Ford",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{beast} Ford",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{fordBeast} Ford",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{town} Ferry",
+          w: 3,
+          f: "twn",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Bridge",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Bridge",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Staithe",
+          w: 2,
+          f: "twn",
+          rt: "broad",
+          st: "hv"
+        },
+        {
+          p: "The Drowned Way",
+          w: 1,
+          f: "fixed",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "{town} Trackway",
+          w: 2,
+          f: "twn",
+          e: [
+            "AN",
+            "MD"
+          ]
+        },
+        {
+          p: "{folkUncanny} Bridge",
+          w: 2,
+          f: "unc"
+        }
+      ],
+      delta: [
+        {
+          p: "{town} Delta",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "The {wildColour} Delta",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{river} Delta",
+          w: 4,
+          f: "riv"
+        },
+        {
+          p: "Mouths of the {river}",
+          w: 2,
+          f: "riv",
+          of: true
+        },
+        {
+          p: "{town} Saltings",
+          w: 3,
+          f: "twn",
+          rt: "saltings"
+        },
+        {
+          p: "{town} Salt Marsh",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Saltmarsh",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Flats",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "The {wildColour} Flats",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{beast} Marshes",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "The {wetQuality} Delta",
+          w: 2,
+          f: "qual"
+        }
+      ],
+      settlement: [
+        {
+          p: "{@causeway} End",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@causeway} Head",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@marsh} Side",
+          w: 3,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@marsh} End",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@marsh} Gate",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{wetWork} Huts",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{wetWork} Row",
+          w: 2,
+          f: "set",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Decoy",
+          w: 2,
+          f: "work",
+          e: [
+            "EM",
+            "ST"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{holy:poss} Abbey",
+          w: 2,
+          f: "sai",
+          e: [
+            "MD",
+            "EM"
+          ],
+          c: [
+            "christian"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{town} Lake Village",
+          w: 2,
+          f: "set",
+          e: [
+            "AN"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{town} Water Village",
+          w: 2,
+          f: "set",
+          bt: "hot",
+          sz: "hv"
+        },
+        {
+          p: "{town} Pumping Station",
+          w: 1,
+          f: "work",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{@channel} Sluice",
+          w: 1,
+          f: "set",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Hydro Station",
+          w: 1,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{@marsh} Station",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        }
+      ]
+    },
+    grasslandNames: {
+      plain: [
+        {
+          p: "The {grsQuality} Plain",
+          w: 6,
+          f: "qual"
+        },
+        {
+          p: "The {grsQuality} Plains",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{town} Plain",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "The {wildColour} Plain",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "The {grsQuality} Steppe",
+          w: 4,
+          f: "qual",
+          bt: "steppe"
+        },
+        {
+          p: "The {grsQuality} Prairie",
+          w: 3,
+          f: "qual",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "grass"
+        },
+        {
+          p: "The {grsQuality} Savannah",
+          w: 3,
+          f: "qual",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          bt: "hot"
+        },
+        {
+          p: "The {grsQuality} Grasslands",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "Sea of {grsFlora}",
+          w: 2,
+          f: "shp",
+          of: true
+        },
+        {
+          p: "Plains of the {folk}",
+          w: 3,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "The {kingdom} Steppe",
+          w: 1,
+          f: "ppl",
+          bt: "steppe"
+        },
+        {
+          p: "Plains of the {beast:pl}",
+          w: 3,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{person} Plains",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{explorerMood} Plains",
+          w: 2,
+          f: "mood"
+        },
+        {
+          p: "The {directionAdj} Plains",
+          w: 3,
+          f: "dir"
+        },
+        {
+          p: "{god:poss} Pasture",
+          w: 1,
+          f: "god",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{mythBeast} Plains",
+          w: 1,
+          f: "myth",
+          h: true
+        },
+        {
+          p: "Plain of {mariaWord}",
+          w: 2,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ]
+        }
+      ],
+      down: [
+        {
+          p: "{town} Down",
+          w: 6,
+          f: "twn",
+          rt: "down"
+        },
+        {
+          p: "{town} Downs",
+          w: 4,
+          f: "twn",
+          rt: "down"
+        },
+        {
+          p: "{wildColour} Down",
+          w: 3,
+          f: "col",
+          rt: "down"
+        },
+        {
+          p: "The {grsQuality} Downs",
+          w: 3,
+          f: "qual",
+          rt: "down"
+        },
+        {
+          p: "{beast} Down",
+          w: 2,
+          f: "crt",
+          rt: "down"
+        },
+        {
+          p: "{town} Wold",
+          w: 5,
+          f: "twn",
+          rt: "wold"
+        },
+        {
+          p: "The {directionAdj} Wolds",
+          w: 3,
+          f: "dir",
+          rt: "wold"
+        },
+        {
+          p: "{wildColour} Wold",
+          w: 2,
+          f: "col",
+          rt: "wold"
+        },
+        {
+          p: "{wildFuse}wold",
+          w: 2,
+          f: "qual",
+          rt: "wold",
+          st: "hv"
+        },
+        {
+          p: "{wildColour} Hill",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{beast} Hill",
+          w: 2,
+          f: "crt",
+          rt: "down"
+        },
+        {
+          p: "{town} Ridge",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "The {grsQuality} Hills",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Hills",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{folkUncanny} Dyke",
+          w: 2,
+          f: "unc",
+          rt: "down"
+        },
+        {
+          p: "{holy:poss} Down",
+          w: 1,
+          f: "sai",
+          rt: "down"
+        }
+      ],
+      meadow: [
+        {
+          p: "{town} Meadow",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{grsFlora} Meadow",
+          w: 5,
+          f: "flora"
+        },
+        {
+          p: "{grsQuality} Meadow",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{beast} Lea",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{grsFlora} Lea",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{town} Lea",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildFuse}ley",
+          w: 4,
+          f: "qual",
+          st: "hvt"
+        },
+        {
+          p: "{town} Mead",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{grsFlora} Mead",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{wildFuse}mead",
+          w: 2,
+          f: "qual",
+          st: "hv"
+        },
+        {
+          p: "{town} Pasture",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{stock} Pasture",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{town} Ings",
+          w: 2,
+          f: "twn",
+          rt: "ings"
+        },
+        {
+          p: "{town} Haugh",
+          w: 3,
+          f: "twn",
+          rt: "haugh"
+        },
+        {
+          p: "{fstOwner} Meadow",
+          w: 2,
+          f: "fixed"
+        },
+        {
+          p: "{holy:poss} Meadow",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{town} Summer Pasture",
+          w: 2,
+          f: "twn",
+          bt: "alpine"
+        }
+      ],
+      heath: [
+        {
+          p: "{town} Heath",
+          w: 6,
+          f: "twn",
+          rt: "heath"
+        },
+        {
+          p: "{wildColour} Heath",
+          w: 3,
+          f: "col",
+          rt: "heath"
+        },
+        {
+          p: "{grsFlora} Heath",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{beast} Heath",
+          w: 2,
+          f: "crt",
+          rt: "heath"
+        },
+        {
+          p: "The {grsQuality} Heath",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Common",
+          w: 5,
+          f: "twn",
+          rt: "common"
+        },
+        {
+          p: "{grsFlora} Common",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{wildColour} Common",
+          w: 2,
+          f: "col",
+          rt: "common"
+        },
+        {
+          p: "{folkUncanny} Heath",
+          w: 1,
+          f: "unc"
+        },
+        {
+          p: "{town} Waste",
+          w: 2,
+          f: "twn",
+          e: [
+            "MD",
+            "EM"
+          ]
+        },
+        {
+          p: "{explorerMood} Heath",
+          w: 1,
+          f: "mood"
+        },
+        {
+          p: "{mythBeast} Heath",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      vale: [
+        {
+          p: "Vale of {town}",
+          w: 6,
+          f: "twn",
+          of: true
+        },
+        {
+          p: "Vale of the {wildColour} {beast}",
+          w: 3,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{town} Vale",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{grsQuality} Vale",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Vale",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "Strath {town}",
+          w: 4,
+          f: "twn",
+          rt: "strath"
+        },
+        {
+          p: "{wildColour} Strath",
+          w: 2,
+          f: "col",
+          rt: "strath"
+        },
+        {
+          p: "Carse of {town}",
+          w: 3,
+          f: "twn",
+          of: true,
+          rt: "carse"
+        },
+        {
+          p: "{town} Valley",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{grsQuality} Valley",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Bottom",
+          w: 2,
+          f: "twn",
+          rt: "down"
+        },
+        {
+          p: "{beast} Bottom",
+          w: 2,
+          f: "crt",
+          rt: "down"
+        },
+        {
+          p: "Vale of {moodOf}",
+          w: 1,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "The {grsFlora} Valley",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "Vale of {mariaWord}",
+          w: 3,
+          f: "alien",
+          of: true,
+          e: [
+            "NF",
+            "IS"
+          ],
+          t: [
+            "strange"
+          ]
+        }
+      ],
+      stream: [
+        {
+          p: "{town} Brook",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{beast} Brook",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{grsFlora} Brook",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{wildColour} Brook",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Bourne",
+          w: 3,
+          f: "twn",
+          rt: "bourne"
+        },
+        {
+          p: "{wildFuse}bourne",
+          w: 3,
+          f: "qual",
+          rt: "bourne",
+          st: "hv"
+        },
+        {
+          p: "{beast} Waterhole",
+          w: 3,
+          f: "crt",
+          bt: "hot"
+        },
+        {
+          p: "{town} Waterhole",
+          w: 2,
+          f: "twn",
+          bt: "hot"
+        },
+        {
+          p: "{beast} Creek",
+          w: 3,
+          f: "crt",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Creek",
+          w: 3,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{beast} Spring",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{town} Well",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{river}",
+          w: 8,
+          f: "riv"
+        },
+        {
+          p: "{wildColour} Water",
+          w: 2,
+          f: "col"
+        }
+      ],
+      lake: [
+        {
+          p: "{beast} Pond",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{town} Pond",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{fstPond} Pond",
+          w: 3,
+          f: "work"
+        },
+        {
+          p: "{lakeQuality} Lake",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{lakeCreature} Lake",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "Lake {town}",
+          w: 2,
+          f: "twn",
+          rt: "lakeLake"
+        },
+        {
+          p: "{wildColour} Lake",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Mere",
+          w: 2,
+          f: "twn",
+          rt: "mere"
+        },
+        {
+          p: "{lakeFuse}mere",
+          w: 2,
+          f: "qual",
+          rt: "mere"
+        },
+        {
+          p: "{town} Slough",
+          w: 1,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{town} Salt Lake",
+          w: 1,
+          f: "twn",
+          bt: "salt"
+        }
+      ],
+      track: [
+        {
+          p: "{town} Drove",
+          w: 4,
+          f: "twn",
+          rt: "drove"
+        },
+        {
+          p: "{stock} Drove",
+          w: 3,
+          f: "crt",
+          rt: "drove"
+        },
+        {
+          p: "{wildColour} Drove",
+          w: 2,
+          f: "col",
+          rt: "drove"
+        },
+        {
+          p: "{town} Trail",
+          w: 3,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 2
+        },
+        {
+          p: "{stock} Trail",
+          w: 3,
+          f: "crt",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{person:poss} Trail",
+          w: 2,
+          f: "per",
+          e: [
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{grsWork} Way",
+          w: 3,
+          f: "work"
+        },
+        {
+          p: "{grsWork} Road",
+          w: 2,
+          f: "work"
+        },
+        {
+          p: "{wildColour} Way",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Way",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{town} Ridgeway",
+          w: 2,
+          f: "twn",
+          rt: "down"
+        },
+        {
+          p: "{town} Road",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{explorerMood} Trail",
+          w: 1,
+          f: "mood"
+        },
+        {
+          p: "Road of the {folk}",
+          w: 1,
+          f: "ppl",
+          of: true
+        }
+      ],
+      landmark: [
+        {
+          p: "{town} Barrow",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Barrow",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "The {number} Barrows",
+          w: 2,
+          f: "fixed"
+        },
+        {
+          p: "{town} Mound",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{folkUncanny} Mound",
+          w: 2,
+          f: "unc"
+        },
+        {
+          p: "{folkUncanny} Grave",
+          w: 1,
+          f: "unc",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "{beast} Stone",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "The {wildColour} Stone",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "The {treeFunc} Stone",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "The Lone {tree}",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "The {treeFunc} {tree}",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "The {wildColour} {stock}",
+          w: 2,
+          f: "shp",
+          rt: "down"
+        },
+        {
+          p: "The {wildColour} Mound",
+          w: 1,
+          f: "col",
+          bt: "steppe"
+        },
+        {
+          p: "{town} Cross",
+          w: 1,
+          f: "twn",
+          c: [
+            "christian"
+          ]
+        },
+        {
+          p: "{god:poss} Mound",
+          w: 1,
+          f: "god"
+        },
+        {
+          p: "{mythBeast:poss} Barrow",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      settlement: [
+        {
+          p: "{@meadow} Farm",
+          w: 3,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@plain} Farm",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@track} Inn",
+          w: 2,
+          f: "set",
+          sz: "h"
+        },
+        {
+          p: "{@track} End",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{@heath} End",
+          w: 2,
+          f: "set",
+          sz: "hv"
+        },
+        {
+          p: "{town} Station",
+          w: 3,
+          f: "set",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{person:poss} Station",
+          w: 2,
+          f: "per",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Ranch",
+          w: 2,
+          f: "set",
+          e: [
+            "ST",
+            "MO"
+          ],
+          nx: 2,
+          sz: "h"
+        },
+        {
+          p: "{person:poss} Ranch",
+          w: 2,
+          f: "per",
+          e: [
+            "ST",
+            "MO"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Camp",
+          w: 2,
+          f: "set",
+          bt: "steppe",
+          sz: "h"
+        },
+        {
+          p: "{folk} Camp",
+          w: 2,
+          f: "ppl",
+          bt: "steppe",
+          sz: "hv"
+        },
+        {
+          p: "{town} Trading Post",
+          w: 2,
+          f: "set",
+          e: [
+            "EM",
+            "ST"
+          ],
+          nx: 2,
+          sz: "h"
+        },
+        {
+          p: "Fort {town}",
+          w: 2,
+          f: "set",
+          e: [
+            "EM",
+            "ST"
+          ],
+          nx: 2,
+          sz: "hv"
+        },
+        {
+          p: "{town} Stockade",
+          w: 1,
+          f: "set",
+          e: [
+            "EM",
+            "ST"
+          ],
+          sz: "h"
+        },
+        {
+          p: "Upper {town}",
+          w: 2,
+          f: "set",
+          c: [
+            "british"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "Nether {town}",
+          w: 2,
+          f: "set",
+          c: [
+            "british"
+          ],
+          sz: "hv"
+        },
+        {
+          p: "{@plain} Station",
+          w: 2,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Agridome",
+          w: 1,
+          f: "set",
+          e: [
+            "NF",
+            "IS"
+          ],
+          sz: "h"
+        },
+        {
+          p: "{town} Riders' Hall",
+          w: 1,
+          f: "myth",
+          h: true,
+          sz: "v"
+        }
+      ]
+    }
+  },
+  cultureShapes: [
+    {
+      p: "Giants' Home",
+      w: 3,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "norse",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "Troll Wall",
+      w: 3,
+      f: "fixed",
+      t: [
+        "strange"
+      ],
+      culture: "norse",
+      module: "mountainNames",
+      kind: "ridge"
+    },
+    {
+      p: "Troll Peak",
+      w: 2,
+      f: "fixed",
+      t: [
+        "strange"
+      ],
+      culture: "norse",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Smoking Mountain",
+      w: 3,
+      f: "fixed",
+      bt: "volcanic",
+      culture: "aztec",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "White Woman",
+      w: 3,
+      f: "fixed",
+      culture: "aztec",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Snake Mountain",
+      w: 2,
+      f: "fixed",
+      culture: "aztec",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Old Mountain",
+      w: 3,
+      f: "fixed",
+      culture: "andean",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Young Mountain",
+      w: 2,
+      f: "fixed",
+      culture: "andean",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Holy Mountain",
+      w: 2,
+      f: "fixed",
+      e: [
+        "MD",
+        "EM",
+        "ST",
+        "MO"
+      ],
+      culture: "greek-byzantine",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Mountain of the Muses",
+      w: 2,
+      f: "fixed",
+      e: [
+        "AN"
+      ],
+      t: [
+        "grand"
+      ],
+      culture: "greek-byzantine",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Abode of Snow",
+      w: 3,
+      f: "fixed",
+      bt: "alpine",
+      t: [
+        "grand"
+      ],
+      culture: "indian",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "Abode of Clouds",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "indian",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "{wildColour} Head Mountain",
+      w: 3,
+      f: "fixed",
+      culture: "korean",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Mountain of the {wildColour} Dragon",
+      w: 3,
+      f: "fixed",
+      culture: "chinese",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Heavenly Mountains",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "chinese",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "Peak of the {number} Immortals",
+      w: 2,
+      f: "fixed",
+      t: [
+        "strange"
+      ],
+      culture: "chinese",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Heavenly Mountains",
+      w: 3,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "steppe",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "Stone Belt",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "slavic",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "Mountains of the Moon",
+      w: 2,
+      f: "fixed",
+      e: [
+        "AN",
+        "MD"
+      ],
+      t: [
+        "strange"
+      ],
+      culture: "arabic-persian",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "Mountains of the Moon",
+      w: 2,
+      f: "fixed",
+      e: [
+        "AN",
+        "MD"
+      ],
+      t: [
+        "strange"
+      ],
+      culture: "egyptian",
+      module: "mountainNames",
+      kind: "range"
+    },
+    {
+      p: "Shining Mountain",
+      w: 3,
+      f: "fixed",
+      culture: "bantu",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "House of {god}",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "bantu",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Sacred Hill",
+      w: 2,
+      f: "fixed",
+      culture: "west-african",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Water Mountain",
+      w: 3,
+      f: "fixed",
+      culture: "maya",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Pure Mountain",
+      w: 2,
+      f: "fixed",
+      culture: "egyptian",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Horizon of {god}",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "egyptian",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "White Mountain",
+      w: 3,
+      f: "fixed",
+      culture: "polynesian",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Long Mountain",
+      w: 3,
+      f: "fixed",
+      culture: "polynesian",
+      module: "mountainNames",
+      kind: "peak"
+    },
+    {
+      p: "Primeval Forest",
+      w: 2,
+      f: "fixed",
+      culture: "slavic",
+      module: "forestNames",
+      kind: "forest"
+    },
+    {
+      p: "Sacred Forest of {town}",
+      w: 3,
+      f: "fixed",
+      culture: "west-african",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "Forest of the Ancestors",
+      w: 3,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "bantu",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "Spirit Wood",
+      w: 2,
+      f: "fixed",
+      t: [
+        "strange"
+      ],
+      culture: "bantu",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "Spirit Wood",
+      w: 2,
+      f: "fixed",
+      t: [
+        "strange"
+      ],
+      culture: "west-african",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "{town} Bamboo Forest",
+      w: 3,
+      f: "fixed",
+      culture: "chinese",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "{town} Bamboo Forest",
+      w: 3,
+      f: "fixed",
+      culture: "japanese",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "{town} Bamboo Forest",
+      w: 2,
+      f: "fixed",
+      culture: "korean",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "Sacred Grove of {town}",
+      w: 2,
+      f: "fixed",
+      culture: "japanese",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "Iron Wood",
+      w: 2,
+      f: "fixed",
+      t: [
+        "strange"
+      ],
+      culture: "norse",
+      module: "forestNames",
+      kind: "forest"
+    },
+    {
+      p: "Forest of the Sages",
+      w: 2,
+      f: "fixed",
+      e: [
+        "AN"
+      ],
+      t: [
+        "grand"
+      ],
+      culture: "indian",
+      module: "forestNames",
+      kind: "forest"
+    },
+    {
+      p: "Sacred Wood of {town}",
+      w: 2,
+      f: "fixed",
+      culture: "roman",
+      module: "forestNames",
+      kind: "grove"
+    },
+    {
+      p: "Cloud Forest of {town}",
+      w: 2,
+      f: "fixed",
+      culture: "andean",
+      module: "forestNames",
+      kind: "forest"
+    },
+    {
+      p: "Forest of the Birds",
+      w: 2,
+      f: "fixed",
+      culture: "polynesian",
+      module: "forestNames",
+      kind: "forest"
+    },
+    {
+      p: "Red Land",
+      w: 6,
+      f: "fixed",
+      e: [
+        "AN"
+      ],
+      t: [
+        "grand"
+      ],
+      culture: "egyptian",
+      module: "desertNames",
+      kind: "desert"
+    },
+    {
+      p: "Sea of Death",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grim"
+      ],
+      culture: "chinese",
+      module: "desertNames",
+      kind: "desert"
+    },
+    {
+      p: "The Flowing Sands",
+      w: 2,
+      f: "fixed",
+      culture: "chinese",
+      module: "desertNames",
+      kind: "desert"
+    },
+    {
+      p: "Moving Sands",
+      w: 2,
+      f: "fixed",
+      culture: "chinese",
+      module: "desertNames",
+      kind: "dune"
+    },
+    {
+      p: "The Waterless Place",
+      w: 2,
+      f: "fixed",
+      culture: "steppe",
+      module: "desertNames",
+      kind: "desert"
+    },
+    {
+      p: "Shore of the Sands",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "west-african",
+      module: "desertNames",
+      kind: "desert"
+    },
+    {
+      p: "Land of Death",
+      w: 2,
+      f: "fixed",
+      t: [
+        "grim"
+      ],
+      culture: "indian",
+      module: "desertNames",
+      kind: "desert"
+    },
+    {
+      p: "Salt Desert of {town}",
+      w: 2,
+      f: "fixed",
+      culture: "andean",
+      module: "desertNames",
+      kind: "plain"
+    },
+    {
+      p: "Field of Reeds",
+      w: 4,
+      f: "fixed",
+      e: [
+        "AN"
+      ],
+      t: [
+        "grand"
+      ],
+      culture: "egyptian",
+      module: "wetlandNames",
+      kind: "marsh"
+    },
+    {
+      p: "Place of Reeds",
+      w: 3,
+      f: "fixed",
+      culture: "aztec",
+      module: "wetlandNames",
+      kind: "reed"
+    },
+    {
+      p: "{town} Floating Gardens",
+      w: 3,
+      f: "fixed",
+      sz: "hv",
+      culture: "aztec",
+      module: "wetlandNames",
+      kind: "settlement"
+    },
+    {
+      p: "Beautiful Forest",
+      w: 2,
+      f: "fixed",
+      bt: "mangrove",
+      culture: "indian",
+      module: "wetlandNames",
+      kind: "swamp"
+    },
+    {
+      p: "Isle of Eels",
+      w: 2,
+      f: "fixed",
+      culture: "anglo-saxon",
+      module: "wetlandNames",
+      kind: "isle"
+    },
+    {
+      p: "Land of the {number} Rivers",
+      w: 3,
+      f: "fixed",
+      culture: "steppe",
+      module: "grasslandNames",
+      kind: "plain"
+    },
+    {
+      p: "High Plain",
+      w: 4,
+      f: "fixed",
+      culture: "andean",
+      module: "grasslandNames",
+      kind: "plain"
+    },
+    {
+      p: "Wild Field",
+      w: 3,
+      f: "fixed",
+      e: [
+        "EM"
+      ],
+      culture: "slavic",
+      module: "grasslandNames",
+      kind: "plain"
+    },
+    {
+      p: "Thing Field",
+      w: 2,
+      f: "fixed",
+      e: [
+        "MD"
+      ],
+      culture: "norse",
+      module: "grasslandNames",
+      kind: "meadow"
+    },
+    {
+      p: "Plain of High Heaven",
+      w: 1,
+      f: "fixed",
+      t: [
+        "grand"
+      ],
+      culture: "japanese",
+      module: "grasslandNames",
+      kind: "plain"
+    }
+  ],
+  settlementLink: {
+    purposeBuiltShare: 0.6,
+    terrainToModule: [
+      {
+        terrain: "mountains",
+        module: "mountainNames"
+      },
+      {
+        terrain: "forest",
+        module: "forestNames"
+      },
+      {
+        terrain: "wetland",
+        module: "wetlandNames"
+      },
+      {
+        terrain: "plains",
+        module: "grasslandNames",
+        byBiome: {
+          desert: "desertNames",
+          moorland: "moorNames"
+        }
+      },
+      {
+        terrain: "hills",
+        module: "grasslandNames",
+        byBiome: {
+          desert: "desertNames",
+          moorland: "moorNames",
+          boreal: "moorNames",
+          highland: "moorNames"
+        },
+        split: {
+          britain: {
+            moorNames: 50,
+            grasslandNames: 50
+          },
+          temperate: {
+            moorNames: 50,
+            grasslandNames: 50
+          }
+        }
+      }
+    ],
+    nativeLand: {
+      mountainNames: {
+        terrain: "mountains"
+      },
+      forestNames: {
+        terrain: "forest"
+      },
+      wetlandNames: {
+        terrain: "wetland"
+      },
+      grasslandNames: {
+        terrain: "plains"
+      },
+      moorNames: {
+        terrain: "hills",
+        biomeIfUnset: "moorland"
+      },
+      desertNames: {
+        terrain: "plains",
+        biomeIfUnset: "desert"
+      }
+    },
+    worldEraToRoute: {
+      "anglo-saxon": {
+        "old-english": "MD",
+        modern: "MO"
+      },
+      norse: {
+        viking: "MD"
+      },
+      celtic: {
+        pagan: "AN",
+        saints: "MD"
+      },
+      roman: {
+        imperial: "AN",
+        medieval: "MD"
+      },
+      chinese: {
+        imperial: "MD",
+        modern: "MO"
+      },
+      egyptian: {
+        pharaonic: "AN",
+        "graeco-roman": "AN"
+      },
+      aztec: {
+        mexica: "MD",
+        colonial: "EM"
+      },
+      bantu: {
+        kingdoms: "MD"
+      },
+      slavic: {
+        rus: "MD",
+        imperial: "EM",
+        soviet: "MO"
+      },
+      "arabic-persian": {
+        arabic: "MD",
+        persian: "MD"
+      },
+      indian: {
+        ancient: "AN",
+        modern: "MO"
+      },
+      japanese: {
+        samurai: "MD",
+        modern: "MO"
+      },
+      "west-african": {
+        "sahel-and-forest": "MD"
+      },
+      maya: {
+        classic: "AN"
+      },
+      korean: {
+        joseon: "EM"
+      },
+      ethiopian: {
+        "aksum-and-abyssinia": "MD"
+      }
+    },
+    colonialToCulture: {
+      general: {
+        culture: "general",
+        era: "EM"
+      },
+      roman: {
+        culture: "roman",
+        era: "AN"
+      },
+      hellenistic: {
+        culture: "greek-byzantine",
+        era: "AN"
+      },
+      phoenician: {
+        culture: "general",
+        era: "AN"
+      },
+      spanish: {
+        culture: "general",
+        era: "EM"
+      },
+      portuguese: {
+        culture: "general",
+        era: "EM"
+      },
+      french: {
+        culture: "general",
+        era: "EM"
+      },
+      italian: {
+        culture: "general",
+        era: "ST"
+      },
+      belgian: {
+        culture: "general",
+        era: "ST"
+      },
+      dutch: {
+        culture: "general",
+        era: "EM"
+      },
+      "british-imperial": {
+        culture: "norman-british",
+        era: "ST"
+      },
+      "english-speaking-settler": {
+        culture: "norman-british",
+        era: "ST"
+      },
+      german: {
+        culture: "general",
+        era: "ST"
+      },
+      danish: {
+        culture: "general",
+        era: "EM"
+      },
+      swedish: {
+        culture: "general",
+        era: "EM"
+      },
+      russian: {
+        culture: "slavic",
+        era: "ST"
+      },
+      arab: {
+        culture: "arabic-persian",
+        era: "MD"
+      },
+      ottoman: {
+        culture: "arabic-persian",
+        era: "EM"
+      },
+      chinese: {
+        culture: "chinese",
+        era: "MD"
+      },
+      japanese: {
+        culture: "japanese",
+        era: "ST"
+      }
+    },
+    cultureToColonial: {
+      general: "general",
+      "norman-british": "british-imperial",
+      "anglo-saxon": "british-imperial",
+      celtic: "british-imperial",
+      roman: "roman",
+      "greek-byzantine": "hellenistic",
+      slavic: "russian",
+      "arabic-persian": "arab",
+      chinese: "chinese",
+      japanese: "japanese"
+    }
+  },
+  sources: {
+    beast: {
+      pool: 0.6,
+      biome: 0.4,
+      biomeLists: {
+        wildAnimals: 60,
+        birds: 40
+      }
+    },
+    tree: {
+      pool: 0.5,
+      biome: 0.5,
+      biomeLists: {
+        trees: 100
+      }
+    },
+    stock: {
+      biome: 1,
+      biomeLists: {
+        livestock: 100
+      }
+    }
+  },
+  beastPools: {
+    mountainNames: "mtBeast",
+    forestNames: "fstBeast",
+    desertNames: "dsrBeast",
+    moorNames: "mrBeast",
+    wetlandNames: "wetBeast",
+    grasslandNames: "grsBeast"
+  },
+  safeguards: {
+    mountainNames: [
+      "Misty Mountains",
+      "Lonely Mountain",
+      "Mount Doom",
+      "Mountains of Madness",
+      "Mountains of Shadow",
+      "Spine of the World",
+      "Throat of the World",
+      "Paths of the Dead",
+      "Weathertop",
+      "Gap of Rohan",
+      "Iron Hills",
+      "Grey Mountains",
+      "Mount Sinai",
+      "Mount Zion",
+      "Mount Moriah",
+      "Mount of Olives",
+      "Mount Hira",
+      "Mount Arafat",
+      "Mount Kailash",
+      "Mount Meru",
+      "Mount Ararat",
+      "Mount Olympus"
+    ],
+    forestNames: [
+      "Mirkwood",
+      "Fangorn",
+      "Lothl\xF3rien",
+      "Lothlorien",
+      "Forbidden Forest",
+      "Hundred Acre Wood",
+      "Chetwood",
+      "Old Forest Road",
+      "Wildwood",
+      "Elfwood"
+    ],
+    desertNames: [
+      "Dune Sea",
+      "Jundland Wastes",
+      "Deep Desert",
+      "Great Pit of Carkoon",
+      "Arrakis",
+      "Tatooine",
+      "Desert of Desolation"
+    ],
+    moorNames: [
+      "Barrow-downs",
+      "Barrow Downs",
+      "Grimpen Mire",
+      "Wuthering Heights",
+      "Weather Hills",
+      "Midgewater"
+    ],
+    wetlandNames: [
+      "Dead Marshes",
+      "Midgewater Marshes",
+      "Swamp of Sorrows",
+      "Swamps of Sadness",
+      "Fire Swamp",
+      "Bog of Eternal Stench",
+      "Dagobah"
+    ],
+    grasslandNames: [
+      "Rohan",
+      "Riddermark",
+      "Pelennor Fields",
+      "Plains of Rohan",
+      "Dothraki Sea",
+      "Westfold",
+      "Eastfold"
+    ],
+    bannedWords: [
+      "Squaw"
+    ]
+  },
+  cap: 6
+};
+
+// src/sections.ts
+var OLD_HISTORY_PREFIXES = {
+  explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
+  empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
+  // Companies brief §1: the trade family's label before "guilds, companies and trade".
+  tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
+  // The titles label before the British spelling.
+  titles: ["titles and honorifics"],
+  // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
+  deityNames: ["deities and sacred places"]
+};
+var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
+var WILDS_SECTIONS = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
+var VESSEL_SECTIONS = ["ships", "spacecraft", "aircraft", "landVehicles"];
+var THING_SECTIONS = ["armsNames", "treasureNames", "bookNames"];
+var BYNAME_SECTIONS = ["epithets", "familyNames", "titles"];
+var GROUP_NAME_SECTIONS = [
+  "mysticOrders",
+  "martialOrders",
+  "underworldGroups",
+  "tradeGuilds",
+  "adventureCompanies",
+  "powerFactions",
+  "supernaturalCourts"
+];
+var GROUP_NAMES_ORDER = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
+var URBAN_SECTIONS = ["settlementNames", "streetNames", "innNames", "buildingNames", "settlementKit"];
+var SECTION_ORDER = [
+  "markov",
+  "placeShapes",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes",
+  "routeNames",
+  "sacredPlaces",
+  ...URBAN_SECTIONS,
+  ...WATERS_SECTIONS,
+  ...WILDS_SECTIONS,
+  ...GROUP_NAMES_ORDER,
+  "deityNames",
+  ...BYNAME_SECTIONS,
+  ...VESSEL_SECTIONS,
+  ...THING_SECTIONS,
+  "nameAgeing",
+  "nameTakeover",
+  "eventNames",
+  "moneyNames",
+  "calendarNames",
+  "skyNames"
+];
+var SECTION_GROUPS = {
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "sacredPlaces"],
+  // Urban brief §1.1: straight after place names.
+  urban: URBAN_SECTIONS,
+  seasCoasts: WATERS_SECTIONS,
+  // Wild lands brief §1.1.
+  wildLands: WILDS_SECTIONS,
+  groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
+  bynames: BYNAME_SECTIONS,
+  // Line-up brief §1: ships and spacecraft get a group of their own.
+  vehicles: VESSEL_SECTIONS,
+  // Named things brief §1.1.
+  namedThings: THING_SECTIONS,
+  advanced: ["nameAgeing", "nameTakeover", "eventNames", "moneyNames", "calendarNames", "skyNames"]
+};
+var GROUP_LABELS = {
+  placeNames: "place names",
+  urban: "urban",
+  seasCoasts: "seas and coasts",
+  wildLands: "wild lands",
+  groupNames: "group names",
+  bynames: "bynames and titles",
+  vehicles: "vehicles",
+  namedThings: "named things",
+  advanced: "advanced"
+};
+var SWITCHER_ORDER = ["markov", "placeNames", "urban", "seasCoasts", "wildLands", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
+function sectionGroup(section) {
+  return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
+}
+var SECTION_LABELS = {
+  markov: "markov generator",
+  placeShapes: "native place names",
+  settlementNames: "settlement names",
+  routeNames: "route names",
+  streetNames: "streets and districts",
+  innNames: "inns and taverns",
+  buildingNames: "buildings and landmarks",
+  settlementKit: "settlement kit",
+  eventNames: "events and eras",
+  moneyNames: "money and coins",
+  calendarNames: "calendars and festivals",
+  skyNames: "sky lore",
+  armsNames: "arms and armour",
+  treasureNames: "treasures and regalia",
+  bookNames: "books and writings",
+  deityNames: "deities",
+  sacredPlaces: "sacred places",
+  riverNames: "river names",
+  explorationPlaceShapes: "exploration into new lands",
+  empireExpansionPlaceShapes: "expansion into settled lands",
+  nameAgeing: "name ageing",
+  nameTakeover: "name takeover",
+  tribalNames: "tribes and kin groups",
+  realms: "realms and polities",
+  peoplesTongues: "peoples and tongues",
+  mysticOrders: "faiths and mystic orders",
+  martialOrders: "armies and martial orders",
+  underworldGroups: "thieves and the underworld",
+  tradeGuilds: "guilds, companies, and trade",
+  adventureCompanies: "adventurers and explorers",
+  powerFactions: "powers and factions",
+  supernaturalCourts: "supernatural courts and hosts",
+  epithets: "epithets and bynames",
+  titles: "titles and honourifics",
+  familyNames: "family names",
+  ships: "ships and boats",
+  spacecraft: "spacecraft and stations",
+  aircraft: "aircraft and airships",
+  landVehicles: "land vehicles",
+  seasLakes: "seas and lakes",
+  coastsIslands: "coasts and islands",
+  seaCharts: "sea charts",
+  hyperspaceCharts: "hyperspace charts",
+  mountainNames: "mountains",
+  forestNames: "forests and woods",
+  desertNames: "deserts",
+  moorNames: "moors and heaths",
+  wetlandNames: "wetlands",
+  grasslandNames: "grasslands"
+};
+var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
+var RIVER_NAMES_HISTORY_NAME = "river names";
+var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
+var SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
+var TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
+var OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
+function historySection(packName) {
+  const starts = (prefix) => packName.startsWith(prefix);
+  if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
+  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
+  if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
+  if (starts(SECTION_LABELS.routeNames)) return "routeNames";
+  if (starts(SETTLEMENT_NAMES_HISTORY_NAME)) return "settlementNames";
+  if (starts(SECTION_LABELS.streetNames)) return "streetNames";
+  if (starts(SECTION_LABELS.innNames)) return "innNames";
+  if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
+  if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
+  if (starts(SECTION_LABELS.eventNames)) return "eventNames";
+  if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
+  if (starts(SECTION_LABELS.calendarNames)) return "calendarNames";
+  if (starts(SECTION_LABELS.skyNames)) return "skyNames";
+  for (const section of THING_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("\xB7 sacred places") ? "sacredPlaces" : "deityNames";
+  if (starts(SECTION_LABELS.deityNames)) return "deityNames";
+  if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
+  if (starts(SECTION_LABELS.realms)) return "realms";
+  if (starts(SECTION_LABELS.peoplesTongues)) return "peoplesTongues";
+  for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of WILDS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  for (const section of WATERS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
+  if (OLD_HISTORY_PREFIXES.titles.some(starts)) return "titles";
+  if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
+    return "explorationPlaceShapes";
+  }
+  if (starts(SECTION_LABELS.empireExpansionPlaceShapes) || OLD_HISTORY_PREFIXES.empireExpansionPlaceShapes.some(starts)) {
+    return "empireExpansionPlaceShapes";
+  }
+  if (starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
+    return "placeShapes";
+  }
+  return "markov";
+}
+
+// src/settlement/names.ts
+var settlementHooks = {};
+function cultureLabel(options) {
+  if (options.setting !== "native") return options.setting === "new-lands" ? "Exploration" : "Expansion";
+  return !options.culture || options.culture === "britain" ? "British" : findCulture(options.culture).label;
+}
+function generateAt(options, size) {
+  var _a5;
+  const { count, seed, faithfulness, strictness } = options;
+  const settlement = { size };
+  if (options.setting === "native" && options.culture && options.culture !== "britain") {
+    const result = generateWorldPlaceNames({
+      culture: options.culture,
+      era: options.era,
+      biome: (_a5 = options.customBiome) != null ? _a5 : findBiome(options.biome),
+      terrain: options.terrain,
+      count,
+      seed,
+      faithfulness,
+      strictness,
+      settlement
+    });
+    return {
+      names: result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology })),
+      seed: result.seed,
+      notices: result.notices
+    };
+  }
+  const recipe = options.setting === "native" ? britishPlaceNamesRecipe(options.region, options.customBiome ? void 0 : options.biome, options.terrain) : colonialPlaceNamesRecipe(
+    options.setting === "new-lands" ? "new-land" : "established",
+    options.tradition,
+    options.context,
+    options.customBiome ? void 0 : options.biome,
+    options.terrain,
+    options.aliens
+  );
+  return generatePlaceNames({ recipe, biome: options.customBiome, slots: {}, count, seed, faithfulness, strictness, settlement });
+}
+function biomeKeyFor(o) {
+  var _a5, _b3, _c3;
+  const id = (_b3 = o.biome) != null ? _b3 : (_a5 = o.customBiome) == null ? void 0 : _a5.id;
+  if (id) return id;
+  if (o.setting !== "native") return "temperate";
+  if (!o.culture || o.culture === "britain") return "britain";
+  return (_c3 = WILDS_DATA.homeland[o.culture]) != null ? _c3 : "temperate";
+}
+function wildsRequest(o) {
+  var _a5, _b3, _c3, _d3, _e3;
+  const link = WILDS_DATA.settlementLink;
+  if (o.setting !== "native") {
+    const mapped = (_b3 = link.colonialToCulture[(_a5 = o.tradition) != null ? _a5 : "general"]) != null ? _b3 : link.colonialToCulture.general;
+    return { culture: mapped.culture, era: mapped.era, where: "new" };
+  }
+  if (!o.culture || o.culture === "britain") return { culture: "norman-british", era: "MD", where: "home", region: o.region };
+  const culture = findCulture(o.culture);
+  const eraId = (_c3 = o.era) != null ? _c3 : culture.eras[0].id;
+  const era = eraId === INTERSTELLAR_ERA ? "IS" : (_e3 = (_d3 = link.worldEraToRoute[o.culture]) == null ? void 0 : _d3[eraId]) != null ? _e3 : "MD";
+  return { culture: o.culture, era, where: "home" };
+}
+function generateWithWilds(options, size, seed) {
+  const normal = generateAt({ ...options, seed }, size);
+  const modules = options.wilds === false ? void 0 : wildsModulesForTerrain(options.terrain, biomeKeyFor(options));
+  if (!modules) return { result: normal, sources: normal.names.map(() => "own") };
+  const rng = mulberry32((seed ^ 1464421444) >>> 0);
+  const share2 = WILDS_DATA.settlementLink.purposeBuiltShare;
+  const queues = /* @__PURE__ */ new Map();
+  const wildNext = (module2) => {
+    var _a5;
+    let queue = queues.get(module2);
+    if (!queue) {
+      const biome = options.biome && wildsBiomes(module2).some((b) => b.id === options.biome) ? options.biome : void 0;
+      const request = {
+        module: module2,
+        ...wildsRequest(options),
+        biome,
+        people: "invented",
+        fantastic: false,
+        tone: "any",
+        series: false,
+        purposeBuiltOnly: true,
+        settlementSize: SIZE_LETTER[size],
+        count: options.count,
+        seed: Math.floor(rng() * 4294967296) >>> 0
+      };
+      (_a5 = settlementHooks.onWildsCall) == null ? void 0 : _a5.call(settlementHooks, request);
+      queue = generateWildsNames(request).names.map((n) => n.text);
+      queues.set(module2, queue);
+    }
+    return queue.shift();
+  };
+  const pickModule = () => {
+    const total = modules.reduce((n, [, w]) => n + w, 0);
+    let r = rng() * total;
+    for (const [m, w] of modules) if ((r -= w) < 0) return m;
+    return modules[modules.length - 1][0];
+  };
+  const names = [];
+  const sources = [];
+  const seen = /* @__PURE__ */ new Set();
+  const spare = [...normal.names];
+  const takeNormal = () => {
+    while (spare.length > 0) {
+      const n = spare.shift();
+      if (!seen.has(n.text.toLowerCase())) return n;
+    }
+    return void 0;
+  };
+  for (let i = 0; i < options.count; i++) {
+    const want = rng() < share2;
+    const module2 = want ? pickModule() : void 0;
+    let text = module2 ? wildNext(module2) : void 0;
+    while (text !== void 0 && seen.has(text.toLowerCase())) text = module2 ? wildNext(module2) : void 0;
+    if (module2 && text !== void 0) {
+      seen.add(text.toLowerCase());
+      names.push({ text, hasPlaceholder: text.includes("["), etymology: "" });
+      sources.push(module2);
+      continue;
+    }
+    const n = takeNormal();
+    if (!n) break;
+    seen.add(n.text.toLowerCase());
+    names.push(n);
+    sources.push("own");
+  }
+  return { result: { ...normal, names }, sources };
+}
+function generateSettlementNames(options) {
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  let failure;
+  for (const size of sizesToTry(options.size)) {
+    try {
+      const { result, sources } = generateWithWilds(options, size, seed);
+      const notices = [...result.notices];
+      if (size !== options.size) {
+        notices.unshift(`${cultureLabel(options)} names don't run to a ${sizeLabel(options.size)}; these are ${sizeLabel(size)} names.`);
+      }
+      return { ...result, notices, size, sources };
+    } catch (e) {
+      if (!(e instanceof Error) || !e.message.startsWith("No eligible")) throw e;
+      failure = e;
+    }
+  }
+  throw failure;
+}
+
+// src/wilds/engine.ts
+var WILDS_MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
+var WILDS_DATA = wilds_default;
+var WILDS_CULTURES = ROUTE_CULTURES;
+var findWildsCulture = (key2) => WILDS_CULTURES.find((c) => c.key === key2);
+var isBritishCulture = (culture) => BRITISH_CULTURES.includes(culture);
+var wildsKinds = (module2) => WILDS_DATA.modules[module2].kinds;
+var findWildsKind = (module2, key2) => wildsKinds(module2).find((k) => k.key === key2);
+var wildsAny = (module2) => WILDS_DATA.modules[module2].any;
+var wildsEras = (module2) => WILDS_DATA.modules[module2].eras;
+var wildsEraLabel = (code) => {
+  var _a5, _b3;
+  return (_b3 = (_a5 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a5.label) != null ? _b3 : code;
+};
+var wildsDefaultCulture = (module2) => module2 === "desertNames" ? "general" : "norman-british";
+var showsWildsRegion = (module2, culture, where2) => WILDS_DATA.modules[module2].region && isBritishCulture(culture) && where2 === "home";
+var wildsBiomes = (module2) => BIOMES.filter((b) => WILDS_DATA.modules[module2].biomes.includes(b.id));
+var PARENT_KIND = { mountainNames: "range", forestNames: "forest", desertNames: "desert", moorNames: "moor", wetlandNames: "marsh", grasslandNames: "plain" };
+function wildsKindLive(module2, kind, era) {
+  var _a5;
+  const shapes = [...(_a5 = WILDS_DATA.shapes[module2][kind]) != null ? _a5 : [], ...WILDS_DATA.cultureShapes.filter((s) => s.module === module2 && s.kind === kind)];
+  if (kind === "settlement") return true;
+  return shapes.some((s) => !s.e || s.e.includes(era));
+}
+var wildsKindsAt = (module2, era) => wildsKinds(module2).filter((k) => wildsKindLive(module2, k.key, era));
+var PLURAL_POOLS = /* @__PURE__ */ new Set();
+var wildsHooks = {};
+function wildsModulesForTerrain(terrain, biome) {
+  var _a5, _b3;
+  const row = WILDS_DATA.settlementLink.terrainToModule.find((t) => t.terrain === terrain);
+  if (!row) return void 0;
+  const split = biome ? (_a5 = row.split) == null ? void 0 : _a5[biome] : void 0;
+  if (split) return Object.entries(split).map(([m, w]) => [m, w]);
+  return [[biome && ((_b3 = row.byBiome) == null ? void 0 : _b3[biome]) || row.module, 1]];
+}
+var SIZE_LETTER = { any: "any", hamlet: "h", village: "v", town: "t", city: "c", great: "g" };
+function nativeSettlementRequest(module2, culture, era, where2, region, chosenBiome, mode) {
+  var _a5;
+  const link = WILDS_DATA.settlementLink;
+  if (mode === "placeholders" || era === "NF" || era === "IS") return void 0;
+  const land = link.nativeLand[module2];
+  const biome = chosenBiome != null ? chosenBiome : land.biomeIfUnset;
+  const base = { size: "any", count: 0, terrain: land.terrain, biome, wilds: false };
+  if (where2 === "new") {
+    const tradition = link.cultureToColonial[culture];
+    return tradition ? { ...base, setting: "new-lands", tradition: tradition === "general" ? void 0 : tradition } : void 0;
+  }
+  if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : void 0 };
+  const worldCulture = WORLD_CULTURES.find((c) => c.id === culture);
+  if (!worldCulture) return void 0;
+  const eras = worldCulture.eras.filter((e) => e.id !== INTERSTELLAR_ERA);
+  const match = (_a5 = eras.find((e) => {
+    var _a6;
+    return ((_a6 = link.worldEraToRoute[culture]) == null ? void 0 : _a6[e.id]) === era;
+  })) != null ? _a5 : eras[0];
+  return { ...base, setting: "native", culture, era: match == null ? void 0 : match.id, biome: void 0, customBiome: biome ? findBiome(biome) : void 0 };
+}
+var LIGHT_OR_GRIM2 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var pickOne8 = (items, rng) => items[Math.floor(rng() * items.length)];
+var MEAN_CACHE = /* @__PURE__ */ new Map();
+function regionMult2(ctx, tag) {
+  var _a5;
+  if (!tag || !ctx.homeBritish) return 1;
+  const row = WILDS_DATA.regionTags[tag];
+  if (!row) return 1;
+  if (ctx.region) return (_a5 = row[ctx.region]) != null ? _a5 : 1;
+  let mean = MEAN_CACHE.get(tag);
+  if (mean === void 0) {
+    mean = WILDS_DATA.regions.reduce((n, code) => {
+      var _a6;
+      return n + ((_a6 = row[code]) != null ? _a6 : 1);
+    }, 0) / WILDS_DATA.regions.length;
+    MEAN_CACHE.set(tag, mean);
+  }
+  return mean;
+}
+function biomeMult(ctx, tag) {
+  var _a5, _b3;
+  if (!tag || !ctx.biomeTags) return 1;
+  return (_b3 = (_a5 = WILDS_DATA.biomeTags[tag]) == null ? void 0 : _a5[ctx.biome.id]) != null ? _b3 : 1;
+}
+function vocabPool3(ctx, pool3) {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(e.t))).map(([e, w]) => {
+    var _a5;
+    return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone) * regionMult2(ctx, e.rt) * biomeMult(ctx, e.bt)];
+  }).filter(([, n]) => n > 0);
+}
+function drawEntry(ctx, pool3) {
+  var _a5;
+  const e = pickWeighted5(vocabPool3(ctx, pool3), ctx.rng);
+  if (!e) return void 0;
+  for (const t of (_a5 = e.t) != null ? _a5 : []) ctx.drawn.add(t);
+  ctx.words.push({ pool: pool3, word: e.w });
+  return e;
+}
+function resolveWildsBiome(module2, culture, where2, chosen) {
+  var _a5, _b3;
+  const data = WILDS_DATA.modules[module2];
+  if (showsWildsRegion(module2, culture, where2)) return { biome: BRITAIN, tags: false, homeBritish: true };
+  const pick4 = (id) => id && data.biomes.includes(id) ? BIOMES.find((b) => b.id === id) : void 0;
+  const biome = (_b3 = (_a5 = pick4(chosen)) != null ? _a5 : pick4(WILDS_DATA.homeland[culture])) != null ? _b3 : pick4(data.defaultBiome);
+  return { biome, tags: true, homeBritish: false };
+}
+function godName2(ctx) {
+  if (ctx.culture.sensitive) return void 0;
+  const world = godNames(ctx.culture.key);
+  if (world.length > 0) return pickOne8(world, ctx.rng);
+  const hooks2 = deityHooks();
+  if (!hooks2 || !hooks2.cultureOffered(ctx.culture.key)) return void 0;
+  return hooks2.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng: ctx.rng, vocab: ctx.vocab });
+}
+var godAvailable = (ctx) => {
+  var _a5;
+  return !ctx.culture.sensitive && (godNames(ctx.culture.key).length > 0 || !!((_a5 = deityHooks()) == null ? void 0 : _a5.cultureOffered(ctx.culture.key)));
+};
+function riverName2(ctx) {
+  if (ctx.mode === "placeholders") return "[river]";
+  const setting = ctx.homeBritish ? "british" : ctx.where === "home" ? "established" : "new-land";
+  const text = riverFill({ setting, region: ctx.homeBritish ? ctx.region : void 0 }, ctx.rng).replace(/\bRiver\b/gi, "").replace(/^the /i, "").replace(/\s+/g, " ").trim();
+  return text || void 0;
+}
+function anchored(ctx, free) {
+  if (ctx.anchor !== void 0 && !ctx.anchorDecided) {
+    ctx.anchorDecided = true;
+    if (ctx.forceAnchor || ctx.rng() < 0.6) {
+      ctx.anchored = true;
+      return ctx.anchor;
+    }
+  }
+  return free();
+}
+function listWord5(ctx, list) {
+  const items = groupListWords(list, ctx.setting, "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const w = pickWeighted5(items, ctx.rng);
+  if (w === void 0) return void 0;
+  for (const t of wordTones(list, w)) ctx.drawn.add(t);
+  ctx.words.push({ pool: list, word: w });
+  return w;
+}
+function biomeWord(ctx, lists) {
+  const entries = [];
+  for (const [list, share2] of Object.entries(lists)) {
+    const words = biomeWords(ctx.biome, list);
+    const total = words.reduce((n, [, w]) => n + w, 0);
+    if (total === 0) continue;
+    for (const [word, w] of words) {
+      const lowered = word.toLowerCase();
+      entries.push([{ w: biomeTitleCase(lowered), pl: biomeTitleCase(pluralOf(lowered)) }, share2 * w / total]);
+    }
+  }
+  const e = pickWeighted5(entries, ctx.rng);
+  if (e) ctx.words.push({ pool: "biome", word: e.w });
+  return e;
+}
+var biomeHas = (ctx, lists) => Object.keys(lists).some((l) => biomeWords(ctx.biome, l).length > 0);
+function creature(ctx, name) {
+  const src = WILDS_DATA.sources[name];
+  const pool3 = name === "beast" ? WILDS_DATA.beastPools[ctx.module] : name === "tree" ? "wildTree" : void 0;
+  const poolLive = !!pool3 && vocabPool3(ctx, pool3).length > 0;
+  const biomeLive = biomeHas(ctx, src.biomeLists);
+  if (!pool3) return biomeLive ? biomeWord(ctx, src.biomeLists) : void 0;
+  const fromPool6 = src.pool;
+  if (poolLive && (!biomeLive || ctx.rng() < fromPool6)) return drawEntry(ctx, pool3);
+  return biomeLive ? biomeWord(ctx, src.biomeLists) : void 0;
+}
+var PLACEHOLDER2 = (name) => `[${name}]`;
+var SOURCES = /* @__PURE__ */ new Set(["town", "number", "folk", "person", "kingdom", "holy", "god", "river", "beast", "tree", "stock"]);
+function token9(ctx, name) {
+  const rng = ctx.rng;
+  const placeholders = ctx.mode === "placeholders";
+  if (name.startsWith("@")) return featureRef(ctx, name.slice(1));
+  switch (name) {
+    case "town": {
+      const free = () => placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
+      const t = anchored(ctx, free);
+      if (t) ctx.words.push({ pool: "town", word: t });
+      return t;
+    }
+    case "number":
+      return listWord5(ctx, "number");
+    case "folk":
+      return placeholders ? PLACEHOLDER2("folk") : routeFolk(ctx.culture.key, rng);
+    case "person": {
+      if (placeholders) return PLACEHOLDER2("person");
+      const names = personNames(ctx.culture.key);
+      return names.length > 0 ? pickOne8(names, rng) : void 0;
+    }
+    case "kingdom":
+      return placeholders ? PLACEHOLDER2("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng);
+    case "holy":
+      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+    case "god":
+      return placeholders ? "[deity]" : godName2(ctx);
+    case "river":
+      return riverName2(ctx);
+    case "beast":
+    case "tree":
+    case "stock":
+      return creature(ctx, name);
+  }
+  return drawEntry(ctx, name);
+}
+var plural2 = (e) => {
+  var _a5;
+  return (_a5 = e.pl) != null ? _a5 : biomeTitleCase(pluralOf(e.w.toLowerCase()));
+};
+function renderPattern7(ctx, pattern, nested = false) {
+  if (!nested) {
+    ctx.anchorDecided = false;
+    ctx.anchored = false;
+  }
+  let failed = false;
+  const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
+    if (failed) return "";
+    const [name, mod] = raw.split(":");
+    const piece = token9(ctx, name);
+    if (piece === void 0 || piece === "") {
+      failed = true;
+      return "";
+    }
+    const entry = typeof piece === "string" ? void 0 : piece;
+    const text = typeof piece === "string" ? piece : piece.w;
+    if (mod === "pl") return entry ? plural2(entry) : text;
+    if (mod === "poss") return groupPossessive(text, PLURAL_POOLS.has(name));
+    return text;
+  });
+  return failed ? void 0 : out;
+}
+var stripThe = (s) => s.replace(/^the /, "");
+function blockSet(module2, guards) {
+  var _a5;
+  const phrases = [...WILDS_DATA.safeguards[module2], ...(_a5 = guards == null ? void 0 : guards.block) != null ? _a5 : [], ...(guards == null ? void 0 : guards.flagListBlocks) ? guards.flag : []];
+  const set = /* @__PURE__ */ new Set();
+  for (const p of phrases) {
+    const n = routeNorm(p);
+    set.add(n);
+    set.add(stripThe(n));
+  }
+  return set;
+}
+function wildsBlocked(module2, text, guards) {
+  const set = blockSet(module2, guards);
+  const n = routeNorm(text);
+  return set.has(n) || set.has(stripThe(n));
+}
+var BANNED9 = new Set(WILDS_DATA.safeguards.bannedWords.map((w) => w.toLowerCase()));
+var hasWildsBanned = (text) => text.toLowerCase().split(/[^\p{L}']+/u).some((w) => BANNED9.has(w));
+var wildsWordBlocked = (word, guards) => breaksRouteWords(word) || hasWildsBanned(word) || WILDS_MODULES.some((m) => wildsBlocked(m, word, guards));
+var tokensOf = (p) => [...p.matchAll(/\{([^}:]+)/g)].map((m) => m[1]);
+function tokensLive(ctx, p) {
+  var _a5;
+  for (const t of tokensOf(p)) {
+    if (t.startsWith("@")) continue;
+    if (SOURCES.has(t)) {
+      if (t === "god" && ctx.mode === "invented" && !godAvailable(ctx)) return false;
+      if (t === "god" && ctx.mode === "placeholders" && ctx.culture.sensitive) return false;
+      if (t === "god" && ctx.mode === "placeholders" && godNames(ctx.culture.key).length === 0 && !((_a5 = deityHooks()) == null ? void 0 : _a5.cultureOffered(ctx.culture.key))) return false;
+      if (t === "person" && ctx.mode === "invented" && personNames(ctx.culture.key).length === 0) return false;
+      if (t === "holy" && !cultureAllowed(["christian"], ctx.culture.key, ctx.era)) return false;
+      if (t === "beast" || t === "tree" || t === "stock") {
+        const src = WILDS_DATA.sources[t];
+        const pool3 = t === "beast" ? WILDS_DATA.beastPools[ctx.module] : t === "tree" ? "wildTree" : void 0;
+        if (!(pool3 && vocabPool3(ctx, pool3).length > 0) && !biomeHas(ctx, src.biomeLists)) return false;
+      }
+      continue;
+    }
+    if (vocabPool3(ctx, t).length === 0) return false;
+  }
+  return true;
+}
+function shapeWeight5(ctx, s, hardOnly = false) {
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k;
+  const c = ctx.culture;
+  if (s.e && !s.e.includes(ctx.era)) return 0;
+  if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
+  if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM2(s.t))) return 0;
+  if (!tokensLive(ctx, s.p)) return 0;
+  if (hardOnly) return s.w;
+  const cm = (_a5 = WILDS_DATA.cultureMult[c.key]) != null ? _a5 : {};
+  const family = ((_b3 = cm[s.f]) != null ? _b3 : 1) * (s.of ? (_c3 = cm.of) != null ? _c3 : 1 : 1);
+  const where2 = (_e3 = (_d3 = WILDS_DATA.where[s.f]) == null ? void 0 : _d3[ctx.where]) != null ? _e3 : 1;
+  const era = (_g = (_f = WILDS_DATA.eraMult[s.f]) == null ? void 0 : _f[ctx.era]) != null ? _g : 1;
+  const extra = ((_i = (_h = s.cx) == null ? void 0 : _h[c.key]) != null ? _i : 1) * (ctx.where === "new" ? (_j = s.nx) != null ? _j : 1 : 1);
+  return s.w * family * where2 * era * extra * regionMult2(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor((_k = s.t) != null ? _k : [], ctx.tone);
+}
+var REF_CACHE = /* @__PURE__ */ new WeakMap();
+function refPlans(ctx, kind) {
+  let byKind = REF_CACHE.get(ctx);
+  if (!byKind) REF_CACHE.set(ctx, byKind = /* @__PURE__ */ new Map());
+  let found = byKind.get(kind);
+  if (!found) {
+    found = kindShapes(ctx, kind).filter((s) => !s.of && !s.p.startsWith("The ") && !s.p.includes("{river}") && !s.p.includes("{@") && s.f !== "set").map((s) => [{ kind, shape: s }, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
+    byKind.set(kind, found);
+  }
+  return found;
+}
+function featureRef(ctx, kind) {
+  const plans4 = refPlans(ctx, kind);
+  if (plans4.length === 0) return void 0;
+  for (let i = 0; i < 10; i++) {
+    const plan = pickWeighted5(plans4, ctx.rng);
+    if (!plan) return void 0;
+    const raw = renderPattern7(ctx, plan.shape.p, true);
+    if (!raw) continue;
+    const text = routeCapitals(raw);
+    if (text.split(" ").length <= 2) {
+      ctx.words.push({ pool: `@${kind}`, word: text });
+      return text;
+    }
+  }
+  return void 0;
+}
+function kindShapes(ctx, kind) {
+  var _a5;
+  const module2 = ctx.module;
+  const own = [...(_a5 = WILDS_DATA.shapes[module2][kind]) != null ? _a5 : [], ...WILDS_DATA.cultureShapes.filter((s) => s.module === module2 && s.kind === kind && s.culture === ctx.culture.key)];
+  if (kind !== "settlement") return own;
+  const dual = [];
+  for (const [k, shapes] of Object.entries(WILDS_DATA.shapes[module2])) {
+    if (k === "settlement") continue;
+    for (const s of shapes) if (s.st) dual.push({ ...s, w: s.w / 2, sz: s.st });
+  }
+  return [...own, ...dual];
+}
+function generateWildsNames(options) {
+  var _a5, _b3;
+  const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
+  const rng = mulberry32(seed);
+  const notices = [];
+  const module2 = options.module;
+  const data = WILDS_DATA.modules[module2];
+  const culture = (_a5 = findWildsCulture(options.culture)) != null ? _a5 : findWildsCulture(wildsDefaultCulture(module2));
+  const era = data.eras.includes(options.era) ? options.era : "MD";
+  const where2 = options.where === "new" ? "new" : "home";
+  const fantastic = !!options.fantastic;
+  const resolved = resolveWildsBiome(module2, culture.key, where2, options.biome);
+  const homeBritish = resolved.homeBritish;
+  const region = homeBritish && options.region && options.region !== "all" ? options.region : void 0;
+  const mode = (_b3 = options.people) != null ? _b3 : "placeholders";
+  const count = Math.max(0, Math.floor(options.count));
+  const block = blockSet(module2, options.safeguards);
+  const forcedKind = options.settlementSize ? "settlement" : options.kind;
+  const newCtx3 = () => {
+    var _a6, _b4;
+    return {
+      rng,
+      module: module2,
+      culture,
+      era,
+      setting: routeSetting(era, fantastic),
+      fantastic,
+      where: where2,
+      homeBritish,
+      region,
+      biome: resolved.biome,
+      biomeTags: resolved.tags,
+      mode,
+      tone: (_a6 = options.tone) != null ? _a6 : "any",
+      vocab: (_b4 = options.vocab) != null ? _b4 : BUILT_IN_VOCAB,
+      drawn: /* @__PURE__ */ new Set(),
+      words: [],
+      anchorDecided: false,
+      anchored: false,
+      forceAnchor: false
+    };
+  };
+  const sizeOk = (s) => {
+    var _a6;
+    return !options.settlementSize || options.settlementSize === "any" || ((_a6 = s.sz) != null ? _a6 : "").includes(options.settlementSize);
+  };
+  let planCache;
+  const plans4 = () => {
+    if (planCache) return planCache;
+    planCache = /* @__PURE__ */ new Map();
+    const ctx = newCtx3();
+    for (const kind of data.kinds) {
+      const live4 = kindShapes(ctx, kind.key).filter((s) => !options.shape || s.p === options.shape).filter((s) => kind.key !== "settlement" || sizeOk(s)).map((s) => [{ kind: kind.key, shape: s }, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
+      if (live4.length > 0) planCache.set(kind.key, live4);
+    }
+    return planCache;
+  };
+  const chosenKind = forcedKind ? findWildsKind(module2, forcedKind) : void 0;
+  if (forcedKind && !chosenKind) notices.push(`Kind \u201C${forcedKind}\u201D isn't offered here.`);
+  const kindWeights = () => {
+    var _a6, _b4, _c3;
+    const base = [];
+    for (const k of data.kinds) {
+      if (!plans4().has(k.key)) continue;
+      let w = k.weight;
+      const id = `${module2}.${k.key}`;
+      if (homeBritish) w *= (_a6 = WILDS_DATA.kindMult.britishHome[id]) != null ? _a6 : 1;
+      else {
+        const tag = WILDS_DATA.kindMult.biome[id];
+        if (tag) w *= (_c3 = (_b4 = WILDS_DATA.biomeTags[tag]) == null ? void 0 : _b4[resolved.biome.id]) != null ? _c3 : 1;
+      }
+      if (w > 0) base.push([k.key, w]);
+    }
+    return base;
+  };
+  const fallbackPlans = () => {
+    const ctx = newCtx3();
+    return Object.entries(WILDS_DATA.shapes[module2]).flatMap(
+      ([kind, shapes]) => shapes.filter((s) => !s.rt && !s.bt && kind !== "settlement").map((s) => [{ kind, shape: s }, shapeWeight5(ctx, s, true)]).filter(([, w]) => w > 0)
+    );
+  };
+  let anchor;
+  if (options.series) {
+    if (mode === "placeholders") anchor = "[place]";
+    else {
+      const ctx = newCtx3();
+      for (let i = 0; i < 40 && !anchor; i++) anchor = routePlace(culture.key, ctx.setting, rng);
+    }
+  }
+  const acceptable7 = (text) => {
+    const counted3 = countedWords2(text);
+    if (counted3.length === 0 || counted3.length > WILDS_DATA.cap) return false;
+    if (repeatsContent(counted3)) return false;
+    const n = routeNorm(text);
+    if (block.has(n) || block.has(stripThe(n))) return false;
+    if (breaksRouteWords(text) || hasBannedWord(text) || hasWildsBanned(text)) return false;
+    return true;
+  };
+  const nativeRequest = options.purposeBuiltOnly ? void 0 : nativeSettlementRequest(module2, culture.key, era, where2, region, homeBritish ? void 0 : options.biome, mode);
+  let nativeQueue;
+  const nextNative = () => {
+    var _a6;
+    if (!nativeRequest) return void 0;
+    if (!nativeQueue) {
+      const request = { ...nativeRequest, count, seed: Math.floor(rng() * 4294967296) >>> 0 };
+      (_a6 = wildsHooks.onNativeCall) == null ? void 0 : _a6.call(wildsHooks, request);
+      try {
+        nativeQueue = generateSettlementNames(request).names.map((n) => n.text);
+      } catch (e) {
+        nativeQueue = [];
+      }
+    }
+    while (nativeQueue.length > 0) {
+      const text = nativeQueue.shift();
+      if (acceptable7(text)) return text;
+    }
+    return void 0;
+  };
+  let first = true;
+  const oneName2 = () => {
+    var _a6;
+    const parent = options.series && first && !chosenKind;
+    for (let round = 0; round < 2; round++) {
+      let kindKey;
+      if (chosenKind) kindKey = chosenKind.key;
+      else if (parent) kindKey = PARENT_KIND[module2];
+      else kindKey = pickWeighted5(kindWeights(), rng);
+      if (kindKey === "settlement" && nativeRequest && rng() >= WILDS_DATA.settlementLink.purposeBuiltShare) {
+        const text = nextNative();
+        if (text) return { text, kind: "settlement", shape: "native", era, tones: [], words: [], source: "native" };
+      }
+      let list = kindKey ? plans4().get(kindKey) : void 0;
+      if (parent && list) {
+        const twn = list.filter(([p]) => p.shape.f === "twn" && p.shape.p.includes("{town}"));
+        if (twn.length > 0) list = twn;
+      }
+      if (!list || list.length === 0) {
+        if (chosenKind) return void 0;
+        const fallback = fallbackPlans();
+        if (fallback.length === 0) return void 0;
+        list = fallback;
+        kindKey = void 0;
+      }
+      for (let i = 0; i < 20; i++) {
+        const ctx = newCtx3();
+        ctx.anchor = anchor;
+        ctx.forceAnchor = !!parent;
+        const plan = pickWeighted5(list, rng);
+        if (!plan) break;
+        ctx.shape = plan.shape;
+        const raw = renderPattern7(ctx, plan.shape.p);
+        if (!raw) continue;
+        const text = routeCapitals(raw);
+        if (!acceptable7(text)) continue;
+        const tones = /* @__PURE__ */ new Set([...(_a6 = plan.shape.t) != null ? _a6 : [], ...ctx.drawn]);
+        return {
+          text,
+          kind: plan.kind,
+          shape: plan.shape.p,
+          era,
+          tones: GROUP_TONES.filter((t) => tones.has(t)),
+          words: ctx.words,
+          ...anchor !== void 0 ? { anchored: ctx.anchored } : {},
+          ...plan.kind === "settlement" ? { source: "purpose-built" } : {}
+        };
+      }
+    }
+    return void 0;
+  };
+  const seen = /* @__PURE__ */ new Set();
+  const names = [];
+  for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
+    const name = oneName2();
+    if (!name) {
+      if (attempt2 > 200 && names.length === 0) break;
+      continue;
+    }
+    const key2 = name.text.toLowerCase();
+    if (seen.has(key2)) continue;
+    seen.add(key2);
+    names.push(name);
+    first = false;
+  }
+  if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
+  return { names, seed, notices };
+}
+
+// src/wilds/sentence.ts
+function defaultWildsState(module2) {
+  return { culture: wildsDefaultCulture(module2), era: "MD", where: "home", fantastic: false, tone: "any", people: "placeholders", series: false };
+}
+var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
+var WHERE_TEXT = { home: "in home country", new: "in newly explored country" };
+var wildsRegionText = (region) => region ? `in ${regionPhrase(region)}` : "across all of Britain";
+function wildsBiomeText(module2, biome) {
+  const found = wildsBiomes(module2).find((b) => b.id === biome);
+  return found ? `in ${found.phrase}` : "in any land";
+}
+function wildsSentence(state, module2) {
+  var _a5;
+  const out = [];
+  const culture = (_a5 = findWildsCulture(state.culture)) != null ? _a5 : WILDS_CULTURES[0];
+  const label = WILDS_DATA.modules[module2].label;
+  out.push({
+    field: "culture",
+    text: culture.label,
+    title: `Naming culture: whose customs the ${label} names follow`,
+    choices: WILDS_CULTURES.map((c, i) => {
+      var _a6;
+      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a6 = WILDS_CULTURES[i - 1]) == null ? void 0 : _a6.group) ? { group: c.group } : {} };
+    }),
+    current: culture.key
+  });
+  out.push(" ");
+  const kinds = wildsKindsAt(module2, state.era);
+  const kind = kinds.find((k) => k.key === state.kind);
+  const any = wildsAny(module2);
+  out.push({
+    field: "kind",
+    text: kind ? kind.plural : any,
+    title: kind ? kind.menu : any.charAt(0).toUpperCase() + any.slice(1),
+    choices: [{ id: void 0, label: "Any" }, ...kinds.map((k) => ({ id: k.key, label: k.menu }))],
+    current: kind == null ? void 0 : kind.key
+  });
+  out.push(" of the ");
+  out.push({
+    field: "era",
+    text: wildsEraLabel(state.era),
+    title: "The age: decides which names exist",
+    choices: wildsEras(module2).map((e) => ({ id: e, label: wildsEraLabel(e) })),
+    current: state.era
+  });
+  out.push(" era, ");
+  out.push({
+    field: "where",
+    text: WHERE_TEXT[state.where],
+    title: "Home country: a people naming its own land. New country: explorers naming land they have just reached",
+    choices: ["home", "new"].map((w) => ({ id: w, label: WHERE_TEXT[w] })),
+    current: state.where
+  });
+  out.push(", in a ");
+  const words = fantasticWords(state.era);
+  out.push({
+    field: "fantastic",
+    text: words[state.fantastic ? 1 : 0],
+    title: "Open magic and monsters; in the steam age, steampunk",
+    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
+    current: state.fantastic ? "on" : "off"
+  });
+  out.push(" world, ");
+  if (showsWildsRegion(module2, state.culture, state.where)) {
+    out.push({
+      field: "region",
+      text: wildsRegionText(state.region),
+      title: "Weights the names towards a region's customs",
+      choices: [{ id: void 0, label: wildsRegionText(void 0) }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: wildsRegionText(r.code), title: r.counties }))],
+      current: state.region
+    });
+  } else {
+    out.push({
+      field: "biome",
+      text: wildsBiomeText(module2, state.biome),
+      title: "Weights the names towards a land's wildlife, plants and words",
+      choices: [{ id: void 0, label: wildsBiomeText(module2, void 0) }, ...wildsBiomes(module2).map((b) => ({ id: b.id, label: wildsBiomeText(module2, b.id) }))],
+      current: state.biome
+    });
+  }
+  out.push(", ");
+  out.push({
+    field: "tone",
+    text: TONE_PHRASES[state.tone],
+    title: "Tone: weights names towards a mood; it never rules any out",
+    choices: ["any", ...GROUP_TONES].map((t) => ({ id: t, label: TONE_PHRASES[t] })),
+    current: state.tone
+  });
+  out.push(", with ");
+  out.push({
+    field: "people",
+    text: PEOPLE_TEXT6[state.people],
+    title: "Placeholders like [place], or invented names",
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT6[p] })),
+    current: state.people
+  });
+  out.push(" people and places, ");
+  const seriesText = WILDS_DATA.modules[module2].seriesText;
+  out.push({
+    field: "series",
+    text: state.series ? seriesText : "each one separate",
+    title: "Names that share one place, like the peaks and passes of one range",
+    choices: [
+      { id: "off", label: "each one separate" },
+      { id: "on", label: seriesText }
+    ],
+    current: state.series ? "on" : "off"
+  });
+  return out;
+}
+function wildsSentenceText(segments) {
+  const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
+}
+function chooseWilds(state, field, id, module2) {
+  const next = { ...state };
+  switch (field) {
+    case "culture":
+      next.culture = id != null ? id : wildsDefaultCulture(module2);
+      break;
+    case "kind":
+      next.kind = id;
+      break;
+    case "era":
+      next.era = wildsEras(module2).includes(id) ? id : defaultWildsState(module2).era;
+      break;
+    case "where":
+      next.where = id === "new" ? "new" : "home";
+      break;
+    case "fantastic":
+      next.fantastic = id === "on";
+      break;
+    case "region":
+      next.region = id;
+      break;
+    case "biome":
+      next.biome = id;
+      break;
+    case "tone":
+      next.tone = id != null ? id : "any";
+      break;
+    case "people":
+      next.people = id != null ? id : "placeholders";
+      break;
+    case "series":
+      next.series = id === "on";
+      break;
+  }
+  if (next.kind && !findWildsKind(module2, next.kind)) next.kind = void 0;
+  if (next.kind && !wildsKindsAt(module2, next.era).some((k) => k.key === next.kind)) next.kind = void 0;
+  if (next.biome && !wildsBiomes(module2).some((b) => b.id === next.biome)) next.biome = void 0;
+  return next;
+}
+function wildsHistoryLabel(module2, state, moduleLabel2) {
+  var _a5, _b3;
+  const culture = (_b3 = (_a5 = findWildsCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const kind = findWildsKind(module2, state.kind);
+  const regionShown = showsWildsRegion(module2, state.culture, state.where);
+  const biome = wildsBiomes(module2).find((b) => b.id === state.biome);
+  return [
+    moduleLabel2,
+    wildsEraLabel(state.era),
+    culture,
+    ...state.where === "new" ? ["new country"] : [],
+    ...regionShown && state.region ? [regionPhrase(state.region)] : [],
+    ...!regionShown && biome ? [biome.label] : [],
+    ...kind ? [kind.plural] : [],
+    ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
+    ...state.tone !== "any" ? [state.tone] : [],
+    ...state.series ? ["series"] : []
+  ].join(" \xB7 ");
+}
+
 // src/waters/guide.ts
 var import_obsidian6 = require("obsidian");
 
@@ -105099,7 +116884,7 @@ var WATERS_MEDIA = [
   { id: "wind", text: "like the wind", label: "like the wind" },
   { id: "both", text: "like the sea or the wind", label: "sea or wind" }
 ];
-var isBritishCulture = (culture) => BRITISH_CULTURES.includes(culture);
+var isBritishCulture2 = (culture) => BRITISH_CULTURES.includes(culture);
 var waterKinds = (module2) => WATERS_DATA.modules[module2].kinds;
 var findWaterKind = (module2, key2) => waterKinds(module2).find((k) => k.key === key2);
 var waterEras = (module2) => WATERS_DATA.modules[module2].eras;
@@ -105110,7 +116895,7 @@ var watersEraLabel = (code) => {
   var _a5, _b3;
   return (_b3 = (_a5 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a5.label) != null ? _b3 : code;
 };
-var showsWatersRegion = (culture, where2) => isBritishCulture(culture) && where2 === "home";
+var showsWatersRegion = (culture, where2) => isBritishCulture2(culture) && where2 === "home";
 var FIXED_POOLS = {
   seasLakes: "watersFixed:seas",
   coastsIslands: "watersFixed:coasts",
@@ -105118,58 +116903,58 @@ var FIXED_POOLS = {
   hyperspaceCharts: "watersFixed:hyperspace"
 };
 var FIXED_WEIGHT = 3;
-var PLURAL_POOLS = /* @__PURE__ */ new Set(["coveFolk"]);
-var LIGHT_OR_GRIM2 = (t) => !!t && (t.includes("light") || t.includes("grim"));
-var pickOne8 = (items, rng) => items[Math.floor(rng() * items.length)];
-var MEAN_CACHE = /* @__PURE__ */ new Map();
-function regionMult2(ctx, tag) {
+var PLURAL_POOLS2 = /* @__PURE__ */ new Set(["coveFolk"]);
+var LIGHT_OR_GRIM3 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var pickOne9 = (items, rng) => items[Math.floor(rng() * items.length)];
+var MEAN_CACHE2 = /* @__PURE__ */ new Map();
+function regionMult3(ctx, tag) {
   var _a5;
   if (!tag || !ctx.homeBritish) return 1;
   const row = WATERS_DATA.regionTags[tag];
   if (!row) return 1;
   if (ctx.region) return (_a5 = row[ctx.region]) != null ? _a5 : 1;
-  let mean = MEAN_CACHE.get(tag);
+  let mean = MEAN_CACHE2.get(tag);
   if (mean === void 0) {
     mean = WATERS_DATA.regions.reduce((n, code) => {
       var _a6;
       return n + ((_a6 = row[code]) != null ? _a6 : 1);
     }, 0) / WATERS_DATA.regions.length;
-    MEAN_CACHE.set(tag, mean);
+    MEAN_CACHE2.set(tag, mean);
   }
   return mean;
 }
-function biomeMult(ctx, tag) {
+function biomeMult2(ctx, tag) {
   var _a5, _b3;
   if (!tag || ctx.homeBritish || !ctx.biome) return 1;
   return (_b3 = (_a5 = WATERS_DATA.biomeTags[tag]) == null ? void 0 : _a5[ctx.biome]) != null ? _b3 : 1;
 }
-function vocabPool3(ctx, pool3) {
-  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(e.t))).map(([e, w]) => {
+function vocabPool4(ctx, pool3) {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(e.t))).map(([e, w]) => {
     var _a5;
-    return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone) * regionMult2(ctx, e.rt) * biomeMult(ctx, e.bt)];
+    return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone) * regionMult3(ctx, e.rt) * biomeMult2(ctx, e.bt)];
   }).filter(([, n]) => n > 0);
 }
-function drawEntry(ctx, pool3) {
+function drawEntry2(ctx, pool3) {
   var _a5;
-  const e = pickWeighted5(vocabPool3(ctx, pool3), ctx.rng);
+  const e = pickWeighted5(vocabPool4(ctx, pool3), ctx.rng);
   if (!e) return void 0;
   for (const t of (_a5 = e.t) != null ? _a5 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
   return e;
 }
-function godName2(ctx) {
+function godName3(ctx) {
   if (ctx.culture.sensitive) return void 0;
   const world = godNames(ctx.culture.key);
-  if (world.length > 0) return pickOne8(world, ctx.rng);
+  if (world.length > 0) return pickOne9(world, ctx.rng);
   const hooks2 = deityHooks();
   if (!hooks2 || !hooks2.cultureOffered(ctx.culture.key)) return void 0;
   return hooks2.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng: ctx.rng, vocab: ctx.vocab });
 }
-var godAvailable = (ctx) => {
+var godAvailable2 = (ctx) => {
   var _a5;
   return !ctx.culture.sensitive && (godNames(ctx.culture.key).length > 0 || !!((_a5 = deityHooks()) == null ? void 0 : _a5.cultureOffered(ctx.culture.key)));
 };
-function riverName2(ctx) {
+function riverName3(ctx) {
   if (ctx.mode === "placeholders") return "[river]";
   const setting = ctx.homeBritish ? "british" : ctx.where === "home" ? "established" : "new-land";
   const text = riverFill({ setting, region: ctx.homeBritish ? ctx.region : void 0 }, ctx.rng).replace(/\bRiver\b/gi, "").replace(/^the /i, "").replace(/\s+/g, " ").trim();
@@ -105199,7 +116984,7 @@ function shipName(ctx) {
     }).names.map((n) => n.name.replace(/^(the )/i, "")).filter((n) => !n.includes("["));
     SHIP_POOLS.set(key2, pool3);
   }
-  return pool3.length > 0 ? pickOne8(pool3, ctx.rng) : void 0;
+  return pool3.length > 0 ? pickOne9(pool3, ctx.rng) : void 0;
 }
 function starName(ctx) {
   var _a5, _b3;
@@ -105223,38 +117008,38 @@ function starName(ctx) {
   for (let i = 0; i < 5 && ctx.stars.includes(star); i++) star = draw2();
   return star;
 }
-function anchored(ctx, free) {
+function anchored2(ctx, free) {
   if (ctx.anchors && !ctx.anchorDecided) {
     ctx.anchorDecided = true;
     if (ctx.rng() < 0.6) {
       ctx.anchored = true;
-      return pickOne8(ctx.anchors, ctx.rng);
+      return pickOne9(ctx.anchors, ctx.rng);
     }
   }
   return free();
 }
-function listWord5(ctx, list) {
+function listWord6(ctx, list) {
   var _a5;
-  const items = groupListWords(list, ctx.setting, (_a5 = ctx.scale) != null ? _a5 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const items = groupListWords(list, ctx.setting, (_a5 = ctx.scale) != null ? _a5 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.words.push({ pool: list, word: w });
   return w;
 }
-var PLACEHOLDER2 = (name) => `[${name}]`;
-function token9(ctx, name) {
+var PLACEHOLDER3 = (name) => `[${name}]`;
+function token10(ctx, name) {
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
     case "town": {
       const free = () => placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
-      const t = anchored(ctx, free);
+      const t = anchored2(ctx, free);
       if (t) ctx.words.push({ pool: "town", word: t });
       return t;
     }
     case "star": {
-      const t = anchored(ctx, () => starName(ctx));
+      const t = anchored2(ctx, () => starName(ctx));
       if (t) {
         ctx.stars.push(t);
         ctx.words.push({ pool: "star", word: t });
@@ -105262,24 +117047,24 @@ function token9(ctx, name) {
       return t;
     }
     case "spaceDirection":
-      return listWord5(ctx, "spaceDirection");
+      return listWord6(ctx, "spaceDirection");
     case "number":
-      return listWord5(ctx, "number");
+      return listWord6(ctx, "number");
     case "folk":
-      return placeholders ? PLACEHOLDER2("folk") : routeFolk(ctx.culture.key, rng);
+      return placeholders ? PLACEHOLDER3("folk") : routeFolk(ctx.culture.key, rng);
     case "person": {
-      if (placeholders) return PLACEHOLDER2("person");
+      if (placeholders) return PLACEHOLDER3("person");
       const names = personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne8(names, rng) : void 0;
+      return names.length > 0 ? pickOne9(names, rng) : void 0;
     }
     case "kingdom":
-      return placeholders ? PLACEHOLDER2("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng);
+      return placeholders ? PLACEHOLDER3("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng);
     case "holy":
       return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
     case "god":
-      return placeholders ? "[deity]" : godName2(ctx);
+      return placeholders ? "[deity]" : godName3(ctx);
     case "river":
-      return riverName2(ctx);
+      return riverName3(ctx);
     case "ship":
       return shipName(ctx);
     case "ordinal": {
@@ -105288,64 +117073,64 @@ function token9(ctx, name) {
       return ordinalText(pickWeighted5(choices, rng));
     }
   }
-  return drawEntry(ctx, name);
+  return drawEntry2(ctx, name);
 }
-var SOURCES = /* @__PURE__ */ new Set(["town", "star", "spaceDirection", "number", "folk", "person", "kingdom", "holy", "god", "river", "ship", "ordinal"]);
-var plural2 = (e) => {
+var SOURCES2 = /* @__PURE__ */ new Set(["town", "star", "spaceDirection", "number", "folk", "person", "kingdom", "holy", "god", "river", "ship", "ordinal"]);
+var plural3 = (e) => {
   var _a5;
   return (_a5 = e.pl) != null ? _a5 : biomeTitleCase(pluralOf(e.w.toLowerCase()));
 };
-function renderPattern7(ctx, pattern) {
+function renderPattern8(ctx, pattern) {
   ctx.anchorDecided = false;
   ctx.anchored = false;
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
     const [name, mod] = raw.split(":");
-    const piece = token9(ctx, name);
+    const piece = token10(ctx, name);
     if (piece === void 0 || piece === "") {
       failed = true;
       return "";
     }
     const entry = typeof piece === "string" ? void 0 : piece;
     const text = typeof piece === "string" ? piece : piece.w;
-    if (mod === "pl") return entry ? plural2(entry) : text;
-    if (mod === "poss") return groupPossessive(text, PLURAL_POOLS.has(name));
+    if (mod === "pl") return entry ? plural3(entry) : text;
+    if (mod === "poss") return groupPossessive(text, PLURAL_POOLS2.has(name));
     return text;
   });
   return failed ? void 0 : out;
 }
-var stripThe = (s) => s.replace(/^the /, "");
-function blockSet(hyper, guards) {
+var stripThe2 = (s) => s.replace(/^the /, "");
+function blockSet2(hyper, guards) {
   var _a5;
   const phrases = [...hyper ? WATERS_DATA.safeguards.hyper : WATERS_DATA.safeguards.earthly, ...(_a5 = guards == null ? void 0 : guards.block) != null ? _a5 : [], ...(guards == null ? void 0 : guards.flagListBlocks) ? guards.flag : []];
   const set = /* @__PURE__ */ new Set();
   for (const p of phrases) {
     const n = routeNorm(p);
     set.add(n);
-    set.add(stripThe(n));
+    set.add(stripThe2(n));
   }
   return set;
 }
 function watersBlocked(text, hyper, guards) {
-  const set = blockSet(hyper, guards);
+  const set = blockSet2(hyper, guards);
   const n = routeNorm(text);
-  return set.has(n) || set.has(stripThe(n));
+  return set.has(n) || set.has(stripThe2(n));
 }
 var watersWordBlocked = (word, guards) => watersBlocked(word, false, guards) || breaksRouteWords(word);
-var tokensOf = (p) => [...p.matchAll(/\{([^}:]+)/g)].map((m) => m[1]);
-function tokensLive(ctx, p) {
+var tokensOf2 = (p) => [...p.matchAll(/\{([^}:]+)/g)].map((m) => m[1]);
+function tokensLive2(ctx, p) {
   var _a5;
-  for (const t of tokensOf(p)) {
-    if (SOURCES.has(t)) {
-      if (t === "god" && ctx.mode === "invented" && !godAvailable(ctx)) return false;
+  for (const t of tokensOf2(p)) {
+    if (SOURCES2.has(t)) {
+      if (t === "god" && ctx.mode === "invented" && !godAvailable2(ctx)) return false;
       if (t === "god" && ctx.mode === "placeholders" && ctx.culture.sensitive) return false;
       if (t === "god" && ctx.mode === "placeholders" && godNames(ctx.culture.key).length === 0 && !((_a5 = deityHooks()) == null ? void 0 : _a5.cultureOffered(ctx.culture.key))) return false;
       if (t === "person" && ctx.mode === "invented" && personNames(ctx.culture.key).length === 0) return false;
       if (t === "holy" && !cultureAllowed(["christian"], ctx.culture.key, ctx.era)) return false;
       continue;
     }
-    if (vocabPool3(ctx, t).length === 0) return false;
+    if (vocabPool4(ctx, t).length === 0) return false;
   }
   return true;
 }
@@ -105355,26 +117140,26 @@ function earthlyWeight(ctx, s, hardOnly = false) {
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
-  const british = isBritishCulture(c.key);
+  const british = isBritishCulture2(c.key);
   if (((_a5 = s.c) == null ? void 0 : _a5.includes("british")) && s.rt && british && ctx.where !== "home") return 0;
   if (s.nb && ctx.homeBritish) return 0;
-  if (c.sensitive && (s.h || LIGHT_OR_GRIM2(s.t))) return 0;
-  if (!tokensLive(ctx, s.p)) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM3(s.t))) return 0;
+  if (!tokensLive2(ctx, s.p)) return 0;
   if (hardOnly) return s.w;
   const cm = (_b3 = WATERS_DATA.cultureMult[c.key]) != null ? _b3 : {};
   const family = ((_c3 = cm[s.f]) != null ? _c3 : 1) * (s.of ? (_d3 = cm.of) != null ? _d3 : 1 : 1);
   const where2 = (_f = (_e3 = WATERS_DATA.where[s.f]) == null ? void 0 : _e3[ctx.where]) != null ? _f : 1;
   const era = (_h = (_g = WATERS_DATA.eraMult[s.f]) == null ? void 0 : _g[ctx.era]) != null ? _h : 1;
   const extra = ((_j = (_i = s.cx) == null ? void 0 : _i[c.key]) != null ? _j : 1) * (ctx.where === "new" ? (_k = s.nx) != null ? _k : 1 : 1);
-  return s.w * family * where2 * era * extra * regionMult2(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor((_l = s.t) != null ? _l : [], ctx.tone);
+  return s.w * family * where2 * era * extra * regionMult3(ctx, s.rt) * biomeMult2(ctx, s.bt) * toneFactor((_l = s.t) != null ? _l : [], ctx.tone);
 }
 function hyperWeight(ctx, s, register, medium) {
   var _a5, _b3, _c3, _d3, _e3, _f;
   const c = ctx.culture;
   if (s.sc && ctx.scale && !s.sc.includes(ctx.scale)) return 0;
   if (s.m && medium !== "both" && s.m !== medium) return 0;
-  if (c.sensitive && LIGHT_OR_GRIM2(s.t)) return 0;
-  if (!tokensLive(ctx, s.p)) return 0;
+  if (c.sensitive && LIGHT_OR_GRIM3(s.t)) return 0;
+  if (!tokensLive2(ctx, s.p)) return 0;
   const cm = (_a5 = WATERS_DATA.cultureMult[c.key]) != null ? _a5 : {};
   let family = 1;
   if (s.p.includes("{person")) family *= (_b3 = cm.per) != null ? _b3 : 1;
@@ -105398,14 +117183,14 @@ function generateWatersNames(options) {
   const era = eras.includes(options.era) ? options.era : hyper ? "IS" : "MD";
   const where2 = !hyper && options.where === "new" ? "new" : "home";
   const fantastic = !hyper && !!options.fantastic;
-  const homeBritish = !hyper && isBritishCulture(culture.key) && where2 === "home";
+  const homeBritish = !hyper && isBritishCulture2(culture.key) && where2 === "home";
   const region = homeBritish && options.region && options.region !== "all" ? options.region : void 0;
   const biome = !homeBritish && !hyper && options.biome && BIOMES.some((b) => b.id === options.biome) ? options.biome : void 0;
   const medium = options.medium === "wind" || options.medium === "both" ? options.medium : "sea";
   const register = WATERS_REGISTERS.some((r) => r.id === options.register) ? options.register : "any";
   const mode = (_b3 = options.people) != null ? _b3 : "placeholders";
   const count = Math.max(0, Math.floor(options.count));
-  const block = blockSet(hyper, options.safeguards);
+  const block = blockSet2(hyper, options.safeguards);
   const chosenScale = hyper && HYPER_SCALES.includes(options.scale) ? options.scale : void 0;
   const newCtx3 = (scale) => {
     var _a6, _b4;
@@ -105457,7 +117242,7 @@ function generateWatersNames(options) {
   };
   const fixedLive = () => {
     if (options.shape) return false;
-    return vocabPool3(newCtx3(chosenScale), FIXED_POOLS[module2]).length > 0;
+    return vocabPool4(newCtx3(chosenScale), FIXED_POOLS[module2]).length > 0;
   };
   const chosenKind = options.kind ? hyper ? findHyperKind(options.kind) : findWaterKind(earthlyModule, options.kind) : void 0;
   if (options.kind && !chosenKind) notices.push(`Kind \u201C${options.kind}\u201D isn't offered here.`);
@@ -105504,7 +117289,7 @@ function generateWatersNames(options) {
     if (counted3.length === 0 || counted3.length > WATERS_DATA.cap) return false;
     if (repeatsContent(counted3)) return false;
     const n = routeNorm(text);
-    if (block.has(n) || block.has(stripThe(n))) return false;
+    if (block.has(n) || block.has(stripThe2(n))) return false;
     if (breaksRouteWords(text) || hasBannedWord(text)) return false;
     if (hyper && hasSpaceBlock(text)) return false;
     return true;
@@ -105548,14 +117333,14 @@ function generateWatersNames(options) {
         let raw;
         let plan;
         if (fixed) {
-          const e = drawEntry(ctx, FIXED_POOLS[module2]);
+          const e = drawEntry2(ctx, FIXED_POOLS[module2]);
           raw = e == null ? void 0 : e.w;
           plan = { kind: "fixed", shape: { p: "fixed", w: 0, f: "fixed" }, fixed: true };
         } else {
           plan = pickWeighted5(list, rng);
           if (!plan) break;
           ctx.shape = plan.shape;
-          raw = renderPattern7(ctx, plan.shape.p);
+          raw = renderPattern8(ctx, plan.shape.p);
         }
         if (!raw || !plan) continue;
         const text = routeCapitals(raw);
@@ -105607,8 +117392,8 @@ function defaultWatersState(module2) {
     register: "any"
   };
 }
-var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
-var WHERE_TEXT = { home: "on home shores", new: "on newly charted shores" };
+var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
+var WHERE_TEXT2 = { home: "on home shores", new: "on newly charted shores" };
 var SERIES_TEXT4 = {
   seasLakes: { off: "each one separate", on: "each one separate" },
   coastsIslands: { off: "each one separate", on: "along one stretch of coast" },
@@ -105690,9 +117475,9 @@ function watersSentence(state, module2) {
     out.push(" era, ");
     out.push({
       field: "where",
-      text: WHERE_TEXT[state.where],
+      text: WHERE_TEXT2[state.where],
       title: "Home shores: a people naming its own coast. New shores: explorers naming a coast they have just reached",
-      choices: ["home", "new"].map((w) => ({ id: w, label: WHERE_TEXT[w] })),
+      choices: ["home", "new"].map((w) => ({ id: w, label: WHERE_TEXT2[w] })),
       current: state.where
     });
     out.push(", in a ");
@@ -105737,9 +117522,9 @@ function watersSentence(state, module2) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT6[state.people],
+    text: PEOPLE_TEXT7[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT6[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT7[p] })),
     current: state.people
   });
   out.push(hyper ? " people" : " people and places");
@@ -106705,15 +118490,15 @@ var defaultStreetSafeguards = () => ({
   flag: STREET_DATA.safeguards.flag,
   flagListBlocks: STREET_DATA.safeguards.flagListBlocks
 });
-var pickOne9 = (items, rng) => items[Math.floor(rng() * items.length)];
-var LIGHT_OR_GRIM3 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var pickOne10 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIGHT_OR_GRIM4 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE2 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var TRADE_TOKENS = /\{(trade|tradeSg)[}:]/;
 var POOL_OF2 = { sw: "streetWord", aw: "alleyWord", dw: "districtWord" };
 var SF_LISTS2 = /* @__PURE__ */ new Set(["star", "greek", "stationDirection"]);
 var where = (ctx, region = ctx.region) => ({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region });
-function vocabPool4(ctx, pool3, region = ctx.region) {
-  return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, where(ctx, region))).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(e.t))).map(([e, w]) => {
+function vocabPool5(ctx, pool3, region = ctx.region) {
+  return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, where(ctx, region))).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(e.t))).map(([e, w]) => {
     var _a5;
     return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
@@ -106726,14 +118511,14 @@ function fromPool3(ctx, pool3, items) {
   ctx.words.push({ pool: pool3, word: e.w });
   return e.w;
 }
-var vocabWord2 = (ctx, pool3, keep) => fromPool3(ctx, pool3, vocabPool4(ctx, pool3).filter(([e]) => !keep || keep(e)));
+var vocabWord2 = (ctx, pool3, keep) => fromPool3(ctx, pool3, vocabPool5(ctx, pool3).filter(([e]) => !keep || keep(e)));
 function gnWord5(ctx, list, keep) {
   if (list === "star") {
     const star = groupStarIn("any", ctx.mode, ctx.rng);
     ctx.words.push({ pool: "star", word: star });
     return star;
   }
-  const items = groupListWords(list, SF_LISTS2.has(list) ? "SF" : ctx.setting).filter(([w2]) => (!keep || keep(w2)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM3(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const items = groupListWords(list, SF_LISTS2.has(list) ? "SF" : ctx.setting).filter(([w2]) => (!keep || keep(w2)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM4(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w !== void 0) {
     for (const t of wordTones(list, w)) ctx.drawn.add(t);
@@ -106754,7 +118539,7 @@ function componentPools(ctx) {
   return Object.entries(weights).map(([p, w]) => {
     var _a6;
     return [p, w * ((_a6 = x == null ? void 0 : x[p]) != null ? _a6 : 1)];
-  }).filter(([p]) => vocabPool4(ctx, p).length > 0);
+  }).filter(([p]) => vocabPool5(ctx, p).length > 0);
 }
 function component(ctx) {
   const pool3 = pickWeighted5(componentPools(ctx), ctx.rng);
@@ -106764,7 +118549,7 @@ function component(ctx) {
 }
 function streetGoods(ctx) {
   var _a5, _b3, _c3;
-  const items = vocabPool4(ctx, "streetGoods");
+  const items = vocabPool5(ctx, "streetGoods");
   for (const e of (_c3 = (_b3 = (_a5 = ctx.vocab.pools.routeGoods) == null ? void 0 : _a5.cultureExtra) == null ? void 0 : _b3[ctx.culture.key]) != null ? _c3 : []) {
     const found = items.find(([x]) => x.w === e.w);
     if (found) found[1] *= 2;
@@ -106777,7 +118562,7 @@ function streetGoods(ctx) {
 function dialectWord(ctx, keep) {
   var _a5;
   const region = (_a5 = ctx.dialectRegion) != null ? _a5 : ctx.region;
-  const items = vocabPool4(ctx, "alleyDialect", region).filter(([e]) => !keep || keep(e.w)).map(([e, w]) => {
+  const items = vocabPool5(ctx, "alleyDialect", region).filter(([e]) => !keep || keep(e.w)).map(([e, w]) => {
     var _a6, _b3;
     return [e, region ? w : w * ((_b3 = (_a6 = e.r) == null ? void 0 : _a6.length) != null ? _b3 : 1)];
   });
@@ -106816,7 +118601,7 @@ function destination(ctx) {
     return t2;
   }
   if (ctx.mode === "placeholders") return "[place]";
-  const t = ctx.towns ? pickOne9(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const t = ctx.towns ? pickOne10(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
   if (t) ctx.uses.push(`destination:${t}`);
   return t;
 }
@@ -106840,7 +118625,7 @@ function landmark(ctx) {
   return w;
 }
 var directionKey = (w) => w.replace(/ern$/, "");
-function token10(ctx, name, alt, pattern) {
+function token11(ctx, name, alt, pattern) {
   var _a5, _b3;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
@@ -106878,18 +118663,18 @@ function token10(ctx, name, alt, pattern) {
       if (ctx.options.context) return ctx.options.context.founder;
       if (placeholders) return "[founder]";
       const names = personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne9(names, rng) : void 0;
+      return names.length > 0 ? pickOne10(names, rng) : void 0;
     }
     case "surname":
       return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord5(ctx, "surname");
     case "god": {
       const gods = godNames(ctx.culture.key);
-      return gods.length > 0 ? pickOne9(gods, rng) : void 0;
+      return gods.length > 0 ? pickOne10(gods, rng) : void 0;
     }
     case "weekday":
       return pickWeighted5(STREET_DATA.lists.weekday, rng);
     case "hill":
-      return pickOne9(STREET_DATA.lists.hill, rng);
+      return pickOne10(STREET_DATA.lists.hill, rng);
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
@@ -106933,7 +118718,7 @@ function token10(ctx, name, alt, pattern) {
   }
   return vocabWord2(ctx, (_b3 = POOL_OF2[name]) != null ? _b3 : name);
 }
-function renderPattern8(ctx, pattern) {
+function renderPattern9(ctx, pattern) {
   let failed = false;
   let hasDialect = false;
   const dialectParts = [];
@@ -106946,7 +118731,7 @@ function renderPattern8(ctx, pattern) {
     last = m.index + m[0].length;
     const [name, mod] = m[1].split(":");
     let alt;
-    const piece = token10(ctx, name, (d) => alt = d, pattern);
+    const piece = token11(ctx, name, (d) => alt = d, pattern);
     if (!piece) {
       failed = true;
       break;
@@ -106963,10 +118748,10 @@ function renderPattern8(ctx, pattern) {
   return { plain, ...hasDialect ? { dialect: routeCapitals(dialectParts.join("")) } : {} };
 }
 var wordRe11 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED9 = [...STREET_DATA.safeguards.banned, ...STREET_DATA.safeguards.religious].map(wordRe11);
+var BANNED10 = [...STREET_DATA.safeguards.banned, ...STREET_DATA.safeguards.religious].map(wordRe11);
 var CHRISTIAN_WORDS = STREET_DATA.safeguards.christian.map(wordRe11);
 function breaksStreetWords(text) {
-  return breaksRouteWords(text) || BANNED9.some((re) => re.test(text));
+  return breaksRouteWords(text) || BANNED10.some((re) => re.test(text));
 }
 var hasChristianWord = (text) => CHRISTIAN_WORDS.some((re) => re.test(text));
 function streetBlockSet(guards = defaultStreetSafeguards()) {
@@ -106975,26 +118760,26 @@ function streetBlockSet(guards = defaultStreetSafeguards()) {
 function streetWordBlocked(word, guards) {
   return streetBlockSet(guards).has(routeNorm(word)) || breaksStreetWords(word);
 }
-function shapeWeight5(ctx, s) {
+function shapeWeight6(ctx, s) {
   var _a5, _b3, _c3, _d3, _e3, _f, _g, _h;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
-  if (c.sensitive && (s.h || LIGHT_OR_GRIM3(s.t))) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM4(s.t))) return 0;
   if (CASTE2.has(c.key) && TRADE_TOKENS.test(s.p)) return 0;
   if (ctx.mode === "invented" && s.p.includes("{founder}") && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
   if (s.p.includes("{holy:") && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
-  if (s.p === "{districtFixed}" && !vocabPool4(ctx, "districtFixed").some(([e]) => !e.fn || e.fn.includes("any") || !!ctx.fn && e.fn.includes(ctx.fn))) return 0;
+  if (s.p === "{districtFixed}" && !vocabPool5(ctx, "districtFixed").some(([e]) => !e.fn || e.fn.includes("any") || !!ctx.fn && e.fn.includes(ctx.fn))) return 0;
   const pool3 = (_a5 = s.p.match(/^\{(\w+)\}$/)) == null ? void 0 : _a5[1];
-  if (pool3 && ctx.vocab.pools[pool3] && vocabPool4(ctx, pool3).length === 0) return 0;
+  if (pool3 && ctx.vocab.pools[pool3] && vocabPool5(ctx, pool3).length === 0) return 0;
   let w = s.w * ((_c3 = (_b3 = s.cx) == null ? void 0 : _b3[c.key]) != null ? _c3 : 1) * toneFactor((_d3 = s.t) != null ? _d3 : [], ctx.tone);
   for (const g of (_e3 = s.g) != null ? _e3 : []) w *= (_g = (_f = STREET_DATA.sizeEffects[g]) == null ? void 0 : _f[ctx.size]) != null ? _g : 1;
   if (ctx.region && s.rx) w *= (_h = s.rx[ctx.region]) != null ? _h : 1;
   return w;
 }
-var live = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
+var live = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight6(ctx, s)]).filter(([, w]) => w > 0);
 function streetShapes(ctx, only) {
   const d = STREET_DATA;
   if (isFuture3(ctx.era) && !only && ctx.rng() < d.scifiStreets.share) return live(ctx, d.scifiStreets.shapes);
@@ -107060,7 +118845,7 @@ function generateStreetNames(options) {
       var _a6;
       return (_a6 = e.r) != null ? _a6 : [];
     }))];
-    dialectRegion = regions.length > 0 ? pickOne9(regions, rng) : void 0;
+    dialectRegion = regions.length > 0 ? pickOne10(regions, rng) : void 0;
   }
   const newCtx3 = (fn) => {
     var _a6;
@@ -107089,7 +118874,7 @@ function generateStreetNames(options) {
   const patternOf = (s) => mode === "invented" && s.p.includes("{royal}") ? "{streetFigure} {sw}" : s.p;
   const render3 = (ctx, s) => {
     var _a6;
-    const out = renderPattern8(ctx, patternOf(s));
+    const out = renderPattern9(ctx, patternOf(s));
     if (!out) return void 0;
     const tones = /* @__PURE__ */ new Set([...(_a6 = s.t) != null ? _a6 : [], ...ctx.drawn]);
     return { ...out, shape: s, tones: GROUP_TONES.filter((t) => tones.has(t)), words: ctx.words, uses: ctx.uses, isRoute: ctx.isRoute };
@@ -107222,12 +119007,12 @@ var defaultBuildingSafeguards = () => ({
   flag: BUILDING_DATA.safeguards.flag,
   flagListBlocks: BUILDING_DATA.safeguards.flagListBlocks
 });
-var pickOne10 = (items, rng) => items[Math.floor(rng() * items.length)];
-var LIGHT_OR_GRIM4 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var pickOne11 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIGHT_OR_GRIM5 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE3 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var SF_LISTS3 = /* @__PURE__ */ new Set(["star", "greek"]);
-function vocabPool5(ctx, pool3) {
-  return boostPool(ctx.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(e.t))).map(([e, w]) => {
+function vocabPool6(ctx, pool3) {
+  return boostPool(ctx.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(e.t))).map(([e, w]) => {
     var _a5;
     return [e, w * toneFactor((_a5 = e.t) != null ? _a5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
@@ -107247,7 +119032,7 @@ function gnWord6(ctx, list, use = false) {
     ctx.words.push({ pool: "star", word: star });
     return star;
   }
-  const items = groupListWords(list, SF_LISTS3.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const items = groupListWords(list, SF_LISTS3.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
@@ -107255,13 +119040,13 @@ function gnWord6(ctx, list, use = false) {
   if (use) ctx.uses.push(`q:${w}`);
   return w;
 }
-var bwItems = (ctx) => vocabPool5(ctx, `buildingWord:${ctx.kind}`).filter(([e]) => {
+var bwItems = (ctx) => vocabPool6(ctx, `buildingWord:${ctx.kind}`).filter(([e]) => {
   var _a5;
   return !((_a5 = ctx.shape) == null ? void 0 : _a5.bw) || ctx.shape.bw.includes(e.w);
 });
-function creature(ctx) {
+function creature2(ctx) {
   const items = BUILDING_DATA.lists.creatureLists.flatMap(
-    (l) => groupListWords(l, ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM4(wordTones(l, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(l, w2), ctx.tone)])
+    (l) => groupListWords(l, ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(wordTones(l, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(l, w2), ctx.tone)])
   );
   const w = pickWeighted5(items, ctx.rng);
   if (w) {
@@ -107282,9 +119067,9 @@ function founder(ctx) {
   if (ctx.founder) return ctx.founder;
   if (ctx.mode === "placeholders") return "[founder]";
   const names = personNames(ctx.culture.key);
-  return names.length > 0 ? pickOne10(names, ctx.rng) : void 0;
+  return names.length > 0 ? pickOne11(names, ctx.rng) : void 0;
 }
-function token11(ctx, name) {
+function token12(ctx, name) {
   var _a5, _b3;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
@@ -107292,7 +119077,7 @@ function token11(ctx, name) {
     case "bw":
       return fromPool4(ctx, `buildingWord:${ctx.kind}`, bwItems(ctx));
     case "fixed":
-      return fromPool4(ctx, `buildingFixed:${ctx.kind}`, vocabPool5(ctx, `buildingFixed:${ctx.kind}`));
+      return fromPool4(ctx, `buildingFixed:${ctx.kind}`, vocabPool6(ctx, `buildingFixed:${ctx.kind}`));
     case "town":
       return town3(ctx);
     case "founder":
@@ -107301,7 +119086,7 @@ function token11(ctx, name) {
     case "patron": {
       if (placeholders) return `[${name}]`;
       const names = name === "owner" ? ownerNames(ctx) : personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne10(names, rng) : void 0;
+      return names.length > 0 ? pickOne11(names, rng) : void 0;
     }
     case "surname":
       return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : gnWord6(ctx, "surname");
@@ -107320,12 +119105,12 @@ function token11(ctx, name) {
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
       const gods = godNames(ctx.culture.key);
-      return gods.length > 0 ? pickOne10(gods, rng) : void 0;
+      return gods.length > 0 ? pickOne11(gods, rng) : void 0;
     }
     case "creature":
-      return creature(ctx);
+      return creature2(ctx);
     case "buildingQual":
-      return fromPool4(ctx, name, vocabPool5(ctx, name), true);
+      return fromPool4(ctx, name, vocabPool6(ctx, name), true);
     case "colour":
       return gnWord6(ctx, name, true);
     case "number":
@@ -107338,22 +119123,22 @@ function token11(ctx, name) {
     case "ordinal":
       return gnWord6(ctx, "ordinalWord");
     case "trade":
-      return fromPool4(ctx, "streetTrades", vocabPool5(ctx, "streetTrades"));
+      return fromPool4(ctx, "streetTrades", vocabPool6(ctx, "streetTrades"));
     case "goods":
-      return fromPool4(ctx, "streetGoods", vocabPool5(ctx, "streetGoods"));
+      return fromPool4(ctx, "streetGoods", vocabPool6(ctx, "streetGoods"));
     case "weekday":
       return pickWeighted5(STREET_DATA.lists.weekday, rng);
     case "discovery":
     case "event":
     case "headland":
-      return pickOne10(BUILDING_DATA.lists[name], rng);
+      return pickOne11(BUILDING_DATA.lists[name], rng);
     case "n":
       return String(1 + Math.floor(rng() * 40));
   }
-  const w = fromPool4(ctx, name, vocabPool5(ctx, name));
-  return (w == null ? void 0 : w.includes("{")) ? renderPattern9(ctx, w) : w;
+  const w = fromPool4(ctx, name, vocabPool6(ctx, name));
+  return (w == null ? void 0 : w.includes("{")) ? renderPattern10(ctx, w) : w;
 }
-function renderPattern9(ctx, pattern) {
+function renderPattern10(ctx, pattern) {
   const outer = ctx.turn;
   if (ctx.context) ctx.turn = new TownTurn(ctx.context, BUILDING_SELF.has(pattern));
   try {
@@ -107367,7 +119152,7 @@ function renderTokens4(ctx, pattern) {
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
     const [name, mod] = raw.split(":");
-    const piece = token11(ctx, name);
+    const piece = token12(ctx, name);
     if (!piece) {
       failed = true;
       return "";
@@ -107380,10 +119165,10 @@ function renderTokens4(ctx, pattern) {
   return out.replace(/^the (\S+'s )/, "$1");
 }
 var wordRe12 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED10 = [...BUILDING_DATA.safeguards.banned, ...BUILDING_DATA.safeguards.religious].map(wordRe12);
+var BANNED11 = [...BUILDING_DATA.safeguards.banned, ...BUILDING_DATA.safeguards.religious].map(wordRe12);
 var CHRISTIAN2 = BUILDING_DATA.safeguards.christian.map(wordRe12);
 function breaksBuildingWords(text) {
-  return breaksInnWords(text) || BANNED10.some((re) => re.test(text));
+  return breaksInnWords(text) || BANNED11.some((re) => re.test(text));
 }
 var hasChristianBuilding = (text) => CHRISTIAN2.some((re) => re.test(text));
 var bare3 = (text) => routeNorm(text).replace(/^the /, "");
@@ -107393,13 +119178,13 @@ function buildingBlockSet(guards = defaultBuildingSafeguards()) {
 function buildingWordBlocked(word, guards) {
   return buildingBlockSet(guards).has(bare3(word)) || breaksBuildingWords(word);
 }
-function shapeWeight6(ctx, s) {
+function shapeWeight7(ctx, s) {
   var _a5, _b3, _c3, _d3, _e3;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
-  if (c.sensitive && (s.h || LIGHT_OR_GRIM4(s.t))) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM5(s.t))) return 0;
   if (s.kinds && !s.kinds.includes(ctx.kind)) return 0;
   if (CASTE3.has(c.key) && s.p.includes("{trade")) return 0;
   if (ctx.mode === "invented" && !ctx.founder && s.p.includes("{founder") && personNames(c.key).length === 0) return 0;
@@ -107415,16 +119200,16 @@ function shapeWeight6(ctx, s) {
     if (hooks2.isChristianCulture(c.key, ctx.era)) return ctx.fantastic && s.p.startsWith("Temple") ? DEITY_CHRISTIAN_WEIGHT * toneFactor((_a5 = s.t) != null ? _a5 : [], ctx.tone) : 0;
   }
   let w = s.w;
-  if (s.p === "{fixed}") w = vocabPool5(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
+  if (s.p === "{fixed}") w = vocabPool6(ctx, `buildingFixed:${ctx.kind}`).reduce((n, [, x]) => n + x, 0);
   const pool3 = (_b3 = s.p.match(/^(?:\{\w+\} )?\{(\w+Landmark)\}$/)) == null ? void 0 : _b3[1];
-  if (pool3 && vocabPool5(ctx, pool3).length === 0) return 0;
+  if (pool3 && vocabPool6(ctx, pool3).length === 0) return 0;
   return w * ((_d3 = (_c3 = s.sx) == null ? void 0 : _c3[ctx.settingKey]) != null ? _d3 : 1) * toneFactor((_e3 = s.t) != null ? _e3 : [], ctx.tone);
 }
 function live2(ctx, shapes, source, only) {
   const out = [];
   for (const s of shapes) {
     if (only && s.p !== only) continue;
-    const w = shapeWeight6(ctx, s);
+    const w = shapeWeight7(ctx, s);
     if (w > 0) out.push([{ shape: s, source: s.p === "{fixed}" ? "fixed" : source }, w]);
   }
   return out;
@@ -107517,7 +119302,7 @@ function generateBuildingNames(options) {
   if (series && options.context) base.town = options.context.town;
   else if (series) {
     base.town = town3(newCtx2(s, "defence"));
-    base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne10(personNames(culture.key), rng) : void 0;
+    base.founder = s.mode === "placeholders" ? "[founder]" : personNames(culture.key).length > 0 ? pickOne11(personNames(culture.key), rng) : void 0;
   }
   const acceptable7 = (text) => {
     const counted3 = countedWords2(text);
@@ -107536,7 +119321,7 @@ function generateBuildingNames(options) {
       const plan = choosePlan(ctx, options.shape);
       if (!plan) return void 0;
       ctx.shape = plan.shape;
-      const raw = renderPattern9(ctx, plan.shape.p);
+      const raw = renderPattern10(ctx, plan.shape.p);
       if (!raw) continue;
       const text = innCapitals(raw);
       if (!acceptable7(text)) continue;
@@ -107623,19 +119408,19 @@ function englishShare(culture, era) {
 }
 var hasSignTradition = (culture) => ROUTE_ERAS.some((e) => englishShare(culture, e.code) > 0);
 var defaultInnSafeguards = () => ({ block: INN_DATA.safeguards.block, flag: INN_DATA.safeguards.flag, flagListBlocks: INN_DATA.safeguards.flagListBlocks });
-var pickOne11 = (items, rng) => items[Math.floor(rng() * items.length)];
-var LIGHT_OR_GRIM5 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var pickOne12 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIGHT_OR_GRIM6 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var COLOURS = /* @__PURE__ */ new Set([...groupListWords("colour", "FL").map(([w]) => w), "Black", "White", "Red", "Blue", "Green", "Golden", "Grey", "Silver", "Pied", "Copper"]);
 var BIRDS2 = new Set(groupListWords("bird", "FL").map(([w]) => w));
 function vocabItems(ctx, pool3, mult = 1) {
-  return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(e.t))).map(([e, w]) => {
+  return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM6(e.t))).map(([e, w]) => {
     var _a5;
     return [{ w: e.w, t: (_a5 = e.t) != null ? _a5 : [] }, w * mult];
   });
 }
 function gnItems(ctx, list) {
   const setting = list === "star" || list === "spaceLand" || list === "tech" ? "SF" : ctx.setting;
-  return groupListWords(list, setting).filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(wordTones(list, w)))).map(([w, n]) => [{ w, t: wordTones(list, w) }, n]);
+  return groupListWords(list, setting).filter(([w]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM6(wordTones(list, w)))).map(([w, n]) => [{ w, t: wordTones(list, w) }, n]);
 }
 function merged(ctx, parts) {
   const out = /* @__PURE__ */ new Map();
@@ -107669,7 +119454,7 @@ function locationItems(ctx) {
   const comps = Object.keys(STREET_DATA.components).map((p) => vocabItems(ctx, p, INN_DATA.lists.componentShare));
   return merged(ctx, [vocabItems(ctx, "innLocation"), ...comps]);
 }
-var creature2 = (ctx, keep) => draw(ctx, "creature", creatureItems(ctx).filter(([w]) => !keep || keep(w.w)), "creature");
+var creature3 = (ctx, keep) => draw(ctx, "creature", creatureItems(ctx).filter(([w]) => !keep || keep(w.w)), "creature");
 var item = (ctx, keep) => draw(ctx, "item", itemItems(ctx).filter(([w]) => !keep || keep(w.w)), "item");
 var person = (ctx, keep) => draw(ctx, "innPerson", merged(ctx, [vocabItems(ctx, "innPerson")]).filter(([w]) => !keep || keep(w.w)), "person");
 function ownerNames2(ctx) {
@@ -107718,20 +119503,20 @@ function landmark2(ctx, kinds) {
   ctx.uses.push(`landmark:${w}`);
   return w;
 }
-function token12(ctx, name) {
+function token13(ctx, name) {
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
     case "creature":
-      return creature2(ctx);
+      return creature3(ctx);
     case "item":
       return item(ctx);
     case "innPerson":
       return person(ctx);
     case "creatureOrItem":
-      return rng() < 0.5 ? creature2(ctx) : item(ctx);
+      return rng() < 0.5 ? creature3(ctx) : item(ctx);
     case "creatureOrPerson":
-      return rng() < 0.5 ? creature2(ctx) : person(ctx);
+      return rng() < 0.5 ? creature3(ctx) : person(ctx);
     case "innLocation":
       return draw(ctx, "innLocation", locationItems(ctx));
     case "trade":
@@ -107742,7 +119527,7 @@ function token12(ctx, name) {
       if (name === "founder" && ctx.options.context) return ctx.options.context.founder;
       if (placeholders) return `[${name}]`;
       const names = name === "owner" ? ownerNames2(ctx) : personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne11(names, rng) : void 0;
+      return names.length > 0 ? pickOne12(names, rng) : void 0;
     }
     case "surname":
       return placeholders || !STREET_DATA.surnameCultures.includes(ctx.culture.key) ? "[surname]" : draw(ctx, "surname", gnItems(ctx, "surname"));
@@ -107766,7 +119551,7 @@ function token12(ctx, name) {
       return routeFigure(ctx.culture.key, ctx.setting, rng);
     case "god": {
       const gods = godNames(ctx.culture.key);
-      return gods.length > 0 ? pickOne11(gods, rng) : void 0;
+      return gods.length > 0 ? pickOne12(gods, rng) : void 0;
     }
     case "ordinal":
       return draw(ctx, "ordinalWord", gnItems(ctx, "ordinalWord"));
@@ -107789,7 +119574,7 @@ function token12(ctx, name) {
     case "grandAdj":
     case "virtue":
     case "drink":
-      return pickOne11(INN_DATA.lists[name], rng);
+      return pickOne12(INN_DATA.lists[name], rng);
     case "n":
       return String(1 + Math.floor(rng() * 40));
     case "auspicious":
@@ -107806,7 +119591,7 @@ function pairTokens(ctx) {
   var _a5;
   const l = INN_DATA.lists;
   const kinds = Object.entries(l.abWeights);
-  const one = (k, keep) => k === "creature" ? creature2(ctx, keep) : k === "item" ? item(ctx, keep) : person(ctx, keep);
+  const one = (k, keep) => k === "creature" ? creature3(ctx, keep) : k === "item" ? item(ctx, keep) : person(ctx, keep);
   const ka = pickWeighted5(kinds, ctx.rng);
   const a = one(ka);
   if (!a) return void 0;
@@ -107820,7 +119605,7 @@ function pairTokens(ctx) {
   const b = one(pickWeighted5(kinds, ctx.rng), (w) => w !== a);
   return b ? [a, b] : void 0;
 }
-function renderPattern10(ctx, pattern) {
+function renderPattern11(ctx, pattern) {
   if (ctx.options.context) ctx.turn = new TownTurn(ctx.options.context, INN_SELF.has(pattern));
   let failed = false;
   let pair2;
@@ -107832,7 +119617,7 @@ function renderPattern10(ctx, pattern) {
     if (name === "a" || name === "b") {
       pair2 != null ? pair2 : pair2 = pairTokens(ctx);
       piece = pair2 == null ? void 0 : pair2[name === "a" ? 0 : 1];
-    } else piece = token12(ctx, name);
+    } else piece = token13(ctx, name);
     if (!piece) {
       failed = true;
       return "";
@@ -107851,14 +119636,14 @@ function innCapitals(text) {
   return routeCapitals(text).replace(/^The /, "the ").replace(/ A /g, " a ");
 }
 var wordRe13 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED11 = INN_DATA.safeguards.banned.map(wordRe13);
+var BANNED12 = INN_DATA.safeguards.banned.map(wordRe13);
 var RACIAL = INN_DATA.safeguards.racialSigns.map(wordRe13);
 var CHRISTIAN3 = INN_DATA.safeguards.christian.map(wordRe13);
 var HOUSE_WORDS = [...new Set(Object.entries(BUILT_IN_VOCAB.pools).filter(([k]) => k.startsWith("houseWord:")).flatMap(([, p]) => p.entries.map((e) => e.w)))].sort(
   (a, b) => b.length - a.length
 );
 function breaksInnWords(text) {
-  return breaksStreetWords(text) || BANNED11.some((re) => re.test(text)) || RACIAL.some((re) => re.test(text));
+  return breaksStreetWords(text) || BANNED12.some((re) => re.test(text)) || RACIAL.some((re) => re.test(text));
 }
 var hasChristianSign = (text) => CHRISTIAN3.some((re) => re.test(text));
 function innBlockForms(text) {
@@ -107879,13 +119664,13 @@ function innWordBlocked(word, guards) {
   const block = innBlockSet(guards);
   return innBlockForms(word).some((f) => block.has(f)) || breaksInnWords(word);
 }
-function shapeWeight7(ctx, s) {
+function shapeWeight8(ctx, s) {
   var _a5;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
-  if (c.sensitive && (s.h || LIGHT_OR_GRIM5(s.t))) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM6(s.t))) return 0;
   if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames2(ctx).length === 0) return 0;
   if (ctx.mode === "invented" && /\{(patron|founder)/.test(s.p) && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
@@ -107893,7 +119678,7 @@ function shapeWeight7(ctx, s) {
   if (s.p.includes("{trade") && (c.key === "indian" || c.key === "west-african")) return 0;
   return s.w * toneFactor((_a5 = s.t) != null ? _a5 : [], ctx.tone);
 }
-var live3 = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight7(ctx, s)]).filter(([, w]) => w > 0);
+var live3 = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight8(ctx, s)]).filter(([, w]) => w > 0);
 function englishPlans(ctx, settingKey, only) {
   var _a5, _b3, _c3, _d3;
   const setting = INN_SETTINGS.find((s) => s.key === settingKey);
@@ -107989,7 +119774,7 @@ function generateInnNames(options) {
     const share2 = form === "signs" ? 0 : form === "house" ? 1 : INN_DATA.formShare.either;
     if (rng() >= share2) return { text: sign, house: false };
     if (rng() < INN_DATA.formShare.innOf) return { text: `the ${rng() < 0.5 ? "Inn" : "Sign"} of ${sign}`, house: true };
-    const hw = token12(ctx, "hw");
+    const hw = token13(ctx, "hw");
     return hw ? { text: `${sign} ${hw}`, house: true } : void 0;
   };
   const build = (kind, anchor) => {
@@ -107998,7 +119783,7 @@ function generateInnNames(options) {
       const ctx = newCtx3(kind);
       const plan = choosePlan2(ctx, anchor);
       if (!plan) return void 0;
-      const raw = renderPattern10(ctx, plan.shape.p);
+      const raw = renderPattern11(ctx, plan.shape.p);
       if (!raw) continue;
       const sign = innCapitals(raw);
       let text = sign;
@@ -108088,7 +119873,7 @@ function generateInnNames(options) {
         if (!n || !fresh(n) || seen.has(n.text.toLowerCase())) continue;
         const free = names.map((_, j) => j).filter((j) => !taken.has(j) && !once.has(names[j].anchor));
         if (free.length === 0) break;
-        const at = pickOne11(free, rng);
+        const at = pickOne12(free, rng);
         seen.delete(names[at].text.toLowerCase());
         for (const u of names[at].uses) used.delete(u);
         seen.add(n.text.toLowerCase());
@@ -108274,21 +120059,21 @@ var EVENT_SELF = selfPatterns(event_names_default);
 var ALL_SHAPES2 = [...EVENT_DATA.shapes, ...EVENT_DATA.cultureShapes, ...EVENT_DATA.steampunk];
 var eventKindsOffered = (era) => EVENT_KINDS.filter((k) => k.era[era] > 0);
 var defaultEventSafeguards = () => ({ block: EVENT_DATA.safeguards.block, flag: EVENT_DATA.safeguards.flag, flagListBlocks: EVENT_DATA.safeguards.flagListBlocks });
-var pickOne12 = (items, rng) => items[Math.floor(rng() * items.length)];
-var LIGHT_OR_GRIM6 = (t) => !!t && (t.includes("light") || t.includes("grim"));
+var pickOne13 = (items, rng) => items[Math.floor(rng() * items.length)];
+var LIGHT_OR_GRIM7 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var CASTE4 = /* @__PURE__ */ new Set(["indian", "west-african"]);
 var SF_LISTS4 = /* @__PURE__ */ new Set(["star", "spaceLand"]);
-function vocabPool6(ctx, pool3) {
+function vocabPool7(ctx, pool3) {
   var _a5, _b3;
   const only = (_b3 = (_a5 = ctx.shape) == null ? void 0 : _a5.only) == null ? void 0 : _b3[pool3];
-  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM6(e.t))).map(([e, w]) => {
+  return poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }).filter(([e]) => (!only || only.includes(e.w)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM7(e.t))).map(([e, w]) => {
     var _a6;
     return [e, w * toneFactor((_a6 = e.t) != null ? _a6 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
 }
 function fromPool5(ctx, pool3) {
   var _a5;
-  const e = pickWeighted5(vocabPool6(ctx, pool3), ctx.rng);
+  const e = pickWeighted5(vocabPool7(ctx, pool3), ctx.rng);
   if (!e) return void 0;
   for (const t of (_a5 = e.t) != null ? _a5 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
@@ -108300,7 +120085,7 @@ function gnWord7(ctx, list) {
     ctx.words.push({ pool: "star", word: star });
     return star;
   }
-  const items = groupListWords(list, SF_LISTS4.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM6(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
+  const items = groupListWords(list, SF_LISTS4.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM7(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
   const w = pickWeighted5(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
@@ -108339,7 +120124,7 @@ function epithet(ctx) {
   }
   return pickWeighted5(items.filter(([, w]) => w > 0), ctx.rng);
 }
-function token13(ctx, name) {
+function token14(ctx, name) {
   var _a5, _b3, _c3;
   const rng = ctx.rng;
   const placeholders = ctx.mode === "placeholders";
@@ -108354,7 +120139,7 @@ function token13(ctx, name) {
       if (ctx.founderLeader && ctx.context) return ctx.context.founder;
       if (placeholders) return "[leader]";
       const names = personNames(ctx.culture.key);
-      return names.length > 0 ? pickOne12(names, rng) : void 0;
+      return names.length > 0 ? pickOne13(names, rng) : void 0;
     }
     case "figure":
       return routeFigure(ctx.culture.key, ctx.setting, rng);
@@ -108369,9 +120154,9 @@ function token13(ctx, name) {
     case "goods":
       return fromPool5(ctx, "streetGoods");
     case "realmForm":
-      return pickOne12((_c3 = (_b3 = (_a5 = ctx.shape) == null ? void 0 : _a5.only) == null ? void 0 : _b3.realmForm) != null ? _c3 : ["Kingdom"], rng);
+      return pickOne13((_c3 = (_b3 = (_a5 = ctx.shape) == null ? void 0 : _a5.only) == null ? void 0 : _b3.realmForm) != null ? _c3 : ["Kingdom"], rng);
     case "crisisFeeling":
-      return pickOne12(EVENT_DATA.lists.crisisFeeling, rng);
+      return pickOne13(EVENT_DATA.lists.crisisFeeling, rng);
     case "year": {
       const [a, b] = EVENT_DATA.lists.year;
       return String(a + Math.floor(rng() * (b - a + 1)));
@@ -108390,15 +120175,15 @@ function token13(ctx, name) {
   }
   return fromPool5(ctx, name);
 }
-function renderPattern11(ctx, pattern) {
+function renderPattern12(ctx, pattern) {
   if (ctx.context) ctx.turn = new TownTurn(ctx.context, EVENT_SELF.has(pattern));
   let failed = false;
   let colours = [];
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
     const [name, mod] = raw.split(":");
-    let piece = token13(ctx, name);
-    if (name === "colour" && piece && colours.includes(piece)) piece = token13(ctx, name);
+    let piece = token14(ctx, name);
+    if (name === "colour" && piece && colours.includes(piece)) piece = token14(ctx, name);
     if (!piece || name === "colour" && colours.includes(piece)) {
       failed = true;
       return "";
@@ -108413,10 +120198,10 @@ function renderPattern11(ctx, pattern) {
 }
 var eventCapitals = (text) => routeCapitals(text).replace(/^The /, "the ");
 var wordRe14 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED12 = EVENT_DATA.safeguards.banned.map((w) => [w, wordRe14(w)]);
+var BANNED13 = EVENT_DATA.safeguards.banned.map((w) => [w, wordRe14(w)]);
 var bare4 = (text) => routeNorm(text).replace(/^the /, "");
 function breaksEventWords(text, purgeAllowed = false) {
-  return hasBannedWord(text) || BANNED12.some(([w, re]) => !(purgeAllowed && w === "Purge") && re.test(text));
+  return hasBannedWord(text) || BANNED13.some(([w, re]) => !(purgeAllowed && w === "Purge") && re.test(text));
 }
 function eventBlockSet(guards = defaultEventSafeguards()) {
   return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(bare4));
@@ -108430,23 +120215,23 @@ var PEOPLE_SHAPES = [
   ["migration", "{people} Crossing"]
 ];
 var GREAT = /(^|\s)(Great|World)(\s|$)/;
-function shapeWeight8(ctx, s) {
+function shapeWeight9(ctx, s) {
   var _a5, _b3, _c3, _d3;
   const c = ctx.culture;
   if (s.e && !s.e.includes(ctx.era)) return 0;
   if (!cultureAllowed(s.c, c.key, ctx.era)) return 0;
   if (s.h !== void 0 && s.h !== ctx.fantastic) return 0;
-  if (c.sensitive && (s.h || LIGHT_OR_GRIM6(s.t))) return 0;
+  if (c.sensitive && (s.h || LIGHT_OR_GRIM7(s.t))) return 0;
   if (s.sc && !s.sc.includes(ctx.scale)) return 0;
   if (s.purge && ctx.tone === "light") return 0;
   if (CASTE4.has(c.key) && s.p.includes("{trade")) return 0;
   if (ctx.mode === "invented" && s.p.includes("{leader") && personNames(c.key).length === 0 && !(ctx.founderLeader && ctx.context)) return 0;
   let w = s.w;
   if (s.p === "{fixed}") {
-    if (vocabPool6({ ...ctx, shape: s }, `eventFixed:${s.kind}`).length === 0) return 0;
+    if (vocabPool7({ ...ctx, shape: s }, `eventFixed:${s.kind}`).length === 0) return 0;
   } else {
     const single = (_a5 = s.p.match(/^(?:the )?\{(\w+)\}$/)) == null ? void 0 : _a5[1];
-    if (single && ctx.vocab.pools[single] && vocabPool6({ ...ctx, shape: s }, single).length === 0) return 0;
+    if (single && ctx.vocab.pools[single] && vocabPool7({ ...ctx, shape: s }, single).length === 0) return 0;
   }
   const r = EVENT_DATA.scaleRules;
   if (ctx.scale === "local") {
@@ -108459,7 +120244,7 @@ function shapeWeight8(ctx, s) {
   return w * toneFactor((_b3 = s.t) != null ? _b3 : [], ctx.tone) * ((_d3 = (_c3 = ctx.boost) == null ? void 0 : _c3.call(ctx, s)) != null ? _d3 : 1);
 }
 function plans3(ctx, kind, only) {
-  return ALL_SHAPES2.filter((s) => s.kind === kind && (!only || s.p === only)).map((s) => [s, shapeWeight8({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
+  return ALL_SHAPES2.filter((s) => s.kind === kind && (!only || s.p === only)).map((s) => [s, shapeWeight9({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
 }
 function generateEventNames(options) {
   var _a5, _b3, _c3, _d3;
@@ -108507,7 +120292,7 @@ function generateEventNames(options) {
       const s = pickWeighted5(plans3(ctx, kind, only != null ? only : options.shape), rng);
       if (!s) return void 0;
       ctx.shape = s;
-      let raw = renderPattern11(ctx, s.p);
+      let raw = renderPattern12(ctx, s.p);
       if (!raw) continue;
       if (scale === "local" && s.p === "{place} War" && rng() < EVENT_DATA.scaleRules.local.riotShare) raw = raw.replace(/ War$/, " Riot");
       const text = eventCapitals(raw);
@@ -108631,7 +120416,7 @@ var DEFAULT_MONEY_STATE = {
   people: "placeholders",
   series: "separate"
 };
-var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT8 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT5 = { separate: "each one separate", coinage: "as one coinage", values: "as one coinage, with values" };
 function moneySeriesChoices(state) {
   return moneyHasLadder(state.culture, state.era, state.kind) ? ["separate", "coinage", "values"] : ["separate", "coinage"];
@@ -108712,9 +120497,9 @@ function moneySentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT7[state.people],
+    text: PEOPLE_TEXT8[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT7[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT8[p] })),
     current: state.people
   });
   out.push(" people and places");
@@ -115414,225 +127199,6 @@ var settlement_kit_default = {
   dedupeTries: 20
 };
 
-// src/sections.ts
-var OLD_HISTORY_PREFIXES = {
-  explorationPlaceShapes: ["exploration place name shapes", "exploration place names", "exploration in new lands"],
-  empireExpansionPlaceShapes: ["empire expansion place name shapes", "empire expansion place names"],
-  // Companies brief §1: the trade family's label before "guilds, companies and trade".
-  tradeGuilds: ["guilds and trading houses", "guilds, companies and trade"],
-  // The titles label before the British spelling.
-  titles: ["titles and honorifics"],
-  // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
-  deityNames: ["deities and sacred places"]
-};
-var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
-var VESSEL_SECTIONS = ["ships", "spacecraft", "aircraft", "landVehicles"];
-var THING_SECTIONS = ["armsNames", "treasureNames", "bookNames"];
-var BYNAME_SECTIONS = ["epithets", "familyNames", "titles"];
-var GROUP_NAME_SECTIONS = [
-  "mysticOrders",
-  "martialOrders",
-  "underworldGroups",
-  "tradeGuilds",
-  "adventureCompanies",
-  "powerFactions",
-  "supernaturalCourts"
-];
-var GROUP_NAMES_ORDER = ["powerFactions", "realms", "peoplesTongues", "tribalNames", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts"];
-var URBAN_SECTIONS = ["settlementNames", "streetNames", "innNames", "buildingNames", "settlementKit"];
-var SECTION_ORDER = [
-  "markov",
-  "placeShapes",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
-  "routeNames",
-  "sacredPlaces",
-  ...URBAN_SECTIONS,
-  ...WATERS_SECTIONS,
-  ...GROUP_NAMES_ORDER,
-  "deityNames",
-  ...BYNAME_SECTIONS,
-  ...VESSEL_SECTIONS,
-  ...THING_SECTIONS,
-  "nameAgeing",
-  "nameTakeover",
-  "eventNames",
-  "moneyNames",
-  "calendarNames",
-  "skyNames"
-];
-var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "sacredPlaces"],
-  // Urban brief §1.1: straight after place names.
-  urban: URBAN_SECTIONS,
-  seasCoasts: WATERS_SECTIONS,
-  groupNames: [...GROUP_NAMES_ORDER, "deityNames"],
-  bynames: BYNAME_SECTIONS,
-  // Line-up brief §1: ships and spacecraft get a group of their own.
-  vehicles: VESSEL_SECTIONS,
-  // Named things brief §1.1.
-  namedThings: THING_SECTIONS,
-  advanced: ["nameAgeing", "nameTakeover", "eventNames", "moneyNames", "calendarNames", "skyNames"]
-};
-var GROUP_LABELS = {
-  placeNames: "place names",
-  urban: "urban",
-  seasCoasts: "seas and coasts",
-  groupNames: "group names",
-  bynames: "bynames and titles",
-  vehicles: "vehicles",
-  namedThings: "named things",
-  advanced: "advanced"
-};
-var SWITCHER_ORDER = ["markov", "placeNames", "urban", "seasCoasts", "groupNames", "bynames", "vehicles", "namedThings", "advanced"];
-function sectionGroup(section) {
-  return Object.keys(SECTION_GROUPS).find((g) => SECTION_GROUPS[g].includes(section));
-}
-var SECTION_LABELS = {
-  markov: "markov generator",
-  placeShapes: "native place names",
-  settlementNames: "settlement names",
-  routeNames: "route names",
-  streetNames: "streets and districts",
-  innNames: "inns and taverns",
-  buildingNames: "buildings and landmarks",
-  settlementKit: "settlement kit",
-  eventNames: "events and eras",
-  moneyNames: "money and coins",
-  calendarNames: "calendars and festivals",
-  skyNames: "sky lore",
-  armsNames: "arms and armour",
-  treasureNames: "treasures and regalia",
-  bookNames: "books and writings",
-  deityNames: "deities",
-  sacredPlaces: "sacred places",
-  riverNames: "river names",
-  explorationPlaceShapes: "exploration into new lands",
-  empireExpansionPlaceShapes: "expansion into settled lands",
-  nameAgeing: "name ageing",
-  nameTakeover: "name takeover",
-  tribalNames: "tribes and kin groups",
-  realms: "realms and polities",
-  peoplesTongues: "peoples and tongues",
-  mysticOrders: "faiths and mystic orders",
-  martialOrders: "armies and martial orders",
-  underworldGroups: "thieves and the underworld",
-  tradeGuilds: "guilds, companies, and trade",
-  adventureCompanies: "adventurers and explorers",
-  powerFactions: "powers and factions",
-  supernaturalCourts: "supernatural courts and hosts",
-  epithets: "epithets and bynames",
-  titles: "titles and honourifics",
-  familyNames: "family names",
-  ships: "ships and boats",
-  spacecraft: "spacecraft and stations",
-  aircraft: "aircraft and airships",
-  landVehicles: "land vehicles",
-  seasLakes: "seas and lakes",
-  coastsIslands: "coasts and islands",
-  seaCharts: "sea charts",
-  hyperspaceCharts: "hyperspace charts"
-};
-var BRITISH_PLACE_NAMES_HISTORY_NAME = "british place names";
-var RIVER_NAMES_HISTORY_NAME = "river names";
-var WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
-var SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
-var TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
-var OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
-function historySection(packName) {
-  const starts = (prefix) => packName.startsWith(prefix);
-  if (starts(RIVER_NAMES_HISTORY_NAME)) return "placeShapes";
-  if (starts(WORLD_PLACE_NAMES_HISTORY_NAME)) return "placeShapes";
-  if (starts(TRIBAL_NAMES_HISTORY_NAME) || starts(OLD_TRIBAL_NAMES_HISTORY_NAME)) return "tribalNames";
-  if (starts(SECTION_LABELS.routeNames)) return "routeNames";
-  if (starts(SETTLEMENT_NAMES_HISTORY_NAME)) return "settlementNames";
-  if (starts(SECTION_LABELS.streetNames)) return "streetNames";
-  if (starts(SECTION_LABELS.innNames)) return "innNames";
-  if (starts(SECTION_LABELS.buildingNames)) return "buildingNames";
-  if (starts(SECTION_LABELS.settlementKit)) return "settlementKit";
-  if (starts(SECTION_LABELS.eventNames)) return "eventNames";
-  if (starts(SECTION_LABELS.moneyNames)) return "moneyNames";
-  if (starts(SECTION_LABELS.calendarNames)) return "calendarNames";
-  if (starts(SECTION_LABELS.skyNames)) return "skyNames";
-  for (const section of THING_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  if (OLD_HISTORY_PREFIXES.deityNames.some(starts)) return packName.includes("\xB7 sacred places") ? "sacredPlaces" : "deityNames";
-  if (starts(SECTION_LABELS.deityNames)) return "deityNames";
-  if (starts(SECTION_LABELS.sacredPlaces)) return "sacredPlaces";
-  if (starts(SECTION_LABELS.realms)) return "realms";
-  if (starts(SECTION_LABELS.peoplesTongues)) return "peoplesTongues";
-  for (const section of GROUP_NAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  for (const section of BYNAME_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  for (const section of WATERS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
-  if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";
-  if (OLD_HISTORY_PREFIXES.titles.some(starts)) return "titles";
-  if (starts(SECTION_LABELS.explorationPlaceShapes) || OLD_HISTORY_PREFIXES.explorationPlaceShapes.some(starts)) {
-    return "explorationPlaceShapes";
-  }
-  if (starts(SECTION_LABELS.empireExpansionPlaceShapes) || OLD_HISTORY_PREFIXES.empireExpansionPlaceShapes.some(starts)) {
-    return "empireExpansionPlaceShapes";
-  }
-  if (starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
-    return "placeShapes";
-  }
-  return "markov";
-}
-
-// src/settlement/names.ts
-function cultureLabel(options) {
-  if (options.setting !== "native") return options.setting === "new-lands" ? "Exploration" : "Expansion";
-  return !options.culture || options.culture === "britain" ? "British" : findCulture(options.culture).label;
-}
-function generateAt(options, size) {
-  var _a5;
-  const { count, seed, faithfulness, strictness } = options;
-  const settlement = { size };
-  if (options.setting === "native" && options.culture && options.culture !== "britain") {
-    const result = generateWorldPlaceNames({
-      culture: options.culture,
-      era: options.era,
-      biome: (_a5 = options.customBiome) != null ? _a5 : findBiome(options.biome),
-      terrain: options.terrain,
-      count,
-      seed,
-      faithfulness,
-      strictness,
-      settlement
-    });
-    return {
-      names: result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology })),
-      seed: result.seed,
-      notices: result.notices
-    };
-  }
-  const recipe = options.setting === "native" ? britishPlaceNamesRecipe(options.region, options.customBiome ? void 0 : options.biome, options.terrain) : colonialPlaceNamesRecipe(
-    options.setting === "new-lands" ? "new-land" : "established",
-    options.tradition,
-    options.context,
-    options.customBiome ? void 0 : options.biome,
-    options.terrain,
-    options.aliens
-  );
-  return generatePlaceNames({ recipe, biome: options.customBiome, slots: {}, count, seed, faithfulness, strictness, settlement });
-}
-function generateSettlementNames(options) {
-  let failure;
-  for (const size of sizesToTry(options.size)) {
-    try {
-      const result = generateAt(options, size);
-      const notices = [...result.notices];
-      if (size !== options.size) {
-        notices.unshift(`${cultureLabel(options)} names don't run to a ${sizeLabel(options.size)}; these are ${sizeLabel(size)} names.`);
-      }
-      return { ...result, notices, size };
-    } catch (e) {
-      if (!(e instanceof Error) || !e.message.startsWith("No eligible")) throw e;
-      failure = e;
-    }
-  }
-  throw failure;
-}
-
 // src/settlement/context.ts
 function vesselCultureFor(culture) {
   return culture === "polynesian" ? "hawaiian" : culture;
@@ -116109,6 +127675,7 @@ function parseModulePreset(content, fileName) {
   if (values.module === BYNAME_PRESET_MODULE) return parseBynamePreset(values, body, fileName);
   if (values.module === VESSEL_PRESET_MODULE) return parseVesselPreset(values, body, fileName);
   if (values.module === WATERS_PRESET_MODULE) return parseWatersPreset(values, body, fileName);
+  if (values.module in WILDS_PRESET_MODULES) return parseWildsPreset(values, body, fileName);
   if (values.module === REALM_PRESET_MODULE) return parseRealmPreset(values, body, fileName);
   if (values.module === ROUTE_PRESET_MODULE) return parseRoutePreset(values, body, fileName);
   if (values.module === STREET_PRESET_MODULE) return parseStreetPreset(values, body, fileName);
@@ -116155,6 +127722,7 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("wildsModule" in preset) return wildsPresetContent(preset);
   if ("peopleSource" in preset) return peoplePresetContent(preset);
   if ("thingModule" in preset) return thingPresetContent(preset);
   if ("timeModule" in preset) return timePresetContent(preset);
@@ -117065,6 +128633,81 @@ function watersPresetContent(preset) {
     ""
   ].join("\n");
 }
+var WILDS_PRESET_MODULES = {
+  "mountain-names": "mountainNames",
+  "forest-names": "forestNames",
+  "desert-names": "desertNames",
+  "moor-names": "moorNames",
+  "wetland-names": "wetlandNames",
+  "grassland-names": "grasslandNames"
+};
+var wildsPresetKey = (module2) => Object.entries(WILDS_PRESET_MODULES).find(([, m]) => m === module2)[0];
+function parseWildsPreset(values, body, fileName) {
+  var _a5;
+  const problems = [];
+  const module2 = WILDS_PRESET_MODULES[values.module];
+  const pick4 = (key2, fallback, ok) => {
+    const v = values[key2];
+    if (v === void 0 || v === "") return fallback;
+    if (ok(v)) return v;
+    problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return fallback;
+  };
+  const flag = (key2) => {
+    const v = values[key2];
+    if (v === "true" || v === "false") return v === "true";
+    if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
+    return false;
+  };
+  const era = pick4("era", "MD", (v) => wildsEras(module2).includes(v));
+  let kind = pick4("kind", "any", (v) => v === "any" || !!findWildsKind(module2, v));
+  if (kind !== "any" && !wildsKindsAt(module2, era).some((k) => k.key === kind)) {
+    problems.push(`Kind \u201C${kind}\u201D isn't offered in that era.`);
+    kind = "any";
+  }
+  return {
+    wilds: {
+      packName: values.packName || fileName,
+      setting: (_a5 = values.setting) != null ? _a5 : "",
+      description: body.trim(),
+      wildsModule: module2,
+      culture: pick4("culture", wildsDefaultCulture(module2), (v) => !!findWildsCulture(v)),
+      wildsKind: kind,
+      era,
+      where: pick4("where", "home", (v) => v === "home" || v === "new"),
+      fantastic: flag("fantastic"),
+      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      biome: pick4("biome", "any", (v) => v === "any" || wildsBiomes(module2).some((b) => b.id === v)),
+      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      series: flag("series")
+    },
+    problems
+  };
+}
+function wildsPresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${wildsPresetKey(preset.wildsModule)}`,
+    `packName: ${preset.packName}`,
+    `setting: ${preset.setting}`,
+    `culture: ${preset.culture}`,
+    `kind: ${preset.wildsKind}`,
+    `era: ${preset.era}`,
+    `where: ${preset.where}`,
+    `fantastic: ${preset.fantastic}`,
+    `region: ${preset.region}`,
+    `biome: ${preset.biome}`,
+    `tone: ${preset.tone}`,
+    `people: ${preset.people}`,
+    `series: ${preset.series}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
 function tribalPresetSlot(preset) {
   return {
     tradition: preset.tradition,
@@ -117318,15 +128961,15 @@ Names to take off the flag list. Built-in block-list names can't be allowed.
 // src/timesky/engine.ts
 var defaultTimeSafeguards = () => ({ block: TIME_SKY.safeguards.block, flag: TIME_SKY.safeguards.flag, flagListBlocks: TIME_SKY.safeguards.flagListBlocks });
 var wordRe15 = (w) => new RegExp(`(^|[^\\p{L}])${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^\\p{L}])`, "iu");
-var BANNED13 = [...TIME_SKY.safeguards.banned, ...TIME_SKY.safeguards.bannedFromMoney ? MONEY_DATA.safeguards.banned : []].map(wordRe15);
+var BANNED14 = [...TIME_SKY.safeguards.banned, ...TIME_SKY.safeguards.bannedFromMoney ? MONEY_DATA.safeguards.banned : []].map(wordRe15);
 var bare5 = (text) => routeNorm(text).replace(/^the /, "");
-var breaksTimeWords = (text) => hasBannedWord(text) || BANNED13.some((re) => re.test(text)) || breaksDeityWords(text);
+var breaksTimeWords = (text) => hasBannedWord(text) || BANNED14.some((re) => re.test(text)) || breaksDeityWords(text);
 function timeBlockSet(guards = defaultTimeSafeguards(), kind) {
   var _a5;
   return new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : [], ...kind ? (_a5 = TIME_SKY.safeguards.kindBlock[kind]) != null ? _a5 : [] : []].map(bare5));
 }
 var timeWordBlocked = (word, guards) => timeBlockSet(guards).has(bare5(word)) || breaksTimeWords(word);
-var pickOne13 = (items, rng) => items[Math.floor(rng() * items.length)];
+var pickOne14 = (items, rng) => items[Math.floor(rng() * items.length)];
 var cap2 = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 var ARTICLE_KINDS = ["constellation", "sign", "light"];
 var NO_LIGHT_GRIM = ["light", "grim"];
@@ -117388,19 +129031,19 @@ function landBiome(ctx) {
   var _a5, _b3;
   return (_b3 = (_a5 = ctx.biome) != null ? _a5 : findBiome(homelandOf(ctx.culture))) != null ? _b3 : BRITAIN;
 }
-function biomeItems(ctx, token15) {
+function biomeItems(ctx, token16) {
   const biome = landBiome(ctx);
   if (!biome || ctx.land.space) return [];
-  const lists = token15 === "beast" ? ["wildAnimal", "bird", "creature", "livestock"] : [token15];
+  const lists = token16 === "beast" ? ["wildAnimal", "bird", "creature", "livestock"] : [token16];
   return lists.flatMap((t) => biomeWords(biome, BIOME_LISTS[t]).filter(([w]) => !w.includes("{")).map(([w, n]) => [biomeTitleCase(w), n]));
 }
-function biomeWord(ctx, token15) {
-  return drawFrom(ctx, token15 === "beast" ? "beast" : token15 === "wildAnimal" || token15 === "bird" || token15 === "creature" || token15 === "livestock" ? "beast" : token15, token15, biomeItems(ctx, token15));
+function biomeWord2(ctx, token16) {
+  return drawFrom(ctx, token16 === "beast" ? "beast" : token16 === "wildAnimal" || token16 === "bird" || token16 === "creature" || token16 === "livestock" ? "beast" : token16, token16, biomeItems(ctx, token16));
 }
 var EVENT_POOLS = /* @__PURE__ */ new Map();
 function eventName(ctx) {
   if (ctx.mode === "placeholders") return "[event]";
-  const kind = pickOne13(["treaty", "battle", "rebellion"], ctx.rng);
+  const kind = pickOne14(["treaty", "battle", "rebellion"], ctx.rng);
   const key2 = `${ctx.culture}|${ctx.era}|${kind}`;
   let pool3 = EVENT_POOLS.get(key2);
   if (!pool3) {
@@ -117408,7 +129051,7 @@ function eventName(ctx) {
     pool3 = batch.names.map((n) => n.text.replace(/^the /i, "").replace(/^(Battle|Treaty) of /i, "")).filter((n) => n && !n.includes("[") && !n.includes(" of the ") && countedWords2(n).length <= 2);
     EVENT_POOLS.set(key2, pool3);
   }
-  return pool3.length > 0 ? pickOne13(pool3, ctx.rng) : void 0;
+  return pool3.length > 0 ? pickOne14(pool3, ctx.rng) : void 0;
 }
 function godTitle(ctx) {
   if (ctx.sensitive) return void 0;
@@ -117433,7 +129076,7 @@ var ordinalWord = (n) => {
   var _a5;
   return (_a5 = ORDINALS[n - 1]) != null ? _a5 : ordinalText(n);
 };
-function token14(ctx, name, mod) {
+function token15(ctx, name, mod) {
   var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u;
   const placeholders = ctx.mode === "placeholders";
   const pl = (w) => mod === "pl" ? pluralName(w) : w;
@@ -117445,15 +129088,15 @@ function token14(ctx, name, mod) {
     case "workWord":
       return (_a5 = drawWord(ctx, "season", "workWord")) == null ? void 0 : _a5.w;
     case "season": {
-      const s = (_b3 = ctx.season) != null ? _b3 : ctx.cycle ? pickOne13(ctx.cycle, ctx.rng)[0] : void 0;
+      const s = (_b3 = ctx.season) != null ? _b3 : ctx.cycle ? pickOne14(ctx.cycle, ctx.rng)[0] : void 0;
       return s ? seasonNoun(s) : void 0;
     }
     case "seasonPhrase": {
-      const s = (_c3 = ctx.season) != null ? _c3 : ctx.cycle ? pickOne13(ctx.cycle, ctx.rng)[0] : void 0;
+      const s = (_c3 = ctx.season) != null ? _c3 : ctx.cycle ? pickOne14(ctx.cycle, ctx.rng)[0] : void 0;
       return s ? seasonPhrase(s) : void 0;
     }
     case "position":
-      return ctx.season === null && ctx.cycle === null ? void 0 : cap2((_d3 = ctx.position) != null ? _d3 : pickOne13(TIME_SKY.lists.position, ctx.rng).toLowerCase());
+      return ctx.season === null && ctx.cycle === null ? void 0 : cap2((_d3 = ctx.position) != null ? _d3 : pickOne14(TIME_SKY.lists.position, ctx.rng).toLowerCase());
     case "dayWork":
       return (_e3 = drawWord(ctx, "day", "dayWork")) == null ? void 0 : _e3.w;
     case "dayElement":
@@ -117488,11 +129131,11 @@ function token14(ctx, name, mod) {
     case "plant":
     case "crop":
     case "livestock": {
-      const w = biomeWord(ctx, name);
+      const w = biomeWord2(ctx, name);
       return w === void 0 ? void 0 : pl(w);
     }
     case "beast": {
-      const w = biomeWord(ctx, "beast");
+      const w = biomeWord2(ctx, "beast");
       if (w === void 0) return void 0;
       return mod === "poss" ? groupPossessive(w, false) : w;
     }
@@ -117500,8 +129143,8 @@ function token14(ctx, name, mod) {
       const g = godTitle(ctx);
       if (g === void 0) return void 0;
       if (mod !== "poss") return g;
-      const plural3 = /^the .+s$/i.test(g);
-      return groupPossessive(g.replace(/^the /i, ""), plural3);
+      const plural4 = /^the .+s$/i.test(g);
+      return groupPossessive(g.replace(/^the /i, ""), plural4);
     }
     case "holy": {
       const h = placeholders ? "[holy person]" : groupSaint(ctx.setting, ctx.rng);
@@ -117532,22 +129175,22 @@ function token14(ctx, name, mod) {
       return gnWord8(ctx, "ordinalWord");
     }
     case "numberWord":
-      return pickOne13(TIME_SKY.lists.numberWord, ctx.rng);
+      return pickOne14(TIME_SKY.lists.numberWord, ctx.rng);
     case "group":
-      return pickOne13(TIME_SKY.lists.group, ctx.rng);
+      return pickOne14(TIME_SKY.lists.group, ctx.rng);
     case "kin":
-      return pickOne13(TIME_SKY.lists.kin, ctx.rng);
+      return pickOne14(TIME_SKY.lists.kin, ctx.rng);
     case "thing":
-      return pickOne13(TIME_SKY.lists.thing, ctx.rng);
+      return pickOne14(TIME_SKY.lists.thing, ctx.rng);
     case "herald":
-      return pickOne13(TIME_SKY.lists.herald, ctx.rng);
+      return pickOne14(TIME_SKY.lists.herald, ctx.rng);
     case "weather":
-      return pickOne13(TIME_SKY.lists.weather, ctx.rng);
+      return pickOne14(TIME_SKY.lists.weather, ctx.rng);
     case "turning":
-      return (_p = ctx.fixed.turning) != null ? _p : pickOne13(TIME_SKY.lists.turning, ctx.rng);
+      return (_p = ctx.fixed.turning) != null ? _p : pickOne14(TIME_SKY.lists.turning, ctx.rng);
     case "pairFeast": {
-      const raw = (_q = ctx.fixed.pairFeast) != null ? _q : pickOne13(TIME_SKY.lists.pairFeast, ctx.rng);
-      return raw.includes("{") ? renderPattern12(ctx, raw) : raw;
+      const raw = (_q = ctx.fixed.pairFeast) != null ? _q : pickOne14(TIME_SKY.lists.pairFeast, ctx.rng);
+      return raw.includes("{") ? renderPattern13(ctx, raw) : raw;
     }
     case "daySign": {
       const w = drawFrom(ctx, "daySign", "daySign", plainList(TIME_SKY.lists.daySign), (x) => {
@@ -117557,7 +129200,7 @@ function token14(ctx, name, mod) {
       return w;
     }
     case "moonPhase":
-      return pickOne13(TIME_SKY.lists.moonPhase, ctx.rng);
+      return pickOne14(TIME_SKY.lists.moonPhase, ctx.rng);
     case "goods":
       return gnWord8(ctx, "goods");
     case "previous":
@@ -117579,12 +129222,12 @@ function token14(ctx, name, mod) {
   }
   return void 0;
 }
-function renderPattern12(ctx, pattern) {
+function renderPattern13(ctx, pattern) {
   let failed = false;
   const out = pattern.replace(/\{([^}]+)\}/g, (_m, raw) => {
     if (failed) return "";
     const [name, mod] = raw.split(":");
-    const piece = token14(ctx, name, mod);
+    const piece = token15(ctx, name, mod);
     if (piece === void 0 || piece === "") {
       failed = true;
       return "";
@@ -117702,7 +129345,7 @@ function buildName(ctx, kind, filter, only) {
     const plans4 = plansFor2(ctx, kind, only ? (p) => p.p === only : filter);
     const plan = pickWeighted5(plans4, ctx.rng);
     if (!plan) return void 0;
-    const raw = renderPattern12(ctx, plan.p);
+    const raw = renderPattern13(ctx, plan.p);
     if (!raw) continue;
     const text = finish2(ctx, kind, raw);
     if (!acceptable6(ctx, text, kind)) continue;
@@ -117731,7 +129374,7 @@ function cultureNameCandidates(ctx, kind, systems) {
 function cultureName(ctx, kind, systems) {
   const items = cultureNameCandidates(ctx, kind, systems).filter((c) => !blockedTone(ctx, void 0));
   for (let i = 0; i < 20 && items.length > 0; i++) {
-    const c = pickOne13(items, ctx.rng);
+    const c = pickOne14(items, ctx.rng);
     const useLoan = !!c.loan && ctx.words === "loanwords" && ctx.rng() < TIME_SKY.loanShare;
     const text = c.row ? useLoan ? c.loan : c.text : timeCapitals(c.text);
     if (!acceptable6(ctx, text, kind, true)) continue;
@@ -117799,7 +129442,7 @@ function buildSign(ctx, only) {
     const plans4 = signPlans(ctx).filter(([p]) => !only || p.p === only);
     const plan = pickWeighted5(plans4, ctx.rng);
     if (!plan) return void 0;
-    const raw = renderPattern12(ctx, plan.p);
+    const raw = renderPattern13(ctx, plan.p);
     if (!raw) continue;
     const text = finish2(ctx, "sign", raw);
     if (!acceptable6(ctx, text, "sign")) continue;
@@ -117824,7 +129467,7 @@ function applyReal(S, lines2) {
     if (real >= cap3) break;
     const options = lines2[i].candidates().filter((n2) => !S.seen.has(n2.text.toLowerCase()));
     if (options.length === 0 || S.ctx.rng() >= S.realShare) continue;
-    const n = pickOne13(options, S.ctx.rng);
+    const n = pickOne14(options, S.ctx.rng);
     S.seen.add(n.text.toLowerCase());
     lines2[i].set(n);
     real++;
@@ -117921,12 +129564,12 @@ function monthSeries(S, systemKey, forMoons) {
   if (forMoons) {
     const lunar = !["julian-12", "egyptian-civil", "ethiopian-13", "persian-solar", "aztec-18", "maya-haab", "fixed-13", "icelandic-12", "darian-24"].includes(systemKey);
     if (leap && (!lunar || sys.leap || !lunar)) {
-      if ((_a5 = sys.leap) == null ? void 0 : _a5.after) after = pickOne13(sys.leap.after, ctx.rng);
+      if ((_a5 = sys.leap) == null ? void 0 : _a5.after) after = pickOne14(sys.leap.after, ctx.rng);
       else if ((_b3 = sys.leap) == null ? void 0 : _b3.uniform) after = 1 + Math.floor(ctx.rng() * months);
       else after = months;
     }
   } else if (sys.leap && leap) {
-    after = sys.leap.after ? pickOne13(sys.leap.after, ctx.rng) : 1 + Math.floor(ctx.rng() * months);
+    after = sys.leap.after ? pickOne14(sys.leap.after, ctx.rng) : 1 + Math.floor(ctx.rng() * months);
   }
   const extraSys = forMoons ? void 0 : sys.extra;
   for (let k = 0; k < months; k++) {
@@ -117954,15 +129597,15 @@ function monthSeries(S, systemKey, forMoons) {
     const spots = [];
     for (let i = 0; i + 1 < lines2.length; i++) if (lines2[i].type === "month" && lines2[i + 1].type === "month" && !lines2[i].name && !lines2[i + 1].name) spots.push(i);
     if (spots.length > 0) {
-      const i = pickOne13(spots, ctx.rng);
+      const i = pickOne14(spots, ctx.rng);
       const aztec = ["aztec", "maya"].includes(ctx.culture);
       let a, b;
       if (aztec) {
-        const pf = (_c3 = token14({ ...ctx, fixed: {}, season: null, distinct: false, drawn: /* @__PURE__ */ new Set(), log: [] }, "pairFeast")) != null ? _c3 : "Vigil";
+        const pf = (_c3 = token15({ ...ctx, fixed: {}, season: null, distinct: false, drawn: /* @__PURE__ */ new Set(), log: [] }, "pairFeast")) != null ? _c3 : "Vigil";
         [a, b] = [`Little ${pf}`, `Great ${pf}`];
       } else {
         const season = (_e3 = (_d3 = lines2[i].slot) == null ? void 0 : _d3.season) != null ? _e3 : "winter";
-        const turning = pickOne13((_f = TIME_SKY.lists.turningOf[season]) != null ? _f : TIME_SKY.lists.turning, ctx.rng);
+        const turning = pickOne14((_f = TIME_SKY.lists.turningOf[season]) != null ? _f : TIME_SKY.lists.turning, ctx.rng);
         [a, b] = [`Before ${turning}`, `After ${turning}`];
       }
       const texts = [timeCapitals(a), timeCapitals(b)];
@@ -118026,18 +129669,18 @@ function nameSpecial(S, line, systemKey, previous, allowReal) {
   for (let attempt2 = 0; attempt2 < 30; attempt2++) {
     const choice = pickWeighted5(options, ctx.rng);
     if (choice === "@cn") {
-      const n = pickOne13(rows, ctx.rng);
+      const n = pickOne14(rows, ctx.rng);
       S.seen.add(n.text.toLowerCase());
       return n;
     }
     if (choice === "@fixed") {
-      const text3 = timeCapitals(pickOne13(["Extra Month", "Added Month", "Thirteenth Month"], ctx.rng));
+      const text3 = timeCapitals(pickOne14(["Extra Month", "Added Month", "Thirteenth Month"], ctx.rng));
       if (!S.seen.has(text3.toLowerCase())) return fixed(text3, "Extra Month");
       continue;
     }
     if (!choice) break;
     const c = { ...ctx, season: (_b3 = (_a5 = line.slot) == null ? void 0 : _a5.season) != null ? _b3 : null, previous, distinct: false, drawn: /* @__PURE__ */ new Set(), log: [], fixed: {} };
-    const raw = renderPattern12(c, choice);
+    const raw = renderPattern13(c, choice);
     if (!raw) continue;
     const text2 = timeCapitals(raw);
     if (acceptable6(ctx, text2, "month") && !S.seen.has(text2.toLowerCase())) {
@@ -118325,7 +129968,7 @@ function festivalSeries(S, cycleKey) {
     if (solar) {
       const w = TIME_SKY.lists.weather;
       const seasonKey = slot.season;
-      const options = [`Start of ${seasonKey ? seasonNoun(seasonKey) : "Season"}`, `${pickOne13(w, ctx.rng)} ${seasonKey ? seasonNoun(seasonKey) : "Season"}`];
+      const options = [`Start of ${seasonKey ? seasonNoun(seasonKey) : "Season"}`, `${pickOne14(w, ctx.rng)} ${seasonKey ? seasonNoun(seasonKey) : "Season"}`];
       for (const text of shuffle(options, ctx.rng)) {
         const t = timeCapitals(text);
         if (acceptable6(ctx, t, "festival") && !S.seen.has(t.toLowerCase())) {
@@ -118493,7 +130136,7 @@ function skyNamesFor(ctx, kind) {
 function skyCultureName(ctx, kind) {
   const names = skyNamesFor(ctx, kind);
   for (let i = 0; i < 20 && names.length > 0; i++) {
-    const text = pickOne13(names, ctx.rng);
+    const text = pickOne14(names, ctx.rng);
     if (acceptable6(ctx, text, kind, true)) return { text, kind, shape: "culture names", tones: [], words: [], real: true };
   }
   return void 0;
@@ -118504,7 +130147,7 @@ function neutralLightName(ctx) {
   const c = { ...ctx, kind: "light", depth: ctx.depth + 1, distinct: false, season: null, drawn: /* @__PURE__ */ new Set(), log: [], fixed: {} };
   const names = skyNamesFor(c, "light");
   const others = plansFor2(c, "light", (p) => !p.shape.god).reduce((n, [, w]) => n + w, 0);
-  if (names.length > 0 && c.rng() * (20 + others) < 20) return pickOne13(names, c.rng);
+  if (names.length > 0 && c.rng() * (20 + others) < 20) return pickOne14(names, c.rng);
   return (_a5 = buildName(c, "light", (p) => !p.shape.god && !p.shape.cn)) == null ? void 0 : _a5.text;
 }
 function neutralCtx(S) {
@@ -118528,7 +130171,7 @@ function lightSeries(base, S, neutral) {
       return ((_a6 = culture == null ? void 0 : culture.bare) == null ? void 0 : _a6.includes(n)) || /^the /i.test(n) ? n : `the ${n}`;
     }).filter((t) => acceptable6(ctx, t, "light", true) && !seen.has(t.toLowerCase()));
     if (options.length === 0 || ctx.rng() >= S.realShare) continue;
-    const text = pickOne13(options, ctx.rng);
+    const text = pickOne14(options, ctx.rng);
     seen.add(text.toLowerCase());
     out[i] = { text, kind: "light", shape: "culture names", tones: [], words: [], real: true, slot: i + 1 };
     real++;
@@ -118544,7 +130187,7 @@ function lightSeries(base, S, neutral) {
   };
   const quality = (c, slot) => {
     const list = TIME_SKY.lists.lightQualities[String(slot)];
-    return list ? drawFrom(c, "quality", "skyQuality", plainList(list)) : token14(c, "skyQuality");
+    return list ? drawFrom(c, "quality", "skyQuality", plainList(list)) : token15(c, "skyQuality");
   };
   for (let i = 0; i < 7; i++) {
     if (out[i]) continue;
@@ -118554,28 +130197,28 @@ function lightSeries(base, S, neutral) {
       let raw;
       let shape;
       if (slot === 4 && theme !== "gods") {
-        raw = pickOne13(["the Day Eye", "the Great Lamp"], c.rng);
+        raw = pickOne14(["the Day Eye", "the Great Lamp"], c.rng);
         shape = "the Day Eye";
       } else if (slot === 4) {
-        raw = `${(_c3 = token14(c, "god", "poss")) != null ? _c3 : ""} Lamp`;
+        raw = `${(_c3 = token15(c, "god", "poss")) != null ? _c3 : ""} Lamp`;
         shape = "{god:poss} Lamp";
       } else if (slot === 5) {
-        const herald = token14(c, "herald");
+        const herald = token15(c, "herald");
         raw = herald ? `the ${c.rng() < 0.5 ? "Morning" : "Evening"} ${herald}` : void 0;
         shape = "the Morning {herald}";
       } else if (slot === 7 && c.rng() < 0.5) {
         raw = "the Night Eye";
         shape = "the Night Eye";
       } else if (slot === 7) {
-        const q = theme === "kin" ? token14(c, "skyKin") : token14(c, "skyQuality");
+        const q = theme === "kin" ? token15(c, "skyKin") : token15(c, "skyQuality");
         raw = q ? `the ${q} Moon` : void 0;
         shape = theme === "kin" ? "the {skyKin} Moon" : "the {skyQuality} Moon";
       } else if (theme === "gods") {
-        raw = `${(_d3 = token14(c, "god", "poss")) != null ? _d3 : ""} Star`;
+        raw = `${(_d3 = token15(c, "god", "poss")) != null ? _d3 : ""} Star`;
         shape = "{god:poss} Star";
       } else if (theme === "kin") {
         const q = quality(c, slot);
-        const k = token14(c, "skyKin");
+        const k = token15(c, "skyKin");
         raw = q && k ? `the ${q} ${k}` : void 0;
         shape = "the {skyQuality} {skyKin}";
       } else {
@@ -118648,8 +130291,8 @@ function signSeries(S, system) {
           raw = drawFrom(c, "beast", "animals", items);
           shape = "{beast}";
         } else {
-          shape = pickOne13(patternsFor(), c.rng);
-          raw = renderPattern12(c, shape);
+          shape = pickOne14(patternsFor(), c.rng);
+          raw = renderPattern13(c, shape);
         }
         if (!raw) continue;
         const text = bareSystem(system) ? timeCapitals(raw) : finish2(c, "sign", raw);
@@ -118687,7 +130330,7 @@ var DEFAULT_CALENDAR_STATE = {
   series: false
 };
 var DEFAULT_SKY_STATE = { ...DEFAULT_CALENDAR_STATE, kind: "constellation" };
-var PEOPLE_TEXT8 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT9 = { placeholders: "placeholders for", invented: "invented" };
 var WORDS_TEXT = { translated: "in translated names", loanwords: "with familiar loanwords" };
 function timeHasLoans(culture) {
   var _a5, _b3;
@@ -118800,9 +130443,9 @@ function timeSentence(module2, state, limits) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT8[state.people],
+    text: PEOPLE_TEXT9[state.people],
     title: "Placeholders like [god], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT8[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT9[p] })),
     current: state.people
   });
   out.push(" gods and people, ");
@@ -119121,7 +130764,7 @@ var DEFAULT_EVENT_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT9 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT10 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT7 = { off: "each one separate", on: "as one history" };
 var scaleText = (key2) => EVENT_SCALES.find((s) => s.key === key2).text;
 function eventSentence(state) {
@@ -119184,9 +130827,9 @@ function eventSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT9[state.people],
+    text: PEOPLE_TEXT10[state.people],
     title: "Placeholders like [leader], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT9[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT10[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -119388,7 +131031,7 @@ var DEFAULT_KIT_STATE = {
   detail: "standard",
   people: "placeholders"
 };
-var PEOPLE_TEXT10 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT11 = { placeholders: "placeholders for", invented: "invented" };
 function kitSentence(state) {
   var _a5;
   const out = [];
@@ -119477,9 +131120,9 @@ function kitSentence(state) {
   out.push(" detail, with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT10[state.people],
+    text: PEOPLE_TEXT11[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT10[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT11[p] })),
     current: state.people
   });
   out.push(" people and places");
@@ -119541,7 +131184,7 @@ var DEFAULT_BUILDING_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT11 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT12 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT8 = { off: "each one separate", on: "as one town" };
 var settingText = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 function buildingSentence(state) {
@@ -119617,9 +131260,9 @@ function buildingSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT11[state.people],
+    text: PEOPLE_TEXT12[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT11[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT12[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -119702,7 +131345,7 @@ var DEFAULT_INN_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT12 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT13 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT9 = { off: "each one separate", on: "as one town" };
 var settingText2 = (key2) => INN_SETTINGS.find((s) => s.key === key2).text;
 var showsForm = (state) => hasSignTradition(state.culture);
@@ -119789,9 +131432,9 @@ function innSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT12[state.people],
+    text: PEOPLE_TEXT13[state.people],
     title: "Placeholders like [owner], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT12[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT13[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -119878,7 +131521,7 @@ var DEFAULT_STREET_STATE = {
   people: "placeholders",
   series: false
 };
-var PEOPLE_TEXT13 = { placeholders: "placeholders for", invented: "invented" };
+var PEOPLE_TEXT14 = { placeholders: "placeholders for", invented: "invented" };
 var SERIES_TEXT10 = { off: "each one separate", on: "as one town" };
 var DIALECT_TEXT = {
   plain: "with plain words only",
@@ -119984,9 +131627,9 @@ function streetSentence(state) {
   out.push(", with ");
   out.push({
     field: "people",
-    text: PEOPLE_TEXT13[state.people],
+    text: PEOPLE_TEXT14[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT13[p] })),
+    choices: ["placeholders", "invented"].map((p) => ({ id: p, label: PEOPLE_TEXT14[p] })),
     current: state.people
   });
   out.push(" people and places, ");
@@ -121606,12 +133249,12 @@ function terrainHeading(heading) {
   const m = heading.match(/^(.+?)\s*[:\-–]\s*(land|water|short land|short water|shape groups|shape generics)$/i);
   return m ? { terrain: m[1].trim(), part: m[2].toLowerCase() } : null;
 }
-function terrainId(token15, custom) {
+function terrainId(token16, custom) {
   var _a5;
-  const t = norm5(token15);
+  const t = norm5(token16);
   const builtIn = TERRAIN_CHOICES.find((x) => x.id !== "any" && (norm5(x.id) === t || norm5(x.label) === t));
   if (builtIn) return builtIn.id;
-  return (_a5 = custom.find((x) => norm5(x.label) === t || x.id === kebab2(token15))) == null ? void 0 : _a5.id;
+  return (_a5 = custom.find((x) => norm5(x.label) === t || x.id === kebab2(token16))) == null ? void 0 : _a5.id;
 }
 var key = (words) => words.map(([w, n]) => `${norm5(w)}|${n}`).sort().join("\n");
 var entryKey = (entries) => entries.map((e) => `${norm5(e.modern)}|1|${fusesKey(fusesOf(e))}`).sort().join("\n");
@@ -124107,6 +135750,13 @@ var withRegion = (label, regionCode) => {
 var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
+  // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
+  mountainNames: ICON_MOUNTAINS,
+  forestNames: ICON_FORESTS,
+  desertNames: ICON_DESERTS,
+  moorNames: ICON_MOORS,
+  wetlandNames: ICON_WETLANDS,
+  grasslandNames: ICON_GRASSLANDS,
   // Urban brief §1.3: settlement names wears the urban group icon.
   settlementNames: ICON_URBAN,
   // Route names brief §1.1.
@@ -124171,6 +135821,7 @@ var GROUP_ICONS = {
   placeNames: ICON_PLACE_SHAPES,
   urban: ICON_URBAN,
   seasCoasts: ICON_SEAS_COASTS,
+  wildLands: ICON_BIOME,
   groupNames: ICON_GROUP_NAMES,
   bynames: ICON_BYNAMES,
   vehicles: ICON_VEHICLES,
@@ -124190,6 +135841,7 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "bynamePreset") return ICON_BYNAMES;
   if (packType === "vesselPreset") return ICON_SHIPS;
   if (packType === "watersPreset") return ICON_SEAS_COASTS;
+  if (packType === "wildsPreset") return ICON_BIOME;
   if (packType === "realmPreset") return ICON_TRIBAL_NAMES;
   if (packType === "routePreset") return ICON_ROUTES;
   if (packType === "streetPreset") return ICON_STREETS;
@@ -124456,6 +136108,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     this.vesselStates = {};
     /** Seas and coasts brief §2: each waters module's choices, session only. */
     this.watersStates = {};
+    /** Wild lands brief §2.4: each terrain module's choices, session only. */
+    this.wildsStates = {};
     /** Realms brief §2.4: the realms sentence's choices, session only. */
     this.realmState = { ...DEFAULT_REALM_STATE };
     /** Route names brief §2.4: the route sentence's choices, session only. */
@@ -124488,7 +136142,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     /** Line-up brief §2.3: the sacred places module's own choices. */
     this.sacredPlaceState = { ...DEFAULT_SACRED_PLACE_STATE };
     /** Each switcher group's last-used module (session only). */
-    this.groupModule = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
+    this.groupModule = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", wildLands: "mountainNames", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     /** Land brief §8.1: river names' peoples (session only). */
     this.riverPeoples = { mode: "tribal", tradition: "general" };
@@ -124906,10 +136560,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     (_e3 = this.packDropdownEl) == null ? void 0 : _e3.toggle(section === "markov");
     (_f = this.sectionSentenceEl) == null ? void 0 : _f.toggle(section === "markov" && this.sectionChoices.length > 0);
     (_g = this.editRecipeButton) == null ? void 0 : _g.toggle(section === "markov" && this.currentPackType === "recipePack");
-    (_h = this.openPresetButton) == null ? void 0 : _h.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || this.currentPackType === "recipePack" && !!this.settlementPreset));
+    (_h = this.openPresetButton) == null ? void 0 : _h.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || this.currentPackType === "recipePack" && !!this.settlementPreset));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_i = this.createPacksButton) == null ? void 0 : _i.toggleClass("is-placeholder", section !== "markov");
-    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
+    const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
     (_j = this.createPacksButton) == null ? void 0 : _j.toggle(!colonialPart && !tribal);
     (_k = this.landButton) == null ? void 0 : _k.refresh();
     (_l = this.guideButton) == null ? void 0 : _l.toggle(!!colonialPart || section === "hyperspaceCharts");
@@ -125217,6 +136871,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     else if (BYNAME_SECTIONS.includes(section)) this.renderBynameSentence(row, section);
     else if (VESSEL_SECTIONS.includes(section)) this.renderVesselSentence(row, section);
     else if (WATERS_SECTIONS.includes(section)) this.renderWatersSentence(row, section);
+    else if (WILDS_SECTIONS.includes(section)) this.renderWildsSentence(row, section);
     else if (section === "realms") this.renderRealmSentence(row);
     else if (section === "peoplesTongues") this.renderPeopleSentence(row);
     else if (section === "routeNames") this.renderRouteSentence(row);
@@ -125793,7 +137448,7 @@ ${n.origin}${also}${echo}` };
     }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian14.TFile)) return;
-    const { preset, group, byname, vessel, waters, realm: realm2, route: route3, street, inn, building, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
     if (peoples) {
       this.peopleState = this.peoplePresetState(peoples);
       this.skipPeopleFill = true;
@@ -125863,6 +137518,11 @@ ${n.origin}${also}${echo}` };
     if (realm2) {
       this.realmState = this.realmPresetState(realm2);
       this.switchSection("realms");
+      return;
+    }
+    if (wilds) {
+      this.wildsStates[wilds.wildsModule] = this.wildsPresetState(wilds);
+      this.switchSection(wilds.wildsModule);
       return;
     }
     if (waters) {
@@ -127627,6 +139287,124 @@ ${n.origin}${also}${echo}` };
     }
     await this.runWaters(waters.watersModule, this.watersPresetState(waters), `${SECTION_LABELS[waters.watersModule]} \xB7 ${waters.packName}`, problems);
   }
+  // ── Wild lands (Wild lands brief) ─────────────────────────────────────────
+  /** §2.4: a terrain module's choices, session only. */
+  wildsState(module2) {
+    var _a5, _b3;
+    return (_b3 = (_a5 = this.wildsStates)[module2]) != null ? _b3 : _a5[module2] = defaultWildsState(module2);
+  }
+  /** §2: the module's sentence. */
+  renderWildsSentence(row, module2) {
+    const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    for (const segment2 of wildsSentence(this.wildsState(module2), module2)) {
+      if (typeof segment2 === "string") {
+        sentence2.appendText(segment2);
+        continue;
+      }
+      this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
+        this.wildsStates[module2] = chooseWilds(this.wildsState(module2), segment2.field, id, module2);
+      });
+    }
+  }
+  wildsPresetState(p) {
+    return chooseWilds(
+      {
+        culture: p.culture,
+        kind: p.wildsKind === "any" ? void 0 : p.wildsKind,
+        era: p.era,
+        where: p.where,
+        fantastic: p.fantastic,
+        region: p.region === "all" ? void 0 : p.region,
+        biome: p.biome === "any" ? void 0 : p.biome,
+        tone: p.tone,
+        people: p.people,
+        series: p.series
+      },
+      "culture",
+      p.culture,
+      p.wildsModule
+    );
+  }
+  /** §14: "{culture} · {module}", described by the sentence. */
+  openSaveWildsPreset(module2) {
+    var _a5, _b3;
+    const state = this.wildsState(module2);
+    const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+    const name = [culture, SECTION_LABELS[module2]].join(" \xB7 ");
+    const description = wildsSentenceText(wildsSentence(state, module2));
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
+      var _a6, _b4, _c3;
+      if (!presetName) {
+        new import_obsidian14.Notice("nameForge: give the preset a name.");
+        return false;
+      }
+      const content = modulePresetContent({
+        packName: presetName,
+        setting: "",
+        description: text,
+        wildsModule: module2,
+        culture: state.culture,
+        wildsKind: (_a6 = state.kind) != null ? _a6 : "any",
+        era: state.era,
+        where: state.where,
+        fantastic: state.fantastic,
+        region: (_b4 = state.region) != null ? _b4 : "all",
+        biome: (_c3 = state.biome) != null ? _c3 : "any",
+        tone: state.tone,
+        people: state.people,
+        series: state.series
+      });
+      return this.writePreset(presetName, content, (existing) => {
+        var _a7;
+        return ((_a7 = parseModulePreset(existing, presetName).wilds) == null ? void 0 : _a7.wildsModule) === module2;
+      });
+    }).open();
+  }
+  /** §14: a wild lands preset, run as its module runs; history "{module} · {preset}". */
+  async runWildsPreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian14.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { wilds, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (!wilds) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    await this.runWilds(wilds.wildsModule, this.wildsPresetState(wilds), `${SECTION_LABELS[wilds.wildsModule]} \xB7 ${wilds.packName}`, problems);
+  }
+  /** The finished strings only; history "{module} · {era} · {culture}…". */
+  async runWilds(module2, state = this.wildsState(module2), label, problems = []) {
+    var _a5;
+    const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
+    const guards = await this.loadSettlementSafeguards({ block: WILDS_DATA.safeguards[module2], flag: [], flagListBlocks: false });
+    const vocab = await this.loadSettlementVocabulary(guards.safeguards, wildsWordBlocked);
+    const result = generateWildsNames({
+      module: module2,
+      culture: state.culture,
+      kind: state.kind,
+      era: state.era,
+      where: state.where,
+      fantastic: state.fantastic,
+      region: state.region,
+      biome: state.biome,
+      tone: state.tone,
+      people: state.people,
+      series: state.series,
+      count: this.generationCount,
+      seed: seedOverride,
+      safeguards: guards.safeguards,
+      vocab: vocab.vocab
+    });
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
+      "none"
+    );
+    await this.recordGenerationHistory(result.names.length, label != null ? label : wildsHistoryLabel(module2, state, SECTION_LABELS[module2]));
+    this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
+  }
   // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
   /** §2.4: a vessel module's choices, session only. */
   vesselState(module2) {
@@ -127937,7 +139715,7 @@ ${n.origin}${also}${echo}` };
     var _a5;
     const section = this.activeSection;
     (_a5 = this.savePresetButton) == null ? void 0 : _a5.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" && this.settlementPresetable() || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "settlementNames" && this.settlementPresetable() || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -127958,6 +139736,10 @@ ${n.origin}${also}${echo}` };
     }
     if (VESSEL_SECTIONS.includes(this.activeSection)) {
       this.openSaveVesselPreset(this.activeSection);
+      return;
+    }
+    if (WILDS_SECTIONS.includes(this.activeSection)) {
+      this.openSaveWildsPreset(this.activeSection);
       return;
     }
     if (WATERS_SECTIONS.includes(this.activeSection)) {
@@ -128776,7 +140558,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "wildsPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset") {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -128930,6 +140712,7 @@ ${text}
           else if (parsed.byname) packs.push({ path: child.path, packType: "bynamePreset" });
           else if (parsed.vessel) packs.push({ path: child.path, packType: "vesselPreset" });
           else if (parsed.waters) packs.push({ path: child.path, packType: "watersPreset" });
+          else if (parsed.wilds) packs.push({ path: child.path, packType: "wildsPreset" });
           else if (parsed.realm) packs.push({ path: child.path, packType: "realmPreset" });
           else if (parsed.route) packs.push({ path: child.path, packType: "routePreset" });
           else if (parsed.street) packs.push({ path: child.path, packType: "streetPreset" });
@@ -129084,9 +140867,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w;
-    const { preset, group, byname, vessel, waters, realm: realm2, route: route3, street, inn, building, kit, event, money, time, thing, peoples, deity, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
+    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, kit, event, money, time, thing, peoples, deity, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -129097,9 +140880,9 @@ ${text}
     this.syncPillSpacing();
     (_b3 = this.editRecipeButton) == null ? void 0 : _b3.hide();
     (_c3 = this.openPresetButton) == null ? void 0 : _c3.toggle(this.activeSection === "markov");
-    const module2 = deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_d3 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _d3.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_e3 = findFamily(group.family)) == null ? void 0 : _e3.label : SECTION_LABELS.tribalNames;
+    const module2 = wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_d3 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _d3.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_e3 = findFamily(group.family)) == null ? void 0 : _e3.label : SECTION_LABELS.tribalNames;
     (_f = this.openPresetButton) == null ? void 0 : _f.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = preset == null ? void 0 : preset.packName) != null ? _g : group == null ? void 0 : group.packName) != null ? _h : byname == null ? void 0 : byname.packName) != null ? _i : vessel == null ? void 0 : vessel.packName) != null ? _j : waters == null ? void 0 : waters.packName) != null ? _k : realm2 == null ? void 0 : realm2.packName) != null ? _l : route3 == null ? void 0 : route3.packName) != null ? _m : street == null ? void 0 : street.packName) != null ? _n : inn == null ? void 0 : inn.packName) != null ? _o : building == null ? void 0 : building.packName) != null ? _p : kit == null ? void 0 : kit.packName) != null ? _q : event == null ? void 0 : event.packName) != null ? _r : money == null ? void 0 : money.packName) != null ? _s : time == null ? void 0 : time.packName) != null ? _t : thing == null ? void 0 : thing.packName) != null ? _u : peoples == null ? void 0 : peoples.packName) != null ? _v : deity == null ? void 0 : deity.packName) != null ? _w : file.basename;
+    this.plugin.settings.packName = (_x = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = wilds == null ? void 0 : wilds.packName) != null ? _g : preset == null ? void 0 : preset.packName) != null ? _h : group == null ? void 0 : group.packName) != null ? _i : byname == null ? void 0 : byname.packName) != null ? _j : vessel == null ? void 0 : vessel.packName) != null ? _k : waters == null ? void 0 : waters.packName) != null ? _l : realm2 == null ? void 0 : realm2.packName) != null ? _m : route3 == null ? void 0 : route3.packName) != null ? _n : street == null ? void 0 : street.packName) != null ? _o : inn == null ? void 0 : inn.packName) != null ? _p : building == null ? void 0 : building.packName) != null ? _q : kit == null ? void 0 : kit.packName) != null ? _r : event == null ? void 0 : event.packName) != null ? _s : money == null ? void 0 : money.packName) != null ? _t : time == null ? void 0 : time.packName) != null ? _u : thing == null ? void 0 : thing.packName) != null ? _v : peoples == null ? void 0 : peoples.packName) != null ? _w : deity == null ? void 0 : deity.packName) != null ? _x : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -129534,6 +141317,10 @@ ${text}
       await this.runVessels(this.activeSection);
       return;
     }
+    if (WILDS_SECTIONS.includes(this.activeSection)) {
+      await this.runWilds(this.activeSection);
+      return;
+    }
     if (WATERS_SECTIONS.includes(this.activeSection)) {
       await this.runWaters(this.activeSection);
       return;
@@ -129637,6 +141424,10 @@ ${text}
     }
     if (this.currentPackType === "vesselPreset") {
       await this.runVesselPreset();
+      return;
+    }
+    if (this.currentPackType === "wildsPreset") {
+      await this.runWildsPreset();
       return;
     }
     if (this.currentPackType === "watersPreset") {

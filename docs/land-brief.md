@@ -976,3 +976,7 @@ Run `npm test` and `npm run build` at the end of every milestone; both must pass
 - Standalone terrain packs shared between biomes (terrains live inside biome packs for now).
 - Biomes for name ageing and name takeover.
 - Biome-flavoured Activity and Produce slots.
+
+## Notes
+
+- **2026-10-19:** settlement names set in mountains, forest, wetland, plains or hills now draws 60% of its names from the matching wild lands module (`docs/wild-lands-brief.md` §10). Native place names, exploration and expansion are unchanged.
