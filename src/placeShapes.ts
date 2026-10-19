@@ -7,6 +7,7 @@
 // (and is tested) under plain Node.
 
 import data from "./data/place-shapes.json";
+import { affixFormAllowed, genericAllowed, type SizeKey } from "./settlement/data";
 import regionData from "./data/place-shape-regions.json";
 import wordData from "./data/place-shape-words.json";
 import { mulberry32 } from "./markov";
@@ -279,6 +280,11 @@ export interface PlaceShapeGenerateOptions {
   feature?: string;
   /** Categories set to `ignore` by a recipe: weight 0 at the shape stage. */
   excludedCategories?: string[];
+  /**
+   * Urban brief §6.1: draw settlement names at a size. Runs as feature "settlement", then drops
+   * every generic and affix form the settlement data doesn't list at the size.
+   */
+  settlement?: { size: SizeKey };
   /** Output wording; shapes are chosen identically either way. Defaults to "meaning". */
   wording?: ShapeWording;
   /** Land brief §3: biome and terrain multipliers. Undefined keeps the unweighted part 1 path. */
@@ -325,13 +331,19 @@ class PlaceShapeGenerator {
   constructor(
     private readonly source: PlaceShapeData,
     private readonly region: RegionWeighting | null,
-    filters: { groupIds?: string[]; feature?: string; excludedCategories?: string[] } = {},
+    filters: { groupIds?: string[]; feature?: string; excludedCategories?: string[]; settlement?: { size: SizeKey } } = {},
     regions: PlaceShapeRegionData = PLACE_SHAPE_REGION_DATA,
     private readonly environment?: { groups: Record<string, number>; generics: Record<string, number> },
   ) {
     this.excluded = new Set(filters.excludedCategories ?? []);
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds!.includes(g.id)) : source.groups;
-    const feature = filters.feature && filters.feature !== "any" ? filters.feature : undefined;
+    const settlement = filters.settlement;
+    const feature = settlement ? "settlement" : filters.feature && filters.feature !== "any" ? filters.feature : undefined;
+    if (settlement) {
+      groups = groups
+        .map((g) => ({ ...g, generics: g.generics.filter((x) => genericAllowed(x.id, settlement.size)) }))
+        .filter((g) => g.generics.length > 0);
+    }
     if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
     else if (feature && feature !== "settlement") groups = groups.filter((g) => g.id === feature);
     if (this.excluded.size > 0) {
@@ -365,8 +377,11 @@ class PlaceShapeGenerator {
       }
     }
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
-    this.stackGenerics = (stackGroup?.generics ?? []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id));
+    this.stackGenerics = (stackGroup?.generics ?? [])
+      .map((g) => g.id)
+      .filter((id) => !FOLK_GROUP_GENERICS.has(id) && (!settlement || genericAllowed(id, settlement.size)));
     this.affixWeights = source.affixes
+      .map((a) => (settlement ? { ...a, forms: a.forms.filter((f) => affixFormAllowed(a.id, f.text, settlement.size)) } : a))
       .filter((a) => a.forms.length > 0)
       .map((a): [AffixType, number] => [a, (regions.affixBaseline[a.id] ?? 0) * (region?.affixMultiplier[a.id] ?? 1)])
       .filter(([, w]) => w > 0);
@@ -471,6 +486,7 @@ function createGenerator(options: PlaceShapeGenerateOptions, source: PlaceShapeD
     groupIds: options.groupIds,
     feature: options.feature,
     excludedCategories: options.excludedCategories,
+    settlement: options.settlement,
   }, PLACE_SHAPE_REGION_DATA, options.environment);
 }
 

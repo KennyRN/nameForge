@@ -8,6 +8,7 @@
 import colonialData from "./data/colonial-shapes.json";
 import { biomeInline, findBiome } from "./biomes";
 import type { SpaceScale } from "./space/scale";
+import { affixFormAllowed, genericAllowed, spaceSiteAllowed, type SizeKey } from "./settlement/data";
 import { mulberry32 } from "./markov";
 import {
   type AffixForm,
@@ -260,6 +261,8 @@ export interface ColonialGenerateOptions {
   environment?: { groups: Record<string, number>; generics: Record<string, number> };
   /** Stellar brief §5: the recipe's biome is a space biome of this scale; `aliens` says whether it has alien life. */
   space?: { scale: SpaceScale; aliens: boolean };
+  /** Urban brief §6.1: draw settlement names at a size (feature "settlement", then the settlement data's filters). */
+  settlement?: { size: SizeKey };
 }
 
 /** Feature filter "Settlement": share of landscape groups drawn (as in part 1). */
@@ -356,7 +359,11 @@ class ColonialShapeGenerator {
     const inPart = (parts: ColonialPart[] | undefined) => (parts ?? ["2", "2a"]).includes(part);
 
     const excluded = new Set(options.excludedCategories ?? []);
-    const feature = options.feature && options.feature !== "any" ? options.feature : undefined;
+    const settlement = options.settlement;
+    const feature = settlement ? "settlement" : options.feature && options.feature !== "any" ? options.feature : undefined;
+    // Urban brief §6.1: a generic is a settlement generic only if the data lists it at the size; under a space biome the site groups count too.
+    const settlementGeneric = (groupId: string, id: string) =>
+      !settlement || genericAllowed(id, settlement.size) || (!!this.space && spaceSiteAllowed(groupId, settlement.size));
     const eligibleByGroup = new Map<string, EligibleGroup>();
     for (const group of data.groups) {
       if (options.groupIds && !options.groupIds.includes(group.id)) continue;
@@ -368,6 +375,7 @@ class ColonialShapeGenerator {
         const id = genericIdOf(entry);
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
         if (this.space && !this.spaceGenericLive(group.id, id)) continue;
+        if (!settlementGeneric(group.id, id)) continue;
         const genericWeight = (this.profile.genericMultipliers[id] ?? 1) * (options.environment?.generics[id] ?? 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)]
@@ -395,6 +403,7 @@ class ColonialShapeGenerator {
     this.stackSource = source.generics
       .filter((entry) => typeof entry === "string" || inPart(entry.parts))
       .filter((entry) => !this.space || this.spaceGenericLive(source.id, genericIdOf(entry)))
+      .filter((entry) => settlementGeneric(source.id, genericIdOf(entry)))
       .map((entry): [string, number] => [genericIdOf(entry), this.profile.genericMultipliers[genericIdOf(entry)] ?? 1])
       .filter(([, w]) => w > 0);
 
@@ -403,13 +412,14 @@ class ColonialShapeGenerator {
     // Stellar brief §5.6: under a space biome, an affix may not name a category the biome rules out (rivers, wetland).
     const spaceFits = (f: AffixForm) => !this.space || !f.slotCategory || this.spaceCategoryMultiplier(f.slotCategory) > 0;
     const formFits = (f: AffixForm) => (!f.slotCategory || inPart(categoryParts.get(f.slotCategory) ?? [])) && spaceFits(f);
+    const sizeFits = (typeId: string, f: AffixForm) => !settlement || affixFormAllowed(typeId, f.text, settlement.size);
     const types = [
       ...PLACE_SHAPE_DATA.affixes.map((a) => ({
         id: a.id,
-        forms: a.forms.filter(formFits),
+        forms: a.forms.filter((f) => formFits(f) && sizeFits(a.id, f)),
         weight: PLACE_SHAPE_REGION_DATA.affixBaseline[a.id] ?? 0,
       })),
-      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter(spaceFits), weight: a.weight })),
+      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter((f) => spaceFits(f) && sizeFits(id, f)), weight: a.weight })),
     ];
     this.affixWeights = types
       .filter((t) => t.forms.length > 0)

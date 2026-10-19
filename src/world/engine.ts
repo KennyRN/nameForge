@@ -11,6 +11,7 @@ import { type Biome, biomeTitleCase, biomeWords, BRITAIN, findBiome, pluralOf, s
 import groupData from "../data/group-names.json";
 import { MarkovModel, mulberry32 } from "../markov";
 import { smoothJoin } from "../names/engine";
+import { filterWorldList, type SizeKey, worldTemplateAllowed } from "../settlement/data";
 import { hasSpaceBlock } from "../space/safeguards";
 import { drawScale, scaleFilter, SPACE_DATA, spaceDirections, type SpaceScale } from "../space/scale";
 import { drawStar } from "../space/stars";
@@ -202,6 +203,8 @@ export interface WorldOptions {
   terrain?: string;
   faithfulness?: number;
   strictness?: number;
+  /** Urban brief §6.2: draw settlement names at a size, from the settlement data's templates and list words. */
+  settlement?: { size: SizeKey };
 }
 
 /** Renders names for one culture and era. Holds the batch-level Markov pools. */
@@ -209,6 +212,9 @@ export class WorldRenderer {
   readonly culture: WorldCulture;
   readonly era: WorldEra;
   private readonly lists: Record<string, string[]>;
+  /** The culture's lists before any settlement filter: biome swaps weigh their slots against these. */
+  private readonly allLists: Record<string, string[]>;
+  private readonly templates: [string, number][];
   private readonly markov: Record<string, MarkovSource>;
   private readonly pools = new Map<string, string[]>();
   private readonly notices = new Set<string>();
@@ -220,7 +226,19 @@ export class WorldRenderer {
     this.culture = findCulture(options.culture);
     this.era = findEra(this.culture, options.era);
     this.interstellar = this.era.id === INTERSTELLAR_ERA;
-    this.lists = { ...this.culture.lists, ...(this.era.lists ?? {}) };
+    this.allLists = { ...this.culture.lists, ...(this.era.lists ?? {}) };
+    this.lists = { ...this.allLists };
+    this.templates = this.era.templates;
+    const settlement = options.settlement;
+    if (settlement) {
+      // Urban brief §6.2: the era's templates cut to those listed at the size, and each listed list filtered.
+      this.templates = this.era.templates.filter(([t]) => worldTemplateAllowed(this.culture.id, this.era.id, t, settlement.size));
+      if (this.templates.length === 0) throw new Error(`No eligible ${this.culture.label} ${this.era.label} templates at this size`);
+      for (const [key, entries] of Object.entries(this.allLists)) {
+        const filtered = filterWorldList(this.culture.id, key, entries, settlement.size);
+        if (filtered) this.lists[key] = filtered;
+      }
+    }
     this.markov = { ...(this.culture.markov ?? {}), ...(this.era.markov ?? {}) };
     // Stellar brief §12.3: an earthly biome has no meaning in space; §12.4: no biome swaps there either.
     if (this.interstellar && options.biome && !options.biome.space) this.notices.add("The Interstellar era is set in space.");
@@ -311,11 +329,13 @@ export class WorldRenderer {
     for (const swap of WORLD_DATA.biomeSwaps) {
       if (swap.culture !== this.culture.id || (swap.era && swap.era !== this.era.id)) continue;
       if (!chosen && !LAND_LISTS.has(swap.list)) continue;
-      const list = this.lists[swap.list];
+      const list = this.allLists[swap.list];
       if (!list) continue;
       const keep = new Set(swap.keep);
       const kept = list.filter((e) => keep.has(parseEntry(e).word));
-      this.swaps.set(swap.list, { swap, biome, kept, slotWeight: list.length - kept.length });
+      // Urban brief §6.2: a filtered list keeps only its filtered entries; the biome's replacements stand as they are.
+      const allowed = new Set(this.lists[swap.list]);
+      this.swaps.set(swap.list, { swap, biome, kept: kept.filter((e) => allowed.has(e)), slotWeight: list.length - kept.length });
     }
   }
 
@@ -353,7 +373,7 @@ export class WorldRenderer {
     // Stellar brief §12.3: the scale is drawn on the batch stream before the template.
     this.space = this.interstellar ? this.drawSpace(rng) : undefined;
     const scale = this.space?.scale;
-    const template = pickWeighted(this.era.templates, rng);
+    const template = pickWeighted(this.templates, rng);
     const piece = this.render(template, rng, 0);
     const text = piece.text.charAt(0).toUpperCase() + piece.text.slice(1);
     return { text, etymology: piece.etym, template, ...(scale ? { scale } : {}) };

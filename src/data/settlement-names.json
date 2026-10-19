@@ -1,0 +1,1187 @@
+{
+ "$comment": "Settlement names (urban brief §4–§6). Size codes: h hamlet, v village, t town, c city, g great city. A generic, affix form, template or list word left out of this file is never drawn by the settlement names module; the source modules are untouched.",
+ "version": 1,
+ "sizes": [
+  {
+   "key": "any",
+   "label": "settlement"
+  },
+  {
+   "key": "hamlet",
+   "code": "h",
+   "label": "hamlet"
+  },
+  {
+   "key": "village",
+   "code": "v",
+   "label": "village"
+  },
+  {
+   "key": "town",
+   "code": "t",
+   "label": "town"
+  },
+  {
+   "key": "city",
+   "code": "c",
+   "label": "city"
+  },
+  {
+   "key": "great",
+   "code": "g",
+   "label": "great city"
+  }
+ ],
+ "fallbackOrder": [
+  "great",
+  "city",
+  "town",
+  "village",
+  "hamlet"
+ ],
+ "generics": {
+  "enclosed-farmstead": "hvt",
+  "estate-manor-centre": "hvtc",
+  "village": "hvtcg",
+  "early-homestead-or-village": "hvtcg",
+  "homestead-site": "hvt",
+  "norse-farm": "hv",
+  "enclosed-farm-garth": "hv",
+  "enclosed-settlement": "hvt",
+  "farm-township": "hvt",
+  "home-farm-of-an-estate": "h",
+  "land-holding-share-of-land": "hvt",
+  "folk-group-territory": "vtc",
+  "folk-group-homestead": "hvtc",
+  "dependent-or-secondary-settlement": "hv",
+  "outlying-place-dependent-site": "hv",
+  "outlying-grain-farm": "hv",
+  "specialised-farm": "hv",
+  "monastic-outlying-farm": "h",
+  "cattle-farm": "hv",
+  "cottars-settlement": "hv",
+  "settlement-by-a-roman-site": "vt",
+  "house": "hv",
+  "dwelling": "hvt",
+  "building-dwelling": "hv",
+  "hall": "hv",
+  "house-plot": "hvt",
+  "small-enclosed-field-by-a-house": "h",
+  "cottage": "hv",
+  "hut-temporary-shelter": "h",
+  "workshop-or-store-building": "h",
+  "summer-upland-dwelling": "h",
+  "permanent-or-winter-lowland-dwelling": "hv",
+  "shieling-summer-pasture-hut": "h",
+  "hut-at-summer-pasture": "h",
+  "salt-works": "hvt",
+  "salt-house": "hv",
+  "mill": "hv",
+  "kiln": "h",
+  "pit-quarry": "h",
+  "fish-weir": "h",
+  "trading-place": "vtcg",
+  "market": "vtc",
+  "market-town-harbour": "vtcg",
+  "landing-place": "hvt",
+  "haven": "vtc",
+  "british-church-community": "hvt",
+  "church": "hvtc",
+  "minster-mother-church": "vtcg",
+  "saints-church-enclosure": "hv",
+  "hermitage-retreat": "h",
+  "island-of-irish-monks": "h",
+  "chapel": "hv",
+  "holy-place": "hv",
+  "standing-cross": "hv",
+  "heathen-temple": "hv",
+  "shrine-idol": "h",
+  "sacred-grove": "hv",
+  "holy-spring": "hv",
+  "burial-mound": "hv",
+  "cairn": "h",
+  "fortified-place-stronghold": "hvtcg",
+  "earthen-ringfort": "hvtc",
+  "fort": "vtcg",
+  "roman-walled-town-or-fort": "vtcg",
+  "castle": "hvtc",
+  "tower-house": "hv",
+  "fortified-farmhouse": "h",
+  "lookout-hill": "hv",
+  "ship-camp-fortified-anchorage": "vt",
+  "royal-or-lordly-court": "vtc",
+  "lords-hall": "hv",
+  "manor-house": "hv",
+  "welsh-administrative-manor": "hv",
+  "assembly-field": "hv",
+  "assembly-mound": "hv",
+  "speech-place": "h",
+  "meeting-place": "hv",
+  "bath-spa": "vtc",
+  "clear-stream": "hvt",
+  "sluggish-or-muddy-stream": "h",
+  "mountain-stream": "hv",
+  "stream-with-its-valley": "hv",
+  "river-source-spring-head": "hv",
+  "river-mouth": "hvtcg",
+  "confluence": "hvtc",
+  "spring-well": "hvt",
+  "spring-with-roman-association": "hv",
+  "pool": "hvtc",
+  "mere-shallow-lake": "hv",
+  "marsh": "h",
+  "fen": "h",
+  "brushwood-marsh-carr": "h",
+  "flood-prone-land-by-a-river": "hv",
+  "island": "hvtc",
+  "dry-ground-in-wet-land": "hvt",
+  "land-in-a-river-bend": "hvt",
+  "water-meadow": "hv",
+  "headland": "hvt",
+  "point-nose": "hvt",
+  "promontory": "hv",
+  "sea-inlet-firth": "hv",
+  "bay": "hvt",
+  "small-bay-creek": "hv",
+  "cove": "h",
+  "strait-sound": "hv",
+  "estuary": "hv",
+  "beach-strand": "hv",
+  "sand-dunes-sandy-shore": "hv",
+  "shingle-bank": "h",
+  "river-crossing": "hvtcg",
+  "causeway": "hv",
+  "bridge": "hvtcg",
+  "ferry": "hv",
+  "paved-or-roman-road": "hvt",
+  "way-track": "hv",
+  "lane": "h",
+  "pass": "hv",
+  "gap-notch": "h",
+  "swing-gate": "h",
+  "isthmus-portage": "hv",
+  "wood": "hv",
+  "single-species-wood": "hv",
+  "great-woodland": "h",
+  "royal-hunting-ground": "hv",
+  "park": "hv",
+  "grove": "hv",
+  "grove-small-wood": "h",
+  "grove-possibly-sacred": "h",
+  "strip-of-woodland-shaw": "h",
+  "wood-on-a-steep-slope": "h",
+  "wooded-hill": "hvt",
+  "scrubland": "h",
+  "thicket": "h",
+  "woodland-then-clearing": "hvtc",
+  "newly-cleared-land-assart": "hv",
+  "clearing-paddock": "hv",
+  "woodland-swine-pasture": "hvt",
+  "low-level-topped-hill": "hvtc",
+  "hill": "hvt",
+  "heel-shaped-spur": "hv",
+  "flat-topped-ridge": "hv",
+  "ridge": "hv",
+  "back-low-ridge": "h",
+  "edge-escarpment": "h",
+  "steep-slope-bank": "hv",
+  "slope": "h",
+  "terrace-lynchet": "h",
+  "knoll": "hv",
+  "rounded-hill-mound": "hv",
+  "summit-top": "hv",
+  "upper-end-head": "hvt",
+  "pointed-hill": "h",
+  "tor": "h",
+  "crag": "h",
+  "stone": "hv",
+  "upland-moor": "h",
+  "heath": "hv",
+  "wold": "hv",
+  "long-valley": "hvt",
+  "dale": "hvt",
+  "broad-valley": "hv",
+  "short-bowl-shaped-valley": "hvt",
+  "narrow-valley-glen": "hv",
+  "small-enclosed-side-valley": "h",
+  "steep-bank-ravine-side": "h",
+  "shallow-damp-valley": "h",
+  "hollow": "hv",
+  "valley-bottom": "hv",
+  "valley-head": "h",
+  "nook": "hv",
+  "corner-projecting-piece-of-land": "h",
+  "corner-angle": "h",
+  "bend-crook": "h",
+  "open-country": "hvtc",
+  "level-field": "hv",
+  "hay-meadow": "hv",
+  "pasture": "h",
+  "arable-field": "h",
+  "arable-unit": "h",
+  "furlong": "h",
+  "animal-fold": "h",
+  "hedged-enclosure": "h",
+  "orchard": "h",
+  "town": "hvtcg",
+  "city": "tcg",
+  "capital": "cg",
+  "colony": "vtc",
+  "planned-village": "hv",
+  "trading-post": "hv",
+  "mission": "hv",
+  "pastoral-station": "h",
+  "mining-camp": "hv",
+  "junction": "hv",
+  "crossing": "hv",
+  "heights": "vt",
+  "hope": "hv",
+  "garrison-camp": "hvt",
+  "frontier-post": "hv",
+  "cantonment": "vt",
+  "civil-lines": "vt",
+  "administrative-station": "hvt",
+  "creek": "hvt",
+  "plain-grassland": "hv",
+  "oasis": "hvt",
+  "dry-riverbed": "hv",
+  "island-group": "hv",
+  "reef": "h",
+  "lagoon": "hv",
+  "local-settlement-word": "hvtcg",
+  "local-market-word": "vtc",
+  "mosque": "hv",
+  "saints-tomb-or-shrine": "hvtc",
+  "religious-lodge": "hv",
+  "station": "hvtc",
+  "habitat": "vtcg",
+  "space-colony": "vtcg",
+  "outpost": "hv",
+  "port": "vtc",
+  "space-haven": "hvt",
+  "anchorage": "hv",
+  "yard": "hv",
+  "dock": "hv",
+  "base": "hvt",
+  "camp": "hv",
+  "relay": "h",
+  "space-beacon": "h",
+  "observatory": "h",
+  "gate": "vt"
+ },
+ "spaceSiteGroups": {
+  "groups": [
+   "planet-surface",
+   "planet-moons",
+   "planet-orbits",
+   "system-belts"
+  ],
+  "sizes": "hv"
+ },
+ "affixes": {
+  "size": {
+   "Great": "vt",
+   "Little": "hv"
+  },
+  "position": {
+   "East": "hvt",
+   "West": "hvt",
+   "North": "hvt",
+   "South": "hvt",
+   "Upper": "hv",
+   "Lower": "hv",
+   "Inner": "hv"
+  },
+  "age": {
+   "Old": "hvt",
+   "New": "hvtc"
+  },
+  "function": {
+   "Market": "vt",
+   "Castle": "hv",
+   "Church": "hv"
+  },
+  "owner-by-status": {
+   "*": "hvt"
+  },
+  "owner-by-family": {
+   "*": "hv"
+  },
+  "dedication": {
+   "*": "hv"
+  },
+  "location": {
+   "*": "hvtc"
+  },
+  "city": {
+   "City": "tcg"
+  }
+ },
+ "world": {
+  "anglo-saxon": {
+   "eras": {
+    "old-english": {
+     "{spec}+{gen}": "hvtcg",
+     "{animal}+Ford": "hvtc",
+     "{size} {spec}+{gen}": "hvt",
+     "{name:pos} {gen}": "hvt",
+     "Home of {name:pos} People": "hvtcg",
+     "{name:pos} People": "hvt",
+     "{god:pos} {holy}": "hvt",
+     "{spec}+{gen} upon {#river}": "vtcg",
+     "{colour} {water}": "hvt",
+     "{saint:pos} {church}": "hvtc"
+    },
+    "modern": {
+     "{place}-on-Sea": "vt",
+     "{place} Junction": "hv",
+     "{place} Spa": "vt",
+     "{place} New Town": "tc",
+     "New {place}": "vtc",
+     "{place} Green": "hv",
+     "{place} Heath": "hv",
+     "{place} Vale": "hv",
+     "{place} Gardens": "v",
+     "{place} {surname}": "hv",
+     "Upper {place}": "hv",
+     "King's {place}": "vt",
+     "Port {surname}": "vtc",
+     "{surname} Park": "v",
+     "{resource}+{rgen}": "vtc",
+     "{resource}ville": "vt",
+     "{aspiration}": "hv",
+     "{place} Garden Village": "v"
+    },
+    "interstellar": {
+     "{spec}+{@land}": "hvtcg",
+     "{size} {spec}+{@land}": "hvt",
+     "{name:pos} {@hab}": "hvtcg",
+     "{name:pos} {@land}": "hvt",
+     "New {place}": "vtcg",
+     "{place} {@hab}": "hvtcg",
+     "{saint:pos} {@hab}": "hvtcg",
+     "{god:pos} {@land}": "hv",
+     "Home of {name:pos} People": "vtcg"
+    }
+   },
+   "lists": {
+    "gen": {
+     "Ford": "hvtcg",
+     "Field": "hvtc",
+     "Wood": "hv",
+     "Well": "hvt",
+     "Brook": "hvt",
+     "Hill": "hvt",
+     "Bridge": "vtcg",
+     "Town": "hvtcg",
+     "Farm": "hv",
+     "Fort": "vtcg",
+     "Mere": "hv",
+     "Stone": "hv",
+     "Dale": "hvt",
+     "Bank": "hv",
+     "Clearing": "hvt",
+     "Island": "vt",
+     "Hollow": "hv",
+     "Meadow": "hv"
+    },
+    "size": {
+     "Great": "vt",
+     "Little": "hv",
+     "Upper": "hv",
+     "Lower": "hv",
+     "Nether": "hv",
+     "Long": "hv",
+     "East": "hvt",
+     "West": "hvt",
+     "North": "hvt",
+     "South": "hvt",
+     "Old": "hvt"
+    },
+    "holy": {
+     "Fort": "vt",
+     "Barrow": "h",
+     "Grove": "h",
+     "Hill": "hv",
+     "Field": "hv",
+     "Clearing": "hv",
+     "Ley": "hv"
+    },
+    "church": {
+     "Minster": "tcg",
+     "Stone": "hv",
+     "Church": "hvt",
+     "Well": "hv"
+    }
+   }
+  },
+  "norse": {
+   "eras": {
+    "viking": {
+     "{name:pos} {farm}": "hvtc",
+     "{god:pos} {holy}": "hv",
+     "{adj} {land}": "hvt",
+     "{animal} {land}": "hv",
+     "{tree} {land}": "hv",
+     "{animal}+{fuse}": "hv",
+     "{adj}+{fuse}": "hv",
+     "Assembly {meet}": "vt",
+     "{name:pos} {land}": "hv",
+     "{status} {farm}": "hvt"
+    },
+    "interstellar": {
+     "{name:pos} {farm}": "hvtc",
+     "{adj} {@land}": "hvt",
+     "{god:pos} {@land}": "hv",
+     "{animal} {@land}": "hv",
+     "{god:pos} {holy}": "hv",
+     "{animal}+{@land}": "hv",
+     "{adj}+{@land}": "hv",
+     "Assembly {meet}": "vt",
+     "{status} {farm}": "hvt"
+    }
+   },
+   "lists": {
+    "farm": {
+     "Farm": "hvtc",
+     "Homestead": "hv",
+     "Clearing": "hv",
+     "Shieling": "h",
+     "Steading": "hv",
+     "Toft": "hvt",
+     "Hold": "hvt",
+     "Habitat": "vtc"
+    },
+    "land": {
+     "Bay": "vt",
+     "Fjord": "hv",
+     "Ness": "hv",
+     "Dale": "hvt",
+     "Island": "hv",
+     "Holm": "hv",
+     "Beck": "hv",
+     "Strand": "hv",
+     "Sound": "v",
+     "Haven": "vtc",
+     "Howe": "hv",
+     "Ridge": "h"
+    },
+    "fuse": {
+     "Dale": "hvt",
+     "Beck": "hv",
+     "Ness": "hv",
+     "Holm": "hv"
+    },
+    "holy": {
+     "Grove": "h",
+     "Hill": "hv",
+     "Field": "hv",
+     "Island": "hv",
+     "Spring": "hv",
+     "Acre": "hv",
+     "Temple": "v",
+     "Stone": "hv"
+    }
+   }
+  },
+  "celtic": {
+   "eras": {
+    "pagan": {
+     "Fort of {god}": "vtcg",
+     "{adj} Fort": "hvtc",
+     "Fort of the {animal:pl}": "hvt",
+     "{grove} of {god}": "hvt",
+     "Plain of {god}": "hvtc",
+     "{adj} Plain": "hvtc",
+     "{tree} Plain": "hv",
+     "Ford of the {animal:pl}": "hvt",
+     "Mouth of the {#river}": "vtc",
+     "Confluence of the {#river}": "vtcg",
+     "{animal} Hill": "hv"
+    },
+    "saints": {
+     "Church of {saint}": "hvtc",
+     "Church of {saint} {prep} {feature}": "hv",
+     "Cell of {saint}": "hv",
+     "Mouth of the {#river}": "vtc",
+     "Fort of the {animal:pl}": "hvt",
+     "Fort of {person}": "vtcg",
+     "{adj} Fort": "hvt",
+     "Head of the {feature}": "hv",
+     "Headland of the {animal}": "hv",
+     "{adj} Headland": "hv",
+     "Valley of the {#river}": "hv",
+     "Valley of the {animal:pl}": "hv",
+     "{adj} Valley": "hv",
+     "Island of {saint}": "hv",
+     "Hill of the {animal:pl}": "hv",
+     "{tree} Wood": "h",
+     "Ford of the {animal:pl}": "hvt",
+     "Ford of {person}": "hvt",
+     "Meadow of the Sons of {person}": "h",
+     "{saint:pos} Well": "hv",
+     "{colour} Pool": "hvtc"
+    },
+    "interstellar": {
+     "Church of {saint}": "hvtc",
+     "Fort of {god}": "vtcg",
+     "Mouth of the {@land}": "vtc",
+     "Head of the {@land}": "hv",
+     "Cell of {saint}": "hv",
+     "Fort of the {animal:pl}": "hvt",
+     "{adj} {@hab}": "hvtcg",
+     "{@land} of {god}": "hv",
+     "Church of {saint} {prep} {@land}": "hv",
+     "{@land} of the {animal:pl}": "hv"
+    }
+   },
+   "lists": {
+    "grove": {
+     "Spring": "hvt",
+     "Well": "hv"
+    },
+    "feature": {
+     "Pool": "hv",
+     "Hollow": "hv",
+     "White Hazel": "h",
+     "Ford": "hv",
+     "Stream": "hv",
+     "Valley": "hv",
+     "Wood": "h",
+     "Rock": "h",
+     "Meadow": "hv",
+     "Hill": "hv",
+     "Grove": "h",
+     "Strand": "hv"
+    }
+   }
+  },
+  "roman": {
+   "eras": {
+    "imperial": {
+     "Shrine of {god}": "hvt",
+     "Harbour of {god}": "vtc",
+     "Forum of {person}": "vtc",
+     "Colony of {emperor}": "tcg",
+     "{emperor:pos} City of the {tribe}": "tcg",
+     "Market of the {tribe}": "vtc",
+     "Waters of {god}": "vt",
+     "Temple of {god}": "hv",
+     "Field of {god}": "hv",
+     "Bridge of {person}": "vt",
+     "Camp on the {#river}": "hvt",
+     "Mouth of the {#river}": "vtc",
+     "At the {ordinal} Milestone": "hv",
+     "At the {at}": "hv",
+     "The Three Taverns": "h",
+     "{emperor:pos} Peace": "tc",
+     "New City": "tcg",
+     "Victory City": "tc",
+     "{waters}": "vt",
+     "Colony of {emperor} at the Altar of {god}": "tc"
+    },
+    "medieval": {
+     "Saint {saint}": "hvtc",
+     "Saint {saint} {where}": "hvt",
+     "Borough of Saint {saint}": "vtc",
+     "Borough of the Holy {holyname}": "vt",
+     "{adj} {town}": "hvtc",
+     "New {town}": "vtc",
+     "{town} of the {animal:pl}": "hv",
+     "{adj} {peak}": "hv",
+     "Tower of the {status}": "hv",
+     "Castle of the {status}": "hvt",
+     "{town} on the {#river}": "vt",
+     "Valley of the {#river}": "hv",
+     "{adj} Water": "hv"
+    },
+    "interstellar": {
+     "Harbour of {god}": "vtc",
+     "Forum of {person}": "vtc",
+     "Colony of {emperor}": "tcg",
+     "At the {@ordinal} Point": "hv",
+     "Shrine of {god}": "hv",
+     "{emperor:pos} {@hab}": "hvtcg",
+     "Camp at the {@land}": "hvt",
+     "Mouth of the {@land}": "vtc",
+     "New {homeland}": "vtcg",
+     "Saint {saint}": "hvtc",
+     "{@land} of {person}": "hv"
+    }
+   },
+   "lists": {
+    "town": {
+     "Village": "hv",
+     "Castle": "hvt",
+     "Borough": "vtc",
+     "Town": "vtc",
+     "Tower": "hv",
+     "Hamlet": "h",
+     "Rock": "hv"
+    }
+   }
+  },
+  "chinese": {
+   "eras": {
+    "imperial": {
+     "{direction} Peace": "tc",
+     "{direction} Capital": "cg",
+     "{adv} {quality}": "tcg",
+     "{verb} the {far}": "tc",
+     "{slogan}": "tc",
+     "{side} of the {river}": "vtcg",
+     "{side} of the Lake": "vt",
+     "Sunny Bank of the {river}": "vt",
+     "Shady Side of Mount {mountain}": "hv",
+     "{quality} Prefecture": "tc",
+     "{quality} County": "vt",
+     "{material} Gate Pass": "hv",
+     "{beast} Gate": "hv",
+     "{beast} Hill": "hv",
+     "{beast} Pass": "hv"
+    },
+    "modern": {
+     "{side} of the {river}": "vtcg",
+     "{side} of the Lake": "vt",
+     "Sunny Bank of the {river}": "vt",
+     "{side} of the {river} New Area": "tc",
+     "{direction} Capital": "cg",
+     "{adj} Island": "vtc",
+     "{adj} Harbour": "vtcg",
+     "{adj} Ford": "vtcg",
+     "{adj} Port": "vtc",
+     "Upon the {water}": "tcg",
+     "{beast} {feature}": "hv",
+     "{slot} {settle}": "hvt",
+     "{quality} {settle}": "hvt"
+    },
+    "interstellar": {
+     "{side} of the {@land}": "vtcg",
+     "{adv} {quality}": "tcg",
+     "{verb} the {far}": "tc",
+     "{quality} {@hab}": "hvtcg",
+     "{direction} Peace": "tc",
+     "{direction} Capital": "cg",
+     "{beast} {@land}": "hv",
+     "{slot} {@hab}": "hvtcg",
+     "{material} Gate": "hv"
+    }
+   },
+   "lists": {
+    "settle": {
+     "Village": "hv",
+     "Commune": "hv",
+     "Town": "vt",
+     "Farm": "h",
+     "District": "vtc"
+    }
+   }
+  },
+  "egyptian": {
+   "eras": {
+    "pharaonic": {
+     "House of {lord}": "hvtcg",
+     "Estate of {god}": "hv",
+     "Temple of the Spirit of {god}": "tcg",
+     "Horizon of {god}": "cg",
+     "Mound of {god}": "hv",
+     "Seat of {god}": "vtc",
+     "Island of {god}": "hv",
+     "{god:pos} City": "tcg",
+     "Mansion of {pharaoh}": "vt",
+     "{pair} and {pair}": "tcg",
+     "The {colour} Walls": "tcg",
+     "Mound of the {sacred}": "hv",
+     "Field of the {sacred:pl}": "hv"
+    },
+    "graeco-roman": {
+     "City of {ggod}": "tc",
+     "Great City of {ggod}": "cg",
+     "City of the {sacred:pl}": "vtc",
+     "{founder:pos} City": "tcg",
+     "City of {founder}": "tcg",
+     "{harbour} Harbour": "vtc",
+     "{founder:pos} City of the Hunts": "vt",
+     "Oasis of {god}": "hv",
+     "Little City of {ggod}": "vt",
+     "Upper City of the {sacred:pl}": "vt"
+    },
+    "interstellar": {
+     "House of {lord}": "hvtcg",
+     "Horizon of {god}": "cg",
+     "{god:pos} {@hab}": "hvtcg",
+     "Seat of {god}": "vtc",
+     "{@land} of {god}": "hv",
+     "Mansion of {pharaoh}": "vt",
+     "{pair} and {pair}": "tcg",
+     "The {colour} Walls": "tcg",
+     "{@land} of the {sacred:pl}": "hv"
+    }
+   },
+   "lists": {}
+  },
+  "aztec": {
+   "eras": {
+    "mexica": {
+     "Place of {animal:pl}": "hvtc",
+     "Place of the {animal:pl}": "hvt",
+     "Place of {plant:pl}": "hvtcg",
+     "{animal} Hill": "hvt",
+     "{plant} Hill": "hv",
+     "Near the {near}": "hvt",
+     "Where {plant:pl} Abound": "hv",
+     "On the {feature}": "hv",
+     "In the Navel of the {celestial}": "cg",
+     "Where the {animal} {verb}": "hv",
+     "Where {god} Was Born": "vt",
+     "Among the {plant:pl}": "hv"
+    },
+    "colonial": {
+     "Saint {saint} of {native}": "vtc",
+     "Our Lady of {native}": "vtc",
+     "Royal Mines of Saint {saint}": "vt",
+     "Rich Town of the {holyname}": "tc",
+     "New {homeland}": "tc",
+     "Mission of Saint {saint}": "hv",
+     "City of the {holy2}": "tcg",
+     "Town of the {holyname}": "vt",
+     "Saint {saint} of the {animal:pl}": "hv"
+    },
+    "interstellar": {
+     "Place of {animal:pl}": "hvtc",
+     "{animal} {@land}": "hv",
+     "Near the {near}": "hvt",
+     "On the {@land}": "hv",
+     "In the Navel of the {celestial}": "cg",
+     "{god:pos} {@land}": "hv",
+     "Place of {plant:pl}": "hvtcg",
+     "Where the {animal} {verb}": "hv",
+     "Where {plant:pl} Abound": "hv"
+    }
+   },
+   "lists": {}
+  },
+  "bantu": {
+   "eras": {
+    "kingdoms": {
+     "Place of the {#people}": "vtc",
+     "Royal Enclosure of {#ruler}": "tcg",
+     "{#ruler:pos} Town": "hvtc",
+     "Houses of {material}": "vtcg",
+     "Place of {event}": "hvt",
+     "Hill of the {animal:pl}": "hv",
+     "At the {feature}": "hvt",
+     "Where the {animal:pl} Drink": "hv",
+     "The {noun} That {verb}": "vt",
+     "{adj} Water": "hv"
+    },
+    "interstellar": {
+     "Place of the {#people}": "vtc",
+     "Place of {event}": "hvt",
+     "Royal Enclosure of {#ruler}": "tcg",
+     "{#ruler:pos} {@hab}": "hvtcg",
+     "{@land} of the {animal:pl}": "hv",
+     "At the {@land}": "hvt",
+     "The {noun} That {verb}": "vt",
+     "{adj} {@land}": "hv"
+    }
+   },
+   "lists": {
+    "feature": {
+     "River": "hvt",
+     "Rock": "hv",
+     "Hill": "hvt",
+     "Bay": "hvt",
+     "Pool": "hv",
+     "Lake": "hv",
+     "Ford": "hvt",
+     "Spring": "hvt",
+     "Gorge": "hv",
+     "Waterfall": "hv",
+     "Forest": "h"
+    }
+   }
+  },
+  "slavic": {
+   "eras": {
+    "rus": {
+     "New {town}": "vtcg",
+     "{prince:pos}": "vtc",
+     "{prince:pos} Town": "vtcg",
+     "{material} Town": "hvt",
+     "{adj} Town": "hvtc",
+     "{prince:pos} beyond the {beyond}": "vt",
+     "Town on the {#river}": "vt",
+     "Mouth of the {#river}": "vt",
+     "{animal} Ford": "hv",
+     "Trinity Town": "vt",
+     "Holy Mountains": "hv",
+     "{animal} Hill": "hv"
+    },
+    "imperial": {
+     "{monarch:pos} City": "tcg",
+     "{monarch:pos} Town": "vt",
+     "Glory of {monarch}": "tc",
+     "Saint {monarch:pos} City": "cg",
+     "Ruler of the {region}": "tc",
+     "Rule the {region}": "tc",
+     "Fortress of Saint {monarch}": "vt",
+     "{monarch:pos} Fort": "vt",
+     "Tsar's Town": "vtc",
+     "Empress's Village": "hv",
+     "New {homeland}": "vtc"
+    },
+    "soviet": {
+     "Red Gift": "hv",
+     "{ideal} Town": "vt",
+     "{#hero:pos} Town": "vtc",
+     "{#hero:pos} City": "tcg",
+     "Young Communists' Town": "tc",
+     "{industry}": "vtc",
+     "{closed}-{num}": "vt",
+     "Red {red}": "hvt",
+     "Settlement of the {ideal} Collective Farm": "h",
+     "Hammer and Sickle": "hv",
+     "{ideal} Path": "hv"
+    },
+    "interstellar": {
+     "New {town}": "vtcg",
+     "{ideal} {@hab}": "hvtcg",
+     "{prince:pos} {@hab}": "hvtcg",
+     "Glory of {monarch}": "tc",
+     "Ruler of the {region}": "tc",
+     "{#hero:pos} {@hab}": "hvtcg",
+     "{closed}-{num}": "vt",
+     "Red {red}": "hvt",
+     "{material} {@hab}": "hvtcg",
+     "Star Town": "vt",
+     "{animal} {@land}": "hv"
+    }
+   },
+   "lists": {
+    "town": {
+     "Town": "vtcg",
+     "Fort": "vtc",
+     "Ford": "hv",
+     "Hill": "hv",
+     "Station": "hvtc",
+     "Settlement": "hvt",
+     "Habitat": "vtcg"
+    }
+   }
+  },
+  "arabic-persian": {
+   "eras": {
+    "arabic": {
+     "Abode of {abode}": "tcg",
+     "City of {abode}": "tcg",
+     "Mother of {mother}": "vt",
+     "Father of {father}": "vt",
+     "The {epithet}": "tcg",
+     "The {epithet} City": "tc",
+     "Gate of {gate}": "vt",
+     "Mountain of {person}": "vt",
+     "Palace of {person}": "vt",
+     "Camp of {person}": "vtc",
+     "The Camp": "vtc",
+     "Harbour of {person}": "vt",
+     "{day} Market": "hv",
+     "Valley of {valley}": "hvtc",
+     "The {adj} Island": "vt",
+     "The Islands": "tcg",
+     "Fortress of the {animal}": "hv",
+     "Eagle's Nest": "h",
+     "Fort of Victory": "vt"
+    },
+    "persian": {
+     "{person:pos} Abode": "hvtc",
+     "{abode} Abode": "vtc",
+     "{king:pos} City": "tcg",
+     "Glory of {king}": "tc",
+     "Land of {plant:pl}": "hv",
+     "{plant} Garden": "hv",
+     "Green City": "tc",
+     "{num} {water}": "hv",
+     "Temple of {sacred}": "hv",
+     "Fire of {king}": "hv",
+     "{adj} Fortress": "hvt",
+     "Fortress of the {animal:pl}": "hv",
+     "{king:pos} Hunting Ground": "h"
+    },
+    "interstellar": {
+     "Abode of {abode}": "tcg",
+     "Mother of {mother}": "vt",
+     "Gate of {gate}": "vt",
+     "Father of {father}": "vt",
+     "The {epithet}": "tcg",
+     "Harbour of {person}": "vt",
+     "{king:pos} City": "tcg",
+     "{plant} Garden": "hv",
+     "Camp of {person}": "vtc",
+     "{day} Market": "hv",
+     "{@land} of {valley}": "hv",
+     "Glory of {king}": "tc",
+     "{num} {water}": "hv"
+    }
+   },
+   "lists": {}
+  },
+  "indian": {
+   "eras": {
+    "ancient": {
+     "{god:pos} Plain": "hv",
+     "{god:pos} City": "tcg",
+     "City of {city}": "tcg",
+     "The {epithet}": "tcg",
+     "Confluence of the {#river}": "vtc",
+     "Place of Sacrifice": "hv",
+     "{plant} Forest": "hv",
+     "{sage:pos} Hermitage": "hv",
+     "Abode of {god}": "vt",
+     "{animal} City": "vt",
+     "Ford of the {#river}": "hvt"
+    },
+    "modern": {
+     "{founder:pos} Abode": "vtcg",
+     "{raja:pos} City": "tcg",
+     "Abode of {abode}": "vt",
+     "Fort of {god}": "vt",
+     "{raja:pos} Fort": "vt",
+     "{market} Market": "hvt",
+     "{surname:pos} Market": "vt",
+     "{animal} City": "vt",
+     "New {place}": "tc",
+     "{place} {colony}": "vt",
+     "{god:pos} Town": "vt",
+     "{surname} Town": "vt"
+    },
+    "interstellar": {
+     "{god:pos} City": "tcg",
+     "City of {city}": "tcg",
+     "The {epithet}": "tcg",
+     "Abode of {god}": "vt",
+     "{sage:pos} Hermitage": "hv",
+     "{founder:pos} Abode": "vtcg",
+     "{raja:pos} {@hab}": "hvtcg",
+     "{market} Market": "hvt",
+     "{god:pos} {@land}": "hv",
+     "{plant} Garden": "hv",
+     "{animal} City": "vt"
+    }
+   },
+   "lists": {}
+  },
+  "japanese": {
+   "eras": {
+    "samurai": {
+     "{adj} {feature}": "hvtcg",
+     "{mouth} Mouth": "hvtc",
+     "{good} {feature}": "hvt",
+     "{animal} {feature}": "hv",
+     "Below the Castle": "vt",
+     "{adj} {feature} Castle Town": "tc",
+     "New {lodging}": "hv",
+     "Capital of {virtue} and {virtue}": "cg",
+     "Before {kami:pos} Gate": "vt",
+     "{kami} {feature}": "hv",
+     "Island of Worship": "hv",
+     "{number} {animal:pl}": "hv",
+     "{number} {feature:pl}": "hv",
+     "Middle of the {feature}": "hv"
+    },
+    "modern": {
+     "{adj} {feature}": "hvtcg",
+     "{mouth} Mouth": "hvtc",
+     "{animal} {feature}": "hv",
+     "{pretty} Hill": "vt",
+     "{place} New Town": "tc",
+     "{place} Station Front": "v",
+     "{place} {future}": "vt",
+     "New {place}": "vt",
+     "{kami} {feature}": "hv"
+    },
+    "interstellar": {
+     "{adj} {@land}": "hvtcg",
+     "{good} {@land}": "hvt",
+     "{@land} Mouth": "hvtc",
+     "{animal} {@land}": "hv",
+     "Before {kami:pos} Gate": "vt",
+     "{pretty} {@hab}": "hvtcg",
+     "{kami} {@land}": "hv",
+     "{number} {@land:pl}": "hv",
+     "{@hab} Front": "v",
+     "Capital of {virtue} and {virtue}": "cg",
+     "Middle of the {@land}": "hv"
+    }
+   },
+   "lists": {
+    "feature": {
+     "Hill": "hvt",
+     "Island": "hvtcg",
+     "Field": "hvtc",
+     "Cape": "hvtc",
+     "River": "hvt",
+     "Bridge": "hvt",
+     "Mountain": "hv",
+     "Valley": "hvt",
+     "Moor": "hv",
+     "Shore": "hvt",
+     "Bay": "hvt",
+     "Pass": "hv",
+     "Slope": "hvtcg",
+     "Pond": "hv",
+     "Well": "hvt",
+     "Marsh": "hv",
+     "Bank": "hv",
+     "Ford": "hvt",
+     "Paddy": "hvtc"
+    }
+   }
+  },
+  "west-african": {
+   "eras": {
+    "sahel-and-forest": {
+     "Under the {tree} Tree": "hvt",
+     "{person:pos} Well": "hvtcg",
+     "Grove of {spirit}": "hv",
+     "Town of the {#people}": "vtc",
+     "Place of the {animal:pl}": "hvt",
+     "Where the River {bend}": "vt",
+     "{market} Market": "hvt",
+     "Beside the {feature}": "hv",
+     "Hill of {spirit}": "hv",
+     "{adj} {feature}": "hv",
+     "Among the {tree} Trees": "hv",
+     "{person:pos} Camp": "hvt",
+     "Mosque of {person}": "vt"
+    },
+    "interstellar": {
+     "{animal} {@land}": "hv",
+     "{person:pos} {@land}": "hvt",
+     "Town of the {#people}": "vtc",
+     "Under the {tree} Tree": "hvt",
+     "Grove of {spirit}": "hv",
+     "Where the {@land} {bend}": "vt",
+     "{market} Market": "hvt",
+     "Beside the {@land}": "hv",
+     "{adj} {@land}": "hv",
+     "{@land} of {spirit}": "hv"
+    }
+   },
+   "lists": {}
+  },
+  "maya": {
+   "eras": {
+    "classic": {
+     "Big Water": "tc",
+     "Mouth of the Well of the {people}": "tcg",
+     "Well of the {people}": "vt",
+     "{colourdir} {feature}": "hvt",
+     "{holyword} {feature}": "vtc",
+     "{animal} Cave": "hv",
+     "Place of the {animal:pl}": "hvt",
+     "{number} Stones": "hv",
+     "Seat of {god}": "vtc",
+     "{number} {animal:pl}": "hv",
+     "Sky Place": "tc",
+     "Where the {animal} Rises": "hv"
+    },
+    "interstellar": {
+     "{colourdir} {@land}": "hvt",
+     "Well of the {people}": "vt",
+     "{holyword} {@land}": "vtc",
+     "{animal} {@land}": "hv",
+     "Place of the {animal:pl}": "hvt",
+     "{number} Stones": "hv",
+     "Seat of {god}": "vtc",
+     "Big {@land}": "tc",
+     "{number} {@land:pl}": "hv",
+     "{god:pos} {@land}": "hv"
+    }
+   },
+   "lists": {}
+  },
+  "korean": {
+   "eras": {
+    "joseon": {
+     "{adj} {feature}": "hvtc",
+     "{jvirtue} District": "vtc",
+     "{animal} {feature}": "hv",
+     "South of the River": "vt",
+     "Water Source": "hv",
+     "{adj} Source": "hv",
+     "Temple of {buddhist}": "hv",
+     "{adj} Fortress": "vt",
+     "Fortress of {virtue}": "vt"
+    },
+    "interstellar": {
+     "{adj} {@land}": "hvtc",
+     "{jvirtue} District": "vtc",
+     "{animal} {@land}": "hv",
+     "Temple of {buddhist}": "hv",
+     "Sunward of the {@land}": "vt",
+     "{@resource} Source": "hv",
+     "{adj} Fortress": "vt"
+    }
+   },
+   "lists": {
+    "feature": {
+     "Hill": "hv",
+     "Mountain": "hv",
+     "Field": "hvt",
+     "Island": "hvt",
+     "River": "hvt",
+     "Gate": "vt",
+     "Valley": "hv",
+     "Pass": "hv",
+     "Bay": "hvt",
+     "Spring": "hv",
+     "Ridge": "hv",
+     "Ford": "hvt",
+     "Plain": "hvtc"
+    }
+   }
+  },
+  "ethiopian": {
+   "eras": {
+    "aksum-and-abyssinia": {
+     "Mount of {holy}": "hvtc",
+     "Mount of {saint}": "hvtc",
+     "Monastery of {saint}": "hv",
+     "Church of {saint} in the Rock": "h",
+     "New {new}": "vtcg",
+     "{adj} {feature}": "hvt",
+     "Royal Camp of {king}": "tc",
+     "{king:pos} Town": "vtc",
+     "{king:pos} Churches": "vt",
+     "Place of the {animal:pl}": "hv",
+     "Throne of {king}": "tc",
+     "Gate of {holy}": "vt"
+    },
+    "interstellar": {
+     "Mount of {holy}": "hvtc",
+     "Mount of {saint}": "hvtc",
+     "{adj} {@land}": "hvt",
+     "Monastery of {saint}": "hv",
+     "Church of {saint} in the Rock": "h",
+     "New {new}": "vtcg",
+     "Royal Camp of {king}": "tc",
+     "{king:pos} {@hab}": "hvtcg",
+     "Throne of {king}": "tc",
+     "Gate of {holy}": "vt"
+    }
+   },
+   "lists": {
+    "feature": {
+     "Spring": "hvt",
+     "Water": "hvt",
+     "Rock": "hv",
+     "Gorge": "hv",
+     "Pass": "hv",
+     "Field": "hv",
+     "Market": "hvt"
+    }
+   }
+  }
+ }
+}

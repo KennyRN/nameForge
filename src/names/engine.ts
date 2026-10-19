@@ -32,6 +32,7 @@ import { SPACE_DATA, spaceDirections } from "../space/scale";
 import { catalogueName, catalogueWorld, spokenCatalogue } from "../space/stars";
 import { riverFill, type RiverSetting } from "../rivers/engine";
 import { type TribalSlotFields, tribalSlotFill } from "../tribes/slotFill";
+import type { SizeKey } from "../settlement/data";
 
 // ── Fixed values (names-reference) ──────────────────────────────────────────
 
@@ -255,6 +256,8 @@ export interface NameGenerateOptions {
   adapt?: NativeAdapter;
   /** Land brief §4.1: the recipe's biome, resolved by the host (biome packs); built-ins resolve here. */
   biome?: Biome;
+  /** Urban brief §6.1: draw settlement names at a size (the shape generators' `settlement` option). */
+  settlement?: { size: SizeKey };
 }
 
 /** Optional renderer streams and settings; a renderer built without them behaves as before. */
@@ -1167,7 +1170,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
   let renderOne: (i: number) => GeneratedName;
   let shapeCount: number;
   if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment });
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement: options.settlement });
     renderOne = (i) => renderer.render(shapes[i], rng);
     shapeCount = shapes.length;
   } else {
@@ -1180,6 +1183,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
       feature: recipe.shape.feature,
       excludedCategories,
       environment,
+      settlement: options.settlement,
       ...(spaceScale ? { space: { scale: spaceScale, aliens: !!recipe.shape.aliens } } : {}),
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);
