@@ -259,9 +259,9 @@ const ICON_DESERTS_SVG =
   '<g transform="scale(0.390625)"><g fill="currentColor"><path d="M232 116a60 60 0 0 1-60 60h-12v40H96v-80H84a60 60 0 0 1-60-60a20 20 0 0 1 20-20a20 20 0 0 1 20 20a20 20 0 0 0 20 20h12V56a32 32 0 0 1 32-32a32 32 0 0 1 32 32v80h12a20 20 0 0 0 20-20a20 20 0 0 1 20-20a20 20 0 0 1 20 20" opacity=".2" /><path d="M216 208h-48v-24h4a68.07 68.07 0 0 0 68-68a28 28 0 0 0-56 0a12 12 0 0 1-12 12h-4V56a40 40 0 0 0-80 0v32h-4a12 12 0 0 1-12-12a28 28 0 0 0-56 0a68.07 68.07 0 0 0 68 68h4v64H40a8 8 0 0 0 0 16h176a8 8 0 0 0 0-16M96 128H84a52.06 52.06 0 0 1-52-52a12 12 0 0 1 24 0a28 28 0 0 0 28 28h12a8 8 0 0 0 8-8V56a24 24 0 0 1 48 0v80a8 8 0 0 0 8 8h12a28 28 0 0 0 28-28a12 12 0 0 1 24 0a52.06 52.06 0 0 1-52 52h-12a8 8 0 0 0-8 8v32h-48v-72a8 8 0 0 0-8-8" /></g></g>';
 
 export const ICON_MOORS = "nameforge-moors";
-// Iconoven — moss. Scaled for Obsidian's 100×100 viewBox.
+// Material Symbols — grass. Scaled for Obsidian's 100×100 viewBox.
 const ICON_MOORS_SVG =
-  '<g transform="scale(4.16667)"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="1.5" d="M2.75 20.25c0-2.75 2.75-4.75 6-4.75h6.5c3.25 0 6 2 6 4.75a1 1 0 0 1-1 1H3.75a1 1 0 0 1-1-1M7.5 15.5v-4c0-.75-.5-1.25-1.25-1.5M12 15.5V7c0-.75.5-1.25 1.25-1.5m3.25 10V10c0-.75.5-1.25 1.25-1.5" /><path stroke-width="2" d="M6.25 10h.01m6.99-4.5h.01m4.49 3h.01" /></g></g>';
+  '<g transform="scale(4.16667)"><path fill="currentColor" d="M2 20v-2h5.75q-.55-2.125-2.087-3.662T2 12.25q.5-.125.988-.187T4 12q3.35 0 5.675 2.325T12 20zm12 0q0-1.05-.225-2.087t-.65-1.988q1.05-1.775 2.863-2.85T20 12q.525 0 1.013.063t.987.187q-2.125.55-3.65 2.088T16.25 18H22v2zm-2-5.975q0-1.625.6-3.05t1.65-2.513t2.463-1.737t3.012-.7q-1.4.875-2.45 2.15t-1.625 2.85q-1.1.525-2.012 1.288T12 14.025m-1.825-1.875q-.3-.225-.6-.425t-.625-.4q0-.15.025-.312T9 10.7q0-1.9-.6-3.6T6.7 4q1.65.675 2.863 1.937t1.862 2.913q-.45.75-.775 1.588t-.475 1.712" /></g>';
 
 export const ICON_WETLANDS = "nameforge-wetlands";
 // Fluent UI — plant-cattail-24-regular. Scaled for Obsidian's 100×100 viewBox.
