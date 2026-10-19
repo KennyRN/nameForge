@@ -2460,7 +2460,7 @@ var ICON_RIVER_NAMES_SVG = '<g transform="scale(6.66667)"><path fill="currentCol
 var ICON_TRIBAL_NAMES = "nameforge-tribal-names";
 var ICON_TRIBAL_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M12 1a2.5 2.5 0 0 0-2.5 2.5A2.5 2.5 0 0 0 11 5.79V7H7a2 2 0 0 0-2 2v.71A2.5 2.5 0 0 0 3.5 12A2.5 2.5 0 0 0 5 14.29V15H4a2 2 0 0 0-2 2v1.21A2.5 2.5 0 0 0 .5 20.5A2.5 2.5 0 0 0 3 23a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 4 18.21V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 9 23a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2H7v-.71A2.5 2.5 0 0 0 8.5 12A2.5 2.5 0 0 0 7 9.71V9h10v.71A2.5 2.5 0 0 0 15.5 12a2.5 2.5 0 0 0 1.5 2.29V15h-1a2 2 0 0 0-2 2v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 15 23a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-1.5-2.29V17h4v1.21a2.5 2.5 0 0 0-1.5 2.29A2.5 2.5 0 0 0 21 23a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-1.5-2.29V17a2 2 0 0 0-2-2h-1v-.71A2.5 2.5 0 0 0 20.5 12A2.5 2.5 0 0 0 19 9.71V9a2 2 0 0 0-2-2h-4V5.79a2.5 2.5 0 0 0 1.5-2.29A2.5 2.5 0 0 0 12 1m0 1.5a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1M6 11a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m12 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1M3 19.5a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m6 0a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1" /></g>';
 var ICON_GROUP_NAMES = "nameforge-group-names";
-var ICON_GROUP_NAMES_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fill="none" /><g fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m16.719 19.752l-.64-5.124A3 3 0 0 0 13.101 12h-2.204a3 3 0 0 0-2.976 2.628l-.641 5.124A2 2 0 0 0 9.266 22h5.468a2 2 0 0 0 1.985-2.248" /><circle cx="12" cy="5" r="3" /><circle cx="4" cy="9" r="2" /><circle cx="20" cy="9" r="2" /><path stroke-linecap="round" stroke-linejoin="round" d="M4 14h-.306a2 2 0 0 0-1.973 1.671l-.333 2A2 2 0 0 0 3.361 20H7m13-6h.306a2 2 0 0 1 1.973 1.671l.333 2A2 2 0 0 1 20.639 20H17" /></g></g>';
+var ICON_GROUP_NAMES_SVG = '<g transform="scale(4.16667)"><path fill="currentColor" d="M14.754 10c.966 0 1.75.784 1.75 1.75v4.749a4.501 4.501 0 0 1-9.002 0V11.75c0-.966.783-1.75 1.75-1.75zm-7.623 0a2.7 2.7 0 0 0-.62 1.53l-.01.22v4.749c0 .847.192 1.649.534 2.365Q6.539 18.999 6 19a4 4 0 0 1-4-4.001V11.75a1.75 1.75 0 0 1 1.606-1.744L3.75 10zm9.744 0h3.375c.966 0 1.75.784 1.75 1.75V15a4 4 0 0 1-5.03 3.866c.3-.628.484-1.32.525-2.052l.009-.315V11.75c0-.665-.236-1.275-.63-1.75M12 3a3 3 0 1 1 0 6a3 3 0 0 1 0-6m6.5 1a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5m-13 0a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5" /></g>';
 var ICON_BYNAMES = "nameforge-bynames";
 var ICON_BYNAMES_SVG = '<g transform="scale(3.125)"><path fill="currentColor" d="M15 16a7 7 0 1 0 0-14a7 7 0 0 0 0 14m-8.5 2A3.5 3.5 0 0 0 3 21.5v.5c0 2.393 1.523 4.417 3.685 5.793C8.859 29.177 11.802 30 15 30q1.118-.001 2.185-.13A8.98 8.98 0 0 1 14 23c0-1.85.558-3.57 1.516-5zm24 5a7.5 7.5 0 1 1-15 0a7.5 7.5 0 0 1 15 0m-8.212-4.862l-.94 2.828h-2.994c-.731 0-1.03.938-.434 1.361l2.406 1.707l-.929 2.792c-.228.687.555 1.267 1.146.848L23 25.931l2.457 1.743c.591.42 1.374-.16 1.146-.848l-.93-2.792l2.407-1.707c.597-.423.297-1.361-.434-1.361h-2.994l-.94-2.828c-.228-.684-1.196-.684-1.424 0" /></g>';
 var ICON_FAMILY_NAMES = "nameforge-family-names";
@@ -2504,7 +2504,7 @@ var ICON_FOLDER_SVG = '<g transform="scale(4.16667)"><path d="M0 0h24v24H0z" fil
 var ICON_INFO = "nameforge-info";
 var ICON_INFO_SVG = '<g transform="scale(0.195313)"><path d="M0 0h512v512H0z" fill="none" /><path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184s184-82.39 184-184S349.61 64 248 64Z" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M220 220h32v116" /><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M208 340h88" /><path fill="currentColor" d="M248 130a26 26 0 1 0 26 26a26 26 0 0 0-26-26" /></g>';
 var ICON_URBAN = "nameforge-urban";
-var ICON_URBAN_SVG = '<g transform="scale(2.08333)"><path d="M0 0h48v48H0z" fill="none" /><defs><mask id="nameforge-urban-mask"><g fill="none"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M4 42h40" /><rect width="8" height="16" x="8" y="26" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path stroke="#fff" stroke-linecap="square" stroke-linejoin="round" stroke-width="4" d="M12 34h1" /><rect width="24" height="38" x="16" y="4" fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4" rx="2" /><path fill="#fff" d="M22 10h4v4h-4zm8 0h4v4h-4zm-8 7h4v4h-4zm8 0h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z" /></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#nameforge-urban-mask)" /></g>';
+var ICON_URBAN_SVG = '<g transform="scale(2.08333)"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path fill="none" d="M4 42h40" /><rect width="8" height="16" x="8" y="26" fill="currentColor" fill-opacity=".33" rx="2" /><rect width="24" height="38" x="16" y="4" fill="currentColor" fill-opacity=".33" rx="2" /></g><path fill="currentColor" d="M22 10h4v4h-4zm8 0h4v4h-4zm-8 7h4v4h-4zm8 0h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z" /></g>';
 var ICON_MOUNTAINS = "nameforge-mountains";
 var ICON_MOUNTAINS_SVG = '<g transform="scale(4.16667)"><path fill="currentColor" fill-rule="evenodd" d="M8.701 5.75c.577-1 2.02-1 2.598 0l3.5 6.062l.902-1.562c.577-1 2.02-1 2.598 0l4.33 7.5A1.5 1.5 0 0 1 21.33 20H17v-.002l-.072.002H3.072a1.5 1.5 0 0 1-1.3-2.25zm-.91 5.576l.709.472l.945-.63a1 1 0 0 1 1.11 0l.945.63l.709-.472L10 7.5z" clip-rule="evenodd" /></g>';
 var ICON_FORESTS = "nameforge-forests";
@@ -137764,6 +137764,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     return () => ui.unmount();
   }
   onOpen() {
+    this.modalEl.addClass("nameforge-main-modal");
     this.mount(this.contentEl);
   }
   onClose() {
@@ -143773,6 +143774,7 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
   onOpen() {
     const { contentEl } = this;
     contentEl.empty();
+    this.modalEl.addClass("nameforge-editor-window");
     contentEl.addClass("nameforge-editor-modal");
     const packNameRow = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
     packNameRow.createEl("label", { text: "Pack Name" });
@@ -143824,7 +143826,6 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
       void this.openWizard();
     });
     this.biomeButton = addTypeButton("Biome", ICON_BIOME);
-    this.biomeButton.addClass("nameforge-modal__toggle-button--spaced");
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
       this.wizardMode = false;
@@ -143832,7 +143833,7 @@ var NameForgeEditorModal = class extends import_obsidian14.Modal {
       void this.enterBiomeMode();
     });
     this.templatesButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button is-pill-bottom-right",
+      cls: "nameforge-modal__toggle-button nameforge-modal__templates-button is-pill-bottom-right",
       attr: { type: "button", "aria-label": "Templates", "aria-pressed": "false" }
     });
     (0, import_obsidian14.setIcon)(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
@@ -144124,54 +144125,47 @@ ${(_c3 = (_b3 = this.inputEl) == null ? void 0 : _b3.value) != null ? _c3 : ""}`
     this.close();
   }
   updateTypeButtons() {
-    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
+    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
     const isWizard = this.wizardMode;
     const isBiome = !isWizard && this.biomeMode;
     const other = isWizard || isBiome;
     (_a5 = this.biomeButton) == null ? void 0 : _a5.classList.toggle("is-active", isBiome);
     (_b3 = this.biomeButton) == null ? void 0 : _b3.setAttribute("aria-pressed", String(isBiome));
     (_c3 = this.biomeRowEl) == null ? void 0 : _c3.toggle(isBiome);
-    const row = this.biomeRowEl;
-    let shrink = 0;
-    if (isBiome && row) {
-      const style = getComputedStyle(row);
-      shrink = row.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-    }
-    (_d3 = this.stageEl) == null ? void 0 : _d3.style.setProperty("--nf-stage-shrink", `${shrink}px`);
     const isBreakdown = !other && this.selectedPackType === "breakdownPack";
     const isList = !other && this.selectedPackType === "listPack";
     const isCompound = !other && this.selectedPackType === "compoundPack";
     const isPlace = !other && this.selectedPackType === "placePack";
     const isMix = !other && this.selectedPackType === "mixPack";
-    (_e3 = this.wizardButton) == null ? void 0 : _e3.classList.toggle("is-active", isWizard);
-    (_f = this.wizardButton) == null ? void 0 : _f.setAttribute("aria-pressed", String(isWizard));
+    (_d3 = this.wizardButton) == null ? void 0 : _d3.classList.toggle("is-active", isWizard);
+    (_e3 = this.wizardButton) == null ? void 0 : _e3.setAttribute("aria-pressed", String(isWizard));
     const templateType = other ? void 0 : templateTypeFor(this.selectedPackType);
     if (this.templatesButton) this.templatesButton.disabled = !templateType;
     const showTemplates = this.templatesOpen && !!templateType;
-    (_g = this.templatesButton) == null ? void 0 : _g.toggleClass("is-active", showTemplates);
-    (_h = this.templatesButton) == null ? void 0 : _h.setAttribute("aria-pressed", String(showTemplates));
-    (_i = this.stageEl) == null ? void 0 : _i.toggleClass("is-templates-open", showTemplates);
-    (_j = this.templatesPaneEl) == null ? void 0 : _j.toggle(showTemplates);
+    (_f = this.templatesButton) == null ? void 0 : _f.toggleClass("is-active", showTemplates);
+    (_g = this.templatesButton) == null ? void 0 : _g.setAttribute("aria-pressed", String(showTemplates));
+    (_h = this.stageEl) == null ? void 0 : _h.toggleClass("is-templates-open", showTemplates);
+    (_i = this.templatesPaneEl) == null ? void 0 : _i.toggle(showTemplates);
     if (showTemplates && templateType) void this.renderTemplatesPane(templateType);
-    (_k = this.wizardPaneEl) == null ? void 0 : _k.toggle(isWizard);
-    (_l = this.breakdownButton) == null ? void 0 : _l.classList.toggle("is-active", isBreakdown);
-    (_m = this.listButton) == null ? void 0 : _m.classList.toggle("is-active", isList);
-    (_n = this.compoundButton) == null ? void 0 : _n.classList.toggle("is-active", isCompound);
-    (_o = this.placeButton) == null ? void 0 : _o.classList.toggle("is-active", isPlace);
-    (_p = this.mixButton) == null ? void 0 : _p.classList.toggle("is-active", isMix);
-    (_q = this.breakdownButton) == null ? void 0 : _q.setAttribute("aria-pressed", String(isBreakdown));
-    (_r = this.listButton) == null ? void 0 : _r.setAttribute("aria-pressed", String(isList));
-    (_s = this.compoundButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isCompound));
-    (_t = this.placeButton) == null ? void 0 : _t.setAttribute("aria-pressed", String(isPlace));
-    (_u = this.mixButton) == null ? void 0 : _u.setAttribute("aria-pressed", String(isMix));
+    (_j = this.wizardPaneEl) == null ? void 0 : _j.toggle(isWizard);
+    (_k = this.breakdownButton) == null ? void 0 : _k.classList.toggle("is-active", isBreakdown);
+    (_l = this.listButton) == null ? void 0 : _l.classList.toggle("is-active", isList);
+    (_m = this.compoundButton) == null ? void 0 : _m.classList.toggle("is-active", isCompound);
+    (_n = this.placeButton) == null ? void 0 : _n.classList.toggle("is-active", isPlace);
+    (_o = this.mixButton) == null ? void 0 : _o.classList.toggle("is-active", isMix);
+    (_p = this.breakdownButton) == null ? void 0 : _p.setAttribute("aria-pressed", String(isBreakdown));
+    (_q = this.listButton) == null ? void 0 : _q.setAttribute("aria-pressed", String(isList));
+    (_r = this.compoundButton) == null ? void 0 : _r.setAttribute("aria-pressed", String(isCompound));
+    (_s = this.placeButton) == null ? void 0 : _s.setAttribute("aria-pressed", String(isPlace));
+    (_t = this.mixButton) == null ? void 0 : _t.setAttribute("aria-pressed", String(isMix));
     const placeCompound = isPlace && this.placeGenerator === "compound";
     const pane = isWizard || placeCompound ? void 0 : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
-    this.inputEl = pane ? (_v = this.textPanes[pane]) != null ? _v : null : null;
+    this.inputEl = pane ? (_u = this.textPanes[pane]) != null ? _u : null : null;
     for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
-    (_w = this.compoundSectionEl) == null ? void 0 : _w.toggle(isCompound);
-    (_x = this.placeSectionEl) == null ? void 0 : _x.toggle(isPlace);
-    (_y = this.placeCompoundEl) == null ? void 0 : _y.toggle(placeCompound);
-    (_z = this.mixSectionEl) == null ? void 0 : _z.toggle(isMix);
+    (_v = this.compoundSectionEl) == null ? void 0 : _v.toggle(isCompound);
+    (_w = this.placeSectionEl) == null ? void 0 : _w.toggle(isPlace);
+    (_x = this.placeCompoundEl) == null ? void 0 : _x.toggle(placeCompound);
+    (_y = this.mixSectionEl) == null ? void 0 : _y.toggle(isMix);
   }
   /** Lists the built-in templates, then the user's own, for the pack type's kind of template. */
   async renderTemplatesPane(type) {

@@ -30,6 +30,54 @@ settings:
   --forge-accent: var(--interactive-accent);
 }
 
+/* The Create Pack window shares the accent, so its selected buttons match the main modal's. */
+.nameforge-editor-modal {
+  --forge-accent: var(--interactive-accent);
+}
+
+/* The main modal keeps one size whatever the sentence says: a fixed box (capped to the window), the
+   content a flex column, and the results box the flexible part that absorbs what the sentence gives
+   or takes and scrolls inside itself. Panel mode flexes to its container instead. */
+.nameforge-main-modal {
+  width: min(560px, 95vw);
+  height: min(700px, 90vh);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nameforge-main-modal > .modal-content.nameforge-modal {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nameforge-main-modal .nameforge-modal__options-list {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.nameforge-main-modal .nameforge-modal__results {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nameforge-main-modal .nameforge-modal__results > .nameforge-modal__results-list,
+.nameforge-main-modal .nameforge-modal__results > .nameforge-kit {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+}
+
+.nameforge-main-modal .nameforge-modal__status {
+  flex: 0 0 auto;
+}
+
 /* Compact layout for storyForge Forge companion panel (no Modal chrome). */
 .nameforge-modal--panel {
   --nf-panel-inline: 4px;
@@ -518,11 +566,6 @@ body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-a
 /* --nf-section-menu-height (setSectionMenuOpen) is the net change in the options list's height,
    negative when the menu is shorter than the controls it hides, so the results box keeps its
    bottom edge and the modal keeps its size. */
-.nameforge-modal.is-section-menu-open .nameforge-modal__results-list,
-.nameforge-modal.is-second-box-open .nameforge-modal__results-list {
-  height: calc(var(--nf-results-height) - var(--nf-section-menu-height, 0px) - var(--nf-second-box-height, 0px));
-}
-
 .nameforge-modal--panel.is-section-menu-open .nameforge-modal__results-list,
 .nameforge-modal--panel.is-second-box-open .nameforge-modal__results-list {
   height: auto;
@@ -870,8 +913,9 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   /* Fixed-ish, but capped relative to the viewport so it doesn't push the
      save/cancel row off the bottom of shorter windows — 420px was too tall
      on smaller screens, clipping the controls below it with no scrollbar. */
-  /* The Biome tab's Start from row takes its height off the stage (set in updateTypeButtons). */
-  height: calc(clamp(200px, 45vh, 420px) - var(--nf-stage-shrink, 0px));
+  /* The flexible part of the Create Pack window: the biome row, when shown, simply takes room from it. */
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
   margin-bottom: 6px;
 }
@@ -1731,11 +1775,6 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   font-weight: var(--font-semibold);
 }
 
-/* Create Pack window: 8px before Biome and before the Templates button. */
-.nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button--spaced {
-  margin-left: 8px;
-}
-
 /* The Templates button: icon only, otherwise like every other button in the pill. Disabled (Mix, the
    place name wizard, Biome): a faded icon with no hover change, as the main modal's disabled icons. */
 .nameforge-modal__pack-type-toggle .nameforge-modal__templates-button {
@@ -1935,4 +1974,43 @@ body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-
 body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-action:not(.is-active):hover,
 body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-action:not(.is-active):focus-visible {
   color: var(--text-muted);
+}
+
+/* Create Pack window: one fixed size for every tab. The default tab's height is the stage's old
+   clamp plus the rows around it; the name row, type pill and save controls keep their natural height. */
+.nameforge-editor-window {
+  width: min(560px, 95vw);
+  height: min(calc(clamp(200px, 45vh, 420px) + 250px), 90vh);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nameforge-editor-window > .modal-content.nameforge-editor-modal {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nameforge-editor-modal > * {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.nameforge-editor-modal > .nameforge-editor-modal__stage {
+  flex: 1 1 auto;
+}
+
+/* Selected pack type / Templates: the main pill's selected look, hovering only brightens that button. */
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-active,
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-active:hover:not(:disabled) {
+  background-color: var(--forge-accent);
+  color: var(--text-on-accent);
+}
+
+.nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-active:hover:not(:disabled) {
+  filter: brightness(1.1);
 }

@@ -878,6 +878,7 @@ export class NameForgeModal extends Modal {
   }
 
   onOpen() {
+    this.modalEl.addClass("nameforge-main-modal");
     this.mount(this.contentEl);
   }
 
@@ -7305,6 +7306,7 @@ class NameForgeEditorModal extends Modal {
   onOpen() {
     const { contentEl } = this;
     contentEl.empty();
+    this.modalEl.addClass("nameforge-editor-window");
     contentEl.addClass("nameforge-editor-modal");
 
     const packNameRow = contentEl.createDiv({ cls: "nameforge-modal__pack-name-row" });
@@ -7365,7 +7367,6 @@ class NameForgeEditorModal extends Modal {
 
     // Land brief §9.4: a biome pack, starting from a base biome.
     this.biomeButton = addTypeButton("Biome", ICON_BIOME);
-    this.biomeButton.addClass("nameforge-modal__toggle-button--spaced");
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
       this.wizardMode = false;
@@ -7375,7 +7376,7 @@ class NameForgeEditorModal extends Modal {
 
     // The templates pane: icon only, on and off, separate from the pack type.
     this.templatesButton = typeToggle.createEl("button", {
-      cls: "nameforge-modal__toggle-button nameforge-modal__toggle-button--spaced nameforge-modal__templates-button is-pill-bottom-right",
+      cls: "nameforge-modal__toggle-button nameforge-modal__templates-button is-pill-bottom-right",
       attr: { type: "button", "aria-label": "Templates", "aria-pressed": "false" },
     });
     setIcon(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
@@ -7707,14 +7708,6 @@ class NameForgeEditorModal extends Modal {
     this.biomeButton?.classList.toggle("is-active", isBiome);
     this.biomeButton?.setAttribute("aria-pressed", String(isBiome));
     this.biomeRowEl?.toggle(isBiome);
-    // The biome row's height comes off the stage, so the window stays the size of the other tabs.
-    const row = this.biomeRowEl;
-    let shrink = 0;
-    if (isBiome && row) {
-      const style = getComputedStyle(row);
-      shrink = row.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-    }
-    this.stageEl?.style.setProperty("--nf-stage-shrink", `${shrink}px`);
     const isBreakdown = !other && this.selectedPackType === "breakdownPack";
     const isList = !other && this.selectedPackType === "listPack";
     const isCompound = !other && this.selectedPackType === "compoundPack";
