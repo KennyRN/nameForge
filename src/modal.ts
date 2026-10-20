@@ -142,7 +142,7 @@ import { findMoneyCulture, findMoneyKind, generateMoneyNames, MONEY_DATA, moneyW
 import { chooseMoney, DEFAULT_MONEY_STATE, moneyHistoryLabel, moneySentence, moneySentenceText, normaliseMoney, type MoneySentenceState } from "./money/sentence";
 import { findThingCulture, findThingKind, generateThingNames, THINGS_DATA, thingModuleOfSection, thingWordBlocked, type ThingModule } from "./things/engine";
 import { chooseThings, DEFAULT_THING_STATE, normaliseThings, ownerSectionRequest, thingHistoryLabel, thingSentence, thingSentenceText, type ThingSentenceState } from "./things/sentence";
-import { findTimeCulture, findTimeKind, generateTimeSkyNames, TIME_SKY, timeWordBlocked, type CycleBiome } from "./timesky/engine";
+import { findTimeCulture, findTimeKind, generateTimeSkyNames, TIME_SKY, timeWordBlocked } from "./timesky/engine";
 import { chooseTime, DEFAULT_CALENDAR_STATE, DEFAULT_SKY_STATE, normaliseTime, timeBiomeResetNotice, timeHistoryLabel, timeSentence, timeSentenceText, type TimeSentenceLimits, type TimeSentenceState } from "./timesky/calendarSentence";
 import { DEITY_CULTURES, DEITY_DATA, DEITY_KINDS, deityWordBlocked, generateDeityNames } from "./deities/engine";
 import { chooseDeity, chooseSacredPlace, DEFAULT_DEITY_STATE, DEFAULT_SACRED_PLACE_STATE, DEITIES_MODULE_KINDS, deityHistoryLabel, deityPresetModule, deitySentence, deitySentenceText, effectiveDeityState, sacredPlaceAsDeityState, sacredPlaceHistoryLabel, sacredPlaceSentence, type DeitySentenceState, type SacredPlaceSentenceState } from "./deities/sentence";

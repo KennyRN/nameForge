@@ -29,7 +29,6 @@ import {
   WATERS_REGISTERS,
   type HyperMedium,
   type HyperRegister,
-  type WatersEarthly,
   type WatersEra,
   type WatersModule,
   type WatersWhere,

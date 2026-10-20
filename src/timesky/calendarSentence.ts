@@ -20,7 +20,6 @@ import {
   TIME_SKY,
   findTimeCulture,
   findTimeKind,
-  type CycleBiome,
   type TimeKind,
   type TimeModule,
   type TimeWords,

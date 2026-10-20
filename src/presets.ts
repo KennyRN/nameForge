@@ -35,7 +35,7 @@ import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type 
 import { AIR_LAND, availableStyles, findVesselCulture, isAirLand, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule, type VesselNaming } from "./vessels/engine";
 import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
 import { scalesFor, type ScaleChoice } from "./space/scale";
-import { findHyperKind, findWaterKind, findWatersCulture, HYPER_SCALES, hyperKindsAt, waterEras, WATERS_MEDIA, WATERS_REGISTERS, watersHasSeries, type HyperMedium, type HyperRegister, type WatersEarthly, type WatersEra, type WatersModule, type WatersWhere } from "./waters/engine";
+import { findHyperKind, findWaterKind, findWatersCulture, HYPER_SCALES, hyperKindsAt, waterEras, WATERS_MEDIA, WATERS_REGISTERS, watersHasSeries, type HyperMedium, type HyperRegister, type WatersEra, type WatersModule, type WatersWhere } from "./waters/engine";
 
 export const TRIBAL_PRESET_MODULE = "tribal-names";
 
