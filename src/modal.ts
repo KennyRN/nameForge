@@ -34,41 +34,18 @@ import {
   ICON_BREAKDOWN_PACK,
   ICON_INFO,
   ICON_PACKS,
-  ICON_RIVER_NAMES,
-  ICON_GROUP_NAMES,
   ICON_TRIBAL_NAMES,
   ICON_BYNAMES,
-  ICON_FAMILY_NAMES,
   ICON_SHIPS,
   ICON_HISTORY,
-  ICON_VEHICLES,
-  ICON_MOUNTAINS,
-  ICON_FORESTS,
-  ICON_DESERTS,
-  ICON_MOORS,
-  ICON_WETLANDS,
-  ICON_GRASSLANDS,
-  ICON_URBAN,
   ICON_ROUTES,
   ICON_SEAS_COASTS,
-  ICON_SEAS_LAKES,
-  ICON_COASTS_ISLANDS,
-  ICON_SEA_CHARTS,
-  ICON_HYPERSPACE_CHARTS,
   ICON_STREETS,
   ICON_INNS,
   ICON_BUILDINGS,
   ICON_MONUMENTS,
   ICON_SETTLEMENT_KIT,
   ICON_DEITIES,
-  ICON_REALMS,
-  ICON_EPITHETS,
-  ICON_MYSTIC,
-  ICON_MARTIAL,
-  ICON_UNDERWORLD,
-  ICON_TRADE,
-  ICON_ADVENTURERS,
-  ICON_SPACECRAFT,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
   ICON_CHECKLIST_INSERT,
@@ -81,16 +58,9 @@ import {
   ICON_MIX_PACK,
   ICON_PLACE_PACK,
   ICON_RECIPE_WIZARD,
-  ICON_PLACE_SHAPES,
   ICON_GENERIC_PLACE_NAMES,
-  ICON_NATIVE_PLACE_NAMES,
-  ICON_ADVANCED,
   ICON_BIOME,
   ICON_SAVE_PRESET,
-  ICON_EXPLORATION_PLACE_SHAPES,
-  ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
-  ICON_NAME_AGEING,
-  ICON_NAME_TAKEOVER,
   ICON_PLUS_SQUARE,
   ICON_SAVE,
   ICON_SEED_COPY,
@@ -99,11 +69,7 @@ import {
   ICON_COINS,
   ICON_CALENDAR_DAYS,
   ICON_MOON_STARS,
-  ICON_SWORD,
-  ICON_BOOK,
   ICON_LANGUAGES,
-  ICON_JET_PLANE,
-  ICON_MONSTER_TRUCK,
   ICON_GEM,
   ICON_PENCIL,
   ICON_ADJUSTMENTS,
@@ -1096,6 +1062,8 @@ export class NameForgeModal extends Modal {
     generateButton.addEventListener("click", () => {
       void this.generateSelectedCount();
     });
+    generateButton.addEventListener("mouseenter", () => generatePill.addClass("is-generate-hover"));
+    generateButton.addEventListener("mouseleave", () => generatePill.removeClass("is-generate-hover"));
 
     this.resultsEl = root.createDiv({ cls: "nameforge-modal__results" });
     this.statusEl = root.createDiv({ cls: "nameforge-modal__status" });
@@ -1413,8 +1381,7 @@ export class NameForgeModal extends Modal {
     if (!row || !box || !setting || !row.isShown() || !setting.isShown()) return;
     const rowRect = row.getBoundingClientRect();
     const settingRect = setting.getBoundingClientRect();
-    box.style.marginLeft = `${settingRect.left - rowRect.left}px`;
-    box.style.width = `${settingRect.width}px`;
+    box.setCssStyles({ marginLeft: `${settingRect.left - rowRect.left}px`, width: `${settingRect.width}px` });
   }
 
   /**
@@ -1430,9 +1397,9 @@ export class NameForgeModal extends Modal {
     row.toggle(show);
     if (show && !wasShown) {
       const added = Math.max(0, (optionsList?.offsetHeight ?? 0) - before);
-      this.rootEl?.style.setProperty("--nf-second-box-height", `${added}px`);
+      this.rootEl?.setCssProps({ "--nf-second-box-height": `${added}px` });
     }
-    if (!show) this.rootEl?.style.setProperty("--nf-second-box-height", "0px");
+    if (!show) this.rootEl?.setCssProps({ "--nf-second-box-height": "0px" });
     this.rootEl?.toggleClass("is-second-box-open", show);
     if (show) this.alignSecondBox();
   }
@@ -1533,7 +1500,7 @@ export class NameForgeModal extends Modal {
     else if (section === "deityNames") this.renderDeitySentence(row);
     else if (section === "sacredPlaces") this.renderSacredPlaceSentence(row);
     else if (section === "placeShapes") this.renderNativeSentence(row);
-    else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]!);
+    else if (COLONIAL_SECTION_PART[section]) this.renderColonialSentence(row, COLONIAL_SECTION_PART[section]);
     else if (section === "nameAgeing") this.renderAgeingSentence(row);
     else if (section === "nameTakeover") this.renderTakeoverSentence(row);
     this.syncPillSpacing();
@@ -1578,8 +1545,9 @@ export class NameForgeModal extends Modal {
     choose: (id: string | undefined) => void,
   ) {
     const a = sentence.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
-    a.addEventListener("click", async (event) => {
+    a.addEventListener("click", (event) => {
       event.preventDefault();
+      void (async () => {
       const menu = new Menu();
       const list = await choices();
       if (list.length === 0) menu.addItem((item) => item.setTitle("No packs found").setDisabled(true));
@@ -1604,6 +1572,7 @@ export class NameForgeModal extends Modal {
         );
       }
       menu.showAtMouseEvent(event);
+      })();
     });
   }
 
@@ -1980,7 +1949,7 @@ export class NameForgeModal extends Modal {
   /** Urban brief §8: loading a settlement names preset opens settlement names with its setting, size and choices. */
   private async openSettlementPreset(shape: Partial<RecipeSettings["shape"]>, from: string) {
     const s = this.settlementState;
-    s.size = (SETTLEMENT_SIZES.find((x) => x.key === shape.settlement)?.key ?? "any") as SizeKey;
+    s.size = (SETTLEMENT_SIZES.find((x) => x.key === shape.settlement)?.key ?? "any");
     let biome: string | undefined = shape.biome && shape.biome !== "unknown" ? shape.biome : undefined;
     if (biome?.startsWith("[[")) {
       const name = biome.slice(2, -2);
@@ -3233,7 +3202,7 @@ export class NameForgeModal extends Modal {
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, timeWordBlocked);
     const custom = await this.loadCustomBiomes();
     const limits = this.timeLimits(custom);
-    const biome = state.biome ? (findBiome(state.biome, custom) as CycleBiome | undefined) : undefined;
+    const biome = state.biome ? (findBiome(state.biome, custom)) : undefined;
     const result = generateTimeSkyNames({
       culture: state.culture,
       kind: state.kind,
@@ -5808,7 +5777,7 @@ export class NameForgeModal extends Modal {
 
     let content: string;
     try {
-      content = example ? example.content : await this.app.vault.cachedRead(file as TFile);
+      content = example ? example.content : await this.app.vault.cachedRead(file!);
     } catch {
       this.setStatus(`Failed to load pack ${packPath}.`);
       return;

@@ -213,7 +213,7 @@ interface AirLandData {
   safeguards: { block: string[]; blockTypesOnly: string[]; flag: string[]; flagListBlocks: boolean; bannedWords: string[]; bannedNames: string[] };
 }
 export const AIR_LAND = airLandData as unknown as AirLandData;
-export const VESSEL_MODULE_LABELS: Record<VesselModule, string> = { ...VESSEL_DATA.modules, ...AIR_LAND.modules } as Record<VesselModule, string>;
+export const VESSEL_MODULE_LABELS: Record<VesselModule, string> = { ...VESSEL_DATA.modules, ...AIR_LAND.modules };
 
 export function findVesselCulture(key: string | undefined): VesselCulture | undefined {
   return VESSEL_CULTURES.find((c) => c.key === key);
@@ -283,7 +283,7 @@ export function inSpan(culture: VesselCulture, level: string, module?: VesselMod
   return level.startsWith("T") && inRange(culture.span, level);
 }
 
-const technologyList = (module: VesselModule) => (isAirLand(module) ? AIR_LAND.technology[module] : VESSEL_DATA.technology[module as "ships" | "spacecraft"]);
+const technologyList = (module: VesselModule) => (isAirLand(module) ? AIR_LAND.technology[module] : VESSEL_DATA.technology[module]);
 
 export function techLabel(module: VesselModule, code: string): string {
   return technologyList(module).find((t) => t.code === code)?.label ?? code;
@@ -311,11 +311,11 @@ export function anyLevels(module: VesselModule, culture: VesselCulture, setting:
 // ── Functions (§6) ──────────────────────────────────────────────────────────
 
 export function moduleFunctions(module: VesselModule): VesselFunction[] {
-  return isAirLand(module) ? AIR_LAND.functions[module].list : VESSEL_DATA.functions[module as "ships" | "spacecraft"].list;
+  return isAirLand(module) ? AIR_LAND.functions[module].list : VESSEL_DATA.functions[module].list;
 }
 
 export function functionAny(module: VesselModule): string {
-  return isAirLand(module) ? AIR_LAND.functions[module].any : VESSEL_DATA.functions[module as "ships" | "spacecraft"].any;
+  return isAirLand(module) ? AIR_LAND.functions[module].any : VESSEL_DATA.functions[module].any;
 }
 
 /** §6.2: whether a function can be drawn at a level for a culture. */
@@ -555,7 +555,7 @@ function pool(ctx: Ctx, name: string): [{ w: string; t: GroupTone[] }, number][]
     // §11.2: the colony style's whole names.
     addEntries(name, VESSEL_DATA.styles.find((st) => st.key === "colony")?.name);
   } else if (STYLE_POOLS.has(name)) {
-    addEntries(name, (ctx.style?.pools[name] ?? STYLE_POOLS.get(name))!);
+    addEntries(name, (ctx.style?.pools[name] ?? STYLE_POOLS.get(name)));
   } else if (!CULTURE_ONLY.has(name)) {
     throw new Error(`Vessels: no list “${name}”.`);
   }
@@ -1146,7 +1146,6 @@ function typeShapes(ctx: Ctx, family: string): TypeShape[] {
 }
 
 /** The type families whose shapes hold a fixed letter prefix and a rising number. */
-const NUMBERED_TYPES = /\{(A|AA|n|n23|n100|romanNumeral)\}/;
 
 // ── Batches ─────────────────────────────────────────────────────────────────
 
@@ -1370,7 +1369,7 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
         const initials = new Map<string, number>();
         for (const [e] of pool(ctx, "rank")) initials.set(e.w.charAt(0), (initials.get(e.w.charAt(0)) ?? 0) + 1);
         const enough = [...initials].filter(([, n]) => n >= count);
-        const choices = (enough.length > 0 ? enough : [...initials].sort((a, b) => b[1] - a[1]).slice(0, 1)) as [string, number][];
+        const choices = (enough.length > 0 ? enough : [...initials].sort((a, b) => b[1] - a[1]).slice(0, 1));
         letter = culture.key === R.culture && fn.key === R.fn && rng() < R.share && initials.has(R.letter) ? R.letter : pickWeighted(choices, rng);
         ctx.rankInitial = letter;
       }
@@ -1576,7 +1575,7 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
       ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name),
     );
     if (others.length === 0) return tone;
-    fill(() => draw({ byName: anchor }, pickWeighted(others, rng)!));
+    fill(() => draw({ byName: anchor }, pickWeighted(others, rng)));
     return tone;
   }
 }

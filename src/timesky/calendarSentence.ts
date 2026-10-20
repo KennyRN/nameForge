@@ -97,7 +97,7 @@ export const showsTimeWords = (state: TimeSentenceState) => state.kind === "fest
 export function startSeasons(state: TimeSentenceState, limits: TimeSentenceLimits): string[] {
   const biome = biomeOf(state, limits);
   const atHome = !state.biome || state.biome === homelandOf(state.culture);
-  return (seasonCycle(biome as CycleBiome | undefined, state.culture, atHome) ?? []).map(([s]) => s);
+  return (seasonCycle(biome, state.culture, atHome) ?? []).map(([s]) => s);
 }
 
 export function timeSentence(module: TimeModule, state: TimeSentenceState, limits: TimeSentenceLimits): TimeSegment[] {
@@ -240,7 +240,7 @@ export function chooseTime(module: TimeModule, state: TimeSentenceState, field: 
       next.culture = id ?? DEFAULT_CALENDAR_STATE.culture;
       break;
     case "kind":
-      next.kind = (findTimeKind(id)?.key ?? next.kind) as TimeKind;
+      next.kind = (findTimeKind(id)?.key ?? next.kind);
       break;
     case "era":
       next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_CALENDAR_STATE.era;

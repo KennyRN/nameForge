@@ -551,7 +551,7 @@ function renderPattern(ctx: Ctx, pattern: string): { plain: string; dialect?: st
     const literal = pattern.slice(last, m.index);
     plainParts.push(literal);
     dialectParts.push(literal);
-    last = m.index! + m[0].length;
+    last = m.index + m[0].length;
     const [name, mod] = m[1].split(":");
     let alt: string | undefined;
     const piece = token(ctx, name, (d) => (alt = d), pattern);

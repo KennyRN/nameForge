@@ -70,7 +70,7 @@ export function unmarkedTownPatterns(data: unknown): string[] {
     else if (v && typeof v === "object") {
       const ts = (v as Record<string, unknown>).townSelf as { self?: string[]; other?: string[] } | undefined;
       for (const p of [...(ts?.self ?? []), ...(ts?.other ?? [])]) listed.add(p);
-      Object.values(v as object).forEach(collect);
+      Object.values(v).forEach(collect);
     }
   };
   collect(data);

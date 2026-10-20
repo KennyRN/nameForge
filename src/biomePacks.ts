@@ -32,7 +32,6 @@ const LIST_SECTIONS: [BiomeList, string, string[]][] = [
   ["seasons", "Seasons", ["season"]],
 ];
 type TerrainPart = "land" | "water" | "short land" | "short water" | "shape groups" | "shape generics";
-const TERRAIN_PARTS: TerrainPart[] = ["land", "water", "short land", "short water", "shape groups", "shape generics"];
 
 const norm = (s: string) => s.trim().toLowerCase();
 const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

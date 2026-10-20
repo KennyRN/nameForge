@@ -164,7 +164,7 @@ function descriptiveName(options: RiverOptions, rng: () => number, bare: boolean
     // §6.5: fuse a fusing word when the join is clean and short enough, three times in four.
     const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
     const fuses = joined !== null && letterCount(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
-    const name = fuses ? titleCase(joined!.toLowerCase()) : titleCase(`${word} ${water}`);
+    const name = fuses ? titleCase(joined.toLowerCase()) : titleCase(`${word} ${water}`);
     if (bare) return { text: name, water, form: "bare" };
     const form = pickWeighted(RIVER_DATA.forms.britishDescriptive, rng);
     return { text: form === "river-x" ? `River ${name}` : name, water, form };

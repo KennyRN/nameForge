@@ -48,7 +48,7 @@ export function defaultVesselState(module: VesselModule): VesselSentenceState {
     prefixes: false,
     people: "placeholders",
     series: false,
-    ...(isAirLand(module) ? { naming: "craft" as VesselNaming } : {}),
+    ...(isAirLand(module) ? { naming: "craft" } : {}),
   };
 }
 

@@ -299,7 +299,7 @@ export function environmentMultipliers(biome: Biome | undefined, terrain: Terrai
     for (const [k, v] of Object.entries(b)) out[k] = (out[k] ?? 1) * v;
     return out;
   };
-  const own = plainBiome ? undefined : biome!.shapeMultipliers;
+  const own = plainBiome ? undefined : biome.shapeMultipliers;
   return {
     groups: merge(own?.groups, terrainEntry?.shapeMultipliers.groups),
     generics: merge(own?.generics, terrainEntry?.shapeMultipliers.generics),

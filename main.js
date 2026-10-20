@@ -24495,7 +24495,6 @@ var PlaceShapeGenerator = class {
     return weights;
   }
   pickGroup(rng) {
-    const region = this.region;
     if (this.sides) {
       const { settlement, landscape, landscapeShare } = this.sides;
       let pool3 = rng() < landscapeShare ? landscape : settlement;
@@ -90326,7 +90325,10 @@ var pickOne3 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIST_CACHE = /* @__PURE__ */ new Map();
 function identityLists(biome, terrain) {
   let byTerrain = LIST_CACHE.get(biome);
-  if (!byTerrain) LIST_CACHE.set(biome, byTerrain = /* @__PURE__ */ new Map());
+  if (!byTerrain) {
+    byTerrain = /* @__PURE__ */ new Map();
+    LIST_CACHE.set(biome, byTerrain);
+  }
   const cached = byTerrain.get(terrain);
   if (cached) return cached;
   const lists = /* @__PURE__ */ new Map();
@@ -98202,7 +98204,10 @@ var HYPHEN_FRACTIONS = /* @__PURE__ */ new Set(["Half", "Quarter"]);
 var POOL_CACHE = /* @__PURE__ */ new WeakMap();
 function cachedPool(ctx, pool3) {
   let cache = POOL_CACHE.get(ctx.vocab);
-  if (!cache) POOL_CACHE.set(ctx.vocab, cache = /* @__PURE__ */ new Map());
+  if (!cache) {
+    cache = /* @__PURE__ */ new Map();
+    POOL_CACHE.set(ctx.vocab, cache);
+  }
   const key2 = `${pool3}|${ctx.culture.key}|${ctx.era}|${ctx.fantastic}`;
   let items = cache.get(key2);
   if (!items) cache.set(key2, items = poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic }));
@@ -104333,7 +104338,10 @@ function poolWords(ctx, pool3, kind) {
   var _a5, _b3, _c3, _d3, _e3;
   const key2 = `${pool3}|${ctx.culture}|${ctx.era}|${ctx.fantastic}`;
   let cache = POOL_CACHE2.get(ctx.vocab);
-  if (!cache) POOL_CACHE2.set(ctx.vocab, cache = /* @__PURE__ */ new Map());
+  if (!cache) {
+    cache = /* @__PURE__ */ new Map();
+    POOL_CACHE2.set(ctx.vocab, cache);
+  }
   let all = cache.get(key2);
   if (!all) {
     const source = ctx.vocab.pools[pool3];
@@ -104613,7 +104621,7 @@ function plansFor(ctx, only) {
 }
 var thingCapitals = (text) => routeCapitals(text).replace(/^The /, "the ");
 function iad(hero) {
-  if (/[\s\[]/.test(hero)) return void 0;
+  if (/[\s[]/.test(hero)) return void 0;
   const stem = /ow$/i.test(hero) ? hero.replace(/ow$/i, "ov") : hero.replace(/[aeiouy]$/i, "");
   return `${stem}iad`;
 }
@@ -116131,7 +116139,10 @@ function shapeWeight5(ctx, s, hardOnly = false) {
 var REF_CACHE = /* @__PURE__ */ new WeakMap();
 function refPlans(ctx, kind) {
   let byKind = REF_CACHE.get(ctx);
-  if (!byKind) REF_CACHE.set(ctx, byKind = /* @__PURE__ */ new Map());
+  if (!byKind) {
+    byKind = /* @__PURE__ */ new Map();
+    REF_CACHE.set(ctx, byKind);
+  }
   let found = byKind.get(kind);
   if (!found) {
     found = kindShapes(ctx, kind).filter((s) => !s.of && !s.p.startsWith("The ") && !s.p.includes("{river}") && !s.p.includes("{@") && s.f !== "set").map((s) => [{ kind, shape: s }, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
@@ -120908,7 +120919,7 @@ function renderPattern12(ctx, pattern) {
     }
     return piece;
   });
-  return failed ? void 0 : out.replace(/Two \u0000/, "Brace of ").replace(/\u0000/g, "");
+  return failed ? void 0 : out.replace("Two \0", "Brace of ").split("\0").join("");
 }
 function innCapitals(text) {
   return routeCapitals(text).replace(/^The /, "the ").replace(/ A /g, " a ");
@@ -130286,7 +130297,7 @@ function parsePeoplePreset(values, body, fileName) {
 }
 function peoplePresetContent(preset) {
   var _a5;
-  const quote2 = (v) => /^[\s"'\[\-]|[:#]|\s$/.test(v) ? `"${v.replace(/"/g, "'")}"` : v;
+  const quote2 = (v) => /^[\s"'[-]|[:#]|\s$/.test(v) ? `"${v.replace(/"/g, "'")}"` : v;
   const source = preset.peopleSource === "pack" ? `"[[${(_a5 = preset.pack) != null ? _a5 : ""}]]"` : preset.peopleSource;
   return [
     "---",
@@ -130535,7 +130546,10 @@ function poolWords2(ctx, pool3, season) {
   const seasons = ctx.cycle ? ctx.cycle.map(([s]) => s) : [];
   const key2 = `${pool3}|${ctx.culture}|${ctx.era}|${ctx.fantastic}|${season != null ? season : "*"}|${seasons.join()}|${ctx.tone}|${ctx.sensitive}`;
   let cache = POOL_CACHE3.get(ctx.vocab);
-  if (!cache) POOL_CACHE3.set(ctx.vocab, cache = /* @__PURE__ */ new Map());
+  if (!cache) {
+    cache = /* @__PURE__ */ new Map();
+    POOL_CACHE3.set(ctx.vocab, cache);
+  }
   const hit = cache.get(key2);
   if (hit) return hit;
   const where2 = { culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic };
@@ -135900,7 +135914,6 @@ function wordsNoteDescription(recipeName) {
 }
 
 // src/recipeEditor.ts
-var NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
 var EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
 var NO_THE_REGIONS2 = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
 var same6 = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -137953,6 +137966,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     generateButton.addEventListener("click", () => {
       void this.generateSelectedCount();
     });
+    generateButton.addEventListener("mouseenter", () => generatePill.addClass("is-generate-hover"));
+    generateButton.addEventListener("mouseleave", () => generatePill.removeClass("is-generate-hover"));
     this.resultsEl = root.createDiv({ cls: "nameforge-modal__results" });
     this.statusEl = root.createDiv({ cls: "nameforge-modal__status" });
     this.renderResults([]);
@@ -138246,8 +138261,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     if (!row || !box || !setting || !row.isShown() || !setting.isShown()) return;
     const rowRect = row.getBoundingClientRect();
     const settingRect = setting.getBoundingClientRect();
-    box.style.marginLeft = `${settingRect.left - rowRect.left}px`;
-    box.style.width = `${settingRect.width}px`;
+    box.setCssStyles({ marginLeft: `${settingRect.left - rowRect.left}px`, width: `${settingRect.width}px` });
   }
   /**
    * Shows the region row (British setting only) and aligns it. The modal keeps its size: the results
@@ -138263,9 +138277,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
     row.toggle(show);
     if (show && !wasShown) {
       const added = Math.max(0, ((_b3 = optionsList == null ? void 0 : optionsList.offsetHeight) != null ? _b3 : 0) - before);
-      (_c3 = this.rootEl) == null ? void 0 : _c3.style.setProperty("--nf-second-box-height", `${added}px`);
+      (_c3 = this.rootEl) == null ? void 0 : _c3.setCssProps({ "--nf-second-box-height": `${added}px` });
     }
-    if (!show) (_d3 = this.rootEl) == null ? void 0 : _d3.style.setProperty("--nf-second-box-height", "0px");
+    if (!show) (_d3 = this.rootEl) == null ? void 0 : _d3.setCssProps({ "--nf-second-box-height": "0px" });
     (_e3 = this.rootEl) == null ? void 0 : _e3.toggleClass("is-second-box-open", show);
     if (show) this.alignSecondBox();
   }
@@ -138399,29 +138413,31 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian14.Modal {
   /** A sentence link that opens a menu of choices; choosing re-renders the sentence. */
   sentenceLink(sentence2, text, title, choices, current, choose) {
     const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
-    a.addEventListener("click", async (event) => {
+    a.addEventListener("click", (event) => {
       event.preventDefault();
-      const menu = new import_obsidian14.Menu();
-      const list = await choices();
-      if (list.length === 0) menu.addItem((item2) => item2.setTitle("No packs found").setDisabled(true));
-      for (const c of list) {
-        if (c.heading) {
-          menu.addSeparator();
-          menu.addItem((item2) => {
-            var _a5;
-            item2.setTitle(c.heading).setDisabled(true);
-            if (c.headingTip) (_a5 = item2.dom) == null ? void 0 : _a5.setAttribute("aria-label", c.headingTip);
-          });
+      void (async () => {
+        const menu = new import_obsidian14.Menu();
+        const list = await choices();
+        if (list.length === 0) menu.addItem((item2) => item2.setTitle("No packs found").setDisabled(true));
+        for (const c of list) {
+          if (c.heading) {
+            menu.addSeparator();
+            menu.addItem((item2) => {
+              var _a5;
+              item2.setTitle(c.heading).setDisabled(true);
+              if (c.headingTip) (_a5 = item2.dom) == null ? void 0 : _a5.setAttribute("aria-label", c.headingTip);
+            });
+          }
+          menu.addItem(
+            (item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
+              choose(c.id);
+              this.updateRegionLabel();
+              this.renderContextRow();
+            })
+          );
         }
-        menu.addItem(
-          (item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
-            choose(c.id);
-            this.updateRegionLabel();
-            this.renderContextRow();
-          })
-        );
-      }
-      menu.showAtMouseEvent(event);
+        menu.showAtMouseEvent(event);
+      })();
     });
   }
   /**

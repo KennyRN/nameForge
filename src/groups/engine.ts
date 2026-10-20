@@ -934,7 +934,7 @@ function deepTokens(pattern: string): string[] {
 
 /** Companies brief §5.3: ×4 for a shape that names goods; 0 when a goods list has none of the commodity's words here. */
 function commodityFactor(ctx: Ctx, shape: GroupShape): number {
-  const cache = (ctx.commodityFactors ??= new Map());
+  const cache = (ctx.commodityFactors ??= new Map<string, number>());
   const found = cache.get(shape.p);
   if (found !== undefined) return found;
   const lists = new Set(deepTokens(shape.p).filter((t) => GOODS_LISTS.includes(t)));
@@ -1229,12 +1229,12 @@ function generateSeries(
       return { names, seriesTone };
     }
   }
-  fill(() => renderShape(ctx, type, first!.listType, first!.shape, first!.name.front, { byIndex: hold }));
+  fill(() => renderShape(ctx, type, first.listType, first.shape, first.name.front, { byIndex: hold }));
   if (!anchor || names.length >= count) return { names, seriesTone };
 
   // §3.5 step 2: top up from the type's other shapes (and front shapes when fronts may show) with the anchor's token.
-  const plain = plainShapes(ctx, type).filter((sh) => sh.p !== first!.shape.p && hasToken(sh));
-  const fronts = frontChoice !== "say" && canFront(type) ? frontShapes(type).filter((sh) => sh.p !== first!.shape.p && hasToken(sh)) : [];
+  const plain = plainShapes(ctx, type).filter((sh) => sh.p !== first.shape.p && hasToken(sh));
+  const fronts = frontChoice !== "say" && canFront(type) ? frontShapes(type).filter((sh) => sh.p !== first.shape.p && hasToken(sh)) : [];
   const pool = byForm(ctx, [...plain, ...fronts]);
   if (pool.length === 0) return { names, seriesTone };
   const frontSet = new Set(fronts);

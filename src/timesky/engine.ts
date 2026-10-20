@@ -4,7 +4,7 @@
 // groups, routes and events engines; lands from biomes. One seeded stream a batch. No Obsidian imports.
 
 import { hasSpaceBlock } from "../space/safeguards";
-import { type Biome, BRITAIN, biomeTitleCase, biomeWords, findBiome, isSpaceBiome, pluralOf } from "../biomes";
+import { type Biome, BRITAIN, biomeTitleCase, biomeWords, findBiome } from "../biomes";
 import {
   type GroupPeople,
   type GroupSafeguards,
@@ -14,7 +14,6 @@ import {
   GROUP_TONES,
   groupListWords,
   groupPerson,
-  groupPlural,
   groupPossessive,
   groupSaint,
   groupStarIn,
@@ -32,7 +31,7 @@ import { deityTitle, hasRealDivineName, isChristianCulture } from "../deities/en
 import { generateEventNames } from "../events/engine";
 import { MONEY_DATA, pluralName } from "../money/engine";
 import { countedWords, routeCapitals, routeFigure, routeKingdom, routeNorm, routeSetting, ROUTE_ERAS, type RouteEra } from "../routes/engine";
-import { BUILT_IN_VOCAB, entryAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
+import { BUILT_IN_VOCAB, entryAllowed, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { breaksDeityWords } from "../deities/engine";
 import {
   type Cycle,
@@ -44,7 +43,6 @@ import {
   type TimeShape,
   type TimeWords,
   cultureRows,
-  eraSpan,
   festivalCycles,
   findTimeCulture,
   homelandOf,
@@ -207,7 +205,10 @@ function poolWords(ctx: Ctx, pool: string, season?: string | null): [VocabEntry,
   const seasons = ctx.cycle ? ctx.cycle.map(([s]) => s) : [];
   const key = `${pool}|${ctx.culture}|${ctx.era}|${ctx.fantastic}|${season ?? "*"}|${seasons.join()}|${ctx.tone}|${ctx.sensitive}`;
   let cache = POOL_CACHE.get(ctx.vocab);
-  if (!cache) POOL_CACHE.set(ctx.vocab, (cache = new Map()));
+  if (!cache) {
+    cache = new Map();
+    POOL_CACHE.set(ctx.vocab, cache);
+  }
   const hit = cache.get(key);
   if (hit) return hit;
   const where = { culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic };
@@ -1327,9 +1328,9 @@ function festivalSeries(S: Series, cycleKey: string): TimeName[] {
     }
     nm ??= themedLine(S, "festival", { season: slot.season }, undefined);
     names[i] = nm ?? { text: timeCapitals(`${ordinalWord(i + 1)} Feast`), kind: "festival", shape: "{ordinal} Feast", tones: [], words: [] };
-    S.seen.add(names[i]!.text.toLowerCase());
+    S.seen.add(names[i].text.toLowerCase());
   });
-  return names.map((n, i) => ({ ...n!, ...(slots[i].season ? { season: slots[i].season!, tag: seasonPhrase(slots[i].season!) } : {}) }));
+  return names.map((n, i) => ({ ...n!, ...(slots[i].season ? { season: slots[i].season, tag: seasonPhrase(slots[i].season) } : {}) }));
 }
 
 // ── Batches ─────────────────────────────────────────────────────────────────
@@ -1348,7 +1349,7 @@ export function generateTimeSkyNames(options: TimeSkyOptions): TimeBatch {
   const home = homelandOf(culture);
   const atHome = !biome || biome.id === home;
   const land = landKind(biome);
-  const resolved = biome ?? (findBiome(home) as CycleBiome | undefined);
+  const resolved = biome ?? (findBiome(home));
   const kinds = kindsOffered(options.kind && findTimeKind(options.kind)?.module === "sky" ? "sky" : "calendar", culture, era, land);
   const kind: TimeKind = options.kind && kinds.some((k) => k.key === options.kind) ? options.kind : kinds[0].key;
   const guards = options.safeguards ?? defaultTimeSafeguards();
@@ -1445,7 +1446,7 @@ function runSeries(S: Series, kind: TimeKind, seed: number): TimeBatch {
 
 /** A culture's sign names in a system, as written; undefined where the names are generated only. */
 function signSystemNames(system: string, culture: string): string[] | undefined {
-  const names = TIME_SKY.signNames as Record<string, unknown>;
+  const names = TIME_SKY.signNames;
   switch (system) {
     case "zodiac-12":
       return names["zodiac-12"] as string[];

@@ -34,7 +34,6 @@ import { pluralOf } from "../biomes";
 import { REALM_DATA } from "../realms/engine";
 import {
   countedWords,
-  findRouteCulture,
   ROUTE_CULTURES,
   ROUTE_ERAS,
   routeCapitals,
@@ -341,7 +340,10 @@ const HYPHEN_FRACTIONS = new Set(["Half", "Quarter"]);
 const POOL_CACHE = new WeakMap<Vocabulary, Map<string, [VocabEntry, number][]>>();
 function cachedPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
   let cache = POOL_CACHE.get(ctx.vocab);
-  if (!cache) POOL_CACHE.set(ctx.vocab, (cache = new Map()));
+  if (!cache) {
+    cache = new Map();
+    POOL_CACHE.set(ctx.vocab, cache);
+  }
   const key = `${pool}|${ctx.culture.key}|${ctx.era}|${ctx.fantastic}`;
   let items = cache.get(key);
   if (!items) cache.set(key, (items = poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic })));
@@ -379,7 +381,6 @@ function fromPool(ctx: Ctx, pool: string, opts: { tiered?: boolean; keep?: (e: V
   return e.w === "" ? undefined : e;
 }
 
-const cap = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
 /** §11: a plural for a printed name: the entry's own, or the head word's (Piece of Eight → Pieces of Eight). */
 export function pluralName(name: string, pl?: string): string {
@@ -403,7 +404,7 @@ const COMPANIES = new Map<string, string[]>();
 
 /** §8.5: the trade family's company names for a culture, setting and tone, forms B and E only, without the last word "Company". */
 function companyPool(ctx: Ctx, type: string): string[] {
-  const tradition = (REALM_DATA.tribal as Record<string, string>)[ctx.culture.key] ?? "general";
+  const tradition = (REALM_DATA.tribal)[ctx.culture.key] ?? "general";
   const key = `${ctx.setting}|${tradition}|${ctx.tone}|${type}`;
   let pool = COMPANIES.get(key);
   if (!pool) {

@@ -1444,7 +1444,7 @@ function parseWatersPreset(values: Record<string, string>, body: string, fileNam
     return false;
   };
   const scale = hyper ? pick<ScaleChoice>("scale", "any", (v) => v === "any" || (HYPER_SCALES as string[]).includes(v)) : "any";
-  let kind = pick<string>("kind", "any", (v) => v === "any" || !!(hyper ? findHyperKind(v) : findWaterKind(module as WatersEarthly, v)));
+  let kind = pick<string>("kind", "any", (v) => v === "any" || !!(hyper ? findHyperKind(v) : findWaterKind(module, v)));
   // §15: a kind not offered here runs as any.
   if (kind !== "any" && hyper && !hyperKindsAt(scale).some((k) => k.key === kind)) {
     problems.push(`Kind “${kind}” isn't offered at that scale.`);
@@ -1459,7 +1459,7 @@ function parseWatersPreset(values: Record<string, string>, body: string, fileNam
       watersModule: module,
       culture,
       waterKind: kind,
-      era: hyper ? "IS" : pick<WatersEra>("era", "MD", (v) => waterEras(module as WatersEarthly).includes(v as WatersEra)),
+      era: hyper ? "IS" : pick<WatersEra>("era", "MD", (v) => waterEras(module).includes(v as WatersEra)),
       where: hyper ? "home" : pick<WatersWhere>("where", "home", (v) => v === "home" || v === "new"),
       fantastic: hyper ? false : flag("fantastic"),
       region: hyper ? "all" : pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
@@ -1880,7 +1880,7 @@ function parsePeoplePreset(values: Record<string, string>, body: string, fileNam
 }
 
 function peoplePresetContent(preset: PeoplePreset): string {
-  const quote = (v: string) => (/^[\s"'\[\-]|[:#]|\s$/.test(v) ? `"${v.replace(/"/g, "'")}"` : v);
+  const quote = (v: string) => (/^[\s"'[-]|[:#]|\s$/.test(v) ? `"${v.replace(/"/g, "'")}"` : v);
   const source = preset.peopleSource === "pack" ? `"[[${preset.pack ?? ""}]]"` : preset.peopleSource;
   return [
     "---",

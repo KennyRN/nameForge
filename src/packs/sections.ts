@@ -273,7 +273,7 @@ export function shortBreakdownLists(lists: { part?: number; body: string; breakd
     const sectioned = parseNameSections(list.body);
     const checks =
       sectioned && sectioned.sections.length > 0
-        ? sectioned.sections.map((section) => ({ title: section.name as string | undefined, count: sectionNames(section).length }))
+        ? sectioned.sections.map((section) => ({ title: section.name, count: sectionNames(section).length }))
         : [{ title: undefined, count: dedupe(extractNamesFromMarkdown(list.body)).length }];
     for (const c of checks) {
       if (c.count > 0 && c.count < BREAKDOWN_MIN_NAMES) {

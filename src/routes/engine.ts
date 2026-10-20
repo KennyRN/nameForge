@@ -913,7 +913,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     );
     if (others.length === 0) return;
     fill(() => {
-      const b = draw({ byName: anchor }, pickWeighted(others, rng)!);
+      const b = draw({ byName: anchor }, pickWeighted(others, rng));
       return b && toName(b, series);
     });
   }

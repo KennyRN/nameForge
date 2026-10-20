@@ -187,7 +187,7 @@ export const isSensitive = (culture: string) => TIME_SKY.sensitive.includes(cult
 
 // ── Eras ────────────────────────────────────────────────────────────────────
 
-const ERA_ORDER: RouteEra[] = ROUTE_ERAS.map((e) => e.code as RouteEra);
+const ERA_ORDER: RouteEra[] = ROUTE_ERAS.map((e) => e.code);
 
 /** Eras written as a span: "all", "AN", "AN-MD", "MD+" (MD on). */
 export function eraSpan(spec: string | undefined): RouteEra[] {

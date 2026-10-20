@@ -27,7 +27,7 @@ import { deityHooks } from "../deities/hook";
 import { STREET_DATA } from "../streets/engine";
 
 /** The lists both modules read (buildings brief §6, §8.3): discoveries, headlands, creature lists and god cultures. */
-const SHARED_LISTS = buildingData.lists as { discovery: string[]; event: string[]; headland: string[]; creatureLists: string[]; godCultures: string[] };
+const SHARED_LISTS = buildingData.lists;
 
 /** What a draw needs, in either module. */
 export interface BaseCtx {
@@ -306,8 +306,8 @@ export function fillBatch<K extends string, N extends BatchItem>(o: {
       const n = o.build(k);
       const fresh = !!n && !n.uses.some((u) => o.keyed.some((p) => u.startsWith(p)) && used.has(u)) && (!n.uses.includes("founder") || founders < o.founderUses);
       if (fresh && add(n)) {
-        for (const u of n!.uses) used.add(u);
-        if (n!.uses.includes("founder")) founders++;
+        for (const u of n.uses) used.add(u);
+        if (n.uses.includes("founder")) founders++;
         round = round.filter(([x]) => x !== k);
         idle = 0;
       } else idle++;

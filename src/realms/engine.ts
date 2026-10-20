@@ -139,7 +139,6 @@ export const REALM_CULTURES = BYNAME_CULTURES;
 export const DYNASTY_CULTURES = REALM_DATA.dynastyCultures;
 
 export const eraCode = (era: string): EraCode => REALM_ERAS.find((e) => e.key === era)?.code ?? "MD";
-const ERA_ORDER: EraCode[] = ["AN", "MD", "EM", "MO", "NF", "IS"];
 
 /** §2.2: whether a namedFor is offered in an era ("the stars": near future and interstellar). */
 export function namedForOffered(key: RealmNamedFor, era: string): boolean {
@@ -200,7 +199,6 @@ export const formGroup = (w: string): FormGroup | undefined =>
 
 // ── Modifiers (§7) ──────────────────────────────────────────────────────────
 
-const eraAtLeast = (era: EraCode, from: EraCode) => ERA_ORDER.indexOf(era) >= ERA_ORDER.indexOf(from);
 export const isIdeological = (w: string) => REALM_DATA.ideology.words.some((e) => e.w === w);
 
 /** §7.1, §7.3: the modifiers that may go with a form in an era. */
@@ -310,7 +308,10 @@ const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() 
 const LIST_CACHE = new Map<Biome, Map<string, Map<string, [RealmEntry, number][]>>>();
 function identityLists(biome: Biome, terrain: string): Map<string, [RealmEntry, number][]> {
   let byTerrain = LIST_CACHE.get(biome);
-  if (!byTerrain) LIST_CACHE.set(biome, (byTerrain = new Map()));
+  if (!byTerrain) {
+    byTerrain = new Map();
+    LIST_CACHE.set(biome, byTerrain);
+  }
   const cached = byTerrain.get(terrain);
   if (cached) return cached;
   const lists = new Map<string, [RealmEntry, number][]>();

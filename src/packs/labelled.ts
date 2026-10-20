@@ -45,7 +45,7 @@ export function generateLabelledNames(
   const pools: (string[] | undefined)[] = viable.map(() => undefined);
   const cursors = viable.map(() => 0);
   const pool = (i: number): string[] => {
-    if (pools[i]) return pools[i]!;
+    if (pools[i]) return pools[i];
     const list = viable[i];
     if (options.generator === "list") {
       const generator = new ListGenerator();
@@ -63,7 +63,7 @@ export function generateLabelledNames(
         seed: subSeeds[i],
       }).names;
     }
-    return pools[i]!;
+    return pools[i];
   };
 
   const result: LabelledName[] = [];

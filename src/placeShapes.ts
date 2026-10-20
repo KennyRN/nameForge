@@ -158,7 +158,7 @@ export function resolveProfile(
   genericId: string,
   source: PlaceShapeData = PLACE_SHAPE_DATA,
 ): Map<string, Tier> {
-  const tiers = new Map<string, Tier>(source.categories.map((c) => [c.id, "unlikely" as Tier]));
+  const tiers = new Map<string, Tier>(source.categories.map((c) => [c.id, "unlikely"]));
   const apply = (profile: ShapeProfile) => {
     for (const tier of TIER_ORDER) {
       for (const id of profile[tier] ?? []) tiers.set(id, tier);
@@ -415,7 +415,6 @@ class PlaceShapeGenerator {
   }
 
   private pickGroup(rng: () => number): ShapeGroup {
-    const region = this.region;
     if (this.sides) {
       const { settlement, landscape, landscapeShare } = this.sides;
       let pool = rng() < landscapeShare ? landscape : settlement;

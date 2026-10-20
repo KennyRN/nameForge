@@ -42,7 +42,7 @@ import {
   type RouteCulture,
   type RouteEra,
 } from "../routes/engine";
-import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
+import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type Vocabulary } from "../settlement/vocab";
 import { buildingName, type BuildingKind } from "../buildings/engine";
 import { monumentName, type MonumentKind } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
@@ -494,7 +494,7 @@ function renderPattern(ctx: Ctx, pattern: string): string | undefined {
     }
     return piece;
   });
-  return failed ? undefined : out.replace(/Two \u0000/, "Brace of ").replace(/\u0000/g, "");
+  return failed ? undefined : out.replace("Two \u0000", "Brace of ").split("\u0000").join("");
 }
 
 // ── Rendering and safeguards (§10, §12) ─────────────────────────────────────
@@ -610,10 +610,6 @@ function eraPlans(ctx: Ctx, only?: string): [Plan, number][] {
 }
 
 // ── Batches ─────────────────────────────────────────────────────────────────
-
-interface Built {
-  name: InnName;
-}
 
 /** §7: a batch of unique inn names. */
 export function generateInnNames(options: InnOptions): InnBatch {

@@ -652,7 +652,10 @@ const REF_CACHE = new WeakMap<Ctx, Map<string, [Plan, number][]>>();
 
 function refPlans(ctx: Ctx, kind: string): [Plan, number][] {
   let byKind = REF_CACHE.get(ctx);
-  if (!byKind) REF_CACHE.set(ctx, (byKind = new Map()));
+  if (!byKind) {
+    byKind = new Map();
+    REF_CACHE.set(ctx, byKind);
+  }
   let found = byKind.get(kind);
   if (!found) {
     found = kindShapes(ctx, kind)

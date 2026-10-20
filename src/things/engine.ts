@@ -100,7 +100,7 @@ export const thingModuleOfSection = (section: string) => THINGS_DATA.modules.fin
 
 // ── Eras ────────────────────────────────────────────────────────────────────
 
-const ERA_ORDER: RouteEra[] = ROUTE_ERAS.map((e) => e.code as RouteEra);
+const ERA_ORDER: RouteEra[] = ROUTE_ERAS.map((e) => e.code);
 function eraSpan(spec: string | undefined): RouteEra[] {
   if (!spec || spec === "all") return ERA_ORDER;
   if (spec.includes(",")) return spec.split(",").flatMap(eraSpan);
@@ -252,7 +252,10 @@ const POOL_CACHE = new WeakMap<Vocabulary, Map<string, [VocabEntry, number][]>>(
 function poolWords(ctx: Ctx, pool: string, kind?: string): [VocabEntry, number][] {
   const key = `${pool}|${ctx.culture}|${ctx.era}|${ctx.fantastic}`;
   let cache = POOL_CACHE.get(ctx.vocab);
-  if (!cache) POOL_CACHE.set(ctx.vocab, (cache = new Map()));
+  if (!cache) {
+    cache = new Map();
+    POOL_CACHE.set(ctx.vocab, cache);
+  }
   let all = cache.get(key);
   if (!all) {
     const source = ctx.vocab.pools[pool];
@@ -565,7 +568,7 @@ export const thingCapitals = (text: string) => routeCapitals(text).replace(/^The
 
 /** §11: `{hero}iad`: the hero's name plus iad, a final vowel dropped, -ow turned to -ov. */
 function iad(hero: string): string | undefined {
-  if (/[\s\[]/.test(hero)) return undefined;
+  if (/[\s[]/.test(hero)) return undefined;
   const stem = /ow$/i.test(hero) ? hero.replace(/ow$/i, "ov") : hero.replace(/[aeiouy]$/i, "");
   return `${stem}iad`;
 }

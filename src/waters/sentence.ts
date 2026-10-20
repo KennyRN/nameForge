@@ -114,9 +114,9 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule)
     current: culture.key,
   });
   out.push(" ");
-  const kinds = hyper ? hyperKindsAt(state.scale) : waterKinds(module as WatersEarthly);
+  const kinds = hyper ? hyperKindsAt(state.scale) : waterKinds(module);
   const kind = kinds.find((k) => k.key === state.kind);
-  const any = hyper ? HYPER_ANY : waterAny(module as WatersEarthly);
+  const any = hyper ? HYPER_ANY : waterAny(module);
   out.push({
     field: "kind",
     text: kind ? kind.plural : any,
@@ -154,7 +154,7 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule)
     });
     out.push(", ");
   } else {
-    const eras = waterEras(module as WatersEarthly);
+    const eras = waterEras(module);
     out.push(" of the ");
     out.push({
       field: "era",
@@ -255,7 +255,7 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
       next.kind = id;
       break;
     case "era":
-      next.era = !hyper && waterEras(module as WatersEarthly).includes(id as WatersEra) ? (id as WatersEra) : defaultWatersState(module).era;
+      next.era = !hyper && waterEras(module).includes(id as WatersEra) ? (id as WatersEra) : defaultWatersState(module).era;
       break;
     case "where":
       next.where = id === "new" ? "new" : "home";
@@ -289,7 +289,7 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
       break;
   }
   // §2.4: a kind not offered after an era or scale change resets to Any.
-  const offered = hyper ? hyperKindsAt(next.scale) : waterKinds(module as WatersEarthly);
+  const offered = hyper ? hyperKindsAt(next.scale) : waterKinds(module);
   if (next.kind && !offered.some((k) => k.key === next.kind)) next.kind = undefined;
   // §2.4: region resets away from the British cultures and new shores; biome resets when region shows again.
   const shown = !hyper && showsWatersRegion(next.culture, next.where);
@@ -319,7 +319,7 @@ export function watersHistoryLabel(module: WatersModule, state: WatersSentenceSt
       ...(state.series ? ["series"] : []),
     ].join(" · ");
   }
-  const kind = findWaterKind(module as WatersEarthly, state.kind);
+  const kind = findWaterKind(module, state.kind);
   const regionShown = showsWatersRegion(state.culture, state.where);
   const biome = BIOMES.find((b) => b.id === state.biome);
   return [

@@ -188,7 +188,7 @@ export function generateCompoundTitled(
       for (const p of result.loosened ?? []) loosened.push({ title: titles[i], part: p + 1, count: resolved[p].length });
       batches[i] = result.names;
     }
-    return batches[i]!;
+    return batches[i];
   };
   const out: { name: string; tag: string }[] = [];
   const seen = new Set<string>();

@@ -622,8 +622,6 @@ function templateWeights(ctx: Ctx): Record<string, number> {
 
 // ── Templates (§11) ─────────────────────────────────────────────────────────
 
-type Built = { text: string; parts: Parts } | null;
-
 function animal(ctx: Ctx, wild = false): string | undefined {
   return ctx.pin.get("animal") ?? pickPool(animalPool(ctx, wild), ctx.rng);
 }
@@ -1202,7 +1200,7 @@ function attempt(ctx: Ctx, fixed?: { perspective?: string; theme?: string; avoid
   if (tone === "hostile" && !opts.hostile) tone = "neutral";
   ctx.tone = tone;
   // Lineage (§5.2).
-  ctx.lineage = pickRecord(ctx.trad.lineage as Record<string, number>, rng)!;
+  ctx.lineage = pickRecord(ctx.trad.lineage, rng)!;
   // Theme (§8).
   ctx.theme = fixed?.theme ?? pickRecord(themeWeights(ctx), rng) ?? "";
   if (!ctx.theme) return null;
@@ -1292,7 +1290,7 @@ export function tribalName(options: TribalOptions, rng: Rng): TribalName | null 
   const groupType = pickRecord(groupTypeChoices(trad, options), rng);
   if (!groupType) return null;
   const registerWeights = options.constraints?.registers;
-  const register = (registerWeights ? pickRecord(registerWeights as Record<string, number>, rng) : options.register) as TribalRegister | undefined;
+  const register = (registerWeights ? pickRecord(registerWeights, rng) : options.register) as TribalRegister | undefined;
   const reg = register ?? "plain";
   const general = TRIBAL_TRADITIONS[0];
   for (const t of trad === general ? [trad] : [trad, general]) {

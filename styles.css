@@ -674,7 +674,7 @@ body .nameforge-editor-modal .nameforge-modal__controls .nameforge-modal__icon-a
 }
 
 /* Hovering the generate button shades the active quantity button the same way. */
-.nameforge-modal__generate-pill:has(.nameforge-modal__generate-button:hover) .nameforge-modal__quantity-toggle .nameforge-modal__toggle-button.is-active {
+.nameforge-modal__generate-pill.is-generate-hover .nameforge-modal__quantity-toggle .nameforge-modal__toggle-button.is-active {
   filter: brightness(1.1);
 }
 
@@ -1641,12 +1641,11 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 }
 .nameforge-recipe-editor__sentence-link {
   color: var(--forge-accent, var(--text-accent));
-  text-decoration: underline dotted;
-  text-underline-offset: 3px;
+  border-bottom: 1px dotted currentColor;
   cursor: pointer;
 }
 .nameforge-recipe-editor__sentence-link:hover {
-  text-decoration-style: solid;
+  border-bottom-style: solid;
 }
 
 /* The information icon after a wizard sentence. */

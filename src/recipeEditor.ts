@@ -47,7 +47,7 @@ import {
   type SlotSetting,
   withDefaults,
 } from "./names/recipe";
-import { COLONIAL_DATA, COLONIAL_TRADITIONS, colonialContexts } from "./colonialShapes";
+import { COLONIAL_TRADITIONS, colonialContexts } from "./colonialShapes";
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { isRecipeContent, parseRecipeContent } from "./recipeHost";
 
@@ -72,7 +72,6 @@ export interface RecipeEditorOptions {
 }
 
 /** Each colonial part's contexts, as they read in the wizard's sentence (shared with the modules). */
-const NEW_LANDS_CONTEXTS = CONTEXT_PHRASES["2"];
 const EXPANSION_CONTEXTS = CONTEXT_PHRASES["2a"];
 /** Regions that read without "the" in the place names sentence ("from Wales", but "from the North"). */
 const NO_THE_REGIONS = new Set(["Cornwall", "East Anglia", "Wales"]);

@@ -538,7 +538,7 @@ function earthlyWeight(ctx: Ctx, s: WatersShape, hardOnly = false): number {
 /** §12.3: a hyperspace shape's weight here. */
 function hyperWeight(ctx: Ctx, s: HyperShape, register: HyperRegister, medium: HyperMedium): number {
   const c = ctx.culture;
-  if (s.sc && ctx.scale && !s.sc.includes(ctx.scale as HyperScale)) return 0;
+  if (s.sc && ctx.scale && !s.sc.includes(ctx.scale)) return 0;
   if (s.m && medium !== "both" && s.m !== medium) return 0;
   if (c.sensitive && LIGHT_OR_GRIM(s.t)) return 0;
   if (!tokensLive(ctx, s.p)) return 0;
@@ -565,7 +565,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   const module = options.module;
   const hyper = module === "hyperspaceCharts";
   const culture = findWatersCulture(options.culture) ?? findWatersCulture(hyper ? "general" : "norman-british")!;
-  const earthlyModule = hyper ? undefined : (module as WatersEarthly);
+  const earthlyModule = hyper ? undefined : (module);
   const eras = earthlyModule ? waterEras(earthlyModule) : (["IS"] as WatersEra[]);
   const era: WatersEra = eras.includes(options.era as WatersEra) ? options.era! : hyper ? "IS" : "MD";
   const where: WatersWhere = !hyper && options.where === "new" ? "new" : "home";

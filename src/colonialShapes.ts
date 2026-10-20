@@ -274,14 +274,6 @@ export interface ColonialGenerateResult {
   seed: number;
 }
 
-const PERSON_CATEGORIES = new Set([
-  "monarch-ruler-or-dynasty",
-  "royal-woman",
-  "honorific-title",
-  "official-patron-or-sponsor",
-  "commander-or-conqueror",
-  "explorer-or-founder",
-]);
 const OVERLAY_CATEGORIES = new Set(["monarch-ruler-or-dynasty", "royal-woman", "honorific-title"]);
 const COLONIAL_SPECIFIC_FAMILIES = new Set(["colonisers", "transfer-and-memory", "experience-and-claim"]);
 const COLONIAL_GENERIC_GROUPS = new Set(["colonial-settlement", "military-and-administrative", "territories"]);

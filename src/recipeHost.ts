@@ -3,7 +3,7 @@
 // Obsidian imports.
 
 import { App, parseYaml, TFile } from "obsidian";
-import { buildWeightedCorpus, extractNamesFromMarkdown, generateCompoundNamesDetailed, MarkovModel, PlaceNameModel } from "./markov";
+import { buildWeightedCorpus, generateCompoundNamesDetailed, MarkovModel } from "./markov";
 import {
   applyTemplate,
   isWordListContent,

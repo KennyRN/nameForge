@@ -1010,7 +1010,7 @@ export class NameRenderer {
           ...shape,
           categoryId: rewrite.category,
           structure:
-            (rewrite.structure as PlaceShape["structure"] | undefined) ??
+            (rewrite.structure) ??
             (shape.structure === "folk-connective" || shape.structure === "associative-connective" ? "two-part-compound" : shape.structure),
         }
       : shape;
