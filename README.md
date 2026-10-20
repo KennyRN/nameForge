@@ -1,114 +1,112 @@
 # nameForge for Obsidian
 Feed nameForge a list of names you love, let it work out the Markov Magic, and generate fresh names right inside Obsidian in that *very same style*. (Offline, no AI, no internet connection, so you'll not end up getting distracted and start hoovering the dogs...)
 
-Once fed a list of source names (characters, places, clans—anything), nameForge, learns the letter patterns of that list and generates new names in the same style. Names for an Anglo-Saxon village produce more Anglo-Saxon-sounding villages; names from your own invented culture produce more of *that*. Everything runs locally using its statistical Markov Magic Model built fresh from your list each time: your names never leave your vault.
+Once fed a list of source names (characters, places, clans – anything), nameForge learns the letter patterns of that list and generates new names in the same style. Names for an Anglo-Saxon village produce more Anglo-Saxon-sounding villages; names from your own invented culture produce more of *that*. Everything runs locally using its statistical Markov Magic Model built fresh from your list each time: your names never leave your vault.
 
 Built by a worldbuilder, for worldbuilders.
 
+## What's new in 2.0.0
+nameForge started out as a name generator. Then it needed place names. Then the places needed rivers, the rivers needed the tribes who named them, the tribes needed realms, the realms needed coins... And, well, here we are: Version 2 is the big one.
+
+- **The Markov generator is still the heart of it.** Your packs work as they always have, only better: compound packs have been reworked, place packs can now be breakdown, list or compound, and any pack can be split into `##` sections (male and female, noble and common, whatever you like).
+- **Forty-eight modules in nine groups**, all reached from the binder icon: place names, urban, seas and coasts, wild lands, group names, bynames and titles, vehicles, named things, and advanced. Between them they name just about everything a world needs, from a farmstead to a galactic sector.
+- **Everything comes out in plain modern English.** *Sheep Bridge* rather than something unpronounceable; *Wrought Silver* rather than *rupee*. The naming habits of each culture are carried over by meaning, not by borrowing their words.
+- **Presets.** Set a module up the way you like it, save it as a note and run it straight from the pack list.
+- **Still offline, still no AI, still yours.** Every module is data and rules with fixed numbers, every batch has a seed, and every preset is a plain markdown note.
+
 ## Features
 - **Five pack types** for different naming jobs:
-  - **Breakdown** — learns letter patterns from your list and invents new names in that style. The core generator.
-  - **List** — picks names verbatim from your list at random, no repeats. For when you've already written the names and just want a dice roll.
-  - **Compound** — builds names from 2 or 3 independent parts, either fused into one word (*Wulf* + *stan* → **Wulfstan**) or kept separate (*Lofty* + *Tiger* → **Lofty Tiger**). Each part can use breakdown generation or verbatim picks, or **combined** sets each part separately. Each part is used all of the time, most of the time, often, sometimes or rarely. Parts are marked `# Part 1`, `# Part 2`, `# Part 3`, and any part can hold `## titles` (such as `## male` / `## women`); a part without a title uses all its names. Packs saved with the older `## Part N` markers still work and move to the new layout when saved from the editor.
-  - **Place** — specialised for settlement names. Recognises toponymic endings (-ford, -wich, -stowe, -ton and dozens more, plus any invented endings that recur in your list), keeps them intact, and generates only the first element — so results read like real places, not letter soup. Learns multi-word patterns too ("Great …", "…-on-…") and reproduces them in proportion.
-  - **Place** packs are built as **breakdown** (new place names in the pack's style), **list** (names picked as written) or **compound** (parts, as in Compound packs, with place examples such as *Ash* + *ford* → **Ashford**). The Place pane opens with *Place pack will be a ‹breakdown› pack*. Breakdown and list place packs can hold `##` titles, like people packs. Every place pack keeps the one place icon.
-  - **Mix** — a virtual list that references other packs with percentage weights (Japanese 40% + English 60%, or Germanic 10% / Nordic 40% / Saxon 50%). Names stay in the source packs; the Mix file only stores the recipe. Generation always uses Breakdown on the weighted blend, so results sound like hybrids of the sources. Distinct from Compound: Mix pools whole lists, Compound joins name parts.
-- **Reproducible batches.** Every generation shows its seed. Copy it, lock it, and the same seed with the same pack and settings regenerates the identical batch; today or next year. Mix packs use the same seed contract: same seed + same Mix file + same source files + same weights = the same batch.
+  - **Breakdown:** learns letter patterns from your list and invents new names in that style. The core generator.
+  - **List:** picks names verbatim from your list at random, no repeats. For when you've already written the names and just want a dice roll.
+  - **Compound:** builds names from 2 or 3 independent parts, either fused into one word (*Wulf* + *stan* → **Wulfstan**) or kept separate (*Lofty* + *Tiger* → **Lofty Tiger**). Each part can be a breakdown or a list (or **combined**, set part by part), and each is used all of the time, most of the time, often, sometimes or rarely. Parts are marked `# Part 1`, `# Part 2`, `# Part 3`.
+  - **Place:** specialised for settlement names. Recognises toponymic endings (-ford, -wich, -stowe, -ton and dozens more, plus any invented endings that recur in your list), keeps them intact, and generates only the first element – so results read like real places, not letter soup. Place packs can be breakdown, list or compound (*Ash* + *ford* → **Ashford**).
+  - **Mix:** a virtual list that references other packs with percentage weights (Japanese 40% + English 60%, or Germanic 10% / Nordic 40% / Saxon 50%). Names stay in the source packs; the Mix file only stores the recipe. Mix pools whole lists, Compound joins name parts.
+- **Sections.** Packs with `##` headings show a sentence under the pack row: *Use the ‹male› names*. Pick one list, or the whole pack, and tag each name with the list it came from if you like.
+- **Templates.** The Templates icon in the Create Pack window fills the box with a starter list (*Victorian, England*, *Anglo-Saxon*, *Old Cornish*, and *Orc* are built in) for you to edit and save as your own. Your own template notes are listed too.
+- **Biome packs.** Make your own kits of nature words – wildlife, plants, crops, terrains – and use them in any module's Land menu.
+- **Reproducible batches.** Every generation shows its seed. Copy it, lock it, and the same seed with the same pack and settings regenerates the identical batch; today or next year.
 - **Generation history.** The last 50 generations (timestamp, seed, pack) are logged to a plain markdown config file in your vault, so a batch you liked last week can be recovered.
-- **Direct insertion.** Click names to select them, then insert into the active note as plain text, a bullet list, or a checklist — cursor-aware, so it never splits your text mid-line.
+- **Direct insertion.** Click names to select them, then insert into the active note as plain text, a bullet list, or a checklist – cursor-aware, so it never splits your text mid-line.
 - **Tuning sliders.** *Faithfulness* controls how closely output hugs the source style; *Strictness* controls how fussy the generator is about accepting a candidate.
-- **Forgiving input.** Paste names one per line, comma-separated, space-separated, as bullets, wikilinks, or a mix: nameForge tidies them up and outputs them as a nice list. A line of three or more names separated by spaces is treated as a list; one or two words on a line stay as a single name.
-- **Plain markdown storage.** Packs and configuration are ordinary `.md` files with frontmatter. They sync with your vault, diff cleanly in git, and can be edited by hand.
+- **Forgiving input.** Paste names one per line, comma-separated, space-separated, as bullets, wikilinks, or a mix: nameForge tidies them up and outputs them as a nice list.
+- **Plain markdown storage.** Packs, presets and configuration are ordinary `.md` files with frontmatter. They sync with your vault, diff cleanly in git, and can be edited by hand.
 
-## Group names, biomes and terrain
-- **Group names** holds **tribes and kin groups**, which names fictional peoples, kin groups, confederations, dynasties and war-bands in plain modern English, as a historian might translate them: *High Folk*, *People of the Blackwater*, *Twelve Arrows*, *Descendants of the Far Navigator*. Seventeen naming traditions decide how a name is built; no native-language words are ever produced. A sentence sets everything: the tradition, the group type, the biome, the terrain, the register (plain, historical, legendary or admin), who uses the name (*given to them by their neighbours*, *imposed on them by outsiders*…) and whether insults are included. The details toggle shows who coined each name, what it means and some alternatives.
-- **Group names** also names organisations, in seven modules: powers and factions, guilds, companies, and trade, armies and martial orders, adventurers and explorers, faiths and mystic orders, thieves and the underworld, and supernatural courts and hosts. Each is set with a sentence: the cultural flavour (General for none), the kind of group, a fantasy, modern or science-fiction world (fantasy and modern each with a fantastic switch), formal or everyday names, front names that hide what a group really is, and placeholders or invented people and places: *Order of the Hidden Lamp*, *the Velvet Hand*, *2nd Fenwick Rifles*, *Kestrel Dynamics*, *Court of the Rowan Moon*. A **tone** (grand, plain, grim, light or strange) weights names towards a mood without ruling any out, and with a type picked, **as one related set** makes one press of Generate give a family of names: *2nd, 3rd and 7th Fenwick Rifles*, or *the Varden Family* with *Varden & Sons Shipping*. Real orders, armies, gangs, companies and movements are never produced; the **Create group safeguard list** command makes a note to add your own. Each module also has **Save as preset**, and its presets run from the pack list like tribal presets.
-- **Biomes** are kits of nature words. There are thirteen: **British** (the built-in British lists, old words and all) and twelve others, from temperate and moorland to the highlands. **Terrain** narrows things further: plains, hills, mountains, forest, coasts, rivers and lakes, wetlands or islands.
-- **Place names** holds native place names, exploration into new lands, expansion into settled lands, route names, streets and districts, inns and taverns, buildings and landmarks, monuments and statues, and sacred places; **advanced** holds name ageing, name takeover, the settlement kit, events and eras, money and coins, calendars and festivals, and sky lore; **named things** holds arms and armour, treasures and regalia, and books and writings. Pick the module in the box beside the switcher, then set the rest in the sentence beneath it, as in the place name wizard: “‹General explorers› in ‹wild and unsettled lands› across ‹the hills› of ‹the savannah›”.
-- The biome and terrain are set in each module's sentence. So British naming habits can be set in a desert, Roman legionaries can name places in Britain, and Polynesian-style tribal names set in a temperate land talk about oaks, herons and chalk hills. The biome changes the wildlife, plants, ground and seasons; the terrain changes which kinds of place get named and the land and water words used. With the defaults, every module gives exactly the names it always has.
-- In the **place name wizard**, all three sentences end in “…set in ‹any part› of ‹Britain›” or “…across ‹the hills› of ‹the highlands›”. The nature, landform, water, ground and season slots now just follow the land, with Placeholder and Ignore as the only other choices.
-- **Biome packs** let you make your own. In the pack editor, choose **Biome**, pick what to start from and edit the lists: each terrain's words and weight, the wildlife, plants, crops and the rest, and even terrains of your own (*salt pans*, say). Only the sections you change are saved; everything else comes from the base. Your biomes appear in every Land menu and can be linked from recipes.
-- **Bynames and titles** has three modules: **epithets and bynames** (*the Bold*, *Ironhand*, *of the Plains*), **family names** (*Fletcher*, *Ivanovich*, *MacBrannoc*) and **titles and honourifics** (*Warden of the Marches*, or full styles such as *King of Kings, Lord of the Two Lands*). Each is set with a sentence: the culture (General and nineteen others), the kind, the world, the tone, English or native forms (*King* or *Konungr*), men, women or anyone, and whose name it follows: a placeholder, names from one of your packs (its Male or Female section by default), or none. Real epithets and titles (*Alfred the Great*, *Prince of Wales*) and well-known fictional ones are never produced; **Create byname safeguard list** makes a note to add your own.
-- **Realms and polities** (in group names, after tribes and kin groups) names states: *Kingdom of the Western Fells*, *Free State of Saltgate*, *League of the Seven Cities*, *Khanate of Vega*. Its sentence sets the culture, the kind of state (merchant, religious, colonial, corporate…), the era (ancient to interstellar, mixed freely with any culture), what it is named for, the land, the tone, plain or ceremonial names (*Most Serene Republic of Saltgate*), and official names, short ones or both. Real states and well-known fictional ones are never produced; **Create realm safeguard list** makes a note to add your own.
-- **Ships and boats** and **spacecraft and stations** have a group of their own, **vehicles** (the car icon). Each is set with a sentence: the culture (General and thirty-three others), the function (warships, merchant ships, yachts, stations…), the technology (canoes to container ships; rockets to interstellar ships), the world, an optional style (elven, steampunk, corporate…), the tone, prefixes such as *HMS* or *ISV*, and whether the names form one class. Any culture can have any technology, so a Hawaiian coal steamer works. Famous real and fictional vessels are never produced; **Create vessel safeguard list** makes a note to add your own.
-- **Deities** (last in group names) and **sacred places** (last in place names) share one engine of invented faiths. Deities names gods, spirits and pantheons (*the Storm Lord*, *Lady of Ash*), with an option to make one pantheon; sacred places names holy mountains, groves, springs and shrines (*Mountain of the Storm Lord*). A deity preset opens in whichever module matches its kind. Real gods, living-religion titles and real sacred places are never produced.
-- **Space, at five scales.** The sci-fi parts of nameForge share one space vocabulary tagged by **scale**: a planetary system (a planet and its moons), a star system, the local stellar neighbourhood, a sector, or the galaxy. **Route names** and **group names** get a scale link; route names in the interstellar era also get a faster-than-light link (*jump points*, *gates*, *hyperspace lanes*), and on a planet the ordinary roads, railways and sea routes come back. **Exploration** and **expansion** gain five **space biomes** under a **Space** heading in the Land menu, with terrains of their own (*the belts of a star system*) and an **alien life** link: places are survey names (*Gliese 581*, or said aloud, *Five-Eighty-One*), and traditions name space as they named new lands. **Realms** can be set in a space biome too. **World place names** gain an **Interstellar** era for every culture, named in its own way: *Horizon of Ra*, *Thor's Ring*, *Sunny Side of the Moon*. Stars are named as astronomers do: proper names, possessives (*Barnard's Star*), Bayer names (*Tau Ceti*), and catalogue numbers (*Kepler-452*). Franchise phrases such as *Outer Rim* are never produced.
-- **River names** fill “[tribal name]” and “[native people]” from tribes and kin groups (*Hill Folk River*), and colonial recipes with a native pack give some rivers native names.
-- The **Create tribal safeguard list** command makes a note where you can add names to block or flag, or take names off the flag list.
+## The modules
+Open the binder icon, pick a group, then pick the module in the box beside it. Every module works the same way:
 
-## Seas and coasts
-The **seas and coasts** group (the waves icon, after place names) names the waters and shores themselves, in four modules that share one engine. Each is set with a sentence: the culture (the same twenty-two as route names), the kind of feature, the tone, and placeholders or invented people and places.
-- **Seas and lakes:** oceans, seas, gulfs and bays, firths, fjords and sea lochs, straits and channels, lakes and lochs (*Black Sea*, *Moray Firth*, *Grassmere*, *Gulf of Arden*).
-- **Coasts and islands:** headlands, cliffs and rocks, beaches and sands, coves and inlets, islands, coasts and shores (*Cape Disappointment*, *Seal Skerry*, *Porth Hesket*), with a series option for one stretch of coast.
-- **Sea charts:** banks and shoals, reefs and ledges, deeps and holes, races and currents, roads and anchorages, channels and swatchways (*Dogger Bank*, *The Broad Fourteens*, *Wherryman's Gat*), with a series option for one chart.
-- **Hyperspace charts:** hyperspace treated as a sea, at the scale of a star system, a neighbourhood, a sector or the galaxy, flowing like the sea or like the wind, in spacers', chart or survey words (*Denebola Realshore*, *The Vega Fold*, *Gravity Shoal*). Its information icon explains how a hyperspace chart is read.
-- The earthly modules name **home shores**, where a people names its own coast, or **newly charted shores**, where explorers name a coast they have just reached (*Cape Farewell*, *Bay of Plenty*). The three British cultures on home shores take a **region** (*Voe* and *Geo* in the far north, *Porth* and *Cove* in Cornwall, *Broad* in East Anglia); every other case takes a **biome** (*Key*, *Atoll* and *Lagoon* in a tropical archipelago). Open magic and monsters, or in the steam age steampunk, sit behind the fantastic link; folk-supernatural names such as *Devil's Hole* are always available.
-- Franchise phrases such as *Sword Coast* and *Witch Space* are never produced. The new word pools are shared with the other settlement modules, so vocabulary packs can extend them.
+- **One sentence sets everything.** Click the links in it to change the culture, the kind of name, the era, the land, the tone and the rest: “‹General explorers› in ‹wild and unsettled lands› across ‹the hills› of ‹the savannah›”.
+- **Cultures and eras mix freely.** British naming habits in a desert, a Polynesian coal steamer, Roman legionaries naming places in a tropical rainforest: all fine.
+- **Biome and terrain** decide the wildlife, plants, ground and seasons in the names, so a rainforest gives you different rivers from the Fens.
+- **Tone** (grand, plain, grim, light or strange) leans the names towards a mood without ruling any out.
+- **Series** – *as one town*, *as one coinage*, *as one class* and so on – make one press of Generate give a set of names that belong together.
+- **Save as preset** (the bookmark icon) keeps a module's setup as a note, ready to run from the pack list.
+- **Nothing real gets out.** Real places, people, ships, swords, gods and currencies – and well-known fictional ones – are never produced. The safeguard list commands make a note where you can add your own.
 
-## Wild lands
-The **wild lands** group (the biome icon, after seas and coasts) names the land itself, in six terrain modules that share one engine. Each is set with the same sentence as seas and coasts: the culture, the kind of feature, the era, home or newly explored country, the fantastic switch, a region or biome, the tone, placeholders or invented people and places, and a series option.
-- **Mountains:** ranges, peaks, passes, gorges, valleys, streams and falls, tarns, glaciers, caves and mines (*Raven Crag*, *Wenlow Pike*, *Kettledale*, *Grey Force*).
-- **Forests and woods:** forests, groves, clearings, rides, pools, named trees and stones, walks and coverts (*The Dark Wood*, *Oakhurst*, *Bluebell Hanger*, *The Gospel Oak*).
-- **Deserts:** sand seas, dunes, stony plains and salt flats, mesas, canyons and wadis, oases, caravan roads and lost places (*Sea of Sand*, *Palm Oasis*, *Twenty Days' Road*).
-- **Moors and heaths:** moors and fells, tors, mosses and mires, cloughs, becks and burns, stones and crosses (*Grouse Moor*, *Lapwing Tor*, *Merlin Clough*).
-- **Wetlands:** marshes and fens, bogs, swamps, reedbeds and carrs, meres and broads, lodes and drains, holmes, causeways and deltas (*Bittern Marsh*, *Alder Carr*, *Forty Foot Drain*).
-- **Grasslands:** plains and steppes, downs and wolds, meadows, heaths and commons, vales and straths, droves and barrows (*The Wide Plains*, *Hartley Down*, *Cattle Drove*).
-- The three British cultures in home country take a **region** (*Fell*, *Pike* and *Beck* in the North, *Tor* and *Combe* in the West Country, *Ben* and *Corrie* in the Highlands); every other case takes a **biome**, which sets the wildlife, trees and livestock in the names. Britain's words are common English and long-established regional English, not Gaelic or Welsh forms.
-- Each module's **settlements** are 60% purpose-built (pass forts, shielings, hunting lodges, caravanserais, decoys) and 40% native settlement names with the terrain fixed.
-- The urban group's **settlement names** uses them in turn: set in mountains, forest, wetland, plains or hills, 60% of its names come from the matching module, so they carry the terrain (*Wolf Pass Fort*, *Deepdale Head*, *Oakhurst*). Any other terrain is unchanged.
-- Franchise names and the holy mountains of living religions are never produced.
+### place names
+- **native place names:** a people's own place names, Britain region by region (rivers included) or one of the world cultures (*Sheep Bridge*, *Ra's City*).
+- **exploration into new lands:** what explorers call wild and unsettled country, on Earth or among the stars.
+- **expansion into settled lands:** new and renamed settlements inside an empire's reach, with native names adopted along the way.
+- **route names:** roads, trade routes, pilgrim ways, railways, canals, sea routes and space lanes (*Salt Way*).
+- **sacred places:** holy mountains, groves, springs and shrines of invented faiths (*Mountain of the Storm Lord*).
 
-## Money and coins
-**Money and coins** (the coins icon, last in advanced) names the money of a world in every culture and era, in modern English: coins (*Gold Noble*, *Cross Penny*, *Little Flower*, *Wrought Silver*, *Small Oval*), early and shaped money (*Hacksilver*, *Spade Money*, *Silver Shoe*), goods money (*Cowrie*, *Cacao Bean*, *Tea Brick*, *Cow-Value*), paper and credit (*Flying Money*, *Tally*, *Fenwick Bank Note*, *Greyback*), scrip and tokens (*Pit Token*, *Hop Token*, *Siege Piece*), whole currencies (*the Fenwick Standard*, *Imperial Silver*, *the Solar Credit*) and nicknames (*Bob*, *Tanner*, *Quid*, *Owls*, *Sorrel*).
-- A sentence sets everything: the culture (route names' twenty cultures bar Polynesian and Andean, plus French, Dutch, Spanish & Portuguese and American), the kind, the era (ancient to interstellar), the fantastic switch (steampunk in the steam age), the **value** (high, middle or low: gold, silver, or copper and small change), the tone, and placeholders or invented places.
-- A culture's own English words stay as they are (*Penny*, *Shilling*, *Dollar*); every other real coin name is given by meaning (*rupee* → *Wrought Silver*). Cultures with a familiar English borrowing get a **words** link: *with familiar loanwords* prints it (*Rupee*) about seven times in ten.
-- **As one coinage** makes one money system: a currency, three to five coins from the highest to the lowest on one theme (beasts, emblems, rulers, one town, saints, gods or the culture's own names), then a note or token and a nickname. **With values** uses a real system, never an invented ratio: *Sovereign (8 Half-Crowns)*, *Half-Crown (5 Sixpences)*, *Sixpence (6 Pence)*, *Penny (4 Farthings)*, *Farthing*, with the system named under the batch. It is offered only where the brief lists one for the culture and era (Athenian drachmas, Augustan denarii, English pounds, shillings and pence, Tokugawa gold, Qing taels, Aztec cacao counts, the United States dollar and more).
-- Company scrip takes its company from the guilds, companies and trade module. Banks, exchanges and mints are named in their own modules. Real and fictional currencies (*Euro*, *Bitcoin*, *Galleon*, *Credits* as a brand) are never produced, and nor are slaves, tobacco, opium or ivory as goods money. The new word pools are shared with the other settlement modules, so vocabulary packs can extend them: `- Little Flower [Florin] (h)` adds a name with a loanword and a tier.
-- Money presets run from the pack list like the other module presets (`module: money-names`).
+### urban
+- **settlement names:** any name a settlement might carry, from hamlet to city.
+- **streets and districts:** streets, squares, markets, and quarters (*Mill Lane*, *Weavers' Quarter*).
+- **inns and taverns:** inn signs, tea houses, hotels, and station bars (*the Fox and Grapes*).
+- **buildings and landmarks:** castles, halls, temples, bridges, wells, and mills (*the Grey Tower*).
+- **monuments and statues:** crosses, obelisks, statues, tombs, and hill figures, and the places named after them.
+- **settlement kit:** one press, one whole town – name, ruler, roads, streets, inns, buildings, and groups, all agreeing with each other.
 
-## Calendars and festivals, and sky lore
-**Calendars and festivals** (the calendar icon) and **sky lore** (the moon-and-star icon) come last in advanced, after money and coins. They name the time and the sky of a world in modern English, in the same twenty-two cultures as route names, with the same eras, fantastic switch and tone. Calendars cover **months** (*Hay Month*, *Before Yule*, *Little Vigil*), **days of the week** (*Market Day*, *Red Star Day*), **festivals and holy days** (*Feast of Reaping*, *Night of Lanterns*) and **full moons** (*Wolf Moon*, *Lone Moon*); sky lore covers **constellations** (*the Plough*, *the Great Elk*), **star signs** (*the Ram*, *the Hare*) and **wanderers and lights** (*the Red Wanderer*, *the Silver River*).
-- A sentence sets everything, including the **land**: *their homeland* or any biome, which decides the seasons the names use (a rainforest year is the rains and the flood; a temperate one has four seasons). In the near future and interstellar eras the space biomes join the menu.
-- **As one calendar, week, year, zodiac or sky** gives a whole set in order. The **counts are never invented**: every series uses a real system (the Anglo-Saxon year of Bede, the Roman market week, the twenty-four solar terms, the twelve animals, the seven classical lights…), named under the batch, and a **start** link begins the year in their own new year or in any season of the land. Leap months appear at the Metonic rate of seven years in nineteen.
-- A culture's own words are given by meaning (*Sacrifice Month*, *Fire Day*) and fill at most half of any series. **A real calendar is never reproduced**: the plain English month, day and star names (*January*, *Monday*, *Aries*, *Mars*), the great holy days of living religions and living indigenous festivals are blocked, and names that belong to a living religion's calendar were left out of the data altogether. Festivals have a **words** link for familiar loanwords (*Samhain*, *Nowruz*) in the cultures that have one.
-- Polynesian and Andean follow the sensitive-culture rule: no fantastic words, no light or grim tones, no gods and only seasonal and working festivals.
-- Words come from the shared vocabulary pools (season words carry the seasons they fit), so vocabulary packs can extend them. Season tags and leap-month or extra-days tags are shown beside the names but are not part of them; the system line under the batch is a notice, not a name.
-- Presets run from the pack list like the other module presets (`module: calendar-names` and `module: sky-names`).
+### seas and coasts
+- **seas and lakes:** oceans, seas, gulfs, fjords, straits, and lochs (*Gulf of Arden*).
+- **coasts and islands:** headlands, cliffs, beaches, coves, and islands (*Seal Skerry*).
+- **sea charts:** banks, shoals, reefs, currents, and anchorages (*Wherryman's Gat*).
+- **hyperspace charts:** hyperspace charted as if it were a sea (*The Vega Fold*).
 
-## Aircraft and land vehicles
-**Aircraft and airships** (the plane icon) and **land vehicles** (the train icon) follow spacecraft and stations in the **vehicles** group, on the ships engine. They use the same thirty-four cultures, the same tone, styles and class series, and a technology of their own: balloons to drones and future flyers (with **sky ships** in fantasy), and chariots to maglevs (with **war engines and wonders** in fantasy). Each culture has the levels it really had; out-of-span levels follow the ships rule.
-- A sentence sets everything, including **naming**: *each craft* (*Spirit of Saltgate*, *Lucky Kate*, *Clipper Morning Star*, *Ashby Castle*, *the Tantivy*, *War Boar*) or **types and models** (*Stormcat*, *Kestrel*, *the Castle class*, *Type 44*). Craft and vehicles come in functions (fighters, bombers, airliners…; locomotives, named trains, coaches, war machines…), with nose art and wartime call names, locomotive class themes, coaches, named trains, siege engines and fairground engines.
-- The prefix link becomes **codes**: registrations and serials for aircraft (*G-ABCD*, *N123AB*) and running numbers for locomotives and early tanks (*4127 Ashby Castle*), only where the culture and period used them.
-- **As one class** gives a locomotive class on one theme, a named-train set on one shape, a Clipper fleet, or a letter class; for types, **as one family** gives one maker's line (*Ka-21*, *Ka-27*, *Ka-32*).
-- Real aircraft, locomotives, trains, war machines, coaches and road vehicles are never produced, and nor are the names of real peoples that makers have used for vehicles. The common single words (*Hurricane*, *Tiger*) are blocked only as types and models. Presets run from the pack list (`module: vessels`, with `vesselModule: aircraft` or `landVehicles` and `naming`).
+### wild lands
+- **mountains:** ranges, peaks, passes, gorges, tarns, and mines (*Raven Crag*).
+- **forests and woods:** forests, groves, clearings, rides, and named trees (*Oakhurst*).
+- **deserts:** sand seas, salt flats, canyons, oases, and caravan roads (*Twenty Days' Road*).
+- **moors and heaths:** moors, tors, mires, cloughs, and becks (*Lapwing Tor*).
+- **wetlands:** marshes, fens, carrs, meres, and drains (*Forty Foot Drain*).
+- **grasslands:** plains, steppes, downs, wolds, and droves (*Hartley Down*).
 
-## Named things
-**Named things** (the gem icon, after vehicles) names the objects of a world in modern English, with three modules that share one engine: **arms and armour** (*Helm-Splitter*, *Wolf's Tooth*, *Joyous*, *Mad Kate*), **treasures and regalia** (*River of Light*, *the Luck of Harrow*, *the Calling Horn*, *Great Nell*, *the Hand of Saint Aldhelm*) and **books and writings** (*Annals of Saltgate*, *the Black Book of Fenwick*, *Dooms of [ruler]*, *the Saltgate Courier and Advertiser*). It uses the twenty cultures of bynames and titles, the seven eras and the fantastic switch (steampunk in the steam age).
-- A sentence sets everything: the culture, the kind (swords, great guns, crowns, bells, relics, chronicles, grimoires, papers…, each offered only where it fits the culture, era and genre), the era, the fantastic switch, the tone, the **owner** and the **description**. The owner is *anyone* (placeholders or invented people), *people from a pack* (with the pack's `##` section) or *no one*. *With what they are* adds a short description after each name (*Wolf's Tooth, sword of [hero]*), which is part of the name.
-- Each culture names things in its own way: shapes belong to **families** (what the thing did, what it does, a mood, a kenning, an animal, light, whose it is, where it was found, a homely nickname…) and the culture's leaning decides how often each is drawn: Norse blades are mostly deeds and kennings, Persian ones agents, Indian jewels light.
-- Real and famous things are never produced: no real sword, jewel, crown, bell, gun, book or paper, and no well-known fictional one, in its own name or translated (*Leg-Biter* is as blocked as *Legbiter*). Gun makers' names, holy scriptures of living faiths and relics of living religions are left out, and the Christian manuscripts (*Psalter*, *Gospels*) appear only in the Christian cultures. The names are English only; real naming habits are carried over by meaning.
-- Words come from the shared vocabulary pools (object words carry the kinds they fit), so vocabulary packs can extend them.
-- Presets run from the pack list like the other module presets (`module: arms-names`, `treasure-names` or `book-names`).
+### group names
+- **powers and factions:** councils, parties, secret societies, rebels, leagues, and great houses.
+- **realms and polities:** kingdoms, republics, leagues, and khanates (*Free State of Saltgate*).
+- **peoples and tongues:** the people, adjective, and language for any place or realm name (*Saltgaters*, *Saltgatish*).
+- **tribes and kin groups:** peoples, clans, confederations, and war-bands (*People of the Blackwater*).
+- **guilds, companies, and trade:** guilds, merchant houses, and chartered companies (*Kestrel Dynamics*).
+- **armies and martial orders:** regiments, knightly orders, and mercenaries (*2nd Fenwick Rifles*).
+- **adventurers and explorers:** adventuring companies, expeditions, and survey crews.
+- **faiths and mystic orders:** orders, cults, and brotherhoods (*Order of the Hidden Lamp*).
+- **thieves and the underworld:** gangs, guilds of thieves, and assassins (*the Velvet Hand*).
+- **supernatural courts and hosts:** fey courts, hosts, and hauntings (*Court of the Rowan Moon*).
+- **deities:** gods, spirits, and whole pantheons (*the Storm Lord*, *Lady of Ash*).
 
-## Peoples and tongues
-**Peoples and tongues** (the languages icon, in group names after realms and polities) takes a place or realm name and gives the name for its people, the adjective and the language, in modern English, by the rules English itself uses: *Saltgate* gives *Saltgater* (person), *Saltgatish* (adjective), *the Saltgaters* (people) and *Saltgatish* (language); *Velloria* gives *Vellorian*; *Fenland* gives *Fenlander*, or clipped, *Fenn* and *Fennish*; *Ashchester* gives *Ashcestrian*; *the Western Fells* gives *Western Fellsman* and *the Western Fellsmen*.
-- It is a set of **rules, not a list**: no real demonym is looked up, so real place names typed in go through the same rules as invented ones. The one exception is the bodies of the Sun's own system (*Martian*, *Jovian*, *Lunarian*).
-- A sentence sets everything: the culture (the twenty of bynames and titles, which decides the endings English would use: *-er* and *-ish* for English places, *-ian* and *-an* for Latin ones, *-i* for Arabic and Indian ones, *-ese* for East Asian ones), the **source**, the era, whether to give peoples, languages or both, the tone, and how much to say about each language.
-- The source is **names I type** (a box under the sentence; one name per line, or separated by commas), **names from a pack** (by the pack's `##` section or the whole pack), **new realms** or **new place names**. Names selected in the results when the module is opened fill the typed box, so the output of any other module comes straight in.
-- Languages come in shapes (*Saltgatish*, *the Fennish tongue*, *Old Vellorian*, *Low Vellorian*, *Court Omrani*, *Harbour Cant*, *Spacers' Omrani*), with **older forms** (*Middle* and *Old Saltgatish*) or three **dialects** on request.
-- Names the rules can't take (a figure, a possessive, a very short word) get a plain fallback: *the folk of Kepler-452*, *the speech of Kepler-452*. Fictional peoples and tongues (*Belter*, *Klingon*, *Sindarin*) and slurs are never produced.
-- **Realms and polities** gains a last link, **with their peoples**, which adds ` – the Saltgaters, Saltgatish` to each realm. The realm names themselves are the same with the link on or off, seed for seed.
-- Presets run from the pack list like the other module presets (`module: peoples-tongues`, with the typed `names` as a list).
+### bynames and titles
+- **epithets and bynames:** *the Bold*, *Ironhand*, *of the Plains*.
+- **family names:** *Fletcher*, *Ivanovich*, *MacBrannoc*.
+- **titles and honourifics:** from *Warden of the Marches* to *King of Kings, Lord of the Two Lands*.
 
-## Presets and the wizard's word lists
-- **Save as preset** (the bookmark icon) saves a module's current setup as a note in your names folder, ready to run from the pack list. Native place names (Britain), exploration and expansion save a recipe, so the preset also opens in the place name wizard; tribes and kin groups saves a tribal preset note. The dialogue suggests a name and uses the module's sentence as the description.
-- **Tribal presets** run from the pack list with the crown icon, and the sliders icon beside the list opens one in tribes and kin groups to adjust and save again. A recipe's tribal slot can use a preset (`tribal: "[[Highland Tribes]]"`), and so can a word list's `//` line (`// Highland Tribes`); the slot still keeps its own short, article-free form.
-- The **place name wizard** has two pages: shape and rendering, then slots. The slots page's row has its own Save icon, a **Template** icon (description, template and starting template) and an **Optional: edit word lists** button.
-- **The word lists page** shows every slot as what it draws from: the built-in list or the biome's words as a table to edit, an empty box for placeholders, the sources a slot already uses, the native pack, or the tribes and kin groups sentence. Only the sections you change are saved, to one word-list note for the recipe (“Danelaw words”), and the slot draws from it; Reset puts a slot back. Generic words are on this page too.
-- Packs with `##` headings show a sentence under the pack row: *Use the ‹male› names*. The first heading is chosen on load; **whole pack** comes last and can tag each name with the list it came from (*Alfred · male*). Tags are for display only: inserting uses the name alone.
-- Breakdown lists under 20 names save with a warning. At generation a small list is still used as chosen, with looser settings, and may repeat names from the list.
-- In the Create Pack window, the **Templates** icon opens a pane beside the box listing templates for the pack type: people (Breakdown and List), people compound (Compound) and place (Place). Click one to fill the box, then edit and save it as your own pack. There are built-in *Victorian, England* and *Anglo-Saxon* templates, each with `## male` and `## female` lists, and your own template notes are listed after the built-ins.
-- The **Word list** button has gone from the Create Pack window: page 4 replaces it. Word-list notes you already have work exactly as before.
+### vehicles
+- **ships and boats:** canoes to container ships, warships to yachts.
+- **spacecraft and stations:** rockets, starships, and stations.
+- **aircraft and airships:** balloons to drones, with sky ships for fantasy.
+- **land vehicles:** chariots to maglevs, with war engines for fantasy.
+
+### named things
+- **arms and armour:** named blades, guns, and armour (*Wolf's Tooth*).
+- **treasures and regalia:** crowns, jewels, horns, bells, and relics (*the Luck of Harrow*).
+- **books and writings:** chronicles, grimoires, law codes, and newspapers (*the Black Book of Fenwick*).
+
+### advanced
+- **name ageing:** gives a place a history, shifting an old name into the language that came after it.
+- **name takeover:** adapts native names into the form an incoming language would make of them.
+- **events and eras:** wars, treaties, risings, disasters, and ages (*Year Without Summer*).
+- **money and coins:** coins, currencies, notes, tokens, and nicknames (*Gold Noble*, *Tanner*).
+- **calendars and festivals:** months, weekdays, festivals, and full moons (*Hay Month*, *Wolf Moon*).
+- **sky lore:** constellations, star signs, and wandering lights (*the Great Elk*).
 
 ## Installation & Use
 1. Turn on Community Plugins
@@ -123,14 +121,18 @@ The **wild lands** group (the biome icon, after seas and coasts) names the land 
 10. Save the pack
 11. Click on the pack name in the nameForge window
 12. Generate away!
-13. As a bonus tip: you can select more than one name, and in doing so the three icons to the right beneath the name pane all work differently. The first of the three icons inserts a *single* name in your document right where you are (for those times you need a name ***NOW!!!*** The second and third put a list of names into a document: the first is a checklist, the second an unordered lists; useful for when you want a list of names ready built for use.
-14. As a bonus bonus tip: to the left, under the name pane, is the seed used to generate those names and an option to lock it (so you generate more names from that same seed) and a button to copy the seed so you can store it for later use!
+13. Want more than your own packs? Click the binder icon, pick a group, pick a module, click your way through its sentence and generate. (No packs needed for most of them!)
+14. As a bonus tip: you can select more than one name, and in doing so the three icons to the right beneath the name pane all work differently. The first of the three icons inserts a *single* name in your document right where you are (for those times you need a name ***NOW!!!***). The second and third put a list of names into a document: the second a checklist, the third an unordered list; useful for when you want a list of names ready built for use.
+15. As a bonus bonus tip: to the left, under the name pane, is the seed used to generate those names and an option to lock it (so you generate more names from that same seed) and a button to copy the seed so you can store it for later use!
+16. As a bonus bonus *bonus* tip: run **Install starter templates** from the command palette for a handful of ready-made recipes and word lists to play with.
+
+## Upgrading from 1.x
+Your packs carry on working. Compound packs saved with the older `## Part N` markers still generate, and move to the new `# Part N` layout the next time you save them from the editor. Word-list notes you already have work exactly as before. nameForge never rewrites your hand-made files behind your back.
 
 ## nameForge and storyForge
 I built nameForge to help me with my storytelling. I built storyForge to help me with my storytelling. So, thought I, why keep them separate...?
 
-In storyForge the main window of nameForge is added to the interface. It's there, easy to access, but easily hidden away for when you want to focus. (Once you've installed both plugins look for it on the right sidebar, beneath the forge icon. Two clicks max to gain access to nameForge. Better yet, it sits out of the way on the right so you can keep accessing it whilst working on your story or your worldbuilding!
+In storyForge the main window of nameForge is added to the interface. It's there, easy to access, but easily hidden away for when you want to focus. (Once you've installed both plugins look for it on the right sidebar, beneath the forge icon.) Two clicks max to gain access to nameForge. Better yet, it sits out of the way on the right so you can keep accessing it whilst working on your story or your worldbuilding!
 
-## License
-
-MIT
+## Licence
+MIT. Third-party icon licences are listed in `LICENCES - Third Party`.
