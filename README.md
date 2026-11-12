@@ -124,7 +124,7 @@ Open the binder icon, pick a group, then pick the module in the box beside it. E
 13. Want more than your own packs? Click the binder icon, pick a group, pick a module, click your way through its sentence and generate. (No packs needed for most of them!)
 14. As a bonus tip: you can select more than one name, and in doing so the three icons to the right beneath the name pane all work differently. The first of the three icons inserts a *single* name in your document right where you are (for those times you need a name ***NOW!!!***). The second and third put a list of names into a document: the second a checklist, the third an unordered list; useful for when you want a list of names ready built for use.
 15. As a bonus bonus tip: to the left, under the name pane, is the seed used to generate those names and an option to lock it (so you generate more names from that same seed) and a button to copy the seed so you can store it for later use!
-16. As a bonus bonus *bonus* tip: run **Install starter templates** from the command palette for a handful of ready-made recipes and word lists to play with.
+16. As a bonus bonus *bonus* tip: run **Install starter templates** from the command palette for a handful of starter word lists to play with.
 
 ## Upgrading from 1.x
 Your packs carry on working. Compound packs saved with the older `## Part N` markers still generate, and move to the new `# Part N` layout the next time you save them from the editor. Word-list notes you already have work exactly as before. nameForge never rewrites your hand-made files behind your back.

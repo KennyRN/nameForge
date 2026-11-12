@@ -1,5 +1,5 @@
-// The place name wizard's sentences as plain data (Tribal brief §19.2, Land brief §4.2), so they
-// can be tested. No Obsidian imports: recipeEditor.ts draws the same wording as links.
+// The place-name sentences' wording as plain data (Tribal brief §19.2, Land brief §4.2), so it
+// can be tested. No Obsidian imports: the modal draws the same wording as links.
 
 import { type Biome, BIOMES, BRITAIN, findBiome, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
 import { contextPhrasesFor } from "./colonialWording";
