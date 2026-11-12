@@ -6,7 +6,7 @@
 // pack lines. A section that matches its base as a set (word, weight and fuses, ignoring order) is
 // the base's own, so `parse(biomeToText(b))` gives `b` back and saving keeps only real changes.
 
-import { type Biome, type BiomeList, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES, type Terrain, type Weighted } from "./biomes";
+import { type Biome, type BiomeList, BIOMES, BRITAIN, findBiome, SPACE_BIOMES, TERRAIN_CHOICES, type Terrain, type Weighted } from "./biomes";
 import { COLONIAL_DATA } from "./colonialShapes";
 import type { NameWordEntry } from "./names/engine";
 import { wordTable } from "./names/starterTemplates";
@@ -413,22 +413,49 @@ export interface BiomePackSource {
   content: string;
 }
 
+/**
+ * Wizard retirement brief §5.2: the built-in a pack name replaces. The match is on the built-in's
+ * label or id, ignoring case, surrounding spaces and a trailing ".md": "Temperate", "boreal" and
+ * "Northern forest and tundra" all match, and Britain answers to "Britain" and "British". Space
+ * biomes count: the Biome tab can start from one.
+ */
+export function builtInForPackName(name: string): Biome | undefined {
+  const key = norm(name).replace(/\.md$/, "").trim();
+  if (!key) return undefined;
+  return [BRITAIN, ...BIOMES, ...SPACE_BIOMES].find((b) => norm(b.id) === key || norm(b.label) === key);
+}
+
 /** Resolves every pack's base chain (depth 5) and merges it; loops and missing bases fall back to temperate. */
 export function resolveBiomePacks(files: readonly BiomePackSource[]): { biomes: Biome[]; problems: string[] } {
   const parsed = new Map(files.map((f) => [f.path, parseBiomePackContent(f.content, f.path.replace(/^.*\//, "").replace(/\.md$/, ""))]));
   const byName = new Map([...parsed].map(([path, p]) => [norm(p.packName), path]));
-  const done = new Map<string, Biome>();
+  // §5.2: a pack named like a built-in replaces it. Two packs claiming one: the first by path wins; the other is an ordinary pack.
   const problems: string[] = [];
+  const overrideOf = new Map<string, Biome>();
+  for (const path of [...parsed.keys()].sort()) {
+    const builtIn = builtInForPackName(parsed.get(path)!.packName);
+    if (!builtIn) continue;
+    const taken = [...overrideOf].find(([, b]) => b.id === builtIn.id);
+    if (taken) {
+      problems.push(`Biome pack “${parsed.get(path)!.packName}” (${path}) also claims the built-in ${builtIn.label} biome; “${taken[0]}” is used, so this one is listed as its own biome.`);
+      continue;
+    }
+    overrideOf.set(path, builtIn);
+  }
+  const done = new Map<string, Biome>();
   const temperate = BIOMES.find((b) => b.id === "temperate")!;
   const resolve = (path: string, seen: string[]): Biome => {
     const cached = done.get(path);
     if (cached) return cached;
     const pack = parsed.get(path)!;
     const link = pack.basedOn.match(/^\[\[([^\]|]+)/)?.[1];
+    const replaces = overrideOf.get(path);
     let base: Biome | undefined;
     if (link) {
       const basePath = byName.get(norm(link)) ?? [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
-      if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
+      // A pack that replaces a built-in and is based on itself by name is based on the real built-in (§5.2).
+      if (replaces && basePath === path) base = replaces;
+      else if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
     } else {
       base = pack.basedOn === "britain" ? BRITAIN : findBiome(pack.basedOn);
     }
@@ -436,8 +463,13 @@ export function resolveBiomePacks(files: readonly BiomePackSource[]): { biomes: 
       problems.push(`Biome pack “${pack.packName}” can't find its base “${link ?? pack.basedOn}”; using temperate woodland.`);
       base = temperate;
     }
-    const { biome, problems: own } = applyBiomePack(base, pack, path);
-    problems.push(...own.map((p) => `${pack.packName}: ${p}`));
+    const applied = applyBiomePack(base, pack, path);
+    let biome = applied.biome;
+    if (replaces) {
+      // It takes the built-in's id, label and place; its phrase is its own if it gives one.
+      biome = { ...biome, id: replaces.id, label: replaces.label, phrase: pack.phrase ?? replaces.phrase, guide: pack.guide || replaces.guide, custom: { ...biome.custom!, overrides: replaces.id } };
+    }
+    problems.push(...applied.problems.map((p) => `${pack.packName}: ${p}`));
     done.set(path, biome);
     return biome;
   };

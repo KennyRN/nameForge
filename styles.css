@@ -1857,3 +1857,10 @@ body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-
 .nameforge-editor-modal .nameforge-modal__pack-type-toggle .nameforge-modal__toggle-button.is-active:hover:not(:disabled) {
   filter: brightness(1.1);
 }
+
+/* Create Pack, Biome tab: the line under the name when it replaces a built-in biome. */
+.nameforge-modal__biome-replaces {
+  margin: 0 0 var(--size-4-2);
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}

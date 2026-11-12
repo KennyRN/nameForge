@@ -86,7 +86,11 @@ export class LandButton {
     const builtIn = catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => defaultLabel !== BRITAIN.label || b.id !== BRITAIN.id);
     const others = catalogue.all.filter((b) => b.custom && !b.custom.overrides);
     for (const b of builtIn) {
-      menu.addItem((item) => item.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
+      menu.addItem((item) => {
+        item.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b)));
+        // Wizard retirement brief §5.2: a pack that replaces a built-in says whose version it is.
+        if (b.custom?.overrides) (item as unknown as { dom?: HTMLElement }).dom?.setAttribute("aria-label", `Your version: ${b.custom.path.replace(/^.*\//, "")}`);
+      });
     }
     if (others.length > 0) {
       menu.addSeparator();

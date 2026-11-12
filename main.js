@@ -15743,7 +15743,7 @@ function biomeCatalogue(custom = []) {
   const space = SPACE_BIOMES.map(swap);
   const matches = (id) => (b) => {
     var _a6;
-    return b.id === id || ((_a6 = b.custom) == null ? void 0 : _a6.path) === id;
+    return b.id === id || ((_a6 = b.custom) == null ? void 0 : _a6.path) === id || !!b.custom && id === `pack:${b.custom.path}`;
   };
   const byPath = new Map(custom.filter((b) => b.custom).map((b) => [b.custom.path, b]));
   return {
@@ -15770,7 +15770,7 @@ function biomeCatalogue(custom = []) {
 var biomeChoiceId = (b) => b.custom && !b.custom.overrides ? b.custom.path : b.id;
 var biomeMatches = (b, id) => {
   var _a5;
-  return !!id && (b.id === id || ((_a5 = b.custom) == null ? void 0 : _a5.path) === id);
+  return !!id && (b.id === id || ((_a5 = b.custom) == null ? void 0 : _a5.path) === id || !!b.custom && id === `pack:${b.custom.path}`);
 };
 var isBuiltInBritain = (biome) => (biome == null ? void 0 : biome.id) === "britain" && !biome.custom;
 var biomeRoot = (catalogue, biome) => {
@@ -134876,7 +134876,11 @@ var LandButton = class {
     const builtIn = catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => defaultLabel !== BRITAIN.label || b.id !== BRITAIN.id);
     const others = catalogue.all.filter((b) => b.custom && !b.custom.overrides);
     for (const b of builtIn) {
-      menu.addItem((item2) => item2.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
+      menu.addItem((item2) => {
+        var _a5, _b3;
+        item2.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b)));
+        if ((_a5 = b.custom) == null ? void 0 : _a5.overrides) (_b3 = item2.dom) == null ? void 0 : _b3.setAttribute("aria-label", `Your version: ${b.custom.path.replace(/^.*\//, "")}`);
+      });
     }
     if (others.length > 0) {
       menu.addSeparator();
@@ -135409,22 +135413,40 @@ ${(_c3 = written.get(s.heading)) != null ? _c3 : ""}`.trim());
 ${guide}${kept.join("\n\n")}
 `, own: kept.length };
 }
+function builtInForPackName(name) {
+  const key2 = norm5(name).replace(/\.md$/, "").trim();
+  if (!key2) return void 0;
+  return [BRITAIN, ...BIOMES, ...SPACE_BIOMES].find((b) => norm5(b.id) === key2 || norm5(b.label) === key2);
+}
 function resolveBiomePacks(files) {
   const parsed = new Map(files.map((f) => [f.path, parseBiomePackContent(f.content, f.path.replace(/^.*\//, "").replace(/\.md$/, ""))]));
   const byName = new Map([...parsed].map(([path, p]) => [norm5(p.packName), path]));
-  const done = /* @__PURE__ */ new Map();
   const problems = [];
+  const overrideOf = /* @__PURE__ */ new Map();
+  for (const path of [...parsed.keys()].sort()) {
+    const builtIn = builtInForPackName(parsed.get(path).packName);
+    if (!builtIn) continue;
+    const taken = [...overrideOf].find(([, b]) => b.id === builtIn.id);
+    if (taken) {
+      problems.push(`Biome pack \u201C${parsed.get(path).packName}\u201D (${path}) also claims the built-in ${builtIn.label} biome; \u201C${taken[0]}\u201D is used, so this one is listed as its own biome.`);
+      continue;
+    }
+    overrideOf.set(path, builtIn);
+  }
+  const done = /* @__PURE__ */ new Map();
   const temperate = BIOMES.find((b) => b.id === "temperate");
   const resolve = (path, seen) => {
-    var _a5, _b3;
+    var _a5, _b3, _c3;
     const cached = done.get(path);
     if (cached) return cached;
     const pack = parsed.get(path);
     const link = (_a5 = pack.basedOn.match(/^\[\[([^\]|]+)/)) == null ? void 0 : _a5[1];
+    const replaces = overrideOf.get(path);
     let base;
     if (link) {
       const basePath = (_b3 = byName.get(norm5(link))) != null ? _b3 : [...parsed.keys()].find((p) => p.replace(/\.md$/, "").endsWith(link));
-      if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
+      if (replaces && basePath === path) base = replaces;
+      else if (basePath && !seen.includes(basePath) && seen.length < 5) base = resolve(basePath, [...seen, path]);
     } else {
       base = pack.basedOn === "britain" ? BRITAIN : findBiome(pack.basedOn);
     }
@@ -135432,8 +135454,12 @@ function resolveBiomePacks(files) {
       problems.push(`Biome pack \u201C${pack.packName}\u201D can't find its base \u201C${link != null ? link : pack.basedOn}\u201D; using temperate woodland.`);
       base = temperate;
     }
-    const { biome, problems: own } = applyBiomePack(base, pack, path);
-    problems.push(...own.map((p) => `${pack.packName}: ${p}`));
+    const applied = applyBiomePack(base, pack, path);
+    let biome = applied.biome;
+    if (replaces) {
+      biome = { ...biome, id: replaces.id, label: replaces.label, phrase: (_c3 = pack.phrase) != null ? _c3 : replaces.phrase, guide: pack.guide || replaces.guide, custom: { ...biome.custom, overrides: replaces.id } };
+    }
+    problems.push(...applied.problems.map((p) => `${pack.packName}: ${p}`));
     done.set(path, biome);
     return biome;
   };
@@ -136340,6 +136366,10 @@ function settlementSentenceText(settings, custom = []) {
 }
 
 // src/modal.ts
+var overrideTip = (b) => {
+  var _a5;
+  return ((_a5 = b.custom) == null ? void 0 : _a5.overrides) ? { tip: `Your version: ${b.custom.path.replace(/^.*\//, "")}` } : {};
+};
 var isPlacePresetType = (type) => type === "nativePlacePreset" || type === "explorationPreset" || type === "expansionPreset";
 var COLONIAL_SECTION_PART = {
   explorationPlaceShapes: "2",
@@ -137492,13 +137522,15 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
               if (c.headingTip) (_a5 = item2.dom) == null ? void 0 : _a5.setAttribute("aria-label", c.headingTip);
             });
           }
-          menu.addItem(
-            (item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
+          menu.addItem((item2) => {
+            var _a5;
+            item2.setTitle(c.label).setChecked(c.id === current).onClick(() => {
               choose(c.id);
               this.updateRegionLabel();
               this.renderContextRow();
-            })
-          );
+            });
+            if (c.tip) (_a5 = item2.dom) == null ? void 0 : _a5.setAttribute("aria-label", c.tip);
+          });
         }
         menu.showAtMouseEvent(event);
       })();
@@ -137571,7 +137603,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         const space = part !== "organic" && key2.includes("colonial:") ? catalogue.space.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
         return [
           { id: void 0, label: defaultPhrase },
-          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase })),
+          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase, ...overrideTip(b) })),
           ...space
         ];
       },
@@ -142935,6 +142967,10 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     this.templatesOpen = false;
     this.biomeRowEl = null;
     this.biomeBaseSelect = null;
+    /** Wizard retirement brief §5.3: the line under the name when it matches a built-in biome. */
+    this.biomeReplacesEl = null;
+    /** Whether the user has picked "Start from" themselves, so typing a built-in's name stops choosing it for them. */
+    this.biomeBaseChosen = false;
     this.biomePhraseInput = null;
     /** The text last put in the textarea from a base, to tell whether it has been edited since. */
     this.biomeFilled = "";
@@ -142977,6 +143013,9 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
       }
     });
     this.packNameInput.value = this.initialPackName;
+    this.biomeReplacesEl = contentEl.createDiv({ cls: "nameforge-modal__biome-replaces" });
+    this.biomeReplacesEl.hide();
+    this.packNameInput.addEventListener("input", () => this.onBiomeNameInput());
     const typeToggle = contentEl.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
     const addTypeButton = (label, iconId) => {
       const button = typeToggle.createEl("button", { cls: "nameforge-modal__toggle-button" });
@@ -143026,7 +143065,10 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     const biomeRow = this.biomeRowEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" });
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from" });
     this.biomeBaseSelect = biomeRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from" } });
-    this.biomeBaseSelect.addEventListener("change", () => this.refillBiome());
+    this.biomeBaseSelect.addEventListener("change", () => {
+      this.biomeBaseChosen = true;
+      this.refillBiome();
+    });
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Phrase" });
     this.biomePhraseInput = biomeRow.createEl("input", { cls: "nameforge-editor-modal__phrase-input", attr: { type: "text", "aria-label": "Phrase" } });
     biomeRow.hide();
@@ -143236,9 +143278,25 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     const text = biomeToText(b);
     return text.slice(text.indexOf("\n## ") + 1);
   }
+  /**
+   * Wizard retirement brief §5.3: a name that matches a built-in biome replaces it, so "Start from"
+   * becomes that built-in (unless the user has already chosen one) and a line under the name says so.
+   */
+  onBiomeNameInput() {
+    var _a5, _b3, _c3, _d3;
+    const builtIn = this.biomeMode ? builtInForPackName((_b3 = (_a5 = this.packNameInput) == null ? void 0 : _a5.value) != null ? _b3 : "") : void 0;
+    (_c3 = this.biomeReplacesEl) == null ? void 0 : _c3.toggle(!!builtIn);
+    if (!builtIn) return;
+    (_d3 = this.biomeReplacesEl) == null ? void 0 : _d3.setText(`Replaces the built-in ${builtIn.label} biome wherever it's used.`);
+    const select = this.biomeBaseSelect;
+    if (!select || this.biomeBaseChosen || this.biomeEditing) return;
+    select.value = builtIn.id;
+    this.refillBiome();
+  }
   /** Land brief §9.4: fills the base choices, and loads an existing pack of the same name merged. */
   async enterBiomeMode() {
     var _a5, _b3;
+    this.biomeBaseChosen = false;
     const custom = await this.parent.loadCustomBiomes();
     const select = this.biomeBaseSelect;
     if (!select) return;
@@ -143246,7 +143304,10 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     for (const b of [BRITAIN, ...BIOMES, ...SPACE_BIOMES]) select.createEl("option", { text: b.label, value: b.id });
     for (const b of custom) select.createEl("option", { text: b.label, value: b.custom.path });
     const name = (_a5 = this.packNameInput) == null ? void 0 : _a5.value.trim().toLowerCase();
-    const existing = custom.find((b) => b.label.toLowerCase() === name);
+    const existing = custom.find((b) => {
+      var _a6;
+      return b.label.toLowerCase() === name || ((_a6 = b.custom) == null ? void 0 : _a6.path.replace(/^.*\//, "").replace(/\.md$/i, "").toLowerCase()) === name;
+    });
     this.biomeEditing = (_b3 = existing == null ? void 0 : existing.custom) == null ? void 0 : _b3.path;
     if (existing) {
       select.value = existing.custom.base;
@@ -143260,6 +143321,7 @@ ${this.biomeBody(existing)}`;
     }
     select.value = "temperate";
     this.refillBiome();
+    this.onBiomeNameInput();
   }
   /** Refills the textarea from the base, unless it has been edited since it was last filled. */
   refillBiome() {
@@ -143303,7 +143365,8 @@ ${(_c3 = (_b3 = this.inputEl) == null ? void 0 : _b3.value) != null ? _c3 : ""}`
     const pack = parseBiomePackContent(text);
     const empty = pack.sections.filter((s) => s.words.length === 0 && s.packs.length === 0).map((s) => `\u201C${s.heading}\u201D is empty.`);
     this.parent.setStatus([`Saved: ${own} sections of your own; the rest comes from ${base.label}.`, ...empty, ...mine].join(" "));
-    new import_obsidian11.Notice(`nameForge: biome \u201C${packName}\u201D saved.`);
+    const replaces = builtInForPackName(packName);
+    new import_obsidian11.Notice(`nameForge: biome \u201C${packName}\u201D saved${replaces ? ` \u2013 replaces the built-in ${replaces.label} biome` : ""}.`);
     this.close();
   }
   updateTypeButtons() {

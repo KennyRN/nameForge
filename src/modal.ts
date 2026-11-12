@@ -160,7 +160,7 @@ import { confirmReplace, PresetSaveModal } from "./presetModal";
 import { builtinTemplates, examplePacks, isExamplePackPath, templateNameCount, templatePartTexts, templateText, type TemplateType, templateTypeFor } from "./templates";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
-import { type BiomePackSource, biomeToText, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
+import { type BiomePackSource, biomeToText, builtInForPackName, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
 import {
   findTradition,
   generateTribalNames,
@@ -291,6 +291,9 @@ import { ALIEN_CHOICES, biomePhrase, explorersPhrase, incomersPhrase, regionPhra
 /** History label for british place names runs; older "place name shapes" entries keep theirs. */
 
 /** The colonial shape generators (colonialShapes.ts): part 2 and part 2a. */
+/** Wizard retirement brief §5.2: the tooltip on a biome that is a pack's replacement for a built-in. */
+const overrideTip = (b: Biome): { tip?: string } => (b.custom?.overrides ? { tip: `Your version: ${b.custom.path.replace(/^.*\//, "")}` } : {});
+
 /** Wizard retirement brief §4: the place-name presets' pack types. */
 const isPlacePresetType = (type: NamePackType) => type === "nativePlacePreset" || type === "explorationPreset" || type === "expansionPreset";
 
@@ -310,7 +313,7 @@ const withRegion = (label: string, regionCode: string | undefined) => {
 /** A module's label in the box beside the trigger: "Native place names". */
 const moduleLabel = (section: NameForgeSection) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
 
-type SentenceChoice = { id: string | undefined; label: string; title?: string; /** A disabled heading shown before this choice. */ heading?: string; headingTip?: string };
+type SentenceChoice = { id: string | undefined; label: string; title?: string; /** A tooltip on the menu item (a pack that replaces a built-in biome: "Your version: {file name}"). */ tip?: string; /** A disabled heading shown before this choice. */ heading?: string; headingTip?: string };
 
 /** Shown in the pack box on the first open of each Obsidian session; the arrow points at the
  * section trigger. */
@@ -1634,7 +1637,7 @@ export class NameForgeModal extends Modal {
             if (c.headingTip) (item as unknown as { dom?: HTMLElement }).dom?.setAttribute("aria-label", c.headingTip);
           });
         }
-        menu.addItem((item) =>
+        menu.addItem((item) => {
           item
             .setTitle(c.label)
             .setChecked(c.id === current)
@@ -1642,8 +1645,9 @@ export class NameForgeModal extends Modal {
               choose(c.id);
               this.updateRegionLabel();
               this.renderContextRow();
-            }),
-        );
+            });
+          if (c.tip) (item as unknown as { dom?: HTMLElement }).dom?.setAttribute("aria-label", c.tip);
+        });
       }
       menu.showAtMouseEvent(event);
       })();
@@ -1718,7 +1722,7 @@ export class NameForgeModal extends Modal {
         const space = part !== "organic" && key.includes("colonial:") ? catalogue.space.map((b, i): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide, ...(i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {}) })) : [];
         return [
           { id: undefined, label: defaultPhrase },
-          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase })),
+          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase, ...overrideTip(b) })),
           ...space,
         ];
       },
@@ -7443,6 +7447,10 @@ class NameForgeEditorModal extends Modal {
   private templatesOpen = false;
   private biomeRowEl: HTMLElement | null = null;
   private biomeBaseSelect: HTMLSelectElement | null = null;
+  /** Wizard retirement brief §5.3: the line under the name when it matches a built-in biome. */
+  private biomeReplacesEl: HTMLElement | null = null;
+  /** Whether the user has picked "Start from" themselves, so typing a built-in's name stops choosing it for them. */
+  private biomeBaseChosen = false;
   private biomePhraseInput: HTMLInputElement | null = null;
   /** The text last put in the textarea from a base, to tell whether it has been edited since. */
   private biomeFilled = "";
@@ -7496,6 +7504,9 @@ class NameForgeEditorModal extends Modal {
       },
     });
     this.packNameInput.value = this.initialPackName;
+    this.biomeReplacesEl = contentEl.createDiv({ cls: "nameforge-modal__biome-replaces" });
+    this.biomeReplacesEl.hide();
+    this.packNameInput.addEventListener("input", () => this.onBiomeNameInput());
 
     const typeToggle = contentEl.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
     const addTypeButton = (label: string, iconId: string): HTMLButtonElement => {
@@ -7557,7 +7568,10 @@ class NameForgeEditorModal extends Modal {
     const biomeRow = (this.biomeRowEl = contentEl.createDiv({ cls: "nameforge-editor-modal__template-row" }));
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Start from" });
     this.biomeBaseSelect = biomeRow.createEl("select", { cls: "dropdown", attr: { "aria-label": "Start from" } });
-    this.biomeBaseSelect.addEventListener("change", () => this.refillBiome());
+    this.biomeBaseSelect.addEventListener("change", () => {
+      this.biomeBaseChosen = true;
+      this.refillBiome();
+    });
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Phrase" });
     this.biomePhraseInput = biomeRow.createEl("input", { cls: "nameforge-editor-modal__phrase-input", attr: { type: "text", "aria-label": "Phrase" } });
     biomeRow.hide();
@@ -7798,8 +7812,24 @@ class NameForgeEditorModal extends Modal {
     return text.slice(text.indexOf("\n## ") + 1);
   }
 
+  /**
+   * Wizard retirement brief §5.3: a name that matches a built-in biome replaces it, so "Start from"
+   * becomes that built-in (unless the user has already chosen one) and a line under the name says so.
+   */
+  private onBiomeNameInput() {
+    const builtIn = this.biomeMode ? builtInForPackName(this.packNameInput?.value ?? "") : undefined;
+    this.biomeReplacesEl?.toggle(!!builtIn);
+    if (!builtIn) return;
+    this.biomeReplacesEl?.setText(`Replaces the built-in ${builtIn.label} biome wherever it's used.`);
+    const select = this.biomeBaseSelect;
+    if (!select || this.biomeBaseChosen || this.biomeEditing) return;
+    select.value = builtIn.id;
+    this.refillBiome();
+  }
+
   /** Land brief §9.4: fills the base choices, and loads an existing pack of the same name merged. */
   private async enterBiomeMode() {
+    this.biomeBaseChosen = false;
     const custom = await this.parent.loadCustomBiomes();
     const select = this.biomeBaseSelect;
     if (!select) return;
@@ -7808,7 +7838,8 @@ class NameForgeEditorModal extends Modal {
     for (const b of [BRITAIN, ...BIOMES, ...SPACE_BIOMES]) select.createEl("option", { text: b.label, value: b.id });
     for (const b of custom) select.createEl("option", { text: b.label, value: b.custom!.path });
     const name = this.packNameInput?.value.trim().toLowerCase();
-    const existing = custom.find((b) => b.label.toLowerCase() === name);
+    // A pack that replaces a built-in carries that built-in's label, so it is also found by its file name.
+    const existing = custom.find((b) => b.label.toLowerCase() === name || b.custom?.path.replace(/^.*\//, "").replace(/\.md$/i, "").toLowerCase() === name);
     this.biomeEditing = existing?.custom?.path;
     if (existing) {
       select.value = existing.custom!.base;
@@ -7820,6 +7851,7 @@ class NameForgeEditorModal extends Modal {
     }
     select.value = "temperate";
     this.refillBiome();
+    this.onBiomeNameInput();
   }
 
   /** Refills the textarea from the base, unless it has been edited since it was last filled. */
@@ -7861,7 +7893,8 @@ class NameForgeEditorModal extends Modal {
     const pack = parseBiomePackContent(text);
     const empty = pack.sections.filter((s) => s.words.length === 0 && s.packs.length === 0).map((s) => `“${s.heading}” is empty.`);
     this.parent.setStatus([`Saved: ${own} sections of your own; the rest comes from ${base.label}.`, ...empty, ...mine].join(" "));
-    new Notice(`nameForge: biome “${packName}” saved.`);
+    const replaces = builtInForPackName(packName);
+    new Notice(`nameForge: biome “${packName}” saved${replaces ? ` – replaces the built-in ${replaces.label} biome` : ""}.`);
     this.close();
   }
 

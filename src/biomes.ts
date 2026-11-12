@@ -213,7 +213,8 @@ export function biomeCatalogue(custom: readonly Biome[] = []): BiomeCatalogue {
   const own = custom.filter((b) => !claimed.has(b)).sort((x, y) => x.label.localeCompare(y.label));
   const all = [swap(BRITAIN), ...BIOMES.map(swap), ...own];
   const space = SPACE_BIOMES.map(swap);
-  const matches = (id: string) => (b: Biome) => b.id === id || b.custom?.path === id;
+  // A pack is found by its path, or by `pack:{path}` (an id older saved states may hold), even when it replaces a built-in.
+  const matches = (id: string) => (b: Biome) => b.id === id || b.custom?.path === id || (!!b.custom && id === `pack:${b.custom.path}`);
   const byPath = new Map(custom.filter((b) => b.custom).map((b) => [b.custom!.path, b]));
   return {
     all,
@@ -240,7 +241,8 @@ export function biomeCatalogue(custom: readonly Biome[] = []): BiomeCatalogue {
 export const biomeChoiceId = (b: Pick<Biome, "id" | "custom">): string => (b.custom && !b.custom.overrides ? b.custom.path : b.id);
 
 /** Whether a stored id (a built-in's id or a pack's path) names this biome. */
-export const biomeMatches = (b: Pick<Biome, "id" | "custom">, id: string | undefined): boolean => !!id && (b.id === id || b.custom?.path === id);
+export const biomeMatches = (b: Pick<Biome, "id" | "custom">, id: string | undefined): boolean =>
+  !!id && (b.id === id || b.custom?.path === id || (!!b.custom && id === `pack:${b.custom.path}`));
 
 /** Whether a biome is the built-in Britain (a pack that replaces Britain has the same id but is a pack's). */
 export const isBuiltInBritain = (biome: Pick<Biome, "id" | "custom"> | undefined): boolean => biome?.id === "britain" && !biome.custom;
