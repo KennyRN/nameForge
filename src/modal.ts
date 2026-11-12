@@ -763,6 +763,8 @@ export class NameForgeModal extends Modal {
     tradition: { "2": undefined, "2a": undefined } as Record<ColonialPart, string | undefined>,
     context: { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] } as Record<ColonialPart, string | undefined>,
     aliens: { "2": false, "2a": false } as Record<ColonialPart, boolean>,
+    /** Wizard retirement brief §3.1: slot sources for its British, new lands and settled lands settings. */
+    slots: { native: freshSlotSources(), "new-lands": freshSlotSources(), "settled-lands": freshSlotSources() } as Record<SettlementSetting, SlotSources>,
   };
   /** The loaded recipe preset's shape, when it is a settlement names preset (it then opens in settlement names). */
   private settlementPreset: Partial<RecipeSettings["shape"]> | undefined = undefined;
@@ -1921,6 +1923,8 @@ export class NameForgeModal extends Modal {
         words: "",
         land: SETTLEMENT_LAND_KEYS,
       });
+      // The world cultures don't run through the names engine's slots: British only.
+      if (culture.id === PLACE_BRITAIN) this.renderSlotChoices(row, sentence, "organic", () => s.slots.native, (next) => (s.slots.native = next));
       return;
     }
     const part: ColonialPart = s.setting === "new-lands" ? "2" : "2a";
@@ -1933,6 +1937,7 @@ export class NameForgeModal extends Modal {
       setAliens: (on) => (s.aliens[part] = on),
       landKey: `settlement:colonial:${part}`,
     });
+    this.renderSlotChoices(row, sentence, slotPartOf(part), () => s.slots[s.setting], (next) => (s.slots[s.setting] = next));
   }
 
   /** Whether the settlement names setup can be saved as a preset: British, in new lands or in settled lands (urban brief §8). */
@@ -1949,9 +1954,19 @@ export class NameForgeModal extends Modal {
     const s = this.settlementState;
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     await this.loadCustomBiomes();
-    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness };
     let options: SettlementNamesOptions;
     let tail: string;
+    // Wizard retirement brief §3.1: slot sources for British, new lands and settled lands; the world cultures keep placeholders.
+    const sourcePart: SlotPart | undefined = s.setting === "native" ? (s.culture === PLACE_BRITAIN ? "organic" : undefined) : slotPartOf(s.setting === "new-lands" ? "2" : "2a");
+    const sources = s.slots[s.setting];
+    const own = sourcePart
+      ? await this.resolveSlotSources(
+          sourcePart,
+          sources,
+          sourcePart === "organic" ? britishPlaceNamesRecipe(s.region) : colonialPlaceNamesRecipe(sourcePart, s.tradition[s.setting === "new-lands" ? "2" : "2a"], s.context[s.setting === "new-lands" ? "2" : "2a"]),
+        )
+      : { slots: {}, notices: [] };
+    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness, slots: own.slots };
     if (s.setting === "native" && s.culture === PLACE_BRITAIN) {
       const land = this.land(SETTLEMENT_LAND_KEYS.britain);
       const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
@@ -1981,8 +1996,8 @@ export class NameForgeModal extends Modal {
     if (!result) return;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
-    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} · ${sizeLabel(result.size)} · ${tail}`);
-    this.setStatus(result.notices.join(" "));
+    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} · ${sizeLabel(result.size)} · ${tail}${sourcePart ? ownNamesSuffix(sourcePart, sources) : ""}`);
+    this.setStatus([...result.notices, ...own.notices].join(" "));
   }
 
   /** Urban brief §8: a settlement names preset, saved as the source module's recipe with the size. */

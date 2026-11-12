@@ -3,7 +3,7 @@
 
 import { type Biome, findBiome } from "../biomes";
 import { mulberry32 } from "../markov";
-import { type GeneratedName, generatePlaceNames, type NameGenerateResult } from "../names/engine";
+import { type GeneratedName, generatePlaceNames, type NameGenerateResult, type ResolvedSlot } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
 import { SETTLEMENT_NAMES_HISTORY_NAME } from "../sections";
 import { generateWildsNames, SIZE_LETTER, WILDS_DATA, wildsBiomes, wildsModulesForTerrain, type WildsEra, type WildsModule, type WildsOptions } from "../wilds/engine";
@@ -36,6 +36,8 @@ export interface SettlementNamesOptions {
   terrain?: string;
   /** Under a space biome, whether it has alien life. */
   aliens?: boolean;
+  /** Wizard retirement brief §3.5: name slots resolved by the host (British, new lands and settled lands); none is every slot as before. */
+  slots?: Record<string, ResolvedSlot>;
   /** Wild lands brief §10.4: false stops the wild-lands branch (the terrain modules' native branch passes it). Default true. */
   wilds?: boolean;
 }
@@ -88,7 +90,7 @@ function generateAt(options: SettlementNamesOptions, size: SizeKey): NameGenerat
           options.terrain,
           options.aliens,
         );
-  return generatePlaceNames({ recipe, biome: options.customBiome, slots: {}, count, seed, faithfulness, strictness, settlement });
+  return generatePlaceNames({ recipe, biome: options.customBiome, slots: options.slots ?? {}, count, seed, faithfulness, strictness, settlement });
 }
 
 /** §10.1: the biome a terrain is mapped with: the chosen one, else the setting's default (Britain, the culture's homeland, temperate). */

@@ -115628,7 +115628,7 @@ function cultureLabel(options) {
   return !options.culture || options.culture === "britain" ? "British" : findCulture(options.culture).label;
 }
 function generateAt(options, size) {
-  var _a5;
+  var _a5, _b3;
   const { count, seed, faithfulness, strictness } = options;
   const settlement = { size };
   if (options.setting === "native" && options.culture && options.culture !== "britain") {
@@ -115657,7 +115657,7 @@ function generateAt(options, size) {
     options.terrain,
     options.aliens
   );
-  return generatePlaceNames({ recipe, biome: options.customBiome, slots: {}, count, seed, faithfulness, strictness, settlement });
+  return generatePlaceNames({ recipe, biome: options.customBiome, slots: (_b3 = options.slots) != null ? _b3 : {}, count, seed, faithfulness, strictness, settlement });
 }
 function biomeKeyFor(o) {
   var _a5, _b3, _c3;
@@ -136395,7 +136395,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       region: void 0,
       tradition: { "2": void 0, "2a": void 0 },
       context: { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] },
-      aliens: { "2": false, "2a": false }
+      aliens: { "2": false, "2a": false },
+      /** Wizard retirement brief §3.1: slot sources for its British, new lands and settled lands settings. */
+      slots: { native: freshSlotSources(), "new-lands": freshSlotSources(), "settled-lands": freshSlotSources() }
     };
     /** The loaded recipe preset's shape, when it is a settlement names preset (it then opens in settlement names). */
     this.settlementPreset = void 0;
@@ -137475,6 +137477,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         words: "",
         land: SETTLEMENT_LAND_KEYS
       });
+      if (culture.id === PLACE_BRITAIN) this.renderSlotChoices(row, sentence2, "organic", () => s.slots.native, (next) => s.slots.native = next);
       return;
     }
     const part = s.setting === "new-lands" ? "2" : "2a";
@@ -137487,6 +137490,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       setAliens: (on) => s.aliens[part] = on,
       landKey: `settlement:colonial:${part}`
     });
+    this.renderSlotChoices(row, sentence2, slotPartOf(part), () => s.slots[s.setting], (next) => s.slots[s.setting] = next);
   }
   /** Whether the settlement names setup can be saved as a preset: British, in new lands or in settled lands (urban brief §8). */
   settlementPresetable() {
@@ -137502,9 +137506,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     const s = this.settlementState;
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
     await this.loadCustomBiomes();
-    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness };
     let options;
     let tail;
+    const sourcePart = s.setting === "native" ? s.culture === PLACE_BRITAIN ? "organic" : void 0 : slotPartOf(s.setting === "new-lands" ? "2" : "2a");
+    const sources = s.slots[s.setting];
+    const own = sourcePart ? await this.resolveSlotSources(
+      sourcePart,
+      sources,
+      sourcePart === "organic" ? britishPlaceNamesRecipe(s.region) : colonialPlaceNamesRecipe(sourcePart, s.tradition[s.setting === "new-lands" ? "2" : "2a"], s.context[s.setting === "new-lands" ? "2" : "2a"])
+    ) : { slots: {}, notices: [] };
+    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness, slots: own.slots };
     if (s.setting === "native" && s.culture === PLACE_BRITAIN) {
       const land = this.land(SETTLEMENT_LAND_KEYS.britain);
       const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
@@ -137530,8 +137541,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     if (!result) return;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
-    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} \xB7 ${sizeLabel(result.size)} \xB7 ${tail}`);
-    this.setStatus(result.notices.join(" "));
+    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} \xB7 ${sizeLabel(result.size)} \xB7 ${tail}${sourcePart ? ownNamesSuffix(sourcePart, sources) : ""}`);
+    this.setStatus([...result.notices, ...own.notices].join(" "));
   }
   /** Urban brief §8: a settlement names preset, saved as the source module's recipe with the size. */
   async openSaveSettlementPreset() {

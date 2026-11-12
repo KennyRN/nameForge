@@ -27,6 +27,7 @@ import { slotCategories, slotChoices, type SlotPart } from "../src/names/slotOpt
 import { createNamesFileContent, createWordListFileContent } from "../src/nameParser";
 import { PLACE_SHAPE_REGIONS } from "../src/placeShapes";
 import { RecipeHost } from "../src/recipeHost";
+import { generateSettlementNames, type SettlementNamesOptions } from "../src/settlement/names";
 
 const PARTS: SlotPart[] = ["organic", "new-land", "established"];
 const ids = (part: SlotPart) => slotInventory(part).map((s) => s.id);
@@ -285,4 +286,31 @@ test("colonial parts: exploration is new-land and expansion is established, each
   assert.equal(ownNamesSuffix(slotPartOf("2a"), expansion), "");
   assert.match(slotSegmentsText(slotSentence("new-land", exploration, { packs: ["Norse"], lists: [] })!), /explorers and founders from Norse \(pack\)/);
   assert.match(slotSegmentsText(slotSentence("established", chooseNames(freshSlotSources(), "perSlot"))!), /local settlement words as placeholders/);
+});
+
+// ── Settlement names ────────────────────────────────────────────────────────
+
+test("settlement names: slots reach the British, new lands and settled lands engines; none gives today's names", () => {
+  const person: Record<string, ResolvedSlot> = {
+    "explorer-or-founder": { kind: "sources", sources: [{ weight: 1, entries: [{ modern: "Zqqx", forms: [], fuses: "no" }] }] },
+    "personal-name": { kind: "sources", sources: [{ weight: 1, entries: [{ modern: "Zqqx", forms: [], fuses: "no" }] }] },
+    "monarch-ruler-or-dynasty": { kind: "sources", sources: [{ weight: 1, entries: [{ modern: "Zqqx", forms: [], fuses: "no" }] }] },
+  };
+  const cases: SettlementNamesOptions[] = [
+    { setting: "native", culture: "britain", size: "any", count: 60, seed: 5 },
+    { setting: "new-lands", size: "any", count: 60, seed: 5 },
+    { setting: "settled-lands", size: "any", count: 60, seed: 5 },
+  ];
+  for (const base of cases) {
+    const plain = generateSettlementNames(base).names.map((n) => n.text);
+    assert.deepEqual(generateSettlementNames({ ...base, slots: {} }).names.map((n) => n.text), plain, `${base.setting} with no slots`);
+    const own = generateSettlementNames({ ...base, slots: person }).names.map((n) => n.text.toLowerCase()).join(" ");
+    assert.ok(own.includes("zqq"), `${base.setting} draws from the mapped slots`);
+  }
+});
+
+test("settlement names: a world culture ignores slots", () => {
+  const slots: Record<string, ResolvedSlot> = { "personal-name": { kind: "sources", sources: [{ weight: 1, entries: [{ modern: "Zqqx", forms: [], fuses: "no" }] }] } };
+  const base: SettlementNamesOptions = { setting: "native", culture: "norse", size: "any", count: 30, seed: 3 };
+  assert.deepEqual(generateSettlementNames({ ...base, slots }).names.map((n) => n.text), generateSettlementNames(base).names.map((n) => n.text));
 });
