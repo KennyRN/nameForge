@@ -7,7 +7,7 @@
 // from it, as the river engine does.
 
 import worldData from "../data/world-place-names.json";
-import { type Biome, biomeTitleCase, biomeWords, BRITAIN, findBiome, pluralOf, shortWords, spaceBiomeFor, terrainWeights } from "../biomes";
+import { type Biome, type BiomeCatalogue, biomeTitleCase, biomeWords, BRITAIN, BUILT_IN_BIOMES, pluralOf, shortWords, spaceBiomeFor, terrainWeights } from "../biomes";
 import groupData from "../data/group-names.json";
 import { MarkovModel, mulberry32 } from "../markov";
 import { smoothJoin } from "../names/engine";
@@ -200,6 +200,8 @@ export interface WorldOptions {
   era?: string;
   /** Land brief §7: a chosen biome (undefined is Homeland) and terrain ("any" by default). */
   biome?: Biome;
+  /** Wizard retirement brief §5: the biome lookups (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   terrain?: string;
   faithfulness?: number;
   strictness?: number;
@@ -325,7 +327,7 @@ export class WorldRenderer {
     const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : undefined;
     const chosen = this.options.biome;
     if (!chosen && !terrain) return;
-    const biome = chosen ?? findBiome(this.culture.homelandBiome) ?? BRITAIN;
+    const biome = chosen ?? (this.options.catalogue ?? BUILT_IN_BIOMES).find(this.culture.homelandBiome) ?? BRITAIN;
     for (const swap of WORLD_DATA.biomeSwaps) {
       if (swap.culture !== this.culture.id || (swap.era && swap.era !== this.era.id)) continue;
       if (!chosen && !LAND_LISTS.has(swap.list)) continue;

@@ -6,7 +6,7 @@
 // group type → perspective and tone → theme → template → words → rendering → safeguards (§4).
 
 import tribalData from "../data/tribal-names.json";
-import { type Biome, biomeInline, biomeTitleCase, biomeWords, findBiome, pluralOf, TERRAIN_CHOICES, type TerrainId, TERRAINS, terrainWords } from "../biomes";
+import { type Biome, type BiomeCatalogue, biomeCatalogue, biomeInline, biomeTitleCase, biomeWords, BUILT_IN_BIOMES, findBiome, pluralOf, TERRAIN_CHOICES, type TerrainId, TERRAINS, terrainWords } from "../biomes";
 import { mulberry32 } from "../markov";
 
 export type TribalRegister = "plain" | "historical" | "legendary" | "administrative";
@@ -190,6 +190,8 @@ export interface TribalOptions {
   terrain?: string;
   /** Land brief §11: a resolved biome (a user pack), used in place of `biome`. */
   biomeData?: Biome;
+  /** Wizard retirement brief §5: the biome lists and lookups (a biome pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   /** Land brief §10: the merged safeguard lists; the built-in lists when absent. */
   safeguards?: { block: string[]; flag: string[]; flagBlocks: boolean };
 }
@@ -1284,9 +1286,10 @@ function groupTypeChoices(trad: TribalTradition, options: TribalOptions): Record
  */
 export function tribalName(options: TribalOptions, rng: Rng): TribalName | null {
   const trad = findTradition(options.tradition) ?? TRIBAL_TRADITIONS[0];
-  const chosen = options.biomeData ?? findBiome(options.biome);
+  const biomes = options.catalogue ?? BUILT_IN_BIOMES;
+  const chosen = options.biomeData ?? biomes.find(options.biome);
   const mode: BiomeMode = chosen ? "chosen" : "homeland";
-  const biome = chosen ?? findBiome(pickRecord(trad.homeland, rng))!;
+  const biome = chosen ?? biomes.find(pickRecord(trad.homeland, rng))!;
   const groupType = pickRecord(groupTypeChoices(trad, options), rng);
   if (!groupType) return null;
   const registerWeights = options.constraints?.registers;
@@ -1421,7 +1424,7 @@ export function tribalHistoryLabel(
   custom: readonly Biome[] = [],
 ): string {
   const t = findTradition(tradition) ?? TRIBAL_TRADITIONS[0];
-  const b = findBiome(biome, custom);
+  const b = biomeCatalogue(custom).find(biome);
   // Land brief §6.4: "tribal names · Polynesian · britain · coasts · plain".
   const land = [...TERRAIN_CHOICES, ...(b?.customTerrains ?? [])].find((x) => x.id === terrain && x.id !== "any");
   return [sectionLabel, t.label, b ? biomeInline(b) : "homeland", ...(land ? [land.label.toLowerCase()] : []), register].join(" · ");

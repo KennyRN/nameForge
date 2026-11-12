@@ -4,7 +4,7 @@
 // groups, routes and events engines; lands from biomes. One seeded stream a batch. No Obsidian imports.
 
 import { hasSpaceBlock } from "../space/safeguards";
-import { type Biome, BRITAIN, biomeTitleCase, biomeWords, findBiome } from "../biomes";
+import { type Biome, type BiomeCatalogue, BRITAIN, biomeTitleCase, biomeWords, BUILT_IN_BIOMES } from "../biomes";
 import {
   type GroupPeople,
   type GroupSafeguards,
@@ -76,6 +76,8 @@ export interface TimeSkyOptions {
   fantastic?: boolean;
   /** A resolved biome; undefined is the culture's homeland. */
   biome?: CycleBiome;
+  /** Wizard retirement brief §5: the biome lookups (a pack can replace a built-in, including a culture's homeland); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   /** "own" (their own new year) or a season key. */
   start?: string;
   words?: TimeWords;
@@ -264,7 +266,7 @@ const BIOME_LISTS = { wildAnimal: "wildAnimals", bird: "birds", creature: "creat
 type BiomeToken = keyof typeof BIOME_LISTS;
 
 function landBiome(ctx: Ctx): Biome | undefined {
-  return ctx.biome ?? findBiome(homelandOf(ctx.culture)) ?? BRITAIN;
+  return ctx.biome ?? BRITAIN;
 }
 
 function biomeItems(ctx: Ctx, token: BiomeToken | "beast"): [string, number][] {
@@ -1349,7 +1351,7 @@ export function generateTimeSkyNames(options: TimeSkyOptions): TimeBatch {
   const home = homelandOf(culture);
   const atHome = !biome || biome.id === home;
   const land = landKind(biome);
-  const resolved = biome ?? (findBiome(home));
+  const resolved = biome ?? (options.catalogue ?? BUILT_IN_BIOMES).find(home);
   const kinds = kindsOffered(options.kind && findTimeKind(options.kind)?.module === "sky" ? "sky" : "calendar", culture, era, land);
   const kind: TimeKind = options.kind && kinds.some((k) => k.key === options.kind) ? options.kind : kinds[0].key;
   const guards = options.safeguards ?? defaultTimeSafeguards();

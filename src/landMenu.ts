@@ -3,7 +3,7 @@
 
 import { Menu, setIcon } from "obsidian";
 import { ICON_BIOME } from "./icons";
-import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, TERRAIN_CHOICES } from "./biomes";
+import { availableTerrains, type Biome, biomeCatalogue, biomeChoiceId, biomeInline, biomeMatches, BRITAIN, TERRAIN_CHOICES } from "./biomes";
 
 export interface LandState {
   /** A built-in biome id, a biome pack's path, or undefined for the module's default. */
@@ -50,7 +50,7 @@ export class LandButton {
     const state = this.options.state();
     this.el.toggle(!!state);
     if (!state) return;
-    const biome = findBiome(state.biome, this.custom);
+    const biome = biomeCatalogue(this.custom).find(state.biome);
     const terrain = [...TERRAIN_CHOICES, ...(biome?.customTerrains ?? [])].find((t) => t.id === state.terrain);
     const biomeLabel = biome?.label ?? this.options.defaultLabel();
     const parts = [biomeLabel, ...(this.options.terrain() ? [terrain?.label ?? "Any terrain"] : [])];
@@ -65,13 +65,14 @@ export class LandButton {
     this.custom = await this.options.customBiomes();
     const menu = new Menu();
     const heading = (title: string) => menu.addItem((item) => item.setTitle(title).setDisabled(true));
+    const catalogue = biomeCatalogue(this.custom);
     const choose = (next: LandState) => {
       this.options.set(next);
       this.refresh();
       this.options.onChange();
     };
     const setBiome = (id: string | undefined) => {
-      const biome = findBiome(id, this.custom);
+      const biome = catalogue.find(id);
       // A biome without the current terrain resets it to Any (Land brief §2.7).
       const keep = !biome || state.terrain === "any" || availableTerrains(biome).some((t) => t.id === state.terrain);
       choose({ biome: id, terrain: keep ? state.terrain : "any" });
@@ -81,20 +82,23 @@ export class LandButton {
     menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(undefined)));
     menu.addSeparator();
     // Britain is listed unless it is already the default.
-    const builtIn = defaultLabel === BRITAIN.label ? BIOMES : [BRITAIN, ...BIOMES];
-    for (const b of builtIn) menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
-    if (this.custom.length > 0) {
+    // The catalogue lists Britain and the 12 (each replaced in place by a pack of the same name), then the other packs A–Z.
+    const builtIn = catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => defaultLabel !== BRITAIN.label || b.id !== BRITAIN.id);
+    const others = catalogue.all.filter((b) => b.custom && !b.custom.overrides);
+    for (const b of builtIn) {
+      menu.addItem((item) => item.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
+    }
+    if (others.length > 0) {
       menu.addSeparator();
       heading("Your biomes");
-      for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
-        const id = b.custom?.path ?? b.id;
-        menu.addItem((item) => item.setTitle(b.label).setChecked(state.biome === id).onClick(() => setBiome(id)));
+      for (const b of others) {
+        menu.addItem((item) => item.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
       }
     }
     if (this.options.terrain()) {
       menu.addSeparator();
       heading("Terrain");
-      const biome = findBiome(state.biome, this.custom);
+      const biome = catalogue.find(state.biome);
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
       menu.addItem((item) => item.setTitle("Any terrain").setChecked(state.terrain === "any").onClick(() => choose({ ...state, terrain: "any" })));
       for (const t of terrains) {
@@ -108,7 +112,7 @@ export class LandButton {
 /** Land brief §6.4: " · desert · mountains" for a history label (biome off default, terrain off Any). */
 export function landHistorySuffix(state: LandState | undefined, custom: readonly Biome[] = [], withBiome = true): string {
   if (!state) return "";
-  const biome = findBiome(state.biome, custom);
+  const biome = biomeCatalogue(custom).find(state.biome);
   const terrain = [...TERRAIN_CHOICES, ...(biome?.customTerrains ?? [])].find((t) => t.id === state.terrain && t.id !== "any");
   return `${withBiome && biome ? ` · ${biomeInline(biome)}` : ""}${terrain ? ` · ${terrain.label.toLowerCase()}` : ""}`;
 }

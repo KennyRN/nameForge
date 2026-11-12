@@ -3,7 +3,7 @@
 // presets are recipes (Presets brief §7.1).
 // No Obsidian imports: the frontmatter is flat `key: value` lines.
 
-import { BIOMES, findBiome, TERRAIN_CHOICES } from "./biomes";
+import { findBiome, NATURAL_BIOME_IDS, TERRAIN_CHOICES } from "./biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
 import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
 import {
@@ -1473,7 +1473,8 @@ function parseWatersPreset(values: Record<string, string>, body: string, fileNam
       where: hyper ? "home" : pick<WatersWhere>("where", "home", (v) => v === "home" || v === "new"),
       fantastic: hyper ? false : flag("fantastic"),
       region: hyper ? "all" : pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
-      biome: hyper ? "any" : pick("biome", "any", (v) => v === "any" || BIOMES.some((b) => b.id === v)),
+      // A built-in's id, or a biome pack's path (a pack's biome shows in seas and coasts where its root built-in does).
+      biome: hyper ? "any" : pick("biome", "any", (v) => v === "any" || NATURAL_BIOME_IDS.includes(v) || /\.md$/i.test(v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       series: watersHasSeries(module) ? flag("series") : false,
@@ -1577,7 +1578,7 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
       where: pick<WildsWhere>("where", "home", (v) => v === "home" || v === "new"),
       fantastic: flag("fantastic"),
       region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
-      biome: pick("biome", "any", (v) => v === "any" || wildsBiomes(module).some((b) => b.id === v)),
+      biome: pick("biome", "any", (v) => v === "any" || wildsBiomes(module).some((b) => b.id === v) || /\.md$/i.test(v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       series: flag("series"),

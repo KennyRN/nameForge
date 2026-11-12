@@ -6,7 +6,7 @@
 import { hasSpaceBlock } from "../space/safeguards";
 import vesselData from "../data/vessels.json";
 import airLandData from "../data/vehicles-air-land.json";
-import { BIOMES, findBiome } from "../biomes";
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { cultureAnimals, cultureLand, holyNamesIn, stripPlural, worldAnimals } from "../bynames/engine";
 import {
   type GroupGenre,
@@ -356,6 +356,8 @@ export interface VesselOptions {
   seed?: number;
   /** §14.5: merged safeguard lists; the built-in lists when absent. */
   safeguards?: GroupSafeguards;
+  /** Wizard retirement brief §5: the biome lists (a pack can replace a built-in, so its birds count); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   /** Tests: only this role shape (its pattern) on the role route. */
   shape?: string;
   /** Settlement kit §4, §7.2: the home port and its neighbours. */
@@ -412,6 +414,8 @@ interface Ctx {
   boost: boolean;
   /** §14.4: sensitive cultures' poetic names are kept from styles and light or grim hybrids. */
   poeticAllowed: boolean;
+  /** The biome lists the bird words come from. */
+  catalogue: BiomeCatalogue;
   drawn: Set<GroupTone>;
   words: { list: string; word: string }[];
   pools: Map<string, [{ w: string; t: GroupTone[] }, number][]>;
@@ -639,14 +643,20 @@ const withMod = (text: string, mod: string | undefined) => (mod === "poss" ? gro
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 /** Aircraft and land brief §9.2: the birds a culture knows (BT's culture animals that are birds), else the temperate biome's. */
-const BIRD_SET = new Set(BIOMES.flatMap((b) => b.birds.map(([w]) => w.toLowerCase())));
-const BIRDS = new Map<string, string[]>();
-function birdWords(culture: VesselCulture): string[] {
-  let found = BIRDS.get(culture.key);
+// Cached per catalogue (a pack can replace a built-in, and its birds are the built-in's), never across them.
+const BIRD_CACHE = new WeakMap<BiomeCatalogue, { set: Set<string>; byCulture: Map<string, string[]> }>();
+function birdWords(culture: VesselCulture, catalogue: BiomeCatalogue): string[] {
+  let cache = BIRD_CACHE.get(catalogue);
+  if (!cache) {
+    cache = { set: new Set(catalogue.all.slice(1, 13).flatMap((b) => b.birds.map(([w]) => w.toLowerCase()))), byCulture: new Map() };
+    BIRD_CACHE.set(catalogue, cache);
+  }
+  let found = cache.byCulture.get(culture.key);
   if (!found) {
-    const own = [...cultureAnimals(culture.key), ...flavourAnimals(culture)].filter((w) => BIRD_SET.has(w.toLowerCase()));
-    found = [...new Set(own.length > 0 ? own : (findBiome("temperate")?.birds ?? []).map(([w]) => w))];
-    BIRDS.set(culture.key, found);
+    const set = cache.set;
+    const own = [...cultureAnimals(culture.key), ...flavourAnimals(culture)].filter((w) => set.has(w.toLowerCase()));
+    found = [...new Set(own.length > 0 ? own : (catalogue.find("temperate")?.birds ?? []).map(([w]) => w))];
+    cache.byCulture.set(culture.key, found);
   }
   return found;
 }
@@ -685,7 +695,7 @@ function baseToken(ctx: Ctx, name: string): string | undefined {
     case "poeticShort":
       return ctx.poeticAllowed ? listWord(ctx, "poetic", POETIC_SHORT) : undefined;
     case "bird": {
-      const birds = birdWords(ctx.culture);
+      const birds = birdWords(ctx.culture, ctx.catalogue);
       return birds.length > 0 ? pickOne(birds, rng) : undefined;
     }
     case "manName":
@@ -1213,6 +1223,7 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
     boost: !!style,
     // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
     poeticAllowed: !(culture.sensitive && (lightOrGrim(tone) || !!style)),
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     context: options.context,
     drawn: new Set(),
     words: [],

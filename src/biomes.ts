@@ -83,7 +83,7 @@ export interface Biome extends Record<BiomeList, Weighted[]> {
   /** False drops the universal terrain words (biome packs). */
   universalWords?: boolean;
   /** A user biome pack (Land brief §9). */
-  custom?: { path: string; base: string };
+  custom?: { path: string; base: string; /** Wizard retirement brief §5.2: the built-in this pack replaces (it then has that built-in's id). */ overrides?: string };
   /** Stellar brief §5.1: a built-in space biome, and the scale it stands for. */
   space?: boolean;
   scale?: SpaceScale;
@@ -184,14 +184,92 @@ export const isSpaceBiome = (biome: Pick<Biome, "space"> | undefined): boolean =
 /** The built-in space biome for a scale. */
 export const spaceBiomeFor = (scale: SpaceScale): Biome => SPACE_BIOMES.find((b) => b.scale === scale)!;
 
-/** Britain, the 12 biomes, then any user biomes. */
-export function allBiomes(custom: readonly Biome[] = []): Biome[] {
-  return [BRITAIN, ...BIOMES, ...custom];
+/** Wizard retirement brief §5.1: every biome list and lookup, over the user's biome packs. */
+export interface BiomeCatalogue {
+  /** Britain and the 12 built-ins, each replaced in place by its override if there is one, then every other custom biome A–Z. */
+  all: Biome[];
+  /** The five space biomes, each replaced in place by its override if there is one. They stay out of `all`: only the space menus list them. */
+  space: Biome[];
+  /** A biome by id (a built-in's id finds its override) or by a pack's path; space biomes too. */
+  find(id: string | undefined): Biome | undefined;
+  /** The built-in a custom biome descends from (its base chain's root), for lists limited to some built-ins. A built-in is its own root. */
+  rootOf(biome: Biome): string;
 }
 
+/**
+ * The one place biome lists and lookups come from. A pack that overrides a built-in (its
+ * `custom.overrides` names the built-in's id) takes that built-in's id and place; with no custom
+ * biomes the catalogue is exactly the built-ins. Pure: engines take it through their options, and
+ * nothing is registered anywhere.
+ */
+export function biomeCatalogue(custom: readonly Biome[] = []): BiomeCatalogue {
+  const overrides = new Map<string, Biome>();
+  for (const b of custom) {
+    const id = b.custom?.overrides;
+    if (id && !overrides.has(id)) overrides.set(id, b);
+  }
+  const swap = (b: Biome) => overrides.get(b.id) ?? b;
+  const claimed = new Set(overrides.values());
+  const own = custom.filter((b) => !claimed.has(b)).sort((x, y) => x.label.localeCompare(y.label));
+  const all = [swap(BRITAIN), ...BIOMES.map(swap), ...own];
+  const space = SPACE_BIOMES.map(swap);
+  const matches = (id: string) => (b: Biome) => b.id === id || b.custom?.path === id;
+  const byPath = new Map(custom.filter((b) => b.custom).map((b) => [b.custom!.path, b]));
+  return {
+    all,
+    space,
+    find(id) {
+      if (!id) return undefined;
+      return all.find(matches(id)) ?? space.find(matches(id));
+    },
+    rootOf(biome) {
+      const seen = new Set<Biome>();
+      let current = biome;
+      while (current.custom && !seen.has(current)) {
+        seen.add(current);
+        const next = byPath.get(current.custom.base);
+        if (!next) return current.custom.base;
+        current = next;
+      }
+      return current.id;
+    },
+  };
+}
+
+/** The id a menu stores for a biome: a pack's path, except a pack that replaces a built-in, which keeps the built-in's id. */
+export const biomeChoiceId = (b: Pick<Biome, "id" | "custom">): string => (b.custom && !b.custom.overrides ? b.custom.path : b.id);
+
+/** Whether a stored id (a built-in's id or a pack's path) names this biome. */
+export const biomeMatches = (b: Pick<Biome, "id" | "custom">, id: string | undefined): boolean => !!id && (b.id === id || b.custom?.path === id);
+
+/** Whether a biome is the built-in Britain (a pack that replaces Britain has the same id but is a pack's). */
+export const isBuiltInBritain = (biome: Pick<Biome, "id" | "custom"> | undefined): boolean => biome?.id === "britain" && !biome.custom;
+
+/** The built-in a biome's words and weights are keyed by: the one it replaces, else its base chain's root. */
+export const biomeRoot = (catalogue: BiomeCatalogue, biome: Biome): string => biome.custom?.overrides ?? catalogue.rootOf(biome);
+
+/** The 12 natural built-ins' ids (Britain and the space biomes aren't among them). */
+export const NATURAL_BIOME_IDS: readonly string[] = BIOMES.map((b) => b.id);
+
+/**
+ * The catalogue's biomes whose root is one of `ids` (default the 12 natural built-ins): the built-in
+ * itself, a pack that replaces it, and any other pack descended from it (wizard retirement brief §5.1).
+ */
+export function biomesRootedIn(catalogue: BiomeCatalogue, ids: readonly string[] = NATURAL_BIOME_IDS): Biome[] {
+  return catalogue.all.filter((b) => ids.includes(biomeRoot(catalogue, b)));
+}
+
+/** The built-ins alone: what an engine uses when its host passes no catalogue. */
+export const BUILT_IN_BIOMES: BiomeCatalogue = biomeCatalogue([]);
+
+/** Britain, the 12 biomes, then any user biomes: the catalogue's `all`, kept for callers that only want the list. */
+export function allBiomes(custom: readonly Biome[] = []): Biome[] {
+  return biomeCatalogue(custom).all;
+}
+
+/** A biome by id among the built-ins and the given biome packs. Prefer a catalogue where one is at hand. */
 export function findBiome(id: string | undefined, custom: readonly Biome[] = []): Biome | undefined {
-  if (!id) return undefined;
-  return allBiomes(custom).find((b) => b.id === id || b.custom?.path === id) ?? SPACE_BIOMES.find((b) => b.id === id);
+  return (custom.length > 0 ? biomeCatalogue(custom) : BUILT_IN_BIOMES).find(id);
 }
 
 export function biomeWords(biome: Biome, list: BiomeList): Weighted[] {

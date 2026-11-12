@@ -1,7 +1,7 @@
 // Settlement names (urban brief §6.3): one entry point over the three place-name engines, each run
 // with its `settlement` option. No Obsidian imports; the modal and the settlement kit both call it.
 
-import { type Biome, findBiome } from "../biomes";
+import { type Biome, type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { mulberry32 } from "../markov";
 import { type GeneratedName, generatePlaceNames, type NameGenerateResult, type ResolvedSlot } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
@@ -36,6 +36,8 @@ export interface SettlementNamesOptions {
   terrain?: string;
   /** Under a space biome, whether it has alien life. */
   aliens?: boolean;
+  /** Wizard retirement brief §5: the biome lists and lookups (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   /** Wizard retirement brief §3.5: name slots resolved by the host (British, new lands and settled lands); none is every slot as before. */
   slots?: Record<string, ResolvedSlot>;
   /** Wild lands brief §10.4: false stops the wild-lands branch (the terrain modules' native branch passes it). Default true. */
@@ -65,7 +67,8 @@ function generateAt(options: SettlementNamesOptions, size: SizeKey): NameGenerat
     const result = generateWorldPlaceNames({
       culture: options.culture,
       era: options.era,
-      biome: options.customBiome ?? findBiome(options.biome),
+      biome: options.customBiome ?? (options.catalogue ?? BUILT_IN_BIOMES).find(options.biome),
+      catalogue: options.catalogue,
       terrain: options.terrain,
       count,
       seed,
@@ -90,7 +93,7 @@ function generateAt(options: SettlementNamesOptions, size: SizeKey): NameGenerat
           options.terrain,
           options.aliens,
         );
-  return generatePlaceNames({ recipe, biome: options.customBiome, slots: options.slots ?? {}, count, seed, faithfulness, strictness, settlement });
+  return generatePlaceNames({ recipe, biome: options.customBiome, slots: options.slots ?? {}, catalogue: options.catalogue, count, seed, faithfulness, strictness, settlement });
 }
 
 /** §10.1: the biome a terrain is mapped with: the chosen one, else the setting's default (Britain, the culture's homeland, temperate). */
@@ -127,7 +130,9 @@ function generateWithWilds(options: SettlementNamesOptions, size: SizeKey, seed:
   const wildNext = (module: WildsModule): string | undefined => {
     let queue = queues.get(module);
     if (!queue) {
-      const biome = options.biome && wildsBiomes(module).some((b) => b.id === options.biome) ? options.biome : undefined;
+      // A pack that replaces a built-in (it has that built-in's id) is the chosen built-in here.
+      const chosen = options.biome ?? options.customBiome?.custom?.overrides;
+      const biome = chosen && wildsBiomes(module, options.catalogue).some((b) => b.id === chosen) ? chosen : undefined;
       const request: WildsOptions = {
         module,
         ...wildsRequest(options),
@@ -138,6 +143,7 @@ function generateWithWilds(options: SettlementNamesOptions, size: SizeKey, seed:
         series: false,
         purposeBuiltOnly: true,
         settlementSize: SIZE_LETTER[size],
+        catalogue: options.catalogue,
         count: options.count,
         seed: Math.floor(rng() * 0x100000000) >>> 0,
       };

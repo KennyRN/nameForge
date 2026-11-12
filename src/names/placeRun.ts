@@ -3,7 +3,7 @@
 // biome packs, resolving slot sources) and hands the results in; a preset run and a module run take
 // exactly the same path, so a preset gives the names its module gives for the same state and seed.
 
-import type { Biome } from "../biomes";
+import type { Biome, BiomeCatalogue } from "../biomes";
 import { type NameGenerateResult, generatePlaceNames, type ResolvedSlot } from "./engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, type SlotSetting } from "./recipe";
 import type { ColonialPart } from "../colonialShapes";
@@ -40,6 +40,8 @@ export interface ColonialPlaceState {
 }
 
 export interface PlaceRun {
+  /** Wizard retirement brief §5: the biome lists and lookups (a pack can replace a built-in). */
+  catalogue?: BiomeCatalogue;
   count: number;
   seed?: number;
   faithfulness?: number;

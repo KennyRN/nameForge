@@ -3,7 +3,7 @@
 // Short tribal names for the colonial `native-people-or-tribe` slot and the organic `folk-group`
 // slot: plain, article-free and never fused, drawn on the recipe's fill stream.
 
-import type { Biome } from "../biomes";
+import type { Biome, BiomeCatalogue } from "../biomes";
 import { findTradition, tribalName, type TribalConstraints } from "./engine";
 
 /**
@@ -32,6 +32,8 @@ export interface TribalSlotOptions {
   terrain?: string;
   /** Presets brief §5.1: the slot's own choices. */
   fields?: TribalSlotFields;
+  /** Wizard retirement brief §5: the biome lookups the tribal names use. */
+  catalogue?: BiomeCatalogue;
 }
 
 /** The §20.2 settings a slot's part uses. */
@@ -111,6 +113,7 @@ export function tribalSlotFill(options: TribalSlotOptions, rng: () => number): {
       ...(fields.perspective ? { perspective: fields.perspective } : {}),
       hostile: false,
       constraints,
+      ...(options.catalogue ? { catalogue: options.catalogue } : {}),
     },
     rng,
   );

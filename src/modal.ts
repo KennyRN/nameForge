@@ -81,7 +81,7 @@ import { GROUP_ICONS, SECTION_ICONS } from "./sectionIcons";
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult, type ResolvedSlot } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter, type SlotSetting } from "./names/recipe";
-import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
+import { availableTerrains, type Biome, type BiomeCatalogue, biomeCatalogue, biomeChoiceId, biomeInline, BIOMES, BRITAIN, BUILT_IN_BIOMES, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
 import {
   familyForSection,
@@ -1411,9 +1411,38 @@ export class NameForgeModal extends Modal {
     return this.customBiomes;
   }
 
+  private catalogueCache: { biomes: Biome[]; catalogue: BiomeCatalogue } | undefined;
+
+  /** Reads the biome packs again and redraws the sentence if they changed, so a menu never offers a stale list. */
+  private refreshBiomes() {
+    const before = this.customBiomes;
+    void this.loadCustomBiomes().then((now) => {
+      if (now !== before) this.renderContextRow();
+    });
+  }
+
+  /** Wizard retirement brief §5.1: every biome list and lookup, over the packs as last loaded (rebuilt only when they are). */
+  public catalogue(): BiomeCatalogue {
+    if (this.catalogueCache?.biomes !== this.customBiomes) this.catalogueCache = { biomes: this.customBiomes, catalogue: biomeCatalogue(this.customBiomes) };
+    return this.catalogueCache.catalogue;
+  }
+
+  /**
+   * The catalogue a run passes to its engine: the packs freshly loaded, their `//` pack lines resolved
+   * to draws (engines never read the vault), so a pack that replaces a built-in works wherever that
+   * built-in is used, including the defaults inside engines.
+   */
+  public async readyCatalogue(): Promise<BiomeCatalogue> {
+    const custom = await this.loadCustomBiomes();
+    if (!custom.some((b) => b.custom && b.packLines && !b.packDraws)) return this.catalogue();
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const ready = await Promise.all(custom.map((b) => (b.custom && b.packLines && !b.packDraws ? host.withPackDraws(b, b.custom.path) : b)));
+    return biomeCatalogue(ready);
+  }
+
   /** A biome for a generator: a pack's `//` lines resolved to draws; built-ins unchanged. */
   private async readyBiome(biome: Biome | undefined): Promise<Biome | undefined> {
-    if (!biome?.custom || !biome.packLines) return biome;
+    if (!biome?.custom || !biome.packLines || biome.packDraws) return biome;
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
     return host.withPackDraws(biome, biome.custom.path);
   }
@@ -1627,7 +1656,7 @@ export class NameForgeModal extends Modal {
    */
   private spaceClause(sentence: HTMLElement, key: string) {
     const land = this.land(key);
-    const biome = findBiome(land.biome, this.customBiomes);
+    const biome = this.catalogue().find(land.biome);
     const space = biome?.space ? biome : undefined;
     const allOfSpace: SentenceChoice = { id: undefined, label: "all of space", title: "Each name is drawn at a scale of its own: a planet's moons, a star system, the local stars, a sector or the galaxy" };
     if (!space) {
@@ -1635,7 +1664,7 @@ export class NameForgeModal extends Modal {
         sentence,
         "all of space",
         allOfSpace.title ?? "",
-        () => [allOfSpace, ...SPACE_BIOMES.map((b): SentenceChoice => ({ id: b.id, label: `all of ${b.phrase}`, title: b.guide }))],
+        () => [allOfSpace, ...this.catalogue().space.map((b): SentenceChoice => ({ id: b.id, label: `all of ${b.phrase}`, title: b.guide }))],
         undefined,
         (id) => (this.landStates[key] = { biome: id, terrain: "any" }),
       );
@@ -1655,7 +1684,7 @@ export class NameForgeModal extends Modal {
       sentence,
       space.phrase,
       space.guide,
-      () => [{ ...allOfSpace, label: "all of space" }, ...SPACE_BIOMES.map((b): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide }))],
+      () => [{ ...allOfSpace, label: "all of space" }, ...this.catalogue().space.map((b): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide }))],
       space.id,
       (id) => (this.landStates[key] = { biome: id, terrain: id === space.id ? this.land(key).terrain : "any" }),
     );
@@ -1664,7 +1693,7 @@ export class NameForgeModal extends Modal {
   /** "…set in ‹any part› of ‹unknown country›": the land phrases for a module's land key. */
   private landClause(sentence: HTMLElement, key: string, defaultPhrase: string, part: "organic" | "new-land" | "established", britainAsDefault: boolean) {
     const land = this.land(key);
-    const biome = findBiome(land.biome, this.customBiomes);
+    const biome = this.catalogue().find(land.biome);
     const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
     // Stellar brief §5.2: under a space biome, Any terrain reads "all of a sector".
     const spaceLand = !!biome?.space && part !== "organic";
@@ -1683,12 +1712,13 @@ export class NameForgeModal extends Modal {
       biome ? biomePhrase(land.biome, part, this.customBiomes) : defaultPhrase,
       biome?.guide ?? "Biome: the plants, wildlife, ground and seasons",
       async () => {
-        const custom = [...(await this.loadCustomBiomes())].sort((x, y) => x.label.localeCompare(y.label));
+        await this.loadCustomBiomes();
+        const catalogue = this.catalogue();
         // Stellar brief §5.1: exploration and expansion list the space biomes last, under a Space heading.
-        const space = part !== "organic" && key.includes("colonial:") ? SPACE_BIOMES.map((b, i): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide, ...(i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {}) })) : [];
+        const space = part !== "organic" && key.includes("colonial:") ? catalogue.space.map((b, i): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide, ...(i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {}) })) : [];
         return [
           { id: undefined, label: defaultPhrase },
-          ...[...(britainAsDefault ? [] : [BRITAIN]), ...BIOMES, ...custom].map((b) => ({ id: b.custom?.path ?? b.id, label: b.phrase })),
+          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase })),
           ...space,
         ];
       },
@@ -1696,7 +1726,7 @@ export class NameForgeModal extends Modal {
       (id) => {
         // A biome without the current terrain resets it to Any (Land brief §2.7).
         const current = this.land(key);
-        const next = findBiome(id, this.customBiomes);
+        const next = this.catalogue().find(id);
         const keep = !next || current.terrain === "any" || availableTerrains(next).some((t) => t.id === current.terrain);
         this.landStates[key] = { biome: id, terrain: keep ? current.terrain : "any" };
       },
@@ -1889,7 +1919,7 @@ export class NameForgeModal extends Modal {
       (id) => o.setTradition(id === "general" ? undefined : id),
     );
     sentence.appendText(part === "2" ? " in " : " who are ");
-    const spaceBiome = findBiome(this.land(o.landKey).biome, this.customBiomes)?.space;
+    const spaceBiome = this.catalogue().find(this.land(o.landKey).biome)?.space;
     const contexts = contextPhrasesFor(part, !!spaceBiome).filter(([id]) => colonialContexts(part).some((c) => c.id === id));
     const context = contexts.find(([id]) => id === o.context) ?? contexts[0];
     this.sentenceLink(
@@ -1985,7 +2015,7 @@ export class NameForgeModal extends Modal {
   private async runSettlementNames() {
     const s = this.settlementState;
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-    await this.loadCustomBiomes();
+    const catalogue = await this.readyCatalogue();
     let options: SettlementNamesOptions;
     let tail: string;
     // Wizard retirement brief §3.1: slot sources for British, new lands and settled lands; the world cultures keep placeholders.
@@ -1998,10 +2028,10 @@ export class NameForgeModal extends Modal {
           sourcePart === "organic" ? britishPlaceNamesRecipe(s.region) : colonialPlaceNamesRecipe(sourcePart, s.tradition[s.setting === "new-lands" ? "2" : "2a"], s.context[s.setting === "new-lands" ? "2" : "2a"]),
         )
       : { slots: {}, notices: [] };
-    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness, slots: own.slots };
+    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness, slots: own.slots, catalogue };
     if (s.setting === "native" && s.culture === PLACE_BRITAIN) {
       const land = this.land(SETTLEMENT_LAND_KEYS.britain);
-      const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
+      const biome = await this.readyBiome(this.catalogue().find(land.biome));
       options = { ...base, setting: "native", culture: "britain", region: s.region, biome: biome?.custom ? undefined : land.biome, customBiome: biome?.custom ? biome : undefined, terrain: land.terrain };
       tail = withRegion("British", s.region) + landHistorySuffix(land, this.customBiomes);
     } else if (s.setting === "native") {
@@ -2010,12 +2040,12 @@ export class NameForgeModal extends Modal {
       const key = interstellar ? SETTLEMENT_LAND_KEYS.interstellar : cultureUsesBiomes(s.culture) ? SETTLEMENT_LAND_KEYS.world(s.culture) : undefined;
       const land = key ? this.land(key) : DEFAULT_LAND;
       // The world engine takes the biome itself, built-in or a pack.
-      options = { ...base, setting: "native", culture: s.culture, era, customBiome: findBiome(land.biome, this.customBiomes), terrain: land.terrain };
+      options = { ...base, setting: "native", culture: s.culture, era, customBiome: this.catalogue().find(land.biome), terrain: land.terrain };
       tail = worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, s.culture, era).slice(WORLD_PLACE_NAMES_HISTORY_NAME.length + 3) + landHistorySuffix(land, this.customBiomes);
     } else {
       const part: ColonialPart = s.setting === "new-lands" ? "2" : "2a";
       const land = this.land(`settlement:colonial:${part}`);
-      const found = findBiome(land.biome, this.customBiomes);
+      const found = this.catalogue().find(land.biome);
       const custom = found?.custom ? await this.readyBiome(found) : undefined;
       const biome = custom ? undefined : land.biome;
       options = { ...base, setting: s.setting, tradition: s.tradition[part], context: s.context[part], biome, customBiome: custom, terrain: land.terrain, aliens: !!found?.space && s.aliens[part] };
@@ -2039,7 +2069,7 @@ export class NameForgeModal extends Modal {
     const custom = await this.loadCustomBiomes();
     const colonialPart: ColonialPart | undefined = s.setting === "native" ? undefined : s.setting === "new-lands" ? "2" : "2a";
     const land = this.land(colonialPart ? `settlement:colonial:${colonialPart}` : SETTLEMENT_LAND_KEYS.britain);
-    const found = findBiome(land.biome, custom);
+    const found = this.catalogue().find(land.biome);
     const biome = found ? (found.custom ? `[[${found.label}]]` : found.id) : undefined;
     const tradition = colonialPart ? s.tradition[colonialPart] : undefined;
     const context = colonialPart ? s.context[colonialPart] : undefined;
@@ -2161,10 +2191,11 @@ export class NameForgeModal extends Modal {
   /** Runs the tribal engine for a sentence state and shows the results as the module does. */
   private async runTribal(state: TribalSentenceState, label: (custom: Biome[]) => string, problems: string[] = []) {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-    await this.loadCustomBiomes();
-    const chosen = findBiome(state.biome, this.customBiomes);
+    const catalogue = await this.readyCatalogue();
+    const chosen = catalogue.find(state.biome);
     const guards = await this.loadSafeguards();
     const result = generateTribalNames({
+      catalogue,
       tradition: state.tradition,
       ...(chosen?.custom ? { biomeData: chosen } : { biome: state.biome }),
       terrain: state.terrain,
@@ -2370,7 +2401,9 @@ export class NameForgeModal extends Modal {
   }
 
   private realmLimits(custom: Biome[]) {
-    return { biomes: [BRITAIN, ...BIOMES, ...[...custom].sort((x, y) => x.label.localeCompare(y.label))], findBiome: (id: string | undefined) => findBiome(id, custom) };
+    void custom;
+    const catalogue = this.catalogue();
+    return { biomes: catalogue.all, findBiome: (id: string | undefined) => catalogue.find(id), spaceBiomes: catalogue.space };
   }
 
   /** §2: the sentence; the biome menu reads the biome packs afresh when it opens. */
@@ -2392,7 +2425,7 @@ export class NameForgeModal extends Modal {
         },
         segment.current,
         (id) => {
-          this.realmState = chooseRealm(this.realmState, segment.field, id, (x) => findBiome(x, this.customBiomes));
+          this.realmState = chooseRealm(this.realmState, segment.field, id, (x) => this.catalogue().find(x));
         },
       );
     }
@@ -2403,8 +2436,10 @@ export class NameForgeModal extends Modal {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     const guards = await this.loadRealmSafeguards();
     const custom = await this.loadCustomBiomes();
-    const biome = state.biome ? findBiome(state.biome, custom) : undefined;
+    const catalogue = await this.readyCatalogue();
+    const biome = state.biome ? catalogue.find(state.biome) : undefined;
     const result = generateRealmNames({
+      catalogue,
       culture: state.culture,
       character: state.character,
       era: state.era,
@@ -3330,8 +3365,10 @@ export class NameForgeModal extends Modal {
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, timeWordBlocked);
     const custom = await this.loadCustomBiomes();
     const limits = this.timeLimits(custom);
-    const biome = state.biome ? (findBiome(state.biome, custom)) : undefined;
+    const catalogue = await this.readyCatalogue();
+    const biome = state.biome ? catalogue.find(state.biome) : undefined;
     const result = generateTimeSkyNames({
+      catalogue,
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -4193,7 +4230,8 @@ export class NameForgeModal extends Modal {
   /** §2: the module's sentence. */
   private renderWatersSentence(row: HTMLElement, module: WatersModule) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    for (const segment of watersSentence(this.watersState(module), module)) {
+    this.refreshBiomes();
+    for (const segment of watersSentence(this.watersState(module), module, this.catalogue())) {
       if (typeof segment === "string") {
         sentence.appendText(segment);
         continue;
@@ -4210,6 +4248,7 @@ export class NameForgeModal extends Modal {
     const guards = await this.loadSettlementSafeguards({ block: module === "hyperspaceCharts" ? WATERS_DATA.safeguards.hyper : WATERS_DATA.safeguards.earthly, flag: [], flagListBlocks: false });
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, watersWordBlocked);
     const result = generateWatersNames({
+      catalogue: await this.readyCatalogue(),
       module,
       culture: state.culture,
       kind: state.kind,
@@ -4234,7 +4273,7 @@ export class NameForgeModal extends Modal {
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
       "none",
     );
-    await this.recordGenerationHistory(result.names.length, label ?? watersHistoryLabel(module, state, SECTION_LABELS[module]));
+    await this.recordGenerationHistory(result.names.length, label ?? watersHistoryLabel(module, state, SECTION_LABELS[module], this.catalogue()));
     this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
   }
 
@@ -4243,7 +4282,7 @@ export class NameForgeModal extends Modal {
     const state = this.watersState(module);
     const culture = findRouteCulture(state.culture)?.label ?? "General";
     const name = [culture, SECTION_LABELS[module]].join(" · ");
-    const description = watersSentenceText(watersSentence(state, module));
+    const description = watersSentenceText(watersSentence(state, module, this.catalogue()));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       if (!presetName) {
         new Notice("nameForge: give the preset a name.");
@@ -4297,13 +4336,14 @@ export class NameForgeModal extends Modal {
   /** §2: the module's sentence. */
   private renderWildsSentence(row: HTMLElement, module: WildsModule) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    for (const segment of wildsSentence(this.wildsState(module), module)) {
+    this.refreshBiomes();
+    for (const segment of wildsSentence(this.wildsState(module), module, this.catalogue())) {
       if (typeof segment === "string") {
         sentence.appendText(segment);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
-        this.wildsStates[module] = chooseWilds(this.wildsState(module), segment.field, id, module);
+        this.wildsStates[module] = chooseWilds(this.wildsState(module), segment.field, id, module, this.catalogue());
       });
     }
   }
@@ -4333,7 +4373,7 @@ export class NameForgeModal extends Modal {
     const state = this.wildsState(module);
     const culture = findRouteCulture(state.culture)?.label ?? "General";
     const name = [culture, SECTION_LABELS[module]].join(" · ");
-    const description = wildsSentenceText(wildsSentence(state, module));
+    const description = wildsSentenceText(wildsSentence(state, module, this.catalogue()));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       if (!presetName) {
         new Notice("nameForge: give the preset a name.");
@@ -4380,6 +4420,7 @@ export class NameForgeModal extends Modal {
     const guards = await this.loadSettlementSafeguards({ block: WILDS_DATA.safeguards[module], flag: [], flagListBlocks: false });
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, wildsWordBlocked);
     const result = generateWildsNames({
+      catalogue: await this.readyCatalogue(),
       module,
       culture: state.culture,
       kind: state.kind,
@@ -4401,7 +4442,7 @@ export class NameForgeModal extends Modal {
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" }) as GeneratedName),
       "none",
     );
-    await this.recordGenerationHistory(result.names.length, label ?? wildsHistoryLabel(module, state, SECTION_LABELS[module]));
+    await this.recordGenerationHistory(result.names.length, label ?? wildsHistoryLabel(module, state, SECTION_LABELS[module], this.catalogue()));
     this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
   }
 
@@ -4447,6 +4488,7 @@ export class NameForgeModal extends Modal {
     const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
     const guards = await this.loadVesselSafeguards(module);
     const result = generateVesselNames({
+      catalogue: await this.readyCatalogue(),
       module,
       culture: state.culture,
       naming: state.naming,
@@ -4830,7 +4872,7 @@ export class NameForgeModal extends Modal {
     const custom = await this.loadCustomBiomes();
     const state = this.tribalState();
     const tradition = findTradition(state.tradition) ?? TRIBAL_TRADITIONS[0];
-    const biome = findBiome(state.biome, custom);
+    const biome = this.catalogue().find(state.biome);
     const name = `${tradition.label} · ${biome ? biomeInline(biome) : "homeland"}`;
     const description = tribalSentenceText(tribalSentence(state, this.tribalLimits(custom)));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
@@ -4869,7 +4911,7 @@ export class NameForgeModal extends Modal {
     let owns: (existing: string, presetName: string) => boolean;
     if (colonialPart) {
       const state = this.colonialPlaceState(colonialPart);
-      const found = findBiome(state.land.biome, custom);
+      const found = this.catalogue().find(state.land.biome);
       const part = colonialPart === "2" ? "new-land" : "established";
       const t = COLONIAL_TRADITIONS.find((x) => x.id === (state.tradition ?? "general"))!;
       const sentence = slotSentence(slotPartOf(colonialPart), state.sources);
@@ -4880,7 +4922,7 @@ export class NameForgeModal extends Modal {
       owns = (existing, presetName) => !!(colonialPart === "2" ? parseModulePreset(existing, presetName).exploration : parseModulePreset(existing, presetName).expansion);
     } else if (this.placeIsBritain()) {
       const state = this.britishPlaceState();
-      const found = findBiome(state.land.biome, custom);
+      const found = this.catalogue().find(state.land.biome);
       const sentence = slotSentence("organic", state.sources);
       name = `British · ${SECTION_LABELS.placeShapes}`;
       description = `${wizardSentenceText("organic", { region: state.region, biome: found?.id, terrain: state.land.terrain }, custom)}.${sentence ? ` ${slotSegmentsText(sentence)}` : ""}`;
@@ -4890,7 +4932,7 @@ export class NameForgeModal extends Modal {
       const state = this.worldPlaceState();
       const culture = findCulture(state.culture);
       const era = findEra(culture, state.era);
-      const found = findBiome(state.land.biome, custom);
+      const found = this.catalogue().find(state.land.biome);
       name = `${culture.label} · ${SECTION_LABELS.placeShapes}`;
       description = `${culture.label} place names${culture.eras.length > 1 ? ` from the ${era.label} era` : ""}${found ? `, set in ${found.phrase}` : ""}.`;
       make = (presetName, text) => modulePresetContent(worldPresetOf(state, era.id, { packName: presetName, description: text, biome: biomeText(found) }));
@@ -4935,8 +4977,9 @@ export class NameForgeModal extends Modal {
     return { ...land, biome: found?.custom?.path };
   }
 
-  private placeRunOptions() {
+  private placeRunOptions(catalogue: BiomeCatalogue) {
     return {
+      catalogue,
       count: this.generationCount,
       seed: this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined,
       faithfulness: this.plugin.settings.faithfulness,
@@ -4946,10 +4989,10 @@ export class NameForgeModal extends Modal {
 
   /** River brief §2: rendered names from the fixed British recipe, shown as recipe results. `label` replaces the history label (a preset run's). */
   private async runBritishPlace(state: BritishPlaceState, label?: string, problems: string[] = []) {
-    await this.loadCustomBiomes();
-    const biome = await this.readyBiome(findBiome(state.land.biome, this.customBiomes));
+    const catalogue = await this.readyCatalogue();
+    const biome = catalogue.find(state.land.biome);
     const own = await this.resolveSlotSources("organic", state.sources, britishRecipe(state, biome));
-    const result = this.tryLand(() => generateBritishPlace(state, biome, own.slots, this.placeRunOptions()));
+    const result = this.tryLand(() => generateBritishPlace(state, biome, own.slots, this.placeRunOptions(catalogue)));
     if (!result) return;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
@@ -4961,8 +5004,8 @@ export class NameForgeModal extends Modal {
   }
 
   private async runWorldPlace(state: WorldPlaceState, label?: string, problems: string[] = []) {
-    await this.loadCustomBiomes();
-    const result = generateWorldPlace(state, findBiome(state.land.biome, this.customBiomes), this.placeRunOptions());
+    const catalogue = await this.readyCatalogue();
+    const result = generateWorldPlace(state, catalogue.find(state.land.biome), this.placeRunOptions(catalogue));
     this.currentSeed = result.seed;
     this.renderRecipeResults(
       result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology }) as GeneratedName),
@@ -4976,13 +5019,13 @@ export class NameForgeModal extends Modal {
   }
 
   private async runColonialPlace(part: ColonialPart, state: ColonialPlaceState, label?: string, problems: string[] = []) {
-    await this.loadCustomBiomes();
-    const found = findBiome(state.land.biome, this.customBiomes);
-    const custom = found?.custom ? await this.readyBiome(found) : undefined;
+    const catalogue = await this.readyCatalogue();
+    const found = catalogue.find(state.land.biome);
+    const custom = found?.custom ? found : undefined;
     const slotPart = slotPartOf(part);
     const own = await this.resolveSlotSources(slotPart, state.sources, colonialRecipe(part, state, found, custom));
     // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
-    const result = this.tryLand(() => generateColonialPlace(part, state, found, custom, own.slots, this.placeRunOptions()));
+    const result = this.tryLand(() => generateColonialPlace(part, state, found, custom, own.slots, this.placeRunOptions(catalogue)));
     if (!result) return;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
@@ -5233,7 +5276,7 @@ export class NameForgeModal extends Modal {
         },
         segment.current,
         (id) => {
-          this.setTribalState(chooseTribal(this.tribalState(), segment.field, id, (x) => findBiome(x, this.customBiomes)));
+          this.setTribalState(chooseTribal(this.tribalState(), segment.field, id, (x) => this.catalogue().find(x)));
           if (segment.field === "hostile" && id === "hostile") new Notice("Hostile names are on: some results will be insults one people used for another.");
         },
       );
@@ -5255,8 +5298,8 @@ export class NameForgeModal extends Modal {
   /** The tribal module's sentence limits: every biome, insults offered. */
   private tribalLimits(custom: Biome[]): TribalSentenceLimits {
     return {
-      biomes: [BRITAIN, ...BIOMES, ...[...custom].sort((x, y) => x.label.localeCompare(y.label))],
-      findBiome: (id) => findBiome(id, custom),
+      biomes: this.catalogue().all,
+      findBiome: (id) => this.catalogue().find(id),
       hostile: true,
     };
   }
@@ -6231,7 +6274,8 @@ export class NameForgeModal extends Modal {
     let result: NameGenerateResult;
     try {
       const adapt = host.resolveTakeover(loaded.recipe, file.path);
-      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt, biome });
+      const catalogue = await this.readyCatalogue();
+      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt, biome, catalogue });
       for (;;) {
         const next = steps.next();
         if (next.done) {
@@ -6460,8 +6504,10 @@ export class NameForgeModal extends Modal {
       const setting: RiverSetting = placeRivers ? "british" : this.riverSetting;
       const british = setting === "british";
       const region = placeRivers ? this.selectedRegion : this.riverRegion;
-      const biome = british ? undefined : findBiome(this.land("river").biome, this.customBiomes);
+      const catalogue = await this.readyCatalogue();
+      const biome = british ? undefined : catalogue.find(this.land("river").biome);
       const result = generateRiverNames({
+        catalogue,
         setting,
         region: british ? region : undefined,
         biome: biome?.id,
@@ -7742,7 +7788,8 @@ class NameForgeEditorModal extends Modal {
   /** The chosen base: a built-in id, or a user pack's path. */
   private biomeBase(): Biome {
     const value = this.biomeBaseSelect?.value ?? "temperate";
-    return findBiome(value, this.parent.customBiomesCache()) ?? BIOMES[0];
+    // The real built-ins and the packs by path, never an override: a pack that replaces a built-in is based on the real one.
+    return BUILT_IN_BIOMES.find(value) ?? this.parent.customBiomesCache().find((b) => b.custom?.path === value) ?? BIOMES[0];
   }
 
   /** The base as editable text: its sections, without frontmatter or guide. */

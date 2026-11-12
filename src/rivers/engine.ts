@@ -6,7 +6,7 @@
 // sub-seeds from it, as the takeover module's native drawer does.
 
 import riverData from "../data/river-names.json";
-import { type Biome, biomeEntries, findBiome, pickWeightedPair } from "../biomes";
+import { type Biome, type BiomeCatalogue, biomeEntries, BUILT_IN_BIOMES, pickWeightedPair } from "../biomes";
 import { MarkovModel, mulberry32 } from "../markov";
 import { NAME_WORDS, NAMES, type NameWordEntry, smoothJoin } from "../names/engine";
 import { tribalSlotFill } from "../tribes/slotFill";
@@ -51,6 +51,8 @@ export interface RiverOptions {
   strictness?: number;
   /** New Land and Established only (Tribal brief §19.5): a biome id that fills native placeholders. */
   biome?: string;
+  /** Wizard retirement brief §5: the biome lookups (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   /** Land brief §8.1: "tribal" fills [tribal name] and [native people] from tribal names; default placeholders. */
   peoples?: "tribal" | "placeholder";
   /** Land brief §8.1: the tradition for colonial peoples (General by default). */
@@ -144,7 +146,7 @@ function ancientForm(name: string, region: string | undefined, rng: () => number
 }
 
 /** Tribal brief §19.5: the colonial settings' biome, if one is set. */
-const colonialBiome = (options: RiverOptions): Biome | undefined => (options.setting === "british" ? undefined : findBiome(options.biome));
+const colonialBiome = (options: RiverOptions): Biome | undefined => (options.setting === "british" ? undefined : (options.catalogue ?? BUILT_IN_BIOMES).find(options.biome));
 
 // ── Descriptive names ───────────────────────────────────────────────────────
 

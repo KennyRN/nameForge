@@ -5,7 +5,7 @@
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
 import watersData from "../data/waters.json";
-import { pluralOf, biomeTitleCase, BIOMES } from "../biomes";
+import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
 import { deityHooks } from "../deities/hook";
 import {
   type GroupPeople,
@@ -175,6 +175,8 @@ export interface WatersOptions {
   region?: string;
   /** A biome id; undefined is any land. */
   biome?: string;
+  /** Wizard retirement brief §5: the biome lists and lookups (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   tone?: GroupToneChoice;
   people?: GroupPeople;
   series?: boolean;
@@ -572,7 +574,10 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   const fantastic = !hyper && !!options.fantastic;
   const homeBritish = !hyper && isBritishCulture(culture.key) && where === "home";
   const region = homeBritish && options.region && options.region !== "all" ? options.region : undefined;
-  const biome = !homeBritish && !hyper && options.biome && BIOMES.some((b) => b.id === options.biome) ? options.biome : undefined;
+  // The biome tags are keyed by the 12 built-ins: a pack uses the one it replaces or descends from.
+  const biomes = options.catalogue ?? BUILT_IN_BIOMES;
+  const chosenBiome = !homeBritish && !hyper && options.biome ? biomesRootedIn(biomes).find((b) => b.id === options.biome || b.custom?.path === options.biome) : undefined;
+  const biome = chosenBiome ? biomeRoot(biomes, chosenBiome) : undefined;
   const medium: HyperMedium = options.medium === "wind" || options.medium === "both" ? options.medium : "sea";
   const register: HyperRegister = WATERS_REGISTERS.some((r) => r.id === options.register) ? options.register! : "any";
   const mode: GroupPeople = options.people ?? "placeholders";

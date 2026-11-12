@@ -6,7 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import wildsData from "../data/wilds.json";
-import { BIOMES, BRITAIN, biomeTitleCase, biomeWords, findBiome, pluralOf, type Biome, type BiomeList } from "../biomes";
+import { BRITAIN, biomesRootedIn, biomeTitleCase, biomeWords, biomeMatches, BUILT_IN_BIOMES, pluralOf, type Biome, type BiomeCatalogue, type BiomeList } from "../biomes";
 import { INTERSTELLAR_ERA, WORLD_CULTURES } from "../world/engine";
 import { deityHooks } from "../deities/hook";
 import {
@@ -123,8 +123,12 @@ export const wildsDefaultCulture = (module: WildsModule) => (module === "desertN
 export const showsWildsRegion = (module: WildsModule, culture: string, where: WildsWhere) =>
   WILDS_DATA.modules[module].region && isBritishCulture(culture) && where === "home";
 
-/** The biomes a module offers (§3.4), in menu order. */
-export const wildsBiomes = (module: WildsModule): Biome[] => BIOMES.filter((b) => WILDS_DATA.modules[module].biomes.includes(b.id));
+/**
+ * The biomes a module offers (§3.4), in menu order. A biome pack shows where its root built-in does
+ * (wizard retirement brief §5.1); one that replaces a built-in shows where that built-in does.
+ */
+export const wildsBiomes = (module: WildsModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): Biome[] =>
+  biomesRootedIn(catalogue, WILDS_DATA.modules[module].biomes);
 
 /** §6: the module's parent kind, for a series' first name (§12). */
 export const PARENT_KIND: Record<WildsModule, string> = { mountainNames: "range", forestNames: "forest", desertNames: "desert", moorNames: "moor", wetlandNames: "marsh", grasslandNames: "plain" };
@@ -167,6 +171,8 @@ export interface WildsOptions {
   purposeBuiltOnly?: boolean;
   /** §10.2: the settlement names size (a letter of `h v t c g`); only shapes suiting it are drawn. Kind is forced to settlement. */
   settlementSize?: string;
+  /** Wizard retirement brief §5: the biome lists and lookups (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
 }
 
 // ── Town stems (§4.1) ───────────────────────────────────────────────────────
@@ -270,6 +276,7 @@ export function nativeSettlementRequest(
   region: string | undefined,
   chosenBiome: string | undefined,
   mode: GroupPeople,
+  catalogue: BiomeCatalogue = BUILT_IN_BIOMES,
 ): SettlementNamesOptions | undefined {
   const link = WILDS_DATA.settlementLink;
   if (mode === "placeholders" || era === "NF" || era === "IS") return undefined;
@@ -285,7 +292,7 @@ export function nativeSettlementRequest(
   if (!worldCulture) return undefined;
   const eras = worldCulture.eras.filter((e) => e.id !== INTERSTELLAR_ERA);
   const match = eras.find((e) => link.worldEraToRoute[culture]?.[e.id] === era) ?? eras[0];
-  return { ...base, setting: "native", culture, era: match?.id, biome: undefined, customBiome: biome ? findBiome(biome) : undefined };
+  return { ...base, setting: "native", culture, era: match?.id, biome: undefined, customBiome: biome ? catalogue.find(biome) : undefined };
 }
 
 export interface WildsName {
@@ -391,10 +398,18 @@ function drawEntry(ctx: Ctx, pool: string): VocabEntry | undefined {
 }
 
 /** §3.4: the resolved biome, and whether its tags apply. */
-export function resolveWildsBiome(module: WildsModule, culture: string, where: WildsWhere, chosen: string | undefined): { biome: Biome; tags: boolean; homeBritish: boolean } {
+export function resolveWildsBiome(
+  module: WildsModule,
+  culture: string,
+  where: WildsWhere,
+  chosen: string | undefined,
+  catalogue: BiomeCatalogue = BUILT_IN_BIOMES,
+): { biome: Biome; tags: boolean; homeBritish: boolean } {
   const data = WILDS_DATA.modules[module];
-  if (showsWildsRegion(module, culture, where)) return { biome: BRITAIN, tags: false, homeBritish: true };
-  const pick = (id: string | undefined) => (id && data.biomes.includes(id) ? BIOMES.find((b) => b.id === id) : undefined);
+  // A pack that replaces Britain is the home country's land, as it is British place names' (wizard retirement brief §5.2).
+  if (showsWildsRegion(module, culture, where)) return { biome: catalogue.find("britain") ?? BRITAIN, tags: false, homeBritish: true };
+  const offered = wildsBiomes(module, catalogue);
+  const pick = (id: string | undefined) => (id ? offered.find((b) => biomeMatches(b, id)) : undefined);
   const biome = pick(chosen) ?? pick(WILDS_DATA.homeland[culture]) ?? pick(data.defaultBiome)!;
   return { biome, tags: true, homeBritish: false };
 }
@@ -711,7 +726,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const era: WildsEra = data.eras.includes(options.era as WildsEra) ? options.era! : "MD";
   const where: WildsWhere = options.where === "new" ? "new" : "home";
   const fantastic = !!options.fantastic;
-  const resolved = resolveWildsBiome(module, culture.key, where, options.biome);
+  const resolved = resolveWildsBiome(module, culture.key, where, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;
   const region = homeBritish && options.region && options.region !== "all" ? options.region : undefined;
   const mode: GroupPeople = options.people ?? "placeholders";
@@ -816,7 +831,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   };
 
   // §9.4: the native branch, asked for once per batch, the first time it is needed.
-  const nativeRequest = options.purposeBuiltOnly ? undefined : nativeSettlementRequest(module, culture.key, era, where, region, homeBritish ? undefined : options.biome, mode);
+  const nativeRequest = options.purposeBuiltOnly ? undefined : nativeSettlementRequest(module, culture.key, era, where, region, homeBritish ? undefined : options.biome, mode, options.catalogue);
   let nativeQueue: string[] | undefined;
   const nextNative = (): string | undefined => {
     if (!nativeRequest) return undefined;

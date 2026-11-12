@@ -15726,16 +15726,64 @@ var BRITAIN = (() => {
 var SPACE_BIOMES = BIOME_DATA.spaceBiomes.map(normalise);
 var isSpaceBiome = (biome) => !!(biome == null ? void 0 : biome.space);
 var spaceBiomeFor = (scale) => SPACE_BIOMES.find((b) => b.scale === scale);
-function allBiomes(custom = []) {
-  return [BRITAIN, ...BIOMES, ...custom];
-}
-function findBiome(id, custom = []) {
+function biomeCatalogue(custom = []) {
   var _a5;
-  if (!id) return void 0;
-  return (_a5 = allBiomes(custom).find((b) => {
+  const overrides = /* @__PURE__ */ new Map();
+  for (const b of custom) {
+    const id = (_a5 = b.custom) == null ? void 0 : _a5.overrides;
+    if (id && !overrides.has(id)) overrides.set(id, b);
+  }
+  const swap = (b) => {
+    var _a6;
+    return (_a6 = overrides.get(b.id)) != null ? _a6 : b;
+  };
+  const claimed = new Set(overrides.values());
+  const own = custom.filter((b) => !claimed.has(b)).sort((x, y) => x.label.localeCompare(y.label));
+  const all = [swap(BRITAIN), ...BIOMES.map(swap), ...own];
+  const space = SPACE_BIOMES.map(swap);
+  const matches = (id) => (b) => {
     var _a6;
     return b.id === id || ((_a6 = b.custom) == null ? void 0 : _a6.path) === id;
-  })) != null ? _a5 : SPACE_BIOMES.find((b) => b.id === id);
+  };
+  const byPath = new Map(custom.filter((b) => b.custom).map((b) => [b.custom.path, b]));
+  return {
+    all,
+    space,
+    find(id) {
+      var _a6;
+      if (!id) return void 0;
+      return (_a6 = all.find(matches(id))) != null ? _a6 : space.find(matches(id));
+    },
+    rootOf(biome) {
+      const seen = /* @__PURE__ */ new Set();
+      let current = biome;
+      while (current.custom && !seen.has(current)) {
+        seen.add(current);
+        const next = byPath.get(current.custom.base);
+        if (!next) return current.custom.base;
+        current = next;
+      }
+      return current.id;
+    }
+  };
+}
+var biomeChoiceId = (b) => b.custom && !b.custom.overrides ? b.custom.path : b.id;
+var biomeMatches = (b, id) => {
+  var _a5;
+  return !!id && (b.id === id || ((_a5 = b.custom) == null ? void 0 : _a5.path) === id);
+};
+var isBuiltInBritain = (biome) => (biome == null ? void 0 : biome.id) === "britain" && !biome.custom;
+var biomeRoot = (catalogue, biome) => {
+  var _a5, _b3;
+  return (_b3 = (_a5 = biome.custom) == null ? void 0 : _a5.overrides) != null ? _b3 : catalogue.rootOf(biome);
+};
+var NATURAL_BIOME_IDS = BIOMES.map((b) => b.id);
+function biomesRootedIn(catalogue, ids = NATURAL_BIOME_IDS) {
+  return catalogue.all.filter((b) => ids.includes(biomeRoot(catalogue, b)));
+}
+var BUILT_IN_BIOMES = biomeCatalogue([]);
+function findBiome(id, custom = []) {
+  return (custom.length > 0 ? biomeCatalogue(custom) : BUILT_IN_BIOMES).find(id);
 }
 function biomeWords(biome, list) {
   var _a5;
@@ -60611,14 +60659,15 @@ function groupTypeChoices(trad, options) {
   return weights;
 }
 function tribalName(options, rng) {
-  var _a5, _b3, _c3;
+  var _a5, _b3, _c3, _d3;
   const trad = (_a5 = findTradition(options.tradition)) != null ? _a5 : TRIBAL_TRADITIONS[0];
-  const chosen = (_b3 = options.biomeData) != null ? _b3 : findBiome(options.biome);
+  const biomes = (_b3 = options.catalogue) != null ? _b3 : BUILT_IN_BIOMES;
+  const chosen = (_c3 = options.biomeData) != null ? _c3 : biomes.find(options.biome);
   const mode = chosen ? "chosen" : "homeland";
-  const biome = chosen != null ? chosen : findBiome(pickRecord(trad.homeland, rng));
+  const biome = chosen != null ? chosen : biomes.find(pickRecord(trad.homeland, rng));
   const groupType = pickRecord(groupTypeChoices(trad, options), rng);
   if (!groupType) return null;
-  const registerWeights = (_c3 = options.constraints) == null ? void 0 : _c3.registers;
+  const registerWeights = (_d3 = options.constraints) == null ? void 0 : _d3.registers;
   const register = registerWeights ? pickRecord(registerWeights, rng) : options.register;
   const reg = register != null ? register : "plain";
   const general = TRIBAL_TRADITIONS[0];
@@ -60727,7 +60776,7 @@ function generateTribalNames(options) {
 function tribalHistoryLabel(sectionLabel, tradition, biome, register, terrain = "any", custom = []) {
   var _a5, _b3;
   const t = (_a5 = findTradition(tradition)) != null ? _a5 : TRIBAL_TRADITIONS[0];
-  const b = findBiome(biome, custom);
+  const b = biomeCatalogue(custom).find(biome);
   const land = [...TERRAIN_CHOICES, ...(_b3 = b == null ? void 0 : b.customTerrains) != null ? _b3 : []].find((x) => x.id === terrain && x.id !== "any");
   return [sectionLabel, t.label, b ? biomeInline(b) : "homeland", ...land ? [land.label.toLowerCase()] : [], register].join(" \xB7 ");
 }
@@ -60815,7 +60864,8 @@ function tribalSlotFill(options, rng) {
       ...groupType ? { groupType } : {},
       ...fields2.perspective ? { perspective: fields2.perspective } : {},
       hostile: false,
-      constraints
+      constraints,
+      ...options.catalogue ? { catalogue: options.catalogue } : {}
     },
     rng
   );
@@ -60886,7 +60936,10 @@ function ancientForm(name, region, rng) {
   if (form === "water-of-x") return { text: `Water of ${name}`, form };
   return { text: name, form };
 }
-var colonialBiome = (options) => options.setting === "british" ? void 0 : findBiome(options.biome);
+var colonialBiome = (options) => {
+  var _a5;
+  return options.setting === "british" ? void 0 : ((_a5 = options.catalogue) != null ? _a5 : BUILT_IN_BIOMES).find(options.biome);
+};
 function descriptiveName(options, rng, bare7) {
   const british = options.setting === "british";
   const biome = colonialBiome(options);
@@ -61208,6 +61261,7 @@ var NameRenderer = class {
         region: setting === "british" ? this.region : void 0,
         // Tribal brief §19.5: colonial parts pass the recipe's biome.
         biome: setting === "british" ? void 0 : this.recipe.shape.biome,
+        ...this.options.catalogue ? { catalogue: this.options.catalogue } : {},
         faithfulness: this.options.faithfulness,
         strictness: this.options.strictness
       },
@@ -61261,8 +61315,7 @@ var NameRenderer = class {
    * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
    */
   landFill(categoryId, rng, chosenBiome) {
-    var _a5;
-    const biome = ((_a5 = this.options.biome) == null ? void 0 : _a5.id) === "britain" ? void 0 : this.options.biome;
+    const biome = isBuiltInBritain(this.options.biome) ? void 0 : this.options.biome;
     const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
     const word = (entry) => ({ kind: "word", entry, traditional: this.chooseRegister(entry, rng) });
     if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
@@ -61316,6 +61369,7 @@ var NameRenderer = class {
         region: this.region,
         biome: part === "organic" ? void 0 : this.options.biome,
         terrain: this.options.terrain,
+        ...this.options.catalogue ? { catalogue: this.options.catalogue } : {},
         ...Object.keys(fields2).length > 0 ? { fields: fields2 } : {}
       },
       rng
@@ -61768,7 +61822,7 @@ function generatePlaceNames(options) {
   }
 }
 function* generatePlaceNamesSteps(options) {
-  var _a5, _b3, _c3;
+  var _a5, _b3, _c3, _d3;
   const { recipe } = options;
   const settlement = (_a5 = options.settlement) != null ? _a5 : recipe.shape.settlement ? { size: recipe.shape.settlement } : void 0;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -61782,17 +61836,22 @@ function* generatePlaceNamesSteps(options) {
   const rng = mulberry32((seed ^ FILL_SALT) >>> 0);
   const adaptation = options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : void 0;
   const biomeSetting = recipe.shape.biome;
-  let biome = (_b3 = options.biome) != null ? _b3 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : findBiome(biomeSetting);
+  const biomes = (_b3 = options.catalogue) != null ? _b3 : BUILT_IN_BIOMES;
+  let biome = (_c3 = options.biome) != null ? _c3 : (biomeSetting == null ? void 0 : biomeSetting.startsWith("[[")) ? void 0 : biomes.find(biomeSetting);
   if (!biome && (biomeSetting == null ? void 0 : biomeSetting.startsWith("[["))) {
     notices.push(`Biome pack \u201C${biomeSetting.slice(2, -2)}\u201D wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
   }
-  if (organic && (biome == null ? void 0 : biome.id) === "britain") biome = void 0;
+  if (organic && isBuiltInBritain(biome)) biome = void 0;
+  if (organic && !biome) {
+    const britain = biomes.find("britain");
+    if (britain == null ? void 0 : britain.custom) biome = britain;
+  }
   if (organic && (biome == null ? void 0 : biome.space)) {
     notices.push("Space biomes are for exploration, expansion and the Interstellar era.");
     biome = void 0;
   }
   const spaceScale = (biome == null ? void 0 : biome.space) ? biome.scale : void 0;
-  let terrain = (_c3 = recipe.shape.terrain) != null ? _c3 : "any";
+  let terrain = (_d3 = recipe.shape.terrain) != null ? _d3 : "any";
   if (terrain !== "any" && biome && !availableTerrains(biome).some((t) => t.id === terrain) && biome.customTerrains) {
     notices.push(`${biome.label} has no \u201C${terrain}\u201D terrain.`);
     terrain = "any";
@@ -61801,6 +61860,7 @@ function* generatePlaceNamesSteps(options) {
   const renderer = new NameRenderer(recipe, options.slots, region, {
     biome,
     terrain,
+    catalogue: options.catalogue,
     adaptation,
     ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
     labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
@@ -62162,10 +62222,7 @@ function tribalSentence(state, limits) {
     title: (_g = biome == null ? void 0 : biome.guide) != null ? _g : tradition ? homelandSummary(tradition.key) : "Biome",
     choices: [
       { id: void 0, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
-      ...limits.biomes.map((b) => {
-        var _a6, _b4;
-        return { id: (_b4 = (_a6 = b.custom) == null ? void 0 : _a6.path) != null ? _b4 : b.id, label: b.label };
-      })
+      ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label }))
     ],
     current: state.biome
   });
@@ -64031,11 +64088,11 @@ var WorldRenderer = class {
     return { text, etym: `[${this.label(key2)}: ${shown}]${token17.form === "pos" ? possessiveTail(word) : ""}`, fusable: fusable && !/\s/.test(text) && token17.form !== "pos" };
   }
   buildSwaps() {
-    var _a5;
+    var _a5, _b3;
     const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
     const chosen = this.options.biome;
     if (!chosen && !terrain) return;
-    const biome = (_a5 = chosen != null ? chosen : findBiome(this.culture.homelandBiome)) != null ? _a5 : BRITAIN;
+    const biome = (_b3 = chosen != null ? chosen : ((_a5 = this.options.catalogue) != null ? _a5 : BUILT_IN_BIOMES).find(this.culture.homelandBiome)) != null ? _b3 : BRITAIN;
     for (const swap of WORLD_DATA.biomeSwaps) {
       if (swap.culture !== this.culture.id || swap.era && swap.era !== this.era.id) continue;
       if (!chosen && !LAND_LISTS.has(swap.list)) continue;
@@ -89456,15 +89513,20 @@ function token3(ctx, name) {
 }
 var withMod = (text, mod) => mod === "poss" ? groupPossessive(text, false) : mod === "lower" ? text.toLowerCase() : text;
 var LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var BIRD_SET = new Set(BIOMES.flatMap((b) => b.birds.map(([w]) => w.toLowerCase())));
-var BIRDS = /* @__PURE__ */ new Map();
-function birdWords(culture) {
+var BIRD_CACHE = /* @__PURE__ */ new WeakMap();
+function birdWords(culture, catalogue) {
   var _a5, _b3;
-  let found = BIRDS.get(culture.key);
+  let cache = BIRD_CACHE.get(catalogue);
+  if (!cache) {
+    cache = { set: new Set(catalogue.all.slice(1, 13).flatMap((b) => b.birds.map(([w]) => w.toLowerCase()))), byCulture: /* @__PURE__ */ new Map() };
+    BIRD_CACHE.set(catalogue, cache);
+  }
+  let found = cache.byCulture.get(culture.key);
   if (!found) {
-    const own = [...cultureAnimals(culture.key), ...flavourAnimals(culture)].filter((w) => BIRD_SET.has(w.toLowerCase()));
-    found = [...new Set(own.length > 0 ? own : ((_b3 = (_a5 = findBiome("temperate")) == null ? void 0 : _a5.birds) != null ? _b3 : []).map(([w]) => w))];
-    BIRDS.set(culture.key, found);
+    const set = cache.set;
+    const own = [...cultureAnimals(culture.key), ...flavourAnimals(culture)].filter((w) => set.has(w.toLowerCase()));
+    found = [...new Set(own.length > 0 ? own : ((_b3 = (_a5 = catalogue.find("temperate")) == null ? void 0 : _a5.birds) != null ? _b3 : []).map(([w]) => w))];
+    cache.byCulture.set(culture.key, found);
   }
   return found;
 }
@@ -89501,7 +89563,7 @@ function baseToken(ctx, name) {
     case "poeticShort":
       return ctx.poeticAllowed ? listWord2(ctx, "poetic", POETIC_SHORT) : void 0;
     case "bird": {
-      const birds = birdWords(ctx.culture);
+      const birds = birdWords(ctx.culture, ctx.catalogue);
       return birds.length > 0 ? pickOne2(birds, rng) : void 0;
     }
     case "manName":
@@ -89897,7 +89959,7 @@ function generateVesselNames(options) {
   };
   const styleShare = !style ? 0 : style.key === "oceanic" && culture.sensitive ? 1 : culture.key === "general" ? VESSEL_DATA.styleShare.general : VESSEL_DATA.styleShare.default;
   const newCtx4 = (level, fn) => {
-    var _a6;
+    var _a6, _b4;
     return {
       rng,
       module: module2,
@@ -89914,6 +89976,7 @@ function generateVesselNames(options) {
       boost: !!style,
       // §14.4: sensitive cultures' poetic names never go to a style or a light or grim name.
       poeticAllowed: !(culture.sensitive && (lightOrGrim2(tone) || !!style)),
+      catalogue: (_b4 = options.catalogue) != null ? _b4 : BUILT_IN_BIOMES,
       context: options.context,
       drawn: /* @__PURE__ */ new Set(),
       words: [],
@@ -90561,16 +90624,17 @@ var COLOUR_BEFORE_PEOPLE = new RegExp(`\\b(${groupListWords("colour", "FL").map(
 var TRIBAL_POOLS = /* @__PURE__ */ new Map();
 function tribalPool(tradition, biome, terrain, custom) {
   var _a5, _b3;
-  const key2 = `${tradition}|${custom ? (_b3 = (_a5 = custom.custom) == null ? void 0 : _a5.path) != null ? _b3 : biome.id : biome.id}|${terrain}`;
+  const data = custom != null ? custom : biome.custom ? biome : void 0;
+  const key2 = `${tradition}|${data ? (_b3 = (_a5 = data.custom) == null ? void 0 : _a5.path) != null ? _b3 : biome.id : biome.id}|${terrain}`;
   let found = TRIBAL_POOLS.get(key2);
   if (!found) {
-    found = generateTribalNames({ tradition, ...custom ? { biomeData: custom } : { biome: biome.id }, terrain, count: 120, seed: 1789 }).names.map((n) => n.name).filter((n) => !n.includes("["));
+    found = generateTribalNames({ tradition, ...data ? { biomeData: data } : { biome: biome.id }, terrain, count: 120, seed: 1789 }).names.map((n) => n.name).filter((n) => !n.includes("["));
     TRIBAL_POOLS.set(key2, found);
   }
   return found;
 }
 function generateRealmNames(options) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -90587,11 +90651,12 @@ function generateRealmNames(options) {
     notices.push("\u201CThe stars\u201D needs the near-future or interstellar era.");
     namedFor = "anything";
   }
-  const biome = (_j = (_i = options.biomeData) != null ? _i : findBiome(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome)) != null ? _j : findBiome("temperate");
-  const terrain = (_k = options.terrain) != null ? _k : "any";
+  const biomes = (_i = options.catalogue) != null ? _i : BUILT_IN_BIOMES;
+  const biome = (_k = (_j = options.biomeData) != null ? _j : biomes.find(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome)) != null ? _k : biomes.find("temperate");
+  const terrain = (_l = options.terrain) != null ? _l : "any";
   const spaceOk = !biome.space || era === "NF" || era === "IS";
   if (!spaceOk) notices.push("Space biomes need the near-future or interstellar era; using their homeland.");
-  const landBiome2 = spaceOk ? biome : (_l = findBiome(homelandBiome(culture))) != null ? _l : findBiome("temperate");
+  const landBiome2 = spaceOk ? biome : (_m = biomes.find(homelandBiome(culture))) != null ? _m : biomes.find("temperate");
   const scale = landBiome2.space ? landBiome2.scale : void 0;
   const lists = identityLists(landBiome2, spaceOk ? terrain : "any");
   const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : void 0;
@@ -90600,12 +90665,12 @@ function generateRealmNames(options) {
     var _a6, _b4;
     return [c.key, c.w * ((_b4 = (_a6 = c.eraMult) == null ? void 0 : _a6[era]) != null ? _b4 : 1)];
   }).filter(([, w]) => w > 0);
-  const guards = (_m = options.safeguards) != null ? _m : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
+  const guards = (_n = options.safeguards) != null ? _n : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
   const pools = /* @__PURE__ */ new Map();
   const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
   const tribal = () => {
     var _a6, _b4;
-    const peopleBiome = landBiome2.space ? (_a6 = findBiome(homelandBiome(culture))) != null ? _a6 : findBiome("temperate") : biome;
+    const peopleBiome = landBiome2.space ? (_a6 = biomes.find(homelandBiome(culture))) != null ? _a6 : biomes.find("temperate") : biome;
     const pool3 = tribalPool((_b4 = REALM_DATA.tribal[culture]) != null ? _b4 : "general", peopleBiome, landBiome2.space ? "any" : terrain, landBiome2.space ? void 0 : options.biomeData);
     return pool3.length > 0 ? pickOne3(pool3, rng) : void 0;
   };
@@ -99437,7 +99502,7 @@ function biomePhrase(biome, part = "new-land", custom = []) {
     });
     return (_a5 = pack == null ? void 0 : pack.phrase) != null ? _a5 : name;
   }
-  const found = findBiome(biome, custom);
+  const found = biomeCatalogue(custom).find(biome);
   if (found) return found.phrase;
   return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
 }
@@ -99461,7 +99526,7 @@ function regionPhrase(region) {
 }
 function wizardSentenceText(part, settings, custom = []) {
   var _a5, _b3, _c3, _d3, _e3;
-  const biome = findBiome(settings.biome, custom);
+  const biome = biomeCatalogue(custom).find(settings.biome);
   const space = !!(biome == null ? void 0 : biome.space) && part !== "organic";
   const land = space && (!settings.terrain || settings.terrain === "any") ? `all of ${biomePhrase(settings.biome, part, custom)}` : `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
   if (part === "organic") {
@@ -105068,7 +105133,7 @@ var OUTPUT_TEXT = { official: "official names", short: "short names", both: "off
 var PEOPLE_TEXT4 = { placeholders: "placeholders for", invented: "invented" };
 var showsLand = (state) => state.namedFor === "anything" || state.namedFor === "land";
 function realmSentence(state, limits) {
-  var _a5, _b3, _c3, _d3;
+  var _a5, _b3, _c3, _d3, _e3;
   const out = [];
   const culture = (_a5 = REALM_CULTURES.find((c) => c.key === state.culture)) != null ? _a5 : REALM_CULTURES[0];
   out.push({
@@ -105135,13 +105200,10 @@ function realmSentence(state, limits) {
       title: (_d3 = biome == null ? void 0 : biome.guide) != null ? _d3 : "Their homeland: the culture's own land",
       choices: [
         { id: void 0, label: "Their homeland" },
-        ...limits.biomes.map((b) => {
-          var _a6, _b4;
-          return { id: (_b4 = (_a6 = b.custom) == null ? void 0 : _a6.path) != null ? _b4 : b.id, label: b.label };
-        }),
+        ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label })),
         // Stellar brief §7.1: in the near future and interstellar eras, the space biomes under a Space heading
         // (the near future offers only the planetary system and the star system).
-        ...(state.era === "nearFuture" || state.era === "interstellar" ? SPACE_BIOMES.filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({
+        ...(state.era === "nearFuture" || state.era === "interstellar" ? ((_e3 = limits.spaceBiomes) != null ? _e3 : SPACE_BIOMES).filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({
           id: b.id,
           label: b.label,
           title: b.guide,
@@ -115628,14 +115690,15 @@ function cultureLabel(options) {
   return !options.culture || options.culture === "britain" ? "British" : findCulture(options.culture).label;
 }
 function generateAt(options, size) {
-  var _a5, _b3;
+  var _a5, _b3, _c3;
   const { count, seed, faithfulness, strictness } = options;
   const settlement = { size };
   if (options.setting === "native" && options.culture && options.culture !== "britain") {
     const result = generateWorldPlaceNames({
       culture: options.culture,
       era: options.era,
-      biome: (_a5 = options.customBiome) != null ? _a5 : findBiome(options.biome),
+      biome: (_b3 = options.customBiome) != null ? _b3 : ((_a5 = options.catalogue) != null ? _a5 : BUILT_IN_BIOMES).find(options.biome),
+      catalogue: options.catalogue,
       terrain: options.terrain,
       count,
       seed,
@@ -115657,7 +115720,7 @@ function generateAt(options, size) {
     options.terrain,
     options.aliens
   );
-  return generatePlaceNames({ recipe, biome: options.customBiome, slots: (_b3 = options.slots) != null ? _b3 : {}, count, seed, faithfulness, strictness, settlement });
+  return generatePlaceNames({ recipe, biome: options.customBiome, slots: (_c3 = options.slots) != null ? _c3 : {}, catalogue: options.catalogue, count, seed, faithfulness, strictness, settlement });
 }
 function biomeKeyFor(o) {
   var _a5, _b3, _c3;
@@ -115688,10 +115751,11 @@ function generateWithWilds(options, size, seed) {
   const share2 = WILDS_DATA.settlementLink.purposeBuiltShare;
   const queues = /* @__PURE__ */ new Map();
   const wildNext = (module2) => {
-    var _a5;
+    var _a5, _b3, _c3, _d3;
     let queue = queues.get(module2);
     if (!queue) {
-      const biome = options.biome && wildsBiomes(module2).some((b) => b.id === options.biome) ? options.biome : void 0;
+      const chosen = (_c3 = options.biome) != null ? _c3 : (_b3 = (_a5 = options.customBiome) == null ? void 0 : _a5.custom) == null ? void 0 : _b3.overrides;
+      const biome = chosen && wildsBiomes(module2, options.catalogue).some((b) => b.id === chosen) ? chosen : void 0;
       const request = {
         module: module2,
         ...wildsRequest(options),
@@ -115702,10 +115766,11 @@ function generateWithWilds(options, size, seed) {
         series: false,
         purposeBuiltOnly: true,
         settlementSize: SIZE_LETTER[size],
+        catalogue: options.catalogue,
         count: options.count,
         seed: Math.floor(rng() * 4294967296) >>> 0
       };
-      (_a5 = settlementHooks.onWildsCall) == null ? void 0 : _a5.call(settlementHooks, request);
+      (_d3 = settlementHooks.onWildsCall) == null ? void 0 : _d3.call(settlementHooks, request);
       queue = generateWildsNames(request).names.map((n) => n.text);
       queues.set(module2, queue);
     }
@@ -115782,7 +115847,7 @@ var wildsEraLabel = (code) => {
 };
 var wildsDefaultCulture = (module2) => module2 === "desertNames" ? "general" : "norman-british";
 var showsWildsRegion = (module2, culture, where2) => WILDS_DATA.modules[module2].region && isBritishCulture(culture) && where2 === "home";
-var wildsBiomes = (module2) => BIOMES.filter((b) => WILDS_DATA.modules[module2].biomes.includes(b.id));
+var wildsBiomes = (module2, catalogue = BUILT_IN_BIOMES) => biomesRootedIn(catalogue, WILDS_DATA.modules[module2].biomes);
 var PARENT_KIND = { mountainNames: "range", forestNames: "forest", desertNames: "desert", moorNames: "moor", wetlandNames: "marsh", grasslandNames: "plain" };
 function wildsKindLive(module2, kind, era) {
   var _a5;
@@ -115860,7 +115925,7 @@ function wildsModulesForTerrain(terrain, biome) {
   return [[biome && ((_b3 = row.byBiome) == null ? void 0 : _b3[biome]) || row.module, 1]];
 }
 var SIZE_LETTER = { any: "any", hamlet: "h", village: "v", town: "t", city: "c", great: "g" };
-function nativeSettlementRequest(module2, culture, era, where2, region, chosenBiome, mode) {
+function nativeSettlementRequest(module2, culture, era, where2, region, chosenBiome, mode, catalogue = BUILT_IN_BIOMES) {
   var _a5;
   const link = WILDS_DATA.settlementLink;
   if (mode === "placeholders" || era === "NF" || era === "IS") return void 0;
@@ -115879,7 +115944,7 @@ function nativeSettlementRequest(module2, culture, era, where2, region, chosenBi
     var _a6;
     return ((_a6 = link.worldEraToRoute[culture]) == null ? void 0 : _a6[e.id]) === era;
   })) != null ? _a5 : eras[0];
-  return { ...base, setting: "native", culture, era: match == null ? void 0 : match.id, biome: void 0, customBiome: biome ? findBiome(biome) : void 0 };
+  return { ...base, setting: "native", culture, era: match == null ? void 0 : match.id, biome: void 0, customBiome: biome ? catalogue.find(biome) : void 0 };
 }
 var LIGHT_OR_GRIM2 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var pickOne8 = (items, rng) => items[Math.floor(rng() * items.length)];
@@ -115919,12 +115984,13 @@ function drawEntry(ctx, pool3) {
   ctx.words.push({ pool: pool3, word: e.w });
   return e;
 }
-function resolveWildsBiome(module2, culture, where2, chosen) {
-  var _a5, _b3;
+function resolveWildsBiome(module2, culture, where2, chosen, catalogue = BUILT_IN_BIOMES) {
+  var _a5, _b3, _c3;
   const data = WILDS_DATA.modules[module2];
-  if (showsWildsRegion(module2, culture, where2)) return { biome: BRITAIN, tags: false, homeBritish: true };
-  const pick4 = (id) => id && data.biomes.includes(id) ? BIOMES.find((b) => b.id === id) : void 0;
-  const biome = (_b3 = (_a5 = pick4(chosen)) != null ? _a5 : pick4(WILDS_DATA.homeland[culture])) != null ? _b3 : pick4(data.defaultBiome);
+  if (showsWildsRegion(module2, culture, where2)) return { biome: (_a5 = catalogue.find("britain")) != null ? _a5 : BRITAIN, tags: false, homeBritish: true };
+  const offered = wildsBiomes(module2, catalogue);
+  const pick4 = (id) => id ? offered.find((b) => biomeMatches(b, id)) : void 0;
+  const biome = (_c3 = (_b3 = pick4(chosen)) != null ? _b3 : pick4(WILDS_DATA.homeland[culture])) != null ? _c3 : pick4(data.defaultBiome);
   return { biome, tags: true, homeBritish: false };
 }
 function godName2(ctx) {
@@ -116181,7 +116247,7 @@ function generateWildsNames(options) {
   const era = data.eras.includes(options.era) ? options.era : "MD";
   const where2 = options.where === "new" ? "new" : "home";
   const fantastic = !!options.fantastic;
-  const resolved = resolveWildsBiome(module2, culture.key, where2, options.biome);
+  const resolved = resolveWildsBiome(module2, culture.key, where2, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;
   const region = homeBritish && options.region && options.region !== "all" ? options.region : void 0;
   const mode = (_b3 = options.people) != null ? _b3 : "placeholders";
@@ -116273,7 +116339,7 @@ function generateWildsNames(options) {
     if (breaksRouteWords(text) || hasBannedWord(text) || hasWildsBanned(text)) return false;
     return true;
   };
-  const nativeRequest = options.purposeBuiltOnly ? void 0 : nativeSettlementRequest(module2, culture.key, era, where2, region, homeBritish ? void 0 : options.biome, mode);
+  const nativeRequest = options.purposeBuiltOnly ? void 0 : nativeSettlementRequest(module2, culture.key, era, where2, region, homeBritish ? void 0 : options.biome, mode, options.catalogue);
   let nativeQueue;
   const nextNative = () => {
     var _a6;
@@ -116369,11 +116435,11 @@ function defaultWildsState(module2) {
 var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
 var WHERE_TEXT = { home: "in home country", new: "in newly explored country" };
 var wildsRegionText = (region) => region ? `in ${regionPhrase(region)}` : "across all of Britain";
-function wildsBiomeText(module2, biome) {
-  const found = wildsBiomes(module2).find((b) => b.id === biome);
+function wildsBiomeText(module2, biome, catalogue = BUILT_IN_BIOMES) {
+  const found = wildsBiomes(module2, catalogue).find((b) => biomeMatches(b, biome));
   return found ? `in ${found.phrase}` : "in any land";
 }
-function wildsSentence(state, module2) {
+function wildsSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
   var _a5;
   const out = [];
   const culture = (_a5 = findWildsCulture(state.culture)) != null ? _a5 : WILDS_CULTURES[0];
@@ -116436,9 +116502,9 @@ function wildsSentence(state, module2) {
   } else {
     out.push({
       field: "biome",
-      text: wildsBiomeText(module2, state.biome),
+      text: wildsBiomeText(module2, state.biome, catalogue),
       title: "Weights the names towards a land's wildlife, plants and words",
-      choices: [{ id: void 0, label: wildsBiomeText(module2, void 0) }, ...wildsBiomes(module2).map((b) => ({ id: b.id, label: wildsBiomeText(module2, b.id) }))],
+      choices: [{ id: void 0, label: wildsBiomeText(module2, void 0, catalogue) }, ...wildsBiomes(module2, catalogue).map((b) => ({ id: biomeChoiceId(b), label: wildsBiomeText(module2, biomeChoiceId(b), catalogue) }))],
       current: state.biome
     });
   }
@@ -116476,7 +116542,7 @@ function wildsSentenceText(segments) {
   const text = segments.map((s) => typeof s === "string" ? s : s.text).join("");
   return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 }
-function chooseWilds(state, field, id, module2) {
+function chooseWilds(state, field, id, module2, catalogue = BUILT_IN_BIOMES) {
   const next = { ...state };
   switch (field) {
     case "culture":
@@ -116512,15 +116578,15 @@ function chooseWilds(state, field, id, module2) {
   }
   if (next.kind && !findWildsKind(module2, next.kind)) next.kind = void 0;
   if (next.kind && !wildsKindsAt(module2, next.era).some((k) => k.key === next.kind)) next.kind = void 0;
-  if (next.biome && !wildsBiomes(module2).some((b) => b.id === next.biome)) next.biome = void 0;
+  if (next.biome && !wildsBiomes(module2, catalogue).some((b) => biomeMatches(b, next.biome))) next.biome = void 0;
   return next;
 }
-function wildsHistoryLabel(module2, state, moduleLabel2) {
+function wildsHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3;
   const culture = (_b3 = (_a5 = findWildsCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
   const kind = findWildsKind(module2, state.kind);
   const regionShown = showsWildsRegion(module2, state.culture, state.where);
-  const biome = wildsBiomes(module2).find((b) => b.id === state.biome);
+  const biome = wildsBiomes(module2, catalogue).find((b) => biomeMatches(b, state.biome));
   return [
     moduleLabel2,
     wildsEraLabel(state.era),
@@ -117714,7 +117780,7 @@ function hyperWeight(ctx, s, register, medium) {
 var SERIES_MODULES = /* @__PURE__ */ new Set(["coastsIslands", "seaCharts", "hyperspaceCharts"]);
 var watersHasSeries = (module2) => SERIES_MODULES.has(module2);
 function generateWatersNames(options) {
-  var _a5, _b3;
+  var _a5, _b3, _c3;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -117728,10 +117794,15 @@ function generateWatersNames(options) {
   const fantastic = !hyper && !!options.fantastic;
   const homeBritish = !hyper && isBritishCulture2(culture.key) && where2 === "home";
   const region = homeBritish && options.region && options.region !== "all" ? options.region : void 0;
-  const biome = !homeBritish && !hyper && options.biome && BIOMES.some((b) => b.id === options.biome) ? options.biome : void 0;
+  const biomes = (_b3 = options.catalogue) != null ? _b3 : BUILT_IN_BIOMES;
+  const chosenBiome = !homeBritish && !hyper && options.biome ? biomesRootedIn(biomes).find((b) => {
+    var _a6;
+    return b.id === options.biome || ((_a6 = b.custom) == null ? void 0 : _a6.path) === options.biome;
+  }) : void 0;
+  const biome = chosenBiome ? biomeRoot(biomes, chosenBiome) : void 0;
   const medium = options.medium === "wind" || options.medium === "both" ? options.medium : "sea";
   const register = WATERS_REGISTERS.some((r) => r.id === options.register) ? options.register : "any";
-  const mode = (_b3 = options.people) != null ? _b3 : "placeholders";
+  const mode = (_c3 = options.people) != null ? _c3 : "placeholders";
   const count = Math.max(0, Math.floor(options.count));
   const block = blockSet2(hyper, options.safeguards);
   const chosenScale = hyper && HYPER_SCALES.includes(options.scale) ? options.scale : void 0;
@@ -117945,12 +118016,12 @@ var SERIES_TEXT4 = {
 };
 var NOUN = { seasLakes: "waters", coastsIslands: "coast features", seaCharts: "chart features", hyperspaceCharts: "hyperspace features" };
 var watersRegionText = (region) => region ? `in ${regionPhrase(region)}` : "across all of Britain";
-var watersBiomeText = (biome) => {
-  const found = BIOMES.find((b) => b.id === biome);
+var watersBiomeText = (biome, catalogue = BUILT_IN_BIOMES) => {
+  const found = biomesRootedIn(catalogue).find((b) => biomeMatches(b, biome));
   return found ? `in ${found.phrase}` : "in any land";
 };
 var hyperScales = () => ["any", ...HYPER_SCALES];
-function watersSentence(state, module2) {
+function watersSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3, _c3;
   const out = [];
   const hyper = module2 === "hyperspaceCharts";
@@ -118047,9 +118118,9 @@ function watersSentence(state, module2) {
     } else {
       out.push({
         field: "biome",
-        text: watersBiomeText(state.biome),
+        text: watersBiomeText(state.biome, catalogue),
         title: "Weights the names towards a land's waters and wildlife",
-        choices: [{ id: void 0, label: watersBiomeText(void 0) }, ...BIOMES.map((b) => ({ id: b.id, label: watersBiomeText(b.id) }))],
+        choices: [{ id: void 0, label: watersBiomeText(void 0, catalogue) }, ...biomesRootedIn(catalogue).map((b) => ({ id: biomeChoiceId(b), label: watersBiomeText(biomeChoiceId(b), catalogue) }))],
         current: state.biome
       });
     }
@@ -118147,7 +118218,7 @@ function chooseWaters(state, field, id, module2) {
   }
   return next;
 }
-function watersHistoryLabel(module2, state, moduleLabel2) {
+function watersHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3, _c3;
   const culture = (_b3 = (_a5 = findWatersCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
   if (module2 === "hyperspaceCharts") {
@@ -118166,7 +118237,7 @@ function watersHistoryLabel(module2, state, moduleLabel2) {
   }
   const kind = findWaterKind(module2, state.kind);
   const regionShown = showsWatersRegion(state.culture, state.where);
-  const biome = BIOMES.find((b) => b.id === state.biome);
+  const biome = biomesRootedIn(catalogue).find((b) => biomeMatches(b, state.biome));
   return [
     moduleLabel2,
     watersEraLabel(state.era),
@@ -120913,7 +120984,7 @@ var defaultInnSafeguards = () => ({ block: INN_DATA.safeguards.block, flag: INN_
 var pickOne12 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM6 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var COLOURS = /* @__PURE__ */ new Set([...groupListWords("colour", "FL").map(([w]) => w), "Black", "White", "Red", "Blue", "Green", "Golden", "Grey", "Silver", "Pied", "Copper"]);
-var BIRDS2 = new Set(groupListWords("bird", "FL").map(([w]) => w));
+var BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
 function vocabItems(ctx, pool3, mult = 1) {
   return boostPool(ctx.options.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM6(e.t))).map(([e, w]) => {
     var _a5;
@@ -121147,7 +121218,7 @@ function renderPattern12(ctx, pattern) {
     if (name === "innNumber") number = piece;
     if (mod === "poss") return groupPossessive(piece, name === "travellers" || name === "trade");
     if (mod === "pl") {
-      if (number === "Two" && BIRDS2.has(piece) && ctx.rng() < INN_DATA.lists.braceShare) return `\0${groupPlural(piece)}`;
+      if (number === "Two" && BIRDS.has(piece) && ctx.rng() < INN_DATA.lists.braceShare) return `\0${groupPlural(piece)}`;
       return groupPlural(piece);
     }
     return piece;
@@ -130224,7 +130295,8 @@ function parseWatersPreset(values, body, fileName) {
       where: hyper ? "home" : pick4("where", "home", (v) => v === "home" || v === "new"),
       fantastic: hyper ? false : flag("fantastic"),
       region: hyper ? "all" : pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
-      biome: hyper ? "any" : pick4("biome", "any", (v) => v === "any" || BIOMES.some((b) => b.id === v)),
+      // A built-in's id, or a biome pack's path (a pack's biome shows in seas and coasts where its root built-in does).
+      biome: hyper ? "any" : pick4("biome", "any", (v) => v === "any" || NATURAL_BIOME_IDS.includes(v) || /\.md$/i.test(v)),
       tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       series: watersHasSeries(module2) ? flag("series") : false,
@@ -130300,7 +130372,7 @@ function parseWildsPreset(values, body, fileName) {
       where: pick4("where", "home", (v) => v === "home" || v === "new"),
       fantastic: flag("fantastic"),
       region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
-      biome: pick4("biome", "any", (v) => v === "any" || wildsBiomes(module2).some((b) => b.id === v)),
+      biome: pick4("biome", "any", (v) => v === "any" || wildsBiomes(module2).some((b) => b.id === v) || /\.md$/i.test(v)),
       tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       people: pick4("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
       series: flag("series")
@@ -130947,8 +131019,8 @@ function gnWord8(ctx, list, setting = ctx.setting) {
 }
 var BIOME_LISTS = { wildAnimal: "wildAnimals", bird: "birds", creature: "creatures", tree: "trees", plant: "plants", crop: "crops", livestock: "livestock" };
 function landBiome(ctx) {
-  var _a5, _b3;
-  return (_b3 = (_a5 = ctx.biome) != null ? _a5 : findBiome(homelandOf(ctx.culture))) != null ? _b3 : BRITAIN;
+  var _a5;
+  return (_a5 = ctx.biome) != null ? _a5 : BRITAIN;
 }
 function biomeItems(ctx, token17) {
   const biome = landBiome(ctx);
@@ -131909,7 +131981,7 @@ function festivalSeries(S, cycleKey) {
   return names.map((n, i) => ({ ...n, ...slots[i].season ? { season: slots[i].season, tag: seasonPhrase(slots[i].season) } : {} }));
 }
 function generateTimeSkyNames(options) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -131921,12 +131993,12 @@ function generateTimeSkyNames(options) {
   const home = homelandOf(culture);
   const atHome = !biome || biome.id === home;
   const land = landKind(biome);
-  const resolved = biome != null ? biome : findBiome(home);
-  const kinds = kindsOffered2(options.kind && ((_c3 = findTimeKind(options.kind)) == null ? void 0 : _c3.module) === "sky" ? "sky" : "calendar", culture, era, land);
+  const resolved = biome != null ? biome : ((_c3 = options.catalogue) != null ? _c3 : BUILT_IN_BIOMES).find(home);
+  const kinds = kindsOffered2(options.kind && ((_d3 = findTimeKind(options.kind)) == null ? void 0 : _d3.module) === "sky" ? "sky" : "calendar", culture, era, land);
   const kind = options.kind && kinds.some((k) => k.key === options.kind) ? options.kind : kinds[0].key;
-  const guards = (_d3 = options.safeguards) != null ? _d3 : defaultTimeSafeguards();
+  const guards = (_e3 = options.safeguards) != null ? _e3 : defaultTimeSafeguards();
   RULES2 = { block: timeBlockSet(guards, kind) };
-  const tone = sensitive && (options.tone === "light" || options.tone === "grim") ? "any" : (_e3 = options.tone) != null ? _e3 : "any";
+  const tone = sensitive && (options.tone === "light" || options.tone === "grim") ? "any" : (_f = options.tone) != null ? _f : "any";
   const count = Math.max(0, Math.floor(options.count));
   const ctx = {
     rng,
@@ -131934,10 +132006,10 @@ function generateTimeSkyNames(options) {
     era,
     setting: routeSetting(era, fantastic),
     fantastic,
-    mode: (_f = options.people) != null ? _f : "placeholders",
+    mode: (_g = options.people) != null ? _g : "placeholders",
     tone,
-    vocab: (_g = options.vocab) != null ? _g : BUILT_IN_VOCAB,
-    words: kind === "festival" ? (_h = options.words) != null ? _h : "translated" : "translated",
+    vocab: (_h = options.vocab) != null ? _h : BUILT_IN_VOCAB,
+    words: kind === "festival" ? (_i = options.words) != null ? _i : "translated" : "translated",
     biome: resolved,
     atHome,
     land,
@@ -131955,7 +132027,7 @@ function generateTimeSkyNames(options) {
   };
   const series = !!options.series && seriesOffered(kind, culture, era, land);
   if (series) {
-    const S = { seed, ctx, options, seen: /* @__PURE__ */ new Set(), notices, realShare: (_i = options.realShare) != null ? _i : TIME_SKY.realShare };
+    const S = { seed, ctx, options, seen: /* @__PURE__ */ new Set(), notices, realShare: (_j = options.realShare) != null ? _j : TIME_SKY.realShare };
     const batch = runSeries(S, kind, seed);
     return batch;
   }
@@ -132268,7 +132340,7 @@ function startSeasons(state, limits) {
   return ((_a5 = seasonCycle(biome, state.culture, atHome)) != null ? _a5 : []).map(([s]) => s);
 }
 function timeSentence(module2, state, limits) {
-  var _a5, _b3, _c3, _d3;
+  var _a5, _b3, _c3, _d3, _e3;
   const out = [];
   const culture = (_a5 = findTimeCulture(state.culture)) != null ? _a5 : TIME_CULTURES[0];
   out.push({
@@ -132321,11 +132393,8 @@ function timeSentence(module2, state, limits) {
     title: (_c3 = biome == null ? void 0 : biome.guide) != null ? _c3 : "Their homeland: the culture's own land",
     choices: [
       { id: void 0, label: "Their homeland" },
-      ...limits.biomes.map((b) => {
-        var _a6, _b4;
-        return { id: (_b4 = (_a6 = b.custom) == null ? void 0 : _a6.path) != null ? _b4 : b.id, label: b.label };
-      }),
-      ...(isFutureEra(state.era) ? SPACE_BIOMES.filter((b) => state.era === "IS" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({ id: b.id, label: b.label, title: b.guide, ...i === 0 ? { heading: "Space" } : {} }))
+      ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label })),
+      ...(isFutureEra(state.era) ? ((_d3 = limits.spaceBiomes) != null ? _d3 : SPACE_BIOMES).filter((b) => state.era === "IS" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({ id: b.id, label: b.label, title: b.guide, ...i === 0 ? { heading: "Space" } : {} }))
     ],
     current: state.biome
   });
@@ -132368,7 +132437,7 @@ function timeSentence(module2, state, limits) {
     current: state.people
   });
   out.push(" gods and people, ");
-  const seriesText = (_d3 = TIME_SKY.series[kind.key]) == null ? void 0 : _d3.text;
+  const seriesText = (_e3 = TIME_SKY.series[kind.key]) == null ? void 0 : _e3.text;
   const canSeries = seriesOffered(kind.key, state.culture, state.era, land);
   out.push({
     field: "series",
@@ -134775,7 +134844,7 @@ var LandButton = class {
     const state = this.options.state();
     this.el.toggle(!!state);
     if (!state) return;
-    const biome = findBiome(state.biome, this.custom);
+    const biome = biomeCatalogue(this.custom).find(state.biome);
     const terrain = [...TERRAIN_CHOICES, ...(_a5 = biome == null ? void 0 : biome.customTerrains) != null ? _a5 : []].find((t) => t.id === state.terrain);
     const biomeLabel = (_b3 = biome == null ? void 0 : biome.label) != null ? _b3 : this.options.defaultLabel();
     const parts = [biomeLabel, ...this.options.terrain() ? [(_c3 = terrain == null ? void 0 : terrain.label) != null ? _c3 : "Any terrain"] : []];
@@ -134784,19 +134853,19 @@ var LandButton = class {
     this.el.toggleClass("is-active", !!state.biome || state.terrain !== "any");
   }
   async open(evt) {
-    var _a5, _b3;
     const state = this.options.state();
     if (!state) return;
     this.custom = await this.options.customBiomes();
     const menu = new import_obsidian8.Menu();
     const heading = (title) => menu.addItem((item2) => item2.setTitle(title).setDisabled(true));
+    const catalogue = biomeCatalogue(this.custom);
     const choose = (next) => {
       this.options.set(next);
       this.refresh();
       this.options.onChange();
     };
     const setBiome = (id) => {
-      const biome = findBiome(id, this.custom);
+      const biome = catalogue.find(id);
       const keep = !biome || state.terrain === "any" || availableTerrains(biome).some((t) => t.id === state.terrain);
       choose({ biome: id, terrain: keep ? state.terrain : "any" });
     };
@@ -134804,20 +134873,22 @@ var LandButton = class {
     const defaultLabel = this.options.defaultLabel();
     menu.addItem((item2) => item2.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
     menu.addSeparator();
-    const builtIn = defaultLabel === BRITAIN.label ? BIOMES : [BRITAIN, ...BIOMES];
-    for (const b of builtIn) menu.addItem((item2) => item2.setTitle(b.label).setChecked(state.biome === b.id).onClick(() => setBiome(b.id)));
-    if (this.custom.length > 0) {
+    const builtIn = catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => defaultLabel !== BRITAIN.label || b.id !== BRITAIN.id);
+    const others = catalogue.all.filter((b) => b.custom && !b.custom.overrides);
+    for (const b of builtIn) {
+      menu.addItem((item2) => item2.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
+    }
+    if (others.length > 0) {
       menu.addSeparator();
       heading("Your biomes");
-      for (const b of [...this.custom].sort((x, y) => x.label.localeCompare(y.label))) {
-        const id = (_b3 = (_a5 = b.custom) == null ? void 0 : _a5.path) != null ? _b3 : b.id;
-        menu.addItem((item2) => item2.setTitle(b.label).setChecked(state.biome === id).onClick(() => setBiome(id)));
+      for (const b of others) {
+        menu.addItem((item2) => item2.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
       }
     }
     if (this.options.terrain()) {
       menu.addSeparator();
       heading("Terrain");
-      const biome = findBiome(state.biome, this.custom);
+      const biome = catalogue.find(state.biome);
       const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
       menu.addItem((item2) => item2.setTitle("Any terrain").setChecked(state.terrain === "any").onClick(() => choose({ ...state, terrain: "any" })));
       for (const t of terrains) {
@@ -134830,7 +134901,7 @@ var LandButton = class {
 function landHistorySuffix(state, custom = [], withBiome = true) {
   var _a5;
   if (!state) return "";
-  const biome = findBiome(state.biome, custom);
+  const biome = biomeCatalogue(custom).find(state.biome);
   const terrain = [...TERRAIN_CHOICES, ...(_a5 = biome == null ? void 0 : biome.customTerrains) != null ? _a5 : []].find((t) => t.id === state.terrain && t.id !== "any");
   return `${withBiome && biome ? ` \xB7 ${biomeInline(biome)}` : ""}${terrain ? ` \xB7 ${terrain.label.toLowerCase()}` : ""}`;
 }
@@ -137215,9 +137286,34 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   customBiomesCache() {
     return this.customBiomes;
   }
+  /** Reads the biome packs again and redraws the sentence if they changed, so a menu never offers a stale list. */
+  refreshBiomes() {
+    const before = this.customBiomes;
+    void this.loadCustomBiomes().then((now) => {
+      if (now !== before) this.renderContextRow();
+    });
+  }
+  /** Wizard retirement brief §5.1: every biome list and lookup, over the packs as last loaded (rebuilt only when they are). */
+  catalogue() {
+    var _a5;
+    if (((_a5 = this.catalogueCache) == null ? void 0 : _a5.biomes) !== this.customBiomes) this.catalogueCache = { biomes: this.customBiomes, catalogue: biomeCatalogue(this.customBiomes) };
+    return this.catalogueCache.catalogue;
+  }
+  /**
+   * The catalogue a run passes to its engine: the packs freshly loaded, their `//` pack lines resolved
+   * to draws (engines never read the vault), so a pack that replaces a built-in works wherever that
+   * built-in is used, including the defaults inside engines.
+   */
+  async readyCatalogue() {
+    const custom = await this.loadCustomBiomes();
+    if (!custom.some((b) => b.custom && b.packLines && !b.packDraws)) return this.catalogue();
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const ready = await Promise.all(custom.map((b) => b.custom && b.packLines && !b.packDraws ? host.withPackDraws(b, b.custom.path) : b));
+    return biomeCatalogue(ready);
+  }
   /** A biome for a generator: a pack's `//` lines resolved to draws; built-ins unchanged. */
   async readyBiome(biome) {
-    if (!(biome == null ? void 0 : biome.custom) || !biome.packLines) return biome;
+    if (!(biome == null ? void 0 : biome.custom) || !biome.packLines || biome.packDraws) return biome;
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
     return host.withPackDraws(biome, biome.custom.path);
   }
@@ -137415,7 +137511,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   spaceClause(sentence2, key2) {
     var _a5;
     const land = this.land(key2);
-    const biome = findBiome(land.biome, this.customBiomes);
+    const biome = this.catalogue().find(land.biome);
     const space = (biome == null ? void 0 : biome.space) ? biome : void 0;
     const allOfSpace = { id: void 0, label: "all of space", title: "Each name is drawn at a scale of its own: a planet's moons, a star system, the local stars, a sector or the galaxy" };
     if (!space) {
@@ -137423,7 +137519,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         sentence2,
         "all of space",
         (_a5 = allOfSpace.title) != null ? _a5 : "",
-        () => [allOfSpace, ...SPACE_BIOMES.map((b) => ({ id: b.id, label: `all of ${b.phrase}`, title: b.guide }))],
+        () => [allOfSpace, ...this.catalogue().space.map((b) => ({ id: b.id, label: `all of ${b.phrase}`, title: b.guide }))],
         void 0,
         (id) => this.landStates[key2] = { biome: id, terrain: "any" }
       );
@@ -137443,7 +137539,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       sentence2,
       space.phrase,
       space.guide,
-      () => [{ ...allOfSpace, label: "all of space" }, ...SPACE_BIOMES.map((b) => ({ id: b.id, label: b.phrase, title: b.guide }))],
+      () => [{ ...allOfSpace, label: "all of space" }, ...this.catalogue().space.map((b) => ({ id: b.id, label: b.phrase, title: b.guide }))],
       space.id,
       (id) => this.landStates[key2] = { biome: id, terrain: id === space.id ? this.land(key2).terrain : "any" }
     );
@@ -137452,7 +137548,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   landClause(sentence2, key2, defaultPhrase, part, britainAsDefault) {
     var _a5;
     const land = this.land(key2);
-    const biome = findBiome(land.biome, this.customBiomes);
+    const biome = this.catalogue().find(land.biome);
     const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
     const spaceLand = !!(biome == null ? void 0 : biome.space) && part !== "organic";
     const anyText = spaceLand ? "all" : "any part";
@@ -137470,21 +137566,19 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       biome ? biomePhrase(land.biome, part, this.customBiomes) : defaultPhrase,
       (_a5 = biome == null ? void 0 : biome.guide) != null ? _a5 : "Biome: the plants, wildlife, ground and seasons",
       async () => {
-        const custom = [...await this.loadCustomBiomes()].sort((x, y) => x.label.localeCompare(y.label));
-        const space = part !== "organic" && key2.includes("colonial:") ? SPACE_BIOMES.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
+        await this.loadCustomBiomes();
+        const catalogue = this.catalogue();
+        const space = part !== "organic" && key2.includes("colonial:") ? catalogue.space.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
         return [
           { id: void 0, label: defaultPhrase },
-          ...[...britainAsDefault ? [] : [BRITAIN], ...BIOMES, ...custom].map((b) => {
-            var _a6, _b3;
-            return { id: (_b3 = (_a6 = b.custom) == null ? void 0 : _a6.path) != null ? _b3 : b.id, label: b.phrase };
-          }),
+          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase })),
           ...space
         ];
       },
       land.biome,
       (id) => {
         const current = this.land(key2);
-        const next = findBiome(id, this.customBiomes);
+        const next = this.catalogue().find(id);
         const keep = !next || current.terrain === "any" || availableTerrains(next).some((t) => t.id === current.terrain);
         this.landStates[key2] = { biome: id, terrain: keep ? current.terrain : "any" };
       }
@@ -137656,7 +137750,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       (id) => o.setTradition(id === "general" ? void 0 : id)
     );
     sentence2.appendText(part === "2" ? " in " : " who are ");
-    const spaceBiome = (_a5 = findBiome(this.land(o.landKey).biome, this.customBiomes)) == null ? void 0 : _a5.space;
+    const spaceBiome = (_a5 = this.catalogue().find(this.land(o.landKey).biome)) == null ? void 0 : _a5.space;
     const contexts = contextPhrasesFor(part, !!spaceBiome).filter(([id]) => colonialContexts(part).some((c) => c.id === id));
     const context = (_b3 = contexts.find(([id]) => id === o.context)) != null ? _b3 : contexts[0];
     this.sentenceLink(
@@ -137749,7 +137843,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     var _a5;
     const s = this.settlementState;
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
-    await this.loadCustomBiomes();
+    const catalogue = await this.readyCatalogue();
     let options;
     let tail;
     const sourcePart = s.setting === "native" ? s.culture === PLACE_BRITAIN ? "organic" : void 0 : slotPartOf(s.setting === "new-lands" ? "2" : "2a");
@@ -137759,10 +137853,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       sources,
       sourcePart === "organic" ? britishPlaceNamesRecipe(s.region) : colonialPlaceNamesRecipe(sourcePart, s.tradition[s.setting === "new-lands" ? "2" : "2a"], s.context[s.setting === "new-lands" ? "2" : "2a"])
     ) : { slots: {}, notices: [] };
-    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness, slots: own.slots };
+    const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness, slots: own.slots, catalogue };
     if (s.setting === "native" && s.culture === PLACE_BRITAIN) {
       const land = this.land(SETTLEMENT_LAND_KEYS.britain);
-      const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
+      const biome = await this.readyBiome(this.catalogue().find(land.biome));
       options = { ...base, setting: "native", culture: "britain", region: s.region, biome: (biome == null ? void 0 : biome.custom) ? void 0 : land.biome, customBiome: (biome == null ? void 0 : biome.custom) ? biome : void 0, terrain: land.terrain };
       tail = withRegion("British", s.region) + landHistorySuffix(land, this.customBiomes);
     } else if (s.setting === "native") {
@@ -137770,12 +137864,12 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       const interstellar = findEra(findCulture(s.culture), era).id === INTERSTELLAR_ERA;
       const key2 = interstellar ? SETTLEMENT_LAND_KEYS.interstellar : cultureUsesBiomes(s.culture) ? SETTLEMENT_LAND_KEYS.world(s.culture) : void 0;
       const land = key2 ? this.land(key2) : DEFAULT_LAND;
-      options = { ...base, setting: "native", culture: s.culture, era, customBiome: findBiome(land.biome, this.customBiomes), terrain: land.terrain };
+      options = { ...base, setting: "native", culture: s.culture, era, customBiome: this.catalogue().find(land.biome), terrain: land.terrain };
       tail = worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, s.culture, era).slice(WORLD_PLACE_NAMES_HISTORY_NAME.length + 3) + landHistorySuffix(land, this.customBiomes);
     } else {
       const part = s.setting === "new-lands" ? "2" : "2a";
       const land = this.land(`settlement:colonial:${part}`);
-      const found = findBiome(land.biome, this.customBiomes);
+      const found = this.catalogue().find(land.biome);
       const custom = (found == null ? void 0 : found.custom) ? await this.readyBiome(found) : void 0;
       const biome = custom ? void 0 : land.biome;
       options = { ...base, setting: s.setting, tradition: s.tradition[part], context: s.context[part], biome, customBiome: custom, terrain: land.terrain, aliens: !!(found == null ? void 0 : found.space) && s.aliens[part] };
@@ -137795,7 +137889,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     const custom = await this.loadCustomBiomes();
     const colonialPart = s.setting === "native" ? void 0 : s.setting === "new-lands" ? "2" : "2a";
     const land = this.land(colonialPart ? `settlement:colonial:${colonialPart}` : SETTLEMENT_LAND_KEYS.britain);
-    const found = findBiome(land.biome, custom);
+    const found = this.catalogue().find(land.biome);
     const biome = found ? found.custom ? `[[${found.label}]]` : found.id : void 0;
     const tradition = colonialPart ? s.tradition[colonialPart] : void 0;
     const context = colonialPart ? s.context[colonialPart] : void 0;
@@ -137917,10 +138011,11 @@ ${text}
   async runTribal(state, label, problems = []) {
     var _a5;
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
-    await this.loadCustomBiomes();
-    const chosen = findBiome(state.biome, this.customBiomes);
+    const catalogue = await this.readyCatalogue();
+    const chosen = catalogue.find(state.biome);
     const guards = await this.loadSafeguards();
     const result = generateTribalNames({
+      catalogue,
       tradition: state.tradition,
       ...(chosen == null ? void 0 : chosen.custom) ? { biomeData: chosen } : { biome: state.biome },
       terrain: state.terrain,
@@ -138107,7 +138202,8 @@ ${n.origin}${also}${echo}` };
     };
   }
   realmLimits(custom) {
-    return { biomes: [BRITAIN, ...BIOMES, ...[...custom].sort((x, y) => x.label.localeCompare(y.label))], findBiome: (id) => findBiome(id, custom) };
+    const catalogue = this.catalogue();
+    return { biomes: catalogue.all, findBiome: (id) => catalogue.find(id), spaceBiomes: catalogue.space };
   }
   /** §2: the sentence; the biome menu reads the biome packs afresh when it opens. */
   renderRealmSentence(row) {
@@ -138128,7 +138224,7 @@ ${n.origin}${also}${echo}` };
         },
         segment2.current,
         (id) => {
-          this.realmState = chooseRealm(this.realmState, segment2.field, id, (x) => findBiome(x, this.customBiomes));
+          this.realmState = chooseRealm(this.realmState, segment2.field, id, (x) => this.catalogue().find(x));
         }
       );
     }
@@ -138139,8 +138235,10 @@ ${n.origin}${also}${echo}` };
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
     const guards = await this.loadRealmSafeguards();
     const custom = await this.loadCustomBiomes();
-    const biome = state.biome ? findBiome(state.biome, custom) : void 0;
+    const catalogue = await this.readyCatalogue();
+    const biome = state.biome ? catalogue.find(state.biome) : void 0;
     const result = generateRealmNames({
+      catalogue,
       culture: state.culture,
       character: state.character,
       era: state.era,
@@ -139028,8 +139126,10 @@ ${n.origin}${also}${echo}` };
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, timeWordBlocked);
     const custom = await this.loadCustomBiomes();
     const limits = this.timeLimits(custom);
-    const biome = state.biome ? findBiome(state.biome, custom) : void 0;
+    const catalogue = await this.readyCatalogue();
+    const biome = state.biome ? catalogue.find(state.biome) : void 0;
     const result = generateTimeSkyNames({
+      catalogue,
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -139863,7 +139963,8 @@ ${n.origin}${also}${echo}` };
   /** §2: the module's sentence. */
   renderWatersSentence(row, module2) {
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    for (const segment2 of watersSentence(this.watersState(module2), module2)) {
+    this.refreshBiomes();
+    for (const segment2 of watersSentence(this.watersState(module2), module2, this.catalogue())) {
       if (typeof segment2 === "string") {
         sentence2.appendText(segment2);
         continue;
@@ -139880,6 +139981,7 @@ ${n.origin}${also}${echo}` };
     const guards = await this.loadSettlementSafeguards({ block: module2 === "hyperspaceCharts" ? WATERS_DATA.safeguards.hyper : WATERS_DATA.safeguards.earthly, flag: [], flagListBlocks: false });
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, watersWordBlocked);
     const result = generateWatersNames({
+      catalogue: await this.readyCatalogue(),
       module: module2,
       culture: state.culture,
       kind: state.kind,
@@ -139904,7 +140006,7 @@ ${n.origin}${also}${echo}` };
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
       "none"
     );
-    await this.recordGenerationHistory(result.names.length, label != null ? label : watersHistoryLabel(module2, state, SECTION_LABELS[module2]));
+    await this.recordGenerationHistory(result.names.length, label != null ? label : watersHistoryLabel(module2, state, SECTION_LABELS[module2], this.catalogue()));
     this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
   }
   /** §15: "{culture} · {module}", described by the sentence. */
@@ -139913,7 +140015,7 @@ ${n.origin}${also}${echo}` };
     const state = this.watersState(module2);
     const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
     const name = [culture, SECTION_LABELS[module2]].join(" \xB7 ");
-    const description = watersSentenceText(watersSentence(state, module2));
+    const description = watersSentenceText(watersSentence(state, module2, this.catalogue()));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4, _c3, _d3;
       if (!presetName) {
@@ -139968,13 +140070,14 @@ ${n.origin}${also}${echo}` };
   /** §2: the module's sentence. */
   renderWildsSentence(row, module2) {
     const sentence2 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
-    for (const segment2 of wildsSentence(this.wildsState(module2), module2)) {
+    this.refreshBiomes();
+    for (const segment2 of wildsSentence(this.wildsState(module2), module2, this.catalogue())) {
       if (typeof segment2 === "string") {
         sentence2.appendText(segment2);
         continue;
       }
       this.sentenceLink(sentence2, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
-        this.wildsStates[module2] = chooseWilds(this.wildsState(module2), segment2.field, id, module2);
+        this.wildsStates[module2] = chooseWilds(this.wildsState(module2), segment2.field, id, module2, this.catalogue());
       });
     }
   }
@@ -140003,7 +140106,7 @@ ${n.origin}${also}${echo}` };
     const state = this.wildsState(module2);
     const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
     const name = [culture, SECTION_LABELS[module2]].join(" \xB7 ");
-    const description = wildsSentenceText(wildsSentence(state, module2));
+    const description = wildsSentenceText(wildsSentence(state, module2, this.catalogue()));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4, _c3;
       if (!presetName) {
@@ -140053,6 +140156,7 @@ ${n.origin}${also}${echo}` };
     const guards = await this.loadSettlementSafeguards({ block: WILDS_DATA.safeguards[module2], flag: [], flagListBlocks: false });
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, wildsWordBlocked);
     const result = generateWildsNames({
+      catalogue: await this.readyCatalogue(),
       module: module2,
       culture: state.culture,
       kind: state.kind,
@@ -140074,7 +140178,7 @@ ${n.origin}${also}${echo}` };
       result.names.map((n) => ({ text: n.text, hasPlaceholder: n.text.includes("["), etymology: "" })),
       "none"
     );
-    await this.recordGenerationHistory(result.names.length, label != null ? label : wildsHistoryLabel(module2, state, SECTION_LABELS[module2]));
+    await this.recordGenerationHistory(result.names.length, label != null ? label : wildsHistoryLabel(module2, state, SECTION_LABELS[module2], this.catalogue()));
     this.setStatus([...problems, ...result.notices, ...guards.notices, ...vocab.notices].join(" "));
   }
   // ── Ships and spacecraft (Ships brief) ────────────────────────────────────
@@ -140117,6 +140221,7 @@ ${n.origin}${also}${echo}` };
     const seedOverride = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
     const guards = await this.loadVesselSafeguards(module2);
     const result = generateVesselNames({
+      catalogue: await this.readyCatalogue(),
       module: module2,
       culture: state.culture,
       naming: state.naming,
@@ -140477,7 +140582,7 @@ ${n.origin}${also}${echo}` };
     const custom = await this.loadCustomBiomes();
     const state = this.tribalState();
     const tradition = (_a5 = findTradition(state.tradition)) != null ? _a5 : TRIBAL_TRADITIONS[0];
-    const biome = findBiome(state.biome, custom);
+    const biome = this.catalogue().find(state.biome);
     const name = `${tradition.label} \xB7 ${biome ? biomeInline(biome) : "homeland"}`;
     const description = tribalSentenceText(tribalSentence(state, this.tribalLimits(custom)));
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
@@ -140517,7 +140622,7 @@ ${n.origin}${also}${echo}` };
     let owns;
     if (colonialPart) {
       const state = this.colonialPlaceState(colonialPart);
-      const found = findBiome(state.land.biome, custom);
+      const found = this.catalogue().find(state.land.biome);
       const part = colonialPart === "2" ? "new-land" : "established";
       const t = COLONIAL_TRADITIONS.find((x) => {
         var _a6;
@@ -140531,7 +140636,7 @@ ${n.origin}${also}${echo}` };
       owns = (existing, presetName) => !!(colonialPart === "2" ? parseModulePreset(existing, presetName).exploration : parseModulePreset(existing, presetName).expansion);
     } else if (this.placeIsBritain()) {
       const state = this.britishPlaceState();
-      const found = findBiome(state.land.biome, custom);
+      const found = this.catalogue().find(state.land.biome);
       const sentence2 = slotSentence("organic", state.sources);
       name = `British \xB7 ${SECTION_LABELS.placeShapes}`;
       description = `${wizardSentenceText("organic", { region: state.region, biome: found == null ? void 0 : found.id, terrain: state.land.terrain }, custom)}.${sentence2 ? ` ${slotSegmentsText(sentence2)}` : ""}`;
@@ -140541,7 +140646,7 @@ ${n.origin}${also}${echo}` };
       const state = this.worldPlaceState();
       const culture = findCulture(state.culture);
       const era = findEra(culture, state.era);
-      const found = findBiome(state.land.biome, custom);
+      const found = this.catalogue().find(state.land.biome);
       name = `${culture.label} \xB7 ${SECTION_LABELS.placeShapes}`;
       description = `${culture.label} place names${culture.eras.length > 1 ? ` from the ${era.label} era` : ""}${found ? `, set in ${found.phrase}` : ""}.`;
       make = (presetName, text) => modulePresetContent(worldPresetOf(state, era.id, { packName: presetName, description: text, biome: biomeText(found) }));
@@ -140584,9 +140689,10 @@ ${n.origin}${also}${echo}` };
     });
     return { ...land, biome: (_b3 = found == null ? void 0 : found.custom) == null ? void 0 : _b3.path };
   }
-  placeRunOptions() {
+  placeRunOptions(catalogue) {
     var _a5;
     return {
+      catalogue,
       count: this.generationCount,
       seed: this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0,
       faithfulness: this.plugin.settings.faithfulness,
@@ -140595,10 +140701,10 @@ ${n.origin}${also}${echo}` };
   }
   /** River brief §2: rendered names from the fixed British recipe, shown as recipe results. `label` replaces the history label (a preset run's). */
   async runBritishPlace(state, label, problems = []) {
-    await this.loadCustomBiomes();
-    const biome = await this.readyBiome(findBiome(state.land.biome, this.customBiomes));
+    const catalogue = await this.readyCatalogue();
+    const biome = catalogue.find(state.land.biome);
     const own = await this.resolveSlotSources("organic", state.sources, britishRecipe(state, biome));
-    const result = this.tryLand(() => generateBritishPlace(state, biome, own.slots, this.placeRunOptions()));
+    const result = this.tryLand(() => generateBritishPlace(state, biome, own.slots, this.placeRunOptions(catalogue)));
     if (!result) return;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
@@ -140609,8 +140715,8 @@ ${n.origin}${also}${echo}` };
     this.setStatus([...problems, ...result.notices, ...own.notices].join(" "));
   }
   async runWorldPlace(state, label, problems = []) {
-    await this.loadCustomBiomes();
-    const result = generateWorldPlace(state, findBiome(state.land.biome, this.customBiomes), this.placeRunOptions());
+    const catalogue = await this.readyCatalogue();
+    const result = generateWorldPlace(state, catalogue.find(state.land.biome), this.placeRunOptions(catalogue));
     this.currentSeed = result.seed;
     this.renderRecipeResults(
       result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology })),
@@ -140623,12 +140729,12 @@ ${n.origin}${also}${echo}` };
     this.setStatus([...problems, ...result.notices].join(" "));
   }
   async runColonialPlace(part, state, label, problems = []) {
-    await this.loadCustomBiomes();
-    const found = findBiome(state.land.biome, this.customBiomes);
-    const custom = (found == null ? void 0 : found.custom) ? await this.readyBiome(found) : void 0;
+    const catalogue = await this.readyCatalogue();
+    const found = catalogue.find(state.land.biome);
+    const custom = (found == null ? void 0 : found.custom) ? found : void 0;
     const slotPart = slotPartOf(part);
     const own = await this.resolveSlotSources(slotPart, state.sources, colonialRecipe(part, state, found, custom));
-    const result = this.tryLand(() => generateColonialPlace(part, state, found, custom, own.slots, this.placeRunOptions()));
+    const result = this.tryLand(() => generateColonialPlace(part, state, found, custom, own.slots, this.placeRunOptions(catalogue)));
     if (!result) return;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
@@ -140873,7 +140979,7 @@ ${n.origin}${also}${echo}` };
         },
         segment2.current,
         (id) => {
-          this.setTribalState(chooseTribal(this.tribalState(), segment2.field, id, (x) => findBiome(x, this.customBiomes)));
+          this.setTribalState(chooseTribal(this.tribalState(), segment2.field, id, (x) => this.catalogue().find(x)));
           if (segment2.field === "hostile" && id === "hostile") new import_obsidian11.Notice("Hostile names are on: some results will be insults one people used for another.");
         }
       );
@@ -140892,8 +140998,8 @@ ${n.origin}${also}${echo}` };
   /** The tribal module's sentence limits: every biome, insults offered. */
   tribalLimits(custom) {
     return {
-      biomes: [BRITAIN, ...BIOMES, ...[...custom].sort((x, y) => x.label.localeCompare(y.label))],
-      findBiome: (id) => findBiome(id, custom),
+      biomes: this.catalogue().all,
+      findBiome: (id) => this.catalogue().find(id),
       hostile: true
     };
   }
@@ -141772,7 +141878,8 @@ ${n.origin}${also}${echo}` };
     let result;
     try {
       const adapt = host.resolveTakeover(loaded.recipe, file.path);
-      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt, biome });
+      const catalogue = await this.readyCatalogue();
+      const steps = generatePlaceNamesSteps({ recipe: loaded.recipe, slots, count: this.generationCount, seed: seedOverride, adapt, biome, catalogue });
       for (; ; ) {
         const next = steps.next();
         if (next.done) {
@@ -141991,8 +142098,10 @@ ${n.origin}${also}${echo}` };
       const setting = placeRivers ? "british" : this.riverSetting;
       const british = setting === "british";
       const region = placeRivers ? this.selectedRegion : this.riverRegion;
-      const biome = british ? void 0 : findBiome(this.land("river").biome, this.customBiomes);
+      const catalogue = await this.readyCatalogue();
+      const biome = british ? void 0 : catalogue.find(this.land("river").biome);
       const result2 = generateRiverNames({
+        catalogue,
         setting,
         region: british ? region : void 0,
         biome: biome == null ? void 0 : biome.id,
@@ -143115,9 +143224,12 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
   }
   /** The chosen base: a built-in id, or a user pack's path. */
   biomeBase() {
-    var _a5, _b3, _c3;
+    var _a5, _b3, _c3, _d3;
     const value = (_b3 = (_a5 = this.biomeBaseSelect) == null ? void 0 : _a5.value) != null ? _b3 : "temperate";
-    return (_c3 = findBiome(value, this.parent.customBiomesCache())) != null ? _c3 : BIOMES[0];
+    return (_d3 = (_c3 = BUILT_IN_BIOMES.find(value)) != null ? _c3 : this.parent.customBiomesCache().find((b) => {
+      var _a6;
+      return ((_a6 = b.custom) == null ? void 0 : _a6.path) === value;
+    })) != null ? _d3 : BIOMES[0];
   }
   /** The base as editable text: its sections, without frontmatter or guide. */
   biomeBody(b) {

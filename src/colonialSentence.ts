@@ -1,7 +1,7 @@
 // The place-name sentences' wording as plain data (Tribal brief §19.2, Land brief §4.2), so it
 // can be tested. No Obsidian imports: the modal draws the same wording as links.
 
-import { type Biome, BIOMES, BRITAIN, findBiome, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
+import { type Biome, type BiomeCatalogue, biomeCatalogue, biomeChoiceId, BRITAIN, BUILT_IN_BIOMES, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
 import { contextPhrasesFor } from "./colonialWording";
 import { COLONIAL_DATA, COLONIAL_TRADITIONS } from "./colonialShapes";
 import { PLACE_SHAPE_DATA, PLACE_SHAPE_REGIONS } from "./placeShapes";
@@ -54,7 +54,7 @@ export function featurePhraseFor(feature: string, biome?: Biome): string {
 export const UNKNOWN_COUNTRY = "unknown country";
 
 /** Stellar brief §5.1: the Space heading's biomes, as the biome link offers them. */
-export const spaceBiomeChoices = (): { id: string; label: string; title: string }[] => SPACE_BIOMES.map((b) => ({ id: b.id, label: b.phrase, title: b.guide }));
+export const spaceBiomeChoices = (catalogue: BiomeCatalogue = BUILT_IN_BIOMES): { id: string; label: string; title: string }[] => catalogue.space.map((b) => ({ id: b.id, label: b.phrase, title: b.guide }));
 
 /** Stellar brief §5.10: the tooltip on the Space heading. */
 export const SPACE_HEADING_TIP = "Traditions name space as they named new lands: rulers, founders, sponsors, ships and homeland names.";
@@ -65,11 +65,11 @@ export const ALIEN_CHOICES = [
   { id: "on", label: "alien life" },
 ];
 
-/** The biome link's built-in choices (Land brief §4.2): the part's default, then Britain (colonial
- * only, since it is organic's default) and the 12 biomes. User packs are added by the editor. */
-export function biomeChoices(part: "organic" | "new-land" | "established"): { id: string; label: string }[] {
-  const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: BRITAIN.phrase }];
-  return [...lead, ...BIOMES.map((b) => ({ id: b.id, label: b.phrase }))];
+/** The biome link's choices (Land brief §4.2): the part's default, then Britain (colonial only, since it
+ * is organic's default), the 12 biomes and the user's packs (wizard retirement brief §5.1). */
+export function biomeChoices(part: "organic" | "new-land" | "established", catalogue: BiomeCatalogue = BUILT_IN_BIOMES): { id: string; label: string }[] {
+  const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: catalogue.find(BRITAIN.id)?.phrase ?? BRITAIN.phrase }];
+  return [...lead, ...catalogue.all.filter((b) => b.id !== BRITAIN.id).map((b) => ({ id: biomeChoiceId(b), label: b.phrase }))];
 }
 
 /** A biome setting's phrase: the part's default, a built-in's phrase, or a pack's. */
@@ -79,7 +79,7 @@ export function biomePhrase(biome: string | undefined, part: "organic" | "new-la
     const pack = custom.find((b) => b.label === name || b.custom?.path === name);
     return pack?.phrase ?? name;
   }
-  const found = findBiome(biome, custom);
+  const found = biomeCatalogue(custom).find(biome);
   if (found) return found.phrase;
   return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
 }
@@ -119,7 +119,7 @@ export interface SentenceSettings {
  * - Expansion: "General incomers who are ruling over the locals across any part of unknown country, naming any feature"
  */
 export function wizardSentenceText(part: "organic" | "new-land" | "established", settings: SentenceSettings, custom: readonly Biome[] = []): string {
-  const biome = findBiome(settings.biome, custom);
+  const biome = biomeCatalogue(custom).find(settings.biome);
   const space = !!biome?.space && part !== "organic";
   // Stellar brief §5.2: Any terrain under a space biome reads "all of a sector".
   const land = space && (!settings.terrain || settings.terrain === "any") ? `all of ${biomePhrase(settings.biome, part, custom)}` : `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;

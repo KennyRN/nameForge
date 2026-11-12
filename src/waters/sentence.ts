@@ -5,7 +5,7 @@
 // ‹in any words›, ‹of any tone›, with ‹placeholders for› people". Built as segments like the route
 // sentence. No Obsidian imports.
 
-import { BIOMES } from "../biomes";
+import { type BiomeCatalogue, biomeChoiceId, biomeMatches, biomesRootedIn, BUILT_IN_BIOMES } from "../biomes";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
@@ -94,14 +94,14 @@ const NOUN: Record<WatersModule, string> = { seasLakes: "waters", coastsIslands:
 /** §2.2: "across all of Britain", or "in the North". */
 export const watersRegionText = (region: string | undefined) => (region ? `in ${regionPhrase(region)}` : "across all of Britain");
 /** §2.2: "in any land", or "in the highlands". */
-export const watersBiomeText = (biome: string | undefined) => {
-  const found = BIOMES.find((b) => b.id === biome);
+export const watersBiomeText = (biome: string | undefined, catalogue: BiomeCatalogue = BUILT_IN_BIOMES) => {
+  const found = biomesRootedIn(catalogue).find((b) => biomeMatches(b, biome));
   return found ? `in ${found.phrase}` : "in any land";
 };
 
 const hyperScales = (): ScaleChoice[] => ["any", ...HYPER_SCALES];
 
-export function watersSentence(state: WatersSentenceState, module: WatersModule): WatersSegment[] {
+export function watersSentence(state: WatersSentenceState, module: WatersModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WatersSegment[] {
   const out: WatersSegment[] = [];
   const hyper = module === "hyperspaceCharts";
   const culture = findWatersCulture(state.culture) ?? WATERS_CULTURES[0];
@@ -194,9 +194,9 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule)
     } else {
       out.push({
         field: "biome",
-        text: watersBiomeText(state.biome),
+        text: watersBiomeText(state.biome, catalogue),
         title: "Weights the names towards a land's waters and wildlife",
-        choices: [{ id: undefined, label: watersBiomeText(undefined) }, ...BIOMES.map((b) => ({ id: b.id, label: watersBiomeText(b.id) }))],
+        choices: [{ id: undefined, label: watersBiomeText(undefined, catalogue) }, ...biomesRootedIn(catalogue).map((b) => ({ id: biomeChoiceId(b), label: watersBiomeText(biomeChoiceId(b), catalogue) }))],
         current: state.biome,
       });
     }
@@ -302,7 +302,7 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
 }
 
 /** §1.3: "{module} · {era} · {culture}…", and for hyperspace "{module} · {scale} · {culture}…". */
-export function watersHistoryLabel(module: WatersModule, state: WatersSentenceState, moduleLabel: string): string {
+export function watersHistoryLabel(module: WatersModule, state: WatersSentenceState, moduleLabel: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string {
   const culture = findWatersCulture(state.culture)?.label ?? "General";
   if (module === "hyperspaceCharts") {
     const kind = findHyperKind(state.kind);
@@ -320,7 +320,7 @@ export function watersHistoryLabel(module: WatersModule, state: WatersSentenceSt
   }
   const kind = findWaterKind(module, state.kind);
   const regionShown = showsWatersRegion(state.culture, state.where);
-  const biome = BIOMES.find((b) => b.id === state.biome);
+  const biome = biomesRootedIn(catalogue).find((b) => biomeMatches(b, state.biome));
   return [
     moduleLabel,
     watersEraLabel(state.era),

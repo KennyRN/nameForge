@@ -3,7 +3,7 @@
 // by them›, ‹no insults›". Built as segments so the module, the wizard's page 4 and preset
 // descriptions all read the same. No Obsidian imports.
 
-import { availableTerrains, type Biome, biomeInline, TERRAIN_CHOICES } from "../biomes";
+import { availableTerrains, type Biome, biomeChoiceId, biomeInline, TERRAIN_CHOICES } from "../biomes";
 import { findTradition, homelandSummary, TRIBAL_DATA, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS, TRIBAL_TRADITIONS } from "./engine";
 
 export interface TribalSentenceState {
@@ -102,7 +102,7 @@ export function tribalSentence(state: TribalSentenceState, limits: TribalSentenc
     title: biome?.guide ?? (tradition ? homelandSummary(tradition.key) : "Biome"),
     choices: [
       { id: undefined, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
-      ...limits.biomes.map((b) => ({ id: b.custom?.path ?? b.id, label: b.label })),
+      ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label })),
     ],
     current: state.biome,
   });

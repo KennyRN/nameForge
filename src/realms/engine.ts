@@ -7,7 +7,7 @@
 import { hasSpaceBlock } from "../space/safeguards";
 import { spaceDirections, type SpaceScale } from "../space/scale";
 import realmData from "../data/realms.json";
-import { availableTerrains, type Biome, biomeTitleCase, findBiome, pluralOf, terrainWords } from "../biomes";
+import { availableTerrains, type Biome, type BiomeCatalogue, biomeTitleCase, BUILT_IN_BIOMES, pluralOf, terrainWords } from "../biomes";
 import { BYNAME_CULTURES, cultureAnimals, holyNamesIn, townSource } from "../bynames/engine";
 import {
   breaksGroupColourRule,
@@ -242,6 +242,8 @@ export interface RealmOptions {
   biome?: string;
   /** A resolved biome (a user pack), used in place of `biome`. */
   biomeData?: Biome;
+  /** Wizard retirement brief §5: the biome lists and lookups (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   terrain?: string;
   tone?: GroupToneChoice;
   length?: RealmLength;
@@ -576,10 +578,12 @@ const COLOUR_BEFORE_PEOPLE = new RegExp(`\\b(${groupListWords("colour", "FL").ma
 
 const TRIBAL_POOLS = new Map<string, string[]>();
 function tribalPool(tradition: string, biome: Biome, terrain: string, custom?: Biome): string[] {
-  const key = `${tradition}|${custom ? custom.custom?.path ?? biome.id : biome.id}|${terrain}`;
+  // A pack's biome (including one that replaces a built-in) is keyed by its path, so it never shares a pool with the built-in.
+  const data = custom ?? (biome.custom ? biome : undefined);
+  const key = `${tradition}|${data ? data.custom?.path ?? biome.id : biome.id}|${terrain}`;
   let found = TRIBAL_POOLS.get(key);
   if (!found) {
-    found = generateTribalNames({ tradition, ...(custom ? { biomeData: custom } : { biome: biome.id }), terrain, count: 120, seed: 1789 })
+    found = generateTribalNames({ tradition, ...(data ? { biomeData: data } : { biome: biome.id }), terrain, count: 120, seed: 1789 })
       .names.map((n) => n.name)
       .filter((n) => !n.includes("["));
     TRIBAL_POOLS.set(key, found);
@@ -607,13 +611,13 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
     notices.push("“The stars” needs the near-future or interstellar era.");
     namedFor = "anything";
   }
-  const biome =
-    options.biomeData ?? findBiome(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome) ?? findBiome("temperate")!;
+  const biomes = options.catalogue ?? BUILT_IN_BIOMES;
+  const biome = options.biomeData ?? biomes.find(!options.biome || options.biome === "homeland" ? homelandBiome(culture) : options.biome) ?? biomes.find("temperate")!;
   const terrain = options.terrain ?? "any";
   // Stellar brief §7.1: a space biome needs the near future or interstellar era; elsewhere the homeland stands.
   const spaceOk = !biome.space || era === "NF" || era === "IS";
   if (!spaceOk) notices.push("Space biomes need the near-future or interstellar era; using their homeland.");
-  const landBiome = spaceOk ? biome : findBiome(homelandBiome(culture)) ?? findBiome("temperate")!;
+  const landBiome = spaceOk ? biome : biomes.find(homelandBiome(culture)) ?? biomes.find("temperate")!;
   const scale: SpaceScale | undefined = landBiome.space ? landBiome.scale : undefined;
   const lists = identityLists(landBiome, spaceOk ? terrain : "any");
   const chosen = options.character ? REALM_CHARACTERS.find((c) => c.key === options.character) : undefined;
@@ -626,7 +630,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
   // §6.4: the peoples, from a pool made once per tradition and land with a fixed seed (as GN towns are).
   const tribal = () => {
     // Peoples have no meaning in a space biome's empty lists: a space realm names its people as at home.
-    const peopleBiome = landBiome.space ? findBiome(homelandBiome(culture)) ?? findBiome("temperate")! : biome;
+    const peopleBiome = landBiome.space ? biomes.find(homelandBiome(culture)) ?? biomes.find("temperate")! : biome;
     const pool = tribalPool(REALM_DATA.tribal[culture] ?? "general", peopleBiome, landBiome.space ? "any" : terrain, landBiome.space ? undefined : options.biomeData);
     return pool.length > 0 ? pickOne(pool, rng) : undefined;
   };

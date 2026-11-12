@@ -5,7 +5,7 @@
 // the shape generator's own batch for the same seed and settings.
 
 import nameWordData from "../data/name-words.json";
-import { availableTerrains, type Biome, biomeEntries, BRITAIN, environmentMultipliers, findBiome, shortWords, SLOT_LISTS, terrainWeights } from "../biomes";
+import { availableTerrains, type Biome, type BiomeCatalogue, biomeEntries, BRITAIN, BUILT_IN_BIOMES, environmentMultipliers, isBuiltInBritain, shortWords, SLOT_LISTS, terrainWeights } from "../biomes";
 import { mulberry32 } from "../markov";
 import { type SectionRequest } from "../packs/sections";
 import {
@@ -256,6 +256,8 @@ export interface NameGenerateOptions {
   adapt?: NativeAdapter;
   /** Land brief §4.1: the recipe's biome, resolved by the host (biome packs); built-ins resolve here. */
   biome?: Biome;
+  /** Wizard retirement brief §5: the biome lookups (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   /** Urban brief §6.1: draw settlement names at a size (the shape generators' `settlement` option). */
   settlement?: { size: SizeKey };
 }
@@ -270,6 +272,8 @@ export interface NameRendererOptions {
   /** Land brief §5.3: the resolved biome (undefined: Britain for organic, unknown country for colonial) and terrain. */
   biome?: Biome;
   terrain?: string;
+  /** Wizard retirement brief §5: passed on to the river and tribal fills. */
+  catalogue?: BiomeCatalogue;
   /** Markov settings for river fills (river brief §6.9). */
   faithfulness?: number;
   strictness?: number;
@@ -476,6 +480,7 @@ export class NameRenderer {
         region: setting === "british" ? this.region : undefined,
         // Tribal brief §19.5: colonial parts pass the recipe's biome.
         biome: setting === "british" ? undefined : this.recipe.shape.biome,
+        ...(this.options.catalogue ? { catalogue: this.options.catalogue } : {}),
         faithfulness: this.options.faithfulness,
         strictness: this.options.strictness,
       },
@@ -531,7 +536,7 @@ export class NameRenderer {
    * (Britain with Any terrain draws today's built-ins uniformly, so seeds are unchanged).
    */
   private landFill(categoryId: string, rng: () => number, chosenBiome: boolean): Fill | undefined {
-    const biome = this.options.biome?.id === "britain" ? undefined : this.options.biome;
+    const biome = isBuiltInBritain(this.options.biome) ? undefined : this.options.biome;
     const terrain = this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : undefined;
     const word = (entry: NameWordEntry): Fill => ({ kind: "word", entry, traditional: this.chooseRegister(entry, rng) });
     if (categoryId === "landform" || categoryId === "water-or-wetland-feature") {
@@ -588,6 +593,7 @@ export class NameRenderer {
         region: this.region,
         biome: part === "organic" ? undefined : this.options.biome,
         terrain: this.options.terrain,
+        ...(this.options.catalogue ? { catalogue: this.options.catalogue } : {}),
         ...(Object.keys(fields).length > 0 ? { fields } : {}),
       },
       rng,
@@ -1143,11 +1149,17 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
     options.adapt && !organic ? { adapt: options.adapt, seed, redrawRng: mulberry32((seed ^ REDRAW_SALT) >>> 0) } : undefined;
   // Land brief §4.1: the biome (resolved by the host, or built in) and terrain.
   const biomeSetting = recipe.shape.biome;
-  let biome = options.biome ?? (biomeSetting?.startsWith("[[") ? undefined : findBiome(biomeSetting));
+  const biomes = options.catalogue ?? BUILT_IN_BIOMES;
+  let biome = options.biome ?? (biomeSetting?.startsWith("[[") ? undefined : biomes.find(biomeSetting));
   if (!biome && biomeSetting?.startsWith("[[")) {
     notices.push(`Biome pack “${biomeSetting.slice(2, -2)}” wasn't found; using ${organic ? "Britain" : "unknown country"}.`);
   }
-  if (organic && biome?.id === "britain") biome = undefined;
+  if (organic && isBuiltInBritain(biome)) biome = undefined;
+  // Wizard retirement brief §5.2: a pack that replaces Britain is British place names' own land.
+  if (organic && !biome) {
+    const britain = biomes.find("britain");
+    if (britain?.custom) biome = britain;
+  }
   // Stellar brief §5.1: space biomes are for exploration and expansion; elsewhere the default stands.
   if (organic && biome?.space) {
     notices.push("Space biomes are for exploration, expansion and the Interstellar era.");
@@ -1163,6 +1175,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
   const renderer = new NameRenderer(recipe, options.slots, region, {
     biome,
     terrain,
+    catalogue: options.catalogue,
     adaptation,
     ofTheRng: mulberry32((seed ^ OF_THE_SALT) >>> 0),
     labelRng: mulberry32((seed ^ SPLIT_SALT) >>> 0),
