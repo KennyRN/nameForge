@@ -5,6 +5,7 @@
 import groupData from "../data/group-names.json";
 import { type BiomeCatalogue, BUILT_IN_BIOMES, pluralOf } from "../biomes";
 import { deityHooks } from "../deities/hook";
+import { tribalCultureWeights } from "../lens";
 import { mulberry32 } from "../markov";
 import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { generatePlaceNames } from "../names/engine";
@@ -110,7 +111,6 @@ interface GroupData {
     typeMultipliers: Record<string, Record<string, number>>;
     shapeMultipliers: Record<string, Record<string, number>>;
     extraShapes: Record<string, Record<string, GroupShape[]>>;
-    cultureMap: Record<string, [string, number][]>;
   };
   safeguards: { block: string[]; flag: string[]; flagListBlocks: boolean; banned: string[]; personNouns: string[]; blockedInitials: string[] };
   people: {
@@ -782,7 +782,7 @@ function inventedTown(ctx: Ctx, type: GroupType): string {
   let source: string | undefined;
   if (GROUP_DATA.people.surnameTraditions.includes(key)) source = "britain";
   else {
-    const cultures = GROUP_DATA.traditions.cultureMap[key];
+    const cultures = tribalCultureWeights(key);
     if (cultures) source = pickWeighted(cultures, rng);
   }
   if (source) {

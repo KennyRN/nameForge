@@ -41,6 +41,7 @@ import { registerRealmSource, withDeityPlaceholders } from "../vessels/engine";
 
 export { withDeityPlaceholders };
 import { WORLD_CULTURES } from "../world/engine";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -442,7 +443,7 @@ function drawModifier(ctx: Ctx): string | undefined {
 const DYNASTY = (f: FormChoice) => (f.g === "crown" || f.g === "imperial") && !f.compound && !f.peoplesOnly;
 const PEOPLES = (f: FormChoice) => f.g === "federal" || f.g === "tribal" || ["Kingdom", "Realm", "Nation"].includes(f.w);
 const PLAIN_FORM = (f: FormChoice) => !f.peoplesOnly;
-const CHRISTIAN = new Set(["general", "anglo-saxon", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "ethiopian"]);
+const CHRISTIAN = cultureSet("realmsChristian");
 
 /** §6.1: a place for the culture, without a leading "The", without deity or saint names in the no-gods cultures. */
 function place(ctx: Ctx): string | undefined {

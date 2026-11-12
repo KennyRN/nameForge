@@ -47,6 +47,7 @@ import {
 } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, VALUE_TIERS, type ValueTier, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { findVesselCulture } from "../vessels/engine";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -335,8 +336,8 @@ interface Ctx {
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const GENRE_OF: Record<GroupSetting, [GroupGenre, boolean]> = { FL: ["fantasy", false], FH: ["fantasy", true], MR: ["modern", false], MF: ["modern", true], SF: ["scifi", false] };
-const CASTE = new Set(["indian", "west-african"]);
-const DUTCH_AMERICAN = new Set(["dutch", "american"]);
+const CASTE = cultureSet("caste");
+const DUTCH_AMERICAN = cultureSet("dutchAmerican");
 const HYPHEN_FRACTIONS = new Set(["Half", "Quarter"]);
 
 // Pools are filtered by culture, era and fantastic once per vocabulary.

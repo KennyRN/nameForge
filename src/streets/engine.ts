@@ -47,6 +47,7 @@ import { breaksInnWords, hasChristianSign, INN_SETTINGS, innBlockForms, innBlock
 import { monumentBlockSet, monumentName } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, contextTown, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -234,7 +235,7 @@ interface Ctx {
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
-const CASTE = new Set(["indian", "west-african"]);
+const CASTE = cultureSet("caste");
 const TRADE_TOKENS = /\{(trade|tradeSg)[}:]/;
 /** Tokens that name a pool of their own under another name. */
 const POOL_OF: Record<string, string> = { sw: "streetWord", aw: "alleyWord", dw: "districtWord", jw: "junctionWord" };

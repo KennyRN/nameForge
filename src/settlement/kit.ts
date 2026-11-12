@@ -17,6 +17,7 @@ import { generateStreetNames, sizeLabel, type StreetSize } from "../streets/engi
 import { generateVesselNames, VESSEL_CULTURES, type VesselModule } from "../vessels/engine";
 import { buildContext, groupGenreFor, type ContextEffects, type SettlementContext } from "./context";
 import type { Vocabulary } from "./vocab";
+import { LENS_CULTURE_GROUPS } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -199,7 +200,7 @@ export function resolveKitOptions(o: KitOptions): ResolvedKitOptions {
     culture,
     era,
     fantastic: !!o.fantastic,
-    region: ["anglo-saxon", "celtic", "norman-british"].includes(culture) && o.region && o.region !== "all" ? o.region : undefined,
+    region: LENS_CULTURE_GROUPS.british.cultures.includes(culture) && o.region && o.region !== "all" ? o.region : undefined,
     size: KIT_SIZES.includes(o.size as KitSize) ? o.size! : "town",
     position: KIT_POSITIONS.some((p) => p.key === o.position) ? o.position! : "inland",
     tone: o.tone ?? "any",

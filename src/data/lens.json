@@ -893,6 +893,125 @@
   "riverNames",
   "placeShapes"
  ],
+ "cultureSets": {
+  "caste": {
+   "cultures": [
+    "indian",
+    "west-african"
+   ],
+   "note": "Cultures whose names carry caste or trade-guild forms: buildings, events, inns, money, settlement context and streets each kept this pair."
+  },
+  "dutchAmerican": {
+   "cultures": [
+    "dutch",
+    "american"
+   ],
+   "note": "Money: the cultures whose coin names read the Dutch and American shapes."
+  },
+  "britainSource": {
+   "cultures": [
+    "general",
+    "anglo-saxon",
+    "celtic",
+    "norman-british"
+   ],
+   "note": "Bynames: cultures that draw their forenames from the British source. Differs from the `british` group: it includes general."
+  },
+  "noPlaceNames": {
+   "cultures": [
+    "greek-byzantine",
+    "steppe"
+   ],
+   "note": "Peoples and tongues, bynames: cultures with no place-name form."
+  },
+  "realmsChristian": {
+   "cultures": [
+    "general",
+    "anglo-saxon",
+    "celtic",
+    "norman-british",
+    "roman",
+    "greek-byzantine",
+    "slavic",
+    "ethiopian"
+   ],
+   "note": "Realms' own Christian set. Differs from the vocabulary's `christian` group (it includes general and ethiopian): kept as it is."
+  },
+  "plainNicknames": {
+   "cultures": [
+    "general",
+    "norman-british",
+    "anglo-saxon"
+   ],
+   "note": "Named things: cultures whose nickname forms aren't reduced."
+  },
+  "routesGods": {
+   "cultures": [
+    "egyptian",
+    "norse",
+    "anglo-saxon",
+    "aztec",
+    "maya"
+   ],
+   "note": "Route names: cultures with god-named routes."
+  },
+  "festivalsAncient": {
+   "cultures": [
+    "greek-byzantine",
+    "roman"
+   ],
+   "note": "Time and sky: cultures whose ancient calendars carry festivals."
+  },
+  "seasonPairNorth": {
+   "cultures": [
+    "anglo-saxon",
+    "celtic",
+    "norse"
+   ],
+   "note": "Time and sky: cultures reading a two-season pair from the ancient era to the medieval."
+  },
+  "seasonPairMeso": {
+   "cultures": [
+    "aztec",
+    "maya"
+   ],
+   "note": "Time and sky: cultures reading a season pair from the ancient era to the early modern; also the Mesoamerican calendar round."
+  },
+  "elementsEastAsian": {
+   "cultures": [
+    "chinese",
+    "japanese",
+    "korean",
+    "steppe"
+   ],
+   "note": "Time and sky: cultures whose week-7 system reads the five elements."
+  },
+  "vesselRealmCultures": {
+   "cultures": [
+    "general",
+    "anglo-saxon",
+    "norse",
+    "celtic",
+    "norman-british",
+    "roman",
+    "greek-byzantine",
+    "slavic",
+    "steppe",
+    "arabic-persian",
+    "indian",
+    "chinese",
+    "japanese",
+    "korean",
+    "egyptian",
+    "ethiopian",
+    "bantu",
+    "west-african",
+    "aztec",
+    "maya"
+   ],
+   "note": "Vessels: the cultures a realm short form can be drawn for (the realms roster); others read general."
+  }
+ },
  "mappings": {
   "cultures": {
    "shared": {

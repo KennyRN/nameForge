@@ -21580,62 +21580,6 @@
      }
     ]
    }
-  },
-  "cultureMap": {
-   "mediterranean": [
-    [
-     "roman",
-     1
-    ]
-   ],
-   "eastAsian": [
-    [
-     "chinese",
-     50
-    ],
-    [
-     "japanese",
-     25
-    ],
-    [
-     "korean",
-     25
-    ]
-   ],
-   "mesoamerican": [
-    [
-     "aztec",
-     60
-    ],
-    [
-     "maya",
-     40
-    ]
-   ],
-   "bantu": [
-    [
-     "bantu",
-     1
-    ]
-   ],
-   "westAfrican": [
-    [
-     "west-african",
-     1
-    ]
-   ],
-   "arabian": [
-    [
-     "arabic-persian",
-     1
-    ]
-   ],
-   "southAsian": [
-    [
-     "indian",
-     1
-    ]
-   ]
   }
  },
  "safeguards": {

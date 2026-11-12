@@ -31,6 +31,7 @@ import { MONEY_DATA } from "../money/engine";
 import { countedWords, routeCapitals, routeFigure, routeFolk, routeKingdom, routeNorm, routeSetting, ROUTE_ERAS, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, entryAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import thingsData from "../data/named-things.json";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -553,7 +554,7 @@ function planWeight(ctx: Ctx, plan: Plan): number {
   }
   mult *= s.kx?.[ctx.kind] ?? 1;
   mult *= THINGS_DATA.leanings[ctx.culture]?.[plan.fam] ?? 1;
-  if (plan.fam === "nickname" && !["general", "norman-british", "anglo-saxon"].includes(ctx.culture)) mult *= THINGS_DATA.nicknameOthers;
+  if (plan.fam === "nickname" && !cultureSet("plainNicknames").has(ctx.culture)) mult *= THINGS_DATA.nicknameOthers;
   if (!viable(ctx, plan)) return 0;
   return (s.w / (plan.patternsFor[ctx.kind] || 1)) * mult * toneFactor(plan.tones, ctx.tone);
 }

@@ -253,11 +253,22 @@ test("§4.1: tribal, colonial and vehicle mappings are the brief's tables", () =
   assert.deepEqual(lensCulturesFor("no-such-module", "general"), []);
 });
 
-test("the group engine's tradition draws are the lens's weights, exactly as traditions.cultureMap has them", () => {
-  const cultureMap = (groupData as unknown as { traditions: { cultureMap: Record<string, [string, number][]> } }).traditions.cultureMap;
-  for (const t of TRIBAL_TRADITIONS) assert.deepEqual(tribalCultureWeights(t.key), cultureMap[t.key], t.key);
-  assert.deepEqual(tribalCultureWeights("eastAsian"), [["chinese", 50], ["japanese", 25], ["korean", 25]]);
-  assert.deepEqual(tribalCultureWeights("mesoamerican"), [["aztec", 60], ["maya", 40]]);
+// The draws `traditions.cultureMap` held in group-names.json before the lens took them over (M2), frozen here.
+const FORMER_CULTURE_MAP: Record<string, [string, number][]> = {
+  mediterranean: [["roman", 1]],
+  eastAsian: [["chinese", 50], ["japanese", 25], ["korean", 25]],
+  mesoamerican: [["aztec", 60], ["maya", 40]],
+  bantu: [["bantu", 1]],
+  westAfrican: [["west-african", 1]],
+  arabian: [["arabic-persian", 1]],
+  southAsian: [["indian", 1]],
+};
+
+test("the group engine's tradition draws are the lens's weights, exactly as traditions.cultureMap had them", () => {
+  for (const t of TRIBAL_TRADITIONS) assert.deepEqual(tribalCultureWeights(t.key), FORMER_CULTURE_MAP[t.key], t.key);
+  assert.deepEqual(Object.keys(FORMER_CULTURE_MAP).sort(), TRIBAL_TRADITIONS.map((t) => t.key).filter((k) => tribalCultureWeights(k)).sort());
+  // The map no longer lives in group-names.json.
+  assert.equal((groupData as unknown as { traditions: Record<string, unknown> }).traditions.cultureMap, undefined);
   // A tradition the lens maps to more cultures than it draws from keeps drawing from the same ones.
   assert.deepEqual(tribalCultureWeights("mediterranean"), [["roman", 1]]);
 });

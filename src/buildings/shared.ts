@@ -26,6 +26,7 @@ import { boostPool, contextSaint, TownTurn, type SettlementContext } from "../se
 import { cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { deityHooks } from "../deities/hook";
 import { STREET_DATA } from "../streets/engine";
+import { cultureSet } from "../lens";
 
 /** The lists both modules read (buildings brief §6, §8.3): discoveries, headlands, creature lists and god cultures. */
 const SHARED_LISTS = buildingData.lists;
@@ -58,7 +59,7 @@ export interface BaseCtx {
 
 export const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 export const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
-export const CASTE = new Set(["indian", "west-african"]);
+export const CASTE = cultureSet("caste");
 const SF_LISTS = new Set(["star", "greek"]);
 
 /** A shared pool's entries here (region, setting themes, tone; never light or grim for the sensitive cultures). */

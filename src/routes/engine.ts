@@ -39,6 +39,7 @@ import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
+import { cultureSet, LENS_CULTURE_GROUPS } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -129,7 +130,7 @@ export const ROUTE_CULTURES = ROUTE_DATA.cultures;
 export const ROUTE_KINDS = ROUTE_DATA.kinds;
 export const ROUTE_ANY = ROUTE_DATA.any;
 /** §4.1: the cultures the region link is offered for. */
-export const BRITISH_CULTURES = ["anglo-saxon", "celtic", "norman-british"];
+export const BRITISH_CULTURES = [...LENS_CULTURE_GROUPS.british.cultures];
 
 export const findRouteCulture = (key: string | undefined) => ROUTE_CULTURES.find((c) => c.key === key);
 export const findRouteKind = (key: string | undefined) => ROUTE_KINDS.find((k) => k.key === key);
@@ -269,7 +270,7 @@ const GN_LISTS: Record<string, string> = {
 };
 const SF_LISTS = new Set(["star", "greek", "spaceLand", "sfBody", "orbitAdj", "spaceDirection", "spaceHazard"]);
 /** §4.2: the cultures `{god}` is drawn for (§12.3). */
-const GOD_CULTURES = new Set(["egyptian", "norse", "anglo-saxon", "aztec", "maya"]);
+const GOD_CULTURES = cultureSet("routesGods");
 
 /** §4.4: a region tag's multiplier here (×1 outside the British cultures or with no region). */
 function regionMult(ctx: Ctx, tag: string | undefined, eras?: RouteEra[]): number {

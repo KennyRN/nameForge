@@ -25,6 +25,7 @@ import { BUILT_IN_VOCAB, inCultureGroup, poolEntries, type Vocabulary } from "./
 import type { SpaceScale } from "../space/scale";
 import type { SettlementContext } from "./contextShared";
 import { deityCultureOffered, deityTitle, isChristianCulture } from "../deities/engine";
+import { cultureSet } from "../lens";
 
 export * from "./contextShared";
 
@@ -74,7 +75,7 @@ export function groupGenreFor(era: RouteEra): "fantasy" | "modern" | "scifi" {
 }
 
 const isFuture = (era: RouteEra) => era === "NF" || era === "IS";
-const CASTE = new Set(["indian", "west-african"]);
+const CASTE = cultureSet("caste");
 
 /** A module's block lists and banned words, for a drawn place name. */
 function defaultBlocked(name: string): boolean {

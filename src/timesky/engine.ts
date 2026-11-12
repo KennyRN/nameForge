@@ -64,6 +64,7 @@ import {
   weekSystems,
   findTimeKind,
 } from "./data";
+import { cultureSet } from "../lens";
 
 export * from "./data";
 
@@ -839,7 +840,7 @@ function monthTheme(S: Series, lines: Line[]): string {
     })
     .filter(([t]) => {
       if (t === "gods") return !ctx.sensitive && ctx.mode === "invented";
-      if (t === "festivals") return ctx.era === "AN" && ["greek-byzantine", "roman"].includes(ctx.culture);
+      if (t === "festivals") return ctx.era === "AN" && cultureSet("festivalsAncient").has(ctx.culture);
       if (t === "nature") return biomeItems(ctx, "tree").length + biomeItems(ctx, "wildAnimal").length > 0;
       if (t === "seasons" || t === "work" || t === "positions") return !ctx.land.space && !!ctx.cycle;
       return true;
@@ -919,13 +920,13 @@ function monthSeries(S: Series, systemKey: string, forMoons: boolean): TimeName[
   // Pairs (§10.2).
   const monthLines = lines.filter((l) => l.type === "month");
   const pairShare = TIME_SKY.themes.pairShare;
-  const wantsPair = (theme === "seasons" && ["anglo-saxon", "celtic", "norse"].includes(ctx.culture) && inEras("AN-MD", ctx.era)) || (["aztec", "maya"].includes(ctx.culture) && inEras("AN-EM", ctx.era));
+  const wantsPair = (theme === "seasons" && cultureSet("seasonPairNorth").has(ctx.culture) && inEras("AN-MD", ctx.era)) || (cultureSet("seasonPairMeso").has(ctx.culture) && inEras("AN-EM", ctx.era));
   if (wantsPair && ctx.rng() < pairShare) {
     const spots: number[] = [];
     for (let i = 0; i + 1 < lines.length; i++) if (lines[i].type === "month" && lines[i + 1].type === "month" && !lines[i].name && !lines[i + 1].name) spots.push(i);
     if (spots.length > 0) {
       const i = pickOne(spots, ctx.rng);
-      const aztec = ["aztec", "maya"].includes(ctx.culture);
+      const aztec = cultureSet("seasonPairMeso").has(ctx.culture);
       let a: string, b: string;
       if (aztec) {
         const pf = token({ ...ctx, fixed: {}, season: null, distinct: false, drawn: new Set(), log: [] }, "pairFeast") ?? "Vigil";
@@ -1106,7 +1107,7 @@ function daySeries(S: Series, systemKey: string): TimeName[] {
   else themeOpts = TIME_SKY.themes.day;
   themeOpts = themeOpts.filter(([t]) => {
     if (t === "planets") return systemKey === "week-7";
-    if (t === "elements") return systemKey === "week-7" && ["chinese", "japanese", "korean", "steppe"].includes(ctx.culture);
+    if (t === "elements") return systemKey === "week-7" && cultureSet("elementsEastAsian").has(ctx.culture);
     if (t === "gods") return !ctx.sensitive && ctx.mode === "invented";
     if (t === "towns" || t === "goods") return true;
     return true;

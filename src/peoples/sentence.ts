@@ -7,6 +7,7 @@ import { type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engin
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { ownerSectionRequest } from "../things/sentence";
 import { type PeopleDetail, type PeopleGiving, PEOPLE_CULTURES, peoplesHistoryLabel } from "./engine";
+import { cultureSetKeys } from "../lens";
 
 export type PeopleSource = "typed" | "pack" | "realms" | "places";
 
@@ -45,7 +46,7 @@ export interface PeopleChoice {
 export type PeopleSegment = string | { field: PeopleField; text: string; title: string; choices: PeopleChoice[]; current: string | undefined };
 
 /** §2.3: new place names isn't offered for greek-byzantine and steppe. */
-export const PEOPLE_NO_PLACES = ["greek-byzantine", "steppe"];
+export const PEOPLE_NO_PLACES = cultureSetKeys("noPlaceNames");
 export const placesOffered = (culture: string) => !PEOPLE_NO_PLACES.includes(culture);
 
 const SOURCE_TEXT: Record<PeopleSource, string> = { typed: "names I type", pack: "names from a pack", realms: "new realms", places: "new place names" };

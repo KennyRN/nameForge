@@ -54194,62 +54194,6 @@ var group_names_default = {
           }
         ]
       }
-    },
-    cultureMap: {
-      mediterranean: [
-        [
-          "roman",
-          1
-        ]
-      ],
-      eastAsian: [
-        [
-          "chinese",
-          50
-        ],
-        [
-          "japanese",
-          25
-        ],
-        [
-          "korean",
-          25
-        ]
-      ],
-      mesoamerican: [
-        [
-          "aztec",
-          60
-        ],
-        [
-          "maya",
-          40
-        ]
-      ],
-      bantu: [
-        [
-          "bantu",
-          1
-        ]
-      ],
-      westAfrican: [
-        [
-          "west-african",
-          1
-        ]
-      ],
-      arabian: [
-        [
-          "arabic-persian",
-          1
-        ]
-      ],
-      southAsian: [
-        [
-          "indian",
-          1
-        ]
-      ]
     }
   },
   safeguards: {
@@ -62365,6 +62309,2230 @@ function setDeityHooks(h) {
 }
 var deityHooks = () => hooks;
 
+// src/data/lens.json
+var lens_default = {
+  $comment: "The shared lens (docs/shared-lens-and-coverage-brief.md \xA73, \xA74): cultures, regions, eras, styles and tones defined once; `mappings` says how each module's own rosters read in lens terms. Planned cultures are declared and never offered.",
+  version: 1,
+  cultures: [
+    {
+      key: "general",
+      label: "General",
+      tier: "baseline",
+      family: null,
+      status: "live",
+      keys: [
+        "general"
+      ]
+    },
+    {
+      key: "english",
+      label: "English",
+      tier: "core",
+      family: "british",
+      status: "live",
+      keys: [
+        "anglo-saxon",
+        "norman-british"
+      ]
+    },
+    {
+      key: "welsh",
+      label: "Welsh",
+      tier: "core",
+      family: "british",
+      status: "planned",
+      keys: [
+        "celtic"
+      ]
+    },
+    {
+      key: "scottish",
+      label: "Scottish",
+      tier: "core",
+      family: "british",
+      status: "planned",
+      keys: [
+        "celtic"
+      ]
+    },
+    {
+      key: "irish",
+      label: "Irish",
+      tier: "core",
+      family: "british",
+      status: "planned",
+      keys: [
+        "celtic"
+      ]
+    },
+    {
+      key: "scandinavian",
+      label: "Scandinavian",
+      tier: "core",
+      family: "germanic",
+      status: "live",
+      keys: [
+        "norse"
+      ]
+    },
+    {
+      key: "german",
+      label: "German",
+      tier: "core",
+      family: "germanic",
+      status: "planned",
+      keys: []
+    },
+    {
+      key: "french",
+      label: "French",
+      tier: "second",
+      family: "romance",
+      status: "live",
+      keys: [
+        "french"
+      ]
+    },
+    {
+      key: "dutch",
+      label: "Dutch",
+      tier: "second",
+      family: "germanic",
+      status: "live",
+      keys: [
+        "dutch"
+      ]
+    },
+    {
+      key: "iberian",
+      label: "Iberian",
+      tier: "second",
+      family: "romance",
+      status: "live",
+      keys: [
+        "iberian"
+      ]
+    },
+    {
+      key: "italian",
+      label: "Italian",
+      tier: "second",
+      family: "romance",
+      status: "planned",
+      keys: []
+    },
+    {
+      key: "roman",
+      label: "Roman",
+      tier: "second",
+      family: "classical",
+      status: "live",
+      keys: [
+        "roman"
+      ]
+    },
+    {
+      key: "greek-byzantine",
+      label: "Greek and Byzantine",
+      tier: "second",
+      family: "classical",
+      status: "live",
+      keys: [
+        "greek-byzantine"
+      ]
+    },
+    {
+      key: "slavic",
+      label: "Slavic",
+      tier: "second",
+      family: "slavic",
+      status: "live",
+      keys: [
+        "slavic"
+      ]
+    },
+    {
+      key: "steppe",
+      label: "Turkic and Mongol steppe",
+      tier: "second",
+      family: "steppe",
+      status: "live",
+      keys: [
+        "steppe"
+      ]
+    },
+    {
+      key: "arabic-persian",
+      label: "Arabic and Persian",
+      tier: "second",
+      family: "near-east",
+      status: "live",
+      keys: [
+        "arabic-persian"
+      ]
+    },
+    {
+      key: "egyptian",
+      label: "Egyptian",
+      tier: "second",
+      family: "near-east",
+      status: "live",
+      keys: [
+        "egyptian"
+      ]
+    },
+    {
+      key: "ethiopian",
+      label: "Ethiopian",
+      tier: "second",
+      family: "africa",
+      status: "live",
+      keys: [
+        "ethiopian"
+      ]
+    },
+    {
+      key: "bantu",
+      label: "Bantu",
+      tier: "second",
+      family: "africa",
+      status: "live",
+      keys: [
+        "bantu"
+      ]
+    },
+    {
+      key: "west-african",
+      label: "West African",
+      tier: "second",
+      family: "africa",
+      status: "live",
+      keys: [
+        "west-african"
+      ]
+    },
+    {
+      key: "indian",
+      label: "Indian",
+      tier: "second",
+      family: "south-asia",
+      status: "live",
+      keys: [
+        "indian"
+      ]
+    },
+    {
+      key: "chinese",
+      label: "Chinese",
+      tier: "second",
+      family: "east-asia",
+      status: "live",
+      keys: [
+        "chinese"
+      ]
+    },
+    {
+      key: "japanese",
+      label: "Japanese",
+      tier: "second",
+      family: "east-asia",
+      status: "live",
+      keys: [
+        "japanese"
+      ]
+    },
+    {
+      key: "korean",
+      label: "Korean",
+      tier: "second",
+      family: "east-asia",
+      status: "live",
+      keys: [
+        "korean"
+      ]
+    },
+    {
+      key: "aztec",
+      label: "Aztec",
+      tier: "second",
+      family: "americas",
+      status: "live",
+      keys: [
+        "aztec"
+      ]
+    },
+    {
+      key: "maya",
+      label: "Maya",
+      tier: "second",
+      family: "americas",
+      status: "live",
+      keys: [
+        "maya"
+      ]
+    },
+    {
+      key: "andean",
+      label: "Andean",
+      tier: "second",
+      family: "americas",
+      status: "live",
+      keys: [
+        "andean"
+      ]
+    },
+    {
+      key: "polynesian",
+      label: "Polynesian",
+      tier: "second",
+      family: "pacific",
+      status: "live",
+      keys: [
+        "polynesian"
+      ]
+    },
+    {
+      key: "american",
+      label: "American",
+      tier: "second",
+      family: "settler",
+      status: "live",
+      keys: [
+        "american"
+      ]
+    },
+    {
+      key: "ottoman",
+      label: "Ottoman & Barbary",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "ottoman"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "swahili-omani",
+      label: "Swahili & Omani",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "swahili-omani"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "malay",
+      label: "Malay & Indonesian",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "malay"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "hawaiian",
+      label: "Hawaiian",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "hawaiian"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "maori",
+      label: "M\u0101ori",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "maori"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "w-polynesian",
+      label: "Western Polynesian",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "w-polynesian"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "nw-coast",
+      label: "Pacific Northwest Coast",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "nw-coast"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "arctic",
+      label: "Arctic",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "arctic"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "na-woodlands",
+      label: "North American Woodlands & Rivers",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "na-woodlands"
+      ],
+      module: "vessels"
+    },
+    {
+      key: "phoenician",
+      label: "Phoenician (and Carthaginian)",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "phoenician"
+      ],
+      module: "colonial"
+    },
+    {
+      key: "hellenistic",
+      label: "Hellenistic (Greek and Macedonian)",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "hellenistic"
+      ],
+      module: "colonial"
+    },
+    {
+      key: "belgian",
+      label: "Belgian",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "belgian"
+      ],
+      module: "colonial"
+    },
+    {
+      key: "northAmerican",
+      label: "North American Woodlands & Plains",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "northAmerican"
+      ],
+      module: "tribal"
+    },
+    {
+      key: "maritimeSEA",
+      label: "Maritime South-East Asian",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "maritimeSEA"
+      ],
+      module: "tribal"
+    },
+    {
+      key: "northernPacific",
+      label: "Pacific Northwest & Arctic",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "northernPacific"
+      ],
+      module: "tribal"
+    },
+    {
+      key: "sahul",
+      label: "Australia & New Guinea",
+      tier: "local",
+      family: null,
+      status: "live",
+      keys: [
+        "sahul"
+      ],
+      module: "tribal"
+    }
+  ],
+  legacy: {
+    "anglo-saxon": [
+      "english"
+    ],
+    "norman-british": [
+      "english"
+    ],
+    celtic: [
+      "welsh",
+      "scottish",
+      "irish"
+    ],
+    norse: [
+      "scandinavian"
+    ]
+  },
+  cultureGroups: {
+    british: {
+      cultures: [
+        "anglo-saxon",
+        "celtic",
+        "norman-british"
+      ]
+    },
+    christian: {
+      cultures: [
+        "anglo-saxon",
+        "celtic",
+        "norman-british",
+        "slavic",
+        "french",
+        "iberian"
+      ],
+      from: {
+        "greek-byzantine": "MD",
+        roman: "MD"
+      }
+    }
+  },
+  regions: [
+    {
+      code: "COR",
+      label: "Cornwall",
+      cultures: [
+        "english"
+      ],
+      status: "live"
+    },
+    {
+      code: "WCY",
+      label: "West Country",
+      cultures: [
+        "english"
+      ],
+      status: "live"
+    },
+    {
+      code: "SEA",
+      label: "South East",
+      cultures: [
+        "english"
+      ],
+      status: "live"
+    },
+    {
+      code: "EAN",
+      label: "East Anglia",
+      cultures: [
+        "english"
+      ],
+      status: "live"
+    },
+    {
+      code: "WMM",
+      label: "West Midlands and Marches",
+      cultures: [
+        "english"
+      ],
+      status: "live"
+    },
+    {
+      code: "EMD",
+      label: "East Midlands",
+      cultures: [
+        "english"
+      ],
+      status: "live"
+    },
+    {
+      code: "NTH",
+      label: "North",
+      cultures: [
+        "english"
+      ],
+      status: "live"
+    },
+    {
+      code: "SBL",
+      label: "Borderlands",
+      cultures: [
+        "english",
+        "scottish"
+      ],
+      status: "live"
+    },
+    {
+      code: "WAL",
+      label: "Wales",
+      cultures: [
+        "welsh"
+      ],
+      status: "live"
+    },
+    {
+      code: "SLO",
+      label: "Lowlands",
+      cultures: [
+        "scottish"
+      ],
+      status: "live"
+    },
+    {
+      code: "SHH",
+      label: "Highlands and Hebrides",
+      cultures: [
+        "scottish"
+      ],
+      status: "live"
+    },
+    {
+      code: "NSI",
+      label: "Northern Isles",
+      cultures: [
+        "scottish"
+      ],
+      status: "live"
+    },
+    {
+      code: "ULS",
+      label: "Ulster",
+      cultures: [
+        "irish"
+      ],
+      status: "planned"
+    },
+    {
+      code: "CON",
+      label: "Connacht",
+      cultures: [
+        "irish"
+      ],
+      status: "planned"
+    },
+    {
+      code: "LEI",
+      label: "Leinster",
+      cultures: [
+        "irish"
+      ],
+      status: "planned"
+    },
+    {
+      code: "MUN",
+      label: "Munster",
+      cultures: [
+        "irish"
+      ],
+      status: "planned"
+    },
+    {
+      code: "DEN",
+      label: "Denmark",
+      cultures: [
+        "scandinavian"
+      ],
+      status: "planned"
+    },
+    {
+      code: "NOR",
+      label: "Norway",
+      cultures: [
+        "scandinavian"
+      ],
+      status: "planned"
+    },
+    {
+      code: "SWE",
+      label: "Sweden",
+      cultures: [
+        "scandinavian"
+      ],
+      status: "planned"
+    },
+    {
+      code: "ICE",
+      label: "Iceland and the Atlantic isles",
+      cultures: [
+        "scandinavian"
+      ],
+      status: "planned"
+    },
+    {
+      code: "NDT",
+      label: "North German plain and coast",
+      cultures: [
+        "german"
+      ],
+      status: "planned"
+    },
+    {
+      code: "RHN",
+      label: "Rhineland",
+      cultures: [
+        "german"
+      ],
+      status: "planned"
+    },
+    {
+      code: "MIT",
+      label: "Central uplands",
+      cultures: [
+        "german"
+      ],
+      status: "planned"
+    },
+    {
+      code: "ALP",
+      label: "Alpine south",
+      cultures: [
+        "german"
+      ],
+      status: "planned"
+    },
+    {
+      code: "OST",
+      label: "Eastern marches",
+      cultures: [
+        "german"
+      ],
+      status: "planned"
+    }
+  ],
+  eras: [
+    {
+      code: "AN",
+      label: "ancient",
+      span: "to c. 500"
+    },
+    {
+      code: "MD",
+      label: "medieval",
+      span: "c. 500\u20131500"
+    },
+    {
+      code: "EM",
+      label: "early modern",
+      span: "c. 1500\u20131750"
+    },
+    {
+      code: "ST",
+      label: "steam age",
+      span: "c. 1750\u20131914"
+    },
+    {
+      code: "MO",
+      label: "modern",
+      span: "c. 1914\u2013now"
+    },
+    {
+      code: "NF",
+      label: "near future",
+      span: null
+    },
+    {
+      code: "IS",
+      label: "interstellar",
+      span: null
+    }
+  ],
+  landBand: [
+    "EM",
+    "ST",
+    "MO"
+  ],
+  styles: [
+    {
+      key: "realistic",
+      label: "realistic",
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ]
+    },
+    {
+      key: "low-fantasy",
+      label: "historic or low fantasy",
+      eras: [
+        "AN",
+        "MD",
+        "EM"
+      ]
+    },
+    {
+      key: "high-fantasy",
+      label: "high or epic fantasy",
+      eras: [
+        "AN",
+        "MD",
+        "EM"
+      ]
+    },
+    {
+      key: "contemporary-fantasy",
+      label: "contemporary fantasy",
+      eras: [
+        "ST",
+        "MO"
+      ]
+    },
+    {
+      key: "steampunk",
+      label: "steampunk",
+      eras: [
+        "ST"
+      ]
+    },
+    {
+      key: "dieselpunk",
+      label: "dieselpunk",
+      eras: [
+        "MO"
+      ]
+    },
+    {
+      key: "cyberpunk",
+      label: "cyberpunk",
+      eras: [
+        "NF"
+      ]
+    },
+    {
+      key: "post-apocalyptic",
+      label: "post-apocalyptic",
+      eras: [
+        "MO",
+        "NF",
+        "IS"
+      ]
+    },
+    {
+      key: "space-opera",
+      label: "space opera",
+      eras: [
+        "IS"
+      ]
+    }
+  ],
+  tones: [
+    {
+      key: "grand"
+    },
+    {
+      key: "plain"
+    },
+    {
+      key: "grim"
+    },
+    {
+      key: "light"
+    },
+    {
+      key: "strange"
+    }
+  ],
+  targets: {
+    cultures: {
+      core: {
+        words: 30,
+        shapes: 10
+      },
+      second: {
+        words: 12,
+        shapes: 4
+      },
+      local: {
+        words: 4,
+        shapes: 1
+      }
+    },
+    era: 12,
+    style: {
+      words: 16,
+      shapes: 4
+    },
+    tone: 8,
+    region: 6,
+    kindOpenShapes: 6,
+    pool: 8,
+    toneKeys: [
+      "grand",
+      "grim",
+      "light",
+      "strange"
+    ]
+  },
+  poolExemptions: {
+    forPacks: [],
+    closed: []
+  },
+  landModules: [
+    "mountainNames",
+    "forestNames",
+    "desertNames",
+    "moorNames",
+    "wetlandNames",
+    "grasslandNames",
+    "seasLakes",
+    "coastsIslands",
+    "seaCharts",
+    "riverNames",
+    "placeShapes"
+  ],
+  cultureSets: {
+    caste: {
+      cultures: [
+        "indian",
+        "west-african"
+      ],
+      note: "Cultures whose names carry caste or trade-guild forms: buildings, events, inns, money, settlement context and streets each kept this pair."
+    },
+    dutchAmerican: {
+      cultures: [
+        "dutch",
+        "american"
+      ],
+      note: "Money: the cultures whose coin names read the Dutch and American shapes."
+    },
+    britainSource: {
+      cultures: [
+        "general",
+        "anglo-saxon",
+        "celtic",
+        "norman-british"
+      ],
+      note: "Bynames: cultures that draw their forenames from the British source. Differs from the `british` group: it includes general."
+    },
+    noPlaceNames: {
+      cultures: [
+        "greek-byzantine",
+        "steppe"
+      ],
+      note: "Peoples and tongues, bynames: cultures with no place-name form."
+    },
+    realmsChristian: {
+      cultures: [
+        "general",
+        "anglo-saxon",
+        "celtic",
+        "norman-british",
+        "roman",
+        "greek-byzantine",
+        "slavic",
+        "ethiopian"
+      ],
+      note: "Realms' own Christian set. Differs from the vocabulary's `christian` group (it includes general and ethiopian): kept as it is."
+    },
+    plainNicknames: {
+      cultures: [
+        "general",
+        "norman-british",
+        "anglo-saxon"
+      ],
+      note: "Named things: cultures whose nickname forms aren't reduced."
+    },
+    routesGods: {
+      cultures: [
+        "egyptian",
+        "norse",
+        "anglo-saxon",
+        "aztec",
+        "maya"
+      ],
+      note: "Route names: cultures with god-named routes."
+    },
+    festivalsAncient: {
+      cultures: [
+        "greek-byzantine",
+        "roman"
+      ],
+      note: "Time and sky: cultures whose ancient calendars carry festivals."
+    },
+    seasonPairNorth: {
+      cultures: [
+        "anglo-saxon",
+        "celtic",
+        "norse"
+      ],
+      note: "Time and sky: cultures reading a two-season pair from the ancient era to the medieval."
+    },
+    seasonPairMeso: {
+      cultures: [
+        "aztec",
+        "maya"
+      ],
+      note: "Time and sky: cultures reading a season pair from the ancient era to the early modern; also the Mesoamerican calendar round."
+    },
+    elementsEastAsian: {
+      cultures: [
+        "chinese",
+        "japanese",
+        "korean",
+        "steppe"
+      ],
+      note: "Time and sky: cultures whose week-7 system reads the five elements."
+    },
+    vesselRealmCultures: {
+      cultures: [
+        "general",
+        "anglo-saxon",
+        "norse",
+        "celtic",
+        "norman-british",
+        "roman",
+        "greek-byzantine",
+        "slavic",
+        "steppe",
+        "arabic-persian",
+        "indian",
+        "chinese",
+        "japanese",
+        "korean",
+        "egyptian",
+        "ethiopian",
+        "bantu",
+        "west-african",
+        "aztec",
+        "maya"
+      ],
+      note: "Vessels: the cultures a realm short form can be drawn for (the realms roster); others read general."
+    }
+  },
+  mappings: {
+    cultures: {
+      shared: {
+        general: {
+          lens: [
+            "general"
+          ]
+        },
+        "anglo-saxon": {
+          lens: [
+            "english"
+          ]
+        },
+        "norman-british": {
+          lens: [
+            "english"
+          ]
+        },
+        celtic: {
+          lens: [
+            "welsh",
+            "scottish",
+            "irish"
+          ]
+        },
+        norse: {
+          lens: [
+            "scandinavian"
+          ]
+        },
+        roman: {
+          lens: [
+            "roman"
+          ]
+        },
+        "greek-byzantine": {
+          lens: [
+            "greek-byzantine"
+          ]
+        },
+        slavic: {
+          lens: [
+            "slavic"
+          ]
+        },
+        steppe: {
+          lens: [
+            "steppe"
+          ]
+        },
+        "arabic-persian": {
+          lens: [
+            "arabic-persian"
+          ]
+        },
+        indian: {
+          lens: [
+            "indian"
+          ]
+        },
+        chinese: {
+          lens: [
+            "chinese"
+          ]
+        },
+        japanese: {
+          lens: [
+            "japanese"
+          ]
+        },
+        korean: {
+          lens: [
+            "korean"
+          ]
+        },
+        egyptian: {
+          lens: [
+            "egyptian"
+          ]
+        },
+        ethiopian: {
+          lens: [
+            "ethiopian"
+          ]
+        },
+        bantu: {
+          lens: [
+            "bantu"
+          ]
+        },
+        "west-african": {
+          lens: [
+            "west-african"
+          ]
+        },
+        aztec: {
+          lens: [
+            "aztec"
+          ]
+        },
+        maya: {
+          lens: [
+            "maya"
+          ]
+        },
+        polynesian: {
+          lens: [
+            "polynesian"
+          ]
+        },
+        andean: {
+          lens: [
+            "andean"
+          ]
+        },
+        french: {
+          lens: [
+            "french"
+          ]
+        },
+        dutch: {
+          lens: [
+            "dutch"
+          ]
+        },
+        iberian: {
+          lens: [
+            "iberian"
+          ]
+        },
+        american: {
+          lens: [
+            "american"
+          ]
+        }
+      },
+      tribal: {
+        general: {
+          lens: [
+            "general"
+          ]
+        },
+        celtic: {
+          lens: [
+            "welsh",
+            "scottish",
+            "irish"
+          ]
+        },
+        germanic: {
+          lens: [
+            "english",
+            "scandinavian",
+            "german",
+            "dutch"
+          ]
+        },
+        mediterranean: {
+          lens: [
+            "roman",
+            "greek-byzantine",
+            "italian"
+          ],
+          weights: [
+            [
+              "roman",
+              1
+            ]
+          ]
+        },
+        steppe: {
+          lens: [
+            "steppe"
+          ]
+        },
+        arabian: {
+          lens: [
+            "arabic-persian"
+          ],
+          weights: [
+            [
+              "arabic-persian",
+              1
+            ]
+          ]
+        },
+        bantu: {
+          lens: [
+            "bantu"
+          ],
+          weights: [
+            [
+              "bantu",
+              1
+            ]
+          ]
+        },
+        westAfrican: {
+          lens: [
+            "west-african"
+          ],
+          weights: [
+            [
+              "west-african",
+              1
+            ]
+          ]
+        },
+        southAsian: {
+          lens: [
+            "indian"
+          ],
+          weights: [
+            [
+              "indian",
+              1
+            ]
+          ]
+        },
+        eastAsian: {
+          lens: [
+            "chinese",
+            "japanese",
+            "korean"
+          ],
+          weights: [
+            [
+              "chinese",
+              50
+            ],
+            [
+              "japanese",
+              25
+            ],
+            [
+              "korean",
+              25
+            ]
+          ]
+        },
+        mesoamerican: {
+          lens: [
+            "aztec",
+            "maya"
+          ],
+          weights: [
+            [
+              "aztec",
+              60
+            ],
+            [
+              "maya",
+              40
+            ]
+          ]
+        },
+        andean: {
+          lens: [
+            "andean"
+          ]
+        },
+        polynesian: {
+          lens: [
+            "polynesian"
+          ]
+        },
+        northAmerican: {
+          lens: [],
+          local: true
+        },
+        maritimeSEA: {
+          lens: [],
+          local: true
+        },
+        northernPacific: {
+          lens: [],
+          local: true
+        },
+        sahul: {
+          lens: [],
+          local: true
+        }
+      },
+      colonial: {
+        general: {
+          lens: [
+            "general"
+          ]
+        },
+        "british-imperial": {
+          lens: [
+            "english"
+          ]
+        },
+        "english-speaking-settler": {
+          lens: [
+            "american"
+          ]
+        },
+        german: {
+          lens: [
+            "german"
+          ]
+        },
+        danish: {
+          lens: [
+            "scandinavian"
+          ]
+        },
+        swedish: {
+          lens: [
+            "scandinavian"
+          ]
+        },
+        dutch: {
+          lens: [
+            "dutch"
+          ]
+        },
+        french: {
+          lens: [
+            "french"
+          ]
+        },
+        spanish: {
+          lens: [
+            "iberian"
+          ]
+        },
+        portuguese: {
+          lens: [
+            "iberian"
+          ]
+        },
+        italian: {
+          lens: [
+            "italian"
+          ]
+        },
+        roman: {
+          lens: [
+            "roman"
+          ]
+        },
+        russian: {
+          lens: [
+            "slavic"
+          ]
+        },
+        arab: {
+          lens: [
+            "arabic-persian"
+          ]
+        },
+        ottoman: {
+          lens: [
+            "arabic-persian"
+          ]
+        },
+        chinese: {
+          lens: [
+            "chinese"
+          ]
+        },
+        japanese: {
+          lens: [
+            "japanese"
+          ]
+        },
+        hellenistic: {
+          lens: [],
+          local: true
+        },
+        phoenician: {
+          lens: [],
+          local: true
+        },
+        belgian: {
+          lens: [],
+          local: true
+        }
+      },
+      vehicle: {
+        extends: "shared",
+        entries: {
+          hawaiian: {
+            lens: [
+              "polynesian"
+            ],
+            local: true
+          },
+          maori: {
+            lens: [
+              "polynesian"
+            ],
+            local: true
+          },
+          "w-polynesian": {
+            lens: [
+              "polynesian"
+            ],
+            local: true
+          },
+          ottoman: {
+            lens: [
+              "arabic-persian"
+            ],
+            local: true
+          },
+          "swahili-omani": {
+            lens: [
+              "arabic-persian"
+            ],
+            local: true
+          },
+          malay: {
+            lens: [],
+            local: true
+          },
+          "nw-coast": {
+            lens: [],
+            local: true
+          },
+          arctic: {
+            lens: [],
+            local: true
+          },
+          "na-woodlands": {
+            lens: [],
+            local: true
+          }
+        }
+      },
+      world: {
+        extends: "shared",
+        entries: {}
+      }
+    },
+    eras: {
+      codes: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      realms: {
+        ancient: [
+          "AN"
+        ],
+        medieval: [
+          "MD"
+        ],
+        earlyModern: [
+          "EM"
+        ],
+        modern: [
+          "MO"
+        ],
+        nearFuture: [
+          "NF"
+        ],
+        interstellar: [
+          "IS"
+        ]
+      },
+      world: {
+        "anglo-saxon:old-english": [
+          "MD"
+        ],
+        "anglo-saxon:modern": [
+          "ST",
+          "MO"
+        ],
+        "anglo-saxon:interstellar": [
+          "IS"
+        ],
+        "norse:viking": [
+          "MD"
+        ],
+        "norse:interstellar": [
+          "IS"
+        ],
+        "celtic:pagan": [
+          "AN"
+        ],
+        "celtic:saints": [
+          "MD"
+        ],
+        "celtic:interstellar": [
+          "IS"
+        ],
+        "roman:imperial": [
+          "AN"
+        ],
+        "roman:medieval": [
+          "MD"
+        ],
+        "roman:interstellar": [
+          "IS"
+        ],
+        "chinese:imperial": [
+          "MD",
+          "EM"
+        ],
+        "chinese:modern": [
+          "ST",
+          "MO"
+        ],
+        "chinese:interstellar": [
+          "IS"
+        ],
+        "egyptian:pharaonic": [
+          "AN"
+        ],
+        "egyptian:graeco-roman": [
+          "AN"
+        ],
+        "egyptian:interstellar": [
+          "IS"
+        ],
+        "aztec:mexica": [
+          "MD"
+        ],
+        "aztec:colonial": [
+          "EM"
+        ],
+        "aztec:interstellar": [
+          "IS"
+        ],
+        "bantu:kingdoms": [
+          "MD",
+          "EM"
+        ],
+        "bantu:interstellar": [
+          "IS"
+        ],
+        "slavic:rus": [
+          "MD"
+        ],
+        "slavic:imperial": [
+          "EM",
+          "ST"
+        ],
+        "slavic:soviet": [
+          "MO"
+        ],
+        "slavic:interstellar": [
+          "IS"
+        ],
+        "arabic-persian:arabic": [
+          "MD"
+        ],
+        "arabic-persian:persian": [
+          "AN",
+          "MD"
+        ],
+        "arabic-persian:interstellar": [
+          "IS"
+        ],
+        "indian:ancient": [
+          "AN"
+        ],
+        "indian:modern": [
+          "ST",
+          "MO"
+        ],
+        "indian:interstellar": [
+          "IS"
+        ],
+        "japanese:samurai": [
+          "MD",
+          "EM"
+        ],
+        "japanese:modern": [
+          "ST",
+          "MO"
+        ],
+        "japanese:interstellar": [
+          "IS"
+        ],
+        "west-african:sahel-and-forest": [
+          "MD",
+          "EM"
+        ],
+        "west-african:interstellar": [
+          "IS"
+        ],
+        "maya:classic": [
+          "AN"
+        ],
+        "maya:interstellar": [
+          "IS"
+        ],
+        "korean:joseon": [
+          "MD",
+          "EM"
+        ],
+        "korean:interstellar": [
+          "IS"
+        ],
+        "ethiopian:aksum-and-abyssinia": [
+          "MD",
+          "EM"
+        ],
+        "ethiopian:interstellar": [
+          "IS"
+        ]
+      },
+      ships: {
+        T1: [
+          "AN"
+        ],
+        T2: [
+          "AN"
+        ],
+        T3: [
+          "MD"
+        ],
+        T4: [
+          "EM"
+        ],
+        T5: [
+          "ST"
+        ],
+        T6: [
+          "MO"
+        ],
+        T7: [
+          "MO"
+        ]
+      },
+      spacecraft: {
+        S1: [
+          "NF"
+        ],
+        S2: [
+          "NF"
+        ],
+        S3: [
+          "IS"
+        ]
+      },
+      aircraft: {
+        A1: [
+          "AN",
+          "MD",
+          "EM",
+          "ST"
+        ],
+        A2: [
+          "ST",
+          "MO"
+        ],
+        A3: [
+          "ST",
+          "MO"
+        ],
+        A4: [
+          "MO"
+        ],
+        A5: [
+          "MO"
+        ],
+        A6: [
+          "MO"
+        ],
+        A7: [
+          "NF"
+        ],
+        AF: [
+          "MD",
+          "MO"
+        ]
+      },
+      landVehicles: {
+        L1: [
+          "AN",
+          "MD",
+          "EM",
+          "ST"
+        ],
+        L2: [
+          "ST"
+        ],
+        L3: [
+          "ST",
+          "MO"
+        ],
+        L4: [
+          "MO"
+        ],
+        L5: [
+          "MO"
+        ],
+        L6: [
+          "NF"
+        ],
+        LF: [
+          "MD",
+          "MO"
+        ]
+      },
+      notes: {
+        aircraft: "Read from docs/aircraft-and-land-vehicles-brief.md \xA74.1 (the data's `technology` carries labels, not dates): A1 balloons and kites (kites from antiquity, balloons from 1783) AN\u2013ST; A2 airships (1852 to the 1930s) ST, MO; A3 pioneer and biplane (1903 to the 1920s) ST, MO; A4 piston age, A5 jet age and A6 modern and drones MO; A7 future NF; AF sky ships, fantastic only: the eras of the settings that offer it (FH is MD, MF is MO, \xA74.3).",
+        landVehicles: "Read from docs/aircraft-and-land-vehicles-brief.md \xA74.2: L1 animal-drawn (chariots to coaches, in use throughout) AN\u2013ST; L2 steam ST; L3 early motor (cars from the 1880s, the first tanks, electric trams) ST, MO; L4 mid-century and L5 modern MO; L6 future NF; LF war engines and wonders, fantastic only: MD (FH) and MO (MF)."
+      }
+    },
+    styles: {
+      genreSettings: {
+        FL: {
+          eras: [
+            "MD"
+          ],
+          style: "low-fantasy"
+        },
+        FH: {
+          eras: [
+            "MD"
+          ],
+          style: "high-fantasy"
+        },
+        MR: {
+          eras: [
+            "MO"
+          ],
+          style: "realistic"
+        },
+        MF: {
+          eras: [
+            "MO"
+          ],
+          style: "contemporary-fantasy"
+        },
+        SF: {
+          eras: [
+            "IS"
+          ],
+          style: "realistic"
+        }
+      },
+      vessel: {
+        heroic: [
+          {
+            style: "high-fantasy"
+          }
+        ],
+        elven: [
+          {
+            style: "high-fantasy"
+          }
+        ],
+        dwarven: [
+          {
+            style: "high-fantasy"
+          }
+        ],
+        oceanic: [
+          {
+            style: "high-fantasy"
+          }
+        ],
+        fpirate: [
+          {
+            style: "high-fantasy"
+          }
+        ],
+        dark: [
+          {
+            style: "high-fantasy"
+          },
+          {
+            style: "contemporary-fantasy"
+          }
+        ],
+        steampunk: [
+          {
+            style: "steampunk"
+          }
+        ],
+        dieselpunk: [
+          {
+            style: "dieselpunk"
+          }
+        ],
+        postapoc: [
+          {
+            style: "post-apocalyptic"
+          }
+        ],
+        wasteland: [
+          {
+            style: "post-apocalyptic"
+          }
+        ],
+        sfmilitary: [
+          {
+            style: "space-opera"
+          }
+        ],
+        sfexplore: [
+          {
+            style: "space-opera"
+          }
+        ],
+        ai: [
+          {
+            style: "space-opera"
+          }
+        ],
+        alien: [
+          {
+            style: "space-opera"
+          }
+        ],
+        corporate: [
+          {
+            style: "realistic",
+            eras: [
+              "NF",
+              "IS"
+            ]
+          }
+        ],
+        colony: [
+          {
+            style: "realistic",
+            eras: [
+              "NF",
+              "IS"
+            ]
+          }
+        ],
+        outlaw: [
+          {
+            style: "realistic",
+            eras: [
+              "NF",
+              "IS"
+            ]
+          }
+        ]
+      },
+      vocabulary: {
+        fantastic: {
+          steampunkWhenEras: [
+            "ST"
+          ],
+          otherwise: [
+            {
+              style: "high-fantasy",
+              eras: [
+                "AN",
+                "MD",
+                "EM"
+              ]
+            },
+            {
+              style: "contemporary-fantasy",
+              eras: [
+                "MO"
+              ]
+            },
+            {
+              style: "space-opera",
+              eras: [
+                "NF",
+                "IS"
+              ]
+            }
+          ]
+        },
+        notFantastic: [
+          {
+            style: "realistic"
+          }
+        ]
+      },
+      steampunkNames: {
+        pools: [
+          "compSteampunk",
+          "streetSteampunk",
+          "steampunkLandmark",
+          "steampunkMonument"
+        ],
+        shapeLists: [
+          "steampunk",
+          "steampunkComponents",
+          "steampunkDistricts"
+        ]
+      },
+      default: [
+        {
+          style: "realistic"
+        }
+      ]
+    }
+  },
+  modules: {
+    routeNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    streetNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    innNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    buildingNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    monumentNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    settlementKit: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    eventNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    calendarNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    skyNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    mountainNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    forestNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    desertNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    moorNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    wetlandNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    grasslandNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    seasLakes: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    coastsIslands: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    seaCharts: {
+      cultures: "shared",
+      eras: "codes",
+      land: true
+    },
+    hyperspaceCharts: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    epithets: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    titles: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    familyNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    armsNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    treasureNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    bookNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    realms: {
+      cultures: "shared",
+      eras: "realms",
+      land: false
+    },
+    peoplesTongues: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    deityNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    sacredPlaces: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    moneyNames: {
+      cultures: "shared",
+      eras: "codes",
+      land: false
+    },
+    tribalNames: {
+      cultures: "tribal",
+      eras: "none",
+      land: false
+    },
+    mysticOrders: {
+      cultures: "tribal",
+      eras: "none",
+      settings: "genreSettings",
+      land: false
+    },
+    martialOrders: {
+      cultures: "tribal",
+      eras: "none",
+      settings: "genreSettings",
+      land: false
+    },
+    underworldGroups: {
+      cultures: "tribal",
+      eras: "none",
+      settings: "genreSettings",
+      land: false
+    },
+    tradeGuilds: {
+      cultures: "tribal",
+      eras: "none",
+      settings: "genreSettings",
+      land: false
+    },
+    adventureCompanies: {
+      cultures: "tribal",
+      eras: "none",
+      settings: "genreSettings",
+      land: false
+    },
+    powerFactions: {
+      cultures: "tribal",
+      eras: "none",
+      settings: "genreSettings",
+      land: false
+    },
+    supernaturalCourts: {
+      cultures: "tribal",
+      eras: "none",
+      settings: "genreSettings",
+      land: false
+    },
+    ships: {
+      cultures: "vehicle",
+      eras: "ships",
+      settings: "genreSettings",
+      styles: "vessel",
+      land: false
+    },
+    spacecraft: {
+      cultures: "vehicle",
+      eras: "spacecraft",
+      settings: "genreSettings",
+      styles: "vessel",
+      land: false
+    },
+    aircraft: {
+      cultures: "vehicle",
+      eras: "aircraft",
+      settings: "genreSettings",
+      styles: "vessel",
+      land: false
+    },
+    landVehicles: {
+      cultures: "vehicle",
+      eras: "landVehicles",
+      settings: "genreSettings",
+      styles: "vessel",
+      land: false
+    },
+    explorationPlaceShapes: {
+      cultures: "colonial",
+      eras: "none",
+      land: false
+    },
+    empireExpansionPlaceShapes: {
+      cultures: "colonial",
+      eras: "none",
+      land: false
+    },
+    placeShapes: {
+      cultures: "world",
+      eras: "world",
+      britishEras: "all",
+      land: true
+    },
+    settlementNames: {
+      cultures: "world",
+      eras: "world",
+      colonialCultures: "colonial",
+      britishEras: "all",
+      land: false
+    },
+    riverNames: {
+      cultures: "none",
+      eras: "none",
+      britishEras: "all",
+      land: true
+    }
+  }
+};
+
+// src/lens.ts
+var LENS = lens_default;
+var LENS_CULTURES = LENS.cultures;
+var LENS_ERAS = LENS.eras;
+var LENS_STYLES = LENS.styles;
+var LENS_TONES = LENS.tones.map((t) => t.key);
+var LENS_REGIONS = LENS.regions;
+var LENS_LEGACY = LENS.legacy;
+var LENS_LAND_BAND = LENS.landBand;
+var LENS_TARGETS = LENS.targets;
+var LENS_MODULES = Object.keys(LENS.modules);
+var CULTURE_BY_KEY = new Map(LENS.cultures.map((c) => [c.key, c]));
+function cultureMapping(name) {
+  var _a5;
+  const raw = LENS.mappings.cultures[name];
+  if (!raw) return {};
+  if ("entries" in raw || "extends" in raw) {
+    const m = raw;
+    return { ...m.extends ? cultureMapping(m.extends) : {}, ...(_a5 = m.entries) != null ? _a5 : {} };
+  }
+  return raw;
+}
+function tribalCultureWeights(tradition) {
+  var _a5;
+  return (_a5 = cultureMapping("tribal")[tradition]) == null ? void 0 : _a5.weights;
+}
+var ERA_CODES = LENS.eras.map((e) => e.code);
+var STEAMPUNK_NAMES = LENS.mappings.styles.steampunkNames;
+function inCultureGroup(group, culture, era) {
+  var _a5;
+  const g = LENS.cultureGroups[group];
+  if (!g) return false;
+  if (g.cultures.includes(culture)) return true;
+  const from = (_a5 = g.from) == null ? void 0 : _a5[culture];
+  return !!from && ERA_CODES.indexOf(era) >= ERA_CODES.indexOf(from);
+}
+var LENS_CULTURE_GROUPS = LENS.cultureGroups;
+function cultureSet(name) {
+  const found = LENS.cultureSets[name];
+  if (!found) throw new Error(`lens: no culture set \u201C${name}\u201D`);
+  let set = SET_CACHE.get(name);
+  if (!set) SET_CACHE.set(name, set = new Set(found.cultures));
+  return set;
+}
+var SET_CACHE = /* @__PURE__ */ new Map();
+var cultureSetKeys = (name) => {
+  var _a5, _b3;
+  return [...(_b3 = (_a5 = LENS.cultureSets[name]) == null ? void 0 : _a5.cultures) != null ? _b3 : []];
+};
+var LENS_CULTURE_SET_NAMES = Object.keys(LENS.cultureSets);
+
 // src/settlement/contextShared.ts
 var CONTEXT_WEIGHT = 4;
 function selfPatterns(data) {
@@ -64835,7 +67003,7 @@ function inventedTown(ctx, type) {
   let source;
   if (GROUP_DATA.people.surnameTraditions.includes(key2)) source = "britain";
   else {
-    const cultures = GROUP_DATA.traditions.cultureMap[key2];
+    const cultures = tribalCultureWeights(key2);
     if (cultures) source = pickWeighted5(cultures, rng);
   }
   if (source) {
@@ -72606,8 +74774,8 @@ function holyNamesIn(culture) {
   return HOLY_NAMES.get(culture);
 }
 function townSource(culture) {
-  if (["general", "anglo-saxon", "celtic", "norman-british"].includes(culture)) return "britain";
-  if (culture === "greek-byzantine" || culture === "steppe") return void 0;
+  if (cultureSet("britainSource").has(culture)) return "britain";
+  if (cultureSet("noPlaceNames").has(culture)) return void 0;
   return culture;
 }
 var PLACEHOLDERS = { self: "[name]", father: "[father]", mother: "[mother]", child: "[child]" };
@@ -89637,7 +91805,7 @@ function baseToken(ctx, name) {
       const seed = Math.floor(rng() * 4294967296);
       const era = ctx.setting === "SF" ? "interstellar" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "medieval";
       const genre = ctx.setting === "SF" ? "scifi" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "fantasy";
-      const realmCulture = ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya"].includes(ctx.culture.key) ? ctx.culture.key : "general";
+      const realmCulture = cultureSet("vesselRealmCultures").has(ctx.culture.key) ? ctx.culture.key : "general";
       return realmSource == null ? void 0 : realmSource({ culture: realmCulture, era, genre, seed, catalogue: ctx.catalogue });
     }
     case "exoticTown":
@@ -90577,7 +92745,7 @@ function drawModifier(ctx) {
 var DYNASTY = (f) => (f.g === "crown" || f.g === "imperial") && !f.compound && !f.peoplesOnly;
 var PEOPLES = (f) => f.g === "federal" || f.g === "tribal" || ["Kingdom", "Realm", "Nation"].includes(f.w);
 var PLAIN_FORM = (f) => !f.peoplesOnly;
-var CHRISTIAN = /* @__PURE__ */ new Set(["general", "anglo-saxon", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "ethiopian"]);
+var CHRISTIAN = cultureSet("realmsChristian");
 function place2(ctx) {
   if (ctx.mode === "placeholders") return "[place]";
   const holy = holyNamesIn(ctx.culture);
@@ -97495,15 +99663,6 @@ var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
 var VOCAB_REGIONS = SETTLEMENT_VOCAB.regions;
 var VOCAB_THEMES = SETTLEMENT_VOCAB.themes;
 var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
-var eraIndex = (era) => VOCAB_ERAS.indexOf(era);
-function inCultureGroup(group, culture, era) {
-  var _a5;
-  const g = SETTLEMENT_VOCAB.cultureGroups[group];
-  if (!g) return false;
-  if (g.cultures.includes(culture)) return true;
-  const from = (_a5 = g.from) == null ? void 0 : _a5[culture];
-  return !!from && eraIndex(era) >= eraIndex(from);
-}
 function cultureAllowed(c, culture, era) {
   if (!c || c.length === 0) return true;
   const matches = (key2) => key2 === culture || inCultureGroup(key2, culture, era);
@@ -97701,7 +99860,7 @@ var ROUTE_ERAS = ROUTE_DATA.eras;
 var ROUTE_CULTURES = ROUTE_DATA.cultures;
 var ROUTE_KINDS = ROUTE_DATA.kinds;
 var ROUTE_ANY = ROUTE_DATA.any;
-var BRITISH_CULTURES = ["anglo-saxon", "celtic", "norman-british"];
+var BRITISH_CULTURES = [...LENS_CULTURE_GROUPS.british.cultures];
 var findRouteCulture = (key2) => ROUTE_CULTURES.find((c) => c.key === key2);
 var findRouteKind = (key2) => ROUTE_KINDS.find((k) => k.key === key2);
 var routeEraLabel = (code) => {
@@ -97750,7 +99909,7 @@ var GN_LISTS2 = {
   spaceHazard: "spaceHazard"
 };
 var SF_LISTS = /* @__PURE__ */ new Set(["star", "greek", "spaceLand", "sfBody", "orbitAdj", "spaceDirection", "spaceHazard"]);
-var GOD_CULTURES = /* @__PURE__ */ new Set(["egyptian", "norse", "anglo-saxon", "aztec", "maya"]);
+var GOD_CULTURES = cultureSet("routesGods");
 function regionMult(ctx, tag, eras) {
   var _a5, _b3;
   if (!tag || !ctx.region) return 1;
@@ -98329,8 +100488,8 @@ function tiersReaching(tiers, shift, want) {
 }
 var pickOne5 = (items, rng) => items[Math.floor(rng() * items.length)];
 var GENRE_OF = { FL: ["fantasy", false], FH: ["fantasy", true], MR: ["modern", false], MF: ["modern", true], SF: ["scifi", false] };
-var CASTE = /* @__PURE__ */ new Set(["indian", "west-african"]);
-var DUTCH_AMERICAN = /* @__PURE__ */ new Set(["dutch", "american"]);
+var CASTE = cultureSet("caste");
+var DUTCH_AMERICAN = cultureSet("dutchAmerican");
 var HYPHEN_FRACTIONS = /* @__PURE__ */ new Set(["Half", "Quarter"]);
 var POOL_CACHE = /* @__PURE__ */ new WeakMap();
 function cachedPool(ctx, pool3) {
@@ -99041,7 +101200,7 @@ function generateMoneyNames(options) {
 // src/peoples/engine.ts
 var PEOPLES_DATA = peoples_tongues_default;
 var PEOPLE_CULTURES = BYNAME_CULTURES;
-var ERA_ORDER = ["AN", "MD", "EM", "ST", "MO", "NF", "IS"];
+var ERA_ORDER = LENS_ERAS.map((e) => e.code);
 var eraFrom = (era, from) => !from || ERA_ORDER.indexOf(era) >= ERA_ORDER.indexOf(from);
 var isFuture = (era) => era === "NF" || era === "IS";
 var asEra = (era) => ROUTE_ERAS.some((e) => e.code === era) ? era : "MD";
@@ -104742,7 +106901,7 @@ function planWeight(ctx, plan) {
   }
   mult *= (_d3 = (_c3 = s.kx) == null ? void 0 : _c3[ctx.kind]) != null ? _d3 : 1;
   mult *= (_f = (_e3 = THINGS_DATA.leanings[ctx.culture]) == null ? void 0 : _e3[plan.fam]) != null ? _f : 1;
-  if (plan.fam === "nickname" && !["general", "norman-british", "anglo-saxon"].includes(ctx.culture)) mult *= THINGS_DATA.nicknameOthers;
+  if (plan.fam === "nickname" && !cultureSet("plainNicknames").has(ctx.culture)) mult *= THINGS_DATA.nicknameOthers;
   if (!viable(ctx, plan)) return 0;
   return s.w / (plan.patternsFor[ctx.kind] || 1) * mult * toneFactor(plan.tones, ctx.tone);
 }
@@ -105055,7 +107214,7 @@ var DEFAULT_PEOPLE_STATE = {
   detail: "one",
   names: ""
 };
-var PEOPLE_NO_PLACES = ["greek-byzantine", "steppe"];
+var PEOPLE_NO_PLACES = cultureSetKeys("noPlaceNames");
 var placesOffered = (culture) => !PEOPLE_NO_PLACES.includes(culture);
 var SOURCE_TEXT2 = { typed: "names I type", pack: "names from a pack", realms: "new realms", places: "new place names" };
 var GIVING_TEXT = { both: "peoples and languages", peoples: "peoples", languages: "languages" };
@@ -120009,7 +122168,7 @@ var defaultStreetSafeguards = () => ({
 });
 var pickOne11 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM4 = (t) => !!t && (t.includes("light") || t.includes("grim"));
-var CASTE2 = /* @__PURE__ */ new Set(["indian", "west-african"]);
+var CASTE2 = cultureSet("caste");
 var TRADE_TOKENS = /\{(trade|tradeSg)[}:]/;
 var POOL_OF2 = { sw: "streetWord", aw: "alleyWord", dw: "districtWord", jw: "junctionWord" };
 var SF_LISTS2 = /* @__PURE__ */ new Set(["star", "greek", "stationDirection"]);
@@ -120627,7 +122786,7 @@ function monumentNeighbours(site, districtWorthy, o) {
 var SHARED_LISTS = building_names_default.lists;
 var pickOne10 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM5 = (t) => !!t && (t.includes("light") || t.includes("grim"));
-var CASTE3 = /* @__PURE__ */ new Set(["indian", "west-african"]);
+var CASTE3 = cultureSet("caste");
 var SF_LISTS3 = /* @__PURE__ */ new Set(["star", "greek"]);
 function vocabPool5(ctx, pool3) {
   return boostPool(ctx.context, pool3, poolEntries(ctx.vocab, pool3, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes })).filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(e.t))).map(([e, w]) => {
@@ -121056,16 +123215,16 @@ var INN_KINDS = INN_DATA.kinds;
 var INN_SETTINGS = INN_DATA.settings;
 var INN_ANY = INN_DATA.any;
 var INN_FORMS = INN_DATA.forms;
-var eraIndex2 = (era) => ROUTE_ERAS.findIndex((e) => e.code === era);
+var eraIndex = (era) => ROUTE_ERAS.findIndex((e) => e.code === era);
 var isFuture6 = (era) => era === "NF" || era === "IS";
 var innKindsOffered = (era) => INN_KINDS.filter((k) => k.era[era] > 0);
 function englishShare(culture, era) {
   const t = INN_DATA.tradition;
   if (t.full.includes(culture)) return 1;
   const from = t.fullFrom[culture];
-  if (from) return eraIndex2(era) >= eraIndex2(from) ? 1 : 0;
+  if (from) return eraIndex(era) >= eraIndex(from) ? 1 : 0;
   const part = t.partial[culture];
-  return part && eraIndex2(era) >= eraIndex2(part[1]) ? part[0] : 0;
+  return part && eraIndex(era) >= eraIndex(part[1]) ? part[0] : 0;
 }
 var hasSignTradition = (culture) => ROUTE_ERAS.some((e) => englishShare(culture, e.code) > 0);
 var defaultInnSafeguards = () => ({ block: INN_DATA.safeguards.block, flag: INN_DATA.safeguards.flag, flagListBlocks: INN_DATA.safeguards.flagListBlocks });
@@ -121359,7 +123518,7 @@ function shapeWeight9(ctx, s) {
   if (ctx.mode === "invented" && /\{(patron|founder)/.test(s.p) && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
   if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
-  if (s.p.includes("{trade") && (c.key === "indian" || c.key === "west-african")) return 0;
+  if (s.p.includes("{trade") && cultureSet("caste").has(c.key)) return 0;
   return s.w * toneFactor((_a5 = s.t) != null ? _a5 : [], ctx.tone);
 }
 var live4 = (ctx, shapes, only) => shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight9(ctx, s)]).filter(([, w]) => w > 0);
@@ -121369,7 +123528,7 @@ function englishPlans(ctx, settingKey, only) {
   const out = [];
   for (const a of INN_DATA.signs) {
     let w = a.key === "roadside" ? setting.roadside * ((_c3 = (_b3 = (_a5 = ctx.options.context) == null ? void 0 : _a5.effects) == null ? void 0 : _b3.roadsideX) != null ? _c3 : 1) : a.w;
-    if (a.from && eraIndex2(ctx.era) < eraIndex2(a.from)) w = 0;
+    if (a.from && eraIndex(ctx.era) < eraIndex(a.from)) w = 0;
     if (a.key === "arms") {
       w *= (_d3 = setting.armsX) != null ? _d3 : 1;
       if (ctx.region && INN_DATA.regionRules.armsHalf.includes(ctx.region)) w *= 0.5;
@@ -121448,7 +123607,7 @@ function generateInnNames(options) {
     if (anchor) return pickWeighted5(englishPlans(ctx, settingKey, options.shape).filter(([p]) => p.anchor === anchor), rng);
     const era2 = eraPlans(ctx, options.shape);
     const share2 = isFuture6(ctx.era) && ctx.kind === "bar" ? INN_DATA.eraShare.futureBar : INN_DATA.eraShare.default;
-    if (era2.length > 0 && (eraIndex2(ctx.era) >= eraIndex2("ST") || options.shape) && rng() < share2) return pickWeighted5(era2, rng);
+    if (era2.length > 0 && (eraIndex(ctx.era) >= eraIndex("ST") || options.shape) && rng() < share2) return pickWeighted5(era2, rng);
     if (english > 0 && rng() < english) {
       const plan = pickWeighted5(englishPlans(ctx, settingKey, options.shape), rng);
       if (plan) return plan;
@@ -121746,7 +123905,7 @@ var eventKindsOffered = (era) => EVENT_KINDS.filter((k) => k.era[era] > 0);
 var defaultEventSafeguards = () => ({ block: EVENT_DATA.safeguards.block, flag: EVENT_DATA.safeguards.flag, flagListBlocks: EVENT_DATA.safeguards.flagListBlocks });
 var pickOne13 = (items, rng) => items[Math.floor(rng() * items.length)];
 var LIGHT_OR_GRIM7 = (t) => !!t && (t.includes("light") || t.includes("grim"));
-var CASTE4 = /* @__PURE__ */ new Set(["indian", "west-african"]);
+var CASTE4 = cultureSet("caste");
 var SF_LISTS4 = /* @__PURE__ */ new Set(["star", "spaceLand"]);
 function vocabPool7(ctx, pool3) {
   var _a5, _b3;
@@ -128907,7 +131066,7 @@ function groupGenreFor(era) {
   return setting === "SF" ? "scifi" : setting === "MR" || setting === "MF" ? "modern" : "fantasy";
 }
 var isFuture7 = (era) => era === "NF" || era === "IS";
-var CASTE5 = /* @__PURE__ */ new Set(["indian", "west-african"]);
+var CASTE5 = cultureSet("caste");
 function defaultBlocked(name) {
   const n = routeNorm(name);
   return routeBlockSet().has(n) || GROUP_DATA.safeguards.block.some((b) => normForBlock(b) === normForBlock(name)) || breaksRouteWords(name) || hasBannedWord(name);
@@ -129060,7 +131219,7 @@ function resolveKitOptions(o) {
     culture,
     era,
     fantastic: !!o.fantastic,
-    region: ["anglo-saxon", "celtic", "norman-british"].includes(culture) && o.region && o.region !== "all" ? o.region : void 0,
+    region: LENS_CULTURE_GROUPS.british.cultures.includes(culture) && o.region && o.region !== "all" ? o.region : void 0,
     size: KIT_SIZES.includes(o.size) ? o.size : "town",
     position: KIT_POSITIONS.some((p) => p.key === o.position) ? o.position : "inland",
     tone: (_c3 = o.tone) != null ? _c3 : "any",
@@ -131602,7 +133761,7 @@ function monthTheme(S, lines2) {
     return true;
   }).filter(([t]) => {
     if (t === "gods") return !ctx.sensitive && ctx.mode === "invented";
-    if (t === "festivals") return ctx.era === "AN" && ["greek-byzantine", "roman"].includes(ctx.culture);
+    if (t === "festivals") return ctx.era === "AN" && cultureSet("festivalsAncient").has(ctx.culture);
     if (t === "nature") return biomeItems(ctx, "tree").length + biomeItems(ctx, "wildAnimal").length > 0;
     if (t === "seasons" || t === "work" || t === "positions") return !ctx.land.space && !!ctx.cycle;
     return true;
@@ -131682,13 +133841,13 @@ function monthSeries(S, systemKey, forMoons) {
   S.ctx.fixed = {};
   const monthLines = lines2.filter((l) => l.type === "month");
   const pairShare = TIME_SKY.themes.pairShare;
-  const wantsPair = theme === "seasons" && ["anglo-saxon", "celtic", "norse"].includes(ctx.culture) && inEras2("AN-MD", ctx.era) || ["aztec", "maya"].includes(ctx.culture) && inEras2("AN-EM", ctx.era);
+  const wantsPair = theme === "seasons" && cultureSet("seasonPairNorth").has(ctx.culture) && inEras2("AN-MD", ctx.era) || cultureSet("seasonPairMeso").has(ctx.culture) && inEras2("AN-EM", ctx.era);
   if (wantsPair && ctx.rng() < pairShare) {
     const spots = [];
     for (let i = 0; i + 1 < lines2.length; i++) if (lines2[i].type === "month" && lines2[i + 1].type === "month" && !lines2[i].name && !lines2[i + 1].name) spots.push(i);
     if (spots.length > 0) {
       const i = pickOne14(spots, ctx.rng);
-      const aztec = ["aztec", "maya"].includes(ctx.culture);
+      const aztec = cultureSet("seasonPairMeso").has(ctx.culture);
       let a, b;
       if (aztec) {
         const pf = (_c3 = token16({ ...ctx, fixed: {}, season: null, distinct: false, drawn: /* @__PURE__ */ new Set(), log: [] }, "pairFeast")) != null ? _c3 : "Vigil";
@@ -131858,7 +134017,7 @@ function daySeries(S, systemKey) {
   else themeOpts = TIME_SKY.themes.day;
   themeOpts = themeOpts.filter(([t]) => {
     if (t === "planets") return systemKey === "week-7";
-    if (t === "elements") return systemKey === "week-7" && ["chinese", "japanese", "korean", "steppe"].includes(ctx.culture);
+    if (t === "elements") return systemKey === "week-7" && cultureSet("elementsEastAsian").has(ctx.culture);
     if (t === "gods") return !ctx.sensitive && ctx.mode === "invented";
     if (t === "towns" || t === "goods") return true;
     return true;

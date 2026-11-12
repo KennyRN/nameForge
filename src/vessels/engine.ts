@@ -39,6 +39,7 @@ import moneyData from "../data/money-names.json";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { findTradition } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -706,7 +707,7 @@ function baseToken(ctx: Ctx, name: string): string | undefined {
       const seed = Math.floor(rng() * 0x100000000);
       const era = ctx.setting === "SF" ? "interstellar" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "medieval";
       const genre = ctx.setting === "SF" ? "scifi" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "fantasy";
-      const realmCulture = ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya"].includes(ctx.culture.key) ? ctx.culture.key : "general";
+      const realmCulture = cultureSet("vesselRealmCultures").has(ctx.culture.key) ? ctx.culture.key : "general";
       return realmSource?.({ culture: realmCulture, era, genre, seed, catalogue: ctx.catalogue });
     }
     case "exoticTown":

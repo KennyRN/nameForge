@@ -95,6 +95,7 @@ interface LensData {
   tones: { key: string }[];
   targets: LensTargets;
   poolExemptions: { forPacks: string[]; closed: string[] };
+  cultureSets: Record<string, { cultures: string[]; note: string }>;
   landModules: string[];
   mappings: {
     cultures: Record<string, CultureMapping | Record<string, CultureMapEntry>>;
@@ -249,6 +250,22 @@ export function inCultureGroup(group: string, culture: string, era: LensEra): bo
 
 /** The lens's culture groups, as the vocabulary has them: `{ cultures, from? }` by name. */
 export const LENS_CULTURE_GROUPS: Readonly<Record<string, { cultures: string[]; from?: Record<string, LensEra> }>> = LENS.cultureGroups;
+
+/**
+ * The culture sets the engines used to hard-code (shared lens brief §5.2), by name: each is kept as it
+ * was, so a set that differs from a lens group of the same sort (realms' Christian set) stays distinct.
+ */
+export function cultureSet(name: string): ReadonlySet<string> {
+  const found = LENS.cultureSets[name];
+  if (!found) throw new Error(`lens: no culture set “${name}”`);
+  let set = SET_CACHE.get(name);
+  if (!set) SET_CACHE.set(name, (set = new Set(found.cultures)));
+  return set;
+}
+const SET_CACHE = new Map<string, ReadonlySet<string>>();
+/** A culture set's keys in their file order. */
+export const cultureSetKeys = (name: string): string[] => [...(LENS.cultureSets[name]?.cultures ?? [])];
+export const LENS_CULTURE_SET_NAMES: readonly string[] = Object.keys(LENS.cultureSets);
 
 /** §3.3: whether the coverage report reads a module's era tags through the land band. */
 export const isLandModule = (moduleKey: string): boolean => LENS.modules[moduleKey]?.land === true;

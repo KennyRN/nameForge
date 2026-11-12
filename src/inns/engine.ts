@@ -48,6 +48,7 @@ import { buildingName, type BuildingKind } from "../buildings/engine";
 import { monumentName, type MonumentKind } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { breaksStreetWords, STREET_DATA } from "../streets/engine";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -571,7 +572,7 @@ function shapeWeight(ctx: Ctx, s: InnShape): number {
   if (ctx.mode === "invented" && /\{(patron|founder)/.test(s.p) && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
   if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
-  if (s.p.includes("{trade") && (c.key === "indian" || c.key === "west-african")) return 0;
+  if (s.p.includes("{trade") && cultureSet("caste").has(c.key)) return 0;
   return s.w * toneFactor(s.t ?? [], ctx.tone);
 }
 

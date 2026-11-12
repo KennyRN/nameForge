@@ -45,6 +45,7 @@ import {
 } from "../routes/engine";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -171,7 +172,7 @@ interface Ctx {
 
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
-const CASTE = new Set(["indian", "west-african"]);
+const CASTE = cultureSet("caste");
 const SF_LISTS = new Set(["star", "spaceLand"]);
 
 function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {

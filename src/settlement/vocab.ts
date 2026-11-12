@@ -4,6 +4,7 @@
 // No Obsidian imports.
 
 import vocabData from "../data/settlement-vocab.json";
+import { inCultureGroup } from "../lens";
 import { GROUP_TONES, type GroupTone, hasBannedWord } from "../groups/engine";
 import { scaleAllows, type ScaleChoice, type SpaceScale } from "../space/scale";
 
@@ -98,14 +99,8 @@ export const POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
 
 const eraIndex = (era: SettlementEra) => VOCAB_ERAS.indexOf(era);
 
-/** §4.1: whether a culture belongs to a named group in an era (christian: greek-byzantine and roman from MD). */
-export function inCultureGroup(group: string, culture: string, era: SettlementEra): boolean {
-  const g = SETTLEMENT_VOCAB.cultureGroups[group];
-  if (!g) return false;
-  if (g.cultures.includes(culture)) return true;
-  const from = g.from?.[culture];
-  return !!from && eraIndex(era) >= eraIndex(from);
-}
+/** §4.1: whether a culture belongs to a named group in an era: the lens's, re-exported (the groups live in lens.json). */
+export { inCultureGroup } from "../lens";
 
 /** §3.1: whether a `c` list allows a culture: no positive keys is every culture; `!key` excludes. */
 export function cultureAllowed(c: readonly string[] | undefined, culture: string, era: SettlementEra): boolean {

@@ -11,6 +11,7 @@ import { mulberry32 } from "../markov";
 import { breaksMoneyWords } from "../money/engine";
 import { ALL_FORMS } from "../realms/engine";
 import { ROUTE_ERAS } from "../routes/engine";
+import { LENS_ERAS } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -65,7 +66,7 @@ export const PEOPLE_CULTURES = BYNAME_CULTURES;
 export const PEOPLE_ERAS = ROUTE_ERAS;
 export const PEOPLE_FAMILIES: PeopleFamily[] = ["an", "ian", "er", "ish", "ese", "i", "ite", "ine", "iot", "ene", "itan", "ec", "clip", "man", "folk", "ings", "learned", "born", "sider"];
 
-const ERA_ORDER: PeopleEra[] = ["AN", "MD", "EM", "ST", "MO", "NF", "IS"];
+const ERA_ORDER = LENS_ERAS.map((e) => e.code) as PeopleEra[];
 const eraFrom = (era: PeopleEra, from?: PeopleEra) => !from || ERA_ORDER.indexOf(era) >= ERA_ORDER.indexOf(from);
 const isFuture = (era: PeopleEra) => era === "NF" || era === "IS";
 const asEra = (era: string | undefined): PeopleEra => (ROUTE_ERAS.some((e) => e.code === era) ? (era as PeopleEra) : "MD");

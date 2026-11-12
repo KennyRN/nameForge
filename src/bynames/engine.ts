@@ -26,6 +26,7 @@ import {
 import { mulberry32 } from "../markov";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { WORLD_CULTURES } from "../world/engine";
+import { cultureSet } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -304,8 +305,8 @@ export function holyNamesIn(culture: string): RegExp | undefined {
 
 /** §4.3: where invented places come from. */
 export function townSource(culture: string): string | undefined {
-  if (["general", "anglo-saxon", "celtic", "norman-british"].includes(culture)) return "britain";
-  if (culture === "greek-byzantine" || culture === "steppe") return undefined;
+  if (cultureSet("britainSource").has(culture)) return "britain";
+  if (cultureSet("noPlaceNames").has(culture)) return undefined;
   return culture;
 }
 
