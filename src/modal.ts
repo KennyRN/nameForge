@@ -46,6 +46,9 @@ import {
   ICON_MONUMENTS,
   ICON_SETTLEMENT_KIT,
   ICON_DEITIES,
+  ICON_EMPIRE_EXPANSION_PLACE_SHAPES,
+  ICON_EXPLORATION_PLACE_SHAPES,
+  ICON_NATIVE_PLACE_NAMES,
   ICON_BULLET_INSERT,
   ICON_CANCEL,
   ICON_CHECKLIST_INSERT,
@@ -127,7 +130,7 @@ import { chooseWilds, defaultWildsState, wildsHistoryLabel, wildsSentence, wilds
 import { HyperspaceGuideModal } from "./waters/guide";
 import { generateWatersNames, WATERS_DATA, watersWordBlocked, type WatersModule } from "./waters/engine";
 import { chooseWaters, defaultWatersState, watersHistoryLabel, watersSentence, watersSentenceText, type WatersSentenceState } from "./waters/sentence";
-import { isModulePresetContent, modulePresetContent, parseModulePreset, type RealmPreset, type RoutePreset, type StreetPreset, type InnPreset, type BuildingPreset, type MonumentPreset, type KitPreset, type EventPreset, type MoneyPreset, type TimePreset, type ThingPreset, type PeoplePreset, type DeityPreset, type TribalPreset, type VesselPreset, type WatersPreset, type WildsPreset } from "./presets";
+import { isModulePresetContent, modulePresetContent, parseModulePreset, type RealmPreset, type RoutePreset, type StreetPreset, type InnPreset, type BuildingPreset, type MonumentPreset, type KitPreset, type EventPreset, type MoneyPreset, type TimePreset, type ThingPreset, type PeoplePreset, type DeityPreset, type ExplorationPreset, type ExpansionPreset, type NativePlacePreset, type TribalPreset, type VesselPreset, type WatersPreset, type WildsPreset } from "./presets";
 import { defaultRouteSafeguards, findRouteCulture, findRouteKind, generateRouteNames, ROUTE_DATA, routeWordBlocked } from "./routes/engine";
 import { chooseRoute, DEFAULT_ROUTE_STATE, routeHistoryLabel, routeSentence, routeSentenceText, type RouteSentenceState } from "./routes/sentence";
 import { isSettlementSafeguardPackContent } from "./settlement/safeguardPacks";
@@ -171,6 +174,22 @@ import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/
 import { cultureUsesBiomes, eraUsesLand, findCulture, findEra, generateWorldPlaceNames, INTERSTELLAR_ERA, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
 import {
+  type BritishPlaceState,
+  britishPresetOf,
+  britishRecipe,
+  type ColonialPlaceState,
+  colonialPresetOf,
+  colonialPresetState,
+  colonialRecipe,
+  generateBritishPlace,
+  generateColonialPlace,
+  generateWorldPlace,
+  nativePresetState,
+  type PlaceLand,
+  type WorldPlaceState,
+  worldPresetOf,
+} from "./names/placeRun";
+import {
   chooseNames,
   chooseSlotSource,
   freshSlotSources,
@@ -182,6 +201,7 @@ import {
   type SlotPart,
   type SlotSegment,
   slotPartOf,
+  slotSegmentsText,
   slotSentence,
   type SlotSources,
   usesOwnNames,
@@ -238,7 +258,7 @@ import { DEFAULT_NAMES_FOLDER, ensureVaultFolder, resolveNamesFolderPath } from 
 
 /** `tribalPreset` (Presets brief §9) and `groupPreset` (Group brief §13): module preset notes, run
  * as-is from the pack dropdown. */
-type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset" | "groupPreset" | "bynamePreset" | "vesselPreset" | "watersPreset" | "wildsPreset" | "realmPreset" | "routePreset" | "streetPreset" | "innPreset" | "buildingPreset" | "monumentPreset" | "kitPreset" | "eventPreset" | "moneyPreset" | "calendarPreset" | "skyPreset" | "thingPreset" | "peoplePreset" | "deityPreset";
+type NamePackType = "breakdownPack" | "listPack" | "compoundPack" | "placePack" | "mixPack" | "recipePack" | "tribalPreset" | "groupPreset" | "bynamePreset" | "vesselPreset" | "watersPreset" | "wildsPreset" | "realmPreset" | "routePreset" | "streetPreset" | "innPreset" | "buildingPreset" | "monumentPreset" | "kitPreset" | "eventPreset" | "moneyPreset" | "calendarPreset" | "skyPreset" | "thingPreset" | "peoplePreset" | "deityPreset" | "nativePlacePreset" | "explorationPreset" | "expansionPreset";
 
 import {
   BRITISH_PLACE_NAMES_HISTORY_NAME,
@@ -268,6 +288,9 @@ import { ALIEN_CHOICES, biomePhrase, explorersPhrase, incomersPhrase, regionPhra
 /** History label for british place names runs; older "place name shapes" entries keep theirs. */
 
 /** The colonial shape generators (colonialShapes.ts): part 2 and part 2a. */
+/** Wizard retirement brief §4: the place-name presets' pack types. */
+const isPlacePresetType = (type: NamePackType) => type === "nativePlacePreset" || type === "explorationPreset" || type === "expansionPreset";
+
 const COLONIAL_SECTION_PART: Partial<Record<NameForgeSection, ColonialPart>> = {
   explorationPlaceShapes: "2",
   empireExpansionPlaceShapes: "2a",
@@ -327,6 +350,10 @@ function packTypeIconId(packType: NamePackType, subGenerator?: CompoundGenerator
   if (packType === "thingPreset") return ICON_GEM;
   if (packType === "peoplePreset") return ICON_LANGUAGES;
   if (packType === "deityPreset") return ICON_DEITIES;
+  // Wizard retirement brief §4: each place-name preset wears its module's icon.
+  if (packType === "nativePlacePreset") return ICON_NATIVE_PLACE_NAMES;
+  if (packType === "explorationPreset") return ICON_EXPLORATION_PLACE_SHAPES;
+  if (packType === "expansionPreset") return ICON_EMPIRE_EXPANSION_PLACE_SHAPES;
   if (packType === "recipePack") {
     // Presets brief §2.2: recipe packs wear the wizard's pen-in-pin icon.
     return ICON_RECIPE_WIZARD;
@@ -1167,7 +1194,7 @@ export class NameForgeModal extends Modal {
     if (group) this.groupModule[group] = section;
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSentenceEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
-    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || (this.currentPackType === "recipePack" && !!this.settlementPreset)));
+    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || isPlacePresetType(this.currentPackType) || (this.currentPackType === "recipePack" && !!this.settlementPreset)));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
     const colonialPart = COLONIAL_SECTION_PART[section];
@@ -2182,7 +2209,12 @@ export class NameForgeModal extends Modal {
     }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof TFile)) return;
-    const { preset, group, byname, vessel, waters, wilds, realm, route, street, inn, building, monument, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, waters, wilds, realm, route, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, nativePlace, exploration, expansion } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (nativePlace || exploration || expansion) {
+      // Wizard retirement brief §4: the preset's choices, applied to its module for this session.
+      await this.openPlacePresetInModule(file.path, nativePlace, exploration, expansion);
+      return;
+    }
     if (peoples) {
       // Peoples and tongues brief §13: the preset's choices, applied to the module for this session.
       this.peopleState = this.peoplePresetState(peoples);
@@ -4700,7 +4732,7 @@ export class NameForgeModal extends Modal {
         section === "deityNames" ||
         section === "sacredPlaces" ||
         !!COLONIAL_SECTION_PART[section] ||
-        (section === "placeShapes" && this.placeIsBritain()),
+        (section === "placeShapes" && !this.placeIsRivers()),
     );
   }
 
@@ -4784,7 +4816,7 @@ export class NameForgeModal extends Modal {
       return;
     }
     if (this.activeSection !== "tribalNames") {
-      await this.openSaveRecipePreset();
+      await this.openSavePlacePreset();
       return;
     }
     const custom = await this.loadCustomBiomes();
@@ -4815,43 +4847,202 @@ export class NameForgeModal extends Modal {
   }
 
   /**
-   * Presets brief §7.1, §8: a place-name module's setup saved as a recipe note, written from the
-   * recipe the module builds; a biome pack is kept as a link.
+   * Wizard retirement brief §4: native place names (British or a world culture), exploration and
+   * expansion save as module presets, with the closing choice and each slot's source.
    */
-  private async openSaveRecipePreset() {
+  private async openSavePlacePreset() {
     const custom = await this.loadCustomBiomes();
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
-    if (!colonialPart && !(this.activeSection === "placeShapes" && this.placeIsBritain())) return;
-    const key = colonialPart ? `colonial:${colonialPart}` : "britain";
-    const land = this.land(key);
-    const found = findBiome(land.biome, custom);
-    const biome = found ? (found.custom ? `[[${found.label}]]` : found.id) : undefined;
-    let recipe: RecipeSettings;
+    if (!colonialPart && !(this.activeSection === "placeShapes" && !this.placeIsRivers())) return;
+    const biomeText = (found: Biome | undefined) => (found ? (found.custom ? `[[${found.label}]]` : found.id) : "");
     let name: string;
     let description: string;
+    let make: (presetName: string, text: string) => string;
+    let owns: (existing: string, presetName: string) => boolean;
     if (colonialPart) {
+      const state = this.colonialPlaceState(colonialPart);
+      const found = findBiome(state.land.biome, custom);
       const part = colonialPart === "2" ? "new-land" : "established";
-      const tradition = this.selectedTradition[colonialPart];
-      const context = this.selectedContext[colonialPart];
-      const aliens = !!found?.space && this.colonialAliens[colonialPart];
-      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain, aliens);
-      const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition ?? "general"))!;
-      const contextLabel = colonialContexts(colonialPart).find((c) => c.id === context)?.label.toLowerCase();
-      name = [traditionLabel(colonialPart, t.id, t.label), contextLabel].filter(Boolean).join(" · ");
-      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain, aliens }, custom);
+      const t = COLONIAL_TRADITIONS.find((x) => x.id === (state.tradition ?? "general"))!;
+      const sentence = slotSentence(slotPartOf(colonialPart), state.sources);
+      name = `${traditionLabel(colonialPart, t.id, t.label)} · ${SECTION_LABELS[this.activeSection]}`;
+      description = `${wizardSentenceText(part, { tradition: t.id, context: state.context, biome: found?.id, terrain: state.land.terrain, aliens: state.aliens }, custom)}.${sentence ? ` ${slotSegmentsText(sentence)}` : ""}`;
+      const contextId = state.context ?? CONTEXT_PHRASES[colonialPart][0][0];
+      make = (presetName, text) => modulePresetContent(colonialPresetOf(colonialPart, state, contextId, { packName: presetName, description: text, biome: biomeText(found) }));
+      owns = (existing, presetName) => !!(colonialPart === "2" ? parseModulePreset(existing, presetName).exploration : parseModulePreset(existing, presetName).expansion);
+    } else if (this.placeIsBritain()) {
+      const state = this.britishPlaceState();
+      const found = findBiome(state.land.biome, custom);
+      const sentence = slotSentence("organic", state.sources);
+      name = `British · ${SECTION_LABELS.placeShapes}`;
+      description = `${wizardSentenceText("organic", { region: state.region, biome: found?.id, terrain: state.land.terrain }, custom)}.${sentence ? ` ${slotSegmentsText(sentence)}` : ""}`;
+      make = (presetName, text) => modulePresetContent(britishPresetOf(state, { packName: presetName, description: text, biome: biomeText(found) }));
+      owns = (existing, presetName) => !!parseModulePreset(existing, presetName).nativePlace;
     } else {
-      recipe = britishPlaceNamesRecipe(this.selectedRegion, biome, land.terrain);
-      name = ["British", regionPhrase(this.selectedRegion), found ? biomeInline(found) : undefined].filter(Boolean).join(" · ");
-      description = wizardSentenceText("organic", { region: this.selectedRegion, biome, terrain: land.terrain }, custom);
+      const state = this.worldPlaceState();
+      const culture = findCulture(state.culture);
+      const era = findEra(culture, state.era);
+      const found = findBiome(state.land.biome, custom);
+      name = `${culture.label} · ${SECTION_LABELS.placeShapes}`;
+      description = `${culture.label} place names${culture.eras.length > 1 ? ` from the ${era.label} era` : ""}${found ? `, set in ${found.phrase}` : ""}.`;
+      make = (presetName, text) => modulePresetContent(worldPresetOf(state, era.id, { packName: presetName, description: text, biome: biomeText(found) }));
+      owns = (existing, presetName) => !!parseModulePreset(existing, presetName).nativePlace;
     }
-    new PresetSaveModal(this.app, name, `${description}.`, async (presetName, text) => {
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       if (!presetName) {
         new Notice("nameForge: give the preset a name.");
         return false;
       }
-      const content = `---\n${stringifyYaml(recipeToFrontmatter(recipe))}---\n\n${text}\n`;
-      return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
+      return this.writePreset(presetName, make(presetName, text), (existing) => owns(existing, presetName));
     }).open();
+  }
+
+  // ── The place-name modules' states, runs and presets (Wizard retirement brief §4) ──
+
+  private britishPlaceState(): BritishPlaceState {
+    return { region: this.selectedRegion, land: this.land("britain"), sources: this.placeSlots };
+  }
+
+  private worldPlaceState(): WorldPlaceState {
+    const key = this.worldLandKey();
+    return { culture: this.worldCulture, era: this.worldEras[this.worldCulture], land: key ? this.land(key) : DEFAULT_LAND };
+  }
+
+  private colonialPlaceState(part: ColonialPart): ColonialPlaceState {
+    return {
+      tradition: this.selectedTradition[part],
+      context: this.selectedContext[part],
+      aliens: this.colonialAliens[part],
+      land: this.land(`colonial:${part}`),
+      sources: this.colonialSlots[part],
+    };
+  }
+
+  /** A preset's "[[Salt Marshes]]" biome link, as the land's biome: the pack's path (as the tribal preset does). */
+  private async presetLand(land: PlaceLand, from: string): Promise<PlaceLand> {
+    if (!land.biome?.startsWith("[[")) return land;
+    const name = land.biome.slice(2, -2);
+    const target = this.app.metadataCache.getFirstLinkpathDest(name, from);
+    const found = (await this.loadCustomBiomes()).find((b) => b.custom?.path === target?.path || b.label === name);
+    return { ...land, biome: found?.custom?.path };
+  }
+
+  private placeRunOptions() {
+    return {
+      count: this.generationCount,
+      seed: this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined,
+      faithfulness: this.plugin.settings.faithfulness,
+      strictness: this.plugin.settings.strictness,
+    };
+  }
+
+  /** River brief §2: rendered names from the fixed British recipe, shown as recipe results. `label` replaces the history label (a preset run's). */
+  private async runBritishPlace(state: BritishPlaceState, label?: string, problems: string[] = []) {
+    await this.loadCustomBiomes();
+    const biome = await this.readyBiome(findBiome(state.land.biome, this.customBiomes));
+    const own = await this.resolveSlotSources("organic", state.sources, britishRecipe(state, biome));
+    const result = this.tryLand(() => generateBritishPlace(state, biome, own.slots, this.placeRunOptions()));
+    if (!result) return;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names, "module");
+    await this.recordGenerationHistory(
+      result.names.length,
+      label ?? withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, state.region) + landHistorySuffix(state.land, this.customBiomes) + ownNamesSuffix("organic", state.sources),
+    );
+    this.setStatus([...problems, ...result.notices, ...own.notices].join(" "));
+  }
+
+  private async runWorldPlace(state: WorldPlaceState, label?: string, problems: string[] = []) {
+    await this.loadCustomBiomes();
+    const result = generateWorldPlace(state, findBiome(state.land.biome, this.customBiomes), this.placeRunOptions());
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology }) as GeneratedName),
+      "module",
+    );
+    await this.recordGenerationHistory(
+      result.names.length,
+      label ?? worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, state.culture, state.era) + landHistorySuffix(state.land, this.customBiomes),
+    );
+    this.setStatus([...problems, ...result.notices].join(" "));
+  }
+
+  private async runColonialPlace(part: ColonialPart, state: ColonialPlaceState, label?: string, problems: string[] = []) {
+    await this.loadCustomBiomes();
+    const found = findBiome(state.land.biome, this.customBiomes);
+    const custom = found?.custom ? await this.readyBiome(found) : undefined;
+    const slotPart = slotPartOf(part);
+    const own = await this.resolveSlotSources(slotPart, state.sources, colonialRecipe(part, state, found, custom));
+    // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
+    const result = this.tryLand(() => generateColonialPlace(part, state, found, custom, own.slots, this.placeRunOptions()));
+    if (!result) return;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names, "module");
+    const section = part === "2" ? "explorationPlaceShapes" : "empireExpansionPlaceShapes";
+    await this.recordGenerationHistory(
+      result.names.length,
+      label ??
+        colonialHistoryLabel(SECTION_LABELS[section], part, state.tradition, state.context, custom ? undefined : state.land.biome) +
+          landHistorySuffix(state.land, this.customBiomes, !!custom) +
+          (found?.space && state.aliens ? " · alien life" : "") +
+          ownNamesSuffix(slotPart, state.sources),
+    );
+    // Unchanged on placeholders: these runs never showed the engine's notices.
+    this.setStatus([...problems, ...(usesOwnNames(slotPart, state.sources) ? [...result.notices, ...own.notices] : [])].join(" "));
+  }
+
+  /** A place-name preset, run as its module runs; history "{module label} · {preset}". */
+  private async runPlacePreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { nativePlace, exploration, expansion, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (nativePlace) {
+      const state = nativePresetState(nativePlace);
+      const label = `${SECTION_LABELS.placeShapes} · ${nativePlace.packName}`;
+      if ("british" in state) await this.runBritishPlace({ ...state.british, land: await this.presetLand(state.british.land, file.path) }, label, problems);
+      else await this.runWorldPlace({ ...state.world, land: await this.presetLand(state.world.land, file.path) }, label, problems);
+      return;
+    }
+    const preset = exploration ?? expansion;
+    if (!preset) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    const state = colonialPresetState(preset);
+    const section = preset.colonialPart === "2" ? "explorationPlaceShapes" : "empireExpansionPlaceShapes";
+    await this.runColonialPlace(preset.colonialPart, { ...state, land: await this.presetLand(state.land, file.path) }, `${SECTION_LABELS[section]} · ${preset.packName}`, problems);
+  }
+
+  /** "Open in {module}": the preset's choices, applied to its module for this session. */
+  private async openPlacePresetInModule(from: string, nativePlace?: NativePlacePreset, exploration?: ExplorationPreset, expansion?: ExpansionPreset) {
+    if (nativePlace) {
+      const state = nativePresetState(nativePlace);
+      this.worldCulture = nativePlace.placeCulture;
+      if ("british" in state) {
+        this.selectedRegion = state.british.region;
+        this.landStates.britain = await this.presetLand(state.british.land, from);
+        this.placeSlots = state.british.sources;
+      } else {
+        if (state.world.era) this.worldEras[state.world.culture] = state.world.era;
+        const key = this.worldLandKey();
+        if (key) this.landStates[key] = await this.presetLand(state.world.land, from);
+      }
+      this.switchSection("placeShapes");
+      return;
+    }
+    const preset = exploration ?? expansion;
+    if (!preset) return;
+    const part = preset.colonialPart;
+    const state = colonialPresetState(preset);
+    this.selectedTradition[part] = state.tradition;
+    this.selectedContext[part] = state.context;
+    this.colonialAliens[part] = state.aliens;
+    this.landStates[`colonial:${part}`] = await this.presetLand(state.land, from);
+    this.colonialSlots[part] = state.sources;
+    this.switchSection(part === "2" ? "explorationPlaceShapes" : "empireExpansionPlaceShapes");
   }
 
   /** Group brief §13: "{tradition} · {type or family} · {setting}", described by the sentence. */
@@ -5600,7 +5791,7 @@ export class NameForgeModal extends Modal {
     }
 
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "wildsPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "monumentPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "wildsPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "monumentPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset" || isPlacePresetType(packType)) {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -5795,6 +5986,9 @@ export class NameForgeModal extends Modal {
           else if (parsed.peoples) packs.push({ path: child.path, packType: "peoplePreset" });
           else if (parsed.time) packs.push({ path: child.path, packType: parsed.time.timeModule === "sky" ? "skyPreset" : "calendarPreset" });
           else if (parsed.deity) packs.push({ path: child.path, packType: "deityPreset" });
+          else if (parsed.nativePlace) packs.push({ path: child.path, packType: "nativePlacePreset" });
+          else if (parsed.exploration) packs.push({ path: child.path, packType: "explorationPreset" });
+          else if (parsed.expansion) packs.push({ path: child.path, packType: "expansionPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -5948,8 +6142,8 @@ export class NameForgeModal extends Modal {
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   private async loadTribalPreset(file: TFile, content: string) {
-    const { preset, group, byname, vessel, waters, wilds, realm, route, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? (time.timeModule === "sky" ? "skyPreset" : "calendarPreset") : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : monument ? "monumentPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route ? "routePreset" : realm ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    const { preset, group, byname, vessel, waters, wilds, realm, route, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, nativePlace, exploration, expansion, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = nativePlace ? "nativePlacePreset" : exploration ? "explorationPreset" : expansion ? "expansionPreset" : wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? (time.timeModule === "sky" ? "skyPreset" : "calendarPreset") : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : monument ? "monumentPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route ? "routePreset" : realm ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = undefined;
     this.currentNamesText = "";
@@ -5959,9 +6153,9 @@ export class NameForgeModal extends Modal {
     this.sectionSentenceEl?.hide();
     this.syncPillSpacing();
     this.openPresetButton?.toggle(this.activeSection === "markov");
-    const module = wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? THINGS_DATA.modules.find((m) => m.key === thing.thingModule)?.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
+    const module = nativePlace ? SECTION_LABELS.placeShapes : exploration ? SECTION_LABELS.explorationPlaceShapes : expansion ? SECTION_LABELS.empireExpansionPlaceShapes : wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? THINGS_DATA.modules.find((m) => m.key === thing.thingModule)?.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
     this.openPresetButton?.setAttribute("title", `Open in ${module ?? SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = wilds?.packName ?? preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? waters?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? building?.packName ?? monument?.packName ?? kit?.packName ?? event?.packName ?? money?.packName ?? time?.packName ?? thing?.packName ?? peoples?.packName ?? deity?.packName ?? file.basename;
+    this.plugin.settings.packName = nativePlace?.packName ?? exploration?.packName ?? expansion?.packName ?? wilds?.packName ?? preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? waters?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? building?.packName ?? monument?.packName ?? kit?.packName ?? event?.packName ?? money?.packName ?? time?.packName ?? thing?.packName ?? peoples?.packName ?? deity?.packName ?? file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -6247,30 +6441,7 @@ export class NameForgeModal extends Modal {
       return;
     }
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
-      // River brief §2: rendered names from the fixed built-in recipe, shown as recipe results.
-      const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-      const land = this.land("britain");
-      await this.loadCustomBiomes();
-      const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
-      const recipe = britishPlaceNamesRecipe(this.selectedRegion, biome?.custom ? undefined : land.biome, land.terrain);
-      const own = await this.resolveSlotSources("organic", this.placeSlots, recipe);
-      const result = this.tryLand(() => generatePlaceNames({
-        recipe,
-        biome: biome?.custom ? biome : undefined,
-        slots: own.slots,
-        count: this.generationCount,
-        seed: seedOverride,
-        faithfulness: this.plugin.settings.faithfulness,
-        strictness: this.plugin.settings.strictness,
-      }));
-      if (!result) return;
-      this.currentSeed = result.seed;
-      this.renderRecipeResults(result.names, "module");
-      await this.recordGenerationHistory(
-        result.names.length,
-        withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion) + landHistorySuffix(land, this.customBiomes) + ownNamesSuffix("organic", this.placeSlots),
-      );
-      this.setStatus([...result.notices, ...own.notices].join(" "));
+      await this.runBritishPlace(this.britishPlaceState());
       return;
     }
     // Place names' British river names: the river engine's British setting, with the place names region.
@@ -6307,31 +6478,8 @@ export class NameForgeModal extends Modal {
       return;
     }
     if (this.activeSection === "placeShapes") {
-      const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-      const era = this.worldEras[this.worldCulture];
       // Land brief §7: the culture's own land choice (Homeland and Any terrain change nothing).
-      const worldKey = this.worldLandKey();
-      const land = worldKey ? this.land(worldKey) : DEFAULT_LAND;
-      const result = generateWorldPlaceNames({
-        culture: this.worldCulture,
-        era,
-        biome: findBiome(land.biome, this.customBiomes),
-        terrain: land.terrain,
-        count: this.generationCount,
-        seed: seedOverride,
-        faithfulness: this.plugin.settings.faithfulness,
-        strictness: this.plugin.settings.strictness,
-      });
-      this.currentSeed = result.seed;
-      this.renderRecipeResults(
-        result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology }) as GeneratedName),
-        "module",
-      );
-      await this.recordGenerationHistory(
-        result.names.length,
-        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era) + landHistorySuffix(land, this.customBiomes),
-      );
-      this.setStatus(result.notices.join(" "));
+      await this.runWorldPlace(this.worldPlaceState());
       return;
     }
     if (this.activeSection === "nameAgeing") {
@@ -6426,39 +6574,7 @@ export class NameForgeModal extends Modal {
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
-      const seedOverride = this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined;
-      const tradition = this.selectedTradition[colonialPart];
-      const context = this.selectedContext[colonialPart];
-      const land = this.land(`colonial:${colonialPart}`);
-      await this.loadCustomBiomes();
-      const found = findBiome(land.biome, this.customBiomes);
-      const custom = found?.custom ? await this.readyBiome(found) : undefined;
-      const biome = custom ? undefined : land.biome;
-      // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
-      const recipe = colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!found?.space && this.colonialAliens[colonialPart]);
-      const slotPart = slotPartOf(colonialPart);
-      const own = await this.resolveSlotSources(slotPart, this.colonialSlots[colonialPart], recipe);
-      const result = this.tryLand(() => generatePlaceNames({
-        recipe,
-        biome: custom,
-        slots: own.slots,
-        count: this.generationCount,
-        seed: seedOverride,
-        faithfulness: this.plugin.settings.faithfulness,
-        strictness: this.plugin.settings.strictness,
-      }));
-      if (!result) return;
-      this.currentSeed = result.seed;
-      this.renderRecipeResults(result.names, "module");
-      await this.recordGenerationHistory(
-        result.names.length,
-        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? undefined : biome) +
-          landHistorySuffix(land, this.customBiomes, !!custom) +
-          (found?.space && this.colonialAliens[colonialPart] ? " · alien life" : "") +
-          ownNamesSuffix(slotPart, this.colonialSlots[colonialPart]),
-      );
-      // Unchanged on placeholders: this branch never showed the engine's notices.
-      this.setStatus(usesOwnNames(slotPart, this.colonialSlots[colonialPart]) ? [...result.notices, ...own.notices].join(" ") : "");
+      await this.runColonialPlace(colonialPart, this.colonialPlaceState(colonialPart));
       return;
     }
     if (this.activeSection !== "markov") {
@@ -6468,6 +6584,10 @@ export class NameForgeModal extends Modal {
     }
     if (this.currentPackType === "recipePack") {
       await this.runRecipe();
+      return;
+    }
+    if (isPlacePresetType(this.currentPackType)) {
+      await this.runPlacePreset();
       return;
     }
     if (this.currentPackType === "tribalPreset") {

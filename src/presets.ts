@@ -18,6 +18,10 @@ import {
 import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, type RealmLength, type RealmNamedFor, type RealmOutput } from "./realms/engine";
 import { findRouteCulture, findRouteKind, kindsOffered, ROUTE_ERAS, ROUTE_FTL, routeEraLabel, type RouteEra, type RouteFtl } from "./routes/engine";
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
+import { COLONIAL_TRADITIONS, colonialContexts, type ColonialPart, isTraditionAvailable } from "./colonialShapes";
+import { CONTEXT_PHRASES } from "./colonialWording";
+import { findEra, WORLD_CULTURES } from "./world/engine";
+import { slotChoiceMenu, slotInventory, type SlotPart } from "./names/slotSentence";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
 import { MONUMENT_KINDS, type MonumentKind } from "./monuments/engine";
@@ -94,7 +98,7 @@ export function isModulePresetContent(content: string): boolean {
 export function parseModulePreset(
   content: string,
   fileName: string,
-): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; wilds?: WildsPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; monument?: MonumentPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; peoples?: PeoplePreset; deity?: DeityPreset; problems: string[] } {
+): { preset?: TribalPreset; group?: GroupPreset; byname?: BynamePreset; vessel?: VesselPreset; waters?: WatersPreset; wilds?: WildsPreset; realm?: RealmPreset; route?: RoutePreset; street?: StreetPreset; inn?: InnPreset; building?: BuildingPreset; monument?: MonumentPreset; kit?: KitPreset; event?: EventPreset; money?: MoneyPreset; time?: TimePreset; thing?: ThingPreset; peoples?: PeoplePreset; deity?: DeityPreset; nativePlace?: NativePlacePreset; exploration?: ExplorationPreset; expansion?: ExpansionPreset; problems: string[] } {
   const parsed = fields(content);
   const problems: string[] = [];
   if (!parsed || parsed.values.type !== "module-preset") return { problems: ["This note isn't a module preset."] };
@@ -135,6 +139,10 @@ export function parseModulePreset(
   if (values.module === PEOPLE_PRESET_MODULE) return parsePeoplePreset(values, body, fileName);
   // Deities brief §12: deity presets too.
   if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
+  // Wizard retirement brief §4: native place names, exploration and expansion presets too.
+  if (values.module === NATIVE_PLACE_PRESET_MODULE) return parseNativePlacePreset(values, body, fileName);
+  if (values.module === EXPLORATION_PRESET_MODULE) return parseColonialPlacePreset("2", values, body, fileName);
+  if (values.module === EXPANSION_PRESET_MODULE) return parseColonialPlacePreset("2a", values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module “${values.module ?? ""}”.`);
     return { problems };
@@ -170,7 +178,9 @@ export function parseModulePreset(
 }
 
 /** §7.2: the note for a preset, every key written. */
-export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | WildsPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | MonumentPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | PeoplePreset | DeityPreset): string {
+export function modulePresetContent(preset: TribalPreset | GroupPreset | BynamePreset | VesselPreset | WatersPreset | WildsPreset | RealmPreset | RoutePreset | StreetPreset | InnPreset | BuildingPreset | MonumentPreset | KitPreset | EventPreset | MoneyPreset | TimePreset | ThingPreset | PeoplePreset | DeityPreset | NativePlacePreset | ColonialPlacePreset): string {
+  if ("placeCulture" in preset) return nativePlacePresetContent(preset);
+  if ("colonialPart" in preset) return colonialPlacePresetContent(preset);
   if ("wildsModule" in preset) return wildsPresetContent(preset);
   if ("peopleSource" in preset) return peoplePresetContent(preset);
   if ("thingModule" in preset) return thingPresetContent(preset);
@@ -1895,6 +1905,167 @@ function peoplePresetContent(preset: PeoplePreset): string {
     `giving: ${preset.giving}`,
     `tone: ${preset.tone}`,
     `detail: ${preset.detail}`,
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+// ── Place-name presets (Wizard retirement brief §4) ─────────────────────────
+
+export const NATIVE_PLACE_PRESET_MODULE = "native-place-names";
+export const EXPLORATION_PRESET_MODULE = "exploration-place-names";
+export const EXPANSION_PRESET_MODULE = "expansion-place-names";
+
+/** What both kinds hold beyond their own settings: land, and where the names come from (§3.5). */
+interface PlacePresetBase {
+  packName: string;
+  setting: string;
+  description: string;
+  /** A built-in biome id, a pack link "[[Salt Marshes]]", or "" for the module's default land. */
+  biome: string;
+  terrain: string;
+  /** The closing choice: "placeholders" or "names chosen per slot". */
+  placeNames: "placeholders" | "perSlot";
+  /** Slot id to its choice: "pack:Name", "list:Name", "built-in" or "tribal". Placeholders aren't listed. */
+  placeSlots: Record<string, string>;
+}
+
+/** Native place names: British, or a world culture in an era. Slot sources are British only. */
+export interface NativePlacePreset extends PlacePresetBase {
+  /** "britain" or a world culture id. */
+  placeCulture: string;
+  /** British: "all" or a region code. */
+  region: string;
+  /** A world culture's era id; "" for British. */
+  era: string;
+}
+
+/** Exploration (part 2) and expansion (part 2a). */
+export interface ColonialPlacePreset extends PlacePresetBase {
+  colonialPart: ColonialPart;
+  tradition: string;
+  context: string;
+  aliens: boolean;
+}
+export type ExplorationPreset = ColonialPlacePreset & { colonialPart: "2" };
+export type ExpansionPreset = ColonialPlacePreset & { colonialPart: "2a" };
+
+const quotePlace = (v: string) => (/^\[\[|[:#]/.test(v) ? `"${v}"` : v);
+
+/** The slot part a preset's slot sources belong to. */
+const slotPartOfColonial = (part: ColonialPart): SlotPart => (part === "2" ? "new-land" : "established");
+
+/** The land and names fields both kinds read, with problems for anything unknown. */
+function readPlaceBase(values: Record<string, string>, body: string, fileName: string, part: SlotPart | undefined, problems: string[]): PlacePresetBase {
+  const biomeRaw = values.biome ?? "";
+  let biome = "";
+  if (biomeRaw) {
+    if (findBiome(biomeRaw) || /^\[\[.+\]\]$/.test(biomeRaw)) biome = biomeRaw;
+    else problems.push(`Unknown biome “${biomeRaw}”.`);
+  }
+  let terrain = "any";
+  if (values.terrain) {
+    if (TERRAIN_CHOICES.some((t) => t.id === values.terrain) || /^[a-z0-9-]+$/.test(values.terrain)) terrain = values.terrain;
+    else problems.push(`Unknown terrain “${values.terrain}”.`);
+  }
+  let placeNames: "placeholders" | "perSlot" = "placeholders";
+  if (values.placeNames === "perSlot") placeNames = "perSlot";
+  else if (values.placeNames && values.placeNames !== "placeholders") problems.push(`Unknown placeNames “${values.placeNames}”.`);
+  const placeSlots: Record<string, string> = {};
+  for (const [key, choice] of Object.entries(values)) {
+    if (!key.startsWith("slot-")) continue;
+    const id = key.slice(5);
+    if (!part || !slotInventory(part).some((s) => s.id === id)) {
+      problems.push(`Slot “${id}” isn't one of this module's name slots.`);
+      continue;
+    }
+    // A pack or list is checked by name only; whether it still exists is found out when the preset runs.
+    const name = choice.includes(":") ? choice.slice(choice.indexOf(":") + 1) : "";
+    const offered = slotChoiceMenu(part, id, { packs: name ? [name] : [], lists: name ? [name] : [] }).some((c) => c.id === choice);
+    if (!offered || choice === "placeholder") problems.push(`Slot “${id}” can't take “${choice}”.`);
+    else placeSlots[id] = choice;
+  }
+  return { packName: values.packName || fileName, setting: "", description: body.trim(), biome, terrain, placeNames, placeSlots };
+}
+
+function parseNativePlacePreset(values: Record<string, string>, body: string, fileName: string): { nativePlace?: NativePlacePreset; problems: string[] } {
+  const problems: string[] = [];
+  let placeCulture = "britain";
+  if (values.culture && values.culture !== "britain") {
+    if (WORLD_CULTURES.some((c) => c.id === values.culture)) placeCulture = values.culture;
+    else problems.push(`Unknown culture “${values.culture}”.`);
+  }
+  const british = placeCulture === "britain";
+  let region = "all";
+  if (values.region && values.region !== "all") {
+    if (PLACE_SHAPE_REGIONS.some((r) => r.code === values.region)) region = values.region;
+    else problems.push(`Unknown region “${values.region}”.`);
+  }
+  let era = "";
+  if (!british) {
+    const culture = WORLD_CULTURES.find((c) => c.id === placeCulture)!;
+    if (values.era && !culture.eras.some((e) => e.id === values.era)) problems.push(`Unknown era “${values.era}”.`);
+    era = findEra(culture, values.era).id;
+  }
+  const base = readPlaceBase(values, body, fileName, british ? "organic" : undefined, problems);
+  // Slot sources are British only; the world cultures don't run through the slots.
+  return { nativePlace: { ...base, ...(british ? {} : { placeNames: "placeholders" as const, placeSlots: {} }), placeCulture, region: british ? region : "all", era }, problems };
+}
+
+function parseColonialPlacePreset(part: ColonialPart, values: Record<string, string>, body: string, fileName: string): { exploration?: ExplorationPreset; expansion?: ExpansionPreset; problems: string[] } {
+  const problems: string[] = [];
+  let tradition = "general";
+  if (values.tradition && values.tradition !== "general") {
+    if (COLONIAL_TRADITIONS.some((t) => t.id === values.tradition) && isTraditionAvailable(values.tradition, part)) tradition = values.tradition;
+    else problems.push(`Unknown tradition “${values.tradition}”.`);
+  }
+  let context = CONTEXT_PHRASES[part][0][0];
+  if (values.context) {
+    if (colonialContexts(part).some((c) => c.id === values.context)) context = values.context;
+    else problems.push(`Unknown context “${values.context}”.`);
+  }
+  const aliensRaw = values.aliens;
+  if (aliensRaw && aliensRaw !== "true" && aliensRaw !== "false") problems.push(`Unknown aliens “${aliensRaw}”.`);
+  const base = readPlaceBase(values, body, fileName, slotPartOfColonial(part), problems);
+  const preset = { ...base, colonialPart: part, tradition, context, aliens: aliensRaw === "true" };
+  return part === "2" ? { exploration: preset as ExplorationPreset, problems } : { expansion: preset as ExpansionPreset, problems };
+}
+
+/** The land, closing choice and slot lines both kinds write; only non-placeholder slots get a line. */
+function placeBaseLines(preset: PlacePresetBase, part: SlotPart | undefined): string[] {
+  const slots = part ? slotInventory(part).filter((slot) => preset.placeSlots[slot.id]).map((slot) => `slot-${slot.id}: ${quotePlace(preset.placeSlots[slot.id])}`) : [];
+  return [`biome: ${quotePlace(preset.biome)}`, `terrain: ${preset.terrain}`, ...(part ? [`placeNames: ${preset.placeNames}`] : []), ...slots];
+}
+
+function nativePlacePresetContent(preset: NativePlacePreset): string {
+  const british = preset.placeCulture === "britain";
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${NATIVE_PLACE_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.placeCulture}`,
+    ...(british ? [`region: ${preset.region}`] : [`era: ${preset.era}`]),
+    ...placeBaseLines(preset, british ? "organic" : undefined),
+    "---",
+    "",
+    preset.description.trim(),
+    "",
+  ].join("\n");
+}
+
+function colonialPlacePresetContent(preset: ColonialPlacePreset): string {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${preset.colonialPart === "2" ? EXPLORATION_PRESET_MODULE : EXPANSION_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `tradition: ${preset.tradition}`,
+    `context: ${preset.context}`,
+    ...(preset.aliens ? ["aliens: true"] : []),
+    ...placeBaseLines(preset, slotPartOfColonial(preset.colonialPart)),
     "---",
     "",
     preset.description.trim(),

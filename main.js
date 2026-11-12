@@ -118181,6 +118181,242 @@ function watersHistoryLabel(module2, state, moduleLabel2) {
   ].join(" \xB7 ");
 }
 
+// src/names/slotOptions.ts
+function slotCategories(part) {
+  const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
+  if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
+  const code = part === "new-land" ? "2" : "2a";
+  const out = [
+    ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => {
+      var _a5;
+      return { id: c.id, label: (_a5 = part1.get(c.id)) != null ? _a5 : c.id };
+    }),
+    ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label }))
+  ];
+  if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
+  return out;
+}
+var FLORA_AND_FAUNA = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
+var WORD_ONLY = /* @__PURE__ */ new Set([
+  "status-or-role",
+  "ethnic-or-cultural-group",
+  "settler-group",
+  "supernatural-being",
+  "domestic-animal",
+  "crop",
+  "landform",
+  "water-or-wetland-feature",
+  "soil-or-ground",
+  "built-feature",
+  "colour",
+  "size",
+  "age",
+  "position-or-direction",
+  "shape",
+  "quality-or-condition",
+  "number",
+  "activity",
+  "produce",
+  "religious-association",
+  "assembly-or-law",
+  "season",
+  "honorific-title",
+  "emotion-or-aspiration",
+  "event-or-incident",
+  "imperial-claim",
+  "resource",
+  "distance-or-survey-mark",
+  "calendar-date-or-feast"
+]);
+var NO_PLACEHOLDER = /* @__PURE__ */ new Set(["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"]);
+var NATURE = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
+function slotChoices(part, categoryId) {
+  if (NATURE.has(categoryId) || categoryId === "landform" || categoryId === "water-or-wetland-feature") return ["default", "placeholder", "ignore"];
+  if (categoryId === "soil-or-ground" || categoryId === "river-or-stream-name") return ["default", "placeholder", "ignore"];
+  if (categoryId === "resource" && part === "new-land") return ["default", "placeholder", "ignore"];
+  if (categoryId === "season") return ["default", "ignore"];
+  if (categoryId === "domestic-animal" || categoryId === "crop") return part === "organic" ? ["default", "ignore"] : ["default", "biome", "ignore"];
+  return void 0;
+}
+function allowsPacks(part, categoryId) {
+  if (slotChoices(part, categoryId)) return false;
+  if (FLORA_AND_FAUNA.has(categoryId)) return part !== "organic";
+  return !WORD_ONLY.has(categoryId);
+}
+function allowsLists(part, categoryId) {
+  return !slotChoices(part, categoryId);
+}
+function allowsTribal(part, categoryId) {
+  if (part === "organic") return categoryId === "folk-group";
+  return categoryId === "native-people-or-tribe";
+}
+function allowsPlaceholderChoice(part, categoryId) {
+  if (slotChoices(part, categoryId)) return false;
+  return !NO_PLACEHOLDER.has(categoryId);
+}
+
+// src/names/slotSentence.ts
+var slotPartOf = (part) => part === "2" ? "new-land" : "established";
+var freshSlotSources = () => ({ names: "placeholders", slots: {} });
+var NO_SLOT_OPTIONS = { packs: [], lists: [] };
+var SLOT_PHRASES = {
+  "personal-name": "personal names",
+  "earlier-or-district-name": "earlier or district names",
+  "folk-group": "folk groups",
+  deity: "deities",
+  "saint-or-holy-person": "holy people",
+  "monarch-ruler-or-dynasty": "monarchs, rulers and dynasties",
+  "royal-woman": "royal women",
+  "official-patron-or-sponsor": "officials, patrons and sponsors",
+  "commander-or-conqueror": "commanders and conquerors",
+  "explorer-or-founder": "explorers and founders",
+  "native-place-name": "native place names",
+  "native-people-or-tribe": "native peoples",
+  "homeland-place-name": "homeland place names",
+  "colonial-deity": "colonial deities",
+  "local-deity": "local deities",
+  "local-settlement-word": "local settlement words",
+  "local-market-word": "local market words"
+};
+var LOCAL_WORDS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
+function categoriesUsed(shapes) {
+  var _a5;
+  const used = /* @__PURE__ */ new Set();
+  for (const shape of shapes) {
+    used.add(shape.categoryId);
+    if (shape.secondCategoryId) used.add(shape.secondCategoryId);
+    if ((_a5 = shape.affix) == null ? void 0 : _a5.form.slotCategory) used.add(shape.affix.form.slotCategory);
+    if (LOCAL_WORDS.has(shape.genericId)) used.add(shape.genericId);
+  }
+  return used;
+}
+var inventoryCache = /* @__PURE__ */ new Map();
+function slotInventory(part) {
+  const cached = inventoryCache.get(part);
+  if (cached) return cached;
+  const used = /* @__PURE__ */ new Set();
+  for (const seed of [1, 2]) {
+    const shapes = part === "organic" ? generatePlaceShapesDetailed({ count: 4e3, seed }).shapes : generateColonialShapesDetailed({ count: 4e3, seed, part: part === "new-land" ? "2" : "2a" }).shapes;
+    for (const id of categoriesUsed(shapes)) used.add(id);
+  }
+  const out = slotCategories(part).filter((c) => used.has(c.id) && !slotChoices(part, c.id) && !hasBuiltInList(c.id)).map((c) => {
+    var _a5;
+    return { id: c.id, label: c.label, phrase: (_a5 = SLOT_PHRASES[c.id]) != null ? _a5 : `${c.label.toLowerCase()}s` };
+  });
+  inventoryCache.set(part, out);
+  return out;
+}
+var PLACEHOLDER_ID = "placeholder";
+var BUILT_IN_ID = "built-in";
+var TRIBAL_ID = "tribal";
+var listId = (name) => `list:${name}`;
+var packId = (name) => `pack:${name}`;
+function slotChoiceId(setting) {
+  if (!setting || setting.kind === "placeholder") return PLACEHOLDER_ID;
+  if (setting.kind === "built-in") return BUILT_IN_ID;
+  if (setting.kind === "tribal") return TRIBAL_ID;
+  if (setting.kind === "sources") {
+    const ref = setting.sources[0];
+    if (ref == null ? void 0 : ref.list) return listId(ref.list);
+    if (ref == null ? void 0 : ref.pack) return packId(ref.pack);
+  }
+  return PLACEHOLDER_ID;
+}
+function slotSettingOf(part, id) {
+  if (!id || id === PLACEHOLDER_ID) return void 0;
+  if (id === BUILT_IN_ID) return { kind: "built-in" };
+  if (id === TRIBAL_ID) return { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
+  if (id.startsWith("list:")) return { kind: "sources", sources: [{ list: id.slice(5), weight: 1 }] };
+  if (id.startsWith("pack:")) return { kind: "sources", sources: [{ pack: id.slice(5), weight: 1 }] };
+  return void 0;
+}
+function slotSourceText(setting) {
+  const id = slotChoiceId(setting);
+  if (id === PLACEHOLDER_ID) return "placeholders";
+  if (id === BUILT_IN_ID) return "the built-in list";
+  if (id === TRIBAL_ID) return "tribes and kin groups";
+  return id.startsWith("list:") ? `${id.slice(5)} (list)` : `${id.slice(5)} (pack)`;
+}
+function slotChoiceMenu(part, categoryId, options) {
+  const out = [];
+  const run = (heading, choices) => {
+    if (choices.length > 0) out.push({ ...choices[0], heading }, ...choices.slice(1));
+  };
+  if (allowsPlaceholderChoice(part, categoryId)) run("Placeholder", [{ id: PLACEHOLDER_ID, label: "placeholders" }]);
+  if (allowsLists(part, categoryId)) {
+    run("Lists", [
+      ...hasBuiltInList(categoryId) ? [{ id: BUILT_IN_ID, label: "the built-in list" }] : [],
+      ...options.lists.map((name) => ({ id: listId(name), label: name }))
+    ]);
+  }
+  const words = LOCAL_WORDS.has(categoryId);
+  run("Generators", words ? [] : [
+    ...allowsPacks(part, categoryId) ? options.packs.map((name) => ({ id: packId(name), label: name })) : [],
+    ...allowsTribal(part, categoryId) ? [{ id: TRIBAL_ID, label: "tribes and kin groups" }] : []
+  ]);
+  return out;
+}
+var NAMES_TITLE = "Names: placeholders show each name slot as a bracket; names chosen per slot lets you pick where each one comes from";
+function namesClosing(state) {
+  const perSlot = state.names === "perSlot";
+  const link = {
+    field: "names",
+    text: perSlot ? "names chosen per slot" : "placeholders",
+    title: NAMES_TITLE,
+    choices: [
+      { id: "placeholders", label: "placeholders" },
+      { id: "perSlot", label: "names chosen per slot" }
+    ],
+    current: state.names
+  };
+  return perSlot ? [", with ", link] : [", with ", link, " for names"];
+}
+function slotSentence(part, state, options = NO_SLOT_OPTIONS) {
+  if (state.names !== "perSlot") return void 0;
+  const out = [];
+  slotInventory(part).forEach((slot, index) => {
+    const setting = state.slots[slot.id];
+    const phrase = index === 0 ? slot.phrase.charAt(0).toUpperCase() + slot.phrase.slice(1) : slot.phrase;
+    out.push(index === 0 ? "" : "; ", `${phrase} ${slotChoiceId(setting) === PLACEHOLDER_ID ? "as" : "from"} `, {
+      field: slot.id,
+      text: slotSourceText(setting),
+      title: `Where ${slot.phrase} come from: ${slot.label.toLowerCase()}`,
+      choices: slotChoiceMenu(part, slot.id, options),
+      current: slotChoiceId(setting)
+    });
+  });
+  if (out.length > 0) out.push(".");
+  return out.filter((s) => s !== "");
+}
+function slotSegmentsText(segments) {
+  return segments.map((s) => typeof s === "string" ? s : s.text).join("");
+}
+function chooseNames(state, id) {
+  return { ...state, names: id === "perSlot" ? "perSlot" : "placeholders" };
+}
+function chooseSlotSource(state, part, categoryId, id) {
+  const slots = { ...state.slots };
+  const setting = slotSettingOf(part, id);
+  if (setting) slots[categoryId] = setting;
+  else delete slots[categoryId];
+  return { ...state, slots };
+}
+function activeSlots(part, state) {
+  if (state.names !== "perSlot") return {};
+  const out = {};
+  for (const slot of slotInventory(part)) {
+    const setting = state.slots[slot.id];
+    if (setting && setting.kind !== "placeholder") out[slot.id] = setting;
+  }
+  return out;
+}
+function usesOwnNames(part, state) {
+  return Object.keys(activeSlots(part, state)).length > 0;
+}
+function ownNamesSuffix(part, state) {
+  return usesOwnNames(part, state) ? " \xB7 own names" : "";
+}
+
 // src/data/inn-names.json
 var inn_names_default = {
   $comment: "Inns and taverns (docs/inns-and-taverns-brief.md \xA75\u2013\xA78, \xA712). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
@@ -128999,6 +129235,9 @@ function parseModulePreset(content, fileName) {
   if (THING_PRESET_MODULES.includes(values.module)) return parseThingPreset(values, body, fileName);
   if (values.module === PEOPLE_PRESET_MODULE) return parsePeoplePreset(values, body, fileName);
   if (values.module === DEITY_PRESET_MODULE) return parseDeityPreset(values, body, fileName);
+  if (values.module === NATIVE_PLACE_PRESET_MODULE) return parseNativePlacePreset(values, body, fileName);
+  if (values.module === EXPLORATION_PRESET_MODULE) return parseColonialPlacePreset("2", values, body, fileName);
+  if (values.module === EXPANSION_PRESET_MODULE) return parseColonialPlacePreset("2a", values, body, fileName);
   if (values.module !== TRIBAL_PRESET_MODULE) {
     problems.push(`Unknown module \u201C${(_a5 = values.module) != null ? _a5 : ""}\u201D.`);
     return { problems };
@@ -129033,6 +129272,8 @@ function parseModulePreset(content, fileName) {
   };
 }
 function modulePresetContent(preset) {
+  if ("placeCulture" in preset) return nativePlacePresetContent(preset);
+  if ("colonialPart" in preset) return colonialPlacePresetContent(preset);
   if ("wildsModule" in preset) return wildsPresetContent(preset);
   if ("peopleSource" in preset) return peoplePresetContent(preset);
   if ("thingModule" in preset) return thingPresetContent(preset);
@@ -130304,6 +130545,118 @@ function peoplePresetContent(preset) {
     `giving: ${preset.giving}`,
     `tone: ${preset.tone}`,
     `detail: ${preset.detail}`,
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+var NATIVE_PLACE_PRESET_MODULE = "native-place-names";
+var EXPLORATION_PRESET_MODULE = "exploration-place-names";
+var EXPANSION_PRESET_MODULE = "expansion-place-names";
+var quotePlace = (v) => /^\[\[|[:#]/.test(v) ? `"${v}"` : v;
+var slotPartOfColonial = (part) => part === "2" ? "new-land" : "established";
+function readPlaceBase(values, body, fileName, part, problems) {
+  var _a5;
+  const biomeRaw = (_a5 = values.biome) != null ? _a5 : "";
+  let biome = "";
+  if (biomeRaw) {
+    if (findBiome(biomeRaw) || /^\[\[.+\]\]$/.test(biomeRaw)) biome = biomeRaw;
+    else problems.push(`Unknown biome \u201C${biomeRaw}\u201D.`);
+  }
+  let terrain = "any";
+  if (values.terrain) {
+    if (TERRAIN_CHOICES.some((t) => t.id === values.terrain) || /^[a-z0-9-]+$/.test(values.terrain)) terrain = values.terrain;
+    else problems.push(`Unknown terrain \u201C${values.terrain}\u201D.`);
+  }
+  let placeNames = "placeholders";
+  if (values.placeNames === "perSlot") placeNames = "perSlot";
+  else if (values.placeNames && values.placeNames !== "placeholders") problems.push(`Unknown placeNames \u201C${values.placeNames}\u201D.`);
+  const placeSlots = {};
+  for (const [key2, choice] of Object.entries(values)) {
+    if (!key2.startsWith("slot-")) continue;
+    const id = key2.slice(5);
+    if (!part || !slotInventory(part).some((s) => s.id === id)) {
+      problems.push(`Slot \u201C${id}\u201D isn't one of this module's name slots.`);
+      continue;
+    }
+    const name = choice.includes(":") ? choice.slice(choice.indexOf(":") + 1) : "";
+    const offered = slotChoiceMenu(part, id, { packs: name ? [name] : [], lists: name ? [name] : [] }).some((c) => c.id === choice);
+    if (!offered || choice === "placeholder") problems.push(`Slot \u201C${id}\u201D can't take \u201C${choice}\u201D.`);
+    else placeSlots[id] = choice;
+  }
+  return { packName: values.packName || fileName, setting: "", description: body.trim(), biome, terrain, placeNames, placeSlots };
+}
+function parseNativePlacePreset(values, body, fileName) {
+  const problems = [];
+  let placeCulture = "britain";
+  if (values.culture && values.culture !== "britain") {
+    if (WORLD_CULTURES.some((c) => c.id === values.culture)) placeCulture = values.culture;
+    else problems.push(`Unknown culture \u201C${values.culture}\u201D.`);
+  }
+  const british = placeCulture === "britain";
+  let region = "all";
+  if (values.region && values.region !== "all") {
+    if (PLACE_SHAPE_REGIONS.some((r) => r.code === values.region)) region = values.region;
+    else problems.push(`Unknown region \u201C${values.region}\u201D.`);
+  }
+  let era = "";
+  if (!british) {
+    const culture = WORLD_CULTURES.find((c) => c.id === placeCulture);
+    if (values.era && !culture.eras.some((e) => e.id === values.era)) problems.push(`Unknown era \u201C${values.era}\u201D.`);
+    era = findEra(culture, values.era).id;
+  }
+  const base = readPlaceBase(values, body, fileName, british ? "organic" : void 0, problems);
+  return { nativePlace: { ...base, ...british ? {} : { placeNames: "placeholders", placeSlots: {} }, placeCulture, region: british ? region : "all", era }, problems };
+}
+function parseColonialPlacePreset(part, values, body, fileName) {
+  const problems = [];
+  let tradition = "general";
+  if (values.tradition && values.tradition !== "general") {
+    if (COLONIAL_TRADITIONS.some((t) => t.id === values.tradition) && isTraditionAvailable(values.tradition, part)) tradition = values.tradition;
+    else problems.push(`Unknown tradition \u201C${values.tradition}\u201D.`);
+  }
+  let context = CONTEXT_PHRASES[part][0][0];
+  if (values.context) {
+    if (colonialContexts(part).some((c) => c.id === values.context)) context = values.context;
+    else problems.push(`Unknown context \u201C${values.context}\u201D.`);
+  }
+  const aliensRaw = values.aliens;
+  if (aliensRaw && aliensRaw !== "true" && aliensRaw !== "false") problems.push(`Unknown aliens \u201C${aliensRaw}\u201D.`);
+  const base = readPlaceBase(values, body, fileName, slotPartOfColonial(part), problems);
+  const preset = { ...base, colonialPart: part, tradition, context, aliens: aliensRaw === "true" };
+  return part === "2" ? { exploration: preset, problems } : { expansion: preset, problems };
+}
+function placeBaseLines(preset, part) {
+  const slots = part ? slotInventory(part).filter((slot) => preset.placeSlots[slot.id]).map((slot) => `slot-${slot.id}: ${quotePlace(preset.placeSlots[slot.id])}`) : [];
+  return [`biome: ${quotePlace(preset.biome)}`, `terrain: ${preset.terrain}`, ...part ? [`placeNames: ${preset.placeNames}`] : [], ...slots];
+}
+function nativePlacePresetContent(preset) {
+  const british = preset.placeCulture === "britain";
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${NATIVE_PLACE_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `culture: ${preset.placeCulture}`,
+    ...british ? [`region: ${preset.region}`] : [`era: ${preset.era}`],
+    ...placeBaseLines(preset, british ? "organic" : void 0),
+    "---",
+    "",
+    preset.description.trim(),
+    ""
+  ].join("\n");
+}
+function colonialPlacePresetContent(preset) {
+  return [
+    "---",
+    "type: module-preset",
+    `module: ${preset.colonialPart === "2" ? EXPLORATION_PRESET_MODULE : EXPANSION_PRESET_MODULE}`,
+    `packName: ${preset.packName}`,
+    `tradition: ${preset.tradition}`,
+    `context: ${preset.context}`,
+    ...preset.aliens ? ["aliens: true"] : [],
+    ...placeBaseLines(preset, slotPartOfColonial(preset.colonialPart)),
     "---",
     "",
     preset.description.trim(),
@@ -135142,239 +135495,6 @@ function resolveRecipeTakeover(input) {
   } };
 }
 
-// src/names/slotOptions.ts
-function slotCategories(part) {
-  const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
-  if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
-  const code = part === "new-land" ? "2" : "2a";
-  const out = [
-    ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => {
-      var _a5;
-      return { id: c.id, label: (_a5 = part1.get(c.id)) != null ? _a5 : c.id };
-    }),
-    ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label }))
-  ];
-  if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
-  return out;
-}
-var FLORA_AND_FAUNA = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
-var WORD_ONLY = /* @__PURE__ */ new Set([
-  "status-or-role",
-  "ethnic-or-cultural-group",
-  "settler-group",
-  "supernatural-being",
-  "domestic-animal",
-  "crop",
-  "landform",
-  "water-or-wetland-feature",
-  "soil-or-ground",
-  "built-feature",
-  "colour",
-  "size",
-  "age",
-  "position-or-direction",
-  "shape",
-  "quality-or-condition",
-  "number",
-  "activity",
-  "produce",
-  "religious-association",
-  "assembly-or-law",
-  "season",
-  "honorific-title",
-  "emotion-or-aspiration",
-  "event-or-incident",
-  "imperial-claim",
-  "resource",
-  "distance-or-survey-mark",
-  "calendar-date-or-feast"
-]);
-var NO_PLACEHOLDER = /* @__PURE__ */ new Set(["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"]);
-var NATURE = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
-function slotChoices(part, categoryId) {
-  if (NATURE.has(categoryId) || categoryId === "landform" || categoryId === "water-or-wetland-feature") return ["default", "placeholder", "ignore"];
-  if (categoryId === "soil-or-ground" || categoryId === "river-or-stream-name") return ["default", "placeholder", "ignore"];
-  if (categoryId === "resource" && part === "new-land") return ["default", "placeholder", "ignore"];
-  if (categoryId === "season") return ["default", "ignore"];
-  if (categoryId === "domestic-animal" || categoryId === "crop") return part === "organic" ? ["default", "ignore"] : ["default", "biome", "ignore"];
-  return void 0;
-}
-function allowsPacks(part, categoryId) {
-  if (slotChoices(part, categoryId)) return false;
-  if (FLORA_AND_FAUNA.has(categoryId)) return part !== "organic";
-  return !WORD_ONLY.has(categoryId);
-}
-function allowsLists(part, categoryId) {
-  return !slotChoices(part, categoryId);
-}
-function allowsTribal(part, categoryId) {
-  if (part === "organic") return categoryId === "folk-group";
-  return categoryId === "native-people-or-tribe";
-}
-function allowsPlaceholderChoice(part, categoryId) {
-  if (slotChoices(part, categoryId)) return false;
-  return !NO_PLACEHOLDER.has(categoryId);
-}
-
-// src/names/slotSentence.ts
-var slotPartOf = (part) => part === "2" ? "new-land" : "established";
-var freshSlotSources = () => ({ names: "placeholders", slots: {} });
-var NO_SLOT_OPTIONS = { packs: [], lists: [] };
-var SLOT_PHRASES = {
-  "personal-name": "personal names",
-  "earlier-or-district-name": "earlier or district names",
-  "folk-group": "folk groups",
-  deity: "deities",
-  "saint-or-holy-person": "holy people",
-  "monarch-ruler-or-dynasty": "monarchs, rulers and dynasties",
-  "royal-woman": "royal women",
-  "official-patron-or-sponsor": "officials, patrons and sponsors",
-  "commander-or-conqueror": "commanders and conquerors",
-  "explorer-or-founder": "explorers and founders",
-  "native-place-name": "native place names",
-  "native-people-or-tribe": "native peoples",
-  "homeland-place-name": "homeland place names",
-  "colonial-deity": "colonial deities",
-  "local-deity": "local deities",
-  "local-settlement-word": "local settlement words",
-  "local-market-word": "local market words"
-};
-var LOCAL_WORDS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
-function categoriesUsed(shapes) {
-  var _a5;
-  const used = /* @__PURE__ */ new Set();
-  for (const shape of shapes) {
-    used.add(shape.categoryId);
-    if (shape.secondCategoryId) used.add(shape.secondCategoryId);
-    if ((_a5 = shape.affix) == null ? void 0 : _a5.form.slotCategory) used.add(shape.affix.form.slotCategory);
-    if (LOCAL_WORDS.has(shape.genericId)) used.add(shape.genericId);
-  }
-  return used;
-}
-var inventoryCache = /* @__PURE__ */ new Map();
-function slotInventory(part) {
-  const cached = inventoryCache.get(part);
-  if (cached) return cached;
-  const used = /* @__PURE__ */ new Set();
-  for (const seed of [1, 2]) {
-    const shapes = part === "organic" ? generatePlaceShapesDetailed({ count: 4e3, seed }).shapes : generateColonialShapesDetailed({ count: 4e3, seed, part: part === "new-land" ? "2" : "2a" }).shapes;
-    for (const id of categoriesUsed(shapes)) used.add(id);
-  }
-  const out = slotCategories(part).filter((c) => used.has(c.id) && !slotChoices(part, c.id) && !hasBuiltInList(c.id)).map((c) => {
-    var _a5;
-    return { id: c.id, label: c.label, phrase: (_a5 = SLOT_PHRASES[c.id]) != null ? _a5 : `${c.label.toLowerCase()}s` };
-  });
-  inventoryCache.set(part, out);
-  return out;
-}
-var PLACEHOLDER_ID = "placeholder";
-var BUILT_IN_ID = "built-in";
-var TRIBAL_ID = "tribal";
-var listId = (name) => `list:${name}`;
-var packId = (name) => `pack:${name}`;
-function slotChoiceId(setting) {
-  if (!setting || setting.kind === "placeholder") return PLACEHOLDER_ID;
-  if (setting.kind === "built-in") return BUILT_IN_ID;
-  if (setting.kind === "tribal") return TRIBAL_ID;
-  if (setting.kind === "sources") {
-    const ref = setting.sources[0];
-    if (ref == null ? void 0 : ref.list) return listId(ref.list);
-    if (ref == null ? void 0 : ref.pack) return packId(ref.pack);
-  }
-  return PLACEHOLDER_ID;
-}
-function slotSettingOf(part, id) {
-  if (!id || id === PLACEHOLDER_ID) return void 0;
-  if (id === BUILT_IN_ID) return { kind: "built-in" };
-  if (id === TRIBAL_ID) return { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
-  if (id.startsWith("list:")) return { kind: "sources", sources: [{ list: id.slice(5), weight: 1 }] };
-  if (id.startsWith("pack:")) return { kind: "sources", sources: [{ pack: id.slice(5), weight: 1 }] };
-  return void 0;
-}
-function slotSourceText(setting) {
-  const id = slotChoiceId(setting);
-  if (id === PLACEHOLDER_ID) return "placeholders";
-  if (id === BUILT_IN_ID) return "the built-in list";
-  if (id === TRIBAL_ID) return "tribes and kin groups";
-  return id.startsWith("list:") ? `${id.slice(5)} (list)` : `${id.slice(5)} (pack)`;
-}
-function slotChoiceMenu(part, categoryId, options) {
-  const out = [];
-  const run = (heading, choices) => {
-    if (choices.length > 0) out.push({ ...choices[0], heading }, ...choices.slice(1));
-  };
-  if (allowsPlaceholderChoice(part, categoryId)) run("Placeholder", [{ id: PLACEHOLDER_ID, label: "placeholders" }]);
-  if (allowsLists(part, categoryId)) {
-    run("Lists", [
-      ...hasBuiltInList(categoryId) ? [{ id: BUILT_IN_ID, label: "the built-in list" }] : [],
-      ...options.lists.map((name) => ({ id: listId(name), label: name }))
-    ]);
-  }
-  const words = LOCAL_WORDS.has(categoryId);
-  run("Generators", words ? [] : [
-    ...allowsPacks(part, categoryId) ? options.packs.map((name) => ({ id: packId(name), label: name })) : [],
-    ...allowsTribal(part, categoryId) ? [{ id: TRIBAL_ID, label: "tribes and kin groups" }] : []
-  ]);
-  return out;
-}
-var NAMES_TITLE = "Names: placeholders show each name slot as a bracket; names chosen per slot lets you pick where each one comes from";
-function namesClosing(state) {
-  const perSlot = state.names === "perSlot";
-  const link = {
-    field: "names",
-    text: perSlot ? "names chosen per slot" : "placeholders",
-    title: NAMES_TITLE,
-    choices: [
-      { id: "placeholders", label: "placeholders" },
-      { id: "perSlot", label: "names chosen per slot" }
-    ],
-    current: state.names
-  };
-  return perSlot ? [", with ", link] : [", with ", link, " for names"];
-}
-function slotSentence(part, state, options = NO_SLOT_OPTIONS) {
-  if (state.names !== "perSlot") return void 0;
-  const out = [];
-  slotInventory(part).forEach((slot, index) => {
-    const setting = state.slots[slot.id];
-    const phrase = index === 0 ? slot.phrase.charAt(0).toUpperCase() + slot.phrase.slice(1) : slot.phrase;
-    out.push(index === 0 ? "" : "; ", `${phrase} ${slotChoiceId(setting) === PLACEHOLDER_ID ? "as" : "from"} `, {
-      field: slot.id,
-      text: slotSourceText(setting),
-      title: `Where ${slot.phrase} come from: ${slot.label.toLowerCase()}`,
-      choices: slotChoiceMenu(part, slot.id, options),
-      current: slotChoiceId(setting)
-    });
-  });
-  if (out.length > 0) out.push(".");
-  return out.filter((s) => s !== "");
-}
-function chooseNames(state, id) {
-  return { ...state, names: id === "perSlot" ? "perSlot" : "placeholders" };
-}
-function chooseSlotSource(state, part, categoryId, id) {
-  const slots = { ...state.slots };
-  const setting = slotSettingOf(part, id);
-  if (setting) slots[categoryId] = setting;
-  else delete slots[categoryId];
-  return { ...state, slots };
-}
-function activeSlots(part, state) {
-  if (state.names !== "perSlot") return {};
-  const out = {};
-  for (const slot of slotInventory(part)) {
-    const setting = state.slots[slot.id];
-    if (setting && setting.kind !== "placeholder") out[slot.id] = setting;
-  }
-  return out;
-}
-function usesOwnNames(part, state) {
-  return Object.keys(activeSlots(part, state)).length > 0;
-}
-function ownNamesSuffix(part, state) {
-  return usesOwnNames(part, state) ? " \xB7 own names" : "";
-}
-
 // src/recipeHost.ts
 var FRONTMATTER2 = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
 function isRecipeContent(content) {
@@ -135662,6 +135782,84 @@ var RecipeHost = class {
     }
   }
 };
+
+// src/names/placeRun.ts
+function britishRecipe(state, biome) {
+  return britishPlaceNamesRecipe(state.region, (biome == null ? void 0 : biome.custom) ? void 0 : state.land.biome, state.land.terrain);
+}
+function generateBritishPlace(state, biome, slots, run) {
+  return generatePlaceNames({ recipe: britishRecipe(state, biome), biome: (biome == null ? void 0 : biome.custom) ? biome : void 0, slots, ...run });
+}
+function colonialRecipe(part, state, found, custom) {
+  return colonialPlaceNamesRecipe(part === "2" ? "new-land" : "established", state.tradition, state.context, custom ? void 0 : state.land.biome, state.land.terrain, !!(found == null ? void 0 : found.space) && state.aliens);
+}
+function generateColonialPlace(part, state, found, custom, slots, run) {
+  return generatePlaceNames({ recipe: colonialRecipe(part, state, found, custom), biome: custom, slots, ...run });
+}
+function generateWorldPlace(state, biome, run) {
+  return generateWorldPlaceNames({ culture: state.culture, era: state.era, biome, terrain: state.land.terrain, ...run });
+}
+function sourcesOfPreset(placeNames, placeSlots, part) {
+  let sources = { ...freshSlotSources(), names: placeNames };
+  for (const [id, choice] of Object.entries(placeSlots)) {
+    if (slotSettingOf(part, choice)) sources = chooseSlotSource(sources, part, id, choice);
+  }
+  return sources;
+}
+function slotsForPreset(sources, part) {
+  const out = {};
+  for (const slot of slotInventory(part)) {
+    const choice = slotChoiceId(sources.slots[slot.id]);
+    if (choice !== "placeholder") out[slot.id] = choice;
+  }
+  return out;
+}
+var landOfPreset = (p) => ({ biome: p.biome || void 0, terrain: p.terrain });
+function nativePresetState(p) {
+  if (p.placeCulture === "britain") {
+    return { british: { region: p.region === "all" ? void 0 : p.region, land: landOfPreset(p), sources: sourcesOfPreset(p.placeNames, p.placeSlots, "organic") } };
+  }
+  return { world: { culture: p.placeCulture, era: p.era || void 0, land: landOfPreset(p) } };
+}
+function colonialPresetState(p) {
+  return {
+    tradition: p.tradition === "general" ? void 0 : p.tradition,
+    context: p.context,
+    aliens: p.aliens,
+    land: landOfPreset(p),
+    sources: sourcesOfPreset(p.placeNames, p.placeSlots, slotPartOf(p.colonialPart))
+  };
+}
+function britishPresetOf(state, meta) {
+  var _a5;
+  return {
+    ...meta,
+    setting: "",
+    terrain: state.land.terrain || "any",
+    placeNames: state.sources.names,
+    placeSlots: slotsForPreset(state.sources, "organic"),
+    placeCulture: "britain",
+    region: (_a5 = state.region) != null ? _a5 : "all",
+    era: ""
+  };
+}
+function worldPresetOf(state, eraId, meta) {
+  return { ...meta, setting: "", terrain: state.land.terrain || "any", placeNames: "placeholders", placeSlots: {}, placeCulture: state.culture, region: "all", era: eraId };
+}
+function colonialPresetOf(part, state, contextId, meta) {
+  var _a5;
+  return {
+    ...meta,
+    setting: "",
+    terrain: state.land.terrain || "any",
+    placeNames: state.sources.names,
+    placeSlots: slotsForPreset(state.sources, slotPartOf(part)),
+    colonialPart: part,
+    tradition: (_a5 = state.tradition) != null ? _a5 : "general",
+    context: contextId,
+    aliens: state.aliens
+  };
+}
 
 // src/packs/labelled.ts
 function generateLabelledNames(lists, options) {
@@ -136031,6 +136229,7 @@ function settlementSentenceText(settings, custom = []) {
 }
 
 // src/modal.ts
+var isPlacePresetType = (type) => type === "nativePlacePreset" || type === "explorationPreset" || type === "expansionPreset";
 var COLONIAL_SECTION_PART = {
   explorationPlaceShapes: "2",
   empireExpansionPlaceShapes: "2a"
@@ -136066,6 +136265,9 @@ function packTypeIconId(packType, subGenerator) {
   if (packType === "thingPreset") return ICON_GEM;
   if (packType === "peoplePreset") return ICON_LANGUAGES;
   if (packType === "deityPreset") return ICON_DEITIES;
+  if (packType === "nativePlacePreset") return ICON_NATIVE_PLACE_NAMES;
+  if (packType === "explorationPreset") return ICON_EXPLORATION_PLACE_SHAPES;
+  if (packType === "expansionPreset") return ICON_EMPIRE_EXPANSION_PLACE_SHAPES;
   if (packType === "recipePack") {
     return ICON_RECIPE_WIZARD;
   }
@@ -136776,7 +136978,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     if (group) this.groupModule[group] = section;
     (_e3 = this.packDropdownEl) == null ? void 0 : _e3.toggle(section === "markov");
     (_f = this.sectionSentenceEl) == null ? void 0 : _f.toggle(section === "markov" && this.sectionChoices.length > 0);
-    (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || this.currentPackType === "recipePack" && !!this.settlementPreset));
+    (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || isPlacePresetType(this.currentPackType) || this.currentPackType === "recipePack" && !!this.settlementPreset));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_h = this.createPacksButton) == null ? void 0 : _h.toggleClass("is-placeholder", section !== "markov");
     const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "monumentNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
@@ -137730,7 +137932,11 @@ ${n.origin}${also}${echo}` };
     }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
     if (!(file instanceof import_obsidian11.TFile)) return;
-    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, nativePlace, exploration, expansion } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (nativePlace || exploration || expansion) {
+      await this.openPlacePresetInModule(file.path, nativePlace, exploration, expansion);
+      return;
+    }
     if (peoples) {
       this.peopleState = this.peoplePresetState(peoples);
       this.skipPeopleFill = true;
@@ -140136,7 +140342,7 @@ ${n.origin}${also}${echo}` };
     var _a5;
     const section = this.activeSection;
     (_a5 = this.savePresetButton) == null ? void 0 : _a5.toggle(
-      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "monumentNames" || section === "settlementNames" && this.settlementPresetable() || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && this.placeIsBritain()
+      section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "monumentNames" || section === "settlementNames" && this.settlementPresetable() || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces" || !!COLONIAL_SECTION_PART[section] || section === "placeShapes" && !this.placeIsRivers()
     );
   }
   /** Presets brief §8.2: the dialogue, prefilled from the module's choices and sentence. */
@@ -140220,7 +140426,7 @@ ${n.origin}${also}${echo}` };
       return;
     }
     if (this.activeSection !== "tribalNames") {
-      await this.openSaveRecipePreset();
+      await this.openSavePlacePreset();
       return;
     }
     const custom = await this.loadCustomBiomes();
@@ -140251,48 +140457,194 @@ ${n.origin}${also}${echo}` };
     }).open();
   }
   /**
-   * Presets brief §7.1, §8: a place-name module's setup saved as a recipe note, written from the
-   * recipe the module builds; a biome pack is kept as a link.
+   * Wizard retirement brief §4: native place names (British or a world culture), exploration and
+   * expansion save as module presets, with the closing choice and each slot's source.
    */
-  async openSaveRecipePreset() {
+  async openSavePlacePreset() {
     var _a5;
     const custom = await this.loadCustomBiomes();
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
-    if (!colonialPart && !(this.activeSection === "placeShapes" && this.placeIsBritain())) return;
-    const key2 = colonialPart ? `colonial:${colonialPart}` : "britain";
-    const land = this.land(key2);
-    const found = findBiome(land.biome, custom);
-    const biome = found ? found.custom ? `[[${found.label}]]` : found.id : void 0;
-    let recipe;
+    if (!colonialPart && !(this.activeSection === "placeShapes" && !this.placeIsRivers())) return;
+    const biomeText = (found) => found ? found.custom ? `[[${found.label}]]` : found.id : "";
     let name;
     let description;
+    let make;
+    let owns;
     if (colonialPart) {
+      const state = this.colonialPlaceState(colonialPart);
+      const found = findBiome(state.land.biome, custom);
       const part = colonialPart === "2" ? "new-land" : "established";
-      const tradition = this.selectedTradition[colonialPart];
-      const context = this.selectedContext[colonialPart];
-      const aliens = !!(found == null ? void 0 : found.space) && this.colonialAliens[colonialPart];
-      recipe = colonialPlaceNamesRecipe(part, tradition, context, biome, land.terrain, aliens);
-      const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition != null ? tradition : "general"));
-      const contextLabel = (_a5 = colonialContexts(colonialPart).find((c) => c.id === context)) == null ? void 0 : _a5.label.toLowerCase();
-      name = [traditionLabel(colonialPart, t.id, t.label), contextLabel].filter(Boolean).join(" \xB7 ");
-      description = wizardSentenceText(part, { tradition: t.id, context, biome, terrain: land.terrain, aliens }, custom);
+      const t = COLONIAL_TRADITIONS.find((x) => {
+        var _a6;
+        return x.id === ((_a6 = state.tradition) != null ? _a6 : "general");
+      });
+      const sentence2 = slotSentence(slotPartOf(colonialPart), state.sources);
+      name = `${traditionLabel(colonialPart, t.id, t.label)} \xB7 ${SECTION_LABELS[this.activeSection]}`;
+      description = `${wizardSentenceText(part, { tradition: t.id, context: state.context, biome: found == null ? void 0 : found.id, terrain: state.land.terrain, aliens: state.aliens }, custom)}.${sentence2 ? ` ${slotSegmentsText(sentence2)}` : ""}`;
+      const contextId = (_a5 = state.context) != null ? _a5 : CONTEXT_PHRASES[colonialPart][0][0];
+      make = (presetName, text) => modulePresetContent(colonialPresetOf(colonialPart, state, contextId, { packName: presetName, description: text, biome: biomeText(found) }));
+      owns = (existing, presetName) => !!(colonialPart === "2" ? parseModulePreset(existing, presetName).exploration : parseModulePreset(existing, presetName).expansion);
+    } else if (this.placeIsBritain()) {
+      const state = this.britishPlaceState();
+      const found = findBiome(state.land.biome, custom);
+      const sentence2 = slotSentence("organic", state.sources);
+      name = `British \xB7 ${SECTION_LABELS.placeShapes}`;
+      description = `${wizardSentenceText("organic", { region: state.region, biome: found == null ? void 0 : found.id, terrain: state.land.terrain }, custom)}.${sentence2 ? ` ${slotSegmentsText(sentence2)}` : ""}`;
+      make = (presetName, text) => modulePresetContent(britishPresetOf(state, { packName: presetName, description: text, biome: biomeText(found) }));
+      owns = (existing, presetName) => !!parseModulePreset(existing, presetName).nativePlace;
     } else {
-      recipe = britishPlaceNamesRecipe(this.selectedRegion, biome, land.terrain);
-      name = ["British", regionPhrase(this.selectedRegion), found ? biomeInline(found) : void 0].filter(Boolean).join(" \xB7 ");
-      description = wizardSentenceText("organic", { region: this.selectedRegion, biome, terrain: land.terrain }, custom);
+      const state = this.worldPlaceState();
+      const culture = findCulture(state.culture);
+      const era = findEra(culture, state.era);
+      const found = findBiome(state.land.biome, custom);
+      name = `${culture.label} \xB7 ${SECTION_LABELS.placeShapes}`;
+      description = `${culture.label} place names${culture.eras.length > 1 ? ` from the ${era.label} era` : ""}${found ? `, set in ${found.phrase}` : ""}.`;
+      make = (presetName, text) => modulePresetContent(worldPresetOf(state, era.id, { packName: presetName, description: text, biome: biomeText(found) }));
+      owns = (existing, presetName) => !!parseModulePreset(existing, presetName).nativePlace;
     }
-    new PresetSaveModal(this.app, name, `${description}.`, async (presetName, text) => {
+    new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       if (!presetName) {
         new import_obsidian11.Notice("nameForge: give the preset a name.");
         return false;
       }
-      const content = `---
-${(0, import_obsidian11.stringifyYaml)(recipeToFrontmatter(recipe))}---
-
-${text}
-`;
-      return this.writePreset(presetName, content, (existing) => isRecipeContent(existing) && !parseRecipeContent(existing).recipe.template);
+      return this.writePreset(presetName, make(presetName, text), (existing) => owns(existing, presetName));
     }).open();
+  }
+  // ── The place-name modules' states, runs and presets (Wizard retirement brief §4) ──
+  britishPlaceState() {
+    return { region: this.selectedRegion, land: this.land("britain"), sources: this.placeSlots };
+  }
+  worldPlaceState() {
+    const key2 = this.worldLandKey();
+    return { culture: this.worldCulture, era: this.worldEras[this.worldCulture], land: key2 ? this.land(key2) : DEFAULT_LAND };
+  }
+  colonialPlaceState(part) {
+    return {
+      tradition: this.selectedTradition[part],
+      context: this.selectedContext[part],
+      aliens: this.colonialAliens[part],
+      land: this.land(`colonial:${part}`),
+      sources: this.colonialSlots[part]
+    };
+  }
+  /** A preset's "[[Salt Marshes]]" biome link, as the land's biome: the pack's path (as the tribal preset does). */
+  async presetLand(land, from) {
+    var _a5, _b3;
+    if (!((_a5 = land.biome) == null ? void 0 : _a5.startsWith("[["))) return land;
+    const name = land.biome.slice(2, -2);
+    const target = this.app.metadataCache.getFirstLinkpathDest(name, from);
+    const found = (await this.loadCustomBiomes()).find((b) => {
+      var _a6;
+      return ((_a6 = b.custom) == null ? void 0 : _a6.path) === (target == null ? void 0 : target.path) || b.label === name;
+    });
+    return { ...land, biome: (_b3 = found == null ? void 0 : found.custom) == null ? void 0 : _b3.path };
+  }
+  placeRunOptions() {
+    var _a5;
+    return {
+      count: this.generationCount,
+      seed: this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0,
+      faithfulness: this.plugin.settings.faithfulness,
+      strictness: this.plugin.settings.strictness
+    };
+  }
+  /** River brief §2: rendered names from the fixed British recipe, shown as recipe results. `label` replaces the history label (a preset run's). */
+  async runBritishPlace(state, label, problems = []) {
+    await this.loadCustomBiomes();
+    const biome = await this.readyBiome(findBiome(state.land.biome, this.customBiomes));
+    const own = await this.resolveSlotSources("organic", state.sources, britishRecipe(state, biome));
+    const result = this.tryLand(() => generateBritishPlace(state, biome, own.slots, this.placeRunOptions()));
+    if (!result) return;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names, "module");
+    await this.recordGenerationHistory(
+      result.names.length,
+      label != null ? label : withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, state.region) + landHistorySuffix(state.land, this.customBiomes) + ownNamesSuffix("organic", state.sources)
+    );
+    this.setStatus([...problems, ...result.notices, ...own.notices].join(" "));
+  }
+  async runWorldPlace(state, label, problems = []) {
+    await this.loadCustomBiomes();
+    const result = generateWorldPlace(state, findBiome(state.land.biome, this.customBiomes), this.placeRunOptions());
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(
+      result.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology })),
+      "module"
+    );
+    await this.recordGenerationHistory(
+      result.names.length,
+      label != null ? label : worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, state.culture, state.era) + landHistorySuffix(state.land, this.customBiomes)
+    );
+    this.setStatus([...problems, ...result.notices].join(" "));
+  }
+  async runColonialPlace(part, state, label, problems = []) {
+    await this.loadCustomBiomes();
+    const found = findBiome(state.land.biome, this.customBiomes);
+    const custom = (found == null ? void 0 : found.custom) ? await this.readyBiome(found) : void 0;
+    const slotPart = slotPartOf(part);
+    const own = await this.resolveSlotSources(slotPart, state.sources, colonialRecipe(part, state, found, custom));
+    const result = this.tryLand(() => generateColonialPlace(part, state, found, custom, own.slots, this.placeRunOptions()));
+    if (!result) return;
+    this.currentSeed = result.seed;
+    this.renderRecipeResults(result.names, "module");
+    const section = part === "2" ? "explorationPlaceShapes" : "empireExpansionPlaceShapes";
+    await this.recordGenerationHistory(
+      result.names.length,
+      label != null ? label : colonialHistoryLabel(SECTION_LABELS[section], part, state.tradition, state.context, custom ? void 0 : state.land.biome) + landHistorySuffix(state.land, this.customBiomes, !!custom) + ((found == null ? void 0 : found.space) && state.aliens ? " \xB7 alien life" : "") + ownNamesSuffix(slotPart, state.sources)
+    );
+    this.setStatus([...problems, ...usesOwnNames(slotPart, state.sources) ? [...result.notices, ...own.notices] : []].join(" "));
+  }
+  /** A place-name preset, run as its module runs; history "{module label} · {preset}". */
+  async runPlacePreset() {
+    const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
+    if (!(file instanceof import_obsidian11.TFile)) {
+      this.setStatus("Preset not found. Reselect it from the pack list.");
+      return;
+    }
+    const { nativePlace, exploration, expansion, problems } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
+    if (nativePlace) {
+      const state2 = nativePresetState(nativePlace);
+      const label = `${SECTION_LABELS.placeShapes} \xB7 ${nativePlace.packName}`;
+      if ("british" in state2) await this.runBritishPlace({ ...state2.british, land: await this.presetLand(state2.british.land, file.path) }, label, problems);
+      else await this.runWorldPlace({ ...state2.world, land: await this.presetLand(state2.world.land, file.path) }, label, problems);
+      return;
+    }
+    const preset = exploration != null ? exploration : expansion;
+    if (!preset) {
+      this.setStatus(problems.join(" "));
+      return;
+    }
+    const state = colonialPresetState(preset);
+    const section = preset.colonialPart === "2" ? "explorationPlaceShapes" : "empireExpansionPlaceShapes";
+    await this.runColonialPlace(preset.colonialPart, { ...state, land: await this.presetLand(state.land, file.path) }, `${SECTION_LABELS[section]} \xB7 ${preset.packName}`, problems);
+  }
+  /** "Open in {module}": the preset's choices, applied to its module for this session. */
+  async openPlacePresetInModule(from, nativePlace, exploration, expansion) {
+    if (nativePlace) {
+      const state2 = nativePresetState(nativePlace);
+      this.worldCulture = nativePlace.placeCulture;
+      if ("british" in state2) {
+        this.selectedRegion = state2.british.region;
+        this.landStates.britain = await this.presetLand(state2.british.land, from);
+        this.placeSlots = state2.british.sources;
+      } else {
+        if (state2.world.era) this.worldEras[state2.world.culture] = state2.world.era;
+        const key2 = this.worldLandKey();
+        if (key2) this.landStates[key2] = await this.presetLand(state2.world.land, from);
+      }
+      this.switchSection("placeShapes");
+      return;
+    }
+    const preset = exploration != null ? exploration : expansion;
+    if (!preset) return;
+    const part = preset.colonialPart;
+    const state = colonialPresetState(preset);
+    this.selectedTradition[part] = state.tradition;
+    this.selectedContext[part] = state.context;
+    this.colonialAliens[part] = state.aliens;
+    this.landStates[`colonial:${part}`] = await this.presetLand(state.land, from);
+    this.colonialSlots[part] = state.sources;
+    this.switchSection(part === "2" ? "explorationPlaceShapes" : "empireExpansionPlaceShapes");
   }
   /** Group brief §13: "{tradition} · {type or family} · {setting}", described by the sentence. */
   openSaveGroupPreset(family) {
@@ -140982,7 +141334,7 @@ ${text}
       return;
     }
     const packType = this.currentPackType;
-    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "wildsPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "monumentPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset") {
+    if (packType === "recipePack" || packType === "tribalPreset" || packType === "groupPreset" || packType === "bynamePreset" || packType === "vesselPreset" || packType === "watersPreset" || packType === "wildsPreset" || packType === "realmPreset" || packType === "routePreset" || packType === "streetPreset" || packType === "innPreset" || packType === "buildingPreset" || packType === "monumentPreset" || packType === "kitPreset" || packType === "eventPreset" || packType === "moneyPreset" || packType === "calendarPreset" || packType === "skyPreset" || packType === "thingPreset" || packType === "peoplePreset" || packType === "deityPreset" || isPlacePresetType(packType)) {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
@@ -141150,6 +141502,9 @@ ${text}
           else if (parsed.peoples) packs.push({ path: child.path, packType: "peoplePreset" });
           else if (parsed.time) packs.push({ path: child.path, packType: parsed.time.timeModule === "sky" ? "skyPreset" : "calendarPreset" });
           else if (parsed.deity) packs.push({ path: child.path, packType: "deityPreset" });
+          else if (parsed.nativePlace) packs.push({ path: child.path, packType: "nativePlacePreset" });
+          else if (parsed.exploration) packs.push({ path: child.path, packType: "explorationPreset" });
+          else if (parsed.expansion) packs.push({ path: child.path, packType: "expansionPreset" });
           continue;
         }
         if (isValidNamePackContent(content)) {
@@ -141291,9 +141646,9 @@ ${text}
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
-    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, problems } = parseModulePreset(content, file.basename);
-    this.currentPackType = wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : monument ? "monumentPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
+    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _A;
+    const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, nativePlace, exploration, expansion, problems } = parseModulePreset(content, file.basename);
+    this.currentPackType = nativePlace ? "nativePlacePreset" : exploration ? "explorationPreset" : expansion ? "expansionPreset" : wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : monument ? "monumentPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
     this.currentRecipePath = void 0;
     this.currentNamesText = "";
@@ -141303,9 +141658,9 @@ ${text}
     (_a5 = this.sectionSentenceEl) == null ? void 0 : _a5.hide();
     this.syncPillSpacing();
     (_b3 = this.openPresetButton) == null ? void 0 : _b3.toggle(this.activeSection === "markov");
-    const module2 = wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_c3 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _c3.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d3 = findFamily(group.family)) == null ? void 0 : _d3.label : SECTION_LABELS.tribalNames;
+    const module2 = nativePlace ? SECTION_LABELS.placeShapes : exploration ? SECTION_LABELS.explorationPlaceShapes : expansion ? SECTION_LABELS.empireExpansionPlaceShapes : wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_c3 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _c3.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d3 = findFamily(group.family)) == null ? void 0 : _d3.label : SECTION_LABELS.tribalNames;
     (_e3 = this.openPresetButton) == null ? void 0 : _e3.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_x = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = wilds == null ? void 0 : wilds.packName) != null ? _f : preset == null ? void 0 : preset.packName) != null ? _g : group == null ? void 0 : group.packName) != null ? _h : byname == null ? void 0 : byname.packName) != null ? _i : vessel == null ? void 0 : vessel.packName) != null ? _j : waters == null ? void 0 : waters.packName) != null ? _k : realm2 == null ? void 0 : realm2.packName) != null ? _l : route3 == null ? void 0 : route3.packName) != null ? _m : street == null ? void 0 : street.packName) != null ? _n : inn == null ? void 0 : inn.packName) != null ? _o : building == null ? void 0 : building.packName) != null ? _p : monument == null ? void 0 : monument.packName) != null ? _q : kit == null ? void 0 : kit.packName) != null ? _r : event == null ? void 0 : event.packName) != null ? _s : money == null ? void 0 : money.packName) != null ? _t : time == null ? void 0 : time.packName) != null ? _u : thing == null ? void 0 : thing.packName) != null ? _v : peoples == null ? void 0 : peoples.packName) != null ? _w : deity == null ? void 0 : deity.packName) != null ? _x : file.basename;
+    this.plugin.settings.packName = (_A = (_z = (_y = (_x = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = nativePlace == null ? void 0 : nativePlace.packName) != null ? _f : exploration == null ? void 0 : exploration.packName) != null ? _g : expansion == null ? void 0 : expansion.packName) != null ? _h : wilds == null ? void 0 : wilds.packName) != null ? _i : preset == null ? void 0 : preset.packName) != null ? _j : group == null ? void 0 : group.packName) != null ? _k : byname == null ? void 0 : byname.packName) != null ? _l : vessel == null ? void 0 : vessel.packName) != null ? _m : waters == null ? void 0 : waters.packName) != null ? _n : realm2 == null ? void 0 : realm2.packName) != null ? _o : route3 == null ? void 0 : route3.packName) != null ? _p : street == null ? void 0 : street.packName) != null ? _q : inn == null ? void 0 : inn.packName) != null ? _r : building == null ? void 0 : building.packName) != null ? _s : monument == null ? void 0 : monument.packName) != null ? _t : kit == null ? void 0 : kit.packName) != null ? _u : event == null ? void 0 : event.packName) != null ? _v : money == null ? void 0 : money.packName) != null ? _w : time == null ? void 0 : time.packName) != null ? _x : thing == null ? void 0 : thing.packName) != null ? _y : peoples == null ? void 0 : peoples.packName) != null ? _z : deity == null ? void 0 : deity.packName) != null ? _A : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
@@ -141575,40 +141930,18 @@ ${text}
     return first ? { name: first.names[0], tag: first.tag } : { name: "Alfred", tag: "male" };
   }
   async generateSelectedCount() {
-    var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j;
+    var _a5, _b3, _c3, _d3, _e3, _f, _g;
     if (this.activeSection === "settlementNames") {
       await this.runSettlementNames();
       return;
     }
     if (this.activeSection === "placeShapes" && this.placeIsBritain()) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
-      const land = this.land("britain");
-      await this.loadCustomBiomes();
-      const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
-      const recipe = britishPlaceNamesRecipe(this.selectedRegion, (biome == null ? void 0 : biome.custom) ? void 0 : land.biome, land.terrain);
-      const own = await this.resolveSlotSources("organic", this.placeSlots, recipe);
-      const result2 = this.tryLand(() => generatePlaceNames({
-        recipe,
-        biome: (biome == null ? void 0 : biome.custom) ? biome : void 0,
-        slots: own.slots,
-        count: this.generationCount,
-        seed: seedOverride2,
-        faithfulness: this.plugin.settings.faithfulness,
-        strictness: this.plugin.settings.strictness
-      }));
-      if (!result2) return;
-      this.currentSeed = result2.seed;
-      this.renderRecipeResults(result2.names, "module");
-      await this.recordGenerationHistory(
-        result2.names.length,
-        withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion) + landHistorySuffix(land, this.customBiomes) + ownNamesSuffix("organic", this.placeSlots)
-      );
-      this.setStatus([...result2.notices, ...own.notices].join(" "));
+      await this.runBritishPlace(this.britishPlaceState());
       return;
     }
     const placeRivers = this.activeSection === "placeShapes" && this.placeIsRivers();
     if (this.activeSection === "riverNames" || placeRivers) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_b3 = this.seedInputEl) == null ? void 0 : _b3.value) : void 0;
+      const seedOverride2 = this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
       const setting = placeRivers ? "british" : this.riverSetting;
       const british = setting === "british";
       const region = placeRivers ? this.selectedRegion : this.riverRegion;
@@ -141633,34 +141966,11 @@ ${text}
       const peoples = this.riverPeoples.mode === "placeholder" ? " \xB7 peoples as placeholders" : "";
       const label = `${RIVER_NAMES_HISTORY_NAME} \xB7 ${settingLabel2}${biome ? ` \xB7 ${biomeInline(biome)}` : ""}${peoples}`;
       await this.recordGenerationHistory(result2.names.length, british ? withRegion(label, region) : label);
-      this.setStatus((_c3 = result2.notice) != null ? _c3 : "");
+      this.setStatus((_b3 = result2.notice) != null ? _b3 : "");
       return;
     }
     if (this.activeSection === "placeShapes") {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_d3 = this.seedInputEl) == null ? void 0 : _d3.value) : void 0;
-      const era = this.worldEras[this.worldCulture];
-      const worldKey = this.worldLandKey();
-      const land = worldKey ? this.land(worldKey) : DEFAULT_LAND;
-      const result2 = generateWorldPlaceNames({
-        culture: this.worldCulture,
-        era,
-        biome: findBiome(land.biome, this.customBiomes),
-        terrain: land.terrain,
-        count: this.generationCount,
-        seed: seedOverride2,
-        faithfulness: this.plugin.settings.faithfulness,
-        strictness: this.plugin.settings.strictness
-      });
-      this.currentSeed = result2.seed;
-      this.renderRecipeResults(
-        result2.names.map((n) => ({ text: n.text, hasPlaceholder: false, etymology: n.etymology })),
-        "module"
-      );
-      await this.recordGenerationHistory(
-        result2.names.length,
-        worldHistoryLabel(WORLD_PLACE_NAMES_HISTORY_NAME, this.worldCulture, era) + landHistorySuffix(land, this.customBiomes)
-      );
-      this.setStatus(result2.notices.join(" "));
+      await this.runWorldPlace(this.worldPlaceState());
       return;
     }
     if (this.activeSection === "nameAgeing") {
@@ -141755,34 +142065,7 @@ ${text}
     }
     const colonialPart = COLONIAL_SECTION_PART[this.activeSection];
     if (colonialPart) {
-      const seedOverride2 = this.seedLocked ? parseSeedInput((_e3 = this.seedInputEl) == null ? void 0 : _e3.value) : void 0;
-      const tradition = this.selectedTradition[colonialPart];
-      const context = this.selectedContext[colonialPart];
-      const land = this.land(`colonial:${colonialPart}`);
-      await this.loadCustomBiomes();
-      const found = findBiome(land.biome, this.customBiomes);
-      const custom = (found == null ? void 0 : found.custom) ? await this.readyBiome(found) : void 0;
-      const biome = custom ? void 0 : land.biome;
-      const recipe = colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!(found == null ? void 0 : found.space) && this.colonialAliens[colonialPart]);
-      const slotPart = slotPartOf(colonialPart);
-      const own = await this.resolveSlotSources(slotPart, this.colonialSlots[colonialPart], recipe);
-      const result2 = this.tryLand(() => generatePlaceNames({
-        recipe,
-        biome: custom,
-        slots: own.slots,
-        count: this.generationCount,
-        seed: seedOverride2,
-        faithfulness: this.plugin.settings.faithfulness,
-        strictness: this.plugin.settings.strictness
-      }));
-      if (!result2) return;
-      this.currentSeed = result2.seed;
-      this.renderRecipeResults(result2.names, "module");
-      await this.recordGenerationHistory(
-        result2.names.length,
-        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? void 0 : biome) + landHistorySuffix(land, this.customBiomes, !!custom) + ((found == null ? void 0 : found.space) && this.colonialAliens[colonialPart] ? " \xB7 alien life" : "") + ownNamesSuffix(slotPart, this.colonialSlots[colonialPart])
-      );
-      this.setStatus(usesOwnNames(slotPart, this.colonialSlots[colonialPart]) ? [...result2.notices, ...own.notices].join(" ") : "");
+      await this.runColonialPlace(colonialPart, this.colonialPlaceState(colonialPart));
       return;
     }
     if (this.activeSection !== "markov") {
@@ -141791,6 +142074,10 @@ ${text}
     }
     if (this.currentPackType === "recipePack") {
       await this.runRecipe();
+      return;
+    }
+    if (isPlacePresetType(this.currentPackType)) {
+      await this.runPlacePreset();
       return;
     }
     if (this.currentPackType === "tribalPreset") {
@@ -141873,13 +142160,13 @@ ${text}
       this.setStatus(this.currentTemplateError);
       return;
     }
-    const seedOverride = this.seedLocked ? parseSeedInput((_f = this.seedInputEl) == null ? void 0 : _f.value) : void 0;
+    const seedOverride = this.seedLocked ? parseSeedInput((_c3 = this.seedInputEl) == null ? void 0 : _c3.value) : void 0;
     if (this.currentCompound && this.compoundLoaded()) {
-      const data = compoundPartData((_g = this.currentCompound) != null ? _g : {});
+      const data = compoundPartData((_d3 = this.currentCompound) != null ? _d3 : {});
       const choice2 = this.sectionChoice;
       const options = {
         count: this.generationCount,
-        ...compoundSettings((_h = this.currentCompound) != null ? _h : {}),
+        ...compoundSettings((_e3 = this.currentCompound) != null ? _e3 : {}),
         // Place generators brief §2.3: a compound place pack's breakdown parts use the place model.
         ...this.currentPackType === "placePack" ? { breakdownModel: "place" } : {},
         faithfulness: this.plugin.settings.faithfulness,
@@ -141902,7 +142189,7 @@ ${text}
         const result2 = generateCompoundNamesDetailed(parts, options);
         names = result2.names;
         seed = result2.seed;
-        small2 = ((_i = result2.loosened) != null ? _i : []).map((i) => smallListNotice(`Part ${i + 1}${title ? ` \u201C${title}\u201D` : ""}`, parts[i].length));
+        small2 = ((_f = result2.loosened) != null ? _f : []).map((i) => smallListNotice(`Part ${i + 1}${title ? ` \u201C${title}\u201D` : ""}`, parts[i].length));
       }
       if (names.length === 0) {
         this.renderResults([], "Select a pack with names to generate from.");
@@ -141991,7 +142278,7 @@ ${text}
       namesText = selection.names.join("\n");
       sectionNotices = selection.notices;
       if (this.currentPackType === "breakdownPack" || this.currentPackType === "placePack" && this.currentPlaceGenerator === "breakdown") {
-        loosened = breakdownSettingsFor(selection.names.length, (_j = this.plugin.settings.strictness) != null ? _j : 3);
+        loosened = breakdownSettingsFor(selection.names.length, (_g = this.plugin.settings.strictness) != null ? _g : 3);
         if (!loosened.allowSourceCopies) loosened = void 0;
         else sectionNotices.push(smallListNotice(selection.used, selection.names.length));
       }
