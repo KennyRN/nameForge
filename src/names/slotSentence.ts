@@ -11,6 +11,9 @@ import { allowsLists, allowsPacks, allowsPlaceholderChoice, allowsTribal, slotCa
 
 export type { SlotPart };
 
+/** The slot part of a colonial part: "2" is exploration into new lands, "2a" expansion into settled lands. */
+export const slotPartOf = (part: "2" | "2a"): SlotPart => (part === "2" ? "new-land" : "established");
+
 /** §3.5: the slot sources held by each module's sentence state. */
 export interface SlotSources {
   names: "placeholders" | "perSlot";

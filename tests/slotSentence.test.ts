@@ -18,6 +18,7 @@ import {
   type SlotChoice,
   slotSegmentsText,
   slotSentence,
+  slotPartOf,
   slotSettingOf,
   type SlotSources,
   usesOwnNames,
@@ -273,4 +274,15 @@ test("resolve: placeholders map nothing, however the state came about", async ()
   const { slots, notices } = await resolve({}, chooseNames(freshSlotSources(), "perSlot"));
   assert.deepEqual(slots, {});
   assert.deepEqual(notices, []);
+});
+
+test("colonial parts: exploration is new-land and expansion is established, each with its own sources", () => {
+  assert.equal(slotPartOf("2"), "new-land");
+  assert.equal(slotPartOf("2a"), "established");
+  const exploration = chooseSlotSource(chooseNames(freshSlotSources(), "perSlot"), slotPartOf("2"), "explorer-or-founder", "pack:Norse");
+  const expansion = freshSlotSources();
+  assert.equal(ownNamesSuffix(slotPartOf("2"), exploration), " · own names");
+  assert.equal(ownNamesSuffix(slotPartOf("2a"), expansion), "");
+  assert.match(slotSegmentsText(slotSentence("new-land", exploration, { packs: ["Norse"], lists: [] })!), /explorers and founders from Norse \(pack\)/);
+  assert.match(slotSegmentsText(slotSentence("established", chooseNames(freshSlotSources(), "perSlot"))!), /local settlement words as placeholders/);
 });

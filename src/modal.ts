@@ -181,6 +181,7 @@ import {
   type SlotFolderOptions,
   type SlotPart,
   type SlotSegment,
+  slotPartOf,
   slotSentence,
   type SlotSources,
   usesOwnNames,
@@ -681,6 +682,8 @@ export class NameForgeModal extends Modal {
   /** The names folder's packs and word lists, as the slot menus list them. */
   private slotFolderOptions: SlotFolderOptions = NO_SLOT_OPTIONS;
   private slotFolderLoaded = false;
+  /** Exploration's (part 2) and expansion's (part 2a) slot sources. */
+  private colonialSlots: Record<ColonialPart, SlotSources> = { "2": freshSlotSources(), "2a": freshSlotSources() };
   /** Ships brief §2.4: each vessel module's choices, session only. */
   private vesselStates: Partial<Record<VesselModule, VesselSentenceState>> = {};
   /** Seas and coasts brief §2: each waters module's choices, session only. */
@@ -1823,6 +1826,8 @@ export class NameForgeModal extends Modal {
       setAliens: (on) => (this.colonialAliens[part] = on),
       landKey: `colonial:${part}`,
     });
+    // Wizard retirement brief §3.1: slot choices in all of both modules' settings.
+    this.renderSlotChoices(row, sentence, slotPartOf(part), () => this.colonialSlots[part], (next) => (this.colonialSlots[part] = next));
   }
 
   /** Exploration's and expansion's clauses, shared with settlement names (urban brief §3). */
@@ -6415,10 +6420,13 @@ export class NameForgeModal extends Modal {
       const custom = found?.custom ? await this.readyBiome(found) : undefined;
       const biome = custom ? undefined : land.biome;
       // River brief §3: rendered names from the fixed built-in recipe, shown as recipe results.
+      const recipe = colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!found?.space && this.colonialAliens[colonialPart]);
+      const slotPart = slotPartOf(colonialPart);
+      const own = await this.resolveSlotSources(slotPart, this.colonialSlots[colonialPart], recipe);
       const result = this.tryLand(() => generatePlaceNames({
-        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!found?.space && this.colonialAliens[colonialPart]),
+        recipe,
         biome: custom,
-        slots: {},
+        slots: own.slots,
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
@@ -6431,9 +6439,11 @@ export class NameForgeModal extends Modal {
         result.names.length,
         colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? undefined : biome) +
           landHistorySuffix(land, this.customBiomes, !!custom) +
-          (found?.space && this.colonialAliens[colonialPart] ? " · alien life" : ""),
+          (found?.space && this.colonialAliens[colonialPart] ? " · alien life" : "") +
+          ownNamesSuffix(slotPart, this.colonialSlots[colonialPart]),
       );
-      this.setStatus("");
+      // Unchanged on placeholders: this branch never showed the engine's notices.
+      this.setStatus(usesOwnNames(slotPart, this.colonialSlots[colonialPart]) ? [...result.notices, ...own.notices].join(" ") : "");
       return;
     }
     if (this.activeSection !== "markov") {

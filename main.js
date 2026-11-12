@@ -135217,6 +135217,7 @@ function allowsPlaceholderChoice(part, categoryId) {
 }
 
 // src/names/slotSentence.ts
+var slotPartOf = (part) => part === "2" ? "new-land" : "established";
 var freshSlotSources = () => ({ names: "placeholders", slots: {} });
 var NO_SLOT_OPTIONS = { packs: [], lists: [] };
 var SLOT_PHRASES = {
@@ -136319,6 +136320,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     /** The names folder's packs and word lists, as the slot menus list them. */
     this.slotFolderOptions = NO_SLOT_OPTIONS;
     this.slotFolderLoaded = false;
+    /** Exploration's (part 2) and expansion's (part 2a) slot sources. */
+    this.colonialSlots = { "2": freshSlotSources(), "2a": freshSlotSources() };
     /** Ships brief §2.4: each vessel module's choices, session only. */
     this.vesselStates = {};
     /** Seas and coasts brief §2: each waters module's choices, session only. */
@@ -137388,6 +137391,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       setAliens: (on) => this.colonialAliens[part] = on,
       landKey: `colonial:${part}`
     });
+    this.renderSlotChoices(row, sentence2, slotPartOf(part), () => this.colonialSlots[part], (next) => this.colonialSlots[part] = next);
   }
   /** Exploration's and expansion's clauses, shared with settlement names (urban brief §3). */
   colonialClauses(sentence2, part, o) {
@@ -141748,10 +141752,13 @@ ${text}
       const found = findBiome(land.biome, this.customBiomes);
       const custom = (found == null ? void 0 : found.custom) ? await this.readyBiome(found) : void 0;
       const biome = custom ? void 0 : land.biome;
+      const recipe = colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!(found == null ? void 0 : found.space) && this.colonialAliens[colonialPart]);
+      const slotPart = slotPartOf(colonialPart);
+      const own = await this.resolveSlotSources(slotPart, this.colonialSlots[colonialPart], recipe);
       const result2 = this.tryLand(() => generatePlaceNames({
-        recipe: colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, !!(found == null ? void 0 : found.space) && this.colonialAliens[colonialPart]),
+        recipe,
         biome: custom,
-        slots: {},
+        slots: own.slots,
         count: this.generationCount,
         seed: seedOverride2,
         faithfulness: this.plugin.settings.faithfulness,
@@ -141762,9 +141769,9 @@ ${text}
       this.renderRecipeResults(result2.names, "module");
       await this.recordGenerationHistory(
         result2.names.length,
-        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? void 0 : biome) + landHistorySuffix(land, this.customBiomes, !!custom) + ((found == null ? void 0 : found.space) && this.colonialAliens[colonialPart] ? " \xB7 alien life" : "")
+        colonialHistoryLabel(SECTION_LABELS[this.activeSection], colonialPart, tradition, context, custom ? void 0 : biome) + landHistorySuffix(land, this.customBiomes, !!custom) + ((found == null ? void 0 : found.space) && this.colonialAliens[colonialPart] ? " \xB7 alien life" : "") + ownNamesSuffix(slotPart, this.colonialSlots[colonialPart])
       );
-      this.setStatus("");
+      this.setStatus(usesOwnNames(slotPart, this.colonialSlots[colonialPart]) ? [...result2.notices, ...own.notices].join(" ") : "");
       return;
     }
     if (this.activeSection !== "markov") {
