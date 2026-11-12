@@ -71,7 +71,6 @@ import {
   ICON_MOON_STARS,
   ICON_LANGUAGES,
   ICON_GEM,
-  ICON_PENCIL,
   ICON_ADJUSTMENTS,
   ICON_LIST_TREE,
 } from "./icons";
@@ -172,7 +171,6 @@ import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/
 import { cultureUsesBiomes, eraUsesLand, findCulture, findEra, generateWorldPlaceNames, INTERSTELLAR_ERA, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
 import { CONTEXT_PHRASES, contextPhrasesFor, partsNote, traditionLabel } from "./colonialWording";
-import { RecipeEditorModal, type RecipeEditorOptions, RecipeWizard } from "./recipeEditor";
 import {
   parseNameSections,
   type SectionedNames,
@@ -811,7 +809,6 @@ export class NameForgeModal extends Modal {
   private openPresetButton: HTMLButtonElement | null = null;
   private savePresetButton: HTMLButtonElement | null = null;
   private recipeEtymology: boolean | undefined = undefined;
-  private editRecipeButton: HTMLButtonElement | null = null;
   private generationCount = 25;
   private currentSeed: number | null = null;
   private seedLocked = false;
@@ -948,14 +945,6 @@ export class NameForgeModal extends Modal {
         new NameForgeEditorModal(this.app, this, "", "").open();
       });
     }
-    // Recipe packs: edit the loaded recipe.
-    this.editRecipeButton = createPacksRow.createEl("button", {
-      cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
-      attr: { type: "button", title: "Edit recipe" },
-    });
-    setIcon(this.editRecipeButton, ICON_PENCIL);
-    this.editRecipeButton.addEventListener("click", () => void this.openRecipeEditor(this.currentRecipePath));
-    this.editRecipeButton.hide();
     // Presets brief §9: open the loaded tribal preset in tribal names.
     this.openPresetButton = createPacksRow.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
@@ -1153,7 +1142,6 @@ export class NameForgeModal extends Modal {
     if (group) this.groupModule[group] = section;
     this.packDropdownEl?.toggle(section === "markov");
     this.sectionSentenceEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
-    this.editRecipeButton?.toggle(section === "markov" && this.currentPackType === "recipePack");
     this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || (this.currentPackType === "recipePack" && !!this.settlementPreset)));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
@@ -5267,7 +5255,6 @@ export class NameForgeModal extends Modal {
     this.quantityButtons = [];
     this.createPacksButton = null;
     this.sectionSentenceEl = null;
-    this.editRecipeButton = null;
     this.openPresetButton = null;
     this.savePresetButton = null;
     this.guideButton = null;
@@ -5793,7 +5780,6 @@ export class NameForgeModal extends Modal {
     }
     this.currentRecipePath = undefined;
     this.currentPresetPath = undefined;
-    this.editRecipeButton?.hide();
     this.openPresetButton?.hide();
 
     const resolved = await this.resolvePackTemplate(packPath, parseNamesFileContent(content));
@@ -5872,7 +5858,6 @@ export class NameForgeModal extends Modal {
     this.sectionChoices = [];
     this.sectionSentenceEl?.hide();
     this.syncPillSpacing();
-    this.editRecipeButton?.hide();
     this.openPresetButton?.toggle(this.activeSection === "markov");
     const module = wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? THINGS_DATA.modules.find((m) => m.key === thing.thingModule)?.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
     this.openPresetButton?.setAttribute("title", `Open in ${module ?? SECTION_LABELS.tribalNames}`);
@@ -5896,7 +5881,6 @@ export class NameForgeModal extends Modal {
     this.sectionChoices = [];
     this.sectionSentenceEl?.hide();
     this.syncPillSpacing();
-    this.editRecipeButton?.toggle(this.activeSection === "markov");
     this.plugin.settings.packName = file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
@@ -6050,60 +6034,6 @@ export class NameForgeModal extends Modal {
       history.addEventListener("click", () => new PreviousGenerationsModal(this.app, this).open());
     }
     update();
-  }
-
-  /** Opens the recipe editor for the recipe at `path` (new recipes are made in the pack editor's wizard). */
-  public async openRecipeEditor(path?: string) {
-    new RecipeEditorModal(this.app, await this.recipeEditorOptions(path)).open();
-  }
-
-  /** What the place name wizard needs: this folder's packs, lists, recipe templates and takeover packs. */
-  public async recipeEditorOptions(path?: string): Promise<RecipeEditorOptions> {
-    const folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
-    const folder = this.app.vault.getFolderByPath(normalizePath(folderPath));
-    const packs: string[] = [];
-    const lists: string[] = [];
-    const templates: { name: string; description: string }[] = [];
-    const tribalPresets: { name: string; preset: TribalPreset }[] = [];
-    // Takeover packs for colonial recipes: the takeover section's own eligibility rules (ageing §1).
-    const index = await this.scanFolderPacks();
-    const takeoverPacks = index
-      .filter((entry) => !entry.parsed.template)
-      .map((entry) => ({
-        name: entry.path.split("/").pop()?.replace(/\.md$/i, "") || entry.path,
-        reason: this.targetPackReason(entry, index),
-      }))
-      .sort((a, b) => a.name.localeCompare(b.name));
-    for (const child of folder?.children ?? []) {
-      if (!(child instanceof TFile) || child.extension !== "md") continue;
-      const content = await this.app.vault.cachedRead(child);
-      if (isRecipeContent(content)) {
-        const parsed = parseRecipeContent(content);
-        if (parsed.recipe.template) templates.push({ name: child.basename, description: parsed.body.trim().split("\n")[0] || "No description" });
-      } else if (isWordListContent(content)) {
-        lists.push(child.basename);
-      } else if (isModulePresetContent(content)) {
-        const { preset } = parseModulePreset(content, child.basename);
-        if (preset) tribalPresets.push({ name: child.basename, preset });
-      } else if (isValidNamePackContent(content) && !parseNamesFileContent(content).template) {
-        packs.push(child.basename);
-      }
-    }
-    const file = path ? this.app.vault.getFileByPath(path) : null;
-    return {
-      folderPath,
-      file: file instanceof TFile ? file : undefined,
-      packs: packs.sort(),
-      lists: lists.sort(),
-      templates: templates.sort((a, b) => a.name.localeCompare(b.name)),
-      takeoverPacks,
-      biomes: await this.loadCustomBiomes(),
-      tribalPresets: tribalPresets.sort((a, b) => a.name.localeCompare(b.name)),
-      onSaved: (saved) => {
-        this.plugin.settings.namesFilePath = saved;
-        void this.refreshPackDropdown().then(() => this.loadPack(saved));
-      },
-    };
   }
 
   /** Compound brief §1: the sections sentence's choices — the pack's `##` headings (for Mix packs,
@@ -7236,11 +7166,6 @@ class NameForgeEditorModal extends Modal {
   private biomeFilled = "";
   /** The file being edited, when the pack name matches an existing biome pack. */
   private biomeEditing: string | undefined;
-  /** The place name wizard replaces the stage's text box; it is built the first time it's chosen. */
-  private wizardMode = false;
-  private wizardButton: HTMLButtonElement | null = null;
-  private wizardPaneEl: HTMLElement | null = null;
-  private wizard: RecipeWizard | null = null;
   private stageEl: HTMLElement | null = null;
   private selectedPackType: NamePackType = "breakdownPack";
   private initialText: string;
@@ -7318,7 +7243,7 @@ class NameForgeEditorModal extends Modal {
     this.mixButton.addEventListener("click", () => {
       this.setPackType("mixPack");
     });
-    // Place, the place name wizard and Biome sit on a second line.
+    // Place and Biome sit on a second line.
     typeToggle.createDiv({ cls: "nameforge-modal__toggle-break" });
     this.placeButton = addTypeButton("Place", ICON_PLACE_PACK);
     this.placeButton.addClass("is-pill-bottom-left");
@@ -7326,19 +7251,10 @@ class NameForgeEditorModal extends Modal {
       this.setPackType("placePack");
     });
 
-    this.wizardButton = addTypeButton("Place name wizard", packTypeIconId("recipePack"));
-    this.wizardButton.addEventListener("click", () => {
-      this.wizardMode = true;
-      this.biomeMode = false;
-      this.updateTypeButtons();
-      void this.openWizard();
-    });
-
     // Land brief §9.4: a biome pack, starting from a base biome.
     this.biomeButton = addTypeButton("Biome", ICON_BIOME);
     this.biomeButton.addEventListener("click", () => {
       this.biomeMode = true;
-      this.wizardMode = false;
       this.updateTypeButtons();
       void this.enterBiomeMode();
     });
@@ -7391,9 +7307,6 @@ class NameForgeEditorModal extends Modal {
     this.buildMixSection(stage);
     this.templatesPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__templates" });
     this.templatesPaneEl.hide();
-    // The wizard's pane: its page scrolls inside the stage, so the modal keeps its size.
-    this.wizardPaneEl = stage.createDiv({ cls: "nameforge-editor-modal__stage-pane nameforge-editor-modal__wizard" });
-    this.wizardPaneEl.hide();
 
     this.selectedPackType = this.parent.currentPackType;
     this.updateTypeButtons();
@@ -7586,7 +7499,6 @@ class NameForgeEditorModal extends Modal {
   private setPackType(type: NamePackType) {
     this.selectedPackType = type;
     this.biomeMode = false;
-    this.wizardMode = false;
     this.updateTypeButtons();
   }
 
@@ -7671,9 +7583,8 @@ class NameForgeEditorModal extends Modal {
   }
 
   private updateTypeButtons() {
-    const isWizard = this.wizardMode;
-    const isBiome = !isWizard && this.biomeMode;
-    const other = isWizard || isBiome;
+    const isBiome = this.biomeMode;
+    const other = isBiome;
     this.biomeButton?.classList.toggle("is-active", isBiome);
     this.biomeButton?.setAttribute("aria-pressed", String(isBiome));
     this.biomeRowEl?.toggle(isBiome);
@@ -7682,9 +7593,7 @@ class NameForgeEditorModal extends Modal {
     const isCompound = !other && this.selectedPackType === "compoundPack";
     const isPlace = !other && this.selectedPackType === "placePack";
     const isMix = !other && this.selectedPackType === "mixPack";
-    this.wizardButton?.classList.toggle("is-active", isWizard);
-    this.wizardButton?.setAttribute("aria-pressed", String(isWizard));
-    // The templates pane: only for pack types that have templates (not Mix, the wizard or Biome).
+    // The templates pane: only for pack types that have templates (not Mix or Biome).
     const templateType = other ? undefined : templateTypeFor(this.selectedPackType);
     // Pack types without templates keep the button, greyed out and unclickable.
     if (this.templatesButton) this.templatesButton.disabled = !templateType;
@@ -7694,7 +7603,6 @@ class NameForgeEditorModal extends Modal {
     this.stageEl?.toggleClass("is-templates-open", showTemplates);
     this.templatesPaneEl?.toggle(showTemplates);
     if (showTemplates && templateType) void this.renderTemplatesPane(templateType);
-    this.wizardPaneEl?.toggle(isWizard);
     this.breakdownButton?.classList.toggle("is-active", isBreakdown);
     this.listButton?.classList.toggle("is-active", isList);
     this.compoundButton?.classList.toggle("is-active", isCompound);
@@ -7707,7 +7615,7 @@ class NameForgeEditorModal extends Modal {
     this.mixButton?.setAttribute("aria-pressed", String(isMix));
 
     const placeCompound = isPlace && this.placeGenerator === "compound";
-    const pane = isWizard || placeCompound ? undefined : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
+    const pane = placeCompound ? undefined : isBiome ? "biome" : this.textPaneFor(this.selectedPackType);
     this.inputEl = pane ? this.textPanes[pane] ?? null : null;
     for (const el of Object.values(this.textPanes)) el.toggle(el === this.inputEl);
     this.compoundSectionEl?.toggle(isCompound);
@@ -7765,22 +7673,7 @@ class NameForgeEditorModal extends Modal {
     return type === "breakdownPack" || type === "listPack" || type === "placePack" ? type : undefined;
   }
 
-  /** Builds the place name wizard in its pane the first time it's chosen; it keeps its answers after. */
-  private async openWizard() {
-    if (this.wizard || !this.wizardPaneEl) return;
-    const pane = this.wizardPaneEl;
-    const options = await this.parent.recipeEditorOptions();
-    // Presets brief §3.1: page 3's Save icon runs this modal's own save.
-    options.requestSave = () => void this.saveNames();
-    this.wizard = new RecipeWizard(this.app, options, pane, () => this.packNameInput?.value ?? "");
-    await this.wizard.load();
-  }
-
   private async saveNames() {
-    if (this.wizardMode) {
-      if (this.wizard && (await this.wizard.save())) this.close();
-      return;
-    }
     const boxName = this.packNameInput?.value?.trim();
     const templateOf = undefined;
     if (this.biomeMode) {

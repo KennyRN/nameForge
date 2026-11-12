@@ -1,11 +1,10 @@
 // Installs the starter templates (names-reference §12) — only when the user runs the command, and
 // never over an existing file.
 
-import { App, normalizePath, Notice, stringifyYaml, TFolder } from "obsidian";
+import { App, normalizePath, Notice, TFolder } from "obsidian";
 import { EnterFolderPathModal } from "./folderModal";
 import { createWordListFileContent, sanitizePackNameForFilename } from "./nameParser";
-import { recipeToFrontmatter } from "./names/recipe";
-import { STARTER_RECIPES, STARTER_WORD_LISTS, starterWordListBody } from "./names/starterTemplates";
+import { STARTER_WORD_LISTS, starterWordListBody } from "./names/starterTemplates";
 
 export function promptInstallStarterTemplates(app: App, defaultFolder: string): void {
   new EnterFolderPathModal(
@@ -18,10 +17,6 @@ export function promptInstallStarterTemplates(app: App, defaultFolder: string): 
 
 export async function installStarterTemplates(app: App, folder: TFolder): Promise<void> {
   const files: { name: string; content: string }[] = [
-    ...STARTER_RECIPES.map((t) => ({
-      name: t.name,
-      content: `---\n${stringifyYaml(recipeToFrontmatter({ ...t.recipe, template: true }))}---\n\n${t.description}\n`,
-    })),
     ...STARTER_WORD_LISTS.map((t) => ({
       name: t.name,
       content: createWordListFileContent(t.name, starterWordListBody(t), undefined, true),

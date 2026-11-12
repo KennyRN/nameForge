@@ -1482,16 +1482,6 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   font-size: var(--font-ui-medium);
 }
 
-.nameforge-recipe-editor__sources {
-  margin: 0 0 8px 16px;
-  padding-left: 8px;
-  border-left: 2px solid var(--background-modifier-border);
-}
-
-.nameforge-recipe-editor__weight {
-  width: 5em;
-}
-
 /* The second box (river names' region, name takeover's takeover pack): exactly beneath the box above
    it (its left edge and width are set from that box in alignSecondBox) and 4px below it. */
 .nameforge-modal__second-box {
@@ -1598,41 +1588,6 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
   }
 }
 
-
-/* The place name wizard inside the pack editor's stage: the page scrolls, Back/Next stay below it. */
-.nameforge-editor-modal__wizard {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.nameforge-recipe-editor__page {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-.nameforge-recipe-editor__page > h3:first-child {
-  margin-top: 0;
-}
-.nameforge-recipe-editor__nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding-top: 8px;
-  border-top: 1px solid var(--background-modifier-border);
-}
-.nameforge-recipe-editor__step {
-  color: var(--text-muted);
-  font-size: var(--font-ui-small);
-}
-
-/* The wizard's part selector: the pack editor's type toggle, fixed above the scrolling page. */
-.nameforge-recipe-editor__parts {
-  flex: 0 0 auto;
-  margin-bottom: 8px;
-}
-
 /* Exploration in new lands' sentence: each phrase opens a menu of its choices. */
 .nameforge-recipe-editor__sentence {
   margin: 4px 0 8px;
@@ -1647,131 +1602,20 @@ body .nameforge-modal__results-actions .nameforge-modal__icon-action:hover:not(:
 .nameforge-recipe-editor__sentence-link:hover {
   border-bottom-style: solid;
 }
-
-/* The information icon after a wizard sentence. */
-.nameforge-recipe-editor__info {
-  display: inline-flex;
-  vertical-align: middle;
-  margin-left: 4px;
-  padding: 2px;
-}
-
-/* The expansion context guide. */
-.nameforge-context-guide h3 {
-  margin: 16px 0 4px;
-  font-size: var(--font-ui-medium);
-}
-.nameforge-context-guide h3:first-child {
-  margin-top: 0;
-}
-/* Imposition, Accommodation and Adoption: the whole line styled like a modal title. */
-.nameforge-context-guide h3.nameforge-context-guide__heading {
-  font-size: var(--font-ui-larger);
-  font-weight: var(--font-semibold);
-  line-height: var(--line-height-tight);
-}
-.nameforge-context-guide__table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--font-ui-small);
-}
-.nameforge-context-guide__table th,
-.nameforge-context-guide__table td {
-  padding: 4px 8px;
-  border: 1px solid var(--background-modifier-border);
-  text-align: left;
-  vertical-align: top;
-}
-.nameforge-context-guide__table th {
-  background-color: var(--background-secondary);
-}
 /* The credit line at the foot of the guide windows. */
 .nameforge-guide-modal__credit {
   color: var(--text-muted);
   font-style: italic;
 }
-
-/* Page 2 of the wizard: no dividing lines between its settings. Matches the specificity of
-   Obsidian's own ".modal:not(.mod-settings) .setting-item:not(.setting-item-heading)" divider. */
-.modal .nameforge-recipe-editor__page--shape .setting-item:not(.setting-item-heading) {
-  border-top: none;
-}
-/* ...except the line beneath a heading (Rendering), drawn by the setting that follows it. */
-.modal .nameforge-recipe-editor__page--shape h3 + .setting-item:not(.setting-item-heading) {
-  border-top: var(--border-width) solid var(--background-modifier-border);
-}
-
-/* The slots page's Simple · Detailed · Complete control. */
-.nameforge-recipe-editor__tiers {
-  margin: 8px 0 4px;
-}
-
-/* The word list guide's help icon, at the end of the template row. */
-.nameforge-editor-modal__help {
-  margin-left: auto;
-}
 /* The word list guide: a wider window, so its tables and examples fit. */
 .nameforge-word-list-guide.modal {
   width: min(760px, 92vw);
-}
-.nameforge-recipe-editor__parts > h3:first-child {
-  margin-top: 0;
-}
-
-/* Presets brief §3.1: page 3's Save icon and "Optional: edit word lists". */
-.nameforge-recipe-editor__nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.nameforge-recipe-editor__words-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.nameforge-recipe-editor__words-icon {
-  display: inline-flex;
-}
-
-/* Presets brief §4: page 4's collapsible slot sections. */
-.nameforge-recipe-editor__words {
-  border-bottom: 1px solid var(--background-modifier-border);
-  padding: 6px 0;
-}
-.nameforge-recipe-editor__words > summary {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  cursor: pointer;
-}
-.nameforge-recipe-editor__words-status {
-  color: var(--text-muted);
-  font-size: var(--font-ui-small);
-}
-.nameforge-recipe-editor__words-body {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  padding-top: 6px;
-}
-.nameforge-recipe-editor__words-text {
-  flex: 1 1 auto;
-  width: 100%;
-  font-family: var(--font-monospace);
-  font-size: var(--font-ui-small);
 }
 
 /* Presets brief §8.2: the Save as preset dialogue. */
 .nameforge-preset-modal__description {
   width: 100%;
   margin-top: 8px;
-}
-.nameforge-recipe-editor__words-body.is-stacked {
-  flex-direction: column;
-  align-items: stretch;
-}
-.nameforge-recipe-editor__sentence-fixed {
-  font-weight: var(--font-semibold);
 }
 
 /* The Templates button: icon only, otherwise like every other button in the pill. Disabled (Mix, the
