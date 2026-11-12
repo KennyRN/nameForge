@@ -135,6 +135,13 @@ export function slotChoiceId(setting: SlotSetting | undefined): string {
   return PLACEHOLDER_ID;
 }
 
+/** Whether a choice id is one the slot's menu can offer (a pack or list is checked by its name only). */
+export function slotChoiceAllowed(part: SlotPart, categoryId: string, choice: string): boolean {
+  if (!slotInventory(part).some((s) => s.id === categoryId) || choice === PLACEHOLDER_ID) return false;
+  const name = choice.includes(":") ? choice.slice(choice.indexOf(":") + 1) : "";
+  return slotChoiceMenu(part, categoryId, { packs: name ? [name] : [], lists: name ? [name] : [] }).some((c) => c.id === choice);
+}
+
 /** A slot's setting from a menu id; undefined is a placeholder (no entry in the slots map). */
 export function slotSettingOf(part: SlotPart, id: string | undefined): SlotSetting | undefined {
   if (!id || id === PLACEHOLDER_ID) return undefined;

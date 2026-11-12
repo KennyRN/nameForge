@@ -118322,6 +118322,11 @@ function slotChoiceId(setting) {
   }
   return PLACEHOLDER_ID;
 }
+function slotChoiceAllowed(part, categoryId, choice) {
+  if (!slotInventory(part).some((s) => s.id === categoryId) || choice === PLACEHOLDER_ID) return false;
+  const name = choice.includes(":") ? choice.slice(choice.indexOf(":") + 1) : "";
+  return slotChoiceMenu(part, categoryId, { packs: name ? [name] : [], lists: name ? [name] : [] }).some((c) => c.id === choice);
+}
 function slotSettingOf(part, id) {
   if (!id || id === PLACEHOLDER_ID) return void 0;
   if (id === BUILT_IN_ID) return { kind: "built-in" };
@@ -135860,6 +135865,41 @@ function colonialPresetOf(part, state, contextId, meta) {
     aliens: state.aliens
   };
 }
+function settlementPresetRecipe(i) {
+  const recipe = i.part ? colonialPlaceNamesRecipe(i.part === "2" ? "new-land" : "established", i.tradition, i.context, i.biome, i.terrain, i.aliens) : britishPlaceNamesRecipe(i.region, i.biome, i.terrain);
+  recipe.shape.settlement = i.size;
+  const slots = activeSlots(i.part ? slotPartOf(i.part) : "organic", i.sources);
+  if (Object.keys(slots).length > 0) recipe.slots = slots;
+  return recipe;
+}
+function choiceOfRecipeSlot(setting, part) {
+  if (setting.kind === "built-in") return "built-in";
+  if (setting.kind === "tribal") {
+    const { kind: _kind, tradition, preset, ...fields2 } = setting;
+    const plain = !preset && tradition === (part === "organic" ? "auto" : "general") && Object.values(fields2).every((v) => v === void 0 || v === "" || v === "any");
+    return plain ? "tribal" : void 0;
+  }
+  if (setting.kind === "sources" && setting.sources.length === 1 && setting.sources[0].weight === 1 && !setting.mode && !setting.gender && !setting.section) {
+    const ref = setting.sources[0];
+    if (ref.list) return `list:${ref.list}`;
+    if (ref.pack) return `pack:${ref.pack}`;
+  }
+  return void 0;
+}
+function sourcesOfRecipeSlots(slots, part) {
+  let sources = freshSlotSources();
+  const unsupported = [];
+  for (const [id, setting] of Object.entries(slots != null ? slots : {})) {
+    const choice = choiceOfRecipeSlot(setting, part);
+    if (choice && slotChoiceAllowed(part, id, choice)) sources = chooseSlotSource(sources, part, id, choice);
+    else unsupported.push(id);
+  }
+  if (Object.keys(sources.slots).length > 0) sources = { ...sources, names: "perSlot" };
+  return { sources, unsupported };
+}
+function withPresetSources(all, setting, sources) {
+  return { ...all, [setting]: sources };
+}
 
 // src/packs/labelled.ts
 function generateLabelledNames(lists, options) {
@@ -136603,6 +136643,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     };
     /** The loaded recipe preset's shape, when it is a settlement names preset (it then opens in settlement names). */
     this.settlementPreset = void 0;
+    /** The loaded settlement names preset's slots, applied to the setting it was saved with when it opens. */
+    this.settlementPresetSlots = void 0;
     this.contextRowEl = null;
     this.quantityToggleEl = null;
     this.generatePillEl = null;
@@ -137758,8 +137800,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     const tradition = colonialPart ? s.tradition[colonialPart] : void 0;
     const context = colonialPart ? s.context[colonialPart] : void 0;
     const aliens = !!colonialPart && !!(found == null ? void 0 : found.space) && s.aliens[colonialPart];
-    const recipe = colonialPart ? colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, aliens) : britishPlaceNamesRecipe(s.region, biome, land.terrain);
-    recipe.shape.settlement = s.size;
+    const recipe = settlementPresetRecipe({ size: s.size, part: colonialPart, region: s.region, tradition, context, biome, terrain: land.terrain, aliens, sources: s.slots[s.setting] });
     const nameParts = colonialPart ? (() => {
       var _a5;
       const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition != null ? tradition : "general"));
@@ -137781,7 +137822,7 @@ ${text}
     }).open();
   }
   /** Urban brief §8: loading a settlement names preset opens settlement names with its setting, size and choices. */
-  async openSettlementPreset(shape, from) {
+  async openSettlementPreset(shape, recipeSlots, from) {
     var _a5, _b3, _c3;
     const s = this.settlementState;
     s.size = (_b3 = (_a5 = SETTLEMENT_SIZES.find((x) => x.key === shape.settlement)) == null ? void 0 : _a5.key) != null ? _b3 : "any";
@@ -137809,7 +137850,11 @@ ${text}
       s.aliens[part] = !!shape.aliens;
       this.landStates[`settlement:colonial:${part}`] = land;
     }
+    const slotPart = shape.part === "organic" ? "organic" : slotPartOf(shape.part === "new-land" ? "2" : "2a");
+    const { sources, unsupported } = sourcesOfRecipeSlots(recipeSlots, slotPart);
+    s.slots = withPresetSources(s.slots, s.setting, sources);
     this.switchSection("settlementNames");
+    if (unsupported.length > 0) this.setStatus(`The preset's source for ${unsupported.map((id) => `\u201C${id}\u201D`).join(", ")} can't be shown in the sentence; ${unsupported.length === 1 ? "it stays a placeholder" : "they stay placeholders"}.`);
   }
   /** Name ageing: "Age the name towards ‹target pack›". */
   renderAgeingSentence(row) {
@@ -137927,7 +137972,7 @@ ${n.origin}${also}${echo}` };
   async openPresetInModule() {
     var _a5;
     if (this.currentPackType === "recipePack" && this.settlementPreset) {
-      await this.openSettlementPreset(this.settlementPreset, (_a5 = this.currentRecipePath) != null ? _a5 : "");
+      await this.openSettlementPreset(this.settlementPreset, this.settlementPresetSlots, (_a5 = this.currentRecipePath) != null ? _a5 : "");
       return;
     }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
@@ -141687,6 +141732,7 @@ ${n.origin}${also}${echo}` };
     this.updatePackDropdownTrigger(file.path, "recipePack");
     const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file));
     this.settlementPreset = ((_c3 = recipe.shape) == null ? void 0 : _c3.settlement) ? recipe.shape : void 0;
+    this.settlementPresetSlots = this.settlementPreset ? recipe.slots : void 0;
     (_d3 = this.openPresetButton) == null ? void 0 : _d3.toggle(this.activeSection === "markov" && !!this.settlementPreset);
     if (this.settlementPreset) (_e3 = this.openPresetButton) == null ? void 0 : _e3.setAttribute("title", `Open in ${SECTION_LABELS.settlementNames}`);
     this.setStatus(problems.join(" "));

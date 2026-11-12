@@ -24,6 +24,10 @@ import { createNamesFileContent } from "../src/nameParser";
 import { isModulePresetContent, modulePresetContent, parseModulePreset } from "../src/presets";
 import { RecipeHost } from "../src/recipeHost";
 import { findBiome } from "../src/biomes";
+import { recipeToFrontmatter, readRecipe, withDefaults } from "../src/names/recipe";
+import { generateSettlementNames } from "../src/settlement/names";
+import { settlementPresetRecipe, sourcesOfRecipeSlots, withPresetSources } from "../src/names/placeRun";
+import { slotInventory } from "../src/names/slotSentence";
 import { COLONIAL_TRADITIONS, colonialContexts, isTraditionAvailable } from "../src/colonialShapes";
 
 const RUN = { count: 25, seed: 7, faithfulness: 2, strictness: 3 };
@@ -193,4 +197,88 @@ test("place presets: a pack or list that's gone falls back to a placeholder with
   assert.deepEqual(own.slots.deity, { kind: "placeholder" });
   assert.deepEqual(own.notices, ["Pack “Gone” wasn't found.", "Word list “Vanished” wasn't found."]);
   assert.equal(slotChoiceId(restored.sources.slots["personal-name"]), "pack:Gone");
+});
+
+// ── Settlement names presets (recipe notes) ────────────────────────────────
+
+/** A recipe as the note holds it: its frontmatter object, read back. */
+const viaNote = (frontmatter: Record<string, unknown>) => {
+  const roundTrip = JSON.parse(JSON.stringify(frontmatter)) as Record<string, unknown>;
+  return readRecipe(roundTrip);
+};
+
+test("settlement names preset: slot sources save in the recipe's slots field and read back as the same state", async () => {
+  for (const part of [undefined, "2", "2a"] as const) {
+    const slotPart = part ? (part === "2" ? "new-land" : "established") : "organic";
+    const sources = perSlot(slotPart, part ? { "native-people-or-tribe": "tribal", "explorer-or-founder": "pack:Anglo-Saxon" } : { "personal-name": "pack:Anglo-Saxon", "folk-group": "tribal" });
+    const recipe = settlementPresetRecipe({ size: "village", part, region: part ? undefined : "NTH", biome: "savannah", terrain: "any", aliens: false, sources });
+    assert.equal(recipe.shape.settlement, "village");
+    const note = recipeToFrontmatter(recipe);
+    assert.ok(note.slots, "the one slots field holds them");
+    const { recipe: read, problems } = viaNote(note);
+    assert.deepEqual(problems, []);
+    const back = sourcesOfRecipeSlots(read.slots, slotPart);
+    assert.deepEqual(back.unsupported, []);
+    assert.deepEqual(back.sources, sources, `${part ?? "british"}`);
+
+    // Same state, same seed: the preset's recipe and the module (settlement names) give the same names.
+    const files = { "Names/Anglo-Saxon.md": PACK };
+    const biome = findBiome("savannah");
+    const own = await slotsFor(slotPart, { sources } as never, recipe, files);
+    const run = { count: 30, seed: 11, faithfulness: 2, strictness: 3 };
+    const preset = generatePlaceNames({ recipe: withDefaults(read), slots: own.slots, ...run }).names.map((n) => n.text);
+    const module = generateSettlementNames({
+      ...run,
+      size: "village",
+      setting: part ? (part === "2" ? "new-lands" : "settled-lands") : "native",
+      ...(part ? {} : { culture: "britain", region: "NTH" }),
+      biome: biome?.id,
+      slots: own.slots,
+    }).names.map((n) => n.text);
+    assert.deepEqual(preset, module, `${part ?? "british"}: the preset gives the module's names`);
+    assert.ok(preset.join(" ").match(/Alfred|Beowulf|Cuthbert|Dunstan|Edmund|Godwin|Harold|Oswald/), "the pack's names appear");
+  }
+});
+
+test("settlement names preset: with every slot on placeholder the note is as it was before slot choices", () => {
+  for (const sources of [freshSlotSources(), chooseNames(freshSlotSources(), "perSlot"), { names: "placeholders", slots: { "personal-name": { kind: "built-in" } } } as never]) {
+    const recipe = settlementPresetRecipe({ size: "town", part: undefined, region: undefined, biome: undefined, terrain: "any", aliens: false, sources });
+    const note = recipeToFrontmatter(recipe);
+    assert.equal("slots" in note, false);
+    assert.deepEqual(sourcesOfRecipeSlots(viaNote(note).recipe.slots, "organic").sources, freshSlotSources());
+  }
+});
+
+test("settlement names preset: slots the sentence can't show stay placeholders and are named", () => {
+  const { sources, unsupported } = sourcesOfRecipeSlots(
+    {
+      "personal-name": { kind: "sources", sources: [{ pack: "A", weight: 1 }, { pack: "B", weight: 1 }] },
+      "folk-group": { kind: "tribal", tradition: "bantu" },
+      deity: { kind: "sources", sources: [{ list: "Holy words", weight: 1 }] },
+      "saint-or-holy-person": { kind: "ignore" },
+      colour: { kind: "built-in" },
+    },
+    "organic",
+  );
+  assert.deepEqual(unsupported.sort(), ["colour", "folk-group", "personal-name", "saint-or-holy-person"]);
+  assert.deepEqual(Object.keys(sources.slots), ["deity"]);
+  assert.equal(sources.names, "perSlot");
+});
+
+test("settlement names preset: loading applies the sources to that setting only", () => {
+  const all = {
+    native: perSlot("organic", { "personal-name": "pack:Keep" }),
+    "new-lands": perSlot("new-land", { "explorer-or-founder": "pack:Replaced" }),
+    "settled-lands": perSlot("established", { "explorer-or-founder": "pack:Keep too" }),
+  };
+  const loaded = sourcesOfRecipeSlots({ "explorer-or-founder": { kind: "sources", sources: [{ pack: "From preset", weight: 1 }] } }, "new-land").sources;
+  const next = withPresetSources(all, "new-lands", loaded);
+  assert.deepEqual(next.native, all.native);
+  assert.deepEqual(next["settled-lands"], all["settled-lands"]);
+  assert.equal(slotChoiceId(next["new-lands"].slots["explorer-or-founder"]), "pack:From preset");
+  // A preset with no slots puts that setting back to placeholders, and still leaves the others.
+  const empty = withPresetSources(all, "native", sourcesOfRecipeSlots(undefined, "organic").sources);
+  assert.deepEqual(empty.native, freshSlotSources());
+  assert.deepEqual(empty["new-lands"], all["new-lands"]);
+  assert.ok(slotInventory("organic").length > 0);
 });

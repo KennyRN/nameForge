@@ -5,11 +5,11 @@
 
 import type { Biome } from "../biomes";
 import { type NameGenerateResult, generatePlaceNames, type ResolvedSlot } from "./engine";
-import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings } from "./recipe";
+import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, type SlotSetting } from "./recipe";
 import type { ColonialPart } from "../colonialShapes";
 import { type ColonialPlacePreset, type NativePlacePreset } from "../presets";
 import { generateWorldPlaceNames, type WorldBatchResult } from "../world/engine";
-import { chooseSlotSource, freshSlotSources, slotChoiceId, slotInventory, type SlotPart, slotPartOf, type SlotSources, slotSettingOf } from "./slotSentence";
+import { activeSlots, chooseSlotSource, freshSlotSources, slotChoiceAllowed, slotChoiceId, slotInventory, type SlotPart, slotPartOf, type SlotSources, slotSettingOf } from "./slotSentence";
 
 /** A module's land choice: a built-in biome id or a pack's path, and a terrain id. */
 export interface PlaceLand {
@@ -149,4 +149,77 @@ export function colonialPresetOf(part: ColonialPart, state: ColonialPlaceState, 
     context: contextId,
     aliens: state.aliens,
   };
+}
+
+// ── Settlement names presets (recipe notes; Wizard retirement brief §4) ─────
+
+/** What a settlement names preset saves: the setting it is saved with and that setting's slot sources. */
+export interface SettlementPresetInput {
+  size: string;
+  /** The colonial part; undefined is British native names. */
+  part: ColonialPart | undefined;
+  region?: string;
+  tradition?: string;
+  context?: string;
+  /** A built-in biome id, or "[[Pack name]]" for a biome pack. */
+  biome?: string;
+  terrain: string;
+  aliens: boolean;
+  sources: SlotSources;
+}
+
+/**
+ * The recipe a settlement names preset is saved as: the source module's recipe with the size. Its one
+ * `slots` field holds the saved setting's slot sources (only non-placeholders, only with names chosen
+ * per slot); with none, the note is exactly what it was before slot choices.
+ */
+export function settlementPresetRecipe(i: SettlementPresetInput): RecipeSettings {
+  const recipe = i.part
+    ? colonialPlaceNamesRecipe(i.part === "2" ? "new-land" : "established", i.tradition, i.context, i.biome, i.terrain, i.aliens)
+    : britishPlaceNamesRecipe(i.region, i.biome, i.terrain);
+  recipe.shape.settlement = i.size;
+  const slots = activeSlots(i.part ? slotPartOf(i.part) : "organic", i.sources);
+  if (Object.keys(slots).length > 0) recipe.slots = slots;
+  return recipe;
+}
+
+/** A recipe slot the sentence can show: one source, a built-in list, or tribal names at the slot's defaults. */
+function choiceOfRecipeSlot(setting: SlotSetting, part: SlotPart): string | undefined {
+  if (setting.kind === "built-in") return "built-in";
+  if (setting.kind === "tribal") {
+    const { kind: _kind, tradition, preset, ...fields } = setting;
+    const plain = !preset && tradition === (part === "organic" ? "auto" : "general") && Object.values(fields).every((v) => v === undefined || v === "" || v === "any");
+    return plain ? "tribal" : undefined;
+  }
+  if (setting.kind === "sources" && setting.sources.length === 1 && setting.sources[0].weight === 1 && !setting.mode && !setting.gender && !setting.section) {
+    const ref = setting.sources[0];
+    if (ref.list) return `list:${ref.list}`;
+    if (ref.pack) return `pack:${ref.pack}`;
+  }
+  return undefined;
+}
+
+/**
+ * A loaded settlement names preset's slots as the sentence's sources for the setting it was saved
+ * with. A slot the sentence can't show (several sources, a gender or section, an ignore, one the
+ * setting doesn't offer) stays a placeholder, and is named in `unsupported` for the status line.
+ */
+export function sourcesOfRecipeSlots(slots: Record<string, SlotSetting> | undefined, part: SlotPart): { sources: SlotSources; unsupported: string[] } {
+  let sources = freshSlotSources();
+  const unsupported: string[] = [];
+  for (const [id, setting] of Object.entries(slots ?? {})) {
+    const choice = choiceOfRecipeSlot(setting, part);
+    if (choice && slotChoiceAllowed(part, id, choice)) sources = chooseSlotSource(sources, part, id, choice);
+    else unsupported.push(id);
+  }
+  if (Object.keys(sources.slots).length > 0) sources = { ...sources, names: "perSlot" };
+  return { sources, unsupported };
+}
+
+/** The settlement setting each source set belongs to. */
+export type SettlementSlotSources<K extends string = string> = Record<K, SlotSources>;
+
+/** A loaded preset's sources replace those of the setting it was saved with; the other settings keep theirs. */
+export function withPresetSources<K extends string>(all: SettlementSlotSources<K>, setting: K, sources: SlotSources): SettlementSlotSources<K> {
+  return { ...all, [setting]: sources };
 }

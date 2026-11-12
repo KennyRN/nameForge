@@ -80,7 +80,7 @@ import {
 import { GROUP_ICONS, SECTION_ICONS } from "./sectionIcons";
 import { EnterFolderPathModal } from "./folderModal";
 import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult, type ResolvedSlot } from "./names/engine";
-import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter } from "./names/recipe";
+import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter, type SlotSetting } from "./names/recipe";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
 import {
@@ -185,6 +185,9 @@ import {
   generateColonialPlace,
   generateWorldPlace,
   nativePresetState,
+  settlementPresetRecipe,
+  sourcesOfRecipeSlots,
+  withPresetSources,
   type PlaceLand,
   type WorldPlaceState,
   worldPresetOf,
@@ -795,6 +798,8 @@ export class NameForgeModal extends Modal {
   };
   /** The loaded recipe preset's shape, when it is a settlement names preset (it then opens in settlement names). */
   private settlementPreset: Partial<RecipeSettings["shape"]> | undefined = undefined;
+  /** The loaded settlement names preset's slots, applied to the setting it was saved with when it opens. */
+  private settlementPresetSlots: Record<string, SlotSetting> | undefined = undefined;
   private contextRowEl: HTMLElement | null = null;
   private quantityToggleEl: HTMLElement | null = null;
   private generatePillEl: HTMLElement | null = null;
@@ -2039,10 +2044,8 @@ export class NameForgeModal extends Modal {
     const tradition = colonialPart ? s.tradition[colonialPart] : undefined;
     const context = colonialPart ? s.context[colonialPart] : undefined;
     const aliens = !!colonialPart && !!found?.space && s.aliens[colonialPart];
-    const recipe: RecipeSettings = colonialPart
-      ? colonialPlaceNamesRecipe(colonialPart === "2" ? "new-land" : "established", tradition, context, biome, land.terrain, aliens)
-      : britishPlaceNamesRecipe(s.region, biome, land.terrain);
-    recipe.shape.settlement = s.size;
+    // The one slots field holds the sources of the setting being saved (wizard retirement brief §4).
+    const recipe = settlementPresetRecipe({ size: s.size, part: colonialPart, region: s.region, tradition, context, biome, terrain: land.terrain, aliens, sources: s.slots[s.setting] });
     const nameParts = colonialPart
       ? (() => {
           const t = COLONIAL_TRADITIONS.find((x) => x.id === (tradition ?? "general"))!;
@@ -2062,7 +2065,7 @@ export class NameForgeModal extends Modal {
   }
 
   /** Urban brief §8: loading a settlement names preset opens settlement names with its setting, size and choices. */
-  private async openSettlementPreset(shape: Partial<RecipeSettings["shape"]>, from: string) {
+  private async openSettlementPreset(shape: Partial<RecipeSettings["shape"]>, recipeSlots: Record<string, SlotSetting> | undefined, from: string) {
     const s = this.settlementState;
     s.size = (SETTLEMENT_SIZES.find((x) => x.key === shape.settlement)?.key ?? "any");
     let biome: string | undefined = shape.biome && shape.biome !== "unknown" ? shape.biome : undefined;
@@ -2086,7 +2089,12 @@ export class NameForgeModal extends Modal {
       s.aliens[part] = !!shape.aliens;
       this.landStates[`settlement:colonial:${part}`] = land;
     }
+    // The recipe's one slots field belongs to the setting it was saved with; the other settings keep their own.
+    const slotPart: SlotPart = shape.part === "organic" ? "organic" : slotPartOf(shape.part === "new-land" ? "2" : "2a");
+    const { sources, unsupported } = sourcesOfRecipeSlots(recipeSlots, slotPart);
+    s.slots = withPresetSources(s.slots, s.setting, sources);
     this.switchSection("settlementNames");
+    if (unsupported.length > 0) this.setStatus(`The preset's source for ${unsupported.map((id) => `“${id}”`).join(", ")} can't be shown in the sentence; ${unsupported.length === 1 ? "it stays a placeholder" : "they stay placeholders"}.`);
   }
 
   /** Name ageing: "Age the name towards ‹target pack›". */
@@ -2204,7 +2212,7 @@ export class NameForgeModal extends Modal {
   /** Presets brief §9: "Open in tribes and kin groups" applies the preset's choices for this session. */
   private async openPresetInModule() {
     if (this.currentPackType === "recipePack" && this.settlementPreset) {
-      await this.openSettlementPreset(this.settlementPreset, this.currentRecipePath ?? "");
+      await this.openSettlementPreset(this.settlementPreset, this.settlementPresetSlots, this.currentRecipePath ?? "");
       return;
     }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
@@ -6183,6 +6191,7 @@ export class NameForgeModal extends Modal {
     const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file));
     // Urban brief §8: a settlement names preset opens in settlement names, not the markov generator's recipe editor.
     this.settlementPreset = recipe.shape?.settlement ? recipe.shape : undefined;
+    this.settlementPresetSlots = this.settlementPreset ? recipe.slots : undefined;
     this.openPresetButton?.toggle(this.activeSection === "markov" && !!this.settlementPreset);
     if (this.settlementPreset) this.openPresetButton?.setAttribute("title", `Open in ${SECTION_LABELS.settlementNames}`);
     this.setStatus(problems.join(" "));
