@@ -130440,10 +130440,10 @@ function wildsPresetContent(preset) {
     ""
   ].join("\n");
 }
-function tribalPresetSlot(preset) {
+function tribalPresetSlot(preset, catalogue = BUILT_IN_BIOMES) {
   return {
     tradition: preset.tradition,
-    ...preset.biome !== "homeland" && findBiome(preset.biome) ? { biome: preset.biome } : {},
+    ...preset.biome !== "homeland" && catalogue.find(preset.biome) ? { biome: preset.biome } : {},
     ...preset.terrain !== "any" ? { terrain: preset.terrain } : {},
     ...preset.groupType !== "any" ? { groupType: preset.groupType } : {},
     ...preset.perspective !== "any" ? { perspective: preset.perspective } : {},
@@ -130456,9 +130456,9 @@ function readTribalPresetSource(name, content) {
   if (!parsed) return { notice: `\u201C${name}\u201D isn't a tribes and kin groups preset.` };
   return { preset: parsed };
 }
-function tribalPresetDraw(preset) {
-  const { tradition, ...fields2 } = tribalPresetSlot(preset);
-  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields: fields2 }, rng).text;
+function tribalPresetDraw(preset, catalogue = BUILT_IN_BIOMES) {
+  const { tradition, ...fields2 } = tribalPresetSlot(preset, catalogue);
+  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields: fields2, catalogue }, rng).text;
 }
 var CALENDAR_PRESET_MODULE = "calendar-names";
 var SKY_PRESET_MODULE = "sky-names";
@@ -134865,6 +134865,33 @@ var isExamplePackPath = (path) => !!path && path.startsWith(EXAMPLE_PACK_PREFIX)
 
 // src/landMenu.ts
 var import_obsidian8 = require("obsidian");
+
+// src/biomeMenus.ts
+var overrideTip = (b) => {
+  var _a5;
+  return ((_a5 = b.custom) == null ? void 0 : _a5.overrides) ? { tip: `Your version: ${b.custom.path.replace(/^.*\//, "")}` } : {};
+};
+function landClauseBiomeItems(catalogue, britainAsDefault) {
+  return catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase, ...overrideTip(b) }));
+}
+function landButtonBiomeItems(catalogue, britainIsDefault) {
+  const item2 = (b) => ({ id: biomeChoiceId(b), label: b.label, biome: b, ...overrideTip(b) });
+  return {
+    builtIn: catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => !britainIsDefault || b.id !== BRITAIN.id).map(item2),
+    yours: catalogue.all.filter((b) => b.custom && !b.custom.overrides).map(item2)
+  };
+}
+function startFromItems(custom) {
+  return [
+    ...[BRITAIN, ...BIOMES, ...SPACE_BIOMES].map((b) => ({ id: b.id, label: b.label })),
+    ...custom.map((b) => {
+      var _a5;
+      return { id: b.custom.path, label: ((_a5 = b.custom) == null ? void 0 : _a5.overrides) ? `${b.label} (your version)` : b.label };
+    })
+  ];
+}
+
+// src/landMenu.ts
 var DEFAULT_LAND = { biome: void 0, terrain: "any" };
 var LandButton = class {
   constructor(container, options) {
@@ -134913,21 +134940,17 @@ var LandButton = class {
     const defaultLabel = this.options.defaultLabel();
     menu.addItem((item2) => item2.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(void 0)));
     menu.addSeparator();
-    const builtIn = catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => defaultLabel !== BRITAIN.label || b.id !== BRITAIN.id);
-    const others = catalogue.all.filter((b) => b.custom && !b.custom.overrides);
-    for (const b of builtIn) {
-      menu.addItem((item2) => {
-        var _a5, _b3;
-        item2.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b)));
-        if ((_a5 = b.custom) == null ? void 0 : _a5.overrides) (_b3 = item2.dom) == null ? void 0 : _b3.setAttribute("aria-label", `Your version: ${b.custom.path.replace(/^.*\//, "")}`);
-      });
-    }
-    if (others.length > 0) {
+    const { builtIn, yours } = landButtonBiomeItems(catalogue, defaultLabel === BRITAIN.label);
+    const add2 = (entry) => menu.addItem((item2) => {
+      var _a5;
+      item2.setTitle(entry.label).setChecked(biomeMatches(entry.biome, state.biome)).onClick(() => setBiome(entry.id));
+      if (entry.tip) (_a5 = item2.dom) == null ? void 0 : _a5.setAttribute("aria-label", entry.tip);
+    });
+    builtIn.forEach(add2);
+    if (yours.length > 0) {
       menu.addSeparator();
       heading("Your biomes");
-      for (const b of others) {
-        menu.addItem((item2) => item2.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
-      }
+      yours.forEach(add2);
     }
     if (this.options.terrain()) {
       menu.addSeparator();
@@ -135748,7 +135771,7 @@ var RecipeHost = class {
           out[categoryId] = { kind: "placeholder" };
           continue;
         }
-        out[categoryId] = { kind: "tribal", ...tribalPresetSlot(found.preset) };
+        out[categoryId] = { kind: "tribal", ...tribalPresetSlot(found.preset, this.catalogue) };
         continue;
       }
       if (slot.kind !== "sources") {
@@ -135811,7 +135834,7 @@ var RecipeHost = class {
       if (isModulePresetContent(packContent)) {
         const preset = parseModulePreset(packContent, packFile.basename).preset;
         if (!preset) return { notPack: true };
-        const draw3 = tribalPresetDraw(preset);
+        const draw3 = tribalPresetDraw(preset, this.catalogue);
         return { draw: (_request, _mode, rng) => draw3(rng) };
       }
       if (isWordListContent(packContent) || isRecipeContent(packContent)) return { notPack: true };
@@ -136407,10 +136430,6 @@ function settlementSentenceText(settings, custom = []) {
 }
 
 // src/modal.ts
-var overrideTip = (b) => {
-  var _a5;
-  return ((_a5 = b.custom) == null ? void 0 : _a5.overrides) ? { tip: `Your version: ${b.custom.path.replace(/^.*\//, "")}` } : {};
-};
 var isPlacePresetType = (type) => type === "nativePlacePreset" || type === "explorationPreset" || type === "expansionPreset";
 var COLONIAL_SECTION_PART = {
   explorationPlaceShapes: "2",
@@ -137378,14 +137397,14 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   async readyCatalogue() {
     const custom = await this.loadCustomBiomes();
     if (!custom.some((b) => b.custom && b.packLines && !b.packDraws)) return this.catalogue();
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const ready = await Promise.all(custom.map((b) => b.custom && b.packLines && !b.packDraws ? host.withPackDraws(b, b.custom.path) : b));
     return biomeCatalogue(ready);
   }
   /** A biome for a generator: a pack's `//` lines resolved to draws; built-ins unchanged. */
   async readyBiome(biome) {
     if (!(biome == null ? void 0 : biome.custom) || !biome.packLines || biome.packDraws) return biome;
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     return host.withPackDraws(biome, biome.custom.path);
   }
   /** Gives the region box the setting box's exact left edge and width. */
@@ -137644,7 +137663,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         const space = part !== "organic" && key2.includes("colonial:") ? catalogue.space.map((b, i) => ({ id: b.id, label: b.phrase, title: b.guide, ...i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {} })) : [];
         return [
           { id: void 0, label: defaultPhrase },
-          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase, ...overrideTip(b) })),
+          ...landClauseBiomeItems(catalogue, britainAsDefault),
           ...space
         ];
       },
@@ -137739,7 +137758,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
    */
   async resolveSlotSources(part, sources, recipe) {
     if (!usesOwnNames(part, sources)) return { slots: {}, notices: [] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const slots = await host.resolveSlotSources(recipe, part, sources, `${(0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
     return { slots, notices: host.getNotices() };
   }
@@ -138458,7 +138477,7 @@ ${n.origin}${also}${echo}` };
     const packs = await this.loadBynamePacks();
     const name = state.pack && packs.some((p) => p.name === state.pack) ? state.pack : void 0;
     if (!name) return { notices: [state.pack ? `Pack \u201C${state.pack}\u201D wasn't found; using the typed names.` : "No name packs found; using the typed names."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices };
@@ -138846,7 +138865,7 @@ ${n.origin}${also}${echo}` };
     const packs = await this.loadBynamePacks();
     const name = (_b3 = state.pack) != null ? _b3 : (_a5 = packs[0]) == null ? void 0 : _a5.name;
     if (!name) return { notices: ["No name packs found; placeholders used."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices };
@@ -139327,7 +139346,7 @@ ${n.origin}${also}${echo}` };
     const packs = await this.loadBynamePacks();
     const name = state.pack && packs.some((p) => p.name === state.pack) ? state.pack : void 0;
     if (!name) return { notices: [state.pack ? `Owner pack \u201C${state.pack}\u201D wasn't found; placeholders used.` : "No name packs found; placeholders used."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices, packName: name };
@@ -140444,7 +140463,7 @@ ${n.origin}${also}${echo}` };
     const packs = await this.loadBynamePacks();
     const name = (_b3 = state.pack) != null ? _b3 : (_a5 = packs[0]) == null ? void 0 : _a5.name;
     if (!name) return { notices: ["No name packs found; placeholders used."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices, packName: name };
@@ -143354,8 +143373,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     const select = this.biomeBaseSelect;
     if (!select) return;
     select.empty();
-    for (const b of [BRITAIN, ...BIOMES, ...SPACE_BIOMES]) select.createEl("option", { text: b.label, value: b.id });
-    for (const b of custom) select.createEl("option", { text: b.label, value: b.custom.path });
+    for (const item2 of startFromItems(custom)) select.createEl("option", { text: item2.label, value: item2.id });
     const name = (_a5 = this.packNameInput) == null ? void 0 : _a5.value.trim().toLowerCase();
     const existing = custom.find((b) => {
       var _a6;

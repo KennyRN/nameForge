@@ -169,7 +169,7 @@ export class RecipeHost {
           out[categoryId] = { kind: "placeholder" };
           continue;
         }
-        out[categoryId] = { kind: "tribal", ...tribalPresetSlot(found.preset) };
+        out[categoryId] = { kind: "tribal", ...tribalPresetSlot(found.preset, this.catalogue) };
         continue;
       }
       if (slot.kind !== "sources") {
@@ -241,7 +241,7 @@ export class RecipeHost {
       if (isModulePresetContent(packContent)) {
         const preset = parseModulePreset(packContent, packFile.basename).preset;
         if (!preset) return { notPack: true };
-        const draw = tribalPresetDraw(preset);
+        const draw = tribalPresetDraw(preset, this.catalogue);
         return { draw: (_request, _mode, rng) => draw(rng) };
       }
       if (isWordListContent(packContent) || isRecipeContent(packContent)) return { notPack: true };

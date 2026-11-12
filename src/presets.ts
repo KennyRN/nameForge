@@ -3,7 +3,7 @@
 // presets are recipes (Presets brief §7.1).
 // No Obsidian imports: the frontmatter is flat `key: value` lines.
 
-import { findBiome, NATURAL_BIOME_IDS, TERRAIN_CHOICES } from "./biomes";
+import { type BiomeCatalogue, BUILT_IN_BIOMES, findBiome, NATURAL_BIOME_IDS, TERRAIN_CHOICES } from "./biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
 import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
 import {
@@ -1619,10 +1619,10 @@ function wildsPresetContent(preset: WildsPreset): string {
  * allows them (slotFill checks), and hostile names are always off. A biome pack link can't be
  * used in a slot, so it falls back to the recipe's biome, as homeland does.
  */
-export function tribalPresetSlot(preset: TribalPreset): { tradition: string } & TribalSlotFields {
+export function tribalPresetSlot(preset: TribalPreset, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): { tradition: string } & TribalSlotFields {
   return {
     tradition: preset.tradition,
-    ...(preset.biome !== "homeland" && findBiome(preset.biome) ? { biome: preset.biome } : {}),
+    ...(preset.biome !== "homeland" && catalogue.find(preset.biome) ? { biome: preset.biome } : {}),
     ...(preset.terrain !== "any" ? { terrain: preset.terrain } : {}),
     ...(preset.groupType !== "any" ? { groupType: preset.groupType } : {}),
     ...(preset.perspective !== "any" ? { perspective: preset.perspective } : {}),
@@ -1639,9 +1639,9 @@ export function readTribalPresetSource(name: string, content: string | null): { 
 }
 
 /** §10.2: a `//` line's draw from a preset: the colonial column of §20.2, with the preset's settings. */
-export function tribalPresetDraw(preset: TribalPreset): (rng: () => number) => string {
-  const { tradition, ...fields } = tribalPresetSlot(preset);
-  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields }, rng).text;
+export function tribalPresetDraw(preset: TribalPreset, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): (rng: () => number) => string {
+  const { tradition, ...fields } = tribalPresetSlot(preset, catalogue);
+  return (rng) => tribalSlotFill({ tradition, part: "new-land", fields, catalogue }, rng).text;
 }
 
 // ── Calendar and sky presets (Time and sky brief §14) ───────────────────────

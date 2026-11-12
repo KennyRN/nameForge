@@ -3,7 +3,8 @@
 
 import { Menu, setIcon } from "obsidian";
 import { ICON_BIOME } from "./icons";
-import { availableTerrains, type Biome, biomeCatalogue, biomeChoiceId, biomeInline, biomeMatches, BRITAIN, TERRAIN_CHOICES } from "./biomes";
+import { landButtonBiomeItems } from "./biomeMenus";
+import { availableTerrains, type Biome, biomeCatalogue, biomeInline, biomeMatches, BRITAIN, TERRAIN_CHOICES } from "./biomes";
 
 export interface LandState {
   /** A built-in biome id, a biome pack's path, or undefined for the module's default. */
@@ -82,22 +83,19 @@ export class LandButton {
     menu.addItem((item) => item.setTitle(defaultLabel).setChecked(!state.biome).onClick(() => setBiome(undefined)));
     menu.addSeparator();
     // Britain is listed unless it is already the default.
-    // The catalogue lists Britain and the 12 (each replaced in place by a pack of the same name), then the other packs A–Z.
-    const builtIn = catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => defaultLabel !== BRITAIN.label || b.id !== BRITAIN.id);
-    const others = catalogue.all.filter((b) => b.custom && !b.custom.overrides);
-    for (const b of builtIn) {
+    // Britain and the 12 (each replaced in place by a pack of the same name), then the other packs A–Z.
+    const { builtIn, yours } = landButtonBiomeItems(catalogue, defaultLabel === BRITAIN.label);
+    const add = (entry: (typeof builtIn)[number]) =>
       menu.addItem((item) => {
-        item.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b)));
+        item.setTitle(entry.label).setChecked(biomeMatches(entry.biome, state.biome)).onClick(() => setBiome(entry.id));
         // Wizard retirement brief §5.2: a pack that replaces a built-in says whose version it is.
-        if (b.custom?.overrides) (item as unknown as { dom?: HTMLElement }).dom?.setAttribute("aria-label", `Your version: ${b.custom.path.replace(/^.*\//, "")}`);
+        if (entry.tip) (item as unknown as { dom?: HTMLElement }).dom?.setAttribute("aria-label", entry.tip);
       });
-    }
-    if (others.length > 0) {
+    builtIn.forEach(add);
+    if (yours.length > 0) {
       menu.addSeparator();
       heading("Your biomes");
-      for (const b of others) {
-        menu.addItem((item) => item.setTitle(b.label).setChecked(biomeMatches(b, state.biome)).onClick(() => setBiome(biomeChoiceId(b))));
-      }
+      yours.forEach(add);
     }
     if (this.options.terrain()) {
       menu.addSeparator();

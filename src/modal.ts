@@ -160,6 +160,7 @@ import { confirmReplace, PresetSaveModal } from "./presetModal";
 import { builtinTemplates, examplePacks, isExamplePackPath, templateNameCount, templatePartTexts, templateText, type TemplateType, templateTypeFor } from "./templates";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
+import { landClauseBiomeItems, startFromItems } from "./biomeMenus";
 import { type BiomePackSource, biomeToText, builtInForPackName, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
 import {
   findTradition,
@@ -291,9 +292,6 @@ import { ALIEN_CHOICES, biomePhrase, explorersPhrase, incomersPhrase, regionPhra
 /** History label for british place names runs; older "place name shapes" entries keep theirs. */
 
 /** The colonial shape generators (colonialShapes.ts): part 2 and part 2a. */
-/** Wizard retirement brief §5.2: the tooltip on a biome that is a pack's replacement for a built-in. */
-const overrideTip = (b: Biome): { tip?: string } => (b.custom?.overrides ? { tip: `Your version: ${b.custom.path.replace(/^.*\//, "")}` } : {});
-
 /** Wizard retirement brief §4: the place-name presets' pack types. */
 const isPlacePresetType = (type: NamePackType) => type === "nativePlacePreset" || type === "explorationPreset" || type === "expansionPreset";
 
@@ -1439,7 +1437,7 @@ export class NameForgeModal extends Modal {
   public async readyCatalogue(): Promise<BiomeCatalogue> {
     const custom = await this.loadCustomBiomes();
     if (!custom.some((b) => b.custom && b.packLines && !b.packDraws)) return this.catalogue();
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), undefined, this.catalogue());
     const ready = await Promise.all(custom.map((b) => (b.custom && b.packLines && !b.packDraws ? host.withPackDraws(b, b.custom.path) : b)));
     return biomeCatalogue(ready);
   }
@@ -1447,7 +1445,7 @@ export class NameForgeModal extends Modal {
   /** A biome for a generator: a pack's `//` lines resolved to draws; built-ins unchanged. */
   private async readyBiome(biome: Biome | undefined): Promise<Biome | undefined> {
     if (!biome?.custom || !biome.packLines || biome.packDraws) return biome;
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), undefined, this.catalogue());
     return host.withPackDraws(biome, biome.custom.path);
   }
 
@@ -1723,7 +1721,7 @@ export class NameForgeModal extends Modal {
         const space = part !== "organic" && key.includes("colonial:") ? catalogue.space.map((b, i): SentenceChoice => ({ id: b.id, label: b.phrase, title: b.guide, ...(i === 0 ? { heading: "Space", headingTip: SPACE_HEADING_TIP } : {}) })) : [];
         return [
           { id: undefined, label: defaultPhrase },
-          ...catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase, ...overrideTip(b) })),
+          ...landClauseBiomeItems(catalogue, britainAsDefault),
           ...space,
         ];
       },
@@ -1825,7 +1823,7 @@ export class NameForgeModal extends Modal {
    */
   private async resolveSlotSources(part: SlotPart, sources: SlotSources, recipe: RecipeSettings): Promise<{ slots: Record<string, ResolvedSlot>; notices: string[] }> {
     if (!usesOwnNames(part, sources)) return { slots: {}, notices: [] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), undefined, this.catalogue());
     const slots = await host.resolveSlotSources(recipe, part, sources, `${normalizePath(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
     return { slots, notices: host.getNotices() };
   }
@@ -2597,7 +2595,7 @@ export class NameForgeModal extends Modal {
     const packs = await this.loadBynamePacks();
     const name = state.pack && packs.some((p) => p.name === state.pack) ? state.pack : undefined;
     if (!name) return { notices: [state.pack ? `Pack “${state.pack}” wasn't found; using the typed names.` : "No name packs found; using the typed names."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), undefined, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw, notices } = await host.packDraw(name, normalizePath(`${folder}/${name}.md`));
     if (!draw) return { notices };
@@ -3002,7 +3000,7 @@ export class NameForgeModal extends Modal {
     const packs = await this.loadBynamePacks();
     const name = state.pack ?? packs[0]?.name;
     if (!name) return { notices: ["No name packs found; placeholders used."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), undefined, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw, notices } = await host.packDraw(name, normalizePath(`${folder}/${name}.md`));
     if (!draw) return { notices };
@@ -3501,7 +3499,7 @@ export class NameForgeModal extends Modal {
     const packs = await this.loadBynamePacks();
     const name = state.pack && packs.some((p) => p.name === state.pack) ? state.pack : undefined;
     if (!name) return { notices: [state.pack ? `Owner pack “${state.pack}” wasn't found; placeholders used.` : "No name packs found; placeholders used."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), undefined, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw, notices } = await host.packDraw(name, normalizePath(`${folder}/${name}.md`));
     if (!draw) return { notices, packName: name };
@@ -4645,7 +4643,7 @@ export class NameForgeModal extends Modal {
     const packs = await this.loadBynamePacks();
     const name = state.pack ?? packs[0]?.name;
     if (!name) return { notices: ["No name packs found; placeholders used."] };
-    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), undefined, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     const { draw, notices } = await host.packDraw(name, normalizePath(`${folder}/${name}.md`));
     if (!draw) return { notices, packName: name };
@@ -6266,7 +6264,7 @@ export class NameForgeModal extends Modal {
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), {
       targetReason: (entry, index) => this.targetPackReason(entry, index),
       targetNames: (entry, index) => this.ageingTargetNames(entry, index),
-    }, (await this.readyCatalogue()));
+    }, await this.readyCatalogue());
     const loaded = await host.loadRecipe(file);
     if (loaded.error) {
       this.setStatus(loaded.error);
@@ -7848,8 +7846,7 @@ class NameForgeEditorModal extends Modal {
     if (!select) return;
     select.empty();
     // Stellar brief §5.1: a pack may copy a space biome; it inherits its scale.
-    for (const b of [BRITAIN, ...BIOMES, ...SPACE_BIOMES]) select.createEl("option", { text: b.label, value: b.id });
-    for (const b of custom) select.createEl("option", { text: b.label, value: b.custom!.path });
+    for (const item of startFromItems(custom)) select.createEl("option", { text: item.label, value: item.id });
     const name = this.packNameInput?.value.trim().toLowerCase();
     // A pack that replaces a built-in carries that built-in's label, so it is also found by its file name.
     const existing = custom.find((b) => b.label.toLowerCase() === name || b.custom?.path.replace(/^.*\//, "").replace(/\.md$/i, "").toLowerCase() === name);
