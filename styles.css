@@ -1864,3 +1864,10 @@ body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-
   color: var(--text-muted);
   font-size: var(--font-ui-smaller);
 }
+
+/* Create Pack: the line under the name when the name or the biome's phrase clashes with another note or biome. */
+.nameforge-modal__biome-problem {
+  margin: 0 0 var(--size-4-2);
+  color: var(--text-error);
+  font-size: var(--font-ui-smaller);
+}

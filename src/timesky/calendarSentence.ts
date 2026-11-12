@@ -3,7 +3,8 @@
 // set in ‹their homeland›, starting in ‹their own new year›, ‹of any tone›, with ‹placeholders for›
 // gods and people, ‹as one calendar›". Built as segments like the money sentence. No Obsidian imports.
 
-import { type Biome, biomeChoiceId, isSpaceBiome, SPACE_BIOMES } from "../biomes";
+import { type Biome, isSpaceBiome, SPACE_BIOMES } from "../biomes";
+import { biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { fantasticWords } from "../routes/sentence";
@@ -63,6 +64,8 @@ export interface TimeChoice {
   heading?: string;
   title?: string;
   group?: string;
+  /** The tooltip of a pack's entry ("Your version: …", "Your biome: …"). */
+  tip?: string;
 }
 
 export type TimeSegment = string | { field: TimeField; text: string; title: string; choices: TimeChoice[]; current: string | undefined };
@@ -148,10 +151,10 @@ export function timeSentence(module: TimeModule, state: TimeSentenceState, limit
   out.push({
     field: "biome",
     text: biome ? biome.phrase : "their homeland",
-    title: biome?.guide ?? "Their homeland: the culture's own land",
+    title: biomeLinkTitle(biome, "Their homeland: the culture's own land"),
     choices: [
       { id: undefined, label: "Their homeland" },
-      ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label })),
+      ...biomeMenuItems(limits.biomes, (b) => b.label),
       ...(isFutureEra(state.era) ? (limits.spaceBiomes ?? SPACE_BIOMES).filter((b) => state.era === "IS" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i): TimeChoice => ({ id: b.id, label: b.label, title: b.guide, ...(i === 0 ? { heading: "Space" } : {}) })),
     ],
     current: state.biome,

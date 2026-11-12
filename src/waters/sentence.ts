@@ -5,7 +5,8 @@
 // ‹in any words›, ‹of any tone›, with ‹placeholders for› people". Built as segments like the route
 // sentence. No Obsidian imports.
 
-import { type BiomeCatalogue, biomeChoiceId, biomeMatches, biomesRootedIn, BUILT_IN_BIOMES } from "../biomes";
+import { type BiomeCatalogue, biomeMatches, biomesRootedIn, BUILT_IN_BIOMES } from "../biomes";
+import { biomeClashes, biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
@@ -75,6 +76,10 @@ export interface WatersChoice {
   id: string | undefined;
   label: string;
   title?: string;
+  /** The tooltip of a pack's entry ("Your version: …", "Your biome: …"). */
+  tip?: string;
+  /** A disabled menu heading shown before this choice ("Your biomes"). */
+  heading?: string;
   /** A menu heading shown before this choice. */
   group?: string;
 }
@@ -195,8 +200,8 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule,
       out.push({
         field: "biome",
         text: watersBiomeText(state.biome, catalogue),
-        title: "Weights the names towards a land's waters and wildlife",
-        choices: [{ id: undefined, label: watersBiomeText(undefined, catalogue) }, ...biomesRootedIn(catalogue).map((b) => ({ id: biomeChoiceId(b), label: watersBiomeText(biomeChoiceId(b), catalogue) }))],
+        title: biomeLinkTitle(biomesRootedIn(catalogue).find((b) => biomeMatches(b, state.biome)), "Weights the names towards a land's waters and wildlife"),
+        choices: [{ id: undefined, label: watersBiomeText(undefined, catalogue) }, ...biomeMenuItems(biomesRootedIn(catalogue), (b) => `in ${b.phrase}`, biomeClashes([...catalogue.all, ...catalogue.space]))],
         current: state.biome,
       });
     }

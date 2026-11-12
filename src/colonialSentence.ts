@@ -1,7 +1,8 @@
 // The place-name sentences' wording as plain data (Tribal brief §19.2, Land brief §4.2), so it
 // can be tested. No Obsidian imports: the modal draws the same wording as links.
 
-import { type Biome, type BiomeCatalogue, biomeCatalogue, biomeChoiceId, BRITAIN, BUILT_IN_BIOMES, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
+import { type Biome, type BiomeCatalogue, biomeCatalogue, BRITAIN, BUILT_IN_BIOMES, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
+import { biomeClashes, biomeMenuItems } from "./biomeMenus";
 import { contextPhrasesFor } from "./colonialWording";
 import { COLONIAL_DATA, COLONIAL_TRADITIONS } from "./colonialShapes";
 import { PLACE_SHAPE_DATA, PLACE_SHAPE_REGIONS } from "./placeShapes";
@@ -67,9 +68,9 @@ export const ALIEN_CHOICES = [
 
 /** The biome link's choices (Land brief §4.2): the part's default, then Britain (colonial only, since it
  * is organic's default), the 12 biomes and the user's packs (wizard retirement brief §5.1). */
-export function biomeChoices(part: "organic" | "new-land" | "established", catalogue: BiomeCatalogue = BUILT_IN_BIOMES): { id: string; label: string }[] {
+export function biomeChoices(part: "organic" | "new-land" | "established", catalogue: BiomeCatalogue = BUILT_IN_BIOMES): { id: string; label: string; tip?: string; heading?: string }[] {
   const lead = part === "organic" ? [{ id: "unknown", label: "Britain" }] : [{ id: "unknown", label: UNKNOWN_COUNTRY }, { id: BRITAIN.id, label: catalogue.find(BRITAIN.id)?.phrase ?? BRITAIN.phrase }];
-  return [...lead, ...catalogue.all.filter((b) => b.id !== BRITAIN.id).map((b) => ({ id: biomeChoiceId(b), label: b.phrase }))];
+  return [...lead, ...biomeMenuItems(catalogue.all.filter((b) => b.id !== BRITAIN.id), (b) => b.phrase, biomeClashes([...catalogue.all, ...catalogue.space]))];
 }
 
 /** A biome setting's phrase: the part's default, a built-in's phrase, or a pack's. */

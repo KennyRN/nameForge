@@ -3,7 +3,8 @@
 // ‹of any tone›, with ‹placeholders for› people and places, ‹each one separate›." One builder for all
 // six modules, as segments like the waters sentence. No Obsidian imports.
 
-import { type BiomeCatalogue, biomeChoiceId, biomeMatches, BUILT_IN_BIOMES } from "../biomes";
+import { type BiomeCatalogue, biomeMatches, BUILT_IN_BIOMES } from "../biomes";
+import { biomeClashes, biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
@@ -52,6 +53,10 @@ export interface WildsChoice {
   label: string;
   title?: string;
   group?: string;
+  /** The tooltip of a pack's entry ("Your version: …", "Your biome: …"). */
+  tip?: string;
+  /** A disabled menu heading shown before this choice ("Your biomes"). */
+  heading?: string;
 }
 
 export type WildsSegment = string | { field: WildsField; text: string; title: string; choices: WildsChoice[]; current: string | undefined };
@@ -128,8 +133,8 @@ export function wildsSentence(state: WildsSentenceState, module: WildsModule, ca
     out.push({
       field: "biome",
       text: wildsBiomeText(module, state.biome, catalogue),
-      title: "Weights the names towards a land's wildlife, plants and words",
-      choices: [{ id: undefined, label: wildsBiomeText(module, undefined, catalogue) }, ...wildsBiomes(module, catalogue).map((b) => ({ id: biomeChoiceId(b), label: wildsBiomeText(module, biomeChoiceId(b), catalogue) }))],
+      title: biomeLinkTitle(wildsBiomes(module, catalogue).find((b) => biomeMatches(b, state.biome)), "Weights the names towards a land's wildlife, plants and words"),
+      choices: [{ id: undefined, label: wildsBiomeText(module, undefined, catalogue) }, ...biomeMenuItems(wildsBiomes(module, catalogue), (b) => `in ${b.phrase}`, biomeClashes([...catalogue.all, ...catalogue.space]))],
       current: state.biome,
     });
   }

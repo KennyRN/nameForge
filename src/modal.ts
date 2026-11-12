@@ -160,7 +160,9 @@ import { confirmReplace, PresetSaveModal } from "./presetModal";
 import { builtinTemplates, examplePacks, isExamplePackPath, templateNameCount, templatePartTexts, templateText, type TemplateType, templateTypeFor } from "./templates";
 import { DEFAULT_LAND, LandButton, landHistorySuffix, type LandState } from "./landMenu";
 import { isSafeguardPackContent, mergeSafeguards, parseSafeguardPack, type Safeguards } from "./tribes/safeguardPacks";
-import { landClauseBiomeItems, startFromItems } from "./biomeMenus";
+import { folderNoteNames } from "./folderNames";
+import { clashMessage, folderNameProblems, nameClash, nameProblem, newNameProblem, type NoteName, packNameOfNote, phraseProblem } from "./noteNames";
+import { biomeLinkTitle, landClauseBiomeItems, startFromItems } from "./biomeMenus";
 import { type BiomePackSource, biomeToText, builtInForPackName, diffAgainstBase, isBiomePackContent, parseBiomePackContent, resolveBiomePacks } from "./biomePacks";
 import {
   findTradition,
@@ -310,6 +312,9 @@ const withRegion = (label: string, regionCode: string | undefined) => {
 
 /** A module's label in the box beside the trigger: "Native place names". */
 const moduleLabel = (section: NameForgeSection) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
+
+/** The folder clashes already shown this session, so each is named once. */
+const shownFolderClashes = new Set<string>();
 
 type SentenceChoice = { id: string | undefined; label: string; title?: string; /** A tooltip on the menu item (a pack that replaces a built-in biome: "Your version: {file name}"). */ tip?: string; /** A disabled heading shown before this choice. */ heading?: string; headingTip?: string };
 
@@ -1392,9 +1397,11 @@ export class NameForgeModal extends Modal {
     const stamp = files.map((f) => `${f.path}:${f.stat.mtime}`).join("|");
     if (stamp === this.biomeStamp) return this.customBiomes;
     const sources: BiomePackSource[] = [];
+    const notes: NoteName[] = [];
     for (const file of files) {
       try {
         const content = await this.app.vault.cachedRead(file);
+        notes.push({ path: file.path, basename: file.basename, packName: packNameOfNote(content) });
         if (isBiomePackContent(content)) sources.push({ path: file.path, content });
       } catch {
         continue;
@@ -1403,8 +1410,41 @@ export class NameForgeModal extends Modal {
     const { biomes, problems } = resolveBiomePacks(sources);
     this.customBiomes = biomes;
     this.biomeProblems = problems;
+    this.folderNotes = notes;
     this.biomeStamp = stamp;
+    this.reportFolderClashes();
     return biomes;
+  }
+
+  /** The names folder's notes as last loaded, for the name checks (pack names and biome marks brief §2). */
+  private folderNotes: NoteName[] = [];
+
+  /** §2.2: the clashes already in the folder, named once per session in the status line. Never changes a note. */
+  private reportFolderClashes() {
+    const catalogue = biomeCatalogue(this.customBiomes);
+    const messages = folderNameProblems(this.folderNotes, [...catalogue.all, ...catalogue.space]);
+    const fresh = messages.filter((m) => !shownFolderClashes.has(m));
+    if (fresh.length === 0) return;
+    for (const m of fresh) shownFolderClashes.add(m);
+    this.setStatus(fresh.join(" "));
+  }
+
+  /**
+   * A new note's name, or undefined after saying why not in the status line: empty, "nameForge", or
+   * the name of a note already in the folder (the note being edited may keep its own name).
+   */
+  public nameProblemNow(raw: string, editingPath?: string): string | undefined {
+    return newNameProblem(raw, this.folderNotes, editingPath);
+  }
+
+  public async checkNewName(raw: string | undefined, editingPath?: string): Promise<string | undefined> {
+    await this.loadCustomBiomes();
+    const problem = newNameProblem(raw, this.folderNotes, editingPath);
+    if (problem) {
+      this.setStatus(problem);
+      return undefined;
+    }
+    return raw!.trim();
   }
 
   /** The biome packs as last loaded. */
@@ -1713,7 +1753,7 @@ export class NameForgeModal extends Modal {
     this.sentenceLink(
       sentence,
       biome ? biomePhrase(land.biome, part, this.customBiomes) : defaultPhrase,
-      biome?.guide ?? "Biome: the plants, wildlife, ground and seasons",
+      biomeLinkTitle(biome, "Biome: the plants, wildlife, ground and seasons"),
       async () => {
         await this.loadCustomBiomes();
         const catalogue = this.catalogue();
@@ -3674,7 +3714,9 @@ export class NameForgeModal extends Modal {
   private async createKitNote(kit: Kit) {
     const folder = this.settlementsFolder();
     await ensureVaultFolder(this.app, folder);
-    const path = freeNotePath(folder, kit.context.town, (p) => !!this.app.vault.getAbstractFileByPath(normalizePath(p)));
+    // Pack names and biome marks brief §2: a kit note's name is free of every note in its folder, by file name and `packName`.
+    const taken = await folderNoteNames(this.app, folder);
+    const path = freeNotePath(folder, kit.context.town, (p) => !!this.app.vault.getAbstractFileByPath(normalizePath(p)) || !!nameClash(p.replace(/^.*\//, "").replace(/\.md$/, ""), taken));
     const file = await this.app.vault.create(normalizePath(path), kitNoteContent(kit));
     await this.app.workspace.getLeaf(false).openFile(file);
     this.setStatus(`Created ${file.path}.`);
@@ -5147,6 +5189,13 @@ export class NameForgeModal extends Modal {
    * preset of the same module is replaced only on yes; any other note is refused.
    */
   private async writePreset(name: string, content: string, sameModule: (existing: string) => boolean): Promise<boolean> {
+    // Pack names and biome marks brief §1, §2: a real name, never "nameForge", and no other note's name.
+    await this.loadCustomBiomes();
+    const nameIssue = nameProblem(name);
+    if (nameIssue) {
+      new Notice(`nameForge: ${nameIssue}`);
+      return false;
+    }
     let folderPath = this.getFolderPath();
     if (!folderPath) {
       const folder = await this.promptForFolderSelection();
@@ -5165,9 +5214,18 @@ export class NameForgeModal extends Modal {
           new Notice("nameForge: a file with that name already exists.");
           return false;
         }
+        // The preset being replaced may keep its own name.
+        if (nameClash(name, this.folderNotes, path)) {
+          new Notice(`nameForge: ${clashMessage(name)}`);
+          return false;
+        }
         if (!(await confirmReplace(this.app, `Replace preset “${name}”?`))) return false;
         await this.app.vault.modify(existing, content);
       } else {
+        if (nameClash(name, this.folderNotes)) {
+          new Notice(`nameForge: ${clashMessage(name)}`);
+          return false;
+        }
         await this.app.vault.create(path, content);
       }
     } catch {
@@ -5860,7 +5918,13 @@ export class NameForgeModal extends Modal {
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
-    const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, packType, {
+    const packName = this.plugin.settings.packName?.trim() ?? "";
+    const nameIssue = nameProblem(packName);
+    if (nameIssue) {
+      this.setStatus(nameIssue);
+      return;
+    }
+    const content = createNamesFileContent(packName, names, packType, {
       templateOf,
       sectioned,
       placeGenerator,
@@ -5921,7 +5985,13 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf, options);
+    const packName = this.plugin.settings.packName?.trim() ?? "";
+    const nameIssue = nameProblem(packName);
+    if (nameIssue) {
+      this.setStatus(nameIssue);
+      return;
+    }
+    const content = createCompoundNamesFileContent(packName, parts, generator, joining, templateOf, options);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof TFile) {
@@ -5971,7 +6041,13 @@ export class NameForgeModal extends Modal {
       return;
     }
 
-    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources, templateOf);
+    const packName = this.plugin.settings.packName?.trim() ?? "";
+    const nameIssue = nameProblem(packName);
+    if (nameIssue) {
+      this.setStatus(nameIssue);
+      return;
+    }
+    const content = createMixNamesFileContent(packName, sources, templateOf);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof TFile) {
@@ -7460,6 +7536,8 @@ class NameForgeEditorModal extends Modal {
   private biomeBaseSelect: HTMLSelectElement | null = null;
   /** Wizard retirement brief §5.3: the line under the name when it matches a built-in biome. */
   private biomeReplacesEl: HTMLElement | null = null;
+  /** Pack names and biome marks brief §2: the line under it when the name or phrase clashes with another note or biome. */
+  private biomeProblemEl: HTMLElement | null = null;
   /** Whether the user has picked "Start from" themselves, so typing a built-in's name stops choosing it for them. */
   private biomeBaseChosen = false;
   private biomePhraseInput: HTMLInputElement | null = null;
@@ -7517,6 +7595,8 @@ class NameForgeEditorModal extends Modal {
     this.packNameInput.value = this.initialPackName;
     this.biomeReplacesEl = contentEl.createDiv({ cls: "nameforge-modal__biome-replaces" });
     this.biomeReplacesEl.hide();
+    this.biomeProblemEl = contentEl.createDiv({ cls: "nameforge-modal__biome-problem" });
+    this.biomeProblemEl.hide();
     this.packNameInput.addEventListener("input", () => this.onBiomeNameInput());
 
     const typeToggle = contentEl.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
@@ -7585,6 +7665,7 @@ class NameForgeEditorModal extends Modal {
     });
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Phrase" });
     this.biomePhraseInput = biomeRow.createEl("input", { cls: "nameforge-editor-modal__phrase-input", attr: { type: "text", "aria-label": "Phrase" } });
+    this.biomePhraseInput.addEventListener("input", () => void this.updateBiomeProblem());
     biomeRow.hide();
 
     // Fixed-height stage: the plain textarea, the compound section, and the mix
@@ -7828,6 +7909,7 @@ class NameForgeEditorModal extends Modal {
    * becomes that built-in (unless the user has already chosen one) and a line under the name says so.
    */
   private onBiomeNameInput() {
+    void this.updateBiomeProblem();
     const builtIn = this.biomeMode ? builtInForPackName(this.packNameInput?.value ?? "") : undefined;
     this.biomeReplacesEl?.toggle(!!builtIn);
     if (!builtIn) return;
@@ -7836,6 +7918,31 @@ class NameForgeEditorModal extends Modal {
     if (!select || this.biomeBaseChosen || this.biomeEditing) return;
     select.value = builtIn.id;
     this.refillBiome();
+  }
+
+  /** §2, §2.1: whether the biome's phrase is already another biome's label or phrase (a replacement may keep its built-in's). */
+  private biomePhraseProblem(name: string, custom: readonly Biome[]): string | undefined {
+    const catalogue = biomeCatalogue(custom);
+    const replaces = builtInForPackName(name);
+    const typed = this.biomePhraseInput?.value.trim();
+    // Left empty, a new pack's phrase is "the {name}" (a replacement inherits the built-in's).
+    const phrase = typed || (replaces || !name ? undefined : /^the\b/i.test(name) ? name : `the ${name.toLowerCase()}`);
+    return phraseProblem(phrase, [...catalogue.all, ...catalogue.space], { editingPath: this.biomeEditing, replaces });
+  }
+
+  /** Shows the name or phrase problem as the user types, alongside the "Replaces the built-in" line. */
+  private async updateBiomeProblem() {
+    const el = this.biomeProblemEl;
+    if (!el) return;
+    if (!this.biomeMode) {
+      el.hide();
+      return;
+    }
+    const custom = await this.parent.loadCustomBiomes();
+    const name = this.packNameInput?.value.trim() ?? "";
+    const problem = (name ? this.parent.nameProblemNow(name, this.biomeEditing) : undefined) ?? this.biomePhraseProblem(name, custom);
+    el.toggle(!!problem);
+    el.setText(problem ?? "");
   }
 
   /** Land brief §9.4: fills the base choices, and loads an existing pack of the same name merged. */
@@ -7889,9 +7996,20 @@ class NameForgeEditorModal extends Modal {
       if (!folder) return;
       folderPath = folder.path;
     }
+    const custom = await this.parent.loadCustomBiomes();
+    const phraseClash = this.biomePhraseProblem(packName, custom);
+    if (phraseClash) {
+      this.parent.setStatus(phraseClash);
+      return;
+    }
     const path = this.biomeEditing ?? normalizePath(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
     try {
       const existing = this.app.vault.getFileByPath(path);
+      // A biome is only ever written over the note being edited, never another.
+      if (existing instanceof TFile && path !== this.biomeEditing) {
+        this.parent.setStatus(`There's already a note called “${packName}” in the names folder – choose another name.`);
+        return;
+      }
       if (existing instanceof TFile) await this.app.vault.modify(existing, text);
       else await this.app.vault.create(path, text);
     } catch {
@@ -8003,7 +8121,8 @@ class NameForgeEditorModal extends Modal {
     const boxName = this.packNameInput?.value?.trim();
     const templateOf = undefined;
     if (this.biomeMode) {
-      await this.saveBiome(boxName || "nameForge");
+      const name = await this.parent.checkNewName(boxName, this.biomeEditing);
+      if (name) await this.saveBiome(name);
       return;
     }
 
@@ -8013,7 +8132,9 @@ class NameForgeEditorModal extends Modal {
     // A `# Name` line in the pasted text names the pack and wins over the Pack Name box.
     const pastedName =
       this.selectedPackType === "mixPack" ? undefined : compoundEditor ? compoundEditor.packName() : packNameFromBody(this.inputEl?.value ?? "");
-    const packName = pastedName || boxName || "nameForge";
+    // A pack always needs a real name: nothing stands in for an empty one, and "nameForge" is reserved.
+    const packName = await this.parent.checkNewName(pastedName || boxName);
+    if (!packName) return;
     if (compoundEditor) {
       const values = compoundEditor.values();
       const parts = values.parts;

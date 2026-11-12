@@ -297,7 +297,7 @@ export function createNamesFileContent(
   packType: NamesFileData["packType"] = "breakdownPack",
   options: { templateOf?: string; sectioned?: SectionedNames; placeGenerator?: PlaceGenerator } = {},
 ): string {
-  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "").trim().replace(/\s+/g, " ");
   const templateLine = options.templateOf ? `template-of: "[[${options.templateOf}]]"\n` : "";
   const body = options.sectioned ? serialiseNameSections(options.sectioned) : names.join("\n");
   // Place generators brief §1.1: written only when it isn't breakdown.
@@ -317,7 +317,7 @@ export function createCompoundNamesFileContent(
   templateOf?: string,
   options: { partUse?: CompoundUse[]; partGenerators?: CompoundPartGenerator[]; place?: boolean } = {},
 ): string {
-  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "").trim().replace(/\s+/g, " ");
   const templateLine = templateOf ? `template-of: "[[${templateOf}]]"\n` : "";
   const partsSections = parts
     .map((part, index) => {
@@ -336,7 +336,7 @@ export function createCompoundNamesFileContent(
 }
 
 export function createMixNamesFileContent(packName: string, sources: MixSourceRef[], templateOf?: string): string {
-  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "").trim().replace(/\s+/g, " ");
   const templateLine = templateOf ? `template-of: "[[${templateOf}]]"\n` : "";
   const sourceLines = sources
     .map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`)
@@ -514,9 +514,9 @@ function resolvePackToCorpus(
 const INVALID_FILENAME_CHARS = /[\\/:*?"<>|]/g;
 
 export function sanitizePackNameForFilename(packName: string): string {
-  const trimmed = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const trimmed = (packName || "").trim().replace(/\s+/g, " ");
   const cleaned = trimmed.replace(INVALID_FILENAME_CHARS, "-").trim();
-  return cleaned || "nameForge";
+  return cleaned;
 }
 // ── Word list packs (§9) ────────────────────────────────────────────────────
 

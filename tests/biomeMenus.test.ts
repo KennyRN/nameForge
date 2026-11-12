@@ -50,7 +50,7 @@ const LABEL_MENUS: [string, () => Choice[] | undefined][] = [
 for (const [label, menu] of LABEL_MENUS) {
   test(`biome menu, ${label}: exactly one temperate entry, the built-in's, by its label`, () => {
     const entries = temperate(menu()!);
-    assert.deepEqual(entries.map((c) => [c.id, c.label]), [["temperate", "Temperate"]]);
+    assert.deepEqual(entries.map((c) => [c.id, c.label]), [["temperate", "Temperate (your version)"]]);
   });
 }
 
@@ -58,27 +58,27 @@ for (const module of WILDS_MODULES) {
   test(`biome menu, wild lands ${module}: one temperate entry where the module offers it, by the built-in's phrase`, () => {
     const entries = temperate(menuOf(wildsSentence({ ...defaultWildsState(module), culture: "general", where: "new" }, module, catalogue))!);
     const offered = WILDS_DATA.modules[module].biomes.includes("temperate");
-    assert.deepEqual(entries.map((c) => [c.id, c.label]), offered ? [["temperate", `in ${BUILT_IN_PHRASE}`]] : []);
+    assert.deepEqual(entries.map((c) => [c.id, c.label]), offered ? [["temperate", `in ${BUILT_IN_PHRASE} (your version)`]] : []);
   });
 }
 
 for (const module of ["seasLakes", "coastsIslands", "seaCharts"] as const) {
   test(`biome menu, seas and coasts ${module}: one temperate entry, by the built-in's phrase`, () => {
     const entries = temperate(menuOf(watersSentence({ ...defaultWatersState(module), culture: "general", where: "new" }, module, catalogue))!);
-    assert.deepEqual(entries.map((c) => [c.id, c.label]), [["temperate", `in ${BUILT_IN_PHRASE}`]]);
+    assert.deepEqual(entries.map((c) => [c.id, c.label]), [["temperate", `in ${BUILT_IN_PHRASE} (your version)`]]);
   });
 }
 
 for (const part of ["organic", "new-land", "established"] as const) {
   test(`biome menu, colonial biome choices (${part}): one temperate entry, by the built-in's phrase`, () => {
-    assert.deepEqual(temperate(biomeChoices(part, catalogue)).map((c) => [c.id, c.label]), [["temperate", BUILT_IN_PHRASE]]);
+    assert.deepEqual(temperate(biomeChoices(part, catalogue)).map((c) => [c.id, c.label]), [["temperate", `${BUILT_IN_PHRASE} (your version)`]]);
   });
 }
 
 for (const britainAsDefault of [true, false]) {
   test(`biome menu, the land clause (exploration, expansion, settlement names, native British; Britain default ${britainAsDefault}): one temperate entry, by the built-in's phrase, with its tooltip`, () => {
     const items = landClauseBiomeItems(catalogue, britainAsDefault);
-    assert.deepEqual(temperate(items).map((c) => [c.id, c.label]), [["temperate", BUILT_IN_PHRASE]]);
+    assert.deepEqual(temperate(items).map((c) => [c.id, c.label]), [["temperate", `${BUILT_IN_PHRASE} (your version)`]]);
     assert.equal(items.find((c) => c.id === "temperate")!.tip, "Your version: Temperate.md");
     assert.equal(items.some((c) => c.id === "britain"), !britainAsDefault);
     // Without the pack the same entry has no tooltip: the built-in.
@@ -89,7 +89,7 @@ for (const britainAsDefault of [true, false]) {
 for (const britainIsDefault of [true, false]) {
   test(`biome menu, the Land button (Britain default ${britainIsDefault}): temperate once among the built-ins, not under Your biomes`, () => {
     const { builtIn, yours } = landButtonBiomeItems(catalogue, britainIsDefault);
-    assert.deepEqual(temperate(builtIn).map((c) => [c.id, c.label]), [["temperate", "Temperate"]]);
+    assert.deepEqual(temperate(builtIn).map((c) => [c.id, c.label]), [["temperate", "Temperate (your version)"]]);
     assert.equal(builtIn.find((c) => c.id === "temperate")!.tip, "Your version: Temperate.md");
     assert.deepEqual(yours, []);
     assert.equal(builtIn.some((c) => c.id === "britain"), !britainIsDefault);

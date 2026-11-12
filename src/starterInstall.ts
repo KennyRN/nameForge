@@ -3,6 +3,8 @@
 
 import { App, normalizePath, Notice, TFolder } from "obsidian";
 import { EnterFolderPathModal } from "./folderModal";
+import { folderNoteNames } from "./folderNames";
+import { nameClash } from "./noteNames";
 import { createWordListFileContent, sanitizePackNameForFilename } from "./nameParser";
 import { STARTER_WORD_LISTS, starterWordListBody } from "./names/starterTemplates";
 
@@ -24,9 +26,11 @@ export async function installStarterTemplates(app: App, folder: TFolder): Promis
   ];
   let installed = 0;
   const skipped: string[] = [];
+  // A starter whose name is taken (by a note's file name or `packName`) is skipped, and named.
+  const taken = await folderNoteNames(app, folder.path);
   for (const file of files) {
     const path = normalizePath(`${folder.path}/${sanitizePackNameForFilename(file.name)}.md`);
-    if (app.vault.getAbstractFileByPath(path)) {
+    if (app.vault.getAbstractFileByPath(path) || nameClash(file.name, taken)) {
       skipped.push(file.name);
       continue;
     }

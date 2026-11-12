@@ -28,7 +28,7 @@ __export(main_exports, {
   default: () => NameForgePlugin
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian13 = require("obsidian");
+var import_obsidian14 = require("obsidian");
 
 // src/settings.ts
 var import_obsidian3 = require("obsidian");
@@ -1717,7 +1717,7 @@ function mergeWithTemplate(derived, template) {
   return merged2;
 }
 function createNamesFileContent(packName, names, packType = "breakdownPack", options = {}) {
-  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "").trim().replace(/\s+/g, " ");
   const templateLine = options.templateOf ? `template-of: "[[${options.templateOf}]]"
 ` : "";
   const body = options.sectioned ? serialiseNameSections(options.sectioned) : names.join("\n");
@@ -1736,7 +1736,7 @@ ${body}
 `;
 }
 function createCompoundNamesFileContent(packName, parts, generator, joining, templateOf, options = {}) {
-  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "").trim().replace(/\s+/g, " ");
   const templateLine = templateOf ? `template-of: "[[${templateOf}]]"
 ` : "";
   const partsSections = parts.map((part, index) => {
@@ -1774,7 +1774,7 @@ ${partsSections}
 `;
 }
 function createMixNamesFileContent(packName, sources, templateOf) {
-  const safePackName = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const safePackName = (packName || "").trim().replace(/\s+/g, " ");
   const templateLine = templateOf ? `template-of: "[[${templateOf}]]"
 ` : "";
   const sourceLines = sources.map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`).join("\n");
@@ -1915,9 +1915,9 @@ function resolvePackToCorpus(entry, index, visiting, sectionRequest2) {
 }
 var INVALID_FILENAME_CHARS = /[\\/:*?"<>|]/g;
 function sanitizePackNameForFilename(packName) {
-  const trimmed = (packName || "nameForge").trim().replace(/\s+/g, " ");
+  const trimmed = (packName || "").trim().replace(/\s+/g, " ");
   const cleaned = trimmed.replace(INVALID_FILENAME_CHARS, "-").trim();
-  return cleaned || "nameForge";
+  return cleaned;
 }
 function isWordListContent(content) {
   const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
@@ -2390,7 +2390,7 @@ var NameForgeSettingTab = class extends import_obsidian3.PluginSettingTab {
 };
 
 // src/modal.ts
-var import_obsidian11 = require("obsidian");
+var import_obsidian12 = require("obsidian");
 
 // src/icons.ts
 var import_obsidian4 = require("obsidian");
@@ -62164,6 +62164,66 @@ function colonialPlaceNamesRecipe(part, tradition, context, biome, terrain, alie
   });
 }
 
+// src/biomeMenus.ts
+var same3 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+var biomeFile = (b) => {
+  var _a5, _b3;
+  return (_b3 = (_a5 = b.custom) == null ? void 0 : _a5.path.replace(/^.*\//, "")) != null ? _b3 : "";
+};
+var YOUR_BIOMES = "Your biomes";
+function biomeClashes(biomes) {
+  const out = /* @__PURE__ */ new Set();
+  for (const b of biomes) {
+    if (!b.custom) continue;
+    if (biomes.some((o) => o !== b && (same3(o.label, b.label) || same3(o.label, b.phrase) || same3(o.phrase, b.label) || same3(o.phrase, b.phrase)))) out.add(b);
+  }
+  return out;
+}
+function biomeMark(b, clashes2) {
+  if (!b.custom) return { suffix: "", own: false };
+  const file = biomeFile(b);
+  const own = !b.custom.overrides;
+  const clash = clashes2.has(b) ? ` (${file})` : "";
+  return { suffix: `${own ? "" : " (your version)"}${clash}`, tip: own ? `Your biome: ${file}` : `Your version: ${file}`, own };
+}
+var biomeLinkTitle = (b, fallback) => {
+  var _a5, _b3;
+  return ((_a5 = b == null ? void 0 : b.custom) == null ? void 0 : _a5.overrides) ? `Your version: ${biomeFile(b)}` : (_b3 = b == null ? void 0 : b.guide) != null ? _b3 : fallback;
+};
+function biomeMenuItems(biomes, text, clashes2 = biomeClashes(biomes)) {
+  let headed = false;
+  return biomes.map((b) => {
+    const mark = biomeMark(b, clashes2);
+    const heading = mark.own && !headed ? YOUR_BIOMES : void 0;
+    if (heading) headed = true;
+    return { id: biomeChoiceId(b), label: `${text(b)}${mark.suffix}`, ...mark.tip ? { tip: mark.tip } : {}, ...heading ? { heading } : {} };
+  });
+}
+function landClauseBiomeItems(catalogue, britainAsDefault) {
+  const clashes2 = biomeClashes([...catalogue.all, ...catalogue.space]);
+  return biomeMenuItems(catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)), (b) => b.phrase, clashes2);
+}
+function landButtonBiomeItems(catalogue, britainIsDefault) {
+  const clashes2 = biomeClashes([...catalogue.all, ...catalogue.space]);
+  const item2 = (b) => {
+    const mark = biomeMark(b, clashes2);
+    return { id: biomeChoiceId(b), label: `${b.label}${mark.suffix}`, biome: b, ...mark.tip ? { tip: mark.tip } : {} };
+  };
+  return {
+    builtIn: catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => !britainIsDefault || b.id !== BRITAIN.id).map(item2),
+    yours: catalogue.all.filter((b) => b.custom && !b.custom.overrides).map(item2)
+  };
+}
+function startFromItems(custom) {
+  return [
+    ...[BRITAIN, ...BIOMES, ...SPACE_BIOMES].map((b) => ({ id: b.id, label: b.label })),
+    ...custom.map((b) => {
+      var _a5;
+      return { id: b.custom.path, label: ((_a5 = b.custom) == null ? void 0 : _a5.overrides) ? `${b.label} (your version)` : b.label };
+    })
+  ];
+}
+
 // src/tribes/sentence.ts
 var TERRAIN_PHRASES = {
   any: "in any terrain",
@@ -62191,7 +62251,7 @@ var perspectivePhrase = (id) => {
   return (_c3 = (_b3 = (_a5 = PERSPECTIVE_PHRASES[id != null ? id : "any"]) != null ? _a5 : TRIBAL_DATA.perspectiveLabels[id]) != null ? _b3 : id) != null ? _c3 : "";
 };
 function tribalSentence(state, limits) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i;
   const out = [];
   const extra = (_a5 = limits.extraTraditions) != null ? _a5 : [];
   const tradition = findTradition(state.tradition);
@@ -62219,10 +62279,10 @@ function tribalSentence(state, limits) {
   out.push({
     field: "biome",
     text: inline ? `${/^[aeiou]/i.test(inline) ? "an" : "a"} ${inline}` : fallback,
-    title: (_g = biome == null ? void 0 : biome.guide) != null ? _g : tradition ? homelandSummary(tradition.key) : "Biome",
+    title: ((_g = biome == null ? void 0 : biome.custom) == null ? void 0 : _g.overrides) ? biomeLinkTitle(biome, "") : (_h = biome == null ? void 0 : biome.guide) != null ? _h : tradition ? homelandSummary(tradition.key) : "Biome",
     choices: [
       { id: void 0, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
-      ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label }))
+      ...biomeMenuItems(limits.biomes, (b) => b.label)
     ],
     current: state.biome
   });
@@ -62245,7 +62305,7 @@ function tribalSentence(state, limits) {
   out.push({
     field: "register",
     text: register,
-    title: (_h = TRIBAL_DATA.registerLabels[register]) != null ? _h : register,
+    title: (_i = TRIBAL_DATA.registerLabels[register]) != null ? _i : register,
     choices: registers.map((r) => ({ id: r, label: TRIBAL_DATA.registerLabels[r] })),
     current: register
   });
@@ -72954,15 +73014,15 @@ var SOURCE_MENU = (module2) => {
   const t = SOURCE_TEXT(module2);
   return { ...t, pack: `${t.pack} a pack` };
 };
-var same3 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+var same4 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
 function hasGenderSections(headings) {
-  return headings.some((h) => same3(h, "male")) && headings.some((h) => same3(h, "female"));
+  return headings.some((h) => same4(h, "male")) && headings.some((h) => same4(h, "female"));
 }
 function sectionRequest(state, headings, role, sex) {
   if (state.section === "whole" || headings.length === 0) return {};
   if (state.section && state.section !== "gender") return { section: state.section };
   const wanted = role === "father" ? "male" : role === "mother" ? "female" : sex;
-  if (hasGenderSections(headings)) return { section: headings.find((h) => same3(h, wanted)) };
+  if (hasGenderSections(headings)) return { section: headings.find((h) => same4(h, wanted)) };
   return { section: headings[0] };
 }
 var sectionText = (state, headings) => {
@@ -104815,10 +104875,10 @@ var DEFAULT_THING_STATE = {
 };
 var PEOPLE_TEXT3 = { placeholders: "placeholders for", invented: "invented" };
 var DESCRIBE_TEXT = { off: "names only", on: "with what they are" };
-var same4 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
+var same5 = (a, b) => a.trim().toLowerCase() === b.trim().toLowerCase();
 function ownerSectionRequest(state, headings) {
   if (state.section === "whole" || headings.length === 0) return {};
-  const wanted = state.section && headings.some((h) => same4(h, state.section)) ? headings.find((h) => same4(h, state.section)) : headings[0];
+  const wanted = state.section && headings.some((h) => same5(h, state.section)) ? headings.find((h) => same5(h, state.section)) : headings[0];
   return { section: wanted };
 }
 var sectionText2 = (state, headings) => state.section === "whole" ? "the whole pack" : `its ${ownerSectionRequest(state, headings).section} section`;
@@ -105147,7 +105207,7 @@ var OUTPUT_TEXT = { official: "official names", short: "short names", both: "off
 var PEOPLE_TEXT4 = { placeholders: "placeholders for", invented: "invented" };
 var showsLand = (state) => state.namedFor === "anything" || state.namedFor === "land";
 function realmSentence(state, limits) {
-  var _a5, _b3, _c3, _d3, _e3;
+  var _a5, _b3, _c3, _d3;
   const out = [];
   const culture = (_a5 = REALM_CULTURES.find((c) => c.key === state.culture)) != null ? _a5 : REALM_CULTURES[0];
   out.push({
@@ -105211,13 +105271,13 @@ function realmSentence(state, limits) {
     out.push({
       field: "biome",
       text: biome ? biome.phrase : "their homeland",
-      title: (_d3 = biome == null ? void 0 : biome.guide) != null ? _d3 : "Their homeland: the culture's own land",
+      title: biomeLinkTitle(biome, "Their homeland: the culture's own land"),
       choices: [
         { id: void 0, label: "Their homeland" },
-        ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label })),
+        ...biomeMenuItems(limits.biomes, (b) => b.label),
         // Stellar brief §7.1: in the near future and interstellar eras, the space biomes under a Space heading
         // (the near future offers only the planetary system and the star system).
-        ...(state.era === "nearFuture" || state.era === "interstellar" ? ((_e3 = limits.spaceBiomes) != null ? _e3 : SPACE_BIOMES).filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({
+        ...(state.era === "nearFuture" || state.era === "interstellar" ? ((_d3 = limits.spaceBiomes) != null ? _d3 : SPACE_BIOMES).filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({
           id: b.id,
           label: b.label,
           title: b.guide,
@@ -116520,8 +116580,8 @@ function wildsSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
     out.push({
       field: "biome",
       text: wildsBiomeText(module2, state.biome, catalogue),
-      title: "Weights the names towards a land's wildlife, plants and words",
-      choices: [{ id: void 0, label: wildsBiomeText(module2, void 0, catalogue) }, ...wildsBiomes(module2, catalogue).map((b) => ({ id: biomeChoiceId(b), label: wildsBiomeText(module2, biomeChoiceId(b), catalogue) }))],
+      title: biomeLinkTitle(wildsBiomes(module2, catalogue).find((b) => biomeMatches(b, state.biome)), "Weights the names towards a land's wildlife, plants and words"),
+      choices: [{ id: void 0, label: wildsBiomeText(module2, void 0, catalogue) }, ...biomeMenuItems(wildsBiomes(module2, catalogue), (b) => `in ${b.phrase}`, biomeClashes([...catalogue.all, ...catalogue.space]))],
       current: state.biome
     });
   }
@@ -118140,8 +118200,8 @@ function watersSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
       out.push({
         field: "biome",
         text: watersBiomeText(state.biome, catalogue),
-        title: "Weights the names towards a land's waters and wildlife",
-        choices: [{ id: void 0, label: watersBiomeText(void 0, catalogue) }, ...biomesRootedIn(catalogue).map((b) => ({ id: biomeChoiceId(b), label: watersBiomeText(biomeChoiceId(b), catalogue) }))],
+        title: biomeLinkTitle(biomesRootedIn(catalogue).find((b) => biomeMatches(b, state.biome)), "Weights the names towards a land's waters and wildlife"),
+        choices: [{ id: void 0, label: watersBiomeText(void 0, catalogue) }, ...biomeMenuItems(biomesRootedIn(catalogue), (b) => `in ${b.phrase}`, biomeClashes([...catalogue.all, ...catalogue.space]))],
         current: state.biome
       });
     }
@@ -122002,9 +122062,9 @@ function generateEventNames(options) {
     const strip = (t) => t.replace(new RegExp(`^(${ORD.join("|")}) `), "");
     const wars = names.filter((n) => n.kind === "war");
     for (const base2 of new Set(wars.map((n) => strip(n.text)))) {
-      const same5 = wars.filter((n) => strip(n.text) === base2);
-      if (same5.length < 2) continue;
-      same5.forEach((n, i) => n.text = `${ORD[Math.min(i, ORD.length - 1)]} ${base2}`);
+      const same6 = wars.filter((n) => strip(n.text) === base2);
+      if (same6.length < 2) continue;
+      same6.forEach((n, i) => n.text = `${ORD[Math.min(i, ORD.length - 1)]} ${base2}`);
     }
     seen.clear();
     for (const n of names) seen.add(n.text.toLowerCase());
@@ -132380,7 +132440,7 @@ function startSeasons(state, limits) {
   return ((_a5 = seasonCycle(biome, state.culture, atHome)) != null ? _a5 : []).map(([s]) => s);
 }
 function timeSentence(module2, state, limits) {
-  var _a5, _b3, _c3, _d3, _e3;
+  var _a5, _b3, _c3, _d3;
   const out = [];
   const culture = (_a5 = findTimeCulture(state.culture)) != null ? _a5 : TIME_CULTURES[0];
   out.push({
@@ -132430,11 +132490,11 @@ function timeSentence(module2, state, limits) {
   out.push({
     field: "biome",
     text: biome ? biome.phrase : "their homeland",
-    title: (_c3 = biome == null ? void 0 : biome.guide) != null ? _c3 : "Their homeland: the culture's own land",
+    title: biomeLinkTitle(biome, "Their homeland: the culture's own land"),
     choices: [
       { id: void 0, label: "Their homeland" },
-      ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label })),
-      ...(isFutureEra(state.era) ? ((_d3 = limits.spaceBiomes) != null ? _d3 : SPACE_BIOMES).filter((b) => state.era === "IS" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({ id: b.id, label: b.label, title: b.guide, ...i === 0 ? { heading: "Space" } : {} }))
+      ...biomeMenuItems(limits.biomes, (b) => b.label),
+      ...(isFutureEra(state.era) ? ((_c3 = limits.spaceBiomes) != null ? _c3 : SPACE_BIOMES).filter((b) => state.era === "IS" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({ id: b.id, label: b.label, title: b.guide, ...i === 0 ? { heading: "Space" } : {} }))
     ],
     current: state.biome
   });
@@ -132477,7 +132537,7 @@ function timeSentence(module2, state, limits) {
     current: state.people
   });
   out.push(" gods and people, ");
-  const seriesText = (_e3 = TIME_SKY.series[kind.key]) == null ? void 0 : _e3.text;
+  const seriesText = (_d3 = TIME_SKY.series[kind.key]) == null ? void 0 : _d3.text;
   const canSeries = seriesOffered(kind.key, state.culture, state.era, land);
   out.push({
     field: "series",
@@ -134865,33 +134925,6 @@ var isExamplePackPath = (path) => !!path && path.startsWith(EXAMPLE_PACK_PREFIX)
 
 // src/landMenu.ts
 var import_obsidian8 = require("obsidian");
-
-// src/biomeMenus.ts
-var overrideTip = (b) => {
-  var _a5;
-  return ((_a5 = b.custom) == null ? void 0 : _a5.overrides) ? { tip: `Your version: ${b.custom.path.replace(/^.*\//, "")}` } : {};
-};
-function landClauseBiomeItems(catalogue, britainAsDefault) {
-  return catalogue.all.filter((b) => !(britainAsDefault && b.id === BRITAIN.id)).map((b) => ({ id: biomeChoiceId(b), label: b.phrase, ...overrideTip(b) }));
-}
-function landButtonBiomeItems(catalogue, britainIsDefault) {
-  const item2 = (b) => ({ id: biomeChoiceId(b), label: b.label, biome: b, ...overrideTip(b) });
-  return {
-    builtIn: catalogue.all.filter((b) => !b.custom || b.custom.overrides).filter((b) => !britainIsDefault || b.id !== BRITAIN.id).map(item2),
-    yours: catalogue.all.filter((b) => b.custom && !b.custom.overrides).map(item2)
-  };
-}
-function startFromItems(custom) {
-  return [
-    ...[BRITAIN, ...BIOMES, ...SPACE_BIOMES].map((b) => ({ id: b.id, label: b.label })),
-    ...custom.map((b) => {
-      var _a5;
-      return { id: b.custom.path, label: ((_a5 = b.custom) == null ? void 0 : _a5.overrides) ? `${b.label} (your version)` : b.label };
-    })
-  ];
-}
-
-// src/landMenu.ts
 var DEFAULT_LAND = { biome: void 0, terrain: "any" };
 var LandButton = class {
   constructor(container, options) {
@@ -135027,6 +135060,107 @@ Names to allow but mark as echoing a real historical people.
 
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
+
+// src/folderNames.ts
+var import_obsidian9 = require("obsidian");
+
+// src/noteNames.ts
+var RESERVED_NAME = "nameForge";
+var normaliseName2 = (s) => (s != null ? s : "").trim().toLowerCase();
+var NO_NAME_MESSAGE = "Give the pack a name.";
+var RESERVED_MESSAGE = `\u201C${RESERVED_NAME}\u201D is reserved \u2013 choose another name.`;
+var clashMessage = (name) => `There's already a note called \u201C${name}\u201D in the names folder \u2013 choose another name.`;
+var phraseClashMessage = (phrase, label) => `The phrase \u201C${phrase}\u201D is already used by ${label} \u2013 choose another.`;
+function nameProblem(raw) {
+  const name = (raw != null ? raw : "").trim();
+  if (!name) return NO_NAME_MESSAGE;
+  if (normaliseName2(name) === normaliseName2(RESERVED_NAME)) return RESERVED_MESSAGE;
+  return void 0;
+}
+function packNameOfNote(text) {
+  var _a5, _b3;
+  const fm = text.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  const line = (_b3 = (_a5 = fm == null ? void 0 : fm[1].match(/^packName:[ \t]*(.*)$/m)) == null ? void 0 : _a5[1]) == null ? void 0 : _b3.trim().replace(/^["']|["']$/g, "");
+  return line || void 0;
+}
+function nameClash(name, notes, editingPath) {
+  const wanted = /* @__PURE__ */ new Set([normaliseName2(name), normaliseName2(sanitizePackNameForFilename(name))]);
+  return notes.find((n) => n.path !== editingPath && (wanted.has(normaliseName2(n.basename)) || n.packName !== void 0 && wanted.has(normaliseName2(n.packName))));
+}
+function newNameProblem(raw, notes, editingPath) {
+  const problem = nameProblem(raw);
+  if (problem) return problem;
+  const name = raw.trim();
+  return nameClash(name, notes, editingPath) ? clashMessage(name) : void 0;
+}
+function phraseProblem(phrase, biomes, opts = {}) {
+  const wanted = normaliseName2(phrase);
+  if (!wanted) return void 0;
+  const other = biomes.find(
+    (b) => {
+      var _a5;
+      return !(opts.editingPath && ((_a5 = b.custom) == null ? void 0 : _a5.path) === opts.editingPath) && !(opts.replaces && b.id === opts.replaces.id) && (normaliseName2(b.label) === wanted || normaliseName2(b.phrase) === wanted);
+    }
+  );
+  return other ? phraseClashMessage(phrase.trim(), other.label) : void 0;
+}
+function folderNameProblems(notes, biomes) {
+  var _a5;
+  const out = [];
+  const file = (n) => `${n.basename}.md`;
+  for (const n of notes) {
+    if (normaliseName2(n.basename) === normaliseName2(RESERVED_NAME) || normaliseName2(n.packName) === normaliseName2(RESERVED_NAME)) {
+      out.push(`Names folder: \u201C${file(n)}\u201D is called \u201C${RESERVED_NAME}\u201D, which is reserved \u2013 rename it.`);
+    }
+  }
+  const byName = /* @__PURE__ */ new Map();
+  for (const n of notes) {
+    for (const key2 of /* @__PURE__ */ new Set([normaliseName2(n.basename), ...n.packName ? [normaliseName2(n.packName)] : []])) {
+      byName.set(key2, [...(_a5 = byName.get(key2)) != null ? _a5 : [], n]);
+    }
+  }
+  for (const [key2, group] of byName) {
+    if (group.length > 1 && key2 !== normaliseName2(RESERVED_NAME)) {
+      out.push(`Names folder: ${group.map((n) => `\u201C${file(n)}\u201D`).join(" and ")} share the name \u201C${key2}\u201D \u2013 rename one.`);
+    }
+  }
+  const uses = (x, y) => !!x.custom && (normaliseName2(x.phrase) === normaliseName2(y.label) || normaliseName2(x.phrase) === normaliseName2(y.phrase));
+  for (let i = 0; i < biomes.length; i++) {
+    for (let j = i + 1; j < biomes.length; j++) {
+      const x = biomes[i];
+      const y = biomes[j];
+      if (!x.custom && !y.custom) continue;
+      if (uses(x, y) || uses(y, x)) {
+        const [pack, other] = uses(x, y) ? [x, y] : [y, x];
+        out.push(`Names folder: \u201C${biomeFile(pack)}\u201D uses the phrase \u201C${pack.phrase}\u201D, which the ${other.label} biome also uses \u2013 rename one.`);
+      } else if (normaliseName2(x.label) === normaliseName2(y.label)) {
+        const [pack, other] = x.custom ? [x, y] : [y, x];
+        out.push(`Names folder: \u201C${biomeFile(pack)}\u201D is called \u201C${pack.label}\u201D, which the ${other.label} biome also uses \u2013 rename one.`);
+      }
+    }
+  }
+  return out;
+}
+
+// src/folderNames.ts
+async function folderNoteNames(app, folder) {
+  var _a5;
+  const dir = app.vault.getFolderByPath((0, import_obsidian9.normalizePath)(folder || "/"));
+  const out = [];
+  for (const file of ((_a5 = dir == null ? void 0 : dir.children) != null ? _a5 : []).filter((c) => c instanceof import_obsidian9.TFile && c.extension === "md")) {
+    let packName;
+    try {
+      packName = packNameOfNote(await app.vault.cachedRead(file));
+    } catch (e) {
+      packName = void 0;
+    }
+    out.push({ path: file.path, basename: file.basename, packName });
+  }
+  return out;
+}
+async function nameTakenIn(app, folder, name) {
+  return nameClash(name, await folderNoteNames(app, folder));
+}
 
 // src/names/starterTemplates.ts
 var STARTER_WORD_LISTS = [
@@ -135463,8 +135597,8 @@ function diffAgainstBase(content, base) {
   flush();
   for (const s of pack.sections) {
     const b = baseText.get(norm5(s.heading));
-    const same5 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
-    if (!same5) kept.push(`## ${s.heading}
+    const same6 = b && (s.entries && b.entries ? entryKey(s.entries) === entryKey(b.entries) : key(s.words) === key(b.words)) && s.packs.length === b.packs.length;
+    if (!same6) kept.push(`## ${s.heading}
 
 ${(_c3 = written.get(s.heading)) != null ? _c3 : ""}`.trim());
   }
@@ -135535,7 +135669,7 @@ function isBiomePackContent(content) {
 }
 
 // src/recipeHost.ts
-var import_obsidian9 = require("obsidian");
+var import_obsidian10 = require("obsidian");
 
 // src/packs/placeDraw.ts
 var seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
@@ -135671,7 +135805,7 @@ function parseRecipeContent(content, catalogue) {
   if (!fm) return { recipe: {}, body: content, problems: ["The recipe has no properties."] };
   let raw;
   try {
-    raw = (0, import_obsidian9.parseYaml)(fm[1]);
+    raw = (0, import_obsidian10.parseYaml)(fm[1]);
   } catch (e) {
     return { recipe: {}, body: content.slice(fm[0].length), problems: ["The recipe's properties aren't valid YAML."] };
   }
@@ -135706,7 +135840,7 @@ var RecipeHost = class {
   }
   resolveLink(target, from) {
     const file = this.app.metadataCache.getFirstLinkpathDest(target, from);
-    return file instanceof import_obsidian9.TFile ? file : null;
+    return file instanceof import_obsidian10.TFile ? file : null;
   }
   /** Reads a recipe and applies its template (§7). */
   async loadRecipe(file) {
@@ -136123,7 +136257,7 @@ function generateLabelledNames(lists, options) {
 }
 
 // src/takeoverView.ts
-var import_obsidian10 = require("obsidian");
+var import_obsidian11 = require("obsidian");
 
 // src/takeover/format.ts
 var TAKEOVER_INSERT_FORMATS = [
@@ -136200,7 +136334,7 @@ function nativeDrawer(entry, index, settings) {
       };
     }
     case "mixPack": {
-      const resolved = resolveMixSources((0, import_obsidian10.normalizePath)(entry.path), parsed, index);
+      const resolved = resolveMixSources((0, import_obsidian11.normalizePath)(entry.path), parsed, index);
       if (resolved.error) return resolved.error;
       const corpus = buildWeightedCorpus(resolved.sources.filter((s) => s.names.length > 0 && s.weight > 0));
       if (corpus.length === 0) return "the mix pack has no names";
@@ -136275,17 +136409,17 @@ var TakeoverView = class {
   async run(batchSize) {
     var _a5, _b3, _c3;
     if (!this.nativePath) {
-      new import_obsidian10.Notice("nameForge: choose a native pack to generate names from.");
+      new import_obsidian11.Notice("nameForge: choose a native pack to generate names from.");
       return;
     }
     if (!this.takeoverPath) {
-      new import_obsidian10.Notice("nameForge: choose a takeover pack.");
+      new import_obsidian11.Notice("nameForge: choose a takeover pack.");
       return;
     }
-    const same5 = samePackNotice(this.nativePath, this.takeoverPath);
-    if (same5) {
-      this.host.setStatus(same5);
-      new import_obsidian10.Notice(`nameForge: ${same5}`);
+    const same6 = samePackNotice(this.nativePath, this.takeoverPath);
+    if (same6) {
+      this.host.setStatus(same6);
+      new import_obsidian11.Notice(`nameForge: ${same6}`);
       return;
     }
     const index = await this.host.scanFolderPacks();
@@ -136293,13 +136427,13 @@ var TakeoverView = class {
     const takeoverEntry = index.find((e) => e.path === this.takeoverPath);
     const draw2 = nativeEntry ? nativeDrawer(nativeEntry, index, this.host.settings()) : "the native pack was not found";
     if (typeof draw2 === "string") {
-      new import_obsidian10.Notice(`nameForge: ${draw2}.`);
+      new import_obsidian11.Notice(`nameForge: ${draw2}.`);
       return;
     }
     const reason = takeoverEntry ? this.host.targetReason(takeoverEntry, index) : "the takeover pack was not found";
     const target = takeoverEntry && !reason ? this.host.targetNames(takeoverEntry, index) : reason;
     if (typeof target === "string" || target === void 0) {
-      new import_obsidian10.Notice(`nameForge: ${target != null ? target : "the takeover pack can't be used"}.`);
+      new import_obsidian11.Notice(`nameForge: ${target != null ? target : "the takeover pack can't be used"}.`);
       return;
     }
     this.host.setStatus("");
@@ -136351,7 +136485,7 @@ var TakeoverView = class {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
         attr: { type: "button", title }
       });
-      (0, import_obsidian10.setIcon)(b, icon);
+      (0, import_obsidian11.setIcon)(b, icon);
       return b;
     };
     const insertButton = button(ICON_TEXT_INSERT, "Insert");
@@ -136440,6 +136574,7 @@ var withRegion = (label, regionCode) => {
   return region ? `${label} \xB7 ${region.label}` : label;
 };
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
+var shownFolderClashes = /* @__PURE__ */ new Set();
 var PLACE_LAND_KEYS = { britain: "britain", world: (id) => `world:${id}`, interstellar: "world:interstellar" };
 var SETTLEMENT_LAND_KEYS = { britain: "settlement:british", world: (id) => `settlement:world:${id}`, interstellar: "settlement:world:interstellar" };
 var PLACE_BRITAIN = "britain";
@@ -136533,7 +136668,7 @@ function menuLink(sentence2, text, title, choices, current, choose) {
   const a = sentence2.createEl("a", { cls: "nameforge-recipe-editor__sentence-link", text, attr: { href: "#", role: "button", title } });
   a.addEventListener("click", (event) => {
     event.preventDefault();
-    const menu = new import_obsidian11.Menu();
+    const menu = new import_obsidian12.Menu();
     for (const c of choices) menu.addItem((item2) => item2.setTitle(c.label).setChecked(c.id === current).onClick(() => choose(c.id)));
     menu.showAtMouseEvent(event);
   });
@@ -136671,7 +136806,7 @@ function formatHistoryTimestamp(date) {
   return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 var MAX_HISTORY_ENTRIES = 50;
-var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
+var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
   constructor(app, plugin, settings = {}) {
     super(app);
     this.resultsEl = null;
@@ -136889,6 +137024,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     /** True when mounted into a host panel (Forge) rather than opened as a Modal. */
     this.panelMode = false;
     this.rootEl = null;
+    /** The names folder's notes as last loaded, for the name checks (pack names and biome marks brief §2). */
+    this.folderNotes = [];
     this.handlePackDropdownOutsideClick = (evt) => {
       if (this.isSecondBoxMenuOpen && this.secondBoxDropdownEl && !this.secondBoxDropdownEl.contains(evt.target)) {
         this.setSecondBoxMenuOpen(false);
@@ -136950,7 +137087,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       cls: "nameforge-modal__icon-decoration nameforge-modal__icon-decoration--lg nameforge-modal__icon-decoration--clickable",
       attr: { role: "button", tabindex: "0", "aria-label": "change section", title: "change section", "aria-expanded": "false" }
     });
-    (0, import_obsidian11.setIcon)(sectionTrigger, SECTION_ICONS[this.activeSection]);
+    (0, import_obsidian12.setIcon)(sectionTrigger, SECTION_ICONS[this.activeSection]);
     sectionTrigger.addEventListener("click", () => this.toggleSectionMenu());
     sectionTrigger.addEventListener("keydown", (evt) => {
       if (evt.key === "Enter" || evt.key === " ") {
@@ -136999,7 +137136,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       cls: "nameforge-modal__pack-dropdown-trigger",
       attr: { type: "button", "aria-disabled": "true" }
     });
-    (0, import_obsidian11.setIcon)(stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), ICON_PACKS);
+    (0, import_obsidian12.setIcon)(stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }), ICON_PACKS);
     this.sectionStubLabelEl = stubTrigger.createSpan({ cls: "nameforge-modal__pack-dropdown-label" });
     this.sectionStubEl.hide();
     activeDocument.addEventListener("click", this.handlePackDropdownOutsideClick);
@@ -137008,7 +137145,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
         attr: { type: "button", title: "Create name packs" }
       });
-      (0, import_obsidian11.setIcon)(createPacksButton, ICON_CREATE_PACKS);
+      (0, import_obsidian12.setIcon)(createPacksButton, ICON_CREATE_PACKS);
       createPacksButton.addEventListener("click", () => {
         new NameForgeEditorModal(this.app, this, "", "").open();
       });
@@ -137017,21 +137154,21 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Open in tribes and kin groups" }
     });
-    (0, import_obsidian11.setIcon)(this.openPresetButton, ICON_ADJUSTMENTS);
+    (0, import_obsidian12.setIcon)(this.openPresetButton, ICON_ADJUSTMENTS);
     this.openPresetButton.addEventListener("click", () => void this.openPresetInModule());
     this.openPresetButton.hide();
     this.savePresetButton = createPacksRow.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Save as preset" }
     });
-    (0, import_obsidian11.setIcon)(this.savePresetButton, ICON_SAVE_PRESET);
+    (0, import_obsidian12.setIcon)(this.savePresetButton, ICON_SAVE_PRESET);
     this.savePresetButton.addEventListener("click", () => void this.openSavePreset());
     this.savePresetButton.hide();
     this.guideButton = createPacksRow.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Tradition guide" }
     });
-    (0, import_obsidian11.setIcon)(this.guideButton, ICON_INFO);
+    (0, import_obsidian12.setIcon)(this.guideButton, ICON_INFO);
     this.guideButton.addEventListener("click", () => {
       if (this.activeSection === "hyperspaceCharts") {
         new HyperspaceGuideModal(this.app).open();
@@ -137049,7 +137186,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Options" }
     });
-    (0, import_obsidian11.setIcon)(this.riverOptionsButton, ICON_ADJUSTMENTS);
+    (0, import_obsidian12.setIcon)(this.riverOptionsButton, ICON_ADJUSTMENTS);
     this.riverOptionsButton.addEventListener("click", (evt) => this.openRiverOptions(evt));
     this.riverOptionsButton.hide();
     this.landButton = new LandButton(createPacksRow, {
@@ -137146,7 +137283,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
         cls: "nameforge-modal__section-menu-item" + (entry === current ? " is-active" : ""),
         attr: { role: "button", tabindex: "0", "aria-label": label }
       });
-      (0, import_obsidian11.setIcon)(item2.createSpan({ cls: "nameforge-modal__section-menu-icon" }), group ? GROUP_ICONS[group] : SECTION_ICONS[entry]);
+      (0, import_obsidian12.setIcon)(item2.createSpan({ cls: "nameforge-modal__section-menu-icon" }), group ? GROUP_ICONS[group] : SECTION_ICONS[entry]);
       item2.createSpan({ text: label });
       const go = () => this.switchSection(group ? this.groupModule[group] : entry);
       item2.addEventListener("click", go);
@@ -137206,7 +137343,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     (_o = this.generateButtonEl) == null ? void 0 : _o.setAttribute("aria-label", action);
     if (ageing) void this.enterAgeingSection();
     if (takeover) void this.takeoverView.refresh();
-    if (this.sectionTriggerEl) (0, import_obsidian11.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
+    if (this.sectionTriggerEl) (0, import_obsidian12.setIcon)(this.sectionTriggerEl, SECTION_ICONS[section]);
     if (this.sectionStubLabelEl) this.sectionStubLabelEl.textContent = `${SECTION_LABELS[section]} \u2014 no packs yet`;
     (_p = this.sectionStubEl) == null ? void 0 : _p.toggle(
       section !== "markov" && section !== "placeShapes" && !river && !colonialPart && section !== "nameAgeing" && !takeover && !tribal
@@ -137353,14 +137490,16 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
    */
   async loadCustomBiomes() {
     var _a5;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
-    const files = ((_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []).filter((c) => c instanceof import_obsidian11.TFile && c.extension === "md");
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const files = ((_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []).filter((c) => c instanceof import_obsidian12.TFile && c.extension === "md");
     const stamp = files.map((f) => `${f.path}:${f.stat.mtime}`).join("|");
     if (stamp === this.biomeStamp) return this.customBiomes;
     const sources = [];
+    const notes = [];
     for (const file of files) {
       try {
         const content = await this.app.vault.cachedRead(file);
+        notes.push({ path: file.path, basename: file.basename, packName: packNameOfNote(content) });
         if (isBiomePackContent(content)) sources.push({ path: file.path, content });
       } catch (e) {
         continue;
@@ -137369,8 +137508,35 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     const { biomes, problems } = resolveBiomePacks(sources);
     this.customBiomes = biomes;
     this.biomeProblems = problems;
+    this.folderNotes = notes;
     this.biomeStamp = stamp;
+    this.reportFolderClashes();
     return biomes;
+  }
+  /** §2.2: the clashes already in the folder, named once per session in the status line. Never changes a note. */
+  reportFolderClashes() {
+    const catalogue = biomeCatalogue(this.customBiomes);
+    const messages = folderNameProblems(this.folderNotes, [...catalogue.all, ...catalogue.space]);
+    const fresh = messages.filter((m) => !shownFolderClashes.has(m));
+    if (fresh.length === 0) return;
+    for (const m of fresh) shownFolderClashes.add(m);
+    this.setStatus(fresh.join(" "));
+  }
+  /**
+   * A new note's name, or undefined after saying why not in the status line: empty, "nameForge", or
+   * the name of a note already in the folder (the note being edited may keep its own name).
+   */
+  nameProblemNow(raw, editingPath) {
+    return newNameProblem(raw, this.folderNotes, editingPath);
+  }
+  async checkNewName(raw, editingPath) {
+    await this.loadCustomBiomes();
+    const problem = newNameProblem(raw, this.folderNotes, editingPath);
+    if (problem) {
+      this.setStatus(problem);
+      return void 0;
+    }
+    return raw.trim();
   }
   /** The biome packs as last loaded. */
   customBiomesCache() {
@@ -137461,7 +137627,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
           cls: "nameforge-modal__pack-dropdown-item" + (section === this.activeSection ? " is-active" : ""),
           attr: { type: "button" }
         });
-        (0, import_obsidian11.setIcon)(item2.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
+        (0, import_obsidian12.setIcon)(item2.createSpan({ cls: "nameforge-modal__section-menu-icon" }), SECTION_ICONS[section]);
         item2.createSpan({ cls: "nameforge-modal__pack-dropdown-label", text: moduleLabel(section) });
         item2.addEventListener("click", () => this.switchSection(section));
       }
@@ -137570,7 +137736,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     a.addEventListener("click", (event) => {
       event.preventDefault();
       void (async () => {
-        const menu = new import_obsidian11.Menu();
+        const menu = new import_obsidian12.Menu();
         const list = await choices();
         if (list.length === 0) menu.addItem((item2) => item2.setTitle("No packs found").setDisabled(true));
         for (const c of list) {
@@ -137638,7 +137804,6 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   }
   /** "…set in ‹any part› of ‹unknown country›": the land phrases for a module's land key. */
   landClause(sentence2, key2, defaultPhrase, part, britainAsDefault) {
-    var _a5;
     const land = this.land(key2);
     const biome = this.catalogue().find(land.biome);
     const terrains = biome ? availableTerrains(biome) : TERRAIN_CHOICES.filter((t) => t.id !== "any");
@@ -137656,7 +137821,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     this.sentenceLink(
       sentence2,
       biome ? biomePhrase(land.biome, part, this.customBiomes) : defaultPhrase,
-      (_a5 = biome == null ? void 0 : biome.guide) != null ? _a5 : "Biome: the plants, wildlife, ground and seasons",
+      biomeLinkTitle(biome, "Biome: the plants, wildlife, ground and seasons"),
       async () => {
         await this.loadCustomBiomes();
         const catalogue = this.catalogue();
@@ -137739,9 +137904,9 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     var _a5;
     const packs = (await this.loadBynamePacks()).map((p) => p.name);
     const lists = [];
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     for (const child of (_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       try {
         if (isWordListContent(await this.app.vault.cachedRead(child))) lists.push(child.basename);
       } catch (e) {
@@ -137759,7 +137924,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   async resolveSlotSources(part, sources, recipe) {
     if (!usesOwnNames(part, sources)) return { slots: {}, notices: [] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
-    const slots = await host.resolveSlotSources(recipe, part, sources, `${(0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
+    const slots = await host.resolveSlotSources(recipe, part, sources, `${(0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
     return { slots, notices: host.getNotices() };
   }
   /** The region link: "‹all of Britain›", "‹the North›". */
@@ -137996,11 +138161,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     const description = settlementSentenceText({ size: s.size, setting: s.setting, region: s.region, tradition, context, biome, terrain: land.terrain, aliens }, custom);
     new PresetSaveModal(this.app, name, `${description}.`, async (presetName, text) => {
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = `---
-${(0, import_obsidian11.stringifyYaml)(recipeToFrontmatter(recipe))}---
+${(0, import_obsidian12.stringifyYaml)(recipeToFrontmatter(recipe))}---
 
 ${text}
 `;
@@ -138088,7 +138253,7 @@ ${text}
   /** Presets brief §9: a tribal preset, run with the current quantity; history "tribal names · {name}". */
   async runTribalPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -138163,7 +138328,7 @@ ${n.origin}${also}${echo}` };
       return;
     }
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) return;
+    if (!(file instanceof import_obsidian12.TFile)) return;
     const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, nativePlace, exploration, expansion } = parseModulePreset(await this.app.vault.cachedRead(file), file.basename);
     if (nativePlace || exploration || expansion) {
       await this.openPlacePresetInModule(file.path, nativePlace, exploration, expansion);
@@ -138366,10 +138531,10 @@ ${n.origin}${also}${echo}` };
   /** §12.4: every realm safeguard pack in the names folder, merged with the built-in lists. */
   async loadRealmSafeguards() {
     var _a5;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
     for (const child of (_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isRealmSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
     }
@@ -138389,7 +138554,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -138416,7 +138581,7 @@ ${n.origin}${also}${echo}` };
   /** §13: a realm preset, run as the module runs; history "realms and polities · {preset}". */
   async runRealmPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -138479,7 +138644,7 @@ ${n.origin}${also}${echo}` };
     if (!name) return { notices: [state.pack ? `Pack \u201C${state.pack}\u201D wasn't found; using the typed names.` : "No name packs found; using the typed names."] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
-    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
+    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian12.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices };
     const headings = (_b3 = (_a5 = packs.find((p) => p.name === name)) == null ? void 0 : _a5.headings) != null ? _b3 : [];
     return { draw: (rng) => draw2(ownerSectionRequest(state, headings), "whole", rng), notices };
@@ -138559,7 +138724,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -138582,7 +138747,7 @@ ${n.origin}${also}${echo}` };
   /** §13: a peoples preset, run as the module runs; history "peoples and tongues · {preset}". */
   async runPeoplePreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -138667,8 +138832,8 @@ ${n.origin}${also}${echo}` };
   /** The names folder's markdown notes. */
   namesFolderNotes() {
     var _a5;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
-    return ((_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []).filter((c) => c instanceof import_obsidian11.TFile && c.extension === "md");
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    return ((_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []).filter((c) => c instanceof import_obsidian12.TFile && c.extension === "md");
   }
   /** §12.6: every settlement safeguard pack in the names folder, merged with the built-in lists. */
   async loadSettlementSafeguards(g = ROUTE_DATA.safeguards) {
@@ -138763,7 +138928,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -138787,7 +138952,7 @@ ${n.origin}${also}${echo}` };
   /** §13: an inn preset, run as the module runs; history "inns and taverns · {preset}". */
   async runInnPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -138867,7 +139032,7 @@ ${n.origin}${also}${echo}` };
     if (!name) return { notices: ["No name packs found; placeholders used."] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
-    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
+    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian12.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices };
     const headings = (_d3 = (_c3 = packs.find((p) => p.name === name)) == null ? void 0 : _c3.headings) != null ? _d3 : [];
     return {
@@ -138922,7 +139087,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -138946,7 +139111,7 @@ ${n.origin}${also}${echo}` };
   /** §12: a deity preset, run as its module runs; history "deities · {preset}" or "sacred places · {preset}". */
   async runDeityPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139025,7 +139190,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139047,7 +139212,7 @@ ${n.origin}${also}${echo}` };
   /** §12: an event preset, run as the module runs; history "events and eras · {preset}". */
   async runEventPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139126,7 +139291,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139149,7 +139314,7 @@ ${n.origin}${also}${echo}` };
   /** §14: a money preset, run as the module runs; history "money and coins · {preset}". */
   async runMoneyPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139262,7 +139427,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139287,7 +139452,7 @@ ${n.origin}${also}${echo}` };
   /** §14: a time or sky preset, run as the module runs; history "calendars and festivals · {preset}". */
   async runTimePreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139348,7 +139513,7 @@ ${n.origin}${also}${echo}` };
     if (!name) return { notices: [state.pack ? `Owner pack \u201C${state.pack}\u201D wasn't found; placeholders used.` : "No name packs found; placeholders used."] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
-    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
+    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian12.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices, packName: name };
     const headings = (_b3 = (_a5 = packs.find((p) => p.name === name)) == null ? void 0 : _a5.headings) != null ? _b3 : [];
     return { draw: (rng) => draw2(ownerSectionRequest(state, headings), "whole", rng), notices, packName: name };
@@ -139397,7 +139562,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4, _c4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139421,7 +139586,7 @@ ${n.origin}${also}${echo}` };
   /** §14: a named things preset, run as the module runs; history "{module label} · {preset}". */
   async runThingPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139509,14 +139674,15 @@ ${n.origin}${also}${echo}` };
   settlementsFolder() {
     var _a5;
     const set = (_a5 = this.plugin.settings.settlementsFolder) == null ? void 0 : _a5.trim();
-    return (0, import_obsidian11.normalizePath)(set || `${this.getFolderPath() || DEFAULT_NAMES_FOLDER}/Settlements`);
+    return (0, import_obsidian12.normalizePath)(set || `${this.getFolderPath() || DEFAULT_NAMES_FOLDER}/Settlements`);
   }
   /** §9.3: "{town}.md" (or "{town} 2.md" …) with frontmatter and the block; never overwrites; opens it. */
   async createKitNote(kit) {
     const folder = this.settlementsFolder();
     await ensureVaultFolder(this.app, folder);
-    const path = freeNotePath(folder, kit.context.town, (p) => !!this.app.vault.getAbstractFileByPath((0, import_obsidian11.normalizePath)(p)));
-    const file = await this.app.vault.create((0, import_obsidian11.normalizePath)(path), kitNoteContent(kit));
+    const taken = await folderNoteNames(this.app, folder);
+    const path = freeNotePath(folder, kit.context.town, (p) => !!this.app.vault.getAbstractFileByPath((0, import_obsidian12.normalizePath)(p)) || !!nameClash(p.replace(/^.*\//, "").replace(/\.md$/, ""), taken));
+    const file = await this.app.vault.create((0, import_obsidian12.normalizePath)(path), kitNoteContent(kit));
     await this.app.workspace.getLeaf(false).openFile(file);
     this.setStatus(`Created ${file.path}.`);
   }
@@ -139554,7 +139720,7 @@ ${n.origin}${also}${echo}` };
       head.createSpan({ text: section.title });
       if (section.key !== "neighbours") {
         const reroll = head.createEl("button", { cls: "nameforge-modal__icon-action nameforge-kit__reroll", attr: { type: "button", title: `Reroll ${section.title.toLowerCase()}` } });
-        (0, import_obsidian11.setIcon)(reroll, ICON_DICE);
+        (0, import_obsidian12.setIcon)(reroll, ICON_DICE);
         reroll.addEventListener("click", () => void this.rerollKitSection(section.key));
       }
       const list = view.createEl("ul", { cls: "nameforge-kit__list" });
@@ -139583,7 +139749,7 @@ ${n.origin}${also}${echo}` };
     const buttons = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
     const button = (icon, title, run) => {
       const b = buttons.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title } });
-      (0, import_obsidian11.setIcon)(b, icon);
+      (0, import_obsidian12.setIcon)(b, icon);
       b.addEventListener("click", run);
       return b;
     };
@@ -139594,7 +139760,7 @@ ${n.origin}${also}${echo}` };
     if (kit) button(ICON_CREATE_PACKS, "Create note", () => void this.createKitNote(kit));
     if (this.panelMode) {
       const history2 = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
-      (0, import_obsidian11.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      (0, import_obsidian12.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
       history2.createSpan({ cls: "nameforge-modal__panel-action-label", text: "previous generations" });
       history2.addEventListener("click", () => new PreviousGenerationsModal(this.app, this).open());
     }
@@ -139609,7 +139775,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139633,7 +139799,7 @@ ${n.origin}${also}${echo}` };
   /** §11: a kit preset, run as the module runs; history "settlement kit · {preset} · {name}". */
   async runKitPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139713,7 +139879,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139736,7 +139902,7 @@ ${n.origin}${also}${echo}` };
   /** §13: a building preset, run as the module runs; history "buildings and landmarks · {preset}". */
   async runBuildingPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139837,7 +140003,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139861,7 +140027,7 @@ ${n.origin}${also}${echo}` };
   /** §14.5: a monument preset, run as the module runs; history "monuments and statues · {preset}". */
   async runMonumentPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139951,7 +140117,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4, _c3;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -139976,7 +140142,7 @@ ${n.origin}${also}${echo}` };
   /** §14: a street preset, run as the module runs; history "streets and districts · {preset}". */
   async runStreetPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -139998,7 +140164,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -140022,7 +140188,7 @@ ${n.origin}${also}${echo}` };
   /** §13: a route preset, run as the module runs; history "route names · {preset}". */
   async runRoutePreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -140120,7 +140286,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4, _c3, _d3;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -140151,7 +140317,7 @@ ${n.origin}${also}${echo}` };
   /** §15: a waters preset, run as its module runs; history "{module} · {preset}". */
   async runWatersPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -140211,7 +140377,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4, _c3;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -140239,7 +140405,7 @@ ${n.origin}${also}${echo}` };
   /** §14: a wild lands preset, run as its module runs; history "{module} · {preset}". */
   async runWildsPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -140351,10 +140517,10 @@ ${n.origin}${also}${echo}` };
   /** §14.5: every vessel safeguard pack in the names folder, merged with the built-in lists. */
   async loadVesselSafeguards(module2) {
     var _a5;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
     for (const child of (_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isVesselSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
     }
@@ -140374,7 +140540,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -140403,7 +140569,7 @@ ${n.origin}${also}${echo}` };
   /** §15: a vessel preset, run as its module runs; history "{module} · {preset}". */
   async runVesselPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -140465,7 +140631,7 @@ ${n.origin}${also}${echo}` };
     if (!name) return { notices: ["No name packs found; placeholders used."] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
     const folder = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
-    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian11.normalizePath)(`${folder}/${name}.md`));
+    const { draw: draw2, notices } = await host.packDraw(name, (0, import_obsidian12.normalizePath)(`${folder}/${name}.md`));
     if (!draw2) return { notices, packName: name };
     const headings = (_d3 = (_c3 = packs.find((p) => p.name === name)) == null ? void 0 : _c3.headings) != null ? _d3 : [];
     return {
@@ -140511,10 +140677,10 @@ ${n.origin}${also}${echo}` };
   /** §11.7: every byname safeguard pack in the names folder, merged with the built-in lists. */
   async loadBynameSafeguards() {
     var _a5;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
     for (const child of (_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isBynameSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
     }
@@ -140534,7 +140700,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b4;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -140563,7 +140729,7 @@ ${n.origin}${also}${echo}` };
   /** §12: a byname preset, run as its module runs; history "{module} · {preset}". */
   async runBynamePreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -140577,7 +140743,7 @@ ${n.origin}${also}${echo}` };
   /** Group brief §13: a group preset, run as its module runs; history "{module} · {preset}". */
   async runGroupPreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -140690,7 +140856,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6, _b3;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -140756,7 +140922,7 @@ ${n.origin}${also}${echo}` };
     }
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       return this.writePreset(presetName, make(presetName, text), (existing) => owns(existing, presetName));
@@ -140850,7 +141016,7 @@ ${n.origin}${also}${echo}` };
   /** A place-name preset, run as its module runs; history "{module label} · {preset}". */
   async runPlacePreset() {
     const file = this.currentPresetPath ? this.app.vault.getFileByPath(this.currentPresetPath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Preset not found. Reselect it from the pack list.");
       return;
     }
@@ -140910,7 +141076,7 @@ ${n.origin}${also}${echo}` };
     new PresetSaveModal(this.app, name, description, async (presetName, text) => {
       var _a6;
       if (!presetName) {
-        new import_obsidian11.Notice("nameForge: give the preset a name.");
+        new import_obsidian12.Notice("nameForge: give the preset a name.");
         return false;
       }
       const content = modulePresetContent({
@@ -140941,34 +141107,48 @@ ${n.origin}${also}${echo}` };
    * preset of the same module is replaced only on yes; any other note is refused.
    */
   async writePreset(name, content, sameModule) {
+    await this.loadCustomBiomes();
+    const nameIssue = nameProblem(name);
+    if (nameIssue) {
+      new import_obsidian12.Notice(`nameForge: ${nameIssue}`);
+      return false;
+    }
     let folderPath = this.getFolderPath();
     if (!folderPath) {
       const folder = await this.promptForFolderSelection();
       if (!folder) return false;
       folderPath = folder.path;
     }
-    const path = (0, import_obsidian11.normalizePath)(`${folderPath}/${sanitizePackNameForFilename(name)}.md`);
+    const path = (0, import_obsidian12.normalizePath)(`${folderPath}/${sanitizePackNameForFilename(name)}.md`);
     try {
       const existing = this.app.vault.getFileByPath(path);
-      if (existing instanceof import_obsidian11.TFile) {
+      if (existing instanceof import_obsidian12.TFile) {
         if (await this.isTemplateFile(existing)) {
-          new import_obsidian11.Notice("nameForge: a template already has that name. Choose another name.");
+          new import_obsidian12.Notice("nameForge: a template already has that name. Choose another name.");
           return false;
         }
         if (!sameModule(await this.app.vault.read(existing))) {
-          new import_obsidian11.Notice("nameForge: a file with that name already exists.");
+          new import_obsidian12.Notice("nameForge: a file with that name already exists.");
+          return false;
+        }
+        if (nameClash(name, this.folderNotes, path)) {
+          new import_obsidian12.Notice(`nameForge: ${clashMessage(name)}`);
           return false;
         }
         if (!await confirmReplace(this.app, `Replace preset \u201C${name}\u201D?`)) return false;
         await this.app.vault.modify(existing, content);
       } else {
+        if (nameClash(name, this.folderNotes)) {
+          new import_obsidian12.Notice(`nameForge: ${clashMessage(name)}`);
+          return false;
+        }
         await this.app.vault.create(path, content);
       }
     } catch (e) {
-      new import_obsidian11.Notice(`nameForge: couldn't save the preset to ${path}.`);
+      new import_obsidian12.Notice(`nameForge: couldn't save the preset to ${path}.`);
       return false;
     }
-    new import_obsidian11.Notice(`nameForge: preset \u201C${name}\u201D saved.`);
+    new import_obsidian12.Notice(`nameForge: preset \u201C${name}\u201D saved.`);
     await this.refreshPackDropdown({ preserveSelection: true });
     return true;
   }
@@ -141032,10 +141212,10 @@ ${n.origin}${also}${echo}` };
   /** Group brief §12.6: every group safeguard pack in the names folder, merged with the built-in lists. */
   async loadGroupSafeguards() {
     var _a5;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
     for (const child of (_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isGroupSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
     }
@@ -141047,10 +141227,10 @@ ${n.origin}${also}${echo}` };
   /** Land brief §10: every tribal safeguard pack in the names folder, merged with the built-in lists. */
   async loadSafeguards() {
     var _a5;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
     const packs = [];
     for (const child of (_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       const content = await this.app.vault.cachedRead(child);
       if (isSafeguardPackContent(content)) packs.push(parseSafeguardPack(content));
     }
@@ -141083,7 +141263,7 @@ ${n.origin}${also}${echo}` };
         segment2.current,
         (id) => {
           this.setTribalState(chooseTribal(this.tribalState(), segment2.field, id, (x) => this.catalogue().find(x)));
-          if (segment2.field === "hostile" && id === "hostile") new import_obsidian11.Notice("Hostile names are on: some results will be insults one people used for another.");
+          if (segment2.field === "hostile" && id === "hostile") new import_obsidian12.Notice("Hostile names are on: some results will be insults one people used for another.");
         }
       );
     }
@@ -141114,7 +141294,7 @@ ${n.origin}${also}${echo}` };
   /** Land brief §8.1: river names' options menu. */
   openRiverOptions(evt) {
     const r = this.riverPeoples;
-    const menu = new import_obsidian11.Menu();
+    const menu = new import_obsidian12.Menu();
     menu.addItem((item2) => item2.setTitle("Peoples from tribes and kin groups").setChecked(r.mode === "tribal").onClick(() => r.mode = "tribal"));
     menu.addItem((item2) => item2.setTitle("Peoples as placeholders").setChecked(r.mode === "placeholder").onClick(() => r.mode = "placeholder"));
     if (this.activeSection === "riverNames" && this.riverSetting !== "british") {
@@ -141216,7 +141396,7 @@ ${n.origin}${also}${echo}` };
     var _a5;
     const { parsed } = entry;
     if (parsed.packType === "mixPack") {
-      const resolved = resolveMixSources((0, import_obsidian11.normalizePath)(entry.path), parsed, index);
+      const resolved = resolveMixSources((0, import_obsidian12.normalizePath)(entry.path), parsed, index);
       if (resolved.error) return resolved.error;
       const distinct = [...new Set(resolved.sources.flatMap((source) => source.names))];
       return { names: distinct, corpus: buildWeightedCorpus(resolved.sources), endings: [] };
@@ -141230,22 +141410,22 @@ ${n.origin}${also}${echo}` };
     const source = (_b3 = (_a5 = this.ageingSourceInput) == null ? void 0 : _a5.value.trim()) != null ? _b3 : "";
     const problem = validateSource(source);
     if (problem) {
-      new import_obsidian11.Notice(`nameForge: ${problem}`);
+      new import_obsidian12.Notice(`nameForge: ${problem}`);
       return;
     }
     if (!this.ageingTargetPath) {
-      new import_obsidian11.Notice("nameForge: choose a target pack to age the name towards.");
+      new import_obsidian12.Notice("nameForge: choose a target pack to age the name towards.");
       return;
     }
     const index = await this.scanFolderPacks();
     const entry = index.find((e) => e.path === this.ageingTargetPath);
     const target = entry ? this.ageingTargetNames(entry, index) : "the target pack was not found";
     if (typeof target === "string") {
-      new import_obsidian11.Notice(`nameForge: ${target}.`);
+      new import_obsidian12.Notice(`nameForge: ${target}.`);
       return;
     }
     if (new Set(target.names.map((n) => n.toLowerCase())).size < AGEING.minTargetNames) {
-      new import_obsidian11.Notice(`nameForge: the target pack needs at least ${AGEING.minTargetNames} names.`);
+      new import_obsidian12.Notice(`nameForge: the target pack needs at least ${AGEING.minTargetNames} names.`);
       return;
     }
     const seedOverride = this.seedLocked ? parseSeedInput((_c3 = this.seedInputEl) == null ? void 0 : _c3.value) : void 0;
@@ -141302,7 +141482,7 @@ ${n.origin}${also}${echo}` };
         cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
         attr: { type: "button", title }
       });
-      (0, import_obsidian11.setIcon)(b, icon);
+      (0, import_obsidian12.setIcon)(b, icon);
       return b;
     };
     const insertButton = button(ICON_TEXT_INSERT, "Insert");
@@ -141344,7 +141524,7 @@ ${n.origin}${also}${echo}` };
     });
     if (this.panelMode) {
       const history2 = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
-      (0, import_obsidian11.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      (0, import_obsidian12.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
       history2.createSpan({ cls: "nameforge-modal__panel-action-label", text: "ageing history" });
       history2.addEventListener("click", () => new AgeingHistoryModal(this.app, this).open());
     }
@@ -141474,7 +141654,7 @@ ${n.origin}${also}${echo}` };
     }
     const pack = this.packTrigger;
     if (!pack) return;
-    if (this.packDropdownIconEl) (0, import_obsidian11.setIcon)(this.packDropdownIconEl, packTypeIconId(pack.type, pack.sub));
+    if (this.packDropdownIconEl) (0, import_obsidian12.setIcon)(this.packDropdownIconEl, packTypeIconId(pack.type, pack.sub));
     if (this.packDropdownLabelEl) {
       this.packDropdownLabelEl.textContent = ((_b3 = pack.path.split("/").pop()) == null ? void 0 : _b3.replace(/\.md$/i, "")) || pack.path;
     }
@@ -141509,7 +141689,7 @@ ${n.origin}${also}${echo}` };
         cls: "nameforge-modal__pack-dropdown-item",
         attr: { type: "button" }
       });
-      (0, import_obsidian11.setIcon)(
+      (0, import_obsidian12.setIcon)(
         item2.createSpan({ cls: "nameforge-modal__pack-dropdown-icon" }),
         packTypeIconId(packType, packSubGenerator(packType, compoundGenerator))
       );
@@ -141526,7 +141706,7 @@ ${n.origin}${also}${echo}` };
       cls: "nameforge-modal__icon-button",
       attr: { title }
     });
-    (0, import_obsidian11.setIcon)(button, iconId);
+    (0, import_obsidian12.setIcon)(button, iconId);
     return button;
   }
   updateQuantityButtons() {
@@ -141569,7 +141749,7 @@ ${n.origin}${also}${echo}` };
     });
   }
   async saveToConfiguredFile(namesText, templateOf, placeGenerator) {
-    var _a5;
+    var _a5, _b3, _c3;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
@@ -141581,7 +141761,7 @@ ${n.origin}${also}${echo}` };
       return;
     }
     const sectioned = this.currentPackType === "listPack" || this.currentPackType === "breakdownPack" || this.currentPackType === "placePack" ? (_a5 = parseNameSections(namesText)) != null ? _a5 : void 0 : void 0;
-    const normalizedFilePath = (0, import_obsidian11.normalizePath)(filePath);
+    const normalizedFilePath = (0, import_obsidian12.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
       this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
@@ -141592,14 +141772,20 @@ ${n.origin}${also}${echo}` };
       this.setStatus("Recipes and presets are saved from their own editors.");
       return;
     }
-    const content = createNamesFileContent(this.plugin.settings.packName || "nameForge", names, packType, {
+    const packName = (_c3 = (_b3 = this.plugin.settings.packName) == null ? void 0 : _b3.trim()) != null ? _c3 : "";
+    const nameIssue = nameProblem(packName);
+    if (nameIssue) {
+      this.setStatus(nameIssue);
+      return;
+    }
+    const content = createNamesFileContent(packName, names, packType, {
       templateOf,
       sectioned,
       placeGenerator
     });
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
-      if (existingFile instanceof import_obsidian11.TFile) {
+      if (existingFile instanceof import_obsidian12.TFile) {
         if (await this.isTemplateFile(existingFile)) {
           this.setStatus("A template already has that name. Choose another pack name.");
           return;
@@ -141620,9 +141806,10 @@ ${n.origin}${also}${echo}` };
   }
   /** §2.2: one notice naming every Breakdown list under the minimum. */
   warnShortLists(short) {
-    if (short.length > 0) new import_obsidian11.Notice(shortListsSaveNotice(short), 1e4);
+    if (short.length > 0) new import_obsidian12.Notice(shortListsSaveNotice(short), 1e4);
   }
   async saveCompoundToConfiguredFile(parts, generator, joining, templateOf, options = {}) {
+    var _a5, _b3;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
@@ -141632,16 +141819,22 @@ ${n.origin}${also}${echo}` };
       this.setStatus("No names to save. Enter at least one name for each part.");
       return;
     }
-    const normalizedFilePath = (0, import_obsidian11.normalizePath)(filePath);
+    const normalizedFilePath = (0, import_obsidian12.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
       this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
       return;
     }
-    const content = createCompoundNamesFileContent(this.plugin.settings.packName || "nameForge", parts, generator, joining, templateOf, options);
+    const packName = (_b3 = (_a5 = this.plugin.settings.packName) == null ? void 0 : _a5.trim()) != null ? _b3 : "";
+    const nameIssue = nameProblem(packName);
+    if (nameIssue) {
+      this.setStatus(nameIssue);
+      return;
+    }
+    const content = createCompoundNamesFileContent(packName, parts, generator, joining, templateOf, options);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
-      if (existingFile instanceof import_obsidian11.TFile) {
+      if (existingFile instanceof import_obsidian12.TFile) {
         if (await this.isTemplateFile(existingFile)) {
           this.setStatus("A template already has that name. Choose another pack name.");
           return;
@@ -141667,6 +141860,7 @@ ${n.origin}${also}${echo}` };
     );
   }
   async saveMixToConfiguredFile(sources, templateOf) {
+    var _a5, _b3;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
@@ -141676,16 +141870,22 @@ ${n.origin}${also}${echo}` };
       this.setStatus("A mix pack needs at least two source packs.");
       return;
     }
-    const normalizedFilePath = (0, import_obsidian11.normalizePath)(filePath);
+    const normalizedFilePath = (0, import_obsidian12.normalizePath)(filePath);
     const folderPath = normalizedFilePath.includes("/") ? normalizedFilePath.substring(0, normalizedFilePath.lastIndexOf("/")) : "";
     if (folderPath && !this.app.vault.getFolderByPath(folderPath)) {
       this.setStatus(`Folder not found at ${folderPath}. Select or create it first.`);
       return;
     }
-    const content = createMixNamesFileContent(this.plugin.settings.packName || "nameForge", sources, templateOf);
+    const packName = (_b3 = (_a5 = this.plugin.settings.packName) == null ? void 0 : _a5.trim()) != null ? _b3 : "";
+    const nameIssue = nameProblem(packName);
+    if (nameIssue) {
+      this.setStatus(nameIssue);
+      return;
+    }
+    const content = createMixNamesFileContent(packName, sources, templateOf);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
-      if (existingFile instanceof import_obsidian11.TFile) {
+      if (existingFile instanceof import_obsidian12.TFile) {
         if (await this.isTemplateFile(existingFile)) {
           this.setStatus("A template already has that name. Choose another pack name.");
           return;
@@ -141711,7 +141911,7 @@ ${n.origin}${also}${echo}` };
       this.setStatus("Set a folder to store name packs before browsing them.");
       return;
     }
-    let folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(folderPath));
+    let folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(folderPath));
     if (!folder) {
       try {
         folder = await ensureVaultFolder(this.app, folderPath);
@@ -141726,7 +141926,7 @@ ${n.origin}${also}${echo}` };
     }
     const packs = [];
     for (const child of folder.children) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") {
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") {
         continue;
       }
       try {
@@ -141815,8 +142015,8 @@ ${n.origin}${also}${echo}` };
   async loadPack(packPath) {
     var _a5, _b3, _c3, _d3;
     const example = isExamplePackPath(packPath) ? examplePacks().find((e) => e.path === packPath) : void 0;
-    const file = example ? null : this.app.vault.getFileByPath((0, import_obsidian11.normalizePath)(packPath));
-    if (!example && !(file instanceof import_obsidian11.TFile)) {
+    const file = example ? null : this.app.vault.getFileByPath((0, import_obsidian12.normalizePath)(packPath));
+    if (!example && !(file instanceof import_obsidian12.TFile)) {
       this.setStatus(`Pack not found at ${packPath}.`);
       return;
     }
@@ -141827,11 +142027,11 @@ ${n.origin}${also}${echo}` };
       this.setStatus(`Failed to load pack ${packPath}.`);
       return;
     }
-    if (file instanceof import_obsidian11.TFile && isRecipeContent(content)) {
+    if (file instanceof import_obsidian12.TFile && isRecipeContent(content)) {
       await this.loadRecipePack(file);
       return;
     }
-    if (file instanceof import_obsidian11.TFile && isModulePresetContent(content)) {
+    if (file instanceof import_obsidian12.TFile && isModulePresetContent(content)) {
       await this.loadTribalPreset(file, content);
       return;
     }
@@ -141888,7 +142088,7 @@ ${n.origin}${also}${echo}` };
     if (!parsed.templateOf) return { parsed };
     const file = this.app.metadataCache.getFirstLinkpathDest(parsed.templateOf, path);
     let template;
-    if (file instanceof import_obsidian11.TFile) {
+    if (file instanceof import_obsidian12.TFile) {
       try {
         template = parseNamesFileContent(await this.app.vault.cachedRead(file));
       } catch (e) {
@@ -141950,7 +142150,7 @@ ${n.origin}${also}${echo}` };
   async runRecipe() {
     var _a5;
     const file = this.currentRecipePath ? this.app.vault.getFileByPath(this.currentRecipePath) : null;
-    if (!(file instanceof import_obsidian11.TFile)) {
+    if (!(file instanceof import_obsidian12.TFile)) {
       this.setStatus("Recipe not found. Reselect it from the pack list.");
       return;
     }
@@ -142020,7 +142220,7 @@ ${n.origin}${also}${echo}` };
     const buttonsGroup = actions.createDiv({ cls: "nameforge-modal__results-buttons" });
     const button = (icon, title) => {
       const b = buttonsGroup.createEl("button", { cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg", attr: { type: "button", title } });
-      (0, import_obsidian11.setIcon)(b, icon);
+      (0, import_obsidian12.setIcon)(b, icon);
       return b;
     };
     if (etymology !== "none") {
@@ -142080,7 +142280,7 @@ ${n.origin}${also}${echo}` };
     });
     if (this.panelMode) {
       const history2 = this.resultsEl.createEl("button", { cls: "nameforge-modal__panel-action", attr: { type: "button" } });
-      (0, import_obsidian11.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
+      (0, import_obsidian12.setIcon)(history2.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_PREVIOUS_GENERATIONS);
       history2.createSpan({ cls: "nameforge-modal__panel-action-label", text: "previous generations" });
       history2.addEventListener("click", () => new PreviousGenerationsModal(this.app, this).open());
     }
@@ -142469,7 +142669,7 @@ ${n.origin}${also}${echo}` };
         return;
       }
       const index = await this.scanFolderPacks();
-      const mixEntry = index.find((entry) => entry.path === (0, import_obsidian11.normalizePath)(mixPath));
+      const mixEntry = index.find((entry) => entry.path === (0, import_obsidian12.normalizePath)(mixPath));
       if (!mixEntry || mixEntry.parsed.packType !== "mixPack") {
         this.renderResults([], "Select a mix pack to generate from.");
         this.setStatus("Mix pack not found. Reselect it from the pack list.");
@@ -142482,7 +142682,7 @@ ${n.origin}${also}${echo}` };
         return;
       }
       const choice2 = this.sectionChoice;
-      const resolved = resolveMixSources((0, import_obsidian11.normalizePath)(mixPath), mixData, index, void 0, choice2 && !choice2.whole ? choice2.request : void 0);
+      const resolved = resolveMixSources((0, import_obsidian12.normalizePath)(mixPath), mixData, index, void 0, choice2 && !choice2.whole ? choice2.request : void 0);
       if (resolved.error) {
         this.renderResults([], resolved.error);
         this.setStatus(resolved.error);
@@ -142624,7 +142824,7 @@ ${n.origin}${also}${echo}` };
       cls: "nameforge-modal__icon-action",
       attr: { type: "button", "aria-pressed": String(this.seedLocked) }
     });
-    (0, import_obsidian11.setIcon)(this.seedLockButton, ICON_SEED_LOCK);
+    (0, import_obsidian12.setIcon)(this.seedLockButton, ICON_SEED_LOCK);
     this.seedLockButton.addEventListener("click", () => {
       this.seedLocked = !this.seedLocked;
       this.updateSeedLockButton();
@@ -142634,7 +142834,7 @@ ${n.origin}${also}${echo}` };
       cls: "nameforge-modal__icon-action",
       attr: { type: "button", title: "Copy seed" }
     });
-    (0, import_obsidian11.setIcon)(copyButton, ICON_SEED_COPY);
+    (0, import_obsidian12.setIcon)(copyButton, ICON_SEED_COPY);
     copyButton.addEventListener("click", () => {
       void this.copySeedToClipboard();
     });
@@ -142642,7 +142842,7 @@ ${n.origin}${also}${echo}` };
       cls: "nameforge-modal__icon-action",
       attr: { type: "button", title: "Previous generations" }
     });
-    (0, import_obsidian11.setIcon)(historyButton, ICON_PREVIOUS_GENERATIONS);
+    (0, import_obsidian12.setIcon)(historyButton, ICON_PREVIOUS_GENERATIONS);
     historyButton.addEventListener("click", () => {
       if (this.activeSection === "nameAgeing") new AgeingHistoryModal(this.app, this).open();
       else new PreviousGenerationsModal(this.app, this).open();
@@ -142662,17 +142862,17 @@ ${n.origin}${also}${echo}` };
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert" }
     });
-    (0, import_obsidian11.setIcon)(insertButton, ICON_TEXT_INSERT);
+    (0, import_obsidian12.setIcon)(insertButton, ICON_TEXT_INSERT);
     const checklistButton = buttonsGroup.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert checklist" }
     });
-    (0, import_obsidian11.setIcon)(checklistButton, ICON_CHECKLIST_INSERT);
+    (0, import_obsidian12.setIcon)(checklistButton, ICON_CHECKLIST_INSERT);
     const bulletButton = buttonsGroup.createEl("button", {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Insert bullet list" }
     });
-    (0, import_obsidian11.setIcon)(bulletButton, ICON_BULLET_INSERT);
+    (0, import_obsidian12.setIcon)(bulletButton, ICON_BULLET_INSERT);
     const getSelectedNames = () => Array.from(list.querySelectorAll("li.is-selected")).map(resultName);
     const updateInsertButtons = () => {
       const selected = getSelectedNames();
@@ -142714,7 +142914,7 @@ ${n.origin}${also}${echo}` };
         cls: "nameforge-modal__panel-action",
         attr: { type: "button" }
       });
-      (0, import_obsidian11.setIcon)(createPack.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
+      (0, import_obsidian12.setIcon)(createPack.createSpan({ cls: "nameforge-modal__panel-action-icon" }), ICON_CREATE_PACKS);
       createPack.createSpan({
         cls: "nameforge-modal__panel-action-label",
         text: "create name pack"
@@ -142726,7 +142926,7 @@ ${n.origin}${also}${echo}` };
         cls: "nameforge-modal__panel-action",
         attr: { type: "button" }
       });
-      (0, import_obsidian11.setIcon)(
+      (0, import_obsidian12.setIcon)(
         previousGenerations.createSpan({ cls: "nameforge-modal__panel-action-icon" }),
         ICON_PREVIOUS_GENERATIONS
       );
@@ -142795,10 +142995,10 @@ ${indent}${marker}${name}`).join("");
     const iconsByName = /* @__PURE__ */ new Map();
     const folderPath = this.getFolderPath();
     if (!folderPath) return iconsByName;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(folderPath));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(folderPath));
     if (!folder) return iconsByName;
     for (const child of folder.children) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
         if (isRecipeContent(content)) {
@@ -142822,10 +143022,10 @@ ${indent}${marker}${name}`).join("");
     const index = [];
     const folderPath = this.getFolderPath();
     if (!folderPath) return index;
-    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(folderPath));
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(folderPath));
     if (!folder) return index;
     for (const child of folder.children) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
         if (!isValidNamePackContent(content)) continue;
@@ -142847,11 +143047,11 @@ ${indent}${marker}${name}`).join("");
   async listTemplates(kinds) {
     var _a5;
     const folderPath = this.getFolderPath();
-    const folder = folderPath ? this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(folderPath)) : null;
+    const folder = folderPath ? this.app.vault.getFolderByPath((0, import_obsidian12.normalizePath)(folderPath)) : null;
     if (!folder) return [];
     const out = [];
     for (const child of folder.children) {
-      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      if (!(child instanceof import_obsidian12.TFile) || child.extension !== "md") continue;
       try {
         const content = await this.app.vault.cachedRead(child);
         if (!isValidNamePackContent(content)) continue;
@@ -142879,7 +143079,7 @@ ${indent}${marker}${name}`).join("");
     });
   }
 };
-var TraditionGuideModal = class extends import_obsidian11.Modal {
+var TraditionGuideModal = class extends import_obsidian12.Modal {
   constructor(app, part, onSelect) {
     super(app);
     this.part = part;
@@ -142913,7 +143113,7 @@ var TraditionGuideModal = class extends import_obsidian11.Modal {
     this.contentEl.empty();
   }
 };
-var AgeingHistoryModal = class extends import_obsidian11.Modal {
+var AgeingHistoryModal = class extends import_obsidian12.Modal {
   constructor(app, parent) {
     super(app);
     this.parent = parent;
@@ -142932,11 +143132,11 @@ var AgeingHistoryModal = class extends import_obsidian11.Modal {
     const list = contentEl.createDiv({ cls: "nameforge-history-modal__list" });
     for (const entry of history2) {
       const row = list.createDiv({ cls: "nameforge-history-modal__row" });
-      (0, import_obsidian11.setIcon)(row.createSpan({ cls: "nameforge-history-modal__pack-icon" }), SECTION_ICONS.nameAgeing);
+      (0, import_obsidian12.setIcon)(row.createSpan({ cls: "nameforge-history-modal__pack-icon" }), SECTION_ICONS.nameAgeing);
       row.createSpan({ cls: "nameforge-history-modal__pack-name", text: entry.label });
       row.createSpan({ cls: "nameforge-history-modal__seed", text: String(entry.seed) });
       const copy = row.createEl("button", { cls: "nameforge-history-modal__copy", attr: { type: "button", title: "Copy seed" } });
-      (0, import_obsidian11.setIcon)(copy, ICON_SEED_COPY);
+      (0, import_obsidian12.setIcon)(copy, ICON_SEED_COPY);
       copy.addEventListener("click", (event) => {
         event.stopPropagation();
         void navigator.clipboard.writeText(String(entry.seed));
@@ -142947,7 +143147,7 @@ var AgeingHistoryModal = class extends import_obsidian11.Modal {
     this.contentEl.empty();
   }
 };
-var PreviousGenerationsModal = class extends import_obsidian11.Modal {
+var PreviousGenerationsModal = class extends import_obsidian12.Modal {
   constructor(app, parent) {
     super(app);
     this.parent = parent;
@@ -142983,7 +143183,7 @@ var PreviousGenerationsModal = class extends import_obsidian11.Modal {
       const row = list.createDiv({ cls: "nameforge-history-modal__row" });
       const iconEl = row.createSpan({ cls: "nameforge-history-modal__pack-icon" });
       const entrySection = historySection(entry.packName);
-      (0, import_obsidian11.setIcon)(
+      (0, import_obsidian12.setIcon)(
         iconEl,
         entrySection === "markov" ? (_b3 = iconsByName.get(entry.packName)) != null ? _b3 : ICON_BREAKDOWN_PACK : entry.packName.startsWith(GENERIC_PLACE_NAMES_HISTORY_NAME) ? ICON_GENERIC_PLACE_NAMES : SECTION_ICONS[entrySection]
       );
@@ -142999,7 +143199,7 @@ var PreviousGenerationsModal = class extends import_obsidian11.Modal {
         cls: "nameforge-history-modal__copy",
         attr: { type: "button", title: "Copy seed" }
       });
-      (0, import_obsidian11.setIcon)(copyButton, ICON_SEED_COPY);
+      (0, import_obsidian12.setIcon)(copyButton, ICON_SEED_COPY);
       copyButton.addEventListener("click", (event) => {
         event.stopPropagation();
         void navigator.clipboard.writeText(String(entry.seed));
@@ -143018,7 +143218,7 @@ var PreviousGenerationsModal = class extends import_obsidian11.Modal {
 };
 var NAME_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nKeelin\nOsbert\nBrynn\nMarusa\n\nor\n\nKeelin, Osbert, Brynn, Marusa\n\nor\n\nKeelin Osbert Brynn Marusa\n\n---\n\n# pack name\nThe name of the pack. It's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.\n\n## pack separator\nThe pack separator is used to divide a name pack into various segments such as male, female, noble, saints, child, or other types of names.";
 var PLACE_TEXTAREA_PLACEHOLDER = "Paste names as CSV, one per line, or space-separated; or a mix. nameForge tidies them up.\n\nThael\nBehem\nPresburg\nKelheim\n\nor\n\nThael, Behem, Presburg, Kelheim\n\n---\n\n# pack name\nThe name of the pack. It's used instead of the Pack Name box, which can be left empty. Without it, the Pack Name box (or YAML packName) names the pack.\n\n## pack separator\nThe pack separator is used to divide a name pack into various segments such as towns, villages, ports, rivers, or other types of place names.";
-var NameForgeEditorModal = class extends import_obsidian11.Modal {
+var NameForgeEditorModal = class extends import_obsidian12.Modal {
   constructor(app, parent, initialText, initialPackName) {
     super(app);
     /** The active tab's text box (one of textPanes), or null on the tabs without one. */
@@ -143041,6 +143241,8 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     this.biomeBaseSelect = null;
     /** Wizard retirement brief §5.3: the line under the name when it matches a built-in biome. */
     this.biomeReplacesEl = null;
+    /** Pack names and biome marks brief §2: the line under it when the name or phrase clashes with another note or biome. */
+    this.biomeProblemEl = null;
     /** Whether the user has picked "Start from" themselves, so typing a built-in's name stops choosing it for them. */
     this.biomeBaseChosen = false;
     this.biomePhraseInput = null;
@@ -143087,11 +143289,13 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     this.packNameInput.value = this.initialPackName;
     this.biomeReplacesEl = contentEl.createDiv({ cls: "nameforge-modal__biome-replaces" });
     this.biomeReplacesEl.hide();
+    this.biomeProblemEl = contentEl.createDiv({ cls: "nameforge-modal__biome-problem" });
+    this.biomeProblemEl.hide();
     this.packNameInput.addEventListener("input", () => this.onBiomeNameInput());
     const typeToggle = contentEl.createDiv({ cls: "nameforge-modal__toggle-panel nameforge-modal__pack-type-toggle" });
     const addTypeButton = (label, iconId) => {
       const button = typeToggle.createEl("button", { cls: "nameforge-modal__toggle-button" });
-      (0, import_obsidian11.setIcon)(button.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), iconId);
+      (0, import_obsidian12.setIcon)(button.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), iconId);
       button.createSpan({ text: label });
       return button;
     };
@@ -143129,7 +143333,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
       cls: "nameforge-modal__toggle-button nameforge-modal__templates-button is-pill-bottom-right",
       attr: { type: "button", "aria-label": "Templates", "aria-pressed": "false" }
     });
-    (0, import_obsidian11.setIcon)(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
+    (0, import_obsidian12.setIcon)(this.templatesButton.createSpan({ cls: "nameforge-modal__toggle-button-icon" }), ICON_SAVE_PRESET);
     this.templatesButton.addEventListener("click", () => {
       this.templatesOpen = !this.templatesOpen;
       this.updateTypeButtons();
@@ -143143,6 +143347,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     });
     biomeRow.createSpan({ cls: "nameforge-editor-modal__template-label", text: "Phrase" });
     this.biomePhraseInput = biomeRow.createEl("input", { cls: "nameforge-editor-modal__phrase-input", attr: { type: "text", "aria-label": "Phrase" } });
+    this.biomePhraseInput.addEventListener("input", () => void this.updateBiomeProblem());
     biomeRow.hide();
     const stage = contentEl.createDiv({ cls: "nameforge-editor-modal__stage" });
     this.stageEl = stage;
@@ -143173,7 +143378,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Save names" }
     });
-    (0, import_obsidian11.setIcon)(saveButton, ICON_SAVE);
+    (0, import_obsidian12.setIcon)(saveButton, ICON_SAVE);
     saveButton.addEventListener("click", () => {
       void this.saveNames();
     });
@@ -143181,7 +143386,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg",
       attr: { type: "button", title: "Cancel" }
     });
-    (0, import_obsidian11.setIcon)(cancelButton, ICON_CANCEL);
+    (0, import_obsidian12.setIcon)(cancelButton, ICON_CANCEL);
     cancelButton.addEventListener("click", () => this.close());
   }
   buildCompoundSection(container) {
@@ -143238,7 +143443,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
       cls: "nameforge-modal__icon-action nameforge-modal__icon-action--lg nameforge-modal__mix-add",
       attr: { type: "button", title: "Add source" }
     });
-    (0, import_obsidian11.setIcon)(addButton, ICON_PLUS_SQUARE);
+    (0, import_obsidian12.setIcon)(addButton, ICON_PLUS_SQUARE);
     addButton.addEventListener("click", () => {
       this.mixSources.push({ packName: "", weight: 50 });
       this.renderMixSourceRows();
@@ -143313,7 +143518,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
         cls: "nameforge-modal__mix-remove",
         attr: { type: "button", title: "Remove source" }
       });
-      (0, import_obsidian11.setIcon)(removeButton, ICON_CANCEL);
+      (0, import_obsidian12.setIcon)(removeButton, ICON_CANCEL);
       removeButton.disabled = this.mixSources.length <= 2;
       removeButton.addEventListener("click", () => {
         if (this.mixSources.length <= 2) return;
@@ -143356,6 +143561,7 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
    */
   onBiomeNameInput() {
     var _a5, _b3, _c3, _d3;
+    void this.updateBiomeProblem();
     const builtIn = this.biomeMode ? builtInForPackName((_b3 = (_a5 = this.packNameInput) == null ? void 0 : _a5.value) != null ? _b3 : "") : void 0;
     (_c3 = this.biomeReplacesEl) == null ? void 0 : _c3.toggle(!!builtIn);
     if (!builtIn) return;
@@ -143364,6 +143570,30 @@ var NameForgeEditorModal = class extends import_obsidian11.Modal {
     if (!select || this.biomeBaseChosen || this.biomeEditing) return;
     select.value = builtIn.id;
     this.refillBiome();
+  }
+  /** §2, §2.1: whether the biome's phrase is already another biome's label or phrase (a replacement may keep its built-in's). */
+  biomePhraseProblem(name, custom) {
+    var _a5;
+    const catalogue = biomeCatalogue(custom);
+    const replaces = builtInForPackName(name);
+    const typed = (_a5 = this.biomePhraseInput) == null ? void 0 : _a5.value.trim();
+    const phrase = typed || (replaces || !name ? void 0 : /^the\b/i.test(name) ? name : `the ${name.toLowerCase()}`);
+    return phraseProblem(phrase, [...catalogue.all, ...catalogue.space], { editingPath: this.biomeEditing, replaces });
+  }
+  /** Shows the name or phrase problem as the user types, alongside the "Replaces the built-in" line. */
+  async updateBiomeProblem() {
+    var _a5, _b3, _c3;
+    const el = this.biomeProblemEl;
+    if (!el) return;
+    if (!this.biomeMode) {
+      el.hide();
+      return;
+    }
+    const custom = await this.parent.loadCustomBiomes();
+    const name = (_b3 = (_a5 = this.packNameInput) == null ? void 0 : _a5.value.trim()) != null ? _b3 : "";
+    const problem = (_c3 = name ? this.parent.nameProblemNow(name, this.biomeEditing) : void 0) != null ? _c3 : this.biomePhraseProblem(name, custom);
+    el.toggle(!!problem);
+    el.setText(problem != null ? problem : "");
   }
   /** Land brief §9.4: fills the base choices, and loads an existing pack of the same name merged. */
   async enterBiomeMode() {
@@ -143422,10 +143652,20 @@ ${(_c3 = (_b3 = this.inputEl) == null ? void 0 : _b3.value) != null ? _c3 : ""}`
       if (!folder) return;
       folderPath = folder.path;
     }
-    const path = (_d3 = this.biomeEditing) != null ? _d3 : (0, import_obsidian11.normalizePath)(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
+    const custom = await this.parent.loadCustomBiomes();
+    const phraseClash = this.biomePhraseProblem(packName, custom);
+    if (phraseClash) {
+      this.parent.setStatus(phraseClash);
+      return;
+    }
+    const path = (_d3 = this.biomeEditing) != null ? _d3 : (0, import_obsidian12.normalizePath)(`${folderPath}/${sanitizePackNameForFilename(packName)}.md`);
     try {
       const existing = this.app.vault.getFileByPath(path);
-      if (existing instanceof import_obsidian11.TFile) await this.app.vault.modify(existing, text);
+      if (existing instanceof import_obsidian12.TFile && path !== this.biomeEditing) {
+        this.parent.setStatus(`There's already a note called \u201C${packName}\u201D in the names folder \u2013 choose another name.`);
+        return;
+      }
+      if (existing instanceof import_obsidian12.TFile) await this.app.vault.modify(existing, text);
       else await this.app.vault.create(path, text);
     } catch (e) {
       this.parent.setStatus(`Failed to save the biome to ${path}.`);
@@ -143437,7 +143677,7 @@ ${(_c3 = (_b3 = this.inputEl) == null ? void 0 : _b3.value) != null ? _c3 : ""}`
     const empty = pack.sections.filter((s) => s.words.length === 0 && s.packs.length === 0).map((s) => `\u201C${s.heading}\u201D is empty.`);
     this.parent.setStatus([`Saved: ${own} sections of your own; the rest comes from ${base.label}.`, ...empty, ...mine].join(" "));
     const replaces = builtInForPackName(packName);
-    new import_obsidian11.Notice(`nameForge: biome \u201C${packName}\u201D saved${replaces ? ` \u2013 replaces the built-in ${replaces.label} biome` : ""}.`);
+    new import_obsidian12.Notice(`nameForge: biome \u201C${packName}\u201D saved${replaces ? ` \u2013 replaces the built-in ${replaces.label} biome` : ""}.`);
     this.close();
   }
   updateTypeButtons() {
@@ -143534,13 +143774,15 @@ ${(_b3 = entry.text) != null ? _b3 : ((_a5 = entry.names) != null ? _a5 : []).jo
     const boxName = (_b3 = (_a5 = this.packNameInput) == null ? void 0 : _a5.value) == null ? void 0 : _b3.trim();
     const templateOf = void 0;
     if (this.biomeMode) {
-      await this.saveBiome(boxName || "nameForge");
+      const name = await this.parent.checkNewName(boxName, this.biomeEditing);
+      if (name) await this.saveBiome(name);
       return;
     }
     const placeCompound = this.selectedPackType === "placePack" && this.placeGenerator === "compound";
     const compoundEditor = placeCompound ? this.placeCompound : this.selectedPackType === "compoundPack" ? this.peopleCompound : null;
     const pastedName = this.selectedPackType === "mixPack" ? void 0 : compoundEditor ? compoundEditor.packName() : packNameFromBody((_d3 = (_c3 = this.inputEl) == null ? void 0 : _c3.value) != null ? _d3 : "");
-    const packName = pastedName || boxName || "nameForge";
+    const packName = await this.parent.checkNewName(pastedName || boxName);
+    if (!packName) return;
     if (compoundEditor) {
       const values = compoundEditor.values();
       const parts = values.parts;
@@ -143562,7 +143804,7 @@ ${(_b3 = entry.text) != null ? _b3 : ((_a5 = entry.names) != null ? _a5 : []).jo
       this.parent.plugin.settings.folderPath = folderPath2;
       this.parent.plugin.settings.folderPath = folderPath2;
       const fileName2 = sanitizePackNameForFilename(packName);
-      this.parent.plugin.settings.namesFilePath = (0, import_obsidian11.normalizePath)(`${folderPath2}/${fileName2}.md`);
+      this.parent.plugin.settings.namesFilePath = (0, import_obsidian12.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
       await this.parent.saveCompoundToConfiguredFile(parts, values.generator, values.joining, templateOf, {
         partUse: values.partUse,
@@ -143595,7 +143837,7 @@ ${(_b3 = entry.text) != null ? _b3 : ((_a5 = entry.names) != null ? _a5 : []).jo
       }
       this.parent.plugin.settings.folderPath = folderPath2;
       const fileName2 = sanitizePackNameForFilename(packName);
-      this.parent.plugin.settings.namesFilePath = (0, import_obsidian11.normalizePath)(`${folderPath2}/${fileName2}.md`);
+      this.parent.plugin.settings.namesFilePath = (0, import_obsidian12.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
       await this.parent.saveMixToConfiguredFile(sources, templateOf);
       this.close();
@@ -143620,7 +143862,7 @@ ${(_b3 = entry.text) != null ? _b3 : ((_a5 = entry.names) != null ? _a5 : []).jo
     this.parent.plugin.settings.folderPath = folderPath;
     this.parent.plugin.settings.folderPath = folderPath;
     const fileName = sanitizePackNameForFilename(packName);
-    this.parent.plugin.settings.namesFilePath = (0, import_obsidian11.normalizePath)(`${folderPath}/${fileName}.md`);
+    this.parent.plugin.settings.namesFilePath = (0, import_obsidian12.normalizePath)(`${folderPath}/${fileName}.md`);
     await this.parent.plugin.saveSettings();
     await this.parent.saveToConfiguredFile(namesText, templateOf, this.selectedPackType === "placePack" ? this.placeGenerator : void 0);
     this.close();
@@ -143653,7 +143895,7 @@ function getStoryForgeHostApi(app) {
 }
 
 // src/starterInstall.ts
-var import_obsidian12 = require("obsidian");
+var import_obsidian13 = require("obsidian");
 function promptInstallStarterTemplates(app, defaultFolder) {
   new EnterFolderPathModal(
     app,
@@ -143671,9 +143913,10 @@ async function installStarterTemplates(app, folder) {
   ];
   let installed = 0;
   const skipped = [];
+  const taken = await folderNoteNames(app, folder.path);
   for (const file of files) {
-    const path = (0, import_obsidian12.normalizePath)(`${folder.path}/${sanitizePackNameForFilename(file.name)}.md`);
-    if (app.vault.getAbstractFileByPath(path)) {
+    const path = (0, import_obsidian13.normalizePath)(`${folder.path}/${sanitizePackNameForFilename(file.name)}.md`);
+    if (app.vault.getAbstractFileByPath(path) || nameClash(file.name, taken)) {
       skipped.push(file.name);
       continue;
     }
@@ -143685,7 +143928,7 @@ async function installStarterTemplates(app, folder) {
     }
   }
   const note2 = skipped.length > 0 ? ` Skipped ${skipped.length} that already exist: ${skipped.join(", ")}.` : "";
-  new import_obsidian12.Notice(`nameForge: installed ${installed} starter templates in ${folder.path || "the vault root"}.${note2}`);
+  new import_obsidian13.Notice(`nameForge: installed ${installed} starter templates in ${folder.path || "the vault root"}.${note2}`);
 }
 
 // src/main.ts
@@ -143698,7 +143941,7 @@ var DEFAULT_SETTINGS = {
 };
 function getSettingsFilePath(settings) {
   const folderPath = resolveNamesFolderPath(settings.folderPath, settings.namesFilePath);
-  return folderPath ? (0, import_obsidian13.normalizePath)(`${folderPath}/nameForgeConfiguration.md`) : "";
+  return folderPath ? (0, import_obsidian14.normalizePath)(`${folderPath}/nameForgeConfiguration.md`) : "";
 }
 var HISTORY_LINE_PATTERN = /^-\s*(\d{8}-\d{6})\s*\|\s*(-?\d+)\s*\|\s*(.*)$/;
 var HISTORY_COUNT_SUFFIX_PATTERN = /^(.*)\s\((\d+)\)$/;
@@ -143844,7 +144087,7 @@ ${lines2.join("\n")}
 `;
   return frontmatter + createGenerationHistorySection(settings.previousGenerations) + createAgeingHistorySection(settings.ageingHistory) + kitHistorySection(((_c3 = settings.previousGenerations) != null ? _c3 : []).slice(0, MAX_HISTORY_ENTRIES));
 }
-var NameForgePlugin = class extends import_obsidian13.Plugin {
+var NameForgePlugin = class extends import_obsidian14.Plugin {
   constructor() {
     super(...arguments);
     this.settings = {};
@@ -143870,13 +144113,13 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const path = (0, import_obsidian13.normalizePath)(`${folder}/Tribal safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
-          new import_obsidian13.Notice("nameForge: \u201CTribal safeguards\u201D already exists.");
+        const path = (0, import_obsidian14.normalizePath)(`${folder}/Tribal safeguards.md`);
+        if (await nameTakenIn(this.app, folder, "Tribal safeguards")) {
+          new import_obsidian14.Notice("nameForge: \u201CTribal safeguards\u201D already exists.");
           return;
         }
         await this.app.vault.create(path, SAFEGUARD_TEMPLATE);
-        new import_obsidian13.Notice("nameForge: \u201CTribal safeguards\u201D created.");
+        new import_obsidian14.Notice("nameForge: \u201CTribal safeguards\u201D created.");
       }
     });
     this.addCommand({
@@ -143885,13 +144128,13 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const path = (0, import_obsidian13.normalizePath)(`${folder}/Group safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
-          new import_obsidian13.Notice("nameForge: \u201CGroup safeguards\u201D already exists.");
+        const path = (0, import_obsidian14.normalizePath)(`${folder}/Group safeguards.md`);
+        if (await nameTakenIn(this.app, folder, "Group safeguards")) {
+          new import_obsidian14.Notice("nameForge: \u201CGroup safeguards\u201D already exists.");
           return;
         }
         await this.app.vault.create(path, GROUP_SAFEGUARD_TEMPLATE);
-        new import_obsidian13.Notice("nameForge: \u201CGroup safeguards\u201D created.");
+        new import_obsidian14.Notice("nameForge: \u201CGroup safeguards\u201D created.");
       }
     });
     this.addCommand({
@@ -143900,13 +144143,13 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const path = (0, import_obsidian13.normalizePath)(`${folder}/Byname safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
-          new import_obsidian13.Notice("nameForge: \u201CByname safeguards\u201D already exists.");
+        const path = (0, import_obsidian14.normalizePath)(`${folder}/Byname safeguards.md`);
+        if (await nameTakenIn(this.app, folder, "Byname safeguards")) {
+          new import_obsidian14.Notice("nameForge: \u201CByname safeguards\u201D already exists.");
           return;
         }
         await this.app.vault.create(path, BYNAME_SAFEGUARD_TEMPLATE);
-        new import_obsidian13.Notice("nameForge: \u201CByname safeguards\u201D created.");
+        new import_obsidian14.Notice("nameForge: \u201CByname safeguards\u201D created.");
       }
     });
     this.addCommand({
@@ -143915,13 +144158,13 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const path = (0, import_obsidian13.normalizePath)(`${folder}/Realm safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
-          new import_obsidian13.Notice("nameForge: \u201CRealm safeguards\u201D already exists.");
+        const path = (0, import_obsidian14.normalizePath)(`${folder}/Realm safeguards.md`);
+        if (await nameTakenIn(this.app, folder, "Realm safeguards")) {
+          new import_obsidian14.Notice("nameForge: \u201CRealm safeguards\u201D already exists.");
           return;
         }
         await this.app.vault.create(path, REALM_SAFEGUARD_TEMPLATE);
-        new import_obsidian13.Notice("nameForge: \u201CRealm safeguards\u201D created.");
+        new import_obsidian14.Notice("nameForge: \u201CRealm safeguards\u201D created.");
       }
     });
     this.addCommand({
@@ -143930,13 +144173,13 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const path = (0, import_obsidian13.normalizePath)(`${folder}/Vessel safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
-          new import_obsidian13.Notice("nameForge: \u201CVessel safeguards\u201D already exists.");
+        const path = (0, import_obsidian14.normalizePath)(`${folder}/Vessel safeguards.md`);
+        if (await nameTakenIn(this.app, folder, "Vessel safeguards")) {
+          new import_obsidian14.Notice("nameForge: \u201CVessel safeguards\u201D already exists.");
           return;
         }
         await this.app.vault.create(path, VESSEL_SAFEGUARD_TEMPLATE);
-        new import_obsidian13.Notice("nameForge: \u201CVessel safeguards\u201D created.");
+        new import_obsidian14.Notice("nameForge: \u201CVessel safeguards\u201D created.");
       }
     });
     this.addCommand({
@@ -143945,13 +144188,13 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const path = (0, import_obsidian13.normalizePath)(`${folder}/Settlement safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
-          new import_obsidian13.Notice("nameForge: \u201CSettlement safeguards\u201D already exists.");
+        const path = (0, import_obsidian14.normalizePath)(`${folder}/Settlement safeguards.md`);
+        if (await nameTakenIn(this.app, folder, "Settlement safeguards")) {
+          new import_obsidian14.Notice("nameForge: \u201CSettlement safeguards\u201D already exists.");
           return;
         }
         await this.app.vault.create(path, SETTLEMENT_SAFEGUARD_TEMPLATE);
-        new import_obsidian13.Notice("nameForge: \u201CSettlement safeguards\u201D created.");
+        new import_obsidian14.Notice("nameForge: \u201CSettlement safeguards\u201D created.");
       }
     });
     this.addCommand({
@@ -143960,9 +144203,10 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const vault = { exists: (path) => !!this.app.vault.getFileByPath((0, import_obsidian13.normalizePath)(path)), create: (path, content) => this.app.vault.create((0, import_obsidian13.normalizePath)(path), content) };
+        const taken = await nameTakenIn(this.app, folder, VOCABULARY_PACK_FILE.replace(/\.md$/, ""));
+        const vault = { exists: (path) => !!taken || !!this.app.vault.getFileByPath((0, import_obsidian14.normalizePath)(path)), create: (path, content) => this.app.vault.create((0, import_obsidian14.normalizePath)(path), content) };
         const result = await createVocabularyPack(vault, folder);
-        new import_obsidian13.Notice(result === "exists" ? "nameForge: \u201CVocabulary\u201D already exists." : "nameForge: \u201CVocabulary\u201D created.");
+        new import_obsidian14.Notice(result === "exists" ? "nameForge: \u201CVocabulary\u201D already exists." : "nameForge: \u201CVocabulary\u201D created.");
       }
     });
     this.addCommand({
@@ -143970,13 +144214,13 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
       name: "Regenerate settlement from note",
       callback: async () => {
         const file = this.app.workspace.getActiveFile();
-        if (!(file instanceof import_obsidian13.TFile)) {
-          new import_obsidian13.Notice("nameForge: open a settlement note first.");
+        if (!(file instanceof import_obsidian14.TFile)) {
+          new import_obsidian14.Notice("nameForge: open a settlement note first.");
           return;
         }
         const { settings, problems } = parseKitNote(await this.app.vault.cachedRead(file));
         if (!settings) {
-          new import_obsidian13.Notice(`nameForge: ${problems.join(" ")}`);
+          new import_obsidian14.Notice(`nameForge: ${problems.join(" ")}`);
           return;
         }
         const modal = new NameForgeModal(this.app, this, this.settings);
@@ -144064,8 +144308,8 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
         continue;
       }
       seen.add(settingsFilePath);
-      const settingsFile = this.app.vault.getFileByPath((0, import_obsidian13.normalizePath)(settingsFilePath));
-      if (!(settingsFile instanceof import_obsidian13.TFile)) {
+      const settingsFile = this.app.vault.getFileByPath((0, import_obsidian14.normalizePath)(settingsFilePath));
+      if (!(settingsFile instanceof import_obsidian14.TFile)) {
         continue;
       }
       let content;
@@ -144086,10 +144330,10 @@ var NameForgePlugin = class extends import_obsidian13.Plugin {
     if (!settingsFilePath) {
       return;
     }
-    const normalizedPath = (0, import_obsidian13.normalizePath)(settingsFilePath);
+    const normalizedPath = (0, import_obsidian14.normalizePath)(settingsFilePath);
     const content = createSettingsMarkdownContent(this.settings);
     const existingFile = this.app.vault.getFileByPath(normalizedPath);
-    if (existingFile instanceof import_obsidian13.TFile) {
+    if (existingFile instanceof import_obsidian14.TFile) {
       await this.app.vault.modify(existingFile, content);
     } else {
       const folderPath = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath);

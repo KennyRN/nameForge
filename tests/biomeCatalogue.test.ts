@@ -100,7 +100,7 @@ test("lists: a biome pack shows in the colonial biome choices; without packs the
   const salt = pack("Names/Salt Marshes.md", desert, "Salt Marshes");
   const withPack = biomeChoices("new-land", biomeCatalogue([salt]));
   assert.deepEqual(withPack.slice(0, -1), biomeChoices("new-land"));
-  assert.deepEqual(withPack[withPack.length - 1], { id: "Names/Salt Marshes.md", label: salt.phrase });
+  assert.deepEqual(withPack[withPack.length - 1], { id: "Names/Salt Marshes.md", label: salt.phrase, tip: "Your biome: Salt Marshes.md", heading: "Your biomes" });
   assert.deepEqual(spaceBiomeChoices(), SPACE_BIOMES.map((b) => ({ id: b.id, label: b.phrase, title: b.guide })));
 });
 

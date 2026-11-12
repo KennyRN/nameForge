@@ -12,7 +12,8 @@ import { BYNAME_SAFEGUARD_TEMPLATE } from "./bynames/safeguardPacks";
 import { VESSEL_SAFEGUARD_TEMPLATE } from "./vessels/safeguardPacks";
 import { REALM_SAFEGUARD_TEMPLATE } from "./realms/safeguardPacks";
 import { GROUP_SAFEGUARD_TEMPLATE } from "./groups/safeguardPacks";
-import { createVocabularyPack } from "./settlement/vocabPacks";
+import { nameTakenIn } from "./folderNames";
+import { createVocabularyPack, VOCABULARY_PACK_FILE } from "./settlement/vocabPacks";
 import { SETTLEMENT_SAFEGUARD_TEMPLATE } from "./settlement/safeguardPacks";
 import { kitHistorySection, parseKitHistory, parseKitNote } from "./settlement/kitFormat";
 
@@ -225,7 +226,7 @@ export default class NameForgePlugin extends Plugin {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
         const path = normalizePath(`${folder}/Tribal safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
+        if (await nameTakenIn(this.app, folder, "Tribal safeguards")) {
           new Notice("nameForge: “Tribal safeguards” already exists.");
           return;
         }
@@ -242,7 +243,7 @@ export default class NameForgePlugin extends Plugin {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
         const path = normalizePath(`${folder}/Group safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
+        if (await nameTakenIn(this.app, folder, "Group safeguards")) {
           new Notice("nameForge: “Group safeguards” already exists.");
           return;
         }
@@ -259,7 +260,7 @@ export default class NameForgePlugin extends Plugin {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
         const path = normalizePath(`${folder}/Byname safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
+        if (await nameTakenIn(this.app, folder, "Byname safeguards")) {
           new Notice("nameForge: “Byname safeguards” already exists.");
           return;
         }
@@ -276,7 +277,7 @@ export default class NameForgePlugin extends Plugin {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
         const path = normalizePath(`${folder}/Realm safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
+        if (await nameTakenIn(this.app, folder, "Realm safeguards")) {
           new Notice("nameForge: “Realm safeguards” already exists.");
           return;
         }
@@ -293,7 +294,7 @@ export default class NameForgePlugin extends Plugin {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
         const path = normalizePath(`${folder}/Vessel safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
+        if (await nameTakenIn(this.app, folder, "Vessel safeguards")) {
           new Notice("nameForge: “Vessel safeguards” already exists.");
           return;
         }
@@ -310,7 +311,7 @@ export default class NameForgePlugin extends Plugin {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
         const path = normalizePath(`${folder}/Settlement safeguards.md`);
-        if (this.app.vault.getFileByPath(path)) {
+        if (await nameTakenIn(this.app, folder, "Settlement safeguards")) {
           new Notice("nameForge: “Settlement safeguards” already exists.");
           return;
         }
@@ -326,7 +327,8 @@ export default class NameForgePlugin extends Plugin {
       callback: async () => {
         const folder = resolveNamesFolderPath(this.settings.folderPath, this.settings.namesFilePath) || DEFAULT_NAMES_FOLDER;
         await ensureVaultFolder(this.app, folder);
-        const vault = { exists: (path: string) => !!this.app.vault.getFileByPath(normalizePath(path)), create: (path: string, content: string) => this.app.vault.create(normalizePath(path), content) };
+        const taken = await nameTakenIn(this.app, folder, VOCABULARY_PACK_FILE.replace(/\.md$/, ""));
+        const vault = { exists: (path: string) => !!taken || !!this.app.vault.getFileByPath(normalizePath(path)), create: (path: string, content: string) => this.app.vault.create(normalizePath(path), content) };
         const result = await createVocabularyPack(vault, folder);
         new Notice(result === "exists" ? "nameForge: “Vocabulary” already exists." : "nameForge: “Vocabulary” created.");
       },

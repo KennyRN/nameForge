@@ -3,7 +3,8 @@
 // by them›, ‹no insults›". Built as segments so the module, the wizard's page 4 and preset
 // descriptions all read the same. No Obsidian imports.
 
-import { availableTerrains, type Biome, biomeChoiceId, biomeInline, TERRAIN_CHOICES } from "../biomes";
+import { availableTerrains, type Biome, biomeInline, TERRAIN_CHOICES } from "../biomes";
+import { biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { findTradition, homelandSummary, TRIBAL_DATA, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS, TRIBAL_TRADITIONS } from "./engine";
 
 export interface TribalSentenceState {
@@ -23,6 +24,10 @@ export type TribalField = "tradition" | "groupType" | "biome" | "terrain" | "reg
 export interface TribalChoice {
   id: string | undefined;
   label: string;
+  /** The tooltip of a pack's entry ("Your version: …", "Your biome: …"). */
+  tip?: string;
+  /** A disabled menu heading shown before this choice ("Your biomes"). */
+  heading?: string;
 }
 
 export type TribalSegment = string | { field: TribalField; text: string; title: string; choices: TribalChoice[]; current: string | undefined };
@@ -99,10 +104,10 @@ export function tribalSentence(state: TribalSentenceState, limits: TribalSentenc
   out.push({
     field: "biome",
     text: inline ? `${/^[aeiou]/i.test(inline) ? "an" : "a"} ${inline}` : fallback,
-    title: biome?.guide ?? (tradition ? homelandSummary(tradition.key) : "Biome"),
+    title: biome?.custom?.overrides ? biomeLinkTitle(biome, "") : biome?.guide ?? (tradition ? homelandSummary(tradition.key) : "Biome"),
     choices: [
       { id: undefined, label: fallback.charAt(0).toUpperCase() + fallback.slice(1) },
-      ...limits.biomes.map((b) => ({ id: biomeChoiceId(b), label: b.label })),
+      ...biomeMenuItems(limits.biomes, (b) => b.label),
     ],
     current: state.biome,
   });
