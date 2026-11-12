@@ -21,3 +21,10 @@ export function normalizePath(path: string): string {
   return cleaned || "/";
 }
 export function addIcon(_id: string, _svg: string): void {}
+// The recipe host parses and writes YAML through Obsidian; tests only need the names to resolve.
+export function parseYaml(text: string): unknown {
+  return JSON.parse(text);
+}
+export function stringifyYaml(value: unknown): string {
+  return JSON.stringify(value);
+}

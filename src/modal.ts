@@ -76,7 +76,7 @@ import {
 } from "./icons";
 import { GROUP_ICONS, SECTION_ICONS } from "./sectionIcons";
 import { EnterFolderPathModal } from "./folderModal";
-import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult } from "./names/engine";
+import { type GeneratedName, generatePlaceNames, generatePlaceNamesSteps, type NameGenerateResult, type ResolvedSlot } from "./names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings, recipeToFrontmatter } from "./names/recipe";
 import { availableTerrains, type Biome, biomeInline, BIOMES, BRITAIN, findBiome, SPACE_BIOMES, TERRAIN_CHOICES } from "./biomes";
 import { chooseTribal, type TribalSentenceLimits, type TribalSentenceState, tribalSentence, tribalSentenceText } from "./tribes/sentence";
@@ -170,6 +170,21 @@ import {
 import { generateRiverNames, RIVER_SETTINGS, type RiverSetting } from "./rivers/engine";
 import { cultureUsesBiomes, eraUsesLand, findCulture, findEra, generateWorldPlaceNames, INTERSTELLAR_ERA, WORLD_CULTURES, worldHistoryLabel } from "./world/engine";
 import { isRecipeContent, parseRecipeContent, RecipeHost } from "./recipeHost";
+import {
+  chooseNames,
+  chooseSlotSource,
+  freshSlotSources,
+  namesClosing,
+  NO_SLOT_OPTIONS,
+  ownNamesSuffix,
+  slotChoiceMenu,
+  type SlotFolderOptions,
+  type SlotPart,
+  type SlotSegment,
+  slotSentence,
+  type SlotSources,
+  usesOwnNames,
+} from "./names/slotSentence";
 import { CONTEXT_PHRASES, contextPhrasesFor, partsNote, traditionLabel } from "./colonialWording";
 import {
   parseNameSections,
@@ -661,6 +676,11 @@ export class NameForgeModal extends Modal {
   private bynameStates: Partial<Record<BynameModule, BynameSentenceState>> = {};
   private bynamePacks: BynamePackInfo[] = [];
   private bynamePacksLoaded = false;
+  /** Wizard retirement brief §3: native British place names' slot sources (names placeholders or chosen per slot). */
+  private placeSlots: SlotSources = freshSlotSources();
+  /** The names folder's packs and word lists, as the slot menus list them. */
+  private slotFolderOptions: SlotFolderOptions = NO_SLOT_OPTIONS;
+  private slotFolderLoaded = false;
   /** Ships brief §2.4: each vessel module's choices, session only. */
   private vesselStates: Partial<Record<VesselModule, VesselSentenceState>> = {};
   /** Seas and coasts brief §2: each waters module's choices, session only. */
@@ -1676,6 +1696,66 @@ export class NameForgeModal extends Modal {
       words: " place names",
       land: PLACE_LAND_KEYS,
     });
+    // Wizard retirement brief §3.1: slot choices for British only; the world cultures don't run through the slots.
+    if (this.placeIsBritain()) this.renderSlotChoices(row, sentence, "organic", () => this.placeSlots, (next) => (this.placeSlots = next));
+  }
+
+  /**
+   * Wizard retirement brief §3.2: the closing "with ‹placeholders› for names" link on the main
+   * sentence and, with names chosen per slot, the second sentence under it, one link per slot.
+   */
+  private renderSlotChoices(row: HTMLElement, sentence: HTMLElement, part: SlotPart, get: () => SlotSources, set: (next: SlotSources) => void) {
+    const draw = (el: HTMLElement, segments: SlotSegment[], choose: (field: string, id: string | undefined) => void) => {
+      for (const segment of segments) {
+        if (typeof segment === "string") {
+          el.appendText(segment);
+          continue;
+        }
+        const choices =
+          segment.field === "names"
+            ? () => segment.choices
+            : async () => slotChoiceMenu(part, segment.field, await this.loadSlotFolderOptions());
+        this.sentenceLink(el, segment.text, segment.title, choices, segment.current, (id) => choose(segment.field, id));
+      }
+    };
+    draw(sentence, namesClosing(get()), (_field, id) => {
+      set(chooseNames(get(), id));
+      if (get().names === "perSlot") void this.loadSlotFolderOptions().then(() => this.renderContextRow());
+    });
+    if (get().names === "perSlot" && !this.slotFolderLoaded) void this.loadSlotFolderOptions().then(() => this.renderContextRow());
+    const second = slotSentence(part, get(), this.slotFolderOptions);
+    if (!second) return;
+    const line = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    draw(line, second, (field, id) => set(chooseSlotSource(get(), part, field, id)));
+  }
+
+  /** The name packs and word lists in the names folder, for the slot menus (read fresh whenever a menu opens). */
+  private async loadSlotFolderOptions(): Promise<SlotFolderOptions> {
+    const packs = (await this.loadBynamePacks()).map((p) => p.name);
+    const lists: string[] = [];
+    const folder = this.app.vault.getFolderByPath(normalizePath(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    for (const child of folder?.children ?? []) {
+      if (!(child instanceof TFile) || child.extension !== "md") continue;
+      try {
+        if (isWordListContent(await this.app.vault.cachedRead(child))) lists.push(child.basename);
+      } catch {
+        continue;
+      }
+    }
+    this.slotFolderOptions = { packs, lists: lists.sort((a, b) => a.localeCompare(b)) };
+    this.slotFolderLoaded = true;
+    return this.slotFolderOptions;
+  }
+
+  /**
+   * Wizard retirement brief §3.5: the sentence's slot sources resolved into the engine's slots by the
+   * recipe host, with its notices. On placeholders it maps nothing, exactly as before.
+   */
+  private async resolveSlotSources(part: SlotPart, sources: SlotSources, recipe: RecipeSettings): Promise<{ slots: Record<string, ResolvedSlot>; notices: string[] }> {
+    if (!usesOwnNames(part, sources)) return { slots: {}, notices: [] };
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const slots = await host.resolveSlotSources(recipe, part, sources, `${normalizePath(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
+    return { slots, notices: host.getNotices() };
   }
 
   /** The region link: "‹all of Britain›", "‹the North›". */
@@ -6152,10 +6232,12 @@ export class NameForgeModal extends Modal {
       const land = this.land("britain");
       await this.loadCustomBiomes();
       const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
+      const recipe = britishPlaceNamesRecipe(this.selectedRegion, biome?.custom ? undefined : land.biome, land.terrain);
+      const own = await this.resolveSlotSources("organic", this.placeSlots, recipe);
       const result = this.tryLand(() => generatePlaceNames({
-        recipe: britishPlaceNamesRecipe(this.selectedRegion, biome?.custom ? undefined : land.biome, land.terrain),
+        recipe,
         biome: biome?.custom ? biome : undefined,
-        slots: {},
+        slots: own.slots,
         count: this.generationCount,
         seed: seedOverride,
         faithfulness: this.plugin.settings.faithfulness,
@@ -6166,9 +6248,9 @@ export class NameForgeModal extends Modal {
       this.renderRecipeResults(result.names, "module");
       await this.recordGenerationHistory(
         result.names.length,
-        withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion) + landHistorySuffix(land, this.customBiomes),
+        withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion) + landHistorySuffix(land, this.customBiomes) + ownNamesSuffix("organic", this.placeSlots),
       );
-      this.setStatus(result.notices.join(" "));
+      this.setStatus([...result.notices, ...own.notices].join(" "));
       return;
     }
     // Place names' British river names: the river engine's British setting, with the place names region.

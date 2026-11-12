@@ -26,6 +26,7 @@ import { needsItems, resolveWordListItems, toNameWordEntry } from "./names/wordL
 import { PLACE_SHAPE_DATA } from "./placeShapes";
 import { COLONIAL_DATA } from "./colonialShapes";
 import { type RecipeTakeoverInput, resolveRecipeTakeover } from "./takeover/recipe";
+import { activeSlots, type SlotPart, type SlotSources } from "./names/slotSentence";
 import { isModulePresetContent, parseModulePreset, readTribalPresetSource, tribalPresetDraw, tribalPresetSlot } from "./presets";
 
 /** The takeover module's target rules, supplied by the modal (the same ones the takeover section uses). */
@@ -135,6 +136,17 @@ export class RecipeHost {
       return undefined;
     }
     return resolved.adapt;
+  }
+
+  /**
+   * Wizard retirement brief §3.5: a sentence's slot sources, resolved by the same code a recipe's slots
+   * are. Placeholders (and names left on "placeholders") map nothing, so the engine's own defaults
+   * apply and the output is unchanged. A missing pack or list falls back to a placeholder with a notice.
+   */
+  async resolveSlotSources(recipe: RecipeSettings, part: SlotPart, sources: SlotSources, from: string): Promise<Record<string, ResolvedSlot>> {
+    const active = activeSlots(part, sources);
+    if (Object.keys(active).length === 0) return {};
+    return this.resolveSlots({ ...recipe, slots: active }, from);
   }
 
   /** Resolves every slot setting to engine-ready sources (§6.2). */

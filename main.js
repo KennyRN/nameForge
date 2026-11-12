@@ -135142,6 +135142,238 @@ function resolveRecipeTakeover(input) {
   } };
 }
 
+// src/names/slotOptions.ts
+function slotCategories(part) {
+  const part1 = new Map(PLACE_SHAPE_DATA.categories.map((c) => [c.id, c.label]));
+  if (part === "organic") return PLACE_SHAPE_DATA.categories.filter((c) => c.id !== "empty-slot");
+  const code = part === "new-land" ? "2" : "2a";
+  const out = [
+    ...COLONIAL_DATA.inheritedCategories.filter((c) => c.parts.includes(code) && c.id !== "empty-slot").map((c) => {
+      var _a5;
+      return { id: c.id, label: (_a5 = part1.get(c.id)) != null ? _a5 : c.id };
+    }),
+    ...COLONIAL_DATA.categories.filter((c) => c.parts.includes(code)).map((c) => ({ id: c.id, label: c.label }))
+  ];
+  if (code === "2a") out.push({ id: "local-settlement-word", label: "Local settlement word" }, { id: "local-market-word", label: "Local market word" });
+  return out;
+}
+var FLORA_AND_FAUNA = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
+var WORD_ONLY = /* @__PURE__ */ new Set([
+  "status-or-role",
+  "ethnic-or-cultural-group",
+  "settler-group",
+  "supernatural-being",
+  "domestic-animal",
+  "crop",
+  "landform",
+  "water-or-wetland-feature",
+  "soil-or-ground",
+  "built-feature",
+  "colour",
+  "size",
+  "age",
+  "position-or-direction",
+  "shape",
+  "quality-or-condition",
+  "number",
+  "activity",
+  "produce",
+  "religious-association",
+  "assembly-or-law",
+  "season",
+  "honorific-title",
+  "emotion-or-aspiration",
+  "event-or-incident",
+  "imperial-claim",
+  "resource",
+  "distance-or-survey-mark",
+  "calendar-date-or-feast"
+]);
+var NO_PLACEHOLDER = /* @__PURE__ */ new Set(["colour", "size", "age", "position-or-direction", "shape", "quality-or-condition", "number", "season"]);
+var NATURE = /* @__PURE__ */ new Set(["wild-animal", "bird", "fish-and-other-creatures", "tree", "wild-plant"]);
+function slotChoices(part, categoryId) {
+  if (NATURE.has(categoryId) || categoryId === "landform" || categoryId === "water-or-wetland-feature") return ["default", "placeholder", "ignore"];
+  if (categoryId === "soil-or-ground" || categoryId === "river-or-stream-name") return ["default", "placeholder", "ignore"];
+  if (categoryId === "resource" && part === "new-land") return ["default", "placeholder", "ignore"];
+  if (categoryId === "season") return ["default", "ignore"];
+  if (categoryId === "domestic-animal" || categoryId === "crop") return part === "organic" ? ["default", "ignore"] : ["default", "biome", "ignore"];
+  return void 0;
+}
+function allowsPacks(part, categoryId) {
+  if (slotChoices(part, categoryId)) return false;
+  if (FLORA_AND_FAUNA.has(categoryId)) return part !== "organic";
+  return !WORD_ONLY.has(categoryId);
+}
+function allowsLists(part, categoryId) {
+  return !slotChoices(part, categoryId);
+}
+function allowsTribal(part, categoryId) {
+  if (part === "organic") return categoryId === "folk-group";
+  return categoryId === "native-people-or-tribe";
+}
+function allowsPlaceholderChoice(part, categoryId) {
+  if (slotChoices(part, categoryId)) return false;
+  return !NO_PLACEHOLDER.has(categoryId);
+}
+
+// src/names/slotSentence.ts
+var freshSlotSources = () => ({ names: "placeholders", slots: {} });
+var NO_SLOT_OPTIONS = { packs: [], lists: [] };
+var SLOT_PHRASES = {
+  "personal-name": "personal names",
+  "earlier-or-district-name": "earlier or district names",
+  "folk-group": "folk groups",
+  deity: "deities",
+  "saint-or-holy-person": "holy people",
+  "monarch-ruler-or-dynasty": "monarchs, rulers and dynasties",
+  "royal-woman": "royal women",
+  "official-patron-or-sponsor": "officials, patrons and sponsors",
+  "commander-or-conqueror": "commanders and conquerors",
+  "explorer-or-founder": "explorers and founders",
+  "native-place-name": "native place names",
+  "native-people-or-tribe": "native peoples",
+  "homeland-place-name": "homeland place names",
+  "colonial-deity": "colonial deities",
+  "local-deity": "local deities",
+  "local-settlement-word": "local settlement words",
+  "local-market-word": "local market words"
+};
+var LOCAL_WORDS = /* @__PURE__ */ new Set(["local-settlement-word", "local-market-word"]);
+function categoriesUsed(shapes) {
+  var _a5;
+  const used = /* @__PURE__ */ new Set();
+  for (const shape of shapes) {
+    used.add(shape.categoryId);
+    if (shape.secondCategoryId) used.add(shape.secondCategoryId);
+    if ((_a5 = shape.affix) == null ? void 0 : _a5.form.slotCategory) used.add(shape.affix.form.slotCategory);
+    if (LOCAL_WORDS.has(shape.genericId)) used.add(shape.genericId);
+  }
+  return used;
+}
+var inventoryCache = /* @__PURE__ */ new Map();
+function slotInventory(part) {
+  const cached = inventoryCache.get(part);
+  if (cached) return cached;
+  const used = /* @__PURE__ */ new Set();
+  for (const seed of [1, 2]) {
+    const shapes = part === "organic" ? generatePlaceShapesDetailed({ count: 4e3, seed }).shapes : generateColonialShapesDetailed({ count: 4e3, seed, part: part === "new-land" ? "2" : "2a" }).shapes;
+    for (const id of categoriesUsed(shapes)) used.add(id);
+  }
+  const out = slotCategories(part).filter((c) => used.has(c.id) && !slotChoices(part, c.id) && !hasBuiltInList(c.id)).map((c) => {
+    var _a5;
+    return { id: c.id, label: c.label, phrase: (_a5 = SLOT_PHRASES[c.id]) != null ? _a5 : `${c.label.toLowerCase()}s` };
+  });
+  inventoryCache.set(part, out);
+  return out;
+}
+var PLACEHOLDER_ID = "placeholder";
+var BUILT_IN_ID = "built-in";
+var TRIBAL_ID = "tribal";
+var listId = (name) => `list:${name}`;
+var packId = (name) => `pack:${name}`;
+function slotChoiceId(setting) {
+  if (!setting || setting.kind === "placeholder") return PLACEHOLDER_ID;
+  if (setting.kind === "built-in") return BUILT_IN_ID;
+  if (setting.kind === "tribal") return TRIBAL_ID;
+  if (setting.kind === "sources") {
+    const ref = setting.sources[0];
+    if (ref == null ? void 0 : ref.list) return listId(ref.list);
+    if (ref == null ? void 0 : ref.pack) return packId(ref.pack);
+  }
+  return PLACEHOLDER_ID;
+}
+function slotSettingOf(part, id) {
+  if (!id || id === PLACEHOLDER_ID) return void 0;
+  if (id === BUILT_IN_ID) return { kind: "built-in" };
+  if (id === TRIBAL_ID) return { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
+  if (id.startsWith("list:")) return { kind: "sources", sources: [{ list: id.slice(5), weight: 1 }] };
+  if (id.startsWith("pack:")) return { kind: "sources", sources: [{ pack: id.slice(5), weight: 1 }] };
+  return void 0;
+}
+function slotSourceText(setting) {
+  const id = slotChoiceId(setting);
+  if (id === PLACEHOLDER_ID) return "placeholders";
+  if (id === BUILT_IN_ID) return "the built-in list";
+  if (id === TRIBAL_ID) return "tribes and kin groups";
+  return id.startsWith("list:") ? `${id.slice(5)} (list)` : `${id.slice(5)} (pack)`;
+}
+function slotChoiceMenu(part, categoryId, options) {
+  const out = [];
+  const run = (heading, choices) => {
+    if (choices.length > 0) out.push({ ...choices[0], heading }, ...choices.slice(1));
+  };
+  if (allowsPlaceholderChoice(part, categoryId)) run("Placeholder", [{ id: PLACEHOLDER_ID, label: "placeholders" }]);
+  if (allowsLists(part, categoryId)) {
+    run("Lists", [
+      ...hasBuiltInList(categoryId) ? [{ id: BUILT_IN_ID, label: "the built-in list" }] : [],
+      ...options.lists.map((name) => ({ id: listId(name), label: name }))
+    ]);
+  }
+  const words = LOCAL_WORDS.has(categoryId);
+  run("Generators", words ? [] : [
+    ...allowsPacks(part, categoryId) ? options.packs.map((name) => ({ id: packId(name), label: name })) : [],
+    ...allowsTribal(part, categoryId) ? [{ id: TRIBAL_ID, label: "tribes and kin groups" }] : []
+  ]);
+  return out;
+}
+var NAMES_TITLE = "Names: placeholders show each name slot as a bracket; names chosen per slot lets you pick where each one comes from";
+function namesClosing(state) {
+  const perSlot = state.names === "perSlot";
+  const link = {
+    field: "names",
+    text: perSlot ? "names chosen per slot" : "placeholders",
+    title: NAMES_TITLE,
+    choices: [
+      { id: "placeholders", label: "placeholders" },
+      { id: "perSlot", label: "names chosen per slot" }
+    ],
+    current: state.names
+  };
+  return perSlot ? [", with ", link] : [", with ", link, " for names"];
+}
+function slotSentence(part, state, options = NO_SLOT_OPTIONS) {
+  if (state.names !== "perSlot") return void 0;
+  const out = [];
+  slotInventory(part).forEach((slot, index) => {
+    const setting = state.slots[slot.id];
+    const phrase = index === 0 ? slot.phrase.charAt(0).toUpperCase() + slot.phrase.slice(1) : slot.phrase;
+    out.push(index === 0 ? "" : "; ", `${phrase} ${slotChoiceId(setting) === PLACEHOLDER_ID ? "as" : "from"} `, {
+      field: slot.id,
+      text: slotSourceText(setting),
+      title: `Where ${slot.phrase} come from: ${slot.label.toLowerCase()}`,
+      choices: slotChoiceMenu(part, slot.id, options),
+      current: slotChoiceId(setting)
+    });
+  });
+  if (out.length > 0) out.push(".");
+  return out.filter((s) => s !== "");
+}
+function chooseNames(state, id) {
+  return { ...state, names: id === "perSlot" ? "perSlot" : "placeholders" };
+}
+function chooseSlotSource(state, part, categoryId, id) {
+  const slots = { ...state.slots };
+  const setting = slotSettingOf(part, id);
+  if (setting) slots[categoryId] = setting;
+  else delete slots[categoryId];
+  return { ...state, slots };
+}
+function activeSlots(part, state) {
+  if (state.names !== "perSlot") return {};
+  const out = {};
+  for (const slot of slotInventory(part)) {
+    const setting = state.slots[slot.id];
+    if (setting && setting.kind !== "placeholder") out[slot.id] = setting;
+  }
+  return out;
+}
+function usesOwnNames(part, state) {
+  return Object.keys(activeSlots(part, state)).length > 0;
+}
+function ownNamesSuffix(part, state) {
+  return usesOwnNames(part, state) ? " \xB7 own names" : "";
+}
+
 // src/recipeHost.ts
 var FRONTMATTER2 = /^---\s*\n([\s\S]*?)\n---\s*\n?/;
 function isRecipeContent(content) {
@@ -135224,6 +135456,16 @@ var RecipeHost = class {
       return void 0;
     }
     return resolved.adapt;
+  }
+  /**
+   * Wizard retirement brief §3.5: a sentence's slot sources, resolved by the same code a recipe's slots
+   * are. Placeholders (and names left on "placeholders") map nothing, so the engine's own defaults
+   * apply and the output is unchanged. A missing pack or list falls back to a placeholder with a notice.
+   */
+  async resolveSlotSources(recipe, part, sources, from) {
+    const active = activeSlots(part, sources);
+    if (Object.keys(active).length === 0) return {};
+    return this.resolveSlots({ ...recipe, slots: active }, from);
   }
   /** Resolves every slot setting to engine-ready sources (§6.2). */
   async resolveSlots(recipe, recipePath) {
@@ -136072,6 +136314,11 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
     this.bynameStates = {};
     this.bynamePacks = [];
     this.bynamePacksLoaded = false;
+    /** Wizard retirement brief §3: native British place names' slot sources (names placeholders or chosen per slot). */
+    this.placeSlots = freshSlotSources();
+    /** The names folder's packs and word lists, as the slot menus list them. */
+    this.slotFolderOptions = NO_SLOT_OPTIONS;
+    this.slotFolderLoaded = false;
     /** Ships brief §2.4: each vessel module's choices, session only. */
     this.vesselStates = {};
     /** Seas and coasts brief §2: each waters module's choices, session only. */
@@ -137025,6 +137272,60 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
       words: " place names",
       land: PLACE_LAND_KEYS
     });
+    if (this.placeIsBritain()) this.renderSlotChoices(row, sentence2, "organic", () => this.placeSlots, (next) => this.placeSlots = next);
+  }
+  /**
+   * Wizard retirement brief §3.2: the closing "with ‹placeholders› for names" link on the main
+   * sentence and, with names chosen per slot, the second sentence under it, one link per slot.
+   */
+  renderSlotChoices(row, sentence2, part, get, set) {
+    const draw2 = (el, segments, choose) => {
+      for (const segment2 of segments) {
+        if (typeof segment2 === "string") {
+          el.appendText(segment2);
+          continue;
+        }
+        const choices = segment2.field === "names" ? () => segment2.choices : async () => slotChoiceMenu(part, segment2.field, await this.loadSlotFolderOptions());
+        this.sentenceLink(el, segment2.text, segment2.title, choices, segment2.current, (id) => choose(segment2.field, id));
+      }
+    };
+    draw2(sentence2, namesClosing(get()), (_field, id) => {
+      set(chooseNames(get(), id));
+      if (get().names === "perSlot") void this.loadSlotFolderOptions().then(() => this.renderContextRow());
+    });
+    if (get().names === "perSlot" && !this.slotFolderLoaded) void this.loadSlotFolderOptions().then(() => this.renderContextRow());
+    const second = slotSentence(part, get(), this.slotFolderOptions);
+    if (!second) return;
+    const line = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
+    draw2(line, second, (field, id) => set(chooseSlotSource(get(), part, field, id)));
+  }
+  /** The name packs and word lists in the names folder, for the slot menus (read fresh whenever a menu opens). */
+  async loadSlotFolderOptions() {
+    var _a5;
+    const packs = (await this.loadBynamePacks()).map((p) => p.name);
+    const lists = [];
+    const folder = this.app.vault.getFolderByPath((0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER));
+    for (const child of (_a5 = folder == null ? void 0 : folder.children) != null ? _a5 : []) {
+      if (!(child instanceof import_obsidian11.TFile) || child.extension !== "md") continue;
+      try {
+        if (isWordListContent(await this.app.vault.cachedRead(child))) lists.push(child.basename);
+      } catch (e) {
+        continue;
+      }
+    }
+    this.slotFolderOptions = { packs, lists: lists.sort((a, b) => a.localeCompare(b)) };
+    this.slotFolderLoaded = true;
+    return this.slotFolderOptions;
+  }
+  /**
+   * Wizard retirement brief §3.5: the sentence's slot sources resolved into the engine's slots by the
+   * recipe host, with its notices. On placeholders it maps nothing, exactly as before.
+   */
+  async resolveSlotSources(part, sources, recipe) {
+    if (!usesOwnNames(part, sources)) return { slots: {}, notices: [] };
+    const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks());
+    const slots = await host.resolveSlotSources(recipe, part, sources, `${(0, import_obsidian11.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
+    return { slots, notices: host.getNotices() };
   }
   /** The region link: "‹all of Britain›", "‹the North›". */
   regionLink(sentence2, region, set) {
@@ -141269,10 +141570,12 @@ ${text}
       const land = this.land("britain");
       await this.loadCustomBiomes();
       const biome = await this.readyBiome(findBiome(land.biome, this.customBiomes));
+      const recipe = britishPlaceNamesRecipe(this.selectedRegion, (biome == null ? void 0 : biome.custom) ? void 0 : land.biome, land.terrain);
+      const own = await this.resolveSlotSources("organic", this.placeSlots, recipe);
       const result2 = this.tryLand(() => generatePlaceNames({
-        recipe: britishPlaceNamesRecipe(this.selectedRegion, (biome == null ? void 0 : biome.custom) ? void 0 : land.biome, land.terrain),
+        recipe,
         biome: (biome == null ? void 0 : biome.custom) ? biome : void 0,
-        slots: {},
+        slots: own.slots,
         count: this.generationCount,
         seed: seedOverride2,
         faithfulness: this.plugin.settings.faithfulness,
@@ -141283,9 +141586,9 @@ ${text}
       this.renderRecipeResults(result2.names, "module");
       await this.recordGenerationHistory(
         result2.names.length,
-        withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion) + landHistorySuffix(land, this.customBiomes)
+        withRegion(BRITISH_PLACE_NAMES_HISTORY_NAME, this.selectedRegion) + landHistorySuffix(land, this.customBiomes) + ownNamesSuffix("organic", this.placeSlots)
       );
-      this.setStatus(result2.notices.join(" "));
+      this.setStatus([...result2.notices, ...own.notices].join(" "));
       return;
     }
     const placeRivers = this.activeSection === "placeShapes" && this.placeIsRivers();
