@@ -5,6 +5,7 @@
 // factor, places, saints and safeguards, bynames' ranks, the tribal engine's peoples and realms'
 // short names. No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import { drawScale, scalesFor, SPACE_DATA, validScale, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { dropStarWord } from "../space/stars";
@@ -172,6 +173,8 @@ export function showsFtl(era: RouteEra, kind: string | undefined, scale: ScaleCh
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface RouteOptions {
+  /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   /** A kind key; undefined is Any. */
   kind?: string;
@@ -230,6 +233,7 @@ interface Ctx {
   fantastic: boolean;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   /** §4.4: the region code, for British cultures only. */
   region?: string;
@@ -324,13 +328,13 @@ function gnWord(ctx: Ctx, token: string): string | undefined {
 }
 
 /** §4.2: an invented place: the culture's places (a land compound for Polynesian and Andean). */
-export function routePlace(cultureKey: string, setting: GroupSetting, rng: () => number): string | undefined {
+export function routePlace(cultureKey: string, setting: GroupSetting, rng: () => number, catalogue?: BiomeCatalogue): string | undefined {
   const culture = findRouteCulture(cultureKey);
   const source = culture?.sensitive ? undefined : townSource(cultureKey);
   // §12.3 / BT §11.4: no deity or saint names in the no-gods cultures' places.
   const holy = holyNamesIn(cultureKey);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(setting, source, rng).replace(/^The /, "");
+    const t = groupTown(setting, source, rng, catalogue).replace(/^The /, "");
     if (!holy || !holy.test(t)) return t;
   }
   return undefined;
@@ -360,35 +364,40 @@ export function routeFigure(cultureKey: string, setting: GroupSetting, rng: () =
 const figure = (ctx: Ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
 
 /** §4.2: one tribes and kin groups name per culture, from a pool made once with a fixed seed. */
-const FOLK = new Map<string, string[]>();
-export function routeFolk(cultureKey: string, rng: () => number): string | undefined {
+// The pools are cached per catalogue: a pack that replaces a built-in changes the homelands they draw from.
+const FOLK = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
+export function routeFolk(cultureKey: string, rng: () => number, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string | undefined {
   const tradition = findRouteCulture(cultureKey)?.folk ?? REALM_DATA.tribal[cultureKey] ?? "general";
-  let pool = FOLK.get(tradition);
+  let pools = FOLK.get(catalogue);
+  if (!pools) FOLK.set(catalogue, (pools = new Map()));
+  let pool = pools.get(tradition);
   if (!pool) {
-    pool = generateTribalNames({ tradition, count: 120, seed: 1789 })
+    pool = generateTribalNames({ tradition, count: 120, seed: 1789, catalogue })
       .names.map((n) => n.name.replace(/^the /i, ""))
       .filter((n) => !n.includes("["));
-    FOLK.set(tradition, pool);
+    pools.set(tradition, pool);
   }
   return pool.length > 0 ? pickOne(pool, rng) : undefined;
 }
 
 /** §4.2: `{kingdom}`: a realm's short name (territorial, named for land), from a pool per culture and era. */
-const KINGDOMS = new Map<string, string[]>();
+const KINGDOMS = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
 /** Also events and eras' `{realm}` (Events brief §3). */
-export function routeKingdom(cultureKey: string, routeEra: RouteEra, rng: () => number): string | undefined {
+export function routeKingdom(cultureKey: string, routeEra: RouteEra, rng: () => number, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string | undefined {
   const era = REALM_ERAS.find((e) => e.code === routeEra)?.key ?? "medieval";
   const key = `${cultureKey}|${era}`;
-  let pool = KINGDOMS.get(key);
+  let pools = KINGDOMS.get(catalogue);
+  if (!pools) KINGDOMS.set(catalogue, (pools = new Map()));
+  let pool = pools.get(key);
   if (!pool) {
-    pool = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789 })
+    pool = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue })
       .names.map((n) => n.text.replace(/^the /i, ""))
       .filter((n) => !n.includes("["));
-    KINGDOMS.set(key, pool);
+    pools.set(key, pool);
   }
   return pool.length > 0 ? pickOne(pool, rng) : undefined;
 }
-const kingdom = (ctx: Ctx) => routeKingdom(ctx.culture.key, ctx.era, ctx.rng);
+const kingdom = (ctx: Ctx) => routeKingdom(ctx.culture.key, ctx.era, ctx.rng, ctx.catalogue);
 
 /** §8.8: a road number from weighted ranges. */
 function roadNumber(ctx: Ctx, which: string): string {
@@ -407,9 +416,9 @@ function token(ctx: Ctx, name: string): string | undefined {
       if (ctx.borrowed) return gnWord(ctx, "star");
       // Settlement kit §4: this place, or one of its neighbours.
       if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
-      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
     case "folk":
-      return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng);
+      return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng, ctx.catalogue);
     case "person":
     case "founder":
     case "patron": {
@@ -725,6 +734,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     mode: options.people ?? "placeholders",
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : undefined,
     borrowed: false,
     drawn: new Set(),

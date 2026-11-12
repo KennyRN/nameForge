@@ -5,6 +5,7 @@
 // places, people, gods, figures and routes come from the route engine, trades and goods from the
 // street pools. No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import innData from "../data/inn-names.json";
 import {
@@ -143,6 +144,8 @@ export const defaultInnSafeguards = (): GroupSafeguards => ({ block: INN_DATA.sa
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface InnOptions {
+  /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   kind?: InnKind;
   era?: RouteEra;
@@ -209,6 +212,7 @@ interface Ctx {
   mode: GroupPeople;
   tone: GroupToneChoice;
   vocab: Vocabulary;
+  catalogue: BiomeCatalogue;
   region?: string;
   kind: InnKind;
   themes: Record<string, number>;
@@ -311,6 +315,7 @@ function route(ctx: Ctx): string | undefined {
     seed: Math.floor(ctx.rng() * 0xffffffff),
     safeguards: ctx.options.routeSafeguards,
     vocab: ctx.options.vocab,
+    catalogue: ctx.catalogue,
   }).names[0];
   if (r) ctx.isRoute = true;
   return r?.text.replace(/^the /i, "");
@@ -341,6 +346,7 @@ function landmark(ctx: Ctx, kinds: BuildingKind[], monumentShare: number, monume
         safeguards: o.monumentSafeguards,
         honourees: o.honourees,
         vocab: o.vocab,
+        catalogue: o.catalogue,
       })?.text.replace(/^the /, "");
     }
     w ??= buildingName({
@@ -353,6 +359,7 @@ function landmark(ctx: Ctx, kinds: BuildingKind[], monumentShare: number, monume
       rng: ctx.rng,
       safeguards: o.landmarkSafeguards,
       vocab: o.vocab,
+      catalogue: o.catalogue,
     });
   }
   if (!w) return undefined;
@@ -402,7 +409,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "town":
       // Settlement kit §4: this place, or one of its neighbours.
       if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
-      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
+      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng, ctx.catalogue);
     case "holy": {
       const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
       return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
@@ -643,6 +650,7 @@ export function generateInnNames(options: InnOptions): InnBatch {
     mode,
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     region,
     kind,
     themes,

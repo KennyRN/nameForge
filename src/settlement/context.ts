@@ -3,6 +3,7 @@
 // runs through each engine's optional `context` option. Also the small helpers the engines share for
 // it: which `{town}` is this place, and the ×4 weights for the context's words. No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import {
   type GroupPeople,
   type GroupSafeguards,
@@ -30,6 +31,8 @@ export * from "./contextShared";
 // ── Building the context (§3) ───────────────────────────────────────────────
 
 export interface ContextOptions {
+  /** Wizard retirement brief §5: the biome lookups the town and realm pools draw from (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture: string;
   era: RouteEra;
   fantastic: boolean;
@@ -84,24 +87,27 @@ function defaultBlocked(name: string): boolean {
   );
 }
 
-const settlementPools = new Map<string, string[]>();
+// Cached per catalogue: a pack that replaces Britain changes the British town pool.
+const settlementPools = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
 
 /**
  * Urban brief §7: 300 settlement names at seed 1789 for the culture's town source (British or a world
  * culture's first era), at the kit's size; cached by culture, size and region. Empty where the culture
  * has no town source or is a sensitive one, which keep the old path.
  */
-export function settlementTownPool(culture: string, size: Exclude<SizeKey, "any" | "hamlet">, region?: string): string[] {
+export function settlementTownPool(culture: string, size: Exclude<SizeKey, "any" | "hamlet">, region?: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string[] {
   const source = findRouteCulture(culture)?.sensitive ? undefined : townSource(culture);
   if (!source) return [];
   // British only, and only a place-shape region code; anything else is all of Britain.
   const code = source === "britain" && PLACE_SHAPE_REGIONS.some((r) => r.code === region) ? region : undefined;
   const key = `${source}|${size}|${code ?? ""}`;
-  let found = settlementPools.get(key);
+  let pools = settlementPools.get(catalogue);
+  if (!pools) settlementPools.set(catalogue, (pools = new Map()));
+  let found = pools.get(key);
   if (!found) {
     // The size's fallback notices are not shown in the kit.
-    found = generateSettlementNames({ setting: "native", culture: source, size, region: code, count: 300, seed: 1789 }).names.map((n) => n.text).filter((n) => !n.includes("["));
-    settlementPools.set(key, found);
+    found = generateSettlementNames({ setting: "native", culture: source, size, region: code, count: 300, seed: 1789, catalogue }).names.map((n) => n.text).filter((n) => !n.includes("["));
+    pools.set(key, found);
   }
   return found;
 }
@@ -129,17 +135,17 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
   const setting = routeSetting(o.era, o.fantastic);
   const blocked = o.blocked ?? defaultBlocked;
   const taken: string[] = [];
-  const pool = isFuture(o.era) ? [] : settlementTownPool(o.culture, o.size ?? "town", o.region);
+  const pool = isFuture(o.era) ? [] : settlementTownPool(o.culture, o.size ?? "town", o.region, o.catalogue);
   const holyWords = holyNamesIn(o.culture);
   // §3: a real name even in placeholder mode; in NF–IS, a station or colony name (GN §8.4 SF row).
   const place = (): string => {
     for (let i = 0; i < 200; i++) {
       // Urban brief §7: settlement names where the culture has them; otherwise route names' invented places.
       const t = isFuture(o.era)
-        ? groupTown("SF", undefined, rng)
+        ? groupTown("SF", undefined, rng, o.catalogue)
         : pool.length > 0
           ? ((n) => (holyWords && holyWords.test(n) ? undefined : n))(pool[Math.floor(rng() * pool.length)])
-          : routePlace(o.culture, setting, rng);
+          : routePlace(o.culture, setting, rng, o.catalogue);
       if (t && !t.includes("[") && !blocked(t) && !taken.some((x) => x.toLowerCase() === t.toLowerCase())) {
         taken.push(t);
         return t;
@@ -170,6 +176,7 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
       count: 1,
       seed: Math.floor(rng() * 0xffffffff),
       safeguards: o.realmSafeguards,
+      catalogue: o.catalogue,
     }).names[0];
     realm = r && !r.text.includes("[") ? r.text : null;
   }

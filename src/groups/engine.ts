@@ -3,7 +3,7 @@
 // No Obsidian imports.
 
 import groupData from "../data/group-names.json";
-import { pluralOf } from "../biomes";
+import { type BiomeCatalogue, BUILT_IN_BIOMES, pluralOf } from "../biomes";
 import { deityHooks } from "../deities/hook";
 import { mulberry32 } from "../markov";
 import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
@@ -336,6 +336,8 @@ export function breaksGroupColourRule(text: string): boolean {
 // ── Generation ──────────────────────────────────────────────────────────────
 
 export interface GroupOptions {
+  /** Wizard retirement brief §5: the biome lookups the invented-town pool draws from (a pack can replace Britain); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   family: string;
   /** A tribal tradition key; "general" (the default) adds no cultural flavour. */
   tradition?: string;
@@ -412,6 +414,8 @@ interface Ctx {
   context?: SettlementContext;
   /** Stellar brief §2: the scale that filters scale-tagged space words. */
   scale: ScaleChoice;
+  /** Wizard retirement brief §5: the biome lookups for the town pool. */
+  catalogue?: BiomeCatalogue;
 }
 
 export const pickWeighted = <T>(items: [T, number][], rng: () => number): T | undefined => {
@@ -542,16 +546,19 @@ function compositeWord(ctx: Ctx, name: string, type: GroupType): string | undefi
 }
 
 // Invented places (§8.4), drawn from pools made once with fixed seeds, so batches stay seed-stable.
-const townPools = new Map<string, string[]>();
-function townPool(key: string): string[] {
-  let found = townPools.get(key);
+// Cached per catalogue: a pack that replaces Britain is British place names' land, so it changes the British pool.
+const townPools = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
+function townPool(key: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string[] {
+  let pools = townPools.get(catalogue);
+  if (!pools) townPools.set(catalogue, (pools = new Map()));
+  let found = pools.get(key);
   if (found) return found;
   const names =
     key === "britain"
-      ? generatePlaceNames({ recipe: britishPlaceNamesRecipe(undefined), slots: {}, count: 300, seed: 1789 }).names.map((n) => n.text)
-      : generateWorldPlaceNames({ culture: key, count: 300, seed: 1789 }).names.map((n) => n.text);
+      ? generatePlaceNames({ recipe: britishPlaceNamesRecipe(undefined), slots: {}, count: 300, seed: 1789, catalogue }).names.map((n) => n.text)
+      : generateWorldPlaceNames({ culture: key, count: 300, seed: 1789, catalogue }).names.map((n) => n.text);
   found = names.filter((n) => !n.includes("["));
-  townPools.set(key, found);
+  pools.set(key, found);
   return found;
 }
 
@@ -695,7 +702,7 @@ function token(ctx: Ctx, name: string, type: GroupType, shape?: GroupShape): Pie
     case "spaceLandPrefixed":
       return { text: spacePrefixed(ctx, type, pick(ctx, "spaceLand", type)!), plural: false };
     case "britishPlace":
-      return { text: pickOne(townPool("britain"), rng), plural: false };
+      return { text: pickOne(townPool("britain", ctx.catalogue), rng), plural: false };
     case "flavourAnimal": {
       const animals = ctx.vocab?.flavour.animals;
       if (animals && animals.length > 0) return { text: pickOne(animals, rng), plural: false };
@@ -803,10 +810,10 @@ function sharedCtx(setting: GroupSetting, rng: () => number, scale: ScaleChoice 
 }
 
 /** §8.4: an invented place: a pool for a world culture or "britain", else a land compound; SF patterns in SF. */
-export function groupTown(setting: GroupSetting, source: string | undefined, rng: () => number): string {
+export function groupTown(setting: GroupSetting, source: string | undefined, rng: () => number, catalogue?: BiomeCatalogue): string {
   const { ctx, type } = sharedCtx(setting, rng);
   if (setting !== "SF" && source) {
-    const names = townPool(source);
+    const names = townPool(source, catalogue);
     if (names.length > 0) return pickOne(names, rng);
   }
   if (setting !== "SF") return `${pickWeighted(pool(ctx, "townPrefix", type), rng)}${pickWeighted(pool(ctx, "townSuffix", type), rng)}`;
@@ -1276,6 +1283,7 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
     drawn: new Set(),
     context: options.context,
     scale: setting === "SF" ? options.scale ?? "any" : "any",
+    catalogue: options.catalogue,
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : undefined;
   if (options.type && !chosen) {

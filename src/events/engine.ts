@@ -4,6 +4,7 @@
 // vocabulary packs); places, peoples, realms, people and figures come from the route engine, dynasties
 // from realms, epithets from bynames, colours and numbers from group names. No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import eventData from "../data/event-names.json";
 import { BYNAMES_DATA, entryForm } from "../bynames/engine";
@@ -97,6 +98,8 @@ export const defaultEventSafeguards = (): GroupSafeguards => ({ block: EVENT_DAT
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface EventOptions {
+  /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   kind?: EventKind;
   era?: RouteEra;
@@ -144,6 +147,7 @@ interface Ctx {
   fantastic: boolean;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   scale: EventScale;
   shape?: EventShape;
@@ -205,14 +209,14 @@ function gnWord(ctx: Ctx, list: string): string | undefined {
 
 /** §3: `{place}`: an invented place (never a placeholder); with a context, this place or a neighbour. */
 function place(ctx: Ctx): string | undefined {
-  const p = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.carryPlace && ctx.shape?.kind === "treaty" && ctx.rng() < EVENT_DATA.series.carryPlace ? ctx.carryPlace : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const p = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.carryPlace && ctx.shape?.kind === "treaty" && ctx.rng() < EVENT_DATA.series.carryPlace ? ctx.carryPlace : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
   if (p) ctx.place ??= p;
   return p;
 }
 
 /** §3: `{people}`: a tribes and kin groups name without "the"; the series' own at ×4. */
 function people(ctx: Ctx): string | undefined {
-  const fresh = () => (ctx.mode === "placeholders" ? "[people]" : routeFolk(ctx.culture.key, ctx.rng));
+  const fresh = () => (ctx.mode === "placeholders" ? "[people]" : routeFolk(ctx.culture.key, ctx.rng, ctx.catalogue));
   const r = ctx.recurring ?? EVENT_DATA.series.recurring;
   const p = ctx.seriesPeople && (r === Infinity || ctx.rng() < r / (r + 1)) ? ctx.seriesPeople : fresh();
   if (p) ctx.people ??= p;
@@ -220,7 +224,7 @@ function people(ctx: Ctx): string | undefined {
 }
 
 function realm(ctx: Ctx): string | undefined {
-  const fresh = () => (ctx.mode === "placeholders" ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, ctx.rng));
+  const fresh = () => (ctx.mode === "placeholders" ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, ctx.rng, ctx.catalogue));
   const r = EVENT_DATA.series.recurring;
   const p = ctx.seriesRealm && !ctx.realm && ctx.rng() < r / (r + 1) ? ctx.seriesRealm : fresh();
   if (p) ctx.realm ??= p;
@@ -408,6 +412,7 @@ export function generateEventNames(options: EventOptions): EventBatch {
     mode,
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     scale,
     context: options.context,
     drawn: new Set(),
@@ -477,8 +482,8 @@ export function generateEventNames(options: EventOptions): EventBatch {
   /** §8: one history: eras framing a rhythm of crisis or war, battle, treaty, then a collapse or migration. */
   function chronicle() {
     const s = EVENT_DATA.series;
-    const seriesPeople = mode === "placeholders" ? "[people]" : routeFolk(culture.key, rng);
-    const seriesRealm = mode === "placeholders" ? "[realm]" : routeKingdom(culture.key, era, rng);
+    const seriesPeople = mode === "placeholders" ? "[people]" : routeFolk(culture.key, rng, options.catalogue);
+    const seriesRealm = mode === "placeholders" ? "[realm]" : routeKingdom(culture.key, era, rng, options.catalogue);
     const recurs = (sh: EventShape) => (sh.p.includes("{people") || sh.p.includes("{realm") ? s.recurring : 1);
     let carryPlace: string | undefined;
     let founded = false;

@@ -159,3 +159,93 @@ test("used everywhere: with Britain replaced, British place names set in Britain
   assert.doesNotMatch(text(), /Quokka/);
   assert.ok(BRITAIN.id === "britain");
 });
+
+// ── Terrain from an overriding biome, and the helper pools (§5.2) ───────────
+
+import { BUILT_IN_BIOMES } from "../src/biomes";
+import { groupTown } from "../src/groups/engine";
+import { mulberry32 } from "../src/markov";
+import { readRecipe, recipeToFrontmatter, withDefaults } from "../src/names/recipe";
+import { settlementPresetRecipe } from "../src/names/placeRun";
+import { freshSlotSources } from "../src/names/slotSentence";
+import { routeFolk, routeKingdom } from "../src/routes/engine";
+import { settlementTownPool } from "../src/settlement/context";
+import { wildsStemPool } from "../src/wilds/engine";
+
+const SALT_PANS = `---\ntype: biome\npackName: Temperate\nbased-on: "temperate"\n---\n\n## Terrain weights\n- plains (15), coast (30)\n- salt pans (10)\n\n## Salt pans: land\n- Salt Pans, White Flats\n\n## Salt pans: short land\n- pan, flat\n`;
+
+test("terrain: a settlement names preset keeps a custom terrain from an overriding biome", () => {
+  const { biomes } = resolve({ "Names/Temperate.md": SALT_PANS });
+  const catalogue = biomeCatalogue(biomes);
+  assert.equal(catalogue.find("temperate")!.customTerrains?.[0].id, "salt-pans");
+  const recipe = settlementPresetRecipe({ size: "village", part: undefined, region: undefined, biome: "temperate", terrain: "salt-pans", aliens: false, sources: freshSlotSources() });
+  const note = JSON.parse(JSON.stringify(recipeToFrontmatter(recipe)));
+  // With the catalogue the terrain is kept; read as the built-ins alone it would be dropped.
+  const kept = readRecipe(note, catalogue);
+  assert.deepEqual(kept.problems, []);
+  assert.equal(kept.recipe.shape?.terrain, "salt-pans");
+  assert.equal(kept.recipe.shape?.biome, "temperate");
+  const dropped = readRecipe(note);
+  assert.equal(dropped.recipe.shape?.terrain, undefined);
+  assert.deepEqual(dropped.problems, ["Unknown terrain “salt-pans”."]);
+  // And it runs: the override's terrain is available to the engine.
+  const run = generatePlaceNames({ recipe: withDefaults(kept.recipe), slots: {}, count: 12, seed: 3, catalogue });
+  assert.equal(run.names.length, 12);
+});
+
+test("terrain: a built-in terrain and a recipe naming no biome read as before", () => {
+  const note = { type: "recipe", shape: { part: "organic", biome: "desert", terrain: "coast" } };
+  assert.deepEqual(readRecipe(note).problems, []);
+  assert.deepEqual(readRecipe(note, biomeCatalogue(resolve({ "Names/Temperate.md": SALT_PANS }).biomes)).problems, []);
+  assert.deepEqual(readRecipe({ type: "recipe", shape: { part: "organic", terrain: "hills" } }).problems, []);
+});
+
+/** Every list of the made-up pack reduced to one word, so an override shows wherever it's drawn. */
+const loud = (name: string, basedOn: string) =>
+  note(name, basedOn, "Quokka") + ["Plains", "Hills", "Mountains", "Forest", "Coast", "Rivers", "Wetland", "Islands"].map((t) => `\n## ${t}: land\n- Quokkaland\n\n## ${t}: water\n- Quokkawater\n`).join("");
+
+test("pools: with Britain replaced, the helper pools that draw British places use it; without, they don't", () => {
+  const { biomes } = resolve({ "N/British.md": loud("British", "britain") });
+  const catalogue = biomeCatalogue(biomes);
+  const draw = (cat?: typeof catalogue) => {
+    const rng = mulberry32(5);
+    return Array.from({ length: 2500 }, () => groupTown("FL", "britain", rng, cat)).join(" ");
+  };
+  assert.match(draw(catalogue), /Quokka/, "group town names");
+  assert.doesNotMatch(draw(BUILT_IN_BIOMES), /Quokka/);
+  // The stem pool keeps only whole-word stems, so it is compared whole: it changes with the override, and not without it.
+  const stems = (cat?: typeof catalogue) => JSON.stringify(wildsStemPool("britain", undefined, cat));
+  assert.notEqual(stems(catalogue), stems(BUILT_IN_BIOMES), "wilds stems");
+  assert.equal(stems(biomeCatalogue([])), stems(BUILT_IN_BIOMES));
+  assert.match(settlementTownPool("norman-british", "town", undefined, catalogue).join(" "), /Quokka/, "kit towns");
+  assert.doesNotMatch(settlementTownPool("norman-british", "town").join(" "), /Quokka/);
+});
+
+test("pools: with a biome replaced, the folk and kingdom pools use it where it's a homeland", () => {
+  const { biomes } = resolve(Object.fromEntries(["Temperate", "Moorland", "Desert", "Savannah", "Mediterranean", "Steppe and grassland", "Highlands"].map((n, i) => [`N/${i}.md`, loud(n, builtInForPackName(n)!.id)])));
+  const catalogue = biomeCatalogue(biomes);
+  const cultures = ["norman-british", "celtic", "anglo-saxon", "norse", "roman", "arabic-persian", "bantu", "slavic"];
+  const folk = (cat?: typeof catalogue) => cultures.map((c) => { const rng = mulberry32(3); return Array.from({ length: 300 }, () => routeFolk(c, rng, cat)).join(" "); }).join(" ");
+  const kingdoms = (cat?: typeof catalogue) => cultures.map((c) => { const rng = mulberry32(3); return Array.from({ length: 300 }, () => routeKingdom(c, "MD", rng, cat)).join(" "); }).join(" ");
+  assert.match(folk(catalogue), /Quokka/, "folk");
+  assert.doesNotMatch(folk(BUILT_IN_BIOMES), /Quokka/);
+  assert.match(kingdoms(catalogue), /Quokka/, "kingdoms");
+  assert.doesNotMatch(kingdoms(BUILT_IN_BIOMES), /Quokka/);
+  assert.equal(kingdoms(biomeCatalogue([])), kingdoms(BUILT_IN_BIOMES));
+});
+
+test("pools: with no override they are the same pools, so output doesn't change", () => {
+  const empty = biomeCatalogue([]);
+  const draw = (cat: typeof empty) => { const rng = mulberry32(9); return [routeFolk("celtic", rng, cat), routeKingdom("norse", "MD", rng, cat), groupTown("FL", "britain", rng, cat), wildsStemPool("britain", undefined, cat).length].join("|"); };
+  assert.equal(draw(empty), draw(BUILT_IN_BIOMES));
+});
+
+import { generateVesselNames } from "../src/vessels/engine";
+
+test("pools: land vehicles named for birds use the replaced temperate birds", () => {
+  const { biomes } = resolve({ "Names/Temperate.md": note("Temperate", "temperate") });
+  const catalogue = biomeCatalogue(biomes);
+  const names = (cat?: typeof catalogue) => generateVesselNames({ module: "landVehicles", culture: "general", count: 3000, seed: 4, catalogue: cat }).names.map((n) => n.name).join(" ");
+  assert.match(names(catalogue), /Quokkabird/);
+  assert.doesNotMatch(names(), /Quokkabird/);
+});

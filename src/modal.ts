@@ -1426,7 +1426,8 @@ export class NameForgeModal extends Modal {
 
   /** Wizard retirement brief §5.1: every biome list and lookup, over the packs as last loaded (rebuilt only when they are). */
   public catalogue(): BiomeCatalogue {
-    if (this.catalogueCache?.biomes !== this.customBiomes) this.catalogueCache = { biomes: this.customBiomes, catalogue: biomeCatalogue(this.customBiomes) };
+    // With no packs it is the built-ins catalogue itself, so the engines' pools are shared with every other caller.
+    if (this.catalogueCache?.biomes !== this.customBiomes) this.catalogueCache = { biomes: this.customBiomes, catalogue: this.customBiomes.length === 0 ? BUILT_IN_BIOMES : biomeCatalogue(this.customBiomes) };
     return this.catalogueCache.catalogue;
   }
 
@@ -2766,6 +2767,7 @@ export class NameForgeModal extends Modal {
     const guards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards);
     const result = generateRouteNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -2854,6 +2856,7 @@ export class NameForgeModal extends Modal {
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, innWordBlocked);
     const result = generateInnNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -3019,6 +3022,7 @@ export class NameForgeModal extends Modal {
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, deityWordBlocked);
     const pack = await this.deityDraw(s);
     const result = generateDeityNames({
+      catalogue: await this.readyCatalogue(),
       culture: s.culture,
       kind: s.kind,
       // Line-up brief §2.2: kind Any in the deities module means deities and pantheons.
@@ -3131,6 +3135,7 @@ export class NameForgeModal extends Modal {
     const guards = await this.loadSettlementSafeguards(EVENT_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, eventWordBlocked);
     const result = generateEventNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -3234,6 +3239,7 @@ export class NameForgeModal extends Modal {
     const guards = await this.loadSettlementSafeguards(MONEY_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, moneyWordBlocked);
     const result = generateMoneyNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -3510,6 +3516,7 @@ export class NameForgeModal extends Modal {
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, thingWordBlocked);
     const pack = await this.thingDraw(state);
     const result = generateThingNames({
+      catalogue: await this.readyCatalogue(),
       module,
       culture: state.culture,
       kind: state.kind,
@@ -3640,7 +3647,7 @@ export class NameForgeModal extends Modal {
   private async runKit(state = this.kitState, label?: string, problems: string[] = [], seed?: number) {
     const seedOverride = seed ?? (this.seedLocked ? parseSeedInput(this.seedInputEl?.value) : undefined);
     const inputs = await this.kitInputs();
-    const kit = generateKit({ ...state, seed: seedOverride, safeguards: inputs.safeguards, honourees: inputs.honourees, vocab: inputs.vocab.vocab });
+    const kit = generateKit({ catalogue: await this.readyCatalogue(), ...state, seed: seedOverride, safeguards: inputs.safeguards, honourees: inputs.honourees, vocab: inputs.vocab.vocab });
     this.currentSeed = kit.options.seed;
     this.currentKit = kit;
     this.renderKitResult(kit);
@@ -3842,6 +3849,7 @@ export class NameForgeModal extends Modal {
     const guards = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, buildingWordBlocked);
     const result = generateBuildingNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -3962,6 +3970,7 @@ export class NameForgeModal extends Modal {
     const innGuards = await this.loadSettlementSafeguards(INN_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, monumentWordBlocked);
     const result = generateMonumentNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -4079,6 +4088,7 @@ export class NameForgeModal extends Modal {
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, streetWordBlocked);
     const result = generateStreetNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       function: state.function,
@@ -4653,6 +4663,7 @@ export class NameForgeModal extends Modal {
     const guards = await this.loadBynameSafeguards();
     const pack = await this.bynameDraw(state);
     const result = generateBynames({
+      catalogue: await this.readyCatalogue(),
       module,
       culture: state.culture,
       kind: state.kind,
@@ -5197,6 +5208,7 @@ export class NameForgeModal extends Modal {
     let result;
     try {
       result = generateGroupNames({
+      catalogue: await this.readyCatalogue(),
         family: family.key,
         tradition: state.tradition,
         type: state.type,
@@ -6235,7 +6247,8 @@ export class NameForgeModal extends Modal {
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
     this.updatePackDropdownTrigger(file.path, "recipePack");
-    const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    await this.loadCustomBiomes();
+    const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file), this.catalogue());
     // Urban brief §8: a settlement names preset opens in settlement names, not the markov generator's recipe editor.
     this.settlementPreset = recipe.shape?.settlement ? recipe.shape : undefined;
     this.settlementPresetSlots = this.settlementPreset ? recipe.slots : undefined;
@@ -6253,7 +6266,7 @@ export class NameForgeModal extends Modal {
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), {
       targetReason: (entry, index) => this.targetPackReason(entry, index),
       targetNames: (entry, index) => this.ageingTargetNames(entry, index),
-    });
+    }, (await this.readyCatalogue()));
     const loaded = await host.loadRecipe(file);
     if (loaded.error) {
       this.setStatus(loaded.error);

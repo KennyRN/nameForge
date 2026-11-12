@@ -164,6 +164,7 @@ interface Ctx {
   fantastic: boolean;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   words: TimeWords;
   biome: CycleBiome | undefined;
@@ -282,17 +283,19 @@ function biomeWord(ctx: Ctx, token: BiomeToken | "beast"): string | undefined {
 
 // ── People, places and the like ─────────────────────────────────────────────
 
-const EVENT_POOLS = new Map<string, string[]>();
+const EVENT_POOLS = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
 /** §3.4: `{event}`: a treaty, battle or rebellion of the culture and era, bare ("Saltgate"). */
 function eventName(ctx: Ctx): string | undefined {
   if (ctx.mode === "placeholders") return "[event]";
   const kind = pickOne(["treaty", "battle", "rebellion"] as const, ctx.rng);
   const key = `${ctx.culture}|${ctx.era}|${kind}`;
-  let pool = EVENT_POOLS.get(key);
+  let pools = EVENT_POOLS.get(ctx.catalogue);
+  if (!pools) EVENT_POOLS.set(ctx.catalogue, (pools = new Map()));
+  let pool = pools.get(key);
   if (!pool) {
-    const batch = generateEventNames({ culture: ctx.culture, era: ctx.era, kind, count: 40, seed: 1789, people: "invented" });
+    const batch = generateEventNames({ culture: ctx.culture, era: ctx.era, kind, count: 40, seed: 1789, people: "invented", catalogue: ctx.catalogue });
     pool = batch.names.map((n) => n.text.replace(/^the /i, "").replace(/^(Battle|Treaty) of /i, "")).filter((n) => n && !n.includes("[") && !n.includes(" of the ") && countedWords(n).length <= 2);
-    EVENT_POOLS.set(key, pool);
+    pools.set(key, pool);
   }
   return pool.length > 0 ? pickOne(pool, ctx.rng) : undefined;
 }
@@ -313,7 +316,7 @@ function godTitle(ctx: Ctx): string | undefined {
 
 function town(ctx: Ctx): string | undefined {
   if (ctx.mode === "placeholders") return "[place]";
-  return groupTown(ctx.setting, ctx.setting === "SF" ? undefined : findTimeCulture(ctx.culture)?.sensitive ? undefined : townSource(ctx.culture), ctx.rng).replace(/^The /, "");
+  return groupTown(ctx.setting, ctx.setting === "SF" ? undefined : findTimeCulture(ctx.culture)?.sensitive ? undefined : townSource(ctx.culture), ctx.rng, ctx.catalogue).replace(/^The /, "");
 }
 
 const ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth", "Thirteenth"];
@@ -401,7 +404,7 @@ function token(ctx: Ctx, name: string, mod?: string): string | undefined {
     case "town":
       return town(ctx);
     case "realm":
-      return placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng);
+      return placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng, ctx.catalogue);
     case "event":
       return eventName(ctx);
     case "star":
@@ -1367,6 +1370,7 @@ export function generateTimeSkyNames(options: TimeSkyOptions): TimeBatch {
     mode: options.people ?? "placeholders",
     tone,
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     words: kind === "festival" ? options.words ?? "translated" : "translated",
     biome: resolved,
     atHome,

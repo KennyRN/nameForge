@@ -3,6 +3,7 @@
 // settlement context once (context.ts) and running the modules already built with it, in order (§6),
 // then applying the kit's rules (§8). The kit has no word lists of its own. No Obsidian imports.
 
+import type { BiomeCatalogue } from "../biomes";
 import kitData from "../data/settlement-kit.json";
 import { generateBuildingNames, type BuildingKind } from "../buildings/engine";
 import { generateMonumentNames } from "../monuments/engine";
@@ -86,6 +87,8 @@ export interface KitSafeguards {
 }
 
 export interface KitOptions {
+  /** Wizard retirement brief §5: the biome lookups the kit's pools draw from (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   era?: RouteEra;
   fantastic?: boolean;
@@ -228,7 +231,7 @@ export function generateKit(options: KitOptions): Kit {
   // 1. Context (§3).
   const context: SettlementContext = {
     ...buildContext(
-      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", size: o.size, blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture(o.era) ? (o.position === "crossroads" ? "Sy" : "Pl") : undefined },
+      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", size: o.size, blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, catalogue: options.catalogue, scale: isFuture(o.era) ? (o.position === "crossroads" ? "Sy" : "Pl") : undefined },
       mulberry32(subSeed(o.seed, STEPS.context)),
     ),
     effects: pos.effects,
@@ -236,7 +239,7 @@ export function generateKit(options: KitOptions): Kit {
   const keep = sectionsFor(o.contents, o.position, o.era);
   // Stellar brief §8: in the future eras the position sets the scale - a station is a star system, anywhere else a planet.
   const kitScale: "Pl" | "Sy" | undefined = isFuture(o.era) ? (o.position === "crossroads" ? "Sy" : "Pl") : undefined;
-  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, context, ...(kitScale ? { scale: kitScale } : {}) };
+  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, catalogue: options.catalogue, context, ...(kitScale ? { scale: kitScale } : {}) };
 
   // §8.1: no name twice across sections (the road through town and the landmark back-links are
   // the same places by design, §8.2).
@@ -410,7 +413,7 @@ export function generateKit(options: KitOptions): Kit {
     const technology = KIT_DATA.vessels[module][o.era] ?? (module === "ships" ? "T7" : "S3");
     const fn = (isFuture(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : undefined;
     run("ships", want("ships"), (seed, count) => {
-      const b = generateVesselNames({ module, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context });
+      const b = generateVesselNames({ module, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context, catalogue: options.catalogue });
       return { names: b.names.map((n) => ({ text: n.text, kind: n.function })), notices: b.notices };
     });
   }
@@ -476,6 +479,7 @@ export function generateKit(options: KitOptions): Kit {
       const front = KIT_DATA.hideFront.includes(row.family) || type === "secret" ? "may" : undefined;
       for (let t = 0; t <= KIT_DATA.dedupeTries; t++) {
         const n = generateGroupNames({
+          catalogue: options.catalogue,
           family: row.family,
           type,
           tradition: context.tradition,

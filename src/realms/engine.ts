@@ -282,6 +282,7 @@ export interface RealmBatch {
 // ── Drawing ─────────────────────────────────────────────────────────────────
 
 interface Ctx {
+  catalogue: BiomeCatalogue;
   rng: () => number;
   setting: GroupSetting;
   era: EraCode;
@@ -448,7 +449,7 @@ function place(ctx: Ctx): string | undefined {
   if (ctx.mode === "placeholders") return "[place]";
   const holy = holyNamesIn(ctx.culture);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(ctx.setting, townSource(ctx.culture), ctx.rng).replace(/^The /, "");
+    const t = groupTown(ctx.setting, townSource(ctx.culture), ctx.rng, ctx.catalogue).replace(/^The /, "");
     if (!holy || !holy.test(t)) return t;
   }
   return undefined;
@@ -484,7 +485,7 @@ function token(ctx: Ctx, name: string, shape: RealmShape, kind: string): string 
     case "place":
       return place(ctx);
     case "landCompound":
-      return ctx.mode === "placeholders" ? "[place]" : groupTown("FL", undefined, rng);
+      return ctx.mode === "placeholders" ? "[place]" : groupTown("FL", undefined, rng, ctx.catalogue);
     case "dynasty":
       if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
       return gnWord(ctx, "house");
@@ -677,7 +678,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
 
   function build(character: string, choice: { shape: RealmShape; kind: ShapeKind; nf: string; t: GroupTone[] }): RealmName | undefined {
     const { shape, kind } = choice;
-    const ctx: Ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome, lists, pools, tribal, drawn: new Set(), values: new Map(), scale };
+    const ctx: Ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome, lists, pools, tribal, drawn: new Set(), values: new Map(), scale, catalogue: biomes };
     // Forms and collective nouns first: modifiers and qualifiers must suit them (§7).
     if (/\{(form|federalForm)\}/.test(shape.p)) {
       const keep = shape.p.includes("{federalForm}")
@@ -775,7 +776,7 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
 }
 
 // Aircraft and land brief §7.5: the vessels engine names realms by their short forms (state coaches, airships) through this.
-registerRealmSource(({ culture, era, genre, seed }) => generateRealmNames({ culture, era, genre, namedFor: "anything", output: "short", people: "invented", count: 1, seed }).names[0]?.short);
+registerRealmSource(({ culture, era, genre, seed, catalogue }) => generateRealmNames({ culture, era, genre, namedFor: "anything", output: "short", people: "invented", count: 1, seed, catalogue }).names[0]?.short);
 
 /** §11: a short form from the shape's template and the values drawn ("same": the plain name). */
 function renderShort(ctx: Ctx, template: string, plain: string): string {

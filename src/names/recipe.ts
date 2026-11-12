@@ -2,7 +2,7 @@
 // into a plain object and hands it here.
 
 import { SETTLEMENT_SIZES } from "../settlement/data";
-import { findBiome, TERRAIN_CHOICES } from "../biomes";
+import { type BiomeCatalogue, BUILT_IN_BIOMES, findBiome, TERRAIN_CHOICES } from "../biomes";
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "../tribes/engine";
 import type { TribalSlotFields } from "../tribes/slotFill";
 
@@ -160,8 +160,11 @@ function readTribalFields(v: Record<string, unknown>, problems: string[], id: st
   return out;
 }
 
-/** Reads a recipe's frontmatter object. Unknown or invalid values are reported and skipped. */
-export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial; problems: string[] } {
+/**
+ * Reads a recipe's frontmatter object. Unknown or invalid values are reported and skipped. A biome's
+ * own terrains (a pack's, including one that replaces a built-in) are known through `catalogue`.
+ */
+export function readRecipe(fm: Record<string, unknown>, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): { recipe: RecipePartial; problems: string[] } {
   const problems: string[] = [];
   const recipe: RecipePartial = {};
   const setting = str(fm.setting);
@@ -186,11 +189,11 @@ export function readRecipe(fm: Record<string, unknown>): { recipe: RecipePartial
       // Land brief §4.1: a biome pack, kept as a link for the host to resolve.
       const target = linkTarget(biome);
       if (target) shape.biome = `[[${target}]]`;
-    } else if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
+    } else if (biome && (biome === "unknown" || catalogue.find(biome))) shape.biome = biome;
     else if (biome) problems.push(`Unknown biome “${biome}”.`);
     // Land brief §4.1: a terrain id or any; a custom terrain is only known once a pack resolves.
     const terrain = str(fm.shape.terrain);
-    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || shape.biome?.startsWith("[[") || findBiome(shape.biome)?.customTerrains?.some((t) => t.id === terrain))) shape.terrain = terrain;
+    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || shape.biome?.startsWith("[[") || catalogue.find(shape.biome)?.customTerrains?.some((t) => t.id === terrain))) shape.terrain = terrain;
     else if (terrain) problems.push(`Unknown terrain “${terrain}”.`);
     // Stellar brief §5.8: the alien life link, saved as aliens: true; absent means none.
     const aliens = bool(fm.shape.aliens);

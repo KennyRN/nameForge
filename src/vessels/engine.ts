@@ -605,14 +605,14 @@ function listWord(ctx: Ctx, name: string, filter?: (w: string) => boolean): stri
 /** §12.2: an invented place; spacecraft in SF use the GN §8.4 SF row. */
 function town(ctx: Ctx): string | undefined {
   const rng = ctx.rng;
-  if (ctx.module === "spacecraft" && ctx.setting === "SF") return groupTown("SF", undefined, rng);
+  if (ctx.module === "spacecraft" && ctx.setting === "SF") return groupTown("SF", undefined, rng, ctx.catalogue);
   const source = ctx.culture.town === "compound" ? undefined : ctx.culture.town;
   // Ships in sci-fi keep their culture's places.
   const setting = ctx.setting === "SF" ? "MR" : ctx.setting;
   // §14.3: no deity or saint names in the no-gods cultures' places (bynames' rule).
   const holy = holyNamesIn(ctx.culture.key);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(setting, source, rng);
+    const t = groupTown(setting, source, rng, ctx.catalogue);
     if (!holy || !holy.test(t)) return t;
   }
   return undefined;
@@ -707,11 +707,11 @@ function baseToken(ctx: Ctx, name: string): string | undefined {
       const era = ctx.setting === "SF" ? "interstellar" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "medieval";
       const genre = ctx.setting === "SF" ? "scifi" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "fantasy";
       const realmCulture = ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya"].includes(ctx.culture.key) ? ctx.culture.key : "general";
-      return realmSource?.({ culture: realmCulture, era, genre, seed });
+      return realmSource?.({ culture: realmCulture, era, genre, seed, catalogue: ctx.catalogue });
     }
     case "exoticTown":
       // §9.2: a town from the roman world culture's pool (cars named for warm resorts).
-      return placeholders ? "[place]" : groupTown(ctx.setting === "SF" ? "MR" : ctx.setting, "roman", rng);
+      return placeholders ? "[place]" : groupTown(ctx.setting === "SF" ? "MR" : ctx.setting, "roman", rng, ctx.catalogue);
     case "call": {
       // §7.3: a letter and its wartime word, "K for King" or "D-Dog".
       const word = pickOne(AIR_LAND.phonetic, rng);
@@ -843,7 +843,7 @@ export function breaksVesselWords(text: string, module?: VesselModule): boolean 
 const MONEY_BANNED = (moneyData as unknown as { safeguards: { banned: string[] } }).safeguards.banned.map(wordRe);
 
 /** A realm's short form (Realms brief §11) for the `{realm}` token: set by the realms engine when it loads. */
-type RealmSource = (options: { culture: string; era: string; genre: "fantasy" | "modern" | "scifi"; seed: number }) => string | undefined;
+type RealmSource = (options: { culture: string; era: string; genre: "fantasy" | "modern" | "scifi"; seed: number; catalogue: BiomeCatalogue }) => string | undefined;
 let realmSource: RealmSource | undefined;
 export function registerRealmSource(source: RealmSource): void {
   realmSource = source;

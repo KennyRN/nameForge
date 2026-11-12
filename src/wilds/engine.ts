@@ -203,14 +203,17 @@ export function stemWeight(name: string, british: boolean): number {
   return 0;
 }
 
-const STEM_POOLS = new Map<string, [string, number][]>();
+// Cached per catalogue: the British stems come from British place names, which a pack replacing Britain changes.
+const STEM_POOLS = new WeakMap<BiomeCatalogue, Map<string, [string, number][]>>();
 
 /** §4.1: the cached stem pool for a stem source ("britain" or a world culture) and, for Britain, a region. */
-export function wildsStemPool(source: string, region?: string): [string, number][] {
+export function wildsStemPool(source: string, region?: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): [string, number][] {
   const key = `${source}|${region ?? ""}`;
-  let pool = STEM_POOLS.get(key);
+  let pools = STEM_POOLS.get(catalogue);
+  if (!pools) STEM_POOLS.set(catalogue, (pools = new Map()));
+  let pool = pools.get(key);
   if (!pool) {
-    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 2000, seed: 1789, region: source === "britain" ? region : undefined, wilds: false }).names.map((n) => n.text);
+    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 2000, seed: 1789, region: source === "britain" ? region : undefined, wilds: false, catalogue }).names.map((n) => n.text);
     const seen = new Set<string>();
     pool = [];
     for (const name of names) {
@@ -220,7 +223,7 @@ export function wildsStemPool(source: string, region?: string): [string, number]
         pool.push([name, w]);
       }
     }
-    STEM_POOLS.set(key, pool);
+    pools.set(key, pool);
   }
   return pool;
 }
@@ -332,6 +335,7 @@ interface Ctx {
   biomeTags: boolean;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   shape?: { p: string };
   drawn: Set<GroupTone>;
@@ -456,7 +460,7 @@ function drawStem(ctx: Ctx, guard: boolean): string | undefined {
   for (let i = 0; i < 10; i++) {
     let stem: string | undefined;
     if (st.route) {
-      const t = routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      const t = routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
       stem = t && stemWeight(t, false) > 0 ? t : undefined;
     } else {
       const entries: [string, number][] = st.thin ? [...st.pool, ...st.extras.map((e): [string, number] => [e, 1])] : st.pool;
@@ -530,14 +534,14 @@ function token(ctx: Ctx, name: string): VocabEntry | string | undefined {
     case "number":
       return listWord(ctx, "number");
     case "folk":
-      return placeholders ? PLACEHOLDER("folk") : routeFolk(ctx.culture.key, rng);
+      return placeholders ? PLACEHOLDER("folk") : routeFolk(ctx.culture.key, rng, ctx.catalogue);
     case "person": {
       if (placeholders) return PLACEHOLDER("person");
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne(names, rng) : undefined;
     }
     case "kingdom":
-      return placeholders ? PLACEHOLDER("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng);
+      return placeholders ? PLACEHOLDER("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng, ctx.catalogue);
     case "holy":
       return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
     case "god":
@@ -735,7 +739,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const forcedKind = options.settlementSize ? "settlement" : options.kind;
   // §4.1: the batch's town stems.
   const source = stemSourceOf(culture);
-  const pool = source ? wildsStemPool(source, homeBritish ? region : undefined) : [];
+  const pool = source ? wildsStemPool(source, homeBritish ? region : undefined, options.catalogue) : [];
   const stems: Stems = { pool, extras: biomeStems(resolved.biome), thin: !!source && pool.length < 20, route: !source };
 
   const newCtx = (): Ctx => ({
@@ -753,6 +757,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     mode,
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     drawn: new Set(),
     words: [],
     anchorDecided: false,

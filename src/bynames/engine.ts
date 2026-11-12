@@ -2,6 +2,7 @@
 // names for twenty cultures, built from shapes and lists. Reuses the group engine's weighted draws,
 // setting tags, tone factor, invented places and safeguards. No Obsidian imports.
 
+import type { BiomeCatalogue } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import bynamesData from "../data/bynames.json";
 import {
@@ -155,6 +156,8 @@ export function showsLanguage(module: BynameModule, culture: string): boolean {
 export type NameRole = "self" | "father" | "mother" | "child";
 
 export interface BynameOptions {
+  /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   module: BynameModule;
   culture?: string;
   /** A kind key of the module; undefined is Any. */
@@ -220,6 +223,7 @@ interface Ctx {
   shapeFilter?: (pattern: string) => boolean;
   officeWords?: string[];
   turn?: TownTurn;
+  catalogue?: BiomeCatalogue;
 }
 
 const lightOrGrim = (tone: GroupToneChoice) => tone === "light" || tone === "grim";
@@ -419,7 +423,7 @@ function token(ctx: Ctx, raw: string): string | undefined {
       // §11.4: no deity or saint names in these cultures' places (Ganesha's Plain, Saint George's).
       const holy = HOLY_NAMES.get(ctx.culture);
       for (let i = 0; i < 20; i++) {
-        const town = groupTown(ctx.setting, townSource(ctx.culture), rng);
+        const town = groupTown(ctx.setting, townSource(ctx.culture), rng, ctx.catalogue);
         if (!holy || !holy.test(town)) return town;
       }
       return undefined;
@@ -700,6 +704,7 @@ export function generateBynames(options: BynameOptions): BynameBatch {
     context: options.context,
     shapeFilter: options.shapeFilter,
     officeWords: options.officeWords,
+    catalogue: options.catalogue,
   };
   const kindChoices = kinds.map(({ kind, weight }): [string, number] => [kind.key, weight]);
   const count = Math.max(0, Math.floor(options.count));

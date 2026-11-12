@@ -5,6 +5,7 @@
 // packs); places, people, gods and figures come from the route engine, creatures and colours from
 // group names, dynasties from realms, and the settings and rendering from inns. No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import buildingData from "../data/building-names.json";
 import {
@@ -99,6 +100,8 @@ export const defaultBuildingSafeguards = (): GroupSafeguards => ({
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface BuildingOptions {
+  /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   /** A kind key; undefined is Any. */
   kind?: BuildingKind;
@@ -281,6 +284,7 @@ const newCtx = (s: Setup, kind: BuildingKind, extra: Partial<Ctx> = {}): Ctx => 
   mode: s.mode,
   tone: s.options.tone ?? "any",
   vocab: s.options.vocab ?? BUILT_IN_VOCAB,
+  catalogue: s.options.catalogue ?? BUILT_IN_BIOMES,
   region: s.region,
   kind,
   themes: s.themes,
@@ -413,6 +417,7 @@ export function buildingName(o: {
   rng: () => number;
   safeguards?: GroupSafeguards;
   vocab?: Vocabulary;
+  catalogue?: BiomeCatalogue;
 }): string | undefined {
   const batch = generateBuildingNames({ ...o, count: 8, seed: Math.floor(o.rng() * 0xffffffff), safeguards: o.safeguards });
   for (const n of batch.names) {

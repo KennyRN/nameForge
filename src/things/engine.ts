@@ -4,7 +4,7 @@
 // engines. One seeded stream a batch. No Obsidian imports.
 
 import { hasSpaceBlock } from "../space/safeguards";
-import { biomeTitleCase } from "../biomes";
+import { biomeTitleCase, type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import {
   type GroupPeople,
   type GroupSafeguards,
@@ -140,6 +140,8 @@ export const thingKindsOffered = (module: ThingModule, culture: string, era: Rou
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface ThingsOptions {
+  /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   module: ThingModule;
   culture?: string;
   /** A kind key; undefined is Any. */
@@ -224,6 +226,7 @@ interface Ctx {
   fantastic: boolean;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   owner: ThingOwner;
   draw?: (rng: () => number) => string | null;
@@ -400,11 +403,11 @@ function token(ctx: Ctx, name: string, mod?: string): string | undefined {
       return mod === "poss" ? groupPossessive(g.replace(/^the /i, ""), /^the .+s$/i.test(g)) : g;
     }
     case "town":
-      return shared(ctx, "town", () => (placeholders ? "[place]" : groupTown(ctx.setting, ctx.setting === "SF" ? undefined : townSource(ctx.culture), ctx.rng).replace(/^The /, "")));
+      return shared(ctx, "town", () => (placeholders ? "[place]" : groupTown(ctx.setting, ctx.setting === "SF" ? undefined : townSource(ctx.culture), ctx.rng, ctx.catalogue).replace(/^The /, "")));
     case "realm":
-      return shared(ctx, "realm", () => (placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng)));
+      return shared(ctx, "realm", () => (placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng, ctx.catalogue)));
     case "folk":
-      return shared(ctx, "folk", () => (placeholders ? "[folk]" : routeFolk(ctx.culture, ctx.rng)));
+      return shared(ctx, "folk", () => (placeholders ? "[folk]" : routeFolk(ctx.culture, ctx.rng, ctx.catalogue)));
     case "dynasty":
       return "[dynasty]";
     case "figure": {
@@ -638,6 +641,7 @@ export function generateThingNames(options: ThingsOptions): ThingsBatch {
     mode: options.people ?? "placeholders",
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     owner: options.owner ?? "anyone",
     draw: options.draw,
     notices,

@@ -15,7 +15,7 @@ import {
   resolveMixSources,
   type WordListFileData,
 } from "./nameParser";
-import type { Biome } from "./biomes";
+import type { Biome, BiomeCatalogue } from "./biomes";
 import { placePackDraw } from "./packs/placeDraw";
 import { compoundPartData, compoundPartsFor, compoundSettings, partIsBreakdown } from "./packs/compound";
 import { breakdownSettingsFor, selectSectionNames, smallListNotice, type SectionRequest } from "./packs/sections";
@@ -40,7 +40,7 @@ export function isRecipeContent(content: string): boolean {
 }
 
 /** A recipe file's own settings (no template applied), its body, and any problems reading it. */
-export function parseRecipeContent(content: string): { recipe: RecipePartial; body: string; problems: string[] } {
+export function parseRecipeContent(content: string, catalogue?: BiomeCatalogue): { recipe: RecipePartial; body: string; problems: string[] } {
   const fm = content.match(FRONTMATTER);
   if (!fm) return { recipe: {}, body: content, problems: ["The recipe has no properties."] };
   let raw: unknown;
@@ -49,7 +49,7 @@ export function parseRecipeContent(content: string): { recipe: RecipePartial; bo
   } catch {
     return { recipe: {}, body: content.slice(fm[0].length), problems: ["The recipe's properties aren't valid YAML."] };
   }
-  const { recipe, problems } = readRecipe((raw ?? {}) as Record<string, unknown>);
+  const { recipe, problems } = readRecipe((raw ?? {}) as Record<string, unknown>, catalogue);
   return { recipe, body: content.slice(fm[0].length), problems };
 }
 
@@ -82,6 +82,8 @@ export class RecipeHost {
     private readonly settings: { faithfulness?: number; strictness?: number },
     private readonly index: MixPackIndexEntry[],
     private readonly targets?: TakeoverTargets,
+    /** Wizard retirement brief §5: the biome lookups a recipe's land is read through (a pack's own terrains, an override's). */
+    private readonly catalogue?: BiomeCatalogue,
   ) {}
 
   getNotices(): string[] {
@@ -105,12 +107,12 @@ export class RecipeHost {
   async loadRecipe(file: TFile): Promise<LoadedRecipe> {
     const content = await this.read(file);
     if (content === null) return { recipe: withDefaults({}), own: {}, error: `Couldn't read “${file.basename}”.`, problems: [] };
-    const { recipe: own, problems } = parseRecipeContent(content);
+    const { recipe: own, problems } = parseRecipeContent(content, this.catalogue);
     let template: RecipePartial | undefined;
     if (own.templateOf) {
       const templateFile = this.resolveLink(own.templateOf, file.path);
       const templateContent = templateFile ? await this.read(templateFile) : null;
-      if (templateContent !== null && isRecipeContent(templateContent)) template = parseRecipeContent(templateContent).recipe;
+      if (templateContent !== null && isRecipeContent(templateContent)) template = parseRecipeContent(templateContent, this.catalogue).recipe;
     }
     const applied = applyRecipeTemplate(own, template, file.basename);
     return { recipe: withDefaults(applied.recipe), own, template, error: applied.error, problems };

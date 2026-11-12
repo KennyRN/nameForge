@@ -61983,7 +61983,7 @@ function readTribalFields(v, problems, id) {
   check("register", (r) => TRIBAL_REGISTERS.includes(r));
   return out;
 }
-function readRecipe(fm) {
+function readRecipe(fm, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3, _c3;
   const problems = [];
   const recipe = {};
@@ -62006,10 +62006,10 @@ function readRecipe(fm) {
     if (biome && /^\[\[/.test(biome)) {
       const target = linkTarget(biome);
       if (target) shape.biome = `[[${target}]]`;
-    } else if (biome && (biome === "unknown" || findBiome(biome))) shape.biome = biome;
+    } else if (biome && (biome === "unknown" || catalogue.find(biome))) shape.biome = biome;
     else if (biome) problems.push(`Unknown biome \u201C${biome}\u201D.`);
     const terrain = str(fm.shape.terrain);
-    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || ((_a5 = shape.biome) == null ? void 0 : _a5.startsWith("[[")) || ((_c3 = (_b3 = findBiome(shape.biome)) == null ? void 0 : _b3.customTerrains) == null ? void 0 : _c3.some((t) => t.id === terrain)))) shape.terrain = terrain;
+    if (terrain && (TERRAIN_CHOICES.some((t) => t.id === terrain) || ((_a5 = shape.biome) == null ? void 0 : _a5.startsWith("[[")) || ((_c3 = (_b3 = catalogue.find(shape.biome)) == null ? void 0 : _b3.customTerrains) == null ? void 0 : _c3.some((t) => t.id === terrain)))) shape.terrain = terrain;
     else if (terrain) problems.push(`Unknown terrain \u201C${terrain}\u201D.`);
     const aliens = bool(fm.shape.aliens);
     if (aliens !== void 0) shape.aliens = aliens;
@@ -64574,13 +64574,15 @@ function compositeWord(ctx, name, type) {
   const sub = pickWeighted5(live5, ctx.rng);
   return sub ? pick2(ctx, sub, type) : void 0;
 }
-var townPools = /* @__PURE__ */ new Map();
-function townPool(key2) {
-  let found = townPools.get(key2);
+var townPools = /* @__PURE__ */ new WeakMap();
+function townPool(key2, catalogue = BUILT_IN_BIOMES) {
+  let pools = townPools.get(catalogue);
+  if (!pools) townPools.set(catalogue, pools = /* @__PURE__ */ new Map());
+  let found = pools.get(key2);
   if (found) return found;
-  const names = key2 === "britain" ? generatePlaceNames({ recipe: britishPlaceNamesRecipe(void 0), slots: {}, count: 300, seed: 1789 }).names.map((n) => n.text) : generateWorldPlaceNames({ culture: key2, count: 300, seed: 1789 }).names.map((n) => n.text);
+  const names = key2 === "britain" ? generatePlaceNames({ recipe: britishPlaceNamesRecipe(void 0), slots: {}, count: 300, seed: 1789, catalogue }).names.map((n) => n.text) : generateWorldPlaceNames({ culture: key2, count: 300, seed: 1789, catalogue }).names.map((n) => n.text);
   found = names.filter((n) => !n.includes("["));
-  townPools.set(key2, found);
+  pools.set(key2, found);
   return found;
 }
 var isGeneral = (t) => !t || t.key === "general";
@@ -64699,7 +64701,7 @@ function token(ctx, name, type, shape) {
     case "spaceLandPrefixed":
       return { text: spacePrefixed(ctx, type, pick2(ctx, "spaceLand", type)), plural: false };
     case "britishPlace":
-      return { text: pickOne(townPool("britain"), rng), plural: false };
+      return { text: pickOne(townPool("britain", ctx.catalogue), rng), plural: false };
     case "flavourAnimal": {
       const animals = (_j = ctx.vocab) == null ? void 0 : _j.flavour.animals;
       if (animals && animals.length > 0) return { text: pickOne(animals, rng), plural: false };
@@ -64795,10 +64797,10 @@ function sharedCtx(setting, rng, scale = "any") {
   found.ctx.rng = rng;
   return found;
 }
-function groupTown(setting, source, rng) {
+function groupTown(setting, source, rng, catalogue) {
   const { ctx, type } = sharedCtx(setting, rng);
   if (setting !== "SF" && source) {
-    const names = townPool(source);
+    const names = townPool(source, catalogue);
     if (names.length > 0) return pickOne(names, rng);
   }
   if (setting !== "SF") return `${pickWeighted5(pool(ctx, "townPrefix", type), rng)}${pickWeighted5(pool(ctx, "townSuffix", type), rng)}`;
@@ -65172,7 +65174,8 @@ function generateGroupNames(options) {
     tone: (_f = options.tone) != null ? _f : "any",
     drawn: /* @__PURE__ */ new Set(),
     context: options.context,
-    scale: setting === "SF" ? (_g = options.scale) != null ? _g : "any" : "any"
+    scale: setting === "SF" ? (_g = options.scale) != null ? _g : "any" : "any",
+    catalogue: options.catalogue
   };
   const chosen = options.type ? available.find((t) => t.key === options.type) : void 0;
   if (options.type && !chosen) {
@@ -72639,7 +72642,7 @@ function token2(ctx, raw) {
       if (ctx.turn) return ctx.turn.next(rng);
       const holy = HOLY_NAMES.get(ctx.culture);
       for (let i = 0; i < 20; i++) {
-        const town5 = groupTown(ctx.setting, townSource(ctx.culture), rng);
+        const town5 = groupTown(ctx.setting, townSource(ctx.culture), rng, ctx.catalogue);
         if (!holy || !holy.test(town5)) return town5;
       }
       return void 0;
@@ -72881,7 +72884,8 @@ function generateBynames(options) {
     packFailed: false,
     context: options.context,
     shapeFilter: options.shapeFilter,
-    officeWords: options.officeWords
+    officeWords: options.officeWords,
+    catalogue: options.catalogue
   };
   const kindChoices = kinds.map(({ kind, weight }) => [kind.key, weight]);
   const count = Math.max(0, Math.floor(options.count));
@@ -89484,12 +89488,12 @@ function listWord2(ctx, name, filter) {
 }
 function town(ctx) {
   const rng = ctx.rng;
-  if (ctx.module === "spacecraft" && ctx.setting === "SF") return groupTown("SF", void 0, rng);
+  if (ctx.module === "spacecraft" && ctx.setting === "SF") return groupTown("SF", void 0, rng, ctx.catalogue);
   const source = ctx.culture.town === "compound" ? void 0 : ctx.culture.town;
   const setting = ctx.setting === "SF" ? "MR" : ctx.setting;
   const holy = holyNamesIn(ctx.culture.key);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(setting, source, rng);
+    const t = groupTown(setting, source, rng, ctx.catalogue);
     if (!holy || !holy.test(t)) return t;
   }
   return void 0;
@@ -89574,10 +89578,10 @@ function baseToken(ctx, name) {
       const era = ctx.setting === "SF" ? "interstellar" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "medieval";
       const genre = ctx.setting === "SF" ? "scifi" : ctx.setting === "MR" || ctx.setting === "MF" ? "modern" : "fantasy";
       const realmCulture = ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya"].includes(ctx.culture.key) ? ctx.culture.key : "general";
-      return realmSource == null ? void 0 : realmSource({ culture: realmCulture, era, genre, seed });
+      return realmSource == null ? void 0 : realmSource({ culture: realmCulture, era, genre, seed, catalogue: ctx.catalogue });
     }
     case "exoticTown":
-      return placeholders ? "[place]" : groupTown(ctx.setting === "SF" ? "MR" : ctx.setting, "roman", rng);
+      return placeholders ? "[place]" : groupTown(ctx.setting === "SF" ? "MR" : ctx.setting, "roman", rng, ctx.catalogue);
     case "call": {
       const word = pickOne2(AIR_LAND.phonetic, rng);
       return `${word.charAt(0)}${rng() < 0.5 ? " for " : "-"}${word}`;
@@ -90518,7 +90522,7 @@ function place2(ctx) {
   if (ctx.mode === "placeholders") return "[place]";
   const holy = holyNamesIn(ctx.culture);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(ctx.setting, townSource(ctx.culture), ctx.rng).replace(/^The /, "");
+    const t = groupTown(ctx.setting, townSource(ctx.culture), ctx.rng, ctx.catalogue).replace(/^The /, "");
     if (!holy || !holy.test(t)) return t;
   }
   return void 0;
@@ -90555,7 +90559,7 @@ function token4(ctx, name, shape, kind) {
     case "place":
       return place2(ctx);
     case "landCompound":
-      return ctx.mode === "placeholders" ? "[place]" : groupTown("FL", void 0, rng);
+      return ctx.mode === "placeholders" ? "[place]" : groupTown("FL", void 0, rng, ctx.catalogue);
     case "dynasty":
       if (ctx.mode === "placeholders" || !REALM_DATA.dynastyCultures.includes(ctx.culture)) return "[dynasty]";
       return gnWord(ctx, "house");
@@ -90712,7 +90716,7 @@ function generateRealmNames(options) {
   function build(character, choice) {
     var _a6, _b4, _c4, _d4;
     const { shape, kind } = choice;
-    const ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome2, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map(), scale };
+    const ctx = { rng, setting, era, culture, character, tone, mode, biome: landBiome2, lists, pools, tribal, drawn: /* @__PURE__ */ new Set(), values: /* @__PURE__ */ new Map(), scale, catalogue: biomes };
     if (/\{(form|federalForm)\}/.test(shape.p)) {
       const keep = shape.p.includes("{federalForm}") ? (f) => f.g === "federal" && !f.peoplesOnly : kind === "dynasty" ? DYNASTY : kind === "people" ? PEOPLES : shape.groups ? (f) => shape.groups.includes(f.g) && PLAIN_FORM(f) : shape.p.includes("{modifier}") ? (f) => PLAIN_FORM(f) && (compatibleModifiers(f.w, era).length > 0 || ideologyFor(f.w, era)) : PLAIN_FORM;
       ctx.form = drawForm(ctx, keep);
@@ -90795,9 +90799,9 @@ function generateRealmNames(options) {
   if (names.length < count) notices.push(`Only ${names.length} names could be generated.`);
   return { names, seed, notices };
 }
-registerRealmSource(({ culture, era, genre, seed }) => {
+registerRealmSource(({ culture, era, genre, seed, catalogue }) => {
   var _a5;
-  return (_a5 = generateRealmNames({ culture, era, genre, namedFor: "anything", output: "short", people: "invented", count: 1, seed }).names[0]) == null ? void 0 : _a5.short;
+  return (_a5 = generateRealmNames({ culture, era, genre, namedFor: "anything", output: "short", people: "invented", count: 1, seed, catalogue }).names[0]) == null ? void 0 : _a5.short;
 });
 function renderShort(ctx, template, plain) {
   if (template === "same") return plain;
@@ -97733,12 +97737,12 @@ function gnWord2(ctx, token17) {
   ctx.words.push({ pool: list, word: w });
   return w;
 }
-function routePlace(cultureKey, setting, rng) {
+function routePlace(cultureKey, setting, rng, catalogue) {
   const culture = findRouteCulture(cultureKey);
   const source = (culture == null ? void 0 : culture.sensitive) ? void 0 : townSource(cultureKey);
   const holy = holyNamesIn(cultureKey);
   for (let i = 0; i < 20; i++) {
-    const t = groupTown(setting, source, rng).replace(/^The /, "");
+    const t = groupTown(setting, source, rng, catalogue).replace(/^The /, "");
     if (!holy || !holy.test(t)) return t;
   }
   return void 0;
@@ -97765,30 +97769,34 @@ function routeFigure(cultureKey, setting, rng) {
   return pickWeighted5(items, rng);
 }
 var figure = (ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
-var FOLK = /* @__PURE__ */ new Map();
-function routeFolk(cultureKey, rng) {
+var FOLK = /* @__PURE__ */ new WeakMap();
+function routeFolk(cultureKey, rng, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3, _c3;
   const tradition = (_c3 = (_b3 = (_a5 = findRouteCulture(cultureKey)) == null ? void 0 : _a5.folk) != null ? _b3 : REALM_DATA.tribal[cultureKey]) != null ? _c3 : "general";
-  let pool3 = FOLK.get(tradition);
+  let pools = FOLK.get(catalogue);
+  if (!pools) FOLK.set(catalogue, pools = /* @__PURE__ */ new Map());
+  let pool3 = pools.get(tradition);
   if (!pool3) {
-    pool3 = generateTribalNames({ tradition, count: 120, seed: 1789 }).names.map((n) => n.name.replace(/^the /i, "")).filter((n) => !n.includes("["));
-    FOLK.set(tradition, pool3);
+    pool3 = generateTribalNames({ tradition, count: 120, seed: 1789, catalogue }).names.map((n) => n.name.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    pools.set(tradition, pool3);
   }
   return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
 }
-var KINGDOMS = /* @__PURE__ */ new Map();
-function routeKingdom(cultureKey, routeEra, rng) {
+var KINGDOMS = /* @__PURE__ */ new WeakMap();
+function routeKingdom(cultureKey, routeEra, rng, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3;
   const era = (_b3 = (_a5 = REALM_ERAS.find((e) => e.code === routeEra)) == null ? void 0 : _a5.key) != null ? _b3 : "medieval";
   const key2 = `${cultureKey}|${era}`;
-  let pool3 = KINGDOMS.get(key2);
+  let pools = KINGDOMS.get(catalogue);
+  if (!pools) KINGDOMS.set(catalogue, pools = /* @__PURE__ */ new Map());
+  let pool3 = pools.get(key2);
   if (!pool3) {
-    pool3 = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789 }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
-    KINGDOMS.set(key2, pool3);
+    pool3 = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    pools.set(key2, pool3);
   }
   return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
 }
-var kingdom = (ctx) => routeKingdom(ctx.culture.key, ctx.era, ctx.rng);
+var kingdom = (ctx) => routeKingdom(ctx.culture.key, ctx.era, ctx.rng, ctx.catalogue);
 function roadNumber(ctx, which) {
   const range2 = pickWeighted5(ROUTE_DATA.roadNumbers[which].map((r) => [r, r[2] * (r[1] - r[0] + 1)]), ctx.rng);
   return String(range2[0] + Math.floor(ctx.rng() * (range2[1] - range2[0] + 1)));
@@ -97802,9 +97810,9 @@ function token5(ctx, name) {
     case "town":
       if (ctx.borrowed) return gnWord2(ctx, "star");
       if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
-      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
     case "folk":
-      return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng);
+      return placeholders ? "[folk]" : routeFolk(ctx.culture.key, ctx.rng, ctx.catalogue);
     case "person":
     case "founder":
     case "patron": {
@@ -98014,7 +98022,7 @@ function generateRouteNames(options) {
   const block = routeBlockSet(options.safeguards);
   const count = Math.max(0, Math.floor(options.count));
   const newCtx4 = (scale) => {
-    var _a6, _b3, _c3;
+    var _a6, _b3, _c3, _d3;
     return {
       rng,
       culture,
@@ -98024,6 +98032,7 @@ function generateRouteNames(options) {
       mode: (_a6 = options.people) != null ? _a6 : "placeholders",
       tone: (_b3 = options.tone) != null ? _b3 : "any",
       vocab: (_c3 = options.vocab) != null ? _c3 : BUILT_IN_VOCAB,
+      catalogue: (_d3 = options.catalogue) != null ? _d3 : BUILT_IN_BIOMES,
       region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
       borrowed: false,
       drawn: /* @__PURE__ */ new Set(),
@@ -98319,19 +98328,21 @@ function pluralName(name, pl) {
   if (/[a-z]man$/.test(word)) return head + pre + word.slice(0, -3) + "men";
   return head + pre + word.charAt(0) + pluralOf(word.toLowerCase()).slice(1);
 }
-var COMPANIES = /* @__PURE__ */ new Map();
+var COMPANIES = /* @__PURE__ */ new WeakMap();
 function companyPool(ctx, type) {
   var _a5;
   const tradition = (_a5 = REALM_DATA.tribal[ctx.culture.key]) != null ? _a5 : "general";
   const key2 = `${ctx.setting}|${tradition}|${ctx.tone}|${type}`;
-  let pool3 = COMPANIES.get(key2);
+  let pools = COMPANIES.get(ctx.catalogue);
+  if (!pools) COMPANIES.set(ctx.catalogue, pools = /* @__PURE__ */ new Map());
+  let pool3 = pools.get(key2);
   if (!pool3) {
     pool3 = [];
     const family = findFamily("trade");
     if (typesInSetting(family, ctx.setting).some((t) => t.key === type)) {
       const [genre, fantastic] = GENRE_OF[ctx.setting];
       const drop = new Set(MONEY_DATA.companyDrop);
-      const batch = generateGroupNames({ family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789 });
+      const batch = generateGroupNames({ family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789, catalogue: ctx.catalogue });
       for (const n of batch.names) {
         const words = n.text.replace(/^the /i, "").split(" ");
         if (words.length > 1 && drop.has(words[words.length - 1])) words.pop();
@@ -98339,7 +98350,7 @@ function companyPool(ctx, type) {
         if (text && !text.includes("[")) pool3.push(text);
       }
     }
-    COMPANIES.set(key2, pool3);
+    pools.set(key2, pool3);
   }
   return pool3;
 }
@@ -98370,7 +98381,7 @@ function gnWord3(ctx, list, setting = ctx.setting) {
 function town2(ctx) {
   if (ctx.mode === "placeholders") return "[place]";
   if (ctx.town) return ctx.town;
-  const found = ctx.culture.moneyOnly ? groupTown(ctx.setting, ctx.culture.town === "compound" ? void 0 : ctx.culture.town, ctx.rng).replace(/^The /, "") : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const found = ctx.culture.moneyOnly ? groupTown(ctx.setting, ctx.culture.town === "compound" ? void 0 : ctx.culture.town, ctx.rng, ctx.catalogue).replace(/^The /, "") : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
   return found;
 }
 function metalPool(ctx) {
@@ -98510,7 +98521,7 @@ function token6(ctx, name, mod) {
     case "town":
       return town2(ctx);
     case "realm":
-      return placeholders ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, rng);
+      return placeholders ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, rng, ctx.catalogue);
     case "figure": {
       const f = ctx.culture.moneyOnly ? ((_g = ctx.culture.figure) != null ? _g : []).length > 0 ? pickOne5(ctx.culture.figure, rng) : void 0 : routeFigure(ctx.culture.key, ctx.setting, rng);
       if (!f) return void 0;
@@ -98851,7 +98862,7 @@ function applyValues(ladder, coins) {
   });
 }
 function generateMoneyNames(options) {
-  var _a5, _b3, _c3, _d3, _e3, _f;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -98873,7 +98884,8 @@ function generateMoneyNames(options) {
     mode: (_c3 = options.people) != null ? _c3 : "placeholders",
     tone,
     vocab: (_d3 = options.vocab) != null ? _d3 : BUILT_IN_VOCAB,
-    words: (_e3 = options.words) != null ? _e3 : "translated",
+    catalogue: (_e3 = options.catalogue) != null ? _e3 : BUILT_IN_BIOMES,
+    words: (_f = options.words) != null ? _f : "translated",
     kind: chosen != null ? chosen : "coin",
     shift: 0,
     drawn: /* @__PURE__ */ new Set(),
@@ -98930,7 +98942,7 @@ function generateMoneyNames(options) {
   };
   const seen = /* @__PURE__ */ new Set();
   const S = { rng, options, culture, era, count, chosen, want, tone, base, newCtx: newCtx4, acceptable: acceptable7, build, seen };
-  let series = (_f = options.series) != null ? _f : "separate";
+  let series = (_g = options.series) != null ? _g : "separate";
   if (!kindHasSeries(chosen)) series = "separate";
   let ladder;
   if (series === "values") {
@@ -100030,7 +100042,7 @@ function token7(ctx, name) {
     case "deityRef":
       return deityRef(ctx);
     case "place":
-      return isFuture2(ctx.era) ? groupStarIn("any", "invented", rng) : routePlace(ctx.culture, ctx.setting, rng);
+      return isFuture2(ctx.era) ? groupStarIn("any", "invented", rng) : routePlace(ctx.culture, ctx.setting, rng, ctx.catalogue);
     case "holy":
       return groupSaint(ctx.setting, rng);
     case "fixed":
@@ -100163,6 +100175,7 @@ function generateDeityNames(options) {
     fantastic,
     tone: (_b3 = options.tone) != null ? _b3 : "any",
     vocab: (_c3 = options.vocab) != null ? _c3 : BUILT_IN_VOCAB,
+    catalogue: options.catalogue,
     style,
     christian: isChristianCulture(culture, era),
     gender: "n",
@@ -104528,11 +104541,11 @@ function token8(ctx, name, mod) {
       return mod === "poss" ? groupPossessive(g.replace(/^the /i, ""), /^the .+s$/i.test(g)) : g;
     }
     case "town":
-      return shared(ctx, "town", () => placeholders ? "[place]" : groupTown(ctx.setting, ctx.setting === "SF" ? void 0 : townSource(ctx.culture), ctx.rng).replace(/^The /, ""));
+      return shared(ctx, "town", () => placeholders ? "[place]" : groupTown(ctx.setting, ctx.setting === "SF" ? void 0 : townSource(ctx.culture), ctx.rng, ctx.catalogue).replace(/^The /, ""));
     case "realm":
-      return shared(ctx, "realm", () => placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng));
+      return shared(ctx, "realm", () => placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng, ctx.catalogue));
     case "folk":
-      return shared(ctx, "folk", () => placeholders ? "[folk]" : routeFolk(ctx.culture, ctx.rng));
+      return shared(ctx, "folk", () => placeholders ? "[folk]" : routeFolk(ctx.culture, ctx.rng, ctx.catalogue));
     case "dynasty":
       return "[dynasty]";
     case "figure": {
@@ -104713,7 +104726,7 @@ function describe(ctx, name) {
   return name;
 }
 function generateThingNames(options) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const module2 = options.module;
@@ -104735,11 +104748,12 @@ function generateThingNames(options) {
     mode: (_c3 = options.people) != null ? _c3 : "placeholders",
     tone: (_d3 = options.tone) != null ? _d3 : "any",
     vocab: (_e3 = options.vocab) != null ? _e3 : BUILT_IN_VOCAB,
-    owner: (_f = options.owner) != null ? _f : "anyone",
+    catalogue: (_f = options.catalogue) != null ? _f : BUILT_IN_BIOMES,
+    owner: (_g = options.owner) != null ? _g : "anyone",
     draw: options.draw,
     notices,
     packName: options.packName,
-    kind: (_h = chosen != null ? chosen : (_g = offered[0]) == null ? void 0 : _g.key) != null ? _h : "",
+    kind: (_i = chosen != null ? chosen : (_h = offered[0]) == null ? void 0 : _h.key) != null ? _i : "",
     christian: isChristianCulture(culture, era),
     drawn: /* @__PURE__ */ new Set(),
     log: [],
@@ -115880,12 +115894,14 @@ function stemWeight(name, british) {
   }
   return 0;
 }
-var STEM_POOLS = /* @__PURE__ */ new Map();
-function wildsStemPool(source, region) {
+var STEM_POOLS = /* @__PURE__ */ new WeakMap();
+function wildsStemPool(source, region, catalogue = BUILT_IN_BIOMES) {
   const key2 = `${source}|${region != null ? region : ""}`;
-  let pool3 = STEM_POOLS.get(key2);
+  let pools = STEM_POOLS.get(catalogue);
+  if (!pools) STEM_POOLS.set(catalogue, pools = /* @__PURE__ */ new Map());
+  let pool3 = pools.get(key2);
   if (!pool3) {
-    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 2e3, seed: 1789, region: source === "britain" ? region : void 0, wilds: false }).names.map((n) => n.text);
+    const names = generateSettlementNames({ setting: "native", culture: source, size: "village", count: 2e3, seed: 1789, region: source === "britain" ? region : void 0, wilds: false, catalogue }).names.map((n) => n.text);
     const seen = /* @__PURE__ */ new Set();
     pool3 = [];
     for (const name of names) {
@@ -115895,7 +115911,7 @@ function wildsStemPool(source, region) {
         pool3.push([name, w]);
       }
     }
-    STEM_POOLS.set(key2, pool3);
+    pools.set(key2, pool3);
   }
   return pool3;
 }
@@ -116026,7 +116042,7 @@ function drawStem(ctx, guard) {
   for (let i = 0; i < 10; i++) {
     let stem;
     if (st.route) {
-      const t = routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      const t = routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
       stem = t && stemWeight(t, false) > 0 ? t : void 0;
     } else {
       const entries = st.thin ? [...st.pool, ...st.extras.map((e) => [e, 1])] : st.pool;
@@ -116086,14 +116102,14 @@ function token9(ctx, name) {
     case "number":
       return listWord5(ctx, "number");
     case "folk":
-      return placeholders ? PLACEHOLDER2("folk") : routeFolk(ctx.culture.key, rng);
+      return placeholders ? PLACEHOLDER2("folk") : routeFolk(ctx.culture.key, rng, ctx.catalogue);
     case "person": {
       if (placeholders) return PLACEHOLDER2("person");
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne8(names, rng) : void 0;
     }
     case "kingdom":
-      return placeholders ? PLACEHOLDER2("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng);
+      return placeholders ? PLACEHOLDER2("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng, ctx.catalogue);
     case "holy":
       return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
     case "god":
@@ -116255,10 +116271,10 @@ function generateWildsNames(options) {
   const block = blockSet(module2, options.safeguards);
   const forcedKind = options.settlementSize ? "settlement" : options.kind;
   const source = stemSourceOf(culture);
-  const pool3 = source ? wildsStemPool(source, homeBritish ? region : void 0) : [];
+  const pool3 = source ? wildsStemPool(source, homeBritish ? region : void 0, options.catalogue) : [];
   const stems = { pool: pool3, extras: biomeStems(resolved.biome), thin: !!source && pool3.length < 20, route: !source };
   const newCtx4 = () => {
-    var _a6, _b4;
+    var _a6, _b4, _c3;
     return {
       rng,
       module: module2,
@@ -116274,6 +116290,7 @@ function generateWildsNames(options) {
       mode,
       tone: (_a6 = options.tone) != null ? _a6 : "any",
       vocab: (_b4 = options.vocab) != null ? _b4 : BUILT_IN_VOCAB,
+      catalogue: (_c3 = options.catalogue) != null ? _c3 : BUILT_IN_BIOMES,
       drawn: /* @__PURE__ */ new Set(),
       words: [],
       anchorDecided: false,
@@ -117571,12 +117588,14 @@ function riverName3(ctx) {
 }
 var VESSEL_CULTURE = { polynesian: "hawaiian" };
 var SHIP_TECH = { AN: "T2", MD: "T3", EM: "T4", ST: "T5", MO: "T7", NF: "T7", IS: "T7" };
-var SHIP_POOLS = /* @__PURE__ */ new Map();
+var SHIP_POOLS = /* @__PURE__ */ new WeakMap();
 function shipName(ctx) {
   var _a5;
   if (ctx.mode === "placeholders") return "[ship]";
   const key2 = `${ctx.culture.key}|${ctx.era}|${ctx.fantastic}`;
-  let pool3 = SHIP_POOLS.get(key2);
+  let pools = SHIP_POOLS.get(ctx.catalogue);
+  if (!pools) SHIP_POOLS.set(ctx.catalogue, pools = /* @__PURE__ */ new Map());
+  let pool3 = pools.get(key2);
   if (!pool3) {
     const genre = ctx.era === "ST" || ctx.era === "MO" ? "modern" : ctx.era === "NF" || ctx.era === "IS" ? "scifi" : "fantasy";
     pool3 = generateVesselNames({
@@ -117589,9 +117608,10 @@ function shipName(ctx) {
       prefixes: false,
       people: "invented",
       count: 60,
-      seed: 1789
+      seed: 1789,
+      catalogue: ctx.catalogue
     }).names.map((n) => n.name.replace(/^(the )/i, "")).filter((n) => !n.includes("["));
-    SHIP_POOLS.set(key2, pool3);
+    pools.set(key2, pool3);
   }
   return pool3.length > 0 ? pickOne9(pool3, ctx.rng) : void 0;
 }
@@ -117642,7 +117662,7 @@ function token10(ctx, name) {
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
     case "town": {
-      const free = () => placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
+      const free = () => placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng, ctx.catalogue);
       const t = anchored2(ctx, free);
       if (t) ctx.words.push({ pool: "town", word: t });
       return t;
@@ -117660,14 +117680,14 @@ function token10(ctx, name) {
     case "number":
       return listWord6(ctx, "number");
     case "folk":
-      return placeholders ? PLACEHOLDER3("folk") : routeFolk(ctx.culture.key, rng);
+      return placeholders ? PLACEHOLDER3("folk") : routeFolk(ctx.culture.key, rng, ctx.catalogue);
     case "person": {
       if (placeholders) return PLACEHOLDER3("person");
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne9(names, rng) : void 0;
     }
     case "kingdom":
-      return placeholders ? PLACEHOLDER3("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng);
+      return placeholders ? PLACEHOLDER3("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng, ctx.catalogue);
     case "holy":
       return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
     case "god":
@@ -117807,7 +117827,7 @@ function generateWatersNames(options) {
   const block = blockSet2(hyper, options.safeguards);
   const chosenScale = hyper && HYPER_SCALES.includes(options.scale) ? options.scale : void 0;
   const newCtx4 = (scale) => {
-    var _a6, _b4;
+    var _a6, _b4, _c4;
     return {
       rng,
       module: module2,
@@ -117823,6 +117843,7 @@ function generateWatersNames(options) {
       mode,
       tone: (_a6 = options.tone) != null ? _a6 : "any",
       vocab: (_b4 = options.vocab) != null ? _b4 : BUILT_IN_VOCAB,
+      catalogue: (_c4 = options.catalogue) != null ? _c4 : BUILT_IN_BIOMES,
       scale,
       drawn: /* @__PURE__ */ new Set(),
       words: [],
@@ -117887,7 +117908,7 @@ function generateWatersNames(options) {
     const ctx = newCtx4(chosenScale);
     const found = [];
     for (let i = 0; i < 40 && found.length < 2; i++) {
-      const value = hyper ? starName({ ...ctx, scale: chosenScale != null ? chosenScale : drawHyperScale() }) : mode === "placeholders" ? void 0 : routePlace(culture.key, ctx.setting, rng);
+      const value = hyper ? starName({ ...ctx, scale: chosenScale != null ? chosenScale : drawHyperScale() }) : mode === "placeholders" ? void 0 : routePlace(culture.key, ctx.setting, rng, ctx.catalogue);
       if (value && !found.includes(value)) found.push(value);
       if (!hyper && mode === "placeholders") break;
     }
@@ -119650,7 +119671,7 @@ function token11(ctx, name) {
       return honouree(ctx, name);
     case "battle": {
       if (ctx.mode === "placeholders") return "[battle]";
-      return ctx.context ? contextTown(ctx.context, false, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      return ctx.context ? contextTown(ctx.context, false, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
     }
     case "bird":
       return gnWord5(ctx, "bird");
@@ -119733,7 +119754,7 @@ function choosePlan(ctx, only) {
   return pickWeighted5(rest, ctx.rng);
 }
 var newCtx2 = (s, kind, extra = {}) => {
-  var _a5, _b3;
+  var _a5, _b3, _c3;
   return {
     rng: s.rng,
     culture: s.culture,
@@ -119744,6 +119765,7 @@ var newCtx2 = (s, kind, extra = {}) => {
     mode: s.mode,
     tone: (_a5 = s.options.tone) != null ? _a5 : "any",
     vocab: (_b3 = s.options.vocab) != null ? _b3 : BUILT_IN_VOCAB,
+    catalogue: (_c3 = s.options.catalogue) != null ? _c3 : BUILT_IN_BIOMES,
     region: s.region,
     kind,
     themes: s.themes,
@@ -119893,7 +119915,8 @@ function neighbourOptions(o, s, rng) {
     safeguards: o.streetSafeguards,
     innSafeguards: o.innSafeguards,
     monumentSafeguards: o.safeguards,
-    vocab: o.vocab
+    vocab: o.vocab,
+    catalogue: o.catalogue
   };
 }
 function monumentName(o) {
@@ -120022,7 +120045,8 @@ function route(ctx) {
     count: 1,
     seed: Math.floor(ctx.rng() * 4294967295),
     safeguards: o.routeSafeguards,
-    vocab: o.vocab
+    vocab: o.vocab,
+    catalogue: o.catalogue
   }).names[0];
   if (r) ctx.isRoute = true;
   return r == null ? void 0 : r.text;
@@ -120035,7 +120059,7 @@ function destination(ctx) {
     return t2;
   }
   if (ctx.mode === "placeholders") return "[place]";
-  const t = ctx.towns ? pickOne11(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const t = ctx.towns ? pickOne11(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
   if (t) ctx.uses.push(`destination:${t}`);
   return t;
 }
@@ -120055,7 +120079,8 @@ function monumentFor(ctx, worthyOnly = false) {
     rng: ctx.rng,
     safeguards: o.monumentSafeguards,
     honourees: o.honourees,
-    vocab: o.vocab
+    vocab: o.vocab,
+    catalogue: o.catalogue
   });
 }
 function landmark(ctx) {
@@ -120086,7 +120111,8 @@ function landmark(ctx) {
     kinds: STREET_LANDMARK_KINDS,
     rng: ctx.rng,
     safeguards: o.landmarkSafeguards,
-    vocab: o.vocab
+    vocab: o.vocab,
+    catalogue: o.catalogue
   });
   if (!w) return void 0;
   ctx.words.push({ pool: "landmark", word: w });
@@ -120131,7 +120157,7 @@ function token12(ctx, name, alt, pattern) {
     case "route":
       return route(ctx);
     case "people":
-      return placeholders ? "[people]" : routeFolk(ctx.culture.key, rng);
+      return placeholders ? "[people]" : routeFolk(ctx.culture.key, rng, ctx.catalogue);
     case "royal":
       return "[royal]";
     case "holy": {
@@ -120323,7 +120349,7 @@ function generateStreetNames(options) {
   const kindWeights = kindsForSize(size).map((k) => [k.key, k.size[size]]);
   const block = streetBlockSet(options.safeguards);
   const series = !!options.series;
-  const towns = series && mode === "invented" ? [...new Set(Array.from({ length: 30 }, () => routePlace(culture.key, setting, rng)).filter((t) => !!t))].slice(0, STREET_DATA.series.towns) : void 0;
+  const towns = series && mode === "invented" ? [...new Set(Array.from({ length: 30 }, () => routePlace(culture.key, setting, rng, options.catalogue)).filter((t) => !!t))].slice(0, STREET_DATA.series.towns) : void 0;
   let dialectRegion = region;
   if (series && !region && dialectSetting !== "plain") {
     const regions = [...new Set(((_g = options.vocab) != null ? _g : BUILT_IN_VOCAB).pools.alleyDialect.entries.flatMap((e) => {
@@ -120333,7 +120359,7 @@ function generateStreetNames(options) {
     dialectRegion = regions.length > 0 ? pickOne11(regions, rng) : void 0;
   }
   const newCtx4 = (fn) => {
-    var _a6;
+    var _a6, _b4;
     return {
       rng,
       culture,
@@ -120343,6 +120369,7 @@ function generateStreetNames(options) {
       mode,
       tone,
       vocab: (_a6 = options.vocab) != null ? _a6 : BUILT_IN_VOCAB,
+      catalogue: (_b4 = options.catalogue) != null ? _b4 : BUILT_IN_BIOMES,
       region,
       size,
       fn,
@@ -120585,7 +120612,7 @@ function creature2(ctx) {
 var ownerNames = (ctx) => [...personNames(ctx.culture.key), ...STREET_DATA.surnameCultures.includes(ctx.culture.key) ? groupListWords("surname", ctx.setting).map(([w]) => w) : []];
 function town3(ctx) {
   var _a5;
-  const t = ctx.turn ? ctx.turn.next(ctx.rng) : (_a5 = ctx.town) != null ? _a5 : ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const t = ctx.turn ? ctx.turn.next(ctx.rng) : (_a5 = ctx.town) != null ? _a5 : ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
   if (t) ctx.uses.push(`town:${t}`);
   return t;
 }
@@ -120837,7 +120864,7 @@ function choosePlan2(ctx, only) {
   return pickWeighted5(rest, ctx.rng);
 }
 var newCtx3 = (s, kind, extra = {}) => {
-  var _a5, _b3;
+  var _a5, _b3, _c3;
   return {
     rng: s.rng,
     culture: s.culture,
@@ -120848,6 +120875,7 @@ var newCtx3 = (s, kind, extra = {}) => {
     mode: s.mode,
     tone: (_a5 = s.options.tone) != null ? _a5 : "any",
     vocab: (_b3 = s.options.vocab) != null ? _b3 : BUILT_IN_VOCAB,
+    catalogue: (_c3 = s.options.catalogue) != null ? _c3 : BUILT_IN_BIOMES,
     region: s.region,
     kind,
     themes: s.themes,
@@ -121051,7 +121079,8 @@ function route2(ctx) {
     count: 1,
     seed: Math.floor(ctx.rng() * 4294967295),
     safeguards: ctx.options.routeSafeguards,
-    vocab: ctx.options.vocab
+    vocab: ctx.options.vocab,
+    catalogue: ctx.catalogue
   }).names[0];
   if (r) ctx.isRoute = true;
   return r == null ? void 0 : r.text.replace(/^the /i, "");
@@ -121076,7 +121105,8 @@ function landmark2(ctx, kinds, monumentShare, monumentKinds) {
         rng: ctx.rng,
         safeguards: o.monumentSafeguards,
         honourees: o.honourees,
-        vocab: o.vocab
+        vocab: o.vocab,
+        catalogue: o.catalogue
       })) == null ? void 0 : _a5.text.replace(/^the /, "");
     }
     w != null ? w : w = buildingName({
@@ -121088,7 +121118,8 @@ function landmark2(ctx, kinds, monumentShare, monumentKinds) {
       kinds,
       rng: ctx.rng,
       safeguards: o.landmarkSafeguards,
-      vocab: o.vocab
+      vocab: o.vocab,
+      catalogue: o.catalogue
     });
   }
   if (!w) return void 0;
@@ -121135,7 +121166,7 @@ function token14(ctx, name) {
     case "destination":
     case "town":
       if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
-      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng);
+      return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng, ctx.catalogue);
     case "holy": {
       const other = () => placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
       return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
@@ -121331,7 +121362,7 @@ function generateInnNames(options) {
   const themes = { ...settingInfo.themes, ...fantastic ? INN_DATA.fantasticThemes : {} };
   const block = innBlockSet(options.safeguards);
   const newCtx4 = (kind) => {
-    var _a6, _b4;
+    var _a6, _b4, _c4;
     return {
       rng,
       culture,
@@ -121341,6 +121372,7 @@ function generateInnNames(options) {
       mode,
       tone: (_a6 = options.tone) != null ? _a6 : "any",
       vocab: (_b4 = options.vocab) != null ? _b4 : BUILT_IN_VOCAB,
+      catalogue: (_c4 = options.catalogue) != null ? _c4 : BUILT_IN_BIOMES,
       region,
       kind,
       themes,
@@ -121687,13 +121719,13 @@ function gnWord7(ctx, list) {
 }
 function place3(ctx) {
   var _a5, _b3;
-  const p = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.carryPlace && ((_a5 = ctx.shape) == null ? void 0 : _a5.kind) === "treaty" && ctx.rng() < EVENT_DATA.series.carryPlace ? ctx.carryPlace : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const p = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.carryPlace && ((_a5 = ctx.shape) == null ? void 0 : _a5.kind) === "treaty" && ctx.rng() < EVENT_DATA.series.carryPlace ? ctx.carryPlace : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
   if (p) (_b3 = ctx.place) != null ? _b3 : ctx.place = p;
   return p;
 }
 function people(ctx) {
   var _a5, _b3;
-  const fresh = () => ctx.mode === "placeholders" ? "[people]" : routeFolk(ctx.culture.key, ctx.rng);
+  const fresh = () => ctx.mode === "placeholders" ? "[people]" : routeFolk(ctx.culture.key, ctx.rng, ctx.catalogue);
   const r = (_a5 = ctx.recurring) != null ? _a5 : EVENT_DATA.series.recurring;
   const p = ctx.seriesPeople && (r === Infinity || ctx.rng() < r / (r + 1)) ? ctx.seriesPeople : fresh();
   if (p) (_b3 = ctx.people) != null ? _b3 : ctx.people = p;
@@ -121701,7 +121733,7 @@ function people(ctx) {
 }
 function realm(ctx) {
   var _a5;
-  const fresh = () => ctx.mode === "placeholders" ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, ctx.rng);
+  const fresh = () => ctx.mode === "placeholders" ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, ctx.rng, ctx.catalogue);
   const r = EVENT_DATA.series.recurring;
   const p = ctx.seriesRealm && !ctx.realm && ctx.rng() < r / (r + 1) ? ctx.seriesRealm : fresh();
   if (p) (_a5 = ctx.realm) != null ? _a5 : ctx.realm = p;
@@ -121840,7 +121872,7 @@ function plans4(ctx, kind, only) {
   return ALL_SHAPES2.filter((s) => s.kind === kind && (!only || s.p === only)).map((s) => [s, shapeWeight10({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
 }
 function generateEventNames(options) {
-  var _a5, _b3, _c3, _d3;
+  var _a5, _b3, _c3, _d3, _e3;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -121862,6 +121894,7 @@ function generateEventNames(options) {
     mode,
     tone: (_c3 = options.tone) != null ? _c3 : "any",
     vocab: (_d3 = options.vocab) != null ? _d3 : BUILT_IN_VOCAB,
+    catalogue: (_e3 = options.catalogue) != null ? _e3 : BUILT_IN_BIOMES,
     scale,
     context: options.context,
     drawn: /* @__PURE__ */ new Set(),
@@ -121925,8 +121958,8 @@ function generateEventNames(options) {
   return { names, seed, notices };
   function chronicle() {
     const s = EVENT_DATA.series;
-    const seriesPeople = mode === "placeholders" ? "[people]" : routeFolk(culture.key, rng);
-    const seriesRealm = mode === "placeholders" ? "[realm]" : routeKingdom(culture.key, era, rng);
+    const seriesPeople = mode === "placeholders" ? "[people]" : routeFolk(culture.key, rng, options.catalogue);
+    const seriesRealm = mode === "placeholders" ? "[realm]" : routeKingdom(culture.key, era, rng, options.catalogue);
     const recurs = (sh) => sh.p.includes("{people") || sh.p.includes("{realm") ? s.recurring : 1;
     let carryPlace;
     let founded = false;
@@ -128819,17 +128852,19 @@ function defaultBlocked(name) {
   const n = routeNorm(name);
   return routeBlockSet().has(n) || GROUP_DATA.safeguards.block.some((b) => normForBlock(b) === normForBlock(name)) || breaksRouteWords(name) || hasBannedWord(name);
 }
-var settlementPools = /* @__PURE__ */ new Map();
-function settlementTownPool(culture, size, region) {
+var settlementPools = /* @__PURE__ */ new WeakMap();
+function settlementTownPool(culture, size, region, catalogue = BUILT_IN_BIOMES) {
   var _a5;
   const source = ((_a5 = findRouteCulture(culture)) == null ? void 0 : _a5.sensitive) ? void 0 : townSource(culture);
   if (!source) return [];
   const code = source === "britain" && PLACE_SHAPE_REGIONS.some((r) => r.code === region) ? region : void 0;
   const key2 = `${source}|${size}|${code != null ? code : ""}`;
-  let found = settlementPools.get(key2);
+  let pools = settlementPools.get(catalogue);
+  if (!pools) settlementPools.set(catalogue, pools = /* @__PURE__ */ new Map());
+  let found = pools.get(key2);
   if (!found) {
-    found = generateSettlementNames({ setting: "native", culture: source, size, region: code, count: 300, seed: 1789 }).names.map((n) => n.text).filter((n) => !n.includes("["));
-    settlementPools.set(key2, found);
+    found = generateSettlementNames({ setting: "native", culture: source, size, region: code, count: 300, seed: 1789, catalogue }).names.map((n) => n.text).filter((n) => !n.includes("["));
+    pools.set(key2, found);
   }
   return found;
 }
@@ -128854,12 +128889,12 @@ function buildContext(o, rng) {
   const setting = routeSetting(o.era, o.fantastic);
   const blocked2 = (_b3 = o.blocked) != null ? _b3 : defaultBlocked;
   const taken = [];
-  const pool3 = isFuture7(o.era) ? [] : settlementTownPool(o.culture, (_c3 = o.size) != null ? _c3 : "town", o.region);
+  const pool3 = isFuture7(o.era) ? [] : settlementTownPool(o.culture, (_c3 = o.size) != null ? _c3 : "town", o.region, o.catalogue);
   const holyWords = holyNamesIn(o.culture);
   const place4 = () => {
     var _a6;
     for (let i = 0; i < 200; i++) {
-      const t2 = isFuture7(o.era) ? groupTown("SF", void 0, rng) : pool3.length > 0 ? ((n) => holyWords && holyWords.test(n) ? void 0 : n)(pool3[Math.floor(rng() * pool3.length)]) : routePlace(o.culture, setting, rng);
+      const t2 = isFuture7(o.era) ? groupTown("SF", void 0, rng, o.catalogue) : pool3.length > 0 ? ((n) => holyWords && holyWords.test(n) ? void 0 : n)(pool3[Math.floor(rng() * pool3.length)]) : routePlace(o.culture, setting, rng, o.catalogue);
       if (t2 && !t2.includes("[") && !blocked2(t2) && !taken.some((x) => x.toLowerCase() === t2.toLowerCase())) {
         taken.push(t2);
         return t2;
@@ -128886,7 +128921,8 @@ function buildContext(o, rng) {
       tone: o.tone,
       count: 1,
       seed: Math.floor(rng() * 4294967295),
-      safeguards: o.realmSafeguards
+      safeguards: o.realmSafeguards,
+      catalogue: o.catalogue
     }).names[0];
     realm2 = r && !r.text.includes("[") ? r.text : null;
   }
@@ -128994,14 +129030,14 @@ function generateKit(options) {
   };
   const context = {
     ...buildContext(
-      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", size: o.size, blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, scale: isFuture8(o.era) ? o.position === "crossroads" ? "Sy" : "Pl" : void 0 },
+      { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, people: o.people, tone: o.tone, village: o.size === "village", size: o.size, blocked: options.blocked, vocab: options.vocab, realmSafeguards: g.realm, catalogue: options.catalogue, scale: isFuture8(o.era) ? o.position === "crossroads" ? "Sy" : "Pl" : void 0 },
       mulberry32(subSeed(o.seed, STEPS.context))
     ),
     effects: pos.effects
   };
   const keep = sectionsFor(o.contents, o.position, o.era);
   const kitScale = isFuture8(o.era) ? o.position === "crossroads" ? "Sy" : "Pl" : void 0;
-  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, context, ...kitScale ? { scale: kitScale } : {} };
+  const common = { culture: o.culture, era: o.era, fantastic: o.fantastic, region: o.region, tone: o.tone, people: o.people, vocab: options.vocab, catalogue: options.catalogue, context, ...kitScale ? { scale: kitScale } : {} };
   const used = /* @__PURE__ */ new Set([norm3(context.town)]);
   const sharedOk = (text) => {
     const n = norm3(text);
@@ -129146,7 +129182,7 @@ function generateKit(options) {
     const technology = (_m = KIT_DATA.vessels[module2][o.era]) != null ? _m : module2 === "ships" ? "T7" : "S3";
     const fn = (isFuture8(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : void 0;
     run("ships", want("ships"), (seed, count) => {
-      const b = generateVesselNames({ module: module2, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context });
+      const b = generateVesselNames({ module: module2, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context, catalogue: options.catalogue });
       return { names: b.names.map((n) => ({ text: n.text, kind: n.function })), notices: b.notices };
     });
   }
@@ -129204,6 +129240,7 @@ function generateKit(options) {
       const front = KIT_DATA.hideFront.includes(row.family) || type === "secret" ? "may" : void 0;
       for (let t = 0; t <= KIT_DATA.dedupeTries; t++) {
         const n = generateGroupNames({
+          catalogue: options.catalogue,
           family: row.family,
           type,
           tradition: context.tradition,
@@ -131031,16 +131068,18 @@ function biomeItems(ctx, token17) {
 function biomeWord2(ctx, token17) {
   return drawFrom(ctx, token17 === "beast" ? "beast" : token17 === "wildAnimal" || token17 === "bird" || token17 === "creature" || token17 === "livestock" ? "beast" : token17, token17, biomeItems(ctx, token17));
 }
-var EVENT_POOLS = /* @__PURE__ */ new Map();
+var EVENT_POOLS = /* @__PURE__ */ new WeakMap();
 function eventName(ctx) {
   if (ctx.mode === "placeholders") return "[event]";
   const kind = pickOne14(["treaty", "battle", "rebellion"], ctx.rng);
   const key2 = `${ctx.culture}|${ctx.era}|${kind}`;
-  let pool3 = EVENT_POOLS.get(key2);
+  let pools = EVENT_POOLS.get(ctx.catalogue);
+  if (!pools) EVENT_POOLS.set(ctx.catalogue, pools = /* @__PURE__ */ new Map());
+  let pool3 = pools.get(key2);
   if (!pool3) {
-    const batch = generateEventNames({ culture: ctx.culture, era: ctx.era, kind, count: 40, seed: 1789, people: "invented" });
+    const batch = generateEventNames({ culture: ctx.culture, era: ctx.era, kind, count: 40, seed: 1789, people: "invented", catalogue: ctx.catalogue });
     pool3 = batch.names.map((n) => n.text.replace(/^the /i, "").replace(/^(Battle|Treaty) of /i, "")).filter((n) => n && !n.includes("[") && !n.includes(" of the ") && countedWords2(n).length <= 2);
-    EVENT_POOLS.set(key2, pool3);
+    pools.set(key2, pool3);
   }
   return pool3.length > 0 ? pickOne14(pool3, ctx.rng) : void 0;
 }
@@ -131060,7 +131099,7 @@ function godTitle(ctx) {
 function town4(ctx) {
   var _a5;
   if (ctx.mode === "placeholders") return "[place]";
-  return groupTown(ctx.setting, ctx.setting === "SF" ? void 0 : ((_a5 = findTimeCulture(ctx.culture)) == null ? void 0 : _a5.sensitive) ? void 0 : townSource(ctx.culture), ctx.rng).replace(/^The /, "");
+  return groupTown(ctx.setting, ctx.setting === "SF" ? void 0 : ((_a5 = findTimeCulture(ctx.culture)) == null ? void 0 : _a5.sensitive) ? void 0 : townSource(ctx.culture), ctx.rng, ctx.catalogue).replace(/^The /, "");
 }
 var ORDINALS = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth", "Thirteenth"];
 var ordinalWord = (n) => {
@@ -131150,7 +131189,7 @@ function token16(ctx, name, mod) {
     case "town":
       return town4(ctx);
     case "realm":
-      return placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng);
+      return placeholders ? "[realm]" : routeKingdom(ctx.culture, ctx.era, ctx.rng, ctx.catalogue);
     case "event":
       return eventName(ctx);
     case "star":
@@ -131981,7 +132020,7 @@ function festivalSeries(S, cycleKey) {
   return names.map((n, i) => ({ ...n, ...slots[i].season ? { season: slots[i].season, tag: seasonPhrase(slots[i].season) } : {} }));
 }
 function generateTimeSkyNames(options) {
-  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j;
+  var _a5, _b3, _c3, _d3, _e3, _f, _g, _h, _i, _j, _k;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -132009,7 +132048,8 @@ function generateTimeSkyNames(options) {
     mode: (_g = options.people) != null ? _g : "placeholders",
     tone,
     vocab: (_h = options.vocab) != null ? _h : BUILT_IN_VOCAB,
-    words: kind === "festival" ? (_i = options.words) != null ? _i : "translated" : "translated",
+    catalogue: (_i = options.catalogue) != null ? _i : BUILT_IN_BIOMES,
+    words: kind === "festival" ? (_j = options.words) != null ? _j : "translated" : "translated",
     biome: resolved,
     atHome,
     land,
@@ -132027,7 +132067,7 @@ function generateTimeSkyNames(options) {
   };
   const series = !!options.series && seriesOffered(kind, culture, era, land);
   if (series) {
-    const S = { seed, ctx, options, seen: /* @__PURE__ */ new Set(), notices, realShare: (_j = options.realShare) != null ? _j : TIME_SKY.realShare };
+    const S = { seed, ctx, options, seen: /* @__PURE__ */ new Set(), notices, realShare: (_k = options.realShare) != null ? _k : TIME_SKY.realShare };
     const batch = runSeries(S, kind, seed);
     return batch;
   }
@@ -135603,7 +135643,7 @@ function isRecipeContent(content) {
   const fm = content.match(FRONTMATTER2);
   return !!fm && /^type:\s*["']?recipe["']?\s*$/m.test(fm[1]);
 }
-function parseRecipeContent(content) {
+function parseRecipeContent(content, catalogue) {
   const fm = content.match(FRONTMATTER2);
   if (!fm) return { recipe: {}, body: content, problems: ["The recipe has no properties."] };
   let raw;
@@ -135612,7 +135652,7 @@ function parseRecipeContent(content) {
   } catch (e) {
     return { recipe: {}, body: content.slice(fm[0].length), problems: ["The recipe's properties aren't valid YAML."] };
   }
-  const { recipe, problems } = readRecipe(raw != null ? raw : {});
+  const { recipe, problems } = readRecipe(raw != null ? raw : {}, catalogue);
   return { recipe, body: content.slice(fm[0].length), problems };
 }
 var NATIVE_PACK_CATEGORIES = ["native-place-name", "native-people-or-tribe"];
@@ -135623,11 +135663,12 @@ var categoryLabels2 = new Map([
   ["local-market-word", "Local market word"]
 ]);
 var RecipeHost = class {
-  constructor(app, settings, index, targets) {
+  constructor(app, settings, index, targets, catalogue) {
     this.app = app;
     this.settings = settings;
     this.index = index;
     this.targets = targets;
+    this.catalogue = catalogue;
     this.notices = /* @__PURE__ */ new Set();
   }
   getNotices() {
@@ -135648,12 +135689,12 @@ var RecipeHost = class {
   async loadRecipe(file) {
     const content = await this.read(file);
     if (content === null) return { recipe: withDefaults({}), own: {}, error: `Couldn't read \u201C${file.basename}\u201D.`, problems: [] };
-    const { recipe: own, problems } = parseRecipeContent(content);
+    const { recipe: own, problems } = parseRecipeContent(content, this.catalogue);
     let template;
     if (own.templateOf) {
       const templateFile = this.resolveLink(own.templateOf, file.path);
       const templateContent = templateFile ? await this.read(templateFile) : null;
-      if (templateContent !== null && isRecipeContent(templateContent)) template = parseRecipeContent(templateContent).recipe;
+      if (templateContent !== null && isRecipeContent(templateContent)) template = parseRecipeContent(templateContent, this.catalogue).recipe;
     }
     const applied = applyRecipeTemplate(own, template, file.basename);
     return { recipe: withDefaults(applied.recipe), own, template, error: applied.error, problems };
@@ -137326,7 +137367,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian11.Modal {
   /** Wizard retirement brief §5.1: every biome list and lookup, over the packs as last loaded (rebuilt only when they are). */
   catalogue() {
     var _a5;
-    if (((_a5 = this.catalogueCache) == null ? void 0 : _a5.biomes) !== this.customBiomes) this.catalogueCache = { biomes: this.customBiomes, catalogue: biomeCatalogue(this.customBiomes) };
+    if (((_a5 = this.catalogueCache) == null ? void 0 : _a5.biomes) !== this.customBiomes) this.catalogueCache = { biomes: this.customBiomes, catalogue: this.customBiomes.length === 0 ? BUILT_IN_BIOMES : biomeCatalogue(this.customBiomes) };
     return this.catalogueCache.catalogue;
   }
   /**
@@ -138580,6 +138621,7 @@ ${n.origin}${also}${echo}` };
     const guards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards);
     const result = generateRouteNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -138663,6 +138705,7 @@ ${n.origin}${also}${echo}` };
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, innWordBlocked);
     const result = generateInnNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -138822,6 +138865,7 @@ ${n.origin}${also}${echo}` };
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, deityWordBlocked);
     const pack = await this.deityDraw(s);
     const result = generateDeityNames({
+      catalogue: await this.readyCatalogue(),
       culture: s.culture,
       kind: s.kind,
       // Line-up brief §2.2: kind Any in the deities module means deities and pantheons.
@@ -138929,6 +138973,7 @@ ${n.origin}${also}${echo}` };
     const guards = await this.loadSettlementSafeguards(EVENT_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, eventWordBlocked);
     const result = generateEventNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -139028,6 +139073,7 @@ ${n.origin}${also}${echo}` };
     const guards = await this.loadSettlementSafeguards(MONEY_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, moneyWordBlocked);
     const result = generateMoneyNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -139296,6 +139342,7 @@ ${n.origin}${also}${echo}` };
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, thingWordBlocked);
     const pack = await this.thingDraw(state);
     const result = generateThingNames({
+      catalogue: await this.readyCatalogue(),
       module: module2,
       culture: state.culture,
       kind: state.kind,
@@ -139422,7 +139469,7 @@ ${n.origin}${also}${echo}` };
     var _a5;
     const seedOverride = seed != null ? seed : this.seedLocked ? parseSeedInput((_a5 = this.seedInputEl) == null ? void 0 : _a5.value) : void 0;
     const inputs = await this.kitInputs();
-    const kit = generateKit({ ...state, seed: seedOverride, safeguards: inputs.safeguards, honourees: inputs.honourees, vocab: inputs.vocab.vocab });
+    const kit = generateKit({ catalogue: await this.readyCatalogue(), ...state, seed: seedOverride, safeguards: inputs.safeguards, honourees: inputs.honourees, vocab: inputs.vocab.vocab });
     this.currentSeed = kit.options.seed;
     this.currentKit = kit;
     this.renderKitResult(kit);
@@ -139613,6 +139660,7 @@ ${n.origin}${also}${echo}` };
     const guards = await this.loadSettlementSafeguards(BUILDING_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, buildingWordBlocked);
     const result = generateBuildingNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -139729,6 +139777,7 @@ ${n.origin}${also}${echo}` };
     const innGuards = await this.loadSettlementSafeguards(INN_DATA.safeguards);
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, monumentWordBlocked);
     const result = generateMonumentNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       era: state.era,
@@ -139843,6 +139892,7 @@ ${n.origin}${also}${echo}` };
     const routeGuards = await this.loadSettlementSafeguards();
     const vocab = await this.loadSettlementVocabulary(guards.safeguards, streetWordBlocked);
     const result = generateStreetNames({
+      catalogue: await this.readyCatalogue(),
       culture: state.culture,
       kind: state.kind,
       function: state.function,
@@ -140412,6 +140462,7 @@ ${n.origin}${also}${echo}` };
     const guards = await this.loadBynameSafeguards();
     const pack = await this.bynameDraw(state);
     const result = generateBynames({
+      catalogue: await this.readyCatalogue(),
       module: module2,
       culture: state.culture,
       kind: state.kind,
@@ -140929,6 +140980,7 @@ ${n.origin}${also}${echo}` };
     let result;
     try {
       result = generateGroupNames({
+        catalogue: await this.readyCatalogue(),
         family: family.key,
         tradition: state.tradition,
         type: state.type,
@@ -141868,7 +141920,8 @@ ${n.origin}${also}${echo}` };
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
     this.updatePackDropdownTrigger(file.path, "recipePack");
-    const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file));
+    await this.loadCustomBiomes();
+    const { problems, recipe } = parseRecipeContent(await this.app.vault.cachedRead(file), this.catalogue());
     this.settlementPreset = ((_c3 = recipe.shape) == null ? void 0 : _c3.settlement) ? recipe.shape : void 0;
     this.settlementPresetSlots = this.settlementPreset ? recipe.slots : void 0;
     (_d3 = this.openPresetButton) == null ? void 0 : _d3.toggle(this.activeSection === "markov" && !!this.settlementPreset);
@@ -141885,7 +141938,7 @@ ${n.origin}${also}${echo}` };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), {
       targetReason: (entry, index) => this.targetPackReason(entry, index),
       targetNames: (entry, index) => this.ageingTargetNames(entry, index)
-    });
+    }, await this.readyCatalogue());
     const loaded = await host.loadRecipe(file);
     if (loaded.error) {
       this.setStatus(loaded.error);

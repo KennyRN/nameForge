@@ -230,6 +230,7 @@ interface Ctx {
   biome?: string;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   scale?: HyperScale;
   shape?: { p: string };
@@ -310,13 +311,15 @@ function riverName(ctx: Ctx): string | undefined {
 const VESSEL_CULTURE: Record<string, string> = { polynesian: "hawaiian" };
 /** The ships module's technology for an era. */
 const SHIP_TECH: Record<WatersEra, string> = { AN: "T2", MD: "T3", EM: "T4", ST: "T5", MO: "T7", NF: "T7", IS: "T7" };
-const SHIP_POOLS = new Map<string, string[]>();
+const SHIP_POOLS = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
 
 /** §4: `{ship}`: one name from the vessel engine (explore vessels), without a prefix. */
 function shipName(ctx: Ctx): string | undefined {
   if (ctx.mode === "placeholders") return "[ship]";
   const key = `${ctx.culture.key}|${ctx.era}|${ctx.fantastic}`;
-  let pool = SHIP_POOLS.get(key);
+  let pools = SHIP_POOLS.get(ctx.catalogue);
+  if (!pools) SHIP_POOLS.set(ctx.catalogue, (pools = new Map()));
+  let pool = pools.get(key);
   if (!pool) {
     const genre = ctx.era === "ST" || ctx.era === "MO" ? "modern" : ctx.era === "NF" || ctx.era === "IS" ? "scifi" : "fantasy";
     pool = generateVesselNames({
@@ -330,10 +333,11 @@ function shipName(ctx: Ctx): string | undefined {
       people: "invented",
       count: 60,
       seed: 1789,
+      catalogue: ctx.catalogue,
     })
       .names.map((n) => n.name.replace(/^(the )/i, ""))
       .filter((n) => !n.includes("["));
-    SHIP_POOLS.set(key, pool);
+    pools.set(key, pool);
   }
   return pool.length > 0 ? pickOne(pool, ctx.rng) : undefined;
 }
@@ -389,7 +393,7 @@ function token(ctx: Ctx, name: string): VocabEntry | string | undefined {
   const placeholders = ctx.mode === "placeholders";
   switch (name) {
     case "town": {
-      const free = () => (placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng));
+      const free = () => (placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng, ctx.catalogue));
       const t = anchored(ctx, free);
       if (t) ctx.words.push({ pool: "town", word: t });
       return t;
@@ -407,14 +411,14 @@ function token(ctx: Ctx, name: string): VocabEntry | string | undefined {
     case "number":
       return listWord(ctx, "number");
     case "folk":
-      return placeholders ? PLACEHOLDER("folk") : routeFolk(ctx.culture.key, rng);
+      return placeholders ? PLACEHOLDER("folk") : routeFolk(ctx.culture.key, rng, ctx.catalogue);
     case "person": {
       if (placeholders) return PLACEHOLDER("person");
       const names = personNames(ctx.culture.key);
       return names.length > 0 ? pickOne(names, rng) : undefined;
     }
     case "kingdom":
-      return placeholders ? PLACEHOLDER("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng);
+      return placeholders ? PLACEHOLDER("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng, ctx.catalogue);
     case "holy":
       return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
     case "god":
@@ -600,6 +604,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     mode,
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     scale,
     drawn: new Set(),
     words: [],
@@ -677,7 +682,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     const ctx = newCtx(chosenScale);
     const found: string[] = [];
     for (let i = 0; i < 40 && found.length < 2; i++) {
-      const value = hyper ? starName({ ...ctx, scale: chosenScale ?? drawHyperScale() }) : mode === "placeholders" ? undefined : routePlace(culture.key, ctx.setting, rng);
+      const value = hyper ? starName({ ...ctx, scale: chosenScale ?? drawHyperScale() }) : mode === "placeholders" ? undefined : routePlace(culture.key, ctx.setting, rng, ctx.catalogue);
       if (value && !found.includes(value)) found.push(value);
       if (!hyper && mode === "placeholders") break;
     }

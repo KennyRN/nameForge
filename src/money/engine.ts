@@ -30,7 +30,7 @@ import {
   typesInSetting,
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
-import { pluralOf } from "../biomes";
+import { pluralOf, type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { REALM_DATA } from "../realms/engine";
 import {
   countedWords,
@@ -240,6 +240,8 @@ export function tiersReaching(tiers: readonly ValueTier[] | undefined, shift: nu
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface MoneyOptions {
+  /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   kind?: MoneyKind;
   era?: RouteEra;
@@ -303,6 +305,7 @@ interface Ctx {
   fantastic: boolean;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   words: MoneyWords;
   kind: MoneyKind;
@@ -400,20 +403,23 @@ export function pluralName(name: string, pl?: string): string {
 
 // ── Companies (§8.5) ────────────────────────────────────────────────────────
 
-const COMPANIES = new Map<string, string[]>();
+// Cached per catalogue: the company names draw invented towns, which a pack replacing Britain changes.
+const COMPANIES = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
 
 /** §8.5: the trade family's company names for a culture, setting and tone, forms B and E only, without the last word "Company". */
 function companyPool(ctx: Ctx, type: string): string[] {
   const tradition = (REALM_DATA.tribal)[ctx.culture.key] ?? "general";
   const key = `${ctx.setting}|${tradition}|${ctx.tone}|${type}`;
-  let pool = COMPANIES.get(key);
+  let pools = COMPANIES.get(ctx.catalogue);
+  if (!pools) COMPANIES.set(ctx.catalogue, (pools = new Map()));
+  let pool = pools.get(key);
   if (!pool) {
     pool = [];
     const family = findFamily("trade")!;
     if (typesInSetting(family, ctx.setting).some((t) => t.key === type)) {
       const [genre, fantastic] = GENRE_OF[ctx.setting];
       const drop = new Set(MONEY_DATA.companyDrop);
-      const batch = generateGroupNames({ family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789 });
+      const batch = generateGroupNames({ family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789, catalogue: ctx.catalogue });
       for (const n of batch.names) {
         const words = n.text.replace(/^the /i, "").split(" ");
         if (words.length > 1 && drop.has(words[words.length - 1])) words.pop();
@@ -421,7 +427,7 @@ function companyPool(ctx: Ctx, type: string): string[] {
         if (text && !text.includes("[")) pool.push(text);
       }
     }
-    COMPANIES.set(key, pool);
+    pools.set(key, pool);
   }
   return pool;
 }
@@ -461,7 +467,7 @@ function gnWord(ctx: Ctx, list: string, setting: GroupSetting = ctx.setting): st
 function town(ctx: Ctx): string | undefined {
   if (ctx.mode === "placeholders") return "[place]";
   if (ctx.town) return ctx.town;
-  const found = ctx.culture.moneyOnly ? groupTown(ctx.setting, ctx.culture.town === "compound" ? undefined : ctx.culture.town, ctx.rng).replace(/^The /, "") : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const found = ctx.culture.moneyOnly ? groupTown(ctx.setting, ctx.culture.town === "compound" ? undefined : ctx.culture.town, ctx.rng, ctx.catalogue).replace(/^The /, "") : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
   return found;
 }
 
@@ -606,7 +612,7 @@ function token(ctx: Ctx, name: string, mod?: string): string | undefined {
     case "town":
       return town(ctx);
     case "realm":
-      return placeholders ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, rng);
+      return placeholders ? "[realm]" : routeKingdom(ctx.culture.key, ctx.era, rng, ctx.catalogue);
     case "figure": {
       const f = ctx.culture.moneyOnly ? (ctx.culture.figure ?? []).length > 0 ? pickOne(ctx.culture.figure!, rng) : undefined : routeFigure(ctx.culture.key, ctx.setting, rng);
       if (!f) return undefined;
@@ -1055,6 +1061,7 @@ export function generateMoneyNames(options: MoneyOptions): MoneyBatch {
     mode: options.people ?? "placeholders",
     tone,
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     words: options.words ?? "translated",
     kind: chosen ?? "coin",
     shift: 0,

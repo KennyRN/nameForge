@@ -3,6 +3,7 @@
 // renderer and the batch loop. Moved out of buildings/engine.ts unchanged, so buildings draws the same
 // names for the same seed. No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import buildingData from "../data/building-names.json";
 import {
   type GroupPeople,
@@ -40,6 +41,8 @@ export interface BaseCtx {
   mode: GroupPeople;
   tone: GroupToneChoice;
   vocab: Vocabulary;
+  /** Wizard retirement brief §5: the biome lookups the town pools draw from. */
+  catalogue: BiomeCatalogue;
   region?: string;
   themes: Record<string, number>;
   /** The series' town and founder. */
@@ -114,7 +117,7 @@ export const ownerNames = (ctx: BaseCtx) => [...personNames(ctx.culture.key), ..
 
 export function town(ctx: BaseCtx): string | undefined {
   // Settlement kit §4: this place, or one of its neighbours.
-  const t = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.town ?? (ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng));
+  const t = ctx.turn ? ctx.turn.next(ctx.rng) : ctx.town ?? (ctx.mode === "placeholders" ? "[place]" : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue));
   if (t) ctx.uses.push(`town:${t}`);
   return t;
 }

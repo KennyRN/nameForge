@@ -4,6 +4,7 @@
 // places, peoples, people's names, gods and route names come from the route engine, which in turn
 // reuses the group, bynames, tribal and realms engines. No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import streetData from "../data/street-names.json";
 import {
@@ -145,6 +146,8 @@ export const defaultStreetSafeguards = (): GroupSafeguards => ({
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface StreetOptions {
+  /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   /** A kind key; undefined is Any. */
   kind?: StreetKind;
@@ -211,6 +214,7 @@ interface Ctx {
   fantastic: boolean;
   mode: GroupPeople;
   tone: GroupToneChoice;
+  catalogue: BiomeCatalogue;
   vocab: Vocabulary;
   /** The region for the British cultures. */
   region?: string;
@@ -343,6 +347,7 @@ function route(ctx: Ctx): string | undefined {
     seed: Math.floor(ctx.rng() * 0xffffffff),
     safeguards: o.routeSafeguards,
     vocab: o.vocab,
+    catalogue: o.catalogue,
   }).names[0];
   if (r) ctx.isRoute = true;
   return r?.text;
@@ -357,7 +362,7 @@ function destination(ctx: Ctx): string | undefined {
     return t;
   }
   if (ctx.mode === "placeholders") return "[place]";
-  const t = ctx.towns ? pickOne(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+  const t = ctx.towns ? pickOne(ctx.towns, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
   if (t) ctx.uses.push(`destination:${t}`);
   return t;
 }
@@ -383,6 +388,7 @@ function monumentFor(ctx: Ctx, worthyOnly = false): { text: string; site: string
     safeguards: o.monumentSafeguards,
     honourees: o.honourees,
     vocab: o.vocab,
+    catalogue: o.catalogue,
   });
 }
 
@@ -419,6 +425,7 @@ function landmark(ctx: Ctx): string | undefined {
     rng: ctx.rng,
     safeguards: o.landmarkSafeguards,
     vocab: o.vocab,
+    catalogue: o.catalogue,
   });
   if (!w) return undefined;
   ctx.words.push({ pool: "landmark", word: w });
@@ -468,7 +475,7 @@ function token(ctx: Ctx, name: string, alt: (dialect: string) => void, pattern: 
     case "route":
       return route(ctx);
     case "people":
-      return placeholders ? "[people]" : routeFolk(ctx.culture.key, rng);
+      return placeholders ? "[people]" : routeFolk(ctx.culture.key, rng, ctx.catalogue);
     case "royal":
       return "[royal]";
     case "holy": {
@@ -707,7 +714,7 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
   // §10: the town's neighbours, and the one region its dialect words keep to.
   const towns =
     series && mode === "invented"
-      ? [...new Set(Array.from({ length: 30 }, () => routePlace(culture.key, setting, rng)).filter((t): t is string => !!t))].slice(0, STREET_DATA.series.towns)
+      ? [...new Set(Array.from({ length: 30 }, () => routePlace(culture.key, setting, rng, options.catalogue)).filter((t): t is string => !!t))].slice(0, STREET_DATA.series.towns)
       : undefined;
   let dialectRegion = region;
   if (series && !region && dialectSetting !== "plain") {
@@ -724,6 +731,7 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
     mode,
     tone,
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue ?? BUILT_IN_BIOMES,
     region,
     size,
     fn,
@@ -877,6 +885,8 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
 // ── What's named after a monument (Monuments brief §9) ──────────────────────
 
 export interface NeighbourOptions {
+  /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   era?: RouteEra;
   fantastic?: boolean;

@@ -6,6 +6,7 @@
 // the name the places around it take (§8), and streets, squares, districts, inns and the settlement
 // kit draw monuments back from here (§11–§12). No Obsidian imports.
 
+import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import monumentData from "../data/monument-names.json";
 import { BUILDING_DATA, breaksBuildingWords, hasChristianBuilding } from "../buildings/engine";
@@ -122,6 +123,8 @@ export const defaultMonumentSafeguards = (): GroupSafeguards => ({
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface MonumentOptions {
+  /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   /** A kind key; undefined is Any. */
   kind?: MonumentKind;
@@ -250,7 +253,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "battle": {
       if (ctx.mode === "placeholders") return "[battle]";
       // Settlement kit §4: a battle fought at one of the neighbours.
-      return ctx.context ? contextTown(ctx.context, false, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng);
+      return ctx.context ? contextTown(ctx.context, false, ctx.rng) : routePlace(ctx.culture.key, ctx.setting, ctx.rng, ctx.catalogue);
     }
     case "bird":
       return gnWord(ctx, "bird");
@@ -388,6 +391,7 @@ const newCtx = (s: Setup, kind: MonumentKind, extra: Partial<Ctx> = {}): Ctx => 
   mode: s.mode,
   tone: s.options.tone ?? "any",
   vocab: s.options.vocab ?? BUILT_IN_VOCAB,
+  catalogue: s.options.catalogue ?? BUILT_IN_BIOMES,
   region: s.region,
   kind,
   themes: s.themes,
@@ -559,6 +563,7 @@ function neighbourOptions(o: MonumentOptions, s: Setup, rng: () => number): Neig
     innSafeguards: o.innSafeguards,
     monumentSafeguards: o.safeguards,
     vocab: o.vocab,
+    catalogue: o.catalogue,
   };
 }
 
@@ -575,6 +580,7 @@ export function monumentName(o: {
   safeguards?: GroupSafeguards;
   honourees?: string[];
   vocab?: Vocabulary;
+  catalogue?: BiomeCatalogue;
 }): { text: string; site: string; districtWorthy: boolean } | undefined {
   const batch = generateMonumentNames({ ...o, count: 8, seed: Math.floor(o.rng() * 0xffffffff) });
   for (const n of batch.names) {

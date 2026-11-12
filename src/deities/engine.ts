@@ -4,6 +4,7 @@
 // Words come from the shared settlement pools (settlement/vocab.ts, with vocabulary packs); colours
 // from group names, saints from group names, places from the route engine. No Obsidian imports.
 
+import type { BiomeCatalogue } from "../biomes";
 import deityData from "../data/deity-names.json";
 import { BYNAME_CULTURES } from "../bynames/engine";
 import {
@@ -127,6 +128,8 @@ export const defaultDeitySafeguards = (): GroupSafeguards => ({ block: DEITY_DAT
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface DeityOptions {
+  /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
+  catalogue?: BiomeCatalogue;
   culture?: string;
   kind?: DeityKind;
   domain?: string;
@@ -179,6 +182,7 @@ interface Ctx {
   fantastic: boolean;
   tone: GroupToneChoice;
   vocab: Vocabulary;
+  catalogue?: BiomeCatalogue;
   style: Style;
   christian: boolean;
   gender: G;
@@ -295,7 +299,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "deityRef":
       return deityRef(ctx);
     case "place":
-      return isFuture(ctx.era) ? groupStarIn("any", "invented", rng) : routePlace(ctx.culture, ctx.setting, rng);
+      return isFuture(ctx.era) ? groupStarIn("any", "invented", rng) : routePlace(ctx.culture, ctx.setting, rng, ctx.catalogue);
     case "holy":
       return groupSaint(ctx.setting, rng);
     case "fixed":
@@ -455,6 +459,7 @@ export function generateDeityNames(options: DeityOptions): DeityBatch {
     fantastic,
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
+    catalogue: options.catalogue,
     style,
     christian: isChristianCulture(culture, era),
     gender: "n",
