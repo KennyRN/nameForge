@@ -366,3 +366,11 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `grsFlora` | grassland plants: Grass, Clover, Cowslip, Poppy | x, bt | wild lands |
 | `grsWork` | grassland trades: Drovers', Shepherds', Herders' | x | wild lands |
 | `grsBeast` | grassland creatures: Horse, Hare, Lark, Bison | x, bt, pl | wild lands |
+
+## The lens and the coverage report
+
+The tags above (`c`, `e`, `t`, `h`, `r`) are read against one shared definition, the **lens**, in `src/data/lens.json` (through `src/lens.ts`): the cultures (core, second and local tiers, each `live` or `planned`), the regions, the seven eras with the land band, the styles, the tones, the targets, and a `modules` map saying how each module's own cultures, eras and settings read in lens terms. The tables keep their own keys; the lens maps them.
+
+`npm run coverage` measures every module's tables against the lens and writes `docs/coverage.md` and `docs/coverage.json`: signature words and shapes per culture, era-restricted entries, styles, tones, regions, shapes open to every culture per kind, thin pools, the cultures each module doesn't offer, and totals. Each module has a small adapter beside its engine (`src/<module>/coverage.ts`) that reads the tables and never runs a generator; the shared pools above are counted in every module that reads them. Targets are the numbers under `targets` in `lens.json`. Pools exempt from the minimum are listed under `poolExemptions`: `forPacks` for those left empty for a user's own packs, and `closed` for sets that are complete by nature.
+
+`tests/coverage.test.ts` is a ratchet over the report's numbers, kept in `tests/fixtures/coverage-baseline.json`. No cell may fall below its baseline value, and a cell that has met its target must keep meeting it; cells under target don't fail the test. When a table change deliberately lowers a number (an entry removed or retagged), re-record the baseline with `CAPTURE_COVERAGE_BASELINE=1 npm test` and say so in the commit message.

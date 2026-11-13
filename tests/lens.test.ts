@@ -1,6 +1,8 @@
 // Shared lens brief §7.2 (M1): the lens is whole and every module's own roster, era, setting and style
 // value reads in lens terms. The data tables are walked, so a value the mappings miss fails here.
 import { test } from "node:test";
+import { COVERAGE_ADAPTERS } from "../src/coverage";
+import { VOCAB_POOL_NAMES } from "../src/coverageRows";
 import assert from "node:assert/strict";
 import airLandData from "../src/data/vehicles-air-land.json";
 import groupData from "../src/data/group-names.json";
@@ -113,7 +115,6 @@ test("§3.3 to §3.5: eras, land band, styles, tones and targets", () => {
     kindOpenShapes: 6,
     pool: 8,
   });
-  assert.deepEqual(lensJsonAny.poolExemptions, { forPacks: [], closed: [] }, "M3 fills the exemptions");
   assert.equal(poolExemption("anything"), undefined);
 });
 
@@ -426,4 +427,15 @@ test("every culture and era tag on a vocabulary entry names a lens culture, grou
   assert.deepEqual(bad, []);
   // Every module culture a vocabulary tag can name is in the shared mapping.
   for (const c of VOCAB_ALL_CULTURES) assert.ok(cultureMapping("shared")[c], c);
+});
+
+test("§6.3: every exempt pool is a real pool, in one list only, and its exemption reads back", () => {
+  const known = new Set<string>(VOCAB_POOL_NAMES);
+  for (const adapter of COVERAGE_ADAPTERS) for (const row of adapter.rows()) known.add(row.source);
+  const { forPacks, closed } = lensJsonAny.poolExemptions as { forPacks: string[]; closed: string[] };
+  assert.ok(forPacks.length > 0 && closed.length > 0);
+  for (const name of [...forPacks, ...closed]) assert.ok(known.has(name), `${name} is not a pool or list any adapter reads`);
+  assert.equal(new Set([...forPacks, ...closed]).size, forPacks.length + closed.length, "no pool is in both lists, or twice");
+  for (const name of forPacks) assert.equal(poolExemption(name), "forPacks");
+  for (const name of closed) assert.equal(poolExemption(name), "closed");
 });
