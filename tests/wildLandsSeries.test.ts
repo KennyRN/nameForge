@@ -167,7 +167,7 @@ test("history: labels follow §1.3 in order", () => {
   const full = { ...base, where: "new" as const, culture: "roman", biome: "boreal", kind: "pass", fantastic: true, tone: "grim" as const, series: true };
   assert.equal(
     wildsHistoryLabel("mountainNames", chooseWilds(full, "culture", "roman", "mountainNames"), SECTION_LABELS.mountainNames),
-    "mountains · medieval · Roman / Italian · new country · Northern forest and tundra · passes and cols · fantastic · grim · series",
+    "mountains · medieval · Roman and Italian · new country · Northern forest and tundra · passes and cols · fantastic · grim · series",
   );
   assert.equal(wildsHistoryLabel("mountainNames", { ...base, region: "NTH" }, "mountains"), "mountains · medieval · Norman & British · the North");
   assert.match(wildsSentenceText(wildsSentence({ ...base, series: true }, "mountainNames")), /in one range\.$/);

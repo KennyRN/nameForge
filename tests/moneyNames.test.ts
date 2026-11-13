@@ -930,7 +930,7 @@ test("§16.8: moneyNames follows events and eras in advanced (time and sky come 
 test("§1.2: the history label, and routing", () => {
   assert.equal(moneyHistoryLabel(DEFAULT_MONEY_STATE), "money and coins · medieval · Norman & British");
   const label = moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, culture: "roman", kind: "coin", era: "ST", value: "high", words: "loanwords", fantastic: true, tone: "grim", series: "values" });
-  assert.equal(label, "money and coins · steam age · Roman / Italian · coins · high · loanwords · steampunk · grim · one coinage with values");
+  assert.equal(label, "money and coins · steam age · Roman and Italian · coins · high · loanwords · steampunk · grim · one coinage with values");
   assert.equal(moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, kind: "goods", series: "coinage" }), "money and coins · medieval · Norman & British · goods money · one coinage");
   assert.equal(moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, kind: "currency", value: "high" }), "money and coins · medieval · Norman & British · currencies");
   assert.equal(historySection(label), "moneyNames");
