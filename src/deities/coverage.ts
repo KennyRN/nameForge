@@ -1,7 +1,7 @@
 // Coverage adapters for deities and for sacred places (shared lens brief §6.1).
 import deityData from "../data/deity-names.json";
 import bynameData from "../data/bynames.json";
-import { type CoverageAdapter, type CoverageRow, listRows, makeRow, vocabularyRows } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows, wordListRows } from "../coverageUse";
 
 const ROSTER = (bynameData.cultures as { key: string }[]).map((c) => c.key);
@@ -33,9 +33,12 @@ function rows(module: string, kinds: readonly string[]): CoverageRow[] {
 
 const kindKeys = (wanted: readonly string[]) => (deityData.kinds as { key: string }[]).map((k) => k.key).filter((k) => wanted.includes(k));
 
+/** §11.2: a culture's form, domain and kind multipliers (`styles[culture]` `formX`, `domainX`, `kindX`) are its profile. */
+const profiles = () => profileKeys(Object.fromEntries(Object.entries(deityData.styles as unknown as Record<string, { formX?: unknown; domainX?: unknown; kindX?: unknown }>).map(([k, v]) => [k, { f: v.formX ?? {}, d: v.domainX ?? {}, k: v.kindX ?? {} }])));
+
 export const deityCoverage: CoverageAdapter[] = [
-  { module: "deityNames", kinds: kindKeys(DEITY_KINDS), roster: ROSTER, excluded: EXCLUDED, rows: () => rows("deityNames", DEITY_KINDS) },
-  { module: "sacredPlaces", kinds: kindKeys(PLACE_KINDS), roster: ROSTER, excluded: EXCLUDED, rows: () => rows("sacredPlaces", PLACE_KINDS) },
+  { module: "deityNames", kinds: kindKeys(DEITY_KINDS), roster: ROSTER, excluded: EXCLUDED, profiles, rows: () => rows("deityNames", DEITY_KINDS) },
+  { module: "sacredPlaces", kinds: kindKeys(PLACE_KINDS), roster: ROSTER, excluded: EXCLUDED, profiles, rows: () => rows("sacredPlaces", PLACE_KINDS) },
 ];
 
 void makeRow;

@@ -58,7 +58,7 @@ const lensJsonAny = lensJson as unknown as Record<string, unknown>;
 
 test("§3.1: the cultures, tiers and statuses are the brief's", () => {
   const tier = (t: string) => LENS_CULTURES.filter((c) => c.tier === t).map((c) => c.key);
-  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "scandinavian", "german"]);
+  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
   assert.deepEqual(tier("second"), [
     "french", "dutch", "iberian", "italian", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "egyptian", "ethiopian", "bantu", "west-african",
     "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american",
@@ -67,11 +67,11 @@ test("§3.1: the cultures, tiers and statuses are the brief's", () => {
     "arctic", "belgian", "hawaiian", "hellenistic", "malay", "maori", "maritimeSEA", "na-woodlands", "northAmerican", "northernPacific", "nw-coast", "ottoman", "phoenician", "sahul", "swahili-omani", "w-polynesian",
   ]);
   assert.deepEqual(tier("baseline"), ["general"]);
-  assert.deepEqual(LENS_CULTURES.filter((c) => c.status === "planned").map((c) => c.key), ["welsh", "scottish", "irish", "german", "italian"]);
+  assert.deepEqual(LENS_CULTURES.filter((c) => c.status === "planned").map((c) => c.key), ["welsh", "scottish", "irish", "cornish", "german", "italian"]);
   assert.equal(new Set(LENS_CULTURES.map((c) => c.key)).size, LENS_CULTURES.length, "keys are unique");
   assert.equal(lensCulture("english")!.keys.join(), "anglo-saxon,norman-british");
   assert.equal(lensCulture("scandinavian")!.keys.join(), "norse");
-  assert.deepEqual(LENS_LEGACY, { "anglo-saxon": ["english"], "norman-british": ["english"], celtic: ["welsh", "scottish", "irish"], norse: ["scandinavian"] });
+  assert.deepEqual(LENS_LEGACY, { "anglo-saxon": ["english"], "norman-british": ["english"], celtic: ["welsh", "scottish", "irish", "cornish"], norse: ["scandinavian"] });
   for (const [legacy, feeds] of Object.entries(LENS_LEGACY)) for (const f of feeds) assert.ok(lensCulture(f)!.keys.includes(legacy), `${f} reads ${legacy}`);
   for (const c of LENS_CULTURES) assert.ok(c.label, `${c.key} has a label`);
 });
@@ -80,10 +80,12 @@ test("§3.2: regions are shared out as the brief says, and the live codes are th
   const live = LENS_REGIONS.filter((r) => r.status === "live").map((r) => r.code);
   assert.deepEqual([...live].sort(), [...VOCAB_REGIONS].sort());
   assert.deepEqual(LENS_REGIONS.find((r) => r.code === "SBL")!.cultures, ["english", "scottish"]);
-  assert.deepEqual(LENS_REGIONS.filter((r) => r.cultures.includes("english")).map((r) => r.code), ["COR", "WCY", "SEA", "EAN", "WMM", "EMD", "NTH", "SBL"]);
+  assert.deepEqual(LENS_REGIONS.filter((r) => r.cultures.includes("english")).map((r) => r.code), ["WCY", "SEA", "EAN", "WMM", "EMD", "NTH", "SBL"]);
   assert.deepEqual(LENS_REGIONS.filter((r) => r.cultures.includes("scottish")).map((r) => r.code), ["SBL", "SLO", "SHH", "NSI"]);
   assert.deepEqual(LENS_REGIONS.filter((r) => r.cultures.includes("welsh")).map((r) => r.code), ["WAL"]);
-  assert.equal(LENS_REGIONS.length, 25);
+  assert.deepEqual(LENS_REGIONS.filter((r) => r.cultures.includes("cornish")).map((r) => r.code), ["COR"]);
+  assert.deepEqual(LENS_REGIONS.filter((r) => r.cultures.includes("irish")).map((r) => r.code), [], "Irish has no regions: one culture, undivided");
+  assert.equal(LENS_REGIONS.length, 21);
   for (const r of LENS_REGIONS) {
     assert.ok(r.cultures.length > 0 && r.cultures.every((c) => cultureKeys.has(c) && lensCulture(c)!.tier === "core"), `${r.code}: core cultures only`);
     if (r.status === "planned") assert.ok(!VOCAB_REGIONS.includes(r.code), `${r.code}: planned regions have no data`);
@@ -103,7 +105,7 @@ test("§3.3 to §3.5: eras, land band, styles, tones and targets", () => {
   assert.equal(eraOf["steampunk"], "ST");
   assert.equal(eraOf["cyberpunk"], "NF");
   assert.equal(eraOf["post-apocalyptic"], "MO,NF,IS");
-  assert.equal(eraOf["space-opera"], "IS");
+  assert.equal(eraOf["space-opera"], "NF,IS");
   assert.deepEqual([...LENS_TONES], ["grand", "plain", "grim", "light", "strange"]);
   assert.deepEqual(LENS_TARGETS, {
     cultures: { core: { words: 30, shapes: 10 }, second: { words: 12, shapes: 4 }, local: { words: 4, shapes: 1 } },
@@ -228,7 +230,7 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
 
 test("§4.1: tribal, colonial and vehicle mappings are the brief's tables", () => {
   const m = (name: string, key: string) => cultureMapping(name)[key];
-  assert.deepEqual(m("tribal", "celtic").lens, ["welsh", "scottish", "irish"]);
+  assert.deepEqual(m("tribal", "celtic").lens, ["welsh", "scottish", "irish", "cornish"]);
   assert.deepEqual(m("tribal", "germanic").lens, ["english", "scandinavian", "german", "dutch"]);
   assert.deepEqual(m("tribal", "mediterranean").lens, ["roman", "greek-byzantine", "italian"]);
   assert.deepEqual(m("tribal", "eastAsian").lens, ["chinese", "japanese", "korean"]);
@@ -247,7 +249,7 @@ test("§4.1: tribal, colonial and vehicle mappings are the brief's tables", () =
   // The legacy rule.
   assert.deepEqual(lensCulturesFor("routeNames", "anglo-saxon"), ["english"]);
   assert.deepEqual(lensCulturesFor("routeNames", "norman-british"), ["english"]);
-  assert.deepEqual(lensCulturesFor("routeNames", "celtic"), ["welsh", "scottish", "irish"]);
+  assert.deepEqual(lensCulturesFor("routeNames", "celtic"), ["welsh", "scottish", "irish", "cornish"]);
   assert.deepEqual(lensCulturesFor("routeNames", "norse"), ["scandinavian"]);
   assert.deepEqual(lensCulturesFor("ships", "hawaiian"), ["polynesian"]);
   assert.deepEqual(lensCulturesFor("routeNames", "no-such-culture"), []);
@@ -276,6 +278,8 @@ test("the group engine's tradition draws are the lens's weights, exactly as trad
 
 test("no shared roster offers a planned culture, and the offered accessors never return one", () => {
   const planned = new Set(LENS_CULTURES.filter((c) => c.status === "planned").map((c) => c.key));
+  // §11.7: only the culture menus are checked. The colonial `german` and `italian` traditions (exploration and expansion) and the
+  // tribal and group taxonomies are those modules' own values; they map to planned lens cultures and stay in their menus.
   const sharedModules = Object.keys(ROSTERS).filter((m) => !["explorationPlaceShapes", "empireExpansionPlaceShapes", "tribalNames", ...GROUP_NAME_SECTIONS].includes(m));
   for (const m of sharedModules) for (const k of ROSTERS[m]) assert.ok(!planned.has(k), `${m} offers the planned culture ${k}`);
   assert.ok(offeredLensCultures().every((c) => c.status === "live"));
@@ -289,6 +293,12 @@ test("no shared roster offers a planned culture, and the offered accessors never
 });
 
 // ── Eras ────────────────────────────────────────────────────────────────────
+
+test("§4.2 / §11.6: the aircraft and land vehicle technology codes read as the brief's table, future craft covering IS as well as NF", () => {
+  const eras = (lensJson as unknown as { mappings: { eras: Record<string, Record<string, string[]>> } }).mappings.eras;
+  assert.deepEqual(eras.aircraft, { A1: ["AN", "MD", "EM", "ST"], A2: ["ST", "MO"], A3: ["ST", "MO"], A4: ["MO"], A5: ["MO"], A6: ["MO"], A7: ["NF", "IS"], AF: ["MD", "MO"] });
+  assert.deepEqual(eras.landVehicles, { L1: ["AN", "MD", "EM", "ST"], L2: ["ST"], L3: ["ST", "MO"], L4: ["MO"], L5: ["MO"], L6: ["NF", "IS"], LF: ["MD", "MO"] });
+});
 
 test("every era value in the data maps to lens eras", () => {
   assert.deepEqual([...VOCAB_ERAS], eraCodes, "the vocabulary's eras are the lens's");
@@ -438,4 +448,8 @@ test("§6.3: every exempt pool is a real pool, in one list only, and its exempti
   assert.equal(new Set([...forPacks, ...closed]).size, forPacks.length + closed.length, "no pool is in both lists, or twice");
   for (const name of forPacks) assert.equal(poolExemption(name), "forPacks");
   for (const name of closed) assert.equal(poolExemption(name), "closed");
+  // §11.4: the six-entry Arabic and Persian day list stays unexempt: its seventh day is left out on purpose (docs/time-and-sky-brief.md §8.5).
+  assert.equal(poolExemption("cultureNames/arabic-persian/day"), undefined);
+  for (const name of ["coinFraction", "dayNumber", "world/korean/lists/direction", "world/chinese/lists/side"]) assert.equal(poolExemption(name), "closed", name);
+  for (const name of ["buildingFixed:civic", "buildingFixed:crossing", "buildingFixed:residence", "buildingFixed:water", "eventFixed:disaster", "eventFixed:era"]) assert.equal(poolExemption(name), "forPacks", name);
 });

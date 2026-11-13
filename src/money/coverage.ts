@@ -1,7 +1,7 @@
 // Coverage adapter for money and coins (shared lens brief §6.1).
 import moneyData from "../data/money-names.json";
 import vocabData from "../data/settlement-vocab.json";
-import { type CoverageAdapter, type CoverageRow, at, listRows, vocabularyRows } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, at, listRows, profileKeys, vocabularyRows } from "../coverageRows";
 
 const MODULE = "moneyNames";
 const KINDS = (moneyData.kinds as { key: string }[]).map((k) => k.key);
@@ -20,5 +20,7 @@ export const moneyCoverage: CoverageAdapter = {
   roster: (vocabData.cultures as string[]).filter((c) => !(moneyData.notOffered as string[]).includes(c)),
   // §6.3: `notOffered` in money-names.json.
   excluded: [{ cultures: moneyData.notOffered as string[] }],
+  // `cultureMult` weights the coin, early and goods forms per culture (§11.2).
+  profiles: () => profileKeys(moneyData.cultureMult),
   rows,
 };

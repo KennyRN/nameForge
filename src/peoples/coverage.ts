@@ -1,7 +1,7 @@
 // Coverage adapter for peoples and tongues (shared lens brief §6.1).
 import peopleData from "../data/peoples-tongues.json";
 import bynameData from "../data/bynames.json";
-import { type CoverageAdapter, type CoverageRow, listRows, makeRow, vocabularyRows } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows } from "../coverageUse";
 
 const MODULE = "peoplesTongues";
@@ -9,7 +9,7 @@ const ROSTER = (bynameData.cultures as { key: string }[]).map((c) => c.key);
 
 /**
  * The module's tables hold weights per culture (suffix choices, the share of "-ic" forms), which
- * multiply forms and add no entries, so they count nowhere; its words and patterns are open to every
+ * multiply forms and add no entries, so they count as a culture's profile (§11.2), not as words or shapes; its words and patterns are open to every
  * culture. Words that belong to an era (`older`) name it.
  */
 function rows(): CoverageRow[] {
@@ -29,4 +29,4 @@ function rows(): CoverageRow[] {
   return out;
 }
 
-export const peopleCoverage: CoverageAdapter = { module: MODULE, roster: ROSTER, rows };
+export const peopleCoverage: CoverageAdapter = { module: MODULE, roster: ROSTER, profiles: () => profileKeys(peopleData.weights), rows };

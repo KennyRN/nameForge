@@ -1,7 +1,7 @@
 // Coverage adapters for arms and armour, treasures and regalia, and books and writings (shared lens brief §6.1).
 import thingData from "../data/named-things.json";
 import bynameData from "../data/bynames.json";
-import { type CoverageAdapter, type CoverageRow, makeRow, vocabularyRows } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { listsUsed, wordListRows } from "../coverageUse";
 
 const LISTS = thingData.lists as unknown as Record<string, unknown[]>;
@@ -32,5 +32,7 @@ export const thingCoverage: CoverageAdapter[] = (thingData.modules as { key: str
   module: m.section,
   kinds: (thingData.kinds as { module: string; key: string }[]).filter((k) => k.module === m.key).map((k) => k.key),
   roster: ROSTER,
+  // §11.2: `leanings` weights each culture's kinds of name.
+  profiles: () => profileKeys(thingData.leanings),
   rows: () => rows(m.key, m.section),
 }));

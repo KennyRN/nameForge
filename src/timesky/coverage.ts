@@ -41,4 +41,4 @@ function skyRows(): CoverageRow[] {
 }
 
 export const calendarCoverage: CoverageAdapter = { module: CALENDAR, kinds: kindsOf("calendar"), roster: SHARED_ROSTER, excluded: [{ cultures: SENSITIVE }], rows: calendarRows };
-export const skyCoverage: CoverageAdapter = { module: SKY, kinds: kindsOf("sky"), roster: SHARED_ROSTER, excluded: [{ cultures: SENSITIVE }], rows: skyRows };
+export const skyCoverage: CoverageAdapter = { module: SKY, kinds: kindsOf("sky"), kindFlags: { sign: "closed" }, roster: SHARED_ROSTER, excluded: [{ cultures: SENSITIVE }], rows: skyRows };

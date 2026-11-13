@@ -14,7 +14,7 @@ import { thingCoverage } from "./things/coverage";
 import { tribalCoverage } from "./tribes/coverage";
 import { vesselCoverage } from "./vessels/coverage";
 import { placeShapesCoverage } from "./world/coverage";
-import { type CoverageAdapter, type CoverageRow, poolEntryCount, VOCAB_POOL_NAMES } from "./coverageRows";
+import { type CoverageAdapter, type CoverageRow, cultureReading, poolEntryCount, VOCAB_POOL_NAMES } from "./coverageRows";
 import { eventCoverage } from "./events/coverage";
 import { innCoverage } from "./inns/coverage";
 import {
@@ -86,6 +86,8 @@ export interface CultureCell extends WordShape {
   notOffered?: boolean;
   /** The module deliberately excludes it (§6.3). */
   excluded?: boolean;
+  /** The culture has its own non-empty row in a per-culture weight table (§11.2): a profile is not a substitute for words. */
+  profile: boolean;
   /** Below target, and neither excluded nor unoffered. */
   below: boolean;
 }
@@ -109,6 +111,8 @@ export interface ModuleCoverage {
   regions?: Record<string, number>;
   /** Shapes open to `general` per kind. */
   kinds: Record<string, number>;
+  /** Kinds not held to the kind target: `delegated` (names from another engine) or `closed` (a real closed system). */
+  kindFlags?: Record<string, "delegated" | "closed">;
   /** Culture keys the module offers that no live lens culture reads (its local ones) and the live lens cultures it doesn't offer. */
   roster?: { localKeys: string[]; notOffered: string[] };
 }
@@ -177,6 +181,7 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
     }
   }
 
+  const profiled = new Set((adapter.profiles?.() ?? []).flatMap((k) => cultureReading(module, k)));
   const roster = adapter.roster;
   const offered = roster ? new Set(offeredLensCulturesFor(module, roster)) : undefined;
   const excludedCultures = new Set((adapter.excluded ?? []).filter((x) => !x.kind).flatMap((x) => [...x.cultures]));
@@ -196,6 +201,7 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
       ...(target ? { target: { ...target } } : {}),
       ...(notOffered ? { notOffered: true } : {}),
       ...(excluded ? { excluded: true } : {}),
+      profile: profiled.has(culture),
       below: !!target && !excluded && !notOffered && (counted.words < target.words || counted.shapes < target.shapes),
     };
     cultures[culture] = cell;
@@ -214,6 +220,7 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
     tones,
     ...(regions ? { regions } : {}),
     kinds,
+    ...(adapter.kindFlags && Object.keys(adapter.kindFlags).length > 0 ? { kindFlags: { ...adapter.kindFlags } } : {}),
     ...(roster && offered ? { roster: { localKeys, notOffered: LENS_CULTURES.filter((c) => c.status === "live" && c.tier !== "baseline" && !offered.has(c.key) && !excludedCultures.has(c.key)).map((c) => c.key) } } : {}),
   };
 }
@@ -254,7 +261,7 @@ export function buildCoverage(adapters: readonly CoverageAdapter[] = COVERAGE_AD
         add(totals.styles[style], row);
       }
       for (const tone of row.tones ?? []) totals.tones[tone] = (totals.tones[tone] ?? 0) + row.n;
-      if (row.type === "word" && !shared) {
+      if (row.type === "word" && !shared && !row.notPool) {
         const id = `${adapter.module}|${row.source}`;
         const found = ownWords.get(id) ?? { module: adapter.module, source: row.source, entries: 0 };
         found.entries += row.n;

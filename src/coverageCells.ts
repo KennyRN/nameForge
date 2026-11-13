@@ -29,6 +29,7 @@ export function coverageCells(report: CoverageReport): Record<string, BaselineCe
       const targeted = !!cell.target && !cell.excluded && !cell.notOffered;
       out[`culture|${m.module}|${culture}|words`] = { v: cell.words, ...(targeted ? { t: cell.target!.words } : {}) };
       out[`culture|${m.module}|${culture}|shapes`] = { v: cell.shapes, ...(targeted ? { t: cell.target!.shapes } : {}) };
+      out[`culture|${m.module}|${culture}|profile`] = { v: cell.profile ? 1 : 0 };
     }
     for (const [era, v] of Object.entries(m.eras)) out[`era|${m.module}|${era}`] = { v, t: t.era };
     for (const [style, c] of Object.entries(m.styles)) {
@@ -37,7 +38,8 @@ export function coverageCells(report: CoverageReport): Record<string, BaselineCe
     }
     for (const [tone, v] of Object.entries(m.tones)) out[`tone|${m.module}|${tone}`] = { v, ...(t.toneKeys.includes(tone) ? { t: t.tone } : {}) };
     for (const [region, v] of Object.entries(m.regions ?? {})) out[`region|${m.module}|${region}`] = { v, t: t.region };
-    for (const [kind, v] of Object.entries(m.kinds)) out[`kind|${m.module}|${kind}`] = { v, t: t.kindOpenShapes };
+    // A delegated or closed kind is counted but not held to the kind target (§11.3).
+    for (const [kind, v] of Object.entries(m.kinds)) out[`kind|${m.module}|${kind}`] = { v, ...(m.kindFlags?.[kind] ? {} : { t: t.kindOpenShapes }) };
   }
   for (const [culture, c] of Object.entries(report.totals.cultures)) {
     out[`total|culture|${culture}|words`] = { v: c.words };

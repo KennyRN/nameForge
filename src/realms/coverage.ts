@@ -1,7 +1,7 @@
 // Coverage adapter for realms and polities (shared lens brief §6.1).
 import realmData from "../data/realms.json";
 import bynameData from "../data/bynames.json";
-import { type CoverageAdapter, type CoverageRow, listRows, makeRow, vocabularyRows } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows, wordListRows } from "../coverageUse";
 
 const MODULE = "realms";
@@ -42,4 +42,7 @@ function rows(): CoverageRow[] {
   return out;
 }
 
-export const realmCoverage: CoverageAdapter = { module: MODULE, kinds: KINDS, roster: ROSTER, rows };
+/** §11.2: a culture's own `mult` (the form weights) is its profile. */
+const profiles = () => profileKeys(Object.fromEntries(Object.entries(realmData.cultures as unknown as Record<string, { mult?: unknown }>).map(([k, c]) => [k, c.mult ?? {}])));
+
+export const realmCoverage: CoverageAdapter = { module: MODULE, kinds: KINDS, roster: ROSTER, profiles, rows };

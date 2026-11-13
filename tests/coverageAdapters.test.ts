@@ -24,7 +24,7 @@ test("an entry counts once per lens culture it is restricted to; open entries an
   assert.equal(cultureTags("routeNames", {}), undefined, "no tag: open");
   assert.equal(cultureTags("routeNames", { c: ["!indian", "!west-african"] }), undefined, "exclusions: open, not signature");
   assert.deepEqual(cultureTags("routeNames", { c: ["!indian", "roman"] }), ["roman"], "a positive tag beside an exclusion is signature");
-  assert.deepEqual(cultureTags("routeNames", { c: ["british"] }), ["english", "welsh", "scottish", "irish"], "a group expands to its lens cultures");
+  assert.deepEqual(cultureTags("routeNames", { c: ["british"] }), ["english", "welsh", "scottish", "irish", "cornish"], "a group expands to its lens cultures");
   assert.equal(cultureTags("routeNames", { culture: "general" }), undefined, "general is the unmarked baseline");
 });
 
@@ -178,4 +178,40 @@ test("the deity and money exclusions read 'excluded', and the deity pair exclude
     assert.ok(m.cultures["polynesian"].excluded && m.cultures["andean"].excluded, `${module}: excluded`);
     assert.equal(m.cultures["polynesian"].below, false);
   }
+});
+
+// ── Corrections after the first report (shared lens brief §11) ─────────────
+
+test("§11.1: a word's region multipliers (`regionTags`) are not pools: none is a thin pool, and they count towards module × region", () => {
+  const report = buildCoverage();
+  assert.ok(report.thinPools.every((p) => !p.pool.startsWith("regionTags/")), "no regionTags entry in the thin pools");
+  const mountains = report.modules.find((m) => m.module === "mountainNames")!;
+  assert.ok((mountains.regions!.SHH ?? 0) > 0, "the Highlands multiplier words count towards the region");
+});
+
+test("§11.2: a culture with its own row in a per-culture weight table has a profile; an empty row (general) has none", () => {
+  const report = buildCoverage();
+  const cultureCell = (module: string, culture: string) => report.modules.find((m) => m.module === module)!.cultures[culture];
+  // wilds.json `cultureMult`: English (anglo-saxon, norman-british) and Chinese have rows; `general` has an empty one.
+  assert.equal(cultureCell("mountainNames", "english").profile, true);
+  assert.equal(cultureCell("mountainNames", "chinese").profile, true);
+  assert.equal(cultureCell("mountainNames", "general")?.profile ?? false, false);
+  // A profile is not words: the targets and the counts are unchanged ("6/2" for Chinese mountains above).
+  assert.equal(cultureCell("mountainNames", "chinese").below, true);
+  // waters.json `cultureMult`, peoples-tongues.json `weights`, money-names.json `cultureMult`.
+  assert.equal(cultureCell("seasLakes", "roman").profile, true);
+  assert.equal(cultureCell("peoplesTongues", "scandinavian").profile, true);
+  assert.equal(cultureCell("moneyNames", "aztec").profile, true);
+  // A module with no weight table has none, whatever its words.
+  assert.ok(Object.values(report.modules.find((m) => m.module === "streetNames")!.cultures).every((c) => !c.profile));
+  // Hyperspace charts reads no culture weights.
+  assert.ok(Object.values(report.modules.find((m) => m.module === "hyperspaceCharts")!.cultures).every((c) => !c.profile));
+});
+
+test("§11.3: the settlement names sizes are delegated and sky lore's signs closed; neither is held to the kind target", () => {
+  const report = buildCoverage();
+  const settlement = report.modules.find((m) => m.module === "settlementNames")!;
+  assert.deepEqual(Object.values(settlement.kindFlags!).sort(), ["delegated", "delegated", "delegated", "delegated", "delegated"]);
+  assert.deepEqual(report.modules.find((m) => m.module === "skyNames")!.kindFlags, { sign: "closed" });
+  assert.equal(report.modules.find((m) => m.module === "mountainNames")!.kindFlags, undefined);
 });

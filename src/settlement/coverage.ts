@@ -37,7 +37,7 @@ function namesRows(): CoverageRow[] {
   return out;
 }
 
-export const settlementNamesCoverage: CoverageAdapter = { module: NAMES, kinds: SIZE_KINDS, regions: true, roster: Object.keys(settlementData.world), rows: namesRows };
+export const settlementNamesCoverage: CoverageAdapter = { module: NAMES, kinds: SIZE_KINDS, kindFlags: Object.fromEntries(SIZE_KINDS.map((k) => [k, "delegated" as const])), regions: true, roster: Object.keys(settlementData.world), rows: namesRows };
 
 /** The settlement kit has no word lists or shapes of its own (its data file says so): it draws on the other modules. */
 export const settlementKitCoverage: CoverageAdapter = { module: "settlementKit", noTables: true, rows: () => [] };

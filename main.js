@@ -62366,6 +62366,16 @@ var lens_default = {
       ]
     },
     {
+      key: "cornish",
+      label: "Cornish",
+      tier: "core",
+      family: "british",
+      status: "planned",
+      keys: [
+        "celtic"
+      ]
+    },
+    {
       key: "scandinavian",
       label: "Scandinavian",
       tier: "core",
@@ -62788,7 +62798,8 @@ var lens_default = {
     celtic: [
       "welsh",
       "scottish",
-      "irish"
+      "irish",
+      "cornish"
     ],
     norse: [
       "scandinavian"
@@ -62822,7 +62833,7 @@ var lens_default = {
       code: "COR",
       label: "Cornwall",
       cultures: [
-        "english"
+        "cornish"
       ],
       status: "live"
     },
@@ -62914,38 +62925,6 @@ var lens_default = {
         "scottish"
       ],
       status: "live"
-    },
-    {
-      code: "ULS",
-      label: "Ulster",
-      cultures: [
-        "irish"
-      ],
-      status: "planned"
-    },
-    {
-      code: "CON",
-      label: "Connacht",
-      cultures: [
-        "irish"
-      ],
-      status: "planned"
-    },
-    {
-      code: "LEI",
-      label: "Leinster",
-      cultures: [
-        "irish"
-      ],
-      status: "planned"
-    },
-    {
-      code: "MUN",
-      label: "Munster",
-      cultures: [
-        "irish"
-      ],
-      status: "planned"
     },
     {
       code: "DEN",
@@ -63136,6 +63115,7 @@ var lens_default = {
       key: "space-opera",
       label: "space opera",
       eras: [
+        "NF",
         "IS"
       ]
     }
@@ -63206,7 +63186,13 @@ var lens_default = {
       "watersFixed:charts",
       "watersFixed:hyperspace",
       "routeFixed:rail",
-      "routeFixed:motor"
+      "routeFixed:motor",
+      "buildingFixed:civic",
+      "buildingFixed:crossing",
+      "buildingFixed:residence",
+      "buildingFixed:water",
+      "eventFixed:disaster",
+      "eventFixed:era"
     ],
     closed: [
       "cycleElement",
@@ -63215,12 +63201,15 @@ var lens_default = {
       "directionAdj",
       "dayElement",
       "cultureNames/anglo-saxon/day",
-      "cultureNames/arabic-persian/day",
       "cultureNames/celtic/day",
       "cultureNames/chinese/day",
       "cultureNames/ethiopian/day",
       "cultureNames/greek-byzantine/day",
-      "cultureNames/korean/day"
+      "cultureNames/korean/day",
+      "coinFraction",
+      "dayNumber",
+      "world/korean/lists/direction",
+      "world/chinese/lists/side"
     ]
   },
   landModules: [
@@ -63377,7 +63366,8 @@ var lens_default = {
           lens: [
             "welsh",
             "scottish",
-            "irish"
+            "irish",
+            "cornish"
           ]
         },
         norse: {
@@ -63501,7 +63491,8 @@ var lens_default = {
           lens: [
             "welsh",
             "scottish",
-            "irish"
+            "irish",
+            "cornish"
           ]
         },
         germanic: {
@@ -64025,7 +64016,8 @@ var lens_default = {
           "MO"
         ],
         A7: [
-          "NF"
+          "NF",
+          "IS"
         ],
         AF: [
           "MD",
@@ -64053,7 +64045,8 @@ var lens_default = {
           "MO"
         ],
         L6: [
-          "NF"
+          "NF",
+          "IS"
         ],
         LF: [
           "MD",
@@ -64061,8 +64054,8 @@ var lens_default = {
         ]
       },
       notes: {
-        aircraft: "Read from docs/aircraft-and-land-vehicles-brief.md \xA74.1 (the data's `technology` carries labels, not dates): A1 balloons and kites (kites from antiquity, balloons from 1783) AN\u2013ST; A2 airships (1852 to the 1930s) ST, MO; A3 pioneer and biplane (1903 to the 1920s) ST, MO; A4 piston age, A5 jet age and A6 modern and drones MO; A7 future NF; AF sky ships, fantastic only: the eras of the settings that offer it (FH is MD, MF is MO, \xA74.3).",
-        landVehicles: "Read from docs/aircraft-and-land-vehicles-brief.md \xA74.2: L1 animal-drawn (chariots to coaches, in use throughout) AN\u2013ST; L2 steam ST; L3 early motor (cars from the 1880s, the first tanks, electric trams) ST, MO; L4 mid-century and L5 modern MO; L6 future NF; LF war engines and wonders, fantastic only: MD (FH) and MO (MF)."
+        aircraft: "Read from docs/aircraft-and-land-vehicles-brief.md \xA74.1 (the data's `technology` carries labels, not dates): A1 balloons and kites (kites from antiquity, balloons from 1783) AN\u2013ST; A2 airships (1852 to the 1930s) ST, MO; A3 pioneer and biplane (1903 to the 1920s) ST, MO; A4 piston age, A5 jet age and A6 modern and drones MO; A7 future NF, IS; AF sky ships, fantastic only: the eras of the settings that offer it (FH is MD, MF is MO, \xA74.3).",
+        landVehicles: "Read from docs/aircraft-and-land-vehicles-brief.md \xA74.2: L1 animal-drawn (chariots to coaches, in use throughout) AN\u2013ST; L2 steam ST; L3 early motor (cars from the 1880s, the first tanks, electric trams) ST, MO; L4 mid-century and L5 modern MO; L6 future NF, IS; LF war engines and wonders, fantastic only: MD (FH) and MO (MF)."
       }
     },
     styles: {

@@ -1,6 +1,6 @@
 # Shared lens and coverage test – brief
 
-**Status:** agreed with Kenny, 12 November 2026. Implement in the milestones of §8. This is the first of six briefs in the table overhaul (§10) and lands **before** the nameForge core brief (`nameforge-core-brief.md`), so the core is ported with one lens rather than nine rosters.
+**Status:** agreed with Kenny, 12 November 2026; roster amended 13 November (Cornish added, Irish without regions, English periods decided) and again after the first coverage report (§11). Implement in the milestones of §8. This is the first of seven briefs in the table overhaul (§10) and lands **before** the nameForge core brief (`nameforge-core-brief.md`), so the core is ported with one lens rather than nine rosters.
 
 ## 1. What changes
 
@@ -80,6 +80,7 @@ One data file, `src/data/lens.json`, read through one module, `src/lens.ts` (§5
 | `welsh` | Welsh | british | `celtic` | planned |
 | `scottish` | Scottish | british | `celtic` | planned |
 | `irish` | Irish | british | `celtic` | planned |
+| `cornish` | Cornish | british | `celtic` | planned |
 | `scandinavian` | Scandinavian | germanic | `norse` | live |
 | `german` | German | germanic | – | planned |
 
@@ -116,20 +117,20 @@ One data file, `src/data/lens.json`, read through one module, `src/lens.ts` (§5
 
 **`general`** is outside the tiers: it is the unmarked baseline every module keeps.
 
-**Legacy keys.** `anglo-saxon`, `norman-british`, `celtic` and `norse` remain the live keys in every module, preset and pack. The lens records which lens culture each feeds (`legacy` in the file). How `anglo-saxon` and `norman-british` sit inside `english`, and what remains of `celtic` once Welsh, Scottish and Irish are live, is settled in brief 2 (§10), not here.
+**Legacy keys.** `anglo-saxon`, `norman-british`, `celtic` and `norse` remain the live keys in every module, preset and pack. The lens records which lens culture each feeds (`legacy` in the file). Decided for brief 2 (§10), not built here: `anglo-saxon` becomes **early English** and `norman-british` **later English**, two periods of the one `english` culture, with the old keys still read. What remains of `celtic` once Welsh, Scottish, Irish and Cornish are live is settled in brief 2.
 
 **Groups.** The vocabulary's `british` and `christian` culture groups move into the lens unchanged: `british`: anglo-saxon, celtic, norman-british; `christian`: anglo-saxon, celtic, norman-british, slavic, french, iberian, and greek-byzantine and roman from MD on.
 
 ### 3.2 Regions
 
-Regions belong to core cultures only. The 12 existing British codes are shared out; the rest are declared `planned` with no data.
+Regions belong to core cultures only. Irish has none: it is one culture, undivided. The 12 existing British codes are shared out; the rest are declared `planned` with no data.
 
 | Culture | Regions | Status |
 |---|---|---|
-| `english` | COR Cornwall, WCY West Country, SEA South East, EAN East Anglia, WMM West Midlands and Marches, EMD East Midlands, NTH North, SBL Borderlands | live |
+| `english` | WCY West Country, SEA South East, EAN East Anglia, WMM West Midlands and Marches, EMD East Midlands, NTH North, SBL Borderlands | live |
 | `welsh` | WAL Wales | live code, planned culture |
+| `cornish` | COR Cornwall | live code, planned culture |
 | `scottish` | SBL Borderlands, SLO Lowlands, SHH Highlands and Hebrides, NSI Northern Isles | live codes, planned culture |
-| `irish` | ULS Ulster, CON Connacht, LEI Leinster, MUN Munster | planned |
 | `scandinavian` | DEN Denmark, NOR Norway, SWE Sweden, ICE Iceland and the Atlantic isles | planned |
 | `german` | NDT North German plain and coast, RHN Rhineland, MIT Central uplands, ALP Alpine south, OST Eastern marches | planned |
 
@@ -165,7 +166,7 @@ Style is an overlay on era, separate from tone. This brief declares the list and
 | `dieselpunk` | dieselpunk | MO |
 | `cyberpunk` | cyberpunk | NF |
 | `post-apocalyptic` | post-apocalyptic | MO, NF, IS |
-| `space-opera` | space opera | IS |
+| `space-opera` | space opera | NF, IS |
 
 `realistic` on NF and IS is hard science fiction; no separate key.
 
@@ -186,7 +187,7 @@ Modules whose keys are already the vocabulary's map one to one, plus the legacy 
 | Tradition | Lens cultures |
 |---|---|
 | `general` | general |
-| `celtic` | welsh, scottish, irish |
+| `celtic` | welsh, scottish, irish, cornish |
 | `germanic` | english, scandinavian, german, dutch |
 | `mediterranean` | roman, greek-byzantine, italian |
 | `steppe` | steppe |
@@ -244,7 +245,12 @@ This replaces `traditions.cultureMap` in `group-names.json` as the one source; t
 | Ships T6, T7 | MO |
 | Spacecraft S1, S2 | NF |
 | Spacecraft S3 | IS |
-| Aircraft and land vehicle technology codes | by each code's own dates in `technology`; the agent lists its reading in the summary for Kenny to check |
+| Aircraft A1; land vehicles L1 | AN, MD, EM, ST |
+| Aircraft A2, A3; land vehicles L3 | ST, MO |
+| Land vehicles L2 | ST |
+| Aircraft A4, A5, A6; land vehicles L4, L5 | MO |
+| Aircraft A7; land vehicles L6 | NF, IS |
+| Aircraft AF; land vehicles LF (fantasy only) | MD, MO |
 | british place names, river names | all seven (no era of their own) |
 
 Technology stays its own axis in the vehicle modules (a Polynesian coal ship remains possible); the mapping is for counting only.
@@ -402,10 +408,42 @@ Culture targets are not applied where a module deliberately excludes a culture (
 | # | Brief | In short |
 |---|---|---|
 | 1 | Shared lens and coverage test | This one |
-| 2 | Roster, eras and style in the sentences | One culture menu everywhere; legacy keys settled; realms gains the steam age; world eras become the seven; the style link; land band in the land modules |
+| 2 | Roster, eras and style in the sentences | One culture menu everywhere; legacy keys settled (early and later English); realms gains the steam age; world eras become the seven; the style link; land band in the land modules |
 | 3 | Module split | New: farmland and countryside; rivers and inland waters. british place names and world place names retired into the focused modules, with culture and region as choices; regional tables move with them; kinds merged or split where the report shows them thin or overloaded |
-| 4 | Northern Europe tables | English regions, Welsh, Scottish, Irish, Scandinavian, German to the core target in every module |
-| 5 | Second tier | French, Dutch, Iberian, Italian and Slavic first, then the world cultures levelled to the second-tier target |
-| 6 | Style tables | Low and high fantasy, steampunk, dieselpunk, cyberpunk, post-apocalyptic and space opera to target in every module |
+| 4 | Shared tables | A people table per culture (given names, surnames, holy people, rulers) filling the name brackets by default; starter name packs per core culture, then per second-tier culture; one core lexicon (colours, numbers, metals, gems, virtues, weather, trades) replacing the per-module copies; mythic creatures per culture |
+| 5 | Northern Europe tables | English regions, Welsh, Scottish, Irish, Cornish, Scandinavian, German to the core target in every module |
+| 6 | Second tier | French, Dutch, Iberian, Italian and Slavic first, then the world cultures levelled to the second-tier target |
+| 7 | Style tables | Low and high fantasy, steampunk, dieselpunk, cyberpunk, post-apocalyptic and space opera to target in every module |
 
-Briefs 4 to 6 are word tables written against the report from this brief, so each can be checked by the ratchet as it lands.
+Briefs 5 to 7 are word tables written against the report from this brief and on top of the shared tables of brief 4, so each can be checked by the ratchet as it lands.
+
+### 10.1 New modules, after the overhaul
+
+Agreed 13 November 2026: all twelve stay on the list, each built on the lens from the start and talked through before its own brief. Order of the first three is a recommendation; the rest are unordered.
+
+| # | Module | Names |
+|---|---|---|
+| 1 | Ruins and adventure sites | dungeons, barrows, lost cities, wrecks, haunted places |
+| 2 | Creatures and beasts | monster kinds, and individual horses, hounds, hawks and dragons |
+| 3 | Codenames and handles | operations, projects, agents, call signs, hacker handles, AI names |
+| – | Spells and magic | spells, rituals, schools, magical phenomena |
+| – | Herbs, potions and plagues | plants, remedies, poisons, diseases |
+| – | Food and drink | ales, wines, spirits, dishes |
+| – | Shops and businesses | shopfronts and firms; brands and products for modern and sci-fi |
+| – | Mottoes and sayings | house words, oaths, battle cries, proverbs |
+| – | Songs, plays and artworks | ballads, plays, paintings, troupes and bands |
+| – | Otherworlds | planes, afterlives, hells, dream realms |
+| – | Winds and weather | named winds, storms, seasons' moods |
+| – | Teams and contests | sports clubs, racing stables, gladiator schools, tournaments |
+
+## 11. Amendments after the first report (13 November 2026)
+
+The first report (commit `8391608`) showed three places where the count misread the data, and settled the open readings. Implemented by `lens-corrections-prompt.md`.
+
+1. **`regionTags` are not pools.** In `wilds.json` and `waters.json` each is one word's map of region multipliers. They leave the thin-pool list (498 of its 1,001 entries) and count towards module × region instead.
+2. **Culture profiles.** Some modules carry a culture through a weight table, not through entries of its own (`cultureMult` in wilds and waters, `spans` in the vehicle tables, the suffix `weights` in peoples and tongues). Each module × culture cell gains `profile: true` where the culture has its own non-empty row in such a table. A cell is **empty** only with no words, no shapes and no profile. Targets are unchanged: a profile is not a substitute for words.
+3. **Delegated and closed kinds.** A kind whose names come from another engine (the settlement names sizes) is marked `delegated`; one drawn from a real closed system (sky lore's signs) is `closed`. Neither is held to the kind target.
+4. **Exemptions.** `forPacks`: also the one-entry `…Fixed:` pools. `closed`: also `coinFraction`, `dayNumber`, `world/korean/lists/direction`, `world/chinese/lists/side`, and the per-culture calendar and sky lists that hold a real system's full count. `cultureNames/arabic-persian/day` (six entries) stays unexempt until the missing day is explained.
+5. **Space opera** sits on NF and IS (§3.4), which is what §4.3 already assumed.
+6. **Technology codes** for aircraft and land vehicles are fixed in §4.2; future craft (A7, L6) cover IS as well as NF.
+7. **`german` and `italian`** stay `planned` as lens cultures. The colonial traditions of the same name are that module's own values and stay in its menus; the integrity test checks culture menus only.

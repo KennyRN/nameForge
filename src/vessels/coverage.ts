@@ -4,7 +4,7 @@
 // style table, and a shared list or shape counts in every module of its file.
 import airLandData from "../data/vehicles-air-land.json";
 import vesselData from "../data/vessels.json";
-import { type CoverageAdapter, type CoverageRow, listRows, makeRow } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys } from "../coverageRows";
 import { lensStyleFor } from "../lens";
 import { plainWordRows, wordListRows } from "../coverageUse";
 
@@ -72,9 +72,18 @@ const VESSEL_ROSTER = (vesselData.cultures as { key: string }[]).map((c) => c.ke
 const AIRLAND_ROSTER = Object.keys(airLandData.spans);
 const kindsOf = (list: { key: string }[]) => list.map((k) => k.key);
 
+/** §11.2: a culture's own technology span (ships: `cultures[].span`; air and land: `spans`), role weights and type leanings are its profile. */
+const shipProfiles = () => profileKeys(Object.fromEntries((vesselData.cultures as { key: string; span?: string }[]).map((c) => [c.key, c.span ?? ""])));
+const airLandProfiles = (module: "aircraft" | "landVehicles") => () => {
+  const spans = airLandData.spans as unknown as Record<string, { airSpan: string; landSpan: string }>;
+  const own = Object.entries(spans).filter(([, s]) => (module === "aircraft" ? s.airSpan : s.landSpan) !== "").map(([k]) => k);
+  const roles = profileKeys((airLandData.cultureRoles as unknown as Record<string, unknown>)[module]);
+  return [...new Set([...own, ...roles, ...profileKeys((airLandData.types as unknown as { leanings: unknown }).leanings)])];
+};
+
 export const vesselCoverage: CoverageAdapter[] = [
-  { module: "ships", kinds: kindsOf(vesselData.functions.ships.list), roster: VESSEL_ROSTER, rows: () => vesselRows("ships") },
+  { module: "ships", kinds: kindsOf(vesselData.functions.ships.list), roster: VESSEL_ROSTER, profiles: shipProfiles, rows: () => vesselRows("ships") },
   { module: "spacecraft", kinds: kindsOf(vesselData.functions.spacecraft.list), roster: VESSEL_ROSTER, rows: () => vesselRows("spacecraft") },
-  { module: "aircraft", kinds: kindsOf(airLandData.functions.aircraft.list), roster: AIRLAND_ROSTER, rows: () => airLandRows("aircraft") },
-  { module: "landVehicles", kinds: kindsOf(airLandData.functions.landVehicles.list), roster: AIRLAND_ROSTER, rows: () => airLandRows("landVehicles") },
+  { module: "aircraft", kinds: kindsOf(airLandData.functions.aircraft.list), roster: AIRLAND_ROSTER, profiles: airLandProfiles("aircraft"), rows: () => airLandRows("aircraft") },
+  { module: "landVehicles", kinds: kindsOf(airLandData.functions.landVehicles.list), roster: AIRLAND_ROSTER, profiles: airLandProfiles("landVehicles"), rows: () => airLandRows("landVehicles") },
 ];

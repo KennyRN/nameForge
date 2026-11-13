@@ -36,6 +36,8 @@ export interface CoverageRow {
   styles?: string[];
   tones?: string[];
   regions?: string[];
+  /** The entry is not one of a pool's entries (a word's region multipliers): it counts towards its cells, never towards a thin pool. */
+  notPool?: boolean;
   /** Entries, not weights. */
   n: number;
 }
@@ -54,6 +56,10 @@ export interface CoverageAdapter {
   regions?: boolean;
   /** The module's own culture keys, as its menu offers them (for the roster differences and the culture cells). */
   roster?: readonly string[];
+  /** The module's own culture keys that have a non-empty row in a per-culture weight table (§11.2): `cultureMult`, `spans`, suffix `weights`… */
+  profiles?(): readonly string[];
+  /** Kinds whose names come from another engine (`delegated`) or from a real closed system (`closed`): not held to the kind target (§11.3). */
+  kindFlags?: Readonly<Record<string, "delegated" | "closed">>;
   /** The era codes the module offers; absent: all seven. */
   eras?: readonly string[];
   /** The rows: shape tables, word lists and the shared pools the module reads. */
@@ -275,4 +281,12 @@ export function vocabularyRows(module: string, only?: (pool: string) => boolean)
 export function poolEntryCount(pool: string): number {
   const p = VOCAB_POOLS[pool];
   return p ? p.entries.length : 0;
+}
+
+/** The keys of a per-culture weight table whose row is non-empty (an object with entries, a non-empty string, a non-zero list). */
+export function profileKeys(table: unknown): string[] {
+  if (!table || typeof table !== "object") return [];
+  const nonEmpty = (v: unknown): boolean =>
+    typeof v === "string" ? v !== "" : Array.isArray(v) ? v.length > 0 : v && typeof v === "object" ? Object.values(v).some(nonEmpty) : typeof v === "number" ? true : v === true;
+  return Object.entries(table as Record<string, unknown>).filter(([, v]) => nonEmpty(v)).map(([k]) => k);
 }

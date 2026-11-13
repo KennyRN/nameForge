@@ -66,3 +66,17 @@ test("coverage ratchet: it fails when a cell falls, and passes when it rises", (
   const fewer: CoverageBaseline = { ...baseline, thinPools: { ...baseline.thinPools, count: baseline.thinPools.count - 1 } };
   assert.match(ratchetFailures(fewer, report)[0], /^thin pools: /);
 });
+
+test("coverage ratchet: a profile that disappears fails, and a delegated or closed kind has no target to lose", () => {
+  const fresh = coverageBaseline(report);
+  const [profileKey] = Object.entries(fresh.cells).find(([k, c]) => k.endsWith("|profile") && c.v === 1)!;
+  assert.deepEqual(ratchetFailures(fresh, report), []);
+  const [, module, culture] = profileKey.split("|");
+  const lost = structuredClone(report);
+  lost.modules.find((m) => m.module === module)!.cultures[culture].profile = false;
+  assert.match(ratchetFailures(fresh, lost)[0], new RegExp(`^${profileKey.replace(/[|]/g, "\\|")}: fell from 1 to 0`));
+  // The settlement names sizes are delegated: counted, with no target.
+  assert.equal(fresh.cells["kind|settlementNames|hamlet"].t, undefined);
+  assert.equal(fresh.cells["kind|skyNames|sign"].t, undefined);
+  assert.equal(fresh.cells["kind|innNames|tavern"].t, 6, "an ordinary kind keeps the target");
+});
