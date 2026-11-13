@@ -2454,8 +2454,8 @@ export class NameForgeModal extends Modal {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const segments = (custom: Biome[]) => realmSentence(this.realmState, this.realmLimits(custom));
     for (const segment of segments(this.customBiomes)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(
@@ -4527,8 +4527,8 @@ export class NameForgeModal extends Modal {
   private renderVesselSentence(row: HTMLElement, module: VesselModule) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of vesselSentence(this.vesselState(module), module)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -4664,8 +4664,8 @@ export class NameForgeModal extends Modal {
       void this.loadBynamePacks().then(() => this.renderContextRow());
     }
     for (const segment of bynameSentence(state, module, this.bynamePacks)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       const choices = segment.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment.choices;
@@ -5247,8 +5247,8 @@ export class NameForgeModal extends Modal {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const state = this.groupState(family);
     for (const segment of groupSentence(state, family)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {

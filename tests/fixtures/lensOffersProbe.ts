@@ -41,7 +41,7 @@ import { generateBynames, type BynameModule } from "../../src/bynames/engine";
 import { DEFAULT_BYNAME_STATE, bynameSentence } from "../../src/bynames/sentence";
 import { generateVesselNames, type VesselModule } from "../../src/vessels/engine";
 import { defaultVesselState, vesselSentence } from "../../src/vessels/sentence";
-import { generateRealmNames } from "../../src/realms/engine";
+import { generateRealmNames, REALM_ERAS } from "../../src/realms/engine";
 import { DEFAULT_REALM_STATE, realmSentence } from "../../src/realms/sentence";
 import { LENS_ERAS } from "../../src/lens";
 import lensData from "../../src/data/lens.json";
@@ -157,7 +157,13 @@ function offeredEras(key: string): string[] {
   return ROUTE_ERAS.map((e) => e.code);
 }
 /** The culture keys a module offers today (its roster). */
-const offeredCultures = (spec: Spec): string[] => (spec.family === "A" ? rosterCultures(LENS_MODULES[spec.key].sentence.roster!).map((c) => c.key) : ids(spec.sentence(spec.state()), spec.culture));
+const offeredCultures = (spec: Spec): string[] => {
+  const roster = LENS_MODULES[spec.key].sentence.roster;
+  // The group families have no culture link of their own: their tribal tradition link is the culture, unchanged.
+  return roster ? rosterCultures(roster).map((c) => c.key) : ids(spec.sentence(spec.state()), spec.culture);
+};
+/** The genres a family B module offers, by the module's own rule (it is what its genre menu listed). */
+const offeredGenres = (spec: Spec): string[] => (spec.key === "supernaturalCourts" ? ["fantasy", "modern"] : spec.key === "spacecraft" ? ["modern", "scifi"] : ["fantasy", "modern", "scifi"]);
 
 /** One run's finished strings, or the error it threw, as its own output. */
 function attempt(spec: Spec, state: State, seed: number): string {
@@ -206,8 +212,8 @@ export function probeModule(spec: Spec): ModuleOffers {
   const segments = spec.sentence(base);
   const variantList = variants(spec);
   const fields = LENS_MODULES[spec.key].sentence.fields;
-  const hasFantastic = spec.family === "A" ? !!fields?.fantastic : !!link(segments, "fantastic");
-  const regionLink = spec.family === "A" ? !!fields?.region : link(segments, "region");
+  const hasFantastic = !!fields?.fantastic;
+  const regionLink = !!fields?.region;
   const worlds: Record<string, string[]> = {};
   let eras: string[][] | string[];
   let eraRuns: string[][] | undefined;
@@ -232,7 +238,7 @@ export function probeModule(spec: Spec): ModuleOffers {
     }
     eras = runs;
   } else {
-    const offered = ids(segments, "genre");
+    const offered = offeredGenres(spec);
     const bands = ["fantasy", "modern", "scifi"].filter((g) => offered.includes(g));
     for (const genre of bands) {
       const state = { ...base, genre, ...("era" in base ? { era: BAND_ERA[genre] } : {}) };
@@ -242,7 +248,7 @@ export function probeModule(spec: Spec): ModuleOffers {
     }
     eras = bands.map((g) => BAND_LABEL[g]);
     if (spec.key === "realms") {
-      const realmEras = ids(segments, "era");
+      const realmEras = REALM_ERAS.map((e) => e.key);
       const GENRE_OF: Record<string, string> = { ancient: "fantasy", medieval: "fantasy", earlyModern: "fantasy", modern: "modern", nearFuture: "scifi", interstellar: "scifi" };
       const sigs = realmEras.map((era) => ({
         era,

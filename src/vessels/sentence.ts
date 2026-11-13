@@ -1,10 +1,13 @@
 // The ships and spacecraft sentences (Ships brief §2): "‹General›-themed ‹ships and boats of any kind›
-// with ‹any› technology, for a ‹fantasy› world ‹of historic or low fantasy›, in ‹no particular› style,
-// ‹of any tone›, ‹without prefixes›, with ‹placeholders for› people and places, ‹each one separate›".
-// Built as segments like the group sentence. No Obsidian imports.
+// with ‹any› technology, of the ‹pre-industrial› era, in a ‹historic or low fantasy› world, in ‹no
+// particular› style, ‹of any tone›, ‹without prefixes›, with ‹placeholders for› people and places, ‹each
+// one separate›". The culture, era and world links are the lens clause's (one sentence brief §4, §7.4);
+// technology and style stay the module's own. Built as segments like the group sentence. No Obsidian imports.
 
 import { type GroupGenre, type GroupPeople, type GroupToneChoice, GROUP_TONES, groupSetting, SETTING_PHRASES, TONE_PHRASES } from "../groups/engine";
-import { FANTASTIC_TEXT, GENRE_TEXT } from "../groups/sentence";
+import { asSegment, chooseLens, eraWorldSegments, type LensedSegment } from "../lensSentence";
+import { lensClause } from "../lensView";
+import { registerRoster } from "../lensRosters";
 import {
   AIR_LAND,
   availableFunctions,
@@ -18,6 +21,8 @@ import {
   type VesselModule,
   type VesselNaming,
 } from "./engine";
+
+registerRoster("vessel", VESSEL_CULTURES);
 
 export interface VesselSentenceState {
   culture: string;
@@ -52,16 +57,17 @@ export function defaultVesselState(module: VesselModule): VesselSentenceState {
   };
 }
 
-export type VesselField = "naming" | "culture" | "function" | "technology" | "genre" | "fantastic" | "style" | "tone" | "prefixes" | "people" | "series";
+export type VesselField = "naming" | "culture" | "function" | "technology" | "era" | "genre" | "fantastic" | "style" | "tone" | "prefixes" | "people" | "series";
 
 export interface VesselChoice {
   id: string | undefined;
   label: string;
   /** A menu heading shown before this choice (§3.1's groups). */
   group?: string;
+  heading?: string;
 }
 
-export type VesselSegment = string | { field: VesselField; text: string; title: string; choices: VesselChoice[]; current: string | undefined };
+export type VesselSegment = string | { field: VesselField; text: string; title: string; choices: VesselChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one class" };
@@ -86,13 +92,8 @@ export function vesselSentence(state: VesselSentenceState, module: VesselModule)
   const out: VesselSegment[] = [];
   const culture = VESSEL_CULTURES.find((c) => c.key === state.culture) ?? VESSEL_CULTURES[0];
   const setting = vesselSetting(state);
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: what its people name vessels after",
-    choices: VESSEL_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== VESSEL_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause(module, state, { cultureTitle: "Naming culture: what its people name vessels after" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push("-themed ");
   const airLand = isAirLand(module);
   const naming = state.naming ?? "craft";
@@ -113,28 +114,9 @@ export function vesselSentence(state: VesselSentenceState, module: VesselModule)
     choices: [{ id: "any", label: "any" }, ...techChoices(module, setting).map((c) => ({ id: c, label: techLabel(module, c) }))],
     current: state.technology,
   });
-  out.push(" technology, for a ");
-  const genres: GroupGenre[] = module === "spacecraft" ? ["modern", "scifi"] : ["fantasy", "modern", "scifi"];
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: genres.map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre,
-  });
-  out.push(" world");
-  if (state.genre !== "scifi") {
-    // Aircraft and land brief §2.1: a modern world reads "of the real world" in the new modules.
-    const phrases: [string, string] = airLand && state.genre === "modern" ? ["of the real world", FANTASTIC_TEXT.modern[1]] : FANTASTIC_TEXT[state.genre];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off",
-    });
-  }
+  out.push(" technology,");
+  // Aircraft and land brief §2.1: a modern world reads "realistic" (not "of the real world") from the lens clause.
+  out.push(...(eraWorldSegments(lens, "era", "fantastic") as (string | LensedSegment<"era" | "fantastic">)[]));
   if (airLand) {
     // Aircraft and land brief §2.1: "naming ‹each craft›".
     out.push(", naming ");
@@ -213,10 +195,10 @@ export function vesselSentenceText(segments: VesselSegment[]): string {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseVessel(state: VesselSentenceState, field: VesselField, id: string | undefined, module: VesselModule): VesselSentenceState {
-  const next: VesselSentenceState = { ...state };
+  let next: VesselSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? "general";
+      next = chooseLens(module, next, "culture", id ?? "general");
       break;
     case "function":
       next.function = id;
@@ -224,12 +206,16 @@ export function chooseVessel(state: VesselSentenceState, field: VesselField, id:
     case "technology":
       next.technology = id ?? "any";
       break;
+    case "era":
+      next = chooseLens(module, next, "era", id);
+      if (module === "spacecraft" && next.genre === "modern") next.technology = "S1";
+      break;
     case "genre":
       next.genre = (id as GroupGenre) ?? "fantasy";
       if (module === "spacecraft" && next.genre === "modern") next.technology = "S1";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(module, next, "fantastic", id);
       break;
     case "style":
       next.style = id ?? "none";

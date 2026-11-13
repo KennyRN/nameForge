@@ -1,8 +1,11 @@
-// The group names sentence (Group brief §2): "‹General›-themed ‹orders and faiths of any kind› for a
-// ‹fantasy› world ‹of historic or low fantasy›, using ‹formal or everyday› names ‹that say what they
-// are›, with ‹placeholders for› people and places". Built as segments like the tribal sentence.
+// The group names sentence (Group brief §2): "‹General›-themed ‹orders and faiths of any kind› of the
+// ‹pre-industrial› era, in a ‹historic or low fantasy› world, using ‹formal or everyday› names ‹that
+// say what they are›, with ‹placeholders for› people and places". The era and world links are the lens
+// clause's (one sentence brief §4, §7.2). Built as segments like the tribal sentence.
 // No Obsidian imports.
 
+import { chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause, registerLensRules } from "../lensView";
 import { scalePhrase, scaleInfo, scalesFor, type ScaleChoice } from "../space/scale";
 import { TRIBAL_TRADITIONS } from "../tribes/engine";
 import {
@@ -39,14 +42,14 @@ export interface GroupSentenceState {
   scale?: ScaleChoice;
 }
 
-export type GroupField = "scale" | "commodity" | "tradition" | "type" | "genre" | "fantastic" | "form" | "tone" | "front" | "people" | "series";
+export type GroupField = "scale" | "commodity" | "tradition" | "type" | "era" | "genre" | "fantastic" | "form" | "tone" | "front" | "people" | "series";
 
 export interface GroupChoice {
   id: string | undefined;
   label: string;
 }
 
-export type GroupSegment = string | { field: GroupField; text: string; title: string; choices: GroupChoice[]; current: string | undefined };
+export type GroupSegment = string | { field: GroupField; text: string; title: string; choices: GroupChoice[]; current: string | undefined; fixed?: boolean };
 
 export const DEFAULT_GROUP_STATE: GroupSentenceState = {
   tradition: "general",
@@ -95,8 +98,14 @@ export function effectiveCommodity(state: GroupSentenceState, family: GroupFamil
   return showsCommodity(state, family) ? state.commodity : "any";
 }
 
-/** §2.4: supernatural courts offer fantasy and modern only. */
-const genresFor = (family: GroupFamily): GroupGenre[] => (family.key === "supernatural" ? ["fantasy", "modern"] : ["fantasy", "modern", "scifi"]);
+/**
+ * §2.4: supernatural modern is always contemporary fantasy: its world link offers that alone, and choosing the
+ * modern band switches it on. (Supernatural courts offer fantasy and modern only: the probe finds no future band.)
+ */
+registerLensRules("supernaturalCourts", {
+  worlds: (state, ids) => (state.genre === "modern" ? ids.filter((id) => id === "fantastic") : ids),
+  after: (_previous, next, field) => (field === "era" && next.genre === "modern" && next.fantastic !== true ? { ...next, fantastic: true } : next),
+});
 
 export function groupSentence(state: GroupSentenceState, family: GroupFamily): GroupSegment[] {
   const out: GroupSegment[] = [];
@@ -130,16 +139,11 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
       choices: [{ id: "any", label: "anything" }, ...groups.map((c) => ({ id: c.key, label: c.label }))],
       current: group ? group.key : "any",
     });
+    out.push(",");
   }
-  out.push(" for a ");
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: genresFor(family).map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre,
-  });
-  out.push(" world");
+  // The era and world links: the lens clause's, as the future band has no fantastic setting and supernatural
+  // courts in a modern world are always contemporary fantasy (the rules registered below).
+  out.push(...eraWorldSegments(lensClause(family.section, state), "era", "fantastic"));
   // Stellar brief §9: sci-fi groups name space at a scale.
   if (state.genre === "scifi") {
     const scale = state.scale ?? "any";
@@ -150,19 +154,6 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
       title: scaleInfo(scale).tooltip,
       choices: scalesFor(undefined).map((c) => ({ id: c, label: scaleInfo(c).label })),
       current: scale,
-    });
-  }
-  if (state.genre !== "scifi") {
-    const phrases = FANTASTIC_TEXT[state.genre];
-    // §2.4: supernatural modern is always contemporary fantasy.
-    const offered = family.key === "supernatural" && state.genre === "modern" ? [true] : [false, true];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: offered.map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off",
     });
   }
   out.push(", using ");
@@ -231,12 +222,15 @@ export function chooseGroup(state: GroupSentenceState, field: GroupField, id: st
     case "type":
       next.type = id;
       break;
+    case "era":
+      next = chooseLens(family.section, next, "era", id);
+      break;
     case "genre":
       next.genre = (id as GroupGenre) ?? "fantasy";
       if (family.key === "supernatural" && next.genre === "modern") next.fantastic = true;
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(family.section, next, "fantastic", id);
       break;
     case "form":
       next.form = (id as GroupForm) ?? "any";

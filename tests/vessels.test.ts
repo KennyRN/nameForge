@@ -290,7 +290,7 @@ test("§16.8: the default ships sentence; prefix link hidden in FL; class link h
   const segs = vesselSentence(state, "ships");
   assert.equal(
     vesselSentenceText(segs),
-    "General-themed ships and boats of any kind with any technology, for a fantasy world of historic or low fantasy, in no particular style, of any tone, with placeholders for people and places, each one separate.",
+    "General-themed ships and boats of any kind with any technology, of the pre-industrial era, in a historic or low fantasy world, in no particular style, of any tone, with placeholders for people and places, each one separate.",
   );
   const fields = (s: typeof segs) => s.filter((x) => typeof x !== "string").map((x) => (x as { field: string }).field);
   assert.ok(!fields(segs).includes("prefixes") && !fields(segs).includes("series"));

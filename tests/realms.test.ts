@@ -272,7 +272,7 @@ const fieldsOf = (state: RealmSentenceState) => realmSentence(state, limits).fil
 test("§15.8: the default sentence", () => {
   assert.equal(
     realmSentenceText(realmSentence(DEFAULT_REALM_STATE, limits)),
-    "General-themed realms of any kind of the medieval era, for a fantasy world of historic or low fantasy, named for anything, in their homeland of any terrain, of any tone, as plain names, giving official names, with placeholders for people and places.",
+    "General-themed realms of any kind of the medieval era, in a historic or low fantasy world, named for anything, in their homeland of any terrain, of any tone, as plain names, giving official names, with placeholders for people and places.",
   );
 });
 

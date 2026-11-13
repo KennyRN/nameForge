@@ -1,9 +1,12 @@
-// The bynames sentences (Bynames brief §2): "‹General›-themed ‹epithets of any kind› for a ‹fantasy›
-// world ‹of historic or low fantasy›, ‹of any tone›, for ‹anyone›, ‹after a placeholder name›".
+// The bynames sentences (Bynames brief §2): "‹General›-themed ‹epithets of any kind› of the
+// ‹pre-industrial› era, in a ‹historic or low fantasy› world, ‹of any tone›, for ‹anyone›, ‹after a
+// placeholder name›". The culture, era and world links are the lens clause's (one sentence brief §4).
 // Built as segments like the group sentence. No Obsidian imports.
 
-import { type GroupGenre, type GroupToneChoice, GROUP_TONES, groupSetting, SETTING_PHRASES, TONE_PHRASES } from "../groups/engine";
-import { FANTASTIC_TEXT, GENRE_TEXT } from "../groups/sentence";
+import { type GroupGenre, type GroupToneChoice, GROUP_TONES, groupSetting, TONE_PHRASES } from "../groups/engine";
+import { asSegment, chooseLens, eraWorldSegments, type LensedSegment } from "../lensSentence";
+import { lensClause } from "../lensView";
+import { registerRoster } from "../lensRosters";
 import type { SectionRequest } from "../packs/sections";
 import {
   availableKinds,
@@ -17,6 +20,8 @@ import {
   type NameRole,
   showsLanguage,
 } from "./engine";
+
+registerRoster("byname", BYNAME_CULTURES);
 
 export interface BynameSentenceState {
   culture: string;
@@ -46,14 +51,15 @@ export const DEFAULT_BYNAME_STATE: BynameSentenceState = {
   source: "placeholder",
 };
 
-export type BynameField = "culture" | "kind" | "genre" | "fantastic" | "tone" | "language" | "gender" | "length" | "source" | "pack" | "section";
+export type BynameField = "culture" | "kind" | "era" | "genre" | "fantastic" | "tone" | "language" | "gender" | "length" | "source" | "pack" | "section";
 
 export interface BynameChoice {
   id: string | undefined;
   label: string;
+  heading?: string;
 }
 
-export type BynameSegment = string | { field: BynameField; text: string; title: string; choices: BynameChoice[]; current: string | undefined };
+export type BynameSegment = string | { field: BynameField; text: string; title: string; choices: BynameChoice[]; current: string | undefined; fixed?: boolean };
 
 /** A pack the sentence can offer: its name and `##` headings. */
 export interface BynamePackInfo {
@@ -98,13 +104,8 @@ const sectionText = (state: BynameSentenceState, headings: string[]) => {
 export function bynameSentence(state: BynameSentenceState, module: BynameModule, packs: BynamePackInfo[] = []): BynameSegment[] {
   const out: BynameSegment[] = [];
   const culture = BYNAME_CULTURES.find((c) => c.key === state.culture) ?? BYNAME_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: which customs the names follow",
-    choices: BYNAME_CULTURES.map((c) => ({ id: c.key, label: c.label })),
-    current: culture.key,
-  });
+  const lens = lensClause(module, state, { cultureTitle: "Naming culture: which customs the names follow" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push("-themed ");
   const setting = groupSetting(state.genre, state.fantastic);
   const kinds = availableKinds(module, culture.key, setting);
@@ -116,26 +117,7 @@ export function bynameSentence(state: BynameSentenceState, module: BynameModule,
     choices: [{ id: undefined, label: "Any" }, ...kinds.map((k) => ({ id: k.kind.key, label: k.kind.menu }))],
     current: kind?.key,
   });
-  out.push(" for a ");
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: (["fantasy", "modern", "scifi"] as GroupGenre[]).map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre,
-  });
-  out.push(" world");
-  if (state.genre !== "scifi") {
-    const phrases = FANTASTIC_TEXT[state.genre];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off",
-    });
-  }
+  out.push(...(eraWorldSegments(lens, "era", "fantastic") as (string | LensedSegment<"era" | "fantastic">)[]));
   out.push(", ");
   out.push({
     field: "tone",
@@ -219,17 +201,20 @@ export function chooseByname(state: BynameSentenceState, field: BynameField, id:
   let next: BynameSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? "general";
+      next = chooseLens(module, next, "culture", id ?? "general");
       if (next.culture === "general") next.language = "english";
       break;
     case "kind":
       next.kind = id;
       break;
+    case "era":
+      next = chooseLens(module, next, "era", id);
+      break;
     case "genre":
       next.genre = (id as GroupGenre) ?? "fantasy";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(module, next, "fantastic", id);
       break;
     case "tone":
       next.tone = (id as GroupToneChoice) ?? "any";

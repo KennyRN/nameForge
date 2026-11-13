@@ -68358,6 +68358,2170 @@ function groupHistoryLabel(family, genre, fantastic, tradition, tone = "any", se
   ].join(" \xB7 ");
 }
 
+// src/colonialWording.ts
+var CONTEXT_PHRASES = {
+  "2": [
+    ["wild-and-unsettled", "wild and unsettled lands"],
+    ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
+    ["contested-frontier", "a contested frontier"]
+  ],
+  "2a": [
+    ["imposition", "ruling over the locals"],
+    ["accommodation", "living alongside the locals"],
+    ["adoption", "settling in amongst the locals"]
+  ]
+};
+var SPACE_CONTEXT_PHRASES = {
+  "2": [
+    ["wild-and-unsettled", "wild and unsettled space"],
+    ["sparse-or-weak-native-presence", "space with a sparse, or weak, native presence"],
+    ["contested-frontier", "a contested frontier"]
+  ],
+  "2a": CONTEXT_PHRASES["2a"]
+};
+var contextPhrasesFor = (part, space) => (space ? SPACE_CONTEXT_PHRASES : CONTEXT_PHRASES)[part];
+function generalTraditionLabel(part) {
+  return part === "2" ? "General explorers" : "General incomers";
+}
+function traditionLabel(part, id, label) {
+  return id === "general" ? generalTraditionLabel(part) : label;
+}
+function partsNote(parts) {
+  if (parts.length === 2) return "exploration and expansion";
+  return parts[0] === "2" ? "exploration only" : "expansion only";
+}
+
+// src/colonialSentence.ts
+function incomersPhrase(id, label) {
+  if (id === "general") return "General incomers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
+}
+function explorersPhrase(id, label) {
+  if (id === "general") return "General explorers";
+  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
+}
+var FEATURES = [
+  { id: "any", label: "Any feature" },
+  { id: "settlement", label: "Settlement" },
+  { id: "landscape", label: "Landscape" },
+  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
+];
+function featurePhrase(feature) {
+  var _a5;
+  const f = (_a5 = FEATURES.find((x) => x.id === feature)) != null ? _a5 : FEATURES[0];
+  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
+}
+function featuresForBiome(biome) {
+  if (!(biome == null ? void 0 : biome.space)) return FEATURES;
+  const rules = COLONIAL_DATA.space;
+  const live5 = COLONIAL_DATA.groups.filter((g) => {
+    var _a5;
+    return g.space ? !g.scale || g.scale === biome.scale : ((_a5 = rules.groups[g.id]) != null ? _a5 : 0) > 0 && (!rules.groupScales[g.id] || rules.groupScales[g.id].includes(biome.scale));
+  }).map((g) => {
+    var _a5;
+    return { id: g.id, label: (_a5 = g.label) != null ? _a5 : g.id };
+  });
+  return [FEATURES[0], FEATURES[1], FEATURES[2], ...live5];
+}
+function featurePhraseFor(feature, biome) {
+  var _a5;
+  const f = (_a5 = featuresForBiome(biome).find((x) => x.id === feature)) != null ? _a5 : FEATURES[0];
+  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
+}
+var UNKNOWN_COUNTRY = "unknown country";
+var SPACE_HEADING_TIP = "Traditions name space as they named new lands: rulers, founders, sponsors, ships and homeland names.";
+var ALIEN_CHOICES = [
+  { id: "off", label: "no alien life" },
+  { id: "on", label: "alien life" }
+];
+function biomePhrase(biome, part = "new-land", custom = []) {
+  var _a5;
+  if (biome == null ? void 0 : biome.startsWith("[[")) {
+    const name = biome.slice(2, -2);
+    const pack = custom.find((b) => {
+      var _a6;
+      return b.label === name || ((_a6 = b.custom) == null ? void 0 : _a6.path) === name;
+    });
+    return (_a5 = pack == null ? void 0 : pack.phrase) != null ? _a5 : name;
+  }
+  const found = biomeCatalogue(custom).find(biome);
+  if (found) return found.phrase;
+  return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
+}
+function terrainPhrase(terrain, custom = []) {
+  var _a5, _b3;
+  const all = [...TERRAIN_CHOICES, ...custom.flatMap((b) => {
+    var _a6;
+    return (_a6 = b.customTerrains) != null ? _a6 : [];
+  }), ...SPACE_BIOMES.flatMap((b) => {
+    var _a6;
+    return (_a6 = b.customTerrains) != null ? _a6 : [];
+  })];
+  return (_b3 = (_a5 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a5.phrase) != null ? _b3 : "any part";
+}
+var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
+var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function regionPhrase(region) {
+  const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() || kebab(x.label) === kebab(region != null ? region : ""));
+  if (!r) return "all of Britain";
+  return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
+}
+function wizardSentenceText(part, settings, custom = []) {
+  var _a5, _b3, _c3, _d3, _e3;
+  const biome = biomeCatalogue(custom).find(settings.biome);
+  const space = !!(biome == null ? void 0 : biome.space) && part !== "organic";
+  const land = space && (!settings.terrain || settings.terrain === "any") ? `all of ${biomePhrase(settings.biome, part, custom)}` : `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
+  if (part === "organic") {
+    const f = (_a5 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a5 : FEATURES[0];
+    return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
+  }
+  const colonialPart = part === "new-land" ? "2" : "2a";
+  const t = (_b3 = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b3 : COLONIAL_TRADITIONS[0];
+  const contexts = contextPhrasesFor(colonialPart, space);
+  const c = ((_c3 = contexts.find(([id]) => id === settings.context)) != null ? _c3 : contexts[0])[1];
+  const lead = part === "new-land" ? `${explorersPhrase(t.id, t.label)} in ${c}` : `${incomersPhrase(t.id, t.label)} who are ${c}`;
+  const life = space ? `, with ${settings.aliens ? "alien life" : "no alien life"}` : "";
+  return `${lead} across ${land}${life}, naming ${space ? featurePhraseFor((_d3 = settings.feature) != null ? _d3 : "any", biome) : featurePhrase((_e3 = settings.feature) != null ? _e3 : "any")}`;
+}
+
+// src/data/lens-offers.json
+var lens_offers_default = {
+  _about: "Generated by `npm run offers` (scripts/make-lens-offers.mjs), never edited by hand. For each family A and B module: which eras, worlds and region views can change its names (one sentence brief \xA75.2).",
+  modules: {
+    routeNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    sacredPlaces: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD",
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    streetNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain"
+        ],
+        IS: [
+          "plain"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    innNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    buildingNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    monumentNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain"
+        ],
+        NF: [
+          "plain"
+        ],
+        IS: [
+          "plain"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    settlementKit: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    seasLakes: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    coastsIslands: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    seaCharts: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    mountainNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    forestNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    desertNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    moorNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    wetlandNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    grasslandNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ]
+    },
+    eventNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain"
+        ],
+        NF: [
+          "plain"
+        ],
+        IS: [
+          "plain"
+        ]
+      }
+    },
+    moneyNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    armsNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    treasureNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    bookNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    deityNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD",
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    calendarNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    skyNames: {
+      family: "A",
+      eras: [
+        [
+          "AN",
+          "MD",
+          "EM",
+          "ST",
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    peoplesTongues: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain"
+        ],
+        MD: [
+          "plain"
+        ],
+        EM: [
+          "plain"
+        ],
+        ST: [
+          "plain"
+        ],
+        MO: [
+          "plain"
+        ],
+        NF: [
+          "plain"
+        ],
+        IS: [
+          "plain"
+        ]
+      }
+    },
+    mysticOrders: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    martialOrders: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    underworldGroups: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    tradeGuilds: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    adventureCompanies: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    powerFactions: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    supernaturalCourts: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ]
+      }
+    },
+    epithets: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    familyNames: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    titles: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    ships: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain"
+        ],
+        "industrial and modern": [
+          "plain"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    spacecraft: {
+      family: "B",
+      eras: [
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "industrial and modern": [
+          "plain"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    aircraft: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    landVehicles: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain",
+          "fantastic"
+        ],
+        "industrial and modern": [
+          "plain",
+          "fantastic"
+        ],
+        future: [
+          "plain"
+        ]
+      }
+    },
+    realms: {
+      family: "B",
+      eras: [
+        "pre-industrial",
+        "industrial and modern",
+        "future"
+      ],
+      worlds: {
+        "pre-industrial": [
+          "plain"
+        ],
+        "industrial and modern": [
+          "plain"
+        ],
+        future: [
+          "plain"
+        ]
+      },
+      eraRuns: [
+        [
+          "ancient"
+        ],
+        [
+          "medieval"
+        ],
+        [
+          "earlyModern"
+        ],
+        [
+          "modern"
+        ],
+        [
+          "nearFuture"
+        ],
+        [
+          "interstellar"
+        ]
+      ]
+    }
+  }
+};
+
+// src/lensRosters.ts
+var ROSTERS = {};
+function registerRoster(roster, cultures) {
+  ROSTERS[roster] = cultures;
+}
+function rosterCultures(roster) {
+  const found = ROSTERS[roster];
+  if (!found) throw new Error(`lens: no culture roster called \u201C${roster}\u201D (its sentence file registers it)`);
+  return found;
+}
+
+// src/lensView.ts
+var RULES = {};
+function registerLensRules(moduleKey, rules) {
+  RULES[moduleKey] = rules;
+}
+var LENS2 = lens_default;
+var OFFERS = lens_offers_default.modules;
+var REGION_TITLE = "Weights the names towards a region's customs";
+var CULTURE_TITLE = "Naming culture: whose customs the names follow";
+var ALL = "all";
+var CELTIC_ANY = "celtic:any";
+var LENS_VIEW_MODULES = Object.keys(LENS2.modules).filter((m) => LENS2.modules[m].sentence.family !== "none");
+var sentence2 = (moduleKey) => {
+  var _a5;
+  const entry = (_a5 = LENS2.modules[moduleKey]) == null ? void 0 : _a5.sentence;
+  if (!entry || entry.family === "none") throw new Error(`lens: \u201C${moduleKey}\u201D has no lens sentence`);
+  return entry;
+};
+var offer = (moduleKey) => {
+  const found = OFFERS[moduleKey];
+  if (!found) throw new Error(`lens: \u201C${moduleKey}\u201D is not in lens-offers.json (run npm run offers)`);
+  return found;
+};
+var eraLabel = (code) => {
+  var _a5, _b3;
+  return (_b3 = (_a5 = LENS_ERAS.find((e) => e.code === code)) == null ? void 0 : _a5.label) != null ? _b3 : code;
+};
+var REALM_ERA_LABELS = { ancient: "ancient", medieval: "medieval", earlyModern: "early modern", modern: "modern", nearFuture: "near future", interstellar: "interstellar" };
+var REALM_ERA_GENRE = { ancient: "fantasy", medieval: "fantasy", earlyModern: "fantasy", modern: "modern", nearFuture: "scifi", interstellar: "scifi" };
+var get = (state, field) => field ? state[field] : void 0;
+var britishKeys = () => LENS_CULTURE_GROUPS.british.cultures;
+function regionShown(entry, state) {
+  const f = entry.fields;
+  if (!(f == null ? void 0 : f.region) || !entry.region) return false;
+  if (!britishKeys().includes(String(get(state, f.culture)))) return false;
+  const requires = entry.region.requires;
+  return !requires || Object.entries(requires).every(([field, value]) => state[field] === value);
+}
+function viewOf(entry, state) {
+  if (!regionShown(entry, state)) return void 0;
+  if (get(state, entry.fields.culture) !== "celtic") return void 0;
+  const region = get(state, entry.fields.region);
+  if (!region) return void 0;
+  return Object.keys(LENS2.views).find((v) => LENS2.views[v].regions.includes(region));
+}
+var viewsOffered = (moduleKey) => {
+  var _a5;
+  return (_a5 = offer(moduleKey).views) != null ? _a5 : [];
+};
+function cultureChoices(moduleKey, entry, current) {
+  var _a5;
+  const roster = new Map(rosterCultures(entry.roster).map((c) => [c.key, c.label]));
+  const views = /* @__PURE__ */ new Set([...viewsOffered(moduleKey), ...LENS2.views[current] ? [current] : []]);
+  const out = [];
+  const placed = /* @__PURE__ */ new Set();
+  for (const block of LENS2.menu) {
+    let first = true;
+    for (const e of block.entries) {
+      let id;
+      let label;
+      if (e.view) {
+        if (!views.has(e.view)) continue;
+        id = e.view;
+        label = LENS2.views[e.view].label;
+      } else if (e.key && roster.has(e.key)) {
+        id = e.key;
+        label = (_a5 = e.label) != null ? _a5 : roster.get(e.key);
+      }
+      if (!id || !label) continue;
+      placed.add(id);
+      out.push({ id, label, ...first && block.heading ? { group: block.heading } : {} });
+      first = false;
+    }
+  }
+  if (LENS2.views[current]) {
+    for (const c of out) if (c.id === "celtic") c.id = CELTIC_ANY;
+  }
+  for (const [key2, label] of roster) if (!placed.has(key2)) out.push({ id: key2, label });
+  if (!out.some((c) => c.id === current)) out.push({ id: current, label: current });
+  return out;
+}
+var regionLabel = (code) => code ? `in ${regionPhrase(code)}` : "across all of Britain";
+var regionChoices = (codes, withAll) => [
+  ...withAll ? [{ id: ALL, label: regionLabel(void 0) }] : [],
+  ...PLACE_SHAPE_REGIONS.filter((r) => codes.includes(r.code)).map((r) => ({ id: r.code, label: regionLabel(r.code), title: r.counties }))
+];
+function regionSegment(moduleKey, entry, state, culture, opts) {
+  var _a5, _b3;
+  if (!regionShown(entry, state)) return void 0;
+  const stored = get(state, entry.fields.region);
+  const title = (_a5 = opts.regionTitle) != null ? _a5 : REGION_TITLE;
+  const view = LENS2.views[culture];
+  if (view && culture !== "scottish") {
+    return { field: "region", text: (_b3 = view.fixedText) != null ? _b3 : regionLabel(view.regions[0]), title, choices: regionChoices(view.regions, false), current: view.regions[0], fixed: true };
+  }
+  if (view) {
+    const codes2 = [...view.regions];
+    const current = stored && codes2.includes(stored) ? stored : view.default;
+    return { field: "region", text: regionLabel(current), title, choices: regionChoices(codes2, false), current };
+  }
+  let codes = PLACE_SHAPE_REGIONS.map((r) => r.code);
+  if (culture === "celtic") {
+    const dropped = new Set(viewsOffered(moduleKey).flatMap((v) => LENS2.views[v].regions));
+    codes = codes.filter((c) => !dropped.has(c) || c === stored);
+  }
+  const choices = regionChoices(codes, true);
+  if (stored && !choices.some((c) => c.id === stored)) choices.push(...regionChoices([stored], false));
+  return { field: "region", text: regionLabel(stored), title, choices, current: stored != null ? stored : ALL };
+}
+var bandOfGenre = (genre) => LENS2.bands.find((b) => b.genre === genre);
+function runLabel(run) {
+  if (run.length === 1) return eraLabel(run[0]);
+  for (const band of LENS2.bands) if (band.eras.length === run.length && band.eras.every((e, i) => run[i] === e)) return band.label;
+  return `${eraLabel(run[0])} to ${eraLabel(run[run.length - 1])}`;
+}
+var runId = (run) => run.join("-");
+var runsOf = (moduleKey) => offer(moduleKey).eras;
+function eraOffered(moduleKey, id) {
+  const entry = sentence2(moduleKey);
+  if (entry.ownEras || entry.family === "B") return true;
+  const codes = id.split("-");
+  return runsOf(moduleKey).some((r) => codes.every((c) => r.includes(c)));
+}
+function eraModel(moduleKey, entry, state) {
+  var _a5, _b3, _c3, _d3;
+  const f = entry.fields;
+  if (entry.ownEras) {
+    const o = offer(moduleKey);
+    const eras = ((_a5 = o.eraRuns) != null ? _a5 : []).map((r) => r[0]);
+    const current = String((_b3 = get(state, f.era)) != null ? _b3 : eras[0]);
+    const choices2 = eras.map((e) => {
+      var _a6;
+      return { id: e, label: (_a6 = REALM_ERA_LABELS[e]) != null ? _a6 : e };
+    });
+    if (!eras.includes(current)) choices2.push({ id: current, label: (_c3 = REALM_ERA_LABELS[current]) != null ? _c3 : current });
+    return { choices: choices2, current };
+  }
+  if (entry.family === "A") {
+    const runs = runsOf(moduleKey);
+    if (runs.length < 2) return void 0;
+    const era = String(get(state, f.era));
+    const run = runs.find((r) => r.includes(era));
+    const choices2 = runs.map((r) => ({ id: runId(r), label: runLabel(r) }));
+    if (!run) choices2.push({ id: era, label: eraLabel(era) });
+    return { choices: choices2, current: run ? runId(run) : era };
+  }
+  const offered = offer(moduleKey).eras.map((k) => LENS2.bands.find((b) => b.key === k)).filter(Boolean);
+  const band = (_d3 = bandOfGenre(get(state, f.genre))) != null ? _d3 : offered[0];
+  const choices = offered.map((b) => ({ id: b.key, label: b.label }));
+  if (!choices.some((c) => c.id === band.key)) choices.push({ id: band.key, label: band.label });
+  return { choices, current: band.key };
+}
+function worldRow(entry, state) {
+  var _a5, _b3;
+  const f = entry.fields;
+  if (entry.family === "B") {
+    const band = (_a5 = bandOfGenre(get(state, f.genre))) != null ? _a5 : LENS2.bands[0];
+    return LENS2.worlds.rows.find((r) => r.key === LENS2.worlds.bandRows[band.key]);
+  }
+  const era = String(get(state, f.era));
+  return (_b3 = LENS2.worlds.rows.find((r) => r.eras.includes(era))) != null ? _b3 : LENS2.worlds.rows[0];
+}
+function offeredWorlds(moduleKey, entry, state) {
+  var _a5, _b3;
+  const f = entry.fields;
+  const o = offer(moduleKey);
+  const key2 = entry.family === "B" ? ((_a5 = bandOfGenre(get(state, f.genre))) != null ? _a5 : LENS2.bands[0]).key : String(get(state, f.era));
+  return (_b3 = o.worlds[key2]) != null ? _b3 : ["plain"];
+}
+var isFutureGenre = (entry, state) => entry.family === "B" && get(state, entry.fields.genre) === "scifi";
+function worldSegment(moduleKey, entry, state) {
+  var _a5, _b3, _c3;
+  const f = entry.fields;
+  if (!f.fantastic) return void 0;
+  const row = worldRow(entry, state);
+  const stored = get(state, f.fantastic) === true ? "fantastic" : "plain";
+  const future = isFutureGenre(entry, state);
+  const current = future ? "plain" : stored;
+  let ids = future ? ["plain"] : offeredWorlds(moduleKey, entry, state);
+  ids = (_c3 = (_b3 = (_a5 = RULES[moduleKey]) == null ? void 0 : _a5.worlds) == null ? void 0 : _b3.call(_a5, state, [...ids])) != null ? _c3 : ids;
+  if (!ids.includes(current)) ids = [...ids, current].sort((a, b) => a === "plain" ? -1 : b === "plain" ? 1 : 0);
+  const choices = ids.map((id) => ({ id, label: row[id].label }));
+  return {
+    field: "world",
+    text: row[current].label,
+    title: LENS2.tooltips.world,
+    choices,
+    current,
+    ...choices.length === 1 ? { fixed: true } : {}
+  };
+}
+function lensClause(moduleKey, state, opts = {}) {
+  var _a5, _b3;
+  const entry = sentence2(moduleKey);
+  const s = state;
+  const f = entry.fields;
+  const out = {};
+  let culture = "";
+  if (f.culture) {
+    culture = (_a5 = viewOf(entry, s)) != null ? _a5 : String(get(s, f.culture));
+    const choices = cultureChoices(moduleKey, entry, culture);
+    out.culture = { field: "culture", text: choices.find((c) => c.id === culture).label, title: (_b3 = opts.cultureTitle) != null ? _b3 : CULTURE_TITLE, choices, current: culture };
+  }
+  if (f.era || f.genre) {
+    const era = eraModel(moduleKey, entry, s);
+    if (era) out.era = { field: "era", text: era.choices.find((c) => c.id === era.current).label, title: LENS2.tooltips.era, choices: era.choices, current: era.current };
+  }
+  const world = worldSegment(moduleKey, entry, s);
+  if (world) out.world = world;
+  if (f.culture) {
+    const region = regionSegment(moduleKey, entry, s, culture, opts);
+    if (region) out.region = region;
+  }
+  return out;
+}
+function put(state, key2, value) {
+  if (state[key2] !== value) state[key2] = value;
+}
+function applyLensChoice(moduleKey, state, field, id) {
+  var _a5;
+  const entry = sentence2(moduleKey);
+  const f = entry.fields;
+  const previous = state;
+  const next = { ...previous };
+  switch (field) {
+    case "culture": {
+      if (!f.culture) break;
+      const before = viewOf(entry, previous);
+      if (id === CELTIC_ANY) {
+        put(next, f.culture, "celtic");
+        if (f.region) put(next, f.region, void 0);
+        break;
+      }
+      const view = LENS2.views[id];
+      if (view) {
+        put(next, f.culture, view.culture);
+        if (f.region) {
+          const stored = previous[f.region];
+          put(next, f.region, stored && view.regions.includes(stored) ? stored : view.default);
+        }
+      } else {
+        put(next, f.culture, id);
+        if (before && f.region && before !== id && id !== get(previous, f.culture)) put(next, f.region, void 0);
+      }
+      break;
+    }
+    case "era": {
+      if (entry.ownEras) {
+        if (f.era && previous[f.era] !== id) {
+          put(next, f.era, id);
+          if (f.genre && REALM_ERA_GENRE[id]) put(next, f.genre, REALM_ERA_GENRE[id]);
+        }
+      } else if (entry.family === "A") {
+        const run = id.split("-");
+        const stored = String(previous[f.era]);
+        put(next, f.era, run.includes(stored) ? stored : run.includes("MD") ? "MD" : run[0]);
+      } else {
+        const band = LENS2.bands.find((b) => b.key === id);
+        if (band && f.genre) put(next, f.genre, band.genre);
+      }
+      break;
+    }
+    case "world": {
+      if (!f.fantastic) break;
+      if (isFutureGenre(entry, previous)) break;
+      put(next, f.fantastic, id === "fantastic");
+      break;
+    }
+    case "region": {
+      if (!f.region) break;
+      put(next, f.region, id === ALL ? void 0 : id);
+      break;
+    }
+  }
+  if (f.region && entry.region && !entry.region.keepWhenHidden && !regionShown(entry, next)) put(next, f.region, void 0);
+  const after = (_a5 = RULES[moduleKey]) == null ? void 0 : _a5.after;
+  return after ? after(previous, next, field, id) : next;
+}
+
+// src/lensSentence.ts
+function asSegment(segment2, field) {
+  return {
+    field,
+    text: segment2.text,
+    title: segment2.title,
+    choices: segment2.choices.map((c) => ({ id: c.id, label: c.label, ...c.title ? { title: c.title } : {}, ...c.group ? { group: c.group, heading: c.group } : {} })),
+    current: segment2.current,
+    ...segment2.fixed ? { fixed: true } : {}
+  };
+}
+function eraWorldSegments(clause, eraField, worldField) {
+  const out = [];
+  if (clause.era) out.push(" of the ", asSegment(clause.era, eraField), " era");
+  if (clause.world) out.push(clause.era ? ", in a " : " in a ", asSegment(clause.world, worldField), " world");
+  return out;
+}
+function chooseLens(moduleKey, state, field, id, fallback) {
+  if (field === "region") return applyLensChoice(moduleKey, state, "region", id != null ? id : "all");
+  if (id === void 0) {
+    if (field !== "era" || fallback === void 0) return state;
+    id = fallback;
+  }
+  if (field === "era" && !eraOffered(moduleKey, id) && fallback !== void 0) id = fallback;
+  if (field === "fantastic") return applyLensChoice(moduleKey, state, "world", id === "on" ? "fantastic" : id === "off" ? "plain" : id);
+  return applyLensChoice(moduleKey, state, field, id);
+}
+
 // src/groups/sentence.ts
 var DEFAULT_GROUP_STATE = {
   tradition: "general",
@@ -68370,11 +70534,6 @@ var DEFAULT_GROUP_STATE = {
   series: false,
   commodity: "any",
   scale: "any"
-};
-var GENRE_TEXT = { fantasy: "fantasy", modern: "modern", scifi: "science fiction" };
-var FANTASTIC_TEXT = {
-  fantasy: ["of historic or low fantasy", "of high or epic fantasy"],
-  modern: ["as it really is", "of contemporary fantasy"]
 };
 var FORM_TEXT = { any: "formal or everyday", formal: "formal", everyday: "everyday" };
 var FRONT_TEXT = { say: "that say what they are", hide: "that hide what they are", may: "that may hide what they are" };
@@ -68396,7 +70555,10 @@ function showsCommodity(state, family) {
 function effectiveCommodity(state, family) {
   return showsCommodity(state, family) ? state.commodity : "any";
 }
-var genresFor = (family) => family.key === "supernatural" ? ["fantasy", "modern"] : ["fantasy", "modern", "scifi"];
+registerLensRules("supernaturalCourts", {
+  worlds: (state, ids) => state.genre === "modern" ? ids.filter((id) => id === "fantastic") : ids,
+  after: (_previous, next, field) => field === "era" && next.genre === "modern" && next.fantastic !== true ? { ...next, fantastic: true } : next
+});
 function groupSentence(state, family) {
   var _a5, _b3;
   const out = [];
@@ -68430,16 +70592,9 @@ function groupSentence(state, family) {
       choices: [{ id: "any", label: "anything" }, ...groups.map((c) => ({ id: c.key, label: c.label }))],
       current: group ? group.key : "any"
     });
+    out.push(",");
   }
-  out.push(" for a ");
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: genresFor(family).map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre
-  });
-  out.push(" world");
+  out.push(...eraWorldSegments(lensClause(family.section, state), "era", "fantastic"));
   if (state.genre === "scifi") {
     const scale = (_b3 = state.scale) != null ? _b3 : "any";
     out.push(" at ");
@@ -68449,18 +70604,6 @@ function groupSentence(state, family) {
       title: scaleInfo(scale).tooltip,
       choices: scalesFor(void 0).map((c) => ({ id: c, label: scaleInfo(c).label })),
       current: scale
-    });
-  }
-  if (state.genre !== "scifi") {
-    const phrases = FANTASTIC_TEXT[state.genre];
-    const offered = family.key === "supernatural" && state.genre === "modern" ? [true] : [false, true];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: offered.map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off"
     });
   }
   out.push(", using ");
@@ -68523,12 +70666,15 @@ function chooseGroup(state, field, id, family) {
     case "type":
       next.type = id;
       break;
+    case "era":
+      next = chooseLens(family.section, next, "era", id);
+      break;
     case "genre":
       next.genre = id != null ? id : "fantasy";
       if (family.key === "supernatural" && next.genre === "modern") next.fantastic = true;
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(family.section, next, "fantastic", id);
       break;
     case "form":
       next.form = id != null ? id : "any";
@@ -76067,6 +78213,7 @@ function bynameHistoryLabel(module2, genre, fantastic, culture, tone = "any", la
 }
 
 // src/bynames/sentence.ts
+registerRoster("byname", BYNAME_CULTURES);
 var DEFAULT_BYNAME_STATE = {
   culture: "general",
   genre: "fantasy",
@@ -76104,13 +78251,8 @@ function bynameSentence(state, module2, packs = []) {
   var _a5, _b3, _c3, _d3, _e3;
   const out = [];
   const culture = (_a5 = BYNAME_CULTURES.find((c) => c.key === state.culture)) != null ? _a5 : BYNAME_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: which customs the names follow",
-    choices: BYNAME_CULTURES.map((c) => ({ id: c.key, label: c.label })),
-    current: culture.key
-  });
+  const lens = lensClause(module2, state, { cultureTitle: "Naming culture: which customs the names follow" });
+  out.push(asSegment(lens.culture, "culture"));
   out.push("-themed ");
   const setting = groupSetting(state.genre, state.fantastic);
   const kinds = availableKinds(module2, culture.key, setting);
@@ -76122,26 +78264,7 @@ function bynameSentence(state, module2, packs = []) {
     choices: [{ id: void 0, label: "Any" }, ...kinds.map((k) => ({ id: k.kind.key, label: k.kind.menu }))],
     current: kind == null ? void 0 : kind.key
   });
-  out.push(" for a ");
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: ["fantasy", "modern", "scifi"].map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre
-  });
-  out.push(" world");
-  if (state.genre !== "scifi") {
-    const phrases = FANTASTIC_TEXT[state.genre];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off"
-    });
-  }
+  out.push(...eraWorldSegments(lens, "era", "fantastic"));
   out.push(", ");
   out.push({
     field: "tone",
@@ -76221,17 +78344,20 @@ function chooseByname(state, field, id, module2) {
   let next = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id != null ? id : "general";
+      next = chooseLens(module2, next, "culture", id != null ? id : "general");
       if (next.culture === "general") next.language = "english";
       break;
     case "kind":
       next.kind = id;
       break;
+    case "era":
+      next = chooseLens(module2, next, "era", id);
+      break;
     case "genre":
       next.genre = id != null ? id : "fantasy";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(module2, next, "fantastic", id);
       break;
     case "tone":
       next.tone = id != null ? id : "any";
@@ -102549,2170 +104675,6 @@ function realmRowsWithPeoples(names, seed, options) {
   });
 }
 
-// src/lensRosters.ts
-var ROSTERS = {};
-function registerRoster(roster, cultures) {
-  ROSTERS[roster] = cultures;
-}
-function rosterCultures(roster) {
-  const found = ROSTERS[roster];
-  if (!found) throw new Error(`lens: no culture roster called \u201C${roster}\u201D (its sentence file registers it)`);
-  return found;
-}
-
-// src/colonialWording.ts
-var CONTEXT_PHRASES = {
-  "2": [
-    ["wild-and-unsettled", "wild and unsettled lands"],
-    ["sparse-or-weak-native-presence", "lands with a sparse, or weak, native presence"],
-    ["contested-frontier", "a contested frontier"]
-  ],
-  "2a": [
-    ["imposition", "ruling over the locals"],
-    ["accommodation", "living alongside the locals"],
-    ["adoption", "settling in amongst the locals"]
-  ]
-};
-var SPACE_CONTEXT_PHRASES = {
-  "2": [
-    ["wild-and-unsettled", "wild and unsettled space"],
-    ["sparse-or-weak-native-presence", "space with a sparse, or weak, native presence"],
-    ["contested-frontier", "a contested frontier"]
-  ],
-  "2a": CONTEXT_PHRASES["2a"]
-};
-var contextPhrasesFor = (part, space) => (space ? SPACE_CONTEXT_PHRASES : CONTEXT_PHRASES)[part];
-function generalTraditionLabel(part) {
-  return part === "2" ? "General explorers" : "General incomers";
-}
-function traditionLabel(part, id, label) {
-  return id === "general" ? generalTraditionLabel(part) : label;
-}
-function partsNote(parts) {
-  if (parts.length === 2) return "exploration and expansion";
-  return parts[0] === "2" ? "exploration only" : "expansion only";
-}
-
-// src/colonialSentence.ts
-function incomersPhrase(id, label) {
-  if (id === "general") return "General incomers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+Imperial$/, "").trim()}-themed incomers`;
-}
-function explorersPhrase(id, label) {
-  if (id === "general") return "General explorers";
-  return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
-}
-var FEATURES = [
-  { id: "any", label: "Any feature" },
-  { id: "settlement", label: "Settlement" },
-  { id: "landscape", label: "Landscape" },
-  ...PLACE_SHAPE_DATA.groups.map((g) => ({ id: g.id, label: g.label }))
-];
-function featurePhrase(feature) {
-  var _a5;
-  const f = (_a5 = FEATURES.find((x) => x.id === feature)) != null ? _a5 : FEATURES[0];
-  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
-}
-function featuresForBiome(biome) {
-  if (!(biome == null ? void 0 : biome.space)) return FEATURES;
-  const rules = COLONIAL_DATA.space;
-  const live5 = COLONIAL_DATA.groups.filter((g) => {
-    var _a5;
-    return g.space ? !g.scale || g.scale === biome.scale : ((_a5 = rules.groups[g.id]) != null ? _a5 : 0) > 0 && (!rules.groupScales[g.id] || rules.groupScales[g.id].includes(biome.scale));
-  }).map((g) => {
-    var _a5;
-    return { id: g.id, label: (_a5 = g.label) != null ? _a5 : g.id };
-  });
-  return [FEATURES[0], FEATURES[1], FEATURES[2], ...live5];
-}
-function featurePhraseFor(feature, biome) {
-  var _a5;
-  const f = (_a5 = featuresForBiome(biome).find((x) => x.id === feature)) != null ? _a5 : FEATURES[0];
-  return f.label.charAt(0).toLowerCase() + f.label.slice(1);
-}
-var UNKNOWN_COUNTRY = "unknown country";
-var SPACE_HEADING_TIP = "Traditions name space as they named new lands: rulers, founders, sponsors, ships and homeland names.";
-var ALIEN_CHOICES = [
-  { id: "off", label: "no alien life" },
-  { id: "on", label: "alien life" }
-];
-function biomePhrase(biome, part = "new-land", custom = []) {
-  var _a5;
-  if (biome == null ? void 0 : biome.startsWith("[[")) {
-    const name = biome.slice(2, -2);
-    const pack = custom.find((b) => {
-      var _a6;
-      return b.label === name || ((_a6 = b.custom) == null ? void 0 : _a6.path) === name;
-    });
-    return (_a5 = pack == null ? void 0 : pack.phrase) != null ? _a5 : name;
-  }
-  const found = biomeCatalogue(custom).find(biome);
-  if (found) return found.phrase;
-  return part === "organic" ? BRITAIN.phrase : UNKNOWN_COUNTRY;
-}
-function terrainPhrase(terrain, custom = []) {
-  var _a5, _b3;
-  const all = [...TERRAIN_CHOICES, ...custom.flatMap((b) => {
-    var _a6;
-    return (_a6 = b.customTerrains) != null ? _a6 : [];
-  }), ...SPACE_BIOMES.flatMap((b) => {
-    var _a6;
-    return (_a6 = b.customTerrains) != null ? _a6 : [];
-  })];
-  return (_b3 = (_a5 = all.find((t) => t.id === (terrain || "any"))) == null ? void 0 : _a5.phrase) != null ? _b3 : "any part";
-}
-var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
-var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-function regionPhrase(region) {
-  const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() || kebab(x.label) === kebab(region != null ? region : ""));
-  if (!r) return "all of Britain";
-  return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
-}
-function wizardSentenceText(part, settings, custom = []) {
-  var _a5, _b3, _c3, _d3, _e3;
-  const biome = biomeCatalogue(custom).find(settings.biome);
-  const space = !!(biome == null ? void 0 : biome.space) && part !== "organic";
-  const land = space && (!settings.terrain || settings.terrain === "any") ? `all of ${biomePhrase(settings.biome, part, custom)}` : `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
-  if (part === "organic") {
-    const f = (_a5 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a5 : FEATURES[0];
-    return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
-  }
-  const colonialPart = part === "new-land" ? "2" : "2a";
-  const t = (_b3 = COLONIAL_TRADITIONS.find((x) => x.id === settings.tradition)) != null ? _b3 : COLONIAL_TRADITIONS[0];
-  const contexts = contextPhrasesFor(colonialPart, space);
-  const c = ((_c3 = contexts.find(([id]) => id === settings.context)) != null ? _c3 : contexts[0])[1];
-  const lead = part === "new-land" ? `${explorersPhrase(t.id, t.label)} in ${c}` : `${incomersPhrase(t.id, t.label)} who are ${c}`;
-  const life = space ? `, with ${settings.aliens ? "alien life" : "no alien life"}` : "";
-  return `${lead} across ${land}${life}, naming ${space ? featurePhraseFor((_d3 = settings.feature) != null ? _d3 : "any", biome) : featurePhrase((_e3 = settings.feature) != null ? _e3 : "any")}`;
-}
-
-// src/data/lens-offers.json
-var lens_offers_default = {
-  _about: "Generated by `npm run offers` (scripts/make-lens-offers.mjs), never edited by hand. For each family A and B module: which eras, worlds and region views can change its names (one sentence brief \xA75.2).",
-  modules: {
-    routeNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    sacredPlaces: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD",
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    streetNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain"
-        ],
-        IS: [
-          "plain"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    innNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    buildingNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    monumentNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain"
-        ],
-        NF: [
-          "plain"
-        ],
-        IS: [
-          "plain"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    settlementKit: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    seasLakes: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    coastsIslands: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    seaCharts: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    mountainNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    forestNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    desertNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    moorNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    wetlandNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    grasslandNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
-    },
-    eventNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain"
-        ],
-        NF: [
-          "plain"
-        ],
-        IS: [
-          "plain"
-        ]
-      }
-    },
-    moneyNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF"
-        ],
-        [
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    armsNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    treasureNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    bookNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    deityNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD",
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    calendarNames: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM"
-        ],
-        [
-          "ST"
-        ],
-        [
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    skyNames: {
-      family: "A",
-      eras: [
-        [
-          "AN",
-          "MD",
-          "EM",
-          "ST",
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain",
-          "fantastic"
-        ],
-        MD: [
-          "plain",
-          "fantastic"
-        ],
-        EM: [
-          "plain",
-          "fantastic"
-        ],
-        ST: [
-          "plain",
-          "fantastic"
-        ],
-        MO: [
-          "plain",
-          "fantastic"
-        ],
-        NF: [
-          "plain",
-          "fantastic"
-        ],
-        IS: [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    peoplesTongues: {
-      family: "A",
-      eras: [
-        [
-          "AN"
-        ],
-        [
-          "MD"
-        ],
-        [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        [
-          "NF",
-          "IS"
-        ]
-      ],
-      worlds: {
-        AN: [
-          "plain"
-        ],
-        MD: [
-          "plain"
-        ],
-        EM: [
-          "plain"
-        ],
-        ST: [
-          "plain"
-        ],
-        MO: [
-          "plain"
-        ],
-        NF: [
-          "plain"
-        ],
-        IS: [
-          "plain"
-        ]
-      }
-    },
-    mysticOrders: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    martialOrders: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    underworldGroups: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    tradeGuilds: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    adventureCompanies: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    powerFactions: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    supernaturalCourts: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ]
-      }
-    },
-    epithets: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    familyNames: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    titles: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    ships: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain"
-        ],
-        "industrial and modern": [
-          "plain"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    spacecraft: {
-      family: "B",
-      eras: [
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "industrial and modern": [
-          "plain"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    aircraft: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    landVehicles: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain",
-          "fantastic"
-        ],
-        "industrial and modern": [
-          "plain",
-          "fantastic"
-        ],
-        future: [
-          "plain"
-        ]
-      }
-    },
-    realms: {
-      family: "B",
-      eras: [
-        "pre-industrial",
-        "industrial and modern",
-        "future"
-      ],
-      worlds: {
-        "pre-industrial": [
-          "plain"
-        ],
-        "industrial and modern": [
-          "plain"
-        ],
-        future: [
-          "plain"
-        ]
-      },
-      eraRuns: [
-        [
-          "ancient"
-        ],
-        [
-          "medieval"
-        ],
-        [
-          "earlyModern"
-        ],
-        [
-          "modern"
-        ],
-        [
-          "nearFuture"
-        ],
-        [
-          "interstellar"
-        ]
-      ]
-    }
-  }
-};
-
-// src/lensView.ts
-var RULES = {};
-function registerLensRules(moduleKey, rules) {
-  RULES[moduleKey] = rules;
-}
-var LENS2 = lens_default;
-var OFFERS = lens_offers_default.modules;
-var REGION_TITLE = "Weights the names towards a region's customs";
-var CULTURE_TITLE = "Naming culture: whose customs the names follow";
-var ALL = "all";
-var CELTIC_ANY = "celtic:any";
-var LENS_VIEW_MODULES = Object.keys(LENS2.modules).filter((m) => LENS2.modules[m].sentence.family !== "none");
-var sentence2 = (moduleKey) => {
-  var _a5;
-  const entry = (_a5 = LENS2.modules[moduleKey]) == null ? void 0 : _a5.sentence;
-  if (!entry || entry.family === "none") throw new Error(`lens: \u201C${moduleKey}\u201D has no lens sentence`);
-  return entry;
-};
-var offer = (moduleKey) => {
-  const found = OFFERS[moduleKey];
-  if (!found) throw new Error(`lens: \u201C${moduleKey}\u201D is not in lens-offers.json (run npm run offers)`);
-  return found;
-};
-var eraLabel = (code) => {
-  var _a5, _b3;
-  return (_b3 = (_a5 = LENS_ERAS.find((e) => e.code === code)) == null ? void 0 : _a5.label) != null ? _b3 : code;
-};
-var REALM_ERA_LABELS = { ancient: "ancient", medieval: "medieval", earlyModern: "early modern", modern: "modern", nearFuture: "near future", interstellar: "interstellar" };
-var REALM_ERA_GENRE = { ancient: "fantasy", medieval: "fantasy", earlyModern: "fantasy", modern: "modern", nearFuture: "scifi", interstellar: "scifi" };
-var get = (state, field) => field ? state[field] : void 0;
-var britishKeys = () => LENS_CULTURE_GROUPS.british.cultures;
-function regionShown(entry, state) {
-  const f = entry.fields;
-  if (!(f == null ? void 0 : f.region) || !entry.region) return false;
-  if (!britishKeys().includes(String(get(state, f.culture)))) return false;
-  const requires = entry.region.requires;
-  return !requires || Object.entries(requires).every(([field, value]) => state[field] === value);
-}
-function viewOf(entry, state) {
-  if (!regionShown(entry, state)) return void 0;
-  if (get(state, entry.fields.culture) !== "celtic") return void 0;
-  const region = get(state, entry.fields.region);
-  if (!region) return void 0;
-  return Object.keys(LENS2.views).find((v) => LENS2.views[v].regions.includes(region));
-}
-var viewsOffered = (moduleKey) => {
-  var _a5;
-  return (_a5 = offer(moduleKey).views) != null ? _a5 : [];
-};
-function cultureChoices(moduleKey, entry, current) {
-  var _a5;
-  const roster = new Map(rosterCultures(entry.roster).map((c) => [c.key, c.label]));
-  const views = /* @__PURE__ */ new Set([...viewsOffered(moduleKey), ...LENS2.views[current] ? [current] : []]);
-  const out = [];
-  const placed = /* @__PURE__ */ new Set();
-  for (const block of LENS2.menu) {
-    let first = true;
-    for (const e of block.entries) {
-      let id;
-      let label;
-      if (e.view) {
-        if (!views.has(e.view)) continue;
-        id = e.view;
-        label = LENS2.views[e.view].label;
-      } else if (e.key && roster.has(e.key)) {
-        id = e.key;
-        label = (_a5 = e.label) != null ? _a5 : roster.get(e.key);
-      }
-      if (!id || !label) continue;
-      placed.add(id);
-      out.push({ id, label, ...first && block.heading ? { group: block.heading } : {} });
-      first = false;
-    }
-  }
-  if (LENS2.views[current]) {
-    for (const c of out) if (c.id === "celtic") c.id = CELTIC_ANY;
-  }
-  for (const [key2, label] of roster) if (!placed.has(key2)) out.push({ id: key2, label });
-  if (!out.some((c) => c.id === current)) out.push({ id: current, label: current });
-  return out;
-}
-var regionLabel = (code) => code ? `in ${regionPhrase(code)}` : "across all of Britain";
-var regionChoices = (codes, withAll) => [
-  ...withAll ? [{ id: ALL, label: regionLabel(void 0) }] : [],
-  ...PLACE_SHAPE_REGIONS.filter((r) => codes.includes(r.code)).map((r) => ({ id: r.code, label: regionLabel(r.code), title: r.counties }))
-];
-function regionSegment(moduleKey, entry, state, culture, opts) {
-  var _a5, _b3;
-  if (!regionShown(entry, state)) return void 0;
-  const stored = get(state, entry.fields.region);
-  const title = (_a5 = opts.regionTitle) != null ? _a5 : REGION_TITLE;
-  const view = LENS2.views[culture];
-  if (view && culture !== "scottish") {
-    return { field: "region", text: (_b3 = view.fixedText) != null ? _b3 : regionLabel(view.regions[0]), title, choices: regionChoices(view.regions, false), current: view.regions[0], fixed: true };
-  }
-  if (view) {
-    const codes2 = [...view.regions];
-    const current = stored && codes2.includes(stored) ? stored : view.default;
-    return { field: "region", text: regionLabel(current), title, choices: regionChoices(codes2, false), current };
-  }
-  let codes = PLACE_SHAPE_REGIONS.map((r) => r.code);
-  if (culture === "celtic") {
-    const dropped = new Set(viewsOffered(moduleKey).flatMap((v) => LENS2.views[v].regions));
-    codes = codes.filter((c) => !dropped.has(c) || c === stored);
-  }
-  const choices = regionChoices(codes, true);
-  if (stored && !choices.some((c) => c.id === stored)) choices.push(...regionChoices([stored], false));
-  return { field: "region", text: regionLabel(stored), title, choices, current: stored != null ? stored : ALL };
-}
-var bandOfGenre = (genre) => LENS2.bands.find((b) => b.genre === genre);
-function runLabel(run) {
-  if (run.length === 1) return eraLabel(run[0]);
-  for (const band of LENS2.bands) if (band.eras.length === run.length && band.eras.every((e, i) => run[i] === e)) return band.label;
-  return `${eraLabel(run[0])} to ${eraLabel(run[run.length - 1])}`;
-}
-var runId = (run) => run.join("-");
-var runsOf = (moduleKey) => offer(moduleKey).eras;
-function eraOffered(moduleKey, id) {
-  const entry = sentence2(moduleKey);
-  if (entry.ownEras || entry.family === "B") return true;
-  const codes = id.split("-");
-  return runsOf(moduleKey).some((r) => codes.every((c) => r.includes(c)));
-}
-function eraModel(moduleKey, entry, state) {
-  var _a5, _b3, _c3, _d3;
-  const f = entry.fields;
-  if (entry.ownEras) {
-    const o = offer(moduleKey);
-    const eras = ((_a5 = o.eraRuns) != null ? _a5 : []).map((r) => r[0]);
-    const current = String((_b3 = get(state, f.era)) != null ? _b3 : eras[0]);
-    const choices2 = eras.map((e) => {
-      var _a6;
-      return { id: e, label: (_a6 = REALM_ERA_LABELS[e]) != null ? _a6 : e };
-    });
-    if (!eras.includes(current)) choices2.push({ id: current, label: (_c3 = REALM_ERA_LABELS[current]) != null ? _c3 : current });
-    return { choices: choices2, current };
-  }
-  if (entry.family === "A") {
-    const runs = runsOf(moduleKey);
-    if (runs.length < 2) return void 0;
-    const era = String(get(state, f.era));
-    const run = runs.find((r) => r.includes(era));
-    const choices2 = runs.map((r) => ({ id: runId(r), label: runLabel(r) }));
-    if (!run) choices2.push({ id: era, label: eraLabel(era) });
-    return { choices: choices2, current: run ? runId(run) : era };
-  }
-  const offered = offer(moduleKey).eras.map((k) => LENS2.bands.find((b) => b.key === k)).filter(Boolean);
-  const band = (_d3 = bandOfGenre(get(state, f.genre))) != null ? _d3 : offered[0];
-  const choices = offered.map((b) => ({ id: b.key, label: b.label }));
-  if (!choices.some((c) => c.id === band.key)) choices.push({ id: band.key, label: band.label });
-  return { choices, current: band.key };
-}
-function worldRow(entry, state) {
-  var _a5, _b3;
-  const f = entry.fields;
-  if (entry.family === "B") {
-    const band = (_a5 = bandOfGenre(get(state, f.genre))) != null ? _a5 : LENS2.bands[0];
-    return LENS2.worlds.rows.find((r) => r.key === LENS2.worlds.bandRows[band.key]);
-  }
-  const era = String(get(state, f.era));
-  return (_b3 = LENS2.worlds.rows.find((r) => r.eras.includes(era))) != null ? _b3 : LENS2.worlds.rows[0];
-}
-function offeredWorlds(moduleKey, entry, state) {
-  var _a5, _b3;
-  const f = entry.fields;
-  const o = offer(moduleKey);
-  const key2 = entry.family === "B" ? ((_a5 = bandOfGenre(get(state, f.genre))) != null ? _a5 : LENS2.bands[0]).key : String(get(state, f.era));
-  return (_b3 = o.worlds[key2]) != null ? _b3 : ["plain"];
-}
-var isFutureGenre = (entry, state) => entry.family === "B" && get(state, entry.fields.genre) === "scifi";
-function worldSegment(moduleKey, entry, state) {
-  var _a5, _b3, _c3;
-  const f = entry.fields;
-  if (!f.fantastic) return void 0;
-  const row = worldRow(entry, state);
-  const stored = get(state, f.fantastic) === true ? "fantastic" : "plain";
-  const future = isFutureGenre(entry, state);
-  const current = future ? "plain" : stored;
-  let ids = future ? ["plain"] : offeredWorlds(moduleKey, entry, state);
-  ids = (_c3 = (_b3 = (_a5 = RULES[moduleKey]) == null ? void 0 : _a5.worlds) == null ? void 0 : _b3.call(_a5, state, [...ids])) != null ? _c3 : ids;
-  if (!ids.includes(current)) ids = [...ids, current].sort((a, b) => a === "plain" ? -1 : b === "plain" ? 1 : 0);
-  const choices = ids.map((id) => ({ id, label: row[id].label }));
-  return {
-    field: "world",
-    text: row[current].label,
-    title: LENS2.tooltips.world,
-    choices,
-    current,
-    ...choices.length === 1 ? { fixed: true } : {}
-  };
-}
-function lensClause(moduleKey, state, opts = {}) {
-  var _a5, _b3;
-  const entry = sentence2(moduleKey);
-  const s = state;
-  const f = entry.fields;
-  const out = {};
-  let culture = "";
-  if (f.culture) {
-    culture = (_a5 = viewOf(entry, s)) != null ? _a5 : String(get(s, f.culture));
-    const choices = cultureChoices(moduleKey, entry, culture);
-    out.culture = { field: "culture", text: choices.find((c) => c.id === culture).label, title: (_b3 = opts.cultureTitle) != null ? _b3 : CULTURE_TITLE, choices, current: culture };
-  }
-  if (f.era || f.genre) {
-    const era = eraModel(moduleKey, entry, s);
-    if (era) out.era = { field: "era", text: era.choices.find((c) => c.id === era.current).label, title: LENS2.tooltips.era, choices: era.choices, current: era.current };
-  }
-  const world = worldSegment(moduleKey, entry, s);
-  if (world) out.world = world;
-  if (f.culture) {
-    const region = regionSegment(moduleKey, entry, s, culture, opts);
-    if (region) out.region = region;
-  }
-  return out;
-}
-function put(state, key2, value) {
-  if (state[key2] !== value) state[key2] = value;
-}
-function applyLensChoice(moduleKey, state, field, id) {
-  var _a5;
-  const entry = sentence2(moduleKey);
-  const f = entry.fields;
-  const previous = state;
-  const next = { ...previous };
-  switch (field) {
-    case "culture": {
-      if (!f.culture) break;
-      const before = viewOf(entry, previous);
-      if (id === CELTIC_ANY) {
-        put(next, f.culture, "celtic");
-        if (f.region) put(next, f.region, void 0);
-        break;
-      }
-      const view = LENS2.views[id];
-      if (view) {
-        put(next, f.culture, view.culture);
-        if (f.region) {
-          const stored = previous[f.region];
-          put(next, f.region, stored && view.regions.includes(stored) ? stored : view.default);
-        }
-      } else {
-        put(next, f.culture, id);
-        if (before && f.region && before !== id && id !== get(previous, f.culture)) put(next, f.region, void 0);
-      }
-      break;
-    }
-    case "era": {
-      if (entry.ownEras) {
-        if (f.era && previous[f.era] !== id) {
-          put(next, f.era, id);
-          if (f.genre && REALM_ERA_GENRE[id]) put(next, f.genre, REALM_ERA_GENRE[id]);
-        }
-      } else if (entry.family === "A") {
-        const run = id.split("-");
-        const stored = String(previous[f.era]);
-        put(next, f.era, run.includes(stored) ? stored : run.includes("MD") ? "MD" : run[0]);
-      } else {
-        const band = LENS2.bands.find((b) => b.key === id);
-        if (band && f.genre) put(next, f.genre, band.genre);
-      }
-      break;
-    }
-    case "world": {
-      if (!f.fantastic) break;
-      if (isFutureGenre(entry, previous)) break;
-      put(next, f.fantastic, id === "fantastic");
-      break;
-    }
-    case "region": {
-      if (!f.region) break;
-      put(next, f.region, id === ALL ? void 0 : id);
-      break;
-    }
-  }
-  if (f.region && entry.region && !entry.region.keepWhenHidden && !regionShown(entry, next)) put(next, f.region, void 0);
-  const after = (_a5 = RULES[moduleKey]) == null ? void 0 : _a5.after;
-  return after ? after(previous, next, field, id) : next;
-}
-
-// src/lensSentence.ts
-function asSegment(segment2, field) {
-  return {
-    field,
-    text: segment2.text,
-    title: segment2.title,
-    choices: segment2.choices.map((c) => ({ id: c.id, label: c.label, ...c.title ? { title: c.title } : {}, ...c.group ? { group: c.group, heading: c.group } : {} })),
-    current: segment2.current,
-    ...segment2.fixed ? { fixed: true } : {}
-  };
-}
-function eraWorldSegments(clause, eraField, worldField) {
-  const out = [];
-  if (clause.era) out.push(" of the ", asSegment(clause.era, eraField), " era");
-  if (clause.world) out.push(clause.era ? ", in a " : " in a ", asSegment(clause.world, worldField), " world");
-  return out;
-}
-function chooseLens(moduleKey, state, field, id, fallback) {
-  if (field === "region") return applyLensChoice(moduleKey, state, "region", id != null ? id : "all");
-  if (id === void 0) {
-    if (field !== "era" || fallback === void 0) return state;
-    id = fallback;
-  }
-  if (field === "era" && !eraOffered(moduleKey, id) && fallback !== void 0) id = fallback;
-  if (field === "fantastic") return applyLensChoice(moduleKey, state, "world", id === "on" ? "fantastic" : id === "off" ? "plain" : id);
-  return applyLensChoice(moduleKey, state, field, id);
-}
-
 // src/routes/sentence.ts
 registerRoster("route", ROUTE_CULTURES);
 var DEFAULT_ROUTE_STATE = {
@@ -110225,6 +110187,7 @@ function peopleHistory(state) {
 }
 
 // src/realms/sentence.ts
+registerRoster("realm", REALM_CULTURES);
 var DEFAULT_REALM_STATE = {
   culture: "general",
   era: "medieval",
@@ -110241,16 +110204,10 @@ var OUTPUT_TEXT = { official: "official names", short: "short names", both: "off
 var PEOPLE_TEXT4 = { placeholders: "placeholders for", invented: "invented" };
 var showsLand = (state) => state.namedFor === "anything" || state.namedFor === "land";
 function realmSentence(state, limits) {
-  var _a5, _b3, _c3, _d3;
+  var _a5, _b3;
   const out = [];
-  const culture = (_a5 = REALM_CULTURES.find((c) => c.key === state.culture)) != null ? _a5 : REALM_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Which customs and forms of government",
-    choices: REALM_CULTURES.map((c) => ({ id: c.key, label: c.label })),
-    current: culture.key
-  });
+  const lens = lensClause("realms", state, { cultureTitle: "Which customs and forms of government" });
+  out.push(asSegment(lens.culture, "culture"));
   out.push("-themed ");
   const character = REALM_CHARACTERS.find((c) => c.key === state.character);
   out.push({
@@ -110260,38 +110217,9 @@ function realmSentence(state, limits) {
     choices: [{ id: void 0, label: "Any" }, ...REALM_CHARACTERS.map((c) => ({ id: c.key, label: c.menu }))],
     current: character == null ? void 0 : character.key
   });
-  out.push(" of the ");
-  const era = (_b3 = REALM_ERAS.find((e) => e.key === state.era)) != null ? _b3 : REALM_ERAS[1];
-  out.push({
-    field: "era",
-    text: era.label,
-    title: "Which forms of government are common: any culture can have any era",
-    choices: REALM_ERAS.map((e) => ({ id: e.key, label: e.label })),
-    current: era.key
-  });
-  out.push(" era, for a ");
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: ["fantasy", "modern", "scifi"].map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre
-  });
-  out.push(" world");
-  if (state.genre !== "scifi") {
-    const setting = groupSetting(state.genre, state.fantastic);
-    const phrases = FANTASTIC_TEXT[state.genre];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off"
-    });
-  }
+  out.push(...eraWorldSegments(lens, "era", "fantastic"));
   out.push(", named for ");
-  const nf = (_c3 = REALM_NAMED_FOR.find((n) => n.key === state.namedFor)) != null ? _c3 : REALM_NAMED_FOR[0];
+  const nf = (_a5 = REALM_NAMED_FOR.find((n) => n.key === state.namedFor)) != null ? _a5 : REALM_NAMED_FOR[0];
   out.push({
     field: "namedFor",
     text: nf.label,
@@ -110311,7 +110239,7 @@ function realmSentence(state, limits) {
         ...biomeMenuItems(limits.biomes, (b) => b.label),
         // Stellar brief §7.1: in the near future and interstellar eras, the space biomes under a Space heading
         // (the near future offers only the planetary system and the star system).
-        ...(state.era === "nearFuture" || state.era === "interstellar" ? ((_d3 = limits.spaceBiomes) != null ? _d3 : SPACE_BIOMES).filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({
+        ...(state.era === "nearFuture" || state.era === "interstellar" ? ((_b3 = limits.spaceBiomes) != null ? _b3 : SPACE_BIOMES).filter((b) => state.era === "interstellar" || b.scale === "Pl" || b.scale === "Sy") : []).map((b, i) => ({
           id: b.id,
           label: b.label,
           title: b.guide,
@@ -110387,16 +110315,16 @@ function realmSentenceText(segments) {
   return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 }
 function chooseRealm(state, field, id, findBiome2) {
-  const next = { ...state };
+  let next = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id != null ? id : "general";
+      next = chooseLens("realms", next, "culture", id != null ? id : "general");
       break;
     case "character":
       next.character = id;
       break;
     case "era": {
-      next.era = id != null ? id : "medieval";
+      next = chooseLens("realms", next, "era", id, "medieval");
       if (next.namedFor === "stars" && !namedForOffered("stars", next.era)) next.namedFor = "anything";
       const chosen = findBiome2(next.biome);
       if ((chosen == null ? void 0 : chosen.space) && !(next.era === "interstellar" || next.era === "nearFuture" && (chosen.scale === "Pl" || chosen.scale === "Sy"))) {
@@ -110409,7 +110337,7 @@ function chooseRealm(state, field, id, findBiome2) {
       next.genre = id != null ? id : "fantasy";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("realms", next, "fantastic", id);
       break;
     case "namedFor":
       next.namedFor = id != null ? id : "anything";
@@ -110468,6 +110396,7 @@ Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
 
 // src/vessels/sentence.ts
+registerRoster("vessel", VESSEL_CULTURES);
 function defaultVesselState(module2) {
   return {
     // Aircraft and land brief §2.2: aircraft default to General, land vehicles to Norman & British, in a modern world.
@@ -110504,16 +110433,8 @@ function vesselSentence(state, module2) {
   const out = [];
   const culture = (_a5 = VESSEL_CULTURES.find((c) => c.key === state.culture)) != null ? _a5 : VESSEL_CULTURES[0];
   const setting = vesselSetting(state);
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: what its people name vessels after",
-    choices: VESSEL_CULTURES.map((c, i) => {
-      var _a6;
-      return { id: c.key, label: c.label, ...c.group && c.group !== ((_a6 = VESSEL_CULTURES[i - 1]) == null ? void 0 : _a6.group) ? { group: c.group } : {} };
-    }),
-    current: culture.key
-  });
+  const lens = lensClause(module2, state, { cultureTitle: "Naming culture: what its people name vessels after" });
+  out.push(asSegment(lens.culture, "culture"));
   out.push("-themed ");
   const airLand = isAirLand(module2);
   const naming = (_b3 = state.naming) != null ? _b3 : "craft";
@@ -110534,27 +110455,8 @@ function vesselSentence(state, module2) {
     choices: [{ id: "any", label: "any" }, ...techChoices(module2, setting).map((c) => ({ id: c, label: techLabel(module2, c) }))],
     current: state.technology
   });
-  out.push(" technology, for a ");
-  const genres = module2 === "spacecraft" ? ["modern", "scifi"] : ["fantasy", "modern", "scifi"];
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: genres.map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre
-  });
-  out.push(" world");
-  if (state.genre !== "scifi") {
-    const phrases = airLand && state.genre === "modern" ? ["of the real world", FANTASTIC_TEXT.modern[1]] : FANTASTIC_TEXT[state.genre];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off"
-    });
-  }
+  out.push(" technology,");
+  out.push(...eraWorldSegments(lens, "era", "fantastic"));
   if (airLand) {
     out.push(", naming ");
     out.push({
@@ -110627,10 +110529,10 @@ function vesselSentenceText(segments) {
 }
 function chooseVessel(state, field, id, module2) {
   var _a5, _b3;
-  const next = { ...state };
+  let next = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id != null ? id : "general";
+      next = chooseLens(module2, next, "culture", id != null ? id : "general");
       break;
     case "function":
       next.function = id;
@@ -110638,12 +110540,16 @@ function chooseVessel(state, field, id, module2) {
     case "technology":
       next.technology = id != null ? id : "any";
       break;
+    case "era":
+      next = chooseLens(module2, next, "era", id);
+      if (module2 === "spacecraft" && next.genre === "modern") next.technology = "S1";
+      break;
     case "genre":
       next.genre = id != null ? id : "fantasy";
       if (module2 === "spacecraft" && next.genre === "modern") next.technology = "S1";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(module2, next, "fantastic", id);
       break;
     case "style":
       next.style = id != null ? id : "none";
@@ -143186,8 +143092,8 @@ ${n.origin}${also}${echo}` };
     const sentence3 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const segments = (custom) => realmSentence(this.realmState, this.realmLimits(custom));
     for (const segment2 of segments(this.customBiomes)) {
-      if (typeof segment2 === "string") {
-        sentence3.appendText(segment2);
+      if (typeof segment2 === "string" || segment2.fixed) {
+        sentence3.appendText(typeof segment2 === "string" ? segment2 : segment2.text);
         continue;
       }
       this.sentenceLink(
@@ -145192,8 +145098,8 @@ ${n.origin}${also}${echo}` };
   renderVesselSentence(row, module2) {
     const sentence3 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment2 of vesselSentence(this.vesselState(module2), module2)) {
-      if (typeof segment2 === "string") {
-        sentence3.appendText(segment2);
+      if (typeof segment2 === "string" || segment2.fixed) {
+        sentence3.appendText(typeof segment2 === "string" ? segment2 : segment2.text);
         continue;
       }
       this.sentenceLink(sentence3, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {
@@ -145327,8 +145233,8 @@ ${n.origin}${also}${echo}` };
       void this.loadBynamePacks().then(() => this.renderContextRow());
     }
     for (const segment2 of bynameSentence(state, module2, this.bynamePacks)) {
-      if (typeof segment2 === "string") {
-        sentence3.appendText(segment2);
+      if (typeof segment2 === "string" || segment2.fixed) {
+        sentence3.appendText(typeof segment2 === "string" ? segment2 : segment2.text);
         continue;
       }
       const choices = segment2.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment2.choices;
@@ -145881,8 +145787,8 @@ ${n.origin}${also}${echo}` };
     const sentence3 = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const state = this.groupState(family);
     for (const segment2 of groupSentence(state, family)) {
-      if (typeof segment2 === "string") {
-        sentence3.appendText(segment2);
+      if (typeof segment2 === "string" || segment2.fixed) {
+        sentence3.appendText(typeof segment2 === "string" ? segment2 : segment2.text);
         continue;
       }
       this.sentenceLink(sentence3, segment2.text, segment2.title, () => segment2.choices, segment2.current, (id) => {

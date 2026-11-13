@@ -252,10 +252,12 @@ const fields = (key: string, state = DEFAULT_GROUP_STATE) => groupSentence(state
 test("group sentence: the default mystic sentence, and which links show", () => {
   assert.equal(
     groupSentenceText(groupSentence(DEFAULT_GROUP_STATE, family("mystic"))),
-    "General-themed orders and faiths of any kind for a fantasy world of historic or low fantasy, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
+    "General-themed orders and faiths of any kind of the pre-industrial era, in a historic or low fantasy world, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
   );
   assert.ok(!fields("martial").includes("front"));
-  assert.ok(!fields("mystic", { ...DEFAULT_GROUP_STATE, genre: "scifi" }).includes("fantastic"));
+  // Science fiction has no fantastic setting: the world is plain text there, not a link.
+  const sciFiWorld = groupSentence({ ...DEFAULT_GROUP_STATE, genre: "scifi" }, family("mystic")).find((s) => typeof s !== "string" && s.field === "fantastic");
+  assert.ok(typeof sciFiWorld === "object" && sciFiWorld.fixed === true && sciFiWorld.text === "science fiction");
 });
 
 test("group sentence: resets", () => {
@@ -263,9 +265,14 @@ test("group sentence: resets", () => {
   const thieves = chooseGroup(DEFAULT_GROUP_STATE, "type", "thieves", family("underworld"));
   assert.equal(chooseGroup(thieves, "genre", "modern", family("underworld")).type, undefined);
   // Supernatural: fantasy and modern only; modern sets the fantastic switch.
-  const genre = groupSentence(DEFAULT_GROUP_STATE, family("supernatural")).find((s) => typeof s !== "string" && s.field === "genre");
-  assert.deepEqual(typeof genre === "object" ? genre.choices.map((c) => c.id) : [], ["fantasy", "modern"]);
+  const era = groupSentence(DEFAULT_GROUP_STATE, family("supernatural")).find((s) => typeof s !== "string" && s.field === "era");
+  assert.deepEqual(typeof era === "object" ? era.choices.map((c) => c.id) : [], ["pre-industrial", "industrial and modern"]);
   assert.equal(chooseGroup(DEFAULT_GROUP_STATE, "genre", "modern", family("supernatural")).fantastic, true);
+  const modern = chooseGroup(DEFAULT_GROUP_STATE, "era", "industrial and modern", family("supernatural"));
+  assert.deepEqual([modern.genre, modern.fantastic], ["modern", true]);
+  // In a modern world the world link offers contemporary fantasy alone (plain text).
+  const world = groupSentence(modern, family("supernatural")).find((s) => typeof s !== "string" && s.field === "fantastic");
+  assert.ok(typeof world === "object" && world.fixed === true && world.text === "contemporary fantasy");
   // A type that can't take a front resets the front.
   const hiding = { ...DEFAULT_GROUP_STATE, front: "hide" as const };
   assert.equal(chooseGroup(hiding, "type", "holy", family("mystic")).front, "say");
@@ -522,7 +529,7 @@ test("series: an {ordinalWord} series of 20 stops at the end of the list, with t
 test("tone sentence: default text, tone between form and front, series only with a type", () => {
   assert.equal(
     groupSentenceText(groupSentence(DEFAULT_GROUP_STATE, family("mystic"))),
-    "General-themed orders and faiths of any kind for a fantasy world of historic or low fantasy, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
+    "General-themed orders and faiths of any kind of the pre-industrial era, in a historic or low fantasy world, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
   );
   const order = fields("underworld", { ...DEFAULT_GROUP_STATE, type: "syndicate" });
   assert.deepEqual(order.slice(order.indexOf("form"), order.indexOf("form") + 3), ["form", "tone", "front"]);
@@ -714,7 +721,7 @@ test("companies sentence: the commodity link shows for Any and the types that de
   }
   assert.ok(!fields("martial").includes("commodity"));
   const spice = chooseGroup({ ...DEFAULT_GROUP_STATE, type: "chartered" }, "commodity", "spice", TRADE);
-  assert.ok(groupSentenceText(groupSentence(spice, TRADE)).startsWith("General-themed chartered companies dealing in spices and dyes for a fantasy world"));
+  assert.ok(groupSentenceText(groupSentence(spice, TRADE)).startsWith("General-themed chartered companies dealing in spices and dyes, of the pre-industrial era"));
   assert.equal(chooseGroup(spice, "genre", "scifi", TRADE).commodity, "any");
   assert.equal(chooseGroup(spice, "type", "colonial", TRADE).commodity, "any");
   assert.equal(chooseGroup(spice, "type", "merchant", TRADE).commodity, "spice");

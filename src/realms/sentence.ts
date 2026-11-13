@@ -1,13 +1,18 @@
 // The realms sentence (Realms brief §2): "‹General›-themed ‹realms of any kind› of the ‹medieval› era,
-// for a ‹fantasy› world ‹of historic or low fantasy›, named for ‹anything›, in ‹their homeland› ‹of any
-// terrain›, ‹of any tone›, as ‹plain› names, giving ‹official names›, with ‹placeholders for› people and
-// places". Built as segments like the group sentence. No Obsidian imports.
+// in a ‹historic or low fantasy› world, named for ‹anything›, in ‹their homeland› ‹of any terrain›, ‹of
+// any tone›, as ‹plain› names, giving ‹official names›, with ‹placeholders for› people and places". The
+// culture, era and world links are the lens clause's: the six eras as now, the world read from the genre
+// (one sentence brief §4, §7.3). Built as segments like the group sentence. No Obsidian imports.
 
 import { availableTerrains, type Biome, SPACE_BIOMES, TERRAIN_CHOICES } from "../biomes";
 import { biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
-import { type GroupGenre, type GroupPeople, type GroupToneChoice, GROUP_TONES, groupSetting, SETTING_PHRASES, TONE_PHRASES } from "../groups/engine";
-import { FANTASTIC_TEXT, GENRE_TEXT } from "../groups/sentence";
+import { type GroupGenre, type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
+import { asSegment, chooseLens, eraWorldSegments, type LensedSegment } from "../lensSentence";
+import { lensClause } from "../lensView";
+import { registerRoster } from "../lensRosters";
 import { namedForOffered, REALM_CHARACTERS, REALM_CULTURES, REALM_ERAS, REALM_NAMED_FOR, type RealmLength, type RealmNamedFor, type RealmOutput } from "./engine";
+
+registerRoster("realm", REALM_CULTURES);
 
 export interface RealmSentenceState {
   culture: string;
@@ -53,7 +58,7 @@ export interface RealmChoice {
   tip?: string;
 }
 
-export type RealmSegment = string | { field: RealmField; text: string; title: string; choices: RealmChoice[]; current: string | undefined };
+export type RealmSegment = string | { field: RealmField; text: string; title: string; choices: RealmChoice[]; current: string | undefined; fixed?: boolean };
 
 export interface RealmSentenceLimits {
   /** Every biome on offer (built-ins and packs), in menu order. */
@@ -71,14 +76,8 @@ export const showsLand = (state: RealmSentenceState) => state.namedFor === "anyt
 
 export function realmSentence(state: RealmSentenceState, limits: RealmSentenceLimits): RealmSegment[] {
   const out: RealmSegment[] = [];
-  const culture = REALM_CULTURES.find((c) => c.key === state.culture) ?? REALM_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Which customs and forms of government",
-    choices: REALM_CULTURES.map((c) => ({ id: c.key, label: c.label })),
-    current: culture.key,
-  });
+  const lens = lensClause("realms", state, { cultureTitle: "Which customs and forms of government" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push("-themed ");
   const character = REALM_CHARACTERS.find((c) => c.key === state.character);
   out.push({
@@ -88,36 +87,7 @@ export function realmSentence(state: RealmSentenceState, limits: RealmSentenceLi
     choices: [{ id: undefined, label: "Any" }, ...REALM_CHARACTERS.map((c) => ({ id: c.key, label: c.menu }))],
     current: character?.key,
   });
-  out.push(" of the ");
-  const era = REALM_ERAS.find((e) => e.key === state.era) ?? REALM_ERAS[1];
-  out.push({
-    field: "era",
-    text: era.label,
-    title: "Which forms of government are common: any culture can have any era",
-    choices: REALM_ERAS.map((e) => ({ id: e.key, label: e.label })),
-    current: era.key,
-  });
-  out.push(" era, for a ");
-  out.push({
-    field: "genre",
-    text: GENRE_TEXT[state.genre],
-    title: "Genre: the kind of world",
-    choices: (["fantasy", "modern", "scifi"] as GroupGenre[]).map((g) => ({ id: g, label: GENRE_TEXT[g] })),
-    current: state.genre,
-  });
-  out.push(" world");
-  if (state.genre !== "scifi") {
-    const setting = groupSetting(state.genre, state.fantastic);
-    const phrases = FANTASTIC_TEXT[state.genre];
-    out.push(" ");
-    out.push({
-      field: "fantastic",
-      text: phrases[state.fantastic ? 1 : 0],
-      title: SETTING_PHRASES[setting].charAt(0).toUpperCase() + SETTING_PHRASES[setting].slice(1),
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: phrases[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off",
-    });
-  }
+  out.push(...(eraWorldSegments(lens, "era", "fantastic") as (string | LensedSegment<"era" | "fantastic">)[]));
   out.push(", named for ");
   const nf = REALM_NAMED_FOR.find((n) => n.key === state.namedFor) ?? REALM_NAMED_FOR[0];
   out.push({
@@ -216,16 +186,17 @@ export function realmSentenceText(segments: RealmSegment[]): string {
 
 /** §2.3: a state after one choice; leaving the future eras resets "the stars". */
 export function chooseRealm(state: RealmSentenceState, field: RealmField, id: string | undefined, findBiome: (id: string | undefined) => Biome | undefined): RealmSentenceState {
-  const next: RealmSentenceState = { ...state };
+  let next: RealmSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? "general";
+      next = chooseLens("realms", next, "culture", id ?? "general");
       break;
     case "character":
       next.character = id;
       break;
     case "era": {
-      next.era = id ?? "medieval";
+      // The six eras as now; choosing one reads the world from the genre it sets (§7.3).
+      next = chooseLens("realms", next, "era", id, "medieval");
       if (next.namedFor === "stars" && !namedForOffered("stars", next.era)) next.namedFor = "anything";
       // Stellar brief §7.1: a space biome the new era lacks resets to the homeland.
       const chosen = findBiome(next.biome);
@@ -239,7 +210,7 @@ export function chooseRealm(state: RealmSentenceState, field: RealmField, id: st
       next.genre = (id as GroupGenre) ?? "fantasy";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("realms", next, "fantastic", id);
       break;
     case "namedFor":
       next.namedFor = (id as RealmNamedFor) ?? "anything";
