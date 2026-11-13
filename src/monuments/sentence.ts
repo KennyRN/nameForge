@@ -3,6 +3,7 @@
 // tone›, with ‹placeholders for› people and places, ‹on their own›, ‹each one separate›". Built as
 // segments like the buildings sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
 import { regionPhrase } from "../colonialSentence";
@@ -176,7 +177,7 @@ export function chooseMonument(state: MonumentSentenceState, field: MonumentFiel
 /** §14.4: "monuments and statues · {era} · {culture}", then kind, setting, region, steampunk or fantastic, tone,
  * "one town" and "named after". */
 export function monumentHistoryLabel(state: MonumentSentenceState): string {
-  const culture = findRouteCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findRouteCulture(state.culture)?.label ?? "General");
   const kind = MONUMENT_KINDS.find((k) => k.key === state.kind);
   return [
     MONUMENT_NAMES_HISTORY_NAME,

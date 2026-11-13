@@ -3,6 +3,7 @@
 // words as variants›, ‹of any tone›, with ‹placeholders for› people and places, ‹each one separate›".
 // Built as segments like the route sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
 import { regionPhrase } from "../colonialSentence";
@@ -198,7 +199,7 @@ export function chooseStreet(state: StreetSentenceState, field: StreetField, id:
 
 /** §1.2: "streets and districts · {era} · {culture}", then kind, size, region, steampunk or fantastic, tone and one town. */
 export function streetHistoryLabel(state: StreetSentenceState): string {
-  const culture = findRouteCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findRouteCulture(state.culture)?.label ?? "General");
   const kind = STREET_KINDS.find((k) => k.key === state.kind);
   return [
     "streets and districts",

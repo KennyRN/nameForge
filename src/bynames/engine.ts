@@ -26,7 +26,7 @@ import {
 import { mulberry32 } from "../markov";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet } from "../lens";
+import { cultureSet, lensCultureLabel } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -749,7 +749,7 @@ export function generateBynames(options: BynameOptions): BynameBatch {
 
 /** §1.2: "titles and honourifics · high or epic fantasy · Norse · grim · native". */
 export function bynameHistoryLabel(module: BynameModule, genre: GroupGenre, fantastic: boolean, culture: string, tone: GroupToneChoice = "any", language: BynameLanguage = "english"): string {
-  const label = BYNAME_CULTURES.find((c) => c.key === culture)?.label ?? "General";
+  const label = lensCultureLabel(culture, BYNAME_CULTURES.find((c) => c.key === culture)?.label ?? "General");
   return [
     BYNAME_MODULE_LABELS[module],
     SETTING_PHRASES[groupSetting(genre, fantastic)],

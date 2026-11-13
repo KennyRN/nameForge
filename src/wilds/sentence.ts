@@ -3,6 +3,7 @@
 // ‹of any tone›, with ‹placeholders for› people and places, ‹each one separate›." One builder for all
 // six modules, as segments like the waters sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens } from "../lensSentence";
 import { lensClause } from "../lensView";
@@ -197,7 +198,7 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
 
 /** §1.3: "{module} · {era} · {culture}", then new country, region or biome, kind, fantastic, tone, series. */
 export function wildsHistoryLabel(module: WildsModule, state: WildsSentenceState, moduleLabel: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string {
-  const culture = findWildsCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findWildsCulture(state.culture)?.label ?? "General");
   const kind = findWildsKind(module, state.kind);
   const regionShown = showsWildsRegion(module, state.culture, state.where);
   const biome = wildsBiomes(module, catalogue).find((b) => biomeMatches(b, state.biome));

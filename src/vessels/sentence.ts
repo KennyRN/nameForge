@@ -4,6 +4,7 @@
 // one separate›". The culture, era and world links are the lens clause's (one sentence brief §4, §7.4);
 // technology and style stay the module's own. Built as segments like the group sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { type GroupGenre, type GroupPeople, type GroupToneChoice, GROUP_TONES, groupSetting, SETTING_PHRASES, TONE_PHRASES } from "../groups/engine";
 import { asSegment, chooseLens, eraWorldSegments, type LensedSegment } from "../lensSentence";
 import { lensClause } from "../lensView";
@@ -249,7 +250,7 @@ export function chooseVessel(state: VesselSentenceState, field: VesselField, id:
 /** §1.2: "{module} · {setting} · {culture} · {technology}", then style, tone and class. */
 export function vesselHistory(module: VesselModule, state: VesselSentenceState, label: string): string {
   const setting = vesselSetting(state);
-  const culture = VESSEL_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, VESSEL_CULTURES.find((c) => c.key === state.culture)?.label ?? "General");
   const style = availableStyles(module, setting, state.technology).find((s) => s.key === state.style);
   const airLand = isAirLand(module);
   const types = airLand && state.naming === "types";

@@ -3,6 +3,7 @@
 // ‹each one separate›"; and, since the line-up brief's split (§2.3), the sacred places sentence on the
 // same engine. Built as segments like the event sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
@@ -196,7 +197,7 @@ export const effectiveDeityState = (state: DeitySentenceState): DeitySentenceSta
 
 /** §1.2 (line-up brief §2.4): "deities · {era} · {culture}", then kind, domain, gender, steampunk or fantastic, tone and one pantheon. */
 export function deityHistoryLabel(state: DeitySentenceState): string {
-  const culture = DEITY_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, DEITY_CULTURES.find((c) => c.key === state.culture)?.label ?? "General");
   const kind = DEITY_KINDS.find((k) => k.key === state.kind);
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   const s = effectiveDeityState(state);
@@ -263,7 +264,7 @@ export function chooseSacredPlace(state: SacredPlaceSentenceState, field: Sacred
 
 /** "sacred places · {era} · {culture}", then domain, steampunk or fantastic and tone. */
 export function sacredPlaceHistoryLabel(state: SacredPlaceSentenceState): string {
-  const culture = DEITY_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, DEITY_CULTURES.find((c) => c.key === state.culture)?.label ?? "General");
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   return [
     "sacred places",

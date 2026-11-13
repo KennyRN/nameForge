@@ -65412,6 +65412,13 @@ function tribalCultureWeights(tradition) {
 }
 var ERA_CODES = LENS.eras.map((e) => e.code);
 var STEAMPUNK_NAMES = LENS.mappings.styles.steampunkNames;
+function lensCultureLabel(key2, own) {
+  if (!key2) return own;
+  for (const block of LENS.menu) {
+    for (const e of block.entries) if (e.key === key2 && e.label) return e.label;
+  }
+  return own;
+}
 function inCultureGroup(group, culture, era) {
   var _a5;
   const g = LENS.cultureGroups[group];
@@ -78202,7 +78209,7 @@ function generateBynames(options) {
 }
 function bynameHistoryLabel(module2, genre, fantastic, culture, tone = "any", language = "english") {
   var _a5, _b3;
-  const label = (_b3 = (_a5 = BYNAME_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const label = lensCultureLabel(culture, (_b3 = (_a5 = BYNAME_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   return [
     BYNAME_MODULE_LABELS[module2],
     SETTING_PHRASES[groupSetting(genre, fantastic)],
@@ -96074,7 +96081,7 @@ function renderShort(ctx, template, plain) {
 }
 function realmHistoryLabel(genre, fantastic, culture, era, character, tone = "any") {
   var _a5, _b3, _c3, _d3;
-  const label = (_b3 = (_a5 = REALM_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const label = lensCultureLabel(culture, (_b3 = (_a5 = REALM_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   return [
     "realms and polities",
     SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],
@@ -104659,7 +104666,7 @@ function peoplesHistoryLabel(era, culture, source, giving, detail, tone, withPeo
   return [
     "peoples and tongues",
     (_b3 = (_a5 = ROUTE_ERAS.find((e) => e.code === era)) == null ? void 0 : _a5.label) != null ? _b3 : era,
-    (_d3 = (_c3 = PEOPLE_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _c3.label) != null ? _d3 : "General",
+    lensCultureLabel(culture, (_d3 = (_c3 = PEOPLE_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _c3.label) != null ? _d3 : "General"),
     source,
     ...giving === "peoples" ? ["peoples"] : giving === "languages" ? ["languages"] : [],
     ...giving !== "peoples" && detail === "older" ? ["older forms"] : giving !== "peoples" && detail === "dialects" ? ["dialects"] : [],
@@ -104811,7 +104818,7 @@ function chooseRoute(state, field, id) {
 }
 function routeHistoryLabel(state) {
   var _a5, _b3, _c3;
-  const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = findRouteKind(state.kind);
   return [
     "route names",
@@ -110044,7 +110051,7 @@ function thingHistoryLabel(module2, state) {
   return [
     info.label,
     routeEraLabel(state.era),
-    (_b3 = (_a5 = findThingCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General",
+    lensCultureLabel(state.culture, (_b3 = (_a5 = findThingCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General"),
     ...state.kind ? [(_d3 = (_c3 = findThingKind(state.kind)) == null ? void 0 : _c3.plural) != null ? _d3 : state.kind] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
     ...state.tone !== "any" ? [state.tone] : [],
@@ -110581,7 +110588,7 @@ function chooseVessel(state, field, id, module2) {
 function vesselHistory(module2, state, label) {
   var _a5, _b3;
   const setting = vesselSetting(state);
-  const culture = (_b3 = (_a5 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = VESSEL_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const style = availableStyles(module2, setting, state.technology).find((s) => s.key === state.style);
   const airLand = isAirLand(module2);
   const types = airLand && state.naming === "types";
@@ -121569,7 +121576,7 @@ function chooseWilds(state, field, id, module2, catalogue = BUILT_IN_BIOMES) {
 }
 function wildsHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = findWildsCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findWildsCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = findWildsKind(module2, state.kind);
   const regionShown2 = showsWildsRegion(module2, state.culture, state.where);
   const biome = wildsBiomes(module2, catalogue).find((b) => biomeMatches(b, state.biome));
@@ -123188,7 +123195,8 @@ function chooseWaters(state, field, id, module2) {
 }
 function watersHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BIOMES) {
   var _a5, _b3, _c3;
-  const culture = (_b3 = (_a5 = findWatersCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const own = (_b3 = (_a5 = findWatersCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = module2 === "hyperspaceCharts" ? own : lensCultureLabel(state.culture, own);
   if (module2 === "hyperspaceCharts") {
     const kind2 = findHyperKind(state.kind);
     const register = WATERS_REGISTERS.find((r) => r.id === state.register);
@@ -127112,7 +127120,7 @@ function chooseMoney(state, field, id) {
 var VALUE_LABEL = { high: "high", middle: "middle", low: "low" };
 function moneyHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = findMoneyCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findMoneyCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = findMoneyKind(state.kind);
   return [
     "money and coins",
@@ -135855,7 +135863,7 @@ function chooseMonument(state, field, id) {
 }
 function monumentHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = MONUMENT_KINDS.find((k) => k.key === state.kind);
   return [
     MONUMENT_NAMES_HISTORY_NAME,
@@ -137414,7 +137422,7 @@ function chooseTime(module2, state, field, id, limits) {
 var timeBiomeResetNotice = (before, after) => before.biome && !after.biome && isFutureEra(before.era) !== isFutureEra(after.era) ? "The space biome was reset to their homeland." : "";
 function timeHistoryLabel(module2, state, limits) {
   var _a5, _b3, _c3;
-  const culture = (_b3 = (_a5 = findTimeCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findTimeCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = findTimeKind(state.kind);
   const biome = biomeOf(state, limits);
   return [
@@ -137572,7 +137580,7 @@ function chooseDeity(state, field, id) {
 var effectiveDeityState = (state) => showsPersonLinks(state) ? state : { ...state, gender: "any", names: "titles" };
 function deityHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = DEITY_KINDS.find((k) => k.key === state.kind);
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   const s = effectiveDeityState(state);
@@ -137615,7 +137623,7 @@ function chooseSacredPlace(state, field, id) {
 }
 function sacredPlaceHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = DEITY_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const domain = DEITY_DOMAINS.find((d) => d.key === state.domain);
   return [
     "sacred places",
@@ -137731,7 +137739,7 @@ function chooseEvent(state, field, id) {
 }
 function eventHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = EVENT_KINDS.find((k) => k.key === state.kind);
   return [
     "events and eras",
@@ -137986,7 +137994,7 @@ function chooseKit(state, field, id) {
 }
 function kitHistoryLabel(town5, state) {
   var _a5, _b3;
-  return ["settlement kit", town5, sizeLabel2(state.size, state.era), routeEraLabel(state.era), (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General"].join(" \xB7 ");
+  return ["settlement kit", town5, sizeLabel2(state.size, state.era), routeEraLabel(state.era), lensCultureLabel(state.culture, (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General")].join(" \xB7 ");
 }
 
 // src/buildings/sentence.ts
@@ -138100,7 +138108,7 @@ function chooseBuilding(state, field, id) {
 }
 function buildingHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = BUILDING_KINDS.find((k) => k.key === state.kind);
   return [
     "buildings and landmarks",
@@ -138242,7 +138250,7 @@ function chooseInn(state, field, id) {
 var innFormFor = (state) => showsForm(state) ? state.form : "either";
 function innHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = INN_KINDS.find((k) => k.key === state.kind);
   return [
     "inns and taverns",
@@ -138406,7 +138414,7 @@ function chooseStreet(state, field, id) {
 }
 function streetHistoryLabel(state) {
   var _a5, _b3;
-  const culture = (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General";
+  const culture = lensCultureLabel(state.culture, (_b3 = (_a5 = findRouteCulture(state.culture)) == null ? void 0 : _a5.label) != null ? _b3 : "General");
   const kind = STREET_KINDS.find((k) => k.key === state.kind);
   return [
     "streets and districts",

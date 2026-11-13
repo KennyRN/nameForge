@@ -3,6 +3,7 @@
 // ‹placeholders for› people and places, ‹names only›". Built as segments like the money sentence.
 // No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
@@ -207,7 +208,7 @@ export function thingHistoryLabel(module: ThingModule, state: ThingSentenceState
   return [
     info.label,
     routeEraLabel(state.era),
-    findThingCulture(state.culture)?.label ?? "General",
+    lensCultureLabel(state.culture, findThingCulture(state.culture)?.label ?? "General"),
     ...(state.kind ? [findThingKind(state.kind)?.plural ?? state.kind] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
     ...(state.tone !== "any" ? [state.tone] : []),

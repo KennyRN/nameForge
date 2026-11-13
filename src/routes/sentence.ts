@@ -3,6 +3,7 @@
 // for› people and places, ‹each one separate›". Built as segments like the group sentence.
 // No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { regionPhrase } from "../colonialSentence";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
@@ -205,7 +206,7 @@ export function chooseRoute(state: RouteSentenceState, field: RouteField, id: st
 
 /** §1.2: "route names · {era} · {culture}", then region, kind, steampunk or fantastic, tone and network. */
 export function routeHistoryLabel(state: RouteSentenceState): string {
-  const culture = findRouteCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findRouteCulture(state.culture)?.label ?? "General");
   const kind = findRouteKind(state.kind);
   return [
     "route names",

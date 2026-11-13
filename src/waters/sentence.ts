@@ -5,6 +5,7 @@
 // ‹in any words›, ‹of any tone›, with ‹placeholders for› people". Built as segments like the route
 // sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens } from "../lensSentence";
 import { lensClause } from "../lensView";
@@ -294,7 +295,9 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
 
 /** §1.3: "{module} · {era} · {culture}…", and for hyperspace "{module} · {scale} · {culture}…". */
 export function watersHistoryLabel(module: WatersModule, state: WatersSentenceState, moduleLabel: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string {
-  const culture = findWatersCulture(state.culture)?.label ?? "General";
+  const own = findWatersCulture(state.culture)?.label ?? "General";
+  // Hyperspace charts keep their own culture link, so their rows keep its labels.
+  const culture = module === "hyperspaceCharts" ? own : lensCultureLabel(state.culture, own);
   if (module === "hyperspaceCharts") {
     const kind = findHyperKind(state.kind);
     const register = WATERS_REGISTERS.find((r) => r.id === state.register);

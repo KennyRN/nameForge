@@ -3,6 +3,7 @@
 // ‹anywhere›, ‹of any tone›, with ‹placeholders for› people and places, ‹each one separate›".
 // Built as segments like the inn sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
 import { regionPhrase } from "../colonialSentence";
@@ -156,7 +157,7 @@ export function chooseBuilding(state: BuildingSentenceState, field: BuildingFiel
 
 /** §1.2: "buildings and landmarks · {era} · {culture}", then kind, setting, region, steampunk or fantastic, tone and one town. */
 export function buildingHistoryLabel(state: BuildingSentenceState): string {
-  const culture = findRouteCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findRouteCulture(state.culture)?.label ?? "General");
   const kind = BUILDING_KINDS.find((k) => k.key === state.kind);
   return [
     "buildings and landmarks",

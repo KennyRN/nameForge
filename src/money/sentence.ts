@@ -3,6 +3,7 @@
 // and places, ‹each one separate›". The words link shows for cultures with loan forms. Built as segments
 // like the events sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
@@ -199,7 +200,7 @@ const VALUE_LABEL: Record<Exclude<MoneyValue, "any">, string> = { high: "high", 
 
 /** §1.2: "money and coins · {era} · {culture}", then kind, value, loanwords, steampunk or fantastic, tone and the coinage. */
 export function moneyHistoryLabel(state: MoneySentenceState): string {
-  const culture = findMoneyCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findMoneyCulture(state.culture)?.label ?? "General");
   const kind = findMoneyKind(state.kind);
   return [
     "money and coins",

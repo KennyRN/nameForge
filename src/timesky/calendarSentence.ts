@@ -3,6 +3,7 @@
 // set in ‹their homeland›, starting in ‹their own new year›, ‹of any tone›, with ‹placeholders for›
 // gods and people, ‹as one calendar›". Built as segments like the money sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause, registerLensRules } from "../lensView";
@@ -266,7 +267,7 @@ export const timeBiomeResetNotice = (before: TimeSentenceState, after: TimeSente
 
 /** §1.2: "{module} · {era} · {culture} · {kind}", then the land, start, loanwords, genre, tone and series. */
 export function timeHistoryLabel(module: TimeModule, state: TimeSentenceState, limits: TimeSentenceLimits): string {
-  const culture = findTimeCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findTimeCulture(state.culture)?.label ?? "General");
   const kind = findTimeKind(state.kind);
   const biome = biomeOf(state, limits);
   return [

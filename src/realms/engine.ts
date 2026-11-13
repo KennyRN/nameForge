@@ -41,7 +41,7 @@ import { registerRealmSource, withDeityPlaceholders } from "../vessels/engine";
 
 export { withDeityPlaceholders };
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet } from "../lens";
+import { cultureSet, lensCultureLabel } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -795,7 +795,7 @@ function renderShort(ctx: Ctx, template: string, plain: string): string {
 
 /** §1.2: "realms and polities · historic or low fantasy · Steppe · medieval", then character and tone. */
 export function realmHistoryLabel(genre: GroupGenre, fantastic: boolean, culture: string, era: string, character?: string, tone: GroupToneChoice = "any"): string {
-  const label = REALM_CULTURES.find((c) => c.key === culture)?.label ?? "General";
+  const label = lensCultureLabel(culture, REALM_CULTURES.find((c) => c.key === culture)?.label ?? "General");
   return [
     "realms and polities",
     SETTING_PHRASES[groupSetting(genre, genre === "scifi" ? false : fantastic)],

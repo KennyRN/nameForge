@@ -11,7 +11,7 @@ import { mulberry32 } from "../markov";
 import { breaksMoneyWords } from "../money/engine";
 import { ALL_FORMS } from "../realms/engine";
 import { ROUTE_ERAS } from "../routes/engine";
-import { LENS_ERAS } from "../lens";
+import { LENS_ERAS, lensCultureLabel } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -690,7 +690,7 @@ export function peoplesHistoryLabel(era: string, culture: string, source: string
   return [
     "peoples and tongues",
     ROUTE_ERAS.find((e) => e.code === era)?.label ?? era,
-    PEOPLE_CULTURES.find((c) => c.key === culture)?.label ?? "General",
+    lensCultureLabel(culture, PEOPLE_CULTURES.find((c) => c.key === culture)?.label ?? "General"),
     source,
     ...(giving === "peoples" ? ["peoples"] : giving === "languages" ? ["languages"] : []),
     ...(giving !== "peoples" && detail === "older" ? ["older forms"] : giving !== "peoples" && detail === "dialects" ? ["dialects"] : []),

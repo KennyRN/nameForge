@@ -3,6 +3,7 @@
 // ‹the whole settlement› in ‹standard› detail, with ‹placeholders for› people and places".
 // Built as segments like the route, street, inn and building sentences. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
@@ -162,5 +163,5 @@ export function chooseKit(state: KitSentenceState, field: KitField, id: string |
 
 /** §1.2: "settlement kit · {settlement name} · {size} · {era label} · {culture label}". */
 export function kitHistoryLabel(town: string, state: Pick<KitSentenceState, "size" | "era" | "culture">): string {
-  return ["settlement kit", town, sizeLabel(state.size, state.era), routeEraLabel(state.era), findRouteCulture(state.culture)?.label ?? "General"].join(" · ");
+  return ["settlement kit", town, sizeLabel(state.size, state.era), routeEraLabel(state.era), lensCultureLabel(state.culture, findRouteCulture(state.culture)?.label ?? "General")].join(" · ");
 }

@@ -239,6 +239,19 @@ export const STEAMPUNK_NAMES = LENS.mappings.styles.steampunkNames;
 
 // ── Groups, land, targets, exemptions ───────────────────────────────────────
 
+/**
+ * A culture's label as the culture menus now read it (one sentence brief §6.1): the lens menu's own label
+ * where it gives one ("Roman and Italian"), otherwise the module's. History rows written from now on use it;
+ * old rows are matched by module prefix, never by culture label, so their old labels still resolve.
+ */
+export function lensCultureLabel(key: string | undefined, own: string): string {
+  if (!key) return own;
+  for (const block of (LENS as unknown as { menu: { entries: { key?: string; label?: string | null }[] }[] }).menu) {
+    for (const e of block.entries) if (e.key === key && e.label) return e.label;
+  }
+  return own;
+}
+
 /** §3.1: whether a culture belongs to a named group in an era (christian: greek-byzantine and roman from MD). */
 export function inCultureGroup(group: string, culture: string, era: LensEra): boolean {
   const g = LENS.cultureGroups[group];

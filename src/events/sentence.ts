@@ -2,6 +2,7 @@
 // ‹medieval› era, in a ‹realistic› world, on ‹a realm's› scale, ‹of any tone›, with ‹placeholders for›
 // people and places, ‹each one separate›". Built as segments like the building sentence. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
@@ -142,7 +143,7 @@ export function chooseEvent(state: EventSentenceState, field: EventField, id: st
 
 /** §1.2: "events and eras · {era} · {culture}", then kind, scale, steampunk or fantastic, tone and one history. */
 export function eventHistoryLabel(state: EventSentenceState): string {
-  const culture = findRouteCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findRouteCulture(state.culture)?.label ?? "General");
   const kind = EVENT_KINDS.find((k) => k.key === state.kind);
   return [
     "events and eras",

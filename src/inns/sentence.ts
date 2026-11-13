@@ -3,6 +3,7 @@
 // house word›, ‹of any tone›, with ‹placeholders for› people and places, ‹each one separate›".
 // Built as segments like the route and street sentences. No Obsidian imports.
 
+import { lensCultureLabel } from "../lens";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause } from "../lensView";
 import { regionPhrase } from "../colonialSentence";
@@ -176,7 +177,7 @@ export const innFormFor = (state: InnSentenceState): InnForm => (showsForm(state
 
 /** §1.2: "inns and taverns · {era} · {culture}", then kind, setting, region, steampunk or fantastic, tone and one town. */
 export function innHistoryLabel(state: InnSentenceState): string {
-  const culture = findRouteCulture(state.culture)?.label ?? "General";
+  const culture = lensCultureLabel(state.culture, findRouteCulture(state.culture)?.label ?? "General");
   const kind = INN_KINDS.find((k) => k.key === state.kind);
   return [
     "inns and taverns",

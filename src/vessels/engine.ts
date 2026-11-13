@@ -39,7 +39,7 @@ import moneyData from "../data/money-names.json";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { findTradition } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet } from "../lens";
+import { cultureSet, lensCultureLabel } from "../lens";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -1594,7 +1594,7 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
 
 /** §1.2: "ships and boats · historic or low fantasy · Hawaiian · steam and iron". */
 export function vesselHistoryLabel(module: VesselModule, genre: GroupGenre, fantastic: boolean, culture: string, technology: string): string {
-  const label = findVesselCulture(culture)?.label ?? "General";
+  const label = lensCultureLabel(culture, findVesselCulture(culture)?.label ?? "General");
   return [VESSEL_MODULE_LABELS[module], SETTING_PHRASES[groupSetting(genre, fantastic)], label, technology === "any" ? "any technology" : techLabel(module, technology)].join(
     " · ",
   );
