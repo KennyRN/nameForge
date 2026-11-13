@@ -63189,8 +63189,39 @@ var lens_default = {
     ]
   },
   poolExemptions: {
-    forPacks: [],
-    closed: []
+    forPacks: [
+      "buildingFixed:faith",
+      "buildingFixed:works",
+      "buildingFixed:learning",
+      "buildingFixed:confinement",
+      "buildingFixed:maritime",
+      "eventFixed:battle",
+      "eventFixed:rebellion",
+      "eventFixed:treaty",
+      "eventFixed:crisis",
+      "deityFixed:deity",
+      "deityFixed:place",
+      "watersFixed:seas",
+      "watersFixed:coasts",
+      "watersFixed:charts",
+      "watersFixed:hyperspace",
+      "routeFixed:rail",
+      "routeFixed:motor"
+    ],
+    closed: [
+      "cycleElement",
+      "cycleAnimal",
+      "direction",
+      "directionAdj",
+      "dayElement",
+      "cultureNames/anglo-saxon/day",
+      "cultureNames/arabic-persian/day",
+      "cultureNames/celtic/day",
+      "cultureNames/chinese/day",
+      "cultureNames/ethiopian/day",
+      "cultureNames/greek-byzantine/day",
+      "cultureNames/korean/day"
+    ]
   },
   landModules: [
     "mountainNames",
