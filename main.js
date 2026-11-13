@@ -64252,258 +64252,1136 @@ var lens_default = {
     routeNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "route",
+        region: {
+          group: "british",
+          requires: null,
+          keepWhenHidden: false
+        }
+      }
     },
     streetNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "route",
+        region: {
+          group: "british",
+          requires: null,
+          keepWhenHidden: false
+        }
+      }
     },
     innNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "route",
+        region: {
+          group: "british",
+          requires: null,
+          keepWhenHidden: false
+        }
+      }
     },
     buildingNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "route",
+        region: {
+          group: "british",
+          requires: null,
+          keepWhenHidden: false
+        }
+      }
     },
     monumentNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "route",
+        region: {
+          group: "british",
+          requires: null,
+          keepWhenHidden: false
+        }
+      }
     },
     settlementKit: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "route",
+        region: {
+          group: "british",
+          requires: null,
+          keepWhenHidden: false
+        }
+      }
     },
     eventNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "route"
+      }
     },
     calendarNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "time"
+      }
     },
     skyNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "time"
+      }
     },
     mountainNames: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     forestNames: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     desertNames: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "wilds"
+      }
     },
     moorNames: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     wetlandNames: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     grasslandNames: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     seasLakes: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "waters",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     coastsIslands: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "waters",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     seaCharts: {
       cultures: "shared",
       eras: "codes",
-      land: true
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "waters",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
     },
     hyperspaceCharts: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "none"
+      }
     },
     epithets: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "byname"
+      }
     },
     titles: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "byname"
+      }
     },
     familyNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "byname"
+      }
     },
     armsNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "thing"
+      }
     },
     treasureNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "thing"
+      }
     },
     bookNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "thing"
+      }
     },
     realms: {
       cultures: "shared",
       eras: "realms",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "realm",
+        ownEras: true
+      }
     },
     peoplesTongues: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: null,
+          genre: null,
+          region: null
+        },
+        roster: "people"
+      }
     },
     deityNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "deity"
+      }
     },
     sacredPlaces: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "deity"
+      }
     },
     moneyNames: {
       cultures: "shared",
       eras: "codes",
-      land: false
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "money"
+      }
     },
     tribalNames: {
       cultures: "tribal",
       eras: "none",
-      land: false
+      land: false,
+      sentence: {
+        family: "none"
+      }
     },
     mysticOrders: {
       cultures: "tribal",
       eras: "none",
       settings: "genreSettings",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: null,
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: null
+      }
     },
     martialOrders: {
       cultures: "tribal",
       eras: "none",
       settings: "genreSettings",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: null,
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: null
+      }
     },
     underworldGroups: {
       cultures: "tribal",
       eras: "none",
       settings: "genreSettings",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: null,
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: null
+      }
     },
     tradeGuilds: {
       cultures: "tribal",
       eras: "none",
       settings: "genreSettings",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: null,
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: null
+      }
     },
     adventureCompanies: {
       cultures: "tribal",
       eras: "none",
       settings: "genreSettings",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: null,
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: null
+      }
     },
     powerFactions: {
       cultures: "tribal",
       eras: "none",
       settings: "genreSettings",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: null,
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: null
+      }
     },
     supernaturalCourts: {
       cultures: "tribal",
       eras: "none",
       settings: "genreSettings",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: null,
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: null
+      }
     },
     ships: {
       cultures: "vehicle",
       eras: "ships",
       settings: "genreSettings",
       styles: "vessel",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "vessel"
+      }
     },
     spacecraft: {
       cultures: "vehicle",
       eras: "spacecraft",
       settings: "genreSettings",
       styles: "vessel",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "vessel"
+      }
     },
     aircraft: {
       cultures: "vehicle",
       eras: "aircraft",
       settings: "genreSettings",
       styles: "vessel",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "vessel"
+      }
     },
     landVehicles: {
       cultures: "vehicle",
       eras: "landVehicles",
       settings: "genreSettings",
       styles: "vessel",
-      land: false
+      land: false,
+      sentence: {
+        family: "B",
+        fields: {
+          culture: "culture",
+          era: null,
+          fantastic: "fantastic",
+          genre: "genre",
+          region: null
+        },
+        roster: "vessel"
+      }
     },
     explorationPlaceShapes: {
       cultures: "colonial",
       eras: "none",
-      land: false
+      land: false,
+      sentence: {
+        family: "none"
+      }
     },
     empireExpansionPlaceShapes: {
       cultures: "colonial",
       eras: "none",
-      land: false
+      land: false,
+      sentence: {
+        family: "none"
+      }
     },
     placeShapes: {
       cultures: "world",
       eras: "world",
       britishEras: "all",
-      land: true
+      land: true,
+      sentence: {
+        family: "none"
+      }
     },
     settlementNames: {
       cultures: "world",
       eras: "world",
       colonialCultures: "colonial",
       britishEras: "all",
-      land: false
+      land: false,
+      sentence: {
+        family: "none"
+      }
     },
     riverNames: {
       cultures: "none",
       eras: "none",
       britishEras: "all",
-      land: true
+      land: true,
+      sentence: {
+        family: "none"
+      }
     }
-  }
+  },
+  bands: [
+    {
+      key: "pre-industrial",
+      label: "pre-industrial",
+      eras: [
+        "AN",
+        "MD",
+        "EM"
+      ],
+      genre: "fantasy"
+    },
+    {
+      key: "industrial and modern",
+      label: "industrial and modern",
+      eras: [
+        "ST",
+        "MO"
+      ],
+      genre: "modern"
+    },
+    {
+      key: "future",
+      label: "future",
+      eras: [
+        "NF",
+        "IS"
+      ],
+      genre: "scifi"
+    }
+  ],
+  worlds: {
+    rows: [
+      {
+        key: "pre-industrial",
+        eras: [
+          "AN",
+          "MD",
+          "EM"
+        ],
+        plain: {
+          label: "historic or low fantasy",
+          style: "low-fantasy"
+        },
+        fantastic: {
+          label: "high or epic fantasy",
+          style: "high-fantasy"
+        }
+      },
+      {
+        key: "ST",
+        eras: [
+          "ST"
+        ],
+        plain: {
+          label: "realistic",
+          style: "realistic"
+        },
+        fantastic: {
+          label: "steampunk",
+          style: "steampunk"
+        }
+      },
+      {
+        key: "MO",
+        eras: [
+          "MO"
+        ],
+        plain: {
+          label: "realistic",
+          style: "realistic"
+        },
+        fantastic: {
+          label: "contemporary fantasy",
+          style: "contemporary-fantasy"
+        }
+      },
+      {
+        key: "future",
+        eras: [
+          "NF",
+          "IS"
+        ],
+        plain: {
+          label: "science fiction",
+          style: "realistic"
+        },
+        fantastic: {
+          label: "space opera",
+          style: "space-opera"
+        }
+      }
+    ],
+    bandRows: {
+      "pre-industrial": "pre-industrial",
+      "industrial and modern": "MO",
+      future: "future"
+    },
+    title: "How real the world is: open magic and monsters, steam and brass, or as it really was"
+  },
+  tooltips: {
+    era: "The age: decides what exists and how it is named",
+    world: "How real the world is: open magic and monsters, steam and brass, or as it really was"
+  },
+  views: {
+    welsh: {
+      label: "Welsh",
+      culture: "celtic",
+      regions: [
+        "WAL"
+      ],
+      default: "WAL",
+      fixedText: "in Wales"
+    },
+    cornish: {
+      label: "Cornish",
+      culture: "celtic",
+      regions: [
+        "COR"
+      ],
+      default: "COR",
+      fixedText: "in Cornwall"
+    },
+    scottish: {
+      label: "Scottish",
+      culture: "celtic",
+      regions: [
+        "SBL",
+        "SLO",
+        "SHH",
+        "NSI"
+      ],
+      default: "SLO"
+    }
+  },
+  menu: [
+    {
+      heading: null,
+      entries: [
+        {
+          key: "general",
+          label: "General"
+        }
+      ]
+    },
+    {
+      heading: "British Isles",
+      entries: [
+        {
+          key: "norman-british",
+          label: "Norman & British"
+        },
+        {
+          key: "anglo-saxon",
+          label: "Anglo-Saxon"
+        },
+        {
+          view: "welsh"
+        },
+        {
+          view: "scottish"
+        },
+        {
+          view: "cornish"
+        },
+        {
+          key: "celtic",
+          label: "Celtic"
+        }
+      ]
+    },
+    {
+      heading: "Northern Europe",
+      entries: [
+        {
+          key: "norse",
+          label: "Norse"
+        },
+        {
+          key: "dutch",
+          label: "Dutch"
+        }
+      ]
+    },
+    {
+      heading: "Western and southern Europe",
+      entries: [
+        {
+          key: "french",
+          label: "French"
+        },
+        {
+          key: "iberian",
+          label: "Iberian"
+        },
+        {
+          key: "roman",
+          label: "Roman and Italian"
+        },
+        {
+          key: "greek-byzantine",
+          label: "Greek and Byzantine"
+        }
+      ]
+    },
+    {
+      heading: "Eastern Europe and the steppe",
+      entries: [
+        {
+          key: "slavic",
+          label: "Slavic"
+        },
+        {
+          key: "steppe",
+          label: "Turkic and Mongol steppe"
+        },
+        {
+          key: "ottoman",
+          label: "Ottoman"
+        }
+      ]
+    },
+    {
+      heading: "Middle East and Africa",
+      entries: [
+        {
+          key: "arabic-persian",
+          label: "Arabic and Persian"
+        },
+        {
+          key: "egyptian",
+          label: "Egyptian"
+        },
+        {
+          key: "ethiopian",
+          label: "Ethiopian"
+        },
+        {
+          key: "swahili-omani",
+          label: "Swahili and Omani"
+        },
+        {
+          key: "bantu",
+          label: "Bantu"
+        },
+        {
+          key: "west-african",
+          label: "West African"
+        }
+      ]
+    },
+    {
+      heading: "South and East Asia",
+      entries: [
+        {
+          key: "indian",
+          label: "Indian"
+        },
+        {
+          key: "malay",
+          label: "Malay"
+        },
+        {
+          key: "chinese",
+          label: "Chinese"
+        },
+        {
+          key: "japanese",
+          label: "Japanese"
+        },
+        {
+          key: "korean",
+          label: "Korean"
+        }
+      ]
+    },
+    {
+      heading: "The Americas",
+      entries: [
+        {
+          key: "american",
+          label: "American"
+        },
+        {
+          key: "arctic",
+          label: null
+        },
+        {
+          key: "na-woodlands",
+          label: null
+        },
+        {
+          key: "nw-coast",
+          label: null
+        },
+        {
+          key: "aztec",
+          label: "Aztec"
+        },
+        {
+          key: "maya",
+          label: "Maya"
+        },
+        {
+          key: "andean",
+          label: "Andean"
+        }
+      ]
+    },
+    {
+      heading: "The Pacific",
+      entries: [
+        {
+          key: "polynesian",
+          label: "Polynesian"
+        },
+        {
+          key: "hawaiian",
+          label: null
+        },
+        {
+          key: "maori",
+          label: null
+        },
+        {
+          key: "w-polynesian",
+          label: null
+        }
+      ]
+    }
+  ]
 };
 
 // src/lens.ts
