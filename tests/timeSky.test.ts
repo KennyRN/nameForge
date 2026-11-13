@@ -518,11 +518,11 @@ const calText = (s: TimeSentenceState) => timeSentenceText(calendarSentence(s, L
 const skyText = (s: TimeSentenceState) => timeSentenceText(skySentence(s, LIMITS));
 
 test("§16.7: the default sentences read as the brief gives them", () => {
-  assert.equal(calText(DEFAULT_CALENDAR_STATE), "Norman & British months of the medieval era, in a realistic world, set in their homeland, of any tone, with placeholders for gods and people, each one separate.");
-  assert.equal(skyText(DEFAULT_SKY_STATE), "Norman & British constellations of the medieval era, in a realistic world, seen from their homeland, of any tone, with placeholders for gods and people, each one separate.");
+  assert.equal(calText(DEFAULT_CALENDAR_STATE), "Norman & British months of the medieval era, in a historic or low fantasy world, set in their homeland, of any tone, with placeholders for gods and people, each one separate.");
+  assert.equal(skyText(DEFAULT_SKY_STATE), "Norman & British constellations of the ancient to modern era, in a historic or low fantasy world, seen from their homeland, of any tone, with placeholders for gods and people, each one separate.");
   assert.equal(
     calText({ ...DEFAULT_CALENDAR_STATE, culture: "anglo-saxon", series: true }),
-    "Anglo-Saxon months of the medieval era, in a realistic world, set in their homeland, starting in their own new year, of any tone, with placeholders for gods and people, as one calendar.",
+    "Anglo-Saxon months of the medieval era, in a historic or low fantasy world, set in their homeland, starting in their own new year, of any tone, with placeholders for gods and people, as one calendar.",
   );
 });
 
@@ -609,7 +609,7 @@ people: placeholders
 series: on
 ---
 
-Anglo-Saxon months of the medieval era, in a realistic world, set in their homeland, starting in their own new year, of any tone, with placeholders for gods and people, as one calendar.
+Anglo-Saxon months of the medieval era, in a historic or low fantasy world, set in their homeland, starting in their own new year, of any tone, with placeholders for gods and people, as one calendar.
 `;
   const sky = `---
 type: module-preset

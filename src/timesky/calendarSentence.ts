@@ -3,6 +3,9 @@
 // set in ‹their homeland›, starting in ‹their own new year›, ‹of any tone›, with ‹placeholders for›
 // gods and people, ‹as one calendar›". Built as segments like the money sentence. No Obsidian imports.
 
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause, registerLensRules } from "../lensView";
 import { type Biome, isSpaceBiome, SPACE_BIOMES } from "../biomes";
 import { biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
@@ -26,6 +29,8 @@ import {
   type TimeWords,
   timeKindDefaultOf,
 } from "./data";
+
+registerRoster("time", TIME_CULTURES);
 
 export interface TimeSentenceState {
   culture: string;
@@ -68,7 +73,7 @@ export interface TimeChoice {
   tip?: string;
 }
 
-export type TimeSegment = string | { field: TimeField; text: string; title: string; choices: TimeChoice[]; current: string | undefined };
+export type TimeSegment = string | { field: TimeField; text: string; title: string; choices: TimeChoice[]; current: string | undefined; fixed?: boolean };
 
 export interface TimeSentenceLimits {
   /** Every biome on offer (built-ins and packs), in menu order. */
@@ -104,16 +109,13 @@ export function startSeasons(state: TimeSentenceState, limits: TimeSentenceLimit
   return (seasonCycle(biome, state.culture, atHome) ?? []).map(([s]) => s);
 }
 
+/** A sensitive culture has no fantastic world: its world link offers the plain one alone (the normaliser keeps the switch off). */
+for (const key of ["calendarNames", "skyNames"]) registerLensRules(key, { worlds: (state, ids) => (isSensitive(String(state.culture)) ? ["plain"] : ids) });
+
 export function timeSentence(module: TimeModule, state: TimeSentenceState, limits: TimeSentenceLimits): TimeSegment[] {
   const out: TimeSegment[] = [];
-  const culture = findTimeCulture(state.culture) ?? TIME_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose calendar and sky, and whose customs, the names follow",
-    choices: TIME_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== TIME_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause(module === "sky" ? "skyNames" : "calendarNames", state, { cultureTitle: "Naming culture: whose calendar and sky, and whose customs, the names follow" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const land = timeLandOf(state, limits);
   const offered = kindsOffered(module, state.culture, state.era, land);
@@ -125,28 +127,12 @@ export function timeSentence(module: TimeModule, state: TimeSentenceState, limit
     choices: offered.map((k) => ({ id: k.key, label: k.menu, title: k.description })),
     current: kind.key,
   });
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which calendars and skies exist",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
   const sensitive = isSensitive(state.culture);
-  const worlds = fantasticWords(state.era);
-  if (sensitive) out.push(worlds[0]);
-  else {
-    out.push({
-      field: "fantastic",
-      text: worlds[state.fantastic ? 1 : 0],
-      title: "Open magic and monsters; in the steam age, steampunk",
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: worlds[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off",
-    });
-  }
-  out.push(module === "calendar" ? " world, set in " : " world, seen from ");
+  // A sensitive culture's world is plain text, as it always was (no link).
+  const time = eraWorldSegments(lens, "era", "fantastic").map((seg) => (sensitive && typeof seg !== "string" && seg.field === "fantastic" ? seg.text : seg));
+  out.push(...time);
+  const setIn = module === "calendar" ? "set in " : "seen from ";
+  out.push(time.length > 0 ? `, ${setIn}` : ` ${setIn}`);
   const biome = biomeOf(state, limits);
   out.push({
     field: "biome",
@@ -238,19 +224,19 @@ export function normaliseTime(module: TimeModule, state: TimeSentenceState, limi
 
 /** §2.4: a state after one choice, with the resets that follow from it. */
 export function chooseTime(module: TimeModule, state: TimeSentenceState, field: TimeField, id: string | undefined, limits: TimeSentenceLimits): TimeSentenceState {
-  const next: TimeSentenceState = { ...state };
+  let next: TimeSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_CALENDAR_STATE.culture;
+      next = chooseLens(module === "sky" ? "skyNames" : "calendarNames", next, "culture", id ?? DEFAULT_CALENDAR_STATE.culture);
       break;
     case "kind":
       next.kind = (findTimeKind(id)?.key ?? next.kind);
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_CALENDAR_STATE.era;
+      next = chooseLens(module === "sky" ? "skyNames" : "calendarNames", next, "era", id, DEFAULT_CALENDAR_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(module === "sky" ? "skyNames" : "calendarNames", next, "fantastic", id);
       break;
     case "biome":
       next.biome = id;

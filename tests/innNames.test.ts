@@ -194,12 +194,12 @@ const iField = (state: InnSentenceState, f: string) => innSentence(state).find((
 test("§15.7: the default sentence's plain text", () => {
   assert.equal(
     innSentenceText(innSentence(DEFAULT_INN_STATE)),
-    "Norman & British houses of any kind of the medieval era, in a realistic world, across all of Britain, anywhere, as signs or with a house word, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British houses of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, anywhere, as signs or with a house word, of any tone, with placeholders for people and places, each one separate.",
   );
   const port = [["kind", "tavern"], ["era", "EM"], ["setting", "port"], ["people", "invented"], ["series", "on"]].reduce((s, [f, id]) => chooseInn(s, f as never, id), DEFAULT_INN_STATE);
   assert.equal(
     innSentenceText(innSentence(port)),
-    "Norman & British taverns of the early modern era, in a realistic world, across all of Britain, in a port, as signs or with a house word, of any tone, with invented people and places, as one town.",
+    "Norman & British taverns of the early modern era, in a historic or low fantasy world, across all of Britain, in a port, as signs or with a house word, of any tone, with invented people and places, as one town.",
   );
 });
 
@@ -225,7 +225,7 @@ test("§15.7: presets round-trip", () => {
   const preset: InnPreset = {
     packName: "Harbour taverns",
     setting: "",
-    description: "Norman & British taverns of the early modern era, in a realistic world, across all of Britain, in a port, as signs or with a house word, of any tone, with invented people and places, as one town.",
+    description: "Norman & British taverns of the early modern era, in a historic or low fantasy world, across all of Britain, in a port, as signs or with a house word, of any tone, with invented people and places, as one town.",
     culture: "norman-british",
     region: "all",
     innKind: "tavern",

@@ -243,12 +243,12 @@ const set = (state: StreetSentenceState, ...pairs: [Parameters<typeof chooseStre
 test("§16.8: the default sentence's plain text", () => {
   assert.equal(
     streetSentenceText(streetSentence(DEFAULT_STREET_STATE)),
-    "Norman & British streets, squares and districts of the medieval era, in a realistic world, across all of Britain, for a town, with dialect words as variants, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British streets, squares and districts of the medieval era, in a historic or low fantasy world, across all of Britain, for a town, with dialect words as variants, of any tone, with placeholders for people and places, each one separate.",
   );
   const crafty = set(DEFAULT_STREET_STATE, ["kind", "districts"], ["function", "craft"], ["region", "NTH"], ["series", "on"]);
   assert.equal(
     streetSentenceText(streetSentence(crafty)),
-    "Norman & British districts for craft of the medieval era, in a realistic world, in the North, for a town, with dialect words as variants, of any tone, with placeholders for people and places, as one town.",
+    "Norman & British districts for craft of the medieval era, in a historic or low fantasy world, in the North, for a town, with dialect words as variants, of any tone, with placeholders for people and places, as one town.",
   );
   assert.ok(streetSentenceText(streetSentence(set(DEFAULT_STREET_STATE, ["kind", "districts"]))).startsWith("Norman & British districts of any function of the"));
 });

@@ -1,5 +1,6 @@
 // One sentence brief §4, §6, §7, §8.2: the lens clause. Nothing uses it yet; these tests pin what it
 // shows and chooses before the sentences are wired to it (M3 to M5).
+import "../src/lensRosterSources";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import lensData from "../src/data/lens.json";
@@ -258,7 +259,13 @@ test("views: Welsh, Cornish and Scottish are readings of (celtic, region), both 
   // Changing culture away from a view clears the region.
   const welsh = stateOf(m, { culture: "celtic", region: "WAL" });
   assert.equal(applyLensChoice(m, welsh, "culture", "norman-british").region, undefined);
-  assert.equal(applyLensChoice(m, welsh, "culture", "celtic").region, undefined);
+  // From a view the Celtic entry's own menu id means "Celtic, all of Britain"; the stored culture key itself changes nothing,
+  // which is what a preset's own mapping relies on (it chooses the culture it already holds).
+  const celticEntry = lensClause(m, welsh).culture!.choices.find((c) => c.label === "Celtic")!;
+  assert.equal(celticEntry.id, "celtic:any");
+  const celticAll = applyLensChoice(m, welsh, "culture", celticEntry.id);
+  assert.deepEqual([celticAll.culture, celticAll.region], ["celtic", undefined]);
+  assert.equal(applyLensChoice(m, welsh, "culture", "celtic").region, "WAL");
   assert.equal(applyLensChoice(m, welsh, "culture", "japanese").region, undefined);
   // The Celtic entry is where the three views sit around it, in the lens order.
   const ids = lensClause(m, stateOf(m, {})).culture!.choices.map((c) => c.id);

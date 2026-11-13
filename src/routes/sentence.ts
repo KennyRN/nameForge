@@ -4,6 +4,9 @@
 // No Obsidian imports.
 
 import { regionPhrase } from "../colonialSentence";
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
 import { scaleInfo, scaleLabel, scalePhrase, scalesFor, validScale, type ScaleChoice } from "../space/scale";
@@ -22,6 +25,8 @@ import {
   type RouteEra,
   type RouteFtl,
 } from "./engine";
+
+registerRoster("route", ROUTE_CULTURES);
 
 export interface RouteSentenceState {
   culture: string;
@@ -57,9 +62,10 @@ export interface RouteChoice {
   title?: string;
   /** A menu heading shown before this choice (§4.1's groups). */
   group?: string;
+  heading?: string;
 }
 
-export type RouteSegment = string | { field: RouteField; text: string; title: string; choices: RouteChoice[]; current: string | undefined };
+export type RouteSegment = string | { field: RouteField; text: string; title: string; choices: RouteChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one network" };
@@ -75,14 +81,8 @@ export const routeRegionText = (region: string | undefined) => (region ? `in ${r
 
 export function routeSentence(state: RouteSentenceState): RouteSegment[] {
   const out: RouteSegment[] = [];
-  const culture = findRouteCulture(state.culture) ?? ROUTE_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose customs the routes follow",
-    choices: ROUTE_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== ROUTE_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause("routeNames", state, { cultureTitle: "Naming culture: whose customs the routes follow", regionTitle: "Weights the routes towards a region's customs" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const offered = kindsOffered(state.era, state.fantastic);
   const kind = offered.find((k) => k.key === state.kind);
@@ -105,24 +105,9 @@ export function routeSentence(state: RouteSentenceState): RouteSegment[] {
       current: scale,
     });
   }
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which kinds of route exist",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const words = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: words[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, ");
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  out.push(...time);
+  if (time.length > 0) out.push(", ");
   // Stellar brief §6.2: faster-than-light travel, in the interstellar era.
   if (showsFtl(state.era, state.kind, state.scale ?? "any")) {
     const ftl = ROUTE_FTL.find((f) => f.id === (state.ftl ?? "any")) ?? ROUTE_FTL[0];
@@ -135,17 +120,8 @@ export function routeSentence(state: RouteSentenceState): RouteSegment[] {
     });
     out.push(", ");
   }
-  if (showsRegion(state)) {
-    out.push({
-      field: "region",
-      text: routeRegionText(state.region),
-      title: "Weights the routes towards a region's customs",
-      choices: [
-        { id: undefined, label: routeRegionText(undefined) },
-        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties })),
-      ],
-      current: state.region,
-    });
+  if (lens.region) {
+    out.push(asSegment(lens.region, "region"));
     out.push(", ");
   }
   out.push({
@@ -185,22 +161,22 @@ export function routeSentenceText(segments: RouteSegment[]): string {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseRoute(state: RouteSentenceState, field: RouteField, id: string | undefined): RouteSentenceState {
-  const next: RouteSentenceState = { ...state };
+  let next: RouteSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_ROUTE_STATE.culture;
+      next = chooseLens("routeNames", next, "culture", id ?? DEFAULT_ROUTE_STATE.culture);
       break;
     case "kind":
       next.kind = id;
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_ROUTE_STATE.era;
+      next = chooseLens("routeNames", next, "era", id, DEFAULT_ROUTE_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("routeNames", next, "fantastic", id);
       break;
     case "region":
-      next.region = id;
+      next = chooseLens("routeNames", next, "region", id);
       break;
     case "tone":
       next.tone = (id as GroupToneChoice) ?? "any";

@@ -3,6 +3,9 @@
 // ‹of any tone›, with ‹placeholders for› people and places, ‹each one separate›." One builder for all
 // six modules, as segments like the waters sentence. No Obsidian imports.
 
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { type BiomeCatalogue, biomeMatches, BUILT_IN_BIOMES } from "../biomes";
 import { biomeClashes, biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { regionPhrase } from "../colonialSentence";
@@ -25,6 +28,8 @@ import {
   type WildsModule,
   type WildsWhere,
 } from "./engine";
+
+registerRoster("wilds", WILDS_CULTURES);
 
 export interface WildsSentenceState {
   culture: string;
@@ -59,7 +64,7 @@ export interface WildsChoice {
   heading?: string;
 }
 
-export type WildsSegment = string | { field: WildsField; text: string; title: string; choices: WildsChoice[]; current: string | undefined };
+export type WildsSegment = string | { field: WildsField; text: string; title: string; choices: WildsChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const WHERE_TEXT: Record<WildsWhere, string> = { home: "in home country", new: "in newly explored country" };
@@ -75,15 +80,9 @@ export function wildsBiomeText(module: WildsModule, biome: string | undefined, c
 
 export function wildsSentence(state: WildsSentenceState, module: WildsModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WildsSegment[] {
   const out: WildsSegment[] = [];
-  const culture = findWildsCulture(state.culture) ?? WILDS_CULTURES[0];
   const label = WILDS_DATA.modules[module].label;
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: `Naming culture: whose customs the ${label} names follow`,
-    choices: WILDS_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== WILDS_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause(module, state, { cultureTitle: `Naming culture: whose customs the ${label} names follow` });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const kinds = wildsKindsAt(module, state.era);
   const kind = kinds.find((k) => k.key === state.kind);
@@ -95,15 +94,8 @@ export function wildsSentence(state: WildsSentenceState, module: WildsModule, ca
     choices: [{ id: undefined, label: "Any" }, ...kinds.map((k) => ({ id: k.key, label: k.menu }))],
     current: kind?.key,
   });
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: wildsEraLabel(state.era),
-    title: "The age: decides which names exist",
-    choices: wildsEras(module).map((e) => ({ id: e, label: wildsEraLabel(e) })),
-    current: state.era,
-  });
-  out.push(" era, ");
+  if (lens.era) out.push(" of the ", asSegment(lens.era, "era"), " era, ");
+  else out.push(" ");
   out.push({
     field: "where",
     text: WHERE_TEXT[state.where],
@@ -111,24 +103,10 @@ export function wildsSentence(state: WildsSentenceState, module: WildsModule, ca
     choices: (["home", "new"] as WildsWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
     current: state.where,
   });
-  out.push(", in a ");
-  const words = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: words[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, ");
-  if (showsWildsRegion(module, state.culture, state.where)) {
-    out.push({
-      field: "region",
-      text: wildsRegionText(state.region),
-      title: "Weights the names towards a region's customs",
-      choices: [{ id: undefined, label: wildsRegionText(undefined) }, ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: wildsRegionText(r.code), title: r.counties }))],
-      current: state.region,
-    });
+  if (lens.world) out.push(", in a ", asSegment(lens.world, "fantastic"), " world, ");
+  else out.push(", ");
+  if (lens.region) {
+    out.push(asSegment(lens.region, "region"));
   } else {
     out.push({
       field: "biome",
@@ -177,25 +155,25 @@ export function wildsSentenceText(segments: WildsSegment[]): string {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseWilds(state: WildsSentenceState, field: WildsField, id: string | undefined, module: WildsModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WildsSentenceState {
-  const next: WildsSentenceState = { ...state };
+  let next: WildsSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? wildsDefaultCulture(module);
+      next = chooseLens(module, next, "culture", id ?? wildsDefaultCulture(module));
       break;
     case "kind":
       next.kind = id;
       break;
     case "era":
-      next.era = wildsEras(module).includes(id as WildsEra) ? (id as WildsEra) : defaultWildsState(module).era;
+      next = chooseLens(module, next, "era", id, defaultWildsState(module).era);
       break;
     case "where":
       next.where = id === "new" ? "new" : "home";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(module, next, "fantastic", id);
       break;
     case "region":
-      next.region = id;
+      next = chooseLens(module, next, "region", id);
       break;
     case "biome":
       next.biome = id;

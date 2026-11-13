@@ -3,6 +3,8 @@
 // ‹the whole settlement› in ‹standard› detail, with ‹placeholders for› people and places".
 // Built as segments like the route, street, inn and building sentences. No Obsidian imports.
 
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
 import { findRouteCulture, ROUTE_CULTURES, ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
@@ -42,24 +44,19 @@ export interface KitChoice {
   label: string;
   title?: string;
   group?: string;
+  heading?: string;
 }
 
-export type KitSegment = string | { field: KitField; text: string; title: string; choices: KitChoice[]; current: string | undefined };
+export type KitSegment = string | { field: KitField; text: string; title: string; choices: KitChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 
 export function kitSentence(state: KitSentenceState): KitSegment[] {
   const out: KitSegment[] = [];
-  const culture = findRouteCulture(state.culture) ?? ROUTE_CULTURES[0];
+  const lens = lensClause("settlementKit", state, { cultureTitle: "Naming culture: whose customs the settlement follows", regionTitle: "Weights the names towards a region's customs" });
   // §2.2: "A" becomes "An" before a vowel.
-  out.push(/^[aeiou]/i.test(culture.label) ? "an " : "a ");
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose customs the settlement follows",
-    choices: ROUTE_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== ROUTE_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  out.push(/^[aeiou]/i.test(lens.culture!.text) ? "an " : "a ");
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   out.push({
     field: "size",
@@ -68,35 +65,11 @@ export function kitSentence(state: KitSentenceState): KitSegment[] {
     choices: KIT_SIZES.map((s) => ({ id: s, label: sizeLabel(s, state.era) })),
     current: state.size,
   });
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which roads, buildings, houses and ships exist",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const words = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: words[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, ");
-  if (showsRegion(state)) {
-    out.push({
-      field: "region",
-      text: routeRegionText(state.region),
-      title: "Weights the names towards a region's customs",
-      choices: [
-        { id: undefined, label: routeRegionText(undefined) },
-        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties })),
-      ],
-      current: state.region,
-    });
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  out.push(...time);
+  if (time.length > 0) out.push(", ");
+  if (lens.region) {
+    out.push(asSegment(lens.region, "region"));
     out.push(", ");
   }
   out.push({
@@ -150,19 +123,19 @@ export function kitSentenceText(segments: KitSegment[]): string {
 
 /** §2: a state after one choice, with the resets that follow from it. */
 export function chooseKit(state: KitSentenceState, field: KitField, id: string | undefined): KitSentenceState {
-  const next: KitSentenceState = { ...state };
+  let next: KitSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_KIT_STATE.culture;
+      next = chooseLens("settlementKit", next, "culture", id ?? DEFAULT_KIT_STATE.culture);
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_KIT_STATE.era;
+      next = chooseLens("settlementKit", next, "era", id, DEFAULT_KIT_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("settlementKit", next, "fantastic", id);
       break;
     case "region":
-      next.region = id;
+      next = chooseLens("settlementKit", next, "region", id);
       break;
     case "size":
       next.size = KIT_SIZES.includes(id as KitSize) ? (id as KitSize) : DEFAULT_KIT_STATE.size;

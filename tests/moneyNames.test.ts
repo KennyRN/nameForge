@@ -837,14 +837,14 @@ const field = (state: Parameters<typeof moneySentence>[0], name: string) => mone
 test("§16.8: the default sentence's plain text", () => {
   assert.equal(
     moneySentenceText(moneySentence(DEFAULT_MONEY_STATE)),
-    "Norman & British money of any kind of the medieval era, in a realistic world, of any value, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British money of any kind of the medieval era, in a historic or low fantasy world, of any value, of any tone, with placeholders for people and places, each one separate.",
   );
 });
 
 test("§16.8: Roman / Italian shows the words link after the value", () => {
   assert.equal(
     moneySentenceText(moneySentence({ ...DEFAULT_MONEY_STATE, culture: "roman" })),
-    "Roman / Italian money of any kind of the medieval era, in a realistic world, of any value, in translated names, of any tone, with placeholders for people and places, each one separate.",
+    "Roman and Italian money of any kind of the medieval era, in a historic or low fantasy world, of any value, in translated names, of any tone, with placeholders for people and places, each one separate.",
   );
   const loans = chooseMoney({ ...DEFAULT_MONEY_STATE, culture: "roman" }, "words", "loanwords");
   assert.equal(moneySentenceText(moneySentence(loans)).includes("with familiar loanwords"), true);

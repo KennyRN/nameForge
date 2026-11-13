@@ -136,7 +136,7 @@ test("sentence: the default reads as the brief's example, and resets follow §2.
   const state = defaultWildsState("mountainNames");
   assert.equal(
     wildsSentenceText(wildsSentence(state, "mountainNames")),
-    "Norman & British mountain features of any kind of the medieval era, in home country, in a realistic world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British mountain features of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
   );
   assert.equal(defaultWildsState("desertNames").culture, "general");
   // Biome shows instead of region for other cultures and for new country, and never offers a biome the module doesn't.

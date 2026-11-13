@@ -189,7 +189,7 @@ import { GROUP_LABELS, historySection, SECTION_GROUPS, SECTION_LABELS, SWITCHER_
 test("§14.6: the default sentence's plain text", () => {
   assert.equal(
     deitySentenceText(deitySentence(DEFAULT_DEITY_STATE)),
-    "General-themed deities of any kind of any domain, of any gender, of the medieval era, in a realistic world, of any tone, as titles only, each one separate.",
+    "General-themed deities of any kind of any domain, of any gender, of the medieval to early modern era, in a historic or low fantasy world, of any tone, as titles only, each one separate.",
   );
 });
 
@@ -197,7 +197,7 @@ test("§14.6: the gender and names links are hidden for sacred places", () => {
   const places = chooseDeity({ ...DEFAULT_DEITY_STATE, gender: "female", names: "placeholder" }, "kind", "place");
   const fields = deitySentence(places).filter((s) => typeof s !== "string").map((s) => (s as { field: string }).field);
   assert.ok(!fields.includes("gender") && !fields.includes("names"));
-  assert.equal(deitySentenceText(deitySentence(places)), "General-themed sacred places of any domain, of the medieval era, in a realistic world, of any tone, each one separate.");
+  assert.equal(deitySentenceText(deitySentence(places)), "General-themed sacred places of any domain, of the medieval to early modern era, in a historic or low fantasy world, of any tone, each one separate.");
   assert.equal(chooseDeity({ ...DEFAULT_DEITY_STATE, era: "ST", fantastic: true, domain: "steampunk" }, "era", "MD").domain, undefined);
 });
 
@@ -215,7 +215,7 @@ test("§14.6: presets round-trip; Polynesian reports and runs as General", () =>
   const preset: DeityPreset = {
     packName: "Storm pantheon",
     setting: "",
-    description: "Norse-themed deities of any kind of any domain, of any gender, of the medieval era, in a fantastic world, of any tone, with placeholder names, as one pantheon.",
+    description: "Norse-themed deities of any kind of any domain, of any gender, of the medieval to early modern era, in a high or epic fantasy world, of any tone, with placeholder names, as one pantheon.",
     culture: "norse",
     deityKind: "any",
     domain: "any",
@@ -336,7 +336,7 @@ test("line-up §2.2: the deities kind link has no sacred places; kind Any never 
 });
 
 test("line-up §2.3: the sacred places sentence; a domain the era lacks resets", () => {
-  assert.equal(deitySentenceText(sacredPlaceSentence(DEFAULT_SACRED_PLACE_STATE)), "General-themed sacred places of any domain, of the medieval era, in a realistic world, of any tone.");
+  assert.equal(deitySentenceText(sacredPlaceSentence(DEFAULT_SACRED_PLACE_STATE)), "General-themed sacred places of any domain, of the medieval to early modern era, in a historic or low fantasy world, of any tone.");
   const fields = sacredPlaceSentence(DEFAULT_SACRED_PLACE_STATE).filter((s) => typeof s !== "string").map((s) => (s as { field: string }).field);
   assert.deepEqual(fields, ["culture", "domain", "era", "fantastic", "tone"]);
   assert.equal(chooseSacredPlace({ ...DEFAULT_SACRED_PLACE_STATE, era: "ST", fantastic: true, domain: "steampunk" }, "era", "MD").domain, undefined);

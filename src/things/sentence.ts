@@ -3,11 +3,16 @@
 // ‹placeholders for› people and places, ‹names only›". Built as segments like the money sentence.
 // No Obsidian imports.
 
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import type { BynamePackInfo } from "../bynames/sentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { fantasticWords } from "../routes/sentence";
 import { findThingCulture, findThingKind, THING_CULTURES, thingKindsOffered, thingModuleInfo, type ThingModule, type ThingOwner } from "./engine";
+
+registerRoster("thing", THING_CULTURES);
 
 export interface ThingSentenceState {
   culture: string;
@@ -41,9 +46,10 @@ export interface ThingChoice {
   label: string;
   title?: string;
   group?: string;
+  heading?: string;
 }
 
-export type ThingSegment = string | { field: ThingField; text: string; title: string; choices: ThingChoice[]; current: string | undefined };
+export type ThingSegment = string | { field: ThingField; text: string; title: string; choices: ThingChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const DESCRIBE_TEXT = { off: "names only", on: "with what they are" };
@@ -62,14 +68,8 @@ const sectionText = (state: ThingSentenceState, headings: string[]) => (state.se
 export function thingSentence(module: ThingModule, state: ThingSentenceState, packs: BynamePackInfo[] = []): ThingSegment[] {
   const out: ThingSegment[] = [];
   const info = thingModuleInfo(module);
-  const culture = findThingCulture(state.culture) ?? THING_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose habits of naming things the names follow",
-    choices: THING_CULTURES.map((c) => ({ id: c.key, label: c.label })),
-    current: culture.key,
-  });
+  const lens = lensClause(thingModuleInfo(module).section, state, { cultureTitle: "Naming culture: whose habits of naming things the names follow" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const offered = thingKindsOffered(module, state.culture, state.era, state.fantastic);
   const kind = offered.find((k) => k.key === state.kind);
@@ -80,24 +80,9 @@ export function thingSentence(module: ThingModule, state: ThingSentenceState, pa
     choices: [{ id: undefined, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind?.key,
   });
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which things exist",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const worlds = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: worlds[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: worlds[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, ");
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  out.push(...time);
+  if (time.length > 0) out.push(", ");
   out.push({
     field: "tone",
     text: TONE_PHRASES[state.tone],
@@ -166,7 +151,7 @@ export function thingSentenceText(segments: ThingSegment[]): string {
 
 /** §2.4: a state made consistent: a kind the culture, era and genre don't offer goes back to Any. */
 export function normaliseThings(module: ThingModule, state: ThingSentenceState): ThingSentenceState {
-  const next: ThingSentenceState = { ...state };
+  let next: ThingSentenceState = { ...state };
   if (!findThingCulture(next.culture)) next.culture = DEFAULT_THING_STATE.culture;
   if (next.kind && !thingKindsOffered(module, next.culture, next.era, next.fantastic).some((k) => k.key === next.kind)) next.kind = undefined;
   return next;
@@ -174,19 +159,19 @@ export function normaliseThings(module: ThingModule, state: ThingSentenceState):
 
 /** §2.4: a state after one choice, with the resets that follow from it. */
 export function chooseThings(module: ThingModule, state: ThingSentenceState, field: ThingField, id: string | undefined, packs: BynamePackInfo[] = []): ThingSentenceState {
-  const next: ThingSentenceState = { ...state };
+  let next: ThingSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_THING_STATE.culture;
+      next = chooseLens(thingModuleInfo(module).section, next, "culture", id ?? DEFAULT_THING_STATE.culture);
       break;
     case "kind":
       next.kind = findThingKind(id)?.module === module ? id : undefined;
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_THING_STATE.era;
+      next = chooseLens(thingModuleInfo(module).section, next, "era", id, DEFAULT_THING_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(thingModuleInfo(module).section, next, "fantastic", id);
       break;
     case "tone":
       next.tone = (id as GroupToneChoice) ?? "any";

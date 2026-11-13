@@ -2,12 +2,17 @@
 // for ‹names I type›, of the ‹medieval› era, giving ‹peoples and languages›, ‹of any tone›, ‹one language
 // name each›". Built as segments like the named things sentence. No Obsidian imports.
 
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens } from "../lensSentence";
+import { lensClause } from "../lensView";
 import type { BynamePackInfo } from "../bynames/sentence";
 import { type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { ownerSectionRequest } from "../things/sentence";
 import { type PeopleDetail, type PeopleGiving, PEOPLE_CULTURES, peoplesHistoryLabel } from "./engine";
 import { cultureSetKeys } from "../lens";
+
+registerRoster("people", PEOPLE_CULTURES);
 
 export type PeopleSource = "typed" | "pack" | "realms" | "places";
 
@@ -41,9 +46,10 @@ export interface PeopleChoice {
   id: string | undefined;
   label: string;
   title?: string;
+  heading?: string;
 }
 
-export type PeopleSegment = string | { field: PeopleField; text: string; title: string; choices: PeopleChoice[]; current: string | undefined };
+export type PeopleSegment = string | { field: PeopleField; text: string; title: string; choices: PeopleChoice[]; current: string | undefined; fixed?: boolean };
 
 /** §2.3: new place names isn't offered for greek-byzantine and steppe. */
 export const PEOPLE_NO_PLACES = cultureSetKeys("noPlaceNames");
@@ -59,14 +65,8 @@ const sectionText = (state: PeopleSentenceState, headings: string[]) => (state.s
 
 export function peopleSentence(state: PeopleSentenceState, packs: BynamePackInfo[] = []): PeopleSegment[] {
   const out: PeopleSegment[] = [];
-  const culture = PEOPLE_CULTURES.find((c) => c.key === state.culture) ?? PEOPLE_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "The culture the names come from. It decides which endings English would use: -er and -ish for English places, -ian and -an for Latin ones, -i for Arabic and Indian ones, -ese for East Asian ones.",
-    choices: PEOPLE_CULTURES.map((c) => ({ id: c.key, label: c.label })),
-    current: culture.key,
-  });
+  const lens = lensClause("peoplesTongues", state, { cultureTitle: "The culture the names come from. It decides which endings English would use: -er and -ish for English places, -ian and -an for Latin ones, -i for Arabic and Indian ones, -ese for East Asian ones." });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" peoples and tongues for ");
   const sources = (["typed", "pack", "realms", "places"] as PeopleSource[]).filter((s) => s !== "places" || placesOffered(state.culture));
   out.push({
@@ -97,15 +97,8 @@ export function peopleSentence(state: PeopleSentenceState, packs: BynamePackInfo
       });
     }
   }
-  out.push(", of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which language shapes are used",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, giving ");
+  if (lens.era) out.push(", of the ", asSegment(lens.era, "era"), " era, giving ");
+  else out.push(", giving ");
   out.push({
     field: "giving",
     text: GIVING_TEXT[state.giving],
@@ -142,7 +135,7 @@ export function peopleSentenceText(segments: PeopleSegment[]): string {
 
 /** §2.4: a state made consistent: a culture with no place names module can't use that source. */
 export function normalisePeoples(state: PeopleSentenceState): PeopleSentenceState {
-  const next: PeopleSentenceState = { ...state };
+  let next: PeopleSentenceState = { ...state };
   if (!PEOPLE_CULTURES.some((c) => c.key === next.culture)) next.culture = DEFAULT_PEOPLE_STATE.culture;
   if (next.source === "places" && !placesOffered(next.culture)) next.source = "realms";
   if (next.giving === "peoples") next.detail = "one";
@@ -151,10 +144,10 @@ export function normalisePeoples(state: PeopleSentenceState): PeopleSentenceStat
 
 /** §2.4: a state after one choice, with the resets that follow from it. */
 export function choosePeoples(state: PeopleSentenceState, field: PeopleField, id: string | undefined, packs: BynamePackInfo[] = []): PeopleSentenceState {
-  const next: PeopleSentenceState = { ...state };
+  let next: PeopleSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_PEOPLE_STATE.culture;
+      next = chooseLens("peoplesTongues", next, "culture", id ?? DEFAULT_PEOPLE_STATE.culture);
       break;
     case "source":
       next.source = id === "pack" || id === "realms" || id === "places" ? id : "typed";
@@ -169,7 +162,7 @@ export function choosePeoples(state: PeopleSentenceState, field: PeopleField, id
       next.section = id;
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_PEOPLE_STATE.era;
+      next = chooseLens("peoplesTongues", next, "era", id, DEFAULT_PEOPLE_STATE.era);
       break;
     case "giving":
       next.giving = id === "peoples" || id === "languages" ? id : "both";

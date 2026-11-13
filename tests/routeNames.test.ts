@@ -280,12 +280,12 @@ const field = (state: RouteSentenceState, f: string) => routeSentence(state).fin
 test("§15.8: the default sentence's plain text", () => {
   assert.equal(
     routeSentenceText(routeSentence(DEFAULT_ROUTE_STATE)),
-    "Norman & British routes of any kind of the medieval era, in a realistic world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British routes of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
   );
   const north = chooseRoute(chooseRoute(chooseRoute(chooseRoute(DEFAULT_ROUTE_STATE, "region", "NTH"), "kind", "drove"), "people", "invented"), "series", "on");
   assert.equal(
     routeSentenceText(routeSentence(north)),
-    "Norman & British droves and tracks of the medieval era, in a realistic world, in the North, of any tone, with invented people and places, as one network.",
+    "Norman & British droves and tracks of the medieval era, in a historic or low fantasy world, in the North, of any tone, with invented people and places, as one network.",
   );
 });
 
@@ -293,7 +293,7 @@ test("§15.8: the steam age shows steampunk in the fantastic link", () => {
   const st = chooseRoute(DEFAULT_ROUTE_STATE, "era", "ST");
   assert.deepEqual(field(st, "fantastic")!.choices.map((c) => c.label), ["realistic", "steampunk"]);
   assert.equal(field(chooseRoute(st, "fantastic", "on"), "fantastic")!.text, "steampunk");
-  assert.equal(field(chooseRoute(DEFAULT_ROUTE_STATE, "fantastic", "on"), "fantastic")!.text, "fantastic");
+  assert.equal(field(chooseRoute(DEFAULT_ROUTE_STATE, "fantastic", "on"), "fantastic")!.text, "high or epic fantasy");
 });
 
 test("§15.8: the region link is hidden for japanese, and choosing japanese resets the region", () => {
@@ -318,7 +318,8 @@ test("§2.2–§2.3: the kind menu offers the era's kinds; a kind the new era la
   const nf = chooseRoute(chooseRoute(chooseRoute(DEFAULT_ROUTE_STATE, "era", "NF"), "fantastic", "on"), "kind", "pilgrim");
   assert.equal(nf.kind, "pilgrim");
   assert.equal(chooseRoute(nf, "fantastic", "off").kind, undefined);
-  assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 22);
+  // The 22 cultures, and the Welsh, Scottish and Cornish views the probe finds real for routes.
+  assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 25);
 });
 
 test("§1: the module sits after native place names; its history label and section", () => {

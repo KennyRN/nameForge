@@ -3,10 +3,15 @@
 // ‹each one separate›"; and, since the line-up brief's split (§2.3), the sacred places sentence on the
 // same engine. Built as segments like the event sentence. No Obsidian imports.
 
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { fantasticWords } from "../routes/sentence";
 import { DEITY_ANY, DEITY_CULTURES, DEITY_DOMAINS, DEITY_KINDS, domainsOffered, type DeityGender, type DeityKind, type DeityNames } from "./engine";
+
+registerRoster("deity", DEITY_CULTURES);
 
 export interface DeitySentenceState {
   culture: string;
@@ -40,9 +45,10 @@ export interface DeityChoice {
   id: string | undefined;
   label: string;
   title?: string;
+  heading?: string;
 }
 
-export type DeitySegment = string | { field: DeityField; text: string; title: string; choices: DeityChoice[]; current: string | undefined };
+export type DeitySegment = string | { field: DeityField; text: string; title: string; choices: DeityChoice[]; current: string | undefined; fixed?: boolean };
 
 export const GENDER_TEXT: Record<DeityGender, string> = { any: "of any gender", male: "male", female: "female", neither: "neither male nor female" };
 export const NAMES_TEXT: Record<DeityNames, string> = { titles: "as titles only", placeholder: "with placeholder names", pack: "with names from" };
@@ -52,18 +58,15 @@ const SERIES_TEXT = { off: "each one separate", on: "as one pantheon" };
 /** Line-up brief §2.2: the kinds the deities module draws (kind Any means these). */
 export const DEITIES_MODULE_KINDS: DeityKind[] = ["deity", "pantheon"];
 
+/** The module whose lens offers the state reads: sacred places are the deities sentence with kind "place". */
+const lensKey = (state: Pick<DeitySentenceState, "kind">): string => (state.kind === "place" ? "sacredPlaces" : "deityNames");
+
 export const showsPersonLinks = (state: Pick<DeitySentenceState, "kind">) => state.kind !== "place";
 
 export function deitySentence(state: DeitySentenceState, packs: string[] = []): DeitySegment[] {
   const out: DeitySegment[] = [];
-  const culture = DEITY_CULTURES.find((c) => c.key === state.culture) ?? DEITY_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose customs shape the faith (never its real gods)",
-    choices: DEITY_CULTURES.map((c) => ({ id: c.key, label: c.label })),
-    current: culture.key,
-  });
+  const lens = lensClause(lensKey(state), state, { cultureTitle: "Naming culture: whose customs shape the faith (never its real gods)" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push("-themed ");
   const kind = DEITY_KINDS.find((k) => k.key === state.kind);
   out.push({
@@ -95,24 +98,11 @@ export function deitySentence(state: DeitySentenceState, packs: string[] = []): 
     });
     out.push(", ");
   }
-  out.push("of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which domains exist (engines in the steam age, machines in the future)",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const words = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: words[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, ");
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  // The lens words follow ", ", so the first begins without its space.
+  if (typeof time[0] === "string") time[0] = time[0].trimStart();
+  out.push(...time);
+  if (time.length > 0) out.push(", ");
   out.push({
     field: "tone",
     text: TONE_PHRASES[state.tone],
@@ -162,10 +152,10 @@ export function deitySentenceText(segments: DeitySegment[]): string {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseDeity(state: DeitySentenceState, field: DeityField, id: string | undefined): DeitySentenceState {
-  const next: DeitySentenceState = { ...state };
+  let next: DeitySentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = DEITY_CULTURES.some((c) => c.key === id) ? id! : "general";
+      next = chooseLens(lensKey(next), next, "culture", DEITY_CULTURES.some((c) => c.key === id) ? id! : "general");
       break;
     case "kind":
       next.kind = id as DeityKind | undefined;
@@ -177,10 +167,10 @@ export function chooseDeity(state: DeitySentenceState, field: DeityField, id: st
       next.gender = (id as DeityGender) ?? "any";
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_DEITY_STATE.era;
+      next = chooseLens(lensKey(next), next, "era", id, DEFAULT_DEITY_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens(lensKey(next), next, "fantastic", id);
       break;
     case "tone":
       next.tone = (id as GroupToneChoice) ?? "any";

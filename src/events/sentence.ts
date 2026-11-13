@@ -2,6 +2,8 @@
 // ‹medieval› era, in a ‹realistic› world, on ‹a realm's› scale, ‹of any tone›, with ‹placeholders for›
 // people and places, ‹each one separate›". Built as segments like the building sentence. No Obsidian imports.
 
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { findRouteCulture, ROUTE_CULTURES, ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { fantasticWords } from "../routes/sentence";
@@ -36,9 +38,10 @@ export interface EventChoice {
   label: string;
   title?: string;
   group?: string;
+  heading?: string;
 }
 
-export type EventSegment = string | { field: EventField; text: string; title: string; choices: EventChoice[]; current: string | undefined };
+export type EventSegment = string | { field: EventField; text: string; title: string; choices: EventChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one history" };
@@ -46,14 +49,8 @@ const scaleText = (key: EventScale) => EVENT_SCALES.find((s) => s.key === key)!.
 
 export function eventSentence(state: EventSentenceState): EventSegment[] {
   const out: EventSegment[] = [];
-  const culture = findRouteCulture(state.culture) ?? ROUTE_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose customs the history follows",
-    choices: ROUTE_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== ROUTE_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause("eventNames", state, { cultureTitle: "Naming culture: whose customs the history follows" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const offered = eventKindsOffered(state.era);
   const kind = offered.find((k) => k.key === state.kind);
@@ -64,24 +61,9 @@ export function eventSentence(state: EventSentenceState): EventSegment[] {
     choices: [{ id: undefined, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind?.key,
   });
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which events and eras exist",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const words = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: words[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, on ");
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  out.push(...time);
+  out.push(time.length > 0 ? ", on " : " on ");
   out.push({
     field: "scale",
     text: scaleText(state.scale),
@@ -127,19 +109,19 @@ export function eventSentenceText(segments: EventSegment[]): string {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseEvent(state: EventSentenceState, field: EventField, id: string | undefined): EventSentenceState {
-  const next: EventSentenceState = { ...state };
+  let next: EventSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_EVENT_STATE.culture;
+      next = chooseLens("eventNames", next, "culture", id ?? DEFAULT_EVENT_STATE.culture);
       break;
     case "kind":
       next.kind = id as EventKind | undefined;
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_EVENT_STATE.era;
+      next = chooseLens("eventNames", next, "era", id, DEFAULT_EVENT_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("eventNames", next, "fantastic", id);
       break;
     case "scale":
       next.scale = EVENT_SCALES.some((s) => s.key === id) ? (id as EventScale) : "realm";

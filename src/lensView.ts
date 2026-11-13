@@ -111,6 +111,8 @@ const OFFERS = (offersData as unknown as { modules: Record<string, Offer> }).mod
 const REGION_TITLE = "Weights the names towards a region's customs";
 const CULTURE_TITLE = "Naming culture: whose customs the names follow";
 const ALL = "all";
+/** The Celtic entry's menu id while the stored state reads as a view: Celtic, no region. */
+export const CELTIC_ANY = "celtic:any";
 
 /** The modules the clause builds for (family A and B). */
 export const LENS_VIEW_MODULES: readonly string[] = Object.keys(LENS.modules).filter((m) => LENS.modules[m].sentence.family !== "none");
@@ -184,6 +186,8 @@ function cultureChoices(moduleKey: string, entry: SentenceEntry, current: string
       first = false;
     }
   }
+  // From a view, the Celtic entry means "Celtic, all of Britain": its menu id says so, since choosing the stored culture key itself changes nothing (a preset's own mapping does that and must keep its region).
+  if (LENS.views[current]) for (const c of out) if (c.id === "celtic") c.id = CELTIC_ANY;
   // A key the module has and the lens menu doesn't list keeps its own label, after the rest.
   for (const [key, label] of roster) if (!placed.has(key)) out.push({ id: key, label });
   // Rule 4: a stored culture the module doesn't list is still shown, and kept.
@@ -237,6 +241,14 @@ const runId = (run: string[]): string => run.join("-");
 
 /** Family A: the runs of eras the probe found (adjacent eras that never differ are one). */
 const runsOf = (moduleKey: string): string[][] => offer(moduleKey).eras as string[][];
+
+/** Whether an era id (a run's id, or one era code) is one the module's era link can hold. Realms' own eras and family B bands are always their own. */
+export function eraOffered(moduleKey: string, id: string): boolean {
+  const entry = sentence(moduleKey);
+  if (entry.ownEras || entry.family === "B") return true;
+  const codes = id.split("-");
+  return runsOf(moduleKey).some((r) => codes.every((c) => r.includes(c)));
+}
 
 /** The era choices and the stored era's id, or undefined when the module has no era link. */
 function eraModel(moduleKey: string, entry: SentenceEntry, state: State): { choices: LensChoice[]; current: string } | undefined {
@@ -374,6 +386,11 @@ export function applyLensChoice<S extends object>(moduleKey: string, state: S, f
     case "culture": {
       if (!f.culture) break;
       const before = viewOf(entry, previous);
+      if (id === CELTIC_ANY) {
+        put(next, f.culture, "celtic");
+        if (f.region) put(next, f.region, undefined);
+        break;
+      }
       const view = LENS.views[id];
       if (view) {
         put(next, f.culture, view.culture);
@@ -384,7 +401,7 @@ export function applyLensChoice<S extends object>(moduleKey: string, state: S, f
       } else {
         put(next, f.culture, id);
         // Changing culture away from a view clears the region; so does Celtic itself when it was a view.
-        if (before && f.region && before !== id) put(next, f.region, undefined);
+        if (before && f.region && before !== id && id !== get(previous, f.culture)) put(next, f.region, undefined);
       }
       break;
     }

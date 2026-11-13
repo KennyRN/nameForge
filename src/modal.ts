@@ -2608,8 +2608,8 @@ export class NameForgeModal extends Modal {
       void this.loadBynamePacks().then(() => this.renderContextRow());
     }
     for (const segment of peopleSentence(state, this.bynamePacks)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       const choices = segment.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment.choices;
@@ -2789,8 +2789,8 @@ export class NameForgeModal extends Modal {
   private renderRouteSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of routeSentence(this.routeState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -2876,8 +2876,8 @@ export class NameForgeModal extends Modal {
   private renderInnSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of innSentence(this.innState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -2997,8 +2997,8 @@ export class NameForgeModal extends Modal {
   private renderSacredPlaceSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of sacredPlaceSentence(this.sacredPlaceState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -3020,8 +3020,8 @@ export class NameForgeModal extends Modal {
       void this.loadBynamePacks().then(() => this.renderContextRow());
     }
     for (const segment of deitySentence(this.deityState, this.bynamePacks.map((p) => p.name))) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       const choices = segment.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment.choices;
@@ -3156,8 +3156,8 @@ export class NameForgeModal extends Modal {
   private renderEventSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of eventSentence(this.eventState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -3260,8 +3260,8 @@ export class NameForgeModal extends Modal {
   private renderMoneySentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of moneySentence(this.moneyState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -3382,8 +3382,8 @@ export class NameForgeModal extends Modal {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     const segments = (custom: Biome[]) => timeSentence(module, this.timeStateOf(module), this.timeLimits(custom));
     for (const segment of segments(this.customBiomes)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(
@@ -3521,8 +3521,8 @@ export class NameForgeModal extends Modal {
       void this.loadBynamePacks().then(() => this.renderContextRow());
     }
     for (const segment of thingSentence(module, state, this.bynamePacks)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       const choices = segment.field === "pack" ? async () => (await this.loadBynamePacks()).map((p) => ({ id: p.name, label: p.name })) : () => segment.choices;
@@ -3649,8 +3649,8 @@ export class NameForgeModal extends Modal {
   private renderKitSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of kitSentence(this.kitState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -3873,8 +3873,8 @@ export class NameForgeModal extends Modal {
   private renderBuildingSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of buildingSentence(this.buildingState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -3991,8 +3991,8 @@ export class NameForgeModal extends Modal {
   private renderMonumentSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of monumentSentence(this.monumentState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -4110,8 +4110,8 @@ export class NameForgeModal extends Modal {
   private renderStreetSentence(row: HTMLElement) {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     for (const segment of streetSentence(this.streetState)) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -4286,8 +4286,8 @@ export class NameForgeModal extends Modal {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     this.refreshBiomes();
     for (const segment of watersSentence(this.watersState(module), module, this.catalogue())) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {
@@ -4392,8 +4392,8 @@ export class NameForgeModal extends Modal {
     const sentence = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     this.refreshBiomes();
     for (const segment of wildsSentence(this.wildsState(module), module, this.catalogue())) {
-      if (typeof segment === "string") {
-        sentence.appendText(segment);
+      if (typeof segment === "string" || segment.fixed) {
+        sentence.appendText(typeof segment === "string" ? segment : segment.text);
         continue;
       }
       this.sentenceLink(sentence, segment.text, segment.title, () => segment.choices, segment.current, (id) => {

@@ -429,7 +429,7 @@ test("§15.12: monuments wears the old buildings icon unchanged; buildings wears
 test("§15.13: the default sentence's plain text; kinds reset with the era; the region goes away from the British cultures", () => {
   assert.equal(
     monumentSentenceText(monumentSentence(DEFAULT_MONUMENT_STATE)),
-    "Norman & British monuments and statues of any kind of the medieval era, in a realistic world, across all of Britain, anywhere, of any tone, with placeholders for people and places, on their own, each one separate.",
+    "Norman & British monuments and statues of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, anywhere, of any tone, with placeholders for people and places, on their own, each one separate.",
   );
   const downland = [["era", "ST"], ["region", "WCY"], ["setting", "country"], ["people", "invented"], ["nearby", "on"], ["series", "on"]].reduce((st, [f, id]) => chooseMonument(st, f as never, id), DEFAULT_MONUMENT_STATE);
   assert.equal(

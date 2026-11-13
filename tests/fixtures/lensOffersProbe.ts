@@ -44,6 +44,12 @@ import { defaultVesselState, vesselSentence } from "../../src/vessels/sentence";
 import { generateRealmNames } from "../../src/realms/engine";
 import { DEFAULT_REALM_STATE, realmSentence } from "../../src/realms/sentence";
 import { LENS_ERAS } from "../../src/lens";
+import lensData from "../../src/data/lens.json";
+import { rosterCultures } from "../../src/lensRosters";
+import "../../src/lensRosterSources";
+import { ROUTE_ERAS } from "../../src/routes/engine";
+import { waterEras } from "../../src/waters/engine";
+import { wildsEras } from "../../src/wilds/engine";
 
 const SEEDS = [1, 42, 2024];
 const COUNT = 12;
@@ -141,6 +147,18 @@ function specs(): Spec[] {
 const link = (segments: Segment[], field: string) => segments.find((s): s is Exclude<Segment, string> => typeof s !== "string" && s.field === field);
 const ids = (segments: Segment[], field: string): string[] => (link(segments, field)?.choices ?? []).map((c) => c.id).filter((id): id is string => id !== undefined);
 
+// The probe finds what a module offers from its own engine and roster, never from its sentence: the sentence's
+// culture, era, world and region links are built from the file this probe writes.
+const LENS_MODULES = (lensData as unknown as { modules: Record<string, { sentence: { fields?: { fantastic: string | null; region: string | null }; roster?: string | null } }> }).modules;
+/** The era codes a family A module offers (its own list). */
+function offeredEras(key: string): string[] {
+  if ((WILDS_MODULES as readonly string[]).includes(key)) return [...wildsEras(key as never)] as string[];
+  if (["seasLakes", "coastsIslands", "seaCharts"].includes(key)) return [...waterEras(key as WatersModule)] as string[];
+  return ROUTE_ERAS.map((e) => e.code);
+}
+/** The culture keys a module offers today (its roster). */
+const offeredCultures = (spec: Spec): string[] => (spec.family === "A" ? rosterCultures(LENS_MODULES[spec.key].sentence.roster!).map((c) => c.key) : ids(spec.sentence(spec.state()), spec.culture));
+
 /** One run's finished strings, or the error it threw, as its own output. */
 function attempt(spec: Spec, state: State, seed: number): string {
   try {
@@ -156,7 +174,7 @@ function variants(spec: Spec): State[] {
   const segments = spec.sentence(base);
   const list: State[] = [{}];
   for (const field of spec.kinds) for (const id of ids(segments, field)) list.push({ [field]: id });
-  for (const id of ids(segments, spec.culture)) list.push({ [spec.culture]: id });
+  for (const id of offeredCultures(spec)) list.push({ [spec.culture]: id });
   return list;
 }
 
@@ -187,14 +205,15 @@ export function probeModule(spec: Spec): ModuleOffers {
   const base = spec.state();
   const segments = spec.sentence(base);
   const variantList = variants(spec);
-  const hasFantastic = !!link(segments, "fantastic");
-  const regionLink = link(segments, "region");
+  const fields = LENS_MODULES[spec.key].sentence.fields;
+  const hasFantastic = spec.family === "A" ? !!fields?.fantastic : !!link(segments, "fantastic");
+  const regionLink = spec.family === "A" ? !!fields?.region : link(segments, "region");
   const worlds: Record<string, string[]> = {};
   let eras: string[][] | string[];
   let eraRuns: string[][] | undefined;
 
   if (spec.family === "A") {
-    const offered = ids(segments, "era");
+    const offered = offeredEras(spec.key);
     const codes = LENS_ERAS.map((e) => e.code).filter((c) => offered.includes(c));
     const plain = new Map<string, string>();
     const fantastic = new Map<string, string>();
@@ -240,7 +259,7 @@ export function probeModule(spec: Spec): ModuleOffers {
   }
 
   let views: string[] | undefined;
-  if (regionLink && ids(segments, spec.culture).includes("celtic")) {
+  if (regionLink && offeredCultures(spec).includes("celtic")) {
     views = [];
     // Kinds vary the runs; the culture is Celtic, so only the kinds (and the defaults) apply.
     const kindsOnly = [{} as State, ...spec.kinds.flatMap((field) => ids(segments, field).map((id): State => ({ [field]: id })))];

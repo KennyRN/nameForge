@@ -160,12 +160,12 @@ import { GROUP_LABELS, historySection, SECTION_GROUPS, SWITCHER_ORDER } from "..
 test("§14.6: the default sentence's plain text", () => {
   assert.equal(
     eventSentenceText(eventSentence(DEFAULT_EVENT_STATE)),
-    "Norman & British events of any kind of the medieval era, in a realistic world, on a realm's scale, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British events of any kind of the medieval era, in a historic or low fantasy world, on a realm's scale, of any tone, with placeholders for people and places, each one separate.",
   );
   const local = [["kind", "war"], ["scale", "local"], ["series", "on"]].reduce((s, [f, id]) => chooseEvent(s, f as never, id), DEFAULT_EVENT_STATE);
   assert.equal(
     eventSentenceText(eventSentence(local)),
-    "Norman & British wars of the medieval era, in a realistic world, on a local scale, of any tone, with placeholders for people and places, as one history.",
+    "Norman & British wars of the medieval era, in a historic or low fantasy world, on a local scale, of any tone, with placeholders for people and places, as one history.",
   );
 });
 
@@ -182,7 +182,7 @@ test("§14.6: presets round-trip", () => {
   const preset: EventPreset = {
     packName: "Border chronicle",
     setting: "",
-    description: "Norman & British events of any kind of the medieval era, in a realistic world, on a realm's scale, with a grim edge, with invented people and places, as one history.",
+    description: "Norman & British events of any kind of the medieval era, in a historic or low fantasy world, on a realm's scale, with a grim edge, with invented people and places, as one history.",
     culture: "norman-british",
     eventKind: "any",
     era: "MD",

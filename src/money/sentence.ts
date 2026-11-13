@@ -3,6 +3,9 @@
 // and places, ‹each one separate›". The words link shows for cultures with loan forms. Built as segments
 // like the events sentence. No Obsidian imports.
 
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { fantasticWords } from "../routes/sentence";
@@ -22,6 +25,8 @@ import {
   type MoneyValue,
   type MoneyWords,
 } from "./engine";
+
+registerRoster("money", MONEY_CULTURES);
 
 export interface MoneySentenceState {
   culture: string;
@@ -54,9 +59,10 @@ export interface MoneyChoice {
   label: string;
   title?: string;
   group?: string;
+  heading?: string;
 }
 
-export type MoneySegment = string | { field: MoneyField; text: string; title: string; choices: MoneyChoice[]; current: string | undefined };
+export type MoneySegment = string | { field: MoneyField; text: string; title: string; choices: MoneyChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT: Record<MoneySeries, string> = { separate: "each one separate", coinage: "as one coinage", values: "as one coinage, with values" };
@@ -73,14 +79,8 @@ export const showsMoneySeries = (state: MoneySentenceState) => kindHasSeries(sta
 
 export function moneySentence(state: MoneySentenceState): MoneySegment[] {
   const out: MoneySegment[] = [];
-  const culture = findMoneyCulture(state.culture) ?? MONEY_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose money, and whose customs, the names follow",
-    choices: MONEY_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== MONEY_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause("moneyNames", state, { cultureTitle: "Naming culture: whose money, and whose customs, the names follow" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const offered = moneyKindsOffered(state.culture, state.era);
   const kind = offered.find((k) => k.key === state.kind);
@@ -91,24 +91,8 @@ export function moneySentence(state: MoneySentenceState): MoneySegment[] {
     choices: [{ id: undefined, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind?.key,
   });
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which money exists",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const worlds = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: worlds[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: worlds[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world");
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  out.push(...time);
   if (showsMoneyValue(state)) {
     out.push(", ");
     out.push({
@@ -167,7 +151,7 @@ export function moneySentenceText(segments: MoneySegment[]): string {
 
 /** §2.3: a state made consistent: a kind the culture and era don't offer goes back to Any, words go back to translated where the culture has no loan forms, and a series the kind or ladders can't have steps down. */
 export function normaliseMoney(state: MoneySentenceState): MoneySentenceState {
-  const next: MoneySentenceState = { ...state };
+  let next: MoneySentenceState = { ...state };
   if (!findMoneyCulture(next.culture)) next.culture = DEFAULT_MONEY_STATE.culture;
   if (next.kind && !moneyKindsOffered(next.culture, next.era).some((k) => k.key === next.kind)) next.kind = undefined;
   if (!moneyHasLoans(next.culture)) next.words = "translated";
@@ -178,19 +162,19 @@ export function normaliseMoney(state: MoneySentenceState): MoneySentenceState {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseMoney(state: MoneySentenceState, field: MoneyField, id: string | undefined): MoneySentenceState {
-  const next: MoneySentenceState = { ...state };
+  let next: MoneySentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_MONEY_STATE.culture;
+      next = chooseLens("moneyNames", next, "culture", id ?? DEFAULT_MONEY_STATE.culture);
       break;
     case "kind":
       next.kind = id as MoneyKind | undefined;
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_MONEY_STATE.era;
+      next = chooseLens("moneyNames", next, "era", id, DEFAULT_MONEY_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("moneyNames", next, "fantastic", id);
       break;
     case "value":
       next.value = MONEY_VALUES.some((v) => v.key === id) ? (id as MoneyValue) : "any";

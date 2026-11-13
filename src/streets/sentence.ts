@@ -3,6 +3,8 @@
 // words as variants›, ‹of any tone›, with ‹placeholders for› people and places, ‹each one separate›".
 // Built as segments like the route sentence. No Obsidian imports.
 
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
@@ -44,9 +46,10 @@ export interface StreetChoice {
   label: string;
   title?: string;
   group?: string;
+  heading?: string;
 }
 
-export type StreetSegment = string | { field: StreetField; text: string; title: string; choices: StreetChoice[]; current: string | undefined };
+export type StreetSegment = string | { field: StreetField; text: string; title: string; choices: StreetChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one town" };
@@ -62,14 +65,8 @@ const kindText = (kind: StreetKind | undefined) => (!kind ? STREET_ANY : kind ==
 
 export function streetSentence(state: StreetSentenceState): StreetSegment[] {
   const out: StreetSegment[] = [];
-  const culture = findRouteCulture(state.culture) ?? ROUTE_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose customs the streets follow",
-    choices: ROUTE_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== ROUTE_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause("streetNames", state, { cultureTitle: "Naming culture: whose customs the streets follow", regionTitle: "Weights the names towards a region's customs" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const kinds = kindsForSize(state.size);
   const kind = kinds.find((k) => k.key === state.kind);
@@ -92,35 +89,11 @@ export function streetSentence(state: StreetSentenceState): StreetSegment[] {
       current: fn?.key,
     });
   }
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which streets, squares and districts exist",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const words = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: words[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, ");
-  if (showsRegion(state)) {
-    out.push({
-      field: "region",
-      text: routeRegionText(state.region),
-      title: "Weights the names towards a region's customs",
-      choices: [
-        { id: undefined, label: routeRegionText(undefined) },
-        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties })),
-      ],
-      current: state.region,
-    });
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  out.push(...time);
+  if (time.length > 0) out.push(", ");
+  if (lens.region) {
+    out.push(asSegment(lens.region, "region"));
     out.push(", ");
   }
   const size = sizeLabel(state.size, state.era);
@@ -180,10 +153,10 @@ export function streetSentenceText(segments: StreetSegment[]): string {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseStreet(state: StreetSentenceState, field: StreetField, id: string | undefined): StreetSentenceState {
-  const next: StreetSentenceState = { ...state };
+  let next: StreetSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_STREET_STATE.culture;
+      next = chooseLens("streetNames", next, "culture", id ?? DEFAULT_STREET_STATE.culture);
       break;
     case "kind":
       next.kind = id as StreetKind | undefined;
@@ -192,13 +165,13 @@ export function chooseStreet(state: StreetSentenceState, field: StreetField, id:
       next.function = id;
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_STREET_STATE.era;
+      next = chooseLens("streetNames", next, "era", id, DEFAULT_STREET_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("streetNames", next, "fantastic", id);
       break;
     case "region":
-      next.region = id;
+      next = chooseLens("streetNames", next, "region", id);
       break;
     case "size":
       next.size = STREET_SIZES.some((s) => s.key === id) ? (id as StreetSize) : DEFAULT_STREET_STATE.size;

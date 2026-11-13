@@ -212,12 +212,12 @@ import { historySection, SECTION_GROUPS } from "../src/sections";
 test("§15.6: the default sentence's plain text", () => {
   assert.equal(
     buildingSentenceText(buildingSentence(DEFAULT_BUILDING_STATE)),
-    "Norman & British buildings and landmarks of any kind of the medieval era, in a realistic world, across all of Britain, anywhere, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British buildings and landmarks of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, anywhere, of any tone, with placeholders for people and places, each one separate.",
   );
   const border = [["era", "EM"], ["region", "SBL"], ["setting", "country"], ["people", "invented"], ["series", "on"]].reduce((s, [f, id]) => chooseBuilding(s, f as never, id), DEFAULT_BUILDING_STATE);
   assert.equal(
     buildingSentenceText(buildingSentence(border)),
-    "Norman & British buildings and landmarks of any kind of the early modern era, in a realistic world, in the Scottish Borderlands, in the country, of any tone, with invented people and places, as one town.",
+    "Norman & British buildings and landmarks of any kind of the early modern era, in a historic or low fantasy world, in the Scottish Borderlands, in the country, of any tone, with invented people and places, as one town.",
   );
 });
 
@@ -240,7 +240,7 @@ test("§15.6: presets round-trip", () => {
   const preset: BuildingPreset = {
     packName: "Border landmarks",
     setting: "",
-    description: "Norman & British buildings and landmarks of any kind of the early modern era, in a realistic world, in the Scottish Borderlands, in the country, of any tone, with invented people and places, as one town.",
+    description: "Norman & British buildings and landmarks of any kind of the early modern era, in a historic or low fantasy world, in the Scottish Borderlands, in the country, of any tone, with invented people and places, as one town.",
     culture: "norman-british",
     region: "SBL",
     buildingKind: "any",

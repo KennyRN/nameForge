@@ -5,6 +5,9 @@
 // ‹in any words›, ‹of any tone›, with ‹placeholders for› people". Built as segments like the route
 // sentence. No Obsidian imports.
 
+import { registerRoster } from "../lensRosters";
+import { asSegment, chooseLens } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { type BiomeCatalogue, biomeMatches, biomesRootedIn, BUILT_IN_BIOMES } from "../biomes";
 import { biomeClashes, biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { regionPhrase } from "../colonialSentence";
@@ -34,6 +37,8 @@ import {
   type WatersModule,
   type WatersWhere,
 } from "./engine";
+
+registerRoster("waters", WATERS_CULTURES);
 
 export interface WatersSentenceState {
   culture: string;
@@ -84,7 +89,7 @@ export interface WatersChoice {
   group?: string;
 }
 
-export type WatersSegment = string | { field: WatersField; text: string; title: string; choices: WatersChoice[]; current: string | undefined };
+export type WatersSegment = string | { field: WatersField; text: string; title: string; choices: WatersChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const WHERE_TEXT: Record<WatersWhere, string> = { home: "on home shores", new: "on newly charted shores" };
@@ -109,14 +114,20 @@ const hyperScales = (): ScaleChoice[] => ["any", ...HYPER_SCALES];
 export function watersSentence(state: WatersSentenceState, module: WatersModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WatersSegment[] {
   const out: WatersSegment[] = [];
   const hyper = module === "hyperspaceCharts";
+  // Hyperspace charts have no era or world and keep their own culture link; the others share the lens clause.
+  const lens = hyper ? undefined : lensClause(module, state, { cultureTitle: `Naming culture: whose customs the ${NOUN[module]} follow` });
   const culture = findWatersCulture(state.culture) ?? WATERS_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: `Naming culture: whose customs the ${NOUN[module]} follow`,
-    choices: WATERS_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== WATERS_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  out.push(
+    lens
+      ? asSegment(lens.culture!, "culture")
+      : {
+          field: "culture",
+          text: culture.label,
+          title: `Naming culture: whose customs the ${NOUN[module]} follow`,
+          choices: WATERS_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== WATERS_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
+          current: culture.key,
+        },
+  );
   out.push(" ");
   const kinds = hyper ? hyperKindsAt(state.scale) : waterKinds(module);
   const kind = kinds.find((k) => k.key === state.kind);
@@ -158,16 +169,8 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule,
     });
     out.push(", ");
   } else {
-    const eras = waterEras(module);
-    out.push(" of the ");
-    out.push({
-      field: "era",
-      text: watersEraLabel(state.era),
-      title: "The age: decides which names exist",
-      choices: eras.map((e) => ({ id: e, label: watersEraLabel(e) })),
-      current: state.era,
-    });
-    out.push(" era, ");
+    if (lens!.era) out.push(" of the ", asSegment(lens!.era, "era"), " era, ");
+    else out.push(" ");
     out.push({
       field: "where",
       text: WHERE_TEXT[state.where],
@@ -175,27 +178,10 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule,
       choices: (["home", "new"] as WatersWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
       current: state.where,
     });
-    out.push(", in a ");
-    const words = fantasticWords(state.era);
-    out.push({
-      field: "fantastic",
-      text: words[state.fantastic ? 1 : 0],
-      title: "Open magic and monsters; in the steam age, steampunk",
-      choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-      current: state.fantastic ? "on" : "off",
-    });
-    out.push(" world, ");
-    if (showsWatersRegion(state.culture, state.where)) {
-      out.push({
-        field: "region",
-        text: watersRegionText(state.region),
-        title: "Weights the names towards a region's customs",
-        choices: [
-          { id: undefined, label: watersRegionText(undefined) },
-          ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: watersRegionText(r.code), title: r.counties })),
-        ],
-        current: state.region,
-      });
+    if (lens!.world) out.push(", in a ", asSegment(lens!.world, "fantastic"), " world, ");
+    else out.push(", ");
+    if (lens!.region) {
+      out.push(asSegment(lens!.region, "region"));
     } else {
       out.push({
         field: "biome",
@@ -248,27 +234,27 @@ export function watersSentenceText(segments: WatersSegment[]): string {
 
 /** §2.4: a state after one choice, with the resets that follow from it. */
 export function chooseWaters(state: WatersSentenceState, field: WatersField, id: string | undefined, module: WatersModule): WatersSentenceState {
-  const next: WatersSentenceState = { ...state };
+  let next: WatersSentenceState = { ...state };
   const hyper = module === "hyperspaceCharts";
   const regionShown = showsWatersRegion(state.culture, state.where);
   switch (field) {
     case "culture":
-      next.culture = id ?? defaultWatersState(module).culture;
+      next = hyper ? { ...next, culture: id ?? defaultWatersState(module).culture } : chooseLens(module, next, "culture", id ?? defaultWatersState(module).culture);
       break;
     case "kind":
       next.kind = id;
       break;
     case "era":
-      next.era = !hyper && waterEras(module).includes(id as WatersEra) ? (id as WatersEra) : defaultWatersState(module).era;
+      next = hyper ? { ...next, era: defaultWatersState(module).era } : chooseLens(module, next, "era", id, defaultWatersState(module).era);
       break;
     case "where":
       next.where = id === "new" ? "new" : "home";
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = hyper ? { ...next, fantastic: id === "on" } : chooseLens(module, next, "fantastic", id);
       break;
     case "region":
-      next.region = id;
+      next = hyper ? { ...next, region: id } : chooseLens(module, next, "region", id);
       break;
     case "biome":
       next.biome = id;

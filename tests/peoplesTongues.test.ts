@@ -469,7 +469,7 @@ test("§2.2: the sentence shows the pack, its section and the detail; the detail
   const pack: PeopleSentenceState = { ...DEFAULT_PEOPLE_STATE, source: "pack", pack: "Fen Towns" };
   assert.equal(sentenceOf(pack, packs), "Norman & British peoples and tongues for names from Fen Towns, its Towns section, of the medieval era, giving peoples and languages, of any tone, one language name each.");
   assert.equal(sentenceOf({ ...pack, section: "whole" }, packs), "Norman & British peoples and tongues for names from Fen Towns, the whole pack, of the medieval era, giving peoples and languages, of any tone, one language name each.");
-  assert.equal(sentenceOf({ ...DEFAULT_PEOPLE_STATE, giving: "peoples", era: "IS", source: "realms" }), "Norman & British peoples and tongues for new realms, of the interstellar era, giving peoples, of any tone.");
+  assert.equal(sentenceOf({ ...DEFAULT_PEOPLE_STATE, giving: "peoples", era: "IS", source: "realms" }), "Norman & British peoples and tongues for new realms, of the future era, giving peoples, of any tone.");
   assert.equal(sentenceOf({ ...DEFAULT_PEOPLE_STATE, giving: "languages", detail: "dialects", tone: "grim" }), "Norman & British peoples and tongues for names I type, of the medieval era, giving languages, with a grim edge, with dialects.");
 });
 

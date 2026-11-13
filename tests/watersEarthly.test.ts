@@ -363,7 +363,7 @@ test("a pack's fixed names are drawn when kind is Any, never with a kind chosen"
 test("§2.1: the earthly sentences", () => {
   assert.equal(
     watersSentenceText(watersSentence(defaultWatersState("seasLakes"), "seasLakes")),
-    "Norman & British waters of any kind of the medieval era, on home shores, in a realistic world, across all of Britain, of any tone, with placeholders for people and places.",
+    "Norman & British waters of any kind of the medieval era, on home shores, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places.",
   );
   assert.equal(
     watersSentenceText(watersSentence({ ...defaultWatersState("seaCharts"), culture: "japanese", where: "new", series: true, era: "ST", fantastic: true }, "seaCharts")),

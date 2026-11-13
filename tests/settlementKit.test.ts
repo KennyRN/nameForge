@@ -311,12 +311,12 @@ import { historySection, SECTION_GROUPS } from "../src/sections";
 test("§13.7: the default sentence's plain text; “An” before a vowel", () => {
   assert.equal(
     kitSentenceText(kitSentence(DEFAULT_KIT_STATE)),
-    "A Norman & British town of the medieval era, in a realistic world, across all of Britain, inland, of any tone, giving the whole settlement in standard detail, with placeholders for people and places.",
+    "A Norman & British town of the medieval era, in a historic or low fantasy world, across all of Britain, inland, of any tone, giving the whole settlement in standard detail, with placeholders for people and places.",
   );
   const arabic = [["culture", "arabic-persian"], ["size", "city"], ["position", "coast"], ["people", "invented"], ["detail", "full"]].reduce((s, [f, id]) => chooseKit(s, f as never, id), DEFAULT_KIT_STATE);
   assert.equal(
     kitSentenceText(kitSentence(arabic)),
-    "An Arabic & Persian city of the medieval era, in a realistic world, on the coast, of any tone, giving the whole settlement in full detail, with invented people and places.",
+    "An Arabic and Persian city of the medieval era, in a historic or low fantasy world, on the coast, of any tone, giving the whole settlement in full detail, with invented people and places.",
   );
   const station = chooseKit(chooseKit(DEFAULT_KIT_STATE, "era", "IS"), "position", "crossroads");
   assert.ok(kitSentenceText(kitSentence(station)).includes(" colony of the interstellar era, in a "), kitSentenceText(kitSentence(station)));
@@ -371,7 +371,7 @@ test("§13.7: presets round-trip", () => {
   const preset: KitPreset = {
     packName: "Border market town",
     setting: "",
-    description: "A Norman & British town of the early modern era, in a realistic world, in the Scottish Borderlands, at a crossroads, of any tone, giving the whole settlement in standard detail, with invented people and places.",
+    description: "A Norman & British town of the early modern era, in a historic or low fantasy world, in the Scottish Borderlands, at a crossroads, of any tone, giving the whole settlement in standard detail, with invented people and places.",
     culture: "norman-british",
     region: "SBL",
     era: "EM",

@@ -3,6 +3,8 @@
 // tone›, with ‹placeholders for› people and places, ‹on their own›, ‹each one separate›". Built as
 // segments like the buildings sentence. No Obsidian imports.
 
+import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
+import { lensClause } from "../lensView";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { INN_SETTINGS, type InnSetting } from "../inns/engine";
@@ -45,9 +47,10 @@ export interface MonumentChoice {
   label: string;
   title?: string;
   group?: string;
+  heading?: string;
 }
 
-export type MonumentSegment = string | { field: MonumentField; text: string; title: string; choices: MonumentChoice[]; current: string | undefined };
+export type MonumentSegment = string | { field: MonumentField; text: string; title: string; choices: MonumentChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const NEARBY_TEXT = { off: "on their own", on: "with what's named after them" };
@@ -56,14 +59,8 @@ const settingText = (key: InnSetting) => INN_SETTINGS.find((s) => s.key === key)
 
 export function monumentSentence(state: MonumentSentenceState): MonumentSegment[] {
   const out: MonumentSegment[] = [];
-  const culture = findRouteCulture(state.culture) ?? ROUTE_CULTURES[0];
-  out.push({
-    field: "culture",
-    text: culture.label,
-    title: "Naming culture: whose customs the monuments follow",
-    choices: ROUTE_CULTURES.map((c, i) => ({ id: c.key, label: c.label, ...(c.group && c.group !== ROUTE_CULTURES[i - 1]?.group ? { group: c.group } : {}) })),
-    current: culture.key,
-  });
+  const lens = lensClause("monumentNames", state, { cultureTitle: "Naming culture: whose customs the monuments follow", regionTitle: "Weights the names towards a region's customs" });
+  out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
   const offered = monumentKindsOffered(state.era);
   const kind = offered.find((k) => k.key === state.kind);
@@ -74,35 +71,11 @@ export function monumentSentence(state: MonumentSentenceState): MonumentSegment[
     choices: [{ id: undefined, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu, title: k.description }))],
     current: kind?.key,
   });
-  out.push(" of the ");
-  out.push({
-    field: "era",
-    text: routeEraLabel(state.era),
-    title: "The age: decides which kinds of monument exist",
-    choices: ROUTE_ERAS.map((e) => ({ id: e.code, label: e.label })),
-    current: state.era,
-  });
-  out.push(" era, in a ");
-  const words = fantasticWords(state.era);
-  out.push({
-    field: "fantastic",
-    text: words[state.fantastic ? 1 : 0],
-    title: "Open magic and monsters; in the steam age, steampunk",
-    choices: [false, true].map((on) => ({ id: on ? "on" : "off", label: words[on ? 1 : 0] })),
-    current: state.fantastic ? "on" : "off",
-  });
-  out.push(" world, ");
-  if (showsRegion(state)) {
-    out.push({
-      field: "region",
-      text: routeRegionText(state.region),
-      title: "Weights the names towards a region's customs",
-      choices: [
-        { id: undefined, label: routeRegionText(undefined) },
-        ...PLACE_SHAPE_REGIONS.map((r) => ({ id: r.code, label: routeRegionText(r.code), title: r.counties })),
-      ],
-      current: state.region,
-    });
+  const time = eraWorldSegments(lens, "era", "fantastic");
+  out.push(...time);
+  if (time.length > 0) out.push(", ");
+  if (lens.region) {
+    out.push(asSegment(lens.region, "region"));
     out.push(", ");
   }
   out.push({
@@ -161,22 +134,22 @@ export function monumentSentenceText(segments: MonumentSegment[]): string {
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
 export function chooseMonument(state: MonumentSentenceState, field: MonumentField, id: string | undefined): MonumentSentenceState {
-  const next: MonumentSentenceState = { ...state };
+  let next: MonumentSentenceState = { ...state };
   switch (field) {
     case "culture":
-      next.culture = id ?? DEFAULT_MONUMENT_STATE.culture;
+      next = chooseLens("monumentNames", next, "culture", id ?? DEFAULT_MONUMENT_STATE.culture);
       break;
     case "kind":
       next.kind = id as MonumentKind | undefined;
       break;
     case "era":
-      next.era = ROUTE_ERAS.some((e) => e.code === id) ? (id as RouteEra) : DEFAULT_MONUMENT_STATE.era;
+      next = chooseLens("monumentNames", next, "era", id, DEFAULT_MONUMENT_STATE.era);
       break;
     case "fantastic":
-      next.fantastic = id === "on";
+      next = chooseLens("monumentNames", next, "fantastic", id);
       break;
     case "region":
-      next.region = id;
+      next = chooseLens("monumentNames", next, "region", id);
       break;
     case "setting":
       next.setting = INN_SETTINGS.some((s) => s.key === id) ? (id as InnSetting) : "anywhere";
