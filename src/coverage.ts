@@ -3,6 +3,17 @@
 // lens; it never runs a generator. `COVERAGE_ADAPTERS` is a plain array a module registry can absorb later.
 
 import { buildingCoverage } from "./buildings/coverage";
+import { bynameCoverage } from "./bynames/coverage";
+import { deityCoverage } from "./deities/coverage";
+import { groupCoverage } from "./groups/coverage";
+import { colonialCoverage } from "./names/coverage";
+import { peopleCoverage } from "./peoples/coverage";
+import { realmCoverage } from "./realms/coverage";
+import { riverCoverage } from "./rivers/coverage";
+import { thingCoverage } from "./things/coverage";
+import { tribalCoverage } from "./tribes/coverage";
+import { vesselCoverage } from "./vessels/coverage";
+import { placeShapesCoverage } from "./world/coverage";
 import { type CoverageAdapter, type CoverageRow, poolEntryCount, VOCAB_POOL_NAMES } from "./coverageRows";
 import { eventCoverage } from "./events/coverage";
 import { innCoverage } from "./inns/coverage";
@@ -31,8 +42,8 @@ import { wildsCoverage } from "./wilds/coverage";
 export type { CoverageAdapter, CoverageRow, CoverageRowType } from "./coverageRows";
 
 /**
- * Every module's adapter, in the order the report lists them. Modules not yet listed here (the rest are
- * added as their adapters are written) are reported as "no adapter yet", never as empty.
+ * Every module's adapter, in the order the report lists them. A lens module with no adapter here is
+ * reported as "no adapter yet", never as empty (a test checks that none is left).
  */
 export const COVERAGE_ADAPTERS: CoverageAdapter[] = [
   routeCoverage,
@@ -48,6 +59,17 @@ export const COVERAGE_ADAPTERS: CoverageAdapter[] = [
   skyCoverage,
   ...wildsCoverage,
   ...watersCoverage,
+  ...bynameCoverage,
+  ...thingCoverage,
+  realmCoverage,
+  peopleCoverage,
+  ...deityCoverage,
+  tribalCoverage,
+  ...groupCoverage,
+  ...vesselCoverage,
+  ...colonialCoverage,
+  placeShapesCoverage,
+  riverCoverage,
 ];
 
 // ── Cells ───────────────────────────────────────────────────────────────────

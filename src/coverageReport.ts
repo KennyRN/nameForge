@@ -1,7 +1,7 @@
 // The coverage report as text (shared lens brief §6.2): `docs/coverage.md` and `docs/coverage.json`
 // from the numbers in coverage.ts. Pure string building; `npm run coverage` writes the files.
 
-import { buildCoverage, type CoverageReport, type CultureCell, type ModuleCoverage } from "./coverage";
+import { buildCoverage, COVERAGE_ADAPTERS, type CoverageReport, type CultureCell, type ModuleCoverage } from "./coverage";
 import { LENS_CULTURES, LENS_ERAS, LENS_STYLES, LENS_TARGETS, LENS_TONES, LENS_REGIONS } from "./lens";
 import { SECTION_LABELS, type NameForgeSection } from "./sections";
 
@@ -116,6 +116,9 @@ export function renderCoverageMarkdown(report: CoverageReport = buildCoverage())
     const missing = m.roster.notOffered.map(cultureLabel);
     out.push(`- **${label(m.module)}**: ${missing.length > 0 ? `doesn't offer ${missing.join(", ")}` : "offers every live lens culture"}${m.roster.localKeys.length > 0 ? `; local: ${m.roster.localKeys.join(", ")}` : ""}.`);
   }
+  // A culture a module leaves out of one kind only (no pilgrim routes for Polynesian and Andean) can't be a whole-module cell.
+  const kindExclusions = COVERAGE_ADAPTERS.flatMap((a) => (a.excluded ?? []).filter((x) => x.kind).map((x) => `${label(a.module)} has no ${x.kind} kind for ${x.cultures.map(cultureLabel).join(" or ")}`));
+  if (kindExclusions.length > 0) out.push("", `Excluded by kind: ${kindExclusions.join("; ")}.`);
   out.push("");
 
   // 8. Totals

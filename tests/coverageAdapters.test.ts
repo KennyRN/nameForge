@@ -4,6 +4,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vocabData from "../src/data/settlement-vocab.json";
+import { LENS_MODULES } from "../src/lens";
 import { buildCoverage, COVERAGE_ADAPTERS, moduleCoverage } from "../src/coverage";
 import { type CoverageAdapter, makeRow, vocabularyRows, VOCAB_POOL_NAMES, eraReading, cultureTags, regionMultipliers } from "../src/coverageRows";
 import { poolReaders, POOL_READER_TEXT, READER_PHRASES } from "../src/coverageReaders";
@@ -145,4 +146,36 @@ test("the report builds and reads in British English with its cells marked", () 
 
 test("adapters are pure: running them twice gives the same rows", () => {
   for (const adapter of COVERAGE_ADAPTERS) assert.deepEqual(adapter.rows(), adapter.rows(), adapter.module);
+});
+
+// ── M3b: realms hand-counted, and every module reports ─────────────────────
+
+test("realms: hand-counted cells (words/shapes), counted by hand from realms.json", () => {
+  // A culture's own forms, its qualifying words (cultQualExtra), its tribal noun and its homeland word.
+  assert.equal(cell("realms", "chinese"), "3/0", "cultQualExtra 2 + tribal 1");
+  assert.equal(cell("realms", "scandinavian"), "4/0", "norse: forms 2 + cultQualExtra 1 + tribal 1");
+  assert.equal(cell("realms", "egyptian"), "5/0", "forms 1 + cultQualExtra 3 + tribal 1");
+  assert.equal(cell("realms", "english"), "5/0", "anglo-saxon tribal 1; norman-british forms 2 + tribal 1 + homeland 1");
+  // Entries confined to an era: the weighted forms (era weights above nought), the modifiers and the
+  // ideology words; ST has none because the realms have no steam age.
+  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 8, MD: 26, EM: 30, ST: 0, MO: 30, NF: 34, IS: 42 });
+});
+
+test("every module in the lens has an adapter and reports, none left 'not yet reported'", () => {
+  const report = buildCoverage();
+  assert.deepEqual(report.withoutAdapter, []);
+  assert.equal(report.modules.length, LENS_MODULES.length);
+  assert.deepEqual(report.modules.map((m) => m.module).sort(), [...LENS_MODULES].sort());
+  // Only the settlement kit has no tables of its own; every other module reports rows.
+  for (const m of report.modules) assert.ok(m.noTables ? m.module === "settlementKit" : m.rowCount > 0, `${m.module} has rows`);
+  assert.match(renderCoverageMarkdown(report), /Realms|realms/);
+  assert.doesNotMatch(renderCoverageMarkdown(report), /Not yet reported/);
+});
+
+test("the deity and money exclusions read 'excluded', and the deity pair excludes Polynesian and Andean", () => {
+  for (const module of ["deityNames", "sacredPlaces"]) {
+    const m = moduleCoverage(adapterOf(module));
+    assert.ok(m.cultures["polynesian"].excluded && m.cultures["andean"].excluded, `${module}: excluded`);
+    assert.equal(m.cultures["polynesian"].below, false);
+  }
 });
