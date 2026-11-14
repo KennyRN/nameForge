@@ -209,3 +209,61 @@ Modules that name creatures read it alongside their own pools, by habitat: inns 
 - The per-slot name sentence in settlement names: unchanged, though its list options may later offer the new templates.
 - Region-level name lists inside a culture (Northern English names, Highland names): brief 5.
 - Changes to the retired modules' presets.
+
+## 12. Amendment: the people tables review (14 November 2026)
+
+Added after the review of `docs/people-tables.md`. It amends §3, §5.2 and §9 and does not rewrite them. The rules apply to the core tables and to every second-tier table (M3).
+
+### 12.1 New rules for every people table
+
+Each rule that can be checked by code has a test in `tests/peopleTables.test.ts`.
+
+1. **One spelling per name per list.** A name appears once in a list, in its usual English form. Variants of one name are duplicates (Edith and Eadgyth; Gwladus and Gwladys; Conor and Connor; Sadb, Sadhbh and Sive). Different names that share a root stay (Alexander and Alasdair; Donald and Dugald are different names; Dugald and Dougal are not).
+2. **Old English names in one convention:** the modern English forms already used for most (Ethelfleda, Elgiva, Edburga, Aldgyth), with no `Ae-` or `Ea-` spellings beside them.
+3. **German umlauts as `ae`, `oe`, `ue`** (Mueller, Schroeder, Krueger, Koenig, Jaeger, Foerster, Schaefer, Moeller, Koehler, Juergen), as Goetz already is; `ß` as `ss`. Scandinavian names keep dropping the marks (Bjorn, Soren, Sjoberg).
+4. **Right sex.** A male name never appears in a female list or the reverse. Every saint is checked against their sex.
+5. **People only.** No place names, name elements or words that are not names, and no gods or figures known only from myth or legend in `historic` lists, unless the name was also given to real people in the period. Legendary names revived later (Rhiannon, Olwen, Branwen) belong in `modern` only.
+6. **No living royals.** Regnal lists do not include a name chiefly known from a living monarch or consort (Silvia and Sonja go; Margrethe and Harald stay, as old regnal names).
+7. **English forms only** in holy and ruler forms, as the overhaul's output rule requires: "Sant", "Sen", "Naomh" and "Sankt" go (their weight goes to "Saint"), and "Kaiser" and "Kaiserin" become "Emperor" and "Empress". Jarl and Margrave stay; both are English words.
+8. **Saints' share by weight, not count.** Names flagged `r` or `s` carry at most a fifth of a list's total weight, as well as at most a fifth of its names. The test checks both.
+9. **Era tags within a period.** The `modern` period runs from about 1750 to now, so a name may carry the era tags `ST` and `MO`. Every `modern` given name carries `ST`, `MO` or both. The filler draws 80% of the time from names tagged with the state's era, and NF and IS prefer `MO`. Each `modern` given-name list holds at least 15 names tagged `ST` only, 15 tagged `MO` only and 12 names given in the last thirty years (the table's `recentMale` and `recentFemale`), all tagged `MO`. The same applies in `historic` where a table spans eras very differently (Greek and Byzantine, Roman, Egyptian).
+
+An entry in `people.json` is `[name, weight, flag, eras]`: the flag is `r`, `s` or empty, and the eras are space-separated tags.
+
+### 12.2 Existing templates are the source
+
+Three cultures already have a built-in people template written by Kenny. They are the source for those tables, not something to rebuild.
+
+| Template | Table it feeds |
+|---|---|
+| *Old Cornish* (149 male, 73 female) | `cornish` historic `male` and `female` |
+| *Anglo-Saxon* (77 male, 25 female) | `anglo-saxon` historic `male` and `female` |
+| *Victorian, England* (168 male, 168 female) | `norman-british` modern, names tagged `ST` |
+
+- Every name in the template goes in the table, one spelling per person (rule 1). The template keeps its variants for Markov training; the table takes one. Where a name appears both as a person and as the parish named after them, the table takes the person's form (Wendrona not Wendron, Newlina not Newlyn, Endelienta not Endellion, Breaca not Breage). The usual modern English spelling is used where one exists (Petroc, Piran, Samson, Constantine for Custentin), otherwise the template's form.
+- Old Cornish is early medieval: its names are tagged `MD`. A shorter later set is tagged `EM` for late medieval and early modern Cornwall (Jago, Jory, Jowan, Pasco, Hicca, Peder, Kitto, Jenifer, Tamsin, Loveday and the common English names of the period). Nothing else is kept in the Cornish historic given-name lists.
+- Rule 8 does not apply to Cornish historic: the early Cornish record is largely saints, and the saints' names were personal names. Weights are flat (5) for the template names and 3 for the `EM` set.
+- Anglo-Saxon: the template's names all go in, and the table's other names fill up to 60, with rules 1 and 2 applied across both.
+- Norman & British modern: the template's names are the `ST` part of the list, and the list may exceed 60 to take them all.
+- List sizes in §3.1 are minimums.
+- **No duplicate templates at M4.** Where one of these three templates covers a culture and period, M4 does not create a new template for it: generated names train on Kenny's template. The templates are not edited.
+- In generated mode, Cornish `[place]` fills train on the built-in *Old Cornish Place Names* template.
+
+### 12.3 Additions to §5.2: three more sources
+
+| Label | Source |
+|---|---|
+| `[battle]` | the events and eras module, battle kind, same culture and era, short form |
+| `[ship]` | ships and boats, same culture, technology matching the era |
+| `[company]` | the trade family of group names (guilds, companies and trade), same culture and setting |
+
+They are no longer on the stay-bracketed list; `fill.json` maps each to its own source, with a resolver at M6.
+
+### 12.4 Other decisions
+
+- **Patronymics:** given name only, no "son of" forms. Weights by order, the flagging approach and plain letters are agreed. The "without surnames" slot forms and the sex shares stand. Titles for officials come from the bynames office list, with German reading General until it has its own list.
+- **British affixes:** under a source filter the British shapes engine also skips the Market, Castle and Church affixes, as it skips stacked settlement generics. With no filter it is unchanged.
+- **Stellar article:** only when called through a source filter under a space biome, the position-of-landmark form takes no "the" before a catalogue designation or a bracketed homeland name ("Coreward of HD 238298"). Retired presets are unchanged.
+- **River names:** when the river engine is called from rivers and inland waters, the "River {name}" form applies only where the water word is "river" (so no "River Bear Brook"). Old presets are unchanged.
+- **"Association":** left for the style tables brief.
+- **Blocked list (M6):** it must catch "Richard Trevithick", since Trevithick stays in the Cornish modern surnames.

@@ -170,7 +170,7 @@ test("delegated kinds ignore the shares and call their engine with the right opt
   for (const seed of [1, 7, 99]) {
     const got = drawKind(rivers, ctxOf({ where: "home", region: "NTH" }, seed), () => "OWN");
     const rng = mulberry32(seed);
-    const expected = generateRiverNames({ setting: "british", region: "NTH", count: 1, seed: seedFrom(rng) }).names[0].text;
+    const expected = generateRiverNames({ setting: "british", region: "NTH", count: 1, seed: seedFrom(rng), sourced: true }).names[0].text;
     assert.equal(got, expected, `rivers ${seed}`);
   }
   assert.equal(riverSettingFor({ where: "home", culture: "norman-british" }), "british");

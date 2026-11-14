@@ -156,7 +156,7 @@ export function riverSettingFor(ctx: Pick<SourceContext, "where" | "culture">): 
 function drawFromDelegate(delegate: KindDelegate, ctx: SourceContext): string | undefined {
   if (delegate.engine === "rivers") {
     const setting = riverSettingFor(ctx);
-    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : undefined, count: 1, seed: seedFrom(ctx.rng) });
+    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : undefined, count: 1, seed: seedFrom(ctx.rng), sourced: true });
     return result.names[0]?.text;
   }
   const size = delegate.sizes[Math.floor(ctx.rng() * delegate.sizes.length)] ?? "any";

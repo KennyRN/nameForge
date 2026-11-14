@@ -24520,7 +24520,7 @@ var PlaceShapeGenerator = class {
     }
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
     this.stackGenerics = ((_c4 = stackGroup == null ? void 0 : stackGroup.generics) != null ? _c4 : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id) && (!settlement || genericAllowed(id, settlement.size)));
-    this.affixWeights = source.affixes.map((a) => settlement ? { ...a, forms: a.forms.filter((f) => affixFormAllowed(a.id, f.text, settlement.size)) } : a).filter((a) => a.forms.length > 0).map((a) => {
+    this.affixWeights = source.affixes.filter((a) => !(this.filteredGenerics && a.id === "function")).map((a) => settlement ? { ...a, forms: a.forms.filter((f) => affixFormAllowed(a.id, f.text, settlement.size)) } : a).filter((a) => a.forms.length > 0).map((a) => {
       var _a7, _b5;
       return [a, ((_a7 = regions.affixBaseline[a.id]) != null ? _a7 : 0) * ((_b5 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b5 : 1)];
     }).filter(([, w]) => w > 0);
@@ -31157,6 +31157,7 @@ var ColonialShapeGenerator = class {
     } else if (s.positionOfLandmark.categories.includes(categoryId) && rng() < this.chance("positionOfLandmark", s.positionOfLandmark.chance)) {
       shape.structure = "position-of-landmark";
       shape.secondCategoryId = pickFrom(s.positionOfLandmark.landmarks, s.positionOfLandmark.fallback);
+      if (this.options.only && this.space) shape.sourced = true;
     } else if (s.twin.parts.includes(part) && s.twin.categories.includes(categoryId) && s.twin.groups.includes(eligible.group.id) && rng() < this.chance("twin", s.twin.chance)) {
       shape.structure = "twin";
       shape.twin = rng() < 0.5 ? "new" : "old";
@@ -60914,7 +60915,7 @@ function descriptiveName(options, rng, bare7) {
     const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
     if (bare7) return { text: name, water, form: "bare" };
     const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
-    return { text: form2 === "river-x" ? `River ${name}` : name, water, form: form2 };
+    return { text: form2 === "river-x" && (!options.sourced || water === "river") ? `River ${name}` : name, water, form: form2 };
   }
   if (bare7) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
   const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
@@ -61633,7 +61634,7 @@ var NameRenderer = class {
       case "position-of-landmark":
         fill = specific(this.fill(shape.categoryId, rng), false);
         second = secondOf(whole(shape.secondCategoryId));
-        text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
+        text = capitaliseSpaced(`${fillWord(fill)} of ${shape.sourced && /\d|^\[/.test(fillWord(second)) ? "" : "the "}${fillWord(second)}`);
         break;
       case "locative":
         text = capitaliseSpaced(`at the ${this.genericWord(shape.genericId, false, rng)}`);
@@ -125442,7 +125443,7 @@ function drawFromDelegate(delegate, ctx) {
   var _a6, _b4, _c4;
   if (delegate.engine === "rivers") {
     const setting = riverSettingFor(ctx);
-    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : void 0, count: 1, seed: seedFrom(ctx.rng) });
+    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : void 0, count: 1, seed: seedFrom(ctx.rng), sourced: true });
     return (_a6 = result.names[0]) == null ? void 0 : _a6.text;
   }
   const size = (_b4 = delegate.sizes[Math.floor(ctx.rng() * delegate.sizes.length)]) != null ? _b4 : "any";

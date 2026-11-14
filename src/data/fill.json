@@ -9,7 +9,10 @@
     "deity": "the deities module, kind deity, same culture and era",
     "folk": "tribes and kin groups, the culture's tradition (lens mapping), short form",
     "realm": "realms and polities, short form",
-    "river": "the river engine, as rivers and inland waters' river kind"
+    "river": "the river engine, as rivers and inland waters' river kind",
+    "battle": "the events and eras module, battle kind, the state's culture and era, short form (review amendment, brief §12)",
+    "ship": "ships and boats, the state's culture, technology matching the era (review amendment, brief §12)",
+    "company": "the trade family of group names (guilds, companies and trade), the state's culture and setting (review amendment, brief §12)"
   },
   "labels": {
     "founder": { "source": "person", "slot": "founder" },
@@ -63,7 +66,10 @@
     "people": { "source": "folk" },
     "realm": { "source": "realm" },
     "kingdom": { "source": "realm", "added": "a realm named in a place or object" },
-    "river": { "source": "river" }
+    "river": { "source": "river" },
+    "battle": { "source": "battle" },
+    "ship": { "source": "ship" },
+    "company": { "source": "company" }
   },
   "stayBracketed": {
     "native people": "native peoples and places stay bracketed in newly explored and settled lands (brief rule 4)",
@@ -80,9 +86,6 @@
     "generic": "a recipe label (brief §2)",
     "description": "a recipe label (brief §2)",
     "aspiration": "a recipe label (brief §2)",
-    "associated with": "a recipe label (brief §2)",
-    "battle": "a battle in a street or event name: no source yet; left bracketed until one is agreed",
-    "ship": "a ship in a chart feature's name: no source yet; left bracketed until one is agreed",
-    "company": "a trading company in a coin's name: no source yet; left bracketed until one is agreed"
+    "associated with": "a recipe label (brief §2)"
   }
 }

@@ -240,6 +240,8 @@ export interface ColonialShape {
   affix?: { typeId: string; form: AffixForm };
   /** Part 2a only. Derived from the shape and never output (§6.5). */
   renamingType?: RenamingType;
+  /** Review amendment: set only when a source filter is set under a space biome; the position-of-landmark form then takes no article before a catalogue designation or a homeland name. */
+  sourced?: boolean;
 }
 
 export interface ColonialGenerateOptions {
@@ -536,6 +538,7 @@ class ColonialShapeGenerator {
     ) {
       shape.structure = "position-of-landmark";
       shape.secondCategoryId = pickFrom(s.positionOfLandmark.landmarks, s.positionOfLandmark.fallback);
+      if (this.options.only && this.space) shape.sourced = true;
     } else if (
       s.twin.parts.includes(part) &&
       s.twin.categories.includes(categoryId) &&

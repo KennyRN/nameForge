@@ -946,7 +946,8 @@ export class NameRenderer {
       case "position-of-landmark":
         fill = specific(this.fill(shape.categoryId, rng), false);
         second = secondOf(whole(shape.secondCategoryId!));
-        text = capitaliseSpaced(`${fillWord(fill)} of the ${fillWord(second)}`);
+        // Review amendment: from a source (stars and space) no article before a catalogue designation or a bracketed homeland name.
+        text = capitaliseSpaced(`${fillWord(fill)} of ${shape.sourced && /\d|^\[/.test(fillWord(second)) ? "" : "the "}${fillWord(second)}`);
         break;
       case "locative":
         text = capitaliseSpaced(`at the ${this.genericWord(shape.genericId, false, rng)}`);

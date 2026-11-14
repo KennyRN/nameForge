@@ -57,6 +57,8 @@ export interface RiverOptions {
   peoples?: "tribal" | "placeholder";
   /** Land brief §8.1: the tradition for colonial peoples (General by default). */
   peoplesTradition?: string;
+  /** Review amendment: called from rivers and inland waters; "River {name}" then applies only where the water word is "river". */
+  sourced?: boolean;
 }
 
 export interface RiverName {
@@ -169,7 +171,7 @@ function descriptiveName(options: RiverOptions, rng: () => number, bare: boolean
     const name = fuses ? titleCase(joined.toLowerCase()) : titleCase(`${word} ${water}`);
     if (bare) return { text: name, water, form: "bare" };
     const form = pickWeighted(RIVER_DATA.forms.britishDescriptive, rng);
-    return { text: form === "river-x" ? `River ${name}` : name, water, form };
+    return { text: form === "river-x" && (!options.sourced || water === "river") ? `River ${name}` : name, water, form };
   }
   // §6.5, §6.7: colonial names are always spaced; the word alone only with "river". A fill (§6.9)
   // may never contain River, so with "river" it is always the word alone; it takes no form roll.

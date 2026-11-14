@@ -5,8 +5,12 @@
 import PEOPLE from "./data/people.json";
 
 export type PeoplePeriod = "historic" | "modern";
-/** [name, weight] with a third element marking a royal (`r`) or saintly (`s`) name. */
-export type PeopleEntry = [string, number] | [string, number, "r" | "s"];
+/**
+ * [name, weight, flag?, eras?]. The flag marks a name kept mainly for a royal (`r`) or saintly (`s`)
+ * bearer ("" for none). The eras are space-separated tags: `ST` and `MO` on every modern given name,
+ * `MD` and `EM` on the Cornish historic names (review amendment, brief §12).
+ */
+export type PeopleEntry = [string, number] | [string, number, "r" | "s" | ""] | [string, number, "r" | "s" | "", string];
 export type PeopleForm = [string, number];
 
 export interface PeopleTable {
@@ -17,6 +21,9 @@ export interface PeopleTable {
   regnalMale: PeopleEntry[];
   regnalFemale: PeopleEntry[];
   holy: PeopleEntry[];
+  /** Modern given names that are given now (the last thirty years), all tagged `MO`. */
+  recentMale?: string[];
+  recentFemale?: string[];
   holyForms: PeopleForm[];
   rulerForms: { male: PeopleForm[]; female: PeopleForm[] };
 }
@@ -86,3 +93,24 @@ export function otherCulture(own: string, rng: () => number): string | undefined
 
 /** How each person slot is said (brief §3.4), for the filler. */
 export const PERSON_SLOT_FORMS = PEOPLE.slotForms;
+
+/** The era tags on an entry. */
+export const entryEras = (e: PeopleEntry): string[] => (e[3] ? e[3].split(" ") : []);
+
+/** The flag on an entry: `r`, `s` or none. */
+export const entryFlag = (e: PeopleEntry): "r" | "s" | "" => (e[2] as "r" | "s" | "" | undefined) ?? "";
+
+/**
+ * A list's weights for a state's era: names tagged with the era carry 80% of the draw and the rest
+ * 20% (the near and far future, NF and IS, prefer `MO`). A list with no era tags, or none for this era
+ * (or all of them), is left as it is.
+ */
+export function eraWeights(list: readonly PeopleEntry[], era: string): number[] {
+  const tag = era === "NF" || era === "IS" ? "MO" : era;
+  const has = list.map((e) => entryEras(e).includes(tag));
+  const inN = has.filter(Boolean).length;
+  if (inN === 0 || inN === list.length) return list.map((e) => e[1]);
+  const inW = list.reduce((s, e, i) => s + (has[i] ? e[1] : 0), 0);
+  const outW = list.reduce((s, e, i) => s + (has[i] ? 0 : e[1]), 0);
+  return list.map((e, i) => (has[i] ? (e[1] / inW) * 0.8 : (e[1] / outW) * 0.2));
+}
