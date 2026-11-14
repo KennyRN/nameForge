@@ -1470,7 +1470,7 @@ function parseWatersPreset(values: Record<string, string>, body: string, fileNam
       culture,
       waterKind: kind,
       era: hyper ? "IS" : pick<WatersEra>("era", "MD", (v) => waterEras(module).includes(v as WatersEra)),
-      where: hyper ? "home" : pick<WatersWhere>("where", "home", (v) => v === "home" || v === "new"),
+      where: hyper ? "home" : pick<WatersWhere>("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
       fantastic: hyper ? false : flag("fantastic"),
       region: hyper ? "all" : pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       // A built-in's id, or a biome pack's path (a pack's biome shows in seas and coasts where its root built-in does).
@@ -1575,7 +1575,7 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
       culture: pick("culture", wildsDefaultCulture(module), (v) => !!findWildsCulture(v)),
       wildsKind: kind,
       era,
-      where: pick<WildsWhere>("where", "home", (v) => v === "home" || v === "new"),
+      where: pick<WildsWhere>("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
       fantastic: flag("fantastic"),
       region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       biome: pick("biome", "any", (v) => v === "any" || wildsBiomes(module).some((b) => b.id === v) || /\.md$/i.test(v)),

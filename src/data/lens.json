@@ -3069,5 +3069,11 @@
     }
    ]
   }
- ]
+ ],
+ "sourceShares": {
+  "$comment": "Place modules split brief §4.1: where a focused place module's draw comes from, before it falls back to its own shapes. A kind may list sources; the share is the chance a draw tries the source first.",
+  "home": { "source": "native", "share": 0.4, "cultures": ["norman-british", "anglo-saxon", "celtic"] },
+  "new": { "source": "colonial", "part": "2", "share": 0.5 },
+  "settled": { "source": "colonial", "part": "2a", "share": 0.6 }
+ }
 }

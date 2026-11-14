@@ -24483,6 +24483,10 @@ var PlaceShapeGenerator = class {
     }
     if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
     else if (feature && feature !== "settlement") groups = groups.filter((g) => g.id === feature);
+    if (filters.genericIds) {
+      const only = new Set(filters.genericIds);
+      groups = groups.map((g) => ({ ...g, generics: g.generics.filter((x) => only.has(x.id)) })).filter((g) => g.generics.length > 0);
+    }
     if (this.excluded.size > 0) {
       groups = groups.map((g) => ({ ...g, generics: g.generics.filter((x) => this.categoryWeights(g, x.id).length > 0) })).filter((g) => g.generics.length > 0);
     }
@@ -24597,7 +24601,8 @@ function createGenerator(options, source) {
     groupIds: options.groupIds,
     feature: options.feature,
     excludedCategories: options.excludedCategories,
-    settlement: options.settlement
+    settlement: options.settlement,
+    genericIds: options.genericIds
   }, PLACE_SHAPE_REGION_DATA, options.environment);
 }
 function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
@@ -30975,7 +30980,7 @@ var ColonialShapeGenerator = class {
     this.data = data;
     this.groups = [];
     this.sides = null;
-    var _a5, _b3, _c3, _d3;
+    var _a5, _b3, _c3, _d3, _e3, _f;
     const { part } = options;
     const tradition = options.tradition ? data.traditions.find((t) => t.id === options.tradition) : data.general;
     if (!tradition) throw new Error(`Unknown colonial tradition: ${options.tradition}`);
@@ -31001,10 +31006,11 @@ var ColonialShapeGenerator = class {
       const generics = [];
       for (const entry of group.generics) {
         const id = genericIdOf(entry);
+        if (options.only && !(((_b3 = options.only.groups) == null ? void 0 : _b3.includes(group.id)) || ((_c3 = options.only.generics) == null ? void 0 : _c3.includes(id)))) continue;
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
         if (this.space && !this.spaceGenericLive(group.id, id)) continue;
         if (!settlementGeneric(group.id, id)) continue;
-        const genericWeight = ((_b3 = this.profile.genericMultipliers[id]) != null ? _b3 : 1) * ((_d3 = (_c3 = options.environment) == null ? void 0 : _c3.generics[id]) != null ? _d3 : 1);
+        const genericWeight = ((_d3 = this.profile.genericMultipliers[id]) != null ? _d3 : 1) * ((_f = (_e3 = options.environment) == null ? void 0 : _e3.generics[id]) != null ? _f : 1);
         if (genericWeight <= 0) continue;
         const categories = [...resolveColonialProfile(group, id, data)].filter(([c]) => inPart(categoryParts.get(c)) && !excluded.has(c)).map(([c, tier]) => [c, PLACE_SHAPE_WEIGHTS.tier[tier] * this.categoryMultiplier(c)]).filter(([, w]) => w > 0);
         if (categories.length === 0) continue;
@@ -61766,7 +61772,7 @@ function generatePlaceNames(options) {
   }
 }
 function* generatePlaceNamesSteps(options) {
-  var _a5, _b3, _c3, _d3;
+  var _a5, _b3, _c3, _d3, _e3;
   const { recipe } = options;
   const settlement = (_a5 = options.settlement) != null ? _a5 : recipe.shape.settlement ? { size: recipe.shape.settlement } : void 0;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -61814,7 +61820,7 @@ function* generatePlaceNamesSteps(options) {
   let renderOne;
   let shapeCount;
   if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement });
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement, ...options.only ? { genericIds: (_e3 = options.only.generics) != null ? _e3 : [] } : {} });
     renderOne = (i) => renderer.render(shapes[i], rng);
     shapeCount = shapes.length;
   } else {
@@ -61828,6 +61834,7 @@ function* generatePlaceNamesSteps(options) {
       excludedCategories,
       environment,
       settlement,
+      ...options.only ? { only: options.only } : {},
       ...spaceScale ? { space: { scale: spaceScale, aliens: !!recipe.shape.aliens } } : {}
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);
@@ -65381,7 +65388,13 @@ var lens_default = {
         }
       ]
     }
-  ]
+  ],
+  sourceShares: {
+    $comment: "Place modules split brief \xA74.1: where a focused place module's draw comes from, before it falls back to its own shapes. A kind may list sources; the share is the chance a draw tries the source first.",
+    home: { source: "native", share: 0.4, cultures: ["norman-british", "anglo-saxon", "celtic"] },
+    new: { source: "colonial", part: "2", share: 0.5 },
+    settled: { source: "colonial", part: "2a", share: 0.6 }
+  }
 };
 
 // src/lens.ts
@@ -110665,15 +110678,18 @@ var wilds_default = {
   where: {
     mood: {
       home: 0.1,
-      new: 4
+      new: 4,
+      settled: 1
     },
     sai: {
       home: 1,
-      new: 2
+      new: 2,
+      settled: 1.5
     },
     per: {
       home: 0.5,
-      new: 2
+      new: 2,
+      settled: 3
     }
   },
   regionTags: {
@@ -120413,6 +120429,24 @@ var wilds_default = {
       "arabic-persian": "arab",
       chinese: "chinese",
       japanese: "japanese"
+    },
+    cultureToColonialAdded: {
+      norse: [
+        { tradition: "danish", weight: 50 },
+        { tradition: "swedish", weight: 50 }
+      ],
+      dutch: "dutch",
+      french: "french",
+      iberian: [
+        { tradition: "spanish", weight: 50 },
+        { tradition: "portuguese", weight: 50 }
+      ],
+      american: "english-speaking-settler",
+      ottoman: "ottoman",
+      german: "german",
+      italian: "italian",
+      phoenician: "phoenician",
+      belgian: "belgian"
     }
   },
   sources: {
@@ -120955,9 +120989,9 @@ function nativeSettlementRequest(module2, culture, era, where2, region, chosenBi
   const land = link.nativeLand[module2];
   const biome = chosenBiome != null ? chosenBiome : land.biomeIfUnset;
   const base = { size: "any", count: 0, terrain: land.terrain, biome, wilds: false };
-  if (where2 === "new") {
+  if (where2 === "new" || where2 === "settled") {
     const tradition = link.cultureToColonial[culture];
-    return tradition ? { ...base, setting: "new-lands", tradition: tradition === "general" ? void 0 : tradition } : void 0;
+    return tradition ? { ...base, setting: where2 === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? void 0 : tradition } : void 0;
   }
   if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : void 0 };
   const worldCulture = WORLD_CULTURES.find((c) => c.id === culture);
@@ -121030,7 +121064,7 @@ var godAvailable = (ctx) => {
 };
 function riverName2(ctx) {
   if (ctx.mode === "placeholders") return "[river]";
-  const setting = ctx.homeBritish ? "british" : ctx.where === "home" ? "established" : "new-land";
+  const setting = ctx.homeBritish ? "british" : ctx.where === "new" ? "new-land" : "established";
   const text = riverFill({ setting, region: ctx.homeBritish ? ctx.region : void 0 }, ctx.rng).replace(/\bRiver\b/gi, "").replace(/^the /i, "").replace(/\s+/g, " ").trim();
   return text || void 0;
 }
@@ -121214,7 +121248,7 @@ function shapeWeight5(ctx, s, hardOnly = false) {
   const family = ((_b3 = cm[s.f]) != null ? _b3 : 1) * (s.of ? (_c3 = cm.of) != null ? _c3 : 1 : 1);
   const where2 = ((_e3 = (_d3 = WILDS_DATA.where[s.f]) == null ? void 0 : _d3[ctx.where]) != null ? _e3 : 1) * (s.f === "twn" && ctx.stems.thin ? 0.5 : 1);
   const era = (_g = (_f = WILDS_DATA.eraMult[s.f]) == null ? void 0 : _f[ctx.era]) != null ? _g : 1;
-  const extra = ((_i = (_h = s.cx) == null ? void 0 : _h[c.key]) != null ? _i : 1) * (ctx.where === "new" ? (_j = s.nx) != null ? _j : 1 : 1);
+  const extra = ((_i = (_h = s.cx) == null ? void 0 : _h[c.key]) != null ? _i : 1) * (ctx.where !== "home" ? (_j = s.nx) != null ? _j : 1 : 1);
   return s.w * family * where2 * era * extra * regionMult2(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor((_k = s.t) != null ? _k : [], ctx.tone);
 }
 var REF_CACHE = /* @__PURE__ */ new WeakMap();
@@ -121268,7 +121302,7 @@ function generateWildsNames(options) {
   const data = WILDS_DATA.modules[module2];
   const culture = (_a5 = findWildsCulture(options.culture)) != null ? _a5 : findWildsCulture(wildsDefaultCulture(module2));
   const era = data.eras.includes(options.era) ? options.era : "MD";
-  const where2 = options.where === "new" ? "new" : "home";
+  const where2 = options.where === "new" || options.where === "settled" ? options.where : "home";
   const fantastic = !!options.fantastic;
   const resolved = resolveWildsBiome(module2, culture.key, where2, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;
@@ -121458,7 +121492,7 @@ function defaultWildsState(module2) {
   return { culture: wildsDefaultCulture(module2), era: "MD", where: "home", fantastic: false, tone: "any", people: "placeholders", series: false };
 }
 var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
-var WHERE_TEXT = { home: "in home country", new: "in newly explored country" };
+var WHERE_TEXT = { home: "in home country", new: "in newly explored country", settled: "in settled lands" };
 function wildsBiomeText(module2, biome, catalogue = BUILT_IN_BIOMES) {
   const found = wildsBiomes(module2, catalogue).find((b) => biomeMatches(b, biome));
   return found ? `in ${found.phrase}` : "in any land";
@@ -121484,8 +121518,8 @@ function wildsSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
   out.push({
     field: "where",
     text: WHERE_TEXT[state.where],
-    title: "Home country: a people naming its own land. New country: explorers naming land they have just reached",
-    choices: ["home", "new"].map((w) => ({ id: w, label: WHERE_TEXT[w] })),
+    title: "Home country: a people naming its own land. New country: explorers naming land they have just reached. Settled lands: a dominant culture naming land within a peopled country",
+    choices: ["home", "new", "settled"].map((w) => ({ id: w, label: WHERE_TEXT[w] })),
     current: state.where
   });
   if (lens.world) out.push(", in a ", asSegment(lens.world, "fantastic"), " world, ");
@@ -121548,7 +121582,7 @@ function chooseWilds(state, field, id, module2, catalogue = BUILT_IN_BIOMES) {
       next = chooseLens(module2, next, "era", id, defaultWildsState(module2).era);
       break;
     case "where":
-      next.where = id === "new" ? "new" : "home";
+      next.where = id === "new" || id === "settled" ? id : "home";
       break;
     case "fantastic":
       next = chooseLens(module2, next, "fantastic", id);
@@ -121584,7 +121618,7 @@ function wildsHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BI
     moduleLabel2,
     wildsEraLabel(state.era),
     culture,
-    ...state.where === "new" ? ["new country"] : [],
+    ...state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : [],
     ...regionShown2 && state.region ? [regionPhrase(state.region)] : [],
     ...!regionShown2 && biome ? [biome.label] : [],
     ...kind ? [kind.plural] : [],
@@ -121622,7 +121656,7 @@ var HyperspaceGuideModal = class extends import_obsidian6.Modal {
 var waters_default = {
   $comment: "Seas and coasts (docs/seas-and-coasts-brief.md). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
   version: 1,
-  where: { mood: { home: 0.1, new: 4 }, false: { home: 0.2, new: 3 }, sai: { home: 1, new: 2 }, per: { home: 0.5, new: 2 } },
+  where: { mood: { home: 0.1, new: 4, settled: 1 }, false: { home: 0.2, new: 3, settled: 3 }, sai: { home: 1, new: 2, settled: 1.5 }, per: { home: 0.5, new: 2, settled: 3 } },
   regions: ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI"],
   regionTags: {
     ness: { COR: 0.3, WCY: 0.5, SEA: 1, EAN: 2, WMM: 0.5, WAL: 0.3, EMD: 2, NTH: 2, SBL: 2, SLO: 1.5, SHH: 2, NSI: 3 },
@@ -122558,7 +122592,7 @@ var godAvailable2 = (ctx) => {
 };
 function riverName3(ctx) {
   if (ctx.mode === "placeholders") return "[river]";
-  const setting = ctx.homeBritish ? "british" : ctx.where === "home" ? "established" : "new-land";
+  const setting = ctx.homeBritish ? "british" : ctx.where === "new" ? "new-land" : "established";
   const text = riverFill({ setting, region: ctx.homeBritish ? ctx.region : void 0 }, ctx.rng).replace(/\bRiver\b/gi, "").replace(/^the /i, "").replace(/\s+/g, " ").trim();
   return text || void 0;
 }
@@ -122755,7 +122789,7 @@ function earthlyWeight(ctx, s, hardOnly = false) {
   const family = ((_c3 = cm[s.f]) != null ? _c3 : 1) * (s.of ? (_d3 = cm.of) != null ? _d3 : 1 : 1);
   const where2 = (_f = (_e3 = WATERS_DATA.where[s.f]) == null ? void 0 : _e3[ctx.where]) != null ? _f : 1;
   const era = (_h = (_g = WATERS_DATA.eraMult[s.f]) == null ? void 0 : _g[ctx.era]) != null ? _h : 1;
-  const extra = ((_j = (_i = s.cx) == null ? void 0 : _i[c.key]) != null ? _j : 1) * (ctx.where === "new" ? (_k = s.nx) != null ? _k : 1 : 1);
+  const extra = ((_j = (_i = s.cx) == null ? void 0 : _i[c.key]) != null ? _j : 1) * (ctx.where !== "home" ? (_k = s.nx) != null ? _k : 1 : 1);
   return s.w * family * where2 * era * extra * regionMult3(ctx, s.rt) * biomeMult2(ctx, s.bt) * toneFactor((_l = s.t) != null ? _l : [], ctx.tone);
 }
 function hyperWeight(ctx, s, register, medium) {
@@ -122786,7 +122820,7 @@ function generateWatersNames(options) {
   const earthlyModule = hyper ? void 0 : module2;
   const eras = earthlyModule ? waterEras(earthlyModule) : ["IS"];
   const era = eras.includes(options.era) ? options.era : hyper ? "IS" : "MD";
-  const where2 = !hyper && options.where === "new" ? "new" : "home";
+  const where2 = !hyper && (options.where === "new" || options.where === "settled") ? options.where : "home";
   const fantastic = !hyper && !!options.fantastic;
   const homeBritish = !hyper && isBritishCulture2(culture.key) && where2 === "home";
   const region = homeBritish && options.region && options.region !== "all" ? options.region : void 0;
@@ -123005,7 +123039,7 @@ function defaultWatersState(module2) {
   };
 }
 var PEOPLE_TEXT7 = { placeholders: "placeholders for", invented: "invented" };
-var WHERE_TEXT2 = { home: "on home shores", new: "on newly charted shores" };
+var WHERE_TEXT2 = { home: "on home shores", new: "on newly explored shores", settled: "on settled shores" };
 var SERIES_TEXT4 = {
   seasLakes: { off: "each one separate", on: "each one separate" },
   coastsIslands: { off: "each one separate", on: "along one stretch of coast" },
@@ -123082,8 +123116,8 @@ function watersSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
     out.push({
       field: "where",
       text: WHERE_TEXT2[state.where],
-      title: "Home shores: a people naming its own coast. New shores: explorers naming a coast they have just reached",
-      choices: ["home", "new"].map((w) => ({ id: w, label: WHERE_TEXT2[w] })),
+      title: "Home shores: a people naming its own coast. New shores: explorers naming a coast they have just reached. Settled shores: a dominant culture naming a coast within a peopled land",
+      choices: ["home", "new", "settled"].map((w) => ({ id: w, label: WHERE_TEXT2[w] })),
       current: state.where
     });
     if (lens.world) out.push(", in a ", asSegment(lens.world, "fantastic"), " world, ");
@@ -123152,7 +123186,7 @@ function chooseWaters(state, field, id, module2) {
       next = hyper ? { ...next, era: defaultWatersState(module2).era } : chooseLens(module2, next, "era", id, defaultWatersState(module2).era);
       break;
     case "where":
-      next.where = id === "new" ? "new" : "home";
+      next.where = id === "new" || id === "settled" ? id : "home";
       break;
     case "fantastic":
       next = hyper ? { ...next, fantastic: id === "on" } : chooseLens(module2, next, "fantastic", id);
@@ -123218,7 +123252,7 @@ function watersHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_B
     moduleLabel2,
     watersEraLabel(state.era),
     culture,
-    ...state.where === "new" ? ["new shores"] : [],
+    ...state.where === "new" ? ["new shores"] : state.where === "settled" ? ["settled shores"] : [],
     ...regionShown2 && state.region ? [regionPhrase(state.region)] : [],
     ...!regionShown2 && biome ? [biome.label] : [],
     ...kind ? [kind.plural] : [],
@@ -135259,7 +135293,7 @@ function parseWatersPreset(values, body, fileName) {
       culture,
       waterKind: kind,
       era: hyper ? "IS" : pick4("era", "MD", (v) => waterEras(module2).includes(v)),
-      where: hyper ? "home" : pick4("where", "home", (v) => v === "home" || v === "new"),
+      where: hyper ? "home" : pick4("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
       fantastic: hyper ? false : flag("fantastic"),
       region: hyper ? "all" : pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       // A built-in's id, or a biome pack's path (a pack's biome shows in seas and coasts where its root built-in does).
@@ -135336,7 +135370,7 @@ function parseWildsPreset(values, body, fileName) {
       culture: pick4("culture", wildsDefaultCulture(module2), (v) => !!findWildsCulture(v)),
       wildsKind: kind,
       era,
-      where: pick4("where", "home", (v) => v === "home" || v === "new"),
+      where: pick4("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
       fantastic: flag("fantastic"),
       region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       biome: pick4("biome", "any", (v) => v === "any" || wildsBiomes(module2).some((b) => b.id === v) || /\.md$/i.test(v)),

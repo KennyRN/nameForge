@@ -37,7 +37,8 @@ import { generateSettlementNames, type SettlementNamesOptions } from "../settlem
 export type WildsModule = "mountainNames" | "forestNames" | "desertNames" | "moorNames" | "wetlandNames" | "grasslandNames";
 export const WILDS_MODULES: WildsModule[] = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 export type WildsEra = RouteEra;
-export type WildsWhere = "home" | "new";
+/** Place modules split brief §3.1: home country, newly explored country, or settled lands. */
+export type WildsWhere = "home" | "new" | "settled";
 
 export interface WildsShape {
   p: string;
@@ -82,7 +83,7 @@ interface WildsModuleData {
 
 interface WildsData {
   regions: string[];
-  where: Record<string, { home: number; new: number }>;
+  where: Record<string, { home: number; new: number; settled?: number }>;
   regionTags: Record<string, Record<string, number>>;
   biomeTags: Record<string, Record<string, number>>;
   cultureMult: Record<string, Record<string, number>>;
@@ -99,6 +100,8 @@ interface WildsData {
     worldEraToRoute: Record<string, Record<string, WildsEra>>;
     colonialToCulture: Record<string, { culture: string; era: WildsEra }>;
     cultureToColonial: Record<string, string>;
+    /** Place modules split brief §3.2: more cultures' colonial traditions; a list is drawn from per name, by weight. Read by the place sources only. */
+    cultureToColonialAdded?: Record<string, string | { tradition: string; weight: number }[]>;
   };
   sources: { beast: { pool: number; biome: number; biomeLists: Record<string, number> }; tree: { pool: number; biome: number; biomeLists: Record<string, number> }; stock: { biome: number; biomeLists: Record<string, number> } };
   beastPools: Record<WildsModule, string>;
@@ -286,9 +289,9 @@ export function nativeSettlementRequest(
   const land = link.nativeLand[module];
   const biome = chosenBiome ?? land.biomeIfUnset;
   const base = { size: "any" as const, count: 0, terrain: land.terrain, biome, wilds: false };
-  if (where === "new") {
+  if (where === "new" || where === "settled") {
     const tradition = link.cultureToColonial[culture];
-    return tradition ? { ...base, setting: "new-lands", tradition: tradition === "general" ? undefined : tradition } : undefined;
+    return tradition ? { ...base, setting: where === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? undefined : tradition } : undefined;
   }
   if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : undefined };
   const worldCulture = WORLD_CULTURES.find((c) => c.id === culture);
@@ -433,7 +436,7 @@ const godAvailable = (ctx: Ctx) => !ctx.culture.sensitive && (godNames(ctx.cultu
 /** §4: `{river}`: a bare river from the river engine, set by the country. */
 function riverName(ctx: Ctx): string | undefined {
   if (ctx.mode === "placeholders") return "[river]";
-  const setting: RiverSetting = ctx.homeBritish ? "british" : ctx.where === "home" ? "established" : "new-land";
+  const setting: RiverSetting = ctx.homeBritish ? "british" : ctx.where === "new" ? "new-land" : "established";
   const text = riverFill({ setting, region: ctx.homeBritish ? ctx.region : undefined }, ctx.rng)
     .replace(/\bRiver\b/gi, "")
     .replace(/^the /i, "")
@@ -660,7 +663,7 @@ function shapeWeight(ctx: Ctx, s: WildsShape, hardOnly = false): number {
   const family = (cm[s.f] ?? 1) * (s.of ? cm.of ?? 1 : 1);
   const where = (WILDS_DATA.where[s.f]?.[ctx.where] ?? 1) * (s.f === "twn" && ctx.stems.thin ? 0.5 : 1);
   const era = WILDS_DATA.eraMult[s.f]?.[ctx.era] ?? 1;
-  const extra = (s.cx?.[c.key] ?? 1) * (ctx.where === "new" ? s.nx ?? 1 : 1);
+  const extra = (s.cx?.[c.key] ?? 1) * (ctx.where !== "home" ? s.nx ?? 1 : 1);
   return s.w * family * where * era * extra * regionMult(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor(s.t ?? [], ctx.tone);
 }
 
@@ -728,7 +731,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const data = WILDS_DATA.modules[module];
   const culture = findWildsCulture(options.culture) ?? findWildsCulture(wildsDefaultCulture(module))!;
   const era: WildsEra = data.eras.includes(options.era as WildsEra) ? options.era! : "MD";
-  const where: WildsWhere = options.where === "new" ? "new" : "home";
+  const where: WildsWhere = options.where === "new" || options.where === "settled" ? options.where : "home";
   const fantastic = !!options.fantastic;
   const resolved = resolveWildsBiome(module, culture.key, where, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;

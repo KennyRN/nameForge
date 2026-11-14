@@ -1,7 +1,7 @@
 {
   "$comment": "Seas and coasts (docs/seas-and-coasts-brief.md). Words come from settlement-vocab.json through src/settlement/vocab.ts.",
   "version": 1,
-  "where": {"mood":{"home":0.1,"new":4},"false":{"home":0.2,"new":3},"sai":{"home":1,"new":2},"per":{"home":0.5,"new":2}},
+  "where": {"mood":{"home":0.1,"new":4,"settled":1},"false":{"home":0.2,"new":3,"settled":3},"sai":{"home":1,"new":2,"settled":1.5},"per":{"home":0.5,"new":2,"settled":3}},
   "regions": ["COR","WCY","SEA","EAN","WMM","WAL","EMD","NTH","SBL","SLO","SHH","NSI"],
   "regionTags": {
     "ness": {"COR":0.3,"WCY":0.5,"SEA":1,"EAN":2,"WMM":0.5,"WAL":0.3,"EMD":2,"NTH":2,"SBL":2,"SLO":1.5,"SHH":2,"NSI":3},

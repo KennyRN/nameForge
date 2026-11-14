@@ -68,7 +68,7 @@ export interface WildsChoice {
 export type WildsSegment = string | { field: WildsField; text: string; title: string; choices: WildsChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
-const WHERE_TEXT: Record<WildsWhere, string> = { home: "in home country", new: "in newly explored country" };
+const WHERE_TEXT: Record<WildsWhere, string> = { home: "in home country", new: "in newly explored country", settled: "in settled lands" };
 
 /** §2.2: "across all of Britain", or "in the North". */
 export const wildsRegionText = (region: string | undefined) => (region ? `in ${regionPhrase(region)}` : "across all of Britain");
@@ -100,8 +100,8 @@ export function wildsSentence(state: WildsSentenceState, module: WildsModule, ca
   out.push({
     field: "where",
     text: WHERE_TEXT[state.where],
-    title: "Home country: a people naming its own land. New country: explorers naming land they have just reached",
-    choices: (["home", "new"] as WildsWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
+    title: "Home country: a people naming its own land. New country: explorers naming land they have just reached. Settled lands: a dominant culture naming land within a peopled country",
+    choices: (["home", "new", "settled"] as WildsWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
     current: state.where,
   });
   if (lens.world) out.push(", in a ", asSegment(lens.world, "fantastic"), " world, ");
@@ -168,7 +168,7 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
       next = chooseLens(module, next, "era", id, defaultWildsState(module).era);
       break;
     case "where":
-      next.where = id === "new" ? "new" : "home";
+      next.where = id === "new" || id === "settled" ? id : "home";
       break;
     case "fantastic":
       next = chooseLens(module, next, "fantastic", id);
@@ -206,7 +206,7 @@ export function wildsHistoryLabel(module: WildsModule, state: WildsSentenceState
     moduleLabel,
     wildsEraLabel(state.era),
     culture,
-    ...(state.where === "new" ? ["new country"] : []),
+    ...(state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : []),
     ...(regionShown && state.region ? [regionPhrase(state.region)] : []),
     ...(!regionShown && biome ? [biome.label] : []),
     ...(kind ? [kind.plural] : []),

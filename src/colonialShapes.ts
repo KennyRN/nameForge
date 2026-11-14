@@ -257,6 +257,11 @@ export interface ColonialGenerateOptions {
   feature?: string;
   /** Categories set to `ignore` by a recipe: weight 0 at the shape stage. */
   excludedCategories?: string[];
+  /**
+   * Place modules split brief §1.1: draw only from every generic of these groups and from these generics
+   * (a source's kind list). Absent, as it is for every caller but the place sources, nothing changes.
+   */
+  only?: { groups?: string[]; generics?: string[] };
   /** Land brief §3: biome and terrain multipliers on groups and generics. */
   environment?: { groups: Record<string, number>; generics: Record<string, number> };
   /** Stellar brief §5: the recipe's biome is a space biome of this scale; `aliens` says whether it has alien life. */
@@ -365,6 +370,7 @@ class ColonialShapeGenerator {
       const generics: [EligibleGeneric, number][] = [];
       for (const entry of group.generics) {
         const id = genericIdOf(entry);
+        if (options.only && !(options.only.groups?.includes(group.id) || options.only.generics?.includes(id))) continue;
         if (typeof entry !== "string" && !inPart(entry.parts)) continue;
         if (this.space && !this.spaceGenericLive(group.id, id)) continue;
         if (!settlementGeneric(group.id, id)) continue;

@@ -281,6 +281,11 @@ export interface PlaceShapeGenerateOptions {
   /** Categories set to `ignore` by a recipe: weight 0 at the shape stage. */
   excludedCategories?: string[];
   /**
+   * Place modules split brief §1.1: draw only from these generics (a source's kind list). Absent, as it is
+   * for every caller but the place sources, the generator is exactly as it was.
+   */
+  genericIds?: string[];
+  /**
    * Urban brief §6.1: draw settlement names at a size. Runs as feature "settlement", then drops
    * every generic and affix form the settlement data doesn't list at the size.
    */
@@ -331,7 +336,7 @@ class PlaceShapeGenerator {
   constructor(
     private readonly source: PlaceShapeData,
     private readonly region: RegionWeighting | null,
-    filters: { groupIds?: string[]; feature?: string; excludedCategories?: string[]; settlement?: { size: SizeKey } } = {},
+    filters: { groupIds?: string[]; feature?: string; excludedCategories?: string[]; settlement?: { size: SizeKey }; genericIds?: string[] } = {},
     regions: PlaceShapeRegionData = PLACE_SHAPE_REGION_DATA,
     private readonly environment?: { groups: Record<string, number>; generics: Record<string, number> },
   ) {
@@ -346,6 +351,11 @@ class PlaceShapeGenerator {
     }
     if (feature === "landscape") groups = groups.filter((g) => g.side === "landscape");
     else if (feature && feature !== "settlement") groups = groups.filter((g) => g.id === feature);
+    // Place modules split brief §1.1: a source's kind list keeps only the generics named.
+    if (filters.genericIds) {
+      const only = new Set(filters.genericIds);
+      groups = groups.map((g) => ({ ...g, generics: g.generics.filter((x) => only.has(x.id)) })).filter((g) => g.generics.length > 0);
+    }
     if (this.excluded.size > 0) {
       // Generics whose every pairing is ignored drop out, and so do groups left empty.
       groups = groups
@@ -486,6 +496,7 @@ function createGenerator(options: PlaceShapeGenerateOptions, source: PlaceShapeD
     feature: options.feature,
     excludedCategories: options.excludedCategories,
     settlement: options.settlement,
+    genericIds: options.genericIds,
   }, PLACE_SHAPE_REGION_DATA, options.environment);
 }
 

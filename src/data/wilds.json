@@ -32,15 +32,18 @@
  "where": {
   "mood": {
    "home": 0.1,
-   "new": 4
+   "new": 4,
+   "settled": 1
   },
   "sai": {
    "home": 1,
-   "new": 2
+   "new": 2,
+   "settled": 1.5
   },
   "per": {
    "home": 0.5,
-   "new": 2
+   "new": 2,
+   "settled": 3
   }
  },
  "regionTags": {
@@ -9780,6 +9783,24 @@
    "arabic-persian": "arab",
    "chinese": "chinese",
    "japanese": "japanese"
+  },
+  "cultureToColonialAdded": {
+   "norse": [
+    { "tradition": "danish", "weight": 50 },
+    { "tradition": "swedish", "weight": 50 }
+   ],
+   "dutch": "dutch",
+   "french": "french",
+   "iberian": [
+    { "tradition": "spanish", "weight": 50 },
+    { "tradition": "portuguese", "weight": 50 }
+   ],
+   "american": "english-speaking-settler",
+   "ottoman": "ottoman",
+   "german": "german",
+   "italian": "italian",
+   "phoenician": "phoenician",
+   "belgian": "belgian"
   }
  },
  "sources": {

@@ -93,7 +93,7 @@ export interface WatersChoice {
 export type WatersSegment = string | { field: WatersField; text: string; title: string; choices: WatersChoice[]; current: string | undefined; fixed?: boolean };
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
-const WHERE_TEXT: Record<WatersWhere, string> = { home: "on home shores", new: "on newly charted shores" };
+const WHERE_TEXT: Record<WatersWhere, string> = { home: "on home shores", new: "on newly explored shores", settled: "on settled shores" };
 const SERIES_TEXT: Record<WatersModule, { off: string; on: string }> = {
   seasLakes: { off: "each one separate", on: "each one separate" },
   coastsIslands: { off: "each one separate", on: "along one stretch of coast" },
@@ -175,8 +175,8 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule,
     out.push({
       field: "where",
       text: WHERE_TEXT[state.where],
-      title: "Home shores: a people naming its own coast. New shores: explorers naming a coast they have just reached",
-      choices: (["home", "new"] as WatersWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
+      title: "Home shores: a people naming its own coast. New shores: explorers naming a coast they have just reached. Settled shores: a dominant culture naming a coast within a peopled land",
+      choices: (["home", "new", "settled"] as WatersWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
       current: state.where,
     });
     if (lens!.world) out.push(", in a ", asSegment(lens!.world, "fantastic"), " world, ");
@@ -249,7 +249,7 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
       next = hyper ? { ...next, era: defaultWatersState(module).era } : chooseLens(module, next, "era", id, defaultWatersState(module).era);
       break;
     case "where":
-      next.where = id === "new" ? "new" : "home";
+      next.where = id === "new" || id === "settled" ? id : "home";
       break;
     case "fantastic":
       next = hyper ? { ...next, fantastic: id === "on" } : chooseLens(module, next, "fantastic", id);
@@ -319,7 +319,7 @@ export function watersHistoryLabel(module: WatersModule, state: WatersSentenceSt
     moduleLabel,
     watersEraLabel(state.era),
     culture,
-    ...(state.where === "new" ? ["new shores"] : []),
+    ...(state.where === "new" ? ["new shores"] : state.where === "settled" ? ["settled shores"] : []),
     ...(regionShown && state.region ? [regionPhrase(state.region)] : []),
     ...(!regionShown && biome ? [biome.label] : []),
     ...(kind ? [kind.plural] : []),

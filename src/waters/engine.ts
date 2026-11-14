@@ -40,7 +40,8 @@ export type WatersEarthly = "seasLakes" | "coastsIslands" | "seaCharts";
 export type WatersModule = WatersEarthly | "hyperspaceCharts";
 export const EARTHLY_MODULES: WatersEarthly[] = ["seasLakes", "coastsIslands", "seaCharts"];
 export type WatersEra = RouteEra;
-export type WatersWhere = "home" | "new";
+/** Place modules split brief §3.1: home shores, newly explored shores, or settled shores. */
+export type WatersWhere = "home" | "new" | "settled";
 export type HyperMedium = "sea" | "wind" | "both";
 export type HyperRegister = "any" | "spacers" | "chart" | "survey";
 /** §12.2: the scales hyperspace charts are drawn at (no planetary system). */
@@ -93,7 +94,7 @@ export interface HyperKind {
 }
 
 interface WatersData {
-  where: Record<string, { home: number; new: number }>;
+  where: Record<string, { home: number; new: number; settled?: number }>;
   regions: string[];
   regionTags: Record<string, Record<string, number>>;
   biomeTags: Record<string, Record<string, number>>;
@@ -298,7 +299,7 @@ const godAvailable = (ctx: Ctx) => !ctx.culture.sensitive && (godNames(ctx.cultu
 /** §4: `{river}`: a bare river from the river engine, set by the shore. */
 function riverName(ctx: Ctx): string | undefined {
   if (ctx.mode === "placeholders") return "[river]";
-  const setting: RiverSetting = ctx.homeBritish ? "british" : ctx.where === "home" ? "established" : "new-land";
+  const setting: RiverSetting = ctx.homeBritish ? "british" : ctx.where === "new" ? "new-land" : "established";
   const text = riverFill({ setting, region: ctx.homeBritish ? ctx.region : undefined }, ctx.rng)
     .replace(/\bRiver\b/gi, "")
     .replace(/^the /i, "")
@@ -537,7 +538,7 @@ function earthlyWeight(ctx: Ctx, s: WatersShape, hardOnly = false): number {
   const family = (cm[s.f] ?? 1) * (s.of ? cm.of ?? 1 : 1);
   const where = WATERS_DATA.where[s.f]?.[ctx.where] ?? 1;
   const era = WATERS_DATA.eraMult[s.f]?.[ctx.era] ?? 1;
-  const extra = (s.cx?.[c.key] ?? 1) * (ctx.where === "new" ? s.nx ?? 1 : 1);
+  const extra = (s.cx?.[c.key] ?? 1) * (ctx.where !== "home" ? s.nx ?? 1 : 1);
   return s.w * family * where * era * extra * regionMult(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor(s.t ?? [], ctx.tone);
 }
 
@@ -574,7 +575,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   const earthlyModule = hyper ? undefined : (module);
   const eras = earthlyModule ? waterEras(earthlyModule) : (["IS"] as WatersEra[]);
   const era: WatersEra = eras.includes(options.era as WatersEra) ? options.era! : hyper ? "IS" : "MD";
-  const where: WatersWhere = !hyper && options.where === "new" ? "new" : "home";
+  const where: WatersWhere = !hyper && (options.where === "new" || options.where === "settled") ? options.where : "home";
   const fantastic = !hyper && !!options.fantastic;
   const homeBritish = !hyper && isBritishCulture(culture.key) && where === "home";
   const region = homeBritish && options.region && options.region !== "all" ? options.region : undefined;

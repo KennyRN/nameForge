@@ -260,6 +260,12 @@ export interface NameGenerateOptions {
   catalogue?: BiomeCatalogue;
   /** Urban brief §6.1: draw settlement names at a size (the shape generators' `settlement` option). */
   settlement?: { size: SizeKey };
+  /**
+   * Place modules split brief §1.1: restrict the shape generators to a source's kind list: British
+   * shapes to `generics`; colonial patterns to every generic of `groups` and to `generics`. Absent,
+   * the engine is exactly as it was.
+   */
+  only?: { groups?: string[]; generics?: string[] };
 }
 
 /** Optional renderer streams and settings; a renderer built without them behaves as before. */
@@ -1185,7 +1191,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
   let renderOne: (i: number) => GeneratedName;
   let shapeCount: number;
   if (organic) {
-    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement });
+    const { shapes } = generatePlaceShapesDetailed({ count: options.count, seed, region, feature: recipe.shape.feature, excludedCategories, environment, settlement, ...(options.only ? { genericIds: options.only.generics ?? [] } : {}) });
     renderOne = (i) => renderer.render(shapes[i], rng);
     shapeCount = shapes.length;
   } else {
@@ -1199,6 +1205,7 @@ export function* generatePlaceNamesSteps(options: NameGenerateOptions): Generato
       excludedCategories,
       environment,
       settlement,
+      ...(options.only ? { only: options.only } : {}),
       ...(spaceScale ? { space: { scale: spaceScale, aliens: !!recipe.shape.aliens } } : {}),
     });
     renderOne = (i) => renderer.renderColonial(shapes[i], rng);
