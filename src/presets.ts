@@ -34,7 +34,9 @@ import { placesOffered, type PeopleSource } from "./peoples/sentence";
 import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_SKY, type TimeKind, type TimeModule, type TimeWords } from "./timesky/data";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { isPlaceClass, type PlaceClass } from "./places/classes";
-import { findWildsCulture, findWildsKind, wildsBiomes, wildsDefaultCulture, wildsEras, wildsKindsAt, type WildsEra, type WildsLikeModule, type WildsWhere } from "./wilds/engine";
+import { scaleOf } from "./places/space";
+import { SCALES, type SpaceScale } from "./space/scale";
+import { findWildsCulture, findWildsKind, wildsBiomes, wildsDefaultCulture, wildsDefaultEra, wildsDefaultWhere, wildsEras, wildsKindsAt, type WildsEra, type WildsLikeModule, type WildsWhere } from "./wilds/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { AIR_LAND, availableStyles, findVesselCulture, isAirLand, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule, type VesselNaming } from "./vessels/engine";
@@ -1540,6 +1542,7 @@ export const WILDS_PRESET_MODULES: Record<string, WildsLikeModule> = {
   "farmland-names": "farmland",
   "hills-valleys-names": "hillsValleys",
   "inland-water-names": "riversInland",
+  "stars-space-names": "starsSpace",
 };
 export const wildsPresetKey = (module: WildsLikeModule): string => Object.entries(WILDS_PRESET_MODULES).find(([, m]) => m === module)![0];
 
@@ -1555,6 +1558,8 @@ export interface WildsPreset {
   wildsClass?: PlaceClass;
   era: WildsEra;
   where: WildsWhere;
+  /** Stars and space (§5.5): the scale link; absent is any scale (and nothing is written for it). */
+  wildsScale?: SpaceScale;
   fantastic: boolean;
   /** "all" or a place-shape region code. */
   region: string;
@@ -1581,7 +1586,7 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
     if (v) problems.push(`Unknown ${key} “${v}”.`);
     return false;
   };
-  const era = pick<WildsEra>("era", "MD", (v) => wildsEras(module).includes(v as WildsEra));
+  const era = pick<WildsEra>("era", wildsDefaultEra(module), (v) => wildsEras(module).includes(v as WildsEra));
   let kind = pick<string>("kind", "any", (v) => v === "any" || !!findWildsKind(module, v));
   // §14: a kind not live in the era runs as any.
   if (kind !== "any" && !wildsKindsAt(module, era).some((k) => k.key === kind)) {
@@ -1589,6 +1594,10 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
     kind = "any";
   }
   const kindClass = classValue(values, problems);
+  // Stars and space: the scale line, only for a scale (a stored "any", or none, is not a scale).
+  const scaleLine = values.scale;
+  const scaleValue = scaleLine && scaleLine !== "any" && (SCALES as string[]).includes(scaleLine) && scaleOf(scaleLine as SpaceScale, era) !== "any" ? (scaleLine as SpaceScale) : undefined;
+  if (scaleLine && scaleLine !== "any" && !scaleValue && module === "starsSpace") problems.push(`Unknown scale “${scaleLine}”.`);
   return {
     wilds: {
       packName: values.packName || fileName,
@@ -1599,7 +1608,8 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
       wildsKind: kind,
       ...(kindClass ? { wildsClass: kindClass } : {}),
       era,
-      where: pick<WildsWhere>("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
+      where: pick<WildsWhere>("where", wildsDefaultWhere(module), (v) => v === "home" || v === "new" || v === "settled"),
+      ...(scaleValue ? { wildsScale: scaleValue } : {}),
       fantastic: flag("fantastic"),
       region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       biome: pick("biome", "any", (v) => v === "any" || wildsBiomes(module).some((b) => b.id === v) || /\.md$/i.test(v)),
@@ -1623,6 +1633,7 @@ function wildsPresetContent(preset: WildsPreset): string {
     ...(preset.wildsClass ? [`class: ${preset.wildsClass}`] : []),
     `era: ${preset.era}`,
     `where: ${preset.where}`,
+    ...(preset.wildsScale ? [`scale: ${preset.wildsScale}`] : []),
     `fantastic: ${preset.fantastic}`,
     `region: ${preset.region}`,
     `biome: ${preset.biome}`,

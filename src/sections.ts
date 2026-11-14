@@ -90,6 +90,7 @@ export type NameForgeSection =
   | "farmland"
   | "hillsValleys"
   | "riversInland"
+  | "starsSpace"
   | "seasLakes"
   | "coastsIslands"
   | "seaCharts"
@@ -103,7 +104,7 @@ export type NameForgeSection =
   | "grasslandNames";
 
 /** Place modules split brief §5: the focused place modules that run on the wild lands engine. */
-export const PLACE_MODULE_SECTIONS: NameForgeSection[] = ["lands", "farmland", "hillsValleys", "riversInland"];
+export const PLACE_MODULE_SECTIONS: NameForgeSection[] = ["lands", "farmland", "hillsValleys", "riversInland", "starsSpace"];
 
 /** Place modules and the wild lands modules: the sections the wild lands sentence and engine draw. */
 export const WILDS_LIKE_SECTIONS: NameForgeSection[] = [...PLACE_MODULE_SECTIONS, "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
@@ -151,6 +152,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "riversInland",
   "routeNames",
   "sacredPlaces",
+  "starsSpace",
   ...URBAN_SECTIONS,
   ...WATERS_SECTIONS,
   ...WILDS_SECTIONS,
@@ -172,7 +174,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
 export type SectionGroup = "placeNames" | "urban" | "seasCoasts" | "wildLands" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", ...PLACE_MODULE_SECTIONS, "routeNames", "sacredPlaces"],
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", ...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace"), "routeNames", "sacredPlaces", "starsSpace"],
   // Urban brief §1.1: straight after place names.
   urban: URBAN_SECTIONS,
   seasCoasts: WATERS_SECTIONS,
@@ -253,6 +255,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   farmland: "farmland and countryside",
   hillsValleys: "hills and valleys",
   riversInland: "rivers and inland waters",
+  starsSpace: "stars and space",
   seasLakes: "seas and bays",
   coastsIslands: "coasts and islands",
   seaCharts: "sea charts",

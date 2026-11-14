@@ -468,3 +468,74 @@ Open to General: 10.
 - `{mythBeast} Land` (w 1, f myth, h: true)
 
 Open to General: 9.
+
+## Stars and space (`starsSpace`)
+
+The `station` kind is delegated to settlement names' space sites and has no shapes of its own. Every other kind is all source (newly explored space draws from the colonial part 2 space groups, settled space from part 2a, both at 100%): these shapes are drawn only for a culture with no colonial tradition (Egyptian, Ethiopian, Bantu, West African, Indian, Korean, steppe, Aztec, Maya, Andean, Polynesian) and, in newly explored space, for Chinese, whose tradition exists only in part 2a; and in a series, whose names come from own shapes. The sky pools (`skyQuality`, `skyObject`, `skyFigure`) and `spaceGoods` are shared with sky lore and route names.
+
+### world
+
+- `{wildColour} World` (w 4, f col)
+- `{skyQuality} Moon` (w 3, f qual)
+- `{person:poss} World` (w 3, f per)
+- `{wildQuality} Rock` (w 3, f qual)
+- `{town} Prime` (w 3, f twn)
+- `{skyObject} World` (w 2, f shp)
+- `{wildWeather} Moon` (w 2, f qual)
+- `World of {god}` (w 1, f god, t: ["grand"], of: true)
+- `{mythBeast} World` (w 1, f myth, h: true)
+
+Open to General: 8.
+
+### orbit
+
+- `{wildQuality} Belt` (w 3, f qual)
+- `{wildColour} Belt` (w 3, f col)
+- `{person:poss} Belt` (w 3, f per)
+- `{town} Gap` (w 3, f twn)
+- `{spaceGoods} Belt` (w 3, f work)
+- `{directionAdj} Belt` (w 2, f dir)
+- `The {skyQuality} Drift` (w 2, f qual)
+- `{mythBeast} Belt` (w 1, f myth, h: true)
+
+Open to General: 7.
+
+### star
+
+- `{skyQuality} Star` (w 4, f qual)
+- `{wildColour} Sun` (w 3, f col)
+- `{person:poss} Star` (w 3, f per)
+- `{town} Star` (w 3, f twn)
+- `{skyObject} Star` (w 2, f shp)
+- `Star of the {skyFigure}` (w 2, f shp)
+- `{wildQuality} Sun` (w 2, f qual)
+- `Star of {god}` (w 1, f god, t: ["grand"], of: true)
+- `{mythBeast} Star` (w 1, f myth, h: true)
+
+Open to General: 8.
+
+### nebula
+
+- `{wildColour} Cloud` (w 3, f col)
+- `{skyQuality} Veil` (w 3, f qual)
+- `{wildWeather} Nebula` (w 3, f qual)
+- `{person:poss} Cloud` (w 3, f per)
+- `{skyFigure} Nebula` (w 2, f shp)
+- `{town} Nebula` (w 3, f twn)
+- `{spaceGoods} Cloud` (w 2, f work)
+- `{mythBeast} Nebula` (w 1, f myth, h: true)
+
+Open to General: 7.
+
+### expanse
+
+- `{wildQuality} Reach` (w 4, f qual)
+- `{skyQuality} Void` (w 3, f qual, t: ["strange"])
+- `{directionAdj} Rift` (w 2, f dir)
+- `{town} Spur` (w 3, f twn)
+- `The {skyObject} Arm` (w 2, f shp)
+- `{person:poss} Rift` (w 3, f per)
+- `{wildColour} Void` (w 2, f col, t: ["grim"])
+- `{mythBeast} Reach` (w 1, f myth, h: true)
+
+Open to General: 7.

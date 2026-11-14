@@ -1202,6 +1202,31 @@
     "constructed"
    ]
   },
+  "starsSpace": {
+   "family": "A",
+   "eras": [
+    [
+     "NF"
+    ],
+    [
+     "IS"
+    ]
+   ],
+   "worlds": {
+    "NF": [
+     "plain",
+     "fantastic"
+    ],
+    "IS": [
+     "plain",
+     "fantastic"
+    ]
+   },
+   "classes": [
+    "natural",
+    "constructed"
+   ]
+  },
   "eventNames": {
    "family": "A",
    "eras": [

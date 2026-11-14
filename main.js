@@ -2651,6 +2651,7 @@ var SECTION_ICONS = {
   farmland: ICON_NATIVE_PLACE_NAMES,
   hillsValleys: ICON_NATIVE_PLACE_NAMES,
   riversInland: ICON_NATIVE_PLACE_NAMES,
+  starsSpace: ICON_NATIVE_PLACE_NAMES,
   // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
   mountainNames: ICON_MOUNTAINS,
   forestNames: ICON_FORESTS,
@@ -65158,6 +65159,22 @@ var lens_default = {
           keepWhenHidden: true
         }
       }
+    },
+    starsSpace: {
+      cultures: "shared",
+      eras: "codes",
+      land: false,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: null
+        },
+        roster: "wilds"
+      }
     }
   },
   bands: [
@@ -69805,6 +69822,31 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      classes: [
+        "natural",
+        "constructed"
+      ]
+    },
+    starsSpace: {
+      family: "A",
+      eras: [
+        [
+          "NF"
+        ],
+        [
+          "IS"
+        ]
+      ],
+      worlds: {
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
       classes: [
         "natural",
         "constructed"
@@ -121727,6 +121769,154 @@ var places_default = {
           }
         }
       ]
+    },
+    starsSpace: {
+      label: "stars and space",
+      any: "space features of any kind",
+      seriesText: "in one system",
+      terrain: "space",
+      defaultBiome: "temperate",
+      parentKind: "star",
+      biomes: [
+        "temperate"
+      ],
+      region: false,
+      eras: [
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "world",
+          menu: "Planets, moons and rings",
+          plural: "planets, moons and rings",
+          weight: 20,
+          class: "natural",
+          sources: {
+            colonial: {
+              groups: [
+                "planet-surface",
+                "planet-moons",
+                "planet-rings"
+              ]
+            },
+            share: {
+              new: 1,
+              settled: 1
+            }
+          }
+        },
+        {
+          key: "orbit",
+          menu: "Orbits, belts and boundaries",
+          plural: "orbits, belts and boundaries",
+          weight: 18,
+          class: "natural",
+          sources: {
+            colonial: {
+              groups: [
+                "planet-orbits",
+                "system-inner",
+                "system-belts",
+                "system-outer",
+                "system-boundaries",
+                "system-binaries"
+              ]
+            },
+            share: {
+              new: 1,
+              settled: 1
+            }
+          }
+        },
+        {
+          key: "star",
+          menu: "Stars and stellar neighbourhoods",
+          plural: "stars and stellar neighbourhoods",
+          weight: 18,
+          class: "natural",
+          sources: {
+            colonial: {
+              groups: [
+                "neighbourhood-stars",
+                "neighbourhood-bubbles",
+                "neighbourhood-streams"
+              ]
+            },
+            share: {
+              new: 1,
+              settled: 1
+            }
+          }
+        },
+        {
+          key: "nebula",
+          menu: "Clouds, nebulae and clusters",
+          plural: "clouds, nebulae and clusters",
+          weight: 14,
+          class: "natural",
+          sources: {
+            colonial: {
+              groups: [
+                "neighbourhood-clouds",
+                "sector-nebulae",
+                "sector-clusters"
+              ]
+            },
+            share: {
+              new: 1,
+              settled: 1
+            }
+          }
+        },
+        {
+          key: "expanse",
+          menu: "Rifts, spurs, arms and voids",
+          plural: "rifts, spurs, arms and voids",
+          weight: 14,
+          class: "natural",
+          sources: {
+            colonial: {
+              groups: [
+                "sector-rifts",
+                "sector-spurs",
+                "galaxy-arms",
+                "galaxy-core",
+                "galaxy-disc",
+                "galaxy-halo",
+                "galaxy-voids"
+              ]
+            },
+            share: {
+              new: 1,
+              settled: 1
+            }
+          }
+        },
+        {
+          key: "station",
+          menu: "Stations and habitats",
+          plural: "stations and habitats",
+          weight: 16,
+          class: "constructed",
+          sources: {
+            delegate: {
+              engine: "settlement",
+              sizes: [
+                "hamlet",
+                "village",
+                "town",
+                "city",
+                "great"
+              ]
+            },
+            share: {
+              new: 1,
+              settled: 1
+            }
+          }
+        }
+      ]
     }
   },
   shapes: {
@@ -124016,6 +124206,247 @@ var places_default = {
           h: true
         }
       ]
+    },
+    starsSpace: {
+      world: [
+        {
+          p: "{wildColour} World",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{skyQuality} Moon",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{person:poss} World",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{wildQuality} Rock",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Prime",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{skyObject} World",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{wildWeather} Moon",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "World of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{mythBeast} World",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      orbit: [
+        {
+          p: "{wildQuality} Belt",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Belt",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{person:poss} Belt",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{town} Gap",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{spaceGoods} Belt",
+          w: 3,
+          f: "work"
+        },
+        {
+          p: "{directionAdj} Belt",
+          w: 2,
+          f: "dir"
+        },
+        {
+          p: "The {skyQuality} Drift",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{mythBeast} Belt",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      star: [
+        {
+          p: "{skyQuality} Star",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Sun",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{person:poss} Star",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{town} Star",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{skyObject} Star",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "Star of the {skyFigure}",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{wildQuality} Sun",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "Star of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{mythBeast} Star",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      nebula: [
+        {
+          p: "{wildColour} Cloud",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{skyQuality} Veil",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildWeather} Nebula",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{person:poss} Cloud",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{skyFigure} Nebula",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{town} Nebula",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{spaceGoods} Cloud",
+          w: 2,
+          f: "work"
+        },
+        {
+          p: "{mythBeast} Nebula",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      expanse: [
+        {
+          p: "{wildQuality} Reach",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{skyQuality} Void",
+          w: 3,
+          f: "qual",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{directionAdj} Rift",
+          w: 2,
+          f: "dir"
+        },
+        {
+          p: "{town} Spur",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "The {skyObject} Arm",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{person:poss} Rift",
+          w: 3,
+          f: "per"
+        },
+        {
+          p: "{wildColour} Void",
+          w: 2,
+          f: "col",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "{mythBeast} Reach",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ]
     }
   },
   cultureShapes: [
@@ -124178,7 +124609,8 @@ var places_default = {
     lands: "grsBeast",
     riversInland: "lakeCreature",
     hillsValleys: "mrBeast",
-    farmland: "grsBeast"
+    farmland: "grsBeast",
+    starsSpace: "mythBeast"
   },
   safeguards: {
     lands: [
@@ -124226,6 +124658,19 @@ var places_default = {
       "Brideshead",
       "Wuthering Heights",
       "Walden Pond"
+    ],
+    starsSpace: [
+      "Tatooine",
+      "Coruscant",
+      "Arrakis",
+      "Pandora",
+      "Krypton",
+      "Gallifrey",
+      "Alderaan",
+      "Endor",
+      "Hoth",
+      "Naboo",
+      "Solaris"
     ]
   }
 };
@@ -124241,7 +124686,7 @@ var OLD_HISTORY_PREFIXES = {
   // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
   deityNames: ["deities and sacred places"]
 };
-var PLACE_MODULE_SECTIONS = ["lands", "farmland", "hillsValleys", "riversInland"];
+var PLACE_MODULE_SECTIONS = ["lands", "farmland", "hillsValleys", "riversInland", "starsSpace"];
 var WILDS_LIKE_SECTIONS = [...PLACE_MODULE_SECTIONS, "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
 var WILDS_SECTIONS = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
@@ -124270,6 +124715,7 @@ var SECTION_ORDER = [
   "riversInland",
   "routeNames",
   "sacredPlaces",
+  "starsSpace",
   ...URBAN_SECTIONS,
   ...WATERS_SECTIONS,
   ...WILDS_SECTIONS,
@@ -124286,7 +124732,7 @@ var SECTION_ORDER = [
   "skyNames"
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", ...PLACE_MODULE_SECTIONS, "routeNames", "sacredPlaces"],
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", ...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace"), "routeNames", "sacredPlaces", "starsSpace"],
   // Urban brief §1.1: straight after place names.
   urban: URBAN_SECTIONS,
   seasCoasts: WATERS_SECTIONS,
@@ -124360,6 +124806,7 @@ var SECTION_LABELS = {
   farmland: "farmland and countryside",
   hillsValleys: "hills and valleys",
   riversInland: "rivers and inland waters",
+  starsSpace: "stars and space",
   seasLakes: "seas and bays",
   coastsIslands: "coasts and islands",
   seaCharts: "sea charts",
@@ -124593,6 +125040,51 @@ function classSegment(module2, current) {
 }
 var kindInClass = (kind, kindClass) => !kindClass || kind.class === kindClass;
 
+// src/places/space.ts
+var SPACE_MODULE = "starsSpace";
+var isSpaceModule = (module2) => module2 === SPACE_MODULE;
+var scaleEraOf = (era) => era === "NF" || era === "IS" ? era : void 0;
+var scalesAtEra = (era) => scalesFor(scaleEraOf(era)).filter((s) => s !== "any");
+function groupScale(id) {
+  var _a6;
+  return (_a6 = COLONIAL_DATA.groups.find((g) => g.id === id)) == null ? void 0 : _a6.scale;
+}
+function kindScales(sources) {
+  var _a6, _b4;
+  if (!sources) return [];
+  if (sources.delegate) return [...SCALES];
+  const found = /* @__PURE__ */ new Set();
+  for (const id of (_b4 = (_a6 = sources.colonial) == null ? void 0 : _a6.groups) != null ? _b4 : []) {
+    const scale = groupScale(id);
+    if (scale) found.add(scale);
+  }
+  return SCALES.filter((s) => found.has(s));
+}
+function kindScalesAt(sources, era) {
+  const offered = scalesAtEra(era);
+  return kindScales(sources).filter((s) => offered.includes(s));
+}
+function groupsAtScale(sources, scale) {
+  var _a6, _b4;
+  return ((_b4 = (_a6 = sources == null ? void 0 : sources.colonial) == null ? void 0 : _a6.groups) != null ? _b4 : []).filter((id) => groupScale(id) === scale);
+}
+var scaleOf = (choice, era) => validScale(choice, scaleEraOf(era));
+function scaleForDraw(sources, era, choice, rng) {
+  const own = kindScalesAt(sources, era);
+  if (own.length === 0) return void 0;
+  const chosen = scaleOf(choice, era);
+  if (chosen !== "any" && own.includes(chosen)) return chosen;
+  const weights = anyScaleWeights(scaleEraOf(era)).filter(([s]) => own.includes(s));
+  const total = weights.reduce((n, [, w]) => n + w, 0);
+  if (total <= 0) return own[Math.floor(rng() * own.length)];
+  let r = rng() * total;
+  for (const [s, w] of weights) {
+    r -= w;
+    if (r < 0) return s;
+  }
+  return weights[weights.length - 1][0];
+}
+
 // src/places/sources.ts
 var SOURCE_SHARES = lens_default.sourceShares;
 var seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
@@ -124618,9 +125110,12 @@ function sourceFor(kind, ctx) {
   if (ctx.where === "home") return kind.native && SOURCE_SHARES.home.cultures.includes(ctx.culture) ? "native" : void 0;
   return kind.colonial && hasColonialTradition(ctx.culture) ? "colonial" : void 0;
 }
-var shareOf = (where2) => SOURCE_SHARES[where2].share;
+var shareOf = (where2, kind) => {
+  var _a6, _b4;
+  return (_b4 = (_a6 = kind == null ? void 0 : kind.share) == null ? void 0 : _a6[where2]) != null ? _b4 : SOURCE_SHARES[where2].share;
+};
 function drawFromSource(kind, source, ctx) {
-  var _a6, _b4, _c4;
+  var _a6, _b4, _c4, _d3;
   const slots = (_a6 = ctx.slots) != null ? _a6 : {};
   try {
     if (source === "native") {
@@ -124630,9 +125125,17 @@ function drawFromSource(kind, source, ctx) {
     }
     const tradition = colonialTraditionOf(ctx.culture, ctx.rng);
     const part = ctx.where === "new" ? "new-land" : "established";
+    if (tradition !== void 0 && tradition !== "general" && !isTraditionAvailable(tradition, ctx.where === "new" ? "2" : "2a")) return void 0;
+    if (ctx.scale) {
+      const groups = groupsAtScale(kind, ctx.scale);
+      if (groups.length === 0) return void 0;
+      const recipe2 = colonialPlaceNamesRecipe(part, tradition === "general" ? void 0 : tradition, void 0, spaceBiomeFor(ctx.scale).id);
+      const result2 = generatePlaceNames({ recipe: recipe2, slots, count: 1, seed: seedFrom(ctx.rng), only: { groups } });
+      return (_c4 = result2.names[0]) == null ? void 0 : _c4.text;
+    }
     const recipe = colonialPlaceNamesRecipe(part, tradition === "general" ? void 0 : tradition, void 0);
     const result = generatePlaceNames({ recipe, slots, count: 1, seed: seedFrom(ctx.rng), only: kind.colonial });
-    return (_c4 = result.names[0]) == null ? void 0 : _c4.text;
+    return (_d3 = result.names[0]) == null ? void 0 : _d3.text;
   } catch (e) {
     if (e instanceof Error && e.message.startsWith("No eligible")) return void 0;
     throw e;
@@ -124642,9 +125145,16 @@ function settlementDelegateOptions(delegate, ctx, size, seed) {
   var _a6;
   const base = { size, count: 1, seed, wilds: false };
   if (ctx.where !== "home") {
-    const tradition = colonialTraditionOf(ctx.culture, ctx.rng);
+    const found = colonialTraditionOf(ctx.culture, ctx.rng);
+    const tradition = found != null ? found : ctx.scale ? "general" : void 0;
     if (tradition === void 0) return void 0;
-    return { ...base, setting: ctx.where === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? void 0 : tradition };
+    if (tradition !== "general" && !isTraditionAvailable(tradition, ctx.where === "new" ? "2" : "2a")) return ctx.scale ? { ...base, setting: ctx.where === "new" ? "new-lands" : "settled-lands", biome: spaceBiomeFor(ctx.scale).id, aliens: false } : void 0;
+    return {
+      ...base,
+      setting: ctx.where === "new" ? "new-lands" : "settled-lands",
+      tradition: tradition === "general" ? void 0 : tradition,
+      ...ctx.scale ? { biome: spaceBiomeFor(ctx.scale).id, aliens: false } : {}
+    };
   }
   if (SOURCE_SHARES.home.cultures.includes(ctx.culture) || ctx.culture === "general") return { ...base, setting: "native", culture: "britain", region: SOURCE_SHARES.home.cultures.includes(ctx.culture) ? ctx.region : void 0 };
   const world = WORLD_CULTURES.find((c) => c.id === ctx.culture);
@@ -124678,13 +125188,13 @@ function drawKind(kind, ctx, own) {
   if (kind.delegate) return (_a6 = drawFromDelegate(kind.delegate, ctx)) != null ? _a6 : own();
   const source = sourceFor(kind, ctx);
   if (!source) return own();
-  if (ctx.rng() < shareOf(ctx.where)) return (_b4 = drawFromSource(kind, source, ctx)) != null ? _b4 : own();
+  if (ctx.rng() < shareOf(ctx.where, kind)) return (_b4 = drawFromSource(kind, source, ctx)) != null ? _b4 : own();
   return (_c4 = own()) != null ? _c4 : drawFromSource(kind, source, ctx);
 }
 
 // src/wilds/engine.ts
 var WILDS_MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
-var PLACE_MODULES = ["lands", "farmland", "hillsValleys", "riversInland"];
+var PLACE_MODULES = ["lands", "farmland", "hillsValleys", "riversInland", "starsSpace"];
 var isPlaceModule = (module2) => PLACE_MODULES.includes(module2);
 var WILDS_DATA = wilds_default;
 var PLACES = places_default;
@@ -124714,7 +125224,9 @@ var wildsEraLabel = (code) => {
   var _a6, _b4;
   return (_b4 = (_a6 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a6.label) != null ? _b4 : code;
 };
-var wildsDefaultCulture = (module2) => module2 === "desertNames" ? "general" : "norman-british";
+var wildsDefaultCulture = (module2) => module2 === "desertNames" || module2 === "starsSpace" ? "general" : "norman-british";
+var wildsDefaultEra = (module2) => module2 === "starsSpace" ? "IS" : "MD";
+var wildsDefaultWhere = (module2) => module2 === "starsSpace" ? "new" : "home";
 var showsWildsRegion = (module2, culture, where2) => wildsDataOf(module2).modules[module2].region && isBritishCulture(culture) && where2 === "home";
 var wildsBiomes = (module2, catalogue = BUILT_IN_BIOMES) => biomesRootedIn(catalogue, wildsDataOf(module2).modules[module2].biomes);
 var PARENT_KIND = { mountainNames: "range", forestNames: "forest", desertNames: "desert", moorNames: "moor", wetlandNames: "marsh", grasslandNames: "plain" };
@@ -124727,7 +125239,9 @@ function wildsKindLive(module2, kind, era) {
   const data = wildsDataOf(module2);
   const shapes = [...(_a6 = data.shapes[module2][kind]) != null ? _a6 : [], ...data.cultureShapes.filter((s) => s.module === module2 && s.kind === kind)];
   if (kind === "settlement") return true;
-  if ((_b4 = findWildsKind(module2, kind)) == null ? void 0 : _b4.sources) return true;
+  const sources = (_b4 = findWildsKind(module2, kind)) == null ? void 0 : _b4.sources;
+  if (sources && isSpaceModule(module2)) return kindScalesAt(sources, era).length > 0;
+  if (sources) return true;
   return shapes.some((s) => !s.e || s.e.includes(era));
 }
 var wildsKindsAt = (module2, era) => wildsKinds(module2).filter((k) => wildsKindLive(module2, k.key, era));
@@ -125125,8 +125639,9 @@ function generateWildsNames(options) {
   const D = wildsDataOf(module2);
   const data = D.modules[module2];
   const culture = (_a6 = findWildsCulture(options.culture)) != null ? _a6 : findWildsCulture(wildsDefaultCulture(module2));
-  const era = data.eras.includes(options.era) ? options.era : "MD";
-  const where2 = options.where === "new" || options.where === "settled" ? options.where : "home";
+  const era = data.eras.includes(options.era) ? options.era : data.eras.includes("MD") ? "MD" : data.eras[data.eras.length - 1];
+  const spaceModule = isSpaceModule(module2);
+  const where2 = options.where === "new" || options.where === "settled" ? options.where : spaceModule ? "new" : "home";
   const fantastic = !!options.fantastic;
   const resolved = resolveWildsBiome(module2, culture.key, where2, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;
@@ -125188,6 +125703,12 @@ function generateWildsNames(options) {
     for (const k of data.kinds) {
       if (!plans5().has(k.key) && !k.sources) continue;
       if (!kindInClass(k, options.kindClass)) continue;
+      if (spaceModule) {
+        const scales = kindScalesAt(k.sources, era);
+        if (scales.length === 0) continue;
+        const chosen = options.scale && options.scale !== "any" ? options.scale : void 0;
+        if (chosen && !scales.includes(chosen)) continue;
+      }
       let w = k.weight;
       const id = `${module2}.${k.key}`;
       if (homeBritish) w *= (_a7 = D.kindMult.britishHome[id]) != null ? _a7 : 1;
@@ -125289,10 +125810,12 @@ function generateWildsNames(options) {
       if (chosenKind) kindKey = chosenKind.key;
       else if (parent) kindKey = parentKindOf(module2);
       else kindKey = pickWeighted5(kindWeights(), rng);
-      const sourced = kindKey ? (_a7 = findWildsKind(module2, kindKey)) == null ? void 0 : _a7.sources : void 0;
+      let sourced = kindKey ? (_a7 = findWildsKind(module2, kindKey)) == null ? void 0 : _a7.sources : void 0;
+      const scale = spaceModule ? scaleForDraw(sourced, era, options.scale, rng) : void 0;
+      if (spaceModule && sourced && !scale) sourced = { ...sourced, colonial: void 0, delegate: void 0 };
       if (kindKey && sourced) {
         let own;
-        const text = drawKind(sourced, { where: where2, culture: culture.key, region, people: mode, series: !!options.series, rng }, () => {
+        const text = drawKind(sourced, { where: where2, culture: culture.key, region, people: mode, series: !!options.series, rng, ...scale ? { scale } : {} }, () => {
           const list2 = listFor(kindKey, parent);
           own = list2 && list2.length > 0 ? drawFromList(list2, parent) : void 0;
           return own == null ? void 0 : own.text;
@@ -125342,16 +125865,19 @@ function generateWildsNames(options) {
 // src/wilds/sentence.ts
 registerRoster("wilds", WILDS_CULTURES);
 function defaultWildsState(module2) {
-  return { culture: wildsDefaultCulture(module2), era: "MD", where: "home", fantastic: false, tone: "any", people: "placeholders", series: false };
+  return { culture: wildsDefaultCulture(module2), era: wildsDefaultEra(module2), where: wildsDefaultWhere(module2), fantastic: false, tone: "any", people: "placeholders", series: false };
 }
 var PEOPLE_TEXT6 = { placeholders: "placeholders for", invented: "invented" };
 var WHERE_TEXT = { home: "in home country", new: "in newly explored country", settled: "in settled lands" };
+var SPACE_WHERE_TEXT = { home: "in newly explored space", new: "in newly explored space", settled: "in settled space" };
+var SPACE_WHERE_TITLE = "Newly explored space: explorers naming what they have just reached. Settled space: a dominant culture naming and renaming within a peopled region";
 function wildsBiomeText(module2, biome, catalogue = BUILT_IN_BIOMES) {
   const found = wildsBiomes(module2, catalogue).find((b) => biomeMatches(b, biome));
   return found ? `in ${found.phrase}` : "in any land";
 }
 function wildsSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
   const out = [];
+  const space = isSpaceModule(module2);
   const label = wildsModuleData(module2).label;
   const lens = lensClause(module2, state, { cultureTitle: `Naming culture: whose customs the ${label} names follow` });
   out.push(asSegment(lens.culture, "culture"));
@@ -125361,7 +125887,8 @@ function wildsSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
   const any = wildsAny(module2);
   const classLink = classSegment(module2, state.kindClass);
   if (classLink) out.push(classLink, " ");
-  const offered = kinds.filter((k) => kindInClass(k, state.kindClass) || k.key === (kind == null ? void 0 : kind.key));
+  const atScale = (k) => !space || !state.scale || state.scale === "any" || kindScalesAt(k.sources, state.era).includes(state.scale);
+  const offered = kinds.filter((k) => kindInClass(k, state.kindClass) && atScale(k) || k.key === (kind == null ? void 0 : kind.key));
   out.push({
     field: "kind",
     text: kind ? kind.plural : any,
@@ -125371,16 +125898,36 @@ function wildsSentence(state, module2, catalogue = BUILT_IN_BIOMES) {
   });
   if (lens.era) out.push(" of the ", asSegment(lens.era, "era"), " era, ");
   else out.push(" ");
-  out.push({
-    field: "where",
-    text: WHERE_TEXT[state.where],
-    title: "Home country: a people naming its own land. New country: explorers naming land they have just reached. Settled lands: a dominant culture naming land within a peopled country",
-    choices: ["home", "new", "settled"].map((w) => ({ id: w, label: WHERE_TEXT[w] })),
-    current: state.where
-  });
+  if (space) {
+    out.push({
+      field: "where",
+      text: SPACE_WHERE_TEXT[state.where],
+      title: SPACE_WHERE_TITLE,
+      choices: ["new", "settled"].map((w) => ({ id: w, label: SPACE_WHERE_TEXT[w] })),
+      current: state.where === "settled" ? "settled" : "new"
+    });
+  } else {
+    out.push({
+      field: "where",
+      text: WHERE_TEXT[state.where],
+      title: "Home country: a people naming its own land. New country: explorers naming land they have just reached. Settled lands: a dominant culture naming land within a peopled country",
+      choices: ["home", "new", "settled"].map((w) => ({ id: w, label: WHERE_TEXT[w] })),
+      current: state.where
+    });
+  }
   if (lens.world) out.push(", in a ", asSegment(lens.world, "fantastic"), " world, ");
   else out.push(", ");
-  if (lens.region) {
+  if (space) {
+    const scale = scaleOf(state.scale, state.era);
+    out.push("across ");
+    out.push({
+      field: "scale",
+      text: scalePhrase(scale),
+      title: scaleInfo(scale).tooltip,
+      choices: scalesFor(state.era === "NF" || state.era === "IS" ? state.era : void 0).map((c) => ({ id: c, label: scaleInfo(c).label })),
+      current: scale
+    });
+  } else if (lens.region) {
     out.push(asSegment(lens.region, "region"));
   } else {
     out.push({
@@ -125426,7 +125973,7 @@ function wildsSentenceText(segments) {
   return `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 }
 function chooseWilds(state, field, id, module2, catalogue = BUILT_IN_BIOMES) {
-  var _a6;
+  var _a6, _b4;
   let next = { ...state };
   switch (field) {
     case "culture":
@@ -125444,7 +125991,11 @@ function chooseWilds(state, field, id, module2, catalogue = BUILT_IN_BIOMES) {
       next = chooseLens(module2, next, "era", id, defaultWildsState(module2).era);
       break;
     case "where":
-      next.where = id === "new" || id === "settled" ? id : "home";
+      next.where = id === "new" || id === "settled" ? id : wildsDefaultWhere(module2);
+      break;
+    case "scale":
+      if (id && id !== "any") next.scale = id;
+      else delete next.scale;
       break;
     case "fantastic":
       next = chooseLens(module2, next, "fantastic", id);
@@ -125468,6 +126019,11 @@ function chooseWilds(state, field, id, module2, catalogue = BUILT_IN_BIOMES) {
   if (next.kind && !findWildsKind(module2, next.kind)) next.kind = void 0;
   if (next.kind && !wildsKindsAt(module2, next.era).some((k) => k.key === next.kind)) next.kind = void 0;
   if (next.biome && !wildsBiomes(module2, catalogue).some((b) => biomeMatches(b, next.biome))) next.biome = void 0;
+  if (isSpaceModule(module2)) {
+    if (next.scale && scaleOf(next.scale, next.era) === "any") delete next.scale;
+    if (next.where !== "settled") next.where = "new";
+    if (next.kind && next.scale && !kindScalesAt((_b4 = findWildsKind(module2, next.kind)) == null ? void 0 : _b4.sources, next.era).includes(next.scale)) next.kind = void 0;
+  }
   return next;
 }
 function wildsHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BIOMES) {
@@ -125480,7 +126036,8 @@ function wildsHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BI
     moduleLabel2,
     wildsEraLabel(state.era),
     culture,
-    ...state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : [],
+    ...isSpaceModule(module2) ? state.where === "settled" ? ["settled space"] : ["new space"] : state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : [],
+    ...isSpaceModule(module2) && state.scale && state.scale !== "any" ? [scaleLabel(state.scale).toLowerCase()] : [],
     ...regionShown2 && state.region ? [regionPhrase(state.region)] : [],
     ...!regionShown2 && biome ? [biome.label] : [],
     ...kind ? [kind.plural] : state.kindClass ? [state.kindClass] : [],
@@ -139225,7 +139782,8 @@ var WILDS_PRESET_MODULES = {
   "land-names": "lands",
   "farmland-names": "farmland",
   "hills-valleys-names": "hillsValleys",
-  "inland-water-names": "riversInland"
+  "inland-water-names": "riversInland",
+  "stars-space-names": "starsSpace"
 };
 var wildsPresetKey = (module2) => Object.entries(WILDS_PRESET_MODULES).find(([, m]) => m === module2)[0];
 function parseWildsPreset(values, body, fileName) {
@@ -139245,13 +139803,16 @@ function parseWildsPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", "MD", (v) => wildsEras(module2).includes(v));
+  const era = pick4("era", wildsDefaultEra(module2), (v) => wildsEras(module2).includes(v));
   let kind = pick4("kind", "any", (v) => v === "any" || !!findWildsKind(module2, v));
   if (kind !== "any" && !wildsKindsAt(module2, era).some((k) => k.key === kind)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered in that era.`);
     kind = "any";
   }
   const kindClass = classValue(values, problems);
+  const scaleLine = values.scale;
+  const scaleValue = scaleLine && scaleLine !== "any" && SCALES.includes(scaleLine) && scaleOf(scaleLine, era) !== "any" ? scaleLine : void 0;
+  if (scaleLine && scaleLine !== "any" && !scaleValue && module2 === "starsSpace") problems.push(`Unknown scale \u201C${scaleLine}\u201D.`);
   return {
     wilds: {
       packName: values.packName || fileName,
@@ -139262,7 +139823,8 @@ function parseWildsPreset(values, body, fileName) {
       wildsKind: kind,
       ...kindClass ? { wildsClass: kindClass } : {},
       era,
-      where: pick4("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
+      where: pick4("where", wildsDefaultWhere(module2), (v) => v === "home" || v === "new" || v === "settled"),
+      ...scaleValue ? { wildsScale: scaleValue } : {},
       fantastic: flag("fantastic"),
       region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       biome: pick4("biome", "any", (v) => v === "any" || wildsBiomes(module2).some((b) => b.id === v) || /\.md$/i.test(v)),
@@ -139285,6 +139847,7 @@ function wildsPresetContent(preset) {
     ...preset.wildsClass ? [`class: ${preset.wildsClass}`] : [],
     `era: ${preset.era}`,
     `where: ${preset.where}`,
+    ...preset.wildsScale ? [`scale: ${preset.wildsScale}`] : [],
     `fantastic: ${preset.fantastic}`,
     `region: ${preset.region}`,
     `biome: ${preset.biome}`,
@@ -148919,6 +149482,7 @@ ${n.origin}${also}${echo}` };
         ...p.wildsClass ? { kindClass: p.wildsClass } : {},
         era: p.era,
         where: p.where,
+        ...p.wildsScale ? { scale: p.wildsScale } : {},
         fantastic: p.fantastic,
         region: p.region === "all" ? void 0 : p.region,
         biome: p.biome === "any" ? void 0 : p.biome,
@@ -148954,6 +149518,7 @@ ${n.origin}${also}${echo}` };
         ...state.kindClass ? { wildsClass: state.kindClass } : {},
         era: state.era,
         where: state.where,
+        ...state.scale && state.scale !== "any" ? { wildsScale: state.scale } : {},
         fantastic: state.fantastic,
         region: (_b5 = state.region) != null ? _b5 : "all",
         biome: (_c4 = state.biome) != null ? _c4 : "any",
@@ -148995,6 +149560,7 @@ ${n.origin}${also}${echo}` };
       ...state.kindClass ? { kindClass: state.kindClass } : {},
       era: state.era,
       where: state.where,
+      ...state.scale && state.scale !== "any" ? { scale: state.scale } : {},
       fantastic: state.fantastic,
       region: state.region,
       biome: state.biome,

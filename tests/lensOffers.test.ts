@@ -30,8 +30,8 @@ test("lens-offers.json is current: regenerating it gives the same file", () => {
 });
 
 test("every family A and B module has an entry", () => {
-  assert.equal(Object.keys(offers).length, 44);
-  assert.equal(Object.values(offers).filter((m) => m.family === "A").length, 29);
+  assert.equal(Object.keys(offers).length, 45);
+  assert.equal(Object.values(offers).filter((m) => m.family === "A").length, 30);
   assert.equal(Object.values(offers).filter((m) => m.family === "B").length, 15);
 });
 

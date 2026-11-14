@@ -34,14 +34,16 @@ import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Voca
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
 import { kindInClass, type PlaceClass } from "../places/classes";
 import { drawKind, type KindSources } from "../places/sources";
+import { isSpaceModule, kindScalesAt, scaleForDraw } from "../places/space";
+import type { ScaleChoice } from "../space/scale";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
 export type WildsModule = "mountainNames" | "forestNames" | "desertNames" | "moorNames" | "wetlandNames" | "grasslandNames";
 export const WILDS_MODULES: WildsModule[] = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 /** Place modules split brief §5: the focused place modules that run on this engine, with their own table (places.json). */
-export type PlaceModule = "lands" | "farmland" | "hillsValleys" | "riversInland";
-export const PLACE_MODULES: PlaceModule[] = ["lands", "farmland", "hillsValleys", "riversInland"];
+export type PlaceModule = "lands" | "farmland" | "hillsValleys" | "riversInland" | "starsSpace";
+export const PLACE_MODULES: PlaceModule[] = ["lands", "farmland", "hillsValleys", "riversInland", "starsSpace"];
 export const isPlaceModule = (module: string): module is PlaceModule => (PLACE_MODULES as string[]).includes(module);
 /** A module this engine runs: one of the six wild lands modules or a focused place module. */
 export type WildsLikeModule = WildsModule | PlaceModule;
@@ -156,7 +158,10 @@ export const findWildsKind = (module: WildsLikeModule, key: string | undefined) 
 export const wildsAny = (module: WildsLikeModule) => wildsDataOf(module).modules[module].any;
 export const wildsEras = (module: WildsLikeModule): WildsEra[] => wildsDataOf(module).modules[module].eras;
 export const wildsEraLabel = (code: string) => ROUTE_ERAS.find((e) => e.code === code)?.label ?? code;
-export const wildsDefaultCulture = (module: WildsLikeModule) => (module === "desertNames" ? "general" : "norman-british");
+export const wildsDefaultCulture = (module: WildsLikeModule) => (module === "desertNames" || module === "starsSpace" ? "general" : "norman-british");
+/** The era and country a module opens in: stars and space has no home country and runs only in the future eras (§5.5). */
+export const wildsDefaultEra = (module: WildsLikeModule): WildsEra => (module === "starsSpace" ? "IS" : "MD");
+export const wildsDefaultWhere = (module: WildsLikeModule): WildsWhere => (module === "starsSpace" ? "new" : "home");
 
 /** §2.2: the region link shows for the three British cultures in home country, never in deserts. */
 export const showsWildsRegion = (module: WildsLikeModule, culture: string, where: WildsWhere) =>
@@ -180,7 +185,10 @@ export function wildsKindLive(module: WildsLikeModule, kind: string, era: WildsE
   const shapes = [...(data.shapes[module][kind] ?? []), ...data.cultureShapes.filter((s) => s.module === module && s.kind === kind)];
   if (kind === "settlement") return true;
   // Place modules split brief §4: a kind with sources can always draw from them, whatever the era.
-  if (findWildsKind(module, kind)?.sources) return true;
+  const sources = findWildsKind(module, kind)?.sources;
+  // Stars and space (§5.5): a kind lives in an era where one of its scales does.
+  if (sources && isSpaceModule(module)) return kindScalesAt(sources, era).length > 0;
+  if (sources) return true;
   return shapes.some((s) => !s.e || s.e.includes(era));
 }
 /** The kinds offered in an era. */
@@ -199,6 +207,8 @@ export interface WildsOptions {
   kindClass?: PlaceClass;
   era?: WildsEra;
   where?: WildsWhere;
+  /** Stars and space (§5.5): the scale link; undefined is any scale. */
+  scale?: ScaleChoice;
   fantastic?: boolean;
   /** A place-shape region code; undefined is all of Britain. */
   region?: string;
@@ -778,8 +788,10 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const D = wildsDataOf(module);
   const data = D.modules[module];
   const culture = findWildsCulture(options.culture) ?? findWildsCulture(wildsDefaultCulture(module))!;
-  const era: WildsEra = data.eras.includes(options.era as WildsEra) ? options.era! : "MD";
-  const where: WildsWhere = options.where === "new" || options.where === "settled" ? options.where : "home";
+  const era: WildsEra = data.eras.includes(options.era as WildsEra) ? options.era! : data.eras.includes("MD") ? "MD" : data.eras[data.eras.length - 1];
+  const spaceModule = isSpaceModule(module);
+  // Stars and space has no home country: a stored `home` reads as newly explored space.
+  const where: WildsWhere = options.where === "new" || options.where === "settled" ? options.where : spaceModule ? "new" : "home";
   const fantastic = !!options.fantastic;
   const resolved = resolveWildsBiome(module, culture.key, where, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;
@@ -848,6 +860,13 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
       // A kind with sources (a delegated river kind has no shapes of its own) needs no live shape.
       if (!plans().has(k.key) && !k.sources) continue;
       if (!kindInClass(k, options.kindClass)) continue;
+      // Stars and space: with a scale chosen, kind Any keeps the kinds that have groups at that scale.
+      if (spaceModule) {
+        const scales = kindScalesAt(k.sources, era);
+        if (scales.length === 0) continue;
+        const chosen = options.scale && options.scale !== "any" ? options.scale : undefined;
+        if (chosen && !scales.includes(chosen)) continue;
+      }
       let w = k.weight;
       const id = `${module}.${k.key}`;
       if (homeBritish) w *= D.kindMult.britishHome[id] ?? 1;
@@ -957,10 +976,13 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
       else if (parent) kindKey = parentKindOf(module);
       else kindKey = pickWeighted(kindWeights(), rng);
       // Place modules split brief §4: a kind with sources first picks where the name comes from (src/places/sources.ts).
-      const sourced = kindKey ? findWildsKind(module, kindKey)?.sources : undefined;
+      let sourced = kindKey ? findWildsKind(module, kindKey)?.sources : undefined;
+      // Stars and space (§5.5): one scale per name; a kind with no scale in the era draws its own shapes only.
+      const scale = spaceModule ? scaleForDraw(sourced, era, options.scale, rng) : undefined;
+      if (spaceModule && sourced && !scale) sourced = { ...sourced, colonial: undefined, delegate: undefined };
       if (kindKey && sourced) {
         let own: WildsName | undefined;
-        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: !!options.series, rng }, () => {
+        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: !!options.series, rng, ...(scale ? { scale } : {}) }, () => {
           const list = listFor(kindKey, parent);
           own = list && list.length > 0 ? drawFromList(list, parent) : undefined;
           return own?.text;

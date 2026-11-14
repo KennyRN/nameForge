@@ -2834,6 +2834,22 @@
      "keepWhenHidden": true
     }
    }
+  },
+  "starsSpace": {
+   "cultures": "shared",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "wilds"
+   }
   }
  },
  "bands": [

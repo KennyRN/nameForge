@@ -10,8 +10,12 @@ import { generateRiverNames, type RiverSetting } from "../rivers/engine";
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
 import type { SizeKey } from "../settlement/data";
 import { INTERSTELLAR_ERA, WORLD_CULTURES } from "../world/engine";
+import { isTraditionAvailable } from "../colonialShapes";
 import { WILDS_DATA } from "../wilds/engine";
 import lens from "../data/lens.json";
+import { spaceBiomeFor } from "../biomes";
+import type { SpaceScale } from "../space/scale";
+import { groupsAtScale } from "./space";
 
 export type PlaceWhere = "home" | "new" | "settled";
 
@@ -27,6 +31,8 @@ export interface KindSources {
   /** New and settled: colonial groups (every generic of each) and generics of the part 2 or 2a patterns. */
   colonial?: { groups?: string[]; generics?: string[] };
   delegate?: KindDelegate;
+  /** Stars and space (§5.5): a share for a where that replaces the shared one (every kind is all source, so 1). */
+  share?: Partial<Record<"home" | "new" | "settled", number>>;
 }
 
 export interface SourceShares {
@@ -49,6 +55,8 @@ export interface SourceContext {
   people?: "placeholders" | "invented";
   /** Series mode draws from own shapes only. */
   series?: boolean;
+  /** Stars and space: the scale this name is drawn at. The colonial source then runs under that scale's space biome, restricted to the kind's groups there. */
+  scale?: SpaceScale;
   /** The batch's stream. */
   rng: () => number;
   /** Slots resolved by the caller for the source's renderer; absent is the engines' own default. */
@@ -84,7 +92,7 @@ export function sourceFor(kind: KindSources, ctx: Pick<SourceContext, "where" | 
   return kind.colonial && hasColonialTradition(ctx.culture) ? "colonial" : undefined;
 }
 
-const shareOf = (where: PlaceWhere): number => SOURCE_SHARES[where].share;
+const shareOf = (where: PlaceWhere, kind?: KindSources): number => kind?.share?.[where] ?? SOURCE_SHARES[where].share;
 
 /** One name from a source, or undefined where it can give nothing for this kind and state. */
 export function drawFromSource(kind: KindSources, source: "native" | "colonial", ctx: SourceContext): string | undefined {
@@ -97,6 +105,16 @@ export function drawFromSource(kind: KindSources, source: "native" | "colonial",
     }
     const tradition = colonialTraditionOf(ctx.culture, ctx.rng);
     const part = ctx.where === "new" ? "new-land" : "established";
+    // A tradition that exists only in the other part (Chinese, say, is a part 2a tradition) gives this part nothing.
+    if (tradition !== undefined && tradition !== "general" && !isTraditionAvailable(tradition, ctx.where === "new" ? "2" : "2a")) return undefined;
+    if (ctx.scale) {
+      // §5.5: under a space biome of the scale, from the kind's groups that live there.
+      const groups = groupsAtScale(kind, ctx.scale);
+      if (groups.length === 0) return undefined;
+      const recipe = colonialPlaceNamesRecipe(part, tradition === "general" ? undefined : tradition, undefined, spaceBiomeFor(ctx.scale).id);
+      const result = generatePlaceNames({ recipe, slots, count: 1, seed: seedFrom(ctx.rng), only: { groups } });
+      return result.names[0]?.text;
+    }
     const recipe = colonialPlaceNamesRecipe(part, tradition === "general" ? undefined : tradition, undefined);
     const result = generatePlaceNames({ recipe, slots, count: 1, seed: seedFrom(ctx.rng), only: kind.colonial });
     return result.names[0]?.text;
@@ -111,9 +129,17 @@ export function drawFromSource(kind: KindSources, source: "native" | "colonial",
 export function settlementDelegateOptions(delegate: Extract<KindDelegate, { engine: "settlement" }>, ctx: SourceContext, size: SizeKey, seed: number): SettlementNamesOptions | undefined {
   const base = { size, count: 1, seed, wilds: false };
   if (ctx.where !== "home") {
-    const tradition = colonialTraditionOf(ctx.culture, ctx.rng);
+    const found = colonialTraditionOf(ctx.culture, ctx.rng);
+    // Stars and space: a station is named whatever the culture, so a culture with no tradition takes the General one.
+    const tradition = found ?? (ctx.scale ? "general" : undefined);
     if (tradition === undefined) return undefined;
-    return { ...base, setting: ctx.where === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? undefined : tradition };
+    if (tradition !== "general" && !isTraditionAvailable(tradition, ctx.where === "new" ? "2" : "2a")) return ctx.scale ? { ...base, setting: ctx.where === "new" ? "new-lands" : "settled-lands", biome: spaceBiomeFor(ctx.scale).id, aliens: false } : undefined;
+    return {
+      ...base,
+      setting: ctx.where === "new" ? "new-lands" : "settled-lands",
+      tradition: tradition === "general" ? undefined : tradition,
+      ...(ctx.scale ? { biome: spaceBiomeFor(ctx.scale).id, aliens: false } : {}),
+    };
   }
   if (SOURCE_SHARES.home.cultures.includes(ctx.culture) || ctx.culture === "general") return { ...base, setting: "native", culture: "britain", region: SOURCE_SHARES.home.cultures.includes(ctx.culture) ? ctx.region : undefined };
   const world = WORLD_CULTURES.find((c) => c.id === ctx.culture);
@@ -155,6 +181,6 @@ export function drawKind(kind: KindSources, ctx: SourceContext, own: () => strin
   if (kind.delegate) return drawFromDelegate(kind.delegate, ctx) ?? own();
   const source = sourceFor(kind, ctx);
   if (!source) return own();
-  if (ctx.rng() < shareOf(ctx.where)) return drawFromSource(kind, source, ctx) ?? own();
+  if (ctx.rng() < shareOf(ctx.where, kind)) return drawFromSource(kind, source, ctx) ?? own();
   return own() ?? drawFromSource(kind, source, ctx);
 }

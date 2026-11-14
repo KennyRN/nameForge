@@ -13,7 +13,7 @@ test("place names and advanced no longer list the moved modules", () => {
     assert.ok(!SECTION_GROUPS.placeNames.includes(m), m);
     assert.ok(!SECTION_GROUPS.advanced.includes(m), m);
   }
-  assert.deepEqual(SECTION_GROUPS.placeNames, ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "lands", "farmland", "hillsValleys", "riversInland", "routeNames", "sacredPlaces"]);
+  assert.deepEqual(SECTION_GROUPS.placeNames, ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "lands", "farmland", "hillsValleys", "riversInland", "routeNames", "sacredPlaces", "starsSpace"]);
 });
 
 test("switcher order puts urban straight after place names", () => {

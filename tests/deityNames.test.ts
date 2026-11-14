@@ -203,7 +203,8 @@ test("§14.6: the gender and names links are hidden for sacred places", () => {
 
 test("§1 (line-up brief): deities last in group names, sacred places last in place names; history label and section", () => {
   assert.equal(SECTION_GROUPS.groupNames.at(-1), "deityNames");
-  assert.equal(SECTION_GROUPS.placeNames.at(-1), "sacredPlaces");
+  // Stars and space follows sacred places (place modules split brief §2).
+  assert.equal(SECTION_GROUPS.placeNames.at(-2), "sacredPlaces");
   assert.equal(SECTION_LABELS.deityNames, "deities");
   assert.equal(SECTION_LABELS.sacredPlaces, "sacred places");
   const label = deityHistoryLabel({ ...DEFAULT_DEITY_STATE, culture: "norse", kind: "deity", domain: "sky", gender: "female", fantastic: true, tone: "grim", series: true });

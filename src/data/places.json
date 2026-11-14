@@ -729,6 +729,154 @@
      }
     }
    ]
+  },
+  "starsSpace": {
+   "label": "stars and space",
+   "any": "space features of any kind",
+   "seriesText": "in one system",
+   "terrain": "space",
+   "defaultBiome": "temperate",
+   "parentKind": "star",
+   "biomes": [
+    "temperate"
+   ],
+   "region": false,
+   "eras": [
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "world",
+     "menu": "Planets, moons and rings",
+     "plural": "planets, moons and rings",
+     "weight": 20,
+     "class": "natural",
+     "sources": {
+      "colonial": {
+       "groups": [
+        "planet-surface",
+        "planet-moons",
+        "planet-rings"
+       ]
+      },
+      "share": {
+       "new": 1,
+       "settled": 1
+      }
+     }
+    },
+    {
+     "key": "orbit",
+     "menu": "Orbits, belts and boundaries",
+     "plural": "orbits, belts and boundaries",
+     "weight": 18,
+     "class": "natural",
+     "sources": {
+      "colonial": {
+       "groups": [
+        "planet-orbits",
+        "system-inner",
+        "system-belts",
+        "system-outer",
+        "system-boundaries",
+        "system-binaries"
+       ]
+      },
+      "share": {
+       "new": 1,
+       "settled": 1
+      }
+     }
+    },
+    {
+     "key": "star",
+     "menu": "Stars and stellar neighbourhoods",
+     "plural": "stars and stellar neighbourhoods",
+     "weight": 18,
+     "class": "natural",
+     "sources": {
+      "colonial": {
+       "groups": [
+        "neighbourhood-stars",
+        "neighbourhood-bubbles",
+        "neighbourhood-streams"
+       ]
+      },
+      "share": {
+       "new": 1,
+       "settled": 1
+      }
+     }
+    },
+    {
+     "key": "nebula",
+     "menu": "Clouds, nebulae and clusters",
+     "plural": "clouds, nebulae and clusters",
+     "weight": 14,
+     "class": "natural",
+     "sources": {
+      "colonial": {
+       "groups": [
+        "neighbourhood-clouds",
+        "sector-nebulae",
+        "sector-clusters"
+       ]
+      },
+      "share": {
+       "new": 1,
+       "settled": 1
+      }
+     }
+    },
+    {
+     "key": "expanse",
+     "menu": "Rifts, spurs, arms and voids",
+     "plural": "rifts, spurs, arms and voids",
+     "weight": 14,
+     "class": "natural",
+     "sources": {
+      "colonial": {
+       "groups": [
+        "sector-rifts",
+        "sector-spurs",
+        "galaxy-arms",
+        "galaxy-core",
+        "galaxy-disc",
+        "galaxy-halo",
+        "galaxy-voids"
+       ]
+      },
+      "share": {
+       "new": 1,
+       "settled": 1
+      }
+     }
+    },
+    {
+     "key": "station",
+     "menu": "Stations and habitats",
+     "plural": "stations and habitats",
+     "weight": 16,
+     "class": "constructed",
+     "sources": {
+      "delegate": {
+       "engine": "settlement",
+       "sizes": [
+        "hamlet",
+        "village",
+        "town",
+        "city",
+        "great"
+       ]
+      },
+      "share": {
+       "new": 1,
+       "settled": 1
+      }
+     }
+    }
+   ]
   }
  },
  "shapes": {
@@ -3018,6 +3166,247 @@
      "h": true
     }
    ]
+  },
+  "starsSpace": {
+   "world": [
+    {
+     "p": "{wildColour} World",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{skyQuality} Moon",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{person:poss} World",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{wildQuality} Rock",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Prime",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{skyObject} World",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{wildWeather} Moon",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "World of {god}",
+     "w": 1,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{mythBeast} World",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "orbit": [
+    {
+     "p": "{wildQuality} Belt",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Belt",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{person:poss} Belt",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{town} Gap",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{spaceGoods} Belt",
+     "w": 3,
+     "f": "work"
+    },
+    {
+     "p": "{directionAdj} Belt",
+     "w": 2,
+     "f": "dir"
+    },
+    {
+     "p": "The {skyQuality} Drift",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{mythBeast} Belt",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "star": [
+    {
+     "p": "{skyQuality} Star",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{wildColour} Sun",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{person:poss} Star",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{town} Star",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{skyObject} Star",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "Star of the {skyFigure}",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{wildQuality} Sun",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "Star of {god}",
+     "w": 1,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{mythBeast} Star",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "nebula": [
+    {
+     "p": "{wildColour} Cloud",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{skyQuality} Veil",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildWeather} Nebula",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{person:poss} Cloud",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{skyFigure} Nebula",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{town} Nebula",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{spaceGoods} Cloud",
+     "w": 2,
+     "f": "work"
+    },
+    {
+     "p": "{mythBeast} Nebula",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "expanse": [
+    {
+     "p": "{wildQuality} Reach",
+     "w": 4,
+     "f": "qual"
+    },
+    {
+     "p": "{skyQuality} Void",
+     "w": 3,
+     "f": "qual",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "{directionAdj} Rift",
+     "w": 2,
+     "f": "dir"
+    },
+    {
+     "p": "{town} Spur",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "The {skyObject} Arm",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{person:poss} Rift",
+     "w": 3,
+     "f": "per"
+    },
+    {
+     "p": "{wildColour} Void",
+     "w": 2,
+     "f": "col",
+     "t": [
+      "grim"
+     ]
+    },
+    {
+     "p": "{mythBeast} Reach",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ]
   }
  },
  "cultureShapes": [
@@ -3180,7 +3569,8 @@
   "lands": "grsBeast",
   "riversInland": "lakeCreature",
   "hillsValleys": "mrBeast",
-  "farmland": "grsBeast"
+  "farmland": "grsBeast",
+  "starsSpace": "mythBeast"
  },
  "safeguards": {
   "lands": [
@@ -3228,6 +3618,19 @@
    "Brideshead",
    "Wuthering Heights",
    "Walden Pond"
+  ],
+  "starsSpace": [
+   "Tatooine",
+   "Coruscant",
+   "Arrakis",
+   "Pandora",
+   "Krypton",
+   "Gallifrey",
+   "Alderaan",
+   "Endor",
+   "Hoth",
+   "Naboo",
+   "Solaris"
   ]
  }
 }

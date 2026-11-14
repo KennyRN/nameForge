@@ -13,6 +13,8 @@ import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
 import { classSegment, isPlaceClass, kindInClass, type PlaceClass } from "../places/classes";
+import { isSpaceModule, kindScalesAt, scaleOf } from "../places/space";
+import { scaleInfo, scaleLabel, scalePhrase, scalesFor, type ScaleChoice } from "../space/scale";
 import { fantasticWords } from "../routes/sentence";
 import {
   findWildsCulture,
@@ -22,6 +24,8 @@ import {
   wildsAny,
   wildsBiomes,
   wildsDefaultCulture,
+  wildsDefaultEra,
+  wildsDefaultWhere,
   wildsEraLabel,
   wildsEras,
   wildsKindsAt,
@@ -41,6 +45,8 @@ export interface WildsSentenceState {
   kindClass?: PlaceClass;
   era: WildsEra;
   where: WildsWhere;
+  /** Stars and space (§5.5): the scale link; undefined is any scale, and nothing is stored for it. */
+  scale?: ScaleChoice;
   fantastic: boolean;
   /** A place-shape region code; undefined is all of Britain. */
   region?: string;
@@ -52,10 +58,10 @@ export interface WildsSentenceState {
 }
 
 export function defaultWildsState(module: WildsLikeModule): WildsSentenceState {
-  return { culture: wildsDefaultCulture(module), era: "MD", where: "home", fantastic: false, tone: "any", people: "placeholders", series: false };
+  return { culture: wildsDefaultCulture(module), era: wildsDefaultEra(module), where: wildsDefaultWhere(module), fantastic: false, tone: "any", people: "placeholders", series: false };
 }
 
-export type WildsField = "culture" | "kindClass" | "kind" | "era" | "where" | "fantastic" | "region" | "biome" | "tone" | "people" | "series";
+export type WildsField = "culture" | "kindClass" | "kind" | "era" | "where" | "scale" | "fantastic" | "region" | "biome" | "tone" | "people" | "series";
 
 export interface WildsChoice {
   id: string | undefined;
@@ -72,6 +78,9 @@ export type WildsSegment = string | { field: WildsField; text: string; title: st
 
 const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
 const WHERE_TEXT: Record<WildsWhere, string> = { home: "in home country", new: "in newly explored country", settled: "in settled lands" };
+/** Stars and space (§3.1, §5.5): no home country, and the words are space's. */
+const SPACE_WHERE_TEXT: Record<WildsWhere, string> = { home: "in newly explored space", new: "in newly explored space", settled: "in settled space" };
+const SPACE_WHERE_TITLE = "Newly explored space: explorers naming what they have just reached. Settled space: a dominant culture naming and renaming within a peopled region";
 
 /** §2.2: "across all of Britain", or "in the North". */
 export const wildsRegionText = (region: string | undefined) => (region ? `in ${regionPhrase(region)}` : "across all of Britain");
@@ -84,6 +93,7 @@ export function wildsBiomeText(module: WildsLikeModule, biome: string | undefine
 
 export function wildsSentence(state: WildsSentenceState, module: WildsLikeModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WildsSegment[] {
   const out: WildsSegment[] = [];
+  const space = isSpaceModule(module);
   const label = wildsModuleData(module).label;
   const lens = lensClause(module, state, { cultureTitle: `Naming culture: whose customs the ${label} names follow` });
   out.push(asSegment(lens.culture!, "culture"));
@@ -94,7 +104,9 @@ export function wildsSentence(state: WildsSentenceState, module: WildsLikeModule
   const classLink = classSegment(module, state.kindClass);
   if (classLink) out.push(classLink, " ");
   // §6: the menu keeps the kinds of the chosen class; a stored kind outside it is shown and kept.
-  const offered = kinds.filter((k) => kindInClass(k, state.kindClass) || k.key === kind?.key);
+  // Stars and space: with a scale chosen, the menu keeps the kinds that have groups there.
+  const atScale = (k: (typeof kinds)[number]) => !space || !state.scale || state.scale === "any" || kindScalesAt(k.sources, state.era).includes(state.scale as never);
+  const offered = kinds.filter((k) => (kindInClass(k, state.kindClass) && atScale(k)) || k.key === kind?.key);
   out.push({
     field: "kind",
     text: kind ? kind.plural : any,
@@ -104,16 +116,37 @@ export function wildsSentence(state: WildsSentenceState, module: WildsLikeModule
   });
   if (lens.era) out.push(" of the ", asSegment(lens.era, "era"), " era, ");
   else out.push(" ");
-  out.push({
-    field: "where",
-    text: WHERE_TEXT[state.where],
-    title: "Home country: a people naming its own land. New country: explorers naming land they have just reached. Settled lands: a dominant culture naming land within a peopled country",
-    choices: (["home", "new", "settled"] as WildsWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
-    current: state.where,
-  });
+  if (space) {
+    out.push({
+      field: "where",
+      text: SPACE_WHERE_TEXT[state.where],
+      title: SPACE_WHERE_TITLE,
+      choices: (["new", "settled"] as WildsWhere[]).map((w) => ({ id: w, label: SPACE_WHERE_TEXT[w] })),
+      current: state.where === "settled" ? "settled" : "new",
+    });
+  } else {
+    out.push({
+      field: "where",
+      text: WHERE_TEXT[state.where],
+      title: "Home country: a people naming its own land. New country: explorers naming land they have just reached. Settled lands: a dominant culture naming land within a peopled country",
+      choices: (["home", "new", "settled"] as WildsWhere[]).map((w) => ({ id: w, label: WHERE_TEXT[w] })),
+      current: state.where,
+    });
+  }
   if (lens.world) out.push(", in a ", asSegment(lens.world, "fantastic"), " world, ");
   else out.push(", ");
-  if (lens.region) {
+  if (space) {
+    // §5.5: the scale link is route names' ScaleChoice, drawn as there ("across ‹any scale›").
+    const scale = scaleOf(state.scale, state.era);
+    out.push("across ");
+    out.push({
+      field: "scale",
+      text: scalePhrase(scale as ScaleChoice),
+      title: scaleInfo(scale as ScaleChoice).tooltip,
+      choices: scalesFor(state.era === "NF" || state.era === "IS" ? state.era : undefined).map((c) => ({ id: c, label: scaleInfo(c).label })),
+      current: scale,
+    });
+  } else if (lens.region) {
     out.push(asSegment(lens.region, "region"));
   } else {
     out.push({
@@ -181,7 +214,11 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
       next = chooseLens(module, next, "era", id, defaultWildsState(module).era);
       break;
     case "where":
-      next.where = id === "new" || id === "settled" ? id : "home";
+      next.where = id === "new" || id === "settled" ? id : wildsDefaultWhere(module);
+      break;
+    case "scale":
+      if (id && id !== "any") next.scale = id as ScaleChoice;
+      else delete next.scale;
       break;
     case "fantastic":
       next = chooseLens(module, next, "fantastic", id);
@@ -206,6 +243,12 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
   if (next.kind && !findWildsKind(module, next.kind)) next.kind = undefined;
   if (next.kind && !wildsKindsAt(module, next.era).some((k) => k.key === next.kind)) next.kind = undefined;
   if (next.biome && !wildsBiomes(module, catalogue).some((b) => biomeMatches(b, next.biome))) next.biome = undefined;
+  // Stars and space (§5.5): a scale the era lacks resets to any; a kind with no group at the chosen scale resets to Any.
+  if (isSpaceModule(module)) {
+    if (next.scale && scaleOf(next.scale, next.era) === "any") delete next.scale;
+    if (next.where !== "settled") next.where = "new";
+    if (next.kind && next.scale && !kindScalesAt(findWildsKind(module, next.kind)?.sources, next.era).includes(next.scale as never)) next.kind = undefined;
+  }
   return next;
 }
 
@@ -219,7 +262,8 @@ export function wildsHistoryLabel(module: WildsLikeModule, state: WildsSentenceS
     moduleLabel,
     wildsEraLabel(state.era),
     culture,
-    ...(state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : []),
+    ...(isSpaceModule(module) ? (state.where === "settled" ? ["settled space"] : ["new space"]) : state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : []),
+    ...(isSpaceModule(module) && state.scale && state.scale !== "any" ? [scaleLabel(state.scale).toLowerCase()] : []),
     ...(regionShown && state.region ? [regionPhrase(state.region)] : []),
     ...(!regionShown && biome ? [biome.label] : []),
     ...(kind ? [kind.plural] : state.kindClass ? [state.kindClass] : []),

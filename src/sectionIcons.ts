@@ -67,6 +67,7 @@ export const SECTION_ICONS: Record<NameForgeSection, string> = {
   farmland: ICON_NATIVE_PLACE_NAMES,
   hillsValleys: ICON_NATIVE_PLACE_NAMES,
   riversInland: ICON_NATIVE_PLACE_NAMES,
+  starsSpace: ICON_NATIVE_PLACE_NAMES,
   // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
   mountainNames: ICON_MOUNTAINS,
   forestNames: ICON_FORESTS,

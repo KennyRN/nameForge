@@ -15,9 +15,10 @@ const readsRegions = (module: string) => (placesData.modules as unknown as Recor
 
 /** The generics of the colonial groups a source names, and the generics it names itself, once each. */
 function colonialGenerics(source: NonNullable<KindSources["colonial"]>): string[] {
-  const groups = coloniaData.groups as { id: string; generics?: string[] }[];
+  // A new group (the space groups) holds full generic records; an inherited one holds ids.
+  const groups = coloniaData.groups as unknown as { id: string; generics?: (string | { id: string })[] }[];
   const out = new Set<string>(source.generics ?? []);
-  for (const id of source.groups ?? []) for (const g of groups.find((x) => x.id === id)?.generics ?? []) out.add(g);
+  for (const id of source.groups ?? []) for (const g of groups.find((x) => x.id === id)?.generics ?? []) out.add(typeof g === "string" ? g : g.id);
   return [...out];
 }
 

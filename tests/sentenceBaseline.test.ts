@@ -291,7 +291,7 @@ test("sentence baseline: the fixture covers every family A and B module and ever
   const modules = Object.keys(expected.sentences);
   for (const m of [
     "routeNames", "sacredPlaces", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit", "seasLakes", "coastsIslands", "seaCharts",
-    "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames", "lands", "farmland", "hillsValleys", "riversInland", "eventNames", "moneyNames", "armsNames", "treasureNames", "bookNames",
+    "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames", "lands", "farmland", "hillsValleys", "riversInland", "starsSpace", "eventNames", "moneyNames", "armsNames", "treasureNames", "bookNames",
     "deityNames", "calendarNames", "skyNames", "peoplesTongues", "epithets", "familyNames", "titles", "ships", "spacecraft", "aircraft", "landVehicles", "realms",
     "powerFactions", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts",
   ]) assert.ok(modules.includes(m), `${m} has a sentence`);
