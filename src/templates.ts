@@ -13,6 +13,8 @@ export interface BuiltinTemplate {
   type: TemplateType;
   /** People and place templates: the names. */
   items?: string[];
+  /** Written from a people table (scripts/make-people-templates.mjs), not by hand: kept out of the example packs. */
+  fromTable?: boolean;
   /** People templates split into `##` lists (e.g. male and female), each with its names. */
   sections?: { name: string; items: string[] }[];
   /** People compound templates: the parts, each a list of name elements. */
@@ -87,7 +89,7 @@ export function examplePacks(): ExamplePack[] {
         partGenerators: ["breakdown", "breakdown", "list"],
       }),
     },
-    ...BUILTIN_TEMPLATES.filter((t) => t.name !== victorian.name && t.name !== orc.name && t.type !== "people-compound").map((t) => {
+    ...BUILTIN_TEMPLATES.filter((t) => t.name !== victorian.name && t.name !== orc.name && t.type !== "people-compound" && !t.fromTable).map((t) => {
       const sectioned = t.sections ? parseNameSections(templateText(t)) ?? undefined : undefined;
       const names = t.sections ? t.sections.flatMap((s) => s.items) : t.items ?? [];
       return {

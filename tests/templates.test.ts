@@ -58,7 +58,9 @@ test("templates: a sectioned template fills the box as ## lists the pack reads b
   assert.equal(templateNameCount(t), 102);
   const parsed = parseNameSections(templateText(t))!;
   assert.deepEqual(parsed.sections.map((s) => [s.name, s.names.length]), [["male", 77], ["female", 25]]);
-  assert.deepEqual(builtinTemplates("people").map((x) => x.name), ["Victorian, England", "Anglo-Saxon", "Old Cornish"]);
+  // Kenny's three come first and are unchanged; the templates written from the people tables follow (M4).
+  assert.deepEqual(builtinTemplates("people").slice(0, 3).map((x) => x.name), ["Victorian, England", "Anglo-Saxon", "Old Cornish"]);
+  assert.ok(builtinTemplates("people").slice(3).every((x) => x.fromTable));
 });
 
 import { templatePartTexts } from "../src/templates";

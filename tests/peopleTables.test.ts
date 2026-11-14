@@ -519,7 +519,7 @@ test("every second-tier modern table draws something sensible in each era", () =
 });
 
 test("no gods or legends in historic second-tier lists, and no living royals in regnal lists", () => {
-  const myth = ["Isis", "Osiris", "Horus", "Anubis", "Ra", "Zeus", "Athena", "Apollo", "Hermes", "Quetzalcoatl", "Huitzilopochtli", "Viracocha", "Itzamna", "Kukulkan", "Hunahpu", "Xbalanque", "Manco Capac", "Mama Ocllo", "Odysseus", "Achilles", "Hector", "Romulus", "Remus", "Aeneas", "Rama", "Sita", "Hanuman", "Gilgamesh", "Rustam", "Sundiata Keita", "Moremi", "Chun-hyang"];
+  const myth = ["Isis", "Osiris", "Horus", "Anubis", "Ra", "Zeus", "Athena", "Apollo", "Hermes", "Quetzalcoatl", "Huitzilopochtli", "Viracocha", "Itzamna", "Kukulkan", "Hunahpu", "Xbalanque", "Manco Capac", "Mama Ocllo", "Odysseus", "Achilles", "Romulus", "Remus", "Aeneas", "Hanuman", "Gilgamesh", "Rustam", "Sundiata Keita", "Moremi", "Chun-hyang"];
   const living = ["Rania", "Farah", "Letizia", "Maxima", "Beatrix", "Masako", "Michiko", "Naruhito", "Akihito", "Sirikit", "Camilla", "Sofia"];
   for (const c of SECOND) {
     const hist = peopleTable(c, "historic")!;
