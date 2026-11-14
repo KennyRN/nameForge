@@ -116,4 +116,4 @@ Merged: 8 words.
 
 ## Status
 
-The merged lists are in `src/data/lexicon.json` with an accessor in `src/lexicon.ts`. Every module list was surveyed above. One module reads it so far: ships add the shared virtues to their `virtue` pool (`mergeLexicon` in `src/lexicon.ts`). Group names were wired too, but that changed the frozen group snapshots of the tone brief, so it was backed out. The other modules keep their own lists; closed sets (the five Chinese elements, the compass, calendar names) stay closed.
+The merged lists are in `src/data/lexicon.json` with an accessor in `src/lexicon.ts`. Every module list was surveyed above. No module reads the lexicon yet. `mergeLexicon` (`src/lexicon.ts`) is ready, but wiring group names (frozen tone-brief snapshots) and ships (the settlement engines fixture) changed fixtures no brief allows to be re-recorded, so both were backed out. Wiring needs those fixtures' owners to agree. The other modules keep their own lists; closed sets (the five Chinese elements, the compass, calendar names) stay closed.
