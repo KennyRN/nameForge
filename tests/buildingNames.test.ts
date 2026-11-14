@@ -212,7 +212,7 @@ import { historySection, SECTION_GROUPS } from "../src/sections";
 test("§15.6: the default sentence's plain text", () => {
   assert.equal(
     buildingSentenceText(buildingSentence(DEFAULT_BUILDING_STATE)),
-    "Norman & British buildings and landmarks of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, anywhere, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British buildings and landmarks of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, anywhere, of any tone, with real-world names for people and places, each one separate.",
   );
   const border = [["era", "EM"], ["region", "SBL"], ["setting", "country"], ["people", "invented"], ["series", "on"]].reduce((s, [f, id]) => chooseBuilding(s, f as never, id), DEFAULT_BUILDING_STATE);
   assert.equal(

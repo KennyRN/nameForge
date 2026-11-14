@@ -3,6 +3,7 @@
 // packs); people, places, realms, folk, gods and saints from the groups, routes, bynames and deities
 // engines. One seeded stream a batch. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
 import { biomeTitleCase, type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import {
@@ -621,6 +622,9 @@ function describe(ctx: Ctx, name: string): string {
 // ── Batches ─────────────────────────────────────────────────────────────────
 
 export function generateThingNames(options: ThingsOptions): ThingsBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateThingNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const module = options.module;

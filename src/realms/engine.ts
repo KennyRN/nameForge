@@ -4,6 +4,8 @@
 // places and culture animals, the biomes' terrain words and the tribal engine's peoples.
 // No Obsidian imports.
 
+import { drawSeed, fillGenre, registerResolver } from "../fill";
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
 import { spaceDirections, type SpaceScale } from "../space/scale";
 import realmData from "../data/realms.json";
@@ -597,6 +599,9 @@ type ShapeKind = "land" | "place" | "dynasty" | "stars" | "collective" | "people
 
 /** §4: a batch of unique names. */
 export function generateRealmNames(options: RealmOptions): RealmBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateRealmNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era ?? options.genre });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
@@ -806,3 +811,12 @@ export function realmHistoryLabel(genre: GroupGenre, fantastic: boolean, culture
     ...(tone !== "any" ? [tone] : []),
   ].join(" · ");
 }
+
+// The filler's realm source (shared tables brief §5.2): "[realm]", "[kingdom]": a short realm name.
+registerResolver("realm", (req) => {
+  try {
+    return generateRealmNames({ culture: req.culture, era: req.era, genre: fillGenre(req.era), namedFor: "anything", output: "short", people: "invented", count: 1, seed: drawSeed(req.rng) }).names[0]?.short;
+  } catch {
+    return undefined;
+  }
+});

@@ -72,7 +72,7 @@ export function defaultWatersState(module: WatersModule): WatersSentenceState {
     where: "home",
     fantastic: false,
     tone: "any",
-    people: "placeholders",
+    people: "real",
     series: false,
     scale: "any",
     medium: "sea",
@@ -96,7 +96,7 @@ export interface WatersChoice {
 
 export type WatersSegment = string | { field: WatersField; text: string; title: string; choices: WatersChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const WHERE_TEXT: Record<WatersWhere, string> = { home: "on home shores", new: "on newly explored shores", settled: "on settled shores" };
 const SERIES_TEXT: Record<WatersModule, { off: string; on: string }> = {
   seasLakes: { off: "each one separate", on: "each one separate" },
@@ -215,7 +215,7 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule,
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(hyper ? " people" : " people and places");
@@ -281,7 +281,7 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "series":
       next.series = id === "on";

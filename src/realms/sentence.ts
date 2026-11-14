@@ -43,7 +43,7 @@ export const DEFAULT_REALM_STATE: RealmSentenceState = {
   tone: "any",
   length: "plain",
   output: "official",
-  people: "placeholders",
+  people: "real",
 };
 
 export type RealmField = "culture" | "character" | "era" | "genre" | "fantastic" | "namedFor" | "biome" | "terrain" | "tone" | "length" | "output" | "people" | "peoples";
@@ -69,7 +69,7 @@ export interface RealmSentenceLimits {
 }
 
 const OUTPUT_TEXT: Record<RealmOutput, string> = { official: "official names", short: "short names", both: "official and short names" };
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 
 /** §2.2: the biome and terrain links show only for anything and their land. */
 export const showsLand = (state: RealmSentenceState) => state.namedFor === "anything" || state.namedFor === "land";
@@ -158,7 +158,7 @@ export function realmSentence(state: RealmSentenceState, limits: RealmSentenceLi
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places, ");
@@ -235,7 +235,7 @@ export function chooseRealm(state: RealmSentenceState, field: RealmField, id: st
       next.output = (id as RealmOutput) ?? "official";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "peoples":
       next.peoples = id === "on";

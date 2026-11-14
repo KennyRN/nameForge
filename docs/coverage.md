@@ -936,3 +936,43 @@ Distinct entries across the reported modules; a shared pool counts once.
 | light | 402 |
 | strange | 511 |
 
+
+## Shared tables
+
+People lists against brief §3.1 (core 60/60/60/15/15/24, second tier 30/30/30/8/8/12) and creatures against §8 (core 12, second tier 8, General 30).
+
+| Culture | Periods | Given m/f | Surnames | Regnal m/f | Holy | Creatures |
+|---|---|---|---|---|---|---|
+| anglo-saxon | historic | 108/74 | – | 15/15 | 24 | 12/12 |
+| norman-british | historic, modern | 60/60 | 60 | 15/15 | 24 | 12/12 |
+| welsh | historic, modern | 66/61 | 60 | 15/15 | 24 | 12/12 |
+| scottish | historic, modern | 60/62 | 60 | 15/15 | 24 | 12/12 |
+| irish | historic, modern | 60/60 | 60 | 15/15 | 24 | 12/12 |
+| cornish | historic, modern | 117/62 | 60 | 15/15 | 24 | 12/12 |
+| scandinavian | historic, modern | 60/60 | 60 | 15/15 | 24 | 12/12 |
+| german | historic, modern | 60/60 | 60 | 15/15 | 24 | 12/12 |
+| french | historic, modern | 38/30 | 30 | 8/8 | 12 | 8/8 |
+| dutch | historic, modern | 32/30 | 30 | 9/8 | 12 | 8/8 |
+| iberian | historic, modern | 33/30 | 31 | 8/8 | 12 | 8/8 |
+| italian | historic, modern | 32/30 | 30 | 8/8 | 12 | 8/8 |
+| roman | historic | 36/37 | 31 | 8/8 | 12 | 8/8 |
+| greek-byzantine | historic, modern | 43/35 | 30 | 8/8 | 12 | 8/8 |
+| slavic | historic, modern | 32/30 | 30 | 8/8 | 12 | 8/8 |
+| steppe | historic, modern | 37/30 | 30 | 8/8 | 12 | 8/8 |
+| arabic-persian | historic, modern | 33/30 | 30 | 8/8 | 12 | 8/8 |
+| egyptian | historic | 37/35 | – | 8/8 | 12 | 8/8 |
+| ethiopian | historic, modern | 32/31 | – | 8/8 | 12 | 8/8 |
+| bantu | historic, modern | 31/32 | 32 | 8/8 | 12 | 8/8 |
+| west-african | historic, modern | 31/31 | 31 | 8/8 | 12 | 8/8 |
+| indian | historic, modern | 34/32 | 31 | 8/8 | 12 | 8/8 |
+| chinese | historic, modern | 37/30 | 30 | 8/8 | 12 | 8/8 |
+| japanese | historic, modern | 33/30 | 31 | 8/8 | 12 | 8/8 |
+| korean | historic, modern | 31/30 | 30 | 8/8 | 12 | 8/8 |
+| aztec | historic | 30/31 | – | 8/8 | 12 | 8/8 |
+| maya | historic | 31/31 | 32 | 8/8 | 12 | 8/8 |
+| andean | historic | 30/30 | – | 8/8 | 12 | 8/8 |
+| polynesian | historic, modern | 32/31 | – | 8/8 | 12 | 8/8 |
+| american | historic, modern | 32/30 | 30 | 8/8 | 12 | 8/8 |
+| general | – | – | – | – | – | 30/30 |
+
+Creature lists: 31 cultures.

@@ -2,11 +2,13 @@
 // names for twenty cultures, built from shapes and lists. Reuses the group engine's weighted draws,
 // setting tags, tone factor, invented places and safeguards. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import type { BiomeCatalogue } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import bynamesData from "../data/bynames.json";
 import {
   type GroupGenre,
+  type GroupPeople,
   type GroupSafeguards,
   type GroupSetting,
   type GroupTone,
@@ -170,6 +172,8 @@ export interface BynameOptions {
   gender?: BynameGender;
   length?: BynameLength;
   source?: BynameSource;
+  /** Shared tables brief §6: `real` and `generated` name the bearer from the people tables; the default is placeholders. */
+  people?: GroupPeople;
   /** §2.4: draws a name from the chosen pack, or null; only used with source "pack". */
   draw?: (role: NameRole, sex: Sex, rng: () => number) => string | null;
   /** The pack's name, for the notice when it gives nothing. */
@@ -675,6 +679,8 @@ function buildFamily(ctx: Ctx, kind: string): Built | undefined {
 
 /** §3: a batch of unique names. */
 export function generateBynames(options: BynameOptions): BynameBatch {
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateBynames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const module = options.module;

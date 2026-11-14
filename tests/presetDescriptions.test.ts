@@ -26,6 +26,8 @@ test("a preset saved before still reads and resolves as saved; its stored descri
   const frozen = JSON.parse(readFileSync("tests/fixtures/sentence-baseline.json", "utf8")).presetOptions["innNames · celtic WAL fantastic"].options;
   const state = chooseInn({ culture: inn.culture, kind: undefined, era: inn.era, fantastic: inn.fantastic, region: inn.region, setting: inn.innSetting, form: inn.form, tone: inn.tone, people: inn.people, series: inn.series } as never, "kind", undefined);
   for (const key of ["culture", "era", "fantastic", "region", "setting", "tone", "people", "series"]) assert.equal((state as unknown as Record<string, unknown>)[key], frozen[key], key);
+  // Shared tables brief §1.1 rule 2: a note with no `people` key gets the new default, real-world names (re-recorded at M5).
+  assert.equal(frozen.people, "real");
   // The sentence now reads it as the Welsh view.
   assert.match(innSentenceText(innSentence(state)), /^Welsh houses of any kind of the medieval era, in a high or epic fantasy world, in Wales/);
 });

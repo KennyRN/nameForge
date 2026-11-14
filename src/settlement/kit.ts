@@ -3,6 +3,7 @@
 // settlement context once (context.ts) and running the modules already built with it, in order (§6),
 // then applying the kit's rules (§8). The kit has no word lists of its own. No Obsidian imports.
 
+import { fillModeOf, fillText } from "../fill/batch";
 import type { BiomeCatalogue } from "../biomes";
 import kitData from "../data/settlement-kit.json";
 import { generateBuildingNames, type BuildingKind } from "../buildings/engine";
@@ -222,6 +223,23 @@ export function kitSummary(o: ResolvedKitOptions, realm: string | null): string 
 
 /** §6: the whole kit. Same options and seed give the same kit. */
 export function generateKit(options: KitOptions): Kit {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then one filler pass names the settlement's
+  // people, with each label filled once so the founder and saint are the same throughout.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) {
+    const kit = generateKit({ ...options, people: "placeholders" });
+    const rng = mulberry32((kit.options.seed ^ 0x5eed5eed) >>> 0);
+    const series = new Map<string, string>();
+    const where = { culture: kit.options.culture, era: kit.options.era, region: kit.options.region };
+    const say = (t: string) => fillText(t, fillMode, where, rng, series);
+    return {
+      ...kit,
+      options: { ...kit.options, people: fillMode },
+      summary: say(kit.summary),
+      ruler: kit.ruler === null ? null : say(kit.ruler),
+      sections: kit.sections.map((sec) => ({ ...sec, entries: sec.entries.map((e) => ({ ...e, text: say(e.text) })) })),
+    };
+  }
   const o = resolveKitOptions(options);
   const rerolls = { ...(options.rerolls ?? {}) };
   const notices: string[] = [];

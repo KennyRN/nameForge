@@ -4,6 +4,7 @@
 // and reuses its places, peoples, kingdoms and capitals, the group engine's weighted draws and tone
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
 import { deityHooks } from "../deities/hook";
@@ -575,6 +576,9 @@ export const watersHasSeries = (module: WatersModule) => SERIES_MODULES.has(modu
 
 /** §7: a batch of unique names for one of the four modules. */
 export function generateWatersNames(options: WatersOptions): WatersBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

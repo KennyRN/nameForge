@@ -3,6 +3,7 @@
 // settlement pools (with vocabulary packs); gods, saints, places, realms and events from the deities,
 // groups, routes and events engines; lands from biomes. One seeded stream a batch. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
 import { type Biome, type BiomeCatalogue, BRITAIN, biomeTitleCase, biomeWords, BUILT_IN_BIOMES } from "../biomes";
 import {
@@ -1344,6 +1345,9 @@ function festivalSeries(S: Series, cycleKey: string): TimeName[] {
 export const timeKindDefault = (module: "calendar" | "sky"): TimeKind => (module === "calendar" ? "month" : "constellation");
 
 export function generateTimeSkyNames(options: TimeSkyOptions): TimeBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateTimeSkyNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

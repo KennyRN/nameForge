@@ -837,14 +837,14 @@ const field = (state: Parameters<typeof moneySentence>[0], name: string) => mone
 test("§16.8: the default sentence's plain text", () => {
   assert.equal(
     moneySentenceText(moneySentence(DEFAULT_MONEY_STATE)),
-    "Norman & British money of any kind of the medieval era, in a historic or low fantasy world, of any value, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British money of any kind of the medieval era, in a historic or low fantasy world, of any value, of any tone, with real-world names for people and places, each one separate.",
   );
 });
 
 test("§16.8: Roman shows the words link after the value", () => {
   assert.equal(
     moneySentenceText(moneySentence({ ...DEFAULT_MONEY_STATE, culture: "roman" })),
-    "Roman money of any kind of the medieval era, in a historic or low fantasy world, of any value, in translated names, of any tone, with placeholders for people and places, each one separate.",
+    "Roman money of any kind of the medieval era, in a historic or low fantasy world, of any value, in translated names, of any tone, with real-world names for people and places, each one separate.",
   );
   const loans = chooseMoney({ ...DEFAULT_MONEY_STATE, culture: "roman" }, "words", "loanwords");
   assert.equal(moneySentenceText(moneySentence(loans)).includes("with familiar loanwords"), true);
@@ -858,7 +858,7 @@ test("§2.2: the value, words and series links show only where they apply", () =
   for (const kind of [undefined, "coin", "early", "goods"] as (MoneyKind | undefined)[]) assert.ok(showsMoneySeries({ ...s, kind }), String(kind));
   for (const kind of ["paper", "scrip", "currency", "nickname"] as MoneyKind[]) assert.ok(!showsMoneySeries({ ...s, kind }), kind);
   const currency = moneySentenceText(moneySentence({ ...s, era: "ST", kind: "currency" }));
-  assert.equal(currency, "Norman & British currencies of the steam age era, in a realistic world, of any tone, with placeholders for people and places.");
+  assert.equal(currency, "Norman & British currencies of the steam age era, in a realistic world, of any tone, with real-world names for people and places.");
 });
 
 test("§2.2: the series link offers values only where a ladder exists", () => {

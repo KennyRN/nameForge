@@ -4,6 +4,7 @@
 // vocabulary packs); places, realms and figures from the route engine, saints and companies from group
 // names, animals from bynames. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
 import moneyData from "../data/money-names.json";
 import { cultureAnimals } from "../bynames/engine";
@@ -1040,6 +1041,9 @@ function applyValues(ladder: MoneyLadder, coins: MoneyName[]) {
 
 /** §6: a batch of unique money names; a coinage when the series says so (§9, §10). */
 export function generateMoneyNames(options: MoneyOptions): MoneyBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateMoneyNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, series: !!options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

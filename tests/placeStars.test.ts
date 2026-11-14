@@ -39,7 +39,7 @@ test("default sentence, series text, the where link (no home) and the eras are Â
   assert.deepEqual([state.era, state.where, state.culture], ["IS", "new", "general"]);
   assert.equal(
     wildsSentenceText(wildsSentence(state, S)),
-    "General all space features of any kind of the interstellar era, in newly explored space, in a science fiction world, across any scale, of any tone, with placeholders for people and places, each one separate.",
+    "General all space features of any kind of the interstellar era, in newly explored space, in a science fiction world, across any scale, of any tone, with real-world names for people and places, each one separate.",
   );
   assert.equal(seg(wildsSentence({ ...state, series: true }, S), "series")!.text, "in one system");
   assert.deepEqual(seg(wildsSentence(state, S), "where")!.choices.map((c) => [c.id, c.label]), [["new", "in newly explored space"], ["settled", "in settled space"]]);

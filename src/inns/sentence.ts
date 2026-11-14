@@ -34,7 +34,7 @@ export const DEFAULT_INN_STATE: InnSentenceState = {
   setting: "anywhere",
   form: "either",
   tone: "any",
-  people: "placeholders",
+  people: "real",
   series: false,
 };
 
@@ -50,7 +50,7 @@ export interface InnChoice {
 
 export type InnSegment = string | { field: InnField; text: string; title: string; choices: InnChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one town" };
 const settingText = (key: InnSetting) => INN_SETTINGS.find((s) => s.key === key)!.text;
 
@@ -108,7 +108,7 @@ export function innSentence(state: InnSentenceState): InnSegment[] {
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [owner], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places, ");
@@ -160,7 +160,7 @@ export function chooseInn(state: InnSentenceState, field: InnField, id: string |
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "series":
       next.series = id === "on";

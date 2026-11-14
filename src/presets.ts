@@ -40,7 +40,7 @@ import { findWildsCulture, findWildsKind, wildsBiomes, wildsDefaultCulture, wild
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { AIR_LAND, availableStyles, findVesselCulture, isAirLand, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule, type VesselNaming } from "./vessels/engine";
-import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice } from "./groups/engine";
+import { findCommodity, findFamily, GROUP_TONES, groupSetting, type GroupForm, type GroupFront, type GroupGenre, type GroupPeople, type GroupToneChoice, isGroupPeople } from "./groups/engine";
 import { scalesFor, type ScaleChoice } from "./space/scale";
 import { findHyperKind, findWaterKind, findWatersCulture, HYPER_SCALES, hyperKindsAt, waterEras, WATERS_MEDIA, WATERS_REGISTERS, watersHasSeries, type HyperMedium, type HyperRegister, type WatersEra, type WatersModule, type WatersWhere } from "./waters/engine";
 
@@ -299,7 +299,7 @@ function parseGroupPreset(values: Record<string, string>, body: string, fileName
       fantastic,
       form: pick<GroupForm>("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
       front: pick<GroupFront>("front", "say", (v) => ["say", "hide", "may"].includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       series,
       ...(commodity !== undefined ? { commodity } : {}),
@@ -353,6 +353,8 @@ export interface BynamePreset {
   gender: BynameGender;
   length: BynameLength;
   source: BynameSource;
+  /** Real-world or generated names for the bearer, or placeholders; an old note with `invented` reads as placeholders. */
+  people: GroupPeople;
   /** The pack's name, with source "pack". */
   pack?: string;
   /** A heading, "gender" or "whole". */
@@ -391,6 +393,7 @@ function parseBynamePreset(values: Record<string, string>, body: string, fileNam
       gender: pick<BynameGender>("gender", "anyone", (v) => ["men", "women", "anyone"].includes(v)),
       length: pick<BynameLength>("length", "single", (v) => ["single", "full"].includes(v)),
       source: pick<BynameSource>("source", "placeholder", (v) => ["placeholder", "pack", "none"].includes(v)),
+      people: ((v) => (v === "invented" ? "placeholders" : v))(pick<GroupPeople>("people", "real", isGroupPeople)),
       ...(values.pack ? { pack: values.pack.replace(/^\[\[|\]\]$/g, "") } : {}),
       section: values.section || "gender",
     },
@@ -415,6 +418,7 @@ function bynamePresetContent(preset: BynamePreset): string {
     `gender: ${preset.gender}`,
     `length: ${preset.length}`,
     `source: ${preset.source}`,
+    `people: ${preset.people}`,
     ...(preset.pack ? [`pack: ${preset.pack}`] : []),
     `section: ${preset.section}`,
     "---",
@@ -488,7 +492,7 @@ function parseRealmPreset(values: Record<string, string>, body: string, fileName
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       length: pick<RealmLength>("length", "plain", (v) => ["plain", "ceremonial"].includes(v)),
       output: pick<RealmOutput>("output", "official", (v) => ["official", "short", "both"].includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       // §10.2: presets without the key run as off.
       ...(pick<"on" | "off">("peoples", "off", (v) => v === "on" || v === "off") === "on" ? { peoples: true } : {}),
     },
@@ -581,7 +585,7 @@ function parseRoutePreset(values: Record<string, string>, body: string, fileName
       era,
       fantastic,
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series: flag("series"),
       ...(values.scale ? { scale: pick<ScaleChoice>("scale", "any", (v) => scalesFor(era === "NF" || era === "IS" ? era : undefined).includes(v as ScaleChoice)) } : {}),
       ...(values.ftl ? { ftl: pick<RouteFtl>("ftl", "any", (v) => ROUTE_FTL.some((f) => f.id === v)) } : {}),
@@ -674,7 +678,7 @@ function parseStreetPreset(values: Record<string, string>, body: string, fileNam
       size,
       dialect: pick<StreetDialect>("dialect", "variants", (v) => ["plain", "variants", "instead"].includes(v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series: flag("series"),
     },
     problems,
@@ -763,7 +767,7 @@ function parseInnPreset(values: Record<string, string>, body: string, fileName: 
       innSetting: pick<InnSetting>("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
       form: pick<InnForm>("form", "either", (v) => ["signs", "house", "either"].includes(v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series: flag("series"),
     },
     problems,
@@ -851,7 +855,7 @@ function parseBuildingPreset(values: Record<string, string>, body: string, fileN
       fantastic: flag("fantastic"),
       buildingSetting: pick<InnSetting>("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series: flag("series"),
     },
     problems,
@@ -938,7 +942,7 @@ function parseMonumentPreset(values: Record<string, string>, body: string, fileN
       fantastic: flag("fantastic"),
       monumentSetting: pick<InnSetting>("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       nearby: flag("nearby"),
       series: flag("series"),
     },
@@ -1015,7 +1019,7 @@ function parseKitPreset(values: Record<string, string>, body: string, fileName: 
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       contents: pick<KitContents>("contents", "whole", (v) => v in KIT_CONTENTS),
       detail: pick<KitDetail>("detail", "standard", (v) => KIT_DETAILS.includes(v as KitDetail)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
     },
     problems,
   };
@@ -1095,7 +1099,7 @@ function parseEventPreset(values: Record<string, string>, body: string, fileName
       fantastic: flag("fantastic"),
       scale: pick<EventScale>("scale", "realm", (v) => EVENT_SCALES.some((s) => s.key === v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series: flag("series"),
     },
     problems,
@@ -1171,7 +1175,7 @@ function parseMoneyPreset(values: Record<string, string>, body: string, fileName
     value: pick<MoneyValue>("value", "any", (v) => MONEY_VALUES.some((x) => x.key === v)),
     words: pick<MoneyWords>("words", "translated", (v) => MONEY_WORDS.some((x) => x.key === v)),
     tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-    people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    people: pick<GroupPeople>("people", "real", isGroupPeople),
     series: pick<MoneySeries>("series", "separate", (v) => MONEY_SERIES.includes(v)),
   };
   // Resets as the sentence makes them: a kind the era doesn't offer, and a series the kind or ladders can't have.
@@ -1372,7 +1376,7 @@ function parseVesselPreset(values: Record<string, string>, body: string, fileNam
       style,
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
       prefixes: flag("prefixes"),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series,
       ...(naming ? { naming } : {}),
     },
@@ -1492,7 +1496,7 @@ function parseWatersPreset(values: Record<string, string>, body: string, fileNam
       // A built-in's id, or a biome pack's path (a pack's biome shows in seas and coasts where its root built-in does).
       biome: hyper ? "any" : pick("biome", "any", (v) => v === "any" || NATURAL_BIOME_IDS.includes(v) || /\.md$/i.test(v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series: watersHasSeries(module) ? flag("series") : false,
       scale,
       medium: hyper ? pick<HyperMedium>("medium", "sea", (v) => WATERS_MEDIA.some((m) => m.id === v)) : "sea",
@@ -1614,7 +1618,7 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
       region: pick("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       biome: pick("biome", "any", (v) => v === "any" || wildsBiomes(module).some((b) => b.id === v) || /\.md$/i.test(v)),
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       series: flag("series"),
     },
     problems,
@@ -1737,7 +1741,7 @@ function parseTimePreset(values: Record<string, string>, body: string, fileName:
     start: pick("start", "own", (v) => v === "own" || Object.keys(TIME_SKY.seasons).includes(v)),
     words: pick<TimeWords>("words", "translated", (v) => v === "translated" || v === "loanwords"),
     tone,
-    people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+    people: pick<GroupPeople>("people", "real", isGroupPeople),
     series: seriesRaw === "on",
   };
   // Fall-backs as the sentence makes them (§14): a kind the era doesn't offer, and the start the land lacks, are checked by the module.
@@ -1827,7 +1831,7 @@ function parseThingPreset(values: Record<string, string>, body: string, fileName
       era,
       fantastic,
       tone: pick<GroupToneChoice>("tone", "any", (v) => v === "any" || (GROUP_TONES as string[]).includes(v)),
-      people: pick<GroupPeople>("people", "placeholders", (v) => ["placeholders", "invented"].includes(v)),
+      people: pick<GroupPeople>("people", "real", isGroupPeople),
       owner,
       ownerSection: values.ownerSection || "",
       describe: describeRaw === "on",

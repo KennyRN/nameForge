@@ -699,10 +699,10 @@ const text = (module: VesselModule, state: VesselSentenceState = defaultVesselSt
 const link = (module: VesselModule, state: VesselSentenceState, field: string) => vesselSentence(state, module).find((x) => typeof x !== "string" && x.field === field) as { text: string; choices: { id?: string; label: string }[]; title: string; current?: string } | undefined;
 
 test("§16.8: the default sentences", () => {
-  assert.equal(text("aircraft"), "General-themed aircraft of any kind with any technology, of the industrial and modern era, in a realistic world, naming each craft, in no particular style, of any tone, without codes, with placeholders for people and places, each one separate.");
-  assert.equal(text("landVehicles"), "Norman & British-themed land vehicles of any kind with any technology, of the industrial and modern era, in a realistic world, naming each vehicle, in no particular style, of any tone, without numbers, with placeholders for people and places, each one separate.");
+  assert.equal(text("aircraft"), "General-themed aircraft of any kind with any technology, of the industrial and modern era, in a realistic world, naming each craft, in no particular style, of any tone, without codes, with real-world names for people and places, each one separate.");
+  assert.equal(text("landVehicles"), "Norman & British-themed land vehicles of any kind with any technology, of the industrial and modern era, in a realistic world, naming each vehicle, in no particular style, of any tone, without numbers, with real-world names for people and places, each one separate.");
   // Ships and spacecraft read as they did.
-  assert.equal(text("ships"), "General-themed ships and boats of any kind with any technology, of the pre-industrial era, in a historic or low fantasy world, in no particular style, of any tone, with placeholders for people and places, each one separate.");
+  assert.equal(text("ships"), "General-themed ships and boats of any kind with any technology, of the pre-industrial era, in a historic or low fantasy world, in no particular style, of any tone, with real-world names for people and places, each one separate.");
 });
 
 test("§16.8: aircraft and landVehicles follow spacecraft in VESSEL_SECTIONS, with their labels and history", () => {
@@ -740,7 +740,7 @@ test("§2.2: the naming, codes and series links", () => {
   assert.equal(link("aircraft", air, "series"), undefined);
   assert.equal(link("aircraft", { ...air, function: "war" }, "series")!.choices[1].label, "as one class");
   assert.equal(link("aircraft", { ...air, naming: "types" }, "series")!.choices[1].label, "as one family");
-  assert.equal(text("aircraft", { ...air, naming: "types", series: true }), "General-themed aircraft of any kind with any technology, of the industrial and modern era, in a realistic world, naming types and models, in no particular style, of any tone, with placeholders for people and places, as one family.");
+  assert.equal(text("aircraft", { ...air, naming: "types", series: true }), "General-themed aircraft of any kind with any technology, of the industrial and modern era, in a realistic world, naming types and models, in no particular style, of any tone, with real-world names for people and places, as one family.");
   assert.equal(text("landVehicles", { ...defaultVesselState("landVehicles"), function: "locomotive", technology: "L3", prefixes: true, series: true, people: "invented" }), "Norman & British-themed locomotives with early motor technology, of the industrial and modern era, in a realistic world, naming each vehicle, in no particular style, of any tone, with numbers, with invented people and places, as one class.");
   // Sky yachts at AF.
   const af = { ...air, genre: "modern" as const, fantastic: true, technology: "AF" };

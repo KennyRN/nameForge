@@ -28,7 +28,7 @@ export const DEFAULT_EVENT_STATE: EventSentenceState = {
   fantastic: false,
   scale: "realm",
   tone: "any",
-  people: "placeholders",
+  people: "real",
   series: false,
 };
 
@@ -44,7 +44,7 @@ export interface EventChoice {
 
 export type EventSegment = string | { field: EventField; text: string; title: string; choices: EventChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one history" };
 const scaleText = (key: EventScale) => EVENT_SCALES.find((s) => s.key === key)!.text;
 
@@ -85,7 +85,7 @@ export function eventSentence(state: EventSentenceState): EventSegment[] {
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [leader], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places, ");
@@ -131,7 +131,7 @@ export function chooseEvent(state: EventSentenceState, field: EventField, id: st
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "series":
       next.series = id === "on";

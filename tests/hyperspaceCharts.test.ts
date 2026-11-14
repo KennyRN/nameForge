@@ -179,12 +179,12 @@ test("every scale × medium × register × kind gives names", () => {
 test("§2.3: the hyperspace sentence", () => {
   assert.equal(
     watersSentenceText(watersSentence(defaultWatersState("hyperspaceCharts"), "hyperspaceCharts")),
-    "General hyperspace features of any kind across any scale, where hyperspace flows like the sea, in any words, of any tone, with placeholders for people, each one separate.",
+    "General hyperspace features of any kind across any scale, where hyperspace flows like the sea, in any words, of any tone, with real-world names for people, each one separate.",
   );
   const state = { ...defaultWatersState("hyperspaceCharts"), scale: "Se" as const, medium: "both" as const, register: "survey" as const, series: true, kind: "weather" };
   assert.equal(
     watersSentenceText(watersSentence(state, "hyperspaceCharts")),
-    "General weather belts across a sector, where hyperspace flows like the sea or the wind, in survey words, of any tone, with placeholders for people, on one chart.",
+    "General weather belts across a sector, where hyperspace flows like the sea or the wind, in survey words, of any tone, with real-world names for people, on one chart.",
   );
 });
 

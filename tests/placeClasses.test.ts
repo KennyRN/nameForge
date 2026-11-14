@@ -96,15 +96,15 @@ test("link: shows only where a module has kinds in at least two classes; seas an
 test("sentence: the link sits before the kind link; modules without one read as before", () => {
   assert.equal(
     wildsSentenceText(wildsSentence(defaultWildsState("mountainNames"), "mountainNames")),
-    "Norman & British all mountain features of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British all mountain features of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.",
   );
   assert.equal(
     watersSentenceText(watersSentence(defaultWatersState("seaCharts"), "seaCharts")),
-    "Norman & British all chart features of any kind of the medieval era, on home shores, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British all chart features of any kind of the medieval era, on home shores, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.",
   );
   assert.equal(
     watersSentenceText(watersSentence(defaultWatersState("coastsIslands"), "coastsIslands")),
-    "Norman & British coast features of any kind of the medieval era, on home shores, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British coast features of any kind of the medieval era, on home shores, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.",
   );
   const withClass = wildsSentence({ ...defaultWildsState("forestNames"), kindClass: "managed" }, "forestNames");
   assert.match(wildsSentenceText(withClass), /^Norman & British managed forest features of any kind of the medieval era/);

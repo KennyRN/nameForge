@@ -280,7 +280,7 @@ const field = (state: RouteSentenceState, f: string) => routeSentence(state).fin
 test("§15.8: the default sentence's plain text", () => {
   assert.equal(
     routeSentenceText(routeSentence(DEFAULT_ROUTE_STATE)),
-    "Norman & British routes of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British routes of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.",
   );
   const north = chooseRoute(chooseRoute(chooseRoute(chooseRoute(DEFAULT_ROUTE_STATE, "region", "NTH"), "kind", "drove"), "people", "invented"), "series", "on");
   assert.equal(

@@ -4,6 +4,7 @@
 // places, peoples, people's names, gods and route names come from the route engine, which in turn
 // reuses the group, bynames, tribal and realms engines. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import streetData from "../data/street-names.json";
@@ -682,6 +683,9 @@ interface Built {
 
 /** §8: a batch of unique street, square and district names. */
 export function generateStreetNames(options: StreetOptions): StreetBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateStreetNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

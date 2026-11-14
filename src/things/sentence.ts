@@ -35,7 +35,7 @@ export const DEFAULT_THING_STATE: ThingSentenceState = {
   era: "MD",
   fantastic: false,
   tone: "any",
-  people: "placeholders",
+  people: "real",
   owner: "anyone",
   describe: false,
 };
@@ -52,7 +52,7 @@ export interface ThingChoice {
 
 export type ThingSegment = string | { field: ThingField; text: string; title: string; choices: ThingChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const DESCRIBE_TEXT = { off: "names only", on: "with what they are" };
 
 const same = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
@@ -130,7 +130,7 @@ export function thingSentence(module: ThingModule, state: ThingSentenceState, pa
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places, ");
@@ -190,7 +190,7 @@ export function chooseThings(module: ThingModule, state: ThingSentenceState, fie
       next.section = id;
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "describe":
       next.describe = id === "on";

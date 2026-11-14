@@ -35,7 +35,7 @@ export const DEFAULT_KIT_STATE: KitSentenceState = {
   tone: "any",
   contents: "whole",
   detail: "standard",
-  people: "placeholders",
+  people: "real",
 };
 
 export type KitField = "culture" | "era" | "fantastic" | "region" | "size" | "position" | "tone" | "contents" | "detail" | "people";
@@ -50,7 +50,7 @@ export interface KitChoice {
 
 export type KitSegment = string | { field: KitField; text: string; title: string; choices: KitChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 
 export function kitSentence(state: KitSentenceState): KitSegment[] {
   const out: KitSegment[] = [];
@@ -109,7 +109,7 @@ export function kitSentence(state: KitSentenceState): KitSegment[] {
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [founder], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places");
@@ -154,7 +154,7 @@ export function chooseKit(state: KitSentenceState, field: KitField, id: string |
       next.detail = KIT_DETAILS.includes(id as KitDetail) ? (id as KitDetail) : "standard";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
   }
   if (!showsRegion(next)) next.region = undefined;

@@ -5,6 +5,8 @@
 // words exist (§3.1). Every draw comes from one seeded stream; the pipeline runs tradition → biome →
 // group type → perspective and tone → theme → template → words → rendering → safeguards (§4).
 
+import { drawSeed, registerResolver } from "../fill";
+import { tribalCultureWeights } from "../lens";
 import tribalData from "../data/tribal-names.json";
 import { type Biome, type BiomeCatalogue, biomeCatalogue, biomeInline, biomeTitleCase, biomeWords, BUILT_IN_BIOMES, findBiome, pluralOf, TERRAIN_CHOICES, type TerrainId, TERRAINS, terrainWords } from "../biomes";
 import { mulberry32 } from "../markov";
@@ -1448,3 +1450,26 @@ export function tribalDetailsLine(name: TribalName): string {
   return `${short} · ${persp} · ${biome.label}${name.biomeMode === "homeland" ? " (homeland)" : ""}`;
 }
 
+
+/** The tribal tradition a culture's folk and kin groups are drawn from: the one whose lens mapping gives it the most weight, else General. */
+export function traditionForCulture(culture: string): string {
+  let best = "general";
+  let bestWeight = 0;
+  for (const t of TRIBAL_TRADITIONS) {
+    const w = tribalCultureWeights(t.key)?.find(([c]) => c === culture)?.[1] ?? 0;
+    if (w > bestWeight) {
+      best = t.key;
+      bestWeight = w;
+    }
+  }
+  return best;
+}
+
+// The filler's folk source (shared tables brief §5.2): "[folk]", "[folk group]", "[tribal name]", "[people]".
+registerResolver("folk", (req) => {
+  try {
+    return generateTribalNames({ tradition: traditionForCulture(req.culture), count: 1, seed: drawSeed(req.rng) }).names[0]?.name;
+  } catch {
+    return undefined;
+  }
+});

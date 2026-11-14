@@ -34,11 +34,11 @@ test("both modules are in the line-up, in the place names group in the brief's o
 test("default sentences read as the other place modules' do, with the where, class and series words of the brief", () => {
   assert.equal(
     wildsSentenceText(wildsSentence(defaultWildsState(H), H)),
-    "Norman & British all hill and valley features of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British all hill and valley features of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.",
   );
   assert.equal(
     wildsSentenceText(wildsSentence(defaultWildsState(F), F)),
-    "Norman & British all fields and farmland of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British all fields and farmland of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.",
   );
   assert.equal(seg(wildsSentence({ ...defaultWildsState(H), series: true }, H), "series")!.text, "in one vale");
   assert.equal(seg(wildsSentence({ ...defaultWildsState(F), series: true }, F), "series")!.text, "on one estate");

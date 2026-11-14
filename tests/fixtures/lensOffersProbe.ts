@@ -171,7 +171,8 @@ const offeredGenres = (spec: Spec): string[] => (spec.key === "supernaturalCourt
 /** One run's finished strings, or the error it threw, as its own output. */
 function attempt(spec: Spec, state: State, seed: number): string {
   try {
-    return JSON.stringify(spec.run(state, seed));
+    // Shared tables brief §6: the probe looks for what a lens link changes in the engines' own words, so people stay placeholders.
+    return JSON.stringify(spec.run("people" in state ? { ...state, people: "placeholders" } : state, seed));
   } catch (error) {
     return `error: ${error instanceof Error ? error.message : String(error)}`;
   }

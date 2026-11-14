@@ -13,6 +13,7 @@ import { INTERSTELLAR_ERA, WORLD_CULTURES } from "../world/engine";
 import { isTraditionAvailable } from "../colonialShapes";
 import { WILDS_DATA } from "../wilds/engine";
 import lens from "../data/lens.json";
+import { fillSlots, registerResolver, type FillRequest } from "../fill";
 import { spaceBiomeFor } from "../biomes";
 import type { SpaceScale } from "../space/scale";
 import { groupsAtScale } from "./space";
@@ -52,7 +53,7 @@ export interface SourceContext {
   /** Home only: a place-shape region code for the British shapes. */
   region?: string;
   /** `invented` passes through to the source: its slots are filled as the caller resolves them (default none: built-in lists, else placeholders). */
-  people?: "placeholders" | "invented";
+  people?: "real" | "generated" | "placeholders" | "invented";
   /** Series mode draws from own shapes only. */
   series?: boolean;
   /** Stars and space: the scale this name is drawn at. The colonial source then runs under that scale's space biome, restricted to the kind's groups there. */
@@ -184,3 +185,22 @@ export function drawKind(kind: KindSources, ctx: SourceContext, own: () => strin
   if (ctx.rng() < shareOf(ctx.where, kind)) return drawFromSource(kind, source, ctx) ?? own();
   return own() ?? drawFromSource(kind, source, ctx);
 }
+
+// ── The filler's place and river sources (shared tables brief §5.2) ──────────────────────────────
+
+/** "[place]", "[town]", "[homeland place name]": a settlement name of the state's culture at home, one word or two. */
+function fillPlace(culture: string, region: string | undefined, rng: () => number): string | undefined {
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture, region, rng });
+    if (name && name.split(/\s+/).length <= 2) return name;
+  }
+  return undefined;
+}
+/** The earlier period's culture for "[earlier or district name]": Anglo-Saxon for Norman & British, else the culture itself. */
+const EARLIER: Record<string, string> = { "norman-british": "anglo-saxon" };
+
+registerResolver("place", (req) => fillPlace(req.culture, req.region, req.rng));
+registerResolver("earlierPlace", (req) => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng) ?? fillPlace(req.culture, req.region, req.rng));
+/** A delegated name may carry person brackets of its own ("[personal name]\'s Fleet"): they are filled here. */
+const settled = (name: string | undefined, req: FillRequest): string | undefined => (name ? fillSlots(name, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng }) : undefined);
+registerResolver("river", (req) => settled(drawFromDelegate({ engine: "rivers" }, { where: "home", culture: req.culture, region: req.region, rng: req.rng }), req));

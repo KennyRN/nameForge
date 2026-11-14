@@ -4729,6 +4729,7 @@ export class NameForgeModal extends Modal {
       length: state.length,
       // A pack that can't be drawn runs with placeholders (§12).
       source: state.source === "pack" && !pack.draw ? "placeholder" : state.source,
+      people: state.people === "invented" ? "placeholders" : state.people,
       draw: pack.draw,
       packName: pack.packName,
       count: this.generationCount,
@@ -4786,6 +4787,7 @@ export class NameForgeModal extends Modal {
         gender: state.gender,
         length: state.length,
         source: state.source,
+        people: state.people === "invented" ? "placeholders" : state.people,
         ...(state.source === "pack" && state.pack ? { pack: state.pack } : {}),
         section: state.section ?? "gender",
       });

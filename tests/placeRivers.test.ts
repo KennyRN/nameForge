@@ -35,7 +35,7 @@ test("seas and lakes is seas and bays; its old history rows still belong to it",
 
 test("the default sentence reads as the wild lands' do, with the where link and the class link", () => {
   const text = wildsSentenceText(wildsSentence(defaultWildsState(M), M));
-  assert.equal(text, "Norman & British all rivers and inland waters of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.");
+  assert.equal(text, "Norman & British all rivers and inland waters of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.");
   const where = seg(wildsSentence(defaultWildsState(M), M), "where")!;
   assert.deepEqual(where.choices.map((c) => c.label), ["in home country", "in newly explored country", "in settled lands"]);
 });

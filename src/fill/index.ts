@@ -102,6 +102,14 @@ export function drawsFromOtherCultures(era: FillEra): boolean {
   return era === "NF" || era === "IS";
 }
 
+/** The genre band a state's era sits in: fantasy to the early modern era, modern to the modern era, sci-fi after. */
+export function fillGenre(era: FillEra): "fantasy" | "modern" | "scifi" {
+  return era === "NF" || era === "IS" ? "scifi" : era === "ST" || era === "MO" ? "modern" : "fantasy";
+}
+
+/** A seed for a one-name draw from another engine, taken from the batch's stream. */
+export const drawSeed = (rng: () => number): number => Math.floor(rng() * 4294967296) >>> 0;
+
 const AGAIN = 8;
 
 /**
@@ -117,6 +125,7 @@ export function fillSlots(name: string, ctx: FillContext): string {
   const era = fillEra(ctx.era);
   const period = fillPeriod(era);
   const used = new Map<string, Set<string>>();
+  let any = false;
   const filled = name.replace(/\[([^\]]+)\]/g, (whole: string, label: string, offset: number) => {
     const info = labelInfo(label);
     if (!info) return whole;
@@ -138,7 +147,9 @@ export function fillSlots(name: string, ctx: FillContext): string {
     const after = name.slice(offset + whole.length);
     if (/\bthe\s$/i.test(before)) fill = fill.replace(/^the\s+/i, "");
     if (/^['’]s\b/.test(after)) fill = fill.replace(/['’]s$/, "");
+    any = true;
     return fill;
   });
-  return filled.replace(/^the\b/, "The");
+  // A name the filler changed never starts with a lower-case "the"; one it left alone is as the engine made it.
+  return any ? filled.replace(/^the\b/, "The") : filled;
 }

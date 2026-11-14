@@ -5,6 +5,7 @@
 // factor, places, saints and safeguards, bynames' ranks, the tribal engine's peoples and realms'
 // short names. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import { drawScale, scalesFor, SPACE_DATA, validScale, type ScaleChoice, type SpaceScale } from "../space/scale";
@@ -701,6 +702,9 @@ function compassValues(ctx: Ctx, token: string): string[] {
 
 /** §7: a batch of unique route names. */
 export function generateRouteNames(options: RouteOptions): RouteBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateRouteNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

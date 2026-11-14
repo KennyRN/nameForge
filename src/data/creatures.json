@@ -1,0 +1,2812 @@
+{
+ "_about": "Shared tables brief §8: mythic creatures per culture (12 core, 8 second tier, 30 General): an English name or word, habitats and tones. Read alongside each module's own pools, by habitat.",
+ "cultures": {
+  "general": [
+   {
+    "name": "dragon",
+    "habitats": [
+     "mountain",
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "wyrm",
+    "habitats": [
+     "underground",
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "griffin",
+    "habitats": [
+     "mountain",
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "unicorn",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "phoenix",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "basilisk",
+    "habitats": [
+     "desert",
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "sphinx",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "hydra",
+    "habitats": [
+     "water",
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "kraken",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mermaid",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "giant",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "troll",
+    "habitats": [
+     "mountain",
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "ogre",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "goblin",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "werewolf",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "vampire",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "ghost",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "banshee",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "harpy",
+    "habitats": [
+     "sky",
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "chimera",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "minotaur",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "centaur",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "satyr",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "pegasus",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "roc",
+    "habitats": [
+     "sky",
+     "desert"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "sea serpent",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "wraith",
+    "habitats": [
+     "moor",
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "gargoyle",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "cockatrice",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "fairy",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   }
+  ],
+  "anglo-saxon": [
+   {
+    "name": "wyrm",
+    "habitats": [
+     "moor",
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "grendel",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "elf",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "dwarf",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "ent",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "water sprite",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "black dog",
+    "habitats": [
+     "moor",
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "wulver",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "eotenas",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "nicor",
+    "habitats": [
+     "water",
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "wolf-man",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "marsh fiend",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "norman-british": [
+   {
+    "name": "dragon",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "green man",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "barghest",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "boggart",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "pixie",
+    "habitats": [
+     "forest",
+     "moor"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "hob",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "knucker",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "brownie",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "will-o'-the-wisp",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "giant",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "black shuck",
+    "habitats": [
+     "moor",
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "wyvern",
+    "habitats": [
+     "sky",
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   }
+  ],
+  "welsh": [
+   {
+    "name": "red dragon",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "afanc",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "gwyllgi",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "tylwyth teg",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "coblynau",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "gwrach y rhibyn",
+    "habitats": [
+     "water",
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "water horse",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "knocker",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "giant",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "hag",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "corpse candle",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "wyvern",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   }
+  ],
+  "scottish": [
+   {
+    "name": "kelpie",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "selkie",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "brownie",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "banshee",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "each-uisge",
+    "habitats": [
+     "water",
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "bean nighe",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "wulver",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "blue men",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "cu sith",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "nuckelavee",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "loch serpent",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "redcap",
+    "habitats": [
+     "home",
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "irish": [
+   {
+    "name": "banshee",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "leprechaun",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "pooka",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "selkie",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "dullahan",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "merrow",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "changeling",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "fomorian",
+    "habitats": [
+     "sea",
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "cluricaun",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "sidhe",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "sea serpent",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "water horse",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "cornish": [
+   {
+    "name": "knocker",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "piskie",
+    "habitats": [
+     "moor",
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "spriggan",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mermaid",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "bucca",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "giant",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "mermaid of zennor",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "tommyknocker",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "duffy",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "morgawr",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "bucca boo",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "black dog",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "scandinavian": [
+   {
+    "name": "troll",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "draugr",
+    "habitats": [
+     "home",
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "kraken",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "fenrir",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "jotun",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "nixie",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "huldra",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "nokken",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "sea serpent",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "valkyrie",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "tomte",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "lindworm",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "german": [
+   {
+    "name": "kobold",
+    "habitats": [
+     "underground",
+     "home"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "nixie",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "erlking",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "lindworm",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "rhine maiden",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "poltergeist",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "alp",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "werewolf",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "wild huntsman",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "dwarf",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "wolpertinger",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "heinzelmannchen",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   }
+  ],
+  "french": [
+   {
+    "name": "lutin",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "melusine",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "beast of gevaudan",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "gargouille",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "fee",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "loup-garou",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "farfadet",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "ankou",
+    "habitats": [
+     "home",
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "dutch": [
+   {
+    "name": "nix",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "kabouter",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "white lady",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "kraken",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "water spirit",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "werewolf",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "will-o'-the-wisp",
+    "habitats": [
+     "moor"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "sea monster",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "iberian": [
+   {
+    "name": "tarasque",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "cuelebre",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "xana",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "trasgu",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "basilisk",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "sea monster",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "werewolf",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "moura encantada",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   }
+  ],
+  "italian": [
+   {
+    "name": "basilisk",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "lupo mannaro",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "scylla",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "siren",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "gryphon",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "monachicchio",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "strega",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "sea serpent",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "roman": [
+   {
+    "name": "lamia",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "lemures",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "faun",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "harpy",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "chimera",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "cerberus",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "hydra",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "gorgon",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "greek-byzantine": [
+   {
+    "name": "minotaur",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "hydra",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "siren",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "cyclops",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "centaur",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "gorgon",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "chimera",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "harpy",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "slavic": [
+   {
+    "name": "baba yaga",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "firebird",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "domovoi",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "leshy",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "rusalka",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "vodyanoy",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "zmey",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "upyr",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "steppe": [
+   {
+    "name": "tengri's hawk",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "albasty",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "wolf spirit",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "simurgh",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "steppe dragon",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "yuyu",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "burkut",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "alp",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "arabic-persian": [
+   {
+    "name": "djinn",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "ghoul",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "simurgh",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "roc",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "ifrit",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "peri",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "div",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "qareen",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   }
+  ],
+  "egyptian": [
+   {
+    "name": "sphinx",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "ammit",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "bennu",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "apep",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "serpopard",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "griffin",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "sacred scarab",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "plain"
+    ]
+   },
+   {
+    "name": "ba",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   }
+  ],
+  "ethiopian": [
+   {
+    "name": "buda",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "abba gedam",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "hyena man",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "zar",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "tolla",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "lion of judah",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "wukro",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "grim hunter",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "bantu": [
+   {
+    "name": "tokoloshe",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "impundulu",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mokele-mbembe",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "inkanyamba",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "grootslang",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mamlambo",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "kongamato",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "abatwa",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   }
+  ],
+  "west-african": [
+   {
+    "name": "anansi",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "mami wata",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "asanbosam",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "adze",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "sasabonsam",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "aziza",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "ninki nanka",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mmoatia",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   }
+  ],
+  "indian": [
+   {
+    "name": "naga",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "garuda",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "rakshasa",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "vetala",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "makara",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "yaksha",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "apsara",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "simha",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   }
+  ],
+  "chinese": [
+   {
+    "name": "long",
+    "habitats": [
+     "sky",
+     "water"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "qilin",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "fenghuang",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "fox spirit",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "jiangshi",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "nian",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "pixiu",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "tigress spirit",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "japanese": [
+   {
+    "name": "kitsune",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "oni",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "tengu",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "kappa",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "tanuki",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "yurei",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "kirin",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "tsuchigumo",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "korean": [
+   {
+    "name": "dokkaebi",
+    "habitats": [
+     "home",
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "gumiho",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "haetae",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "bulgasari",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "imugi",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "cheonyeo gwishin",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "samjoko",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "jangseung",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "plain"
+    ]
+   }
+  ],
+  "aztec": [
+   {
+    "name": "quetzal serpent",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "ahuizotl",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "nahual",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "cipactli",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "tzitzimitl",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "xolotl",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "eagle warrior",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "jaguar warrior",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   }
+  ],
+  "maya": [
+   {
+    "name": "kukulkan",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "camazotz",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "alux",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "sak b'e",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "xtabay",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "bat spirit",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "jaguar spirit",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "cenote guardian",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   }
+  ],
+  "andean": [
+   {
+    "name": "amaru",
+    "habitats": [
+     "water",
+     "underground"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "condor",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "ukuku",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "supay",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "yacumama",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "pishtaco",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "apu",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "chullachaqui",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   }
+  ],
+  "polynesian": [
+   {
+    "name": "taniwha",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mo'o",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "menehune",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "shark god",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "marakihau",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "patupaiarehe",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "night marcher",
+    "habitats": [
+     "home",
+     "moor"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "manaia",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "strange"
+    ]
+   }
+  ],
+  "american": [
+   {
+    "name": "thunderbird",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "wendigo",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "bigfoot",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "jackalope",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "skinwalker",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mothman",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "wampus cat",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "hodag",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   }
+  ]
+ }
+}

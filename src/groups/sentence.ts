@@ -57,7 +57,7 @@ export const DEFAULT_GROUP_STATE: GroupSentenceState = {
   fantastic: false,
   form: "any",
   front: "say",
-  people: "placeholders",
+  people: "real",
   tone: "any",
   series: false,
   commodity: "any",
@@ -71,7 +71,7 @@ export const FANTASTIC_TEXT: Record<"fantasy" | "modern", [string, string]> = {
 };
 const FORM_TEXT: Record<GroupForm, string> = { any: "formal or everyday", formal: "formal", everyday: "everyday" };
 const FRONT_TEXT: Record<GroupFront, string> = { say: "that say what they are", hide: "that hide what they are", may: "that may hide what they are" };
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one related set" };
 
 /** §2.2: whether the front link shows: the type can take a front, or Any with one available type that can. */
@@ -188,7 +188,7 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [commander], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places");
@@ -239,7 +239,7 @@ export function chooseGroup(state: GroupSentenceState, field: GroupField, id: st
       next.front = (id as GroupFront) ?? "say";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "tone":
       next.tone = (id as GroupToneChoice) ?? "any";

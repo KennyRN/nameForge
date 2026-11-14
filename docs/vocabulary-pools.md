@@ -388,3 +388,7 @@ Place names are five focused modules, each built on the wild lands engine and it
 - **Where:** every focused place module, each wild lands module and the first three seas and coasts modules has a three-way link: home country, newly explored country, settled lands (on home, newly explored and settled shores for the seas; newly explored and settled space for stars and space). The wild lands and waters tables carry a `settled` column beside `new`.
 - **Sources:** a kind may borrow names from a retired engine through `src/places/sources.ts`, with the shares under `sourceShares` in `lens.json`: native British shapes at home (40%), colonial part 2 in newly explored country (50%) and part 2a in settled lands (60%). A borrowed entry counts in the report for the module that borrows it, as a shared pool does.
 - **Class:** every kind carries `natural`, `managed` or `constructed`. The class link narrows the kind menu and shows only where a module has kinds in at least two classes; `npm run offers` records which classes each module offers.
+
+## Shared tables (brief 4)
+
+`src/data/lexicon.json` merges the colour, metal, number, ordinal, virtue, weather, season and direction lists of the modules (see `docs/lexicon-merge.md`); `src/data/creatures.json` holds mythic creatures per culture by habitat. Neither is read by a module yet, so no pool's output has changed.

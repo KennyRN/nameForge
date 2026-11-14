@@ -311,7 +311,7 @@ import { historySection, SECTION_GROUPS } from "../src/sections";
 test("§13.7: the default sentence's plain text; “An” before a vowel", () => {
   assert.equal(
     kitSentenceText(kitSentence(DEFAULT_KIT_STATE)),
-    "A Norman & British town of the medieval era, in a historic or low fantasy world, across all of Britain, inland, of any tone, giving the whole settlement in standard detail, with placeholders for people and places.",
+    "A Norman & British town of the medieval era, in a historic or low fantasy world, across all of Britain, inland, of any tone, giving the whole settlement in standard detail, with real-world names for people and places.",
   );
   const arabic = [["culture", "arabic-persian"], ["size", "city"], ["position", "coast"], ["people", "invented"], ["detail", "full"]].reduce((s, [f, id]) => chooseKit(s, f as never, id), DEFAULT_KIT_STATE);
   assert.equal(

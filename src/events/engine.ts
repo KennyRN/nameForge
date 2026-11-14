@@ -4,6 +4,8 @@
 // vocabulary packs); places, peoples, realms, people and figures come from the route engine, dynasties
 // from realms, epithets from bynames, colours and numbers from group names. No Obsidian imports.
 
+import { drawSeed, registerResolver } from "../fill";
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import eventData from "../data/event-names.json";
@@ -391,6 +393,9 @@ function plans(ctx: Ctx, kind: EventKind, only?: string): [EventShape, number][]
 
 /** §6: a batch of unique event names; with series on, a chronicle in order (§8). */
 export function generateEventNames(options: EventOptions): EventBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateEventNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
@@ -565,3 +570,12 @@ export function generateEventNames(options: EventOptions): EventBatch {
   }
 
 }
+
+// The filler's battle source (review amendment, brief §12.3): "[battle]", a battle of the state's culture and era.
+registerResolver("battle", (req) => {
+  try {
+    return generateEventNames({ culture: req.culture, era: req.era, kind: "battle", people: "invented", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
+  } catch {
+    return undefined;
+  }
+});

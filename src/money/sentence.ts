@@ -49,7 +49,7 @@ export const DEFAULT_MONEY_STATE: MoneySentenceState = {
   value: "any",
   words: "translated",
   tone: "any",
-  people: "placeholders",
+  people: "real",
   series: "separate",
 };
 
@@ -65,7 +65,7 @@ export interface MoneyChoice {
 
 export type MoneySegment = string | { field: MoneyField; text: string; title: string; choices: MoneyChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT: Record<MoneySeries, string> = { separate: "each one separate", coinage: "as one coinage", values: "as one coinage, with values" };
 
 /** §2.2: the series choices: a valued coinage only where a real ladder exists for the culture, era and kind. */
@@ -127,7 +127,7 @@ export function moneySentence(state: MoneySentenceState): MoneySegment[] {
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places");
@@ -187,7 +187,7 @@ export function chooseMoney(state: MoneySentenceState, field: MoneyField, id: st
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "series":
       next.series = id === "coinage" || id === "values" ? id : "separate";

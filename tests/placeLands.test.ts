@@ -30,7 +30,7 @@ test("lands and territories is first of the focused modules in the place names g
 test("default sentence and series text are §5.1's; the where link is three-way; eras run AN to MO", () => {
   assert.equal(
     wildsSentenceText(wildsSentence(defaultWildsState(L), L)),
-    "Norman & British all lands and territories of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British all lands and territories of any kind of the medieval era, in home country, in a historic or low fantasy world, across all of Britain, of any tone, with real-world names for people and places, each one separate.",
   );
   assert.equal(seg(wildsSentence({ ...defaultWildsState(L), series: true }, L), "series")!.text, "in one realm");
   assert.deepEqual(seg(wildsSentence(defaultWildsState(L), L), "where")!.choices.map((c) => c.label), ["in home country", "in newly explored country", "in settled lands"]);

@@ -6,6 +6,7 @@
 // the name the places around it take (§8), and streets, squares, districts, inns and the settlement
 // kit draw monuments back from here (§11–§12). No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import monumentData from "../data/monument-names.json";
@@ -463,6 +464,9 @@ function siteOf(shape: MonumentShape, text: string, values: Record<string, strin
 
 /** §4–§9: a batch of unique monument and statue names. */
 export function generateMonumentNames(options: MonumentOptions): MonumentBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateMonumentNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const s = setup(options, seed);
   const { rng, culture, era } = s;

@@ -158,7 +158,8 @@ test("presets: a value outside its choices falls back to the default", () => {
   assert.equal(wilds!.biome, "any");
   assert.equal(wilds!.region, "all");
   assert.equal(wilds!.tone, "any");
-  assert.equal(wilds!.people, "placeholders");
+  // Shared tables brief §1.1 rule 2: a value that isn't one gets the new default.
+  assert.equal(wilds!.people, "real");
 });
 
 test("history: labels follow §1.3 in order", () => {

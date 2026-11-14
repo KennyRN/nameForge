@@ -2,6 +2,8 @@
 // families of organisations for fantasy, modern and sci-fi settings, built from shapes and lists.
 // No Obsidian imports.
 
+import { drawSeed, fillGenre, registerResolver } from "../fill";
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import groupData from "../data/group-names.json";
 import { type BiomeCatalogue, BUILT_IN_BIOMES, pluralOf } from "../biomes";
 import { deityHooks } from "../deities/hook";
@@ -10,7 +12,7 @@ import { mulberry32 } from "../markov";
 import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { generatePlaceNames } from "../names/engine";
 import { britishPlaceNamesRecipe } from "../names/recipe";
-import { findTradition, TRIBAL_DATA, type TribalTradition } from "../tribes/engine";
+import { findTradition, TRIBAL_DATA, traditionForCulture, type TribalTradition } from "../tribes/engine";
 import { generateWorldPlaceNames } from "../world/engine";
 import { scaleAllows, scaleLabel, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { catalogueWorld, drawStarKind, drawStarOfKind, type DrawStarOptions } from "../space/stars";
@@ -23,7 +25,15 @@ export type GroupSetting = "FL" | "FH" | "MR" | "MF" | "SF";
 export type GroupGenre = "fantasy" | "modern" | "scifi";
 export type GroupForm = "any" | "formal" | "everyday";
 export type GroupFront = "say" | "hide" | "may";
-export type GroupPeople = "placeholders" | "invented";
+/**
+ * How people and places are named (shared tables brief §6): `real` and `generated` fill the brackets the
+ * engines leave from the people tables and the starter models (src/fill/); `placeholders` and `invented`
+ * are as they were. A module that doesn't offer `invented` never stores it.
+ */
+export type GroupPeople = "real" | "generated" | "placeholders" | "invented";
+/** The values a preset or stored state may hold. */
+export const GROUP_PEOPLE_VALUES: readonly GroupPeople[] = ["real", "generated", "placeholders", "invented"];
+export const isGroupPeople = (v: string): v is GroupPeople => (GROUP_PEOPLE_VALUES as readonly string[]).includes(v);
 type ShapeForm = "F" | "E" | "B";
 /** Tone brief §2.1. */
 export type GroupTone = "grand" | "plain" | "grim" | "light" | "strange";
@@ -1254,6 +1264,9 @@ function generateSeries(
 
 /** §4: a batch of unique names. */
 export function generateGroupNames(options: GroupOptions): GroupBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateGroupNames({ ...options, people: "placeholders" }), fillMode, { culture: options.tradition, era: options.genre, series: options.series });
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family “${options.family}”.`);
   if (options.series && !options.type) throw new Error("Series needs a type.");
@@ -1346,3 +1359,13 @@ export function groupHistoryLabel(
     ...(genre === "scifi" && scale !== "any" ? [scaleLabel(scale).toLowerCase()] : []),
   ].join(" · ");
 }
+
+// The filler's company source (review amendment, brief §12.3): "[company]", a trade name of the state's culture and setting.
+registerResolver("company", (req) => {
+  try {
+    const tradition = traditionForCulture(req.culture);
+    return generateGroupNames({ family: "trade", tradition, genre: fillGenre(req.era), form: "everyday", people: "invented", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
+  } catch {
+    return undefined;
+  }
+});

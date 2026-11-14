@@ -36,7 +36,7 @@ export const DEFAULT_MONUMENT_STATE: MonumentSentenceState = {
   fantastic: false,
   setting: "anywhere",
   tone: "any",
-  people: "placeholders",
+  people: "real",
   nearby: false,
   series: false,
 };
@@ -53,7 +53,7 @@ export interface MonumentChoice {
 
 export type MonumentSegment = string | { field: MonumentField; text: string; title: string; choices: MonumentChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const NEARBY_TEXT = { off: "on their own", on: "with what's named after them" };
 const SERIES_TEXT = { off: "each one separate", on: "as one town" };
 const settingText = (key: InnSetting) => INN_SETTINGS.find((s) => s.key === key)!.text;
@@ -99,7 +99,7 @@ export function monumentSentence(state: MonumentSentenceState): MonumentSegment[
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [founder] and [hero], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places, ");
@@ -159,7 +159,7 @@ export function chooseMonument(state: MonumentSentenceState, field: MonumentFiel
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "nearby":
       next.nearby = id === "on";

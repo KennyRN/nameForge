@@ -5,6 +5,7 @@
 // tone factor, and the river engine. The helpers are mirrored from the waters engine so that its
 // fixtures can't move. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
 import { BRITAIN, biomesRootedIn, biomeTitleCase, biomeWords, biomeMatches, BUILT_IN_BIOMES, pluralOf, type Biome, type BiomeCatalogue, type BiomeList } from "../biomes";
@@ -796,6 +797,9 @@ function kindShapes(ctx: Ctx, kind: string): WildsShape[] {
 
 /** §7: a batch of unique names for one of the six modules. */
 export function generateWildsNames(options: WildsOptions): WildsBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

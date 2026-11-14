@@ -141,3 +141,7 @@ In storyForge the main window of nameForge is added to the interface. It's there
 
 ## Licence
 MIT. Third-party icon licences are listed in `LICENCES - Third Party`.
+
+## Real, generated and placeholder names
+
+Every module that names people and places has a "with ‹…› for people and places" link. **Real-world names** (the default for a new sentence) fills brackets such as `[founder]`, `[holy person]` and `[place]` from curated lists of real names for each culture and period (`docs/people-tables.md`). **Generated names** trains the Markov generator on the same lists (and, for Old Cornish, Anglo-Saxon and Victorian, England, on those templates). **Placeholders** and **invented names** work as they always did, and a saved preset keeps whichever it was saved with. The same lists are in Create Pack's Templates ("Welsh (modern)" and so on). Native peoples, plants and animals in newly explored and settled lands stay bracketed.

@@ -5,6 +5,7 @@
 // packs); places, people, gods and figures come from the route engine, creatures and colours from
 // group names, dynasties from realms, and the settings and rendering from inns. No Obsidian imports.
 
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import buildingData from "../data/building-names.json";
@@ -332,6 +333,9 @@ function setup(options: BuildingOptions, seed = 0): Setup {
 
 /** §7: a batch of unique building and landmark names. */
 export function generateBuildingNames(options: BuildingOptions): BuildingBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateBuildingNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const s = setup(options, seed);
   const { rng, culture, era } = s;

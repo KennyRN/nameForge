@@ -3,7 +3,7 @@
 // placeholder name›". The culture, era and world links are the lens clause's (one sentence brief §4).
 // Built as segments like the group sentence. No Obsidian imports.
 
-import { type GroupGenre, type GroupToneChoice, GROUP_TONES, groupSetting, TONE_PHRASES } from "../groups/engine";
+import { type GroupGenre, type GroupPeople, type GroupToneChoice, GROUP_TONES, groupSetting, TONE_PHRASES } from "../groups/engine";
 import { asSegment, chooseLens, eraWorldSegments, type LensedSegment } from "../lensSentence";
 import { lensClause } from "../lensView";
 import { registerRoster } from "../lensRosters";
@@ -34,11 +34,15 @@ export interface BynameSentenceState {
   gender: BynameGender;
   length: BynameLength;
   source: BynameSource;
+  /** Shared tables brief §6: shown with a placeholder bearer; a byname has no invented mode. */
+  people: GroupPeople;
   /** §2.3: kept for next time when the source moves away from pack. */
   pack?: string;
   /** A heading, "whole", or undefined for the default (§2.4). */
   section?: string;
 }
+
+const BYNAME_PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "placeholders for" };
 
 export const DEFAULT_BYNAME_STATE: BynameSentenceState = {
   culture: "general",
@@ -49,9 +53,10 @@ export const DEFAULT_BYNAME_STATE: BynameSentenceState = {
   gender: "anyone",
   length: "single",
   source: "placeholder",
+  people: "real",
 };
 
-export type BynameField = "culture" | "kind" | "era" | "genre" | "fantastic" | "tone" | "language" | "gender" | "length" | "source" | "pack" | "section";
+export type BynameField = "culture" | "kind" | "era" | "genre" | "fantastic" | "tone" | "language" | "gender" | "length" | "source" | "people" | "pack" | "section";
 
 export interface BynameChoice {
   id: string | undefined;
@@ -162,6 +167,17 @@ export function bynameSentence(state: BynameSentenceState, module: BynameModule,
     choices: (["placeholder", "pack", "none"] as BynameSource[]).map((s) => ({ id: s, label: SOURCE_MENU(module)[s] })),
     current: state.source,
   });
+  if (state.source === "placeholder") {
+    out.push(", with ");
+    out.push({
+      field: "people",
+      text: BYNAME_PEOPLE_TEXT[state.people === "invented" ? "placeholders" : state.people],
+      title: "Real-world or generated names for the bearer, or the placeholder [name]",
+      choices: (["real", "generated", "placeholders"] as GroupPeople[]).map((p) => ({ id: p, label: BYNAME_PEOPLE_TEXT[p] })),
+      current: state.people === "invented" ? "placeholders" : state.people,
+    });
+    out.push(" people");
+  }
   if (state.source === "pack") {
     const pack = packs.find((p) => p.name === state.pack) ?? packs[0];
     out.push(" ");
@@ -231,6 +247,9 @@ export function chooseByname(state: BynameSentenceState, field: BynameField, id:
     case "source":
       next.source = (id as BynameSource) ?? "placeholder";
       break;
+    case "people":
+      next.people = (id as GroupPeople) ?? "real";
+      break;
     case "pack":
       next.pack = id;
       next.section = undefined;
@@ -261,6 +280,7 @@ export function bynamePresetState(preset: {
   gender: BynameGender;
   length: BynameLength;
   source: BynameSource;
+  people?: GroupPeople;
   pack?: string;
   section: string;
 }): BynameSentenceState {
@@ -274,6 +294,7 @@ export function bynamePresetState(preset: {
     gender: preset.gender,
     length: preset.length,
     source: preset.source,
+    people: preset.people === "invented" || preset.people === undefined ? "placeholders" : preset.people,
     pack: preset.pack,
     section: preset.section === "gender" ? undefined : preset.section,
   };

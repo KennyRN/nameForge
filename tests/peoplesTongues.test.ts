@@ -592,8 +592,8 @@ test("§10.1: the peoples link is the realms sentence's last link, off by defaul
   assert.equal(segs.filter((s) => typeof s === "object").at(-1), last);
   const on = chooseRealm(DEFAULT_REALM_STATE, "peoples", "on", realmLimits.findBiome);
   assert.equal(on.peoples, true);
-  assert.match(realmSentenceText(realmSentence(on, realmLimits)), /with placeholders for people and places, with their peoples\.$/);
-  assert.match(realmSentenceText(realmSentence(DEFAULT_REALM_STATE, realmLimits)), /with placeholders for people and places\.$/);
+  assert.match(realmSentenceText(realmSentence(on, realmLimits)), /with real-world names for people and places, with their peoples\.$/);
+  assert.match(realmSentenceText(realmSentence(DEFAULT_REALM_STATE, realmLimits)), /with real-world names for people and places\.$/);
   assert.equal(chooseRealm(on, "peoples", "off", realmLimits.findBiome).peoples, false);
 });
 

@@ -56,7 +56,7 @@ export const DEFAULT_CALENDAR_STATE: TimeSentenceState = {
   start: "own",
   words: "translated",
   tone: "any",
-  people: "placeholders",
+  people: "real",
   series: false,
 };
 export const DEFAULT_SKY_STATE: TimeSentenceState = { ...DEFAULT_CALENDAR_STATE, kind: "constellation" };
@@ -84,7 +84,7 @@ export interface TimeSentenceLimits {
   spaceBiomes?: readonly Biome[];
 }
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const WORDS_TEXT: Record<TimeWords, string> = { translated: "in translated names", loanwords: "with familiar loanwords" };
 
 /** §2.3: whether a culture has at least one loan form (so the words link shows). */
@@ -181,7 +181,7 @@ export function timeSentence(module: TimeModule, state: TimeSentenceState, limit
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [god], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" gods and people, ");
@@ -252,7 +252,7 @@ export function chooseTime(module: TimeModule, state: TimeSentenceState, field: 
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "series":
       next.series = id === "on";

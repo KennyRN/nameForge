@@ -194,7 +194,7 @@ const iField = (state: InnSentenceState, f: string) => innSentence(state).find((
 test("§15.7: the default sentence's plain text", () => {
   assert.equal(
     innSentenceText(innSentence(DEFAULT_INN_STATE)),
-    "Norman & British houses of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, anywhere, as signs or with a house word, of any tone, with placeholders for people and places, each one separate.",
+    "Norman & British houses of any kind of the medieval era, in a historic or low fantasy world, across all of Britain, anywhere, as signs or with a house word, of any tone, with real-world names for people and places, each one separate.",
   );
   const port = [["kind", "tavern"], ["era", "EM"], ["setting", "port"], ["people", "invented"], ["series", "on"]].reduce((s, [f, id]) => chooseInn(s, f as never, id), DEFAULT_INN_STATE);
   assert.equal(

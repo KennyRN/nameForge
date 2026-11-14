@@ -51,7 +51,7 @@ export const DEFAULT_ROUTE_STATE: RouteSentenceState = {
   era: "MD",
   fantastic: false,
   tone: "any",
-  people: "placeholders",
+  people: "real",
   series: false,
 };
 
@@ -68,7 +68,7 @@ export interface RouteChoice {
 
 export type RouteSegment = string | { field: RouteField; text: string; title: string; choices: RouteChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const SERIES_TEXT = { off: "each one separate", on: "as one network" };
 
 /** §2.2: the fantastic link's words: steampunk in the steam age. */
@@ -137,7 +137,7 @@ export function routeSentence(state: RouteSentenceState): RouteSegment[] {
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places, ");
@@ -183,7 +183,7 @@ export function chooseRoute(state: RouteSentenceState, field: RouteField, id: st
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "series":
       next.series = id === "on";

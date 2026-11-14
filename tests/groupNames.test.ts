@@ -252,7 +252,7 @@ const fields = (key: string, state = DEFAULT_GROUP_STATE) => groupSentence(state
 test("group sentence: the default mystic sentence, and which links show", () => {
   assert.equal(
     groupSentenceText(groupSentence(DEFAULT_GROUP_STATE, family("mystic"))),
-    "General-themed orders and faiths of any kind of the pre-industrial era, in a historic or low fantasy world, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
+    "General-themed orders and faiths of any kind of the pre-industrial era, in a historic or low fantasy world, using formal or everyday names of any tone that say what they are, with real-world names for people and places.",
   );
   assert.ok(!fields("martial").includes("front"));
   // Science fiction has no fantastic setting: the world is plain text there, not a link.
@@ -529,7 +529,7 @@ test("series: an {ordinalWord} series of 20 stops at the end of the list, with t
 test("tone sentence: default text, tone between form and front, series only with a type", () => {
   assert.equal(
     groupSentenceText(groupSentence(DEFAULT_GROUP_STATE, family("mystic"))),
-    "General-themed orders and faiths of any kind of the pre-industrial era, in a historic or low fantasy world, using formal or everyday names of any tone that say what they are, with placeholders for people and places.",
+    "General-themed orders and faiths of any kind of the pre-industrial era, in a historic or low fantasy world, using formal or everyday names of any tone that say what they are, with real-world names for people and places.",
   );
   const order = fields("underworld", { ...DEFAULT_GROUP_STATE, type: "syndicate" });
   assert.deepEqual(order.slice(order.indexOf("form"), order.indexOf("form") + 3), ["form", "tone", "front"]);
@@ -537,7 +537,7 @@ test("tone sentence: default text, tone between form and front, series only with
   assert.equal(order.at(-1), "series");
   const unit = { ...DEFAULT_GROUP_STATE, type: "unit", series: true, tone: "grim" as const };
   assert.ok(
-    groupSentenceText(groupSentence(unit, family("martial"))).endsWith("names with a grim edge, with placeholders for people and places, as one related set."),
+    groupSentenceText(groupSentence(unit, family("martial"))).endsWith("names with a grim edge, with real-world names for people and places, as one related set."),
   );
   assert.equal(chooseGroup(unit, "type", undefined, family("martial")).series, false);
   assert.equal(chooseGroup(unit, "type", undefined, family("martial")).tone, "grim");

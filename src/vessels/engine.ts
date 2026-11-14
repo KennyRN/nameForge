@@ -3,6 +3,8 @@
 // tags, tone factor, invented people and places, possessives, repetition check and safeguards.
 // No Obsidian imports.
 
+import { drawSeed, fillGenre, registerResolver } from "../fill";
+import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
 import vesselData from "../data/vessels.json";
 import airLandData from "../data/vehicles-air-land.json";
@@ -1162,6 +1164,9 @@ function typeShapes(ctx: Ctx, family: string): TypeShape[] {
 
 /** §5: a batch of unique names. */
 export function generateVesselNames(options: VesselOptions): VesselBatch {
+  // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
+  const fillMode = fillModeOf(options.people);
+  if (fillMode) return fillPeopleBatch(generateVesselNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const module = options.module;
@@ -1599,3 +1604,12 @@ export function vesselHistoryLabel(module: VesselModule, genre: GroupGenre, fant
     " · ",
   );
 }
+
+// The filler's ship source (review amendment, brief §12.3): "[ship]", a ship of the state's culture and era.
+registerResolver("ship", (req) => {
+  try {
+    return generateVesselNames({ module: "ships", culture: req.culture, genre: fillGenre(req.era), people: "invented", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
+  } catch {
+    return undefined;
+  }
+});

@@ -1,6 +1,7 @@
 // The coverage report as text (shared lens brief §6.2): `docs/coverage.md` and `docs/coverage.json`
 // from the numbers in coverage.ts. Pure string building; `npm run coverage` writes the files.
 
+import { sharedTablesMarkdown } from "./sharedTablesCoverage";
 import { buildCoverage, COVERAGE_ADAPTERS, type CoverageReport, type CultureCell, type ModuleCoverage } from "./coverage";
 import { LENS_CULTURES, LENS_ERAS, LENS_STYLES, LENS_TARGETS, LENS_TONES, LENS_REGIONS, isLiveCulture } from "./lens";
 import { SECTION_LABELS, type NameForgeSection } from "./sections";
@@ -138,5 +139,5 @@ export function renderCoverageJson(report: CoverageReport = buildCoverage()): st
 /** What `npm run coverage` writes. */
 export function coverageFiles(): { markdown: string; json: string } {
   const report = buildCoverage();
-  return { markdown: renderCoverageMarkdown(report), json: renderCoverageJson(report) };
+  return { markdown: `${renderCoverageMarkdown(report)}\n${sharedTablesMarkdown()}`, json: renderCoverageJson(report) };
 }

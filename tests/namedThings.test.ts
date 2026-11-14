@@ -305,8 +305,8 @@ import { isModulePresetContent, modulePresetContent, parseModulePreset } from ".
 const text = (module: ThingModule, s: ThingSentenceState, packs = [] as { name: string; headings: string[] }[]) => thingSentenceText(thingSentence(module, s, packs));
 
 test("§16.6: the default sentences read as the brief gives them", () => {
-  assert.equal(text("arms", DEFAULT_THING_STATE), "Norman & British arms and armour of any kind of the medieval era, in a historic or low fantasy world, of any tone, belonging to anyone, with placeholders for people and places, names only.");
-  assert.equal(text("treasure", DEFAULT_THING_STATE), "Norman & British treasures and regalia of any kind of the medieval era, in a historic or low fantasy world, of any tone, belonging to anyone, with placeholders for people and places, names only.");
+  assert.equal(text("arms", DEFAULT_THING_STATE), "Norman & British arms and armour of any kind of the medieval era, in a historic or low fantasy world, of any tone, belonging to anyone, with real-world names for people and places, names only.");
+  assert.equal(text("treasure", DEFAULT_THING_STATE), "Norman & British treasures and regalia of any kind of the medieval era, in a historic or low fantasy world, of any tone, belonging to anyone, with real-world names for people and places, names only.");
   assert.equal(
     text("book", { ...DEFAULT_THING_STATE, era: "EM", describe: true, people: "invented" }),
     "Norman & British books and writings of any kind of the early modern era, in a historic or low fantasy world, of any tone, by or about anyone, with invented people and places, with what they are.",

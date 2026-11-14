@@ -4,6 +4,7 @@
 // Words come from the shared settlement pools (settlement/vocab.ts, with vocabulary packs); colours
 // from group names, saints from group names, places from the route engine. No Obsidian imports.
 
+import { drawSeed, registerResolver } from "../fill";
 import type { BiomeCatalogue } from "../biomes";
 import deityData from "../data/deity-names.json";
 import { BYNAME_CULTURES } from "../bynames/engine";
@@ -605,4 +606,13 @@ setDeityHooks({
   isChristianCulture,
   sensitiveTraditions: DEITY_DATA.sensitiveTraditions,
   christianTraditions: DEITY_DATA.christianTraditions,
+});
+
+// The filler's deity source (shared tables brief §5.2): "[deity]", "[god]", "[local deity]".
+registerResolver("deity", (req) => {
+  try {
+    return generateDeityNames({ culture: req.culture, era: req.era, kind: "deity", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
+  } catch {
+    return undefined;
+  }
 });

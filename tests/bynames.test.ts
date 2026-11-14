@@ -296,11 +296,11 @@ const fieldsOf = (module: BynameModule, state = DEFAULT_BYNAME_STATE, packs: { n
 test("bynames sentence: default epithets text", () => {
   assert.equal(
     bynameSentenceText(bynameSentence(DEFAULT_BYNAME_STATE, "epithets")),
-    "General-themed epithets of any kind of the pre-industrial era, in a historic or low fantasy world, of any tone, for anyone, after a placeholder name.",
+    "General-themed epithets of any kind of the pre-industrial era, in a historic or low fantasy world, of any tone, for anyone, after a placeholder name, with real-world names for people.",
   );
   assert.equal(
     bynameSentenceText(bynameSentence(DEFAULT_BYNAME_STATE, "familyNames")),
-    "General-themed family names of any kind of the pre-industrial era, in a historic or low fantasy world, of any tone, for anyone, with a placeholder name.",
+    "General-themed family names of any kind of the pre-industrial era, in a historic or low fantasy world, of any tone, for anyone, with a placeholder name, with real-world names for people.",
   );
   assert.ok(fieldsOf("titles").includes("length") && !fieldsOf("epithets").includes("length"));
 });
@@ -360,6 +360,7 @@ test("bynames presets: round trip, unknown values and a missing pack", () => {
     gender: "men",
     length: "full",
     source: "pack",
+    people: "real",
     pack: "Steppe names",
     section: "Male",
   };

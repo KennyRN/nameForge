@@ -59,7 +59,7 @@ export interface WildsSentenceState {
 }
 
 export function defaultWildsState(module: WildsLikeModule): WildsSentenceState {
-  return { culture: wildsDefaultCulture(module), era: wildsDefaultEra(module), where: wildsDefaultWhere(module), fantastic: false, tone: "any", people: "placeholders", series: false };
+  return { culture: wildsDefaultCulture(module), era: wildsDefaultEra(module), where: wildsDefaultWhere(module), fantastic: false, tone: "any", people: "real", series: false };
 }
 
 export type WildsField = "culture" | "kindClass" | "kind" | "era" | "where" | "scale" | "fantastic" | "region" | "biome" | "tone" | "people" | "series";
@@ -77,7 +77,7 @@ export interface WildsChoice {
 
 export type WildsSegment = string | { field: WildsField; text: string; title: string; choices: WildsChoice[]; current: string | undefined; fixed?: boolean };
 
-const PEOPLE_TEXT: Record<GroupPeople, string> = { placeholders: "placeholders for", invented: "invented" };
+const PEOPLE_TEXT: Record<GroupPeople, string> = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "invented" };
 const WHERE_TEXT: Record<WildsWhere, string> = { home: "in home country", new: "in newly explored country", settled: "in settled lands" };
 /** Stars and space (§3.1, §5.5): no home country, and the words are space's. */
 const SPACE_WHERE_TEXT: Record<WildsWhere, string> = { home: "in newly explored space", new: "in newly explored space", settled: "in settled space" };
@@ -171,7 +171,7 @@ export function wildsSentence(state: WildsSentenceState, module: WildsLikeModule
     field: "people",
     text: PEOPLE_TEXT[state.people],
     title: "Placeholders like [place], or invented names",
-    choices: (["placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
+    choices: (["real", "generated", "placeholders", "invented"] as GroupPeople[]).map((p) => ({ id: p, label: PEOPLE_TEXT[p] })),
     current: state.people,
   });
   out.push(" people and places, ");
@@ -236,7 +236,7 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
       next.tone = (id as GroupToneChoice) ?? "any";
       break;
     case "people":
-      next.people = (id as GroupPeople) ?? "placeholders";
+      next.people = (id as GroupPeople) ?? "real";
       break;
     case "series":
       next.series = id === "on";
