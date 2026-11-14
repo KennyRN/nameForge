@@ -7,19 +7,29 @@ import PEOPLE from "../src/data/people.json";
 import { mulberry32 } from "../src/markov";
 import { entryEras, entryFlag, eraWeights, otherCulture, PEOPLE_CULTURES, peopleCultureFor, peoplePeriod, peopleSourceFor, peopleTable, type PeopleEntry, type PeoplePeriod } from "../src/people";
 import TEMPLATES from "../src/data/builtin-templates.json";
+import LENS from "../src/data/lens.json";
 
 const CORE = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
+const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => c.tier === "second").map((c) => c.key);
+/** Ancient peoples with only a historic table: later they read another culture. */
+const HISTORIC_ONLY = new Set(["anglo-saxon", "roman", "egyptian", "aztec", "maya", "andean"]);
 const PERIODS: PeoplePeriod[] = ["historic", "modern"];
-/** Periods where the culture named people by patronymic, so it has no surname list. */
-const NO_SURNAMES = new Set(["anglo-saxon/historic", "welsh/historic", "scandinavian/historic"]);
+/** Periods where the culture named people by patronymic or had no inherited surnames, so it has no surname list. */
+const NO_SURNAMES = new Set([
+  "anglo-saxon/historic", "welsh/historic", "scandinavian/historic",
+  "greek-byzantine/historic", "steppe/historic", "arabic-persian/historic", "egyptian/historic", "ethiopian/historic", "ethiopian/modern", "bantu/historic", "west-african/historic", "indian/historic",
+  "aztec/historic", "andean/historic", "polynesian/historic", "polynesian/modern",
+]);
+const SECOND_SIZES = { male: 30, female: 30, surnames: 30, regnalMale: 8, regnalFemale: 8, holy: 12 } as const;
 /** Minimums (review amendment: a list may be larger when a built-in template is). */
 const SIZES = { male: 60, female: 60, surnames: 60, regnalMale: 15, regnalFemale: 15, holy: 24 } as const;
 
 test("every core culture has the periods the brief names: Anglo-Saxon historic only, the rest both", () => {
-  assert.deepEqual([...PEOPLE_CULTURES].sort(), [...CORE].sort());
-  for (const c of CORE) {
+  assert.deepEqual([...PEOPLE_CULTURES].sort(), [...CORE, ...SECOND].sort());
+  assert.equal(SECOND.length, 22);
+  for (const c of [...CORE, ...SECOND]) {
     for (const p of PERIODS) {
-      const expected = !(c === "anglo-saxon" && p === "modern");
+      const expected = !(HISTORIC_ONLY.has(c) && p === "modern");
       assert.equal(!!peopleTable(c, p), expected, `${c}/${p}`);
     }
   }
@@ -43,8 +53,26 @@ test("list sizes meet the §3.1 minimums for the core cultures", () => {
   }
 });
 
+test("list sizes meet the §3.1 second-tier minimums, and surnames are absent exactly where the culture had none", () => {
+  for (const c of SECOND) {
+    for (const p of PERIODS) {
+      const t = peopleTable(c, p);
+      if (!t) continue;
+      for (const [k, n] of Object.entries(SECOND_SIZES)) {
+        const list = (t as unknown as Record<string, PeopleEntry[] | undefined>)[k];
+        if (k === "surnames" && NO_SURNAMES.has(`${c}/${p}`)) {
+          assert.equal(list, undefined, `${c}/${p} has no surnames`);
+          continue;
+        }
+        assert.ok((list?.length ?? 0) >= n, `${c}/${p}/${k}: ${list?.length} < ${n}`);
+      }
+      assert.ok(t.holyForms.length > 0 && t.rulerForms.male.length > 0 && t.rulerForms.female.length > 0, `${c}/${p} forms`);
+    }
+  }
+});
+
 test("no duplicates in a list, every weight a positive whole number, and at most a fifth royal or saintly", () => {
-  for (const c of CORE) {
+  for (const c of PEOPLE_CULTURES) {
     for (const p of PERIODS) {
       const t = peopleTable(c, p);
       if (!t) continue;
@@ -66,8 +94,8 @@ test("no duplicates in a list, every weight a positive whole number, and at most
   }
 });
 
-test("names are real-looking: no digits, brackets or blanks", () => {
-  for (const c of CORE) {
+test("names are plain letters: no digits, brackets, accents or blanks", () => {
+  for (const c of PEOPLE_CULTURES) {
     for (const p of PERIODS) {
       const t = peopleTable(c, p);
       if (!t) continue;
@@ -121,9 +149,10 @@ test("resolving a culture: legacy and lens keys, the Welsh, Scottish and Cornish
   for (const r of ["SBL", "SLO", "SHH", "NSI"]) assert.equal(peopleCultureFor("celtic", r, rng), "scottish", r);
   // The lens keys resolve to themselves.
   for (const c of ["welsh", "scottish", "irish", "cornish", "german"]) assert.equal(peopleCultureFor(c, undefined, rng), c);
-  // A culture with no table yet gives nothing.
-  assert.equal(peopleCultureFor("japanese", undefined, rng), undefined);
-  assert.equal(peopleCultureFor("french", undefined, rng), undefined);
+  // The second tier reads its own tables; the native peoples with no nearest culture give nothing.
+  assert.equal(peopleCultureFor("japanese", undefined, rng), "japanese");
+  assert.equal(peopleCultureFor("french", undefined, rng), "french");
+  for (const c of ["nw-coast", "arctic", "na-woodlands", "northAmerican", "northernPacific", "sahul"]) assert.equal(peopleCultureFor(c, undefined, rng), undefined, c);
 });
 
 test("Celtic with no region, or another region, draws evenly from the four Celtic cultures", () => {
@@ -421,4 +450,101 @@ test("fill.json: [battle], [ship] and [company] have a source of their own", () 
     assert.ok(fill.sources[l]);
     assert.equal(fill.stayBracketed[l], undefined);
   }
+});
+
+// ── M3: the second tier ──────────────────────────────────────────────────────────────────────────
+
+test("every one of the 22 second-tier cultures has the tables the brief gives it", () => {
+  for (const c of SECOND) {
+    assert.ok(peopleTable(c, "historic"), `${c} historic`);
+    assert.equal(!!peopleTable(c, "modern"), !HISTORIC_ONLY.has(c), `${c} modern`);
+  }
+});
+
+test("local cultures read the nearest second-tier culture; historic-only peoples read another culture from the steam age", () => {
+  const rng = mulberry32(4);
+  const near = (c: string, period: PeoplePeriod = "historic") => peopleCultureFor(c, undefined, rng, period);
+  for (const c of ["maori", "hawaiian", "w-polynesian"]) assert.equal(near(c), "polynesian", c);
+  assert.equal(near("ottoman"), "arabic-persian");
+  assert.equal(near("swahili-omani"), "arabic-persian");
+  assert.equal(near("phoenician"), "arabic-persian");
+  assert.equal(near("hellenistic"), "greek-byzantine");
+  assert.equal(near("belgian"), "dutch");
+  assert.equal(near("malay", "historic"), "indian");
+  assert.equal(near("malay", "modern"), "arabic-persian");
+  assert.equal(near("roman", "historic"), "roman");
+  assert.equal(near("roman", "modern"), "italian");
+  assert.equal(near("egyptian", "modern"), "arabic-persian");
+  for (const c of ["aztec", "maya", "andean"]) {
+    assert.equal(near(c, "historic"), c);
+    assert.equal(near(c, "modern"), "iberian");
+  }
+  // A modern state of a historic-only culture draws from the culture it reads.
+  assert.equal(peopleSourceFor("roman", undefined, "MO", mulberry32(1))!.culture, "italian");
+  assert.equal(peopleSourceFor("roman", undefined, "AN", mulberry32(1))!.culture, "roman");
+});
+
+test("the Ottoman reads Arabic and Persian with a ten-name Turkish extra for each sex, and only the Ottoman", () => {
+  const extras = (PEOPLE as unknown as { extras: { turkish: { male: PeopleEntry[]; female: PeopleEntry[] } } }).extras.turkish;
+  assert.equal(extras.male.length, 10);
+  assert.equal(extras.female.length, 10);
+  const base = peopleTable("arabic-persian", "historic")!;
+  const ottoman = peopleSourceFor("ottoman", undefined, "MD", mulberry32(1))!;
+  assert.equal(ottoman.culture, "arabic-persian");
+  assert.equal(ottoman.table.male.length, base.male.length + 10);
+  assert.equal(ottoman.table.female.length, base.female.length + 10);
+  for (const e of extras.male) assert.ok(ottoman.table.male.some((x) => x[0] === e[0]));
+  // The extra duplicates nothing in either arabic-persian table, and the plain culture has no extra.
+  for (const period of PERIODS) {
+    const t = peopleTable("arabic-persian", period)!;
+    for (const e of extras.male) assert.ok(!t.male.some((x) => x[0] === e[0]), `${period} male ${e[0]}`);
+    for (const e of extras.female) assert.ok(!t.female.some((x) => x[0] === e[0]), `${period} female ${e[0]}`);
+  }
+  assert.equal(peopleSourceFor("arabic-persian", undefined, "MD", mulberry32(1))!.table.male.length, base.male.length);
+});
+
+test("every table's families come from the lens, so the near future weighs the same family 3 to 1", () => {
+  const families = PEOPLE.families as Record<string, string>;
+  for (const c of PEOPLE_CULTURES) assert.ok(families[c], `${c} has a family`);
+  for (const c of SECOND) assert.equal(families[c], (LENS.cultures as { key: string; family: string }[]).find((x) => x.key === c)!.family, c);
+});
+
+test("every second-tier modern table draws something sensible in each era", () => {
+  for (const c of SECOND) {
+    for (const era of ["AN", "MD", "EM", "ST", "MO", "NF", "IS"]) {
+      const s = peopleSourceFor(c, undefined, era, mulberry32(9));
+      assert.ok(s && s.table.male.length >= 30, `${c}/${era}`);
+    }
+  }
+});
+
+test("no gods or legends in historic second-tier lists, and no living royals in regnal lists", () => {
+  const myth = ["Isis", "Osiris", "Horus", "Anubis", "Ra", "Zeus", "Athena", "Apollo", "Hermes", "Quetzalcoatl", "Huitzilopochtli", "Viracocha", "Itzamna", "Kukulkan", "Hunahpu", "Xbalanque", "Manco Capac", "Mama Ocllo", "Odysseus", "Achilles", "Hector", "Romulus", "Remus", "Aeneas", "Rama", "Sita", "Hanuman", "Gilgamesh", "Rustam", "Sundiata Keita", "Moremi", "Chun-hyang"];
+  const living = ["Rania", "Farah", "Letizia", "Maxima", "Beatrix", "Masako", "Michiko", "Naruhito", "Akihito", "Sirikit", "Camilla", "Sofia"];
+  for (const c of SECOND) {
+    const hist = peopleTable(c, "historic")!;
+    for (const k of ["male", "female", "regnalMale", "regnalFemale"] as const) for (const [n] of hist[k]) assert.ok(!myth.includes(n), `${c}/historic/${k}/${n}`);
+    for (const p of PERIODS) {
+      const t = peopleTable(c, p);
+      if (!t) continue;
+      for (const [n] of [...t.regnalMale, ...t.regnalFemale]) assert.ok(!living.includes(n), `${c}/${p} regnal ${n}`);
+    }
+  }
+});
+
+test("Greek and Byzantine, Roman and Egyptian tag their historic names AN or MD", () => {
+  for (const c of ["greek-byzantine", "roman", "egyptian"]) {
+    const t = peopleTable(c, "historic")!;
+    for (const sex of ["male", "female"] as const) {
+      const an = t[sex].filter((e) => entryEras(e).join(" ") === "AN").length;
+      const md = t[sex].filter((e) => entryEras(e).join(" ") === "MD").length;
+      assert.ok(an >= 8 && md >= 6, `${c}/${sex}: ${an} AN, ${md} MD`);
+      for (const e of t[sex]) assert.ok(["AN", "MD"].includes(entryEras(e).join(" ")), `${c}/${sex}/${e[0]}`);
+    }
+  }
+  // The era draw prefers the state's era.
+  const g = peopleTable("greek-byzantine", "historic")!.male;
+  const w = eraWeights(g, "AN");
+  const anShare = g.reduce((s, e, i) => s + (entryEras(e).includes("AN") ? w[i] : 0), 0);
+  assert.ok(Math.abs(anShare - 0.8) < 1e-9);
 });

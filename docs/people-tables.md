@@ -1,6 +1,6 @@
-# People tables: core cultures
+# People tables
 
-For review (shared tables brief, M2), as corrected after the review (brief §12). Every list below is in `src/data/people.json` and is read by the filler once it is wired in (M5, M6). Second-tier cultures follow at M3.
+For review (shared tables brief, M2), as corrected after the review (brief §12). Every list below is in `src/data/people.json` and is read by the filler once it is wired in (M5, M6). The second-tier cultures (M3) follow the core ones.
 
 Reading the lists: names run from most to least common; the number in brackets is the weight. `ʳ` marks a name kept mainly for a royal bearer, `ˢ` for a saint's. On `modern` given names and on Cornish `historic` names the era tags follow the weight: `ST` (steam age), `MO` (modern), `ST+MO` (both), `MD` (medieval), `EM` (late medieval and early modern). Spelling is the usual English one, one spelling per name.
 
@@ -26,7 +26,47 @@ Sizes are minimums (brief §12): a table may be larger when a built-in template 
 | German | historic | 60 | 60 | 61 | 15 | 15 | 24 |
 | German | modern | 69 | 65 | 60 | 15 | 15 | 24 |
 
-Targets for core cultures: 60, 60, 60, 15, 15, 24. A dash means the culture used no inherited surnames in that period (see the notes).
+| French | historic | 38 | 30 | 31 | 8 | 8 | 12 |
+| French | modern | 41 | 40 | 30 | 8 | 8 | 12 |
+| Dutch | historic | 32 | 30 | 30 | 9 | 8 | 12 |
+| Dutch | modern | 37 | 35 | 30 | 8 | 8 | 12 |
+| Iberian | historic | 33 | 30 | 31 | 8 | 8 | 12 |
+| Iberian | modern | 36 | 35 | 31 | 8 | 8 | 12 |
+| Italian | historic | 32 | 30 | 30 | 8 | 8 | 12 |
+| Italian | modern | 36 | 35 | 30 | 8 | 8 | 12 |
+| Roman | historic | 36 | 37 | 31 | 8 | 8 | 12 |
+| Greek and Byzantine | historic | 43 | 35 | – | 8 | 8 | 12 |
+| Greek and Byzantine | modern | 36 | 35 | 30 | 8 | 8 | 12 |
+| Slavic | historic | 32 | 30 | 30 | 8 | 8 | 12 |
+| Slavic | modern | 36 | 35 | 30 | 8 | 8 | 12 |
+| Turkic and Mongol steppe | historic | 37 | 30 | – | 8 | 8 | 12 |
+| Turkic and Mongol steppe | modern | 35 | 35 | 30 | 8 | 8 | 12 |
+| Arabic and Persian | historic | 33 | 30 | – | 8 | 8 | 12 |
+| Arabic and Persian | modern | 39 | 34 | 30 | 8 | 8 | 12 |
+| Egyptian | historic | 37 | 35 | – | 8 | 8 | 12 |
+| Ethiopian | historic | 32 | 31 | – | 8 | 8 | 12 |
+| Ethiopian | modern | 34 | 34 | – | 8 | 8 | 12 |
+| Bantu | historic | 31 | 32 | – | 8 | 8 | 12 |
+| Bantu | modern | 38 | 35 | 32 | 8 | 8 | 12 |
+| West African | historic | 31 | 31 | – | 8 | 8 | 12 |
+| West African | modern | 34 | 34 | 31 | 8 | 8 | 12 |
+| Indian | historic | 34 | 32 | – | 8 | 8 | 12 |
+| Indian | modern | 34 | 34 | 31 | 8 | 8 | 12 |
+| Chinese | historic | 37 | 30 | 32 | 8 | 8 | 12 |
+| Chinese | modern | 32 | 33 | 30 | 8 | 8 | 12 |
+| Japanese | historic | 33 | 30 | 30 | 8 | 8 | 12 |
+| Japanese | modern | 34 | 34 | 31 | 8 | 8 | 12 |
+| Korean | historic | 31 | 30 | 30 | 8 | 8 | 12 |
+| Korean | modern | 30 | 30 | 30 | 8 | 8 | 12 |
+| Aztec | historic | 30 | 31 | – | 8 | 8 | 12 |
+| Maya | historic | 31 | 31 | 32 | 8 | 8 | 12 |
+| Andean | historic | 30 | 30 | – | 8 | 8 | 12 |
+| Polynesian | historic | 32 | 31 | – | 8 | 8 | 12 |
+| Polynesian | modern | 34 | 34 | – | 8 | 8 | 12 |
+| American | historic | 32 | 30 | 30 | 8 | 8 | 12 |
+| American | modern | 35 | 35 | 30 | 8 | 8 | 12 |
+
+Targets: core cultures 60, 60, 60, 15, 15, 24; second tier 30, 30, 30, 8, 8, 12. A dash means the culture used no inherited surnames in that period (see the notes).
 
 ## Anglo-Saxon
 
@@ -342,6 +382,828 @@ Targets for core cultures: 60, 60, 60, 15, 15, 24. A dash means the culture used
 
 **Ruler forms**: male Emperor {m} (35), King {m} (35), Prince {m} (30); female Empress {f} (35), Queen {f} (35), Princess {f} (30)
 
+# Second-tier cultures (M3)
+
+The same rules as the core (brief §12) apply to every list. Weights follow list order (10, 7, 5, 3, 2). Every `modern` given name carries `ST`, `MO` or both.
+
+## French
+
+### historic (AN, MD, EM)
+
+**Male given names** (38): Jean (10), Pierre (10), Guillaume (10), Jacques (10), Henri (10), Philippe (7), Robert (7), Raoul (7), Thibaut (7), Renaud (7), Hugues (5), Louis (5)ʳ, Geoffroy (5), Gautier (5), Baudouin (5), Etienne (5), Bertrand (5), Aymeric (5), Eudes (3), Foulques (3), Gilles (3), Charles (3)ʳ, Lambert (3), Olivier (3), Roland (3), Amaury (3), Martin (2)ˢ, Arnaud (2), Bernard (2), Gaston (2), Guy (2), Andre (2), Michel (2), Mathieu (2), Simon (2), Antoine (2), Laurent (2), Denis (2)ˢ
+
+**Female given names** (30): Marie (10), Jeanne (10), Isabelle (10), Marguerite (10), Catherine (10), Agnes (7), Alix (7), Blanche (7), Mahaut (7), Beatrice (7), Yolande (5), Sibylle (5), Clemence (5), Ermengarde (5), Helene (5), Jacqueline (5), Perrette (5), Colette (5), Guillemette (3), Aude (3), Adelaide (3), Berthe (3), Constance (3), Eleonore (3), Mathilde (3), Bertrade (3), Petronille (2), Ysabeau (2), Radegonde (2)ˢ, Genevieve (2)ˢ
+
+**Surnames** (31): Martin (10), Bernard (10), Dubois (10), Thomas (10), Robert (10), Richard (7), Petit (7), Durand (7), Leroy (7), Moreau (7), Simon (5), Laurent (5), Lefebvre (5), Michel (5), Garcia (5), Roux (5), Fournier (5), Girard (5), Bonnet (3), Dupont (3), Lambert (3), Fontaine (3), Rousseau (3), Vincent (3), Faure (3), Andre (3), Mercier (2), Blanc (2), Guerin (2), Boyer (2), Chevalier (2)
+
+**Regnal names, male** (8): Louis (10), Charles (10), Philippe (10), Henri (10), Francois (10), Jean (7), Robert (7), Hugues (7)
+
+**Regnal names, female** (8): Blanche (10), Marie (10), Isabelle (10), Anne (10), Catherine (10), Marguerite (7), Eleonore (7), Jeanne (7)
+
+**Holy names** (12): Martin (10), Denis (10), Hilaire (10), Genevieve (10), Radegonde (10), Louis (7), Remi (7), Germain (7), Bernard (7), Francis (7), Vincent (5), Benedict (5)
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Abbot {n} (10)
+
+**Ruler forms**: male King {m} (60), Emperor {m} (20), Duke {m} (20); female Queen {f} (70), Duchess {f} (15), Empress {f} (15)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (41): Michel (10, ST+MO), Philippe (10, ST+MO), Andre (10, ST+MO), Marcel (10, ST+MO), Paul (10, ST+MO), Georges (7, ST+MO), Maurice (7, ST+MO), Daniel (7, ST+MO), Alain (7, ST+MO), Bernard (7, ST+MO), Jean (5, ST), Gabriel (5, MO), Pierre (5, ST), Raphael (5, MO), Joseph (5, ST), Arthur (5, MO), Charles (5, ST), Adam (5, MO), Francois (3, ST), Leo (3, MO), Henri (3, ST), Hugo (3, MO), Auguste (3, ST), Lucas (3, MO), Eugene (3, ST), Nathan (3, MO), Alphonse (2, ST), Ethan (2, MO), Emile (2, ST), Theo (2, MO), Ernest (2, ST), Noe (2, MO), Gustave (2, ST), Enzo (2, MO), Jules (2, ST), Mathis (2, MO), Victor (2, ST), Tom (2, MO), Lucien (2, ST), Louis (2, MO), Achille (2, ST)
+
+**Female given names** (40): Monique (10, ST+MO), Nicole (10, ST+MO), Francoise (10, ST+MO), Catherine (10, ST+MO), Sylvie (10, ST+MO), Isabelle (7, ST+MO), Nathalie (7, ST+MO), Brigitte (7, ST+MO), Christine (7, ST+MO), Martine (7, ST+MO), Marie (5, ST), Emma (5, MO), Jeanne (5, ST), Jade (5, MO), Marguerite (5, ST), Lea (5, MO), Louise (5, ST), Chloe (5, MO), Augustine (3, ST), Manon (3, MO), Eugenie (3, ST), Camille (3, MO), Berthe (3, ST), Ines (3, MO), Madeleine (3, ST), Lola (3, MO), Josephine (2, ST), Zoe (2, MO), Clemence (2, ST), Alice (2, MO), Alphonsine (2, ST), Clara (2, MO), Mathilde (2, ST), Juliette (2, MO), Valentine (2, ST), Anais (2, MO), Aimee (2, ST), Lena (2, MO), Antoinette (2, ST), Eva (2, MO)
+
+**Surnames** (30): Martin (10), Bernard (10), Dubois (10), Thomas (10), Robert (10), Richard (7), Petit (7), Durand (7), Leroy (7), Moreau (7), Simon (5), Laurent (5), Lefebvre (5), Michel (5), Garcia (5), David (5), Bertrand (5), Roux (5), Vincent (3), Fournier (3), Morel (3), Girard (3), Andre (3), Mercier (3), Dupont (3), Lambert (3), Bonnet (2), Francois (2), Martinez (2), Legrand (2)
+
+**Regnal names, male** (8): Louis (10), Charles (10), Napoleon (10), Philippe (10), Henri (10), Francois (7), Jean (7), Louis Philippe (7)
+
+**Regnal names, female** (8): Marie (10), Josephine (10), Eugenie (10), Marie Antoinette (10), Anne (10), Marguerite (7), Isabelle (7), Marie Louise (7)
+
+**Holy names** (12): Therese (10), Bernadette (10), Vincent (10), Francis (10), Jean (10), Joan (7), Louis (7), Ignatius (7), Dominic (7), Martin (7), Benedict (5), Joseph (5)
+
+**Recent male names (last thirty years)**: Gabriel, Raphael, Arthur, Adam, Leo, Hugo, Lucas, Nathan, Ethan, Theo, Noe, Enzo, Mathis, Tom
+
+**Recent female names (last thirty years)**: Emma, Jade, Lea, Chloe, Manon, Camille, Ines, Lola, Zoe, Clara, Anais, Lena, Eva
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Abbot {n} (10)
+
+**Ruler forms**: male King {m} (60), Emperor {m} (20), Duke {m} (20); female Queen {f} (70), Duchess {f} (15), Empress {f} (15)
+
+## Dutch
+
+### historic (AN, MD, EM)
+
+**Male given names** (32): Jan (10), Willem (10), Dirk (10), Pieter (10), Hendrik (10), Cornelis (7), Gerrit (7), Jacob (7), Adriaan (7), Floris (7), Albrecht (5), Reinier (5), Claes (5), Lambert (5), Evert (5), Joost (5), Gijsbrecht (5), Wouter (5), Arnoud (3), Hugo (3), Simon (3), Maarten (3), Roelof (3), Frederik (3), Maurits (3), Aert (3), Bartholomeus (2), Thomas (2), Karel (2), Willibrord (2)ˢ, Servatius (2)ˢ, Bavo (2)ˢ
+
+**Female given names** (30): Maria (10), Anna (10), Catharina (10), Margaretha (10), Elisabeth (10), Johanna (7), Cornelia (7), Geertruid (7), Aleid (7), Machteld (7), Adriana (5), Hadewych (5), Jacoba (5), Beatrix (5), Grietje (5), Neeltje (5), Aaltje (5), Trijntje (5), Jannetje (3), Marijke (3), Sophia (3), Hillegonda (3), Lijsbeth (3), Willemijn (3), Petronella (3), Judith (3), Ida (2), Ermgard (2), Liduina (2)ˢ, Odilia (2)ˢ
+
+**Surnames** (30): De Jong (10), Jansen (10), De Vries (10), Van den Berg (10), Bakker (10), Visser (7), Smit (7), Meijer (7), De Boer (7), Mulder (7), De Groot (5), Bos (5), Vos (5), Peters (5), Hendriks (5), Van Dijk (5), Dekker (5), Brouwer (5), De Wit (3), Dijkstra (3), Smits (3), De Graaf (3), Van der Meer (3), Van der Linden (3), Kok (3), Jacobs (3), De Haan (2), Vermeulen (2), Van den Heuvel (2), Van der Veen (2)
+
+**Regnal names, male** (9): Willem (10), Maurits (10), Frederik (10), Hendrik (10), Albrecht (10), Floris (7), Dirk (7), Lodewijk (7), Jan (7)
+
+**Regnal names, female** (8): Jacoba (10), Margaretha (10), Maria (10), Machteld (10), Aleid (10), Adelheid (7), Sophia (7), Johanna (7)
+
+**Holy names** (12): Willibrord (10), Servatius (10), Lebuin (10), Ludger (10), Bavo (10), Lambert (7), Liduina (7), Gertrude (7), Ursula (7), Amand (7), Remaclus (5), Odulf (5)
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Abbot {n} (10)
+
+**Ruler forms**: male King {m} (60), Prince {m} (20), Count {m} (20); female Queen {f} (70), Countess {f} (20), Princess {f} (10)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (37): Henk (10, ST+MO), Kees (10, ST+MO), Johan (10, ST+MO), Marcel (10, ST+MO), Peter (10, ST+MO), Johannes (7, ST), Daan (7, MO), Cornelis (7, ST), Sem (7, MO), Hendrik (7, ST), Luuk (5, MO), Jacobus (5, ST), Bram (5, MO), Willem (5, ST), Milan (5, MO), Gerrit (5, ST), Finn (5, MO), Dirk (5, ST), Jesse (3, MO), Adrianus (3, ST), Lucas (3, MO), Antonius (3, ST), Noah (3, MO), Petrus (3, ST), Levi (3, MO), Theodorus (3, ST), Thijs (2, MO), Marinus (2, ST), Mees (2, MO), Hermanus (2, ST), Stijn (2, MO), Wilhelmus (2, ST), Ruben (2, MO), Gerardus (2, ST), Lars (2, MO), Jan (2, ST), Pieter (2, ST)
+
+**Female given names** (35): Ingrid (10, ST+MO), Marijke (10, ST+MO), Els (10, ST+MO), Ineke (10, ST+MO), Annemarie (10, ST+MO), Maria (7, ST), Emma (7, MO), Johanna (7, ST), Julia (7, MO), Cornelia (7, ST), Sophie (5, MO), Anna (5, ST), Lotte (5, MO), Elisabeth (5, ST), Fleur (5, MO), Catharina (5, ST), Sara (5, MO), Geertruida (5, ST), Lieke (3, MO), Hendrika (3, ST), Anne (3, MO), Wilhelmina (3, ST), Mila (3, MO), Adriana (3, ST), Tess (3, MO), Petronella (3, ST), Eva (2, MO), Jacoba (2, ST), Noor (2, MO), Margaretha (2, ST), Saar (2, MO), Aaltje (2, ST), Fenna (2, MO), Grietje (2, ST), Roos (2, MO)
+
+**Surnames** (30): De Jong (10), Jansen (10), De Vries (10), Van den Berg (10), Van Dijk (10), Bakker (7), Janssen (7), Visser (7), Smit (7), Meijer (7), De Boer (5), Mulder (5), De Groot (5), Bos (5), Vos (5), Peters (5), Hendriks (5), Van Leeuwen (5), Dekker (3), Brouwer (3), De Wit (3), Dijkstra (3), Smits (3), De Graaf (3), Van der Meer (3), Van der Linden (3), Kok (2), Jacobs (2), De Haan (2), Vermeulen (2)
+
+**Regnal names, male** (8): Willem (10), Frederik (10), Hendrik (10), Lodewijk (10), Alexander (10), Maurits (7), Willem Alexander (7), Albrecht (7)
+
+**Regnal names, female** (8): Wilhelmina (10), Juliana (10), Emma (10), Anna (10), Maria (10), Sophie (7), Louise (7), Charlotte (7)
+
+**Holy names** (12): Willibrord (10), Servatius (10), Peter (10), Titus (10), Gerard (10), Damien (7), Boniface (7), Ludger (7), Lambert (7), Gertrude (7), Ursula (5), Odilia (5)
+
+**Recent male names (last thirty years)**: Daan, Sem, Luuk, Bram, Milan, Finn, Jesse, Lucas, Noah, Levi, Thijs, Mees, Stijn
+
+**Recent female names (last thirty years)**: Emma, Julia, Sophie, Lotte, Fleur, Sara, Lieke, Mila, Tess, Eva, Noor, Saar, Fenna, Roos
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Abbot {n} (10)
+
+**Ruler forms**: male King {m} (60), Prince {m} (20), Count {m} (20); female Queen {f} (70), Countess {f} (20), Princess {f} (10)
+
+## Iberian
+
+### historic (AN, MD, EM)
+
+**Male given names** (33): Juan (10), Pedro (10), Diego (10), Fernando (10), Alonso (10), Garcia (7), Gonzalo (7), Rodrigo (7), Alvaro (7), Sancho (7), Ramiro (5), Nuno (5), Alfonso (5), Joao (5), Duarte (5), Manuel (5), Pelayo (5), Bermudo (5), Ordono (3), Fruela (3), Hernan (3), Francisco (3), Martin (3), Lope (3), Gil (3), Mendo (3), Suero (2), Inigo (2), Fortun (2), Jaime (2), Enrique (2), Felipe (2)ʳ, Isidore (2)ˢ
+
+**Female given names** (30): Maria (10), Isabel (10), Juana (10), Catalina (10), Leonor (10), Urraca (7), Teresa (7), Beatriz (7), Elvira (7), Constanza (7), Mencia (5), Sancha (5), Blanca (5), Violante (5), Berenguela (5), Ines (5), Mayor (5), Sol (5), Aldonza (3), Guiomar (3), Mafalda (3), Brites (3), Joana (3), Ximena (3), Velasquita (3), Toda (3), Clara (2), Dulce (2), Nuna (2), Aurembiaix (2)
+
+**Surnames** (31): Garcia (10), Fernandez (10), Gonzalez (10), Rodriguez (10), Lopez (10), Martinez (7), Sanchez (7), Perez (7), Gomez (7), Diaz (7), Alvarez (5), Ruiz (5), Jimenez (5), Moreno (5), Munoz (5), Hernandez (5), Torres (5), Romero (5), Navarro (3), Silva (3), Costa (3), Pereira (3), Ferreira (3), Santos (3), Oliveira (3), Carvalho (3), Almeida (2), Castro (2), Mendoza (2), Vega (2), Ortega (2)
+
+**Regnal names, male** (8): Alfonso (10), Fernando (10), Sancho (10), Ramiro (10), Pedro (10), Juan (7), Felipe (7), Carlos (7)
+
+**Regnal names, female** (8): Isabel (10), Juana (10), Maria (10), Leonor (10), Urraca (10), Catalina (7), Berenguela (7), Blanca (7)
+
+**Holy names** (12): Isidore (10), Ildefonsus (10), Dominic (10), Teresa (10), Vincent (10), Ferrer (7), Anthony (7), Isabel (7), Rosa (7), Ignatius (7), Francis (5), Eulalia (5)
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Brother {n} (10)
+
+**Ruler forms**: male King {m} (70), Emperor {m} (10), Prince {m} (20); female Queen {f} (80), Infanta {f} (10), Empress {f} (10)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (36): Javier (10, ST+MO), David (10, ST+MO), Alberto (10, ST+MO), Jorge (10, ST+MO), Marcos (10, ST+MO), Jose (7, ST), Hugo (7, MO), Juan (7, ST), Martin (7, MO), Antonio (7, ST), Lucas (5, MO), Manuel (5, ST), Mateo (5, MO), Francisco (5, ST), Daniel (5, MO), Luis (5, ST), Pablo (5, MO), Miguel (5, ST), Alejandro (3, MO), Jesus (3, ST), Adrian (3, MO), Pedro (3, ST), Diego (3, MO), Joaquin (3, ST), Sergio (3, MO), Ramon (3, ST), Leo (2, MO), Fernando (2, ST), Enzo (2, MO), Rafael (2, ST), Thiago (2, MO), Angel (2, ST), Gabriel (2, MO), Carlos (2, ST), Santiago (2, MO), Joao (2, ST)
+
+**Female given names** (35): Elena (10, ST+MO), Marta (10, ST+MO), Cristina (10, ST+MO), Silvia (10, ST+MO), Raquel (10, ST+MO), Maria (7, ST), Lucia (7, MO), Carmen (7, ST), Sofia (7, MO), Dolores (7, ST), Martina (5, MO), Josefa (5, ST), Paula (5, MO), Francisca (5, ST), Valeria (5, MO), Antonia (5, ST), Julia (5, MO), Rosa (5, ST), Emma (3, MO), Pilar (3, ST), Daniela (3, MO), Concepcion (3, ST), Alba (3, MO), Teresa (3, ST), Carla (3, MO), Isabel (3, ST), Sara (2, MO), Ana (2, ST), Noa (2, MO), Manuela (2, ST), Vega (2, MO), Mercedes (2, ST), Laura (2, MO), Juana (2, ST), Valentina (2, MO)
+
+**Surnames** (31): Garcia (10), Fernandez (10), Gonzalez (10), Rodriguez (10), Lopez (10), Martinez (7), Sanchez (7), Perez (7), Gomez (7), Martin (7), Jimenez (5), Ruiz (5), Hernandez (5), Diaz (5), Moreno (5), Alvarez (5), Munoz (5), Romero (5), Alonso (3), Gutierrez (3), Navarro (3), Torres (3), Dominguez (3), Vazquez (3), Ramos (3), Gil (3), Ramirez (2), Serrano (2), Blanco (2), Suarez (2), Molina (2)
+
+**Regnal names, male** (8): Alfonso (10), Carlos (10), Juan (10), Felipe (10), Fernando (10), Luis (7), Pedro (7), Joao (7)
+
+**Regnal names, female** (8): Isabel (10), Maria (10), Victoria (10), Eugenia (10), Amelia (10), Carlota (7), Mercedes (7), Cristina (7)
+
+**Holy names** (12): Teresa (10), Ignatius (10), John (10), Francis (10), Vincent (10), Rita (7), Joseph (7), Isidore (7), Josemaria (7), Dominic (7), Rose (5), Anthony (5)
+
+**Recent male names (last thirty years)**: Hugo, Martin, Lucas, Mateo, Pablo, Alejandro, Adrian, Diego, Leo, Enzo, Thiago, Gabriel, Santiago
+
+**Recent female names (last thirty years)**: Lucia, Sofia, Martina, Paula, Valeria, Julia, Emma, Daniela, Alba, Carla, Sara, Noa, Vega
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Brother {n} (10)
+
+**Ruler forms**: male King {m} (70), Emperor {m} (10), Prince {m} (20); female Queen {f} (80), Infanta {f} (10), Empress {f} (10)
+
+## Italian
+
+### historic (AN, MD, EM)
+
+**Male given names** (32): Giovanni (10), Francesco (10), Antonio (10), Giuseppe (10), Pietro (10), Marco (7), Lorenzo (7), Giacomo (7), Niccolo (7), Matteo (7), Bartolomeo (5), Guido (5), Ugo (5), Ruggero (5), Ludovico (5), Cosimo (5), Leonardo (5), Alessandro (5), Filippo (3), Paolo (3), Luca (3), Tommaso (3), Federico (3)ʳ, Galeazzo (3), Cesare (3), Dante (3), Piero (2), Bernardo (2), Domenico (2)ˢ, Benedetto (2)ˢ, Girolamo (2), Ottaviano (2)
+
+**Female given names** (30): Maria (10), Caterina (10), Lucia (10), Giovanna (10), Anna (10), Isabella (7), Beatrice (7), Lucrezia (7), Bianca (7), Margherita (7), Elisabetta (5), Francesca (5), Angela (5), Chiara (5)ˢ, Cecilia (5), Eleonora (5), Costanza (5), Laura (5), Ginevra (3), Simonetta (3), Fiammetta (3), Contessina (3), Albiera (3), Vittoria (3), Giulia (3), Ippolita (3), Dorotea (2), Tommasina (2), Piccarda (2), Elena (2)
+
+**Surnames** (30): Rossi (10), Russo (10), Ferrari (10), Esposito (10), Bianchi (10), Romano (7), Colombo (7), Ricci (7), Marino (7), Greco (7), Bruno (5), Gallo (5), Conti (5), De Luca (5), Costa (5), Giordano (5), Mancini (5), Rizzo (5), Lombardi (3), Moretti (3), Barbieri (3), Fontana (3), Santoro (3), Mariani (3), Rinaldi (3), Caruso (3), Ferrara (2), Galli (2), Martini (2), Leone (2)
+
+**Regnal names, male** (8): Federico (10), Ruggero (10), Roberto (10), Carlo (10), Manfredi (10), Enrico (7), Ludovico (7), Amedeo (7)
+
+**Regnal names, female** (8): Margherita (10), Maria (10), Bona (10), Beatrice (10), Giovanna (10), Costanza (7), Isabella (7), Caterina (7)
+
+**Holy names** (12): Francis (10), Benedict (10), Anthony (10), Catherine (10), Clare (10), Bernard (7), Dominic (7), Bonaventure (7), Thomas (7), Ambrose (7), Rita (5), Lucy (5)
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Brother {n} (10)
+
+**Ruler forms**: male King {m} (50), Duke {m} (25), Doge {m} (25); female Queen {f} (50), Duchess {f} (30), Princess {f} (20)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (36): Marco (10, ST+MO), Paolo (10, ST+MO), Luca (10, ST+MO), Stefano (10, ST+MO), Roberto (10, ST+MO), Giuseppe (7, ST), Leonardo (7, MO), Giovanni (7, ST), Lorenzo (7, MO), Antonio (7, ST), Alessandro (5, MO), Francesco (5, ST), Mattia (5, MO), Luigi (5, ST), Tommaso (5, MO), Mario (5, ST), Riccardo (5, MO), Angelo (5, ST), Gabriele (3, MO), Vincenzo (3, ST), Andrea (3, MO), Salvatore (3, ST), Edoardo (3, MO), Carlo (3, ST), Matteo (3, MO), Pietro (3, ST), Federico (2, MO), Domenico (2, ST), Davide (2, MO), Benito (2, ST), Samuele (2, MO), Umberto (2, ST), Christian (2, MO), Aldo (2, ST), Diego (2, MO), Guido (2, ST)
+
+**Female given names** (35): Paola (10, ST+MO), Laura (10, ST+MO), Elena (10, ST+MO), Silvia (10, ST+MO), Daniela (10, ST+MO), Maria (7, ST), Sofia (7, MO), Anna (7, ST), Giulia (7, MO), Giuseppina (7, ST), Aurora (5, MO), Rosa (5, ST), Alice (5, MO), Angela (5, ST), Ginevra (5, MO), Giovanna (5, ST), Emma (5, MO), Teresa (5, ST), Giorgia (3, MO), Lucia (3, ST), Greta (3, MO), Carmela (3, ST), Beatrice (3, MO), Concetta (3, ST), Martina (3, MO), Francesca (3, ST), Chiara (2, MO), Antonietta (2, ST), Vittoria (2, MO), Margherita (2, ST), Matilde (2, MO), Caterina (2, ST), Alessia (2, MO), Assunta (2, ST), Sara (2, MO)
+
+**Surnames** (30): Rossi (10), Russo (10), Ferrari (10), Esposito (10), Bianchi (10), Romano (7), Colombo (7), Ricci (7), Marino (7), Greco (7), Bruno (5), Gallo (5), Conti (5), De Luca (5), Costa (5), Giordano (5), Mancini (5), Rizzo (5), Lombardi (3), Moretti (3), Barbieri (3), Fontana (3), Santoro (3), Mariani (3), Rinaldi (3), Caruso (3), Ferrara (2), Galli (2), Martini (2), Leone (2)
+
+**Regnal names, male** (8): Vittorio Emanuele (10), Umberto (10), Carlo (10), Ferdinando (10), Amedeo (10), Emanuele (7), Federico (7), Napoleone (7)
+
+**Regnal names, female** (8): Margherita (10), Maria (10), Elena (10), Giovanna (10), Maria Jose (10), Beatrice (7), Anna (7), Isabella (7)
+
+**Holy names** (12): Francis (10), Padre Pio (10), Anthony (10), Catherine (10), John Bosco (10), Rita (7), Clare (7), Gianna (7), Maximilian (7), Joseph (7), Charles (5), Pius (5)
+
+**Recent male names (last thirty years)**: Leonardo, Lorenzo, Alessandro, Mattia, Tommaso, Riccardo, Gabriele, Edoardo, Matteo, Federico, Davide, Samuele
+
+**Recent female names (last thirty years)**: Sofia, Giulia, Aurora, Alice, Ginevra, Emma, Giorgia, Greta, Beatrice, Martina, Vittoria, Matilde
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Brother {n} (10)
+
+**Ruler forms**: male King {m} (50), Duke {m} (25), Doge {m} (25); female Queen {f} (50), Duchess {f} (30), Princess {f} (20)
+
+## Roman
+
+### historic (AN, MD, EM)
+
+**Male given names** (36): Marcus (10, AN), Boethius (10, MD), Lucius (10, AN), Cassiodorus (10, MD), Gaius (10, AN), Symmachus (7, MD), Publius (7, AN), Aetius (7, MD), Quintus (7, AN), Gregory (7, MD)ˢ, Titus (5, AN), Benedict (5, MD)ˢ, Gnaeus (5, AN), Boniface (5, MD)ˢ, Aulus (5, AN), Leo (5, MD)ˢ, Sextus (5, AN), Ambrose (5, MD)ˢ, Decimus (3, AN), Jerome (3, MD)ˢ, Tiberius (3, AN), Servius (3, AN), Appius (3, AN), Manius (3, AN), Spurius (3, AN), Marcellus (3, AN), Maximus (2, AN), Felix (2, AN), Rufus (2, AN), Crispus (2, AN), Cato (2, AN), Brutus (2, AN), Cassius (2, AN), Varro (2, AN), Sulla (2, AN), Pompey (2, AN)
+
+**Female given names** (37): Julia (10, AN), Galla (10, MD), Livia (10, AN), Eudoxia (10, MD), Claudia (10, AN), Melania (7, MD), Cornelia (7, AN), Paula (7, MD), Octavia (7, AN), Monica (7, MD), Agrippina (5, AN), Scholastica (5, MD)ˢ, Antonia (5, AN), Anastasia (5, MD)ˢ, Aemilia (5, AN), Proba (5, MD), Fulvia (5, AN), Sempronia (5, AN), Valeria (3, AN), Fabia (3, AN), Tullia (3, AN), Terentia (3, AN), Calpurnia (3, AN), Pompeia (3, AN), Servilia (3, AN), Lucretia (3, AN), Cassia (2, AN), Aurelia (2, AN), Domitia (2, AN), Flavia (2, AN), Poppaea (2, AN), Sabina (2, AN), Faustina (2, AN), Plotina (2, AN), Marcia (2, AN), Hortensia (2, AN), Caecilia (2, AN)
+
+**Surnames** (31): Julius (10), Cornelius (10), Claudius (10), Fabius (10), Valerius (10), Aemilius (7), Antonius (7), Domitius (7), Flavius (7), Octavius (7), Sempronius (5), Sulpicius (5), Tullius (5), Aurelius (5), Calpurnius (5), Cassius (5), Junius (5), Livius (5), Marcius (3), Pompeius (3), Quinctius (3), Servilius (3), Terentius (3), Ulpius (3), Annius (3), Caecilius (3), Fulvius (2), Licinius (2), Manlius (2), Porcius (2), Sergius (2)
+
+**Regnal names, male** (8): Augustus (10), Tiberius (10), Claudius (10), Nero (10), Vespasian (10), Trajan (7), Hadrian (7), Constantine (7)
+
+**Regnal names, female** (8): Livia (10), Agrippina (10), Julia (10), Faustina (10), Plotina (10), Helena (7), Sabina (7), Fausta (7)
+
+**Holy names** (12): Peter (10), Paul (10), Sebastian (10), Lawrence (10), Clement (10), Cyprian (7), Ambrose (7), Jerome (7), Benedict (7), Gregory (7), Cecilia (5), Agnes (5)
+
+**Holy forms**: Saint {n} (50), Priest {n} (30), Augur {n} (20)
+
+**Ruler forms**: male Emperor {m} (70), Caesar {m} (20), Consul {m} (10); female Empress {f} (70), Augusta {f} (30)
+
+## Greek and Byzantine
+
+### historic (AN, MD, EM)
+
+**Male given names** (43): Pericles (10, AN), Basil (10, MD), Alexander (10, AN), Constantine (10, MD)ʳ, Socrates (10, AN), Michael (7, MD), Plato (7, AN), Leo (7, MD), Aristotle (7, AN), John (7, MD), Demetrius (5, AN), Alexius (5, MD), Nicias (5, AN), Manuel (5, MD), Themistocles (5, AN), Nicephorus (5, MD), Leonidas (5, AN), Theodore (5, MD), Philip (3, AN), Andronicus (3, MD), Theodorus (3, AN), Isaac (3, MD), Lysander (3, AN), Romanus (3, MD), Alcibiades (3, AN), Stephen (3, MD), Cimon (2, AN), George (2, MD), Xenophon (2, AN), Photius (2, MD), Thucydides (2, AN), Justinian (2, MD)ʳ, Pythagoras (2, AN), Archimedes (2, AN), Solon (2, AN), Dionysius (2, AN), Aristides (2, AN), Epaminondas (2, AN), Pindar (2, AN), Hippocrates (2, AN), Euclid (2, AN), Diogenes (2, AN), Demosthenes (2, AN)
+
+**Female given names** (35): Helen (10, AN), Theodora (10, MD)ʳ, Penelope (10, AN), Irene (10, MD), Antigone (10, AN), Zoe (7, MD), Aspasia (7, AN), Eudocia (7, MD), Phryne (7, AN), Anna (7, MD), Sappho (5, AN), Maria (5, MD), Cassandra (5, AN), Euphrosyne (5, MD), Andromache (5, AN), Theophano (5, MD), Hypatia (5, AN), Helena (5, MD), Artemisia (3, AN), Sophia (3, MD), Berenice (3, AN), Kassia (3, MD), Cleopatra (3, AN), Agatha (3, MD), Arsinoe (3, AN), Thekla (3, MD), Olympias (2, AN), Thais (2, AN), Phila (2, AN), Roxana (2, AN), Stratonice (2, AN), Laodice (2, AN), Cynisca (2, AN), Agariste (2, AN), Xanthippe (2, AN)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Constantine (10), Justinian (10), Basil (10), Leo (10), Heraclius (10), Alexius (7), Michael (7), Manuel (7)
+
+**Regnal names, female** (8): Theodora (10), Irene (10), Zoe (10), Eudocia (10), Helena (10), Eudoxia (7), Sophia (7), Anna (7)
+
+**Holy names** (12): Nicholas (10), Basil (10), Gregory (10), Athanasius (10), Demetrius (10), George (7), Spyridon (7), Helena (7), Catherine (7), Barbara (7), Photini (5), Chrysostom (5)
+
+**Holy forms**: Saint {n} (80), Elder {n} (10), Patriarch {n} (10)
+
+**Ruler forms**: male Emperor {m} (60), King {m} (40); female Empress {f} (60), Queen {f} (40)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (36): Georgios (10, ST+MO), Dimitrios (10, ST+MO), Nikolaos (10, ST+MO), Ioannis (10, ST+MO), Panagiotis (10, ST+MO), Christos (7, ST+MO), Spyridon (7, ST), Giannis (7, MO), Stylianos (7, ST), Nikos (7, MO), Anastasios (5, ST), Kostas (5, MO), Aristides (5, ST), Dimitris (5, MO), Pantelis (5, ST), Vasilis (5, MO), Charalambos (5, ST), Thanasis (5, MO), Epameinondas (3, ST), Manolis (3, MO), Themistoklis (3, ST), Alexandros (3, MO), Periklis (3, ST), Orestis (3, MO), Eleftherios (3, ST), Marios (3, MO), Kyriakos (2, ST), Odysseas (2, MO), Efstathios (2, ST), Lefteris (2, MO), Ilias (2, ST), Petros (2, MO), Aristotelis (2, ST), Fotis (2, MO), Sotirios (2, ST), Andreas (2, MO)
+
+**Female given names** (35): Angeliki (10, ST+MO), Konstantina (10, ST+MO), Efthymia (10, ST+MO), Chara (10, ST+MO), Eftychia (10, ST+MO), Maria (7, ST), Marina (7, MO), Eleni (7, ST), Ioanna (7, MO), Georgia (7, ST), Dimitra (5, MO), Katerina (5, ST), Natalia (5, MO), Despina (5, ST), Eirini (5, MO), Sofia (5, ST), Christina (5, MO), Aikaterini (5, ST), Kalliopi (3, MO), Vasiliki (3, ST), Zoi (3, MO), Chrysoula (3, ST), Fotini (3, MO), Anastasia (3, ST), Artemis (3, MO), Evangelia (3, ST), Afroditi (2, MO), Paraskevi (2, ST), Myrto (2, MO), Koula (2, ST), Danai (2, MO), Stavroula (2, ST), Penelope (2, MO), Panagiota (2, ST), Ariadni (2, MO)
+
+**Surnames** (30): Papadopoulos (10), Papadakis (10), Georgiou (10), Nikolaou (10), Dimitriou (10), Konstantinou (7), Vasileiou (7), Alexiou (7), Ioannou (7), Karagiannis (7), Antoniou (5), Papanikolaou (5), Pappas (5), Vlachos (5), Makris (5), Oikonomou (5), Petrou (5), Michailidis (5), Stavrou (3), Kostopoulos (3), Theodorou (3), Angelopoulos (3), Mavridis (3), Kalogeropoulos (3), Samaras (3), Doukas (3), Laskaris (2), Palaiologos (2), Komninos (2), Karamanlis (2)
+
+**Regnal names, male** (8): Otto (10), George (10), Constantine (10), Alexander (10), Paul (10), Basil (7), Leo (7), Justinian (7)
+
+**Regnal names, female** (8): Amalia (10), Olga (10), Sophia (10), Frederica (10), Aspasia (10), Elisabeth (7), Alexandra (7), Theodora (7)
+
+**Holy names** (12): Nicholas (10), Basil (10), Gregory (10), Spyridon (10), Nektarios (10), Porphyrios (7), Paisios (7), Silouan (7), Helena (7), Catherine (7), Barbara (5), Photini (5)
+
+**Recent male names (last thirty years)**: Alexandros, Orestis, Marios, Odysseas, Lefteris, Petros, Fotis, Andreas, Giannis, Nikos, Dimitris, Manolis
+
+**Recent female names (last thirty years)**: Marina, Ioanna, Dimitra, Natalia, Eirini, Christina, Kalliopi, Zoi, Fotini, Artemis, Afroditi, Myrto
+
+**Holy forms**: Saint {n} (80), Elder {n} (10), Patriarch {n} (10)
+
+**Ruler forms**: male Emperor {m} (60), King {m} (40); female Empress {f} (60), Queen {f} (40)
+
+## Slavic
+
+### historic (AN, MD, EM)
+
+**Male given names** (32): Yaroslav (10), Svyatoslav (10), Oleg (10), Igor (10), Mstislav (10), Vsevolod (7), Dmitri (7), Ivan (7), Mikhail (7), Andrei (7), Stepan (5), Bogdan (5), Vyacheslav (5), Vladimir (5)ʳ, Boris (5)ˢ, Gleb (5)ˢ, Boleslaw (5), Mieszko (5), Casimir (3), Wladyslaw (3), Wenceslas (3)ʳ, Milan (3), Stefan (3), Dusan (3), Lazar (3), Tvrtko (3), Radoslav (2), Bohumil (2), Sviatopolk (2), Rostislav (2), Yuri (2), Kiril (2)
+
+**Female given names** (30): Olga (10)ˢ, Anna (10), Maria (10), Eufemia (10), Dobrawa (10), Jadwiga (7), Judith (7), Dragomira (7), Ludmila (7)ˢ, Elena (7), Sophia (5), Euphrosyne (5), Agafia (5), Anastasia (5), Zofia (5), Margareta (5), Katarina (5), Milica (5), Jelena (3), Danica (3), Vesna (3), Ljubica (3), Xenia (3), Predslava (3), Malusha (3), Eudokia (3), Zdislava (2), Agnes (2), Bozena (2), Vera (2)
+
+**Surnames** (30): Ivanov (10), Petrov (10), Smirnov (10), Kuznetsov (10), Popov (10), Sokolov (7), Lebedev (7), Kozlov (7), Novak (7), Kowalski (7), Nowak (5), Wisniewski (5), Kovac (5), Horvat (5), Novotny (5), Dvorak (5), Svoboda (5), Cerny (5), Kovalenko (3), Bondarenko (3), Shevchenko (3), Melnyk (3), Kravchenko (3), Tkachenko (3), Savchenko (3), Marek (3), Jovanovic (2), Petrovic (2), Nikolic (2), Markovic (2)
+
+**Regnal names, male** (8): Vladimir (10), Boleslaw (10), Casimir (10), Ivan (10), Peter (10), Stefan (7), Wenceslas (7), Alexander (7)
+
+**Regnal names, female** (8): Olga (10), Jadwiga (10), Dobrawa (10), Catherine (10), Elizabeth (10), Anna (7), Milica (7), Maria (7)
+
+**Holy names** (12): Cyril (10), Methodius (10), Wenceslas (10), Sergius (10), Vladimir (10), Stanislaus (7), Adalbert (7), Sava (7), Seraphim (7), Nicholas (7), Olga (5), Barbara (5)
+
+**Holy forms**: Saint {n} (80), the Venerable {n} (20)
+
+**Ruler forms**: male King {m} (40), Prince {m} (30), Tsar {m} (30); female Queen {f} (40), Princess {f} (40), Tsarina {f} (20)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (36): Andrei (10, ST+MO), Viktor (10, ST+MO), Oleg (10, ST+MO), Igor (10, ST+MO), Piotr (10, ST+MO), Ivan (7, ST), Maksim (7, MO), Petr (7, ST), Daniil (7, MO), Nikolai (7, ST), Mateusz (5, MO), Aleksandr (5, ST), Jakub (5, MO), Sergei (5, ST), Szymon (5, MO), Vladimir (5, ST), Kacper (5, MO), Mikhail (5, ST), Filip (3, MO), Pavel (3, ST), Luka (3, MO), Stanislaw (3, ST), Matej (3, MO), Jan (3, ST), Dominik (3, MO), Jozef (3, ST), Artem (2, MO), Franciszek (2, ST), Nikola (2, MO), Tomasz (2, ST), Vaclav (2, MO), Wojciech (2, ST), Kristof (2, MO), Stefan (2, ST), Marek (2, MO), Dmitri (2, ST)
+
+**Female given names** (35): Irina (10, ST+MO), Svetlana (10, ST+MO), Galina (10, ST+MO), Ewa (10, ST+MO), Magdalena (10, ST+MO), Maria (7, ST), Sofia (7, MO), Anna (7, ST), Zuzanna (7, MO), Ekaterina (7, ST), Julia (5, MO), Elena (5, ST), Maja (5, MO), Olga (5, ST), Alicja (5, MO), Zofia (5, ST), Hanna (5, MO), Katarzyna (5, ST), Oliwia (3, MO), Natalia (3, ST), Lena (3, MO), Tatiana (3, ST), Eliska (3, MO), Agnieszka (3, ST), Ema (3, MO), Marta (3, ST), Tereza (2, MO), Ludmila (2, ST), Nela (2, MO), Vera (2, ST), Mila (2, MO), Nadezhda (2, ST), Viktoria (2, MO), Anastasia (2, ST), Polina (2, MO)
+
+**Surnames** (30): Ivanov (10), Petrov (10), Smirnov (10), Kuznetsov (10), Popov (10), Sokolov (7), Lebedev (7), Kozlov (7), Novak (7), Kowalski (7), Nowak (5), Wisniewski (5), Kovac (5), Horvat (5), Novotny (5), Dvorak (5), Svoboda (5), Cerny (5), Kovalenko (3), Bondarenko (3), Shevchenko (3), Melnyk (3), Kravchenko (3), Tkachenko (3), Savchenko (3), Jovanovic (3), Petrovic (2), Nikolic (2), Markovic (2), Popovic (2)
+
+**Regnal names, male** (8): Nicholas (10), Alexander (10), Peter (10), Stefan (10), Michael (10), Boris (7), Simeon (7), Milan (7)
+
+**Regnal names, female** (8): Alexandra (10), Maria (10), Catherine (10), Elisabeth (10), Natalija (10), Olga (7), Draga (7), Marija (7)
+
+**Holy names** (12): Seraphim (10), Sergius (10), Sava (10), Nicholas (10), John of Kronstadt (10), Faustina (7), Maximilian (7), Josaphat (7), Stanislaus (7), Olga (7), Barbara (5), Matrona (5)
+
+**Recent male names (last thirty years)**: Maksim, Daniil, Mateusz, Jakub, Szymon, Kacper, Filip, Luka, Matej, Dominik, Artem, Nikola
+
+**Recent female names (last thirty years)**: Sofia, Zuzanna, Maja, Alicja, Oliwia, Lena, Eliska, Ema, Tereza, Nela, Mila, Polina
+
+**Holy forms**: Saint {n} (80), the Venerable {n} (20)
+
+**Ruler forms**: male King {m} (40), Prince {m} (30), Tsar {m} (30); female Queen {f} (40), Princess {f} (40), Tsarina {f} (20)
+
+## Turkic and Mongol steppe
+
+### historic (AN, MD, EM)
+
+**Male given names** (37): Temujin (10), Ogedei (10), Jochi (10), Chagatai (10), Tolui (10), Batu (7), Kublai (7), Hulagu (7), Mongke (7), Berke (7), Timur (5), Attila (5), Bumin (5), Istemi (5), Tonyukuk (5), Bilge (5), Tughril (5), Alp Arslan (5), Kilij Arslan (3), Jebe (3), Subutai (3), Muqali (3), Boroqul (3), Toghon (3), Ariq Boke (3), Mamai (3), Toqtamish (2), Ulugh Beg (2), Babur (2), Khaidu (2), Nogai (2), Kuchlug (2), Jamukha (2), Toghrul (2), Kul Tigin (2), Mahmud (2), Orda (2)
+
+**Female given names** (30): Borte (10), Hoelun (10), Sorghaghtani (10), Toregene (10), Doquz (10), Chabi (7), Kokochin (7), Khutulun (7), Mandukhai (7), Alaqai (7), Orghana (5), Nambui (5), Bayalun (5), Tolun (5), Ebuskun (5), Yesugen (5), Yesui (5), Khulan (5), Gawhar Shad (3), Saray Mulk (3), Khanzada (3), Gevher (3), Terken (3), Mahperi (3), Altun (3), Sevinch (3), Kutlug (2), Aysha (2), Tuman (2), Bibi (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Genghis (10), Kublai (10), Ogedei (10), Timur (10), Mongke (10), Batu (7), Hulagu (7), Tughril (7)
+
+**Regnal names, female** (8): Toregene (10), Oghul Gamish (10), Mandukhai (10), Sorghaghtani (10), Doquz (10), Chabi (7), Borte (7), Gawhar Shad (7)
+
+**Holy names** (12): Teb Tengri (10), Kokochu (10), Ahmad Yasawi (10), Hajji Bektash (10), Yunus Emre (10), Sari Saltuk (7), Baba Tukles (7), Zanabazar (7), Phagpa (7), Sakya Pandita (7), Mahmud Kashgari (5), Yusuf Balasagun (5)
+
+**Holy forms**: Sheikh {n} (50), Saint {n} (20), Lama {n} (30)
+
+**Ruler forms**: male Khan {m} (50), Sultan {m} (30), Emperor {m} (20); female Khatun {f} (50), Queen {f} (30), Empress {f} (20)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (35): Murat (10, ST+MO), Hakan (10, ST+MO), Serkan (10, ST+MO), Emre (10, ST+MO), Cem (10, ST+MO), Mehmet (7, ST), Emir (7, MO), Mustafa (7, ST), Eymen (7, MO), Ahmet (7, ST), Yigit (5, MO), Ali (5, ST), Kerem (5, MO), Huseyin (5, ST), Berat (5, MO), Hasan (5, ST), Alp (5, MO), Ibrahim (5, ST), Arda (3, MO), Ismail (3, ST), Emirhan (3, MO), Osman (3, ST), Ege (3, MO), Yusuf (3, ST), Mert (3, MO), Hamza (3, ST), Burak (2, MO), Omer (2, ST), Baran (2, MO), Kemal (2, ST), Kaan (2, MO), Ismet (2, ST), Efe (2, MO), Recep (2, ST), Batuhan (2, MO)
+
+**Female given names** (35): Elif (10, ST+MO), Seda (10, ST+MO), Esra (10, ST+MO), Merve (10, ST+MO), Burcu (10, ST+MO), Fatma (7, ST), Defne (7, MO), Ayse (7, ST), Asya (7, MO), Hatice (7, ST), Nehir (5, MO), Emine (5, ST), Ecrin (5, MO), Zeynep (5, ST), Ela (5, MO), Hanife (5, ST), Nisa (5, MO), Meryem (5, ST), Azra (3, MO), Zehra (3, ST), Melisa (3, MO), Sultan (3, ST), Irem (3, MO), Hacer (3, ST), Duru (3, MO), Hava (3, ST), Ceylin (2, MO), Gulsum (2, ST), Eylul (2, MO), Halime (2, ST), Nil (2, MO), Safiye (2, ST), Ada (2, MO), Rabia (2, ST), Mira (2, MO)
+
+**Surnames** (30): Yilmaz (10), Kaya (10), Demir (10), Sahin (10), Celik (10), Yildiz (7), Yildirim (7), Ozturk (7), Aydin (7), Ozdemir (7), Arslan (5), Dogan (5), Kilic (5), Aslan (5), Cetin (5), Kara (5), Koc (5), Kurt (5), Ozkan (3), Simsek (3), Polat (3), Korkmaz (3), Acar (3), Tekin (3), Gunes (3), Bozkurt (3), Aksoy (2), Erdogan (2), Aktas (2), Turan (2)
+
+**Regnal names, male** (8): Abdulhamid (10), Mehmed (10), Murad (10), Selim (10), Osman (10), Ahmed (7), Mahmud (7), Abdulmejid (7)
+
+**Regnal names, female** (8): Gulbahar (10), Hafsa (10), Safiye (10), Kosem (10), Nurbanu (10), Turhan (7), Pertevniyal (7), Bezmialem (7)
+
+**Holy names** (12): Hajji Bektash (10), Yunus Emre (10), Ahmad Yasawi (10), Said Nursi (10), Zanabazar (10), Rumi (7), Haji Bayram (7), Sheikh Edebali (7), Fethullah (7), Mevlana (7), Seyyid Battal (5), Hoca Nasreddin (5)
+
+**Recent male names (last thirty years)**: Emir, Eymen, Yigit, Kerem, Berat, Alp, Arda, Ege, Mert, Baran, Kaan, Efe
+
+**Recent female names (last thirty years)**: Defne, Asya, Nehir, Ecrin, Ela, Nisa, Azra, Melisa, Irem, Duru, Ceylin, Eylul
+
+**Holy forms**: Sheikh {n} (50), Saint {n} (20), Lama {n} (30)
+
+**Ruler forms**: male Khan {m} (50), Sultan {m} (30), Emperor {m} (20); female Khatun {f} (50), Queen {f} (30), Empress {f} (20)
+
+## Arabic and Persian
+
+### historic (AN, MD, EM)
+
+**Male given names** (33): Muhammad (10), Ali (10), Umar (10), Abu Bakr (10), Uthman (10), Hasan (7), Husayn (7), Khalid (7), Harun (7), Mansur (7), Mahmud (5), Yusuf (5), Ibrahim (5), Ismail (5), Ahmad (5), Hamza (5), Salim (5), Idris (5), Jafar (3), Tariq (3), Musa (3), Isa (3), Yahya (3), Zayd (3), Cyrus (3), Darius (3), Xerxes (2), Ardashir (2), Shapur (2), Bahram (2), Khosrow (2), Kavad (2), Saladin (2)
+
+**Female given names** (30): Fatima (10), Aisha (10), Khadija (10), Zaynab (10), Maryam (10), Hafsa (7), Ruqayya (7), Umm Kulthum (7), Sumayya (7), Asma (7), Layla (5), Zubayda (5), Shirin (5), Farah (5), Roxana (5), Parisa (5), Mahin (5), Azadeh (5), Banu (3), Dilara (3), Gulnar (3), Shahrbanu (3), Pourandokht (3), Azarmidokht (3), Safiya (3), Hind (3), Sakina (2), Rabia (2), Atika (2), Buran (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Harun (10), Mansur (10), Mahmud (10), Saladin (10), Cyrus (10), Darius (7), Khosrow (7), Shapur (7)
+
+**Regnal names, female** (8): Zubayda (10), Shajar-al-Durr (10), Shirin (10), Pourandokht (10), Azarmidokht (10), Khayzuran (7), Buran (7), Arwa (7)
+
+**Holy names** (12): Abdul Qadir (10), Ahmad Rifai (10), Junayd (10), Rabia (10), Bayazid (10), Hallaj (7), Ghazali (7), Rumi (7), Attar (7), Saadi (7), Hafez (5), Shams (5)
+
+**Holy forms**: Sheikh {n} (60), Imam {n} (25), Sufi {n} (15)
+
+**Ruler forms**: male Caliph {m} (30), Sultan {m} (30), Emir {m} (20), Shah {m} (20); female Queen {f} (50), Sultana {f} (30), Princess {f} (20)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (39): Ali (10, ST+MO), Hassan (10, ST+MO), Khaled (10, ST+MO), Hamad (10, ST+MO), Muhammad (10, ST), Yazan (7, MO), Ahmad (7, ST), Ayman (7, MO), Mahmoud (7, ST), Hadi (7, MO), Mustafa (5, ST), Majid (5, MO), Abdullah (5, ST), Tariq (5, MO), Ibrahim (5, ST), Ziad (5, MO), Khalil (5, ST), Karim (5, MO), Hamid (3, ST), Nabil (3, MO), Hussein (3, ST), Samir (3, MO), Salim (3, ST), Rami (3, MO), Fouad (3, ST), Sami (3, MO), Nasser (2, ST), Fadi (2, MO), Farouk (2, ST), Walid (2, MO), Abbas (2, ST), Bilal (2, MO), Rashid (2, ST), Adam (2, MO), Zayd (2, MO), Amir (2, MO), Hamza (2, MO), Omar (2, MO), Yusuf (2, MO)
+
+**Female given names** (34): Huda (10, ST+MO), Dalia (10, ST+MO), Leila (10, ST+MO), Aya (10, ST+MO), Fatima (10, ST), Lina (7, MO), Khadija (7, ST), Sara (7, MO), Aisha (7, ST), Rania (7, MO), Zaynab (5, ST), Yasmin (5, MO), Maryam (5, ST), Noor (5, MO), Amina (5, ST), Dana (5, MO), Halima (5, ST), Maya (5, MO), Hafsa (3, ST), Jana (3, MO), Layla (3, ST), Hala (3, MO), Zubayda (3, ST), Lara (3, MO), Safiya (3, ST), Layan (3, MO), Nadia (2, ST), Rama (2, MO), Samira (2, ST), Tala (2, MO), Salma (2, ST), Ayla (2, MO), Hind (2, ST), Mira (2, MO)
+
+**Surnames** (30): Haddad (10), Khalil (10), Hussein (10), Mansour (10), Saleh (10), Nasser (7), Farouk (7), Said (7), Rahman (7), Karimi (7), Hosseini (5), Ahmadi (5), Rezaei (5), Mohammadi (5), Moradi (5), Hashemi (5), Jafari (5), Rahimi (5), Najafi (3), Taheri (3), Sadeghi (3), Mousavi (3), Abbasi (3), Habibi (3), Kazemi (3), Amini (3), Shirazi (2), Tehrani (2), Ghorbani (2), Mahmoud (2)
+
+**Regnal names, male** (8): Faisal (10), Abdullah (10), Hussein (10), Hassan (10), Farouk (10), Reza (7), Fuad (7), Idris (7)
+
+**Regnal names, female** (8): Nazli (10), Farida (10), Soraya (10), Fawzia (10), Alia (10), Narriman (7), Shams (7), Ashraf (7)
+
+**Holy names** (12): Khomeini (10), Sistani (10), Muhammad Abduh (10), Hasan al Banna (10), Rumi (10), Hafez (7), Saadi (7), Attar (7), Abdul Qadir (7), Ibn Arabi (7), Junayd (5), Rabia (5)
+
+**Recent male names (last thirty years)**: Yazan, Adam, Zayd, Amir, Hamza, Ayman, Hadi, Karim, Bilal, Yusuf, Omar, Ziad
+
+**Recent female names (last thirty years)**: Lina, Jana, Maya, Lara, Noor, Dana, Hala, Layan, Rama, Tala, Ayla, Mira
+
+**Holy forms**: Sheikh {n} (60), Imam {n} (25), Sufi {n} (15)
+
+**Ruler forms**: male Caliph {m} (30), Sultan {m} (30), Emir {m} (20), Shah {m} (20); female Queen {f} (50), Sultana {f} (30), Princess {f} (20)
+
+## Egyptian
+
+### historic (AN, MD, EM)
+
+**Male given names** (37): Ramesses (10, AN), Pachomius (10, MD), Thutmose (10, AN), Shenouda (10, MD), Amenhotep (10, AN), Antony (7, MD), Seti (7, AN), Athanasius (7, MD), Khufu (7, AN), Cyril (7, MD), Khafre (5, AN), Macarius (5, MD), Menkaure (5, AN), Mina (5, MD), Djoser (5, AN), Dioscorus (5, MD), Senusret (5, AN), Amenemhat (5, AN), Ahmose (3, AN), Merneptah (3, AN), Psamtik (3, AN), Necho (3, AN), Taharqa (3, AN), Piye (3, AN), Tutankhamun (3, AN), Akhenaten (3, AN), Horemheb (2, AN), Imhotep (2, AN), Hori (2, AN), Nakht (2, AN), Sennedjem (2, AN), Ptolemy (2, AN), Khaemwaset (2, AN), Ptahhotep (2, AN), Kagemni (2, AN), Ankhsheshonq (2, AN), Petosiris (2, AN)
+
+**Female given names** (35): Nefertiti (10, AN), Demiana (10, MD), Hatshepsut (10, AN), Marina (10, MD), Cleopatra (10, AN), Verena (7, MD), Nefertari (7, AN), Irene (7, MD), Tiye (7, AN), Dorothea (7, MD), Ankhesenamun (5, AN), Eudoxia (5, MD), Meritaten (5, AN), Hypatia (5, MD), Sobekneferu (5, AN), Mary (5, MD), Nitocris (5, AN), Merneith (5, AN), Khentkaus (3, AN), Ahhotep (3, AN), Mutnodjmet (3, AN), Henutmire (3, AN), Tuya (3, AN), Iset (3, AN), Bintanath (3, AN), Arsinoe (3, AN), Berenice (2, AN), Tausret (2, AN), Meresankh (2, AN), Hetepheres (2, AN), Nofret (2, AN), Neferura (2, AN), Satiah (2, AN), Kiya (2, AN), Henutsen (2, AN)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Ramesses (10), Thutmose (10), Amenhotep (10), Seti (10), Ptolemy (10), Psamtik (7), Senusret (7), Ahmose (7)
+
+**Regnal names, female** (8): Hatshepsut (10), Cleopatra (10), Nefertiti (10), Tausret (10), Sobekneferu (10), Nitocris (7), Arsinoe (7), Berenice (7)
+
+**Holy names** (12): Imhotep (10), Ptahhotep (10), Kagemni (10), Hardjedef (10), Khaemwaset (10), Ankhsheshonq (7), Petosiris (7), Pachomius (7), Shenouda (7), Antony (7), Macarius (5), Athanasius (5)
+
+**Holy forms**: High Priest {n} (40), Sage {n} (30), Saint {n} (30)
+
+**Ruler forms**: male Pharaoh {m} (80), King {m} (20); female Queen {f} (60), Pharaoh {f} (40)
+
+## Ethiopian
+
+### historic (AN, MD, EM)
+
+**Male given names** (32): Ezana (10), Kaleb (10), Lalibela (10), Dawit (10), Yeshaq (10), Menelik (7), Tewodros (7), Yohannes (7), Susenyos (7), Fasilides (7), Iyasu (5), Naod (5), Eskender (5), Zara Yaqob (5), Lebna Dengel (5), Amda Seyon (5), Yekuno Amlak (5), Sarsa Dengel (5), Baeda Maryam (3), Gebre Mesqel (3), Tekle Haymanot (3), Haile (3), Gebre (3), Kidane (3), Tesfaye (3), Mulugeta (3), Getachew (2), Girma (2), Bekele (2), Tadesse (2), Desta (2), Wolde (2)
+
+**Female given names** (31): Eleni (10), Mentewab (10), Zewditu (10), Taytu (10), Menen (10), Sabla Wengel (7), Romane Work (7), Judith (7), Almaz (7), Berhane (7), Tigist (5), Aster (5), Hirut (5), Selam (5), Mekdes (5), Meseret (5), Tsehay (5), Genet (5), Etenesh (3), Birtukan (3), Yeshi (3), Marta (3), Worknesh (3), Aberash (3), Mulu (3), Alem (3), Ababa (2), Tirunesh (2), Senait (2), Hiwot (2), Rahel (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Ezana (10), Kaleb (10), Lalibela (10), Zara Yaqob (10), Lebna Dengel (10), Fasilides (7), Tewodros (7), Yohannes (7)
+
+**Regnal names, female** (8): Eleni (10), Mentewab (10), Sabla Wengel (10), Zewditu (10), Taytu (10), Menen (7), Judith (7), Romane Work (7)
+
+**Holy names** (12): Tekle Haymanot (10), Yared (10), Lalibela (10), Aregawi (10), Frumentius (10), Gebre Menfes Kidus (7), Zara Yaqob (7), Estifanos (7), Ewostatewos (7), Mikael (7), Gabriel (5), Hanna (5)
+
+**Holy forms**: Saint {n} (60), Abba {n} (20), Father {n} (20)
+
+**Ruler forms**: male Emperor {m} (60), King {m} (30), Negus {m} (10); female Empress {f} (60), Queen {f} (40)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (34): Solomon (10, ST+MO), Daniel (10, ST+MO), Michael (10, ST+MO), Tsegaye (10, ST+MO), Haile (10, ST), Abel (7, MO), Tewodros (7, ST), Dawit (7, MO), Menelik (7, ST), Yonas (7, MO), Tekle (5, ST), Samuel (5, MO), Gebre (5, ST), Nahom (5, MO), Wolde (5, ST), Kaleb (5, MO), Kidane (5, ST), Natnael (5, MO), Tesfaye (3, ST), Henok (3, MO), Mulugeta (3, ST), Biruk (3, MO), Getachew (3, ST), Yared (3, MO), Girma (3, ST), Eyob (3, MO), Bekele (2, ST), Robel (2, MO), Tadesse (2, ST), Amanuel (2, MO), Desta (2, ST), Ephrem (2, MO), Mengistu (2, ST), Kirubel (2, MO)
+
+**Female given names** (34): Marta (10, ST+MO), Hiwot (10, ST+MO), Rahel (10, ST+MO), Senait (10, ST+MO), Zewditu (10, ST), Hanna (7, MO), Taytu (7, ST), Bethlehem (7, MO), Menen (7, ST), Selam (7, MO), Mulu (5, ST), Meron (5, MO), Alem (5, ST), Rediet (5, MO), Aster (5, ST), Liya (5, MO), Tsehay (5, ST), Saron (5, MO), Almaz (3, ST), Eden (3, MO), Tigist (3, ST), Mahlet (3, MO), Berhane (3, ST), Meklit (3, MO), Ababa (3, ST), Tsion (3, MO), Aberash (2, ST), Blen (2, MO), Etenesh (2, ST), Heran (2, MO), Yeshi (2, ST), Kidist (2, MO), Worknesh (2, ST), Lidya (2, MO)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Menelik (10), Haile Selassie (10), Tewodros (10), Yohannes (10), Iyasu (10), Sahle Selassie (7), Zara Yaqob (7), Sarsa Dengel (7)
+
+**Regnal names, female** (8): Zewditu (10), Taytu (10), Menen (10), Eleni (10), Mentewab (10), Sabla Wengel (7), Judith (7), Romane Work (7)
+
+**Holy names** (12): Tekle Haymanot (10), Yared (10), Lalibela (10), Aregawi (10), Frumentius (10), Gebre Menfes Kidus (7), Takla Haymanot (7), Abune Basilios (7), Estifanos (7), Mikael (7), Gabriel (5), Hanna (5)
+
+**Recent male names (last thirty years)**: Abel, Dawit, Yonas, Nahom, Natnael, Henok, Biruk, Yared, Eyob, Robel, Amanuel, Kirubel
+
+**Recent female names (last thirty years)**: Hanna, Bethlehem, Selam, Meron, Rediet, Liya, Saron, Eden, Mahlet, Tsion, Blen, Heran
+
+**Holy forms**: Saint {n} (60), Abba {n} (20), Father {n} (20)
+
+**Ruler forms**: male Emperor {m} (60), King {m} (30), Negus {m} (10); female Empress {f} (60), Queen {f} (40)
+
+## Bantu
+
+### historic (AN, MD, EM)
+
+**Male given names** (31): Shaka (10), Dingane (10), Mpande (10), Cetshwayo (10), Dinuzulu (10), Moshoeshoe (7), Sekhukhune (7), Khama (7), Sobhuza (7), Mzilikazi (7), Lobengula (5), Mswati (5), Mutesa (5), Mwanga (5), Kamanya (5), Chwa (5), Kimera (5), Hintsa (5), Sandile (3), Maqoma (3), Ngqika (3), Phalo (3), Mohlomi (3), Lerotholi (3), Letsie (3), Makaba (3), Sechele (2), Soshangane (2), Zwangendaba (2), Mzila (2), Mutota (2)
+
+**Female given names** (32): Nandi (10), Mnkabayi (10), Manthatisi (10), Nzinga (10), Kimpa Vita (10), Nehanda (7), Mawa (7), Nomusa (7), Nomvula (7), Thandi (7), Zandile (5), Nokuzola (5), Thembeka (5), Ntombi (5), Nosipho (5), Nonhlanhla (5), Lindiwe (5), Zodwa (5), Busisiwe (3), Zanele (3), Nobuhle (3), Mbali (3), Thandiwe (3), Nokuthula (3), Thembi (3), Sibongile (3), Dudu (2), Ayanda (2), Phindile (2), Nomsa (2), Lungile (2), Zinhle (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Shaka (10), Dingane (10), Cetshwayo (10), Moshoeshoe (10), Mutesa (10), Mwanga (7), Sobhuza (7), Lobengula (7)
+
+**Regnal names, female** (8): Nzinga (10), Nandi (10), Manthatisi (10), Labotsibeni (10), Mnkabayi (10), Mawa (7), Dzeliwe (7), Lojiba (7)
+
+**Holy names** (12): Ntsikana (10), Nongqawuse (10), Mlanjeni (10), Kinjikitile (10), Nehanda (10), Kimpa Vita (7), Simon Kimbangu (7), Isaiah Shembe (7), Mugo wa Kibiru (7), John Chilembwe (7), Mbuya Nehanda (5), Mkabayi (5)
+
+**Holy forms**: Prophet {n} (50), Elder {n} (30), Saint {n} (20)
+
+**Ruler forms**: male King {m} (60), Chief {m} (30), Paramount Chief {m} (10); female Queen {f} (60), Queen Mother {f} (30), Chieftainess {f} (10)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (38): Sipho (10, ST+MO), Themba (10, ST+MO), Mandla (10, ST+MO), Bheki (10, ST+MO), Bongani (10, ST+MO), Sibusiso (7, ST+MO), Musa (7, ST+MO), Vusi (7, ST+MO), John (7, ST), Lwazi (7, MO), Peter (5, ST), Lethabo (5, MO), Joseph (5, ST), Siyabonga (5, MO), James (5, ST), Kagiso (5, MO), Moses (5, ST), Tumelo (5, MO), Elias (3, ST), Thando (3, MO), Simon (3, ST), Lungelo (3, MO), Jacob (3, ST), Bandile (3, MO), Isaac (3, ST), Sanele (3, MO), David (2, ST), Wandile (2, MO), Samuel (2, ST), Luyanda (2, MO), Johannes (2, ST), Lindani (2, MO), Daniel (2, ST), Lwandle (2, MO), Petrus (2, ST), Sihle (2, MO), Paul (2, ST), Andile (2, MO)
+
+**Female given names** (35): Thandi (10, ST+MO), Nomsa (10, ST+MO), Zandile (10, ST+MO), Mbali (10, ST+MO), Nomvula (10, ST+MO), Mary (7, ST), Lerato (7, MO), Martha (7, ST), Naledi (7, MO), Elizabeth (7, ST), Palesa (5, MO), Esther (5, ST), Amahle (5, MO), Ruth (5, ST), Zinhle (5, MO), Sarah (5, ST), Lesedi (5, MO), Hannah (5, ST), Anele (3, MO), Rebecca (3, ST), Sinazo (3, MO), Maria (3, ST), Ntando (3, MO), Johanna (3, ST), Asanda (3, MO), Agnes (3, ST), Zimkhitha (2, MO), Margaret (2, ST), Lunathi (2, MO), Anna (2, ST), Refilwe (2, MO), Catherine (2, ST), Kamogelo (2, MO), Lydia (2, ST), Onalenna (2, MO)
+
+**Surnames** (32): Dlamini (10), Nkosi (10), Khumalo (10), Ndlovu (10), Zulu (10), Mthembu (7), Mkhize (7), Ngcobo (7), Sithole (7), Zungu (7), Mokoena (5), Molefe (5), Mahlangu (5), Ntuli (5), Cele (5), Shabalala (5), Buthelezi (5), Mabaso (5), Radebe (3), Moyo (3), Ncube (3), Mutasa (3), Banda (3), Phiri (3), Tembo (3), Mwale (3), Chanda (2), Kamau (2), Njoroge (2), Mwangi (2), Kimani (2), Mutua (2)
+
+**Regnal names, male** (8): Cetshwayo (10), Moshoeshoe (10), Sobhuza (10), Mutesa (10), Mwanga (10), Goodwill (7), Khama (7), Lerotholi (7)
+
+**Regnal names, female** (8): Labotsibeni (10), Dzeliwe (10), Lojiba (10), Manthatisi (10), Nandi (10), Nzinga (7), Mnkabayi (7), Mawa (7)
+
+**Holy names** (12): Isaiah Shembe (10), Simon Kimbangu (10), John Chilembwe (10), Ntsikana (10), Engenas Lekganyane (10), Charles Lwanga (7), Kizito (7), Joseph Mukasa (7), Matthias Mulumba (7), Noe Mawaggali (7), Anatoli Kiriggwajjo (5), Andrew Kaggwa (5)
+
+**Recent male names (last thirty years)**: Lwazi, Lethabo, Siyabonga, Kagiso, Tumelo, Thando, Lungelo, Bandile, Sanele, Wandile, Luyanda, Lindani
+
+**Recent female names (last thirty years)**: Lerato, Naledi, Palesa, Amahle, Zinhle, Lesedi, Anele, Sinazo, Ntando, Asanda, Zimkhitha, Lunathi
+
+**Holy forms**: Prophet {n} (50), Elder {n} (30), Saint {n} (20)
+
+**Ruler forms**: male King {m} (60), Chief {m} (30), Paramount Chief {m} (10); female Queen {f} (60), Queen Mother {f} (30), Chieftainess {f} (10)
+
+## West African
+
+### historic (AN, MD, EM)
+
+**Male given names** (31): Sundiata (10), Musa (10), Sunni Ali (10), Askia (10), Osei Tutu (10), Opoku Ware (7), Agaja (7), Ghezo (7), Glele (7), Behanzin (7), Ewuare (5), Esigie (5), Orhogbua (5), Kwame (5), Kofi (5), Kwabena (5), Kwasi (5), Yaw (5), Kojo (3), Kwaku (3), Kwadwo (3), Prempeh (3), Ahmadu (3), Samori (3), Mamadou (3), Ousmane (3), Sekou (2), Amadou (2), Abdoulaye (2), Ibrahim (2), Moussa (2)
+
+**Female given names** (31): Akosua (10), Adwoa (10), Abenaa (10), Akua (10), Yaa (10), Afua (7), Ama (7), Efua (7), Esi (7), Amina (7), Idia (5), Yaa Asantewaa (5), Nana Asma'u (5), Aminata (5), Mariama (5), Kadiatou (5), Hawa (5), Awa (5), Fatoumata (3), Bintou (3), Khady (3), Rokia (3), Fatima (3), Ndate Yalla (3), Afua Kobi (3), Yaa Akyaa (3), Ahebi Ugbabe (2), Sarraounia (2), Aissata (2), Safiatou (2), Maimouna (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Sundiata (10), Osei Tutu (10), Opoku Ware (10), Agaja (10), Ghezo (10), Behanzin (7), Ewuare (7), Askia (7)
+
+**Regnal names, female** (8): Idia (10), Amina (10), Yaa Asantewaa (10), Ndate Yalla (10), Afua Kobi (10), Yaa Akyaa (7), Ahebi Ugbabe (7), Sarraounia (7)
+
+**Holy names** (12): Ahmadu Bamba (10), Usman dan Fodio (10), Umar Tall (10), Nana Asma'u (10), Muhammad Bello (10), Ibrahim Niasse (7), Samuel Crowther (7), Joseph Babalola (7), Garrick Braide (7), William Harris (7), Mame Diarra (5), Cheikh Hamallah (5)
+
+**Holy forms**: Sheikh {n} (40), Saint {n} (30), Prophet {n} (30)
+
+**Ruler forms**: male King {m} (40), Emir {m} (30), Chief {m} (30); female Queen {f} (60), Queen Mother {f} (40)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (34): Mohammed (10, ST+MO), Abdul (10, ST+MO), Samuel (10, ST+MO), Daniel (10, ST+MO), Kwame (10, ST), Chidi (7, MO), Kofi (7, ST), Emeka (7, MO), Kwabena (7, ST), Tunde (7, MO), Kwasi (5, ST), Segun (5, MO), Yaw (5, ST), Ayodele (5, MO), Kojo (5, ST), Kelechi (5, MO), Kwaku (5, ST), Chinedu (5, MO), Kwadwo (3, ST), Ikenna (3, MO), Ibrahim (3, ST), Obinna (3, MO), Moussa (3, ST), Nnamdi (3, MO), Mamadou (3, ST), Femi (3, MO), Ousmane (2, ST), Kayode (2, MO), Sekou (2, ST), Tobi (2, MO), Amadou (2, ST), Uche (2, MO), Abdoulaye (2, ST), Chibuike (2, MO)
+
+**Female given names** (34): Fatima (10, ST+MO), Aisha (10, ST+MO), Blessing (10, ST+MO), Grace (10, ST+MO), Akosua (10, ST), Chiamaka (7, MO), Adwoa (7, ST), Ngozi (7, MO), Abenaa (7, ST), Amara (7, MO), Akua (5, ST), Folake (5, MO), Yaa (5, ST), Ifeoma (5, MO), Afua (5, ST), Adaeze (5, MO), Ama (5, ST), Nneka (5, MO), Efua (3, ST), Temitope (3, MO), Esi (3, ST), Titilayo (3, MO), Aminata (3, ST), Zainab (3, MO), Mariama (3, ST), Chidinma (3, MO), Fatoumata (2, ST), Oluchi (2, MO), Awa (2, ST), Yetunde (2, MO), Kadiatou (2, ST), Kehinde (2, MO), Hawa (2, ST), Bukola (2, MO)
+
+**Surnames** (31): Okafor (10), Mensah (10), Diallo (10), Traore (10), Keita (10), Toure (7), Camara (7), Diop (7), Ndiaye (7), Sow (7), Balde (5), Sylla (5), Kone (5), Coulibaly (5), Ouedraogo (5), Sawadogo (5), Adeyemi (5), Okonkwo (5), Adebayo (3), Eze (3), Nwosu (3), Owusu (3), Boateng (3), Asante (3), Appiah (3), Ogunleye (3), Abubakar (2), Bello (2), Danjuma (2), Kamara (2), Koroma (2)
+
+**Regnal names, male** (8): Prempeh (10), Osei Tutu (10), Opoku Ware (10), Behanzin (10), Ewuare (10), Sundiata (7), Agaja (7), Ghezo (7)
+
+**Regnal names, female** (8): Idia (10), Amina (10), Yaa Asantewaa (10), Ndate Yalla (10), Afua Kobi (10), Yaa Akyaa (7), Ahebi Ugbabe (7), Sarraounia (7)
+
+**Holy names** (12): Ahmadu Bamba (10), Usman dan Fodio (10), Umar Tall (10), Ibrahim Niasse (10), Samuel Crowther (10), Joseph Babalola (7), Garrick Braide (7), William Harris (7), Mame Diarra (7), Cheikh Hamallah (7), Simeon Adeniran (5), Moses Orimolade (5)
+
+**Recent male names (last thirty years)**: Chidi, Emeka, Kelechi, Chinedu, Ikenna, Obinna, Nnamdi, Femi, Kayode, Tobi, Uche, Chibuike
+
+**Recent female names (last thirty years)**: Chiamaka, Ngozi, Amara, Folake, Ifeoma, Adaeze, Nneka, Temitope, Titilayo, Zainab, Chidinma, Oluchi
+
+**Holy forms**: Sheikh {n} (40), Saint {n} (30), Prophet {n} (30)
+
+**Ruler forms**: male King {m} (40), Emir {m} (30), Chief {m} (30); female Queen {f} (60), Queen Mother {f} (40)
+
+## Indian
+
+### historic (AN, MD, EM)
+
+**Male given names** (34): Ashoka (10), Chandragupta (10), Bindusara (10), Samudragupta (10), Vikramaditya (10), Harsha (7), Pulakeshin (7), Rajaraja (7), Rajendra (7), Krishnadevaraya (7), Shivaji (5), Prithviraj (5), Pratap (5), Kanishka (5), Kautilya (5), Panini (5), Aryabhata (5), Kalidasa (5), Bhaskara (3), Varahamihira (3), Charaka (3), Sushruta (3), Arjun (3), Vijay (3), Ravi (3), Mohan (3), Ram (2), Krishna (2), Govind (2), Hari (2), Gopal (2), Shyam (2), Narayan (2), Raghu (2)
+
+**Female given names** (32): Lakshmi (10), Parvati (10), Saraswati (10), Ahilyabai (10), Chennamma (10), Lakshmibai (7), Rudrama (7), Didda (7), Mirabai (7), Gargi (7), Maitreyi (5), Avvaiyar (5), Andal (5), Karaikkal (5), Mahadevi (5), Kalyani (5), Sangamitra (5), Chandramati (5), Yasodhara (3), Kamala (3), Savitri (3), Radha (3), Uma (3), Durga (3), Gauri (3), Sita (3), Tara (2), Padma (2), Meenakshi (2), Bhagirathi (2), Janaki (2), Draupadi (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Ashoka (10), Chandragupta (10), Samudragupta (10), Harsha (10), Rajaraja (10), Krishnadevaraya (7), Shivaji (7), Vikramaditya (7)
+
+**Regnal names, female** (8): Didda (10), Razia (10), Rudrama (10), Chennamma (10), Lakshmibai (10), Ahilyabai (7), Durgavati (7), Chand Bibi (7)
+
+**Holy names** (12): Nanak (10), Kabir (10), Tulsidas (10), Ramanuja (10), Shankara (10), Basava (7), Mahavira (7), Ramakrishna (7), Vivekananda (7), Chaitanya (7), Tukaram (5), Meera (5)
+
+**Holy forms**: Swami {n} (40), Guru {n} (30), Saint {n} (30)
+
+**Ruler forms**: male Maharaja {m} (50), King {m} (30), Emperor {m} (20); female Maharani {f} (50), Queen {f} (30), Empress {f} (20)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (34): Rahul (10, ST+MO), Amit (10, ST+MO), Vijay (10, ST+MO), Sanjay (10, ST+MO), Mohandas (10, ST), Aarav (7, MO), Jawaharlal (7, ST), Vihaan (7, MO), Rajendra (7, ST), Aditya (7, MO), Subhas (5, ST), Arjun (5, MO), Vallabhbhai (5, ST), Reyansh (5, MO), Sarvepalli (5, ST), Ayaan (5, MO), Rabindranath (5, ST), Krish (5, MO), Ramesh (3, ST), Ishaan (3, MO), Suresh (3, ST), Kabir (3, MO), Mahesh (3, ST), Atharv (3, MO), Dinesh (3, ST), Shaurya (3, MO), Ganesh (2, ST), Rudra (2, MO), Ram (2, ST), Dhruv (2, MO), Krishna (2, ST), Veer (2, MO), Gopal (2, ST), Yash (2, MO)
+
+**Female given names** (34): Priya (10, ST+MO), Neha (10, ST+MO), Pooja (10, ST+MO), Anjali (10, ST+MO), Lakshmi (10, ST), Aadhya (7, MO), Parvati (7, ST), Anaya (7, MO), Saraswati (7, ST), Diya (7, MO), Sita (5, ST), Saanvi (5, MO), Radha (5, ST), Ananya (5, MO), Kamala (5, ST), Myra (5, MO), Savitri (5, ST), Aarohi (5, MO), Sarojini (3, ST), Kiara (3, MO), Indira (3, ST), Pari (3, MO), Sushila (3, ST), Navya (3, MO), Kavita (3, ST), Riya (3, MO), Gita (2, ST), Anika (2, MO), Shanti (2, ST), Ira (2, MO), Uma (2, ST), Siya (2, MO), Durga (2, ST), Avni (2, MO)
+
+**Surnames** (31): Sharma (10), Patel (10), Singh (10), Kumar (10), Gupta (10), Reddy (7), Rao (7), Nair (7), Iyer (7), Menon (7), Das (5), Chatterjee (5), Banerjee (5), Mukherjee (5), Bose (5), Joshi (5), Desai (5), Mehta (5), Shah (3), Kapoor (3), Khanna (3), Malhotra (3), Agarwal (3), Verma (3), Yadav (3), Mishra (3), Pandey (2), Chopra (2), Bhatt (2), Kulkarni (2), Pillai (2)
+
+**Regnal names, male** (8): Ranjit (10), Tipu (10), Sayajirao (10), Bhupinder (10), Madhavrao (10), Krishnaraja (7), Jai Singh (7), Hari Singh (7)
+
+**Regnal names, female** (8): Lakshmibai (10), Ahilyabai (10), Chennamma (10), Gayatri (10), Rashmoni (10), Jindan (7), Tarabai (7), Yashodhara (7)
+
+**Holy names** (12): Ramakrishna (10), Vivekananda (10), Aurobindo (10), Ramana (10), Sai Baba (10), Sivananda (7), Yogananda (7), Dayananda (7), Narayana Guru (7), Mother Teresa (7), Anandamayi (5), Sarada (5)
+
+**Recent male names (last thirty years)**: Aarav, Vihaan, Aditya, Arjun, Reyansh, Ayaan, Krish, Ishaan, Kabir, Atharv, Shaurya, Rudra
+
+**Recent female names (last thirty years)**: Aadhya, Anaya, Diya, Saanvi, Ananya, Myra, Aarohi, Kiara, Pari, Navya, Riya, Anika
+
+**Holy forms**: Swami {n} (40), Guru {n} (30), Saint {n} (30)
+
+**Ruler forms**: male Maharaja {m} (50), King {m} (30), Emperor {m} (20); female Maharani {f} (50), Queen {f} (30), Empress {f} (20)
+
+## Chinese
+
+### historic (AN, MD, EM)
+
+**Male given names** (37): Bang (10), Xiang (10), Cao (10), Bei (10), Quan (10), Liang (7), Yue (7), Fei (7), Wen (7), Zhou (7), Shi (5), Kuang (5), Qian (5), Bo (5), Yi (5), Zhao (5), Chong (5), Kai (5), Xuan (3), Hui (3), Heng (3), Yan (3), Ru (3), Qi (3), Rong (3), Zhong (3), Zhi (2), Zhen (2), Ting (2), Yong (2), Ji (2), Kang (2), Shu (2), Guang (2), Wu (2), Mu (2), Xi (2)
+
+**Female given names** (30): Mei (10), Li (10), Fang (10), Ying (10), Xiu (10), Lan (7), Juan (7), Jing (7), Ping (7), Qing (7), Ling (5), Yun (5), Xia (5), Min (5), Dan (5), Xue (5), Chun (5), Jie (5), Shan (3), Lian (3), Hong (3), Wei (3), Rui (3), Yu (3), Lin (3), Ai (3), Ya (2), Zhu (2), Yin (2), Qin (2)
+
+**Surnames** (32): Wang (10), Li (10), Zhang (10), Liu (10), Chen (10), Yang (7), Zhao (7), Huang (7), Zhou (7), Wu (7), Xu (5), Sun (5), Ma (5), Zhu (5), Hu (5), Guo (5), He (5), Gao (5), Lin (3), Luo (3), Zheng (3), Liang (3), Xie (3), Song (3), Tang (3), Han (3), Sima (2), Zhuge (2), Ouyang (2), Kong (2), Meng (2), Yuan (2)
+
+**Regnal names, male** (8): Hongwu (10), Yongle (10), Kangxi (10), Qianlong (10), Taizong (10), Gaozu (7), Wudi (7), Shihuang (7)
+
+**Regnal names, female** (8): Wu (10), Lu (10), Cixi (10), Xiaozhuang (10), Dou (10), Deng (7), Yang (7), Xiaoyi (7)
+
+**Holy names** (12): Laozi (10), Zhuangzi (10), Mencius (10), Mozi (10), Bodhidharma (10), Xuanzang (7), Huineng (7), Zhiyi (7), Fazang (7), Zhuxi (7), Wang Yangming (5), Zhang Daoling (5)
+
+**Holy forms**: Master {n} (50), Immortal {n} (25), the Venerable {n} (25)
+
+**Ruler forms**: male Emperor {m} (80), King {m} (20); female Empress {f} (70), Empress Dowager {f} (30)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (32): Chen (10, ST+MO), Jie (10, ST+MO), Wei (10, ST), Haoran (10, MO), Jun (10, ST), Yuchen (7, MO), Ming (7, ST), Yuxuan (7, MO), Hua (7, ST), Zihan (7, MO), Bo (5, ST), Zixuan (5, MO), Jian (5, ST), Yichen (5, MO), Yong (5, ST), Junjie (5, MO), Feng (5, ST), Yutong (5, MO), Tao (3, ST), Jiahao (3, MO), Hui (3, ST), Boyuan (3, MO), Gang (3, ST), Hanyu (3, MO), Kai (3, ST), Tianyu (3, MO), Lin (2, ST), Zhihao (2, MO), Rui (2, ST), Ruize (2, MO), Xiang (2, ST), Yihan (2, MO)
+
+**Female given names** (33): Na (10, ST+MO), Min (10, ST+MO), Dan (10, ST+MO), Mei (10, ST), Yiran (10, MO), Li (7, ST), Xinyi (7, MO), Fang (7, ST), Zixin (7, MO), Ying (7, ST), Yuxin (5, MO), Xiu (5, ST), Ruoxi (5, MO), Lan (5, ST), Shiyu (5, MO), Juan (5, ST), Xinran (5, MO), Jing (5, ST), Yuqi (3, MO), Ping (3, ST), Siyu (3, MO), Qing (3, ST), Jiaqi (3, MO), Ling (3, ST), Yaxin (3, MO), Yun (3, ST), Meiqi (2, MO), Xia (2, ST), Tingting (2, MO), Zhen (2, ST), Xiaoxuan (2, MO), Shu (2, ST), Mengyao (2, MO)
+
+**Surnames** (30): Wang (10), Li (10), Zhang (10), Liu (10), Chen (10), Yang (7), Huang (7), Zhao (7), Wu (7), Zhou (7), Xu (5), Sun (5), Ma (5), Zhu (5), Hu (5), Guo (5), He (5), Gao (5), Lin (3), Luo (3), Zheng (3), Liang (3), Xie (3), Song (3), Tang (3), Han (3), Feng (2), Deng (2), Cao (2), Peng (2)
+
+**Regnal names, male** (8): Xuantong (10), Guangxu (10), Tongzhi (10), Xianfeng (10), Daoguang (10), Jiaqing (7), Qianlong (7), Kangxi (7)
+
+**Regnal names, female** (8): Cixi (10), Wanrong (10), Longyu (10), Xiaoding (10), Xiaozhen (10), Xiaoqin (7), Wenxiu (7), Xiaoxian (7)
+
+**Holy names** (12): Xuyun (10), Taixu (10), Hongyi (10), Yinguang (10), Hsing Yun (10), Wang Chongyang (7), Qiu Chuji (7), Ma Danyang (7), Zhang Sanfeng (7), Lu Dongbin (7), Sun Simiao (5), Bodhidharma (5)
+
+**Recent male names (last thirty years)**: Haoran, Yuchen, Yuxuan, Zihan, Zixuan, Yichen, Junjie, Yutong, Jiahao, Boyuan, Hanyu, Tianyu
+
+**Recent female names (last thirty years)**: Yiran, Xinyi, Zixin, Yuxin, Ruoxi, Shiyu, Xinran, Yuqi, Siyu, Jiaqi, Yaxin, Meiqi
+
+**Holy forms**: Master {n} (50), Immortal {n} (25), the Venerable {n} (25)
+
+**Ruler forms**: male Emperor {m} (80), King {m} (20); female Empress {f} (70), Empress Dowager {f} (30)
+
+## Japanese
+
+### historic (AN, MD, EM)
+
+**Male given names** (33): Yoshitsune (10), Yoritomo (10), Nobunaga (10), Hideyoshi (10), Ieyasu (10), Shingen (7), Kenshin (7), Masamune (7), Mitsuhide (7), Takauji (7), Kiyomori (5), Michinaga (5), Tenji (5), Tenmu (5), Taro (5), Jiro (5), Saburo (5), Shiro (5), Goro (3), Hidetada (3), Iemitsu (3), Yoshimune (3), Tsunayoshi (3), Nobutada (3), Katsuie (3), Motonari (3), Musashi (2), Sanada (2), Kenji (2), Nagamasa (2), Yukimura (2), Hanzo (2), Kagetora (2)
+
+**Female given names** (30): Murasaki (10), Sei (10), Tomoe (10), Shizuka (10), Masako (10), Hana (7), Hanako (7), Ine (7), Oichi (7), Nene (7), Yodo (5), Ochiyo (5), Tsuru (5), Fuji (5), Toyo (5), Ayame (5), Kichi (5), Oran (5), Gracia (3), Ginko (3), Ume (3), Kiku (3), Take (3), Matsu (3), Sakura (3), Chiyo (3), Shigeko (2), Teishi (2), Akiko (2), Hisa (2)
+
+**Surnames** (30): Fujiwara (10), Minamoto (10), Taira (10), Tachibana (10), Sugawara (10), Oda (7), Toyotomi (7), Tokugawa (7), Takeda (7), Uesugi (7), Hojo (5), Ashikaga (5), Mori (5), Date (5), Shimazu (5), Maeda (5), Ikeda (5), Hosokawa (5), Kuroda (3), Kato (3), Ishida (3), Saito (3), Sanada (3), Chosokabe (3), Otomo (3), Ouchi (3), Akechi (2), Asakura (2), Imagawa (2), Kobayakawa (2)
+
+**Regnal names, male** (8): Kammu (10), Saga (10), Daigo (10), Murakami (10), Shirakawa (10), Toba (7), Go-Daigo (7), Reigen (7)
+
+**Regnal names, female** (8): Suiko (10), Kogyoku (10), Jito (10), Genmei (10), Gensho (10), Koken (7), Meisho (7), Go-Sakuramachi (7)
+
+**Holy names** (12): Kukai (10), Saicho (10), Honen (10), Shinran (10), Nichiren (10), Dogen (7), Eisai (7), Ippen (7), Ryokan (7), Hakuin (7), Ennin (5), Gyoki (5)
+
+**Holy forms**: Master {n} (40), Priest {n} (30), the Venerable {n} (30)
+
+**Ruler forms**: male Emperor {m} (70), Shogun {m} (30); female Empress {f} (70), Empress Dowager {f} (30)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (34): Kenta (10, ST+MO), Takumi (10, ST+MO), Daisuke (10, ST+MO), Shota (10, ST+MO), Taro (10, ST), Haruto (7, MO), Jiro (7, ST), Yuto (7, MO), Saburo (7, ST), Sota (7, MO), Ichiro (5, ST), Ren (5, MO), Kenji (5, ST), Riku (5, MO), Hiroshi (5, ST), Minato (5, MO), Takeshi (5, ST), Kaito (5, MO), Masao (3, ST), Yuma (3, MO), Isamu (3, ST), Asahi (3, MO), Shigeru (3, ST), Itsuki (3, MO), Kazuo (3, ST), Kota (3, MO), Tadashi (2, ST), Daiki (2, MO), Minoru (2, ST), Shun (2, MO), Akira (2, ST), Hayato (2, MO), Osamu (2, ST), Ryota (2, MO)
+
+**Female given names** (34): Ayumi (10, ST+MO), Emi (10, ST+MO), Yumi (10, ST+MO), Mari (10, ST+MO), Hanako (10, ST), Yui (7, MO), Yoshiko (7, ST), Hina (7, MO), Fumiko (7, ST), Sakura (7, MO), Sachiko (5, ST), Mio (5, MO), Chiyo (5, ST), Yuna (5, MO), Hisako (5, ST), Mei (5, MO), Kimiko (5, ST), Rin (5, MO), Masako (3, ST), Aoi (3, MO), Tomoko (3, ST), Himari (3, MO), Kazuko (3, ST), Tsumugi (3, MO), Setsuko (3, ST), Ichika (3, MO), Michiko (2, ST), Akari (2, MO), Eiko (2, ST), Miyu (2, MO), Yukiko (2, ST), Koharu (2, MO), Mitsuko (2, ST), Honoka (2, MO)
+
+**Surnames** (31): Sato (10), Suzuki (10), Takahashi (10), Tanaka (10), Watanabe (10), Ito (7), Yamamoto (7), Nakamura (7), Kobayashi (7), Kato (7), Yoshida (5), Yamada (5), Sasaki (5), Yamaguchi (5), Matsumoto (5), Inoue (5), Kimura (5), Hayashi (5), Shimizu (3), Yamazaki (3), Mori (3), Abe (3), Ikeda (3), Hashimoto (3), Ishikawa (3), Ogawa (3), Goto (2), Okada (2), Hasegawa (2), Fujita (2), Maeda (2)
+
+**Regnal names, male** (8): Mutsuhito (10), Yoshihito (10), Hirohito (10), Komei (10), Ninko (10), Kokaku (7), Reigen (7), Go-Mizunoo (7)
+
+**Regnal names, female** (8): Haruko (10), Nagako (10), Sadako (10), Shoken (10), Kojun (10), Teimei (7), Suiko (7), Jito (7)
+
+**Holy names** (12): Kukai (10), Saicho (10), Honen (10), Shinran (10), Nichiren (10), Dogen (7), Eisai (7), Ippen (7), Ryokan (7), Hakuin (7), Ennin (5), Takuan (5)
+
+**Recent male names (last thirty years)**: Haruto, Yuto, Sota, Ren, Riku, Minato, Kaito, Yuma, Asahi, Itsuki, Kota, Daiki
+
+**Recent female names (last thirty years)**: Yui, Hina, Sakura, Mio, Yuna, Mei, Rin, Aoi, Himari, Tsumugi, Ichika, Akari
+
+**Holy forms**: Master {n} (40), Priest {n} (30), the Venerable {n} (30)
+
+**Ruler forms**: male Emperor {m} (70), Shogun {m} (30); female Empress {f} (70), Empress Dowager {f} (30)
+
+## Korean
+
+### historic (AN, MD, EM)
+
+**Male given names** (31): Sejong (10), Taejo (10), Jumong (10), Gwanggaeto (10), Onjo (10), Jinheung (7), Muryeong (7), Wonhyo (7), Uisang (7), Yusin (7), Sun-sin (5), Seong-gye (5), Mong-ju (5), Jeong-do (5), Gamchan (5), Yeongjo (5), Jeongjo (5), Gojong (5), Sukjong (3), Seonjo (3), Injo (3), Hyojong (3), Munjong (3), Sejo (3), Taejong (3), Gyeongjong (3), Hyeonjong (2), Gwangjong (2), Seongjong (2), Cheoljong (2), Heonjong (2)
+
+**Female given names** (30): Seondeok (10), Jindeok (10), Jinseong (10), Yuhwa (10), Soseono (10), Hwang-ok (7), Munjeong (7), Jeongsun (7), Nanseolheon (7), Saimdang (7), Jini (5), Hyegyeong (5), Myeongseong (5), Huibin (5), Inhyeon (5), Sohyeon (5), Insu (5), Inwon (5), Insun (3), Gongmin (3), Jangnyeok (3), Munmyeong (3), Heo-ok (3), Sado (3), Gyeongbin (3), Soon-i (3), Bok-sun (2), Ok-sun (2), Mal-sun (2), Bun-i (2)
+
+**Surnames** (30): Kim (10), Lee (10), Park (10), Choi (10), Jung (10), Kang (7), Cho (7), Yoon (7), Jang (7), Lim (7), Han (5), Oh (5), Seo (5), Shin (5), Kwon (5), Hwang (5), Ahn (5), Song (5), Yoo (3), Hong (3), Jeon (3), Ko (3), Moon (3), Yang (3), Son (3), Bae (3), Baek (2), Heo (2), Nam (2), Sim (2)
+
+**Regnal names, male** (8): Sejong (10), Taejo (10), Gwanggaeto (10), Jinheung (10), Muryeong (10), Seongjong (7), Sukjong (7), Yeongjo (7)
+
+**Regnal names, female** (8): Seondeok (10), Jindeok (10), Jinseong (10), Munjeong (10), Insu (10), Inhyeon (7), Myeongseong (7), Jeongsun (7)
+
+**Holy names** (12): Wonhyo (10), Uisang (10), Jinul (10), Jajang (10), Hyecho (10), Seosan (7), Samyeong (7), Manhae (7), Taego (7), Naong (7), Andrew Kim (5), Paul Yun (5)
+
+**Holy forms**: Master {n} (40), the Venerable {n} (30), Saint {n} (30)
+
+**Ruler forms**: male King {m} (70), Emperor {m} (30); female Queen {f} (70), Empress {f} (30)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (30): Young-ho (10, ST), Min-jun (10, MO), Sung-ho (10, ST), Seo-jun (10, MO), Jong-su (10, ST), Do-yun (7, MO), Kyung-su (7, ST), Ye-jun (7, MO), Dong-hyun (7, ST), Si-woo (7, MO), Jae-won (5, ST), Ha-jun (5, MO), Chul-su (5, ST), Joo-won (5, MO), Min-su (5, ST), Ji-ho (5, MO), Young-sik (5, ST), Jun-seo (5, MO), Sang-ho (3, ST), Jun-woo (3, MO), Jin-ho (3, ST), Hyun-woo (3, MO), Hyun-su (3, ST), Ji-hoon (3, MO), Tae-sik (3, ST), Seung-woo (3, MO), Byung-ho (2, ST), Eun-woo (2, MO), Kwang-su (2, ST), Yu-jun (2, MO)
+
+**Female given names** (30): Soon-ja (10, ST), Seo-yeon (10, MO), Young-ja (10, ST), Ha-yoon (10, MO), Mi-ja (10, ST), Ji-woo (7, MO), Jung-ja (7, ST), Seo-ah (7, MO), Kyung-ja (7, ST), Ha-eun (7, MO), Myung-ja (5, ST), Ji-yu (5, MO), Bok-sun (5, ST), Su-ah (5, MO), Ok-sun (5, ST), Ye-jin (5, MO), Young-hee (5, ST), Yun-seo (5, MO), Sun-hee (3, ST), Chae-won (3, MO), Jung-hee (3, ST), Ji-ah (3, MO), Mi-sook (3, ST), Da-eun (3, MO), Kyung-sook (3, ST), Ye-eun (3, MO), Young-sook (2, ST), Soo-bin (2, MO), Hye-ja (2, ST), Min-seo (2, MO)
+
+**Surnames** (30): Kim (10), Lee (10), Park (10), Choi (10), Jung (10), Kang (7), Cho (7), Yoon (7), Jang (7), Lim (7), Han (5), Oh (5), Seo (5), Shin (5), Kwon (5), Hwang (5), Ahn (5), Song (5), Yoo (3), Hong (3), Jeon (3), Ko (3), Moon (3), Yang (3), Son (3), Bae (3), Baek (2), Heo (2), Nam (2), Sim (2)
+
+**Regnal names, male** (8): Gojong (10), Sunjong (10), Jeongjo (10), Cheoljong (10), Heonjong (10), Sukjong (7), Yeongjo (7), Sejong (7)
+
+**Regnal names, female** (8): Myeongseong (10), Sunmyeong (10), Sunjeong (10), Inhyeon (10), Huibin (10), Insu (7), Munjeong (7), Jeongsun (7)
+
+**Holy names** (12): Wonhyo (10), Uisang (10), Jinul (10), Jajang (10), Hyecho (10), Seosan (7), Samyeong (7), Manhae (7), Taego (7), Naong (7), Andrew Kim (5), Paul Yun (5)
+
+**Recent male names (last thirty years)**: Min-jun, Seo-jun, Do-yun, Ye-jun, Si-woo, Ha-jun, Joo-won, Ji-ho, Jun-seo, Jun-woo, Hyun-woo, Ji-hoon
+
+**Recent female names (last thirty years)**: Seo-yeon, Ha-yoon, Ji-woo, Seo-ah, Ha-eun, Ji-yu, Su-ah, Ye-jin, Yun-seo, Chae-won, Ji-ah, Da-eun
+
+**Holy forms**: Master {n} (40), the Venerable {n} (30), Saint {n} (30)
+
+**Ruler forms**: male King {m} (70), Emperor {m} (30); female Queen {f} (70), Empress {f} (30)
+
+## Aztec
+
+### historic (AN, MD, EM)
+
+**Male given names** (30): Moctezuma (10), Cuauhtemoc (10), Itzcoatl (10), Nezahualcoyotl (10), Tlacaelel (10), Ahuitzotl (7), Axayacatl (7), Tizoc (7), Cuitlahuac (7), Chimalpopoca (7), Acamapichtli (5), Huitzilihuitl (5), Nezahualpilli (5), Maxtla (5), Cacama (5), Tlacotzin (5), Ixtlilxochitl (5), Tezozomoc (5), Totoquihuatzin (3), Tlaltecatzin (3), Tochihuitzin (3), Coanacoch (3), Tenoch (3), Tlacahuepan (3), Tlilpotonqui (3), Quauhpopoca (3), Xicotencatl (2), Maxixcatzin (2), Cuauhtlatoa (2), Tecayehuatzin (2)
+
+**Female given names** (31): Atotoztli (10), Tecuichpo (10), Malinalli (10), Chimalxochitl (10), Azcalxochitl (10), Miahuaxihuitl (7), Chalchiuhnenetzin (7), Papantzin (7), Tlacoehua (7), Tzihuacxochitzin (7), Tozquentzin (5), Ilancueitl (5), Xochitl (5), Citlali (5), Quetzalli (5), Yoloxochitl (5), Itzel (5), Nochtli (5), Ihuicatl (3), Tonalli (3), Cuicatl (3), Mazatl (3), Xilonen (3), Tecpatl (3), Eztli (3), Yaretzi (3), Nahui (2), Ayotl (2), Teicuih (2), Oceloxochitl (2), Tlazohtzin (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Acamapichtli (10), Huitzilihuitl (10), Chimalpopoca (10), Itzcoatl (10), Moctezuma (10), Axayacatl (7), Tizoc (7), Ahuitzotl (7)
+
+**Regnal names, female** (8): Atotoztli (10), Chimalxochitl (10), Azcalxochitl (10), Miahuaxihuitl (10), Ilancueitl (10), Tecuichpo (7), Papantzin (7), Chalchiuhnenetzin (7)
+
+**Holy names** (12): Tlacaelel (10), Nezahualcoyotl (10), Tecayehuatzin (10), Ayocuan (10), Tochihuitzin (10), Tlaltecatzin (7), Cuauhtencoztli (7), Aquiauhtzin (7), Xayacamach (7), Quauhtencoztli (7), Mexicatl (5), Cipactonal (5)
+
+**Holy forms**: Priest {n} (50), Sage {n} (30), High Priest {n} (20)
+
+**Ruler forms**: male Emperor {m} (60), King {m} (40); female Queen {f} (70), Princess {f} (30)
+
+## Maya
+
+### historic (AN, MD, EM)
+
+**Male given names** (31): Pakal (10), Yax Pasaj (10), Jasaw Chan K'awiil (10), Yuknoom Ch'een (10), Kan Bahlam (10), Chan Bahlam (7), Yik'in Chan K'awiil (7), Siyaj Chan K'awiil (7), Wak Chan K'awiil (7), Itzamnaaj Bahlam (7), Hanab Pakal (5), Tecun Uman (5), Kikab (5), Tepepul (5), Oxib Keh (5), Beleheb Tzy (5), Nachi Cocom (5), Tutul Xiu (5), Ah Canul (3), Kan Ek (3), Kinich Ahkal (3), Ukit Kan Lek (3), Yuknoom Yich'aak K'ak' (3), Yax Nuun Ayiin (3), Sihyaj K'ahk' (3), Chak Tok Ich'aak (3), Yaxun Bahlam (2), Kinich Yo'nal Ahk (2), Tajoom Uk'ab' K'ak' (2), Aj Ne' Ohl Mat (2), Cocom (2)
+
+**Female given names** (31): Sak K'uk' (10), Yohl Ik'nal (10), Xoc (10), K'abel (10), Tz'akbu Ajaw (10), Sak Biyaan (7), Ix Mutal Ajaw (7), Ix Chan (7), Ix Kuk (7), Ix Ek (7), Ix Pol (5), Ix Nah (5), Ix Cab (5), Ix Pat (5), Ix Uc (5), Ix May (5), Ix Chel Ha (5), Ix Canul (5), Ix Coh (3), Ix Tun (3), Ix Zac (3), Ix Balam (3), Ix Kan (3), Ix Tzul (3), Ix Than (3), Ix Ayin (3), Ix Yaxche (2), Ix Ahau (2), Ix Cheel (2), Ix Be (2), Ix Chi (2)
+
+**Surnames** (32): Chan (10), Pech (10), Cocom (10), Canul (10), Chel (10), Xiu (7), Tun (7), Cupul (7), Couoh (7), May (7), Uc (5), Ek (5), Cab (5), Can (5), Cen (5), Chi (5), Ku (5), Poot (5), Dzul (3), Euan (3), Balam (3), Ake (3), Be (3), Chim (3), Tzab (3), Uicab (3), Yam (2), Tzuc (2), Pat (2), Mex (2), Cauich (2), Cituk (2)
+
+**Regnal names, male** (8): Pakal (10), Yax Pasaj (10), Jasaw Chan K'awiil (10), Kan Bahlam (10), Yuknoom Ch'een (10), Tecun Uman (7), Kikab (7), Tepepul (7)
+
+**Regnal names, female** (8): Sak K'uk' (10), Yohl Ik'nal (10), K'abel (10), Xoc (10), Tz'akbu Ajaw (10), Sak Biyaan (7), Ix Mutal Ajaw (7), Ix Chan (7)
+
+**Holy names** (12): Chilam Balam (10), Napuc Tun (10), Nakuk Pech (10), Gaspar Chi (10), Ah Kin Chi (10), Ah Kin Chel (7), Ah Kin Xiu (7), Ah Kin Pech (7), Ah Kin Cocom (7), Ah Kin Canul (7), Ah Kin Cupul (5), Ah Kin May (5)
+
+**Holy forms**: Priest {n} (40), Seer {n} (30), Sage {n} (30)
+
+**Ruler forms**: male King {m} (60), Lord {m} (40); female Queen {f} (60), Lady {f} (40)
+
+## Andean
+
+### historic (AN, MD, EM)
+
+**Male given names** (30): Atahualpa (10), Huascar (10), Pachacuti (10), Tupac Yupanqui (10), Huayna Capac (10), Manco Inca (7), Sayri Tupac (7), Titu Cusi (7), Tupac Amaru (7), Viracocha Inca (7), Yahuar Huacac (5), Inca Roca (5), Lloque Yupanqui (5), Mayta Capac (5), Capac Yupanqui (5), Ruminahui (5), Chalcuchima (5), Quisquis (5), Cusi Yupanqui (3), Amaru (3), Paullu Inca (3), Ninan Cuyochi (3), Tupac Hualpa (3), Waman (3), Inti (3), Illari (3), Sinchi Roca (2), Kusi (2), Puma (2), Titu (2)
+
+**Female given names** (30): Quispe Sisa (10), Cura Ocllo (10), Contarhuacho (10), Chimpu Ocllo (10), Anahuarque (10), Rahua Ocllo (7), Mama Runtu (7), Chuqui Llanto (7), Pillcu Huaco (7), Cusi Rimay (7), Chuqui Huipa (5), Cusi Chimbo (5), Cori Ocllo (5), Mama Huaco (5), Sisa (5), Killa (5), Chaska (5), Kusi Ocllo (5), Kori (3), Wayra (3), Sumaq (3), Yurak (3), Illa (3), Tika (3), Qori (3), Sapay (3), Nusta (2), Mayta (2), Quilla (2), Chimpu (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Pachacuti (10), Tupac Yupanqui (10), Huayna Capac (10), Huascar (10), Atahualpa (10), Manco Inca (7), Viracocha Inca (7), Inca Roca (7)
+
+**Regnal names, female** (8): Anahuarque (10), Chuqui Llanto (10), Rahua Ocllo (10), Cusi Rimay (10), Contarhuacho (10), Chimpu Ocllo (7), Cura Ocllo (7), Pillcu Huaco (7)
+
+**Holy names** (12): Huillac Umu (10), Guaman Poma (10), Santacruz Pachacuti (10), Rose (10), Martin de Porres (10), Toribius (7), Francis Solano (7), Juan Macias (7), Taqui Onqoy (7), Anchanchu (7), Titu Atauchi (5), Wari Kuri (5)
+
+**Holy forms**: Priest {n} (50), Saint {n} (30), Sage {n} (20)
+
+**Ruler forms**: male Emperor {m} (50), Inca {m} (50); female Queen {f} (60), Princess {f} (40)
+
+## Polynesian
+
+### historic (AN, MD, EM)
+
+**Male given names** (32): Kamehameha (10), Liholiho (10), Kauikeaouli (10), Lunalilo (10), Kalakaua (10), Umi (7), Pomare (7), Tupou (7), Mataafa (7), Malietoa (7), Tamasese (5), Kupe (5), Hongi (5), Te Rauparaha (5), Te Kooti (5), Tawhiao (5), Potatau (5), Kualii (5), Keawe (3), Kahekili (3), Kaumualii (3), Kiwalao (3), Keoua (3), Kalaniopuu (3), Paoa (3), Keanu (3), Kekoa (2), Makoa (2), Koa (2), Nui (2), Hone (2), Rawiri (2)
+
+**Female given names** (31): Kaahumanu (10), Liliuokalani (10), Emma (10), Kapiolani (10), Keopuolani (10), Kekauluohi (7), Kinau (7), Pauahi (7), Keelikolani (7), Kaiulani (7), Nahienaena (5), Puea (5), Atairangikaahu (5), Makea (5), Salote (5), Sinaitakala (5), Leilani (5), Malia (5), Mele (3), Lani (3), Alana (3), Maile (3), Kalani (3), Noelani (3), Hinewai (3), Aroha (3), Mere (2), Hera (2), Rangi (2), Huia (2), Moana (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Kamehameha (10), Liholiho (10), Kauikeaouli (10), Lunalilo (10), Kalakaua (10), Pomare (7), Tawhiao (7), Taufaahau (7)
+
+**Regnal names, female** (8): Liliuokalani (10), Kapiolani (10), Emma (10), Salote (10), Kaahumanu (10), Kinau (7), Kaiulani (7), Pauahi (7)
+
+**Holy names** (12): Te Kooti (10), Te Whiti (10), Tohu (10), Rua Kenana (10), Wiremu Ratana (10), Papahurihia (7), Titokowaru (7), Damien (7), Marianne (7), Kapihe (7), Kamakau (5), Haumata (5)
+
+**Holy forms**: Prophet {n} (40), Priest {n} (30), Kahuna {n} (30)
+
+**Ruler forms**: male King {m} (60), Chief {m} (40); female Queen {f} (60), Chieftainess {f} (40)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (34): Kekoa (10, ST+MO), Makoa (10, ST+MO), Kalani (10, ST+MO), Palani (10, ST+MO), Hone (10, ST), Kai (7, MO), Rawiri (7, ST), Koa (7, MO), Wiremu (7, ST), Nikau (7, MO), Hemi (5, ST), Tane (5, MO), Eruera (5, ST), Manaia (5, MO), Pita (5, ST), Rua (5, MO), Tamati (5, ST), Ariki (5, MO), Manu (3, ST), Mana (3, MO), Ihaia (3, ST), Keanu (3, MO), Rewi (3, ST), Makana (3, MO), Mikaere (3, ST), Kaleo (3, MO), Timoti (2, ST), Kaimana (2, MO), Hohepa (2, ST), Kainoa (2, MO), Hori (2, ST), Noa (2, MO), Tipene (2, ST), Ikaika (2, MO)
+
+**Female given names** (34): Salote (10, ST+MO), Sina (10, ST+MO), Tui (10, ST+MO), Lea (10, ST+MO), Mere (10, ST), Aroha (7, MO), Hera (7, ST), Moana (7, MO), Rangi (7, ST), Leilani (7, MO), Ngaire (5, ST), Malia (5, MO), Huia (5, ST), Kailani (5, MO), Hine (5, ST), Mele (5, MO), Rina (5, ST), Lani (5, MO), Kiri (3, ST), Alana (3, MO), Pare (3, ST), Maile (3, MO), Ani (3, ST), Nalani (3, MO), Maata (3, ST), Kalena (3, MO), Materoa (2, ST), Leimomi (2, MO), Wikitoria (2, ST), Melia (2, MO), Erihapeti (2, ST), Mahina (2, MO), Rahera (2, ST), Nikau Ana (2, MO)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (8): Kamehameha (10), Liholiho (10), Kauikeaouli (10), Lunalilo (10), Kalakaua (10), Pomare (7), Tawhiao (7), Taufaahau (7)
+
+**Regnal names, female** (8): Liliuokalani (10), Kapiolani (10), Emma (10), Salote (10), Kaahumanu (10), Kinau (7), Kaiulani (7), Pauahi (7)
+
+**Holy names** (12): Te Kooti (10), Te Whiti (10), Tohu (10), Rua Kenana (10), Wiremu Ratana (10), Papahurihia (7), Titokowaru (7), Damien (7), Marianne (7), Kapihe (7), Kamakau (5), Haumata (5)
+
+**Recent male names (last thirty years)**: Kai, Koa, Nikau, Tane, Manaia, Rua, Ariki, Mana, Keanu, Makana, Kaleo, Kaimana
+
+**Recent female names (last thirty years)**: Aroha, Moana, Leilani, Malia, Kailani, Mele, Lani, Alana, Maile, Nalani, Kalena, Leimomi
+
+**Holy forms**: Prophet {n} (40), Priest {n} (30), Kahuna {n} (30)
+
+**Ruler forms**: male King {m} (60), Chief {m} (40); female Queen {f} (60), Chieftainess {f} (40)
+
+## American
+
+### historic (AN, MD, EM)
+
+**Male given names** (32): John (10), William (10), Thomas (10), James (10), Richard (10), Robert (7), George (7), Samuel (7), Joseph (7), Benjamin (7), Nathaniel (5), Ebenezer (5), Josiah (5), Increase (5), Jonathan (5), Elijah (5), Isaac (5), Jacob (5), Abraham (3), Daniel (3), Peter (3), Stephen (3), Edward (3), Henry (3), Ezekiel (3), Obadiah (3), Zachariah (2), Eliphalet (2), Timothy (2), Seth (2), Silas (2), Jeremiah (2)
+
+**Female given names** (30): Mary (10), Elizabeth (10), Sarah (10), Anne (10), Hannah (10), Abigail (7), Mercy (7), Prudence (7), Patience (7), Priscilla (7), Experience (5), Temperance (5), Deborah (5), Rebecca (5), Rachel (5), Martha (5), Margaret (5), Susanna (5), Lydia (3), Ruth (3), Jane (3), Dorothy (3), Hope (3), Charity (3), Submit (3), Thankful (3), Remember (2), Content (2), Silence (2), Comfort (2)
+
+**Surnames** (30): Smith (10), Johnson (10), Williams (10), Brown (10), Jones (10), Miller (7), Davis (7), Wilson (7), Taylor (7), Anderson (7), Thomas (5), Moore (5), Martin (5), Jackson (5), Thompson (5), White (5), Harris (5), Clark (5), Lewis (3), Robinson (3), Walker (3), Young (3), Allen (3), King (3), Wright (3), Scott (3), Hill (2), Adams (2), Baker (2), Green (2)
+
+**Regnal names, male** (8): George (10), John (10), Thomas (10), James (10), Andrew (10), Abraham (7), Benjamin (7), William (7)
+
+**Regnal names, female** (8): Martha (10), Abigail (10), Dolley (10), Elizabeth (10), Mary (10), Louisa (7), Rachel (7), Anne (7)
+
+**Holy names** (12): Roger Williams (10), Anne Hutchinson (10), Jonathan Edwards (10), Cotton Mather (10), Increase Mather (10), John Eliot (7), Thomas Hooker (7), George Whitefield (7), Isaac Backus (7), Jemima Wilkinson (7), Ann Lee (5), Mary Dyer (5)
+
+**Holy forms**: Reverend {n} (50), Elder {n} (30), Saint {n} (20)
+
+**Ruler forms**: male President {m} (50), Governor {m} (30), King {m} (20); female Queen {f} (60), First Lady {f} (40)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (35): Michael (10, ST+MO), David (10, ST+MO), Richard (10, ST+MO), Kevin (10, ST+MO), Brian (10, ST+MO), John (7, ST), Liam (7, MO), William (7, ST), Noah (7, MO), James (7, ST), Oliver (5, MO), George (5, ST), Elijah (5, MO), Charles (5, ST), Mason (5, MO), Joseph (5, ST), Lucas (5, MO), Robert (5, ST), Logan (3, MO), Henry (3, ST), Ethan (3, MO), Frank (3, ST), Jacob (3, MO), Edward (3, ST), Jackson (3, MO), Thomas (3, ST), Aiden (2, MO), Walter (2, ST), Mateo (2, MO), Harry (2, ST), Jayden (2, MO), Fred (2, ST), Caleb (2, MO), Arthur (2, ST), Levi (2, MO)
+
+**Female given names** (35): Linda (10, ST+MO), Barbara (10, ST+MO), Susan (10, ST+MO), Karen (10, ST+MO), Nancy (10, ST+MO), Mary (7, ST), Olivia (7, MO), Anna (7, ST), Amelia (7, MO), Margaret (7, ST), Ava (5, MO), Helen (5, ST), Sophia (5, MO), Elizabeth (5, ST), Isabella (5, MO), Ruth (5, ST), Mia (5, MO), Florence (5, ST), Harper (3, MO), Ethel (3, ST), Evelyn (3, MO), Emma (3, ST), Abigail (3, MO), Marie (3, ST), Emily (3, MO), Minnie (3, ST), Ella (2, MO), Bertha (2, ST), Scarlett (2, MO), Clara (2, ST), Aria (2, MO), Alice (2, ST), Chloe (2, MO), Edna (2, ST), Luna (2, MO)
+
+**Surnames** (30): Smith (10), Johnson (10), Williams (10), Brown (10), Jones (10), Garcia (7), Miller (7), Davis (7), Rodriguez (7), Martinez (7), Hernandez (5), Lopez (5), Gonzalez (5), Wilson (5), Anderson (5), Thomas (5), Taylor (5), Moore (5), Jackson (3), Martin (3), Lee (3), Perez (3), Thompson (3), White (3), Harris (3), Sanchez (3), Clark (2), Ramirez (2), Lewis (2), Robinson (2)
+
+**Regnal names, male** (8): George (10), Abraham (10), Theodore (10), Franklin (10), Harry (10), Dwight (7), Ulysses (7), Woodrow (7)
+
+**Regnal names, female** (8): Eleanor (10), Edith (10), Mamie (10), Jacqueline (10), Dolley (10), Martha (7), Abigail (7), Betty (7)
+
+**Holy names** (12): Elizabeth Seton (10), Katharine Drexel (10), Frances Cabrini (10), John Neumann (10), Joseph Smith (10), Mary Baker Eddy (7), Ellen White (7), Brigham Young (7), Dwight Moody (7), Billy Sunday (7), Martin Luther King (5), Aimee McPherson (5)
+
+**Recent male names (last thirty years)**: Liam, Noah, Oliver, Elijah, Mason, Lucas, Logan, Ethan, Jackson, Aiden, Mateo, Jayden
+
+**Recent female names (last thirty years)**: Olivia, Amelia, Ava, Sophia, Isabella, Mia, Harper, Evelyn, Abigail, Emily, Ella, Scarlett
+
+**Holy forms**: Reverend {n} (50), Elder {n} (30), Saint {n} (20)
+
+**Ruler forms**: male President {m} (50), Governor {m} (30), King {m} (20); female Queen {f} (60), First Lady {f} (40)
+
+## Extras
+
+The Ottoman reads Arabic and Persian plus a Turkish extra (weight 5 each, no surnames): male Orhan, Osman, Ertugrul, Murad, Bayezid, Mehmed, Selim, Suleyman, Kemal, Cem; female Hurrem, Nurbanu, Kosem, Safiye, Turhan, Mihrimah, Nilufer, Gulbahar, Gulnihal, Esma.
+
 ## Slot forms (brief §3.4)
 
 `{g}` a given name, `{s}` a surname, `{t}` an official's title, `{r}` a ruler form filled with a regnal name, `{rm}` and `{rf}` a regnal name alone, `{h}` a holy form filled with a holy name. Where a period has no surnames, the second column applies.
@@ -368,7 +1230,9 @@ Titles for officials (`{t}`) come from the titles module's office kind in the cu
 - **General** reads Norman & British. **Norse** reads Scandinavian.
 - **Anglo-Saxon** has only a `historic` table; in the steam age and later it reads Norman & British `modern`.
 - **Celtic** with no region draws evenly from Welsh, Scottish, Irish and Cornish. Region WAL gives Welsh; COR gives Cornish; SBL, SLO, SHH and NSI give Scottish. Any other region leaves Celtic drawing evenly. The Welsh, Scottish and Cornish views therefore have tables of their own, so they now differ in every module that fills person slots.
-- A culture with no table yet (the second tier) resolves to nothing, and its brackets stay as they are until M3.
+- **Second tier:** each of the 22 lens cultures reads its own table. Roman, Egyptian, Aztec, Maya and Andean have only a `historic` table (ancient peoples with no modern naming of their own): in the steam age and later Roman reads Italian, Egyptian reads Arabic and Persian, and Aztec, Maya and Andean read Iberian.
+- **Local cultures** read the nearest second-tier culture: Maori, Hawaiian and Western Polynesian read Polynesian; Ottoman & Barbary reads Arabic and Persian plus the Turkish extra; Swahili & Omani and Phoenician read Arabic and Persian; Malay & Indonesian and Maritime South-East Asian read Indian historically and Arabic and Persian from the steam age; Hellenistic reads Greek and Byzantine; Belgian reads Dutch.
+- **No nearest culture:** Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, North American Woodlands & Plains, Pacific Northwest & Arctic, and Australia & New Guinea have no second-tier people table. They resolve to nothing, so their person brackets stay as they are, as native peoples' names do (brief §1.1).
 
 ## Notes for review
 
@@ -488,3 +1352,25 @@ Every name removed and added by the review (brief §12), per list. Renamings to 
 | Scandinavian (Norse) | 14 | 26 |
 | German | 42 | 57 |
 
+## Second tier: decisions and changes from the rules (M3)
+
+The second-tier tables were written against the rules of brief §12, so there is no earlier version to diff. What the rules shaped, per culture:
+
+- **French:** one spelling per name (Etienne, Guillaume, Jacques); no living royals; the saints Denis and Martin flagged `s`, the kings Louis and Charles `r`.
+- **Dutch:** surnames with their particles as one surname ("Van der Meer"); Beatrix left out of the regnal list as a name chiefly known from a living royal.
+- **Iberian:** Spanish and Portuguese in one list in the usual English form (Alfonso, not Afonso; Felipe); Letizia and other living consorts left out.
+- **Italian:** Romance surnames in the Italian form; Doge as a ruler form (an English word).
+- **Roman:** historic only; `AN` names and a late-Roman `MD` group (Boethius, Cassiodorus, the Church Fathers, flagged `s`); surnames are the gentilicia; no gods.
+- **Greek and Byzantine:** `AN` and `MD` tags as the brief says; modern Greek names in the usual English transliteration; "Saint", "Elder" and "Patriarch" for holy forms.
+- **Slavic:** one pan-Slavic list across Russian, Polish, Czech and South Slavic names, with the Russian transliteration for East Slavic.
+- **Turkic and Mongol steppe:** historic names are the Mongol and Turkic ones; modern names are Turkish (and Anatolian), the largest living Turkic population. Historic surnames none; Turkish modern surnames date from 1934.
+- **Arabic and Persian:** historic has no surnames (nasab); the modern lists are Arabic and Persian names in one list. Rabia, Hallaj, Rumi and the like in the holy list; "Sheikh", "Imam" and "Sufi" as forms. Living royals (Rania, Farah) left out.
+- **Egyptian:** historic only, `AN` for the pharaonic names and `MD` for Coptic ones; Coptic saints' names are given names, so not flagged. No gods.
+- **Ethiopian:** no surnames in either period (patronymic naming).
+- **Bantu:** southern and eastern African names together; no surnames historic. Historic women's names are thin in the record: Nandi, Mnkabayi, Manthatisi, Nzinga and Nehanda are attested, and the rest are Zulu and Xhosa given names of the early record.
+- **West African:** Akan day names, Mande, Yoruba, Igbo, Hausa and Wolof; no surnames historic.
+- **Indian:** historic has no surnames; modern surnames are the common regional ones. Gods' names (Lakshmi, Parvati, Radha) stay as given names borne by real women.
+- **Chinese, Japanese, Korean:** surnames in both periods; the regnal lists use the dynastic and imperial names rulers took; living imperial figures left out (Michiko, Masako).
+- **Aztec, Maya, Andean:** historic only. These are the least sure tables: the historic women's names are thin in the record. For the Aztec the attested women and common Nahuatl given names are mixed; for the Maya the Classic queens are attested and the remainder are Yucatec women's names in the `Ix` form with family names; for the Andean, Inca queens and Quechua given names. **Please check these three first.**
+- **Polynesian:** Hawaiian, Maori, Samoan and Tongan together; no surname list (modern surnames are mostly European or very varied).
+- **American:** colonial historic names; presidents' first names as regnal names (the monarch slot reads "President", "Governor" or "King"); modern surnames the common US ones.

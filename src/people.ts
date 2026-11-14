@@ -32,7 +32,7 @@ type CultureTables = Partial<Record<PeoplePeriod, PeopleTable>>;
 const CULTURES = PEOPLE.cultures as unknown as Record<string, CultureTables>;
 const FAMILIES = PEOPLE.families as Record<string, string>;
 
-type ResolveRule = string | { even?: string[]; regions?: Record<string, string>; historic?: string; modern?: string };
+type ResolveRule = string | { even?: string[]; regions?: Record<string, string>; historic?: string; modern?: string; as?: string; extra?: string };
 const RESOLVE = PEOPLE.resolve as unknown as Record<string, ResolveRule>;
 
 /** The cultures that have a table of their own (the others resolve to one of these). */
@@ -51,12 +51,13 @@ export function peopleTable(culture: string, period: PeoplePeriod): PeopleTable 
 /**
  * The people culture a module's culture (and region) reads. `celtic` with no region draws evenly
  * from Welsh, Scottish, Irish and Cornish; WAL, COR and the Scottish regions pick their view's table.
- * A culture with no table yet (second tier, at M3) gives undefined.
+ * A culture with no table and no nearer one (the native peoples with no second-tier culture) gives undefined.
  */
 export function peopleCultureFor(culture: string, region: string | undefined, rng: () => number, period: PeoplePeriod = "historic"): string | undefined {
   const rule: ResolveRule | undefined = RESOLVE[culture];
   if (rule === undefined) return CULTURES[culture] ? culture : undefined;
   if (typeof rule === "string") return peopleCultureFor(rule, region, rng, period);
+  if (rule.as) return peopleCultureFor(rule.as, region, rng, period);
   if (rule.even) {
     const picked = region ? rule.regions?.[region] : undefined;
     if (picked) return picked;
@@ -70,12 +71,30 @@ export function peopleCultureFor(culture: string, region: string | undefined, rn
 /** One draw's culture and period for a state: the culture's own table, or another's in the future eras. */
 export function peopleSourceFor(culture: string, region: string | undefined, era: string, rng: () => number): { culture: string; period: PeoplePeriod; table: PeopleTable } | undefined {
   const period = peoplePeriod(era);
-  let own = peopleCultureFor(culture, region, rng, period);
-  if (!own) return undefined;
+  const base = peopleCultureFor(culture, region, rng, period);
+  if (!base) return undefined;
+  let own = base;
   if ((era === "NF" || era === "IS") && rng() < PEOPLE.nearFuture.otherShare) own = otherCulture(own, rng) ?? own;
-  const table = peopleTable(own, period) ?? peopleTable(peopleCultureFor(own, undefined, rng, period) ?? own, period);
-  return table ? { culture: own, period, table } : undefined;
+  let table = peopleTable(own, period) ?? peopleTable(peopleCultureFor(own, undefined, rng, period) ?? own, period);
+  if (!table) return undefined;
+  const extra = own === base ? extraFor(culture) : undefined;
+  if (extra) table = withExtra(table, extra);
+  return { culture: own, period, table };
 }
+
+type ExtraSet = { male?: PeopleEntry[]; female?: PeopleEntry[]; surnames?: PeopleEntry[] };
+const EXTRAS = (PEOPLE as unknown as { extras: Record<string, ExtraSet> }).extras;
+/** The short extra set a local culture adds to its nearest culture's lists (the Ottoman's Turkish names), if it has one. */
+function extraFor(culture: string): ExtraSet | undefined {
+  const rule = RESOLVE[culture];
+  return rule && typeof rule === "object" && rule.extra ? EXTRAS[rule.extra] : undefined;
+}
+const withExtra = (table: PeopleTable, extra: ExtraSet): PeopleTable => ({
+  ...table,
+  male: [...table.male, ...(extra.male ?? [])],
+  female: [...table.female, ...(extra.female ?? [])],
+  surnames: table.surnames ? [...table.surnames, ...(extra.surnames ?? [])] : table.surnames,
+});
 
 /** In the future eras a share of names come from other cultures' modern lists, weighted towards the same family. */
 export function otherCulture(own: string, rng: () => number): string | undefined {
