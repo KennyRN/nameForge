@@ -27,6 +27,7 @@ import {
   isLandModule,
   isLocalCulture,
   lensCulture,
+  isLiveCulture,
   offeredLensCulturesFor,
   poolExemption,
 } from "./lens";
@@ -194,7 +195,8 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
     const tier = tierOf(culture);
     const counted = tally.get(culture) ?? { words: 0, shapes: 0 };
     const target = tier ? LENS_TARGETS.cultures[tier] : undefined;
-    const isLive = lensCulture(culture)?.status !== "planned";
+    const lensC = lensCulture(culture);
+    const isLive = lensC ? isLiveCulture(lensC) : true;
     // Excluded cultures are matched by key or by the lens culture a module's own key feeds.
     const excluded = excludedCultures.has(culture) || [...excludedCultures].some((x) => (offeredLensCulturesFor(module, [x]) as string[]).includes(culture));
     const notOffered = !!offered && !offered.has(culture) && lensCulture(culture) !== undefined && isLive && !excluded;
@@ -223,7 +225,7 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
     ...(regions ? { regions } : {}),
     kinds,
     ...(adapter.kindFlags && Object.keys(adapter.kindFlags).length > 0 ? { kindFlags: { ...adapter.kindFlags } } : {}),
-    ...(roster && offered ? { roster: { localKeys, notOffered: LENS_CULTURES.filter((c) => c.status === "live" && c.tier !== "baseline" && !offered.has(c.key) && !excludedCultures.has(c.key)).map((c) => c.key) } } : {}),
+    ...(roster && offered ? { roster: { localKeys, notOffered: LENS_CULTURES.filter((c) => isLiveCulture(c) && c.tier !== "baseline" && !offered.has(c.key) && !excludedCultures.has(c.key)).map((c) => c.key) } } : {}),
   };
 }
 

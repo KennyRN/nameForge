@@ -61,7 +61,7 @@ export function registerLensRules(moduleKey: string, rules: LensRules): void {
 
 interface SentenceEntry {
   family: "A" | "B" | "none";
-  fields?: { culture: string | null; era: string | null; fantastic: string | null; genre: string | null; region: string | null };
+  fields?: { where?: string | null; culture: string | null; era: string | null; fantastic: string | null; genre: string | null; region: string | null };
   roster?: string | null;
   region?: { group: string; requires: Record<string, string> | null; keepWhenHidden: boolean };
   ownEras?: boolean;
@@ -89,6 +89,8 @@ interface MenuEntry {
   key?: string;
   label?: string | null;
   view?: string;
+  /** `colonial`: a colonial tradition offered as a culture (place modules split brief §7). */
+  scope?: string;
 }
 interface Offer {
   family: "A" | "B";
@@ -96,6 +98,8 @@ interface Offer {
   eraRuns?: string[][];
   worlds: Record<string, string[]>;
   views?: string[];
+  /** Place modules split brief §7: per where, the colonial cultures whose names differ from General's there. */
+  colonial?: Record<string, string[]>;
 }
 
 const LENS = lensData as unknown as {
@@ -162,7 +166,7 @@ function viewOf(entry: SentenceEntry, state: State): string | undefined {
 const viewsOffered = (moduleKey: string): string[] => offer(moduleKey).views ?? [];
 
 /** Every culture the module offers today, plus the views the probe found, under the lens headings. */
-function cultureChoices(moduleKey: string, entry: SentenceEntry, current: string): LensChoice[] {
+function cultureChoices(moduleKey: string, entry: SentenceEntry, current: string, where?: string): LensChoice[] {
   const roster = new Map(rosterCultures(entry.roster!).map((c) => [c.key, c.label]));
   const views = new Set([...viewsOffered(moduleKey), ...(LENS.views[current] ? [current] : [])]);
   const out: LensChoice[] = [];
@@ -176,6 +180,12 @@ function cultureChoices(moduleKey: string, entry: SentenceEntry, current: string
         if (!views.has(e.view)) continue;
         id = e.view;
         label = LENS.views[e.view].label;
+      } else if (e.scope === "colonial" && e.key) {
+        // §7: a colonial tradition is a culture only where the where link is newly explored or settled and the probe found it differs there; a stored one is always shown.
+        const offered = where && where !== "home" ? offer(moduleKey).colonial?.[where] ?? [] : [];
+        if (!offered.includes(e.key) && current !== e.key) continue;
+        id = e.key;
+        label = e.label ?? e.key;
       } else if (e.key && roster.has(e.key)) {
         id = e.key;
         label = e.label ?? roster.get(e.key)!;
@@ -341,7 +351,7 @@ export function lensClause(moduleKey: string, state: object, opts: LensOptions =
   let culture = "";
   if (f.culture) {
     culture = viewOf(entry, s) ?? String(get(s, f.culture));
-    const choices = cultureChoices(moduleKey, entry, culture);
+    const choices = cultureChoices(moduleKey, entry, culture, f.where ? String(get(s, f.where) ?? "") || undefined : undefined);
     out.culture = { field: "culture", text: choices.find((c) => c.id === culture)!.label, title: opts.cultureTitle ?? CULTURE_TITLE, choices, current: culture };
   }
   if (f.era || f.genre) {

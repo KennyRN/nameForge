@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vocab from "../src/data/settlement-vocab.json";
 import { GROUP_LABELS, historySection, SECTION_GROUPS, SECTION_LABELS, SECTION_ORDER, SWITCHER_ORDER, WATERS_SECTIONS, WILDS_SECTIONS } from "../src/sections";
+import { countedWords } from "../src/routes/engine";
 import { generateWildsNames, WILDS_CULTURES, WILDS_DATA, WILDS_MODULES, type WildsShape } from "../src/wilds/engine";
 import { chooseWilds, defaultWildsState, wildsHistoryLabel, wildsSentence, wildsSentenceText } from "../src/wilds/sentence";
 
@@ -119,7 +120,13 @@ test("engine: same options and seed give the same batch; names are unique and wi
     assert.deepEqual(a.names.map((n) => n.text), b.names.map((n) => n.text), module);
     assert.equal(a.names.length, 40, module);
     assert.equal(new Set(a.names.map((n) => n.text.toLowerCase())).size, 40, module);
-    for (const n of a.names) assert.ok(n.text.split(/\s+/).length <= WILDS_DATA.cap, n.text);
+    // Own shapes keep the original check, raw words within the cap, except a shape whose fill (`{folk}`, `{town}`) can run long in plain words
+    // (an expansion such as "Dwellers of the Grey Sea"); those, and a name from a source (shape "source", its own rendering), are held to the
+    // engine's own rule: counted words (capitalised, bar "The" and the small words) within the cap.
+    for (const n of a.names) {
+      const longFill = n.shape === "source" || /\{(folk|town)/.test(n.shape);
+      assert.ok(longFill ? countedWords(n.text).length <= WILDS_DATA.cap : n.text.split(/\s+/).length <= WILDS_DATA.cap, n.text);
+    }
   }
 });
 

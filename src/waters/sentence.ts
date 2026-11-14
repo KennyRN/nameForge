@@ -5,6 +5,7 @@
 // ‹in any words›, ‹of any tone›, with ‹placeholders for› people". Built as segments like the route
 // sentence. No Obsidian imports.
 
+import { findColonialCulture } from "../places/colonialCultures";
 import { lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens } from "../lensSentence";
@@ -264,6 +265,8 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
       break;
     case "where":
       next.where = id === "new" || id === "settled" ? id : "home";
+      // Place modules split brief §7: back to home shores, a colonial tradition offered as a culture goes back to the module's default.
+      if (next.where === "home" && findColonialCulture(next.culture)) next.culture = "norman-british";
       break;
     case "fantastic":
       next = hyper ? { ...next, fantastic: id === "on" } : chooseLens(module, next, "fantastic", id);

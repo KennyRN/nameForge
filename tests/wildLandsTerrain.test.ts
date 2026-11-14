@@ -25,7 +25,9 @@ test("mountains: NTH gives Fell, Pike, Beck and Force, and never Cwm, Ben, Locha
 test("mountains: SHH gives Ben, Corrie and Lochan, and never Tor, Fell or Hause", () => {
   const names = many({ module: "mountainNames", culture: "norman-british", region: "SHH" });
   for (const w of ["Ben", "Corrie", "Lochan"]) assert.ok(has(names, new RegExp(`\\b${w}\\b`)), w);
-  for (const w of ["Tor", "Fell", "Hause"]) assert.ok(!has(names, new RegExp(`\\b${w}\\b`)), w);
+  // The module's own shapes never give them. A name drawn from the British source (M7, §8.1) keeps that engine's own rendering, which may.
+  const own = names.filter((n) => n.shape !== "source");
+  for (const w of ["Tor", "Fell", "Hause"]) assert.ok(!has(own, new RegExp(`\\b${w}\\b`)), w);
 });
 
 test("mountains: WAL gives Cwm; WCY and COR give Tor and Combe", () => {

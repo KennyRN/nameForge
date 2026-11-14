@@ -5,8 +5,10 @@
 //   presets      FROZEN. The retired modules' presets (native place names, exploration, expansion) run
 //                through the real preset helpers: save → parse → state → the module's own run.
 //   settlement   FROZEN. Settlement names in all three settings and the settlement kit.
-//   wildsWaters  The six wild lands and three seas and coasts modules at where home and new. This is
-//                the "before" for §8: M7 replaces this part only, and its commit lists the changed states.
+//   wildsWaters  The six wild lands and three seas and coasts modules at where home, new and settled.
+//                Recorded at M0 for home and new (the "before" for §8); M7 replaced this part only (sources
+//                now draw in the British cultures at home and in every culture with a tradition at new and
+//                settled; `settled` states added) and its commit lists the changed states.
 //
 // Retired-module recipe packs are covered by tests/fixtures/recipe-regression.json (recipeRegression
 // test), which must keep matching.
@@ -223,7 +225,7 @@ function wildsWatersPart(): Snapshot {
   const out: Snapshot = {};
   const wildsKinds = (module: (typeof WILDS_MODULES)[number]) => WILDS_DATA.modules[module].kinds.map((k) => k.key);
   const watersKinds = (module: WatersModule) => WATERS_DATA.modules[module].kinds.map((k) => k.key);
-  for (const where of ["home", "new"] as const) {
+  for (const where of ["home", "new", "settled"] as const) {
     for (const module of WILDS_MODULES) {
       const base = defaultWildsState(module);
       for (const culture of keysOf(WILDS_CULTURES)) {
@@ -233,7 +235,7 @@ function wildsWatersPart(): Snapshot {
       for (const kind of wildsKinds(module)) {
         record(out, `${module} ${where} kind ${kind}`, (seed) => textsOf(generateWildsNames({ ...base, module, kind, where, count: COUNT, seed })));
       }
-      if (where === "new") {
+      if (where !== "home") {
         record(out, `${module} ${where} biome temperate`, (seed) => textsOf(generateWildsNames({ ...base, module, where, biome: "temperate", count: COUNT, seed })));
       }
     }
@@ -245,7 +247,7 @@ function wildsWatersPart(): Snapshot {
       for (const kind of watersKinds(module)) {
         record(out, `${module} ${where} kind ${kind}`, (seed) => textsOf(generateWatersNames({ ...base, module, kind, where, count: COUNT, seed })));
       }
-      if (where === "new") {
+      if (where !== "home") {
         record(out, `${module} ${where} biome temperate`, (seed) => textsOf(generateWatersNames({ ...base, module, where, biome: "temperate", count: COUNT, seed })));
       }
     }
@@ -257,7 +259,11 @@ export async function buildBaseline(): Promise<Baseline> {
   return { presets: await presetsPart(), settlement: settlementPart(), wildsWaters: wildsWatersPart() };
 }
 
-if (process.env.CAPTURE_PLACE_SPLIT_BASELINE) {
+if (process.env.CAPTURE_PLACE_SPLIT_BASELINE === "wildsWaters") {
+  // M7: replace the third part only; the frozen parts stay byte for byte.
+  const recorded = JSON.parse(readFileSync(FIXTURE, "utf8")) as Baseline;
+  writeFileSync(FIXTURE, JSON.stringify({ ...recorded, wildsWaters: wildsWatersPart() }));
+} else if (process.env.CAPTURE_PLACE_SPLIT_BASELINE) {
   writeFileSync(FIXTURE, JSON.stringify(await buildBaseline()));
 }
 
@@ -279,7 +285,7 @@ test("place split baseline: settlement names and the kit run exactly as recorded
   for (const key of Object.keys(want)) assert.deepEqual(got[key], want[key], key);
 });
 
-test("place split baseline: wild lands and seas and coasts at home and new match the 'before' (replaced at M7)", () => {
+test("place split baseline: wild lands and seas and coasts at home, new and settled match what M7 recorded", () => {
   const want = expected().wildsWaters;
   const got = wildsWatersPart();
   assert.ok(Object.keys(want).length > 500, "fixture covers many states");

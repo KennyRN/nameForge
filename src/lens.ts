@@ -20,6 +20,8 @@ export interface LensCulture {
   keys: string[];
   /** Local cultures: the roster they belong to. */
   module?: string;
+  /** `colonial` (place modules split brief §7): offered only where a place module's where link is newly explored or settled, and only where the probe finds it differs; never at home, and not counted as a live culture. */
+  scope?: "colonial";
 }
 
 export interface LensEraInfo {
@@ -130,7 +132,9 @@ const CULTURE_BY_KEY = new Map(LENS.cultures.map((c) => [c.key, c]));
 export const lensCulture = (key: string): LensCulture | undefined => CULTURE_BY_KEY.get(key);
 
 /** The lens cultures that may be offered: live ones. Planned cultures are never offered (§3.1). */
-export const offeredLensCultures = (): LensCulture[] => LENS.cultures.filter((c) => c.status === "live");
+/** Whether a culture is live in the ordinary sense: offered under its keys in the shared menus (a colonial-scope culture is offered only at where new and settled). */
+export const isLiveCulture = (c: Pick<LensCulture, "status" | "scope">): boolean => c.status === "live" && c.scope !== "colonial";
+export const offeredLensCultures = (): LensCulture[] => LENS.cultures.filter(isLiveCulture);
 
 // ── Cultures ────────────────────────────────────────────────────────────────
 
@@ -176,7 +180,7 @@ export function moduleKnowsCulture(moduleKey: string, moduleCultureKey: string):
 /** The live lens cultures a module's roster reaches, in lens order: what the coverage report counts it as offering. Never a planned culture. */
 export function offeredLensCulturesFor(moduleKey: string, moduleKeys: readonly string[]): string[] {
   const reached = new Set(moduleKeys.flatMap((k) => lensCulturesFor(moduleKey, k)));
-  return LENS.cultures.filter((c) => c.status === "live" && reached.has(c.key)).map((c) => c.key);
+  return LENS.cultures.filter((c) => isLiveCulture(c) && reached.has(c.key)).map((c) => c.key);
 }
 
 /** §4.1: the draws of a tribal tradition (the group engine's `traditions.cultureMap` as it is today), if it has any. */

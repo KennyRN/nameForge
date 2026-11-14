@@ -216,9 +216,9 @@
       "kinds": [
         {"key":"ocean","menu":"Oceans","plural":"oceans","weight":10,"class":"natural"},
         {"key":"sea","menu":"Seas","plural":"seas","weight":25,"class":"natural"},
-        {"key":"bay","menu":"Gulfs and bays","plural":"gulfs and bays","weight":25,"class":"natural"},
-        {"key":"inlet","menu":"Firths, fjords and sea lochs","plural":"firths, fjords and sea lochs","weight":12,"class":"natural"},
-        {"key":"strait","menu":"Straits and channels","plural":"straits and channels","weight":13,"class":"natural"},
+        {"key":"bay","menu":"Gulfs and bays","plural":"gulfs and bays","weight":25,"class":"natural","sources":{"native":{"generics":["bay","sea-inlet-firth","strait-sound","estuary"]},"colonial":{"groups":["coast-and-sea"]}}},
+        {"key":"inlet","menu":"Firths, fjords and sea lochs","plural":"firths, fjords and sea lochs","weight":12,"class":"natural","sources":{"native":{"generics":["bay","sea-inlet-firth","strait-sound","estuary"]},"colonial":{"groups":["coast-and-sea"]}}},
+        {"key":"strait","menu":"Straits and channels","plural":"straits and channels","weight":13,"class":"natural","sources":{"native":{"generics":["bay","sea-inlet-firth","strait-sound","estuary"]},"colonial":{"groups":["coast-and-sea"]}}},
         {"key":"lake","menu":"Lakes and lochs","plural":"lakes and lochs","weight":15,"class":"natural"}
       ]
     },
@@ -226,12 +226,12 @@
       "any": "coast features of any kind",
       "eras": ["AN","MD","EM","ST","MO","NF","IS"],
       "kinds": [
-        {"key":"headland","menu":"Headlands and points","plural":"headlands and points","weight":22,"class":"natural"},
-        {"key":"cliff","menu":"Cliffs and rocks","plural":"cliffs and rocks","weight":15,"class":"natural"},
-        {"key":"beach","menu":"Beaches and sands","plural":"beaches and sands","weight":15,"class":"natural"},
-        {"key":"cove","menu":"Coves and inlets","plural":"coves and inlets","weight":15,"class":"natural"},
-        {"key":"island","menu":"Islands","plural":"islands","weight":23,"class":"natural"},
-        {"key":"coast","menu":"Coasts and shores","plural":"coasts and shores","weight":10,"class":"natural"}
+        {"key":"headland","menu":"Headlands and points","plural":"headlands and points","weight":22,"class":"natural","sources":{"native":{"generics":["headland","point-nose","promontory","sea-cliff","coastal-chasm-geo","beach-strand","sand-dunes-sandy-shore","shingle-bank","small-bay-creek","cove","island","skerry-rock-islet"]},"colonial":{"groups":["coast-and-sea","islands-and-river-land"],"generics":["island-group","reef","lagoon"]}}},
+        {"key":"cliff","menu":"Cliffs and rocks","plural":"cliffs and rocks","weight":15,"class":"natural","sources":{"native":{"generics":["headland","point-nose","promontory","sea-cliff","coastal-chasm-geo","beach-strand","sand-dunes-sandy-shore","shingle-bank","small-bay-creek","cove","island","skerry-rock-islet"]},"colonial":{"groups":["coast-and-sea","islands-and-river-land"],"generics":["island-group","reef","lagoon"]}}},
+        {"key":"beach","menu":"Beaches and sands","plural":"beaches and sands","weight":15,"class":"natural","sources":{"native":{"generics":["headland","point-nose","promontory","sea-cliff","coastal-chasm-geo","beach-strand","sand-dunes-sandy-shore","shingle-bank","small-bay-creek","cove","island","skerry-rock-islet"]},"colonial":{"groups":["coast-and-sea","islands-and-river-land"],"generics":["island-group","reef","lagoon"]}}},
+        {"key":"cove","menu":"Coves and inlets","plural":"coves and inlets","weight":15,"class":"natural","sources":{"native":{"generics":["headland","point-nose","promontory","sea-cliff","coastal-chasm-geo","beach-strand","sand-dunes-sandy-shore","shingle-bank","small-bay-creek","cove","island","skerry-rock-islet"]},"colonial":{"groups":["coast-and-sea","islands-and-river-land"],"generics":["island-group","reef","lagoon"]}}},
+        {"key":"island","menu":"Islands","plural":"islands","weight":23,"class":"natural","sources":{"native":{"generics":["headland","point-nose","promontory","sea-cliff","coastal-chasm-geo","beach-strand","sand-dunes-sandy-shore","shingle-bank","small-bay-creek","cove","island","skerry-rock-islet"]},"colonial":{"groups":["coast-and-sea","islands-and-river-land"],"generics":["island-group","reef","lagoon"]}}},
+        {"key":"coast","menu":"Coasts and shores","plural":"coasts and shores","weight":10,"class":"natural","sources":{"native":{"generics":["headland","point-nose","promontory","sea-cliff","coastal-chasm-geo","beach-strand","sand-dunes-sandy-shore","shingle-bank","small-bay-creek","cove","island","skerry-rock-islet"]},"colonial":{"groups":["coast-and-sea","islands-and-river-land"],"generics":["island-group","reef","lagoon"]}}}
       ]
     },
     "seaCharts": {

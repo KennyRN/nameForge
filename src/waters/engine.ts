@@ -34,6 +34,8 @@ import { dropStarWord, drawStarOfKind, type StarKind } from "../space/stars";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateVesselNames } from "../vessels/engine";
 import { kindInClass, type PlaceClass } from "../places/classes";
+import { drawKind, sourceFor, type KindSources } from "../places/sources";
+import { findColonialCulture } from "../places/colonialCultures";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -76,6 +78,8 @@ export interface WatersKind {
   weight: number;
   /** Place modules split brief §6: natural, managed or constructed. */
   class?: PlaceClass;
+  /** Place modules split brief §8.1: the engines this kind borrows names from (coasts and islands, seas and bays). */
+  sources?: KindSources;
 }
 
 export interface HyperShape {
@@ -120,7 +124,7 @@ interface WatersData {
 
 export const WATERS_DATA = watersData as unknown as WatersData;
 export const WATERS_CULTURES: RouteCulture[] = ROUTE_CULTURES;
-export const findWatersCulture = (key: string | undefined) => WATERS_CULTURES.find((c) => c.key === key);
+export const findWatersCulture = (key: string | undefined) => WATERS_CULTURES.find((c) => c.key === key) ?? findColonialCulture(key);
 export const HYPER_ANY = WATERS_DATA.hyper.any;
 export const HYPER_KINDS = WATERS_DATA.hyper.kinds;
 export const HYPER_SCALES: HyperScale[] = ["Sy", "Nb", "Se", "Ga"];
@@ -657,12 +661,17 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   if (options.kind && !chosenKind) notices.push(`Kind “${options.kind}” isn't offered here.`);
   const withFixed = fixedLive();
 
+  /** Whether a kind's source can give a name in this state. */
+  const sourceReaches = (s: KindSources) => !!s.delegate || sourceFor(s, { where, culture: culture.key }) !== undefined;
+
   /** §3.3: kind weights with kind Any, before the home-British multipliers. */
   const kindWeights = (plans: Map<string, [Plan, number][]>, scale?: HyperScale): [string, number][] => {
     const base: [string, number][] = [];
     const kinds = earthlyModule ? waterKinds(earthlyModule) : hyperKindsAt(scale);
     for (const k of kinds) {
-      if (!plans.has(k.key)) continue;
+      // A kind with sources but no live shape of its own is in the draw only where a source applies, so a state no source reaches draws exactly as it always has.
+      const sources = (k as WatersKind).sources;
+      if (!plans.has(k.key) && !(sources && sourceReaches(sources))) continue;
       if (!kindInClass(k as { class?: string }, options.kindClass)) continue;
       let w = k.weight;
       if (homeBritish && earthlyModule === "seasLakes") {
@@ -713,6 +722,28 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     return true;
   };
 
+  /** One name from a kind's own live plans (the 20 tries the module has always made), or undefined. */
+  const drawOwn = (list: [Plan, number][] | undefined, scale: HyperScale | undefined, anchors: string[] | undefined): WatersName | undefined => {
+    if (!list || list.length === 0) return undefined;
+    for (let i = 0; i < 20; i++) {
+      const ctx = newCtx(scale);
+      ctx.anchors = anchors;
+      ctx.drawn = new Set();
+      ctx.words = [];
+      ctx.stars = [];
+      const plan = pickWeighted(list, rng);
+      if (!plan) break;
+      ctx.shape = plan.shape;
+      const raw = renderPattern(ctx, plan.shape.p);
+      if (!raw) continue;
+      const text = routeCapitals(raw);
+      if (!acceptable(text)) continue;
+      const tones = new Set<GroupTone>([...(plan.shape.t ?? []), ...ctx.drawn]);
+      return { text, kind: plan.kind, shape: plan.shape.p, era, tones: GROUP_TONES.filter((t) => tones.has(t)), ...(scale ? { scale } : {}), words: ctx.words, ...(anchors ? { anchored: ctx.anchored } : {}) };
+    }
+    return undefined;
+  };
+
   const oneName = (): WatersName | undefined => {
     // Hyperspace: a scale for the name, from the chosen kind's scales when a kind is chosen.
     let scale: HyperScale | undefined;
@@ -734,6 +765,21 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
         if (withFixed && !options.kindClass) weights.push(["fixed", FIXED_WEIGHT]);
         kindKey = pickWeighted(weights, rng);
         fixed = kindKey === "fixed";
+      }
+      // Place modules split brief §8.1: a kind with sources first picks where the name comes from (src/places/sources.ts), wherever one applies; a series, a fixed name and every state no source reaches take the path below untouched.
+      const sourced = !fixed && earthlyModule && kindKey && !(options.series && watersHasSeries(module)) ? findWaterKind(earthlyModule, kindKey)?.sources : undefined;
+      if (sourced && kindKey && sourceReaches(sourced)) {
+        let own: WatersName | undefined;
+        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: false, rng }, () => {
+          own = drawOwn(plans.get(kindKey!), scale, anchors);
+          return own?.text;
+        });
+        if (text !== undefined) {
+          if (own && (own as WatersName).text === text) return own;
+          if (acceptable(text)) return { text, kind: kindKey, shape: "source", era, tones: [], words: [] };
+        }
+        if (chosenKind) return undefined;
+        continue;
       }
       let list: [Plan, number][] | undefined = fixed ? [] : kindKey ? plans.get(kindKey) : undefined;
       if (!fixed && (!list || list.length === 0)) {

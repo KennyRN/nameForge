@@ -1540,42 +1540,48 @@
      "menu": "Ranges and massifs",
      "plural": "ranges and massifs",
      "weight": 16,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"]}, "colonial": {"groups": ["mountains-and-rock"], "generics": ["mountain-range", "volcano", "glacier"]}}
     },
     {
      "key": "peak",
      "menu": "Peaks and summits",
      "plural": "peaks and summits",
      "weight": 22,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"]}, "colonial": {"groups": ["mountains-and-rock"], "generics": ["mountain-range", "volcano", "glacier"]}}
     },
     {
      "key": "ridge",
      "menu": "Ridges, edges and crags",
      "plural": "ridges, edges and crags",
      "weight": 12,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"]}, "colonial": {"groups": ["mountains-and-rock"], "generics": ["mountain-range", "volcano", "glacier"]}}
     },
     {
      "key": "pass",
      "menu": "Passes and cols",
      "plural": "passes and cols",
      "weight": 12,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["pass", "gap-notch"]}}
     },
     {
      "key": "gorge",
      "menu": "Gorges and ravines",
      "plural": "gorges and ravines",
      "weight": 7,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["narrow-valley-glen", "corrie", "river-cut-gorge"]}, "colonial": {"groups": ["valleys"]}}
     },
     {
      "key": "valley",
      "menu": "Valleys, glens and corries",
      "plural": "valleys, glens and corries",
      "weight": 10,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["narrow-valley-glen", "corrie", "river-cut-gorge"]}, "colonial": {"groups": ["valleys"]}}
     },
     {
      "key": "stream",
@@ -1596,7 +1602,8 @@
      "menu": "Tarns and lakes",
      "plural": "tarns and lakes",
      "weight": 6,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["small-mountain-lake"]}}
     },
     {
      "key": "ice",
@@ -1610,7 +1617,8 @@
      "menu": "Caves and mines",
      "plural": "caves and mines",
      "weight": 4,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"]}, "colonial": {"groups": ["mountains-and-rock"], "generics": ["mountain-range", "volcano", "glacier"]}}
     },
     {
      "key": "settlement",
@@ -1656,21 +1664,24 @@
      "menu": "Forests and woods",
      "plural": "forests and woods",
      "weight": 22,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"]}, "colonial": {"groups": ["woodland"]}}
     },
     {
      "key": "grove",
      "menu": "Groves, copses and thickets",
      "plural": "groves, copses and thickets",
      "weight": 14,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"]}, "colonial": {"groups": ["woodland"]}}
     },
     {
      "key": "clearing",
      "menu": "Clearings, glades and dells",
      "plural": "clearings, glades and dells",
      "weight": 12,
-     "class": "managed"
+     "class": "managed",
+     "sources": {"native": {"generics": ["woodland-then-clearing", "newly-cleared-land-assart", "clearing-paddock", "woodland-swine-pasture"]}, "colonial": {"groups": ["clearings"]}}
     },
     {
      "key": "ride",
@@ -1705,14 +1716,16 @@
      "menu": "Named trees and stones",
      "plural": "named trees and stones",
      "weight": 8,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"]}, "colonial": {"groups": ["woodland"]}}
     },
     {
      "key": "walk",
      "menu": "Walks, parks and coverts",
      "plural": "walks, parks and coverts",
      "weight": 6,
-     "class": "managed"
+     "class": "managed",
+     "sources": {"native": {"generics": ["park"]}}
     },
     {
      "key": "settlement",
@@ -1752,7 +1765,8 @@
      "menu": "Deserts and sand seas",
      "plural": "deserts and sand seas",
      "weight": 18,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"colonial": {"generics": ["desert", "oasis", "dry-riverbed"]}}
     },
     {
      "key": "dune",
@@ -1787,7 +1801,8 @@
      "menu": "Oases, wells and springs",
      "plural": "oases, wells and springs",
      "weight": 14,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"colonial": {"generics": ["desert", "oasis", "dry-riverbed"]}}
     },
     {
      "key": "lake",
@@ -1848,14 +1863,16 @@
      "menu": "Moors and fells",
      "plural": "moors and fells",
      "weight": 20,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["upland-moor", "heath"]}, "colonial": {"groups": ["upland-and-open-ground"]}}
     },
     {
      "key": "hill",
      "menu": "Tors, riggs and hills",
      "plural": "tors, riggs and hills",
      "weight": 14,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["upland-moor", "heath"]}, "colonial": {"groups": ["upland-and-open-ground"]}}
     },
     {
      "key": "bog",
@@ -1943,14 +1960,16 @@
      "menu": "Marshes and fens",
      "plural": "marshes and fens",
      "weight": 20,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"]}, "colonial": {"groups": ["wetland"]}}
     },
     {
      "key": "bog",
      "menu": "Bogs and mires",
      "plural": "bogs and mires",
      "weight": 10,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"]}, "colonial": {"groups": ["wetland"]}}
     },
     {
      "key": "swamp",
@@ -1964,14 +1983,16 @@
      "menu": "Reedbeds and carrs",
      "plural": "reedbeds and carrs",
      "weight": 8,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"]}, "colonial": {"groups": ["wetland"]}}
     },
     {
      "key": "water",
      "menu": "Meres, broads and pools",
      "plural": "meres, broads and pools",
      "weight": 10,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"]}, "colonial": {"groups": ["wetland"]}}
     },
     {
      "key": "channel",
@@ -1985,14 +2006,16 @@
      "menu": "Islands and holmes",
      "plural": "islands and holmes",
      "weight": 8,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["dry-ground-in-wet-land"]}}
     },
     {
      "key": "causeway",
      "menu": "Causeways and crossings",
      "plural": "causeways and crossings",
      "weight": 6,
-     "class": "constructed"
+     "class": "constructed",
+     "sources": {"native": {"generics": ["causeway"]}}
     },
     {
      "key": "delta",
@@ -2047,21 +2070,24 @@
      "menu": "Downs and wolds",
      "plural": "downs and wolds",
      "weight": 14,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["wold", "heath"]}, "colonial": {"groups": ["upland-and-open-ground"], "generics": ["plain-grassland"]}}
     },
     {
      "key": "meadow",
      "menu": "Meadows, leas and pastures",
      "plural": "meadows, leas and pastures",
      "weight": 14,
-     "class": "managed"
+     "class": "managed",
+     "sources": {"native": {"generics": ["hay-meadow", "pasture"]}}
     },
     {
      "key": "heath",
      "menu": "Heaths and commons",
      "plural": "heaths and commons",
      "weight": 8,
-     "class": "natural"
+     "class": "natural",
+     "sources": {"native": {"generics": ["wold", "heath"]}, "colonial": {"groups": ["upland-and-open-ground"], "generics": ["plain-grassland"]}}
     },
     {
      "key": "vale",
@@ -9843,9 +9869,7 @@
    "slavic": "russian",
    "arabic-persian": "arab",
    "chinese": "chinese",
-   "japanese": "japanese"
-  },
-  "cultureToColonialAdded": {
+   "japanese": "japanese",
    "norse": [
     { "tradition": "danish", "weight": 50 },
     { "tradition": "swedish", "weight": 50 }
@@ -9861,7 +9885,8 @@
    "german": "german",
    "italian": "italian",
    "phoenician": "phoenician",
-   "belgian": "belgian"
+   "belgian": "belgian",
+   "hellenistic": "hellenistic"
   }
  },
  "sources": {

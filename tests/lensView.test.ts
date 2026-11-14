@@ -13,7 +13,7 @@ import { chooseVessel } from "../src/vessels/sentence";
 import { PLACE_SHAPE_REGIONS } from "../src/placeShapes";
 
 type Entry = { family: "A" | "B"; fields: Record<"culture" | "era" | "fantastic" | "genre" | "region", string | null>; roster?: string; region?: { group: string; requires: Record<string, string> | null; keepWhenHidden: boolean }; ownEras?: boolean };
-const LENS = lensData as unknown as { modules: Record<string, { sentence: Entry | { family: "none" } }>; menu: { heading: string | null; entries: { key?: string; label?: string | null; view?: string }[] }[] };
+const LENS = lensData as unknown as { modules: Record<string, { sentence: Entry | { family: "none" } }>; menu: { heading: string | null; entries: { key?: string; label?: string | null; view?: string; scope?: string }[] }[] };
 const OFFERS = (offersData as unknown as { modules: Record<string, { eras: (string[] | string)[]; eraRuns?: string[][]; worlds: Record<string, string[]>; views?: string[] }> }).modules;
 const entryOf = (m: string) => LENS.modules[m].sentence as Entry;
 const REGION_CODES = PLACE_SHAPE_REGIONS.map((r) => r.code);
@@ -61,8 +61,13 @@ const MENU_BRIEF: [string | null, string[]][] = [
 
 test("the menu in lens.json has the headings, keys and order of the brief", () => {
   assert.deepEqual(
-    LENS.menu.map((b) => [b.heading, b.entries.map((e) => e.view ?? e.key)]),
+    // The colonial-scope entries (place modules split brief §7) are the menu's additions: checked below.
+    LENS.menu.map((b) => [b.heading, b.entries.filter((e) => !e.scope).map((e) => e.view ?? e.key)]),
     MENU_BRIEF,
+  );
+  assert.deepEqual(
+    LENS.menu.map((b) => [b.heading, b.entries.filter((e) => e.scope === "colonial").map((e) => e.key)]).filter(([, keys]) => (keys as string[]).length > 0),
+    [["Northern Europe", ["german", "belgian"]], ["Western and southern Europe", ["italian", "hellenistic"]], ["Middle East and Africa", ["phoenician"]]],
   );
   const label = (k: string) => LENS.menu.flatMap((b) => b.entries).find((e) => e.key === k)?.label;
   // The user's amendment: the English periods keep the labels their modules give them.
@@ -150,7 +155,8 @@ test("every choice in every menu gives a state whose four values are ones the se
       for (const field of FIELDS) {
         for (const c of clause[field]?.choices ?? []) {
           const next = applyLensChoice(m, state, field, c.id);
-          if (roster && e.fields.culture) assert.ok(roster.has(String(next[e.fields.culture])), `${m}: ${field} “${c.id}” keeps a culture the module has`);
+          // A colonial tradition offered as a culture at newly explored or settled lands (§7) is the one culture a roster doesn't list.
+          if (roster && e.fields.culture) assert.ok(roster.has(String(next[e.fields.culture])) || ["german", "italian", "phoenician", "belgian", "hellenistic"].includes(String(next[e.fields.culture])), `${m}: ${field} “${c.id}” keeps a culture the module has`);
           if (e.family === "A" && e.fields.era) assert.ok(ERA_CODES.includes(String(next[e.fields.era])), `${m}: era stays a code`);
           if (e.family === "B" && !e.ownEras) assert.ok(["fantasy", "modern", "scifi"].includes(String(next[e.fields.genre!])));
           if (e.fields.region && next[e.fields.region] !== undefined) assert.ok(REGION_CODES.includes(String(next[e.fields.region])), `${m}: region stays a code`);

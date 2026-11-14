@@ -68,7 +68,7 @@ const seedFrom = (rng: () => number): number => Math.floor(rng() * 4294967296) >
 /** §3.2: a culture's colonial tradition, drawn by weight where the entry has two; `undefined` for none, "general" for the general one. */
 export function colonialTraditionOf(culture: string, rng: () => number): string | undefined {
   const link = WILDS_DATA.settlementLink;
-  const entry: string | { tradition: string; weight: number }[] | undefined = (link.cultureToColonial as Record<string, string | undefined>)[culture] ?? link.cultureToColonialAdded?.[culture];
+  const entry = link.cultureToColonial[culture];
   if (entry === undefined) return undefined;
   if (typeof entry === "string") return entry;
   const total = entry.reduce((sum, e) => sum + e.weight, 0);
@@ -83,7 +83,7 @@ export function colonialTraditionOf(culture: string, rng: () => number): string 
 /** Whether a culture has a colonial tradition at all (§3.2). */
 export const hasColonialTradition = (culture: string): boolean => {
   const link = WILDS_DATA.settlementLink;
-  return culture in link.cultureToColonial || !!link.cultureToColonialAdded && culture in link.cultureToColonialAdded;
+  return culture in link.cultureToColonial;
 };
 
 /** The source a kind could draw from in this state, before any roll: native at home for a British culture, colonial for new and settled for a culture with a tradition. */

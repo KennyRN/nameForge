@@ -44,9 +44,10 @@ test("data: every kind of the nine modules has the class §6 gives it", () => {
   }
 });
 
-test("data: the class is the only change to a kind (the table's other fields are as before)", () => {
-  for (const module of WILDS_MODULES) for (const k of WILDS_DATA.modules[module].kinds) assert.deepEqual(Object.keys(k).sort(), ["class", "key", "menu", "plural", "weight"]);
-  for (const module of ["seasLakes", "coastsIslands", "seaCharts"] as const) for (const k of WATERS_DATA.modules[module].kinds) assert.deepEqual(Object.keys(k).sort(), ["class", "key", "menu", "plural", "weight"]);
+test("data: the class (and, from M7, the sources of §8.1) are the only changes to a kind (the table's other fields are as before)", () => {
+  const plain = (k: object) => Object.keys(k).filter((f) => f !== "sources").sort();
+  for (const module of WILDS_MODULES) for (const k of WILDS_DATA.modules[module].kinds) assert.deepEqual(plain(k), ["class", "key", "menu", "plural", "weight"]);
+  for (const module of ["seasLakes", "coastsIslands", "seaCharts"] as const) for (const k of WATERS_DATA.modules[module].kinds) assert.deepEqual(plain(k), ["class", "key", "menu", "plural", "weight"]);
 });
 
 // ── The probe records the classes a module offers ───────────────────────────

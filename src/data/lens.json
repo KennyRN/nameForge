@@ -78,7 +78,8 @@
    "label": "German",
    "tier": "core",
    "family": "germanic",
-   "status": "planned",
+   "status": "live",
+   "scope": "colonial",
    "keys": []
   },
   {
@@ -116,7 +117,8 @@
    "label": "Italian",
    "tier": "second",
    "family": "romance",
-   "status": "planned",
+   "status": "live",
+   "scope": "colonial",
    "keys": []
   },
   {
@@ -2122,6 +2124,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2145,6 +2148,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2168,6 +2172,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2184,6 +2189,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2207,6 +2213,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2230,6 +2237,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2253,6 +2261,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2276,6 +2285,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2299,6 +2309,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2322,6 +2333,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2345,6 +2357,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2368,6 +2381,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2819,6 +2833,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -2842,6 +2857,7 @@
    "sentence": {
     "family": "A",
     "fields": {
+     "where": "where",
      "culture": "culture",
      "era": "era",
      "fantastic": "fantastic",
@@ -3032,6 +3048,16 @@
     {
      "key": "dutch",
      "label": "Dutch"
+    },
+    {
+     "key": "german",
+     "label": "German",
+     "scope": "colonial"
+    },
+    {
+     "key": "belgian",
+     "label": "Belgian",
+     "scope": "colonial"
     }
    ]
   },
@@ -3053,6 +3079,16 @@
     {
      "key": "greek-byzantine",
      "label": "Greek and Byzantine"
+    },
+    {
+     "key": "italian",
+     "label": "Italian",
+     "scope": "colonial"
+    },
+    {
+     "key": "hellenistic",
+     "label": "Hellenistic",
+     "scope": "colonial"
     }
    ]
   },
@@ -3099,6 +3135,11 @@
     {
      "key": "west-african",
      "label": "West African"
+    },
+    {
+     "key": "phoenician",
+     "label": "Phoenician",
+     "scope": "colonial"
     }
    ]
   },

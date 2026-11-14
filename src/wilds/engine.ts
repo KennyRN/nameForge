@@ -33,7 +33,8 @@ import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, personNames
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
 import { kindInClass, type PlaceClass } from "../places/classes";
-import { drawKind, type KindSources } from "../places/sources";
+import { drawKind, sourceFor, type KindSources } from "../places/sources";
+import { findColonialCulture } from "../places/colonialCultures";
 import { isSpaceModule, kindScalesAt, scaleForDraw } from "../places/space";
 import type { ScaleChoice } from "../space/scale";
 
@@ -116,9 +117,8 @@ interface WildsData {
     nativeLand: Record<string, { terrain: string; biomeIfUnset?: string }>;
     worldEraToRoute: Record<string, Record<string, WildsEra>>;
     colonialToCulture: Record<string, { culture: string; era: WildsEra }>;
-    cultureToColonial: Record<string, string>;
-    /** Place modules split brief §3.2: more cultures' colonial traditions; a list is drawn from per name, by weight. Read by the place sources only. */
-    cultureToColonialAdded?: Record<string, string | { tradition: string; weight: number }[]>;
+    /** Place modules split brief §3.2: a culture's colonial tradition; a two-way entry is drawn from by weight (per name by the place sources, per batch by the settlement link). */
+    cultureToColonial: Record<string, string | { tradition: string; weight: number }[]>;
   };
   sources: { beast: { pool: number; biome: number; biomeLists: Record<string, number> }; tree: { pool: number; biome: number; biomeLists: Record<string, number> }; stock: { biome: number; biomeLists: Record<string, number> } };
   beastPools: Record<string, string>;
@@ -149,7 +149,7 @@ const PLACES_DATA: WildsData = {
 /** The table a module reads. */
 export const wildsDataOf = (module: WildsLikeModule): WildsData => (isPlaceModule(module) ? PLACES_DATA : WILDS_DATA);
 export const WILDS_CULTURES: RouteCulture[] = ROUTE_CULTURES;
-export const findWildsCulture = (key: string | undefined) => WILDS_CULTURES.find((c) => c.key === key);
+export const findWildsCulture = (key: string | undefined) => WILDS_CULTURES.find((c) => c.key === key) ?? findColonialCulture(key);
 export const isBritishCulture = (culture: string) => BRITISH_CULTURES.includes(culture);
 
 export const wildsModuleData = (module: WildsLikeModule): WildsModuleData => wildsDataOf(module).modules[module];
@@ -188,7 +188,8 @@ export function wildsKindLive(module: WildsLikeModule, kind: string, era: WildsE
   const sources = findWildsKind(module, kind)?.sources;
   // Stars and space (§5.5): a kind lives in an era where one of its scales does.
   if (sources && isSpaceModule(module)) return kindScalesAt(sources, era).length > 0;
-  if (sources) return true;
+  // The wild lands keep their kind menu as it was: a source adds names, not kinds. Only the focused place modules list a kind on sources alone.
+  if (sources && isPlaceModule(module)) return true;
   return shapes.some((s) => !s.e || s.e.includes(era));
 }
 /** The kinds offered in an era. */
@@ -336,6 +337,8 @@ export function nativeSettlementRequest(
   chosenBiome: string | undefined,
   mode: GroupPeople,
   catalogue: BiomeCatalogue = BUILT_IN_BIOMES,
+  /** A two-way culture (Norse, Iberian) draws its tradition once per batch, by weight, from the batch's stream. */
+  rng?: () => number,
 ): SettlementNamesOptions | undefined {
   const link = WILDS_DATA.settlementLink;
   if (mode === "placeholders" || era === "NF" || era === "IS") return undefined;
@@ -345,7 +348,8 @@ export function nativeSettlementRequest(
   const biome = chosenBiome ?? land.biomeIfUnset;
   const base = { size: "any" as const, count: 0, terrain: land.terrain, biome, wilds: false };
   if (where === "new" || where === "settled") {
-    const tradition = link.cultureToColonial[culture];
+    const entry = link.cultureToColonial[culture];
+    const tradition = typeof entry === "string" || entry === undefined ? entry : pickTradition(entry, rng ?? (() => 0));
     return tradition ? { ...base, setting: where === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? undefined : tradition } : undefined;
   }
   if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : undefined };
@@ -354,6 +358,17 @@ export function nativeSettlementRequest(
   const eras = worldCulture.eras.filter((e) => e.id !== INTERSTELLAR_ERA);
   const match = eras.find((e) => link.worldEraToRoute[culture]?.[e.id] === era) ?? eras[0];
   return { ...base, setting: "native", culture, era: match?.id, biome: undefined, customBiome: biome ? catalogue.find(biome) : undefined };
+}
+
+/** A weighted two-way tradition entry (§3.2): one roll, by weight. */
+function pickTradition(entry: { tradition: string; weight: number }[], rng: () => number): string {
+  const total = entry.reduce((sum, e) => sum + e.weight, 0);
+  let roll = rng() * total;
+  for (const e of entry) {
+    roll -= e.weight;
+    if (roll < 0) return e.tradition;
+  }
+  return entry[entry.length - 1].tradition;
 }
 
 export interface WildsName {
@@ -790,6 +805,9 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const culture = findWildsCulture(options.culture) ?? findWildsCulture(wildsDefaultCulture(module))!;
   const era: WildsEra = data.eras.includes(options.era as WildsEra) ? options.era! : data.eras.includes("MD") ? "MD" : data.eras[data.eras.length - 1];
   const spaceModule = isSpaceModule(module);
+  const spaceOrPlace = isPlaceModule(module);
+  /** Whether a kind's source can give a name in this state (a delegate always can). */
+  const sourceReaches = (s: KindSources) => !!s.delegate || sourceFor(s, { where, culture: culture.key }) !== undefined;
   // Stars and space has no home country: a stored `home` reads as newly explored space.
   const where: WildsWhere = options.where === "new" || options.where === "settled" ? options.where : spaceModule ? "new" : "home";
   const fantastic = !!options.fantastic;
@@ -858,7 +876,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     const base: [string, number][] = [];
     for (const k of data.kinds) {
       // A kind with sources (a delegated river kind has no shapes of its own) needs no live shape.
-      if (!plans().has(k.key) && !k.sources) continue;
+      // Wild lands (not the focused place modules): a kind with sources but no live shape of its own is in the draw only where a source applies, so a state no source reaches draws exactly as it always has.
+      if (!plans().has(k.key) && !(k.sources && (spaceOrPlace || sourceReaches(k.sources)))) continue;
       if (!kindInClass(k, options.kindClass)) continue;
       // Stars and space: with a scale chosen, kind Any keeps the kinds that have groups at that scale.
       if (spaceModule) {
@@ -908,7 +927,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   };
 
   // §9.4: the native branch, asked for once per batch, the first time it is needed.
-  const nativeRequest = options.purposeBuiltOnly ? undefined : nativeSettlementRequest(module, culture.key, era, where, region, homeBritish ? undefined : options.biome, mode, options.catalogue);
+  const nativeRequest = options.purposeBuiltOnly ? undefined : nativeSettlementRequest(module, culture.key, era, where, region, homeBritish ? undefined : options.biome, mode, options.catalogue, rng);
   let nativeQueue: string[] | undefined;
   const nextNative = (): string | undefined => {
     if (!nativeRequest) return undefined;
@@ -977,6 +996,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
       else kindKey = pickWeighted(kindWeights(), rng);
       // Place modules split brief §4: a kind with sources first picks where the name comes from (src/places/sources.ts).
       let sourced = kindKey ? findWildsKind(module, kindKey)?.sources : undefined;
+      // The wild lands draw through a source only where one applies (a series never does); everywhere else the legacy path below runs untouched.
+      if (sourced && !isPlaceModule(module) && (options.series || !sourceReaches(sourced))) sourced = undefined;
       // Stars and space (§5.5): one scale per name; a kind with no scale in the era draws its own shapes only.
       const scale = spaceModule ? scaleForDraw(sourced, era, options.scale, rng) : undefined;
       if (spaceModule && sourced && !scale) sourced = { ...sourced, colonial: undefined, delegate: undefined };

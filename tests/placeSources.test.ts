@@ -29,37 +29,27 @@ test("the shares are as §4.1 fixes them, in lens.json", () => {
   assert.ok((lens as { sourceShares?: unknown }).sourceShares);
 });
 
-test("the culture-to-tradition map: §3.2's additions are there, the old entries stay, every tradition exists", () => {
-  const link = WILDS_DATA.settlementLink;
-  assert.deepEqual(link.cultureToColonial, {
-    general: "general",
-    "norman-british": "british-imperial",
-    "anglo-saxon": "british-imperial",
-    celtic: "british-imperial",
-    roman: "roman",
-    "greek-byzantine": "hellenistic",
-    slavic: "russian",
-    "arabic-persian": "arab",
-    chinese: "chinese",
-    japanese: "japanese",
-  });
-  const added = link.cultureToColonialAdded!;
-  assert.deepEqual(Object.keys(added).sort(), ["american", "belgian", "dutch", "french", "german", "iberian", "italian", "norse", "ottoman", "phoenician"]);
-  assert.deepEqual(added.norse, [{ tradition: "danish", weight: 50 }, { tradition: "swedish", weight: 50 }]);
-  assert.deepEqual(added.iberian, [{ tradition: "spanish", weight: 50 }, { tradition: "portuguese", weight: 50 }]);
-  assert.equal(added.american, "english-speaking-settler");
+test("the culture-to-tradition map: §3.2's additions are merged into the one map (M7), the old entries stay, every tradition exists", () => {
+  const link = WILDS_DATA.settlementLink as unknown as { cultureToColonial: Record<string, string | { tradition: string; weight: number }[]>; cultureToColonialAdded?: unknown };
+  assert.equal(link.cultureToColonialAdded, undefined, "the separate key is gone");
+  assert.deepEqual(Object.keys(link.cultureToColonial).sort(), [
+    "american", "anglo-saxon", "arabic-persian", "belgian", "celtic", "chinese", "dutch", "french", "general", "german", "greek-byzantine", "hellenistic", "iberian", "italian", "japanese", "norman-british", "norse", "ottoman", "phoenician", "roman", "slavic",
+  ]);
+  const old = { general: "general", "norman-british": "british-imperial", "anglo-saxon": "british-imperial", celtic: "british-imperial", roman: "roman", "greek-byzantine": "hellenistic", slavic: "russian", "arabic-persian": "arab", chinese: "chinese", japanese: "japanese" };
+  for (const [k, v] of Object.entries(old)) assert.equal(link.cultureToColonial[k], v, `${k} keeps its tradition`);
+  assert.deepEqual(link.cultureToColonial.norse, [{ tradition: "danish", weight: 50 }, { tradition: "swedish", weight: 50 }]);
+  assert.deepEqual(link.cultureToColonial.iberian, [{ tradition: "spanish", weight: 50 }, { tradition: "portuguese", weight: 50 }]);
+  assert.equal(link.cultureToColonial.american, "english-speaking-settler");
   const traditions = new Set(COLONIAL_DATA.traditions.map((t) => t.id));
-  for (const entry of [...Object.values(link.cultureToColonial), ...Object.values(added)].flatMap((e) => (typeof e === "string" ? [e] : e.map((x) => x.tradition)))) {
+  for (const entry of Object.values(link.cultureToColonial).flatMap((e) => (typeof e === "string" ? [e] : e.map((x) => x.tradition)))) {
     assert.ok(entry === "general" || traditions.has(entry), `tradition ${entry} exists`);
   }
 });
 
-test("the added cultures change no current output: the settlement link still reads only the old map", () => {
-  // `norse` is only in the added map, so a wild lands settlement draw at `new` still has no colonial request.
-  const before = generateWildsNames({ module: "mountainNames", culture: "norse", era: "MD", where: "new", count: 12, seed: 42 }).names.map((n) => n.text);
-  const again = generateWildsNames({ module: "mountainNames", culture: "norse", era: "MD", where: "new", count: 12, seed: 42 }).names.map((n) => n.text);
-  assert.deepEqual(before, again);
-  assert.equal(WILDS_DATA.settlementLink.cultureToColonial["norse" as string], undefined);
+test("M7: the merged cultures reach the settlement link: Norse at `new` now draws settlements from a colonial tradition", () => {
+  // Before the merge `norse` had no entry, so a wild lands settlement draw at `new` had no colonial request.
+  const settlements = generateWildsNames({ module: "mountainNames", culture: "norse", era: "MD", where: "new", kind: "settlement", settlementSize: "any", people: "invented", count: 12, seed: 42 });
+  assert.ok(settlements.names.length > 0);
 });
 
 test("a two-way entry is drawn per name by weight; a one-way entry is that tradition; none is none", () => {

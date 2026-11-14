@@ -2,7 +2,7 @@
 // from the numbers in coverage.ts. Pure string building; `npm run coverage` writes the files.
 
 import { buildCoverage, COVERAGE_ADAPTERS, type CoverageReport, type CultureCell, type ModuleCoverage } from "./coverage";
-import { LENS_CULTURES, LENS_ERAS, LENS_STYLES, LENS_TARGETS, LENS_TONES, LENS_REGIONS } from "./lens";
+import { LENS_CULTURES, LENS_ERAS, LENS_STYLES, LENS_TARGETS, LENS_TONES, LENS_REGIONS, isLiveCulture } from "./lens";
 import { SECTION_LABELS, type NameForgeSection } from "./sections";
 
 const label = (module: string) => SECTION_LABELS[module as NameForgeSection] ?? module;
@@ -20,7 +20,7 @@ function cultureCell(cell: CultureCell | undefined): string {
 
 const table = (head: string[], rows: string[][]) => [`| ${head.join(" | ")} |`, `| ${head.map(() => "---").join(" | ")} |`, ...rows.map((r) => `| ${r.join(" | ")} |`)].join("\n");
 
-const liveLensCultures = () => LENS_CULTURES.filter((c) => (c.tier === "core" || c.tier === "second") && c.status === "live");
+const liveLensCultures = () => LENS_CULTURES.filter((c) => (c.tier === "core" || c.tier === "second") && isLiveCulture(c));
 
 /** The report in Markdown, British English. */
 export function renderCoverageMarkdown(report: CoverageReport = buildCoverage()): string {
@@ -123,7 +123,7 @@ export function renderCoverageMarkdown(report: CoverageReport = buildCoverage())
 
   // 8. Totals
   out.push("## 8. Totals", "", "Distinct entries across the reported modules; a shared pool counts once.", "");
-  out.push(table(["lens culture", "words", "shapes"], LENS_CULTURES.filter((c) => c.tier !== "baseline").map((c) => [c.label + (c.status === "planned" ? " (planned)" : ""), String(report.totals.cultures[c.key]?.words ?? 0), String(report.totals.cultures[c.key]?.shapes ?? 0)])), "");
+  out.push(table(["lens culture", "words", "shapes"], LENS_CULTURES.filter((c) => c.tier !== "baseline").map((c) => [c.label + (c.status === "planned" || c.scope === "colonial" ? " (planned)" : ""), String(report.totals.cultures[c.key]?.words ?? 0), String(report.totals.cultures[c.key]?.shapes ?? 0)])), "");
   out.push(table(["era", "entries"], LENS_ERAS.map((e) => [`${e.code} ${e.label}`, String(report.totals.eras[e.code] ?? 0)])), "");
   out.push(table(["style", "words", "shapes"], styleKeys.map((k) => [styleLabel(k), String(report.totals.styles[k]?.words ?? 0), String(report.totals.styles[k]?.shapes ?? 0)])), "");
   out.push(table(["tone", "entries"], LENS_TONES.map((tone) => [tone, String(report.totals.tones[tone] ?? 0)])), "");

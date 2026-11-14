@@ -62403,7 +62403,8 @@ var lens_default = {
       label: "German",
       tier: "core",
       family: "germanic",
-      status: "planned",
+      status: "live",
+      scope: "colonial",
       keys: []
     },
     {
@@ -62441,7 +62442,8 @@ var lens_default = {
       label: "Italian",
       tier: "second",
       family: "romance",
-      status: "planned",
+      status: "live",
+      scope: "colonial",
       keys: []
     },
     {
@@ -64447,6 +64449,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64470,6 +64473,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64493,6 +64497,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64509,6 +64514,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64532,6 +64538,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64555,6 +64562,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64578,6 +64586,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64601,6 +64610,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64624,6 +64634,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64647,6 +64658,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64670,6 +64682,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -64693,6 +64706,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -65144,6 +65158,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -65167,6 +65182,7 @@ var lens_default = {
       sentence: {
         family: "A",
         fields: {
+          where: "where",
           culture: "culture",
           era: "era",
           fantastic: "fantastic",
@@ -65357,6 +65373,16 @@ var lens_default = {
         {
           key: "dutch",
           label: "Dutch"
+        },
+        {
+          key: "german",
+          label: "German",
+          scope: "colonial"
+        },
+        {
+          key: "belgian",
+          label: "Belgian",
+          scope: "colonial"
         }
       ]
     },
@@ -65378,6 +65404,16 @@ var lens_default = {
         {
           key: "greek-byzantine",
           label: "Greek and Byzantine"
+        },
+        {
+          key: "italian",
+          label: "Italian",
+          scope: "colonial"
+        },
+        {
+          key: "hellenistic",
+          label: "Hellenistic",
+          scope: "colonial"
         }
       ]
     },
@@ -65424,6 +65460,11 @@ var lens_default = {
         {
           key: "west-african",
           label: "West African"
+        },
+        {
+          key: "phoenician",
+          label: "Phoenician",
+          scope: "colonial"
         }
       ]
     },
@@ -69097,6 +69138,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: []
     },
     coastsIslands: {
@@ -69157,6 +69212,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: []
     },
     seaCharts: {
@@ -69205,6 +69274,10 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [],
+        settled: []
+      },
       classes: [
         "natural",
         "managed"
@@ -69268,6 +69341,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "constructed"
@@ -69331,6 +69418,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "managed",
@@ -69388,6 +69489,20 @@ var lens_offers_default = {
         IS: [
           "plain",
           "fantastic"
+        ]
+      },
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
         ]
       },
       classes: [
@@ -69453,6 +69568,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "constructed"
@@ -69516,6 +69645,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "managed",
@@ -69580,6 +69723,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "managed",
@@ -69632,6 +69789,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "managed"
@@ -69695,6 +69866,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "managed",
         "constructed"
@@ -69758,6 +69943,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "managed",
@@ -69822,6 +70021,20 @@ var lens_offers_default = {
         "scottish",
         "cornish"
       ],
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
+        ]
+      },
       classes: [
         "natural",
         "constructed"
@@ -69845,6 +70058,20 @@ var lens_offers_default = {
         IS: [
           "plain",
           "fantastic"
+        ]
+      },
+      colonial: {
+        new: [
+          "german",
+          "italian",
+          "hellenistic",
+          "phoenician"
+        ],
+        settled: [
+          "german",
+          "belgian",
+          "italian",
+          "hellenistic"
         ]
       },
       classes: [
@@ -70701,8 +70928,8 @@ var viewsOffered = (moduleKey) => {
   var _a6;
   return (_a6 = offer(moduleKey).views) != null ? _a6 : [];
 };
-function cultureChoices(moduleKey, entry, current) {
-  var _a6;
+function cultureChoices(moduleKey, entry, current, where2) {
+  var _a6, _b4, _c4, _d3;
   const roster = new Map(rosterCultures(entry.roster).map((c) => [c.key, c.label]));
   const views = /* @__PURE__ */ new Set([...viewsOffered(moduleKey), ...LENS2.views[current] ? [current] : []]);
   const out = [];
@@ -70716,9 +70943,14 @@ function cultureChoices(moduleKey, entry, current) {
         if (!views.has(e.view)) continue;
         id = e.view;
         label = LENS2.views[e.view].label;
+      } else if (e.scope === "colonial" && e.key) {
+        const offered = where2 && where2 !== "home" ? (_b4 = (_a6 = offer(moduleKey).colonial) == null ? void 0 : _a6[where2]) != null ? _b4 : [] : [];
+        if (!offered.includes(e.key) && current !== e.key) continue;
+        id = e.key;
+        label = (_c4 = e.label) != null ? _c4 : e.key;
       } else if (e.key && roster.has(e.key)) {
         id = e.key;
-        label = (_a6 = e.label) != null ? _a6 : roster.get(e.key);
+        label = (_d3 = e.label) != null ? _d3 : roster.get(e.key);
       }
       if (!id || !label) continue;
       placed.add(id);
@@ -70844,7 +71076,7 @@ function worldSegment(moduleKey, entry, state) {
   };
 }
 function lensClause(moduleKey, state, opts = {}) {
-  var _a6, _b4;
+  var _a6, _b4, _c4;
   const entry = sentence2(moduleKey);
   const s = state;
   const f = entry.fields;
@@ -70852,8 +71084,8 @@ function lensClause(moduleKey, state, opts = {}) {
   let culture = "";
   if (f.culture) {
     culture = (_a6 = viewOf(entry, s)) != null ? _a6 : String(get(s, f.culture));
-    const choices = cultureChoices(moduleKey, entry, culture);
-    out.culture = { field: "culture", text: choices.find((c) => c.id === culture).label, title: (_b4 = opts.cultureTitle) != null ? _b4 : CULTURE_TITLE, choices, current: culture };
+    const choices = cultureChoices(moduleKey, entry, culture, f.where ? String((_b4 = get(s, f.where)) != null ? _b4 : "") || void 0 : void 0);
+    out.culture = { field: "culture", text: choices.find((c) => c.id === culture).label, title: (_c4 = opts.cultureTitle) != null ? _c4 : CULTURE_TITLE, choices, current: culture };
   }
   if (f.era || f.genre) {
     const era = eraModel(moduleKey, entry, s);
@@ -112603,42 +112835,48 @@ var wilds_default = {
           menu: "Ranges and massifs",
           plural: "ranges and massifs",
           weight: 16,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
         },
         {
           key: "peak",
           menu: "Peaks and summits",
           plural: "peaks and summits",
           weight: 22,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
         },
         {
           key: "ridge",
           menu: "Ridges, edges and crags",
           plural: "ridges, edges and crags",
           weight: 12,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
         },
         {
           key: "pass",
           menu: "Passes and cols",
           plural: "passes and cols",
           weight: 12,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["pass", "gap-notch"] } }
         },
         {
           key: "gorge",
           menu: "Gorges and ravines",
           plural: "gorges and ravines",
           weight: 7,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] }, colonial: { groups: ["valleys"] } }
         },
         {
           key: "valley",
           menu: "Valleys, glens and corries",
           plural: "valleys, glens and corries",
           weight: 10,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] }, colonial: { groups: ["valleys"] } }
         },
         {
           key: "stream",
@@ -112659,7 +112897,8 @@ var wilds_default = {
           menu: "Tarns and lakes",
           plural: "tarns and lakes",
           weight: 6,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["small-mountain-lake"] } }
         },
         {
           key: "ice",
@@ -112673,7 +112912,8 @@ var wilds_default = {
           menu: "Caves and mines",
           plural: "caves and mines",
           weight: 4,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
         },
         {
           key: "settlement",
@@ -112719,21 +112959,24 @@ var wilds_default = {
           menu: "Forests and woods",
           plural: "forests and woods",
           weight: 22,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { groups: ["woodland"] } }
         },
         {
           key: "grove",
           menu: "Groves, copses and thickets",
           plural: "groves, copses and thickets",
           weight: 14,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { groups: ["woodland"] } }
         },
         {
           key: "clearing",
           menu: "Clearings, glades and dells",
           plural: "clearings, glades and dells",
           weight: 12,
-          class: "managed"
+          class: "managed",
+          sources: { native: { generics: ["woodland-then-clearing", "newly-cleared-land-assart", "clearing-paddock", "woodland-swine-pasture"] }, colonial: { groups: ["clearings"] } }
         },
         {
           key: "ride",
@@ -112768,14 +113011,16 @@ var wilds_default = {
           menu: "Named trees and stones",
           plural: "named trees and stones",
           weight: 8,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { groups: ["woodland"] } }
         },
         {
           key: "walk",
           menu: "Walks, parks and coverts",
           plural: "walks, parks and coverts",
           weight: 6,
-          class: "managed"
+          class: "managed",
+          sources: { native: { generics: ["park"] } }
         },
         {
           key: "settlement",
@@ -112815,7 +113060,8 @@ var wilds_default = {
           menu: "Deserts and sand seas",
           plural: "deserts and sand seas",
           weight: 18,
-          class: "natural"
+          class: "natural",
+          sources: { colonial: { generics: ["desert", "oasis", "dry-riverbed"] } }
         },
         {
           key: "dune",
@@ -112850,7 +113096,8 @@ var wilds_default = {
           menu: "Oases, wells and springs",
           plural: "oases, wells and springs",
           weight: 14,
-          class: "natural"
+          class: "natural",
+          sources: { colonial: { generics: ["desert", "oasis", "dry-riverbed"] } }
         },
         {
           key: "lake",
@@ -112911,14 +113158,16 @@ var wilds_default = {
           menu: "Moors and fells",
           plural: "moors and fells",
           weight: 20,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["upland-moor", "heath"] }, colonial: { groups: ["upland-and-open-ground"] } }
         },
         {
           key: "hill",
           menu: "Tors, riggs and hills",
           plural: "tors, riggs and hills",
           weight: 14,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["upland-moor", "heath"] }, colonial: { groups: ["upland-and-open-ground"] } }
         },
         {
           key: "bog",
@@ -113006,14 +113255,16 @@ var wilds_default = {
           menu: "Marshes and fens",
           plural: "marshes and fens",
           weight: 20,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
         },
         {
           key: "bog",
           menu: "Bogs and mires",
           plural: "bogs and mires",
           weight: 10,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
         },
         {
           key: "swamp",
@@ -113027,14 +113278,16 @@ var wilds_default = {
           menu: "Reedbeds and carrs",
           plural: "reedbeds and carrs",
           weight: 8,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
         },
         {
           key: "water",
           menu: "Meres, broads and pools",
           plural: "meres, broads and pools",
           weight: 10,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
         },
         {
           key: "channel",
@@ -113048,14 +113301,16 @@ var wilds_default = {
           menu: "Islands and holmes",
           plural: "islands and holmes",
           weight: 8,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["dry-ground-in-wet-land"] } }
         },
         {
           key: "causeway",
           menu: "Causeways and crossings",
           plural: "causeways and crossings",
           weight: 6,
-          class: "constructed"
+          class: "constructed",
+          sources: { native: { generics: ["causeway"] } }
         },
         {
           key: "delta",
@@ -113110,21 +113365,24 @@ var wilds_default = {
           menu: "Downs and wolds",
           plural: "downs and wolds",
           weight: 14,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["wold", "heath"] }, colonial: { groups: ["upland-and-open-ground"], generics: ["plain-grassland"] } }
         },
         {
           key: "meadow",
           menu: "Meadows, leas and pastures",
           plural: "meadows, leas and pastures",
           weight: 14,
-          class: "managed"
+          class: "managed",
+          sources: { native: { generics: ["hay-meadow", "pasture"] } }
         },
         {
           key: "heath",
           menu: "Heaths and commons",
           plural: "heaths and commons",
           weight: 8,
-          class: "natural"
+          class: "natural",
+          sources: { native: { generics: ["wold", "heath"] }, colonial: { groups: ["upland-and-open-ground"], generics: ["plain-grassland"] } }
         },
         {
           key: "vale",
@@ -120906,9 +121164,7 @@ var wilds_default = {
       slavic: "russian",
       "arabic-persian": "arab",
       chinese: "chinese",
-      japanese: "japanese"
-    },
-    cultureToColonialAdded: {
+      japanese: "japanese",
       norse: [
         { tradition: "danish", weight: 50 },
         { tradition: "swedish", weight: 50 }
@@ -120924,7 +121180,8 @@ var wilds_default = {
       german: "german",
       italian: "italian",
       phoenician: "phoenician",
-      belgian: "belgian"
+      belgian: "belgian",
+      hellenistic: "hellenistic"
     }
   },
   sources: {
@@ -125089,9 +125346,8 @@ function scaleForDraw(sources, era, choice, rng) {
 var SOURCE_SHARES = lens_default.sourceShares;
 var seedFrom = (rng) => Math.floor(rng() * 4294967296) >>> 0;
 function colonialTraditionOf(culture, rng) {
-  var _a6, _b4;
   const link = WILDS_DATA.settlementLink;
-  const entry = (_b4 = link.cultureToColonial[culture]) != null ? _b4 : (_a6 = link.cultureToColonialAdded) == null ? void 0 : _a6[culture];
+  const entry = link.cultureToColonial[culture];
   if (entry === void 0) return void 0;
   if (typeof entry === "string") return entry;
   const total = entry.reduce((sum, e) => sum + e.weight, 0);
@@ -125104,7 +125360,7 @@ function colonialTraditionOf(culture, rng) {
 }
 var hasColonialTradition = (culture) => {
   const link = WILDS_DATA.settlementLink;
-  return culture in link.cultureToColonial || !!link.cultureToColonialAdded && culture in link.cultureToColonialAdded;
+  return culture in link.cultureToColonial;
 };
 function sourceFor(kind, ctx) {
   if (ctx.where === "home") return kind.native && SOURCE_SHARES.home.cultures.includes(ctx.culture) ? "native" : void 0;
@@ -125192,6 +125448,13 @@ function drawKind(kind, ctx, own) {
   return (_c4 = own()) != null ? _c4 : drawFromSource(kind, source, ctx);
 }
 
+// src/places/colonialCultures.ts
+var COLONIAL_CULTURES = lens_default.menu.flatMap((block) => block.entries).filter((e) => e.scope === "colonial" && e.key).map((e) => {
+  var _a6;
+  return { key: e.key, label: (_a6 = e.label) != null ? _a6 : e.key, group: "colonial" };
+});
+var findColonialCulture = (key2) => COLONIAL_CULTURES.find((c) => c.key === key2);
+
 // src/wilds/engine.ts
 var WILDS_MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 var PLACE_MODULES = ["lands", "farmland", "hillsValleys", "riversInland", "starsSpace"];
@@ -125213,7 +125476,10 @@ var PLACES_DATA = {
 };
 var wildsDataOf = (module2) => isPlaceModule(module2) ? PLACES_DATA : WILDS_DATA;
 var WILDS_CULTURES = ROUTE_CULTURES;
-var findWildsCulture = (key2) => WILDS_CULTURES.find((c) => c.key === key2);
+var findWildsCulture = (key2) => {
+  var _a6;
+  return (_a6 = WILDS_CULTURES.find((c) => c.key === key2)) != null ? _a6 : findColonialCulture(key2);
+};
 var isBritishCulture = (culture) => BRITISH_CULTURES.includes(culture);
 var wildsModuleData = (module2) => wildsDataOf(module2).modules[module2];
 var wildsKinds = (module2) => wildsDataOf(module2).modules[module2].kinds;
@@ -125241,7 +125507,7 @@ function wildsKindLive(module2, kind, era) {
   if (kind === "settlement") return true;
   const sources = (_b4 = findWildsKind(module2, kind)) == null ? void 0 : _b4.sources;
   if (sources && isSpaceModule(module2)) return kindScalesAt(sources, era).length > 0;
-  if (sources) return true;
+  if (sources && isPlaceModule(module2)) return true;
   return shapes.some((s) => !s.e || s.e.includes(era));
 }
 var wildsKindsAt = (module2, era) => wildsKinds(module2).filter((k) => wildsKindLive(module2, k.key, era));
@@ -125316,7 +125582,7 @@ function wildsModulesForTerrain(terrain, biome) {
   return [[biome && ((_b4 = row.byBiome) == null ? void 0 : _b4[biome]) || row.module, 1]];
 }
 var SIZE_LETTER = { any: "any", hamlet: "h", village: "v", town: "t", city: "c", great: "g" };
-function nativeSettlementRequest(module2, culture, era, where2, region, chosenBiome, mode, catalogue = BUILT_IN_BIOMES) {
+function nativeSettlementRequest(module2, culture, era, where2, region, chosenBiome, mode, catalogue = BUILT_IN_BIOMES, rng) {
   var _a6;
   const link = WILDS_DATA.settlementLink;
   if (mode === "placeholders" || era === "NF" || era === "IS") return void 0;
@@ -125325,7 +125591,8 @@ function nativeSettlementRequest(module2, culture, era, where2, region, chosenBi
   const biome = chosenBiome != null ? chosenBiome : land.biomeIfUnset;
   const base = { size: "any", count: 0, terrain: land.terrain, biome, wilds: false };
   if (where2 === "new" || where2 === "settled") {
-    const tradition = link.cultureToColonial[culture];
+    const entry = link.cultureToColonial[culture];
+    const tradition = typeof entry === "string" || entry === void 0 ? entry : pickTradition(entry, rng != null ? rng : () => 0);
     return tradition ? { ...base, setting: where2 === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? void 0 : tradition } : void 0;
   }
   if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : void 0 };
@@ -125337,6 +125604,15 @@ function nativeSettlementRequest(module2, culture, era, where2, region, chosenBi
     return ((_a7 = link.worldEraToRoute[culture]) == null ? void 0 : _a7[e.id]) === era;
   })) != null ? _a6 : eras[0];
   return { ...base, setting: "native", culture, era: match == null ? void 0 : match.id, biome: void 0, customBiome: biome ? catalogue.find(biome) : void 0 };
+}
+function pickTradition(entry, rng) {
+  const total = entry.reduce((sum, e) => sum + e.weight, 0);
+  let roll = rng() * total;
+  for (const e of entry) {
+    roll -= e.weight;
+    if (roll < 0) return e.tradition;
+  }
+  return entry[entry.length - 1].tradition;
 }
 var LIGHT_OR_GRIM2 = (t) => !!t && (t.includes("light") || t.includes("grim"));
 var pickOne8 = (items, rng) => items[Math.floor(rng() * items.length)];
@@ -125641,6 +125917,8 @@ function generateWildsNames(options) {
   const culture = (_a6 = findWildsCulture(options.culture)) != null ? _a6 : findWildsCulture(wildsDefaultCulture(module2));
   const era = data.eras.includes(options.era) ? options.era : data.eras.includes("MD") ? "MD" : data.eras[data.eras.length - 1];
   const spaceModule = isSpaceModule(module2);
+  const spaceOrPlace = isPlaceModule(module2);
+  const sourceReaches = (s) => !!s.delegate || sourceFor(s, { where: where2, culture: culture.key }) !== void 0;
   const where2 = options.where === "new" || options.where === "settled" ? options.where : spaceModule ? "new" : "home";
   const fantastic = !!options.fantastic;
   const resolved = resolveWildsBiome(module2, culture.key, where2, options.biome, options.catalogue);
@@ -125701,7 +125979,7 @@ function generateWildsNames(options) {
     var _a7, _b5, _c4;
     const base = [];
     for (const k of data.kinds) {
-      if (!plans5().has(k.key) && !k.sources) continue;
+      if (!plans5().has(k.key) && !(k.sources && (spaceOrPlace || sourceReaches(k.sources)))) continue;
       if (!kindInClass(k, options.kindClass)) continue;
       if (spaceModule) {
         const scales = kindScalesAt(k.sources, era);
@@ -125746,7 +126024,7 @@ function generateWildsNames(options) {
     if (breaksRouteWords(text) || hasBannedWord(text) || hasWildsBanned(text)) return false;
     return true;
   };
-  const nativeRequest = options.purposeBuiltOnly ? void 0 : nativeSettlementRequest(module2, culture.key, era, where2, region, homeBritish ? void 0 : options.biome, mode, options.catalogue);
+  const nativeRequest = options.purposeBuiltOnly ? void 0 : nativeSettlementRequest(module2, culture.key, era, where2, region, homeBritish ? void 0 : options.biome, mode, options.catalogue, rng);
   let nativeQueue;
   const nextNative = () => {
     var _a7;
@@ -125811,6 +126089,7 @@ function generateWildsNames(options) {
       else if (parent) kindKey = parentKindOf(module2);
       else kindKey = pickWeighted5(kindWeights(), rng);
       let sourced = kindKey ? (_a7 = findWildsKind(module2, kindKey)) == null ? void 0 : _a7.sources : void 0;
+      if (sourced && !isPlaceModule(module2) && (options.series || !sourceReaches(sourced))) sourced = void 0;
       const scale = spaceModule ? scaleForDraw(sourced, era, options.scale, rng) : void 0;
       if (spaceModule && sourced && !scale) sourced = { ...sourced, colonial: void 0, delegate: void 0 };
       if (kindKey && sourced) {
@@ -125992,6 +126271,7 @@ function chooseWilds(state, field, id, module2, catalogue = BUILT_IN_BIOMES) {
       break;
     case "where":
       next.where = id === "new" || id === "settled" ? id : wildsDefaultWhere(module2);
+      if (next.where === "home" && findColonialCulture(next.culture)) next.culture = wildsDefaultCulture(module2);
       break;
     case "scale":
       if (id && id !== "any") next.scale = id;
@@ -126290,9 +126570,9 @@ var waters_default = {
       kinds: [
         { key: "ocean", menu: "Oceans", plural: "oceans", weight: 10, class: "natural" },
         { key: "sea", menu: "Seas", plural: "seas", weight: 25, class: "natural" },
-        { key: "bay", menu: "Gulfs and bays", plural: "gulfs and bays", weight: 25, class: "natural" },
-        { key: "inlet", menu: "Firths, fjords and sea lochs", plural: "firths, fjords and sea lochs", weight: 12, class: "natural" },
-        { key: "strait", menu: "Straits and channels", plural: "straits and channels", weight: 13, class: "natural" },
+        { key: "bay", menu: "Gulfs and bays", plural: "gulfs and bays", weight: 25, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { groups: ["coast-and-sea"] } } },
+        { key: "inlet", menu: "Firths, fjords and sea lochs", plural: "firths, fjords and sea lochs", weight: 12, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { groups: ["coast-and-sea"] } } },
+        { key: "strait", menu: "Straits and channels", plural: "straits and channels", weight: 13, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { groups: ["coast-and-sea"] } } },
         { key: "lake", menu: "Lakes and lochs", plural: "lakes and lochs", weight: 15, class: "natural" }
       ]
     },
@@ -126300,12 +126580,12 @@ var waters_default = {
       any: "coast features of any kind",
       eras: ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
       kinds: [
-        { key: "headland", menu: "Headlands and points", plural: "headlands and points", weight: 22, class: "natural" },
-        { key: "cliff", menu: "Cliffs and rocks", plural: "cliffs and rocks", weight: 15, class: "natural" },
-        { key: "beach", menu: "Beaches and sands", plural: "beaches and sands", weight: 15, class: "natural" },
-        { key: "cove", menu: "Coves and inlets", plural: "coves and inlets", weight: 15, class: "natural" },
-        { key: "island", menu: "Islands", plural: "islands", weight: 23, class: "natural" },
-        { key: "coast", menu: "Coasts and shores", plural: "coasts and shores", weight: 10, class: "natural" }
+        { key: "headland", menu: "Headlands and points", plural: "headlands and points", weight: 22, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
+        { key: "cliff", menu: "Cliffs and rocks", plural: "cliffs and rocks", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
+        { key: "beach", menu: "Beaches and sands", plural: "beaches and sands", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
+        { key: "cove", menu: "Coves and inlets", plural: "coves and inlets", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
+        { key: "island", menu: "Islands", plural: "islands", weight: 23, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
+        { key: "coast", menu: "Coasts and shores", plural: "coasts and shores", weight: 10, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } }
       ]
     },
     seaCharts: {
@@ -126924,7 +127204,10 @@ var waters_default = {
 // src/waters/engine.ts
 var WATERS_DATA = waters_default;
 var WATERS_CULTURES = ROUTE_CULTURES;
-var findWatersCulture = (key2) => WATERS_CULTURES.find((c) => c.key === key2);
+var findWatersCulture = (key2) => {
+  var _a6;
+  return (_a6 = WATERS_CULTURES.find((c) => c.key === key2)) != null ? _a6 : findColonialCulture(key2);
+};
 var HYPER_ANY = WATERS_DATA.hyper.any;
 var HYPER_KINDS = WATERS_DATA.hyper.kinds;
 var HYPER_SCALES = ["Sy", "Nb", "Se", "Ga"];
@@ -127311,11 +127594,13 @@ function generateWatersNames(options) {
   const chosenKind = options.kind ? hyper ? findHyperKind(options.kind) : findWaterKind(earthlyModule, options.kind) : void 0;
   if (options.kind && !chosenKind) notices.push(`Kind \u201C${options.kind}\u201D isn't offered here.`);
   const withFixed = fixedLive();
+  const sourceReaches = (s) => !!s.delegate || sourceFor(s, { where: where2, culture: culture.key }) !== void 0;
   const kindWeights = (plans5, scale) => {
     const base = [];
     const kinds = earthlyModule ? waterKinds(earthlyModule) : hyperKindsAt(scale);
     for (const k of kinds) {
-      if (!plans5.has(k.key)) continue;
+      const sources = k.sources;
+      if (!plans5.has(k.key) && !(sources && sourceReaches(sources))) continue;
       if (!kindInClass(k, options.kindClass)) continue;
       let w = k.weight;
       if (homeBritish && earthlyModule === "seasLakes") {
@@ -127362,8 +127647,29 @@ function generateWatersNames(options) {
     if (hyper && hasSpaceBlock(text)) return false;
     return true;
   };
-  const oneName2 = () => {
+  const drawOwn = (list, scale, anchors2) => {
     var _a7;
+    if (!list || list.length === 0) return void 0;
+    for (let i = 0; i < 20; i++) {
+      const ctx = newCtx4(scale);
+      ctx.anchors = anchors2;
+      ctx.drawn = /* @__PURE__ */ new Set();
+      ctx.words = [];
+      ctx.stars = [];
+      const plan = pickWeighted5(list, rng);
+      if (!plan) break;
+      ctx.shape = plan.shape;
+      const raw = renderPattern8(ctx, plan.shape.p);
+      if (!raw) continue;
+      const text = routeCapitals(raw);
+      if (!acceptable7(text)) continue;
+      const tones = /* @__PURE__ */ new Set([...(_a7 = plan.shape.t) != null ? _a7 : [], ...ctx.drawn]);
+      return { text, kind: plan.kind, shape: plan.shape.p, era, tones: GROUP_TONES.filter((t) => tones.has(t)), ...scale ? { scale } : {}, words: ctx.words, ...anchors2 ? { anchored: ctx.anchored } : {} };
+    }
+    return void 0;
+  };
+  const oneName2 = () => {
+    var _a7, _b5;
     let scale;
     if (hyper) {
       if (chosenScale) scale = chosenScale;
@@ -127383,6 +127689,20 @@ function generateWatersNames(options) {
         if (withFixed && !options.kindClass) weights.push(["fixed", FIXED_WEIGHT]);
         kindKey = pickWeighted5(weights, rng);
         fixed = kindKey === "fixed";
+      }
+      const sourced = !fixed && earthlyModule && kindKey && !(options.series && watersHasSeries(module2)) ? (_a7 = findWaterKind(earthlyModule, kindKey)) == null ? void 0 : _a7.sources : void 0;
+      if (sourced && kindKey && sourceReaches(sourced)) {
+        let own;
+        const text = drawKind(sourced, { where: where2, culture: culture.key, region, people: mode, series: false, rng }, () => {
+          own = drawOwn(plans5.get(kindKey), scale, anchors);
+          return own == null ? void 0 : own.text;
+        });
+        if (text !== void 0) {
+          if (own && own.text === text) return own;
+          if (acceptable7(text)) return { text, kind: kindKey, shape: "source", era, tones: [], words: [] };
+        }
+        if (chosenKind) return void 0;
+        continue;
       }
       let list = fixed ? [] : kindKey ? plans5.get(kindKey) : void 0;
       if (!fixed && (!list || list.length === 0)) {
@@ -127413,7 +127733,7 @@ function generateWatersNames(options) {
         if (!raw || !plan) continue;
         const text = routeCapitals(raw);
         if (!acceptable7(text)) continue;
-        const tones = /* @__PURE__ */ new Set([...(_a7 = plan.shape.t) != null ? _a7 : [], ...ctx.drawn]);
+        const tones = /* @__PURE__ */ new Set([...(_b5 = plan.shape.t) != null ? _b5 : [], ...ctx.drawn]);
         return {
           text,
           kind: plan.kind,
@@ -127619,6 +127939,7 @@ function chooseWaters(state, field, id, module2) {
       break;
     case "where":
       next.where = id === "new" || id === "settled" ? id : "home";
+      if (next.where === "home" && findColonialCulture(next.culture)) next.culture = "norman-british";
       break;
     case "fantastic":
       next = hyper ? { ...next, fantastic: id === "on" } : chooseLens(module2, next, "fantastic", id);

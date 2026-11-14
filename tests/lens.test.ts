@@ -67,7 +67,9 @@ test("§3.1: the cultures, tiers and statuses are the brief's", () => {
     "arctic", "belgian", "hawaiian", "hellenistic", "malay", "maori", "maritimeSEA", "na-woodlands", "northAmerican", "northernPacific", "nw-coast", "ottoman", "phoenician", "sahul", "swahili-omani", "w-polynesian",
   ]);
   assert.deepEqual(tier("baseline"), ["general"]);
-  assert.deepEqual(LENS_CULTURES.filter((c) => c.status === "planned").map((c) => c.key), ["welsh", "scottish", "irish", "cornish", "german", "italian"]);
+  assert.deepEqual(LENS_CULTURES.filter((c) => c.status === "planned").map((c) => c.key), ["welsh", "scottish", "irish", "cornish"]);
+  // Place modules split brief §7: German and Italian are live, with colonial scope: offered only at newly explored and settled lands.
+  for (const key of ["german", "italian"]) assert.deepEqual([lensCulture(key)!.status, lensCulture(key)!.scope], ["live", "colonial"], key);
   assert.equal(new Set(LENS_CULTURES.map((c) => c.key)).size, LENS_CULTURES.length, "keys are unique");
   assert.equal(lensCulture("english")!.keys.join(), "anglo-saxon,norman-british");
   assert.equal(lensCulture("scandinavian")!.keys.join(), "norse");

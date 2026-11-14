@@ -44,6 +44,8 @@ for (const m of withCulture) {
     for (const block of LENS.menu) {
       let first = true;
       for (const e of block.entries) {
+        // A colonial tradition offered as a culture (§7) is checked on its own below: it is there only at new and settled.
+        if ((e as { scope?: string }).scope === "colonial") continue;
         const id = e.view ?? e.key!;
         if (e.view ? !views.has(e.view) : !roster.has(e.key!)) continue;
         listed.add(id);
@@ -52,8 +54,9 @@ for (const m of withCulture) {
       }
     }
     for (const [key, label] of roster) if (!listed.has(key)) expected.push({ id: key, label });
+    const colonial = new Set(["german", "italian", "phoenician", "belgian", "hellenistic"]);
     assert.deepEqual(
-      menu.map((c) => ({ id: c.id, label: c.label, ...(c.heading ? { heading: c.heading } : {}) })),
+      menu.filter((c) => !colonial.has(c.id!)).map((c) => ({ id: c.id, label: c.label, ...(c.heading ? { heading: c.heading } : {}) })),
       expected,
     );
     // No culture is removed: every culture the module offers is in its menu.

@@ -472,6 +472,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": []
   },
   "coastsIslands": {
@@ -532,6 +546,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": []
   },
   "seaCharts": {
@@ -580,6 +608,10 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [],
+    "settled": []
+   },
    "classes": [
     "natural",
     "managed"
@@ -643,6 +675,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "constructed"
@@ -706,6 +752,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "managed",
@@ -763,6 +823,20 @@
     "IS": [
      "plain",
      "fantastic"
+    ]
+   },
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
     ]
    },
    "classes": [
@@ -828,6 +902,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "constructed"
@@ -891,6 +979,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "managed",
@@ -955,6 +1057,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "managed",
@@ -1007,6 +1123,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "managed"
@@ -1070,6 +1200,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "managed",
     "constructed"
@@ -1133,6 +1277,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "managed",
@@ -1197,6 +1355,20 @@
     "scottish",
     "cornish"
    ],
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
+    ]
+   },
    "classes": [
     "natural",
     "constructed"
@@ -1220,6 +1392,20 @@
     "IS": [
      "plain",
      "fantastic"
+    ]
+   },
+   "colonial": {
+    "new": [
+     "german",
+     "italian",
+     "hellenistic",
+     "phoenician"
+    ],
+    "settled": [
+     "german",
+     "belgian",
+     "italian",
+     "hellenistic"
     ]
    },
    "classes": [

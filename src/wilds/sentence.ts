@@ -12,6 +12,7 @@ import { biomeClashes, biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
+import { findColonialCulture } from "../places/colonialCultures";
 import { classSegment, isPlaceClass, kindInClass, type PlaceClass } from "../places/classes";
 import { isSpaceModule, kindScalesAt, scaleOf } from "../places/space";
 import { scaleInfo, scaleLabel, scalePhrase, scalesFor, type ScaleChoice } from "../space/scale";
@@ -215,6 +216,8 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
       break;
     case "where":
       next.where = id === "new" || id === "settled" ? id : wildsDefaultWhere(module);
+      // Place modules split brief §7: back to home country, a colonial tradition offered as a culture goes back to the module's default.
+      if (next.where === "home" && findColonialCulture(next.culture)) next.culture = wildsDefaultCulture(module);
       break;
     case "scale":
       if (id && id !== "any") next.scale = id as ScaleChoice;

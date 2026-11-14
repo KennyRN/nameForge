@@ -44,6 +44,9 @@ import { defaultVesselState, vesselSentence } from "../../src/vessels/sentence";
 import { generateRealmNames, REALM_ERAS } from "../../src/realms/engine";
 import { DEFAULT_REALM_STATE, realmSentence } from "../../src/realms/sentence";
 import { LENS_ERAS } from "../../src/lens";
+import { COLONIAL_CULTURES } from "../../src/places/colonialCultures";
+import { isTraditionAvailable } from "../../src/colonialShapes";
+import { WILDS_DATA } from "../../src/wilds/engine";
 import lensData from "../../src/data/lens.json";
 import { rosterCultures } from "../../src/lensRosters";
 import "../../src/lensRosterSources";
@@ -149,7 +152,7 @@ const ids = (segments: Segment[], field: string): string[] => (link(segments, fi
 
 // The probe finds what a module offers from its own engine and roster, never from its sentence: the sentence's
 // culture, era, world and region links are built from the file this probe writes.
-const LENS_MODULES = (lensData as unknown as { modules: Record<string, { sentence: { fields?: { fantastic: string | null; region: string | null }; roster?: string | null } }> }).modules;
+const LENS_MODULES = (lensData as unknown as { modules: Record<string, { sentence: { fields?: { where?: string | null; fantastic: string | null; region: string | null }; roster?: string | null } }> }).modules;
 /** The era codes a family A module offers (its own list). */
 function offeredEras(key: string): string[] {
   if (([...WILDS_MODULES, ...PLACE_MODULES] as readonly string[]).includes(key)) return [...wildsEras(key as never)] as string[];
@@ -203,6 +206,8 @@ export interface ModuleOffers {
   worlds: Record<string, string[]>;
   /** Only for modules with a region field: the views of Celtic that change the names. */
   views?: string[];
+  /** Per where (new, settled): the colonial cultures that change the names, for the modules with a where link. */
+  colonial?: Record<string, string[]>;
   /** Realms only: their own six eras, in runs of adjacent eras that never differ (the genre follows the era). */
   eraRuns?: string[][];
   /** Place modules split brief §6, only for the wild lands and seas and coasts modules: the classes that change the names (choosing one gives names, and not the same names as all). The class link shows when there are two or more. */
@@ -293,7 +298,22 @@ export function probeModule(spec: Spec): ModuleOffers {
     if (["SBL", "SLO", "SHH", "NSI"].some((r) => celtic(r) !== none)) views.push("scottish");
     if (celtic("COR") !== none) views.push("cornish");
   }
-  return { family: spec.family, eras, worlds, ...(views ? { views } : {}), ...(eraRuns ? { eraRuns } : {}), ...(hasClasses(spec.key) ? { classes: offeredClasses(spec) } : {}) };
+  // Place modules split brief §7: the colonial traditions offered as cultures, per where: those whose names differ from General's there.
+  let colonial: Record<string, string[]> | undefined;
+  if (fields?.where) {
+    colonial = {};
+    const kindsOnly = [{} as State, ...spec.kinds.flatMap((field) => ids(segments, field).map((id): State => ({ [field]: id })))];
+    for (const where of ["new", "settled"]) {
+      const general = signature(spec, kindsOnly, { ...base, where, culture: "general" });
+      // A colonial tradition is a culture only where its part exists (Phoenician has no part 2a) and the names differ from General's.
+      const part = where === "new" ? "2" : "2a";
+      colonial[where] = COLONIAL_CULTURES.filter((c) => {
+        const tradition = WILDS_DATA.settlementLink.cultureToColonial[c.key];
+        return typeof tradition === "string" && isTraditionAvailable(tradition, part) && signature(spec, kindsOnly, { ...base, where, culture: c.key }) !== general;
+      }).map((c) => c.key);
+    }
+  }
+  return { family: spec.family, eras, worlds, ...(views ? { views } : {}), ...(colonial ? { colonial } : {}), ...(eraRuns ? { eraRuns } : {}), ...(hasClasses(spec.key) ? { classes: offeredClasses(spec) } : {}) };
 }
 
 export function buildOffers(): { _about: string; modules: Record<string, ModuleOffers> } {

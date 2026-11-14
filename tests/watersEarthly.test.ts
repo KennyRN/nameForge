@@ -1,5 +1,6 @@
 // Seas and coasts: seas and lakes, coasts and islands, sea charts (Seas and coasts brief §17.1–§17.3, §17.5).
 import { WILDS_DATA } from "../src/wilds/engine";
+import { countedWords } from "../src/routes/engine";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 // The deities engine registers the hooks `{god}` reads, as the app loads it.
@@ -82,7 +83,12 @@ test("every module × culture × era gives 12 unique names within the cap", () =
           const b = generateWatersNames({ module, culture: c.key, era, where, people: "invented", count: 12, seed: 3 });
           assert.equal(b.names.length, 12, `${module} ${c.key} ${era} ${where}: ${b.names.length} ${b.notices.join(" ")}`);
           assert.equal(new Set(b.names.map((n) => n.text.toLowerCase())).size, 12);
-          for (const n of b.names) assert.ok(n.text.split(" ").length <= 9 && !/[{}]/.test(n.text), n.text);
+          // Own shapes keep the original check (at most 9 raw words), except a shape whose `{town}` or `{folk}` fill can run long in plain words, and a
+          // name from a source (shape "source", its own rendering): those are held to the engine's rule, counted words within the cap.
+          for (const n of b.names) {
+            const longFill = n.shape === "source" || /\{(folk|town)/.test(n.shape);
+            assert.ok((longFill ? countedWords(n.text).length <= WATERS_DATA.cap : n.text.split(" ").length <= 9) && !/[{}]/.test(n.text), n.text);
+          }
         }
       }
     }
