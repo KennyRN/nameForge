@@ -69,18 +69,23 @@ test("a two-way entry is drawn per name by weight; a one-way entry is that tradi
 
 // ── Filters: absent by default, so nothing changes ─────────────────────────
 
-test("the British shape filter: absent or covering every generic gives the same batch and the same stream", () => {
+test("the British shape filter: absent gives the same batch and stream as before; a filter that covers every generic differs only in taking no stacked settlement generic", () => {
   const all = PLACE_SHAPE_DATA.groups.flatMap((g) => g.generics.map((x) => x.id));
+  let stackedSomewhere = false;
   for (const region of [undefined, "NTH", "COR", "SHH"]) {
     for (const seed of [1, 42, 2024]) {
+      // Absent: nothing changes (the frozen baselines prove it for every old caller; this is the direct check).
       const plain = generatePlaceShapesDetailed({ count: 60, seed, region });
+      const absent = generatePlaceShapesDetailed({ count: 60, seed, region, genericIds: undefined });
+      assert.deepEqual(absent.shapes, plain.shapes, `${region} ${seed}`);
+      assert.equal(absent.mainRngNext, plain.mainRngNext, "same stream");
+      if (plain.shapes.some((s) => s.stackedGenericId)) stackedSomewhere = true;
+      // Place split fixes: a source's feature never takes a stacked settlement generic ("Valley Township").
       const withAll = generatePlaceShapesDetailed({ count: 60, seed, region, genericIds: all });
-      assert.deepEqual(withAll.shapes, plain.shapes, `${region} ${seed}`);
-      assert.equal(withAll.mainRngNext, plain.mainRngNext, "same stream");
-      const rendered = (only?: { generics: string[] }) => generatePlaceNames({ recipe: britishPlaceNamesRecipe(region), slots: {}, count: 24, seed, ...(only ? { only } : {}) }).names.map((n) => n.text);
-      assert.deepEqual(rendered({ generics: all }), rendered(), `rendered ${region} ${seed}`);
+      assert.ok(withAll.shapes.every((s) => !s.stackedGenericId && s.structure !== "stacked-generic"), `filtered ${region} ${seed}`);
     }
   }
+  assert.ok(stackedSomewhere, "the unfiltered engine still stacks generics");
 });
 
 test("the British shape filter restricts to the generics named", () => {
@@ -96,14 +101,14 @@ test("the colonial filter: absent or covering every group gives the same batch; 
     for (const tradition of [undefined, "british-imperial", "french"]) {
       for (const seed of [1, 42]) {
         const plain = generateColonialShapesDetailed({ count: 60, seed, part, tradition });
+        const absent = generateColonialShapesDetailed({ count: 60, seed, part, tradition, only: undefined });
+        assert.deepEqual(absent.shapes, plain.shapes, `${part} ${tradition} ${seed}`);
+        // Place split fixes: a filter takes no stacked settlement generic ("Bishop Town" on a feature).
         const withAll = generateColonialShapesDetailed({ count: 60, seed, part, tradition, only: { groups } });
-        assert.deepEqual(withAll.shapes, plain.shapes, `${part} ${tradition} ${seed}`);
+        assert.ok(withAll.shapes.every((s) => !s.stackedGenericId), `filtered ${part} ${tradition} ${seed}`);
       }
     }
   }
-  const rendered = (only?: { groups?: string[]; generics?: string[] }) =>
-    generatePlaceNames({ recipe: colonialPlaceNamesRecipe("new-land", undefined, undefined), slots: {}, count: 30, seed: 9, ...(only ? { only } : {}) }).names.map((n) => n.text);
-  assert.deepEqual(rendered({ groups }), rendered());
   const { shapes } = generateColonialShapesDetailed({ count: 300, seed: 3, part: "2", only: { groups: ["valleys"], generics: ["volcano"] } });
   const allowed = new Set(["volcano", ...COLONIAL_DATA.groups.find((g) => g.id === "valleys")!.generics.map((g) => (typeof g === "string" ? g : g.id))]);
   assert.ok(shapes.length > 0 && shapes.every((s) => allowed.has(s.genericId)), "only the listed groups' generics and the listed generics");

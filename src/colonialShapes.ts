@@ -417,7 +417,10 @@ class ColonialShapeGenerator {
         forms: a.forms.filter((f) => formFits(f) && sizeFits(a.id, f)),
         weight: PLACE_SHAPE_REGION_DATA.affixBaseline[a.id] ?? 0,
       })),
-      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter((f) => spaceFits(f) && sizeFits(id, f)), weight: a.weight })),
+      // Place split fixes: a source's feature never takes the City affix ("Kiln City"); only when a filter is set.
+      ...Object.entries(data.affixTypes)
+        .filter(([id]) => !(options.only && id === "city"))
+        .map(([id, a]) => ({ id, forms: a.forms.filter((f) => spaceFits(f) && sizeFits(id, f)), weight: a.weight })),
     ];
     this.affixWeights = types
       .filter((t) => t.forms.length > 0)
@@ -543,7 +546,8 @@ class ColonialShapeGenerator {
       shape.twin = rng() < 0.5 ? "new" : "old";
     } else if (s.locative.parts.includes(part) && this.profile.locative > 0 && rng() < this.profile.locative) {
       shape.structure = "locative";
-    } else if (eligible.side === "landscape" && this.stackSource.length > 0 && rng() < s.stackedGeneric.chance) {
+    } else if (eligible.side === "landscape" && this.stackSource.length > 0 && !this.options.only && rng() < s.stackedGeneric.chance) {
+      // (Place split fixes: a source's feature never takes a settlement generic on top; only when a filter is set.)
       shape.structure = "stacked-generic";
       shape.stackedGenericId = pickWeighted(this.stackSource, rng);
     }

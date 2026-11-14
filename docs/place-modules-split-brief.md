@@ -298,3 +298,36 @@ The first two parts must never change. The third is replaced at M7, and its comm
 - Expansion's context choice: settled lands use the default context.
 - Changes to route names, sacred places, hyperspace charts, settlement names, the settlement kit, the urban modules, ageing and takeover.
 - Moving the retired engines' words into the focused modules' own tables: the sources draw on them where they are.
+
+## 13. Amendment: colonial sources by generic (14 November 2026)
+
+Agreed after the split shipped (`place-split-fixes-prompt.md`). It amends the colonial columns of §5 and §8.1; the originals above stay as written and this section wins where they differ.
+
+**Rule.** A kind's colonial source draws from the **same generic ids as its native source** that the colonial table holds, plus the colonial-only generics named below. A whole colonial group is used only where a kind has no native list (stars and space, and deserts). Native ids the colonial table lacks (for example `assembly-field`) drop out; a kind left with none has no colonial source and uses its own shapes in new and settled lands.
+
+**No settlement words on features.** When a source filter is set, the British shapes engine takes no stacked settlement generic and the colonial engine takes neither a stacked settlement generic nor the City affix, so a feature never reads "Valley Township", "Bishop Town" or "Kiln City". With no filter, both engines are exactly as before (retired presets, settlement names and the settlement kit are unchanged).
+
+| Module and kinds | Colonial generics |
+|---|---|
+| Mountains: range, peak | the native ids, plus `mountain-range`, `volcano`, `glacier` |
+| Mountains: ridge, cave, pass, gorge, valley, tarn | the native ids |
+| Mountains: ice | `glacier` only |
+| Forests (forest, grove, clearing, tree, walk), moors, wetlands (marsh, bog, reed, water, isle, causeway) | the native ids |
+| Grasslands: down, heath | the native ids, plus `plain-grassland` |
+| Grasslands: meadow | the native ids |
+| Deserts | unchanged: `desert`, `oasis`, `dry-riverbed` |
+| Seas and bays: bay, inlet, strait | the native ids |
+| Coasts and islands: headland, cliff, beach, coast | the native ids |
+| Coasts and islands: cove | the native ids, plus `lagoon` |
+| Coasts and islands: island | `island`, `skerry-rock-islet`, `island-group` |
+| Lands and territories | shire `land-territory`; march `frontier-march`; province `province-kingdom`; country `plain-grassland`, `desert`; parish and folk none |
+| Farmland: field, enclosure, moot, works | the native ids the colonial table holds |
+| Farmland: farm | `enclosed-farmstead`, `pastoral-station` |
+| Farmland: common | none (no native id is in the colonial table) |
+| Hills and valleys: every kind but settlement | the native ids (every one is in the colonial table) |
+| Rivers and inland waters: stream | the native ids, plus `creek`, `dry-riverbed` |
+| Rivers and inland waters: lake | the native ids, plus `lagoon` |
+| Rivers and inland waters: spring, pool, falls, riverland | the native ids |
+| Stars and space | unchanged: the groups of §5.5 |
+
+**Roman.** The lens culture `roman` reads **Roman** in every culture menu and in history rows written from now on, now that Italian is its own culture. Old history rows labelled "Roman / Italian" or "Roman and Italian" are still matched.

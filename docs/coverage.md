@@ -292,9 +292,9 @@ Shapes open to every culture, per kind (target 6). A shape that names no kind co
 - **wetlands**: marsh 22, bog 15, swamp 16, reed 9, water 17, channel 13, isle 13, causeway 12, delta 11, settlement 14
 - **grasslands**: plain 18, down 16, meadow 16, heath 12, vale 15, stream 14, lake 11, track 14, landmark 14, settlement 17
 - **lands and territories**: country 13, shire 12, march 13, province 12, parish 11, folk 10
-- **rivers and inland waters**: river 0 (delegated), stream 32, spring 30, pool 28, lake 32, falls 31, riverland 27, cut 10
-- **hills and valleys**: hill 29, ridge 28, valley 26, combe 19, ravine 21, terrace 24, settlement 0 (delegated)
-- **farmland and countryside**: field 40, enclosure 38, farm 41, common 35, moot 37, works 40, settlement 0 (delegated)
+- **rivers and inland waters**: river 0 (delegated), stream 20, spring 15, pool 13, lake 17, falls 14, riverland 15, cut 10
+- **hills and valleys**: hill 21, ridge 22, valley 21, combe 19, ravine 13, terrace 11, settlement 0 (delegated)
+- **farmland and countryside**: field 23, enclosure 17, farm 19, common 11, moot 15, works 22, settlement 0 (delegated)
 - **stars and space**: world 28, orbit 43, star 21, nebula 22, expanse 34, station 0 (delegated)
 - **seas and bays**: ocean 7, sea 17, bay 17, inlet 10, strait 13, lake 13
 - **coasts and islands**: headland 15, cliff 19, beach 13, cove 11, island 19, coast 11

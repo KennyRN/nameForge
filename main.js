@@ -24481,6 +24481,7 @@ var PlaceShapeGenerator = class {
     this.sides = null;
     var _a6, _b4, _c4;
     this.excluded = new Set((_a6 = filters.excludedCategories) != null ? _a6 : []);
+    this.filteredGenerics = !!filters.genericIds;
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds.includes(g.id)) : source.groups;
     const settlement = filters.settlement;
     const feature = settlement ? "settlement" : filters.feature && filters.feature !== "any" ? filters.feature : void 0;
@@ -24582,7 +24583,8 @@ var PlaceShapeGenerator = class {
     } else if (categoryId === PERSONAL_NAME && !FOLK_GROUP_GENERICS.has(generic.id) && rng() < connectiveChance) {
       const folkShare = (_d3 = region == null ? void 0 : region.folkConnectiveShare) != null ? _d3 : PLACE_SHAPE_WEIGHTS.folkConnectiveShare;
       shape.structure = rng() < folkShare ? "folk-connective" : "associative-connective";
-    } else if (group.side === "landscape" && this.stackGenerics.length > 0 && rng() < stackedGenericChance) {
+    } else if (group.side === "landscape" && this.stackGenerics.length > 0 && // Place split fixes: a source's feature never takes a settlement generic on top ("Valley Township"); only when a filter is set.
+    !this.filteredGenerics && rng() < stackedGenericChance) {
       shape.structure = "stacked-generic";
       shape.stackedGenericId = pickUniform(this.stackGenerics, rng);
     } else {
@@ -31053,7 +31055,8 @@ var ColonialShapeGenerator = class {
           weight: (_a7 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a7 : 0
         };
       }),
-      ...Object.entries(data.affixTypes).map(([id, a]) => ({ id, forms: a.forms.filter((f) => spaceFits(f) && sizeFits(id, f)), weight: a.weight }))
+      // Place split fixes: a source's feature never takes the City affix ("Kiln City"); only when a filter is set.
+      ...Object.entries(data.affixTypes).filter(([id]) => !(options.only && id === "city")).map(([id, a]) => ({ id, forms: a.forms.filter((f) => spaceFits(f) && sizeFits(id, f)), weight: a.weight }))
     ];
     this.affixWeights = types.filter((t) => t.forms.length > 0).map((t) => {
       var _a7;
@@ -31159,7 +31162,7 @@ var ColonialShapeGenerator = class {
       shape.twin = rng() < 0.5 ? "new" : "old";
     } else if (s.locative.parts.includes(part) && this.profile.locative > 0 && rng() < this.profile.locative) {
       shape.structure = "locative";
-    } else if (eligible.side === "landscape" && this.stackSource.length > 0 && rng() < s.stackedGeneric.chance) {
+    } else if (eligible.side === "landscape" && this.stackSource.length > 0 && !this.options.only && rng() < s.stackedGeneric.chance) {
       shape.structure = "stacked-generic";
       shape.stackedGenericId = pickWeighted(this.stackSource, rng);
     }
@@ -65404,7 +65407,7 @@ var lens_default = {
         },
         {
           key: "roman",
-          label: "Roman and Italian"
+          label: "Roman"
         },
         {
           key: "greek-byzantine",
@@ -112843,7 +112846,7 @@ var wilds_default = {
           plural: "ranges and massifs",
           weight: 16,
           class: "natural",
-          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave", "mountain-range", "volcano", "glacier"] } }
         },
         {
           key: "peak",
@@ -112851,7 +112854,7 @@ var wilds_default = {
           plural: "peaks and summits",
           weight: 22,
           class: "natural",
-          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave", "mountain-range", "volcano", "glacier"] } }
         },
         {
           key: "ridge",
@@ -112859,7 +112862,7 @@ var wilds_default = {
           plural: "ridges, edges and crags",
           weight: 12,
           class: "natural",
-          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] } }
         },
         {
           key: "pass",
@@ -112867,7 +112870,7 @@ var wilds_default = {
           plural: "passes and cols",
           weight: 12,
           class: "natural",
-          sources: { native: { generics: ["pass", "gap-notch"] } }
+          sources: { native: { generics: ["pass", "gap-notch"] }, colonial: { generics: ["pass", "gap-notch"] } }
         },
         {
           key: "gorge",
@@ -112875,7 +112878,7 @@ var wilds_default = {
           plural: "gorges and ravines",
           weight: 7,
           class: "natural",
-          sources: { native: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] }, colonial: { groups: ["valleys"] } }
+          sources: { native: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] }, colonial: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] } }
         },
         {
           key: "valley",
@@ -112883,7 +112886,7 @@ var wilds_default = {
           plural: "valleys, glens and corries",
           weight: 10,
           class: "natural",
-          sources: { native: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] }, colonial: { groups: ["valleys"] } }
+          sources: { native: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] }, colonial: { generics: ["narrow-valley-glen", "corrie", "river-cut-gorge"] } }
         },
         {
           key: "stream",
@@ -112905,14 +112908,15 @@ var wilds_default = {
           plural: "tarns and lakes",
           weight: 6,
           class: "natural",
-          sources: { native: { generics: ["small-mountain-lake"] } }
+          sources: { native: { generics: ["small-mountain-lake"] }, colonial: { generics: ["small-mountain-lake"] } }
         },
         {
           key: "ice",
           menu: "Glaciers and snowfields",
           plural: "glaciers and snowfields",
           weight: 3,
-          class: "natural"
+          class: "natural",
+          sources: { colonial: { generics: ["glacier"] } }
         },
         {
           key: "cave",
@@ -112920,7 +112924,7 @@ var wilds_default = {
           plural: "caves and mines",
           weight: 4,
           class: "natural",
-          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { groups: ["mountains-and-rock"], generics: ["mountain-range", "volcano", "glacier"] } }
+          sources: { native: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] }, colonial: { generics: ["mountain", "fell", "pointed-hill", "sharp-peak", "tor", "crag", "stone", "cave"] } }
         },
         {
           key: "settlement",
@@ -112967,7 +112971,7 @@ var wilds_default = {
           plural: "forests and woods",
           weight: 22,
           class: "natural",
-          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { groups: ["woodland"] } }
+          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] } }
         },
         {
           key: "grove",
@@ -112975,7 +112979,7 @@ var wilds_default = {
           plural: "groves, copses and thickets",
           weight: 14,
           class: "natural",
-          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { groups: ["woodland"] } }
+          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] } }
         },
         {
           key: "clearing",
@@ -112983,7 +112987,7 @@ var wilds_default = {
           plural: "clearings, glades and dells",
           weight: 12,
           class: "managed",
-          sources: { native: { generics: ["woodland-then-clearing", "newly-cleared-land-assart", "clearing-paddock", "woodland-swine-pasture"] }, colonial: { groups: ["clearings"] } }
+          sources: { native: { generics: ["woodland-then-clearing", "newly-cleared-land-assart", "clearing-paddock", "woodland-swine-pasture"] }, colonial: { generics: ["woodland-then-clearing", "newly-cleared-land-assart", "clearing-paddock", "woodland-swine-pasture"] } }
         },
         {
           key: "ride",
@@ -113019,7 +113023,7 @@ var wilds_default = {
           plural: "named trees and stones",
           weight: 8,
           class: "natural",
-          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { groups: ["woodland"] } }
+          sources: { native: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] }, colonial: { generics: ["wood", "single-species-wood", "great-woodland", "royal-hunting-ground", "grove", "grove-small-wood", "grove-possibly-sacred", "strip-of-woodland-shaw", "wood-on-a-steep-slope", "scrubland", "thicket"] } }
         },
         {
           key: "walk",
@@ -113027,7 +113031,7 @@ var wilds_default = {
           plural: "walks, parks and coverts",
           weight: 6,
           class: "managed",
-          sources: { native: { generics: ["park"] } }
+          sources: { native: { generics: ["park"] }, colonial: { generics: ["park"] } }
         },
         {
           key: "settlement",
@@ -113166,7 +113170,7 @@ var wilds_default = {
           plural: "moors and fells",
           weight: 20,
           class: "natural",
-          sources: { native: { generics: ["upland-moor", "heath"] }, colonial: { groups: ["upland-and-open-ground"] } }
+          sources: { native: { generics: ["upland-moor", "heath"] }, colonial: { generics: ["upland-moor", "heath"] } }
         },
         {
           key: "hill",
@@ -113174,7 +113178,7 @@ var wilds_default = {
           plural: "tors, riggs and hills",
           weight: 14,
           class: "natural",
-          sources: { native: { generics: ["upland-moor", "heath"] }, colonial: { groups: ["upland-and-open-ground"] } }
+          sources: { native: { generics: ["upland-moor", "heath"] }, colonial: { generics: ["upland-moor", "heath"] } }
         },
         {
           key: "bog",
@@ -113263,7 +113267,7 @@ var wilds_default = {
           plural: "marshes and fens",
           weight: 20,
           class: "natural",
-          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] } }
         },
         {
           key: "bog",
@@ -113271,7 +113275,7 @@ var wilds_default = {
           plural: "bogs and mires",
           weight: 10,
           class: "natural",
-          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] } }
         },
         {
           key: "swamp",
@@ -113286,7 +113290,7 @@ var wilds_default = {
           plural: "reedbeds and carrs",
           weight: 8,
           class: "natural",
-          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] } }
         },
         {
           key: "water",
@@ -113294,7 +113298,7 @@ var wilds_default = {
           plural: "meres, broads and pools",
           weight: 10,
           class: "natural",
-          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { groups: ["wetland"] } }
+          sources: { native: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] }, colonial: { generics: ["marsh", "fen", "lowland-marsh", "brushwood-marsh-carr", "mire", "peat-bog-moss", "bog"] } }
         },
         {
           key: "channel",
@@ -113309,7 +113313,7 @@ var wilds_default = {
           plural: "islands and holmes",
           weight: 8,
           class: "natural",
-          sources: { native: { generics: ["dry-ground-in-wet-land"] } }
+          sources: { native: { generics: ["dry-ground-in-wet-land"] }, colonial: { generics: ["dry-ground-in-wet-land"] } }
         },
         {
           key: "causeway",
@@ -113317,7 +113321,7 @@ var wilds_default = {
           plural: "causeways and crossings",
           weight: 6,
           class: "constructed",
-          sources: { native: { generics: ["causeway"] } }
+          sources: { native: { generics: ["causeway"] }, colonial: { generics: ["causeway"] } }
         },
         {
           key: "delta",
@@ -113373,7 +113377,7 @@ var wilds_default = {
           plural: "downs and wolds",
           weight: 14,
           class: "natural",
-          sources: { native: { generics: ["wold", "heath"] }, colonial: { groups: ["upland-and-open-ground"], generics: ["plain-grassland"] } }
+          sources: { native: { generics: ["wold", "heath"] }, colonial: { generics: ["wold", "heath", "plain-grassland"] } }
         },
         {
           key: "meadow",
@@ -113381,7 +113385,7 @@ var wilds_default = {
           plural: "meadows, leas and pastures",
           weight: 14,
           class: "managed",
-          sources: { native: { generics: ["hay-meadow", "pasture"] } }
+          sources: { native: { generics: ["hay-meadow", "pasture"] }, colonial: { generics: ["hay-meadow", "pasture"] } }
         },
         {
           key: "heath",
@@ -113389,7 +113393,7 @@ var wilds_default = {
           plural: "heaths and commons",
           weight: 8,
           class: "natural",
-          sources: { native: { generics: ["wold", "heath"] }, colonial: { groups: ["upland-and-open-ground"], generics: ["plain-grassland"] } }
+          sources: { native: { generics: ["wold", "heath"] }, colonial: { generics: ["wold", "heath", "plain-grassland"] } }
         },
         {
           key: "vale",
@@ -121495,14 +121499,13 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "rivers-and-streams",
-                "springs-pools-and-lakes"
-              ],
               generics: [
+                "clear-stream",
+                "sluggish-or-muddy-stream",
+                "mountain-stream",
+                "stream-with-its-valley",
                 "creek",
-                "dry-riverbed",
-                "lagoon"
+                "dry-riverbed"
               ]
             }
           }
@@ -121522,14 +121525,10 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "rivers-and-streams",
-                "springs-pools-and-lakes"
-              ],
               generics: [
-                "creek",
-                "dry-riverbed",
-                "lagoon"
+                "river-source-spring-head",
+                "spring-well",
+                "spring-with-roman-association"
               ]
             }
           }
@@ -121549,14 +121548,10 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "rivers-and-streams",
-                "springs-pools-and-lakes"
-              ],
               generics: [
-                "creek",
-                "dry-riverbed",
-                "lagoon"
+                "pool",
+                "mere-shallow-lake",
+                "miry-pool-wallowing-place"
               ]
             }
           }
@@ -121575,13 +121570,9 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "rivers-and-streams",
-                "springs-pools-and-lakes"
-              ],
               generics: [
-                "creek",
-                "dry-riverbed",
+                "lake",
+                "small-mountain-lake",
                 "lagoon"
               ]
             }
@@ -121600,14 +121591,8 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "rivers-and-streams",
-                "springs-pools-and-lakes"
-              ],
               generics: [
-                "creek",
-                "dry-riverbed",
-                "lagoon"
+                "waterfall"
               ]
             }
           }
@@ -121630,14 +121615,13 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "rivers-and-streams",
-                "springs-pools-and-lakes"
-              ],
               generics: [
-                "creek",
-                "dry-riverbed",
-                "lagoon"
+                "land-in-a-river-bend",
+                "water-meadow",
+                "flood-prone-land-by-a-river",
+                "river-mouth",
+                "confluence",
+                "dry-ground-in-wet-land"
               ]
             }
           }
@@ -121701,8 +121685,13 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "hills-and-slopes"
+              generics: [
+                "low-level-topped-hill",
+                "hill",
+                "knoll",
+                "rounded-hill-mound",
+                "summit-top",
+                "wooded-hill"
               ]
             }
           }
@@ -121727,8 +121716,15 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "hills-and-slopes"
+              generics: [
+                "ridge",
+                "back-low-ridge",
+                "flat-topped-ridge",
+                "heel-shaped-spur",
+                "edge-escarpment",
+                "steep-slope-bank",
+                "slope",
+                "upper-end-head"
               ]
             }
           }
@@ -121751,8 +121747,13 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "valleys"
+              generics: [
+                "long-valley",
+                "dale",
+                "broad-valley",
+                "short-bowl-shaped-valley",
+                "small-enclosed-side-valley",
+                "shallow-damp-valley"
               ]
             }
           }
@@ -121776,8 +121777,14 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "hollows-and-corners"
+              generics: [
+                "hollow",
+                "valley-bottom",
+                "valley-head",
+                "nook",
+                "corner-projecting-piece-of-land",
+                "corner-angle",
+                "bend-crook"
               ]
             }
           }
@@ -121797,8 +121804,10 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "valleys"
+              generics: [
+                "ravine",
+                "steep-bank-ravine-side",
+                "river-cut-gorge"
               ]
             }
           }
@@ -121816,8 +121825,8 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "hills-and-slopes"
+              generics: [
+                "terrace-lynchet"
               ]
             }
           }
@@ -121891,9 +121900,14 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "open-and-farmed-land",
-                "colonial-settlement"
+              generics: [
+                "open-country",
+                "level-field",
+                "hay-meadow",
+                "pasture",
+                "arable-field",
+                "arable-unit",
+                "furlong"
               ]
             }
           }
@@ -121914,9 +121928,10 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "open-and-farmed-land",
-                "colonial-settlement"
+              generics: [
+                "animal-fold",
+                "hedged-enclosure",
+                "orchard"
               ]
             }
           }
@@ -121940,9 +121955,9 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "open-and-farmed-land",
-                "colonial-settlement"
+              generics: [
+                "enclosed-farmstead",
+                "pastoral-station"
               ]
             }
           }
@@ -121958,12 +121973,6 @@ var places_default = {
               generics: [
                 "assembly-field",
                 "place-for-games-or-sport"
-              ]
-            },
-            colonial: {
-              groups: [
-                "open-and-farmed-land",
-                "colonial-settlement"
               ]
             }
           }
@@ -121984,9 +121993,9 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "open-and-farmed-land",
-                "colonial-settlement"
+              generics: [
+                "meeting-place",
+                "execution-site"
               ]
             }
           }
@@ -122009,9 +122018,13 @@ var places_default = {
               ]
             },
             colonial: {
-              groups: [
-                "open-and-farmed-land",
-                "colonial-settlement"
+              generics: [
+                "mill",
+                "kiln",
+                "pit-quarry",
+                "salt-works",
+                "salt-house",
+                "fish-weir"
               ]
             }
           }
@@ -126574,9 +126587,9 @@ var waters_default = {
       kinds: [
         { key: "ocean", menu: "Oceans", plural: "oceans", weight: 10, class: "natural" },
         { key: "sea", menu: "Seas", plural: "seas", weight: 25, class: "natural" },
-        { key: "bay", menu: "Gulfs and bays", plural: "gulfs and bays", weight: 25, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { groups: ["coast-and-sea"] } } },
-        { key: "inlet", menu: "Firths, fjords and sea lochs", plural: "firths, fjords and sea lochs", weight: 12, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { groups: ["coast-and-sea"] } } },
-        { key: "strait", menu: "Straits and channels", plural: "straits and channels", weight: 13, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { groups: ["coast-and-sea"] } } },
+        { key: "bay", menu: "Gulfs and bays", plural: "gulfs and bays", weight: 25, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] } } },
+        { key: "inlet", menu: "Firths, fjords and sea lochs", plural: "firths, fjords and sea lochs", weight: 12, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] } } },
+        { key: "strait", menu: "Straits and channels", plural: "straits and channels", weight: 13, class: "natural", sources: { native: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] }, colonial: { generics: ["bay", "sea-inlet-firth", "strait-sound", "estuary"] } } },
         { key: "lake", menu: "Lakes and lochs", plural: "lakes and lochs", weight: 15, class: "natural" }
       ]
     },
@@ -126584,12 +126597,12 @@ var waters_default = {
       any: "coast features of any kind",
       eras: ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
       kinds: [
-        { key: "headland", menu: "Headlands and points", plural: "headlands and points", weight: 22, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
-        { key: "cliff", menu: "Cliffs and rocks", plural: "cliffs and rocks", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
-        { key: "beach", menu: "Beaches and sands", plural: "beaches and sands", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
-        { key: "cove", menu: "Coves and inlets", plural: "coves and inlets", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
-        { key: "island", menu: "Islands", plural: "islands", weight: 23, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } },
-        { key: "coast", menu: "Coasts and shores", plural: "coasts and shores", weight: 10, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { groups: ["coast-and-sea", "islands-and-river-land"], generics: ["island-group", "reef", "lagoon"] } } }
+        { key: "headland", menu: "Headlands and points", plural: "headlands and points", weight: 22, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] } } },
+        { key: "cliff", menu: "Cliffs and rocks", plural: "cliffs and rocks", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] } } },
+        { key: "beach", menu: "Beaches and sands", plural: "beaches and sands", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] } } },
+        { key: "cove", menu: "Coves and inlets", plural: "coves and inlets", weight: 15, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet", "lagoon"] } } },
+        { key: "island", menu: "Islands", plural: "islands", weight: 23, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { generics: ["island", "skerry-rock-islet", "island-group"] } } },
+        { key: "coast", menu: "Coasts and shores", plural: "coasts and shores", weight: 10, class: "natural", sources: { native: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] }, colonial: { generics: ["headland", "point-nose", "promontory", "sea-cliff", "coastal-chasm-geo", "beach-strand", "sand-dunes-sandy-shore", "shingle-bank", "small-bay-creek", "cove", "island", "skerry-rock-islet"] } } }
       ]
     },
     seaCharts: {

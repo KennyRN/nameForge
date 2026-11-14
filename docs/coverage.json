@@ -6688,7 +6688,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 600,
+   "rowCount": 514,
    "cultures": {
     "general": {
      "words": 0,
@@ -7046,12 +7046,12 @@
    },
    "kinds": {
     "river": 0,
-    "stream": 32,
-    "spring": 30,
-    "pool": 28,
-    "lake": 32,
-    "falls": 31,
-    "riverland": 27,
+    "stream": 20,
+    "spring": 15,
+    "pool": 13,
+    "lake": 17,
+    "falls": 14,
+    "riverland": 15,
     "cut": 10
    },
    "kindFlags": {
@@ -7088,7 +7088,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 466,
+   "rowCount": 426,
    "cultures": {
     "general": {
      "words": 0,
@@ -7445,12 +7445,12 @@
     "OST": 0
    },
    "kinds": {
-    "hill": 29,
-    "ridge": 28,
-    "valley": 26,
+    "hill": 21,
+    "ridge": 22,
+    "valley": 21,
     "combe": 19,
-    "ravine": 21,
-    "terrace": 24,
+    "ravine": 13,
+    "terrace": 11,
     "settlement": 0
    },
    "kindFlags": {
@@ -7487,7 +7487,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 488,
+   "rowCount": 364,
    "cultures": {
     "general": {
      "words": 0,
@@ -7844,12 +7844,12 @@
     "OST": 0
    },
    "kinds": {
-    "field": 40,
-    "enclosure": 38,
-    "farm": 41,
-    "common": 35,
-    "moot": 37,
-    "works": 40,
+    "field": 23,
+    "enclosure": 17,
+    "farm": 19,
+    "common": 11,
+    "moot": 15,
+    "works": 22,
     "settlement": 0
    },
    "kindFlags": {

@@ -73,7 +73,7 @@ test("the menu in lens.json has the headings, keys and order of the brief", () =
   // The user's amendment: the English periods keep the labels their modules give them.
   assert.equal(label("norman-british"), "Norman & British");
   assert.equal(label("anglo-saxon"), "Anglo-Saxon");
-  assert.equal(label("roman"), "Roman and Italian");
+  assert.equal(label("roman"), "Roman");
   assert.equal(label("steppe"), "Turkic and Mongol steppe");
   assert.equal(label("greek-byzantine"), "Greek and Byzantine");
   assert.equal(label("arctic"), null, "keys the brief doesn't label keep their module's label");

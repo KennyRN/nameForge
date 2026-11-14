@@ -191,14 +191,13 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "rivers-and-streams",
-        "springs-pools-and-lakes"
-       ],
        "generics": [
+        "clear-stream",
+        "sluggish-or-muddy-stream",
+        "mountain-stream",
+        "stream-with-its-valley",
         "creek",
-        "dry-riverbed",
-        "lagoon"
+        "dry-riverbed"
        ]
       }
      }
@@ -218,14 +217,10 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "rivers-and-streams",
-        "springs-pools-and-lakes"
-       ],
        "generics": [
-        "creek",
-        "dry-riverbed",
-        "lagoon"
+        "river-source-spring-head",
+        "spring-well",
+        "spring-with-roman-association"
        ]
       }
      }
@@ -245,14 +240,10 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "rivers-and-streams",
-        "springs-pools-and-lakes"
-       ],
        "generics": [
-        "creek",
-        "dry-riverbed",
-        "lagoon"
+        "pool",
+        "mere-shallow-lake",
+        "miry-pool-wallowing-place"
        ]
       }
      }
@@ -271,13 +262,9 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "rivers-and-streams",
-        "springs-pools-and-lakes"
-       ],
        "generics": [
-        "creek",
-        "dry-riverbed",
+        "lake",
+        "small-mountain-lake",
         "lagoon"
        ]
       }
@@ -296,14 +283,8 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "rivers-and-streams",
-        "springs-pools-and-lakes"
-       ],
        "generics": [
-        "creek",
-        "dry-riverbed",
-        "lagoon"
+        "waterfall"
        ]
       }
      }
@@ -326,14 +307,13 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "rivers-and-streams",
-        "springs-pools-and-lakes"
-       ],
        "generics": [
-        "creek",
-        "dry-riverbed",
-        "lagoon"
+        "land-in-a-river-bend",
+        "water-meadow",
+        "flood-prone-land-by-a-river",
+        "river-mouth",
+        "confluence",
+        "dry-ground-in-wet-land"
        ]
       }
      }
@@ -397,8 +377,13 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "hills-and-slopes"
+       "generics": [
+        "low-level-topped-hill",
+        "hill",
+        "knoll",
+        "rounded-hill-mound",
+        "summit-top",
+        "wooded-hill"
        ]
       }
      }
@@ -423,8 +408,15 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "hills-and-slopes"
+       "generics": [
+        "ridge",
+        "back-low-ridge",
+        "flat-topped-ridge",
+        "heel-shaped-spur",
+        "edge-escarpment",
+        "steep-slope-bank",
+        "slope",
+        "upper-end-head"
        ]
       }
      }
@@ -447,8 +439,13 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "valleys"
+       "generics": [
+        "long-valley",
+        "dale",
+        "broad-valley",
+        "short-bowl-shaped-valley",
+        "small-enclosed-side-valley",
+        "shallow-damp-valley"
        ]
       }
      }
@@ -472,8 +469,14 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "hollows-and-corners"
+       "generics": [
+        "hollow",
+        "valley-bottom",
+        "valley-head",
+        "nook",
+        "corner-projecting-piece-of-land",
+        "corner-angle",
+        "bend-crook"
        ]
       }
      }
@@ -493,8 +496,10 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "valleys"
+       "generics": [
+        "ravine",
+        "steep-bank-ravine-side",
+        "river-cut-gorge"
        ]
       }
      }
@@ -512,8 +517,8 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "hills-and-slopes"
+       "generics": [
+        "terrace-lynchet"
        ]
       }
      }
@@ -587,9 +592,14 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "open-and-farmed-land",
-        "colonial-settlement"
+       "generics": [
+        "open-country",
+        "level-field",
+        "hay-meadow",
+        "pasture",
+        "arable-field",
+        "arable-unit",
+        "furlong"
        ]
       }
      }
@@ -610,9 +620,10 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "open-and-farmed-land",
-        "colonial-settlement"
+       "generics": [
+        "animal-fold",
+        "hedged-enclosure",
+        "orchard"
        ]
       }
      }
@@ -636,9 +647,9 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "open-and-farmed-land",
-        "colonial-settlement"
+       "generics": [
+        "enclosed-farmstead",
+        "pastoral-station"
        ]
       }
      }
@@ -654,12 +665,6 @@
        "generics": [
         "assembly-field",
         "place-for-games-or-sport"
-       ]
-      },
-      "colonial": {
-       "groups": [
-        "open-and-farmed-land",
-        "colonial-settlement"
        ]
       }
      }
@@ -680,9 +685,9 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "open-and-farmed-land",
-        "colonial-settlement"
+       "generics": [
+        "meeting-place",
+        "execution-site"
        ]
       }
      }
@@ -705,9 +710,13 @@
        ]
       },
       "colonial": {
-       "groups": [
-        "open-and-farmed-land",
-        "colonial-settlement"
+       "generics": [
+        "mill",
+        "kiln",
+        "pit-quarry",
+        "salt-works",
+        "salt-house",
+        "fish-weir"
        ]
       }
      }

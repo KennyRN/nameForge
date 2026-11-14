@@ -249,7 +249,7 @@ export const STEAMPUNK_NAMES = LENS.mappings.styles.steampunkNames;
 
 /**
  * A culture's label as the culture menus now read it (one sentence brief §6.1): the lens menu's own label
- * where it gives one ("Roman and Italian"), otherwise the module's. History rows written from now on use it;
+ * where it gives one ("Roman"), otherwise the module's. History rows written from now on use it;
  * old rows are matched by module prefix, never by culture label, so their old labels still resolve.
  */
 export function lensCultureLabel(key: string | undefined, own: string): string {

@@ -328,6 +328,8 @@ class PlaceShapeGenerator {
   private readonly groupWeights: [ShapeGroup, number][] = [];
   private readonly genericWeights = new Map<string, [ShapeGeneric, number][]>();
   private readonly stackGenerics: string[];
+  /** A source's generic filter is set: no stacked settlement generic (place split fixes). */
+  private readonly filteredGenerics: boolean;
   private readonly affixWeights: [AffixType, number][];
   private readonly excluded: Set<string>;
   /** Feature filter "settlement": the two sides and the landscape share. */
@@ -341,6 +343,7 @@ class PlaceShapeGenerator {
     private readonly environment?: { groups: Record<string, number>; generics: Record<string, number> },
   ) {
     this.excluded = new Set(filters.excludedCategories ?? []);
+    this.filteredGenerics = !!filters.genericIds;
     let groups = filters.groupIds ? source.groups.filter((g) => filters.groupIds!.includes(g.id)) : source.groups;
     const settlement = filters.settlement;
     const feature = settlement ? "settlement" : filters.feature && filters.feature !== "any" ? filters.feature : undefined;
@@ -465,6 +468,8 @@ class PlaceShapeGenerator {
     } else if (
       group.side === "landscape" &&
       this.stackGenerics.length > 0 &&
+      // Place split fixes: a source's feature never takes a settlement generic on top ("Valley Township"); only when a filter is set.
+      !this.filteredGenerics &&
       rng() < stackedGenericChance
     ) {
       shape.structure = "stacked-generic";

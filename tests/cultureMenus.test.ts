@@ -72,7 +72,8 @@ for (const m of withCulture) {
 
 test("history rows written now use the lens labels; rows written before still resolve to their module", () => {
   const route = routeHistoryLabel({ ...DEFAULT_ROUTE_STATE, culture: "roman" });
-  assert.match(route, /Roman and Italian/);
+  assert.match(route, /Roman/);
+  assert.doesNotMatch(route, /Roman and Italian/, "Italian is its own culture now, so Roman reads Roman");
   const money = moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, culture: "arabic-persian" });
   assert.match(money, /Arabic and Persian/);
   // Keys the lens gives no label keep their module's label, and so do the two English periods.
@@ -82,6 +83,8 @@ test("history rows written now use the lens labels; rows written before still re
   assert.equal(lensCultureLabel(undefined, "General"), "General");
   // Old rows carry the old labels; history is matched by the module's own prefix, never by the culture label.
   assert.equal(historySection("route names · modern · Roman / Italian"), "routeNames");
+  assert.equal(historySection("route names · modern · Roman and Italian"), "routeNames");
+  assert.equal(historySection("route names · modern · Roman"), "routeNames");
   assert.equal(historySection("route names · modern · Greek & Byzantine"), "routeNames");
   assert.equal(historySection(route), "routeNames");
   assert.equal(historySection("money and coins · modern · Arabic & Persian"), "moneyNames");

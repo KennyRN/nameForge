@@ -57,9 +57,11 @@ test("hills and valleys: kinds, classes and native generics are §5.3's", () => 
   assert.deepEqual(native("combe"), ["hollow", "valley-bottom", "valley-head", "nook", "corner-projecting-piece-of-land", "corner-angle", "bend-crook"]);
   assert.deepEqual(native("ravine"), ["ravine", "steep-bank-ravine-side", "river-cut-gorge"]);
   assert.deepEqual(native("terrace"), ["terrace-lynchet"]);
-  // The three colonial groups of the brief are all used, each by the kinds whose generics it holds.
-  const groups = new Set(kinds.flatMap((k) => k.sources?.colonial?.groups ?? []));
-  assert.deepEqual([...groups].sort(), ["hills-and-slopes", "hollows-and-corners", "valleys"]);
+  // Place split fixes: a kind's colonial source is its own generics, never a whole group.
+  for (const k of kinds.filter((k) => k.key !== "settlement")) {
+    assert.equal(k.sources!.colonial!.groups, undefined, k.key);
+    assert.deepEqual(k.sources!.colonial!.generics, k.sources!.native!.generics, k.key);
+  }
   assert.deepEqual(classesOffered(H), ["natural", "managed", "constructed"]);
 });
 
@@ -73,7 +75,15 @@ test("farmland: kinds, classes, native generics and colonial groups are §5.2's"
   assert.deepEqual(native("common"), ["assembly-field", "place-for-games-or-sport"]);
   assert.deepEqual(native("moot"), ["assembly-mound", "speech-place", "meeting-place", "execution-site"]);
   assert.deepEqual(native("works"), ["mill", "kiln", "pit-quarry", "salt-works", "salt-house", "fish-weir"]);
-  for (const k of kinds.filter((k) => k.key !== "settlement")) assert.deepEqual(k.sources!.colonial!.groups, ["open-and-farmed-land", "colonial-settlement"], k.key);
+  // Place split fixes: colonial = the native ids the colonial table has, by generic; only the farm kind adds pastoral-station, and none takes colonial-settlement's town words.
+  const colonial = (key: string) => kinds.find((k) => k.key === key)!.sources!.colonial;
+  assert.deepEqual(colonial("field"), { generics: ["open-country", "level-field", "hay-meadow", "pasture", "arable-field", "arable-unit", "furlong"] });
+  assert.deepEqual(colonial("enclosure"), { generics: ["animal-fold", "hedged-enclosure", "orchard"] });
+  assert.deepEqual(colonial("farm"), { generics: ["enclosed-farmstead", "pastoral-station"] });
+  assert.equal(colonial("common"), undefined, "no assembly or games generic exists in the colonial table");
+  assert.deepEqual(colonial("moot"), { generics: ["meeting-place", "execution-site"] });
+  assert.deepEqual(colonial("works"), { generics: ["mill", "kiln", "pit-quarry", "salt-works", "salt-house", "fish-weir"] });
+  for (const k of kinds.filter((k) => k.key !== "settlement")) assert.equal(k.sources!.colonial?.groups, undefined, k.key);
   assert.deepEqual(classesOffered(F), ["managed", "constructed"]);
 });
 

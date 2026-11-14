@@ -8763,27 +8763,27 @@
    "v": 0
   },
   "kind|riversInland|stream": {
-   "v": 32,
+   "v": 20,
    "t": 6
   },
   "kind|riversInland|spring": {
-   "v": 30,
+   "v": 15,
    "t": 6
   },
   "kind|riversInland|pool": {
-   "v": 28,
+   "v": 13,
    "t": 6
   },
   "kind|riversInland|lake": {
-   "v": 32,
+   "v": 17,
    "t": 6
   },
   "kind|riversInland|falls": {
-   "v": 31,
+   "v": 14,
    "t": 6
   },
   "kind|riversInland|riverland": {
-   "v": 27,
+   "v": 15,
    "t": 6
   },
   "kind|riversInland|cut": {
@@ -9266,15 +9266,15 @@
    "t": 6
   },
   "kind|hillsValleys|hill": {
-   "v": 29,
+   "v": 21,
    "t": 6
   },
   "kind|hillsValleys|ridge": {
-   "v": 28,
+   "v": 22,
    "t": 6
   },
   "kind|hillsValleys|valley": {
-   "v": 26,
+   "v": 21,
    "t": 6
   },
   "kind|hillsValleys|combe": {
@@ -9282,11 +9282,11 @@
    "t": 6
   },
   "kind|hillsValleys|ravine": {
-   "v": 21,
+   "v": 13,
    "t": 6
   },
   "kind|hillsValleys|terrace": {
-   "v": 24,
+   "v": 11,
    "t": 6
   },
   "kind|hillsValleys|settlement": {
@@ -9768,27 +9768,27 @@
    "t": 6
   },
   "kind|farmland|field": {
-   "v": 40,
+   "v": 23,
    "t": 6
   },
   "kind|farmland|enclosure": {
-   "v": 38,
+   "v": 17,
    "t": 6
   },
   "kind|farmland|farm": {
-   "v": 41,
+   "v": 19,
    "t": 6
   },
   "kind|farmland|common": {
-   "v": 35,
+   "v": 11,
    "t": 6
   },
   "kind|farmland|moot": {
-   "v": 37,
+   "v": 15,
    "t": 6
   },
   "kind|farmland|works": {
-   "v": 40,
+   "v": 22,
    "t": 6
   },
   "kind|farmland|settlement": {

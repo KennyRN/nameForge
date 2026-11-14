@@ -841,10 +841,10 @@ test("§16.8: the default sentence's plain text", () => {
   );
 });
 
-test("§16.8: Roman / Italian shows the words link after the value", () => {
+test("§16.8: Roman shows the words link after the value", () => {
   assert.equal(
     moneySentenceText(moneySentence({ ...DEFAULT_MONEY_STATE, culture: "roman" })),
-    "Roman and Italian money of any kind of the medieval era, in a historic or low fantasy world, of any value, in translated names, of any tone, with placeholders for people and places, each one separate.",
+    "Roman money of any kind of the medieval era, in a historic or low fantasy world, of any value, in translated names, of any tone, with placeholders for people and places, each one separate.",
   );
   const loans = chooseMoney({ ...DEFAULT_MONEY_STATE, culture: "roman" }, "words", "loanwords");
   assert.equal(moneySentenceText(moneySentence(loans)).includes("with familiar loanwords"), true);
@@ -930,7 +930,7 @@ test("§16.8: moneyNames follows events and eras in advanced (time and sky come 
 test("§1.2: the history label, and routing", () => {
   assert.equal(moneyHistoryLabel(DEFAULT_MONEY_STATE), "money and coins · medieval · Norman & British");
   const label = moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, culture: "roman", kind: "coin", era: "ST", value: "high", words: "loanwords", fantastic: true, tone: "grim", series: "values" });
-  assert.equal(label, "money and coins · steam age · Roman and Italian · coins · high · loanwords · steampunk · grim · one coinage with values");
+  assert.equal(label, "money and coins · steam age · Roman · coins · high · loanwords · steampunk · grim · one coinage with values");
   assert.equal(moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, kind: "goods", series: "coinage" }), "money and coins · medieval · Norman & British · goods money · one coinage");
   assert.equal(moneyHistoryLabel({ ...DEFAULT_MONEY_STATE, kind: "currency", value: "high" }), "money and coins · medieval · Norman & British · currencies");
   assert.equal(historySection(label), "moneyNames");

@@ -37,10 +37,11 @@ for (const [where, expected] of [["home", 0.4], ["new", 0.5], ["settled", 0.6]] 
   });
 }
 
-test("sources: mountains pass has a native source only: sourced at home, never at new or settled", () => {
+test("sources: mountains pass is sourced at home and, by its own generics (pass, gap-notch), at new and settled", () => {
   assert.ok(sourcedShare("mountainNames", "home", "norman-british", "pass").sourced > 0);
-  assert.equal(sourcedShare("mountainNames", "new", "norman-british", "pass").sourced, 0);
-  assert.equal(sourcedShare("mountainNames", "settled", "norman-british", "pass").sourced, 0);
+  assert.ok(sourcedShare("mountainNames", "new", "norman-british", "pass").sourced > 0);
+  assert.ok(sourcedShare("mountainNames", "settled", "norman-british", "pass").sourced > 0);
+  assert.deepEqual(WILDS_DATA.modules.mountainNames.kinds.find((k) => k.key === "pass")!.sources!.colonial, { generics: ["pass", "gap-notch"] });
 });
 
 test("sources: no native source for a non-British culture at home, so its names are not sourced", () => {
@@ -51,7 +52,7 @@ test("sources: no native source for a non-British culture at home, so its names 
 
 test("sources: the kinds the table lists have sources, and no others do", () => {
   const listed: Record<string, string[]> = {
-    mountainNames: ["range", "peak", "ridge", "cave", "pass", "valley", "gorge", "tarn"],
+    mountainNames: ["range", "peak", "ridge", "cave", "pass", "valley", "gorge", "tarn", "ice"],
     forestNames: ["forest", "grove", "tree", "clearing", "walk"],
     moorNames: ["moor", "hill"],
     wetlandNames: ["marsh", "bog", "reed", "water", "isle", "causeway"],
