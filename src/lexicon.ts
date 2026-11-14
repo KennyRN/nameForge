@@ -13,3 +13,9 @@ export const LEXICON_KINDS = Object.keys(lexicon.kinds) as LexiconKind[];
 export function lexiconWords(kind: LexiconKind, setting?: string): LexiconWord[] {
   return (lexicon.kinds[kind] as LexiconWord[]).filter((e) => !setting || !e.s || e.s.includes(setting));
 }
+
+/** Adds the shared lexicon's words of a kind to a module's pool (words already in the pool, in any case, are left as they are). */
+export function mergeLexicon<T extends { w: string }>(pool: T[], kind: LexiconKind): void {
+  const have = new Set(pool.map((e) => e.w.toLowerCase()));
+  for (const e of lexiconWords(kind)) if (!have.has(e.w.toLowerCase())) pool.push({ w: e.w, ...(e.x ? { x: e.x } : {}), ...(e.t ? { t: e.t } : {}), ...(e.s ? { s: e.s } : {}) } as unknown as T);
+}

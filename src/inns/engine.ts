@@ -5,6 +5,7 @@
 // places, people, gods, figures and routes come from the route engine, trades and goods from the
 // street pools. No Obsidian imports.
 
+import { creaturesFor } from "../creatures";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
@@ -273,7 +274,9 @@ function draw(ctx: Ctx, pool: string, items: [Word, number][], use?: string): st
 
 /** §4.1: creatures: GN beast, bird, fish and heraldic beasts with innCreature (WAL doubles Dragon). */
 function creatureItems(ctx: Ctx): [Word, number][] {
-  const items = merged(ctx, [...INN_DATA.lists.creatureLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innCreature")]);
+  // Shared tables brief §8: in a fantastic world the culture's mythic creatures join the signs.
+  const mythic: [Word, number][] = ctx.fantastic ? creaturesFor(ctx.culture.key).map((c): [Word, number] => [{ w: c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase()), t: c.tones as never }, 1]) : [];
+  const items = merged(ctx, [...INN_DATA.lists.creatureLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innCreature"), mythic]);
   if (ctx.region && INN_DATA.regionRules.dragonDouble.includes(ctx.region)) for (const it of items) if (it[0].w === "Dragon") it[1] *= 2;
   return items;
 }

@@ -739,6 +739,1005 @@
     "w": "Winter"
    }
   ],
+  "trades": [
+   {
+    "w": "Armourers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Bakers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Barbers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Bellfounders",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Blacksmiths",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Bookbinders",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Bowyers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Brewers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Broderers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Butchers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Candlemakers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Carpenters",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Cartographers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Chandlers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Clockmakers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Clothworkers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Coopers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Cordwainers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Cutlers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Drapers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Dyers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Farriers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Feltmakers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Fishmongers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Fletchers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Founders",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Glassblowers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Glaziers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Glovers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Goldsmiths",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Grocers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Haberdashers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Ironmongers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Joiners",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Lanternmakers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Leathersellers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Locksmiths",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Masons",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Mercers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Millers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Needlemakers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Painters",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Perfumers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Pewterers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Plasterers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Potters",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Ropemakers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Saddlers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Salters",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Scriveners",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Shipwrights",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF",
+     "SF"
+    ]
+   },
+   {
+    "w": "Skinners",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Spectacle Makers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Stationers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Tanners",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Tilers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Turners",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Vintners",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Weavers",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Wheelwrights",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Woolmen",
+    "s": [
+     "FL",
+     "FH",
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Electricians",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Engineers",
+    "s": [
+     "MR",
+     "MF",
+     "SF"
+    ]
+   },
+   {
+    "w": "Printers",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Mechanics",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Plumbers",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Builders",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Surveyors",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Typesetters",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Alchemists",
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "w": "Enchanters",
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "w": "Runecarvers",
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "w": "Wandwrights",
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "w": "Golemwrights",
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "w": "Beast-Tamers",
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "w": "Spell-Scribes",
+    "s": [
+     "FH",
+     "MF"
+    ]
+   },
+   {
+    "w": "Pilots",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Navigators",
+    "x": 0.5,
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Riggers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Salvagers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Fabricators",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Terraformers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Prospectors",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Couriers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Data-Brokers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Medics",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Dockers",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Miners",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Railwaymen",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Seamen",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Carters",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Teachers",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Nurses",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Clerks",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Postal Workers",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Shipbuilders",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Steelworkers",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Drivers",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Spacers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Belt Miners",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Dock Hands",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Ring Workers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Hydroponic Growers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Ice Haulers",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Reactor Crews",
+    "s": [
+     "SF"
+    ]
+   },
+   {
+    "w": "Haulage"
+   },
+   {
+    "w": "Shipping"
+   },
+   {
+    "w": "Import–Export"
+   },
+   {
+    "w": "Scrap Metals"
+   },
+   {
+    "w": "Fine Wines"
+   },
+   {
+    "w": "Laundry"
+   },
+   {
+    "w": "Removals"
+   },
+   {
+    "w": "Pawnbrokers"
+   },
+   {
+    "w": "Builders' Merchants",
+    "s": [
+     "MR",
+     "MF"
+    ]
+   },
+   {
+    "w": "Trading",
+    "x": 4
+   },
+   {
+    "w": "Merchant",
+    "x": 2
+   },
+   {
+    "w": "Mercantile"
+   },
+   {
+    "w": "Commercial"
+   },
+   {
+    "w": "Commerce"
+   },
+   {
+    "w": "Exchange"
+   }
+  ],
+  "sizes": [
+   {
+    "w": "great"
+   },
+   {
+    "w": "little"
+   },
+   {
+    "w": "big"
+   },
+   {
+    "w": "small"
+   },
+   {
+    "w": "new"
+   },
+   {
+    "w": "old"
+   },
+   {
+    "w": "vt"
+   },
+   {
+    "w": "hv"
+   },
+   {
+    "w": "hvt"
+   }
+  ],
+  "gems": [
+   {
+    "w": "Ruby"
+   },
+   {
+    "w": "Emerald"
+   },
+   {
+    "w": "Sapphire"
+   },
+   {
+    "w": "Diamond"
+   },
+   {
+    "w": "Opal"
+   },
+   {
+    "w": "Jade"
+   },
+   {
+    "w": "Amber"
+   },
+   {
+    "w": "Garnet"
+   },
+   {
+    "w": "Onyx"
+   },
+   {
+    "w": "Pearl"
+   },
+   {
+    "w": "Topaz"
+   },
+   {
+    "w": "Amethyst"
+   },
+   {
+    "w": "Jet"
+   },
+   {
+    "w": "Agate"
+   },
+   {
+    "w": "Granite"
+   },
+   {
+    "w": "Basalt"
+   },
+   {
+    "w": "Flint"
+   },
+   {
+    "w": "Marble"
+   },
+   {
+    "w": "Slate"
+   },
+   {
+    "w": "Obsidian"
+   },
+   {
+    "w": "Quartz"
+   },
+   {
+    "w": "Coral"
+   },
+   {
+    "w": "Jasper"
+   },
+   {
+    "w": "Lapis"
+   }
+  ],
   "directions": [
    {
     "w": "north"

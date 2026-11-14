@@ -6,8 +6,8 @@ import { LEXICON_KINDS, lexiconWords } from "../src/lexicon";
 import { creaturesFor, CREATURE_CULTURES } from "../src/creatures";
 import { PEOPLE_CULTURES } from "../src/people";
 
-test("the lexicon holds de-duplicated lists of the eight kinds merged so far", () => {
-  assert.deepEqual([...LEXICON_KINDS].sort(), ["colours", "directions", "metals", "numbers", "ordinals", "seasons", "virtues", "weather"]);
+test("the lexicon holds de-duplicated lists of the eleven kinds", () => {
+  assert.deepEqual([...LEXICON_KINDS].sort(), ["colours", "directions", "gems", "metals", "numbers", "ordinals", "seasons", "sizes", "trades", "virtues", "weather"]);
   for (const k of LEXICON_KINDS) {
     const words = lexiconWords(k).map((e) => e.w.toLowerCase());
     assert.ok(words.length >= 8, k);

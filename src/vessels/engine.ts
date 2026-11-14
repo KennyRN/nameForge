@@ -3,6 +3,7 @@
 // tags, tone factor, invented people and places, possessives, repetition check and safeguards.
 // No Obsidian imports.
 
+import { mergeLexicon } from "../lexicon";
 import { drawSeed, fillGenre, registerResolver } from "../fill";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
@@ -171,6 +172,8 @@ interface VesselData {
 }
 
 export const VESSEL_DATA = vesselData as unknown as VesselData;
+// Shared tables brief §7: the pool reads the shared virtues as well as its own.
+mergeLexicon(VESSEL_DATA.lists.virtue, "virtues");
 /** Settlement kit §4: the patterns and words whose `{town}` is the home port. */
 const VESSEL_SELF = selfPatterns(vesselData);
 export const VESSEL_CULTURES = VESSEL_DATA.cultures;
