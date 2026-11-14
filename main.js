@@ -2647,6 +2647,8 @@ var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
   // Place modules split brief §2: the existing place icon until the focused modules' own icons are supplied.
+  farmland: ICON_NATIVE_PLACE_NAMES,
+  hillsValleys: ICON_NATIVE_PLACE_NAMES,
   riversInland: ICON_NATIVE_PLACE_NAMES,
   // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
   mountainNames: ICON_MOUNTAINS,
@@ -63233,7 +63235,9 @@ var lens_default = {
     "seaCharts",
     "riverNames",
     "placeShapes",
-    "riversInland"
+    "riversInland",
+    "hillsValleys",
+    "farmland"
   ],
   cultureSets: {
     caste: {
@@ -64565,6 +64569,52 @@ var lens_default = {
       }
     },
     riversInland: {
+      cultures: "shared",
+      eras: "codes",
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
+    },
+    hillsValleys: {
+      cultures: "shared",
+      eras: "codes",
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
+      }
+    },
+    farmland: {
       cultures: "shared",
       eras: "codes",
       land: true,
@@ -69431,6 +69481,133 @@ var lens_offers_default = {
       ]
     },
     grasslandNames: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ],
+      classes: [
+        "natural",
+        "managed",
+        "constructed"
+      ]
+    },
+    farmland: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ],
+        [
+          "NF",
+          "IS"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ],
+        NF: [
+          "plain",
+          "fantastic"
+        ],
+        IS: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ],
+      classes: [
+        "managed",
+        "constructed"
+      ]
+    },
+    hillsValleys: {
       family: "A",
       eras: [
         [
@@ -120962,6 +121139,389 @@ var places_default = {
           class: "constructed"
         }
       ]
+    },
+    hillsValleys: {
+      label: "hills and valleys",
+      any: "hill and valley features of any kind",
+      seriesText: "in one vale",
+      terrain: "hills",
+      defaultBiome: "temperate",
+      parentKind: "valley",
+      biomes: [
+        "temperate",
+        "moorland",
+        "boreal",
+        "cool-rainforest",
+        "mediterranean",
+        "steppe",
+        "desert",
+        "savannah",
+        "rainforest",
+        "monsoon",
+        "tropical-islands",
+        "highland"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "hill",
+          menu: "Hills, knolls and mounds",
+          plural: "hills, knolls and mounds",
+          weight: 22,
+          class: "natural",
+          sources: {
+            native: {
+              generics: [
+                "low-level-topped-hill",
+                "hill",
+                "knoll",
+                "rounded-hill-mound",
+                "summit-top",
+                "wooded-hill"
+              ]
+            },
+            colonial: {
+              groups: [
+                "hills-and-slopes"
+              ]
+            }
+          }
+        },
+        {
+          key: "ridge",
+          menu: "Ridges, edges and banks",
+          plural: "ridges, edges and banks",
+          weight: 12,
+          class: "natural",
+          sources: {
+            native: {
+              generics: [
+                "ridge",
+                "back-low-ridge",
+                "flat-topped-ridge",
+                "heel-shaped-spur",
+                "edge-escarpment",
+                "steep-slope-bank",
+                "slope",
+                "upper-end-head"
+              ]
+            },
+            colonial: {
+              groups: [
+                "hills-and-slopes"
+              ]
+            }
+          }
+        },
+        {
+          key: "valley",
+          menu: "Valleys, dales and vales",
+          plural: "valleys, dales and vales",
+          weight: 20,
+          class: "natural",
+          sources: {
+            native: {
+              generics: [
+                "long-valley",
+                "dale",
+                "broad-valley",
+                "short-bowl-shaped-valley",
+                "small-enclosed-side-valley",
+                "shallow-damp-valley"
+              ]
+            },
+            colonial: {
+              groups: [
+                "valleys"
+              ]
+            }
+          }
+        },
+        {
+          key: "combe",
+          menu: "Combes, hollows and nooks",
+          plural: "combes, hollows and nooks",
+          weight: 10,
+          class: "natural",
+          sources: {
+            native: {
+              generics: [
+                "hollow",
+                "valley-bottom",
+                "valley-head",
+                "nook",
+                "corner-projecting-piece-of-land",
+                "corner-angle",
+                "bend-crook"
+              ]
+            },
+            colonial: {
+              groups: [
+                "hollows-and-corners"
+              ]
+            }
+          }
+        },
+        {
+          key: "ravine",
+          menu: "Ravines and dells",
+          plural: "ravines and dells",
+          weight: 6,
+          class: "natural",
+          sources: {
+            native: {
+              generics: [
+                "ravine",
+                "steep-bank-ravine-side",
+                "river-cut-gorge"
+              ]
+            },
+            colonial: {
+              groups: [
+                "valleys"
+              ]
+            }
+          }
+        },
+        {
+          key: "terrace",
+          menu: "Terraces and lynchets",
+          plural: "terraces and lynchets",
+          weight: 4,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "terrace-lynchet"
+              ]
+            },
+            colonial: {
+              groups: [
+                "hills-and-slopes"
+              ]
+            }
+          }
+        },
+        {
+          key: "settlement",
+          menu: "Hill and valley settlements",
+          plural: "hill and valley settlements",
+          weight: 6,
+          class: "constructed",
+          sources: {
+            delegate: {
+              engine: "settlement",
+              sizes: [
+                "hamlet",
+                "village",
+                "town"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    farmland: {
+      label: "farmland and countryside",
+      any: "fields and farmland of any kind",
+      seriesText: "on one estate",
+      terrain: "plains",
+      defaultBiome: "temperate",
+      parentKind: "farm",
+      biomes: [
+        "temperate",
+        "moorland",
+        "boreal",
+        "cool-rainforest",
+        "mediterranean",
+        "steppe",
+        "savannah",
+        "rainforest",
+        "monsoon",
+        "tropical-islands",
+        "highland"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO",
+        "NF",
+        "IS"
+      ],
+      kinds: [
+        {
+          key: "field",
+          menu: "Fields, meadows and pastures",
+          plural: "fields, meadows and pastures",
+          weight: 24,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "open-country",
+                "level-field",
+                "hay-meadow",
+                "pasture",
+                "arable-field",
+                "arable-unit",
+                "furlong"
+              ]
+            },
+            colonial: {
+              groups: [
+                "open-and-farmed-land",
+                "colonial-settlement"
+              ]
+            }
+          }
+        },
+        {
+          key: "enclosure",
+          menu: "Folds, closes and orchards",
+          plural: "folds, closes and orchards",
+          weight: 12,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "animal-fold",
+                "hedged-enclosure",
+                "orchard",
+                "small-enclosed-field-by-a-house"
+              ]
+            },
+            colonial: {
+              groups: [
+                "open-and-farmed-land",
+                "colonial-settlement"
+              ]
+            }
+          }
+        },
+        {
+          key: "farm",
+          menu: "Farms and granges",
+          plural: "farms and granges",
+          weight: 20,
+          class: "constructed",
+          sources: {
+            native: {
+              generics: [
+                "enclosed-farmstead",
+                "home-farm-of-an-estate",
+                "outlying-grain-farm",
+                "specialised-farm",
+                "cattle-farm",
+                "monastic-outlying-farm",
+                "shieling-summer-pasture-hut"
+              ]
+            },
+            colonial: {
+              groups: [
+                "open-and-farmed-land",
+                "colonial-settlement"
+              ]
+            }
+          }
+        },
+        {
+          key: "common",
+          menu: "Commons and greens",
+          plural: "commons and greens",
+          weight: 6,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "assembly-field",
+                "place-for-games-or-sport"
+              ]
+            },
+            colonial: {
+              groups: [
+                "open-and-farmed-land",
+                "colonial-settlement"
+              ]
+            }
+          }
+        },
+        {
+          key: "moot",
+          menu: "Moots, gallows and boundary stones",
+          plural: "moots, gallows and boundary stones",
+          weight: 4,
+          class: "constructed",
+          sources: {
+            native: {
+              generics: [
+                "assembly-mound",
+                "speech-place",
+                "meeting-place",
+                "execution-site"
+              ]
+            },
+            colonial: {
+              groups: [
+                "open-and-farmed-land",
+                "colonial-settlement"
+              ]
+            }
+          }
+        },
+        {
+          key: "works",
+          menu: "Mills, kilns, quarries and salt works",
+          plural: "mills, kilns, quarries and salt works",
+          weight: 10,
+          class: "constructed",
+          sources: {
+            native: {
+              generics: [
+                "mill",
+                "kiln",
+                "pit-quarry",
+                "salt-works",
+                "salt-house",
+                "fish-weir"
+              ]
+            },
+            colonial: {
+              groups: [
+                "open-and-farmed-land",
+                "colonial-settlement"
+              ]
+            }
+          }
+        },
+        {
+          key: "settlement",
+          menu: "Hamlets and villages",
+          plural: "hamlets and villages",
+          weight: 8,
+          class: "constructed",
+          sources: {
+            delegate: {
+              engine: "settlement",
+              sizes: [
+                "hamlet",
+                "village"
+              ]
+            }
+          }
+        }
+      ]
     }
   },
   shapes: {
@@ -121722,6 +122282,1130 @@ var places_default = {
           ]
         }
       ]
+    },
+    hillsValleys: {
+      hill: [
+        {
+          p: "{town} Hill",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Hill",
+          w: 4,
+          f: "col"
+        },
+        {
+          p: "{beast} Hill",
+          w: 4,
+          f: "crt"
+        },
+        {
+          p: "{tree} Hill",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{wildQuality} Hill",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildFuse}hill",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildShape} Hill",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{holy:poss} Hill",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{mrFlora} Hill",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "Hill of the {beast:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "{person} Hill",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{explorerMood} Hill",
+          w: 2,
+          f: "mood",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{folkUncanny} Hill",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{god:poss} Hill",
+          w: 1,
+          f: "god",
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{town} Law",
+          w: 3,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "law"
+        },
+        {
+          p: "{town} Howe",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "howe"
+        },
+        {
+          p: "{town} Knott",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "knott"
+        },
+        {
+          p: "{mythBeast} Hill",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      ridge: [
+        {
+          p: "{town} Ridge",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Ridge",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{beast} Ridge",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{wildQuality} Ridge",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Edge",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Edge",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{wildShape} Ridge",
+          w: 2,
+          f: "shp"
+        },
+        {
+          p: "{wildWeather} Ridge",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Bank",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{directionAdj} Ridge",
+          w: 2,
+          f: "dir"
+        },
+        {
+          p: "{tree} Ridge",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{person} Ridge",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{folkUncanny} Ridge",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{town} Rigg",
+          w: 3,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "rigg"
+        },
+        {
+          p: "{town} Scar",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "scar"
+        },
+        {
+          p: "{mythBeast} Ridge",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      valley: [
+        {
+          p: "{town} Valley",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Valley",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{beast} Valley",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{wildQuality} Valley",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{tree} Valley",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{town} Vale",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildFuse}vale",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "Vale of {town}",
+          w: 3,
+          f: "twn",
+          of: true
+        },
+        {
+          p: "Vale of the {beast:pl}",
+          w: 2,
+          f: "crt",
+          of: true
+        },
+        {
+          p: "Valley of {moodOf}",
+          w: 2,
+          f: "mood",
+          of: true
+        },
+        {
+          p: "Valley of the {folk}",
+          w: 2,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "{person} Valley",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{folkUncanny} Valley",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "Valley of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{town} Dale",
+          w: 4,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "dale"
+        },
+        {
+          p: "{wildFuse}dale",
+          w: 3,
+          f: "qual",
+          c: [
+            "british"
+          ],
+          rt: "dale"
+        },
+        {
+          p: "{town} Glen",
+          w: 3,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "glen"
+        },
+        {
+          p: "{mythBeast} Vale",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      combe: [
+        {
+          p: "{town} Hollow",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Hollow",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{beast} Hollow",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{tree} Hollow",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{wildColour} Hollow",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Dell",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Nook",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Dell",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Corner",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{holy:poss} Dell",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{folkUncanny} Hollow",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{town} Combe",
+          w: 5,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "combe"
+        },
+        {
+          p: "{wildFuse}combe",
+          w: 3,
+          f: "qual",
+          c: [
+            "british"
+          ],
+          rt: "combe"
+        },
+        {
+          p: "{town} Slade",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "slade"
+        },
+        {
+          p: "{mythBeast} Hollow",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      ravine: [
+        {
+          p: "{town} Ravine",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Ravine",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{beast} Ravine",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Ravine",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Dell",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{tree} Dell",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{wildWeather} Ravine",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{wildShape} Gorge",
+          w: 1,
+          f: "shp"
+        },
+        {
+          p: "{folkUncanny} Dell",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{town} Ghyll",
+          w: 3,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "ghyll"
+        },
+        {
+          p: "{town} Cleave",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "cleave"
+        },
+        {
+          p: "{mythBeast} Ravine",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      terrace: [
+        {
+          p: "{town} Terraces",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Terraces",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Lynchets",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{grsFlora} Terraces",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{town} Steps",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{beast} Terraces",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Terraces",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Strips",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{holy:poss} Terraces",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{mythBeast} Terraces",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ]
+    },
+    farmland: {
+      field: [
+        {
+          p: "{town} Field",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Field",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{beast} Field",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{grsFlora} Field",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{town} Meadow",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{town} Mead",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Meadow",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Pasture",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{grsQuality} Pasture",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Lea",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Acre",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{grsWork} Field",
+          w: 2,
+          f: "work"
+        },
+        {
+          p: "{holy:poss} Field",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{person} Field",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{folkUncanny} Field",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{town} Ings",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "ings"
+        },
+        {
+          p: "{town} Haugh",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "haugh"
+        },
+        {
+          p: "{mythBeast} Field",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      enclosure: [
+        {
+          p: "{town} Close",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{town} Fold",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Orchard",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{tree} Close",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{wildQuality} Close",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{beast} Fold",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{stock} Fold",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{town} Paddock",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Croft",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Close",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Pound",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{holy:poss} Orchard",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{folkUncanny} Close",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{mythBeast} Fold",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      farm: [
+        {
+          p: "{town} Farm",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Farm",
+          w: 4,
+          f: "qual"
+        },
+        {
+          p: "{grsFlora} Farm",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{tree} Farm",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{beast} Farm",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{wildColour} Farm",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{town} Grange",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{town} Barton",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Manor Farm",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Home Farm",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Grange",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{stock} Farm",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{holy:poss} Grange",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{person} Farm",
+          w: 3,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{explorerMood} Farm",
+          w: 2,
+          f: "mood",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{folkUncanny} Farm",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{town} Shieling",
+          w: 2,
+          f: "twn",
+          c: [
+            "british"
+          ],
+          rt: "shieling"
+        },
+        {
+          p: "{mythBeast} Farm",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      common: [
+        {
+          p: "{town} Common",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{town} Green",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Green",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{beast} Green",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{tree} Green",
+          w: 3,
+          f: "flora"
+        },
+        {
+          p: "{wildQuality} Common",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Fair Field",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{town} Recreation Ground",
+          w: 2,
+          f: "twn",
+          e: [
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{folkUncanny} Green",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{holy:poss} Green",
+          w: 1,
+          f: "sai"
+        },
+        {
+          p: "{mythBeast} Green",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      moot: [
+        {
+          p: "{town} Moot",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Gallows",
+          w: 3,
+          f: "twn",
+          t: [
+            "grim"
+          ]
+        },
+        {
+          p: "{wildQuality} Stone",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Stone",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{town} Cross",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Mound",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Moot Hill",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Boundary Stone",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Stone",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{holy:poss} Cross",
+          w: 3,
+          f: "sai"
+        },
+        {
+          p: "{person} Stone",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO",
+            "NF",
+            "IS"
+          ]
+        },
+        {
+          p: "{folkUncanny} Stone",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{mythBeast} Stone",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      works: [
+        {
+          p: "{town} Mill",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Mill",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{beast} Mill",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{town} Kiln",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Quarry",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Quarry",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Salt Works",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Salterns",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{town} Lime Kiln",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Fish Weir",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{wildMetal} Quarry",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "{town} Watermill",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Windmill",
+          w: 3,
+          f: "twn",
+          e: [
+            "MD",
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{town} Brickworks",
+          w: 2,
+          f: "twn",
+          e: [
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{folkUncanny} Mill",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{mythBeast} Quarry",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ]
     }
   },
   cultureShapes: [
@@ -121881,7 +123565,9 @@ var places_default = {
     biome: {}
   },
   beastPools: {
-    riversInland: "lakeCreature"
+    riversInland: "lakeCreature",
+    hillsValleys: "mrBeast",
+    farmland: "grsBeast"
   },
   safeguards: {
     riversInland: [
@@ -121896,6 +123582,28 @@ var places_default = {
       "Crystal Lake",
       "Nen Hithoel",
       "Celebrant"
+    ],
+    hillsValleys: [
+      "Hobbiton Hill",
+      "Rivendell",
+      "Silent Hill",
+      "Sleepy Hollow",
+      "Death Valley",
+      "Valley of the Kings",
+      "Hill of Tara",
+      "Glastonbury Tor",
+      "Bald Mountain"
+    ],
+    farmland: [
+      "Cold Comfort Farm",
+      "Animal Farm",
+      "Manor Farm",
+      "Green Gables",
+      "Bag End",
+      "The Shire",
+      "Brideshead",
+      "Wuthering Heights",
+      "Walden Pond"
     ]
   }
 };
@@ -121911,7 +123619,7 @@ var OLD_HISTORY_PREFIXES = {
   // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
   deityNames: ["deities and sacred places"]
 };
-var PLACE_MODULE_SECTIONS = ["riversInland"];
+var PLACE_MODULE_SECTIONS = ["farmland", "hillsValleys", "riversInland"];
 var WILDS_LIKE_SECTIONS = [...PLACE_MODULE_SECTIONS, "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
 var WILDS_SECTIONS = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
@@ -121934,6 +123642,8 @@ var SECTION_ORDER = [
   "placeShapes",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
+  "farmland",
+  "hillsValleys",
   "riversInland",
   "routeNames",
   "sacredPlaces",
@@ -122023,6 +123733,8 @@ var SECTION_LABELS = {
   spacecraft: "spacecraft and stations",
   aircraft: "aircraft and airships",
   landVehicles: "land vehicles",
+  farmland: "farmland and countryside",
+  hillsValleys: "hills and valleys",
   riversInland: "rivers and inland waters",
   seasLakes: "seas and bays",
   coastsIslands: "coasts and islands",
@@ -122348,7 +124060,7 @@ function drawKind(kind, ctx, own) {
 
 // src/wilds/engine.ts
 var WILDS_MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
-var PLACE_MODULES = ["riversInland"];
+var PLACE_MODULES = ["farmland", "hillsValleys", "riversInland"];
 var isPlaceModule = (module2) => PLACE_MODULES.includes(module2);
 var WILDS_DATA = wilds_default;
 var PLACES = places_default;
@@ -136886,6 +138598,8 @@ var WILDS_PRESET_MODULES = {
   "wetland-names": "wetlandNames",
   "grassland-names": "grasslandNames",
   // Place modules split brief §5: the focused place modules save presets the same way.
+  "farmland-names": "farmland",
+  "hills-valleys-names": "hillsValleys",
   "inland-water-names": "riversInland"
 };
 var wildsPresetKey = (module2) => Object.entries(WILDS_PRESET_MODULES).find(([, m]) => m === module2)[0];

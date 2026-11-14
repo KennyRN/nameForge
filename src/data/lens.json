@@ -912,7 +912,9 @@
   "seaCharts",
   "riverNames",
   "placeShapes",
-  "riversInland"
+  "riversInland",
+  "hillsValleys",
+  "farmland"
  ],
  "cultureSets": {
   "caste": {
@@ -2244,6 +2246,52 @@
    }
   },
   "riversInland": {
+   "cultures": "shared",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds",
+    "region": {
+     "group": "british",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "hillsValleys": {
+   "cultures": "shared",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds",
+    "region": {
+     "group": "british",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "farmland": {
    "cultures": "shared",
    "eras": "codes",
    "land": true,

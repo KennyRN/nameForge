@@ -183,7 +183,7 @@ test("the lens maps every non-Markov module in the line-up, and river names", ()
     "realms", "peoplesTongues", "ships", "spacecraft", "aircraft", "landVehicles", ...WATERS_SECTIONS, ...WILDS_SECTIONS, ...PLACE_MODULE_SECTIONS,
   ];
   assert.deepEqual([...LENS_MODULES].sort(), [...expected].sort());
-  assert.equal(LENS_MODULES.length, 48);
+  assert.equal(LENS_MODULES.length, 50);
 });
 
 // ── The rosters in the data ─────────────────────────────────────────────────

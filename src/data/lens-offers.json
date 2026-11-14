@@ -961,6 +961,133 @@
     "constructed"
    ]
   },
+  "farmland": {
+   "family": "A",
+   "eras": [
+    [
+     "AN"
+    ],
+    [
+     "MD"
+    ],
+    [
+     "EM"
+    ],
+    [
+     "ST"
+    ],
+    [
+     "MO"
+    ],
+    [
+     "NF",
+     "IS"
+    ]
+   ],
+   "worlds": {
+    "AN": [
+     "plain",
+     "fantastic"
+    ],
+    "MD": [
+     "plain",
+     "fantastic"
+    ],
+    "EM": [
+     "plain",
+     "fantastic"
+    ],
+    "ST": [
+     "plain",
+     "fantastic"
+    ],
+    "MO": [
+     "plain",
+     "fantastic"
+    ],
+    "NF": [
+     "plain",
+     "fantastic"
+    ],
+    "IS": [
+     "plain",
+     "fantastic"
+    ]
+   },
+   "views": [
+    "welsh",
+    "scottish",
+    "cornish"
+   ],
+   "classes": [
+    "managed",
+    "constructed"
+   ]
+  },
+  "hillsValleys": {
+   "family": "A",
+   "eras": [
+    [
+     "AN"
+    ],
+    [
+     "MD"
+    ],
+    [
+     "EM"
+    ],
+    [
+     "ST"
+    ],
+    [
+     "MO"
+    ],
+    [
+     "NF",
+     "IS"
+    ]
+   ],
+   "worlds": {
+    "AN": [
+     "plain",
+     "fantastic"
+    ],
+    "MD": [
+     "plain",
+     "fantastic"
+    ],
+    "EM": [
+     "plain",
+     "fantastic"
+    ],
+    "ST": [
+     "plain",
+     "fantastic"
+    ],
+    "MO": [
+     "plain",
+     "fantastic"
+    ],
+    "NF": [
+     "plain",
+     "fantastic"
+    ],
+    "IS": [
+     "plain",
+     "fantastic"
+    ]
+   },
+   "views": [
+    "welsh",
+    "scottish",
+    "cornish"
+   ],
+   "classes": [
+    "natural",
+    "managed",
+    "constructed"
+   ]
+  },
   "riversInland": {
    "family": "A",
    "eras": [
