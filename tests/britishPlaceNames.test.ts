@@ -227,6 +227,7 @@ test("line-up: the modules in order, with their labels; river names live in plac
       "native place names",
       "exploration into new lands",
       "expansion into settled lands",
+      "lands and territories",
       "farmland and countryside",
       "hills and valleys",
       "rivers and inland waters",

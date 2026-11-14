@@ -2647,6 +2647,7 @@ var SECTION_ICONS = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
   // Place modules split brief §2: the existing place icon until the focused modules' own icons are supplied.
+  lands: ICON_NATIVE_PLACE_NAMES,
   farmland: ICON_NATIVE_PLACE_NAMES,
   hillsValleys: ICON_NATIVE_PLACE_NAMES,
   riversInland: ICON_NATIVE_PLACE_NAMES,
@@ -63237,7 +63238,8 @@ var lens_default = {
     "placeShapes",
     "riversInland",
     "hillsValleys",
-    "farmland"
+    "farmland",
+    "lands"
   ],
   cultureSets: {
     caste: {
@@ -65132,6 +65134,29 @@ var lens_default = {
       land: true,
       sentence: {
         family: "none"
+      }
+    },
+    lands: {
+      cultures: "shared",
+      eras: "codes",
+      land: true,
+      sentence: {
+        family: "A",
+        fields: {
+          culture: "culture",
+          era: "era",
+          fantastic: "fantastic",
+          genre: null,
+          region: "region"
+        },
+        roster: "wilds",
+        region: {
+          group: "british",
+          requires: {
+            where: "home"
+          },
+          keepWhenHidden: true
+        }
       }
     }
   },
@@ -69542,6 +69567,57 @@ var lens_offers_default = {
         "natural",
         "managed",
         "constructed"
+      ]
+    },
+    lands: {
+      family: "A",
+      eras: [
+        [
+          "AN"
+        ],
+        [
+          "MD"
+        ],
+        [
+          "EM"
+        ],
+        [
+          "ST"
+        ],
+        [
+          "MO"
+        ]
+      ],
+      worlds: {
+        AN: [
+          "plain",
+          "fantastic"
+        ],
+        MD: [
+          "plain",
+          "fantastic"
+        ],
+        EM: [
+          "plain",
+          "fantastic"
+        ],
+        ST: [
+          "plain",
+          "fantastic"
+        ],
+        MO: [
+          "plain",
+          "fantastic"
+        ]
+      },
+      views: [
+        "welsh",
+        "scottish",
+        "cornish"
+      ],
+      classes: [
+        "natural",
+        "managed"
       ]
     },
     farmland: {
@@ -120924,6 +121000,135 @@ var places_default = {
   $comment: "Place modules split brief (docs/place-modules-split-brief.md). Focused place modules on the wild lands engine (src/wilds/engine.ts): their own modules, kinds (with class and sources), shapes and the few tags and tables wilds.json lacks; everything else (culture, era and where multipliers, homeland, vocabulary) is wilds.json's. Sources: src/places/sources.ts.",
   version: 1,
   modules: {
+    lands: {
+      label: "lands and territories",
+      any: "lands and territories of any kind",
+      seriesText: "in one realm",
+      terrain: "plains",
+      defaultBiome: "temperate",
+      parentKind: "shire",
+      biomes: [
+        "temperate",
+        "moorland",
+        "boreal",
+        "cool-rainforest",
+        "mediterranean",
+        "steppe",
+        "savannah",
+        "rainforest",
+        "monsoon",
+        "tropical-islands",
+        "highland"
+      ],
+      region: true,
+      eras: [
+        "AN",
+        "MD",
+        "EM",
+        "ST",
+        "MO"
+      ],
+      kinds: [
+        {
+          key: "country",
+          menu: "Named countrysides",
+          plural: "named countrysides",
+          weight: 14,
+          class: "natural",
+          sources: {
+            colonial: {
+              generics: [
+                "plain-grassland",
+                "desert"
+              ]
+            }
+          }
+        },
+        {
+          key: "shire",
+          menu: "Shires, counties and hundreds",
+          plural: "shires, counties and hundreds",
+          weight: 20,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "land-holding-share-of-land",
+                "folk-group-territory"
+              ]
+            },
+            colonial: {
+              generics: [
+                "land-territory"
+              ]
+            }
+          }
+        },
+        {
+          key: "march",
+          menu: "Marches and borderlands",
+          plural: "marches and borderlands",
+          weight: 12,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "boundary",
+                "dyke-boundary-earthwork"
+              ]
+            },
+            colonial: {
+              generics: [
+                "frontier-march"
+              ]
+            }
+          }
+        },
+        {
+          key: "province",
+          menu: "Provinces, colonies and dominions",
+          plural: "provinces, colonies and dominions",
+          weight: 14,
+          class: "managed",
+          sources: {
+            colonial: {
+              generics: [
+                "province-kingdom"
+              ]
+            }
+          }
+        },
+        {
+          key: "parish",
+          menu: "Parishes, townships and estates",
+          plural: "parishes, townships and estates",
+          weight: 18,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "estate-manor-centre",
+                "farm-township"
+              ]
+            }
+          }
+        },
+        {
+          key: "folk",
+          menu: "Lands of a people",
+          plural: "lands of a people",
+          weight: 12,
+          class: "managed",
+          sources: {
+            native: {
+              generics: [
+                "folk-group-territory"
+              ]
+            }
+          }
+        }
+      ]
+    },
     riversInland: {
       label: "rivers and inland waters",
       any: "rivers and inland waters of any kind",
@@ -121525,6 +121730,411 @@ var places_default = {
     }
   },
   shapes: {
+    lands: {
+      country: [
+        {
+          p: "{town} Country",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{wildQuality} Country",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{wildColour} Country",
+          w: 3,
+          f: "col"
+        },
+        {
+          p: "{beast} Country",
+          w: 3,
+          f: "crt"
+        },
+        {
+          p: "{grsFlora} Country",
+          w: 2,
+          f: "flora"
+        },
+        {
+          p: "{wildWeather} Country",
+          w: 2,
+          f: "qual"
+        },
+        {
+          p: "The {wildQuality} Lands",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "Land of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{person:poss} Country",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{folkUncanny} Country",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{mythBeast} Country",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      shire: [
+        {
+          p: "{town}shire",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{town} County",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Hundred",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} District",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Lordship",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Barony",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "Lands of {holy}",
+          w: 2,
+          f: "sai",
+          of: true
+        },
+        {
+          p: "{kingdom} Shire",
+          w: 2,
+          f: "ppl"
+        },
+        {
+          p: "{person:poss} Lands",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{folkUncanny} Shire",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{mythBeast} Shire",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      march: [
+        {
+          p: "{town} March",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{directionAdj} March",
+          w: 4,
+          f: "dir"
+        },
+        {
+          p: "The {wildQuality} Marches",
+          w: 3,
+          f: "qual"
+        },
+        {
+          p: "{town} Borderlands",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{kingdom} Marches",
+          w: 2,
+          f: "ppl"
+        },
+        {
+          p: "{town} Frontier",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{directionAdj} Frontier",
+          w: 2,
+          f: "dir"
+        },
+        {
+          p: "{town} Borders",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "The {town} Pale",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "Marches of the {folk}",
+          w: 2,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "{folkUncanny} March",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{mythBeast} March",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      province: [
+        {
+          p: "{town} Province",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "Province of {kingdom}",
+          w: 4,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "{directionAdj} Province",
+          w: 3,
+          f: "dir"
+        },
+        {
+          p: "{town} Dominion",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "New {town}",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Territory",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Kingdom",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Principality",
+          w: 2,
+          f: "twn"
+        },
+        {
+          p: "{town} Colony",
+          w: 3,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO"
+          ],
+          nx: 2
+        },
+        {
+          p: "{town} Protectorate",
+          w: 2,
+          f: "twn",
+          e: [
+            "EM",
+            "ST",
+            "MO"
+          ]
+        },
+        {
+          p: "{mythBeast} Province",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      parish: [
+        {
+          p: "{town} Parish",
+          w: 6,
+          f: "twn"
+        },
+        {
+          p: "{town} Manor",
+          w: 5,
+          f: "twn"
+        },
+        {
+          p: "{town} Estate",
+          w: 4,
+          f: "twn"
+        },
+        {
+          p: "{town} Township",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{town} Hall",
+          w: 3,
+          f: "twn"
+        },
+        {
+          p: "{wildColour} Manor",
+          w: 2,
+          f: "col"
+        },
+        {
+          p: "{holy:poss} Parish",
+          w: 2,
+          f: "sai"
+        },
+        {
+          p: "{beast} Manor",
+          w: 2,
+          f: "crt"
+        },
+        {
+          p: "{person:poss} Estate",
+          w: 2,
+          f: "per",
+          e: [
+            "EM",
+            "ST",
+            "MO"
+          ],
+          nx: 1.5
+        },
+        {
+          p: "{folkUncanny} Manor",
+          w: 1,
+          f: "unc",
+          t: [
+            "strange"
+          ]
+        },
+        {
+          p: "{mythBeast} Manor",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ],
+      folk: [
+        {
+          p: "Land of the {folk}",
+          w: 5,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "{folk} Land",
+          w: 4,
+          f: "ppl"
+        },
+        {
+          p: "{folk} Territory",
+          w: 3,
+          f: "ppl"
+        },
+        {
+          p: "Lands of the {folk}",
+          w: 3,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "{folk} Homeland",
+          w: 2,
+          f: "ppl"
+        },
+        {
+          p: "Realm of the {folk}",
+          w: 2,
+          f: "ppl",
+          of: true
+        },
+        {
+          p: "The {kingdom} Lands",
+          w: 3,
+          f: "ppl"
+        },
+        {
+          p: "{folk} Heartland",
+          w: 2,
+          f: "ppl"
+        },
+        {
+          p: "Land of {god}",
+          w: 1,
+          f: "god",
+          of: true,
+          t: [
+            "grand"
+          ]
+        },
+        {
+          p: "{mythBeast} Land",
+          w: 1,
+          f: "myth",
+          h: true
+        }
+      ]
+    },
     riversInland: {
       stream: [
         {
@@ -123565,11 +124175,23 @@ var places_default = {
     biome: {}
   },
   beastPools: {
+    lands: "grsBeast",
     riversInland: "lakeCreature",
     hillsValleys: "mrBeast",
     farmland: "grsBeast"
   },
   safeguards: {
+    lands: [
+      "The Shire",
+      "Mordor",
+      "Gondor",
+      "Rohan",
+      "Narnia",
+      "Westeros",
+      "Hyrule",
+      "Middle-earth",
+      "Wonderland"
+    ],
     riversInland: [
       "Anduin",
       "Brandywine River",
@@ -123619,7 +124241,7 @@ var OLD_HISTORY_PREFIXES = {
   // Line-up brief §2.4: the deities module before the split; place rows go to sacred places.
   deityNames: ["deities and sacred places"]
 };
-var PLACE_MODULE_SECTIONS = ["farmland", "hillsValleys", "riversInland"];
+var PLACE_MODULE_SECTIONS = ["lands", "farmland", "hillsValleys", "riversInland"];
 var WILDS_LIKE_SECTIONS = [...PLACE_MODULE_SECTIONS, "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 var WATERS_SECTIONS = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
 var WILDS_SECTIONS = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
@@ -123642,6 +124264,7 @@ var SECTION_ORDER = [
   "placeShapes",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
+  "lands",
   "farmland",
   "hillsValleys",
   "riversInland",
@@ -123733,6 +124356,7 @@ var SECTION_LABELS = {
   spacecraft: "spacecraft and stations",
   aircraft: "aircraft and airships",
   landVehicles: "land vehicles",
+  lands: "lands and territories",
   farmland: "farmland and countryside",
   hillsValleys: "hills and valleys",
   riversInland: "rivers and inland waters",
@@ -124060,7 +124684,7 @@ function drawKind(kind, ctx, own) {
 
 // src/wilds/engine.ts
 var WILDS_MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
-var PLACE_MODULES = ["farmland", "hillsValleys", "riversInland"];
+var PLACE_MODULES = ["lands", "farmland", "hillsValleys", "riversInland"];
 var isPlaceModule = (module2) => PLACE_MODULES.includes(module2);
 var WILDS_DATA = wilds_default;
 var PLACES = places_default;
@@ -138598,6 +139222,7 @@ var WILDS_PRESET_MODULES = {
   "wetland-names": "wetlandNames",
   "grassland-names": "grasslandNames",
   // Place modules split brief §5: the focused place modules save presets the same way.
+  "land-names": "lands",
   "farmland-names": "farmland",
   "hills-valleys-names": "hillsValleys",
   "inland-water-names": "riversInland"

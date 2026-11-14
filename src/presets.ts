@@ -1536,6 +1536,7 @@ export const WILDS_PRESET_MODULES: Record<string, WildsLikeModule> = {
   "wetland-names": "wetlandNames",
   "grassland-names": "grasslandNames",
   // Place modules split brief §5: the focused place modules save presets the same way.
+  "land-names": "lands",
   "farmland-names": "farmland",
   "hills-valleys-names": "hillsValleys",
   "inland-water-names": "riversInland",

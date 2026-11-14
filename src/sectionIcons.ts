@@ -63,6 +63,7 @@ export const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
   // Place modules split brief §2: the existing place icon until the focused modules' own icons are supplied.
+  lands: ICON_NATIVE_PLACE_NAMES,
   farmland: ICON_NATIVE_PLACE_NAMES,
   hillsValleys: ICON_NATIVE_PLACE_NAMES,
   riversInland: ICON_NATIVE_PLACE_NAMES,

@@ -133,7 +133,7 @@ test("every module in the lens either has an adapter or is listed as not yet rep
   const have = new Set(report.modules.map((m) => m.module));
   for (const adapter of COVERAGE_ADAPTERS) assert.ok(have.has(adapter.module));
   assert.equal(new Set(COVERAGE_ADAPTERS.map((a) => a.module)).size, COVERAGE_ADAPTERS.length, "no module twice");
-  assert.equal(have.size + report.withoutAdapter.length, 50, "the 50 lens modules, reported or pending");
+  assert.equal(have.size + report.withoutAdapter.length, 51, "the 51 lens modules, reported or pending");
 });
 
 test("the report builds and reads in British English with its cells marked", () => {

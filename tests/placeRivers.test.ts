@@ -19,7 +19,7 @@ const seg = (segments: unknown[], field: string) => segments.find((s) => typeof 
 
 test("the module is in the line-up: label, place names group (before route names) and history", () => {
   assert.equal(SECTION_LABELS[M], "rivers and inland waters");
-  assert.deepEqual(PLACE_MODULE_SECTIONS, ["farmland", "hillsValleys", M]);
+  assert.deepEqual(PLACE_MODULE_SECTIONS, ["lands", "farmland", "hillsValleys", M]);
   assert.ok(SECTION_ORDER.includes(M));
   const group = SECTION_GROUPS.placeNames;
   assert.ok(group.indexOf(M) > group.indexOf("empireExpansionPlaceShapes") && group.indexOf(M) < group.indexOf("routeNames"), group.join(", "));

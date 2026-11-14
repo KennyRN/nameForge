@@ -40,8 +40,8 @@ import { drawKind, type KindSources } from "../places/sources";
 export type WildsModule = "mountainNames" | "forestNames" | "desertNames" | "moorNames" | "wetlandNames" | "grasslandNames";
 export const WILDS_MODULES: WildsModule[] = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 /** Place modules split brief §5: the focused place modules that run on this engine, with their own table (places.json). */
-export type PlaceModule = "farmland" | "hillsValleys" | "riversInland";
-export const PLACE_MODULES: PlaceModule[] = ["farmland", "hillsValleys", "riversInland"];
+export type PlaceModule = "lands" | "farmland" | "hillsValleys" | "riversInland";
+export const PLACE_MODULES: PlaceModule[] = ["lands", "farmland", "hillsValleys", "riversInland"];
 export const isPlaceModule = (module: string): module is PlaceModule => (PLACE_MODULES as string[]).includes(module);
 /** A module this engine runs: one of the six wild lands modules or a focused place module. */
 export type WildsLikeModule = WildsModule | PlaceModule;

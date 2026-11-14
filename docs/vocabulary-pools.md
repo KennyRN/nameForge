@@ -38,7 +38,7 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | Pool | Holds | Tags used | Read by |
 |---|---|---|---|
 | `direction` | compass points for "‹direction› Road" (diagonals ×0.2) | x | route names, streets and districts, buildings and landmarks, seas and coasts |
-| `directionAdj` | Northern, Southern, Eastern, Western | – | route names, streets and districts, inns and taverns, buildings and landmarks, seas and coasts, hills and valleys |
+| `directionAdj` | Northern, Southern, Eastern, Western | – | route names, streets and districts, inns and taverns, buildings and landmarks, seas and coasts, hills and valleys, lands and territories |
 | `travellers` | plural travellers for "‹travellers›' Way" | x, t, c, e | route names, streets and districts, inns and taverns |
 | `routeFeature` | earthworks and markers for "‹feature› Way" | x | route names |
 | `routeMaterial` | road surfaces for "‹material› Street" | x, e | route names |
@@ -225,7 +225,7 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `endWord` | "‹…› End": Land's, World's, Earth's | x | coasts and islands |
 | `stackGroup` | groups of sea stacks: Needles, Maidens, Sisters, Teeth | x, t | coasts and islands, sea charts |
 | `coveFolk` | people a cove is named for: Smugglers, Fishermen, Pirates, Monks | x, t | coasts and islands |
-| `folkUncanny` | folk-supernatural possessives: Devil's, Giant's, Witch's, Mermaid's | x, t | seas and lakes, coasts and islands, sea charts, rivers and inland waters, farmland and countryside, hills and valleys |
+| `folkUncanny` | folk-supernatural possessives: Devil's, Giant's, Witch's, Mermaid's | x, t | seas and lakes, coasts and islands, sea charts, rivers and inland waters, farmland and countryside, hills and valleys, lands and territories |
 | `devilFeature` | what the Devil owns: Rock, Bellows, Frying Pan, Punchbowl | x, t | coasts and islands |
 | `narrowsWord` | "The ‹…› Narrows": Iron, Stone, Long, Crooked, Twin | x, t | seas and lakes |
 | `gateWord` | "‹…› Gate": Golden, Iron, Narrow, Western | x | seas and lakes |
@@ -316,14 +316,14 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `bookSecret` | Night, Ash, Bones, Stars, Keys, Names, Tides… | x, t | books and writings |
 | `officeWord` | Exchequer, Treasury, Admiralty, Chancery, Wardrobe… | x | books and writings |
 | `moodOf` | explorers' moods that can follow "of": Plenty, Hope, Disappointment, Farewell | x, t | wild lands, hills and valleys |
-| `wildColour` | colours: Black, White, Red, Grey, Green | x, t | wild lands, rivers and inland waters, farmland and countryside, hills and valleys |
-| `wildQuality` | plain adjectives: Great, Little, High, Long, Old | x, c, t | wild lands, rivers and inland waters, farmland and countryside, hills and valleys |
+| `wildColour` | colours: Black, White, Red, Grey, Green | x, t | wild lands, rivers and inland waters, farmland and countryside, hills and valleys, lands and territories |
+| `wildQuality` | plain adjectives: Great, Little, High, Long, Old | x, c, t | wild lands, rivers and inland waters, farmland and countryside, hills and valleys, lands and territories |
 | `wildFuse` | first halves of fused words: Ash- and Raven- (Ashdale, Ravenhurst) | – | wild lands, rivers and inland waters, hills and valleys |
-| `wildWeather` | weather and sky: Wind, Storm, Mist, Frost | x, bt, t | wild lands, rivers and inland waters, hills and valleys |
+| `wildWeather` | weather and sky: Wind, Storm, Mist, Frost | x, bt, t | wild lands, rivers and inland waters, hills and valleys, lands and territories |
 | `wildShape` | shapes a feature resembles: Saddle, Anvil, Horn, Needle | x, c, t | wild lands, hills and valleys |
 | `rangeBody` | body words of a range: Spine, Backbone, Teeth, Wall | x | wild lands |
 | `wildMetal` | metals and stones worked: Silver, Copper, Lead, Coal, Slate | x, bt, c | wild lands, farmland and countryside |
-| `mythBeast` | fantastic beasts: Dragon, Wyrm, Griffin, Giant, Troll (fantastic only) | x, h, t | wild lands, rivers and inland waters, farmland and countryside, hills and valleys |
+| `mythBeast` | fantastic beasts: Dragon, Wyrm, Griffin, Giant, Troll (fantastic only) | x, h, t | wild lands, rivers and inland waters, farmland and countryside, hills and valleys, lands and territories |
 | `mythFuse` | fantastic first halves: Elf-, Fey-, Troll-, Dwarf- (fantastic only) | x, h | wild lands |
 | `leapWho` | whose leap: Maiden's, Lover's, Giant's, Hart's | x, e, t | wild lands, rivers and inland waters |
 | `iceWord` | ice features: River, Stair, Tongue, Wall | – | wild lands |
@@ -363,9 +363,9 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `wetBeast` | wetland creatures: Heron, Bittern, Crane, Eel, Frog | x, bt, e, pl, t | wild lands |
 | `drainFeet` | widths of a drain: Forty, Twenty, Sixteen, Hundred | x | wild lands |
 | `grsQuality` | grassland adjectives: Wide, Open, Green, Golden | x, bt, t | wild lands, farmland and countryside |
-| `grsFlora` | grassland plants: Grass, Clover, Cowslip, Poppy | x, bt | wild lands, farmland and countryside, hills and valleys |
+| `grsFlora` | grassland plants: Grass, Clover, Cowslip, Poppy | x, bt | wild lands, farmland and countryside, hills and valleys, lands and territories |
 | `grsWork` | grassland trades: Drovers', Shepherds', Herders' | x | wild lands, farmland and countryside |
-| `grsBeast` | grassland creatures: Horse, Hare, Lark, Bison | x, bt, pl | wild lands, farmland and countryside |
+| `grsBeast` | grassland creatures: Horse, Hare, Lark, Bison | x, bt, pl | wild lands, farmland and countryside, lands and territories |
 
 ## The lens and the coverage report
 

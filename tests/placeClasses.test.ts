@@ -21,14 +21,15 @@ const TABLE: Record<string, Record<PlaceClass, string>> = {
   grasslandNames: { natural: "plain down heath vale stream lake", managed: "meadow", constructed: "track landmark settlement" },
   // Place modules split brief §5.4: the rivers and inland waters kinds, with the classes the brief gives them.
   riversInland: { natural: "river stream spring pool lake falls riverland", managed: "", constructed: "cut" },
-  // §5.3 and §5.2.
+  // §5.1, §5.3 and §5.2.
+  lands: { natural: "country", managed: "shire march province parish folk", constructed: "" },
   hillsValleys: { natural: "hill ridge valley combe ravine", managed: "terrace", constructed: "settlement" },
   farmland: { natural: "", managed: "field enclosure common", constructed: "farm moot works settlement" },
   seasLakes: { natural: "ocean sea bay inlet strait lake", managed: "", constructed: "" },
   coastsIslands: { natural: "headland cliff beach cove island coast", managed: "", constructed: "" },
   seaCharts: { natural: "bank reef deep race channel", managed: "roads", constructed: "" },
 };
-const kindsOf = (module: string) => (([...WILDS_MODULES, "riversInland", "hillsValleys", "farmland"] as readonly string[]).includes(module) ? wildsKinds(module as WildsModule) : waterKinds(module as never));
+const kindsOf = (module: string) => (([...WILDS_MODULES, "riversInland", "hillsValleys", "farmland", "lands"] as readonly string[]).includes(module) ? wildsKinds(module as WildsModule) : waterKinds(module as never));
 const sorted = (s: string) => s.split(" ").filter(Boolean).sort();
 
 test("data: every kind of the nine modules has the class §6 gives it", () => {
@@ -58,6 +59,7 @@ test("probe: which classes each module offers, hand-checked against §6", () => 
     wetlandNames: ["natural", "managed", "constructed"],
     grasslandNames: ["natural", "managed", "constructed"],
     riversInland: ["natural", "constructed"],
+    lands: ["natural", "managed"],
     hillsValleys: ["natural", "managed", "constructed"],
     farmland: ["managed", "constructed"],
     seasLakes: [],

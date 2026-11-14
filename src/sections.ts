@@ -86,6 +86,7 @@ export type NameForgeSection =
   | "landVehicles"
   // Seas and coasts brief §1.1: the seas and coasts group, after place names.
   // Place modules split brief §2: the focused place modules, in the place names group.
+  | "lands"
   | "farmland"
   | "hillsValleys"
   | "riversInland"
@@ -102,7 +103,7 @@ export type NameForgeSection =
   | "grasslandNames";
 
 /** Place modules split brief §5: the focused place modules that run on the wild lands engine. */
-export const PLACE_MODULE_SECTIONS: NameForgeSection[] = ["farmland", "hillsValleys", "riversInland"];
+export const PLACE_MODULE_SECTIONS: NameForgeSection[] = ["lands", "farmland", "hillsValleys", "riversInland"];
 
 /** Place modules and the wild lands modules: the sections the wild lands sentence and engine draw. */
 export const WILDS_LIKE_SECTIONS: NameForgeSection[] = [...PLACE_MODULE_SECTIONS, "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
@@ -144,6 +145,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "placeShapes",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
+  "lands",
   "farmland",
   "hillsValleys",
   "riversInland",
@@ -247,6 +249,7 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   spacecraft: "spacecraft and stations",
   aircraft: "aircraft and airships",
   landVehicles: "land vehicles",
+  lands: "lands and territories",
   farmland: "farmland and countryside",
   hillsValleys: "hills and valleys",
   riversInland: "rivers and inland waters",

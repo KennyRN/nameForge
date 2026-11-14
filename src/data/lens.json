@@ -914,7 +914,8 @@
   "placeShapes",
   "riversInland",
   "hillsValleys",
-  "farmland"
+  "farmland",
+  "lands"
  ],
  "cultureSets": {
   "caste": {
@@ -2809,6 +2810,29 @@
    "land": true,
    "sentence": {
     "family": "none"
+   }
+  },
+  "lands": {
+   "cultures": "shared",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds",
+    "region": {
+     "group": "british",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
    }
   }
  },

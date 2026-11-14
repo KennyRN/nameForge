@@ -368,3 +368,103 @@ Open to General: 9.
 - `{mythBeast} Terraces` (w 1, f myth, h: true)
 
 Open to General: 9.
+
+## Lands and territories (`lands`)
+
+No kind is delegated. Each kind's colonial source names generics of the colonial patterns (the brief's §5.1 table), and its native source names generics of the British shapes; `country` and `province` have no native source, `parish` and `folk` no colonial one, so at home or in new and settled lands they fall back to the shapes below, as §4.1 says. The sentence reads "in one realm" in series mode and the module runs from the ancient to the modern era.
+
+### country
+
+- `{town} Country` (w 6, f twn)
+- `{wildQuality} Country` (w 3, f qual)
+- `{wildColour} Country` (w 3, f col)
+- `{beast} Country` (w 3, f crt)
+- `{grsFlora} Country` (w 2, f flora)
+- `{wildWeather} Country` (w 2, f qual)
+- `The {wildQuality} Lands` (w 3, f qual)
+- `Land of {god}` (w 1, f god, of: true, t: ["grand"])
+- `{person:poss} Country` (w 2, f per, e: ["EM", "ST", "MO"], nx: 1.5)
+- `{folkUncanny} Country` (w 1, f unc, t: ["strange"])
+- `{mythBeast} Country` (w 1, f myth, h: true)
+
+Open to General: 10.
+
+### shire
+
+- `{town}shire` (w 6, f twn)
+- `{town} County` (w 4, f twn)
+- `{town} Hundred` (w 4, f twn)
+- `{town} District` (w 3, f twn)
+- `{town} Lordship` (w 3, f twn)
+- `{town} Barony` (w 2, f twn)
+- `Lands of {holy}` (w 2, f sai, of: true)
+- `{kingdom} Shire` (w 2, f ppl)
+- `{person:poss} Lands` (w 2, f per, e: ["EM", "ST", "MO"], nx: 1.5)
+- `{folkUncanny} Shire` (w 1, f unc, t: ["strange"])
+- `{mythBeast} Shire` (w 1, f myth, h: true)
+
+Open to General: 10.
+
+### march
+
+- `{town} March` (w 6, f twn)
+- `{directionAdj} March` (w 4, f dir)
+- `The {wildQuality} Marches` (w 3, f qual)
+- `{town} Borderlands` (w 3, f twn)
+- `{kingdom} Marches` (w 2, f ppl)
+- `{town} Frontier` (w 3, f twn)
+- `{directionAdj} Frontier` (w 2, f dir)
+- `{town} Borders` (w 2, f twn)
+- `The {town} Pale` (w 3, f twn)
+- `Marches of the {folk}` (w 2, f ppl, of: true)
+- `{folkUncanny} March` (w 1, f unc, t: ["strange"])
+- `{mythBeast} March` (w 1, f myth, h: true)
+
+Open to General: 11.
+
+### province
+
+- `{town} Province` (w 5, f twn)
+- `Province of {kingdom}` (w 4, f ppl, of: true)
+- `{directionAdj} Province` (w 3, f dir)
+- `{town} Dominion` (w 3, f twn)
+- `New {town}` (w 4, f twn)
+- `{town} Territory` (w 3, f twn)
+- `{town} Kingdom` (w 3, f twn)
+- `{town} Principality` (w 2, f twn)
+- `{town} Colony` (w 3, f twn, e: ["EM", "ST", "MO"], nx: 2)
+- `{town} Protectorate` (w 2, f twn, e: ["EM", "ST", "MO"])
+- `{mythBeast} Province` (w 1, f myth, h: true)
+
+Open to General: 10.
+
+### parish
+
+- `{town} Parish` (w 6, f twn)
+- `{town} Manor` (w 5, f twn)
+- `{town} Estate` (w 4, f twn)
+- `{town} Township` (w 3, f twn)
+- `{town} Hall` (w 3, f twn)
+- `{wildColour} Manor` (w 2, f col)
+- `{holy:poss} Parish` (w 2, f sai)
+- `{beast} Manor` (w 2, f crt)
+- `{person:poss} Estate` (w 2, f per, e: ["EM", "ST", "MO"], nx: 1.5)
+- `{folkUncanny} Manor` (w 1, f unc, t: ["strange"])
+- `{mythBeast} Manor` (w 1, f myth, h: true)
+
+Open to General: 10.
+
+### folk
+
+- `Land of the {folk}` (w 5, f ppl, of: true)
+- `{folk} Land` (w 4, f ppl)
+- `{folk} Territory` (w 3, f ppl)
+- `Lands of the {folk}` (w 3, f ppl, of: true)
+- `{folk} Homeland` (w 2, f ppl)
+- `Realm of the {folk}` (w 2, f ppl, of: true)
+- `The {kingdom} Lands` (w 3, f ppl)
+- `{folk} Heartland` (w 2, f ppl)
+- `Land of {god}` (w 1, f god, of: true, t: ["grand"])
+- `{mythBeast} Land` (w 1, f myth, h: true)
+
+Open to General: 9.

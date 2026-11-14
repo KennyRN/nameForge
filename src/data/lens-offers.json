@@ -961,6 +961,57 @@
     "constructed"
    ]
   },
+  "lands": {
+   "family": "A",
+   "eras": [
+    [
+     "AN"
+    ],
+    [
+     "MD"
+    ],
+    [
+     "EM"
+    ],
+    [
+     "ST"
+    ],
+    [
+     "MO"
+    ]
+   ],
+   "worlds": {
+    "AN": [
+     "plain",
+     "fantastic"
+    ],
+    "MD": [
+     "plain",
+     "fantastic"
+    ],
+    "EM": [
+     "plain",
+     "fantastic"
+    ],
+    "ST": [
+     "plain",
+     "fantastic"
+    ],
+    "MO": [
+     "plain",
+     "fantastic"
+    ]
+   },
+   "views": [
+    "welsh",
+    "scottish",
+    "cornish"
+   ],
+   "classes": [
+    "natural",
+    "managed"
+   ]
+  },
   "farmland": {
    "family": "A",
    "eras": [
