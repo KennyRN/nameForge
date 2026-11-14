@@ -911,7 +911,8 @@
   "coastsIslands",
   "seaCharts",
   "riverNames",
-  "placeShapes"
+  "placeShapes",
+  "riversInland"
  ],
  "cultureSets": {
   "caste": {
@@ -2220,6 +2221,29 @@
    }
   },
   "grasslandNames": {
+   "cultures": "shared",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds",
+    "region": {
+     "group": "british",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "riversInland": {
    "cultures": "shared",
    "eras": "codes",
    "land": true,

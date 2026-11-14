@@ -34,7 +34,7 @@ import { defaultVesselState, vesselSentence, vesselSentenceText } from "../src/v
 import { DEFAULT_REALM_STATE, realmSentence, realmSentenceText } from "../src/realms/sentence";
 import { familyForSection } from "../src/groups/engine";
 import { GROUP_NAME_SECTIONS } from "../src/sections";
-import { WILDS_MODULES } from "../src/wilds/engine";
+import { PLACE_MODULES, WILDS_MODULES } from "../src/wilds/engine";
 import { THING_MODULES } from "../src/things/engine";
 import { parseModulePreset } from "../src/presets";
 
@@ -80,7 +80,7 @@ function sentences(): Record<string, ReturnType<typeof record>> {
   out.seasLakes = record(watersSentence(defaultWatersState("seasLakes"), "seasLakes"), watersSentenceText);
   out.coastsIslands = record(watersSentence(defaultWatersState("coastsIslands"), "coastsIslands"), watersSentenceText);
   out.seaCharts = record(watersSentence(defaultWatersState("seaCharts"), "seaCharts"), watersSentenceText);
-  for (const m of WILDS_MODULES) out[m] = record(wildsSentence(defaultWildsState(m), m), wildsSentenceText);
+  for (const m of [...WILDS_MODULES, ...PLACE_MODULES]) out[m] = record(wildsSentence(defaultWildsState(m), m), wildsSentenceText);
   out.eventNames = record(eventSentence({ ...DEFAULT_EVENT_STATE }), eventSentenceText);
   out.moneyNames = record(moneySentence({ ...DEFAULT_MONEY_STATE }), moneySentenceText);
   for (const m of THING_MODULES) {
@@ -291,7 +291,7 @@ test("sentence baseline: the fixture covers every family A and B module and ever
   const modules = Object.keys(expected.sentences);
   for (const m of [
     "routeNames", "sacredPlaces", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit", "seasLakes", "coastsIslands", "seaCharts",
-    "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames", "eventNames", "moneyNames", "armsNames", "treasureNames", "bookNames",
+    "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames", "riversInland", "eventNames", "moneyNames", "armsNames", "treasureNames", "bookNames",
     "deityNames", "calendarNames", "skyNames", "peoplesTongues", "epithets", "familyNames", "titles", "ships", "spacecraft", "aircraft", "landVehicles", "realms",
     "powerFactions", "tradeGuilds", "martialOrders", "adventureCompanies", "mysticOrders", "underworldGroups", "supernaturalCourts",
   ]) assert.ok(modules.includes(m), `${m} has a sentence`);

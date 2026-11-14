@@ -36,7 +36,7 @@ const MODULES = LENS_VIEW_MODULES;
 const britain = ["anglo-saxon", "celtic", "norman-british"];
 
 test("every family A and B module has a sentence entry and an offers entry", () => {
-  assert.equal(MODULES.length, 40);
+  assert.equal(MODULES.length, 41);
   for (const m of MODULES) {
     assert.ok(OFFERS[m], `${m} in lens-offers.json`);
     const e = entryOf(m);

@@ -85,6 +85,8 @@ export type NameForgeSection =
   | "aircraft"
   | "landVehicles"
   // Seas and coasts brief §1.1: the seas and coasts group, after place names.
+  // Place modules split brief §2: the focused place modules, in the place names group.
+  | "riversInland"
   | "seasLakes"
   | "coastsIslands"
   | "seaCharts"
@@ -96,6 +98,12 @@ export type NameForgeSection =
   | "moorNames"
   | "wetlandNames"
   | "grasslandNames";
+
+/** Place modules split brief §5: the focused place modules that run on the wild lands engine. */
+export const PLACE_MODULE_SECTIONS: NameForgeSection[] = ["riversInland"];
+
+/** Place modules and the wild lands modules: the sections the wild lands sentence and engine draw. */
+export const WILDS_LIKE_SECTIONS: NameForgeSection[] = [...PLACE_MODULE_SECTIONS, "mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 
 /** Seas and coasts brief §1.1: the four waters modules, in order. */
 export const WATERS_SECTIONS: NameForgeSection[] = ["seasLakes", "coastsIslands", "seaCharts", "hyperspaceCharts"];
@@ -134,6 +142,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
   "placeShapes",
   "explorationPlaceShapes",
   "empireExpansionPlaceShapes",
+  "riversInland",
   "routeNames",
   "sacredPlaces",
   ...URBAN_SECTIONS,
@@ -157,7 +166,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
 export type SectionGroup = "placeNames" | "urban" | "seasCoasts" | "wildLands" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "routeNames", "sacredPlaces"],
+  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", ...PLACE_MODULE_SECTIONS, "routeNames", "sacredPlaces"],
   // Urban brief §1.1: straight after place names.
   urban: URBAN_SECTIONS,
   seasCoasts: WATERS_SECTIONS,
@@ -234,7 +243,8 @@ export const SECTION_LABELS: Record<NameForgeSection, string> = {
   spacecraft: "spacecraft and stations",
   aircraft: "aircraft and airships",
   landVehicles: "land vehicles",
-  seasLakes: "seas and lakes",
+  riversInland: "rivers and inland waters",
+  seasLakes: "seas and bays",
   coastsIslands: "coasts and islands",
   seaCharts: "sea charts",
   hyperspaceCharts: "hyperspace charts",
@@ -254,6 +264,8 @@ export const WORLD_PLACE_NAMES_HISTORY_NAME = "world place names";
 export const SETTLEMENT_NAMES_HISTORY_NAME = "settlement names";
 /** Monuments brief §1.1: "monuments and statues · {era} · {culture}…". */
 export const MONUMENT_NAMES_HISTORY_NAME = "monuments and statues";
+/** History rows from before seas and lakes became seas and bays. */
+export const OLD_SEAS_LAKES_HISTORY_NAME = "seas and lakes";
 export const TRIBAL_NAMES_HISTORY_NAME = "tribes and kin groups";
 /** History rows from before the rename to tribes and kin groups. */
 export const OLD_TRIBAL_NAMES_HISTORY_NAME = "tribal names";
@@ -311,6 +323,10 @@ export function historySection(packName: string): NameForgeSection {
   for (const section of VESSEL_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   // Wild lands brief §1.3: "{module} · {era} · {culture}…".
   for (const section of WILDS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  // Place modules split brief §5: "{module} · {era} · {culture}…".
+  for (const section of PLACE_MODULE_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
+  // Place modules split brief §5.4: seas and lakes became seas and bays; its old rows keep their module.
+  if (starts(OLD_SEAS_LAKES_HISTORY_NAME)) return "seasLakes";
   // Seas and coasts brief §1.3: "{module} · {era} · {culture}…".
   for (const section of WATERS_SECTIONS) if (starts(SECTION_LABELS[section])) return section;
   if (OLD_HISTORY_PREFIXES.tradeGuilds.some(starts)) return "tradeGuilds";

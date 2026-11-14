@@ -392,7 +392,7 @@ test("§2.4: resets", () => {
 
 test("§1.3: history labels", () => {
   const label = (module: WatersEarthly, state: Parameters<typeof watersHistoryLabel>[1]) => watersHistoryLabel(module, state, SECTION_LABELS[module]);
-  assert.equal(label("seasLakes", defaultWatersState("seasLakes")), "seas and lakes · medieval · Norman & British");
+  assert.equal(label("seasLakes", defaultWatersState("seasLakes")), "seas and bays · medieval · Norman & British");
   assert.equal(
     label("coastsIslands", { ...defaultWatersState("coastsIslands"), where: "new", culture: "general", biome: "desert", kind: "island", fantastic: true, tone: "grim", series: true }),
     "coasts and islands · medieval · General · new shores · Desert · islands · fantastic · grim · series",

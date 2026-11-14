@@ -1,0 +1,1156 @@
+{
+ "$comment": "Place modules split brief (docs/place-modules-split-brief.md). Focused place modules on the wild lands engine (src/wilds/engine.ts): their own modules, kinds (with class and sources), shapes and the few tags and tables wilds.json lacks; everything else (culture, era and where multipliers, homeland, vocabulary) is wilds.json's. Sources: src/places/sources.ts.",
+ "version": 1,
+ "modules": {
+  "riversInland": {
+   "label": "rivers and inland waters",
+   "any": "rivers and inland waters of any kind",
+   "seriesText": "in one river system",
+   "terrain": "rivers",
+   "defaultBiome": "temperate",
+   "parentKind": "stream",
+   "biomes": [
+    "temperate",
+    "moorland",
+    "boreal",
+    "cool-rainforest",
+    "mediterranean",
+    "steppe",
+    "desert",
+    "savannah",
+    "rainforest",
+    "monsoon",
+    "tropical-islands",
+    "highland"
+   ],
+   "region": true,
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "kinds": [
+    {
+     "key": "river",
+     "menu": "Rivers",
+     "plural": "rivers",
+     "weight": 28,
+     "class": "natural",
+     "sources": {
+      "delegate": {
+       "engine": "rivers"
+      }
+     }
+    },
+    {
+     "key": "stream",
+     "menu": "Streams, brooks and becks",
+     "plural": "streams, brooks and becks",
+     "weight": 16,
+     "class": "natural",
+     "sources": {
+      "native": {
+       "generics": [
+        "clear-stream",
+        "sluggish-or-muddy-stream",
+        "mountain-stream",
+        "stream-with-its-valley"
+       ]
+      },
+      "colonial": {
+       "groups": [
+        "rivers-and-streams",
+        "springs-pools-and-lakes"
+       ],
+       "generics": [
+        "creek",
+        "dry-riverbed",
+        "lagoon"
+       ]
+      }
+     }
+    },
+    {
+     "key": "spring",
+     "menu": "Springs and wells",
+     "plural": "springs and wells",
+     "weight": 7,
+     "class": "natural",
+     "sources": {
+      "native": {
+       "generics": [
+        "river-source-spring-head",
+        "spring-well",
+        "spring-with-roman-association"
+       ]
+      },
+      "colonial": {
+       "groups": [
+        "rivers-and-streams",
+        "springs-pools-and-lakes"
+       ],
+       "generics": [
+        "creek",
+        "dry-riverbed",
+        "lagoon"
+       ]
+      }
+     }
+    },
+    {
+     "key": "pool",
+     "menu": "Pools and meres",
+     "plural": "pools and meres",
+     "weight": 6,
+     "class": "natural",
+     "sources": {
+      "native": {
+       "generics": [
+        "pool",
+        "mere-shallow-lake",
+        "miry-pool-wallowing-place"
+       ]
+      },
+      "colonial": {
+       "groups": [
+        "rivers-and-streams",
+        "springs-pools-and-lakes"
+       ],
+       "generics": [
+        "creek",
+        "dry-riverbed",
+        "lagoon"
+       ]
+      }
+     }
+    },
+    {
+     "key": "lake",
+     "menu": "Lakes and lochs",
+     "plural": "lakes and lochs",
+     "weight": 12,
+     "class": "natural",
+     "sources": {
+      "native": {
+       "generics": [
+        "lake",
+        "small-mountain-lake"
+       ]
+      },
+      "colonial": {
+       "groups": [
+        "rivers-and-streams",
+        "springs-pools-and-lakes"
+       ],
+       "generics": [
+        "creek",
+        "dry-riverbed",
+        "lagoon"
+       ]
+      }
+     }
+    },
+    {
+     "key": "falls",
+     "menu": "Waterfalls and rapids",
+     "plural": "waterfalls and rapids",
+     "weight": 6,
+     "class": "natural",
+     "sources": {
+      "native": {
+       "generics": [
+        "waterfall"
+       ]
+      },
+      "colonial": {
+       "groups": [
+        "rivers-and-streams",
+        "springs-pools-and-lakes"
+       ],
+       "generics": [
+        "creek",
+        "dry-riverbed",
+        "lagoon"
+       ]
+      }
+     }
+    },
+    {
+     "key": "riverland",
+     "menu": "Meadows, bends and eyots",
+     "plural": "meadows, bends and eyots",
+     "weight": 8,
+     "class": "natural",
+     "sources": {
+      "native": {
+       "generics": [
+        "land-in-a-river-bend",
+        "water-meadow",
+        "flood-prone-land-by-a-river",
+        "river-mouth",
+        "confluence",
+        "dry-ground-in-wet-land"
+       ]
+      },
+      "colonial": {
+       "groups": [
+        "rivers-and-streams",
+        "springs-pools-and-lakes"
+       ],
+       "generics": [
+        "creek",
+        "dry-riverbed",
+        "lagoon"
+       ]
+      }
+     }
+    },
+    {
+     "key": "cut",
+     "menu": "Canals, leats and reservoirs",
+     "plural": "canals, leats and reservoirs",
+     "weight": 4,
+     "class": "constructed"
+    }
+   ]
+  }
+ },
+ "shapes": {
+  "riversInland": {
+   "stream": [
+    {
+     "p": "{wildColour} Brook",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Brook",
+     "w": 4,
+     "f": "crt"
+    },
+    {
+     "p": "{town} Brook",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{wildQuality} Brook",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildFuse}brook",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{mtRiverAdj} Water",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{tree} Brook",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{town} Run",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Creek",
+     "w": 3,
+     "f": "col",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 2
+    },
+    {
+     "p": "{town} Creek",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 2
+    },
+    {
+     "p": "{explorerMood} Creek",
+     "w": 2,
+     "f": "mood",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person} Creek",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 1.5
+    },
+    {
+     "p": "{folkUncanny} Brook",
+     "w": 1,
+     "f": "unc",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "{town} Beck",
+     "w": 3,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "beck"
+    },
+    {
+     "p": "{wildColour} Burn",
+     "w": 3,
+     "f": "col",
+     "c": [
+      "british"
+     ],
+     "rt": "burn"
+    },
+    {
+     "p": "{town} Bourne",
+     "w": 2,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "bourne"
+    },
+    {
+     "p": "{mythBeast} Brook",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "spring": [
+    {
+     "p": "{town} Spring",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Spring",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Spring",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{wildQuality} Spring",
+     "w": 2,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Well",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{holy:poss} Well",
+     "w": 4,
+     "f": "sai"
+    },
+    {
+     "p": "{tree} Well",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{god:poss} Spring",
+     "w": 2,
+     "f": "god",
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "{fstSprite} Spring",
+     "w": 1,
+     "f": "unc",
+     "t": [
+      "light"
+     ]
+    },
+    {
+     "p": "{person} Spring",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 1.5
+    },
+    {
+     "p": "{explorerMood} Spring",
+     "w": 2,
+     "f": "mood",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{mythBeast} Spring",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "pool": [
+    {
+     "p": "{town} Pool",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Pool",
+     "w": 4,
+     "f": "col"
+    },
+    {
+     "p": "{beast} Pool",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{lakeQuality} Pool",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Pond",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{fstPond} Pond",
+     "w": 3,
+     "f": "work"
+    },
+    {
+     "p": "{wetFlora} Pond",
+     "w": 2,
+     "f": "flora"
+    },
+    {
+     "p": "{folkUncanny} Pool",
+     "w": 2,
+     "f": "unc",
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "{holy:poss} Pool",
+     "w": 1,
+     "f": "sai"
+    },
+    {
+     "p": "{town} Mere",
+     "w": 3,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "mere",
+     "bt": "lowWater"
+    },
+    {
+     "p": "{lakeFuse}mere",
+     "w": 3,
+     "f": "qual",
+     "c": [
+      "british"
+     ],
+     "rt": "mere",
+     "bt": "lowWater"
+    },
+    {
+     "p": "{mythBeast} Pool",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "lake": [
+    {
+     "p": "Lake {town}",
+     "w": 10,
+     "f": "twn",
+     "rt": "lakeLake",
+     "t": [
+      "plain"
+     ]
+    },
+    {
+     "p": "{town} Lake",
+     "w": 8,
+     "f": "twn",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "{lakeCreature} Lake",
+     "w": 6,
+     "f": "crt",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "Lake of the {lakeCreature:pl}",
+     "w": 4,
+     "f": "crt",
+     "of": true,
+     "rt": "lakeLake"
+    },
+    {
+     "p": "{seaColour} Lake",
+     "w": 6,
+     "f": "col",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "{lakeQuality} Lake",
+     "w": 6,
+     "f": "qual",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "Loch {town}",
+     "w": 10,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "loch",
+     "bt": "upland"
+    },
+    {
+     "p": "Loch of the {lakeCreature:pl}",
+     "w": 3,
+     "f": "crt",
+     "of": true,
+     "c": [
+      "british"
+     ],
+     "rt": "loch",
+     "bt": "upland"
+    },
+    {
+     "p": "{town} Water",
+     "w": 6,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "lakeWater"
+    },
+    {
+     "p": "{lakeFuse}water",
+     "w": 3,
+     "f": "qual",
+     "c": [
+      "british"
+     ],
+     "rt": "lakeWater"
+    },
+    {
+     "p": "{lakeFuse}mere",
+     "w": 4,
+     "f": "qual",
+     "c": [
+      "british"
+     ],
+     "rt": "mere",
+     "bt": "lowWater"
+    },
+    {
+     "p": "{town} Mere",
+     "w": 4,
+     "f": "twn",
+     "rt": "mere",
+     "bt": "lowWater"
+    },
+    {
+     "p": "{town} Tarn",
+     "w": 4,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "tarn",
+     "bt": "upland"
+    },
+    {
+     "p": "{lakeQuality} Tarn",
+     "w": 2,
+     "f": "qual",
+     "c": [
+      "british"
+     ],
+     "rt": "tarn",
+     "bt": "upland"
+    },
+    {
+     "p": "{town} Broad",
+     "w": 4,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "broad",
+     "bt": "lowWater"
+    },
+    {
+     "p": "{town} Pool",
+     "w": 3,
+     "f": "twn",
+     "rt": "pool",
+     "bt": "lowWater"
+    },
+    {
+     "p": "Llyn {town}",
+     "w": 4,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "llyn"
+    },
+    {
+     "p": "{town} Reservoir",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "t": [
+      "plain"
+     ]
+    },
+    {
+     "p": "{lakeShape} Lake",
+     "w": 3,
+     "f": "shp",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "{folk} Lake",
+     "w": 3,
+     "f": "ppl",
+     "rt": "lakeLake"
+    },
+    {
+     "p": "Lake of {god}",
+     "w": 2,
+     "f": "god",
+     "of": true,
+     "t": [
+      "grand"
+     ]
+    },
+    {
+     "p": "Lake of {mariaWord}",
+     "w": 3,
+     "f": "maria",
+     "of": true,
+     "t": [
+      "strange"
+     ]
+    },
+    {
+     "p": "{mythBeast} Lake",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "falls": [
+    {
+     "p": "{wildColour} Falls",
+     "w": 5,
+     "f": "col"
+    },
+    {
+     "p": "{town} Falls",
+     "w": 5,
+     "f": "twn"
+    },
+    {
+     "p": "{beast} Falls",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{wildQuality} Falls",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{wildWeather} Falls",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{mtRiverAdj} Rapids",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Rapids",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{wildColour} Rapids",
+     "w": 2,
+     "f": "col"
+    },
+    {
+     "p": "{person} Falls",
+     "w": 3,
+     "f": "per",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 1.5
+    },
+    {
+     "p": "{leapWho} Leap",
+     "w": 3,
+     "f": "unc"
+    },
+    {
+     "p": "{wildColour} Veil",
+     "w": 2,
+     "f": "shp"
+    },
+    {
+     "p": "{town} Cascade",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "EM",
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Force",
+     "w": 3,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "force"
+    },
+    {
+     "p": "{mythBeast} Falls",
+     "w": 1,
+     "f": "myth",
+     "h": true
+    }
+   ],
+   "riverland": [
+    {
+     "p": "{town} Bend",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{wildQuality} Bend",
+     "w": 3,
+     "f": "qual"
+    },
+    {
+     "p": "{town} Meadows",
+     "w": 4,
+     "f": "twn"
+    },
+    {
+     "p": "{wetFlora} Meadow",
+     "w": 3,
+     "f": "flora"
+    },
+    {
+     "p": "{beast} Meadow",
+     "w": 3,
+     "f": "crt"
+    },
+    {
+     "p": "{wildColour} Meadow",
+     "w": 3,
+     "f": "col"
+    },
+    {
+     "p": "{town} Mouth",
+     "w": 3,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Water Meadow",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Flats",
+     "w": 2,
+     "f": "twn"
+    },
+    {
+     "p": "{town} Eyot",
+     "w": 2,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "eyot"
+    },
+    {
+     "p": "{town} Holm",
+     "w": 2,
+     "f": "twn",
+     "c": [
+      "british"
+     ],
+     "rt": "holme"
+    }
+   ],
+   "cut": [
+    {
+     "p": "{town} Leat",
+     "w": 4,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{wildColour} Leat",
+     "w": 2,
+     "f": "col",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{town} Mill Race",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "MD",
+      "EM",
+      "ST",
+      "MO"
+     ]
+    },
+    {
+     "p": "{town} Canal",
+     "w": 6,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{wildQuality} Canal",
+     "w": 3,
+     "f": "qual",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{person} Canal",
+     "w": 2,
+     "f": "per",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ],
+     "nx": 1.5
+    },
+    {
+     "p": "{town} Cut",
+     "w": 3,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Reservoir",
+     "w": 4,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{lakeQuality} Reservoir",
+     "w": 3,
+     "f": "qual",
+     "e": [
+      "ST",
+      "MO",
+      "NF",
+      "IS"
+     ]
+    },
+    {
+     "p": "{town} Navigation",
+     "w": 2,
+     "f": "twn",
+     "e": [
+      "ST",
+      "MO"
+     ]
+    }
+   ]
+  }
+ },
+ "cultureShapes": [
+  {
+   "culture": "steppe",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "{seaColour} Sea",
+   "w": 10,
+   "f": "fixed"
+  },
+  {
+   "culture": "steppe",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "Sea of Islands",
+   "w": 2,
+   "f": "fixed"
+  },
+  {
+   "culture": "chinese",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "{lakeShape} Sea",
+   "w": 6,
+   "f": "fixed"
+  },
+  {
+   "culture": "egyptian",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "Great Lake",
+   "w": 4,
+   "f": "fixed",
+   "e": [
+    "AN",
+    "MD"
+   ]
+  },
+  {
+   "culture": "bantu",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "Great Water",
+   "w": 4,
+   "f": "fixed"
+  },
+  {
+   "culture": "bantu",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "Home of {god}",
+   "w": 3,
+   "f": "fixed",
+   "t": [
+    "grand"
+   ]
+  },
+  {
+   "culture": "west-african",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "Great Water",
+   "w": 4,
+   "f": "fixed"
+  },
+  {
+   "culture": "aztec",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "Lake of the Moon",
+   "w": 3,
+   "f": "fixed"
+  },
+  {
+   "culture": "andean",
+   "module": "riversInland",
+   "kind": "lake",
+   "p": "Mother Lake",
+   "w": 3,
+   "f": "fixed"
+  }
+ ],
+ "regionTags": {
+  "pool": {
+   "COR": 0.5,
+   "WCY": 1,
+   "SEA": 0.5,
+   "EAN": 0.5,
+   "WMM": 2,
+   "WAL": 1,
+   "EMD": 0.5,
+   "NTH": 0.5,
+   "SBL": 0.5,
+   "SLO": 0.5,
+   "SHH": 0.5,
+   "NSI": 0.5
+  },
+  "llyn": {
+   "COR": 0,
+   "WCY": 0,
+   "SEA": 0,
+   "EAN": 0,
+   "WMM": 0,
+   "WAL": 3,
+   "EMD": 0,
+   "NTH": 0,
+   "SBL": 0,
+   "SLO": 0,
+   "SHH": 0,
+   "NSI": 0
+  }
+ },
+ "biomeTags": {
+  "upland": {
+   "temperate": 1,
+   "moorland": 2,
+   "boreal": 1.5,
+   "cool-rainforest": 1.5,
+   "mediterranean": 0.5,
+   "steppe": 0.3,
+   "desert": 0.2,
+   "savannah": 0.3,
+   "rainforest": 0.5,
+   "monsoon": 0.5,
+   "tropical-islands": 0.3,
+   "highland": 3
+  },
+  "lowWater": {
+   "temperate": 1.5,
+   "moorland": 1,
+   "boreal": 1,
+   "cool-rainforest": 0.5,
+   "mediterranean": 0.5,
+   "steppe": 1,
+   "desert": 0.2,
+   "savannah": 1,
+   "rainforest": 1,
+   "monsoon": 1,
+   "tropical-islands": 0.3,
+   "highland": 0.3
+  }
+ },
+ "eraMult": {
+  "maria": {
+   "AN": 1,
+   "MD": 1,
+   "EM": 1,
+   "ST": 1,
+   "MO": 1,
+   "NF": 6,
+   "IS": 6
+  }
+ },
+ "kindMult": {
+  "britishHome": {},
+  "biome": {}
+ },
+ "beastPools": {
+  "riversInland": "lakeCreature"
+ },
+ "safeguards": {
+  "riversInland": [
+   "Anduin",
+   "Brandywine River",
+   "River Styx",
+   "River Lethe",
+   "River Acheron",
+   "River Phlegethon",
+   "Lake Placid",
+   "Lake Wobegon",
+   "Crystal Lake",
+   "Nen Hithoel",
+   "Celebrant"
+  ]
+ }
+}

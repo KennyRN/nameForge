@@ -6,6 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import wildsData from "../data/wilds.json";
+import placesData from "../data/places.json";
 import { BRITAIN, biomesRootedIn, biomeTitleCase, biomeWords, biomeMatches, BUILT_IN_BIOMES, pluralOf, type Biome, type BiomeCatalogue, type BiomeList } from "../biomes";
 import { INTERSTELLAR_ERA, WORLD_CULTURES } from "../world/engine";
 import { deityHooks } from "../deities/hook";
@@ -32,11 +33,18 @@ import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, personNames
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
 import { kindInClass, type PlaceClass } from "../places/classes";
+import { drawKind, type KindSources } from "../places/sources";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
 export type WildsModule = "mountainNames" | "forestNames" | "desertNames" | "moorNames" | "wetlandNames" | "grasslandNames";
 export const WILDS_MODULES: WildsModule[] = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
+/** Place modules split brief §5: the focused place modules that run on this engine, with their own table (places.json). */
+export type PlaceModule = "riversInland";
+export const PLACE_MODULES: PlaceModule[] = ["riversInland"];
+export const isPlaceModule = (module: string): module is PlaceModule => (PLACE_MODULES as string[]).includes(module);
+/** A module this engine runs: one of the six wild lands modules or a focused place module. */
+export type WildsLikeModule = WildsModule | PlaceModule;
 export type WildsEra = RouteEra;
 /** Place modules split brief §3.1: home country, newly explored country, or settled lands. */
 export type WildsWhere = "home" | "new" | "settled";
@@ -70,6 +78,8 @@ export interface WildsKind {
   weight: number;
   /** Place modules split brief §6: natural, managed or constructed. */
   class?: PlaceClass;
+  /** Place modules split brief §4: the engines this kind borrows names from, or delegates to (focused place modules only). */
+  sources?: KindSources;
 }
 
 interface WildsModuleData {
@@ -82,6 +92,8 @@ interface WildsModuleData {
   region: boolean;
   eras: WildsEra[];
   kinds: WildsKind[];
+  /** Focused place modules: the kind a series' first name is drawn from (the wild lands' is PARENT_KIND). */
+  parentKind?: string;
 }
 
 interface WildsData {
@@ -93,13 +105,13 @@ interface WildsData {
   eraMult: Record<string, Record<string, number>>;
   kindMult: { britishHome: Record<string, number>; biome: Record<string, string> };
   homeland: Record<string, string>;
-  modules: Record<WildsModule, WildsModuleData>;
-  shapes: Record<WildsModule, Record<string, WildsShape[]>>;
-  cultureShapes: (WildsShape & { culture: string; module: WildsModule; kind: string })[];
+  modules: Record<string, WildsModuleData>;
+  shapes: Record<string, Record<string, WildsShape[]>>;
+  cultureShapes: (WildsShape & { culture: string; module: string; kind: string })[];
   settlementLink: {
     purposeBuiltShare: number;
     terrainToModule: { terrain: string; module: WildsModule; byBiome?: Record<string, WildsModule>; split?: Record<string, Record<string, number>> }[];
-    nativeLand: Record<WildsModule, { terrain: string; biomeIfUnset?: string }>;
+    nativeLand: Record<string, { terrain: string; biomeIfUnset?: string }>;
     worldEraToRoute: Record<string, Record<string, WildsEra>>;
     colonialToCulture: Record<string, { culture: string; era: WildsEra }>;
     cultureToColonial: Record<string, string>;
@@ -107,53 +119,79 @@ interface WildsData {
     cultureToColonialAdded?: Record<string, string | { tradition: string; weight: number }[]>;
   };
   sources: { beast: { pool: number; biome: number; biomeLists: Record<string, number> }; tree: { pool: number; biome: number; biomeLists: Record<string, number> }; stock: { biome: number; biomeLists: Record<string, number> } };
-  beastPools: Record<WildsModule, string>;
-  safeguards: Record<WildsModule, string[]> & { bannedWords: string[] };
+  beastPools: Record<string, string>;
+  safeguards: Record<string, string[]> & { bannedWords: string[] };
   cap: number;
 }
 
 export const WILDS_DATA = wildsData as unknown as WildsData;
+const PLACES = placesData as unknown as Partial<WildsData> & { eraMult?: Record<string, Record<string, number>> };
+
+/**
+ * The table a module reads: wilds.json for the six wild lands modules; for a focused place module the
+ * same, with the module's own kinds, shapes, culture shapes, tags and safeguards from places.json.
+ * Shared multipliers (culture, era, where), the homeland map and the vocabulary stay wilds.json's.
+ */
+const PLACES_DATA: WildsData = {
+  ...WILDS_DATA,
+  modules: PLACES.modules!,
+  shapes: PLACES.shapes!,
+  cultureShapes: PLACES.cultureShapes ?? [],
+  regionTags: { ...WILDS_DATA.regionTags, ...PLACES.regionTags },
+  biomeTags: { ...WILDS_DATA.biomeTags, ...PLACES.biomeTags },
+  eraMult: { ...WILDS_DATA.eraMult, ...PLACES.eraMult },
+  kindMult: { britishHome: { ...WILDS_DATA.kindMult.britishHome, ...PLACES.kindMult?.britishHome }, biome: { ...WILDS_DATA.kindMult.biome, ...PLACES.kindMult?.biome } },
+  beastPools: PLACES.beastPools!,
+  safeguards: { ...PLACES.safeguards!, bannedWords: WILDS_DATA.safeguards.bannedWords },
+};
+/** The table a module reads. */
+export const wildsDataOf = (module: WildsLikeModule): WildsData => (isPlaceModule(module) ? PLACES_DATA : WILDS_DATA);
 export const WILDS_CULTURES: RouteCulture[] = ROUTE_CULTURES;
 export const findWildsCulture = (key: string | undefined) => WILDS_CULTURES.find((c) => c.key === key);
 export const isBritishCulture = (culture: string) => BRITISH_CULTURES.includes(culture);
 
-export const wildsModuleData = (module: WildsModule): WildsModuleData => WILDS_DATA.modules[module];
-export const wildsKinds = (module: WildsModule): WildsKind[] => WILDS_DATA.modules[module].kinds;
-export const findWildsKind = (module: WildsModule, key: string | undefined) => wildsKinds(module).find((k) => k.key === key);
-export const wildsAny = (module: WildsModule) => WILDS_DATA.modules[module].any;
-export const wildsEras = (module: WildsModule): WildsEra[] => WILDS_DATA.modules[module].eras;
+export const wildsModuleData = (module: WildsLikeModule): WildsModuleData => wildsDataOf(module).modules[module];
+export const wildsKinds = (module: WildsLikeModule): WildsKind[] => wildsDataOf(module).modules[module].kinds;
+export const findWildsKind = (module: WildsLikeModule, key: string | undefined) => wildsKinds(module).find((k) => k.key === key);
+export const wildsAny = (module: WildsLikeModule) => wildsDataOf(module).modules[module].any;
+export const wildsEras = (module: WildsLikeModule): WildsEra[] => wildsDataOf(module).modules[module].eras;
 export const wildsEraLabel = (code: string) => ROUTE_ERAS.find((e) => e.code === code)?.label ?? code;
-export const wildsDefaultCulture = (module: WildsModule) => (module === "desertNames" ? "general" : "norman-british");
+export const wildsDefaultCulture = (module: WildsLikeModule) => (module === "desertNames" ? "general" : "norman-british");
 
 /** §2.2: the region link shows for the three British cultures in home country, never in deserts. */
-export const showsWildsRegion = (module: WildsModule, culture: string, where: WildsWhere) =>
-  WILDS_DATA.modules[module].region && isBritishCulture(culture) && where === "home";
+export const showsWildsRegion = (module: WildsLikeModule, culture: string, where: WildsWhere) =>
+  wildsDataOf(module).modules[module].region && isBritishCulture(culture) && where === "home";
 
 /**
  * The biomes a module offers (§3.4), in menu order. A biome pack shows where its root built-in does
  * (wizard retirement brief §5.1); one that replaces a built-in shows where that built-in does.
  */
-export const wildsBiomes = (module: WildsModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): Biome[] =>
-  biomesRootedIn(catalogue, WILDS_DATA.modules[module].biomes);
+export const wildsBiomes = (module: WildsLikeModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): Biome[] =>
+  biomesRootedIn(catalogue, wildsDataOf(module).modules[module].biomes);
 
 /** §6: the module's parent kind, for a series' first name (§12). */
 export const PARENT_KIND: Record<WildsModule, string> = { mountainNames: "range", forestNames: "forest", desertNames: "desert", moorNames: "moor", wetlandNames: "marsh", grasslandNames: "plain" };
+/** A module's parent kind: the wild lands' fixed table, or a focused place module's own `parentKind`. */
+export const parentKindOf = (module: WildsLikeModule): string => (isPlaceModule(module) ? PLACES_DATA.modules[module].parentKind ?? PLACES_DATA.modules[module].kinds[0].key : PARENT_KIND[module]);
 
 /** §6: whether a kind has a shape live in an era (culture and fantastic ignored, as the kind menu shows it). */
-export function wildsKindLive(module: WildsModule, kind: string, era: WildsEra): boolean {
-  const shapes = [...(WILDS_DATA.shapes[module][kind] ?? []), ...WILDS_DATA.cultureShapes.filter((s) => s.module === module && s.kind === kind)];
+export function wildsKindLive(module: WildsLikeModule, kind: string, era: WildsEra): boolean {
+  const data = wildsDataOf(module);
+  const shapes = [...(data.shapes[module][kind] ?? []), ...data.cultureShapes.filter((s) => s.module === module && s.kind === kind)];
   if (kind === "settlement") return true;
+  // Place modules split brief §4: a kind with sources can always draw from them, whatever the era.
+  if (findWildsKind(module, kind)?.sources) return true;
   return shapes.some((s) => !s.e || s.e.includes(era));
 }
 /** The kinds offered in an era. */
-export const wildsKindsAt = (module: WildsModule, era: WildsEra): WildsKind[] => wildsKinds(module).filter((k) => wildsKindLive(module, k.key, era));
+export const wildsKindsAt = (module: WildsLikeModule, era: WildsEra): WildsKind[] => wildsKinds(module).filter((k) => wildsKindLive(module, k.key, era));
 
 const PLURAL_POOLS = new Set<string>();
 
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface WildsOptions {
-  module: WildsModule;
+  module: WildsLikeModule;
   culture?: string;
   /** A kind key; undefined is Any. */
   kind?: string;
@@ -280,7 +318,7 @@ export const SIZE_LETTER: Record<string, string> = { any: "any", hamlet: "h", vi
 
 /** §9.4: what the native branch asks settlement names for, or undefined where it isn't available. */
 export function nativeSettlementRequest(
-  module: WildsModule,
+  module: WildsLikeModule,
   culture: string,
   era: WildsEra,
   where: WildsWhere,
@@ -291,6 +329,8 @@ export function nativeSettlementRequest(
 ): SettlementNamesOptions | undefined {
   const link = WILDS_DATA.settlementLink;
   if (mode === "placeholders" || era === "NF" || era === "IS") return undefined;
+  // Focused place modules delegate their settlements through the sources instead.
+  if (isPlaceModule(module)) return undefined;
   const land = link.nativeLand[module];
   const biome = chosenBiome ?? land.biomeIfUnset;
   const base = { size: "any" as const, count: 0, terrain: land.terrain, biome, wilds: false };
@@ -328,7 +368,7 @@ export interface WildsBatch {
 
 interface Ctx {
   rng: () => number;
-  module: WildsModule;
+  module: WildsLikeModule;
   culture: RouteCulture;
   era: WildsEra;
   setting: GroupSetting;
@@ -376,7 +416,7 @@ const MEAN_CACHE = new Map<string, number>();
 /** §3.3: a region tag's multiplier; the mean of its 12 values with no region chosen. */
 function regionMult(ctx: Ctx, tag: string | undefined): number {
   if (!tag || !ctx.homeBritish) return 1;
-  const row = WILDS_DATA.regionTags[tag];
+  const row = wildsDataOf(ctx.module).regionTags[tag];
   if (!row) return 1;
   if (ctx.region) return row[ctx.region] ?? 1;
   let mean = MEAN_CACHE.get(tag);
@@ -390,7 +430,7 @@ function regionMult(ctx: Ctx, tag: string | undefined): number {
 /** §3.4: a biome tag's multiplier for the resolved biome; 1 under the Britain rule. */
 function biomeMult(ctx: Ctx, tag: string | undefined): number {
   if (!tag || !ctx.biomeTags) return 1;
-  return WILDS_DATA.biomeTags[tag]?.[ctx.biome.id] ?? 1;
+  return wildsDataOf(ctx.module).biomeTags[tag]?.[ctx.biome.id] ?? 1;
 }
 
 /** A pool's words here: culture, era, fantastic, tone, region and biome; never light or grim for the sensitive cultures. */
@@ -411,13 +451,13 @@ function drawEntry(ctx: Ctx, pool: string): VocabEntry | undefined {
 
 /** §3.4: the resolved biome, and whether its tags apply. */
 export function resolveWildsBiome(
-  module: WildsModule,
+  module: WildsLikeModule,
   culture: string,
   where: WildsWhere,
   chosen: string | undefined,
   catalogue: BiomeCatalogue = BUILT_IN_BIOMES,
 ): { biome: Biome; tags: boolean; homeBritish: boolean } {
-  const data = WILDS_DATA.modules[module];
+  const data = wildsDataOf(module).modules[module];
   // A pack that replaces Britain is the home country's land, as it is British place names' (wizard retirement brief §5.2).
   if (showsWildsRegion(module, culture, where)) return { biome: catalogue.find("britain") ?? BRITAIN, tags: false, homeBritish: true };
   const offered = wildsBiomes(module, catalogue);
@@ -513,7 +553,7 @@ const biomeHas = (ctx: Ctx, lists: Record<string, number>) => Object.keys(lists)
 /** §4: `{beast}` 60% from the module's creature pool, 40% from the biome; `{tree}` 50/50; `{stock}` the biome's livestock. */
 function creature(ctx: Ctx, name: "beast" | "tree" | "stock"): VocabEntry | undefined {
   const src = WILDS_DATA.sources[name];
-  const pool = name === "beast" ? WILDS_DATA.beastPools[ctx.module] : name === "tree" ? "wildTree" : undefined;
+  const pool = name === "beast" ? wildsDataOf(ctx.module).beastPools[ctx.module] : name === "tree" ? "wildTree" : undefined;
   const poolLive = !!pool && vocabPool(ctx, pool).length > 0;
   const biomeLive = biomeHas(ctx, src.biomeLists);
   if (!pool) return biomeLive ? biomeWord(ctx, src.biomeLists) : undefined;
@@ -597,8 +637,8 @@ function renderPattern(ctx: Ctx, pattern: string, nested = false): string | unde
 
 const stripThe = (s: string) => s.replace(/^the /, "");
 
-function blockSet(module: WildsModule, guards?: GroupSafeguards): Set<string> {
-  const phrases = [...WILDS_DATA.safeguards[module], ...(guards?.block ?? []), ...(guards?.flagListBlocks ? guards.flag : [])];
+function blockSet(module: WildsLikeModule, guards?: GroupSafeguards): Set<string> {
+  const phrases = [...wildsDataOf(module).safeguards[module], ...(guards?.block ?? []), ...(guards?.flagListBlocks ? guards.flag : [])];
   const set = new Set<string>();
   for (const p of phrases) {
     const n = routeNorm(p);
@@ -608,7 +648,7 @@ function blockSet(module: WildsModule, guards?: GroupSafeguards): Set<string> {
   return set;
 }
 
-export function wildsBlocked(module: WildsModule, text: string, guards?: GroupSafeguards): boolean {
+export function wildsBlocked(module: WildsLikeModule, text: string, guards?: GroupSafeguards): boolean {
   const set = blockSet(module, guards);
   const n = routeNorm(text);
   return set.has(n) || set.has(stripThe(n));
@@ -620,8 +660,8 @@ const hasWildsBanned = (text: string) => text.toLowerCase().split(/[^\p{L}']+/u)
 /** A pack word the safeguards drop (blocked whole, or holding a banned word). */
 export const wildsWordBlocked = (word: string, guards?: GroupSafeguards) => breaksRouteWords(word) || hasWildsBanned(word) || WILDS_MODULES.some((m) => wildsBlocked(m, word, guards));
 
-export function defaultWildsSafeguards(module: WildsModule): GroupSafeguards {
-  return { block: WILDS_DATA.safeguards[module], flag: [], flagListBlocks: false };
+export function defaultWildsSafeguards(module: WildsLikeModule): GroupSafeguards {
+  return { block: wildsDataOf(module).safeguards[module], flag: [], flagListBlocks: false };
 }
 
 // ── Plans (shapes with their weights) ───────────────────────────────────────
@@ -645,7 +685,7 @@ function tokensLive(ctx: Ctx, p: string): boolean {
       if (t === "holy" && !cultureAllowed(["christian"], ctx.culture.key, ctx.era)) return false;
       if (t === "beast" || t === "tree" || t === "stock") {
         const src = WILDS_DATA.sources[t];
-        const pool = t === "beast" ? WILDS_DATA.beastPools[ctx.module] : t === "tree" ? "wildTree" : undefined;
+        const pool = t === "beast" ? wildsDataOf(ctx.module).beastPools[ctx.module] : t === "tree" ? "wildTree" : undefined;
         if (!(pool && vocabPool(ctx, pool).length > 0) && !biomeHas(ctx, src.biomeLists)) return false;
       }
       continue;
@@ -664,10 +704,11 @@ function shapeWeight(ctx: Ctx, s: WildsShape, hardOnly = false): number {
   if (c.sensitive && (s.h || LIGHT_OR_GRIM(s.t))) return 0;
   if (!tokensLive(ctx, s.p)) return 0;
   if (hardOnly) return s.w;
-  const cm = WILDS_DATA.cultureMult[c.key] ?? {};
+  const D = wildsDataOf(ctx.module);
+  const cm = D.cultureMult[c.key] ?? {};
   const family = (cm[s.f] ?? 1) * (s.of ? cm.of ?? 1 : 1);
-  const where = (WILDS_DATA.where[s.f]?.[ctx.where] ?? 1) * (s.f === "twn" && ctx.stems.thin ? 0.5 : 1);
-  const era = WILDS_DATA.eraMult[s.f]?.[ctx.era] ?? 1;
+  const where = (D.where[s.f]?.[ctx.where] ?? 1) * (s.f === "twn" && ctx.stems.thin ? 0.5 : 1);
+  const era = D.eraMult[s.f]?.[ctx.era] ?? 1;
   const extra = (s.cx?.[c.key] ?? 1) * (ctx.where !== "home" ? s.nx ?? 1 : 1);
   return s.w * family * where * era * extra * regionMult(ctx, s.rt) * biomeMult(ctx, s.bt) * toneFactor(s.t ?? [], ctx.tone);
 }
@@ -715,10 +756,11 @@ function featureRef(ctx: Ctx, kind: string): string | undefined {
 /** A kind's shapes: its own, the culture's, and (settlement) the module's dual-use shapes at half weight (§9.2). */
 function kindShapes(ctx: Ctx, kind: string): WildsShape[] {
   const module = ctx.module;
-  const own = [...(WILDS_DATA.shapes[module][kind] ?? []), ...WILDS_DATA.cultureShapes.filter((s) => s.module === module && s.kind === kind && s.culture === ctx.culture.key)];
+  const D = wildsDataOf(module);
+  const own = [...(D.shapes[module][kind] ?? []), ...D.cultureShapes.filter((s) => s.module === module && s.kind === kind && s.culture === ctx.culture.key)];
   if (kind !== "settlement") return own;
   const dual: WildsShape[] = [];
-  for (const [k, shapes] of Object.entries(WILDS_DATA.shapes[module])) {
+  for (const [k, shapes] of Object.entries(D.shapes[module])) {
     if (k === "settlement") continue;
     for (const s of shapes) if (s.st) dual.push({ ...s, w: s.w / 2, sz: s.st });
   }
@@ -733,7 +775,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const rng = mulberry32(seed);
   const notices: string[] = [];
   const module = options.module;
-  const data = WILDS_DATA.modules[module];
+  const D = wildsDataOf(module);
+  const data = D.modules[module];
   const culture = findWildsCulture(options.culture) ?? findWildsCulture(wildsDefaultCulture(module))!;
   const era: WildsEra = data.eras.includes(options.era as WildsEra) ? options.era! : "MD";
   const where: WildsWhere = options.where === "new" || options.where === "settled" ? options.where : "home";
@@ -802,14 +845,15 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const kindWeights = (): [string, number][] => {
     const base: [string, number][] = [];
     for (const k of data.kinds) {
-      if (!plans().has(k.key)) continue;
+      // A kind with sources (a delegated river kind has no shapes of its own) needs no live shape.
+      if (!plans().has(k.key) && !k.sources) continue;
       if (!kindInClass(k, options.kindClass)) continue;
       let w = k.weight;
       const id = `${module}.${k.key}`;
-      if (homeBritish) w *= WILDS_DATA.kindMult.britishHome[id] ?? 1;
+      if (homeBritish) w *= D.kindMult.britishHome[id] ?? 1;
       else {
-        const tag = WILDS_DATA.kindMult.biome[id];
-        if (tag) w *= WILDS_DATA.biomeTags[tag]?.[resolved.biome.id] ?? 1;
+        const tag = D.kindMult.biome[id];
+        if (tag) w *= D.biomeTags[tag]?.[resolved.biome.id] ?? 1;
       }
       if (w > 0) base.push([k.key, w]);
     }
@@ -819,7 +863,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   /** §7: when no kind is live, the module's untagged shapes. */
   const fallbackPlans = (): [Plan, number][] => {
     const ctx = newCtx();
-    return Object.entries(WILDS_DATA.shapes[module]).filter(([kind]) => kindInClass(findWildsKind(module, kind) ?? {}, options.kindClass)).flatMap(([kind, shapes]) =>
+    return Object.entries(D.shapes[module]).filter(([kind]) => kindInClass(findWildsKind(module, kind) ?? {}, options.kindClass)).flatMap(([kind, shapes]) =>
       shapes.filter((s) => !s.rt && !s.bt && kind !== "settlement").map((s): [Plan, number] => [{ kind, shape: s }, shapeWeight(ctx, s, true)]).filter(([, w]) => w > 0),
     );
   };
@@ -866,23 +910,74 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   };
 
   let first = true;
+
+  /** One name from a kind's own live plans (the 20 tries the wild lands have always made), or undefined. */
+  const drawFromList = (list: [Plan, number][], parent: boolean): WildsName | undefined => {
+    for (let i = 0; i < 20; i++) {
+      const ctx = newCtx();
+      ctx.anchor = anchor;
+      ctx.forceAnchor = parent;
+      const plan = pickWeighted(list, rng);
+      if (!plan) break;
+      ctx.shape = plan.shape;
+      const raw = renderPattern(ctx, plan.shape.p);
+      if (!raw) continue;
+      const text = routeCapitals(raw);
+      if (!acceptable(text)) continue;
+      const tones = new Set<GroupTone>([...(plan.shape.t ?? []), ...ctx.drawn]);
+      return {
+        text,
+        kind: plan.kind,
+        shape: plan.shape.p,
+        era,
+        tones: GROUP_TONES.filter((t) => tones.has(t)),
+        words: ctx.words,
+        ...(anchor !== undefined ? { anchored: ctx.anchored } : {}),
+        ...(plan.kind === "settlement" ? { source: "purpose-built" as const } : {}),
+      };
+    }
+    return undefined;
+  };
+
+  /** A kind's live plans; for the parent name of a series, the `{town}` shapes of its own. */
+  const listFor = (kindKey: string | undefined, parent: boolean): [Plan, number][] | undefined => {
+    let list: [Plan, number][] | undefined = kindKey ? plans().get(kindKey) : undefined;
+    if (parent && list) {
+      const twn = list.filter(([p]) => p.shape.f === "twn" && p.shape.p.includes("{town}"));
+      if (twn.length > 0) list = twn;
+    }
+    return list;
+  };
+
   const oneName = (): WildsName | undefined => {
-    const parent = options.series && first && !chosenKind;
+    const parent = !!options.series && first && !chosenKind;
     for (let round = 0; round < 2; round++) {
       let kindKey: string | undefined;
       if (chosenKind) kindKey = chosenKind.key;
-      else if (parent) kindKey = PARENT_KIND[module];
+      else if (parent) kindKey = parentKindOf(module);
       else kindKey = pickWeighted(kindWeights(), rng);
+      // Place modules split brief §4: a kind with sources first picks where the name comes from (src/places/sources.ts).
+      const sourced = kindKey ? findWildsKind(module, kindKey)?.sources : undefined;
+      if (kindKey && sourced) {
+        let own: WildsName | undefined;
+        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: !!options.series, rng }, () => {
+          const list = listFor(kindKey, parent);
+          own = list && list.length > 0 ? drawFromList(list, parent) : undefined;
+          return own?.text;
+        });
+        if (text !== undefined) {
+          if (own && (own as WildsName).text === text) return own;
+          if (acceptable(text)) return { text, kind: kindKey, shape: "source", era, tones: [], words: [] };
+        }
+        if (chosenKind) return undefined;
+        continue;
+      }
       // §9.1: a settlement is native 40% of the time (the 0.6 draw is made before anything else for the name).
       if (kindKey === "settlement" && nativeRequest && rng() >= WILDS_DATA.settlementLink.purposeBuiltShare) {
         const text = nextNative();
         if (text) return { text, kind: "settlement", shape: "native", era, tones: [], words: [], source: "native" };
       }
-      let list: [Plan, number][] | undefined = kindKey ? plans().get(kindKey) : undefined;
-      if (parent && list) {
-        const twn = list.filter(([p]) => p.shape.f === "twn" && p.shape.p.includes("{town}"));
-        if (twn.length > 0) list = twn;
-      }
+      let list = listFor(kindKey, parent);
       if (!list || list.length === 0) {
         if (chosenKind) return undefined;
         const fallback = fallbackPlans();
@@ -890,29 +985,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
         list = fallback;
         kindKey = undefined;
       }
-      for (let i = 0; i < 20; i++) {
-        const ctx = newCtx();
-        ctx.anchor = anchor;
-        ctx.forceAnchor = !!parent;
-        const plan = pickWeighted(list, rng);
-        if (!plan) break;
-        ctx.shape = plan.shape;
-        const raw = renderPattern(ctx, plan.shape.p);
-        if (!raw) continue;
-        const text = routeCapitals(raw);
-        if (!acceptable(text)) continue;
-        const tones = new Set<GroupTone>([...(plan.shape.t ?? []), ...ctx.drawn]);
-        return {
-          text,
-          kind: plan.kind,
-          shape: plan.shape.p,
-          era,
-          tones: GROUP_TONES.filter((t) => tones.has(t)),
-          words: ctx.words,
-          ...(anchor !== undefined ? { anchored: ctx.anchored } : {}),
-          ...(plan.kind === "settlement" ? { source: "purpose-built" as const } : {}),
-        };
-      }
+      const name = drawFromList(list, parent);
+      if (name) return name;
     }
     return undefined;
   };

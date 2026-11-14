@@ -47,7 +47,7 @@ import {
   tribalCultureWeights,
   type LensEra,
 } from "../src/lens";
-import { WILDS_SECTIONS, WATERS_SECTIONS, GROUP_NAME_SECTIONS } from "../src/sections";
+import { WILDS_SECTIONS, WATERS_SECTIONS, GROUP_NAME_SECTIONS, PLACE_MODULE_SECTIONS } from "../src/sections";
 
 const cultureKeys = new Set(LENS_CULTURES.map((c) => c.key));
 const eraCodes = LENS_ERAS.map((e) => e.code);
@@ -122,7 +122,7 @@ test("§3.3 to §3.5: eras, land band, styles, tones and targets", () => {
 
 test("§3.3: the land modules are the brief's", () => {
   const land = LENS_MODULES.filter(isLandModule).sort();
-  assert.deepEqual(land, [...WILDS_SECTIONS, "seasLakes", "coastsIslands", "seaCharts", "riverNames", "placeShapes"].sort());
+  assert.deepEqual(land, [...WILDS_SECTIONS, ...PLACE_MODULE_SECTIONS, "seasLakes", "coastsIslands", "seaCharts", "riverNames", "placeShapes"].sort());
   assert.equal(isLandModule("hyperspaceCharts"), false);
   assert.equal(isLandModule("streetNames"), false);
 });
@@ -180,10 +180,10 @@ test("the lens maps every non-Markov module in the line-up, and river names", ()
   const expected = [
     "placeShapes", "routeNames", "sacredPlaces", "riverNames", "explorationPlaceShapes", "empireExpansionPlaceShapes", "settlementNames", "streetNames", "innNames", "buildingNames", "monumentNames",
     "settlementKit", "eventNames", "moneyNames", "calendarNames", "skyNames", "armsNames", "treasureNames", "bookNames", "deityNames", "tribalNames", ...GROUP_NAME_SECTIONS, "epithets", "titles", "familyNames",
-    "realms", "peoplesTongues", "ships", "spacecraft", "aircraft", "landVehicles", ...WATERS_SECTIONS, ...WILDS_SECTIONS,
+    "realms", "peoplesTongues", "ships", "spacecraft", "aircraft", "landVehicles", ...WATERS_SECTIONS, ...WILDS_SECTIONS, ...PLACE_MODULE_SECTIONS,
   ];
   assert.deepEqual([...LENS_MODULES].sort(), [...expected].sort());
-  assert.equal(LENS_MODULES.length, 47);
+  assert.equal(LENS_MODULES.length, 48);
 });
 
 // ── The rosters in the data ─────────────────────────────────────────────────

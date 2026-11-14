@@ -38,6 +38,7 @@ import { streetCoverage } from "./streets/coverage";
 import { calendarCoverage, skyCoverage } from "./timesky/coverage";
 import { watersCoverage } from "./waters/coverage";
 import { wildsCoverage } from "./wilds/coverage";
+import { placeCoverage } from "./places/coverage";
 
 export type { CoverageAdapter, CoverageRow, CoverageRowType } from "./coverageRows";
 
@@ -58,6 +59,7 @@ export const COVERAGE_ADAPTERS: CoverageAdapter[] = [
   calendarCoverage,
   skyCoverage,
   ...wildsCoverage,
+  ...placeCoverage,
   ...watersCoverage,
   ...bynameCoverage,
   ...thingCoverage,

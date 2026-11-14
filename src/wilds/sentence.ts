@@ -19,15 +19,15 @@ import {
   findWildsKind,
   showsWildsRegion,
   WILDS_CULTURES,
-  WILDS_DATA,
   wildsAny,
   wildsBiomes,
   wildsDefaultCulture,
   wildsEraLabel,
   wildsEras,
   wildsKindsAt,
+  wildsModuleData,
   type WildsEra,
-  type WildsModule,
+  type WildsLikeModule,
   type WildsWhere,
 } from "./engine";
 
@@ -51,7 +51,7 @@ export interface WildsSentenceState {
   series: boolean;
 }
 
-export function defaultWildsState(module: WildsModule): WildsSentenceState {
+export function defaultWildsState(module: WildsLikeModule): WildsSentenceState {
   return { culture: wildsDefaultCulture(module), era: "MD", where: "home", fantastic: false, tone: "any", people: "placeholders", series: false };
 }
 
@@ -77,14 +77,14 @@ const WHERE_TEXT: Record<WildsWhere, string> = { home: "in home country", new: "
 export const wildsRegionText = (region: string | undefined) => (region ? `in ${regionPhrase(region)}` : "across all of Britain");
 
 /** §2.2: "in any land", or "in " + the biome's phrase. */
-export function wildsBiomeText(module: WildsModule, biome: string | undefined, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string {
+export function wildsBiomeText(module: WildsLikeModule, biome: string | undefined, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string {
   const found = wildsBiomes(module, catalogue).find((b) => biomeMatches(b, biome));
   return found ? `in ${found.phrase}` : "in any land";
 }
 
-export function wildsSentence(state: WildsSentenceState, module: WildsModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WildsSegment[] {
+export function wildsSentence(state: WildsSentenceState, module: WildsLikeModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WildsSegment[] {
   const out: WildsSegment[] = [];
-  const label = WILDS_DATA.modules[module].label;
+  const label = wildsModuleData(module).label;
   const lens = lensClause(module, state, { cultureTitle: `Naming culture: whose customs the ${label} names follow` });
   out.push(asSegment(lens.culture!, "culture"));
   out.push(" ");
@@ -141,7 +141,7 @@ export function wildsSentence(state: WildsSentenceState, module: WildsModule, ca
     current: state.people,
   });
   out.push(" people and places, ");
-  const seriesText = WILDS_DATA.modules[module].seriesText;
+  const seriesText = wildsModuleData(module).seriesText;
   out.push({
     field: "series",
     text: state.series ? seriesText : "each one separate",
@@ -162,7 +162,7 @@ export function wildsSentenceText(segments: WildsSegment[]): string {
 }
 
 /** §2.3: a state after one choice, with the resets that follow from it. */
-export function chooseWilds(state: WildsSentenceState, field: WildsField, id: string | undefined, module: WildsModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WildsSentenceState {
+export function chooseWilds(state: WildsSentenceState, field: WildsField, id: string | undefined, module: WildsLikeModule, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): WildsSentenceState {
   let next: WildsSentenceState = { ...state };
   switch (field) {
     case "culture":
@@ -210,7 +210,7 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
 }
 
 /** §1.3: "{module} · {era} · {culture}", then new country, region or biome, kind, fantastic, tone, series. */
-export function wildsHistoryLabel(module: WildsModule, state: WildsSentenceState, moduleLabel: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string {
+export function wildsHistoryLabel(module: WildsLikeModule, state: WildsSentenceState, moduleLabel: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string {
   const culture = lensCultureLabel(state.culture, findWildsCulture(state.culture)?.label ?? "General");
   const kind = findWildsKind(module, state.kind);
   const regionShown = showsWildsRegion(module, state.culture, state.where);

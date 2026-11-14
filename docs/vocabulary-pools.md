@@ -211,21 +211,21 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `deityFixed:deity` | whole deity titles (empty: for packs) | t, e, c | deities and sacred places |
 | `deityFixed:pantheon` | whole pantheon names: the Twins, the Makers, the Elder Kin | t, e, c | deities and sacred places |
 | `deityFixed:place` | whole sacred places (empty: for packs) | t, e, c | deities and sacred places |
-| `seaColour` | colour seas: Black, White, Red, Golden; Wine-Dark for Greek-Byzantine | x, t, e, cultureExtra | seas and lakes, coasts and islands, sea charts |
+| `seaColour` | colour seas: Black, White, Red, Golden; Wine-Dark for Greek-Byzantine | x, t, e, cultureExtra | seas and lakes, coasts and islands, sea charts, rivers and inland waters |
 | `seaQuality` | qualities of a sea: Great, Narrow, Inner, Restless, Frozen | x, t, bt | seas and lakes, sea charts |
 | `oceanQuality` | qualities of an ocean: Great, Outer, Encircling, Silent | x, t, e | seas and lakes |
 | `oceanOf` | "Ocean of ‹…›": Storms, Darkness, Mists, the World | x, t, bt | seas and lakes |
 | `seaCreature` | sea creatures and birds: Seal, Whale, Gull, Puffin, Walrus | x, t, pl, bt | seas and lakes, coasts and islands, sea charts |
-| `lakeCreature` | lake creatures and birds: Swan, Heron, Pike, Crocodile | x, t, e, pl, bt | seas and lakes |
+| `lakeCreature` | lake creatures and birds: Swan, Heron, Pike, Crocodile | x, t, e, pl, bt | seas and lakes, rivers and inland waters |
 | `shoreShape` | body shapes a headland resembles: Horn, Hook, Nose, Tongue | x | coasts and islands |
-| `lakeShape` | shapes a lake resembles: Moon, Crescent, Eye; Lute and Fan for Japanese, Ear for Chinese and Korean | x, cultureExtra | seas and lakes |
-| `explorerMood` | explorers' moods: Plenty, Hope, Disappointment, Desolation, Farewell | x, t | seas and lakes, coasts and islands |
+| `lakeShape` | shapes a lake resembles: Moon, Crescent, Eye; Lute and Fan for Japanese, Ear for Chinese and Korean | x, cultureExtra | seas and lakes, rivers and inland waters |
+| `explorerMood` | explorers' moods: Plenty, Hope, Disappointment, Desolation, Farewell | x, t | seas and lakes, coasts and islands, rivers and inland waters |
 | `coastGoods` | goods a coast is named for: Gold, Ivory, Pepper, Pearl, Coral | x, bt | coasts and islands |
 | `grimCoast` | grim coast words: Skeleton, Wreckers', Widow's, Drowned (all grim) | x, t, bt | coasts and islands |
 | `endWord` | "‹…› End": Land's, World's, Earth's | x | coasts and islands |
 | `stackGroup` | groups of sea stacks: Needles, Maidens, Sisters, Teeth | x, t | coasts and islands, sea charts |
 | `coveFolk` | people a cove is named for: Smugglers, Fishermen, Pirates, Monks | x, t | coasts and islands |
-| `folkUncanny` | folk-supernatural possessives: Devil's, Giant's, Witch's, Mermaid's | x, t | seas and lakes, coasts and islands, sea charts |
+| `folkUncanny` | folk-supernatural possessives: Devil's, Giant's, Witch's, Mermaid's | x, t | seas and lakes, coasts and islands, sea charts, rivers and inland waters |
 | `devilFeature` | what the Devil owns: Rock, Bellows, Frying Pan, Punchbowl | x, t | coasts and islands |
 | `narrowsWord` | "The ‹…› Narrows": Iron, Stone, Long, Crooked, Twin | x, t | seas and lakes |
 | `gateWord` | "‹…› Gate": Golden, Iron, Narrow, Western | x | seas and lakes |
@@ -233,8 +233,8 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `bayQuality` | qualities of a bay or cove: Long, Broad, Sandy, Hidden, Shell | x | seas and lakes, coasts and islands |
 | `islandQuality` | qualities of an island: Long, Flat, Green, Steep, Holy | x, t, c | coasts and islands |
 | `shoreQuality` | qualities of a shore or sand: Long, Black, Golden, Shingle, Steep | x | coasts and islands |
-| `lakeQuality` | qualities of a lake: Long, Still, Deep, Hidden, Salt | x, t, bt | seas and lakes |
-| `lakeFuse` | first halves of fused lake words: Grass- and Reed- (Grassmere, Reedwater) | – | seas and lakes |
+| `lakeQuality` | qualities of a lake: Long, Still, Deep, Hidden, Salt | x, t, bt | seas and lakes, rivers and inland waters |
+| `lakeFuse` | first halves of fused lake words: Grass- and Reed- (Grassmere, Reedwater) | – | seas and lakes, rivers and inland waters |
 | `boatWord` | fishing boats banks are named for: Dogger, Buss, Cog, Smack, Trawler | e, rt | sea charts |
 | `pitWord` | "‹…› Pit": Silver, Sole, Herring, Ling, Cod | x | sea charts |
 | `depthNumber` | depth-number banks: Fourteens, Forties, Eighteens | x | sea charts |
@@ -243,7 +243,7 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `swallowWord` | whirlpool words: Swallower, Grinder, Churn, Cauldron, Boil | x, t | sea charts |
 | `kinCurrent` | kin words for currents (Japanese): Parent, Mother, Child | x, c | sea charts |
 | `seaKenning` | kennings for the sea (Anglo-Saxon and Norse): Whale Road, Swan Road, Gannet's Bath | x, t, c | seas and lakes |
-| `mariaWord` | lunar maria words: Tranquillity, Serenity, Storms, Dreams, Decay | x, t | seas and lakes |
+| `mariaWord` | lunar maria words: Tranquillity, Serenity, Storms, Dreams, Decay | x, t | seas and lakes, rivers and inland waters |
 | `seaMonster` | sea monsters: Kraken, Leviathan, Serpent; Merrow and Selkie for Celtic and Norse | x, cultureExtra | seas and lakes, sea charts |
 | `cosmoSubstance` | the seven Puranic oceans' substances (Indian): Milk, Salt, Wine, Ghee | x, c | seas and lakes |
 | `euphemism` | euphemisms for a sea (Greek-Byzantine): Hospitable, Kindly, Gentle | x, t, c | seas and lakes |
@@ -316,20 +316,20 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `bookSecret` | Night, Ash, Bones, Stars, Keys, Names, Tides… | x, t | books and writings |
 | `officeWord` | Exchequer, Treasury, Admiralty, Chancery, Wardrobe… | x | books and writings |
 | `moodOf` | explorers' moods that can follow "of": Plenty, Hope, Disappointment, Farewell | x, t | wild lands |
-| `wildColour` | colours: Black, White, Red, Grey, Green | x, t | wild lands |
-| `wildQuality` | plain adjectives: Great, Little, High, Long, Old | x, c, t | wild lands |
-| `wildFuse` | first halves of fused words: Ash- and Raven- (Ashdale, Ravenhurst) | – | wild lands |
-| `wildWeather` | weather and sky: Wind, Storm, Mist, Frost | x, bt, t | wild lands |
+| `wildColour` | colours: Black, White, Red, Grey, Green | x, t | wild lands, rivers and inland waters |
+| `wildQuality` | plain adjectives: Great, Little, High, Long, Old | x, c, t | wild lands, rivers and inland waters |
+| `wildFuse` | first halves of fused words: Ash- and Raven- (Ashdale, Ravenhurst) | – | wild lands, rivers and inland waters |
+| `wildWeather` | weather and sky: Wind, Storm, Mist, Frost | x, bt, t | wild lands, rivers and inland waters |
 | `wildShape` | shapes a feature resembles: Saddle, Anvil, Horn, Needle | x, c, t | wild lands |
 | `rangeBody` | body words of a range: Spine, Backbone, Teeth, Wall | x | wild lands |
 | `wildMetal` | metals and stones worked: Silver, Copper, Lead, Coal, Slate | x, bt, c | wild lands |
-| `mythBeast` | fantastic beasts: Dragon, Wyrm, Griffin, Giant, Troll (fantastic only) | x, h, t | wild lands |
+| `mythBeast` | fantastic beasts: Dragon, Wyrm, Griffin, Giant, Troll (fantastic only) | x, h, t | wild lands, rivers and inland waters |
 | `mythFuse` | fantastic first halves: Elf-, Fey-, Troll-, Dwarf- (fantastic only) | x, h | wild lands |
-| `leapWho` | whose leap: Maiden's, Lover's, Giant's, Hart's | x, e, t | wild lands |
+| `leapWho` | whose leap: Maiden's, Lover's, Giant's, Hart's | x, e, t | wild lands, rivers and inland waters |
 | `iceWord` | ice features: River, Stair, Tongue, Wall | – | wild lands |
 | `mtWork` | mountain trades: Shepherds', Drovers', Miners', Pilgrims' | x, e, t | wild lands |
 | `mtRiverWord` | mountain river words: Swift, Rush, Roar, Tumble | x | wild lands |
-| `mtRiverAdj` | mountain river adjectives: Roaring, Rushing, Tumbling | x | wild lands |
+| `mtRiverAdj` | mountain river adjectives: Roaring, Rushing, Tumbling | x | wild lands, rivers and inland waters |
 | `mtBeast` | mountain creatures: Eagle, Raven, Goat, Ptarmigan, Ibex | x, bt, c, t | wild lands |
 | `fstQuality` | forest adjectives: Dark, Deep, Green, Old | x, t | wild lands |
 | `fstNoun` | what a forest holds: Shadows, Whispers, Thorns | t | wild lands |
@@ -338,12 +338,12 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `fstKeeper` | forest officers: Keeper's, Verderer's, Ranger's | x | wild lands |
 | `fstFlora` | forest plants: Bluebell, Primrose, Bracken, Fern | x, bt, c | wild lands |
 | `fstFestival` | festivals: Midsummer, May, Harvest, Beltane | x, c, t | wild lands |
-| `fstSprite` | forest sprites: Fairy, Pixie, Elf, Goblin, Puck | x, t | wild lands |
+| `fstSprite` | forest sprites: Fairy, Pixie, Elf, Goblin, Puck | x, t | wild lands, rivers and inland waters |
 | `fstRiverWord` | forest river words: Shade, Leaf, Hush, Moss | x | wild lands |
-| `fstPond` | pond kinds: Hammer, Mill, Furnace, Fish, Dew | x, e | wild lands |
+| `fstPond` | pond kinds: Hammer, Mill, Furnace, Fish, Dew | x, e | wild lands, rivers and inland waters |
 | `treeFunc` | what a named tree or stone was for: Gospel, Hanging, Moot, Boundary, Wishing | x, c, e, t | wild lands |
 | `fstBeast` | forest creatures: Deer, Boar, Wolf, Fox, Owl | x, bt, c, t | wild lands |
-| `wildTree` | trees: Oak, Ash, Beech, Elm, Pine (biome-tagged) | x, bt, c | wild lands |
+| `wildTree` | trees: Oak, Ash, Beech, Elm, Pine (biome-tagged) | x, bt, c | wild lands, rivers and inland waters |
 | `dsrQuality` | desert adjectives: Empty, Great, Burning, Red, Thirsty | x, t | wild lands |
 | `dsrStuff` | what a desert is: Sand, Stones, Gravel, Salt | x, t | wild lands |
 | `dsrStone` | desert ground: Flint, Gravel, Pebble, Stone | t | wild lands |
@@ -358,7 +358,7 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `mrBeast` | moorland creatures: Grouse, Curlew, Lapwing, Merlin | x, pl, t | wild lands |
 | `wetQuality` | wetland adjectives: Black, Still, Wide, Sour | x, t | wild lands |
 | `wetNoun` | what a wetland holds: Mists, Reeds, Whispers, Lights | t | wild lands |
-| `wetFlora` | wetland plants: Reed, Rush, Sedge, Willow, Cypress | x, bt | wild lands |
+| `wetFlora` | wetland plants: Reed, Rush, Sedge, Willow, Cypress | x, bt | wild lands, rivers and inland waters |
 | `wetWork` | wetland trades: Reed Cutters', Eelers', Fowlers' | x, t | wild lands |
 | `wetBeast` | wetland creatures: Heron, Bittern, Crane, Eel, Frog | x, bt, e, pl, t | wild lands |
 | `drainFeet` | widths of a drain: Forty, Twenty, Sixteen, Hundred | x | wild lands |

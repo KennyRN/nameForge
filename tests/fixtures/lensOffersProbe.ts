@@ -20,7 +20,7 @@ import { kitNoteContent } from "../../src/settlement/kitFormat";
 import { DEFAULT_KIT_STATE, kitSentence } from "../../src/settlement/kitSentence";
 import { generateWatersNames, type WatersModule } from "../../src/waters/engine";
 import { defaultWatersState, watersSentence } from "../../src/waters/sentence";
-import { generateWildsNames, WILDS_MODULES } from "../../src/wilds/engine";
+import { generateWildsNames, PLACE_MODULES, WILDS_MODULES } from "../../src/wilds/engine";
 import { defaultWildsState, wildsSentence } from "../../src/wilds/sentence";
 import { generateEventNames } from "../../src/events/engine";
 import { DEFAULT_EVENT_STATE, eventSentence } from "../../src/events/sentence";
@@ -98,7 +98,7 @@ function specs(): Spec[] {
   for (const module of ["seasLakes", "coastsIslands", "seaCharts"] as WatersModule[]) {
     add({ key: module, family: "A", culture: "culture", kinds: ["kind"], state: () => ({ ...defaultWatersState(module) }), sentence: (s) => watersSentence(s as never, module), run: (s, seed) => textsOf(generateWatersNames({ ...(s as never), module, count: COUNT, seed })) });
   }
-  for (const module of WILDS_MODULES) {
+  for (const module of [...WILDS_MODULES, ...PLACE_MODULES]) {
     add({ key: module, family: "A", culture: "culture", kinds: ["kind"], state: () => ({ ...defaultWildsState(module) }), sentence: (s) => wildsSentence(s as never, module), run: (s, seed) => textsOf(generateWildsNames({ ...(s as never), module, count: COUNT, seed })) });
   }
   add({ key: "eventNames", family: "A", culture: "culture", kinds: ["kind"], state: () => ({ ...DEFAULT_EVENT_STATE }), sentence: (s) => eventSentence(s as never), run: (s, seed) => textsOf(generateEventNames({ ...(s as never), count: COUNT, seed })) });
@@ -152,7 +152,7 @@ const ids = (segments: Segment[], field: string): string[] => (link(segments, fi
 const LENS_MODULES = (lensData as unknown as { modules: Record<string, { sentence: { fields?: { fantastic: string | null; region: string | null }; roster?: string | null } }> }).modules;
 /** The era codes a family A module offers (its own list). */
 function offeredEras(key: string): string[] {
-  if ((WILDS_MODULES as readonly string[]).includes(key)) return [...wildsEras(key as never)] as string[];
+  if (([...WILDS_MODULES, ...PLACE_MODULES] as readonly string[]).includes(key)) return [...wildsEras(key as never)] as string[];
   if (["seasLakes", "coastsIslands", "seaCharts"].includes(key)) return [...waterEras(key as WatersModule)] as string[];
   return ROUTE_ERAS.map((e) => e.code);
 }
@@ -211,7 +211,7 @@ export interface ModuleOffers {
 
 const CLASSES = ["natural", "managed", "constructed"];
 /** The modules whose kinds carry a class. */
-const hasClasses = (key: string): boolean => (WILDS_MODULES as readonly string[]).includes(key) || ["seasLakes", "coastsIslands", "seaCharts"].includes(key);
+const hasClasses = (key: string): boolean => ([...WILDS_MODULES, ...PLACE_MODULES] as readonly string[]).includes(key) || ["seasLakes", "coastsIslands", "seaCharts"].includes(key);
 
 /** §6: a class is offered when running the module with only that class gives names and differs from running it with all. */
 function offeredClasses(spec: Spec): string[] {

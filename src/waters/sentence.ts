@@ -139,7 +139,8 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule,
   const classLink = hyper ? undefined : classSegment(module, state.kindClass);
   if (classLink) out.push(classLink, " ");
   // §6: the menu keeps the kinds of the chosen class; a stored kind outside it is shown and kept.
-  const offered = hyper ? kinds : kinds.filter((k) => kindInClass(k as { class?: string }, state.kindClass) || k.key === kind?.key);
+  // Place modules split brief §5.4: lakes moved to rivers and inland waters, so seas and bays no longer offers the kind; a stored lake is still shown and kept, and still runs.
+  const offered = (hyper ? kinds : kinds.filter((k) => kindInClass(k as { class?: string }, state.kindClass) || k.key === kind?.key)).filter((k) => module !== "seasLakes" || k.key !== "lake" || k.key === kind?.key);
   out.push({
     field: "kind",
     text: kind ? kind.plural : any,

@@ -23,7 +23,9 @@ test("coverage ratchet: no cell falls below the baseline, and no met target is l
 test("coverage ratchet: the baseline covers every module and every kind of cell", () => {
   const keys = Object.keys(baseline.cells);
   for (const kind of ["culture", "era", "style", "tone", "region", "kind", "total"]) assert.ok(keys.some((k) => k.startsWith(`${kind}|`)), kind);
-  assert.equal(new Set(keys.filter((k) => k.startsWith("era|")).map((k) => k.split("|")[1])).size, report.modules.length, "an era cell for every module");
+  // Modules added since the baseline was recorded have no cells in it until the final re-record (place modules split brief §10.2).
+  const NEW_SINCE_BASELINE = ["riversInland"];
+  assert.equal(new Set(keys.filter((k) => k.startsWith("era|")).map((k) => k.split("|")[1])).size, report.modules.filter((m) => !NEW_SINCE_BASELINE.includes(m.module)).length, "an era cell for every module");
   assert.equal(report.withoutAdapter.length, 0);
   assert.ok(baseline.thinPools.count > 0);
 });

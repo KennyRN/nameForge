@@ -62,6 +62,8 @@ import type { NameForgeSection, SectionGroup } from "./sections";
 export const SECTION_ICONS: Record<NameForgeSection, string> = {
   markov: ICON_PACKS,
   placeShapes: ICON_NATIVE_PLACE_NAMES,
+  // Place modules split brief §2: the existing place icon until the focused modules' own icons are supplied.
+  riversInland: ICON_NATIVE_PLACE_NAMES,
   // Wild lands brief §1.2: the biome icon for the group, one icon each for the modules.
   mountainNames: ICON_MOUNTAINS,
   forestNames: ICON_FORESTS,

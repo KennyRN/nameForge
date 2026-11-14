@@ -34,7 +34,7 @@ import { placesOffered, type PeopleSource } from "./peoples/sentence";
 import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_SKY, type TimeKind, type TimeModule, type TimeWords } from "./timesky/data";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
 import { isPlaceClass, type PlaceClass } from "./places/classes";
-import { findWildsCulture, findWildsKind, wildsBiomes, wildsDefaultCulture, wildsEras, wildsKindsAt, type WildsEra, type WildsModule, type WildsWhere } from "./wilds/engine";
+import { findWildsCulture, findWildsKind, wildsBiomes, wildsDefaultCulture, wildsEras, wildsKindsAt, type WildsEra, type WildsLikeModule, type WildsWhere } from "./wilds/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
 import { AIR_LAND, availableStyles, findVesselCulture, isAirLand, VESSEL_DATA, moduleFunctions, techChoices, type VesselModule, type VesselNaming } from "./vessels/engine";
@@ -1528,21 +1528,23 @@ function watersPresetContent(preset: WatersPreset): string {
 // ── Wild lands presets (Wild lands brief §14) ───────────────────────────────
 
 /** §14: the preset module keys, one per terrain module. */
-export const WILDS_PRESET_MODULES: Record<string, WildsModule> = {
+export const WILDS_PRESET_MODULES: Record<string, WildsLikeModule> = {
   "mountain-names": "mountainNames",
   "forest-names": "forestNames",
   "desert-names": "desertNames",
   "moor-names": "moorNames",
   "wetland-names": "wetlandNames",
   "grassland-names": "grasslandNames",
+  // Place modules split brief §5: the focused place modules save presets the same way.
+  "inland-water-names": "riversInland",
 };
-export const wildsPresetKey = (module: WildsModule): string => Object.entries(WILDS_PRESET_MODULES).find(([, m]) => m === module)![0];
+export const wildsPresetKey = (module: WildsLikeModule): string => Object.entries(WILDS_PRESET_MODULES).find(([, m]) => m === module)![0];
 
 export interface WildsPreset {
   packName: string;
   setting: string;
   description: string;
-  wildsModule: WildsModule;
+  wildsModule: WildsLikeModule;
   culture: string;
   /** "any" or a kind key. */
   wildsKind: string;
