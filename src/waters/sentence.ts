@@ -14,6 +14,7 @@ import { biomeClashes, biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
+import { classSegment, isPlaceClass, kindInClass, type PlaceClass } from "../places/classes";
 import { fantasticWords } from "../routes/sentence";
 import { scaleInfo, scaleLabel, scalePhrase, type ScaleChoice } from "../space/scale";
 import {
@@ -45,6 +46,8 @@ export interface WatersSentenceState {
   culture: string;
   /** A kind key; undefined is Any. */
   kind?: string;
+  /** Place modules split brief §6: the class link; undefined is all. Only set when a class is chosen, so old states and presets are unchanged. */
+  kindClass?: PlaceClass;
   era: WatersEra;
   where: WatersWhere;
   fantastic: boolean;
@@ -76,7 +79,7 @@ export function defaultWatersState(module: WatersModule): WatersSentenceState {
   };
 }
 
-export type WatersField = "culture" | "kind" | "era" | "where" | "fantastic" | "region" | "biome" | "tone" | "people" | "series" | "scale" | "medium" | "register";
+export type WatersField = "culture" | "kindClass" | "kind" | "era" | "where" | "fantastic" | "region" | "biome" | "tone" | "people" | "series" | "scale" | "medium" | "register";
 
 export interface WatersChoice {
   id: string | undefined;
@@ -133,11 +136,15 @@ export function watersSentence(state: WatersSentenceState, module: WatersModule,
   const kinds = hyper ? hyperKindsAt(state.scale) : waterKinds(module);
   const kind = kinds.find((k) => k.key === state.kind);
   const any = hyper ? HYPER_ANY : waterAny(module);
+  const classLink = hyper ? undefined : classSegment(module, state.kindClass);
+  if (classLink) out.push(classLink, " ");
+  // §6: the menu keeps the kinds of the chosen class; a stored kind outside it is shown and kept.
+  const offered = hyper ? kinds : kinds.filter((k) => kindInClass(k as { class?: string }, state.kindClass) || k.key === kind?.key);
   out.push({
     field: "kind",
     text: kind ? kind.plural : any,
     title: kind ? kind.menu : any.charAt(0).toUpperCase() + any.slice(1),
-    choices: [{ id: undefined, label: "Any" }, ...kinds.map((k) => ({ id: k.key, label: k.menu }))],
+    choices: [{ id: undefined, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu }))],
     current: kind?.key,
   });
   if (hyper) {
@@ -242,6 +249,12 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
     case "culture":
       next = hyper ? { ...next, culture: id ?? defaultWatersState(module).culture } : chooseLens(module, next, "culture", id ?? defaultWatersState(module).culture);
       break;
+    case "kindClass":
+      // §6: choosing a class resets a kind outside it to Any; all (no class) leaves the kind alone.
+      if (!hyper && isPlaceClass(id)) next.kindClass = id;
+      else delete next.kindClass;
+      if (next.kind && !hyper && !kindInClass(findWaterKind(module, next.kind) ?? {}, next.kindClass)) next.kind = undefined;
+      break;
     case "kind":
       next.kind = id;
       break;
@@ -322,7 +335,7 @@ export function watersHistoryLabel(module: WatersModule, state: WatersSentenceSt
     ...(state.where === "new" ? ["new shores"] : state.where === "settled" ? ["settled shores"] : []),
     ...(regionShown && state.region ? [regionPhrase(state.region)] : []),
     ...(!regionShown && biome ? [biome.label] : []),
-    ...(kind ? [kind.plural] : []),
+    ...(kind ? [kind.plural] : state.kindClass ? [state.kindClass] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
     ...(state.tone !== "any" ? [state.tone] : []),
     ...(state.series && watersHasSeries(module) ? ["series"] : []),

@@ -12,6 +12,7 @@ import { biomeClashes, biomeLinkTitle, biomeMenuItems } from "../biomeMenus";
 import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
+import { classSegment, isPlaceClass, kindInClass, type PlaceClass } from "../places/classes";
 import { fantasticWords } from "../routes/sentence";
 import {
   findWildsCulture,
@@ -36,6 +37,8 @@ export interface WildsSentenceState {
   culture: string;
   /** A kind key; undefined is Any. */
   kind?: string;
+  /** Place modules split brief §6: the class link; undefined is all. Only set when a class is chosen, so old states and presets are unchanged. */
+  kindClass?: PlaceClass;
   era: WildsEra;
   where: WildsWhere;
   fantastic: boolean;
@@ -52,7 +55,7 @@ export function defaultWildsState(module: WildsModule): WildsSentenceState {
   return { culture: wildsDefaultCulture(module), era: "MD", where: "home", fantastic: false, tone: "any", people: "placeholders", series: false };
 }
 
-export type WildsField = "culture" | "kind" | "era" | "where" | "fantastic" | "region" | "biome" | "tone" | "people" | "series";
+export type WildsField = "culture" | "kindClass" | "kind" | "era" | "where" | "fantastic" | "region" | "biome" | "tone" | "people" | "series";
 
 export interface WildsChoice {
   id: string | undefined;
@@ -88,11 +91,15 @@ export function wildsSentence(state: WildsSentenceState, module: WildsModule, ca
   const kinds = wildsKindsAt(module, state.era);
   const kind = kinds.find((k) => k.key === state.kind);
   const any = wildsAny(module);
+  const classLink = classSegment(module, state.kindClass);
+  if (classLink) out.push(classLink, " ");
+  // §6: the menu keeps the kinds of the chosen class; a stored kind outside it is shown and kept.
+  const offered = kinds.filter((k) => kindInClass(k, state.kindClass) || k.key === kind?.key);
   out.push({
     field: "kind",
     text: kind ? kind.plural : any,
     title: kind ? kind.menu : any.charAt(0).toUpperCase() + any.slice(1),
-    choices: [{ id: undefined, label: "Any" }, ...kinds.map((k) => ({ id: k.key, label: k.menu }))],
+    choices: [{ id: undefined, label: "Any" }, ...offered.map((k) => ({ id: k.key, label: k.menu }))],
     current: kind?.key,
   });
   if (lens.era) out.push(" of the ", asSegment(lens.era, "era"), " era, ");
@@ -161,6 +168,12 @@ export function chooseWilds(state: WildsSentenceState, field: WildsField, id: st
     case "culture":
       next = chooseLens(module, next, "culture", id ?? wildsDefaultCulture(module));
       break;
+    case "kindClass":
+      // §6: choosing a class resets a kind outside it to Any; all (no class) leaves the kind alone.
+      if (isPlaceClass(id)) next.kindClass = id;
+      else delete next.kindClass;
+      if (next.kind && !kindInClass(findWildsKind(module, next.kind) ?? {}, next.kindClass)) next.kind = undefined;
+      break;
     case "kind":
       next.kind = id;
       break;
@@ -209,7 +222,7 @@ export function wildsHistoryLabel(module: WildsModule, state: WildsSentenceState
     ...(state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : []),
     ...(regionShown && state.region ? [regionPhrase(state.region)] : []),
     ...(!regionShown && biome ? [biome.label] : []),
-    ...(kind ? [kind.plural] : []),
+    ...(kind ? [kind.plural] : state.kindClass ? [state.kindClass] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
     ...(state.tone !== "any" ? [state.tone] : []),
     ...(state.series ? ["series"] : []),

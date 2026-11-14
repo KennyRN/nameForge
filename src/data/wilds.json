@@ -1539,73 +1539,85 @@
      "key": "range",
      "menu": "Ranges and massifs",
      "plural": "ranges and massifs",
-     "weight": 16
+     "weight": 16,
+     "class": "natural"
     },
     {
      "key": "peak",
      "menu": "Peaks and summits",
      "plural": "peaks and summits",
-     "weight": 22
+     "weight": 22,
+     "class": "natural"
     },
     {
      "key": "ridge",
      "menu": "Ridges, edges and crags",
      "plural": "ridges, edges and crags",
-     "weight": 12
+     "weight": 12,
+     "class": "natural"
     },
     {
      "key": "pass",
      "menu": "Passes and cols",
      "plural": "passes and cols",
-     "weight": 12
+     "weight": 12,
+     "class": "natural"
     },
     {
      "key": "gorge",
      "menu": "Gorges and ravines",
      "plural": "gorges and ravines",
-     "weight": 7
+     "weight": 7,
+     "class": "natural"
     },
     {
      "key": "valley",
      "menu": "Valleys, glens and corries",
      "plural": "valleys, glens and corries",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "stream",
      "menu": "Streams and falls",
      "plural": "streams and falls",
-     "weight": 8
+     "weight": 8,
+     "class": "natural"
     },
     {
      "key": "river",
      "menu": "Mountain rivers",
      "plural": "mountain rivers",
-     "weight": 4
+     "weight": 4,
+     "class": "natural"
     },
     {
      "key": "tarn",
      "menu": "Tarns and lakes",
      "plural": "tarns and lakes",
-     "weight": 6
+     "weight": 6,
+     "class": "natural"
     },
     {
      "key": "ice",
      "menu": "Glaciers and snowfields",
      "plural": "glaciers and snowfields",
-     "weight": 3
+     "weight": 3,
+     "class": "natural"
     },
     {
      "key": "cave",
      "menu": "Caves and mines",
      "plural": "caves and mines",
-     "weight": 4
+     "weight": 4,
+     "class": "natural"
     },
     {
      "key": "settlement",
      "menu": "Mountain settlements",
      "plural": "mountain settlements",
-     "weight": 6
+     "weight": 6,
+     "class": "constructed"
     }
    ]
   },
@@ -1643,61 +1655,71 @@
      "key": "forest",
      "menu": "Forests and woods",
      "plural": "forests and woods",
-     "weight": 22
+     "weight": 22,
+     "class": "natural"
     },
     {
      "key": "grove",
      "menu": "Groves, copses and thickets",
      "plural": "groves, copses and thickets",
-     "weight": 14
+     "weight": 14,
+     "class": "natural"
     },
     {
      "key": "clearing",
      "menu": "Clearings, glades and dells",
      "plural": "clearings, glades and dells",
-     "weight": 12
+     "weight": 12,
+     "class": "managed"
     },
     {
      "key": "ride",
      "menu": "Rides, paths and forest roads",
      "plural": "rides, paths and forest roads",
-     "weight": 10
+     "weight": 10,
+     "class": "managed"
     },
     {
      "key": "stream",
      "menu": "Streams and springs",
      "plural": "streams and springs",
-     "weight": 9
+     "weight": 9,
+     "class": "natural"
     },
     {
      "key": "river",
      "menu": "Forest rivers",
      "plural": "forest rivers",
-     "weight": 4
+     "weight": 4,
+     "class": "natural"
     },
     {
      "key": "pool",
      "menu": "Pools, ponds and lakes",
      "plural": "pools, ponds and lakes",
-     "weight": 7
+     "weight": 7,
+     "class": "natural"
     },
     {
      "key": "tree",
      "menu": "Named trees and stones",
      "plural": "named trees and stones",
-     "weight": 8
+     "weight": 8,
+     "class": "natural"
     },
     {
      "key": "walk",
      "menu": "Walks, parks and coverts",
      "plural": "walks, parks and coverts",
-     "weight": 6
+     "weight": 6,
+     "class": "managed"
     },
     {
      "key": "settlement",
      "menu": "Forest settlements",
      "plural": "forest settlements",
-     "weight": 8
+     "weight": 8,
+     "class": "constructed"
     }
    ]
   },
@@ -1729,61 +1751,71 @@
      "key": "desert",
      "menu": "Deserts and sand seas",
      "plural": "deserts and sand seas",
-     "weight": 18
+     "weight": 18,
+     "class": "natural"
     },
     {
      "key": "dune",
      "menu": "Dunes and sandhills",
      "plural": "dunes and sandhills",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "plain",
      "menu": "Stony plains and salt flats",
      "plural": "stony plains and salt flats",
-     "weight": 12
+     "weight": 12,
+     "class": "natural"
     },
     {
      "key": "rock",
      "menu": "Mesas, buttes and rocks",
      "plural": "mesas, buttes and rocks",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "canyon",
      "menu": "Canyons and wadis",
      "plural": "canyons and wadis",
-     "weight": 12
+     "weight": 12,
+     "class": "natural"
     },
     {
      "key": "oasis",
      "menu": "Oases, wells and springs",
      "plural": "oases, wells and springs",
-     "weight": 14
+     "weight": 14,
+     "class": "natural"
     },
     {
      "key": "lake",
      "menu": "Salt lakes and dry lakes",
      "plural": "salt lakes and dry lakes",
-     "weight": 6
+     "weight": 6,
+     "class": "natural"
     },
     {
      "key": "route",
      "menu": "Tracks and caravan roads",
      "plural": "tracks and caravan roads",
-     "weight": 8
+     "weight": 8,
+     "class": "constructed"
     },
     {
      "key": "landmark",
      "menu": "Landmarks and lost places",
      "plural": "landmarks and lost places",
-     "weight": 5
+     "weight": 5,
+     "class": "constructed"
     },
     {
      "key": "settlement",
      "menu": "Desert settlements",
      "plural": "desert settlements",
-     "weight": 10
+     "weight": 10,
+     "class": "constructed"
     }
    ]
   },
@@ -1815,55 +1847,64 @@
      "key": "moor",
      "menu": "Moors and fells",
      "plural": "moors and fells",
-     "weight": 20
+     "weight": 20,
+     "class": "natural"
     },
     {
      "key": "hill",
      "menu": "Tors, riggs and hills",
      "plural": "tors, riggs and hills",
-     "weight": 14
+     "weight": 14,
+     "class": "natural"
     },
     {
      "key": "bog",
      "menu": "Mosses, mires and flows",
      "plural": "mosses, mires and flows",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "clough",
      "menu": "Cloughs, combes and hopes",
      "plural": "cloughs, combes and hopes",
-     "weight": 8
+     "weight": 8,
+     "class": "natural"
     },
     {
      "key": "stream",
      "menu": "Becks, gills and burns",
      "plural": "becks, gills and burns",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "pool",
      "menu": "Tarns and pools",
      "plural": "tarns and pools",
-     "weight": 6
+     "weight": 6,
+     "class": "natural"
     },
     {
      "key": "stone",
      "menu": "Stones, cairns and crosses",
      "plural": "stones, cairns and crosses",
-     "weight": 10
+     "weight": 10,
+     "class": "constructed"
     },
     {
      "key": "track",
      "menu": "Tracks and ways",
      "plural": "tracks and ways",
-     "weight": 8
+     "weight": 8,
+     "class": "constructed"
     },
     {
      "key": "settlement",
      "menu": "Moorland settlements",
      "plural": "moorland settlements",
-     "weight": 8
+     "weight": 8,
+     "class": "constructed"
     }
    ]
   },
@@ -1901,61 +1942,71 @@
      "key": "marsh",
      "menu": "Marshes and fens",
      "plural": "marshes and fens",
-     "weight": 20
+     "weight": 20,
+     "class": "natural"
     },
     {
      "key": "bog",
      "menu": "Bogs and mires",
      "plural": "bogs and mires",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "swamp",
      "menu": "Swamps and backwaters",
      "plural": "swamps and backwaters",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "reed",
      "menu": "Reedbeds and carrs",
      "plural": "reedbeds and carrs",
-     "weight": 8
+     "weight": 8,
+     "class": "natural"
     },
     {
      "key": "water",
      "menu": "Meres, broads and pools",
      "plural": "meres, broads and pools",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "channel",
      "menu": "Creeks, lodes and drains",
      "plural": "creeks, lodes and drains",
-     "weight": 10
+     "weight": 10,
+     "class": "managed"
     },
     {
      "key": "isle",
      "menu": "Islands and holmes",
      "plural": "islands and holmes",
-     "weight": 8
+     "weight": 8,
+     "class": "natural"
     },
     {
      "key": "causeway",
      "menu": "Causeways and crossings",
      "plural": "causeways and crossings",
-     "weight": 6
+     "weight": 6,
+     "class": "constructed"
     },
     {
      "key": "delta",
      "menu": "Deltas and saltmarshes",
      "plural": "deltas and saltmarshes",
-     "weight": 6
+     "weight": 6,
+     "class": "natural"
     },
     {
      "key": "settlement",
      "menu": "Wetland settlements",
      "plural": "wetland settlements",
-     "weight": 8
+     "weight": 8,
+     "class": "constructed"
     }
    ]
   },
@@ -1988,61 +2039,71 @@
      "key": "plain",
      "menu": "Plains, steppes and prairies",
      "plural": "plains, steppes and prairies",
-     "weight": 20
+     "weight": 20,
+     "class": "natural"
     },
     {
      "key": "down",
      "menu": "Downs and wolds",
      "plural": "downs and wolds",
-     "weight": 14
+     "weight": 14,
+     "class": "natural"
     },
     {
      "key": "meadow",
      "menu": "Meadows, leas and pastures",
      "plural": "meadows, leas and pastures",
-     "weight": 14
+     "weight": 14,
+     "class": "managed"
     },
     {
      "key": "heath",
      "menu": "Heaths and commons",
      "plural": "heaths and commons",
-     "weight": 8
+     "weight": 8,
+     "class": "natural"
     },
     {
      "key": "vale",
      "menu": "Vales and straths",
      "plural": "vales and straths",
-     "weight": 10
+     "weight": 10,
+     "class": "natural"
     },
     {
      "key": "stream",
      "menu": "Streams and waterholes",
      "plural": "streams and waterholes",
-     "weight": 8
+     "weight": 8,
+     "class": "natural"
     },
     {
      "key": "lake",
      "menu": "Lakes and ponds",
      "plural": "lakes and ponds",
-     "weight": 5
+     "weight": 5,
+     "class": "natural"
     },
     {
      "key": "track",
      "menu": "Droves, trails and tracks",
      "plural": "droves, trails and tracks",
-     "weight": 8
+     "weight": 8,
+     "class": "constructed"
     },
     {
      "key": "landmark",
      "menu": "Mounds, barrows and lone trees",
      "plural": "mounds, barrows and lone trees",
-     "weight": 7
+     "weight": 7,
+     "class": "constructed"
     },
     {
      "key": "settlement",
      "menu": "Grassland settlements",
      "plural": "grassland settlements",
-     "weight": 8
+     "weight": 8,
+     "class": "constructed"
     }
    ]
   }

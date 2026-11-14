@@ -33,6 +33,7 @@ import { SPACE_DATA, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { dropStarWord, drawStarOfKind, type StarKind } from "../space/stars";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateVesselNames } from "../vessels/engine";
+import { kindInClass, type PlaceClass } from "../places/classes";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -73,6 +74,8 @@ export interface WatersKind {
   menu: string;
   plural: string;
   weight: number;
+  /** Place modules split brief §6: natural, managed or constructed. */
+  class?: PlaceClass;
 }
 
 export interface HyperShape {
@@ -169,6 +172,8 @@ export interface WatersOptions {
   culture?: string;
   /** A kind key; undefined is Any. */
   kind?: string;
+  /** Place modules split brief §6: with kind Any, only kinds of this class are drawn (whole names have no class); absent is every class. */
+  kindClass?: PlaceClass;
   era?: WatersEra;
   where?: WatersWhere;
   fantastic?: boolean;
@@ -658,6 +663,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     const kinds = earthlyModule ? waterKinds(earthlyModule) : hyperKindsAt(scale);
     for (const k of kinds) {
       if (!plans.has(k.key)) continue;
+      if (!kindInClass(k as { class?: string }, options.kindClass)) continue;
       let w = k.weight;
       if (homeBritish && earthlyModule === "seasLakes") {
         if (k.key === "ocean") w *= WATERS_DATA.kindMult.oceanHome;
@@ -672,7 +678,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   const fallbackPlans = (): [Plan, number][] => {
     if (!earthlyModule) return [];
     const ctx = newCtx();
-    return Object.entries(WATERS_DATA.shapes[earthlyModule]).flatMap(([kind, shapes]) =>
+    return Object.entries(WATERS_DATA.shapes[earthlyModule]).filter(([kind]) => kindInClass(findWaterKind(earthlyModule, kind) ?? {}, options.kindClass)).flatMap(([kind, shapes]) =>
       shapes.filter((s) => !s.rt && !s.bt).map((s): [Plan, number] => [{ kind, shape: s }, earthlyWeight(ctx, s, true)]).filter(([, w]) => w > 0),
     );
   };
@@ -725,7 +731,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
       if (chosenKind) kindKey = chosenKind.key;
       else {
         const weights = kindWeights(plans, scale);
-        if (withFixed) weights.push(["fixed", FIXED_WEIGHT]);
+        if (withFixed && !options.kindClass) weights.push(["fixed", FIXED_WEIGHT]);
         kindKey = pickWeighted(weights, rng);
         fixed = kindKey === "fixed";
       }

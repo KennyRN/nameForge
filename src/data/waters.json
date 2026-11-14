@@ -214,36 +214,36 @@
       "any": "waters of any kind",
       "eras": ["AN","MD","EM","ST","MO","NF","IS"],
       "kinds": [
-        {"key":"ocean","menu":"Oceans","plural":"oceans","weight":10},
-        {"key":"sea","menu":"Seas","plural":"seas","weight":25},
-        {"key":"bay","menu":"Gulfs and bays","plural":"gulfs and bays","weight":25},
-        {"key":"inlet","menu":"Firths, fjords and sea lochs","plural":"firths, fjords and sea lochs","weight":12},
-        {"key":"strait","menu":"Straits and channels","plural":"straits and channels","weight":13},
-        {"key":"lake","menu":"Lakes and lochs","plural":"lakes and lochs","weight":15}
+        {"key":"ocean","menu":"Oceans","plural":"oceans","weight":10,"class":"natural"},
+        {"key":"sea","menu":"Seas","plural":"seas","weight":25,"class":"natural"},
+        {"key":"bay","menu":"Gulfs and bays","plural":"gulfs and bays","weight":25,"class":"natural"},
+        {"key":"inlet","menu":"Firths, fjords and sea lochs","plural":"firths, fjords and sea lochs","weight":12,"class":"natural"},
+        {"key":"strait","menu":"Straits and channels","plural":"straits and channels","weight":13,"class":"natural"},
+        {"key":"lake","menu":"Lakes and lochs","plural":"lakes and lochs","weight":15,"class":"natural"}
       ]
     },
     "coastsIslands": {
       "any": "coast features of any kind",
       "eras": ["AN","MD","EM","ST","MO","NF","IS"],
       "kinds": [
-        {"key":"headland","menu":"Headlands and points","plural":"headlands and points","weight":22},
-        {"key":"cliff","menu":"Cliffs and rocks","plural":"cliffs and rocks","weight":15},
-        {"key":"beach","menu":"Beaches and sands","plural":"beaches and sands","weight":15},
-        {"key":"cove","menu":"Coves and inlets","plural":"coves and inlets","weight":15},
-        {"key":"island","menu":"Islands","plural":"islands","weight":23},
-        {"key":"coast","menu":"Coasts and shores","plural":"coasts and shores","weight":10}
+        {"key":"headland","menu":"Headlands and points","plural":"headlands and points","weight":22,"class":"natural"},
+        {"key":"cliff","menu":"Cliffs and rocks","plural":"cliffs and rocks","weight":15,"class":"natural"},
+        {"key":"beach","menu":"Beaches and sands","plural":"beaches and sands","weight":15,"class":"natural"},
+        {"key":"cove","menu":"Coves and inlets","plural":"coves and inlets","weight":15,"class":"natural"},
+        {"key":"island","menu":"Islands","plural":"islands","weight":23,"class":"natural"},
+        {"key":"coast","menu":"Coasts and shores","plural":"coasts and shores","weight":10,"class":"natural"}
       ]
     },
     "seaCharts": {
       "any": "chart features of any kind",
       "eras": ["AN","MD","EM","ST","MO"],
       "kinds": [
-        {"key":"bank","menu":"Banks and shoals","plural":"banks and shoals","weight":25},
-        {"key":"reef","menu":"Reefs, rocks and ledges","plural":"reefs, rocks and ledges","weight":20},
-        {"key":"deep","menu":"Deeps and holes","plural":"deeps and holes","weight":13},
-        {"key":"race","menu":"Races, tides and currents","plural":"races, tides and currents","weight":20},
-        {"key":"roads","menu":"Roads and anchorages","plural":"roads and anchorages","weight":10},
-        {"key":"channel","menu":"Channels and swatchways","plural":"channels and swatchways","weight":12}
+        {"key":"bank","menu":"Banks and shoals","plural":"banks and shoals","weight":25,"class":"natural"},
+        {"key":"reef","menu":"Reefs, rocks and ledges","plural":"reefs, rocks and ledges","weight":20,"class":"natural"},
+        {"key":"deep","menu":"Deeps and holes","plural":"deeps and holes","weight":13,"class":"natural"},
+        {"key":"race","menu":"Races, tides and currents","plural":"races, tides and currents","weight":20,"class":"natural"},
+        {"key":"roads","menu":"Roads and anchorages","plural":"roads and anchorages","weight":10,"class":"managed"},
+        {"key":"channel","menu":"Channels and swatchways","plural":"channels and swatchways","weight":12,"class":"natural"}
       ]
     }
   },

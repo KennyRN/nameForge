@@ -367,7 +367,7 @@ test("§2.1: the earthly sentences", () => {
   );
   assert.equal(
     watersSentenceText(watersSentence({ ...defaultWatersState("seaCharts"), culture: "japanese", where: "new", series: true, era: "ST", fantastic: true }, "seaCharts")),
-    "Japanese chart features of any kind of the steam age era, on newly explored shores, in a steampunk world, in any land, of any tone, with placeholders for people and places, on one chart.",
+    "Japanese all chart features of any kind of the steam age era, on newly explored shores, in a steampunk world, in any land, of any tone, with placeholders for people and places, on one chart.",
   );
   const coasts = watersSentenceText(watersSentence({ ...defaultWatersState("coastsIslands"), series: true }, "coastsIslands"));
   assert.ok(coasts.endsWith("along one stretch of coast."));

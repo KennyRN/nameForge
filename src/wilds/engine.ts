@@ -31,6 +31,7 @@ import { townSource } from "../bynames/engine";
 import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, personNames, ROUTE_CULTURES, ROUTE_ERAS, routeCapitals, routeFolk, routeKingdom, routeNorm, routePlace, routeSetting, type RouteCulture, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
+import { kindInClass, type PlaceClass } from "../places/classes";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -67,6 +68,8 @@ export interface WildsKind {
   menu: string;
   plural: string;
   weight: number;
+  /** Place modules split brief §6: natural, managed or constructed. */
+  class?: PlaceClass;
 }
 
 interface WildsModuleData {
@@ -154,6 +157,8 @@ export interface WildsOptions {
   culture?: string;
   /** A kind key; undefined is Any. */
   kind?: string;
+  /** Place modules split brief §6: with kind Any, only kinds of this class are drawn; absent is every class. */
+  kindClass?: PlaceClass;
   era?: WildsEra;
   where?: WildsWhere;
   fantastic?: boolean;
@@ -798,6 +803,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     const base: [string, number][] = [];
     for (const k of data.kinds) {
       if (!plans().has(k.key)) continue;
+      if (!kindInClass(k, options.kindClass)) continue;
       let w = k.weight;
       const id = `${module}.${k.key}`;
       if (homeBritish) w *= WILDS_DATA.kindMult.britishHome[id] ?? 1;
@@ -813,7 +819,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   /** §7: when no kind is live, the module's untagged shapes. */
   const fallbackPlans = (): [Plan, number][] => {
     const ctx = newCtx();
-    return Object.entries(WILDS_DATA.shapes[module]).flatMap(([kind, shapes]) =>
+    return Object.entries(WILDS_DATA.shapes[module]).filter(([kind]) => kindInClass(findWildsKind(module, kind) ?? {}, options.kindClass)).flatMap(([kind, shapes]) =>
       shapes.filter((s) => !s.rt && !s.bt && kind !== "settlement").map((s): [Plan, number] => [{ kind, shape: s }, shapeWeight(ctx, s, true)]).filter(([, w]) => w > 0),
     );
   };

@@ -33,6 +33,7 @@ import { PEOPLE_CULTURES, type PeopleDetail, type PeopleGiving } from "./peoples
 import { placesOffered, type PeopleSource } from "./peoples/sentence";
 import { findTimeCulture, findTimeKind, kindsOffered as timeKindsOffered, TIME_SKY, type TimeKind, type TimeModule, type TimeWords } from "./timesky/data";
 import { DEITY_KINDS, DEITY_DOMAINS, deityCulture, type DeityGender, type DeityKind, type DeityNames } from "./deities/engine";
+import { isPlaceClass, type PlaceClass } from "./places/classes";
 import { findWildsCulture, findWildsKind, wildsBiomes, wildsDefaultCulture, wildsEras, wildsKindsAt, type WildsEra, type WildsModule, type WildsWhere } from "./wilds/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./settlement/kit";
 import { STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./streets/engine";
@@ -1415,6 +1416,8 @@ export interface WatersPreset {
   culture: string;
   /** "any" or a kind key. */
   waterKind: string;
+  /** Place modules split brief §6: the class link; absent is all (and nothing is written for it). */
+  waterClass?: PlaceClass;
   /** Earthly modules only. */
   era: WatersEra;
   where: WatersWhere;
@@ -1430,6 +1433,15 @@ export interface WatersPreset {
   scale: ScaleChoice;
   medium: HyperMedium;
   register: HyperRegister;
+}
+
+/** Place modules split brief §6: a preset's optional `class` line: absent, empty or `all` is no class; an unknown value is noted and ignored. */
+function classValue(values: Record<string, string>, problems: string[]): PlaceClass | undefined {
+  const v = values.class;
+  if (v === undefined || v === "" || v === "all") return undefined;
+  if (isPlaceClass(v)) return v;
+  problems.push(`Unknown class “${v}”.`);
+  return undefined;
 }
 
 function parseWatersPreset(values: Record<string, string>, body: string, fileName: string): { waters?: WatersPreset; problems: string[] } {
@@ -1461,6 +1473,7 @@ function parseWatersPreset(values: Record<string, string>, body: string, fileNam
     kind = "any";
   }
   const culture = pick("culture", hyper ? "general" : "norman-british", (v) => !!findWatersCulture(v));
+  const kindClass = hyper ? undefined : classValue(values, problems);
   return {
     waters: {
       packName: values.packName || fileName,
@@ -1469,6 +1482,7 @@ function parseWatersPreset(values: Record<string, string>, body: string, fileNam
       watersModule: module,
       culture,
       waterKind: kind,
+      ...(kindClass ? { waterClass: kindClass } : {}),
       era: hyper ? "IS" : pick<WatersEra>("era", "MD", (v) => waterEras(module).includes(v as WatersEra)),
       where: hyper ? "home" : pick<WatersWhere>("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
       fantastic: hyper ? false : flag("fantastic"),
@@ -1497,6 +1511,7 @@ function watersPresetContent(preset: WatersPreset): string {
     `setting: ${preset.setting}`,
     `culture: ${preset.culture}`,
     `kind: ${preset.waterKind}`,
+    ...(preset.waterClass && !hyper ? [`class: ${preset.waterClass}`] : []),
     ...(hyper
       ? [`scale: ${preset.scale}`, `medium: ${preset.medium}`, `register: ${preset.register}`]
       : [`era: ${preset.era}`, `where: ${preset.where}`, `fantastic: ${preset.fantastic}`, `region: ${preset.region}`, `biome: ${preset.biome}`]),
@@ -1531,6 +1546,8 @@ export interface WildsPreset {
   culture: string;
   /** "any" or a kind key. */
   wildsKind: string;
+  /** Place modules split brief §6: the class link; absent is all (and nothing is written for it). */
+  wildsClass?: PlaceClass;
   era: WildsEra;
   where: WildsWhere;
   fantastic: boolean;
@@ -1566,6 +1583,7 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
     problems.push(`Kind “${kind}” isn't offered in that era.`);
     kind = "any";
   }
+  const kindClass = classValue(values, problems);
   return {
     wilds: {
       packName: values.packName || fileName,
@@ -1574,6 +1592,7 @@ function parseWildsPreset(values: Record<string, string>, body: string, fileName
       wildsModule: module,
       culture: pick("culture", wildsDefaultCulture(module), (v) => !!findWildsCulture(v)),
       wildsKind: kind,
+      ...(kindClass ? { wildsClass: kindClass } : {}),
       era,
       where: pick<WildsWhere>("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
       fantastic: flag("fantastic"),
@@ -1596,6 +1615,7 @@ function wildsPresetContent(preset: WildsPreset): string {
     `setting: ${preset.setting}`,
     `culture: ${preset.culture}`,
     `kind: ${preset.wildsKind}`,
+    ...(preset.wildsClass ? [`class: ${preset.wildsClass}`] : []),
     `era: ${preset.era}`,
     `where: ${preset.where}`,
     `fantastic: ${preset.fantastic}`,
