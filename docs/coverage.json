@@ -6289,6 +6289,1974 @@
    }
   },
   {
+   "module": "lands",
+   "land": true,
+   "adapter": true,
+   "noTables": false,
+   "rowCount": 258,
+   "cultures": {
+    "general": {
+     "words": 0,
+     "shapes": 0,
+     "profile": false,
+     "below": false
+    },
+    "english": {
+     "words": 1,
+     "shapes": 7,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "welsh": {
+     "words": 1,
+     "shapes": 7,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scottish": {
+     "words": 1,
+     "shapes": 7,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "irish": {
+     "words": 1,
+     "shapes": 7,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "cornish": {
+     "words": 1,
+     "shapes": 7,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scandinavian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "german": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "french": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "dutch": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "iberian": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": true
+    },
+    "roman": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "greek-byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "slavic": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "steppe": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "arabic-persian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "egyptian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "ethiopian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "bantu": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "west-african": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "indian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "chinese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "japanese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "korean": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "aztec": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "maya": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "andean": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "polynesian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "american": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    }
+   },
+   "eras": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 5,
+    "ST": 5,
+    "MO": 5,
+    "NF": 0,
+    "IS": 0
+   },
+   "styles": {
+    "high-fantasy": {
+     "words": 9,
+     "shapes": 6
+    },
+    "contemporary-fantasy": {
+     "words": 9,
+     "shapes": 6
+    },
+    "space-opera": {
+     "words": 9,
+     "shapes": 6
+    }
+   },
+   "tones": {
+    "grand": 6,
+    "plain": 0,
+    "grim": 5,
+    "light": 2,
+    "strange": 6
+   },
+   "regions": {
+    "COR": 4,
+    "WCY": 13,
+    "SEA": 14,
+    "EAN": 15,
+    "WMM": 13,
+    "EMD": 19,
+    "NTH": 32,
+    "SBL": 17,
+    "WAL": 5,
+    "SLO": 15,
+    "SHH": 14,
+    "NSI": 9,
+    "DEN": 0,
+    "NOR": 0,
+    "SWE": 0,
+    "ICE": 0,
+    "NDT": 0,
+    "RHN": 0,
+    "MIT": 0,
+    "ALP": 0,
+    "OST": 0
+   },
+   "kinds": {
+    "country": 13,
+    "shire": 12,
+    "march": 13,
+    "province": 12,
+    "parish": 11,
+    "folk": 10
+   },
+   "roster": {
+    "localKeys": [],
+    "notOffered": [
+     "french",
+     "dutch",
+     "iberian",
+     "american",
+     "ottoman",
+     "swahili-omani",
+     "malay",
+     "hawaiian",
+     "maori",
+     "w-polynesian",
+     "nw-coast",
+     "arctic",
+     "na-woodlands",
+     "phoenician",
+     "hellenistic",
+     "belgian",
+     "northAmerican",
+     "maritimeSEA",
+     "northernPacific",
+     "sahul"
+    ]
+   }
+  },
+  {
+   "module": "riversInland",
+   "land": true,
+   "adapter": true,
+   "noTables": false,
+   "rowCount": 600,
+   "cultures": {
+    "general": {
+     "words": 0,
+     "shapes": 0,
+     "profile": false,
+     "below": false
+    },
+    "english": {
+     "words": 1,
+     "shapes": 36,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "welsh": {
+     "words": 1,
+     "shapes": 36,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scottish": {
+     "words": 1,
+     "shapes": 36,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "irish": {
+     "words": 1,
+     "shapes": 36,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "cornish": {
+     "words": 1,
+     "shapes": 36,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scandinavian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "german": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "french": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "dutch": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "iberian": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": true
+    },
+    "roman": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "greek-byzantine": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "slavic": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "steppe": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "arabic-persian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "egyptian": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "ethiopian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "bantu": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "west-african": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "indian": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "chinese": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "japanese": {
+     "words": 3,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "korean": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "aztec": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "maya": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "andean": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "polynesian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "american": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    }
+   },
+   "eras": {
+    "AN": 3,
+    "MD": 5,
+    "EM": 4,
+    "ST": 4,
+    "MO": 4,
+    "NF": 0,
+    "IS": 0
+   },
+   "styles": {
+    "high-fantasy": {
+     "words": 9,
+     "shapes": 5
+    },
+    "contemporary-fantasy": {
+     "words": 9,
+     "shapes": 5
+    },
+    "space-opera": {
+     "words": 9,
+     "shapes": 5
+    }
+   },
+   "tones": {
+    "grand": 10,
+    "plain": 2,
+    "grim": 15,
+    "light": 10,
+    "strange": 10
+   },
+   "regions": {
+    "COR": 4,
+    "WCY": 13,
+    "SEA": 14,
+    "EAN": 15,
+    "WMM": 13,
+    "EMD": 19,
+    "NTH": 32,
+    "SBL": 17,
+    "WAL": 5,
+    "SLO": 15,
+    "SHH": 14,
+    "NSI": 9,
+    "DEN": 0,
+    "NOR": 0,
+    "SWE": 0,
+    "ICE": 0,
+    "NDT": 0,
+    "RHN": 0,
+    "MIT": 0,
+    "ALP": 0,
+    "OST": 0
+   },
+   "kinds": {
+    "river": 0,
+    "stream": 32,
+    "spring": 30,
+    "pool": 28,
+    "lake": 32,
+    "falls": 31,
+    "riverland": 27,
+    "cut": 10
+   },
+   "kindFlags": {
+    "river": "delegated"
+   },
+   "roster": {
+    "localKeys": [],
+    "notOffered": [
+     "french",
+     "dutch",
+     "iberian",
+     "american",
+     "ottoman",
+     "swahili-omani",
+     "malay",
+     "hawaiian",
+     "maori",
+     "w-polynesian",
+     "nw-coast",
+     "arctic",
+     "na-woodlands",
+     "phoenician",
+     "hellenistic",
+     "belgian",
+     "northAmerican",
+     "maritimeSEA",
+     "northernPacific",
+     "sahul"
+    ]
+   }
+  },
+  {
+   "module": "hillsValleys",
+   "land": true,
+   "adapter": true,
+   "noTables": false,
+   "rowCount": 466,
+   "cultures": {
+    "general": {
+     "words": 0,
+     "shapes": 0,
+     "profile": false,
+     "below": false
+    },
+    "english": {
+     "words": 2,
+     "shapes": 44,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "welsh": {
+     "words": 2,
+     "shapes": 44,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scottish": {
+     "words": 2,
+     "shapes": 44,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "irish": {
+     "words": 2,
+     "shapes": 44,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "cornish": {
+     "words": 2,
+     "shapes": 44,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scandinavian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "german": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "french": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "dutch": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "iberian": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": true
+    },
+    "roman": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "greek-byzantine": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "slavic": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "steppe": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "arabic-persian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "egyptian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "ethiopian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "bantu": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "west-african": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "indian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "chinese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "japanese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "korean": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "aztec": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "maya": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "andean": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "polynesian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "american": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    }
+   },
+   "eras": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "ST": 0,
+    "MO": 0,
+    "NF": 0,
+    "IS": 0
+   },
+   "styles": {
+    "high-fantasy": {
+     "words": 9,
+     "shapes": 6
+    },
+    "contemporary-fantasy": {
+     "words": 9,
+     "shapes": 6
+    },
+    "space-opera": {
+     "words": 9,
+     "shapes": 6
+    }
+   },
+   "tones": {
+    "grand": 6,
+    "plain": 0,
+    "grim": 15,
+    "light": 8,
+    "strange": 7
+   },
+   "regions": {
+    "COR": 4,
+    "WCY": 13,
+    "SEA": 14,
+    "EAN": 15,
+    "WMM": 13,
+    "EMD": 19,
+    "NTH": 32,
+    "SBL": 17,
+    "WAL": 5,
+    "SLO": 15,
+    "SHH": 14,
+    "NSI": 9,
+    "DEN": 0,
+    "NOR": 0,
+    "SWE": 0,
+    "ICE": 0,
+    "NDT": 0,
+    "RHN": 0,
+    "MIT": 0,
+    "ALP": 0,
+    "OST": 0
+   },
+   "kinds": {
+    "hill": 29,
+    "ridge": 28,
+    "valley": 26,
+    "combe": 19,
+    "ravine": 21,
+    "terrace": 24,
+    "settlement": 0
+   },
+   "kindFlags": {
+    "settlement": "delegated"
+   },
+   "roster": {
+    "localKeys": [],
+    "notOffered": [
+     "french",
+     "dutch",
+     "iberian",
+     "american",
+     "ottoman",
+     "swahili-omani",
+     "malay",
+     "hawaiian",
+     "maori",
+     "w-polynesian",
+     "nw-coast",
+     "arctic",
+     "na-woodlands",
+     "phoenician",
+     "hellenistic",
+     "belgian",
+     "northAmerican",
+     "maritimeSEA",
+     "northernPacific",
+     "sahul"
+    ]
+   }
+  },
+  {
+   "module": "farmland",
+   "land": true,
+   "adapter": true,
+   "noTables": false,
+   "rowCount": 488,
+   "cultures": {
+    "general": {
+     "words": 0,
+     "shapes": 0,
+     "profile": false,
+     "below": false
+    },
+    "english": {
+     "words": 1,
+     "shapes": 33,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "welsh": {
+     "words": 1,
+     "shapes": 33,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scottish": {
+     "words": 1,
+     "shapes": 33,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "irish": {
+     "words": 1,
+     "shapes": 33,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "cornish": {
+     "words": 1,
+     "shapes": 33,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scandinavian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "german": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "french": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "dutch": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "iberian": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": true
+    },
+    "roman": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "greek-byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "slavic": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "steppe": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "arabic-persian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "egyptian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "ethiopian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "bantu": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "west-african": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "indian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "chinese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "japanese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "korean": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "aztec": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "maya": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "andean": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "polynesian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "american": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    }
+   },
+   "eras": {
+    "AN": 0,
+    "MD": 1,
+    "EM": 2,
+    "ST": 2,
+    "MO": 2,
+    "NF": 0,
+    "IS": 0
+   },
+   "styles": {
+    "high-fantasy": {
+     "words": 9,
+     "shapes": 6
+    },
+    "contemporary-fantasy": {
+     "words": 9,
+     "shapes": 6
+    },
+    "space-opera": {
+     "words": 9,
+     "shapes": 6
+    }
+   },
+   "tones": {
+    "grand": 4,
+    "plain": 0,
+    "grim": 11,
+    "light": 6,
+    "strange": 8
+   },
+   "regions": {
+    "COR": 4,
+    "WCY": 13,
+    "SEA": 14,
+    "EAN": 15,
+    "WMM": 13,
+    "EMD": 19,
+    "NTH": 32,
+    "SBL": 17,
+    "WAL": 5,
+    "SLO": 15,
+    "SHH": 14,
+    "NSI": 9,
+    "DEN": 0,
+    "NOR": 0,
+    "SWE": 0,
+    "ICE": 0,
+    "NDT": 0,
+    "RHN": 0,
+    "MIT": 0,
+    "ALP": 0,
+    "OST": 0
+   },
+   "kinds": {
+    "field": 40,
+    "enclosure": 38,
+    "farm": 41,
+    "common": 35,
+    "moot": 37,
+    "works": 40,
+    "settlement": 0
+   },
+   "kindFlags": {
+    "settlement": "delegated"
+   },
+   "roster": {
+    "localKeys": [],
+    "notOffered": [
+     "french",
+     "dutch",
+     "iberian",
+     "american",
+     "ottoman",
+     "swahili-omani",
+     "malay",
+     "hawaiian",
+     "maori",
+     "w-polynesian",
+     "nw-coast",
+     "arctic",
+     "na-woodlands",
+     "phoenician",
+     "hellenistic",
+     "belgian",
+     "northAmerican",
+     "maritimeSEA",
+     "northernPacific",
+     "sahul"
+    ]
+   }
+  },
+  {
+   "module": "starsSpace",
+   "land": false,
+   "adapter": true,
+   "noTables": false,
+   "rowCount": 290,
+   "cultures": {
+    "general": {
+     "words": 0,
+     "shapes": 0,
+     "profile": false,
+     "below": false
+    },
+    "english": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "welsh": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scottish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "irish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "cornish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "scandinavian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": true,
+     "below": true
+    },
+    "german": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "french": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "dutch": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "iberian": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": true
+    },
+    "roman": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "greek-byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "slavic": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "steppe": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "arabic-persian": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "egyptian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "ethiopian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "bantu": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "west-african": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "indian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "chinese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "japanese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "korean": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "aztec": {
+     "words": 3,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "maya": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "andean": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "polynesian": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": true
+    },
+    "american": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    }
+   },
+   "eras": {
+    "AN": 0,
+    "MD": 0,
+    "EM": 0,
+    "ST": 0,
+    "MO": 0,
+    "NF": 0,
+    "IS": 0
+   },
+   "styles": {
+    "high-fantasy": {
+     "words": 9,
+     "shapes": 5
+    },
+    "contemporary-fantasy": {
+     "words": 9,
+     "shapes": 5
+    },
+    "space-opera": {
+     "words": 9,
+     "shapes": 5
+    }
+   },
+   "tones": {
+    "grand": 6,
+    "plain": 0,
+    "grim": 5,
+    "light": 0,
+    "strange": 5
+   },
+   "kinds": {
+    "world": 28,
+    "orbit": 43,
+    "star": 21,
+    "nebula": 22,
+    "expanse": 34,
+    "station": 0
+   },
+   "kindFlags": {
+    "station": "delegated"
+   },
+   "roster": {
+    "localKeys": [],
+    "notOffered": [
+     "french",
+     "dutch",
+     "iberian",
+     "american",
+     "ottoman",
+     "swahili-omani",
+     "malay",
+     "hawaiian",
+     "maori",
+     "w-polynesian",
+     "nw-coast",
+     "arctic",
+     "na-woodlands",
+     "phoenician",
+     "hellenistic",
+     "belgian",
+     "northAmerican",
+     "maritimeSEA",
+     "northernPacific",
+     "sahul"
+    ]
+   }
+  },
+  {
    "module": "seasLakes",
    "land": true,
    "adapter": true,
@@ -16811,1180 +18779,6 @@
    }
   },
   {
-   "module": "explorationPlaceShapes",
-   "land": false,
-   "adapter": true,
-   "noTables": false,
-   "rowCount": 79,
-   "cultures": {
-    "english": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "welsh": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "scottish": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "irish": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "cornish": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "scandinavian": {
-     "words": 0,
-     "shapes": 2,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "german": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "french": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "dutch": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "iberian": {
-     "words": 0,
-     "shapes": 2,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "italian": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "roman": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "greek-byzantine": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "slavic": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "steppe": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "arabic-persian": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "egyptian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "ethiopian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "bantu": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "west-african": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "indian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "chinese": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "japanese": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "korean": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "aztec": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "maya": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "andean": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "polynesian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "american": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "phoenician": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 4,
-      "shapes": 1
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "hellenistic": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 4,
-      "shapes": 1
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    }
-   },
-   "eras": {
-    "AN": 0,
-    "MD": 0,
-    "EM": 0,
-    "ST": 0,
-    "MO": 0,
-    "NF": 0,
-    "IS": 0
-   },
-   "styles": {},
-   "tones": {
-    "grand": 0,
-    "plain": 0,
-    "grim": 0,
-    "light": 0,
-    "strange": 0
-   },
-   "kinds": {
-    "sparse-or-weak-native-presence": 61,
-    "contested-frontier": 61,
-    "wild-and-unsettled": 61
-   },
-   "roster": {
-    "localKeys": [
-     "hellenistic",
-     "phoenician"
-    ],
-    "notOffered": [
-     "greek-byzantine",
-     "steppe",
-     "egyptian",
-     "ethiopian",
-     "bantu",
-     "west-african",
-     "indian",
-     "chinese",
-     "korean",
-     "aztec",
-     "maya",
-     "andean",
-     "polynesian",
-     "ottoman",
-     "swahili-omani",
-     "malay",
-     "hawaiian",
-     "maori",
-     "w-polynesian",
-     "nw-coast",
-     "arctic",
-     "na-woodlands",
-     "phoenician",
-     "hellenistic",
-     "belgian",
-     "northAmerican",
-     "maritimeSEA",
-     "northernPacific",
-     "sahul"
-    ]
-   }
-  },
-  {
-   "module": "empireExpansionPlaceShapes",
-   "land": false,
-   "adapter": true,
-   "noTables": false,
-   "rowCount": 75,
-   "cultures": {
-    "english": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "welsh": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "scottish": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "irish": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "cornish": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "scandinavian": {
-     "words": 0,
-     "shapes": 2,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "german": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "french": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "dutch": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "iberian": {
-     "words": 0,
-     "shapes": 2,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "italian": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "roman": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "greek-byzantine": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "slavic": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "steppe": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "arabic-persian": {
-     "words": 0,
-     "shapes": 2,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "egyptian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "ethiopian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "bantu": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "west-african": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "indian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "chinese": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "japanese": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "korean": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "aztec": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "maya": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "andean": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "polynesian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "american": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "ottoman": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 4,
-      "shapes": 1
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "hellenistic": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 4,
-      "shapes": 1
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "belgian": {
-     "words": 0,
-     "shapes": 1,
-     "target": {
-      "words": 4,
-      "shapes": 1
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    }
-   },
-   "eras": {
-    "AN": 0,
-    "MD": 0,
-    "EM": 0,
-    "ST": 0,
-    "MO": 0,
-    "NF": 0,
-    "IS": 0
-   },
-   "styles": {},
-   "tones": {
-    "grand": 0,
-    "plain": 0,
-    "grim": 0,
-    "light": 0,
-    "strange": 0
-   },
-   "kinds": {
-    "imposition": 56,
-    "accommodation": 56,
-    "adoption": 56
-   },
-   "roster": {
-    "localKeys": [
-     "hellenistic",
-     "belgian"
-    ],
-    "notOffered": [
-     "greek-byzantine",
-     "steppe",
-     "egyptian",
-     "ethiopian",
-     "bantu",
-     "west-african",
-     "indian",
-     "korean",
-     "aztec",
-     "maya",
-     "andean",
-     "polynesian",
-     "american",
-     "ottoman",
-     "swahili-omani",
-     "malay",
-     "hawaiian",
-     "maori",
-     "w-polynesian",
-     "nw-coast",
-     "arctic",
-     "na-woodlands",
-     "phoenician",
-     "hellenistic",
-     "belgian",
-     "northAmerican",
-     "maritimeSEA",
-     "northernPacific",
-     "sahul"
-    ]
-   }
-  },
-  {
-   "module": "placeShapes",
-   "land": true,
-   "adapter": true,
-   "noTables": false,
-   "rowCount": 1919,
-   "cultures": {
-    "english": {
-     "words": 426,
-     "shapes": 57,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": false
-    },
-    "welsh": {
-     "words": 47,
-     "shapes": 43,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": false
-    },
-    "scottish": {
-     "words": 47,
-     "shapes": 43,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": false
-    },
-    "irish": {
-     "words": 47,
-     "shapes": 43,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": false
-    },
-    "cornish": {
-     "words": 47,
-     "shapes": 43,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": false
-    },
-    "scandinavian": {
-     "words": 141,
-     "shapes": 22,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": false
-    },
-    "german": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "french": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "dutch": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "iberian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "italian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "roman": {
-     "words": 12,
-     "shapes": 45,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "greek-byzantine": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "slavic": {
-     "words": 41,
-     "shapes": 45,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "steppe": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "arabic-persian": {
-     "words": 25,
-     "shapes": 46,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "egyptian": {
-     "words": 24,
-     "shapes": 36,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "ethiopian": {
-     "words": 79,
-     "shapes": 23,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "bantu": {
-     "words": 69,
-     "shapes": 25,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "west-african": {
-     "words": 95,
-     "shapes": 26,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "indian": {
-     "words": 33,
-     "shapes": 37,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "chinese": {
-     "words": 75,
-     "shapes": 39,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "japanese": {
-     "words": 83,
-     "shapes": 35,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "korean": {
-     "words": 82,
-     "shapes": 24,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "aztec": {
-     "words": 50,
-     "shapes": 33,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "maya": {
-     "words": 76,
-     "shapes": 25,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": false
-    },
-    "andean": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "polynesian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    },
-    "american": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "notOffered": true,
-     "profile": false,
-     "below": false
-    }
-   },
-   "eras": {
-    "AN": 98,
-    "MD": 197,
-    "EM": 167,
-    "ST": 167,
-    "MO": 167,
-    "NF": 0,
-    "IS": 176
-   },
-   "styles": {},
-   "tones": {
-    "grand": 0,
-    "plain": 0,
-    "grim": 0,
-    "light": 0,
-    "strange": 0
-   },
-   "regions": {
-    "COR": 0,
-    "WCY": 2,
-    "SEA": 5,
-    "EAN": 3,
-    "WMM": 2,
-    "EMD": 5,
-    "NTH": 11,
-    "SBL": 7,
-    "WAL": 0,
-    "SLO": 3,
-    "SHH": 1,
-    "NSI": 3,
-    "DEN": 0,
-    "NOR": 0,
-    "SWE": 0,
-    "ICE": 0,
-    "NDT": 0,
-    "RHN": 0,
-    "MIT": 0,
-    "ALP": 0,
-    "OST": 0
-   },
-   "kinds": {},
-   "roster": {
-    "localKeys": [],
-    "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
-     "greek-byzantine",
-     "steppe",
-     "andean",
-     "polynesian",
-     "american",
-     "ottoman",
-     "swahili-omani",
-     "malay",
-     "hawaiian",
-     "maori",
-     "w-polynesian",
-     "nw-coast",
-     "arctic",
-     "na-woodlands",
-     "phoenician",
-     "hellenistic",
-     "belgian",
-     "northAmerican",
-     "maritimeSEA",
-     "northernPacific",
-     "sahul"
-    ]
-   }
-  },
-  {
    "module": "riverNames",
    "land": true,
    "adapter": true,
@@ -18328,91 +19122,91 @@
  "totals": {
   "cultures": {
    "english": {
-    "words": 1070,
-    "shapes": 351
+    "words": 644,
+    "shapes": 412
    },
    "welsh": {
-    "words": 394,
-    "shapes": 324
+    "words": 347,
+    "shapes": 401
    },
    "scottish": {
-    "words": 405,
-    "shapes": 324
+    "words": 358,
+    "shapes": 401
    },
    "irish": {
-    "words": 328,
-    "shapes": 324
+    "words": 281,
+    "shapes": 401
    },
    "cornish": {
-    "words": 328,
-    "shapes": 324
+    "words": 281,
+    "shapes": 401
    },
    "roman": {
-    "words": 269,
-    "shapes": 235
+    "words": 257,
+    "shapes": 188
    },
    "scandinavian": {
-    "words": 346,
-    "shapes": 122
+    "words": 205,
+    "shapes": 96
    },
    "arabic-persian": {
-    "words": 176,
-    "shapes": 200
+    "words": 151,
+    "shapes": 151
    },
    "egyptian": {
-    "words": 122,
-    "shapes": 155
+    "words": 99,
+    "shapes": 119
    },
    "west-african": {
-    "words": 188,
-    "shapes": 120
+    "words": 94,
+    "shapes": 94
    },
    "ethiopian": {
-    "words": 156,
-    "shapes": 102
+    "words": 77,
+    "shapes": 79
    },
    "steppe": {
-    "words": 108,
+    "words": 110,
     "shapes": 32
    },
    "indian": {
-    "words": 157,
-    "shapes": 164
+    "words": 124,
+    "shapes": 127
    },
    "chinese": {
-    "words": 360,
-    "shapes": 180
+    "words": 286,
+    "shapes": 140
    },
    "slavic": {
-    "words": 233,
-    "shapes": 228
+    "words": 192,
+    "shapes": 181
    },
    "french": {
     "words": 84,
-    "shapes": 32
+    "shapes": 30
    },
    "iberian": {
     "words": 84,
-    "shapes": 34
+    "shapes": 30
    },
    "greek-byzantine": {
     "words": 216,
     "shapes": 54
    },
    "japanese": {
-    "words": 392,
-    "shapes": 159
+    "words": 309,
+    "shapes": 122
    },
    "korean": {
-    "words": 332,
-    "shapes": 94
+    "words": 250,
+    "shapes": 70
    },
    "maya": {
-    "words": 158,
-    "shapes": 107
+    "words": 82,
+    "shapes": 82
    },
    "andean": {
-    "words": 35,
+    "words": 36,
     "shapes": 10
    },
    "polynesian": {
@@ -18420,24 +19214,24 @@
     "shapes": 11
    },
    "bantu": {
-    "words": 187,
-    "shapes": 92
+    "words": 120,
+    "shapes": 67
    },
    "aztec": {
-    "words": 188,
-    "shapes": 138
+    "words": 139,
+    "shapes": 105
    },
    "american": {
     "words": 44,
-    "shapes": 3
+    "shapes": 2
    },
    "dutch": {
     "words": 32,
-    "shapes": 2
+    "shapes": 0
    },
    "german": {
     "words": 15,
-    "shapes": 2
+    "shapes": 0
    },
    "northAmerican": {
     "words": 12,
@@ -18449,7 +19243,7 @@
    },
    "italian": {
     "words": 17,
-    "shapes": 2
+    "shapes": 0
    },
    "northernPacific": {
     "words": 11,
@@ -18458,41 +19252,29 @@
    "sahul": {
     "words": 7,
     "shapes": 0
-   },
-   "hellenistic": {
-    "words": 0,
-    "shapes": 2
-   },
-   "phoenician": {
-    "words": 0,
-    "shapes": 1
-   },
-   "belgian": {
-    "words": 0,
-    "shapes": 1
    }
   },
   "eras": {
-   "AN": 865,
-   "MD": 1520,
-   "EM": 1038,
-   "ST": 1081,
-   "MO": 1094,
+   "AN": 768,
+   "MD": 1328,
+   "EM": 882,
+   "ST": 925,
+   "MO": 938,
    "NF": 764,
-   "IS": 1505
+   "IS": 1329
   },
   "styles": {
    "high-fantasy": {
     "words": 189,
-    "shapes": 284
+    "shapes": 312
    },
    "contemporary-fantasy": {
     "words": 105,
-    "shapes": 282
+    "shapes": 310
    },
    "space-opera": {
     "words": 241,
-    "shapes": 115
+    "shapes": 143
    },
    "steampunk": {
     "words": 84,
@@ -18512,11 +19294,11 @@
    }
   },
   "tones": {
-   "grand": 606,
-   "plain": 681,
-   "grim": 497,
-   "light": 401,
-   "strange": 492
+   "grand": 615,
+   "plain": 683,
+   "grim": 499,
+   "light": 402,
+   "strange": 511
   }
  },
  "thinPools": [
@@ -19459,12 +20241,6 @@
    "minimum": 8
   },
   {
-   "pool": "world/anglo-saxon/lists/animal",
-   "module": "placeShapes",
-   "entries": 3,
-   "minimum": 8
-  },
-  {
    "pool": "constellations/norse",
    "module": "skyNames",
    "entries": 4,
@@ -20299,26 +21075,8 @@
    "minimum": 8
   },
   {
-   "pool": "world/anglo-saxon/lists/church",
-   "module": "placeShapes",
-   "entries": 5,
-   "minimum": 8
-  },
-  {
-   "pool": "world/bantu/lists/noun",
-   "module": "placeShapes",
-   "entries": 5,
-   "minimum": 8
-  },
-  {
    "pool": "world/celtic/lists/grove",
    "module": "settlementNames",
-   "entries": 5,
-   "minimum": 8
-  },
-  {
-   "pool": "world/chinese/lists/direction",
-   "module": "placeShapes",
    "entries": 5,
    "minimum": 8
   },
@@ -20795,72 +21553,6 @@
   {
    "pool": "waterWords/british/EAN",
    "module": "riverNames",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/anglo-saxon/lists/god",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/anglo-saxon/lists/water",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/bantu/lists/verb",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/celtic/lists/colour",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/ethiopian/lists/new",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/maya/lists/colourdir",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/maya/lists/holyword",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/maya/lists/number",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/norse/lists/fuse",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/norse/lists/meet",
-   "module": "placeShapes",
-   "entries": 6,
-   "minimum": 8
-  },
-  {
-   "pool": "world/west-african/lists/bend",
-   "module": "placeShapes",
    "entries": 6,
    "minimum": 8
   },
@@ -21359,42 +22051,6 @@
   {
    "pool": "waterWords/british/all",
    "module": "riverNames",
-   "entries": 7,
-   "minimum": 8
-  },
-  {
-   "pool": "world/anglo-saxon/lists/colour",
-   "module": "placeShapes",
-   "entries": 7,
-   "minimum": 8
-  },
-  {
-   "pool": "world/bantu/lists/material",
-   "module": "placeShapes",
-   "entries": 7,
-   "minimum": 8
-  },
-  {
-   "pool": "world/chinese/lists/material",
-   "module": "placeShapes",
-   "entries": 7,
-   "minimum": 8
-  },
-  {
-   "pool": "world/korean/lists/virtue",
-   "module": "placeShapes",
-   "entries": 7,
-   "minimum": 8
-  },
-  {
-   "pool": "world/norse/lists/farm",
-   "module": "placeShapes",
-   "entries": 7,
-   "minimum": 8
-  },
-  {
-   "pool": "world/norse/lists/landpl",
-   "module": "placeShapes",
    "entries": 7,
    "minimum": 8
   }

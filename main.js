@@ -63227,6 +63227,11 @@ var lens_default = {
       "world/chinese/lists/side"
     ]
   },
+  retiredModules: [
+    "placeShapes",
+    "explorationPlaceShapes",
+    "empireExpansionPlaceShapes"
+  ],
   landModules: [
     "mountainNames",
     "forestNames",
@@ -65567,6 +65572,8 @@ var LENS_LEGACY = LENS.legacy;
 var LENS_LAND_BAND = LENS.landBand;
 var LENS_TARGETS = LENS.targets;
 var LENS_MODULES = Object.keys(LENS.modules);
+var LENS_RETIRED_MODULES = LENS.retiredModules;
+var COVERAGE_MODULES = LENS_MODULES.filter((m) => !LENS_RETIRED_MODULES.includes(m));
 var CULTURE_BY_KEY = new Map(LENS.cultures.map((c) => [c.key, c]));
 function cultureMapping(name) {
   var _a6;
@@ -124963,9 +124970,6 @@ var GROUP_NAMES_ORDER = ["powerFactions", "realms", "peoplesTongues", "tribalNam
 var URBAN_SECTIONS = ["settlementNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit"];
 var SECTION_ORDER = [
   "markov",
-  "placeShapes",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
   "lands",
   "farmland",
   "hillsValleys",
@@ -124989,7 +124993,7 @@ var SECTION_ORDER = [
   "skyNames"
 ];
 var SECTION_GROUPS = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", ...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace"), "routeNames", "sacredPlaces", "starsSpace"],
+  placeNames: [...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace"), "routeNames", "sacredPlaces", "starsSpace"],
   // Urban brief §1.1: straight after place names.
   urban: URBAN_SECTIONS,
   seasCoasts: WATERS_SECTIONS,
@@ -125120,7 +125124,7 @@ function historySection(packName) {
   if (starts(SECTION_LABELS.empireExpansionPlaceShapes) || OLD_HISTORY_PREFIXES.empireExpansionPlaceShapes.some(starts)) {
     return "empireExpansionPlaceShapes";
   }
-  if (starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
+  if (starts(SECTION_LABELS.placeShapes) || starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
     return "placeShapes";
   }
   return "markov";
@@ -146018,6 +146022,7 @@ var withRegion = (label, regionCode) => {
   return region ? `${label} \xB7 ${region.label}` : label;
 };
 var moduleLabel = (section) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
+var RETIRED_PRESET_HEADING = "From a retired module: runs as saved";
 var shownFolderClashes = /* @__PURE__ */ new Set();
 var PLACE_LAND_KEYS = { britain: "britain", world: (id) => `world:${id}`, interstellar: "world:interstellar" };
 var SETTLEMENT_LAND_KEYS = { britain: "settlement:british", world: (id) => `settlement:world:${id}`, interstellar: "settlement:world:interstellar" };
@@ -146344,7 +146349,7 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     /** Line-up brief §2.3: the sacred places module's own choices. */
     this.sacredPlaceState = { ...DEFAULT_SACRED_PLACE_STATE };
     /** Each switcher group's last-used module (session only). */
-    this.groupModule = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", wildLands: "mountainNames", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
+    this.groupModule = { placeNames: "lands", urban: "settlementNames", seasCoasts: "seasLakes", wildLands: "mountainNames", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
     this.tribal = { tradition: "general", register: "plain", groupType: void 0, perspective: void 0, hostile: false };
     /** Land brief §8.1: river names' peoples (session only). */
     this.riverPeoples = { mode: "tribal", tradition: "general" };
@@ -146761,8 +146766,8 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     const group = sectionGroup(section);
     if (group) this.groupModule[group] = section;
     (_e3 = this.packDropdownEl) == null ? void 0 : _e3.toggle(section === "markov");
-    (_f = this.sectionSentenceEl) == null ? void 0 : _f.toggle(section === "markov" && this.sectionChoices.length > 0);
-    (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || isPlacePresetType(this.currentPackType) || this.currentPackType === "recipePack" && !!this.settlementPreset));
+    (_f = this.sectionSentenceEl) == null ? void 0 : _f.toggle(section === "markov" && (this.sectionChoices.length > 0 || !!this.retiredPresetText));
+    (_g = this.openPresetButton) == null ? void 0 : _g.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || this.currentPackType === "recipePack" && !!this.settlementPreset));
     const colonialPart = COLONIAL_SECTION_PART[section];
     (_h = this.createPacksButton) == null ? void 0 : _h.toggleClass("is-placeholder", section !== "markov");
     const tribal = section === "tribalNames" || !!familyForSection(section) || BYNAME_SECTIONS.includes(section) || VESSEL_SECTIONS.includes(section) || WATERS_SECTIONS.includes(section) || WILDS_LIKE_SECTIONS.includes(section) || section === "realms" || section === "peoplesTongues" || section === "routeNames" || section === "streetNames" || section === "innNames" || section === "buildingNames" || section === "monumentNames" || section === "settlementNames" || section === "settlementKit" || section === "eventNames" || section === "moneyNames" || section === "calendarNames" || section === "skyNames" || THING_SECTIONS.includes(section) || section === "deityNames" || section === "sacredPlaces";
@@ -151553,7 +151558,7 @@ ${n.origin}${also}${echo}` };
   /** A recipe pack (§6): no names of its own; it generates place names from shapes. */
   /** Presets brief §9: a tribal preset; its problems show in the status line, as a recipe's do. */
   async loadTribalPreset(file, content) {
-    var _a6, _b4, _c4, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _A;
+    var _a6, _b4, _c4, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _A, _B;
     const { preset, group, byname, vessel, waters, wilds, realm: realm2, route: route3, street, inn, building, monument, kit, event, money, time, thing, peoples, deity, nativePlace, exploration, expansion, problems } = parseModulePreset(content, file.basename);
     this.currentPackType = nativePlace ? "nativePlacePreset" : exploration ? "explorationPreset" : expansion ? "expansionPreset" : wilds ? "wildsPreset" : deity ? "deityPreset" : peoples ? "peoplePreset" : thing ? "thingPreset" : time ? time.timeModule === "sky" ? "skyPreset" : "calendarPreset" : money ? "moneyPreset" : event ? "eventPreset" : kit ? "kitPreset" : monument ? "monumentPreset" : building ? "buildingPreset" : inn ? "innPreset" : street ? "streetPreset" : route3 ? "routePreset" : realm2 ? "realmPreset" : waters ? "watersPreset" : vessel ? "vesselPreset" : byname ? "bynamePreset" : group ? "groupPreset" : "tribalPreset";
     this.currentPresetPath = file.path;
@@ -151563,19 +151568,34 @@ ${n.origin}${also}${echo}` };
     this.currentTemplateError = void 0;
     this.sectionChoices = [];
     (_a6 = this.sectionSentenceEl) == null ? void 0 : _a6.hide();
+    this.retiredPresetText = void 0;
     this.syncPillSpacing();
-    (_b4 = this.openPresetButton) == null ? void 0 : _b4.toggle(this.activeSection === "markov");
-    const module2 = nativePlace ? SECTION_LABELS.placeShapes : exploration ? SECTION_LABELS.explorationPlaceShapes : expansion ? SECTION_LABELS.empireExpansionPlaceShapes : wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_c4 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _c4.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_d3 = findFamily(group.family)) == null ? void 0 : _d3.label : SECTION_LABELS.tribalNames;
-    (_e3 = this.openPresetButton) == null ? void 0 : _e3.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
-    this.plugin.settings.packName = (_A = (_z = (_y = (_x = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = (_f = nativePlace == null ? void 0 : nativePlace.packName) != null ? _f : exploration == null ? void 0 : exploration.packName) != null ? _g : expansion == null ? void 0 : expansion.packName) != null ? _h : wilds == null ? void 0 : wilds.packName) != null ? _i : preset == null ? void 0 : preset.packName) != null ? _j : group == null ? void 0 : group.packName) != null ? _k : byname == null ? void 0 : byname.packName) != null ? _l : vessel == null ? void 0 : vessel.packName) != null ? _m : waters == null ? void 0 : waters.packName) != null ? _n : realm2 == null ? void 0 : realm2.packName) != null ? _o : route3 == null ? void 0 : route3.packName) != null ? _p : street == null ? void 0 : street.packName) != null ? _q : inn == null ? void 0 : inn.packName) != null ? _r : building == null ? void 0 : building.packName) != null ? _s : monument == null ? void 0 : monument.packName) != null ? _t : kit == null ? void 0 : kit.packName) != null ? _u : event == null ? void 0 : event.packName) != null ? _v : money == null ? void 0 : money.packName) != null ? _w : time == null ? void 0 : time.packName) != null ? _x : thing == null ? void 0 : thing.packName) != null ? _y : peoples == null ? void 0 : peoples.packName) != null ? _z : deity == null ? void 0 : deity.packName) != null ? _A : file.basename;
+    const retired = (_b4 = nativePlace != null ? nativePlace : exploration) != null ? _b4 : expansion;
+    (_c4 = this.openPresetButton) == null ? void 0 : _c4.toggle(this.activeSection === "markov" && !retired);
+    if (retired) this.renderRetiredPresetNote(retired.description);
+    const module2 = nativePlace ? SECTION_LABELS.placeShapes : exploration ? SECTION_LABELS.explorationPlaceShapes : expansion ? SECTION_LABELS.empireExpansionPlaceShapes : wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? (_d3 = THINGS_DATA.modules.find((m) => m.key === thing.thingModule)) == null ? void 0 : _d3.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route3 ? SECTION_LABELS.routeNames : realm2 ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? (_e3 = findFamily(group.family)) == null ? void 0 : _e3.label : SECTION_LABELS.tribalNames;
+    (_f = this.openPresetButton) == null ? void 0 : _f.setAttribute("title", `Open in ${module2 != null ? module2 : SECTION_LABELS.tribalNames}`);
+    this.plugin.settings.packName = (_B = (_A = (_z = (_y = (_x = (_w = (_v = (_u = (_t = (_s = (_r = (_q = (_p = (_o = (_n = (_m = (_l = (_k = (_j = (_i = (_h = (_g = nativePlace == null ? void 0 : nativePlace.packName) != null ? _g : exploration == null ? void 0 : exploration.packName) != null ? _h : expansion == null ? void 0 : expansion.packName) != null ? _i : wilds == null ? void 0 : wilds.packName) != null ? _j : preset == null ? void 0 : preset.packName) != null ? _k : group == null ? void 0 : group.packName) != null ? _l : byname == null ? void 0 : byname.packName) != null ? _m : vessel == null ? void 0 : vessel.packName) != null ? _n : waters == null ? void 0 : waters.packName) != null ? _o : realm2 == null ? void 0 : realm2.packName) != null ? _p : route3 == null ? void 0 : route3.packName) != null ? _q : street == null ? void 0 : street.packName) != null ? _r : inn == null ? void 0 : inn.packName) != null ? _s : building == null ? void 0 : building.packName) != null ? _t : monument == null ? void 0 : monument.packName) != null ? _u : kit == null ? void 0 : kit.packName) != null ? _v : event == null ? void 0 : event.packName) != null ? _w : money == null ? void 0 : money.packName) != null ? _x : time == null ? void 0 : time.packName) != null ? _y : thing == null ? void 0 : thing.packName) != null ? _z : peoples == null ? void 0 : peoples.packName) != null ? _A : deity == null ? void 0 : deity.packName) != null ? _B : file.basename;
     this.plugin.settings.namesFilePath = file.path;
     this.plugin.settings.folderPath = this.getFolderPath() || DEFAULT_NAMES_FOLDER;
     await this.plugin.saveSettings();
     this.updatePackDropdownTrigger(file.path, this.currentPackType);
     this.setStatus(problems.join(" "));
   }
+  /** Place modules split brief §9.3: the retired module's saved sentence, as plain text under a heading, with no links. */
+  renderRetiredPresetNote(sentence3) {
+    const el = this.sectionSentenceEl;
+    if (!el) return;
+    this.retiredPresetText = sentence3 || RETIRED_PRESET_HEADING;
+    el.empty();
+    el.createDiv({ cls: "nameforge-modal__retired-heading", text: RETIRED_PRESET_HEADING });
+    if (sentence3) el.createDiv({ cls: "nameforge-modal__retired-sentence", text: sentence3 });
+    el.toggle(this.activeSection === "markov");
+    this.syncPillSpacing();
+  }
   async loadRecipePack(file) {
     var _a6, _b4, _c4, _d3, _e3;
+    this.retiredPresetText = void 0;
     this.currentPackType = "recipePack";
     this.currentRecipePath = file.path;
     this.currentPresetPath = void 0;
@@ -151787,6 +151807,7 @@ ${n.origin}${also}${echo}` };
   renderSectionSentence() {
     const el = this.sectionSentenceEl;
     if (!el) return;
+    this.retiredPresetText = void 0;
     el.empty();
     const choice = this.sectionChoice;
     el.toggle(this.activeSection === "markov" && !!choice);

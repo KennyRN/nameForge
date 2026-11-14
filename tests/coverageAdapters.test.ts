@@ -4,7 +4,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vocabData from "../src/data/settlement-vocab.json";
-import { LENS_MODULES } from "../src/lens";
+import { COVERAGE_MODULES, LENS_MODULES } from "../src/lens";
 import { buildCoverage, COVERAGE_ADAPTERS, moduleCoverage } from "../src/coverage";
 import { type CoverageAdapter, makeRow, vocabularyRows, VOCAB_POOL_NAMES, eraReading, cultureTags, regionMultipliers } from "../src/coverageRows";
 import { poolReaders, POOL_READER_TEXT, READER_PHRASES } from "../src/coverageReaders";
@@ -133,7 +133,7 @@ test("every module in the lens either has an adapter or is listed as not yet rep
   const have = new Set(report.modules.map((m) => m.module));
   for (const adapter of COVERAGE_ADAPTERS) assert.ok(have.has(adapter.module));
   assert.equal(new Set(COVERAGE_ADAPTERS.map((a) => a.module)).size, COVERAGE_ADAPTERS.length, "no module twice");
-  assert.equal(have.size + report.withoutAdapter.length, 52, "the 52 lens modules, reported or pending");
+  assert.equal(have.size + report.withoutAdapter.length, COVERAGE_MODULES.length, "the measured lens modules, reported or pending");
 });
 
 test("the report builds and reads in British English with its cells marked", () => {
@@ -164,8 +164,10 @@ test("realms: hand-counted cells (words/shapes), counted by hand from realms.jso
 test("every module in the lens has an adapter and reports, none left 'not yet reported'", () => {
   const report = buildCoverage();
   assert.deepEqual(report.withoutAdapter, []);
-  assert.equal(report.modules.length, LENS_MODULES.length);
-  assert.deepEqual(report.modules.map((m) => m.module).sort(), [...LENS_MODULES].sort());
+  assert.equal(report.modules.length, COVERAGE_MODULES.length);
+  assert.deepEqual(report.modules.map((m) => m.module).sort(), [...COVERAGE_MODULES].sort());
+  // Place modules split brief §9: the three retired place modules are not measured.
+  for (const m of ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"]) assert.ok(LENS_MODULES.includes(m) && !COVERAGE_MODULES.includes(m), m);
   // Only the settlement kit has no tables of its own; every other module reports rows.
   for (const m of report.modules) assert.ok(m.noTables ? m.module === "settlementKit" : m.rowCount > 0, `${m.module} has rows`);
   assert.match(renderCoverageMarkdown(report), /Realms|realms/);

@@ -6,21 +6,19 @@ import { buildingCoverage } from "./buildings/coverage";
 import { bynameCoverage } from "./bynames/coverage";
 import { deityCoverage } from "./deities/coverage";
 import { groupCoverage } from "./groups/coverage";
-import { colonialCoverage } from "./names/coverage";
 import { peopleCoverage } from "./peoples/coverage";
 import { realmCoverage } from "./realms/coverage";
 import { riverCoverage } from "./rivers/coverage";
 import { thingCoverage } from "./things/coverage";
 import { tribalCoverage } from "./tribes/coverage";
 import { vesselCoverage } from "./vessels/coverage";
-import { placeShapesCoverage } from "./world/coverage";
 import { type CoverageAdapter, type CoverageRow, cultureReading, poolEntryCount, VOCAB_POOL_NAMES } from "./coverageRows";
 import { eventCoverage } from "./events/coverage";
 import { innCoverage } from "./inns/coverage";
 import {
   LENS_CULTURES,
   LENS_ERAS,
-  LENS_MODULES,
+  COVERAGE_MODULES,
   LENS_TARGETS,
   LENS_TONES,
   LENS_REGIONS,
@@ -44,7 +42,7 @@ import { placeCoverage } from "./places/coverage";
 export type { CoverageAdapter, CoverageRow, CoverageRowType } from "./coverageRows";
 
 /**
- * Every module's adapter, in the order the report lists them. A lens module with no adapter here is
+ * Every measured module's adapter, in the order the report lists them (the three retired place modules are not measured: place modules split brief §9). A lens module with no adapter here is
  * reported as "no adapter yet", never as empty (a test checks that none is left).
  */
 export const COVERAGE_ADAPTERS: CoverageAdapter[] = [
@@ -70,8 +68,6 @@ export const COVERAGE_ADAPTERS: CoverageAdapter[] = [
   tribalCoverage,
   ...groupCoverage,
   ...vesselCoverage,
-  ...colonialCoverage,
-  placeShapesCoverage,
   riverCoverage,
 ];
 
@@ -287,5 +283,5 @@ export function buildCoverage(adapters: readonly CoverageAdapter[] = COVERAGE_AD
   thinPools.sort((a, b) => a.entries - b.entries || a.pool.localeCompare(b.pool) || (a.module ?? "").localeCompare(b.module ?? ""));
 
   const have = new Set(adapters.map((x) => x.module));
-  return { modules, totals, thinPools, withoutAdapter: LENS_MODULES.filter((m) => !have.has(m)) };
+  return { modules, totals, thinPools, withoutAdapter: COVERAGE_MODULES.filter((m) => !have.has(m)) };
 }

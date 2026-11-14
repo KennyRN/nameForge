@@ -127,6 +127,10 @@ export const LENS_LAND_BAND: readonly LensEra[] = LENS.landBand;
 export const LENS_TARGETS: LensTargets = LENS.targets;
 /** Every module the lens maps, by section id. */
 export const LENS_MODULES: readonly string[] = Object.keys(LENS.modules);
+/** Place modules split brief §9: the three wide place modules that left the line-up. Their mappings stay (old presets still run) but they are no longer measured. */
+export const LENS_RETIRED_MODULES: readonly string[] = (LENS as unknown as { retiredModules: string[] }).retiredModules;
+/** The modules the coverage report measures: the lens modules still in the line-up. */
+export const COVERAGE_MODULES: readonly string[] = LENS_MODULES.filter((m) => !LENS_RETIRED_MODULES.includes(m));
 
 const CULTURE_BY_KEY = new Map(LENS.cultures.map((c) => [c.key, c]));
 export const lensCulture = (key: string): LensCulture | undefined => CULTURE_BY_KEY.get(key);

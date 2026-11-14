@@ -141,11 +141,13 @@ export const GROUP_NAMES_ORDER: NameForgeSection[] = ["powerFactions", "realms",
 /** Urban brief §1.1, Monuments brief §1.1: the six urban modules, in order. */
 export const URBAN_SECTIONS: NameForgeSection[] = ["settlementNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit"];
 
+/** Place modules split brief §9: the three wide place modules that left the line-up. Their section keys,
+ * engines, sentence builders, preset parsing and data stay: old presets still run, and history rows keep
+ * their icons and labels. */
+export const RETIRED_SECTIONS: NameForgeSection[] = ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes"];
+
 export const SECTION_ORDER: NameForgeSection[] = [
   "markov",
-  "placeShapes",
-  "explorationPlaceShapes",
-  "empireExpansionPlaceShapes",
   "lands",
   "farmland",
   "hillsValleys",
@@ -174,7 +176,7 @@ export const SECTION_ORDER: NameForgeSection[] = [
 export type SectionGroup = "placeNames" | "urban" | "seasCoasts" | "wildLands" | "groupNames" | "bynames" | "vehicles" | "namedThings" | "advanced";
 
 export const SECTION_GROUPS: Record<SectionGroup, NameForgeSection[]> = {
-  placeNames: ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", ...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace"), "routeNames", "sacredPlaces", "starsSpace"],
+  placeNames: [...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace"), "routeNames", "sacredPlaces", "starsSpace"],
   // Urban brief §1.1: straight after place names.
   urban: URBAN_SECTIONS,
   seasCoasts: WATERS_SECTIONS,
@@ -349,7 +351,7 @@ export function historySection(packName: string): NameForgeSection {
   if (starts(SECTION_LABELS.empireExpansionPlaceShapes) || OLD_HISTORY_PREFIXES.empireExpansionPlaceShapes.some(starts)) {
     return "empireExpansionPlaceShapes";
   }
-  if (starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
+  if (starts(SECTION_LABELS.placeShapes) || starts(BRITISH_PLACE_NAMES_HISTORY_NAME) || starts(PLACE_SHAPES_HISTORY_NAME) || starts(GENERIC_PLACE_NAMES_HISTORY_NAME)) {
     return "placeShapes";
   }
   return "markov";

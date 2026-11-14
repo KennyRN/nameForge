@@ -902,6 +902,11 @@
    "world/chinese/lists/side"
   ]
  },
+ "retiredModules": [
+  "placeShapes",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes"
+ ],
  "landModules": [
   "mountainNames",
   "forestNames",

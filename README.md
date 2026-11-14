@@ -9,7 +9,7 @@ Built by a worldbuilder, for worldbuilders.
 nameForge started out as a name generator. Then it needed place names. Then the places needed rivers, the rivers needed the tribes who named them, the tribes needed realms, the realms needed coins... And, well, here we are: Version 2 is the big one.
 
 - **The Markov generator is still the heart of it.** Your packs work as they always have, only better: compound packs have been reworked, place packs can now be breakdown, list or compound, and any pack can be split into `##` sections (male and female, noble and common, whatever you like).
-- **Forty-eight modules in nine groups**, all reached from the binder icon: place names, urban, seas and coasts, wild lands, group names, bynames and titles, vehicles, named things, and advanced. Between them they name just about everything a world needs, from a farmstead to a galactic sector.
+- **Fifty modules in nine groups**, all reached from the binder icon: place names, urban, seas and coasts, wild lands, group names, bynames and titles, vehicles, named things, and advanced. Between them they name just about everything a world needs, from a farmstead to a galactic sector.
 - **Everything comes out in plain modern English.** *Sheep Bridge* rather than something unpronounceable; *Wrought Silver* rather than *rupee*. The naming habits of each culture are carried over by meaning, not by borrowing their words.
 - **Presets.** Set a module up the way you like it, save it as a note and run it straight from the pack list.
 - **Still offline, still no AI, still yours.** Every module is data and rules with fixed numbers, every batch has a seed, and every preset is a plain markdown note.
@@ -44,11 +44,15 @@ Open the binder icon, pick a group, then pick the module in the box beside it. E
 - **Nothing real gets out.** Real places, people, ships, swords, gods and currencies – and well-known fictional ones – are never produced. The safeguard list commands make a note where you can add your own.
 
 ### place names
-- **native place names:** a people's own place names, Britain region by region (rivers included) or one of the world cultures (*Sheep Bridge*, *Ra's City*).
-- **exploration into new lands:** what explorers call wild and unsettled country, on Earth or among the stars.
-- **expansion into settled lands:** new and renamed settlements inside an empire's reach, with native names adopted along the way.
+- **lands and territories:** shires, marches, provinces, parishes and the lands of a people (*Western Province*).
+- **farmland and countryside:** fields, closes, farms, commons, moots and mills (*Buttercup Field*).
+- **hills and valleys:** hills, ridges, dales, combes and ravines (*Hill of the Curlews*).
+- **rivers and inland waters:** rivers, streams, springs, pools, lakes, falls and canals (*Green Brook*).
 - **route names:** roads, trade routes, pilgrim ways, railways, canals, sea routes and space lanes (*Salt Way*).
 - **sacred places:** holy mountains, groves, springs and shrines of invented faiths (*Mountain of the Storm Lord*).
+- **stars and space:** planets, orbits, stars, nebulae, expanses and stations, newly explored or settled (*Providence Beach*).
+
+Every focused place module, and each wild lands and seas and coasts module, has a **where** link: home country, newly explored country or settled lands. Where a module's kinds fall into more than one class, a **class** link narrows them to natural, managed or constructed features. The old native place names, exploration and expansion modules have left the line-up; their saved presets still run exactly as saved, shown as plain text under "From a retired module: runs as saved", and their recipe packs still run from the pack list.
 
 ### urban
 - **settlement names:** any name a settlement might carry, from hamlet to city.
@@ -59,7 +63,7 @@ Open the binder icon, pick a group, then pick the module in the box beside it. E
 - **settlement kit:** one press, one whole town – name, ruler, roads, streets, inns, buildings, and groups, all agreeing with each other.
 
 ### seas and coasts
-- **seas and lakes:** oceans, seas, gulfs, fjords, straits, and lochs (*Gulf of Arden*).
+- **seas and bays:** oceans, seas, bays, gulfs, fjords and straits (*Gulf of Arden*); lakes and lochs now live under rivers and inland waters.
 - **coasts and islands:** headlands, cliffs, beaches, coves, and islands (*Seal Skerry*).
 - **sea charts:** banks, shoals, reefs, currents, and anchorages (*Wherryman's Gat*).
 - **hyperspace charts:** hyperspace charted as if it were a sea (*The Vega Fold*).

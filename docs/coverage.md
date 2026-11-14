@@ -27,7 +27,12 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | moors and heaths | **4/2 + profile** | **0/0 + profile** | not offered | not offered | not offered | **4/2 + profile** | **4/2 + profile** | **4/2 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | not offered |
 | wetlands | **5/1 + profile** | **0/0 + profile** | not offered | not offered | not offered | **4/1 + profile** | **4/1 + profile** | **4/1 + profile** | **0/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **4/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | not offered |
 | grasslands | **4/3 + profile** | **1/0 + profile** | not offered | not offered | not offered | **4/1 + profile** | **4/1 + profile** | **5/1 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **0/0 + profile** | not offered |
-| seas and lakes | **7/17 + profile** | **8/3 + profile** | not offered | not offered | not offered | **2/1 + profile** | **9/1 + profile** | **0/1 + profile** | **2/0 + profile** | **1/0 + profile** | **2/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **8/1 + profile** | **4/0 + profile** | **3/0 + profile** | **1/0 + profile** | **3/0 + profile** | **1/0 + profile** | **2/0 + profile** | **6/0 + profile** | not offered |
+| lands and territories | **1/7 + profile** | **0/0 + profile** | not offered | not offered | not offered | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| rivers and inland waters | **1/36 + profile** | **0/0 + profile** | not offered | not offered | not offered | **1/0 + profile** | **2/0 + profile** | **1/0 + profile** | **2/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **1/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **1/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | not offered |
+| hills and valleys | **2/44 + profile** | **0/0 + profile** | not offered | not offered | not offered | **2/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| farmland and countryside | **1/33 + profile** | **0/0 + profile** | not offered | not offered | not offered | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| stars and space | **1/0 + profile** | **0/0 + profile** | not offered | not offered | not offered | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **2/0 + profile** | not offered |
+| seas and bays | **7/17 + profile** | **8/3 + profile** | not offered | not offered | not offered | **2/1 + profile** | **9/1 + profile** | **0/1 + profile** | **2/0 + profile** | **1/0 + profile** | **2/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **8/1 + profile** | **4/0 + profile** | **3/0 + profile** | **1/0 + profile** | **3/0 + profile** | **1/0 + profile** | **2/0 + profile** | **6/0 + profile** | not offered |
 | coasts and islands | **1/32 + profile** | **0/12 + profile** | not offered | not offered | not offered | **1/5 + profile** | **2/5 + profile** | **1/3 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
 | sea charts | **0/17 + profile** | **1/3 + profile** | not offered | not offered | not offered | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/1 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
 | hyperspace charts | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
@@ -53,31 +58,26 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | spacecraft and stations | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 | aircraft and airships | **5/0 + profile** | **0/0** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0** | **0/0** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0 + profile** |
 | land vehicles | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0 + profile** |
-| exploration into new lands | **0/1** | **0/2** | **0/1** | **0/1** | **0/2** | **0/1** | not offered | **0/1** | not offered | **0/1** | not offered | not offered | not offered | not offered | not offered | not offered | **0/1** | not offered | not offered | not offered | not offered | not offered | **0/1** |
-| expansion into settled lands | **0/1** | **0/2** | **0/1** | **0/1** | **0/2** | **0/1** | not offered | **0/1** | not offered | **0/2** | not offered | not offered | not offered | not offered | not offered | **0/1** | **0/1** | not offered | not offered | not offered | not offered | not offered | not offered |
-| native place names | 426/57 | 141/22 | not offered | not offered | not offered | 12/45 | not offered | 41/45 | not offered | 25/46 | 24/36 | 79/23 | 69/25 | 95/26 | 33/37 | 75/39 | 83/35 | 82/24 | 50/33 | 76/25 | not offered | not offered | not offered |
 | river names | **112/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 
 ### Local cultures
 
 Cultures only their own module has (§3.1), at the local-tier target.
 
-| module | arctic | belgian | hawaiian | hellenistic | malay | maori | maritimeSEA | na-woodlands | northAmerican | northernPacific | nw-coast | ottoman | phoenician | sahul | swahili-omani | w-polynesian |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| tribes and kin groups | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| faiths and mystic orders | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| armies and martial orders | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| thieves and the underworld | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| guilds, companies, and trade | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| adventurers and explorers | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| powers and factions | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| supernatural courts and hosts | – | – | – | – | – | – | not offered | – | not offered | not offered | – | – | – | not offered | – | – |
-| ships and boats | not offered | – | not offered | – | not offered | not offered | – | not offered | – | – | not offered | not offered | – | – | not offered | not offered |
-| spacecraft and stations | not offered | – | not offered | – | not offered | not offered | – | not offered | – | – | not offered | not offered | – | – | not offered | not offered |
-| aircraft and airships | not offered | – | not offered | – | not offered | not offered | – | not offered | – | – | not offered | not offered | – | – | not offered | not offered |
-| land vehicles | not offered | – | not offered | – | not offered | not offered | – | not offered | – | – | not offered | not offered | – | – | not offered | not offered |
-| exploration into new lands | – | – | – | not offered | – | – | – | – | – | – | – | – | not offered | – | – | – |
-| expansion into settled lands | – | not offered | – | not offered | – | – | – | – | – | – | – | not offered | – | – | – | – |
+| module | arctic | hawaiian | malay | maori | maritimeSEA | na-woodlands | northAmerican | northernPacific | nw-coast | ottoman | sahul | swahili-omani | w-polynesian |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| tribes and kin groups | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| faiths and mystic orders | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| armies and martial orders | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| thieves and the underworld | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| guilds, companies, and trade | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| adventurers and explorers | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| powers and factions | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| supernatural courts and hosts | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| ships and boats | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
+| spacecraft and stations | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
+| aircraft and airships | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
+| land vehicles | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
 
 ## 2. Module × era and module × style
 
@@ -102,7 +102,12 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | moors and heaths (land) | **1** | **4** | **3** | **3** | **3** | **5** | **5** |
 | wetlands (land) | **4** | **4** | **4** | **4** | **4** | **5** | **5** |
 | grasslands (land) | **1** | **4** | **11** | **11** | **11** | **4** | **4** |
-| seas and lakes (land) | **10** | **7** | **0** | **0** | **0** | **0** | **1** |
+| lands and territories (land) | **0** | **0** | **5** | **5** | **5** | **0** | **0** |
+| rivers and inland waters (land) | **3** | **5** | **4** | **4** | **4** | **0** | **0** |
+| hills and valleys (land) | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
+| farmland and countryside (land) | **0** | **1** | **2** | **2** | **2** | **0** | **0** |
+| stars and space | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
+| seas and bays (land) | **10** | **7** | **0** | **0** | **0** | **0** | **1** |
 | coasts and islands (land) | **1** | **0** | **2** | **2** | **2** | **0** | **0** |
 | sea charts (land) | **1** | **3** | 21 | 21 | 21 | **0** | **0** |
 | hyperspace charts | **0** | **0** | **0** | **0** | **0** | 155 | 155 |
@@ -128,9 +133,6 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | spacecraft and stations | **0** | **0** | **0** | **0** | **0** | 67 | 59 |
 | aircraft and airships | **9** | 18 | **9** | 24 | 47 | **11** | **11** |
 | land vehicles | **9** | 19 | **9** | 25 | 33 | **11** | **11** |
-| exploration into new lands | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| expansion into settled lands | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| native place names (land) | 98 | 197 | 167 | 167 | 167 | **0** | 176 |
 | river names (land) | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 
 Style (words/shapes; target 16 and 4). Realistic is the default and isn't counted.
@@ -154,7 +156,12 @@ Style (words/shapes; target 16 and 4). Realistic is the default and isn't counte
 | moors and heaths | **0/0** | **16/3** | **16/3** | **0/0** | **0/0** | **0/0** | **0/0** | **16/3** |
 | wetlands | **0/0** | **16/2** | **16/2** | **0/0** | **0/0** | **0/0** | **0/0** | **16/2** |
 | grasslands | **0/0** | 16/4 | 16/4 | **0/0** | **0/0** | **0/0** | **0/0** | 16/4 |
-| seas and lakes | **0/0** | **0/2** | **0/2** | **0/0** | **0/0** | **0/0** | **0/0** | **0/2** |
+| lands and territories | **0/0** | **9/6** | **9/6** | **0/0** | **0/0** | **0/0** | **0/0** | **9/6** |
+| rivers and inland waters | **0/0** | **9/5** | **9/5** | **0/0** | **0/0** | **0/0** | **0/0** | **9/5** |
+| hills and valleys | **0/0** | **9/6** | **9/6** | **0/0** | **0/0** | **0/0** | **0/0** | **9/6** |
+| farmland and countryside | **0/0** | **9/6** | **9/6** | **0/0** | **0/0** | **0/0** | **0/0** | **9/6** |
+| stars and space | **0/0** | **9/5** | **9/5** | **0/0** | **0/0** | **0/0** | **0/0** | **9/5** |
+| seas and bays | **0/0** | **0/2** | **0/2** | **0/0** | **0/0** | **0/0** | **0/0** | **0/2** |
 | coasts and islands | **0/0** | **0/1** | **0/1** | **0/0** | **0/0** | **0/0** | **0/0** | **0/1** |
 | sea charts | **0/0** | **0/2** | **0/2** | **0/0** | **0/0** | **0/0** | **0/0** | **0/2** |
 | hyperspace charts | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
@@ -180,9 +187,6 @@ Style (words/shapes; target 16 and 4). Realistic is the default and isn't counte
 | spacecraft and stations | **0/0** | **21/3** | **21/3** | 19/4 | **17/3** | **0/0** | 35/7 | 89/18 |
 | aircraft and airships | **0/0** | **0/5** | **0/1** | **0/1** | **0/1** | **0/0** | **0/2** | **0/4** |
 | land vehicles | **0/0** | **0/5** | **0/1** | **0/1** | **0/1** | **0/0** | **0/2** | **0/3** |
-| exploration into new lands | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
-| expansion into settled lands | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
-| native place names | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 | river names | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 
 ## 3. Module × tone
@@ -208,7 +212,12 @@ Tagged entries per tone (target 8 for grand, grim, light and strange; plain is t
 | moors and heaths | **7** | 0 | 41 | 23 | 24 |
 | wetlands | 8 | 0 | 41 | 23 | 24 |
 | grasslands | 9 | 0 | 41 | 23 | 22 |
-| seas and lakes | 19 | 13 | 23 | 11 | 18 |
+| lands and territories | **6** | 0 | **5** | **2** | **6** |
+| rivers and inland waters | 10 | 2 | 15 | 10 | 10 |
+| hills and valleys | **6** | 0 | 15 | 8 | **7** |
+| farmland and countryside | **4** | 0 | 11 | **6** | 8 |
+| stars and space | **6** | 0 | **5** | **0** | **5** |
+| seas and bays | 19 | 13 | 23 | 11 | 18 |
 | coasts and islands | **7** | 14 | 21 | 14 | **4** |
 | sea charts | **4** | 18 | 11 | 8 | **7** |
 | hyperspace charts | **2** | 8 | 9 | **2** | 13 |
@@ -234,9 +243,6 @@ Tagged entries per tone (target 8 for grand, grim, light and strange; plain is t
 | spacecraft and stations | 17 | 9 | **3** | 11 | **4** |
 | aircraft and airships | **1** | 1 | **2** | 10 | **0** |
 | land vehicles | **4** | 0 | **5** | 22 | **3** |
-| exploration into new lands | **0** | 0 | **0** | **0** | **0** |
-| expansion into settled lands | **0** | 0 | **0** | **0** | **0** |
-| native place names | **0** | 0 | **0** | **0** | **0** |
 | river names | **0** | 0 | **0** | **0** | **0** |
 
 ## 4. Module × region
@@ -256,10 +262,13 @@ Entries restricted to or multiplied for each British region (target 6), for the 
 | moors and heaths | **4** | 13 | 14 | 15 | 12 | 19 | 32 | 17 | **4** | 15 | 14 | 9 |
 | wetlands | **4** | 13 | 14 | 15 | 12 | 19 | 32 | 17 | **4** | 15 | 14 | 9 |
 | grasslands | **4** | 13 | 14 | 15 | 12 | 19 | 32 | 17 | **4** | 15 | 14 | 9 |
-| seas and lakes | **5** | 12 | 12 | 13 | **3** | 6 | 9 | 8 | 7 | 7 | 15 | 12 |
+| lands and territories | **4** | 13 | 14 | 15 | 13 | 19 | 32 | 17 | **5** | 15 | 14 | 9 |
+| rivers and inland waters | **4** | 13 | 14 | 15 | 13 | 19 | 32 | 17 | **5** | 15 | 14 | 9 |
+| hills and valleys | **4** | 13 | 14 | 15 | 13 | 19 | 32 | 17 | **5** | 15 | 14 | 9 |
+| farmland and countryside | **4** | 13 | 14 | 15 | 13 | 19 | 32 | 17 | **5** | 15 | 14 | 9 |
+| seas and bays | **5** | 12 | 12 | 13 | **3** | 6 | 9 | 8 | 7 | 7 | 15 | 12 |
 | coasts and islands | **5** | 12 | 12 | 13 | **3** | 6 | 9 | 8 | 7 | 7 | 15 | 12 |
 | sea charts | **5** | 12 | 12 | 13 | **3** | 6 | 9 | 8 | 7 | 7 | 15 | 12 |
-| native place names | **0** | **2** | **5** | **3** | **2** | **5** | 11 | 7 | **0** | **3** | **1** | **3** |
 | river names | 117 | 117 | 117 | 118 | 182 | 117 | 117 | 193 | 69 | 80 | 80 | 80 |
 
 ## 5. Module × kind
@@ -282,7 +291,12 @@ Shapes open to every culture, per kind (target 6). A shape that names no kind co
 - **moors and heaths**: moor 24, hill 24, bog 16, clough 11, stream 16, pool 12, stone 16, track 9, settlement 15
 - **wetlands**: marsh 22, bog 15, swamp 16, reed 9, water 17, channel 13, isle 13, causeway 12, delta 11, settlement 14
 - **grasslands**: plain 18, down 16, meadow 16, heath 12, vale 15, stream 14, lake 11, track 14, landmark 14, settlement 17
-- **seas and lakes**: ocean 7, sea 17, bay 17, inlet 10, strait 13, lake 13
+- **lands and territories**: country 13, shire 12, march 13, province 12, parish 11, folk 10
+- **rivers and inland waters**: river 0 (delegated), stream 32, spring 30, pool 28, lake 32, falls 31, riverland 27, cut 10
+- **hills and valleys**: hill 29, ridge 28, valley 26, combe 19, ravine 21, terrace 24, settlement 0 (delegated)
+- **farmland and countryside**: field 40, enclosure 38, farm 41, common 35, moot 37, works 40, settlement 0 (delegated)
+- **stars and space**: world 28, orbit 43, star 21, nebula 22, expanse 34, station 0 (delegated)
+- **seas and bays**: ocean 7, sea 17, bay 17, inlet 10, strait 13, lake 13
 - **coasts and islands**: headland 15, cliff 19, beach 13, cove 11, island 19, coast 11
 - **sea charts**: bank 17, reef 16, deep 11, race 16, roads 8, **channel 4**
 - **hyperspace charts**: waters 10, shore 17, shoal 21, deep 21, strait 14, current 29, calm 15, divide 19, weather 9
@@ -307,8 +321,6 @@ Shapes open to every culture, per kind (target 6). A shape that names no kind co
 - **spacecraft and stations**: war 119, merchant 119, passenger 119, explore 119, working 119, yacht 119, raider 119, sacred 119, colony 119, station 119
 - **aircraft and airships**: war 40, bomber 40, airliner 40, transport 40, explore 40, private 40, working 40, state 40, raider 40
 - **land vehicles**: locomotive 99, train 99, war 99, coach 99, road 99, wagon 99, working 99
-- **exploration into new lands**: sparse-or-weak-native-presence 61, contested-frontier 61, wild-and-unsettled 61
-- **expansion into settled lands**: imposition 56, accommodation 56, adoption 56
 
 ## 6. Thin pools
 
@@ -474,7 +486,6 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `waterWords/british/SLO` | river names | 3 |
 | `waterWords/british/WAL` | river names | 3 |
 | `waterWords/established` | river names | 3 |
-| `world/anglo-saxon/lists/animal` | native place names | 3 |
 | `constellations/norse` | sky lore | 4 |
 | `constellations/steppe` | sky lore | 4 |
 | `cultureNames/arabic-persian/festival` | calendars and festivals | 4 |
@@ -617,10 +628,7 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `waterWords/british/WCY` | river names | 5 |
 | `waterWords/new-land` | river names | 5 |
 | `welcomePhrase` | shared | 5 |
-| `world/anglo-saxon/lists/church` | native place names | 5 |
-| `world/bantu/lists/noun` | native place names | 5 |
 | `world/celtic/lists/grove` | settlement names | 5 |
-| `world/chinese/lists/direction` | native place names | 5 |
 | `bookPlace` | shared | 6 |
 | `castleBird` | shared | 6 |
 | `chronicleSeason` | shared | 6 |
@@ -705,17 +713,6 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `vocabulary/interpretiveQualities` | tribes and kin groups | 6 |
 | `vocabulary/warfareObjects` | tribes and kin groups | 6 |
 | `waterWords/british/EAN` | river names | 6 |
-| `world/anglo-saxon/lists/god` | native place names | 6 |
-| `world/anglo-saxon/lists/water` | native place names | 6 |
-| `world/bantu/lists/verb` | native place names | 6 |
-| `world/celtic/lists/colour` | native place names | 6 |
-| `world/ethiopian/lists/new` | native place names | 6 |
-| `world/maya/lists/colourdir` | native place names | 6 |
-| `world/maya/lists/holyword` | native place names | 6 |
-| `world/maya/lists/number` | native place names | 6 |
-| `world/norse/lists/fuse` | native place names | 6 |
-| `world/norse/lists/meet` | native place names | 6 |
-| `world/west-african/lists/bend` | native place names | 6 |
 | `bodyNumber` | shared | 7 |
 | `bodyPart` | shared | 7 |
 | `bookTreasure` | shared | 7 |
@@ -804,12 +801,6 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `vocabulary/countedFeatures` | tribes and kin groups | 7 |
 | `warAnimal` | shared | 7 |
 | `waterWords/british/all` | river names | 7 |
-| `world/anglo-saxon/lists/colour` | native place names | 7 |
-| `world/bantu/lists/material` | native place names | 7 |
-| `world/chinese/lists/material` | native place names | 7 |
-| `world/korean/lists/virtue` | native place names | 7 |
-| `world/norse/lists/farm` | native place names | 7 |
-| `world/norse/lists/landpl` | native place names | 7 |
 
 ## 7. Roster differences
 
@@ -831,7 +822,12 @@ The live lens cultures each module doesn't offer, and the keys it offers that ar
 - **moors and heaths**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **wetlands**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **grasslands**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **seas and lakes**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **lands and territories**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **rivers and inland waters**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **hills and valleys**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **farmland and countryside**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **stars and space**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **seas and bays**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **coasts and islands**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **sea charts**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **epithets and bynames**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
@@ -856,9 +852,6 @@ The live lens cultures each module doesn't offer, and the keys it offers that ar
 - **spacecraft and stations**: doesn't offer Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: ottoman, swahili-omani, malay, hawaiian, maori, w-polynesian, nw-coast, arctic, na-woodlands.
 - **aircraft and airships**: doesn't offer Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: ottoman, swahili-omani, malay, arctic, na-woodlands, hawaiian, maori, w-polynesian, nw-coast.
 - **land vehicles**: doesn't offer Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: ottoman, swahili-omani, malay, arctic, na-woodlands, hawaiian, maori, w-polynesian, nw-coast.
-- **exploration into new lands**: doesn't offer Greek and Byzantine, Turkic and Mongol steppe, Egyptian, Ethiopian, Bantu, West African, Indian, Chinese, Korean, Aztec, Maya, Andean, Polynesian, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: hellenistic, phoenician.
-- **expansion into settled lands**: doesn't offer Greek and Byzantine, Turkic and Mongol steppe, Egyptian, Ethiopian, Bantu, West African, Indian, Korean, Aztec, Maya, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: hellenistic, belgian.
-- **native place names**: doesn't offer French, Dutch, Iberian, Greek and Byzantine, Turkic and Mongol steppe, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 
 Excluded by kind: route names has no pilgrim kind for Polynesian or Andean.
 
@@ -868,35 +861,35 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | lens culture | words | shapes |
 | --- | --- | --- |
-| English | 1070 | 351 |
-| Welsh (planned) | 394 | 324 |
-| Scottish (planned) | 405 | 324 |
-| Irish (planned) | 328 | 324 |
-| Cornish (planned) | 328 | 324 |
-| Scandinavian | 346 | 122 |
-| German (planned) | 15 | 2 |
-| French | 84 | 32 |
-| Dutch | 32 | 2 |
-| Iberian | 84 | 34 |
-| Italian (planned) | 17 | 2 |
-| Roman | 269 | 235 |
+| English | 644 | 412 |
+| Welsh (planned) | 347 | 401 |
+| Scottish (planned) | 358 | 401 |
+| Irish (planned) | 281 | 401 |
+| Cornish (planned) | 281 | 401 |
+| Scandinavian | 205 | 96 |
+| German (planned) | 15 | 0 |
+| French | 84 | 30 |
+| Dutch | 32 | 0 |
+| Iberian | 84 | 30 |
+| Italian (planned) | 17 | 0 |
+| Roman | 257 | 188 |
 | Greek and Byzantine | 216 | 54 |
-| Slavic | 233 | 228 |
-| Turkic and Mongol steppe | 108 | 32 |
-| Arabic and Persian | 176 | 200 |
-| Egyptian | 122 | 155 |
-| Ethiopian | 156 | 102 |
-| Bantu | 187 | 92 |
-| West African | 188 | 120 |
-| Indian | 157 | 164 |
-| Chinese | 360 | 180 |
-| Japanese | 392 | 159 |
-| Korean | 332 | 94 |
-| Aztec | 188 | 138 |
-| Maya | 158 | 107 |
-| Andean | 35 | 10 |
+| Slavic | 192 | 181 |
+| Turkic and Mongol steppe | 110 | 32 |
+| Arabic and Persian | 151 | 151 |
+| Egyptian | 99 | 119 |
+| Ethiopian | 77 | 79 |
+| Bantu | 120 | 67 |
+| West African | 94 | 94 |
+| Indian | 124 | 127 |
+| Chinese | 286 | 140 |
+| Japanese | 309 | 122 |
+| Korean | 250 | 70 |
+| Aztec | 139 | 105 |
+| Maya | 82 | 82 |
+| Andean | 36 | 10 |
 | Polynesian | 43 | 11 |
-| American | 44 | 3 |
+| American | 44 | 2 |
 | Ottoman & Barbary | 0 | 0 |
 | Swahili & Omani | 0 | 0 |
 | Malay & Indonesian | 0 | 0 |
@@ -906,9 +899,9 @@ Distinct entries across the reported modules; a shared pool counts once.
 | Pacific Northwest Coast | 0 | 0 |
 | Arctic | 0 | 0 |
 | North American Woodlands & Rivers | 0 | 0 |
-| Phoenician (and Carthaginian) | 0 | 1 |
-| Hellenistic (Greek and Macedonian) | 0 | 2 |
-| Belgian | 0 | 1 |
+| Phoenician (and Carthaginian) | 0 | 0 |
+| Hellenistic (Greek and Macedonian) | 0 | 0 |
+| Belgian | 0 | 0 |
 | North American Woodlands & Plains | 12 | 0 |
 | Maritime South-East Asian | 8 | 0 |
 | Pacific Northwest & Arctic | 11 | 0 |
@@ -916,30 +909,30 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 865 |
-| MD medieval | 1520 |
-| EM early modern | 1038 |
-| ST steam age | 1081 |
-| MO modern | 1094 |
+| AN ancient | 768 |
+| MD medieval | 1328 |
+| EM early modern | 882 |
+| ST steam age | 925 |
+| MO modern | 938 |
 | NF near future | 764 |
-| IS interstellar | 1505 |
+| IS interstellar | 1329 |
 
 | style | words | shapes |
 | --- | --- | --- |
 | historic or low fantasy | 0 | 140 |
-| high or epic fantasy | 189 | 284 |
-| contemporary fantasy | 105 | 282 |
+| high or epic fantasy | 189 | 312 |
+| contemporary fantasy | 105 | 310 |
 | steampunk | 84 | 57 |
 | dieselpunk | 34 | 8 |
 | cyberpunk | 0 | 0 |
 | post-apocalyptic | 70 | 18 |
-| space opera | 241 | 115 |
+| space opera | 241 | 143 |
 
 | tone | entries |
 | --- | --- |
-| grand | 606 |
-| plain | 681 |
-| grim | 497 |
-| light | 401 |
-| strange | 492 |
+| grand | 615 |
+| plain | 683 |
+| grim | 499 |
+| light | 402 |
+| strange | 511 |
 

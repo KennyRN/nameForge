@@ -7785,6 +7785,2429 @@
    "v": 17,
    "t": 6
   },
+  "culture|lands|general|words": {
+   "v": 0
+  },
+  "culture|lands|general|shapes": {
+   "v": 0
+  },
+  "culture|lands|general|profile": {
+   "v": 0
+  },
+  "culture|lands|english|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|lands|english|shapes": {
+   "v": 7,
+   "t": 10
+  },
+  "culture|lands|english|profile": {
+   "v": 1
+  },
+  "culture|lands|welsh|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|lands|welsh|shapes": {
+   "v": 7,
+   "t": 10
+  },
+  "culture|lands|welsh|profile": {
+   "v": 1
+  },
+  "culture|lands|scottish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|lands|scottish|shapes": {
+   "v": 7,
+   "t": 10
+  },
+  "culture|lands|scottish|profile": {
+   "v": 1
+  },
+  "culture|lands|irish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|lands|irish|shapes": {
+   "v": 7,
+   "t": 10
+  },
+  "culture|lands|irish|profile": {
+   "v": 1
+  },
+  "culture|lands|cornish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|lands|cornish|shapes": {
+   "v": 7,
+   "t": 10
+  },
+  "culture|lands|cornish|profile": {
+   "v": 1
+  },
+  "culture|lands|scandinavian|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|lands|scandinavian|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|lands|scandinavian|profile": {
+   "v": 1
+  },
+  "culture|lands|german|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|lands|german|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|lands|german|profile": {
+   "v": 0
+  },
+  "culture|lands|french|words": {
+   "v": 1
+  },
+  "culture|lands|french|shapes": {
+   "v": 0
+  },
+  "culture|lands|french|profile": {
+   "v": 0
+  },
+  "culture|lands|dutch|words": {
+   "v": 0
+  },
+  "culture|lands|dutch|shapes": {
+   "v": 0
+  },
+  "culture|lands|dutch|profile": {
+   "v": 0
+  },
+  "culture|lands|iberian|words": {
+   "v": 1
+  },
+  "culture|lands|iberian|shapes": {
+   "v": 0
+  },
+  "culture|lands|iberian|profile": {
+   "v": 0
+  },
+  "culture|lands|italian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|italian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|italian|profile": {
+   "v": 0
+  },
+  "culture|lands|roman|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|lands|roman|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|roman|profile": {
+   "v": 1
+  },
+  "culture|lands|greek-byzantine|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|lands|greek-byzantine|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|greek-byzantine|profile": {
+   "v": 1
+  },
+  "culture|lands|slavic|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|lands|slavic|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|slavic|profile": {
+   "v": 1
+  },
+  "culture|lands|steppe|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|steppe|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|steppe|profile": {
+   "v": 1
+  },
+  "culture|lands|arabic-persian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|arabic-persian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|arabic-persian|profile": {
+   "v": 1
+  },
+  "culture|lands|egyptian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|egyptian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|egyptian|profile": {
+   "v": 1
+  },
+  "culture|lands|ethiopian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|ethiopian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|ethiopian|profile": {
+   "v": 1
+  },
+  "culture|lands|bantu|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|bantu|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|bantu|profile": {
+   "v": 1
+  },
+  "culture|lands|west-african|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|west-african|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|west-african|profile": {
+   "v": 1
+  },
+  "culture|lands|indian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|indian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|indian|profile": {
+   "v": 1
+  },
+  "culture|lands|chinese|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|chinese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|chinese|profile": {
+   "v": 1
+  },
+  "culture|lands|japanese|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|japanese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|japanese|profile": {
+   "v": 1
+  },
+  "culture|lands|korean|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|korean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|korean|profile": {
+   "v": 1
+  },
+  "culture|lands|aztec|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|aztec|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|aztec|profile": {
+   "v": 1
+  },
+  "culture|lands|maya|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|maya|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|maya|profile": {
+   "v": 1
+  },
+  "culture|lands|andean|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|andean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|andean|profile": {
+   "v": 1
+  },
+  "culture|lands|polynesian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|lands|polynesian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|lands|polynesian|profile": {
+   "v": 1
+  },
+  "culture|lands|american|words": {
+   "v": 0
+  },
+  "culture|lands|american|shapes": {
+   "v": 0
+  },
+  "culture|lands|american|profile": {
+   "v": 0
+  },
+  "era|lands|AN": {
+   "v": 0,
+   "t": 12
+  },
+  "era|lands|MD": {
+   "v": 0,
+   "t": 12
+  },
+  "era|lands|EM": {
+   "v": 5,
+   "t": 12
+  },
+  "era|lands|ST": {
+   "v": 5,
+   "t": 12
+  },
+  "era|lands|MO": {
+   "v": 5,
+   "t": 12
+  },
+  "era|lands|NF": {
+   "v": 0,
+   "t": 12
+  },
+  "era|lands|IS": {
+   "v": 0,
+   "t": 12
+  },
+  "style|lands|high-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|lands|high-fantasy|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "style|lands|contemporary-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|lands|contemporary-fantasy|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "style|lands|space-opera|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|lands|space-opera|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "tone|lands|grand": {
+   "v": 6,
+   "t": 8
+  },
+  "tone|lands|plain": {
+   "v": 0
+  },
+  "tone|lands|grim": {
+   "v": 5,
+   "t": 8
+  },
+  "tone|lands|light": {
+   "v": 2,
+   "t": 8
+  },
+  "tone|lands|strange": {
+   "v": 6,
+   "t": 8
+  },
+  "region|lands|COR": {
+   "v": 4,
+   "t": 6
+  },
+  "region|lands|WCY": {
+   "v": 13,
+   "t": 6
+  },
+  "region|lands|SEA": {
+   "v": 14,
+   "t": 6
+  },
+  "region|lands|EAN": {
+   "v": 15,
+   "t": 6
+  },
+  "region|lands|WMM": {
+   "v": 13,
+   "t": 6
+  },
+  "region|lands|EMD": {
+   "v": 19,
+   "t": 6
+  },
+  "region|lands|NTH": {
+   "v": 32,
+   "t": 6
+  },
+  "region|lands|SBL": {
+   "v": 17,
+   "t": 6
+  },
+  "region|lands|WAL": {
+   "v": 5,
+   "t": 6
+  },
+  "region|lands|SLO": {
+   "v": 15,
+   "t": 6
+  },
+  "region|lands|SHH": {
+   "v": 14,
+   "t": 6
+  },
+  "region|lands|NSI": {
+   "v": 9,
+   "t": 6
+  },
+  "region|lands|DEN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|NOR": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|SWE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|ICE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|NDT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|RHN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|MIT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|ALP": {
+   "v": 0,
+   "t": 6
+  },
+  "region|lands|OST": {
+   "v": 0,
+   "t": 6
+  },
+  "kind|lands|country": {
+   "v": 13,
+   "t": 6
+  },
+  "kind|lands|shire": {
+   "v": 12,
+   "t": 6
+  },
+  "kind|lands|march": {
+   "v": 13,
+   "t": 6
+  },
+  "kind|lands|province": {
+   "v": 12,
+   "t": 6
+  },
+  "kind|lands|parish": {
+   "v": 11,
+   "t": 6
+  },
+  "kind|lands|folk": {
+   "v": 10,
+   "t": 6
+  },
+  "culture|riversInland|general|words": {
+   "v": 0
+  },
+  "culture|riversInland|general|shapes": {
+   "v": 0
+  },
+  "culture|riversInland|general|profile": {
+   "v": 0
+  },
+  "culture|riversInland|english|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|riversInland|english|shapes": {
+   "v": 36,
+   "t": 10
+  },
+  "culture|riversInland|english|profile": {
+   "v": 1
+  },
+  "culture|riversInland|welsh|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|riversInland|welsh|shapes": {
+   "v": 36,
+   "t": 10
+  },
+  "culture|riversInland|welsh|profile": {
+   "v": 1
+  },
+  "culture|riversInland|scottish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|riversInland|scottish|shapes": {
+   "v": 36,
+   "t": 10
+  },
+  "culture|riversInland|scottish|profile": {
+   "v": 1
+  },
+  "culture|riversInland|irish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|riversInland|irish|shapes": {
+   "v": 36,
+   "t": 10
+  },
+  "culture|riversInland|irish|profile": {
+   "v": 1
+  },
+  "culture|riversInland|cornish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|riversInland|cornish|shapes": {
+   "v": 36,
+   "t": 10
+  },
+  "culture|riversInland|cornish|profile": {
+   "v": 1
+  },
+  "culture|riversInland|scandinavian|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|riversInland|scandinavian|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|riversInland|scandinavian|profile": {
+   "v": 1
+  },
+  "culture|riversInland|german|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|riversInland|german|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|riversInland|german|profile": {
+   "v": 0
+  },
+  "culture|riversInland|french|words": {
+   "v": 1
+  },
+  "culture|riversInland|french|shapes": {
+   "v": 0
+  },
+  "culture|riversInland|french|profile": {
+   "v": 0
+  },
+  "culture|riversInland|dutch|words": {
+   "v": 0
+  },
+  "culture|riversInland|dutch|shapes": {
+   "v": 0
+  },
+  "culture|riversInland|dutch|profile": {
+   "v": 0
+  },
+  "culture|riversInland|iberian|words": {
+   "v": 1
+  },
+  "culture|riversInland|iberian|shapes": {
+   "v": 0
+  },
+  "culture|riversInland|iberian|profile": {
+   "v": 0
+  },
+  "culture|riversInland|italian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|riversInland|italian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|italian|profile": {
+   "v": 0
+  },
+  "culture|riversInland|roman|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|riversInland|roman|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|roman|profile": {
+   "v": 1
+  },
+  "culture|riversInland|greek-byzantine|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|riversInland|greek-byzantine|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|greek-byzantine|profile": {
+   "v": 1
+  },
+  "culture|riversInland|slavic|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|riversInland|slavic|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|slavic|profile": {
+   "v": 1
+  },
+  "culture|riversInland|steppe|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|riversInland|steppe|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|steppe|profile": {
+   "v": 1
+  },
+  "culture|riversInland|arabic-persian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|riversInland|arabic-persian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|arabic-persian|profile": {
+   "v": 1
+  },
+  "culture|riversInland|egyptian|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|riversInland|egyptian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|egyptian|profile": {
+   "v": 1
+  },
+  "culture|riversInland|ethiopian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|riversInland|ethiopian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|ethiopian|profile": {
+   "v": 1
+  },
+  "culture|riversInland|bantu|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|riversInland|bantu|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|bantu|profile": {
+   "v": 1
+  },
+  "culture|riversInland|west-african|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|riversInland|west-african|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|west-african|profile": {
+   "v": 1
+  },
+  "culture|riversInland|indian|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|riversInland|indian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|indian|profile": {
+   "v": 1
+  },
+  "culture|riversInland|chinese|words": {
+   "v": 4,
+   "t": 12
+  },
+  "culture|riversInland|chinese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|chinese|profile": {
+   "v": 1
+  },
+  "culture|riversInland|japanese|words": {
+   "v": 3,
+   "t": 12
+  },
+  "culture|riversInland|japanese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|japanese|profile": {
+   "v": 1
+  },
+  "culture|riversInland|korean|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|riversInland|korean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|korean|profile": {
+   "v": 1
+  },
+  "culture|riversInland|aztec|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|riversInland|aztec|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|aztec|profile": {
+   "v": 1
+  },
+  "culture|riversInland|maya|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|riversInland|maya|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|maya|profile": {
+   "v": 1
+  },
+  "culture|riversInland|andean|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|riversInland|andean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|andean|profile": {
+   "v": 1
+  },
+  "culture|riversInland|polynesian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|riversInland|polynesian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|riversInland|polynesian|profile": {
+   "v": 1
+  },
+  "culture|riversInland|american|words": {
+   "v": 0
+  },
+  "culture|riversInland|american|shapes": {
+   "v": 0
+  },
+  "culture|riversInland|american|profile": {
+   "v": 0
+  },
+  "era|riversInland|AN": {
+   "v": 3,
+   "t": 12
+  },
+  "era|riversInland|MD": {
+   "v": 5,
+   "t": 12
+  },
+  "era|riversInland|EM": {
+   "v": 4,
+   "t": 12
+  },
+  "era|riversInland|ST": {
+   "v": 4,
+   "t": 12
+  },
+  "era|riversInland|MO": {
+   "v": 4,
+   "t": 12
+  },
+  "era|riversInland|NF": {
+   "v": 0,
+   "t": 12
+  },
+  "era|riversInland|IS": {
+   "v": 0,
+   "t": 12
+  },
+  "style|riversInland|high-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|riversInland|high-fantasy|shapes": {
+   "v": 5,
+   "t": 4
+  },
+  "style|riversInland|contemporary-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|riversInland|contemporary-fantasy|shapes": {
+   "v": 5,
+   "t": 4
+  },
+  "style|riversInland|space-opera|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|riversInland|space-opera|shapes": {
+   "v": 5,
+   "t": 4
+  },
+  "tone|riversInland|grand": {
+   "v": 10,
+   "t": 8
+  },
+  "tone|riversInland|plain": {
+   "v": 2
+  },
+  "tone|riversInland|grim": {
+   "v": 15,
+   "t": 8
+  },
+  "tone|riversInland|light": {
+   "v": 10,
+   "t": 8
+  },
+  "tone|riversInland|strange": {
+   "v": 10,
+   "t": 8
+  },
+  "region|riversInland|COR": {
+   "v": 4,
+   "t": 6
+  },
+  "region|riversInland|WCY": {
+   "v": 13,
+   "t": 6
+  },
+  "region|riversInland|SEA": {
+   "v": 14,
+   "t": 6
+  },
+  "region|riversInland|EAN": {
+   "v": 15,
+   "t": 6
+  },
+  "region|riversInland|WMM": {
+   "v": 13,
+   "t": 6
+  },
+  "region|riversInland|EMD": {
+   "v": 19,
+   "t": 6
+  },
+  "region|riversInland|NTH": {
+   "v": 32,
+   "t": 6
+  },
+  "region|riversInland|SBL": {
+   "v": 17,
+   "t": 6
+  },
+  "region|riversInland|WAL": {
+   "v": 5,
+   "t": 6
+  },
+  "region|riversInland|SLO": {
+   "v": 15,
+   "t": 6
+  },
+  "region|riversInland|SHH": {
+   "v": 14,
+   "t": 6
+  },
+  "region|riversInland|NSI": {
+   "v": 9,
+   "t": 6
+  },
+  "region|riversInland|DEN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|NOR": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|SWE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|ICE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|NDT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|RHN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|MIT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|ALP": {
+   "v": 0,
+   "t": 6
+  },
+  "region|riversInland|OST": {
+   "v": 0,
+   "t": 6
+  },
+  "kind|riversInland|river": {
+   "v": 0
+  },
+  "kind|riversInland|stream": {
+   "v": 32,
+   "t": 6
+  },
+  "kind|riversInland|spring": {
+   "v": 30,
+   "t": 6
+  },
+  "kind|riversInland|pool": {
+   "v": 28,
+   "t": 6
+  },
+  "kind|riversInland|lake": {
+   "v": 32,
+   "t": 6
+  },
+  "kind|riversInland|falls": {
+   "v": 31,
+   "t": 6
+  },
+  "kind|riversInland|riverland": {
+   "v": 27,
+   "t": 6
+  },
+  "kind|riversInland|cut": {
+   "v": 10,
+   "t": 6
+  },
+  "culture|hillsValleys|general|words": {
+   "v": 0
+  },
+  "culture|hillsValleys|general|shapes": {
+   "v": 0
+  },
+  "culture|hillsValleys|general|profile": {
+   "v": 0
+  },
+  "culture|hillsValleys|english|words": {
+   "v": 2,
+   "t": 30
+  },
+  "culture|hillsValleys|english|shapes": {
+   "v": 44,
+   "t": 10
+  },
+  "culture|hillsValleys|english|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|welsh|words": {
+   "v": 2,
+   "t": 30
+  },
+  "culture|hillsValleys|welsh|shapes": {
+   "v": 44,
+   "t": 10
+  },
+  "culture|hillsValleys|welsh|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|scottish|words": {
+   "v": 2,
+   "t": 30
+  },
+  "culture|hillsValleys|scottish|shapes": {
+   "v": 44,
+   "t": 10
+  },
+  "culture|hillsValleys|scottish|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|irish|words": {
+   "v": 2,
+   "t": 30
+  },
+  "culture|hillsValleys|irish|shapes": {
+   "v": 44,
+   "t": 10
+  },
+  "culture|hillsValleys|irish|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|cornish|words": {
+   "v": 2,
+   "t": 30
+  },
+  "culture|hillsValleys|cornish|shapes": {
+   "v": 44,
+   "t": 10
+  },
+  "culture|hillsValleys|cornish|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|scandinavian|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|hillsValleys|scandinavian|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|hillsValleys|scandinavian|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|german|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|hillsValleys|german|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|hillsValleys|german|profile": {
+   "v": 0
+  },
+  "culture|hillsValleys|french|words": {
+   "v": 2
+  },
+  "culture|hillsValleys|french|shapes": {
+   "v": 0
+  },
+  "culture|hillsValleys|french|profile": {
+   "v": 0
+  },
+  "culture|hillsValleys|dutch|words": {
+   "v": 0
+  },
+  "culture|hillsValleys|dutch|shapes": {
+   "v": 0
+  },
+  "culture|hillsValleys|dutch|profile": {
+   "v": 0
+  },
+  "culture|hillsValleys|iberian|words": {
+   "v": 2
+  },
+  "culture|hillsValleys|iberian|shapes": {
+   "v": 0
+  },
+  "culture|hillsValleys|iberian|profile": {
+   "v": 0
+  },
+  "culture|hillsValleys|italian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|italian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|italian|profile": {
+   "v": 0
+  },
+  "culture|hillsValleys|roman|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|hillsValleys|roman|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|roman|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|greek-byzantine|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|hillsValleys|greek-byzantine|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|greek-byzantine|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|slavic|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|hillsValleys|slavic|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|slavic|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|steppe|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|steppe|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|steppe|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|arabic-persian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|arabic-persian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|arabic-persian|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|egyptian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|egyptian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|egyptian|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|ethiopian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|ethiopian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|ethiopian|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|bantu|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|bantu|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|bantu|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|west-african|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|west-african|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|west-african|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|indian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|indian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|indian|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|chinese|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|chinese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|chinese|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|japanese|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|japanese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|japanese|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|korean|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|korean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|korean|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|aztec|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|aztec|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|aztec|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|maya|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|maya|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|maya|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|andean|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|andean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|andean|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|polynesian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|hillsValleys|polynesian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|hillsValleys|polynesian|profile": {
+   "v": 1
+  },
+  "culture|hillsValleys|american|words": {
+   "v": 0
+  },
+  "culture|hillsValleys|american|shapes": {
+   "v": 0
+  },
+  "culture|hillsValleys|american|profile": {
+   "v": 0
+  },
+  "era|hillsValleys|AN": {
+   "v": 0,
+   "t": 12
+  },
+  "era|hillsValleys|MD": {
+   "v": 0,
+   "t": 12
+  },
+  "era|hillsValleys|EM": {
+   "v": 0,
+   "t": 12
+  },
+  "era|hillsValleys|ST": {
+   "v": 0,
+   "t": 12
+  },
+  "era|hillsValleys|MO": {
+   "v": 0,
+   "t": 12
+  },
+  "era|hillsValleys|NF": {
+   "v": 0,
+   "t": 12
+  },
+  "era|hillsValleys|IS": {
+   "v": 0,
+   "t": 12
+  },
+  "style|hillsValleys|high-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|hillsValleys|high-fantasy|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "style|hillsValleys|contemporary-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|hillsValleys|contemporary-fantasy|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "style|hillsValleys|space-opera|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|hillsValleys|space-opera|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "tone|hillsValleys|grand": {
+   "v": 6,
+   "t": 8
+  },
+  "tone|hillsValleys|plain": {
+   "v": 0
+  },
+  "tone|hillsValleys|grim": {
+   "v": 15,
+   "t": 8
+  },
+  "tone|hillsValleys|light": {
+   "v": 8,
+   "t": 8
+  },
+  "tone|hillsValleys|strange": {
+   "v": 7,
+   "t": 8
+  },
+  "region|hillsValleys|COR": {
+   "v": 4,
+   "t": 6
+  },
+  "region|hillsValleys|WCY": {
+   "v": 13,
+   "t": 6
+  },
+  "region|hillsValleys|SEA": {
+   "v": 14,
+   "t": 6
+  },
+  "region|hillsValleys|EAN": {
+   "v": 15,
+   "t": 6
+  },
+  "region|hillsValleys|WMM": {
+   "v": 13,
+   "t": 6
+  },
+  "region|hillsValleys|EMD": {
+   "v": 19,
+   "t": 6
+  },
+  "region|hillsValleys|NTH": {
+   "v": 32,
+   "t": 6
+  },
+  "region|hillsValleys|SBL": {
+   "v": 17,
+   "t": 6
+  },
+  "region|hillsValleys|WAL": {
+   "v": 5,
+   "t": 6
+  },
+  "region|hillsValleys|SLO": {
+   "v": 15,
+   "t": 6
+  },
+  "region|hillsValleys|SHH": {
+   "v": 14,
+   "t": 6
+  },
+  "region|hillsValleys|NSI": {
+   "v": 9,
+   "t": 6
+  },
+  "region|hillsValleys|DEN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|NOR": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|SWE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|ICE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|NDT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|RHN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|MIT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|ALP": {
+   "v": 0,
+   "t": 6
+  },
+  "region|hillsValleys|OST": {
+   "v": 0,
+   "t": 6
+  },
+  "kind|hillsValleys|hill": {
+   "v": 29,
+   "t": 6
+  },
+  "kind|hillsValleys|ridge": {
+   "v": 28,
+   "t": 6
+  },
+  "kind|hillsValleys|valley": {
+   "v": 26,
+   "t": 6
+  },
+  "kind|hillsValleys|combe": {
+   "v": 19,
+   "t": 6
+  },
+  "kind|hillsValleys|ravine": {
+   "v": 21,
+   "t": 6
+  },
+  "kind|hillsValleys|terrace": {
+   "v": 24,
+   "t": 6
+  },
+  "kind|hillsValleys|settlement": {
+   "v": 0
+  },
+  "culture|farmland|general|words": {
+   "v": 0
+  },
+  "culture|farmland|general|shapes": {
+   "v": 0
+  },
+  "culture|farmland|general|profile": {
+   "v": 0
+  },
+  "culture|farmland|english|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|farmland|english|shapes": {
+   "v": 33,
+   "t": 10
+  },
+  "culture|farmland|english|profile": {
+   "v": 1
+  },
+  "culture|farmland|welsh|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|farmland|welsh|shapes": {
+   "v": 33,
+   "t": 10
+  },
+  "culture|farmland|welsh|profile": {
+   "v": 1
+  },
+  "culture|farmland|scottish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|farmland|scottish|shapes": {
+   "v": 33,
+   "t": 10
+  },
+  "culture|farmland|scottish|profile": {
+   "v": 1
+  },
+  "culture|farmland|irish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|farmland|irish|shapes": {
+   "v": 33,
+   "t": 10
+  },
+  "culture|farmland|irish|profile": {
+   "v": 1
+  },
+  "culture|farmland|cornish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|farmland|cornish|shapes": {
+   "v": 33,
+   "t": 10
+  },
+  "culture|farmland|cornish|profile": {
+   "v": 1
+  },
+  "culture|farmland|scandinavian|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|farmland|scandinavian|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|farmland|scandinavian|profile": {
+   "v": 1
+  },
+  "culture|farmland|german|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|farmland|german|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|farmland|german|profile": {
+   "v": 0
+  },
+  "culture|farmland|french|words": {
+   "v": 1
+  },
+  "culture|farmland|french|shapes": {
+   "v": 0
+  },
+  "culture|farmland|french|profile": {
+   "v": 0
+  },
+  "culture|farmland|dutch|words": {
+   "v": 0
+  },
+  "culture|farmland|dutch|shapes": {
+   "v": 0
+  },
+  "culture|farmland|dutch|profile": {
+   "v": 0
+  },
+  "culture|farmland|iberian|words": {
+   "v": 1
+  },
+  "culture|farmland|iberian|shapes": {
+   "v": 0
+  },
+  "culture|farmland|iberian|profile": {
+   "v": 0
+  },
+  "culture|farmland|italian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|italian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|italian|profile": {
+   "v": 0
+  },
+  "culture|farmland|roman|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|roman|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|roman|profile": {
+   "v": 1
+  },
+  "culture|farmland|greek-byzantine|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|greek-byzantine|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|greek-byzantine|profile": {
+   "v": 1
+  },
+  "culture|farmland|slavic|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|slavic|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|slavic|profile": {
+   "v": 1
+  },
+  "culture|farmland|steppe|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|steppe|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|steppe|profile": {
+   "v": 1
+  },
+  "culture|farmland|arabic-persian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|arabic-persian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|arabic-persian|profile": {
+   "v": 1
+  },
+  "culture|farmland|egyptian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|egyptian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|egyptian|profile": {
+   "v": 1
+  },
+  "culture|farmland|ethiopian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|ethiopian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|ethiopian|profile": {
+   "v": 1
+  },
+  "culture|farmland|bantu|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|bantu|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|bantu|profile": {
+   "v": 1
+  },
+  "culture|farmland|west-african|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|west-african|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|west-african|profile": {
+   "v": 1
+  },
+  "culture|farmland|indian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|indian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|indian|profile": {
+   "v": 1
+  },
+  "culture|farmland|chinese|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|chinese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|chinese|profile": {
+   "v": 1
+  },
+  "culture|farmland|japanese|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|japanese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|japanese|profile": {
+   "v": 1
+  },
+  "culture|farmland|korean|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|korean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|korean|profile": {
+   "v": 1
+  },
+  "culture|farmland|aztec|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|aztec|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|aztec|profile": {
+   "v": 1
+  },
+  "culture|farmland|maya|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|farmland|maya|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|maya|profile": {
+   "v": 1
+  },
+  "culture|farmland|andean|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|andean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|andean|profile": {
+   "v": 1
+  },
+  "culture|farmland|polynesian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|farmland|polynesian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|farmland|polynesian|profile": {
+   "v": 1
+  },
+  "culture|farmland|american|words": {
+   "v": 0
+  },
+  "culture|farmland|american|shapes": {
+   "v": 0
+  },
+  "culture|farmland|american|profile": {
+   "v": 0
+  },
+  "era|farmland|AN": {
+   "v": 0,
+   "t": 12
+  },
+  "era|farmland|MD": {
+   "v": 1,
+   "t": 12
+  },
+  "era|farmland|EM": {
+   "v": 2,
+   "t": 12
+  },
+  "era|farmland|ST": {
+   "v": 2,
+   "t": 12
+  },
+  "era|farmland|MO": {
+   "v": 2,
+   "t": 12
+  },
+  "era|farmland|NF": {
+   "v": 0,
+   "t": 12
+  },
+  "era|farmland|IS": {
+   "v": 0,
+   "t": 12
+  },
+  "style|farmland|high-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|farmland|high-fantasy|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "style|farmland|contemporary-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|farmland|contemporary-fantasy|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "style|farmland|space-opera|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|farmland|space-opera|shapes": {
+   "v": 6,
+   "t": 4
+  },
+  "tone|farmland|grand": {
+   "v": 4,
+   "t": 8
+  },
+  "tone|farmland|plain": {
+   "v": 0
+  },
+  "tone|farmland|grim": {
+   "v": 11,
+   "t": 8
+  },
+  "tone|farmland|light": {
+   "v": 6,
+   "t": 8
+  },
+  "tone|farmland|strange": {
+   "v": 8,
+   "t": 8
+  },
+  "region|farmland|COR": {
+   "v": 4,
+   "t": 6
+  },
+  "region|farmland|WCY": {
+   "v": 13,
+   "t": 6
+  },
+  "region|farmland|SEA": {
+   "v": 14,
+   "t": 6
+  },
+  "region|farmland|EAN": {
+   "v": 15,
+   "t": 6
+  },
+  "region|farmland|WMM": {
+   "v": 13,
+   "t": 6
+  },
+  "region|farmland|EMD": {
+   "v": 19,
+   "t": 6
+  },
+  "region|farmland|NTH": {
+   "v": 32,
+   "t": 6
+  },
+  "region|farmland|SBL": {
+   "v": 17,
+   "t": 6
+  },
+  "region|farmland|WAL": {
+   "v": 5,
+   "t": 6
+  },
+  "region|farmland|SLO": {
+   "v": 15,
+   "t": 6
+  },
+  "region|farmland|SHH": {
+   "v": 14,
+   "t": 6
+  },
+  "region|farmland|NSI": {
+   "v": 9,
+   "t": 6
+  },
+  "region|farmland|DEN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|NOR": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|SWE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|ICE": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|NDT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|RHN": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|MIT": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|ALP": {
+   "v": 0,
+   "t": 6
+  },
+  "region|farmland|OST": {
+   "v": 0,
+   "t": 6
+  },
+  "kind|farmland|field": {
+   "v": 40,
+   "t": 6
+  },
+  "kind|farmland|enclosure": {
+   "v": 38,
+   "t": 6
+  },
+  "kind|farmland|farm": {
+   "v": 41,
+   "t": 6
+  },
+  "kind|farmland|common": {
+   "v": 35,
+   "t": 6
+  },
+  "kind|farmland|moot": {
+   "v": 37,
+   "t": 6
+  },
+  "kind|farmland|works": {
+   "v": 40,
+   "t": 6
+  },
+  "kind|farmland|settlement": {
+   "v": 0
+  },
+  "culture|starsSpace|general|words": {
+   "v": 0
+  },
+  "culture|starsSpace|general|shapes": {
+   "v": 0
+  },
+  "culture|starsSpace|general|profile": {
+   "v": 0
+  },
+  "culture|starsSpace|english|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|starsSpace|english|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|starsSpace|english|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|welsh|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|starsSpace|welsh|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|starsSpace|welsh|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|scottish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|starsSpace|scottish|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|starsSpace|scottish|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|irish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|starsSpace|irish|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|starsSpace|irish|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|cornish|words": {
+   "v": 1,
+   "t": 30
+  },
+  "culture|starsSpace|cornish|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|starsSpace|cornish|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|scandinavian|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|starsSpace|scandinavian|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|starsSpace|scandinavian|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|german|words": {
+   "v": 0,
+   "t": 30
+  },
+  "culture|starsSpace|german|shapes": {
+   "v": 0,
+   "t": 10
+  },
+  "culture|starsSpace|german|profile": {
+   "v": 0
+  },
+  "culture|starsSpace|french|words": {
+   "v": 1
+  },
+  "culture|starsSpace|french|shapes": {
+   "v": 0
+  },
+  "culture|starsSpace|french|profile": {
+   "v": 0
+  },
+  "culture|starsSpace|dutch|words": {
+   "v": 0
+  },
+  "culture|starsSpace|dutch|shapes": {
+   "v": 0
+  },
+  "culture|starsSpace|dutch|profile": {
+   "v": 0
+  },
+  "culture|starsSpace|iberian|words": {
+   "v": 1
+  },
+  "culture|starsSpace|iberian|shapes": {
+   "v": 0
+  },
+  "culture|starsSpace|iberian|profile": {
+   "v": 0
+  },
+  "culture|starsSpace|italian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|italian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|italian|profile": {
+   "v": 0
+  },
+  "culture|starsSpace|roman|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|starsSpace|roman|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|roman|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|greek-byzantine|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|starsSpace|greek-byzantine|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|greek-byzantine|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|slavic|words": {
+   "v": 1,
+   "t": 12
+  },
+  "culture|starsSpace|slavic|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|slavic|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|steppe|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|starsSpace|steppe|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|steppe|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|arabic-persian|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|starsSpace|arabic-persian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|arabic-persian|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|egyptian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|egyptian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|egyptian|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|ethiopian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|ethiopian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|ethiopian|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|bantu|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|bantu|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|bantu|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|west-african|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|west-african|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|west-african|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|indian|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|indian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|indian|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|chinese|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|chinese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|chinese|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|japanese|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|japanese|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|japanese|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|korean|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|korean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|korean|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|aztec|words": {
+   "v": 3,
+   "t": 12
+  },
+  "culture|starsSpace|aztec|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|aztec|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|maya|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|starsSpace|maya|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|maya|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|andean|words": {
+   "v": 0,
+   "t": 12
+  },
+  "culture|starsSpace|andean|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|andean|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|polynesian|words": {
+   "v": 2,
+   "t": 12
+  },
+  "culture|starsSpace|polynesian|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "culture|starsSpace|polynesian|profile": {
+   "v": 1
+  },
+  "culture|starsSpace|american|words": {
+   "v": 0
+  },
+  "culture|starsSpace|american|shapes": {
+   "v": 0
+  },
+  "culture|starsSpace|american|profile": {
+   "v": 0
+  },
+  "era|starsSpace|AN": {
+   "v": 0,
+   "t": 12
+  },
+  "era|starsSpace|MD": {
+   "v": 0,
+   "t": 12
+  },
+  "era|starsSpace|EM": {
+   "v": 0,
+   "t": 12
+  },
+  "era|starsSpace|ST": {
+   "v": 0,
+   "t": 12
+  },
+  "era|starsSpace|MO": {
+   "v": 0,
+   "t": 12
+  },
+  "era|starsSpace|NF": {
+   "v": 0,
+   "t": 12
+  },
+  "era|starsSpace|IS": {
+   "v": 0,
+   "t": 12
+  },
+  "style|starsSpace|high-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|starsSpace|high-fantasy|shapes": {
+   "v": 5,
+   "t": 4
+  },
+  "style|starsSpace|contemporary-fantasy|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|starsSpace|contemporary-fantasy|shapes": {
+   "v": 5,
+   "t": 4
+  },
+  "style|starsSpace|space-opera|words": {
+   "v": 9,
+   "t": 16
+  },
+  "style|starsSpace|space-opera|shapes": {
+   "v": 5,
+   "t": 4
+  },
+  "tone|starsSpace|grand": {
+   "v": 6,
+   "t": 8
+  },
+  "tone|starsSpace|plain": {
+   "v": 0
+  },
+  "tone|starsSpace|grim": {
+   "v": 5,
+   "t": 8
+  },
+  "tone|starsSpace|light": {
+   "v": 0,
+   "t": 8
+  },
+  "tone|starsSpace|strange": {
+   "v": 5,
+   "t": 8
+  },
+  "kind|starsSpace|world": {
+   "v": 28,
+   "t": 6
+  },
+  "kind|starsSpace|orbit": {
+   "v": 43,
+   "t": 6
+  },
+  "kind|starsSpace|star": {
+   "v": 21,
+   "t": 6
+  },
+  "kind|starsSpace|nebula": {
+   "v": 22,
+   "t": 6
+  },
+  "kind|starsSpace|expanse": {
+   "v": 34,
+   "t": 6
+  },
+  "kind|starsSpace|station": {
+   "v": 0
+  },
   "culture|seasLakes|general|words": {
    "v": 0
   },
@@ -19366,1189 +21789,6 @@
    "v": 99,
    "t": 6
   },
-  "culture|explorationPlaceShapes|english|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|explorationPlaceShapes|english|shapes": {
-   "v": 1,
-   "t": 10
-  },
-  "culture|explorationPlaceShapes|english|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|welsh|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|explorationPlaceShapes|welsh|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|explorationPlaceShapes|welsh|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|scottish|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|explorationPlaceShapes|scottish|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|explorationPlaceShapes|scottish|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|irish|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|explorationPlaceShapes|irish|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|explorationPlaceShapes|irish|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|cornish|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|explorationPlaceShapes|cornish|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|explorationPlaceShapes|cornish|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|scandinavian|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|explorationPlaceShapes|scandinavian|shapes": {
-   "v": 2,
-   "t": 10
-  },
-  "culture|explorationPlaceShapes|scandinavian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|german|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|explorationPlaceShapes|german|shapes": {
-   "v": 1,
-   "t": 10
-  },
-  "culture|explorationPlaceShapes|german|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|french|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|french|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|french|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|dutch|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|dutch|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|dutch|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|iberian|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|iberian|shapes": {
-   "v": 2,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|iberian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|italian|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|italian|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|italian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|roman|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|roman|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|roman|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|greek-byzantine|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|greek-byzantine|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|greek-byzantine|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|slavic|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|slavic|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|slavic|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|steppe|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|steppe|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|steppe|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|arabic-persian|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|arabic-persian|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|arabic-persian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|egyptian|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|egyptian|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|egyptian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|ethiopian|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|ethiopian|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|ethiopian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|bantu|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|bantu|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|bantu|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|west-african|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|west-african|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|west-african|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|indian|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|indian|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|indian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|chinese|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|chinese|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|chinese|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|japanese|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|japanese|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|japanese|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|korean|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|korean|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|korean|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|aztec|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|aztec|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|aztec|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|maya|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|maya|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|maya|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|andean|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|andean|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|andean|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|polynesian|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|polynesian|shapes": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|polynesian|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|american|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|explorationPlaceShapes|american|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|explorationPlaceShapes|american|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|phoenician|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|phoenician|shapes": {
-   "v": 1
-  },
-  "culture|explorationPlaceShapes|phoenician|profile": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|hellenistic|words": {
-   "v": 0
-  },
-  "culture|explorationPlaceShapes|hellenistic|shapes": {
-   "v": 1
-  },
-  "culture|explorationPlaceShapes|hellenistic|profile": {
-   "v": 0
-  },
-  "era|explorationPlaceShapes|AN": {
-   "v": 0,
-   "t": 12
-  },
-  "era|explorationPlaceShapes|MD": {
-   "v": 0,
-   "t": 12
-  },
-  "era|explorationPlaceShapes|EM": {
-   "v": 0,
-   "t": 12
-  },
-  "era|explorationPlaceShapes|ST": {
-   "v": 0,
-   "t": 12
-  },
-  "era|explorationPlaceShapes|MO": {
-   "v": 0,
-   "t": 12
-  },
-  "era|explorationPlaceShapes|NF": {
-   "v": 0,
-   "t": 12
-  },
-  "era|explorationPlaceShapes|IS": {
-   "v": 0,
-   "t": 12
-  },
-  "tone|explorationPlaceShapes|grand": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|explorationPlaceShapes|plain": {
-   "v": 0
-  },
-  "tone|explorationPlaceShapes|grim": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|explorationPlaceShapes|light": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|explorationPlaceShapes|strange": {
-   "v": 0,
-   "t": 8
-  },
-  "kind|explorationPlaceShapes|sparse-or-weak-native-presence": {
-   "v": 61,
-   "t": 6
-  },
-  "kind|explorationPlaceShapes|contested-frontier": {
-   "v": 61,
-   "t": 6
-  },
-  "kind|explorationPlaceShapes|wild-and-unsettled": {
-   "v": 61,
-   "t": 6
-  },
-  "culture|empireExpansionPlaceShapes|english|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|empireExpansionPlaceShapes|english|shapes": {
-   "v": 1,
-   "t": 10
-  },
-  "culture|empireExpansionPlaceShapes|english|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|welsh|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|empireExpansionPlaceShapes|welsh|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|empireExpansionPlaceShapes|welsh|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|scottish|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|empireExpansionPlaceShapes|scottish|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|empireExpansionPlaceShapes|scottish|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|irish|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|empireExpansionPlaceShapes|irish|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|empireExpansionPlaceShapes|irish|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|cornish|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|empireExpansionPlaceShapes|cornish|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|empireExpansionPlaceShapes|cornish|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|scandinavian|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|empireExpansionPlaceShapes|scandinavian|shapes": {
-   "v": 2,
-   "t": 10
-  },
-  "culture|empireExpansionPlaceShapes|scandinavian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|german|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|empireExpansionPlaceShapes|german|shapes": {
-   "v": 1,
-   "t": 10
-  },
-  "culture|empireExpansionPlaceShapes|german|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|french|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|french|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|french|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|dutch|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|dutch|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|dutch|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|iberian|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|iberian|shapes": {
-   "v": 2,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|iberian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|italian|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|italian|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|italian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|roman|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|roman|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|roman|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|greek-byzantine|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|greek-byzantine|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|greek-byzantine|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|slavic|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|slavic|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|slavic|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|steppe|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|steppe|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|steppe|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|arabic-persian|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|arabic-persian|shapes": {
-   "v": 2,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|arabic-persian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|egyptian|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|egyptian|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|egyptian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|ethiopian|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|ethiopian|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|ethiopian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|bantu|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|bantu|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|bantu|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|west-african|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|west-african|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|west-african|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|indian|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|indian|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|indian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|chinese|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|chinese|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|chinese|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|japanese|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|empireExpansionPlaceShapes|japanese|shapes": {
-   "v": 1,
-   "t": 4
-  },
-  "culture|empireExpansionPlaceShapes|japanese|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|korean|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|korean|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|korean|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|aztec|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|aztec|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|aztec|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|maya|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|maya|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|maya|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|andean|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|andean|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|andean|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|polynesian|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|polynesian|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|polynesian|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|american|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|american|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|american|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|ottoman|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|ottoman|shapes": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|ottoman|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|hellenistic|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|hellenistic|shapes": {
-   "v": 1
-  },
-  "culture|empireExpansionPlaceShapes|hellenistic|profile": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|belgian|words": {
-   "v": 0
-  },
-  "culture|empireExpansionPlaceShapes|belgian|shapes": {
-   "v": 1
-  },
-  "culture|empireExpansionPlaceShapes|belgian|profile": {
-   "v": 0
-  },
-  "era|empireExpansionPlaceShapes|AN": {
-   "v": 0,
-   "t": 12
-  },
-  "era|empireExpansionPlaceShapes|MD": {
-   "v": 0,
-   "t": 12
-  },
-  "era|empireExpansionPlaceShapes|EM": {
-   "v": 0,
-   "t": 12
-  },
-  "era|empireExpansionPlaceShapes|ST": {
-   "v": 0,
-   "t": 12
-  },
-  "era|empireExpansionPlaceShapes|MO": {
-   "v": 0,
-   "t": 12
-  },
-  "era|empireExpansionPlaceShapes|NF": {
-   "v": 0,
-   "t": 12
-  },
-  "era|empireExpansionPlaceShapes|IS": {
-   "v": 0,
-   "t": 12
-  },
-  "tone|empireExpansionPlaceShapes|grand": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|empireExpansionPlaceShapes|plain": {
-   "v": 0
-  },
-  "tone|empireExpansionPlaceShapes|grim": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|empireExpansionPlaceShapes|light": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|empireExpansionPlaceShapes|strange": {
-   "v": 0,
-   "t": 8
-  },
-  "kind|empireExpansionPlaceShapes|imposition": {
-   "v": 56,
-   "t": 6
-  },
-  "kind|empireExpansionPlaceShapes|accommodation": {
-   "v": 56,
-   "t": 6
-  },
-  "kind|empireExpansionPlaceShapes|adoption": {
-   "v": 56,
-   "t": 6
-  },
-  "culture|placeShapes|english|words": {
-   "v": 426,
-   "t": 30
-  },
-  "culture|placeShapes|english|shapes": {
-   "v": 57,
-   "t": 10
-  },
-  "culture|placeShapes|english|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|welsh|words": {
-   "v": 47,
-   "t": 30
-  },
-  "culture|placeShapes|welsh|shapes": {
-   "v": 43,
-   "t": 10
-  },
-  "culture|placeShapes|welsh|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|scottish|words": {
-   "v": 47,
-   "t": 30
-  },
-  "culture|placeShapes|scottish|shapes": {
-   "v": 43,
-   "t": 10
-  },
-  "culture|placeShapes|scottish|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|irish|words": {
-   "v": 47,
-   "t": 30
-  },
-  "culture|placeShapes|irish|shapes": {
-   "v": 43,
-   "t": 10
-  },
-  "culture|placeShapes|irish|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|cornish|words": {
-   "v": 47,
-   "t": 30
-  },
-  "culture|placeShapes|cornish|shapes": {
-   "v": 43,
-   "t": 10
-  },
-  "culture|placeShapes|cornish|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|scandinavian|words": {
-   "v": 141,
-   "t": 30
-  },
-  "culture|placeShapes|scandinavian|shapes": {
-   "v": 22,
-   "t": 10
-  },
-  "culture|placeShapes|scandinavian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|german|words": {
-   "v": 0,
-   "t": 30
-  },
-  "culture|placeShapes|german|shapes": {
-   "v": 0,
-   "t": 10
-  },
-  "culture|placeShapes|german|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|french|words": {
-   "v": 0
-  },
-  "culture|placeShapes|french|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|french|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|dutch|words": {
-   "v": 0
-  },
-  "culture|placeShapes|dutch|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|dutch|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|iberian|words": {
-   "v": 0
-  },
-  "culture|placeShapes|iberian|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|iberian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|italian|words": {
-   "v": 0,
-   "t": 12
-  },
-  "culture|placeShapes|italian|shapes": {
-   "v": 0,
-   "t": 4
-  },
-  "culture|placeShapes|italian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|roman|words": {
-   "v": 12,
-   "t": 12
-  },
-  "culture|placeShapes|roman|shapes": {
-   "v": 45,
-   "t": 4
-  },
-  "culture|placeShapes|roman|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|greek-byzantine|words": {
-   "v": 0
-  },
-  "culture|placeShapes|greek-byzantine|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|greek-byzantine|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|slavic|words": {
-   "v": 41,
-   "t": 12
-  },
-  "culture|placeShapes|slavic|shapes": {
-   "v": 45,
-   "t": 4
-  },
-  "culture|placeShapes|slavic|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|steppe|words": {
-   "v": 0
-  },
-  "culture|placeShapes|steppe|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|steppe|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|arabic-persian|words": {
-   "v": 25,
-   "t": 12
-  },
-  "culture|placeShapes|arabic-persian|shapes": {
-   "v": 46,
-   "t": 4
-  },
-  "culture|placeShapes|arabic-persian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|egyptian|words": {
-   "v": 24,
-   "t": 12
-  },
-  "culture|placeShapes|egyptian|shapes": {
-   "v": 36,
-   "t": 4
-  },
-  "culture|placeShapes|egyptian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|ethiopian|words": {
-   "v": 79,
-   "t": 12
-  },
-  "culture|placeShapes|ethiopian|shapes": {
-   "v": 23,
-   "t": 4
-  },
-  "culture|placeShapes|ethiopian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|bantu|words": {
-   "v": 69,
-   "t": 12
-  },
-  "culture|placeShapes|bantu|shapes": {
-   "v": 25,
-   "t": 4
-  },
-  "culture|placeShapes|bantu|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|west-african|words": {
-   "v": 95,
-   "t": 12
-  },
-  "culture|placeShapes|west-african|shapes": {
-   "v": 26,
-   "t": 4
-  },
-  "culture|placeShapes|west-african|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|indian|words": {
-   "v": 33,
-   "t": 12
-  },
-  "culture|placeShapes|indian|shapes": {
-   "v": 37,
-   "t": 4
-  },
-  "culture|placeShapes|indian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|chinese|words": {
-   "v": 75,
-   "t": 12
-  },
-  "culture|placeShapes|chinese|shapes": {
-   "v": 39,
-   "t": 4
-  },
-  "culture|placeShapes|chinese|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|japanese|words": {
-   "v": 83,
-   "t": 12
-  },
-  "culture|placeShapes|japanese|shapes": {
-   "v": 35,
-   "t": 4
-  },
-  "culture|placeShapes|japanese|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|korean|words": {
-   "v": 82,
-   "t": 12
-  },
-  "culture|placeShapes|korean|shapes": {
-   "v": 24,
-   "t": 4
-  },
-  "culture|placeShapes|korean|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|aztec|words": {
-   "v": 50,
-   "t": 12
-  },
-  "culture|placeShapes|aztec|shapes": {
-   "v": 33,
-   "t": 4
-  },
-  "culture|placeShapes|aztec|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|maya|words": {
-   "v": 76,
-   "t": 12
-  },
-  "culture|placeShapes|maya|shapes": {
-   "v": 25,
-   "t": 4
-  },
-  "culture|placeShapes|maya|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|andean|words": {
-   "v": 0
-  },
-  "culture|placeShapes|andean|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|andean|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|polynesian|words": {
-   "v": 0
-  },
-  "culture|placeShapes|polynesian|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|polynesian|profile": {
-   "v": 0
-  },
-  "culture|placeShapes|american|words": {
-   "v": 0
-  },
-  "culture|placeShapes|american|shapes": {
-   "v": 0
-  },
-  "culture|placeShapes|american|profile": {
-   "v": 0
-  },
-  "era|placeShapes|AN": {
-   "v": 98,
-   "t": 12
-  },
-  "era|placeShapes|MD": {
-   "v": 197,
-   "t": 12
-  },
-  "era|placeShapes|EM": {
-   "v": 167,
-   "t": 12
-  },
-  "era|placeShapes|ST": {
-   "v": 167,
-   "t": 12
-  },
-  "era|placeShapes|MO": {
-   "v": 167,
-   "t": 12
-  },
-  "era|placeShapes|NF": {
-   "v": 0,
-   "t": 12
-  },
-  "era|placeShapes|IS": {
-   "v": 176,
-   "t": 12
-  },
-  "tone|placeShapes|grand": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|placeShapes|plain": {
-   "v": 0
-  },
-  "tone|placeShapes|grim": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|placeShapes|light": {
-   "v": 0,
-   "t": 8
-  },
-  "tone|placeShapes|strange": {
-   "v": 0,
-   "t": 8
-  },
-  "region|placeShapes|COR": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|WCY": {
-   "v": 2,
-   "t": 6
-  },
-  "region|placeShapes|SEA": {
-   "v": 5,
-   "t": 6
-  },
-  "region|placeShapes|EAN": {
-   "v": 3,
-   "t": 6
-  },
-  "region|placeShapes|WMM": {
-   "v": 2,
-   "t": 6
-  },
-  "region|placeShapes|EMD": {
-   "v": 5,
-   "t": 6
-  },
-  "region|placeShapes|NTH": {
-   "v": 11,
-   "t": 6
-  },
-  "region|placeShapes|SBL": {
-   "v": 7,
-   "t": 6
-  },
-  "region|placeShapes|WAL": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|SLO": {
-   "v": 3,
-   "t": 6
-  },
-  "region|placeShapes|SHH": {
-   "v": 1,
-   "t": 6
-  },
-  "region|placeShapes|NSI": {
-   "v": 3,
-   "t": 6
-  },
-  "region|placeShapes|DEN": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|NOR": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|SWE": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|ICE": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|NDT": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|RHN": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|MIT": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|ALP": {
-   "v": 0,
-   "t": 6
-  },
-  "region|placeShapes|OST": {
-   "v": 0,
-   "t": 6
-  },
   "culture|riverNames|english|words": {
    "v": 112,
    "t": 30
@@ -21000,106 +22240,106 @@
    "t": 6
   },
   "total|culture|english|words": {
-   "v": 1070
+   "v": 644
   },
   "total|culture|english|shapes": {
-   "v": 351
+   "v": 412
   },
   "total|culture|welsh|words": {
-   "v": 394
+   "v": 347
   },
   "total|culture|welsh|shapes": {
-   "v": 324
+   "v": 401
   },
   "total|culture|scottish|words": {
-   "v": 405
+   "v": 358
   },
   "total|culture|scottish|shapes": {
-   "v": 324
+   "v": 401
   },
   "total|culture|irish|words": {
-   "v": 328
+   "v": 281
   },
   "total|culture|irish|shapes": {
-   "v": 324
+   "v": 401
   },
   "total|culture|cornish|words": {
-   "v": 328
+   "v": 281
   },
   "total|culture|cornish|shapes": {
-   "v": 324
+   "v": 401
   },
   "total|culture|roman|words": {
-   "v": 269
+   "v": 257
   },
   "total|culture|roman|shapes": {
-   "v": 235
-  },
-  "total|culture|scandinavian|words": {
-   "v": 346
-  },
-  "total|culture|scandinavian|shapes": {
-   "v": 122
-  },
-  "total|culture|arabic-persian|words": {
-   "v": 176
-  },
-  "total|culture|arabic-persian|shapes": {
-   "v": 200
-  },
-  "total|culture|egyptian|words": {
-   "v": 122
-  },
-  "total|culture|egyptian|shapes": {
-   "v": 155
-  },
-  "total|culture|west-african|words": {
    "v": 188
   },
+  "total|culture|scandinavian|words": {
+   "v": 205
+  },
+  "total|culture|scandinavian|shapes": {
+   "v": 96
+  },
+  "total|culture|arabic-persian|words": {
+   "v": 151
+  },
+  "total|culture|arabic-persian|shapes": {
+   "v": 151
+  },
+  "total|culture|egyptian|words": {
+   "v": 99
+  },
+  "total|culture|egyptian|shapes": {
+   "v": 119
+  },
+  "total|culture|west-african|words": {
+   "v": 94
+  },
   "total|culture|west-african|shapes": {
-   "v": 120
+   "v": 94
   },
   "total|culture|ethiopian|words": {
-   "v": 156
+   "v": 77
   },
   "total|culture|ethiopian|shapes": {
-   "v": 102
+   "v": 79
   },
   "total|culture|steppe|words": {
-   "v": 108
+   "v": 110
   },
   "total|culture|steppe|shapes": {
    "v": 32
   },
   "total|culture|indian|words": {
-   "v": 157
+   "v": 124
   },
   "total|culture|indian|shapes": {
-   "v": 164
+   "v": 127
   },
   "total|culture|chinese|words": {
-   "v": 360
+   "v": 286
   },
   "total|culture|chinese|shapes": {
-   "v": 180
+   "v": 140
   },
   "total|culture|slavic|words": {
-   "v": 233
+   "v": 192
   },
   "total|culture|slavic|shapes": {
-   "v": 228
+   "v": 181
   },
   "total|culture|french|words": {
    "v": 84
   },
   "total|culture|french|shapes": {
-   "v": 32
+   "v": 30
   },
   "total|culture|iberian|words": {
    "v": 84
   },
   "total|culture|iberian|shapes": {
-   "v": 34
+   "v": 30
   },
   "total|culture|greek-byzantine|words": {
    "v": 216
@@ -21108,25 +22348,25 @@
    "v": 54
   },
   "total|culture|japanese|words": {
-   "v": 392
+   "v": 309
   },
   "total|culture|japanese|shapes": {
-   "v": 159
+   "v": 122
   },
   "total|culture|korean|words": {
-   "v": 332
+   "v": 250
   },
   "total|culture|korean|shapes": {
-   "v": 94
+   "v": 70
   },
   "total|culture|maya|words": {
-   "v": 158
+   "v": 82
   },
   "total|culture|maya|shapes": {
-   "v": 107
+   "v": 82
   },
   "total|culture|andean|words": {
-   "v": 35
+   "v": 36
   },
   "total|culture|andean|shapes": {
    "v": 10
@@ -21138,34 +22378,34 @@
    "v": 11
   },
   "total|culture|bantu|words": {
-   "v": 187
+   "v": 120
   },
   "total|culture|bantu|shapes": {
-   "v": 92
+   "v": 67
   },
   "total|culture|aztec|words": {
-   "v": 188
+   "v": 139
   },
   "total|culture|aztec|shapes": {
-   "v": 138
+   "v": 105
   },
   "total|culture|american|words": {
    "v": 44
   },
   "total|culture|american|shapes": {
-   "v": 3
+   "v": 2
   },
   "total|culture|dutch|words": {
    "v": 32
   },
   "total|culture|dutch|shapes": {
-   "v": 2
+   "v": 0
   },
   "total|culture|german|words": {
    "v": 15
   },
   "total|culture|german|shapes": {
-   "v": 2
+   "v": 0
   },
   "total|culture|northAmerican|words": {
    "v": 12
@@ -21183,7 +22423,7 @@
    "v": 17
   },
   "total|culture|italian|shapes": {
-   "v": 2
+   "v": 0
   },
   "total|culture|northernPacific|words": {
    "v": 11
@@ -21197,62 +22437,44 @@
   "total|culture|sahul|shapes": {
    "v": 0
   },
-  "total|culture|hellenistic|words": {
-   "v": 0
-  },
-  "total|culture|hellenistic|shapes": {
-   "v": 2
-  },
-  "total|culture|phoenician|words": {
-   "v": 0
-  },
-  "total|culture|phoenician|shapes": {
-   "v": 1
-  },
-  "total|culture|belgian|words": {
-   "v": 0
-  },
-  "total|culture|belgian|shapes": {
-   "v": 1
-  },
   "total|era|AN": {
-   "v": 865
+   "v": 768
   },
   "total|era|MD": {
-   "v": 1520
+   "v": 1328
   },
   "total|era|EM": {
-   "v": 1038
+   "v": 882
   },
   "total|era|ST": {
-   "v": 1081
+   "v": 925
   },
   "total|era|MO": {
-   "v": 1094
+   "v": 938
   },
   "total|era|NF": {
    "v": 764
   },
   "total|era|IS": {
-   "v": 1505
+   "v": 1329
   },
   "total|style|high-fantasy|words": {
    "v": 189
   },
   "total|style|high-fantasy|shapes": {
-   "v": 284
+   "v": 312
   },
   "total|style|contemporary-fantasy|words": {
    "v": 105
   },
   "total|style|contemporary-fantasy|shapes": {
-   "v": 282
+   "v": 310
   },
   "total|style|space-opera|words": {
    "v": 241
   },
   "total|style|space-opera|shapes": {
-   "v": 115
+   "v": 143
   },
   "total|style|steampunk|words": {
    "v": 84
@@ -21279,23 +22501,23 @@
    "v": 18
   },
   "total|tone|grand": {
-   "v": 606
+   "v": 615
   },
   "total|tone|plain": {
-   "v": 681
+   "v": 683
   },
   "total|tone|grim": {
-   "v": 497
+   "v": 499
   },
   "total|tone|light": {
-   "v": 401
+   "v": 402
   },
   "total|tone|strange": {
-   "v": 492
+   "v": 511
   }
  },
  "thinPools": {
-  "count": 494,
+  "count": 473,
   "entries": {
    "skyNames|constellations/anglo-saxon": 1,
    "realms|cultQualExtra/ethiopian": 1,
@@ -21455,7 +22677,6 @@
    "riverNames|waterWords/british/SLO": 3,
    "riverNames|waterWords/british/WAL": 3,
    "riverNames|waterWords/established": 3,
-   "placeShapes|world/anglo-saxon/lists/animal": 3,
    "skyNames|constellations/norse": 4,
    "skyNames|constellations/steppe": 4,
    "calendarNames|cultureNames/arabic-persian/festival": 4,
@@ -21598,10 +22819,7 @@
    "riverNames|waterWords/british/WCY": 5,
    "riverNames|waterWords/new-land": 5,
    "shared|welcomePhrase": 5,
-   "placeShapes|world/anglo-saxon/lists/church": 5,
-   "placeShapes|world/bantu/lists/noun": 5,
    "settlementNames|world/celtic/lists/grove": 5,
-   "placeShapes|world/chinese/lists/direction": 5,
    "shared|bookPlace": 6,
    "shared|castleBird": 6,
    "shared|chronicleSeason": 6,
@@ -21686,17 +22904,6 @@
    "tribalNames|vocabulary/interpretiveQualities": 6,
    "tribalNames|vocabulary/warfareObjects": 6,
    "riverNames|waterWords/british/EAN": 6,
-   "placeShapes|world/anglo-saxon/lists/god": 6,
-   "placeShapes|world/anglo-saxon/lists/water": 6,
-   "placeShapes|world/bantu/lists/verb": 6,
-   "placeShapes|world/celtic/lists/colour": 6,
-   "placeShapes|world/ethiopian/lists/new": 6,
-   "placeShapes|world/maya/lists/colourdir": 6,
-   "placeShapes|world/maya/lists/holyword": 6,
-   "placeShapes|world/maya/lists/number": 6,
-   "placeShapes|world/norse/lists/fuse": 6,
-   "placeShapes|world/norse/lists/meet": 6,
-   "placeShapes|world/west-african/lists/bend": 6,
    "shared|bodyNumber": 7,
    "shared|bodyPart": 7,
    "shared|bookTreasure": 7,
@@ -21784,13 +22991,7 @@
    "tribalNames|vocabulary/canoes": 7,
    "tribalNames|vocabulary/countedFeatures": 7,
    "shared|warAnimal": 7,
-   "riverNames|waterWords/british/all": 7,
-   "placeShapes|world/anglo-saxon/lists/colour": 7,
-   "placeShapes|world/bantu/lists/material": 7,
-   "placeShapes|world/chinese/lists/material": 7,
-   "placeShapes|world/korean/lists/virtue": 7,
-   "placeShapes|world/norse/lists/farm": 7,
-   "placeShapes|world/norse/lists/landpl": 7
+   "riverNames|waterWords/british/all": 7
   }
  }
 }

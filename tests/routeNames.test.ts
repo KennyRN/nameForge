@@ -322,9 +322,9 @@ test("§2.2–§2.3: the kind menu offers the era's kinds; a kind the new era la
   assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 25);
 });
 
-test("§1: the module sits after native place names; its history label and section", () => {
+test("§1: the module sits after the focused place modules; its history label and section", () => {
   // Place modules split brief §2: rivers and inland waters comes before route names.
-  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 8), ["placeShapes", "explorationPlaceShapes", "empireExpansionPlaceShapes", "lands", "farmland", "hillsValleys", "riversInland", "routeNames"]);
+  assert.deepEqual(SECTION_GROUPS.placeNames.slice(0, 5), ["lands", "farmland", "hillsValleys", "riversInland", "routeNames"]);
   assert.equal(SECTION_ORDER[SECTION_ORDER.indexOf("riversInland") + 1], "routeNames");
   assert.equal(routeHistoryLabel(DEFAULT_ROUTE_STATE), "route names · medieval · Norman & British");
   const full: RouteSentenceState = { culture: "norman-british", era: "ST", region: "NTH", kind: "rail", fantastic: true, tone: "grim", people: "invented", series: true };

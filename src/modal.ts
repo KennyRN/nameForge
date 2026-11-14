@@ -313,6 +313,9 @@ const withRegion = (label: string, regionCode: string | undefined) => {
 /** A module's label in the box beside the trigger: "Native place names". */
 const moduleLabel = (section: NameForgeSection) => SECTION_LABELS[section].charAt(0).toUpperCase() + SECTION_LABELS[section].slice(1);
 
+/** Place modules split brief §9.3: the heading over a retired module's preset. */
+const RETIRED_PRESET_HEADING = "From a retired module: runs as saved";
+
 /** The folder clashes already shown this session, so each is named once. */
 const shownFolderClashes = new Set<string>();
 
@@ -760,7 +763,7 @@ export class NameForgeModal extends Modal {
   /** Line-up brief §2.3: the sacred places module's own choices. */
   private sacredPlaceState: SacredPlaceSentenceState = { ...DEFAULT_SACRED_PLACE_STATE };
   /** Each switcher group's last-used module (session only). */
-  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "placeShapes", urban: "settlementNames", seasCoasts: "seasLakes", wildLands: "mountainNames", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
+  private groupModule: Record<SectionGroup, NameForgeSection> = { placeNames: "lands", urban: "settlementNames", seasCoasts: "seasLakes", wildLands: "mountainNames", groupNames: "tribalNames", bynames: "epithets", vehicles: "ships", namedThings: "armsNames", advanced: "nameAgeing" };
   private tribal: {
     tradition: string;
     register: TribalRegister;
@@ -863,6 +866,8 @@ export class NameForgeModal extends Modal {
   private sectionChoiceIndex = 0;
   private sectionLabelsShown = true;
   private sectionSentenceEl: HTMLElement | null = null;
+  /** Place modules split brief §9.3: the saved sentence of a retired module's preset, shown as plain text. */
+  private retiredPresetText: string | undefined;
   /** §7: set when the loaded pack's template couldn't be applied. */
   private currentTemplateError: string | undefined = undefined;
   /** Recipe packs: the loaded recipe, the session's etymology toggle, and the edit button. */
@@ -1204,8 +1209,8 @@ export class NameForgeModal extends Modal {
     const group = sectionGroup(section);
     if (group) this.groupModule[group] = section;
     this.packDropdownEl?.toggle(section === "markov");
-    this.sectionSentenceEl?.toggle(section === "markov" && this.sectionChoices.length > 0);
-    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || isPlacePresetType(this.currentPackType) || (this.currentPackType === "recipePack" && !!this.settlementPreset)));
+    this.sectionSentenceEl?.toggle(section === "markov" && (this.sectionChoices.length > 0 || !!this.retiredPresetText));
+    this.openPresetButton?.toggle(section === "markov" && (this.currentPackType === "tribalPreset" || this.currentPackType === "groupPreset" || this.currentPackType === "bynamePreset" || this.currentPackType === "vesselPreset" || this.currentPackType === "watersPreset" || this.currentPackType === "wildsPreset" || this.currentPackType === "realmPreset" || this.currentPackType === "routePreset" || this.currentPackType === "streetPreset" || this.currentPackType === "innPreset" || this.currentPackType === "buildingPreset" || this.currentPackType === "monumentPreset" || this.currentPackType === "kitPreset" || this.currentPackType === "eventPreset" || this.currentPackType === "moneyPreset" || this.currentPackType === "calendarPreset" || this.currentPackType === "skyPreset" || this.currentPackType === "thingPreset" || this.currentPackType === "peoplePreset" || this.currentPackType === "deityPreset" || (this.currentPackType === "recipePack" && !!this.settlementPreset)));
     // Pack creation belongs to the markov generator; elsewhere the button keeps its space so the
     // box beside the trigger stays the same size.
     const colonialPart = COLONIAL_SECTION_PART[section];
@@ -6301,8 +6306,12 @@ export class NameForgeModal extends Modal {
     this.currentTemplateError = undefined;
     this.sectionChoices = [];
     this.sectionSentenceEl?.hide();
+    this.retiredPresetText = undefined;
     this.syncPillSpacing();
-    this.openPresetButton?.toggle(this.activeSection === "markov");
+    // Place modules split brief §9.3: a preset of a retired module runs as saved; its sentence is plain text, with no "Open in".
+    const retired = nativePlace ?? exploration ?? expansion;
+    this.openPresetButton?.toggle(this.activeSection === "markov" && !retired);
+    if (retired) this.renderRetiredPresetNote(retired.description);
     const module = nativePlace ? SECTION_LABELS.placeShapes : exploration ? SECTION_LABELS.explorationPlaceShapes : expansion ? SECTION_LABELS.empireExpansionPlaceShapes : wilds ? SECTION_LABELS[wilds.wildsModule] : deity ? SECTION_LABELS[deityPresetModule(deity.deityKind)] : peoples ? SECTION_LABELS.peoplesTongues : thing ? THINGS_DATA.modules.find((m) => m.key === thing.thingModule)?.label : time ? SECTION_LABELS[time.timeModule === "sky" ? "skyNames" : "calendarNames"] : money ? SECTION_LABELS.moneyNames : event ? SECTION_LABELS.eventNames : kit ? SECTION_LABELS.settlementKit : monument ? SECTION_LABELS.monumentNames : building ? SECTION_LABELS.buildingNames : inn ? SECTION_LABELS.innNames : street ? SECTION_LABELS.streetNames : route ? SECTION_LABELS.routeNames : realm ? SECTION_LABELS.realms : waters ? SECTION_LABELS[waters.watersModule] : vessel ? SECTION_LABELS[vessel.vesselModule] : byname ? SECTION_LABELS[byname.bynameModule] : group ? findFamily(group.family)?.label : SECTION_LABELS.tribalNames;
     this.openPresetButton?.setAttribute("title", `Open in ${module ?? SECTION_LABELS.tribalNames}`);
     this.plugin.settings.packName = nativePlace?.packName ?? exploration?.packName ?? expansion?.packName ?? wilds?.packName ?? preset?.packName ?? group?.packName ?? byname?.packName ?? vessel?.packName ?? waters?.packName ?? realm?.packName ?? route?.packName ?? street?.packName ?? inn?.packName ?? building?.packName ?? monument?.packName ?? kit?.packName ?? event?.packName ?? money?.packName ?? time?.packName ?? thing?.packName ?? peoples?.packName ?? deity?.packName ?? file.basename;
@@ -6313,7 +6322,20 @@ export class NameForgeModal extends Modal {
     this.setStatus(problems.join(" "));
   }
 
+  /** Place modules split brief §9.3: the retired module's saved sentence, as plain text under a heading, with no links. */
+  private renderRetiredPresetNote(sentence: string) {
+    const el = this.sectionSentenceEl;
+    if (!el) return;
+    this.retiredPresetText = sentence || RETIRED_PRESET_HEADING;
+    el.empty();
+    el.createDiv({ cls: "nameforge-modal__retired-heading", text: RETIRED_PRESET_HEADING });
+    if (sentence) el.createDiv({ cls: "nameforge-modal__retired-sentence", text: sentence });
+    el.toggle(this.activeSection === "markov");
+    this.syncPillSpacing();
+  }
+
   private async loadRecipePack(file: TFile) {
+    this.retiredPresetText = undefined;
     this.currentPackType = "recipePack";
     this.currentRecipePath = file.path;
     this.currentPresetPath = undefined;
@@ -6536,6 +6558,7 @@ export class NameForgeModal extends Modal {
   private renderSectionSentence() {
     const el = this.sectionSentenceEl;
     if (!el) return;
+    this.retiredPresetText = undefined;
     el.empty();
     const choice = this.sectionChoice;
     el.toggle(this.activeSection === "markov" && !!choice);

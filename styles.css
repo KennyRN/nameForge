@@ -1871,3 +1871,14 @@ body .nameforge-modal .nameforge-modal__option-row button.nameforge-modal__icon-
   color: var(--text-error);
   font-size: var(--font-ui-smaller);
 }
+
+/* Place modules split brief §9.3: a retired module's preset shows its saved sentence as plain text under a heading. */
+.nameforge-modal__retired-heading {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+  margin-bottom: var(--size-4-1);
+}
+
+.nameforge-modal__retired-sentence {
+  color: var(--text-normal);
+}

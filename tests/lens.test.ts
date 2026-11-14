@@ -2,6 +2,8 @@
 // value reads in lens terms. The data tables are walked, so a value the mappings miss fails here.
 import { test } from "node:test";
 import { COVERAGE_ADAPTERS } from "../src/coverage";
+import { colonialCoverage } from "../src/names/coverage";
+import { placeShapesCoverage } from "../src/world/coverage";
 import { VOCAB_POOL_NAMES } from "../src/coverageRows";
 import assert from "node:assert/strict";
 import airLandData from "../src/data/vehicles-air-land.json";
@@ -443,7 +445,7 @@ test("every culture and era tag on a vocabulary entry names a lens culture, grou
 
 test("§6.3: every exempt pool is a real pool, in one list only, and its exemption reads back", () => {
   const known = new Set<string>(VOCAB_POOL_NAMES);
-  for (const adapter of COVERAGE_ADAPTERS) for (const row of adapter.rows()) known.add(row.source);
+  for (const adapter of [...COVERAGE_ADAPTERS, placeShapesCoverage, ...colonialCoverage]) for (const row of adapter.rows()) known.add(row.source);
   const { forPacks, closed } = lensJsonAny.poolExemptions as { forPacks: string[]; closed: string[] };
   assert.ok(forPacks.length > 0 && closed.length > 0);
   for (const name of [...forPacks, ...closed]) assert.ok(known.has(name), `${name} is not a pool or list any adapter reads`);
