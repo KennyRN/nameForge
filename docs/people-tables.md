@@ -1,0 +1,353 @@
+# People tables: core cultures
+
+For review (shared tables brief, M2). Every list below is in `src/data/people.json` and is read by the filler once it is wired in (M5, M6). Second-tier cultures follow at M3.
+
+Reading the lists: names run from most to least common; the number in brackets is the weight. `r` marks a name kept mainly for a royal bearer, `s` for a saint's. Spelling is the usual English one.
+
+## Sizes against the brief (§3.1)
+
+| Culture | Period | male | female | surnames | regnal m | regnal f | holy |
+|---|---|---|---|---|---|---|---|
+| Anglo-Saxon (English, early) | historic | 60 | 60 | – | 15 | 15 | 24 |
+| Norman & British (English, later) | historic | 60 | 60 | 60 | 15 | 15 | 24 |
+| Norman & British (English, later) | modern | 60 | 60 | 60 | 15 | 15 | 24 |
+| Welsh | historic | 60 | 60 | – | 15 | 15 | 24 |
+| Welsh | modern | 60 | 60 | 60 | 15 | 15 | 24 |
+| Scottish | historic | 60 | 60 | 60 | 15 | 15 | 24 |
+| Scottish | modern | 60 | 60 | 60 | 15 | 15 | 24 |
+| Irish | historic | 60 | 60 | 60 | 15 | 15 | 24 |
+| Irish | modern | 60 | 60 | 60 | 15 | 15 | 24 |
+| Cornish | historic | 60 | 60 | 60 | 15 | 15 | 24 |
+| Cornish | modern | 60 | 60 | 60 | 15 | 15 | 24 |
+| Scandinavian (Norse) | historic | 60 | 60 | – | 15 | 15 | 24 |
+| Scandinavian (Norse) | modern | 60 | 60 | 60 | 15 | 15 | 24 |
+| German | historic | 60 | 60 | 60 | 15 | 15 | 24 |
+| German | modern | 60 | 60 | 60 | 15 | 15 | 24 |
+
+Targets for core cultures: 60, 60, 60, 15, 15, 24. A dash means the culture used no inherited surnames in that period (see the notes).
+
+## Anglo-Saxon (English, early)
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): Godwin (10), Leofric (10), Wulfric (10), Alfric (10), Edric (10), Edwin (7), Aldred (7), Wulfstan (7), Leofwin (7), Siward (7), Osric (7), Oswin (7), Wulfgar (5), Godric (5), Leofgar (5), Leofstan (5), Brictric (5), Brihtwold (5), Cenwulf (5), Elfwin (5), Ethelwin (5), Eadnoth (5), Hereward (5), Hunwald (5), Leofsige (3), Lyfing (3), Morcar (3), Northman (3), Osgod (3), Ordgar (3), Ordulf (3), Sigeric (3), Sired (3), Stigand (3), Thurstan (3), Wigstan (3), Wulfnoth (3), Wulfsige (3), Wynstan (3), Edmundʳ (3), Alfredʳ (2), Edwardʳ (2), Edgarʳ (2), Athelstanʳ (2), Haroldʳ (2), Oswaldˢ (2), Cuthbertˢ (2), Dunstanˢ (2), Alchmund (2), Brihtwulf (2), Cynewulf (2), Eadwulf (2), Wihtred (2), Sigebert (2), Eadred (2), Alfhere (2), Wulfmaer (2), Thorold (2), Alfsi (2), Beornwulf (2)
+
+**Female given names** (60): Edith (10), Elgiva (10), Godiva (10), Ethelfledaʳ (10), Alswith (10), Hildaˢ (7), Etheldredaˢ (7), Ethelburgaˢ (7), Edburgaˢ (7), Wulfrun (7), Wulfhild (7), Leofgifu (7), Leofrun (5), Leofflaed (5), Elfwyn (5), Edgiva (5), Ethelgiva (5), Wynflaed (5), Hereswith (5), Sexburgaˢ (5), Eanswithˢ (5), Mildredˢ (5), Frideswideˢ (5), Werburgaˢ (5), Osburga (3), Cynethrith (3), Wynfrith (3), Elfridaʳ (3), Ethelswith (3), Aldgyth (3), Gytha (3), Tova (3), Ebbaˢ (3), Eormenhild (3), Wulfthryth (3), Aelfgyth (3), Eadgyth (3), Leofwaru (3), Godgifu (3), Wulfwyn (3), Brihtgifu (2), Aethelwyn (2), Cwenhild (2), Ealdgyth (2), Wynnifred (2), Lufu (2), Ordgyth (2), Sunngifu (2), Hildeburh (2), Eadflaed (2), Aelflaed (2), Wulfflaed (2), Beorhtgyth (2), Eadburh (2), Aethelflaed (2), Saewyn (2), Leofgyth (2), Wulfgyth (2), Ealhhild (2), Ethelwyn (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (15): Alfred (6), Edward (6), Edmund (6), Edgar (4), Athelstan (4), Ethelred (4), Edwy (4), Egbert (4), Offa (3), Ethelbert (3), Oswald (3), Oswy (3), Penda (3), Ine (3), Harold (2)
+
+**Regnal names, female** (15): Ethelfleda (6), Elfrida (6), Emma (6), Edith (4), Edgiva (4), Elgiva (4), Alswith (4), Osburga (4), Ethelswith (3), Edburga (3), Sexburga (3), Ethelburga (3), Ermenilda (3), Wulfthryth (3), Cynethrith (2)
+
+**Holy names** (24): Aidan (6), Bede (6), Cuthbert (6), Wilfrid (4), Oswald (4), Chad (4), Dunstan (4), Swithun (4), Aldhelm (3), Botolph (3), Guthlac (3), Edmund (3), Alphege (3), Cedd (3), Etheldreda (2), Hilda (2), Ebba (2), Frideswide (2), Ethelburga (2), Werburga (2), Mildred (2), Eanswith (2), Kenelm (2), Birinus (2)
+
+**Holy forms**: Saint {n} (70), the Venerable {n} (15), Blessed {n} (10), Bishop {n} (5)
+
+**Ruler forms**: male King {m} (70), Prince {m} (15), Lord {m} (15); female Queen {f} (70), Lady {f} (20), Princess {f} (10)
+
+## Norman & British (English, later)
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): William (10), John (10), Richard (10), Robert (10), Henry (10), Thomas (7), Walter (7), Hugh (7), Roger (7), Geoffrey (7), Ralph (7), Simon (7), Nicholas (5), Adam (5), Gilbert (5), Peter (5), Reginald (5), Baldwin (5), Humphrey (5), Godfrey (5), Gervase (5), Osbert (5), Payne (5), Alan (5), Alexander (3), Bartholomew (3), Giles (3), Guy (3), Hamo (3), Jocelyn (3), Lambert (3), Miles (3), Odo (3), Piers (3), Randolph (3), Reynold (3), Roland (3), Serlo (3), Walkelin (3), Warin (3), Waleran (2), Fulk (2), Philip (2), Matthew (2), Martin (2), Laurence (2), Eustace (2), Drogo (2), Bertram (2), Maurice (2), Theobald (2), Amaury (2), Stephenʳ (2), Edwardʳ (2), Edmundʳ (2), Anselmˢ (2), Hubertˢ (2), Herbert (2), Ernulf (2), Thurstan (2)
+
+**Female given names** (60): Matilda (10), Isabel (10), Alice (10), Joan (10), Margaret (10), Eleanor (7), Agnes (7), Emma (7), Beatrice (7), Cecily (7), Maud (7), Joanna (7), Katherine (5), Elizabeth (5), Anne (5), Margery (5), Avice (5), Amice (5), Edith (5), Ela (5), Eve (5), Hawise (5), Idonea (5), Isolda (5), Juliana (3), Lettice (3), Mabel (3), Philippa (3), Petronilla (3), Rohese (3), Sibyl (3), Susanna (3), Alianora (3), Christiana (3), Denise (3), Dionisia (3), Gillian (3), Helewise (3), Hilary (3), Joyce (3), Lucy (2), Mary (2), Mariota (2), Millicent (2), Olive (2), Parnel (2), Rose (2), Sabina (2), Sarah (2), Thomasina (2), Ursula (2), Wymarc (2), Yolande (2), Berengariaʳ (2), Adelizaʳ (2), Adelicia (2), Constance (2), Florence (2), Gunnora (2), Isabella (2)
+
+**Surnames** (60): Smith (10), Taylor (10), Cooper (10), Fletcher (10), Mason (10), Carter (7), Baker (7), Miller (7), Fuller (7), Turner (7), Wright (7), Thatcher (7), Chapman (5), Sawyer (5), Archer (5), Hunter (5), Fisher (5), Shepherd (5), Walker (5), Webster (5), Dyer (5), Tanner (5), Skinner (5), Glover (5), Spencer (3), Draper (3), Cartwright (3), Cook (3), Butler (3), Clarke (3), Fowler (3), Forester (3), Hill (3), Wood (3), Brook (3), Field (3), Ford (3), Marsh (3), Moor (3), Dale (3), Thorpe (2), Lacy (2), Fitzalan (2), Fitzgerald (2), Beaumont (2), Mortimer (2), Percy (2), Neville (2), Courtenay (2), Clifford (2), Talbot (2), Warenne (2), Devereux (2), Giffard (2), Bohun (2), Mowbray (2), Gifford (2), Tracy (2), Montfort (2), Hale (2)
+
+**Regnal names, male** (15): William (6), Henry (6), Stephen (6), Richard (4), John (4), Edward (4), Charles (4), James (4), Harold (3), Edmund (3), Arthur (3), Robert (3), Alfred (3), Edgar (3), Geoffrey (2)
+
+**Regnal names, female** (15): Matilda (6), Eleanor (6), Isabella (6), Margaret (4), Elizabeth (4), Mary (4), Anne (4), Catherine (4), Jane (3), Joan (3), Philippa (3), Edith (3), Adeliza (3), Berengaria (3), Isabel (2)
+
+**Holy names** (24): Thomas (6), Edmund (6), Dunstan (6), Cuthbert (4), Alban (4), Botolph (4), Swithun (4), Chad (4), Aidan (3), Hugh (3), Anselm (3), Wilfrid (3), Oswald (3), Edward (3), Etheldreda (2), Frideswide (2), Hilda (2), Mildred (2), Werburga (2), Margaret (2), Katherine (2), Agnes (2), Ursula (2), George (2)
+
+**Holy forms**: Saint {n} (75), the Venerable {n} (15), Blessed {n} (10)
+
+**Ruler forms**: male King {m} (70), Prince {m} (15), Lord {m} (15); female Queen {f} (70), Lady {f} (20), Princess {f} (10)
+
+### modern (ST, MO)
+
+**Male given names** (60): John (10), William (10), George (10), Thomas (10), James (10), Arthur (7), Henry (7), Charles (7), Frederick (7), Albert (7), Edward (7), Alfred (7), Walter (5), Harry (5), Frank (5), Ernest (5), Herbert (5), Harold (5), Percy (5), Reginald (5), Sidney (5), Stanley (5), Leonard (5), Cecil (5), Bernard (3), Francis (3), Edgar (3), Victor (3), Eric (3), Norman (3), Douglas (3), Kenneth (3), Raymond (3), Ronald (3), Alan (3), Brian (3), Peter (3), David (3), Michael (3), Robert (3), Richard (2), Anthony (2), Geoffrey (2), Colin (2), Keith (2), Roy (2), Derek (2), Graham (2), Malcolm (2), Gordon (2), Trevor (2), Ian (2), Martin (2), Stephen (2), Paul (2), Mark (2), Christopher (2), Simon (2), Andrew (2), Nigel (2)
+
+**Female given names** (60): Mary (10), Elizabeth (10), Annie (10), Florence (10), Ethel (10), Edith (7), Emily (7), Alice (7), Ada (7), Doris (7), Margaret (7), Dorothy (7), Winifred (5), Gladys (5), Mildred (5), Lilian (5), Hilda (5), Olive (5), Violet (5), Beatrice (5), Irene (5), Joan (5), Betty (5), Eileen (5), Kathleen (3), Marjorie (3), Sheila (3), Jean (3), Barbara (3), Patricia (3), Pamela (3), Brenda (3), Maureen (3), Joyce (3), Audrey (3), Phyllis (3), Vera (3), Muriel (3), Evelyn (3), Grace (3), Harriet (2), Charlotte (2), Jane (2), Sarah (2), Emma (2), Louisa (2), Eliza (2), Caroline (2), Clara (2), Ellen (2), Hannah (2), Catherine (2), Susan (2), Linda (2), Carol (2), Christine (2), Janet (2), Judith (2), Angela (2), Rosemary (2)
+
+**Surnames** (60): Smith (10), Jones (10), Taylor (10), Brown (10), Williams (10), Wilson (7), Johnson (7), Davies (7), Robinson (7), Wright (7), Thompson (7), Evans (7), Walker (5), White (5), Roberts (5), Green (5), Hall (5), Wood (5), Jackson (5), Clarke (5), Harris (5), Clark (5), Scott (5), Turner (5), Hill (3), Moore (3), Cooper (3), Ward (3), Morris (3), King (3), Watson (3), Baker (3), Harrison (3), Morgan (3), Young (3), Allen (3), Mitchell (3), James (3), Anderson (3), Phillips (3), Lee (2), Bell (2), Parker (2), Davis (2), Bennett (2), Shaw (2), Marshall (2), Collins (2), Hunt (2), Hughes (2), Price (2), Fox (2), Webb (2), Palmer (2), Mills (2), Carter (2), Stevens (2), Edwards (2), Lewis (2), Cook (2)
+
+**Regnal names, male** (15): George (6), Edward (6), William (6), Charles (4), Henry (4), Albert (4), Frederick (4), Arthur (4), Alfred (3), Edmund (3), James (3), John (3), Richard (3), Harold (3), Ernest (2)
+
+**Regnal names, female** (15): Victoria (6), Elizabeth (6), Alexandra (6), Mary (4), Charlotte (4), Caroline (4), Adelaide (4), Anne (4), Margaret (3), Louise (3), Beatrice (3), Alice (3), Helena (3), Augusta (3), Sophia (2)
+
+**Holy names** (24): Alban (6), Aidan (6), Cuthbert (6), Chad (4), Columba (4), Oswald (4), Wilfrid (4), Bede (4), Dunstan (3), Swithun (3), Botolph (3), Edmund (3), Thomas (3), Anselm (3), Hilda (2), Etheldreda (2), Frideswide (2), Margaret (2), Katharine (2), Agnes (2), Cecilia (2), Helena (2), Hugh (2), John (2)
+
+**Holy forms**: Saint {n} (80), Father {n} (10), Blessed {n} (10)
+
+**Ruler forms**: male King {m} (80), Prince {m} (20); female Queen {f} (80), Princess {f} (20)
+
+## Welsh
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): Owain (10), Llywelyn (10), Rhys (10), Hywel (10), Griffith (10), Madoc (7), David (7), Morgan (7), Cadwallon (7), Iorwerth (7), Meredith (7), Bleddyn (7), Cynan (5), Ieuan (5), Einion (5), Rhodri (5), Ithel (5), Cadell (5), Gwilym (5), Tudur (5), Gwyn (5), Goronwy (5), Ednyfed (5), Maelgwn (5), Cadwaladr (3), Gruffudd (3), Dafydd (3), Elis (3), Trahaearn (3), Gwion (3), Cynfyn (3), Morien (3), Idwal (3), Gwrgenau (3), Llewelyn (3), Heilyn (3), Tegwared (3), Adda (3), Bran (3), Cadfan (3), Cai (2), Caradoc (2), Cynddelw (2), Cynog (2), Dyfrigˢ (2), Illtydˢ (2), Padarnˢ (2), Teiloˢ (2), Beunoˢ (2), Deiniolˢ (2), Cadogˢ (2), Brychanʳ (2), Math (2), Pryderi (2), Gwalchmai (2), Cadwgan (2), Rhydderch (2), Elystan (2), Seisyll (2), Cynfelyn (2)
+
+**Female given names** (60): Gwenllian (10), Nest (10), Angharad (10), Gwladus (10), Tangwystl (10), Marged (7), Efa (7), Gwerful (7), Gwen (7), Eleri (7), Catrin (7), Mallt (7), Elen (5), Gwyneth (5), Haf (5), Lowri (5), Morfudd (5), Dyddgu (5), Ceinwen (5), Olwen (5), Rhiannon (5), Branwen (5), Eurgain (5), Gwenhwyfar (5), Tegau (3), Heledd (3), Cenarth (3), Elinor (3), Annest (3), Ellen (3), Sioned (3), Siwan (3), Cecilia (3), Alis (3), Gwladysˢ (3), Dwynwenˢ (3), Melangellˢ (3), Nonˢ (3), Tudfulˢ (3), Gwenfrewiˢ (3), Eilunedˢ (2), Brynach (2), Arianwen (2), Eluned (2), Cain (2), Gwerfyl (2), Lleucu (2), Gwenfron (2), Generys (2), Marared (2), Ellyw (2), Isabel (2), Margaret (2), Joan (2), Maud (2), Hawise (2), Sybil (2), Agnes (2), Alice (2), Cristin (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (15): Owain (6), Llywelyn (6), Rhys (6), Hywel (4), Gruffudd (4), Madog (4), Cadwallon (4), Rhodri (4), Maredudd (3), Bleddyn (3), Cynan (3), Dafydd (3), Iorwerth (3), Gwenwynwyn (3), Maelgwn (2)
+
+**Regnal names, female** (15): Gwenllian (6), Nest (6), Angharad (6), Gwladus (4), Siwan (4), Marared (4), Tangwystl (4), Efa (4), Elen (3), Joan (3), Eleanor (3), Gwerful (3), Catrin (3), Margaret (3), Morfudd (2)
+
+**Holy names** (24): David (6), Teilo (6), Dyfrig (6), Illtyd (4), Padarn (4), Beuno (4), Deiniol (4), Cadog (4), Brychan (3), Winifred (3), Dwynwen (3), Melangell (3), Non (3), Cybi (3), Seiriol (2), Tydfil (2), Asaph (2), Dyfnog (2), Gwenfrewi (2), Elian (2), Collen (2), Brynach (2), Cynog (2), Tysilio (2)
+
+**Holy forms**: Saint {n} (70), Sant {n} (15), the Blessed {n} (10), Abbot {n} (5)
+
+**Ruler forms**: male Prince {m} (50), King {m} (30), Lord {m} (20); female Princess {f} (50), Queen {f} (30), Lady {f} (20)
+
+### modern (ST, MO)
+
+**Male given names** (60): John (10), William (10), Thomas (10), David (10), Evan (10), Owen (7), Griffith (7), Hugh (7), Rhys (7), Gwilym (7), Idris (7), Ivor (7), Emlyn (5), Gareth (5), Glyn (5), Gwyn (5), Dilwyn (5), Elwyn (5), Trevor (5), Dylan (5), Aled (5), Huw (5), Meurig (5), Wyn (5), Alun (3), Emrys (3), Gethin (3), Iolo (3), Dafydd (3), Llewellyn (3), Bryn (3), Ieuan (3), Cai (3), Gruffydd (3), Arwel (3), Eifion (3), Tudor (3), Edward (3), Robert (3), Richard (3), Morgan (2), Mostyn (2), Islwyn (2), Dai (2), Mervyn (2), Cledwyn (2), Hywel (2), Carwyn (2), Rhodri (2), Osian (2), Ifor (2), Wynford (2), Berwyn (2), Caradog (2), Cynan (2), Aneurin (2), Gwyndaf (2), Idwal (2), Aeron (2), Rhydian (2)
+
+**Female given names** (60): Mary (10), Margaret (10), Elizabeth (10), Gwen (10), Catherine (10), Ann (7), Jane (7), Sarah (7), Eleanor (7), Blodwen (7), Gwyneth (7), Megan (7), Eirlys (5), Olwen (5), Bethan (5), Rhian (5), Sian (5), Nia (5), Ceri (5), Angharad (5), Eluned (5), Nerys (5), Mererid (5), Delyth (5), Gwenllian (3), Myfanwy (3), Menna (3), Heledd (3), Eira (3), Lowri (3), Carys (3), Ffion (3), Haf (3), Bronwen (3), Branwen (3), Rhiannon (3), Cerys (3), Elen (3), Sioned (3), Gwladys (3), Eurwen (2), Nesta (2), Ellen (2), Hannah (2), Gladys (2), Morfydd (2), Mair (2), Marged (2), Tegwen (2), Dilys (2), Glenys (2), Enid (2), Rhoda (2), Awen (2), Annwen (2), Eilir (2), Seren (2), Luned (2), Llinos (2), Teleri (2)
+
+**Surnames** (60): Jones (10), Williams (10), Davies (10), Evans (10), Thomas (10), Roberts (7), Hughes (7), Lewis (7), Morgan (7), Griffiths (7), Edwards (7), Owen (7), Price (5), Rees (5), Phillips (5), Powell (5), Pritchard (5), Parry (5), Bevan (5), Probert (5), Howell (5), Jenkins (5), Lloyd (5), Morris (5), Watkins (3), Harris (3), Rowlands (3), Vaughan (3), Pugh (3), Bowen (3), Gwynne (3), Pryce (3), Meredith (3), Griffith (3), Humphreys (3), Prosser (3), Prichard (3), Gough (3), Protheroe (3), Anwyl (3), Cadwallader (2), Tudor (2), Llewellyn (2), Maddocks (2), Gethin (2), Richards (2), James (2), Walters (2), Hopkins (2), Bellis (2), Beynon (2), Gittins (2), Madoc (2), Ellis (2), Pierce (2), Samuel (2), Jeffreys (2), Beddoe (2), Bebb (2), Rogers (2)
+
+**Regnal names, male** (15): Owain (6), Llywelyn (6), Rhys (6), Hywel (4), Gruffudd (4), Dafydd (4), Madog (4), Cadwallon (4), Edward (3), George (3), William (3), Arthur (3), Henry (3), Charles (3), Rhodri (2)
+
+**Regnal names, female** (15): Elizabeth (6), Victoria (6), Mary (6), Gwenllian (4), Nest (4), Margaret (4), Elen (4), Gwladus (4), Siwan (3), Angharad (3), Catherine (3), Anne (3), Alexandra (3), Charlotte (3), Rhiannon (2)
+
+**Holy names** (24): David (6), Teilo (6), Dyfrig (6), Illtyd (4), Padarn (4), Beuno (4), Deiniol (4), Cadog (4), Winifred (3), Dwynwen (3), Melangell (3), Non (3), Cybi (3), Seiriol (3), Tydfil (2), Asaph (2), Dyfnog (2), Elian (2), Collen (2), Brynach (2), Cynog (2), Tysilio (2), Mary (2), Cadfan (2)
+
+**Holy forms**: Saint {n} (80), Sant {n} (10), Father {n} (10)
+
+**Ruler forms**: male King {m} (60), Prince {m} (40); female Queen {f} (60), Princess {f} (40)
+
+## Scottish
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): Duncan (10), Malcolm (10), Donald (10), Alexander (10), Angus (10), Alasdair (7), Gilbert (7), Fergus (7), Kenneth (7), Lachlan (7), Hugh (7), Ranald (7), Somerled (5), Murdoch (5), Colin (5), Ewan (5), Finlay (5), Neil (5), Dugald (5), Cormac (5), Walter (5), William (5), Andrew (5), John (5), James (3), Patrick (3), Archibald (3), Adam (3), Allan (3), Magnus (3), Torquil (3), Malise (3), Maurice (3), Gregor (3), Farquhar (3), Gillanders (3), Dougal (3), Thomas (3), Robertʳ (3), Davidʳ (3), Macbethʳ (2), Alan (2), Ingram (2), Roderick (2), Hector (2), Lulach (2), Domhnall (2), Eachann (2), Fingal (2), Iain (2), Kentigernˢ (2), Columbaˢ (2), Ninianˢ (2), Moluagˢ (2), Adomnanˢ (2), Gilchrist (2), Aulay (2), Tormod (2), Nicol (2), Bartholomew (2)
+
+**Female given names** (60): Margaret (10), Isabella (10), Marjory (10), Ada (10), Mairi (10), Euphemia (7), Elspeth (7), Janet (7), Christian (7), Agnes (7), Beatrix (7), Ellen (7), Mariota (5), Finola (5), Gruoch (5), Sorcha (5), Eva (5), Matilda (5), Joan (5), Marion (5), Annabella (5), Egidia (5), Muriel (5), Catherine (5), Alice (3), Cecilia (3), Helen (3), Elizabeth (3), Mary (3), Isobel (3), Mairead (3), Una (3), Fenella (3), Gormlaith (3), Grizel (3), Jean (3), Kirsty (3), Morag (3), Peigi (3), Seonag (3), Effie (2), Elspet (2), Eufemia (2), Giles (2), Ishbel (2), Lilias (2), Mora (2), Beathag (2), Ethne (2), Mor (2), Rhona (2), Brideˢ (2), Brigidˢ (2), Ethernan (2), Maelrubha (2), Dervorguilla (2), Affraic (2), Ysenda (2), Sibyl (2), Gunhild (2)
+
+**Surnames** (60): Campbell (10), Stewart (10), Douglas (10), Murray (10), Gordon (10), Fraser (7), Graham (7), Hamilton (7), Kerr (7), Scott (7), Ross (7), Sinclair (7), Munro (5), Macdonald (5), Maclean (5), Macleod (5), Mackay (5), Mackenzie (5), Macgregor (5), Maclachlan (5), Cameron (5), Grant (5), Menzies (5), Drummond (5), Leslie (3), Lindsay (3), Ogilvy (3), Hay (3), Keith (3), Seton (3), Bruce (3), Comyn (3), Balliol (3), Wallace (3), Maxwell (3), Johnstone (3), Armstrong (3), Elliot (3), Home (3), Cunningham (3), Boyd (2), Crichton (2), Erskine (2), Forbes (2), Gunn (2), Innes (2), Irvine (2), Lamont (2), Livingstone (2), Macneil (2), Matheson (2), Morrison (2), Robertson (2), Rose (2), Sutherland (2), Urquhart (2), Barclay (2), Ramsay (2), Kennedy (2), Carnegie (2)
+
+**Regnal names, male** (15): Malcolm (6), Alexander (6), David (6), Duncan (4), Robert (4), William (4), Donald (4), Kenneth (4), Macbeth (3), James (3), Edgar (3), Constantine (3), Indulf (3), Lulach (3), Edward (2)
+
+**Regnal names, female** (15): Margaret (6), Ada (6), Isabella (6), Marjory (4), Joan (4), Euphemia (4), Gruoch (4), Ethne (4), Elizabeth (3), Mary (3), Matilda (3), Eleanor (3), Annabella (3), Christian (3), Marie (2)
+
+**Holy names** (24): Columba (6), Kentigern (6), Ninian (6), Moluag (4), Adomnan (4), Margaret (4), Andrew (4), Machar (4), Serf (3), Cuthbert (3), Drostan (3), Fillan (3), Maelrubha (3), Brendan (3), Congal (2), Donnan (2), Bride (2), Mungo (2), Ethernan (2), Kessog (2), Blane (2), Comgall (2), Magnus (2), Duthac (2)
+
+**Holy forms**: Saint {n} (70), the Blessed {n} (15), Abbot {n} (10), Father {n} (5)
+
+**Ruler forms**: male King {m} (65), Earl {m} (20), Lord {m} (15); female Queen {f} (65), Lady {f} (25), Countess {f} (10)
+
+### modern (ST, MO)
+
+**Male given names** (60): John (10), James (10), William (10), Robert (10), Alexander (10), Thomas (7), David (7), Andrew (7), George (7), Donald (7), Duncan (7), Peter (7), Angus (5), Archibald (5), Hugh (5), Malcolm (5), Alan (5), Ian (5), Iain (5), Kenneth (5), Neil (5), Colin (5), Gordon (5), Stuart (5), Ross (3), Fraser (3), Murray (3), Euan (3), Callum (3), Alasdair (3), Gregor (3), Finlay (3), Lachlan (3), Rory (3), Craig (3), Gavin (3), Scott (3), Douglas (3), Graeme (3), Allan (3), Bruce (2), Roderick (2), Ewan (2), Hamish (2), Struan (2), Magnus (2), Fergus (2), Dugald (2), Mungo (2), Niall (2), Gillespie (2), Kerr (2), Ranald (2), Alister (2), Calum (2), Davy (2), Jock (2), Sandy (2), Hector (2), Dougal (2)
+
+**Female given names** (60): Margaret (10), Mary (10), Jean (10), Isabella (10), Agnes (10), Janet (7), Elizabeth (7), Helen (7), Catherine (7), Christina (7), Ann (7), Jessie (7), Williamina (5), Euphemia (5), Elspeth (5), Flora (5), Morag (5), Effie (5), Annabel (5), Isobel (5), Marion (5), Alison (5), Fiona (5), Kirsty (5), Moira (3), Shona (3), Sheena (3), Catriona (3), Mairi (3), Ishbel (3), Rhona (3), Morven (3), Eilidh (3), Ailsa (3), Isla (3), Lorna (3), Elsie (3), Nessie (3), Bessie (3), Mhairi (3), Kenna (2), Grizel (2), Peggy (2), Sine (2), Kirstin (2), Ina (2), Maisie (2), Alice (2), Ethel (2), Jemima (2), Lesley (2), Sandra (2), Dorothy (2), Irene (2), Joan (2), Rosemary (2), Alexandra (2), Cecilia (2), Kelsey (2), Eve (2)
+
+**Surnames** (60): Smith (10), Brown (10), Wilson (10), Campbell (10), Stewart (10), Thomson (7), Robertson (7), Anderson (7), Macdonald (7), Scott (7), Reid (7), Murray (7), Taylor (5), Clark (5), Ross (5), Young (5), Paterson (5), Mitchell (5), Watson (5), Morrison (5), Miller (5), Fraser (5), Davidson (5), Gray (5), Henderson (3), Hamilton (3), Johnston (3), Duncan (3), Graham (3), Ferguson (3), Kerr (3), Cameron (3), Hunter (3), Simpson (3), Boyd (3), Black (3), Marshall (3), Allan (3), Grant (3), Gibson (3), Kelly (2), Mackay (2), Mackenzie (2), Gordon (2), Russell (2), Wallace (2), Craig (2), Burns (2), Dickson (2), Dunbar (2), Muir (2), Lindsay (2), Sinclair (2), Shaw (2), Walker (2), Wright (2), Cunningham (2), Maclean (2), Macleod (2), Drummond (2)
+
+**Regnal names, male** (15): James (6), Robert (6), David (6), Charles (4), William (4), Alexander (4), George (4), Edward (4), Henry (3), John (3), Malcolm (3), Donald (3), Duncan (3), Kenneth (3), Hamish (2)
+
+**Regnal names, female** (15): Mary (6), Margaret (6), Elizabeth (6), Victoria (4), Anne (4), Alexandra (4), Charlotte (4), Isabella (4), Marjory (3), Euphemia (3), Ada (3), Joan (3), Catherine (3), Jane (3), Louise (2)
+
+**Holy names** (24): Columba (6), Kentigern (6), Ninian (6), Margaret (4), Andrew (4), Machar (4), Cuthbert (4), Drostan (4), Fillan (3), Maelrubha (3), Brendan (3), Donnan (3), Bride (3), Mungo (3), Ethernan (2), Kessog (2), Blane (2), Comgall (2), Magnus (2), Duthac (2), Serf (2), Moluag (2), Adomnan (2), Bega (2)
+
+**Holy forms**: Saint {n} (80), Father {n} (10), Blessed {n} (10)
+
+**Ruler forms**: male King {m} (70), Prince {m} (30); female Queen {f} (70), Princess {f} (30)
+
+## Irish
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): Brian (10), Conor (10), Cormac (10), Niall (10), Donal (10), Fergus (7), Murrough (7), Turlough (7), Hugh (7), Teigue (7), Dermot (7), Cathal (7), Owen (5), Rory (5), Lorcan (5), Finn (5), Aedan (5), Connor (5), Maelseachlain (5), Domhnall (5), Eochaid (5), Flann (5), Muirchertach (5), Ruaidri (5), Tadc (3), Diarmaid (3), Art (3), Cian (3), Oisin (3), Fiachra (3), Fintan (3), Colman (3), Ciaranˢ (3), Brendanˢ (3), Kevinˢ (3), Columbaˢ (3), Patrickˢ (3), Declanˢ (3), Finbarˢ (3), Comgallˢ (3), Aidanˢ (2), Eoghan (2), Gilla (2), Maelmordha (2), Ruairi (2), Aengus (2), Conall (2), Congal (2), Cuchulainn (2), Mac (2), Dara (2), Ultan (2), Fiachna (2), Senanˢ (2), Endaˢ (2), Lugaid (2), Nuadu (2), Sorley (2), Lochlann (2), Ardal (2)
+
+**Female given names** (60): Brigidˢ (10), Maeve (10), Grainne (10), Una (10), Sorcha (10), Eithne (7), Aoife (7), Mor (7), Gormlaith (7), Sive (7), Nuala (7), Finola (7), Deirdre (5), Niamh (5), Orla (5), Eileen (5), Caitlin (5), Sadb (5), Aine (5), Etain (5), Fionnuala (5), Mairead (5), Rosc (5), Moriath (5), Derbforgaill (3), Gormflaith (3), Cacht (3), Medb (3), Cliodna (3), Emer (3), Fedelm (3), Eimhear (3), Fand (3), Lasair (3), Liadan (3), Muirenn (3), Sadhbh (3), Scathach (3), Sinead (3), Tailltiu (3), Itaˢ (2), Dympnaˢ (2), Gobnaitˢ (2), Attractaˢ (2), Fidelma (2), Cainnech (2), Bebinn (2), Nessa (2), Mugain (2), Duibh (2), Maire (2), Sile (2), Eibhlin (2), Aibhilin (2), Catriona (2), Ailbhe (2), Cairenn (2), Dubhlaith (2), Mairin (2), Eilis (2)
+
+**Surnames** (60): O'Neill (10), O'Brien (10), O'Connor (10), O'Donnell (10), MacCarthy (10), O'Sullivan (7), Fitzgerald (7), Burke (7), Butler (7), Kavanagh (7), O'Reilly (7), MacMahon (7), O'Rourke (5), Maguire (5), MacDermot (5), O'Byrne (5), O'Toole (5), MacMurrough (5), O'Flaherty (5), O'Malley (5), O'Dowd (5), MacNamara (5), O'Hara (5), MacSweeney (5), O'Driscoll (3), O'Callaghan (3), O'Keeffe (3), MacGuinness (3), MacDonnell (3), O'Farrell (3), O'Hanlon (3), O'Kelly (3), O'Mahony (3), O'Moore (3), Quinn (3), O'Shea (3), O'Connell (3), Fitzpatrick (3), Dillon (3), Plunkett (3), Nugent (2), Barry (2), Roche (2), Power (2), Walsh (2), O'Doherty (2), MacCabe (2), O'Gara (2), O'Hagan (2), O'Higgins (2), O'Leary (2), O'Lynch (2), O'Meara (2), O'Mulligan (2), O'Nolan (2), O'Regan (2), O'Shaughnessy (2), O'Tierney (2), O'Dea (2), MacBride (2)
+
+**Regnal names, male** (15): Brian (6), Niall (6), Cormac (6), Domhnall (4), Muirchertach (4), Maelseachlain (4), Ruaidri (4), Turlough (4), Conn (3), Art (3), Fergus (3), Flann (3), Aedh (3), Cathal (3), Diarmait (2)
+
+**Regnal names, female** (15): Gormlaith (6), Medb (6), Sadhbh (6), Derbforgaill (4), Eithne (4), Nuala (4), Grainne (4), Aoife (4), Mor (3), Maeve (3), Ethlinn (3), Etain (3), Emer (3), Finola (3), Sorcha (2)
+
+**Holy names** (24): Patrick (6), Brigid (6), Columba (6), Brendan (4), Ciaran (4), Kevin (4), Declan (4), Finbar (4), Malachy (3), Laurence (3), Comgall (3), Aidan (3), Senan (3), Enda (3), Ita (2), Dympna (2), Gobnait (2), Attracta (2), Fintan (2), Colman (2), Kieran (2), Molaise (2), Mochua (2), Canice (2)
+
+**Holy forms**: Saint {n} (70), Naomh {n} (10), the Blessed {n} (10), Abbot {n} (10)
+
+**Ruler forms**: male King {m} (60), High King {m} (20), Lord {m} (20); female Queen {f} (70), Lady {f} (30)
+
+### modern (ST, MO)
+
+**Male given names** (60): Patrick (10), John (10), Michael (10), Thomas (10), James (10), Joseph (7), William (7), Peter (7), Daniel (7), Timothy (7), Denis (7), Cornelius (7), Jeremiah (5), Eugene (5), Brendan (5), Sean (5), Liam (5), Seamus (5), Kevin (5), Declan (5), Eamon (5), Cathal (5), Cian (5), Niall (5), Brian (3), Gerard (3), Francis (3), Martin (3), Mark (3), Paul (3), Anthony (3), Edward (3), Matthew (3), Barry (3), Dermot (3), Colm (3), Conor (3), Cormac (3), Owen (3), Fergal (3), Ronan (2), Fintan (2), Oisin (2), Donal (2), Kieran (2), Ciaran (2), Aidan (2), Enda (2), Dara (2), Eoin (2), Ruairi (2), Padraig (2), Tadhg (2), Tomas (2), Fionn (2), Turlough (2), Diarmuid (2), Lorcan (2), Ultan (2), Darragh (2)
+
+**Female given names** (60): Mary (10), Bridget (10), Margaret (10), Catherine (10), Anne (10), Nora (7), Johanna (7), Ellen (7), Kathleen (7), Norah (7), Winifred (7), Honora (7), Julia (5), Elizabeth (5), Teresa (5), Josephine (5), Eileen (5), Maureen (5), Sheila (5), Siobhan (5), Mairead (5), Aoife (5), Niamh (5), Orla (5), Sinead (3), Roisin (3), Grainne (3), Nuala (3), Deirdre (3), Maeve (3), Eithne (3), Clodagh (3), Fionnuala (3), Una (3), Bernadette (3), Rosaleen (3), Nancy (3), Peggy (3), Sally (3), Cathleen (3), Noreen (2), Brenda (2), Patricia (2), Geraldine (2), Marian (2), Veronica (2), Carmel (2), Imelda (2), Philomena (2), Concepta (2), Dympna (2), Attracta (2), Gobnait (2), Muireann (2), Aisling (2), Ciara (2), Sorcha (2), Rita (2), Maire (2), Aine (2)
+
+**Surnames** (60): Murphy (10), Kelly (10), O'Sullivan (10), Walsh (10), Smith (10), O'Brien (7), Byrne (7), Ryan (7), O'Connor (7), O'Neill (7), O'Reilly (7), Doyle (7), McCarthy (5), Gallagher (5), O'Doherty (5), Kennedy (5), Lynch (5), Murray (5), Quinn (5), Moore (5), McLoughlin (5), O'Carroll (5), Connolly (5), Daly (5), O'Connell (3), Wilson (3), Dunne (3), Brennan (3), Burke (3), Collins (3), Campbell (3), Clarke (3), Johnston (3), Hughes (3), O'Farrell (3), Fitzgerald (3), Brown (3), Martin (3), Maguire (3), Nolan (3), Flynn (2), Thompson (2), O'Callaghan (2), O'Donnell (2), Duffy (2), O'Mahony (2), Boyle (2), Healy (2), O'Shea (2), Sweeney (2), Hayes (2), Kavanagh (2), Power (2), McGrath (2), Moran (2), Brady (2), Stewart (2), Casey (2), Foley (2), Fitzpatrick (2)
+
+**Regnal names, male** (15): Brian (6), Niall (6), Cormac (6), Domhnall (4), Muirchertach (4), Turlough (4), Edward (4), George (4), William (3), Charles (3), Henry (3), John (3), James (3), Patrick (3), Eamon (2)
+
+**Regnal names, female** (15): Victoria (6), Elizabeth (6), Mary (6), Brigid (4), Maeve (4), Grainne (4), Alexandra (4), Charlotte (4), Anne (3), Margaret (3), Caroline (3), Eithne (3), Deirdre (3), Gormlaith (3), Catherine (2)
+
+**Holy names** (24): Patrick (6), Brigid (6), Columba (6), Brendan (4), Ciaran (4), Kevin (4), Declan (4), Finbar (4), Malachy (3), Laurence (3), Comgall (3), Aidan (3), Senan (3), Enda (3), Ita (2), Dympna (2), Gobnait (2), Attracta (2), Fintan (2), Colman (2), Kieran (2), Molaise (2), Canice (2), Fiacre (2)
+
+**Holy forms**: Saint {n} (80), Father {n} (10), Blessed {n} (10)
+
+**Ruler forms**: male King {m} (80), Prince {m} (20); female Queen {f} (80), Princess {f} (20)
+
+## Cornish
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): Jago (10), Piranˢ (10), Petrocˢ (10), Constantineˢ (10), Mawganˢ (10), Kenwyn (7), Ruanˢ (7), Cadoc (7), Gerensʳ (7), Cadan (7), Conan (7), Hamelin (7), John (5), William (5), Thomas (5), Henry (5), Nicholas (5), Roger (5), Walter (5), Ralph (5), Richard (5), Colan (5), Jory (5), Jowan (5), Peder (3), Pasco (3), Kitto (3), Hicca (3), Selyf (3), Tomas (3), Markʳ (3), Clement (3), Hugh (3), Geoffrey (3), Reginald (3), Robert (3), Stephen (3), Martin (3), Michael (3), Andrew (3), Peter (2), James (2), Simon (2), Adam (2), Roland (2), Odo (2), Osbert (2), Wolfstan (2), Ranulf (2), Gilbert (2), Baldwin (2), Hamo (2), Jordan (2), Warin (2), Wymund (2), Oliver (2), Serlo (2), Drew (2), Renfrey (2), Alured (2)
+
+**Female given names** (60): Wennaˢ (10), Morwennaˢ (10), Newlinaˢ (10), Iaˢ (10), Keyneˢ (10), Breacaˢ (7), Mabynˢ (7), Endelientaˢ (7), Elwynˢ (7), Joan (7), Alice (7), Margery (7), Elizabeth (5), Agnes (5), Joanna (5), Isolda (5), Katherine (5), Margaret (5), Jenifer (5), Tamsin (5), Eva (5), Matilda (5), Emma (5), Isabel (5), Avice (3), Amice (3), Cecily (3), Maud (3), Juliana (3), Sibyl (3), Johanna (3), Annora (3), Wenn (3), Gwenna (3), Hawise (3), Edith (3), Elena (3), Petronilla (3), Susanna (3), Beatrice (3), Clarice (2), Mariota (2), Rosa (2), Thomasina (2), Edyth (2), Dionisia (2), Lettice (2), Ysolt (2), Ellen (2), Eleanor (2), Philippa (2), Anne (2), Mabel (2), Julian (2), Lucy (2), Rose (2), Olive (2), Mary (2), Christian (2), Gillian (2)
+
+**Surnames** (60): Trevelyan (10), Tregarthen (10), Penrose (10), Polwhele (10), Trelawny (10), Tremayne (7), Trevanion (7), Carew (7), Arundell (7), Godolphin (7), Killigrew (7), Grenville (7), Trenance (5), Treloar (5), Tregellas (5), Trewin (5), Pascoe (5), Jago (5), Nance (5), Kitto (5), Rowse (5), Hocking (5), Angove (5), Bolitho (5), Chenoweth (3), Polkinghorne (3), Pengelly (3), Penhale (3), Trevaskis (3), Tregenza (3), Trethewey (3), Trevena (3), Trevorrow (3), Tonkin (3), Vivian (3), Opie (3), Pender (3), Pentreath (3), Provis (3), Retallack (3), Uren (2), Wearne (2), Roskilly (2), Rosewarne (2), Curnow (2), Hosking (2), Penhaligon (2), Nancarrow (2), Trebilcock (2), Polglase (2), Tremain (2), Tregear (2), Trevithick (2), Trembath (2), Trewhella (2), Tresidder (2), Treglown (2), Trezise (2), Truscott (2), Tyack (2)
+
+**Regnal names, male** (15): Mark (6), Conan (6), Gerens (6), Cadan (4), Constantine (4), Gereint (4), Cador (4), Donyarth (4), Hywel (3), Dungarth (3), Ruan (3), Selyf (3), Kenstec (3), Maenyrch (3), Mawgan (2)
+
+**Regnal names, female** (15): Ia (6), Wenna (6), Morwenna (6), Keyne (4), Jenifer (4), Isolda (4), Ysolt (4), Tamsin (4), Elwyn (3), Breaca (3), Mabyn (3), Endelienta (3), Newlina (3), Gwenna (3), Eva (2)
+
+**Holy names** (24): Piran (6), Petroc (6), Constantine (6), Mawgan (4), Ruan (4), Tudy (4), Budoc (4), Cadoc (4), Kea (3), Germoe (3), Gluvias (3), Neot (3), Samson (3), Winnoc (3), Cleer (2), Morwenna (2), Wenna (2), Newlina (2), Ia (2), Keyne (2), Breaca (2), Mabyn (2), Endelienta (2), Elwyn (2)
+
+**Holy forms**: Saint {n} (75), Sen {n} (15), Abbot {n} (10)
+
+**Ruler forms**: male King {m} (60), Earl {m} (20), Lord {m} (20); female Queen {f} (60), Lady {f} (40)
+
+### modern (ST, MO)
+
+**Male given names** (60): John (10), William (10), Thomas (10), James (10), Richard (10), Henry (7), Samuel (7), Joseph (7), Nicholas (7), Peter (7), George (7), Charles (7), Edward (5), Francis (5), Walter (5), Alfred (5), Albert (5), Arthur (5), Stephen (5), Jack (5), Tom (5), Jago (5), Piran (5), Kitto (5), Jory (3), Pasco (3), Ken (3), Trevor (3), Tristan (3), Kenver (3), Mark (3), Michael (3), David (3), Robert (3), Philip (3), Roger (3), Harry (3), Fred (3), Ernest (3), Percy (3), Reginald (2), Cyril (2), Leonard (2), Colin (2), Keith (2), Roy (2), Brian (2), Graham (2), Malcolm (2), Alan (2), Derek (2), Gerald (2), Barry (2), Terry (2), Clive (2), Jowan (2), Peder (2), Dylan (2), Ben (2), Josh (2)
+
+**Female given names** (60): Mary (10), Elizabeth (10), Jane (10), Ann (10), Grace (10), Emma (7), Sarah (7), Susan (7), Margaret (7), Catherine (7), Tamsin (7), Demelza (7), Morwenna (5), Jenifer (5), Kerensa (5), Wenna (5), Loveday (5), Lowena (5), Eseld (5), Tegen (5), Gwenna (5), Amy (5), Alice (5), Florence (5), Ethel (3), Edith (3), Emily (3), Lilian (3), Doris (3), Dorothy (3), Winifred (3), Gladys (3), Hilda (3), Violet (3), Joan (3), Betty (3), Eileen (3), Kathleen (3), Barbara (3), Pamela (3), Brenda (2), Maureen (2), Joyce (2), Audrey (2), Phyllis (2), Vera (2), Muriel (2), Hannah (2), Rachel (2), Rebecca (2), Charlotte (2), Louisa (2), Eliza (2), Caroline (2), Clara (2), Ellen (2), Janet (2), Judith (2), Carol (2), Linda (2)
+
+**Surnames** (60): Pascoe (10), Penrose (10), Trevithick (10), Tregear (10), Trevelyan (10), Polglase (7), Penhaligon (7), Trewin (7), Nancarrow (7), Tremain (7), Treloar (7), Trebilcock (7), Hocking (5), Jago (5), Kitto (5), Rowe (5), Hosking (5), Curnow (5), Bolitho (5), Chenoweth (5), Angove (5), Carne (5), Cock (5), Couch (5), Eddy (3), Roskilly (3), Rosewarne (3), Polkinghorne (3), Tregenza (3), Trethewey (3), Trevena (3), Trevorrow (3), Tonkin (3), Vivian (3), Williams (3), Pearce (3), Hicks (3), Nicholls (3), Opie (3), Pender (3), Pentreath (2), Provis (2), Retallack (2), Rule (2), Sleep (2), Thomas (2), Tremelling (2), Uren (2), Wearne (2), Mitchell (2), Harvey (2), Bray (2), Tippett (2), Hitchens (2), Chegwidden (2), Dunstan (2), Nankivell (2), Trudgeon (2), Tuckett (2), Rickard (2)
+
+**Regnal names, male** (15): Mark (6), Conan (6), Gerens (6), Cadan (4), Constantine (4), Gereint (4), Cador (4), Edward (4), George (3), William (3), Charles (3), Henry (3), Arthur (3), Richard (3), Philip (2)
+
+**Regnal names, female** (15): Victoria (6), Elizabeth (6), Alexandra (6), Mary (4), Charlotte (4), Caroline (4), Ia (4), Wenna (4), Morwenna (3), Jenifer (3), Isolda (3), Tamsin (3), Anne (3), Margaret (3), Catherine (2)
+
+**Holy names** (24): Piran (6), Petroc (6), Constantine (6), Mawgan (4), Ruan (4), Tudy (4), Budoc (4), Kea (4), Germoe (3), Gluvias (3), Neot (3), Samson (3), Winnoc (3), Cleer (3), Morwenna (2), Wenna (2), Newlina (2), Ia (2), Keyne (2), Breaca (2), Mabyn (2), Endelienta (2), Elwyn (2), Meriadoc (2)
+
+**Holy forms**: Saint {n} (80), Sen {n} (10), Father {n} (10)
+
+**Ruler forms**: male King {m} (70), Prince {m} (30); female Queen {f} (70), Princess {f} (30)
+
+## Scandinavian (Norse)
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): Bjorn (10), Ivar (10), Gunnar (10), Leif (10), Thorfinn (10), Thorkell (7), Ulf (7), Halfdan (7), Sigurd (7), Ketil (7), Ragnar (7), Thord (7), Arnor (5), Eyvind (5), Grim (5), Hallvard (5), Hrafn (5), Ingvar (5), Kol (5), Orm (5), Rolf (5), Skuli (5), Steinar (5), Thorir (5), Thorgeir (3), Thorvald (3), Asgeir (3), Atli (3), Audun (3), Bard (3), Egil (3), Einar (3), Finn (3), Geir (3), Gisli (3), Glum (3), Gudmund (3), Gunnlaug (3), Hallbjorn (3), Helgi (3), Hjalmar (2), Kari (2), Ottar (2), Rognvald (2), Snorri (2), Sturla (2), Thorstein (2), Svein (2), Torf (2), Vermund (2), Haraldʳ (2), Olafʳ (2), Svenʳ (2), Knutʳ (2), Hakonʳ (2), Magnusʳ (2), Erikʳ (2), Alf (2), Hauk (2), Starkad (2)
+
+**Female given names** (60): Ragnhild (10), Sigrid (10), Astrid (10), Gunnhild (10), Ingrid (10), Thora (7), Freydis (7), Aslaug (7), Gudrun (7), Helga (7), Ingeborg (7), Torunn (7), Gyda (5), Thyri (5), Ragna (5), Hild (5), Unn (5), Svanhild (5), Yrsa (5), Aud (5), Bergljot (5), Estrid (5), Gerd (5), Halldis (5), Jorunn (3), Alfhild (3), Arnbjorg (3), Asa (3), Bera (3), Dagny (3), Eir (3), Fridgerd (3), Gro (3), Gunnvor (3), Halla (3), Herdis (3), Hrefna (3), Ingigerd (3), Jofrid (3), Katla (3), Kolfinna (2), Ljot (2), Melkorka (2), Olof (2), Ranveig (2), Rafarta (2), Sigrun (2), Sunnivaˢ (2), Thordis (2), Thorgerd (2), Thorhild (2), Thurid (2), Valgerd (2), Vigdis (2), Oddny (2), Ulfhild (2), Borghild (2), Gudny (2), Hallgerd (2), Thorun (2)
+
+**Surnames**: none (see notes)
+
+**Regnal names, male** (15): Harald (6), Olaf (6), Sven (6), Knut (4), Erik (4), Hakon (4), Magnus (4), Sigurd (4), Gorm (3), Halfdan (3), Eystein (3), Inge (3), Valdemar (3), Christian (3), Gustav (2)
+
+**Regnal names, female** (15): Margaret (6), Ingeborg (6), Astrid (6), Sigrid (4), Gunnhild (4), Thyra (4), Ragnhild (4), Sophia (4), Dagmar (3), Philippa (3), Eufemia (3), Christina (3), Elizabeth (3), Ulvhild (3), Katarina (2)
+
+**Holy names** (24): Olaf (6), Knut (6), Eric (6), Magnus (4), Sunniva (4), Anskar (4), Birgitta (4), Henrik (4), Sigfrid (3), Thorlak (3), Nicholas (3), Hallvard (3), Eskil (3), Rimbert (3), Willibrord (2), Elin (2), Helena (2), Gudmund (2), Thorfinn (2), Botolph (2), Ragnhild (2), Kjeld (2), Margit (2), Katarina (2)
+
+**Holy forms**: Saint {n} (75), the Blessed {n} (15), Bishop {n} (10)
+
+**Ruler forms**: male King {m} (70), Jarl {m} (15), Prince {m} (15); female Queen {f} (70), Lady {f} (30)
+
+### modern (ST, MO)
+
+**Male given names** (60): Anders (10), Lars (10), Nils (10), Karl (10), Johan (10), Erik (7), Olaf (7), Per (7), Jens (7), Hans (7), Sven (7), Gustav (7), Axel (5), Magnus (5), Bjorn (5), Thor (5), Henrik (5), Ole (5), Peter (5), Knud (5), Niels (5), Jorgen (5), Soren (5), Anton (5), Emil (3), Oscar (3), Viktor (3), Einar (3), Leif (3), Arne (3), Rolf (3), Kjell (3), Torsten (3), Ulf (3), Gunnar (3), Harald (3), Sigurd (3), Eskil (3), Bengt (3), Stig (3), Lennart (2), Sture (2), Folke (2), Ragnar (2), Tore (2), Ingvar (2), Halvard (2), Kristian (2), Mikael (2), Daniel (2), Jonas (2), Mattias (2), Fredrik (2), Rasmus (2), Mads (2), Thomas (2), Jan (2), Ivar (2), Birger (2), Hakon (2)
+
+**Female given names** (60): Anna (10), Karin (10), Ingrid (10), Astrid (10), Sigrid (10), Marta (7), Kristina (7), Margit (7), Elsa (7), Greta (7), Maja (7), Elin (7), Britta (5), Birgit (5), Gunhild (5), Hanna (5), Ida (5), Ingeborg (5), Signe (5), Sofie (5), Lena (5), Eva (5), Inger (5), Berit (5), Solveig (3), Liv (3), Hilde (3), Tora (3), Else (3), Dagny (3), Gerda (3), Helga (3), Thea (3), Freja (3), Annika (3), Maria (3), Margareta (3), Elisabet (3), Brita (3), Kerstin (3), Lisbeth (2), Ulla (2), Gunilla (2), Monica (2), Ulrika (2), Camilla (2), Malin (2), Emma (2), Linnea (2), Sara (2), Hedda (2), Kari (2), Randi (2), Marit (2), Synnove (2), Sunniva (2), Tuva (2), Nora (2), Ebba (2), Aase (2)
+
+**Surnames** (60): Andersson (10), Johansson (10), Karlsson (10), Nilsson (10), Eriksson (10), Larsson (7), Olsson (7), Persson (7), Svensson (7), Gustafsson (7), Pettersson (7), Jonsson (7), Jansson (5), Hansson (5), Bengtsson (5), Jonasson (5), Lindberg (5), Lindgren (5), Lindqvist (5), Berg (5), Holm (5), Dahl (5), Lund (5), Nyberg (5), Strand (3), Sandberg (3), Ek (3), Forsberg (3), Hedlund (3), Nordin (3), Hansen (3), Jensen (3), Nielsen (3), Pedersen (3), Christensen (3), Larsen (3), Sorensen (3), Rasmussen (3), Jorgensen (3), Madsen (3), Olsen (2), Johansen (2), Andersen (2), Halvorsen (2), Haugen (2), Bakke (2), Kristiansen (2), Berge (2), Moe (2), Solberg (2), Dahlberg (2), Lindholm (2), Ahlberg (2), Blom (2), Engstrom (2), Wallin (2), Sjoberg (2), Falk (2), Lundgren (2), Nordstrom (2)
+
+**Regnal names, male** (15): Oscar (6), Gustav (6), Karl (6), Haakon (4), Olav (4), Frederik (4), Christian (4), Harald (4), Magnus (3), Knud (3), Valdemar (3), Eric (3), Adolf (3), Birger (3), Johan (2)
+
+**Regnal names, female** (15): Margrethe (6), Silvia (6), Ingrid (6), Louise (4), Victoria (4), Sophia (4), Astrid (4), Maud (4), Alexandrine (3), Desiree (3), Josephine (3), Lovisa (3), Margaretha (3), Sonja (3), Ulrika (2)
+
+**Holy names** (24): Anskar (6), Birgitta (6), Olaf (6), Knut (4), Eric (4), Magnus (4), Sunniva (4), Henrik (4), Sigfrid (3), Nicholas (3), Hallvard (3), Eskil (3), Elin (3), Helena (3), Katarina (2), Margit (2), Gudmund (2), Thorlak (2), Willibrord (2), Rimbert (2), Lucia (2), Botolph (2), Kjeld (2), Ragnhild (2)
+
+**Holy forms**: Saint {n} (80), Father {n} (10), Blessed {n} (10)
+
+**Ruler forms**: male King {m} (80), Prince {m} (20); female Queen {f} (80), Princess {f} (20)
+
+## German
+
+### historic (AN, MD, EM)
+
+**Male given names** (60): Hans (10), Heinrich (10), Konrad (10), Friedrich (10), Johann (10), Ulrich (7), Albrecht (7), Dietrich (7), Wolfgang (7), Gottfried (7), Berthold (7), Rudolf (7), Siegfried (5), Ludwig (5), Walter (5), Hermann (5), Gerhard (5), Wilhelm (5), Karl (5), Peter (5), Nikolaus (5), Eberhard (5), Burkhard (5), Gunther (5), Heinz (3), Kunz (3), Ruprecht (3), Arnold (3), Bernhard (3), Gebhard (3), Hartmann (3), Lothar (3), Werner (3), Wolfram (3), Hugo (3), Lorenz (3), Michael (3), Matthias (3), Jakob (3), Georg (3), Andreas (2), Martin (2), Paul (2), Thomas (2), Erhard (2), Goetz (2), Kaspar (2), Melchior (2), Balthasar (2), Veit (2), Ambros (2), Anselm (2), Ottoʳ (2), Sigismundʳ (2), Maximilianʳ (2), Leopoldʳ (2), Albert (2), Philipp (2), Marquard (2), Eckhart (2)
+
+**Female given names** (60): Adelheid (10), Kunigundeˢ (10), Mechthild (10), Gertrud (10), Hedwigˢ (10), Elisabeth (7), Agnes (7), Anna (7), Margarethe (7), Katharina (7), Barbara (7), Ursula (7), Dorothea (5), Sophia (5), Irmgard (5), Hildegard (5), Gisela (5), Bertha (5), Richardis (5), Uta (5), Kriemhild (5), Brunhild (5), Oda (5), Walpurgaˢ (5), Ottilieˢ (3), Odilia (3), Adelgund (3), Agathe (3), Apollonia (3), Benigna (3), Brigitta (3), Christine (3), Clara (3), Cordula (3), Ermengard (3), Eva (3), Gerlinde (3), Jutta (3), Lucia (3), Magdalena (3), Margret (2), Marie (2), Mathilde (2), Regina (2), Sabina (2), Sibylla (2), Susanna (2), Veronika (2), Walburga (2), Wiltrud (2), Bertrada (2), Gerburg (2), Hiltrud (2), Adelina (2), Liutgard (2), Gudrun (2), Ermentrud (2), Elsbeth (2), Hemma (2), Irmentrud (2)
+
+**Surnames** (60): Schmid (10), Muller (10), Weber (10), Fischer (10), Bauer (10), Meier (7), Schneider (7), Becker (7), Wagner (7), Koch (7), Richter (7), Schulze (7), Kramer (5), Kaufmann (5), Gerber (5), Fleischer (5), Zimmermann (5), Maurer (5), Schuster (5), Bader (5), Binder (5), Kessler (5), Sattler (5), Wolf (5), Hofmann (3), Schroder (3), Braun (3), Kruger (3), Hartmann (3), Lange (3), Werner (3), Krause (3), Lehmann (3), Konig (3), Walter (3), Huber (3), Kaiser (3), Fuchs (3), Peters (3), Lang (3), Scholz (2), Weiss (2), Jung (2), Hahn (2), Vogel (2), Friedrich (2), Keller (2), Gunther (2), Frank (2), Berger (2), Winkler (2), Roth (2), Beck (2), Lorenz (2), Baumann (2), Ritter (2), Jager (2), Forster (2), Brandt (2), Seidel (2)
+
+**Regnal names, male** (15): Otto (6), Heinrich (6), Konrad (6), Friedrich (4), Ludwig (4), Karl (4), Rudolf (4), Albrecht (4), Sigismund (3), Maximilian (3), Philipp (3), Wenzel (3), Lothar (3), Arnulf (3), Ferdinand (2)
+
+**Regnal names, female** (15): Adelheid (6), Theophanu (6), Kunigunde (6), Gisela (4), Beatrix (4), Matilda (4), Richenza (4), Agnes (4), Bertha (3), Konstanze (3), Margarete (3), Elisabeth (3), Anna (3), Maria (3), Eleonore (2)
+
+**Holy names** (24): Boniface (6), Elisabeth (6), Hildegard (6), Albert (4), Ulrich (4), Willibald (4), Kilian (4), Gall (4), Otmar (3), Wolfgang (3), Bruno (3), Norbert (3), Konrad (3), Bernward (3), Adalbert (2), Ansgar (2), Lambert (2), Gertrud (2), Hedwig (2), Kunigunde (2), Walburga (2), Ottilie (2), Odilia (2), Mechthild (2)
+
+**Holy forms**: Saint {n} (70), Sankt {n} (10), the Blessed {n} (10), Bishop {n} (10)
+
+**Ruler forms**: male King {m} (40), Emperor {m} (30), Duke {m} (15), Margrave {m} (15); female Queen {f} (40), Empress {f} (30), Duchess {f} (30)
+
+### modern (ST, MO)
+
+**Male given names** (60): Hans (10), Karl (10), Wilhelm (10), Friedrich (10), Heinrich (10), Hermann (7), Otto (7), Paul (7), Walter (7), Ernst (7), Fritz (7), Franz (7), Josef (5), Georg (5), Max (5), Ludwig (5), August (5), Emil (5), Richard (5), Kurt (5), Rudolf (5), Gustav (5), Albert (5), Werner (5), Gerhard (3), Helmut (3), Horst (3), Klaus (3), Dieter (3), Jurgen (3), Peter (3), Wolfgang (3), Manfred (3), Gunter (3), Heinz (3), Uwe (3), Rolf (3), Bernd (3), Jens (3), Stefan (3), Michael (2), Thomas (2), Andreas (2), Frank (2), Matthias (2), Markus (2), Lars (2), Jan (2), Tobias (2), Felix (2), Lukas (2), Johann (2), Bruno (2), Erich (2), Willi (2), Alfred (2), Ralf (2), Dirk (2), Volker (2), Reinhard (2)
+
+**Female given names** (60): Anna (10), Maria (10), Margarete (10), Elisabeth (10), Marie (10), Frieda (7), Emma (7), Martha (7), Berta (7), Hedwig (7), Elsa (7), Else (7), Emilie (5), Auguste (5), Luise (5), Klara (5), Helene (5), Gertrud (5), Ida (5), Johanna (5), Katharina (5), Therese (5), Ingeborg (5), Erika (5), Ursula (3), Hildegard (3), Ilse (3), Gisela (3), Renate (3), Brigitte (3), Monika (3), Ingrid (3), Christa (3), Helga (3), Karin (3), Petra (3), Sabine (3), Susanne (3), Andrea (3), Claudia (3), Birgit (2), Heike (2), Anja (2), Katja (2), Nicole (2), Julia (2), Sandra (2), Sarah (2), Lena (2), Laura (2), Lisa (2), Hannah (2), Charlotte (2), Sophie (2), Greta (2), Lotte (2), Paula (2), Frida (2), Irene (2), Lieselotte (2)
+
+**Surnames** (60): Muller (10), Schmidt (10), Schneider (10), Fischer (10), Weber (10), Meyer (7), Wagner (7), Becker (7), Schulz (7), Hoffmann (7), Schafer (7), Koch (7), Bauer (5), Richter (5), Klein (5), Wolf (5), Schroder (5), Neumann (5), Schwarz (5), Zimmermann (5), Braun (5), Kruger (5), Hofmann (5), Hartmann (5), Lange (3), Schmitt (3), Werner (3), Krause (3), Meier (3), Lehmann (3), Schmid (3), Schulze (3), Maier (3), Kohler (3), Herrmann (3), Konig (3), Walter (3), Mayer (3), Huber (3), Kaiser (3), Fuchs (2), Peters (2), Lang (2), Scholz (2), Moller (2), Weiss (2), Jung (2), Hahn (2), Schubert (2), Vogel (2), Friedrich (2), Keller (2), Gunther (2), Frank (2), Berger (2), Winkler (2), Roth (2), Beck (2), Lorenz (2), Schumacher (2)
+
+**Regnal names, male** (15): Wilhelm (6), Friedrich (6), Ludwig (6), Karl (4), Franz (4), Ferdinand (4), Maximilian (4), Leopold (4), Otto (3), Ernst (3), Georg (3), Albert (3), August (3), Heinrich (3), Johann (2)
+
+**Regnal names, female** (15): Augusta (6), Victoria (6), Luise (6), Charlotte (4), Elisabeth (4), Sophie (4), Marie (4), Wilhelmine (4), Auguste (3), Friederike (3), Maria (3), Karoline (3), Amalie (3), Dorothea (3), Alexandra (2)
+
+**Holy names** (24): Boniface (6), Elisabeth (6), Hildegard (6), Albert (4), Ulrich (4), Willibald (4), Kilian (4), Gall (4), Otmar (3), Wolfgang (3), Bruno (3), Norbert (3), Konrad (3), Bernward (3), Adalbert (2), Ansgar (2), Lambert (2), Gertrud (2), Hedwig (2), Kunigunde (2), Walburga (2), Ottilie (2), Odilia (2), Edith (2)
+
+**Holy forms**: Saint {n} (60), Sankt {n} (20), Father {n} (10), Blessed {n} (10)
+
+**Ruler forms**: male Kaiser {m} (35), King {m} (35), Prince {m} (30); female Kaiserin {f} (35), Queen {f} (35), Princess {f} (30)
+
+
+## Slot forms (brief §3.4)
+
+`{g}` a given name, `{s}` a surname, `{t}` an official's title, `{r}` a ruler form filled with a regnal name, `{rm}` and `{rf}` a regnal name alone, `{h}` a holy form filled with a holy name. Where a period has no surnames, the second column applies.
+
+| Slot (labels that use it) | With surnames | Without surnames | Sex of the given name |
+|---|---|---|---|
+| founder (founder, explorer, commander, conqueror) | `{s}` 60, `{g} {s}` 15, `{g}` 25 | `{g}` 100 | male 90, female 10 |
+| official (official, patron, sponsor, benefactor) | `{s}` 50, `{t} {s}` 30, `{g} {s}` 20 | `{t} {g}` 50, `{g}` 50 | male 90, female 10 |
+| person (person, personal name, hero, owner, leader, captain, admiral, president, boss, author, smith, lord, sire, alpha) | `{g}` 85, `{s}` 15 | `{g}` 100 | male 70, female 30 |
+| monarch (monarch, ruler, sultan, royal) | `{r}` 50, `{rm}` 50 | the same | male |
+| royalWoman (royal woman) | `{rf}` 70, "Queen {rf}" 30 | the same | female |
+| dynasty | `{s}` 100 | `{g}` 100 | – |
+| house | `{s}` 70, "House of {s}" 30 | "House of {g}" 100 | – |
+| holy (holy person, prophet) | `{h}` 100 | the same | – |
+| givenMale (name, father, man's name), givenFemale (woman's name), given (child) | `{gm}`, `{gf}` or `{g}` 100 | the same | given: male 50, female 50 |
+
+The extra labels (benefactor, hero, owner and the rest) are the ones the M1 label sweep found beyond the brief's table; each reads the slot form shown. The sex shares and the "without surnames" forms are my choices; the brief fixes only the "with surnames" column for the first five slots.
+
+Titles for officials (`{t}`) come from the titles module's office kind in the culture's bynames culture: Anglo-Saxon and Norman & British read their own; Welsh, Scottish, Irish and Cornish read Celtic; Scandinavian reads Norse; German reads General (the bynames module has no German list). The filler resolves the title at fill time from `officeWord` and `ranks` in `bynames.json`.
+
+## How a culture, region and era pick a table
+
+- **Period:** AN, MD and EM read `historic`; ST and MO read `modern`. NF and IS read `modern`, with 25% of names drawn from other cultures' `modern` lists, each culture weighted 3 if it is in the same lens family (British, Germanic) and 1 if not. Only cultures that have a `modern` table take part, so Anglo-Saxon never does.
+- **General** reads Norman & British. **Norse** reads Scandinavian.
+- **Anglo-Saxon** has only a `historic` table; in the steam age and later it reads Norman & British `modern`.
+- **Celtic** with no region draws evenly from Welsh, Scottish, Irish and Cornish. Region WAL gives Welsh; COR gives Cornish; SBL, SLO, SHH and NSI give Scottish. Any other region leaves Celtic drawing evenly. The Welsh, Scottish and Cornish views therefore have tables of their own, so they now differ in every module that fills person slots.
+- A culture with no table yet (the second tier) resolves to nothing, and its brackets stay as they are until M3.
+
+## Notes for review
+
+- **Patronymics.** Anglo-Saxon, Scandinavian (historic) and Welsh (historic) have no surname list: those cultures named people by patronymic, and the slot forms fall back to the given name. If you would rather they had "son of" forms, that is a change to the slot forms, not to these lists.
+- **Weights.** Weights follow each list's order, not counts from records: the first five names weigh 10, the next seven 7, then 5, 3 and 2. The regnal and holy lists use 6, 4, 3 and 2. Reorder a list to change who is common.
+- **Royal and saintly names.** Given-name and surname lists mark royal and saintly bearers with `r` and `s`, at most 12 of 60 (a test checks it). I marked only names kept mainly for such a bearer (Alfred, Edmund, Oswald, Dunstan and the like), not common names that a king happened to have (William, Henry). Regnal and holy lists are royal or saintly by nature and are exempt.
+- **Spelling.** Old English names are in their usual modern English forms (Ethelred, Athelstan, Godwin), without ligatures or diacritics. Welsh names keep Welsh spelling where that is the usual English form (Llywelyn, Owain, Rhys) and are anglicised elsewhere (Griffith, Madoc, Meredith). Irish names are anglicised (Dermot, Teigue, Rory) except where the Irish spelling is itself usual in English (Aoife, Niamh, Siobhan). German and Scandinavian names drop umlauts and the Scandinavian ø and å (Jurgen, Bjorn, Aase).
+- **Thin attestation.** Cornish `historic` is the thinnest period: few personal names survive from medieval Cornwall. Its list mixes the Cornish forms that did (Jago, Jory, Jowan, Peder, Pasco, Kitto, Colan, Hicca, Selyf), the Anglo-Norman names every English county used, and the Cornish saints' names (Piran, Petroc, Mawgan, Ruan). The women's list leans on saints and on the Anglo-Norman names. Cornish surnames (Tre-, Pol-, Pen-) became hereditary from the fourteenth century.
+- **Celtic overlaps.** Welsh, Scottish and Irish `modern` lists share some common British names (John, William, Mary); the differences are in the Gaelic and Welsh names and the surnames.
+- **Where I am least sure.** A few Old English and early Welsh and Irish women's names (Leofgyth, Wulfgyth, Ealhhild, Generys, Dubhlaith, Cairenn) are attested but rare; say if you would rather drop them for commoner names.
+- **No famous full names.** Given names and surnames are drawn separately. The `blocked` list of famous real full names arrives at M6.

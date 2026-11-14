@@ -399,6 +399,8 @@ test("every culture key in any data table is one the lens knows", () => {
   const seen = { objects: 0 };
   const check = (ck: string, where: string) => {
     seen.objects++;
+    // The people tables are keyed by lens culture (brief §3.2), including the planned Welsh, Scottish, Irish, Cornish and German.
+    if (where.startsWith("people.json") && LENS_CULTURES.some((c) => c.key === ck)) return;
     if (!known.has(ck.replace(/^!/, ""))) unknown.push(`${where}: ${ck}`);
   };
   const walk = (value: unknown, file: string, path: string) => {
