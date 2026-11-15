@@ -3,6 +3,7 @@
 
 import lensData from "./data/lens.json";
 import north from "./data/north5a.json";
+import north5b from "./data/north5b.json";
 
 type Row = Record<string, number>;
 type Rows = Record<string, Row>;
@@ -90,7 +91,7 @@ export const regionWeighted = (rows: Record<string, Record<string, number>>, tag
 
 // ── §11.3: no noun twice in a batch ─────────────────────────────────────────
 
-const NOUN_POOLS = new Set<string>(NORTH.nounPools);
+const NOUN_POOLS = new Set<string>([...NORTH.nounPools, ...((north5b as unknown as { nounPools?: string[] }).nounPools ?? [])]);
 const NOUN_USE = new WeakMap<object, Map<string, number>>();
 const NOUN_LIMIT = 2;
 

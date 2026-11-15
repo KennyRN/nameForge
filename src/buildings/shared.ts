@@ -3,6 +3,7 @@
 // renderer and the batch loop. Moved out of buildings/engine.ts unchanged, so buildings draws the same
 // names for the same seed. No Obsidian imports.
 
+import { freshNouns, noteNoun } from "../northData";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import buildingData from "../data/building-names.json";
 import {
@@ -71,8 +72,10 @@ export function vocabPool(ctx: BaseCtx, pool: string): [VocabEntry, number][] {
 }
 
 export function fromPool(ctx: BaseCtx, pool: string, items: [VocabEntry, number][], use = false): string | undefined {
-  const e = pickWeighted(items, ctx.rng);
+  // Brief 5b §11.3 (as 5a): a culture noun is drawn at most twice in a batch.
+  const e = pickWeighted(freshNouns(ctx.rng, pool, items), ctx.rng);
   if (!e) return undefined;
+  noteNoun(ctx.rng, pool, e.w);
   for (const t of e.t ?? []) ctx.drawn.add(t);
   ctx.words.push({ pool, word: e.w });
   if (use) ctx.uses.push(`q:${e.w}`);

@@ -158,17 +158,14 @@
      "fantastic"
     ],
     "NF": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "IS": [
-     "plain"
+     "plain",
+     "fantastic"
     ]
-   },
-   "views": [
-    "welsh",
-    "scottish",
-    "cornish"
-   ]
+   }
   },
   "innNames": {
    "family": "A",
@@ -224,12 +221,7 @@
      "plain",
      "fantastic"
     ]
-   },
-   "views": [
-    "welsh",
-    "scottish",
-    "cornish"
-   ]
+   }
   },
   "buildingNames": {
    "family": "A",
@@ -285,12 +277,7 @@
      "plain",
      "fantastic"
     ]
-   },
-   "views": [
-    "welsh",
-    "scottish",
-    "cornish"
-   ]
+   }
   },
   "monumentNames": {
    "family": "A",
@@ -337,17 +324,14 @@
      "fantastic"
     ],
     "NF": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "IS": [
-     "plain"
+     "plain",
+     "fantastic"
     ]
-   },
-   "views": [
-    "welsh",
-    "scottish",
-    "cornish"
-   ]
+   }
   },
   "settlementKit": {
    "family": "A",
@@ -403,12 +387,7 @@
      "plain",
      "fantastic"
     ]
-   },
-   "views": [
-    "welsh",
-    "scottish",
-    "cornish"
-   ]
+   }
   },
   "seasLakes": {
    "family": "A",

@@ -28,6 +28,8 @@ import {
 import { mulberry32 } from "../markov";
 import {
   BRITISH_CULTURES,
+  readsRegions,
+  regionOf,
   breaksRouteWords,
   countedWords,
   findRouteCulture,
@@ -49,6 +51,9 @@ import { monumentBlockSet, monumentName } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, contextTown, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { cultureSet } from "../lens";
+import { balanceRegion, balanceSignature, freshNouns, noteNoun, REGION_SHARE, regionSeed, shapesOf, SIGNATURE_SHARE } from "../northData";
+import { mapShapes, NORTH5B } from "../northData5b";
+
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -253,8 +258,10 @@ function vocabPool(ctx: Ctx, pool: string, region = ctx.region): [VocabEntry, nu
 }
 
 function fromPool(ctx: Ctx, pool: string, items: [VocabEntry, number][]): string | undefined {
-  const e = pickWeighted(items, ctx.rng);
+  // Brief 5b §11.3 (as 5a): a culture noun is drawn at most twice in a batch.
+  const e = pickWeighted(freshNouns(ctx.rng, pool, items), ctx.rng);
   if (!e) return undefined;
+  noteNoun(ctx.rng, pool, e.w);
   for (const t of e.t ?? []) ctx.drawn.add(t);
   ctx.words.push({ pool, word: e.w });
   return e.w;
@@ -628,17 +635,22 @@ function shapeWeight(ctx: Ctx, s: StreetShape): number {
   return w;
 }
 
-const live = (ctx: Ctx, shapes: StreetShape[], only?: string): [StreetShape, number][] =>
-  shapes
+const live = (ctx: Ctx, shapes: StreetShape[], only?: string): [StreetShape, number][] => {
+  const plans = shapes
     .filter((s) => !only || s.p === only)
     .map((s): [StreetShape, number] => [s, shapeWeight(ctx, s)])
     .filter(([, w]) => w > 0);
+  // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
+  const regional = (s: StreetShape) => !!(s as { rg?: boolean }).rg && !!ctx.region;
+  const signed = balanceSignature(plans, (s) => !!(s as { sig?: boolean }).sig, regional);
+  return ctx.region ? balanceRegion(signed, regional) : signed;
+};
 
 /** §8.1–§8.2: street shapes; in the near future and beyond, sci-fi shapes 70% of the time. */
 function streetShapes(ctx: Ctx, only?: string): [StreetShape, number][] {
   const d = STREET_DATA;
   if (isFuture(ctx.era) && !only && ctx.rng() < d.scifiStreets.share) return live(ctx, d.scifiStreets.shapes);
-  return live(ctx, [...d.streets, ...d.cultureStreets.filter((s) => s.culture === ctx.culture.key), ...(only ? d.scifiStreets.shapes : [])], only);
+  return live(ctx, [...d.streets, ...d.cultureStreets.filter((s) => s.culture === ctx.culture.key), ...shapesOf(NORTH5B.streets.cultureStreets as unknown as StreetShape[], ctx.culture.key), ...(only ? d.scifiStreets.shapes : [])], only);
 }
 
 /** §7.2–§7.3: a function's district shapes; in the near future and beyond, sci-fi shapes 60% of the time. */
@@ -656,6 +668,7 @@ function districtShapes(ctx: Ctx, only?: string): [StreetShape, number][] {
     [
       ...(d.districts[fn] ?? []),
       ...d.cultureDistricts.filter((s) => s.culture === ctx.culture.key && (s.fn === fn || s.fn === "any")),
+      ...shapesOf(NORTH5B.streets.cultureDistricts as unknown as StreetShape[], ctx.culture.key),
       ...d.steampunkDistricts,
       { p: "{districtFixed}", w: d.districtFixedWeight },
       ...(only ? [...d.monumentDistricts, ...d.scifiDistricts.shapes] : []),
@@ -687,7 +700,7 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateStreetNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
-  const rng = mulberry32(seed);
+  const rng = mulberry32(regionOf(options.culture ?? "", options.region) ? regionSeed(seed, options.region!, "streetNames") : seed);
   const notices: string[] = [];
   const culture = findRouteCulture(options.culture) ?? findRouteCulture("norman-british")!;
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
@@ -695,7 +708,7 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
   const setting = routeSetting(era, fantastic);
   const size: StreetSize = SIZE_ORDER.includes(options.size as StreetSize) ? options.size! : "town";
   const british = BRITISH_CULTURES.includes(culture.key);
-  const region = british && options.region && options.region !== "all" ? options.region : undefined;
+  const region = regionOf(culture.key, options.region);
   const dialectSetting: StreetDialect = british ? options.dialect ?? "variants" : "plain";
   const mode = options.people ?? "placeholders";
   const tone = options.tone ?? "any";
@@ -774,7 +787,7 @@ export function generateStreetNames(options: StreetOptions): StreetBatch {
   };
 
   const shapesFor = (ctx: Ctx, k: StreetKind) =>
-    k === "streets" ? streetShapes(ctx, options.shape) : k === "squares" ? live(ctx, STREET_DATA.squares, options.shape) : districtShapes(ctx, options.shape);
+    k === "streets" ? streetShapes(ctx, options.shape) : k === "squares" ? live(ctx, [...STREET_DATA.squares, ...shapesOf(NORTH5B.streets.cultureSquares as unknown as StreetShape[], culture.key)], options.shape) : districtShapes(ctx, options.shape);
 
   /** GN §4: one name of a kind, 40 tries; `ok` adds the series' checks. */
   const draw = (k: StreetKind, fnFor: () => string | undefined, ok: (b: Built) => boolean = () => true, shape?: StreetShape): { built: Built; fn?: string } | undefined => {
@@ -919,7 +932,7 @@ export function monumentNeighbours(site: string, districtWorthy: boolean, o: Nei
   const rng = o.rng;
   const vocab = o.vocab ?? BUILT_IN_VOCAB;
   const themes = INN_SETTINGS.find((s) => s.key === o.setting)?.themes ?? {};
-  const region = BRITISH_CULTURES.includes(culture.key) && o.region && o.region !== "all" ? o.region : undefined;
+  const region = regionOf(culture.key, o.region);
   const block = streetBlockSet(o.safeguards);
   const monumentBlock = monumentBlockSet(o.monumentSafeguards);
   const innBlock = innBlockSet(o.innSafeguards);

@@ -63,7 +63,7 @@ test("data: every culture, era, template and list word exists", () => {
     for (const [eraId, templates] of Object.entries(entry.eras)) {
       const era = culture!.eras.find((e) => e.id === eraId);
       assert.ok(era, `${cultureId}/${eraId}`);
-      const have = new Set(era!.templates.map(([t]) => t));
+      const have = new Set([...era!.templates.map(([t]) => t), ...Object.values(culture!.regions ?? {}).flatMap((r) => r.templates.map(([t]) => t))]);
       for (const t of Object.keys(templates)) assert.ok(have.has(t), `${cultureId}/${eraId}: ${t}`);
     }
     for (const [key, words] of Object.entries(entry.lists)) {

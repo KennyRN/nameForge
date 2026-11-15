@@ -40,7 +40,7 @@ import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
+import { cultureReadsRegion, cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
 import { balanceRegion, balanceSignature, regionSeed, regionWeighted, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -150,6 +150,8 @@ export const BRITISH_CULTURES = [...LENS_CULTURE_GROUPS.british.cultures];
 export const findRouteCulture = (key: string | undefined) => ROUTE_CULTURES.find((c) => c.key === key) ?? NORTH_CULTURES.find((c) => c.key === key);
 /** Whether a culture takes a region in a module of the batch: the British cultures, and the cultures with regions of their own (Scandinavia, Germany). */
 export const readsRegions = (culture: string): boolean => BRITISH_CULTURES.includes(culture) || REGION_CULTURES.includes(culture);
+/** Northern Europe brief 5b: the region a culture reads, if the chosen one is its own (a British culture any British region; Norse, Scandinavian and German their own). */
+export const regionOf = (culture: string, region: string | undefined): string | undefined => (region && region !== "all" && (BRITISH_CULTURES.includes(culture) || cultureReadsRegion(culture, region)) ? region : undefined);
 export const findRouteKind = (key: string | undefined) => ROUTE_KINDS.find((k) => k.key === key);
 export const routeEraLabel = (code: string) => ROUTE_ERAS.find((e) => e.code === code)?.label ?? code;
 

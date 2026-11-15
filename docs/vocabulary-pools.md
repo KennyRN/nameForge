@@ -427,6 +427,22 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `nSacredC` | lore words of a sacred place (fantastic only) (batch 5a; tagged `c`; read by sacred places, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
 | `nSacredD` | sacred place words by era (batch 5a; tagged `c`; read by sacred places, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
 | `nSacredDOld` | the older eras' sacred place words, for "Old {D}" (batch 5a; tagged `c`; read by sacred places, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nbStreetStreet` | a culture's own streets nouns for streets and districts (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | streets and districts |
+| `nbStreetSquare` | a culture's own squares nouns for streets and districts (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | streets and districts |
+| `nbStreetDistrict` | a culture's own districts nouns for streets and districts (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | streets and districts |
+| `nbStreetRegion` | region words for streets and districts: six per region (batch 5b; tagged `c` and `r`; drawn only for the cultures that read the region; counted) | x, e, t, c, h | streets and districts |
+| `nbInnInn` | a culture's own inn nouns for inns and taverns (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | inns and taverns |
+| `nbInnTavern` | a culture's own tavern nouns for inns and taverns (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | inns and taverns |
+| `nbInnWayhouse` | a culture's own wayhouse nouns for inns and taverns (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | inns and taverns |
+| `nbInnRegion` | region words for inns and taverns: six per region (batch 5b; tagged `c` and `r`; drawn only for the cultures that read the region; counted) | x, e, t, c, h | inns and taverns |
+| `nbBuildDefence` | a culture's own defence nouns for buildings and landmarks (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | buildings and landmarks |
+| `nbBuildFaith` | a culture's own faith nouns for buildings and landmarks (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | buildings and landmarks |
+| `nbBuildCivic` | a culture's own civic nouns for buildings and landmarks (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | buildings and landmarks |
+| `nbBuildRegion` | region words for buildings and landmarks: six per region (batch 5b; tagged `c` and `r`; drawn only for the cultures that read the region; counted) | x, e, t, c, h | buildings and landmarks |
+| `nbMonStone` | a culture's own stone nouns for monuments and statues (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | monuments and statues |
+| `nbMonCross` | a culture's own cross nouns for monuments and statues (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | monuments and statues |
+| `nbMonMemorial` | a culture's own memorial nouns for monuments and statues (batch 5b; tagged `c` with their cultures; counted) | x, e, t, c, h | monuments and statues |
+| `nbMonRegion` | region words for monuments and statues: six per region (batch 5b; tagged `c` and `r`; drawn only for the cultures that read the region; counted) | x, e, t, c, h | monuments and statues |
 
 ## The lens and the coverage report
 

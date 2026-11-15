@@ -13,7 +13,7 @@ import { generateBynames } from "../bynames/engine";
 import { GROUP_FAMILIES, generateGroupNames, groupSetting, type GroupPeople, type GroupSafeguards, type GroupToneChoice, typesInSetting } from "../groups/engine";
 import { generateInnNames, type InnSetting } from "../inns/engine";
 import { mulberry32 } from "../markov";
-import { generateRouteNames, findRouteCulture, ROUTE_ERAS, type RouteEra } from "../routes/engine";
+import { generateRouteNames, findRouteCulture, regionOf, ROUTE_ERAS, type RouteEra } from "../routes/engine";
 import { generateStreetNames, sizeLabel, type StreetSize } from "../streets/engine";
 import { generateVesselNames, VESSEL_CULTURES, type VesselModule } from "../vessels/engine";
 import { buildContext, groupGenreFor, type ContextEffects, type SettlementContext } from "./context";
@@ -201,7 +201,7 @@ export function resolveKitOptions(o: KitOptions): ResolvedKitOptions {
     culture,
     era,
     fantastic: !!o.fantastic,
-    region: LENS_CULTURE_GROUPS.british.cultures.includes(culture) && o.region && o.region !== "all" ? o.region : undefined,
+    region: regionOf(culture, o.region),
     size: KIT_SIZES.includes(o.size as KitSize) ? o.size! : "town",
     position: KIT_POSITIONS.some((p) => p.key === o.position) ? o.position! : "inland",
     tone: o.tone ?? "any",

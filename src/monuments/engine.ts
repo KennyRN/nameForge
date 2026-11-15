@@ -39,6 +39,8 @@ import { INN_DATA, INN_SETTINGS, innCapitals, type InnSetting } from "../inns/en
 import { mulberry32 } from "../markov";
 import {
   BRITISH_CULTURES,
+  readsRegions,
+  regionOf,
   countedWords,
   findRouteCulture,
   personNames,
@@ -57,6 +59,8 @@ import { monumentNeighbours, STREET_DATA, type NeighbourOptions } from "../stree
 /** §9.1: what's named after a monument lives in the streets engine, which streets, inns and the kit share. */
 export { monumentNeighbours };
 import { deityHooks } from "../deities/hook";
+import { balanceRegion, balanceSignature, regionSeed } from "../northData";
+import { mapShapes, NORTH5B } from "../northData5b";
 
 /** Deities brief §10.1: the christian cultures' deity weight, with fantastic on. */
 const DEITY_CHRISTIAN_WEIGHT = 3;
@@ -354,8 +358,12 @@ function live(ctx: Ctx, shapes: MonumentShape[], source: MonumentSource, only?: 
 function plans(ctx: Ctx, only?: string): [Plan, number][] {
   const d = MONUMENT_DATA;
   const k = ctx.kind;
-  const culture = (d.cultureShapes[ctx.culture.key] ?? []).filter((s) => s.kind === k);
-  return [...live(ctx, d.shared, "shared", only), ...live(ctx, d.kindShapes[k] ?? [], "kind", only), ...live(ctx, culture, "culture", only), ...live(ctx, d.eraShapes, "era", only)];
+  const culture = [...(d.cultureShapes[ctx.culture.key] ?? []), ...mapShapes(NORTH5B.monuments.cultureShapes as unknown as Record<string, MonumentShape[]>, ctx.culture.key)].filter((s) => s.kind === k);
+  const all = [...live(ctx, d.shared, "shared", only), ...live(ctx, d.kindShapes[k] ?? [], "kind", only), ...live(ctx, culture, "culture", only), ...live(ctx, d.eraShapes, "era", only)];
+  // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
+  const regional = (p: Plan) => !!(p.shape as { rg?: boolean }).rg && !!ctx.region;
+  const signed = balanceSignature(all, (p) => !!(p.shape as { sig?: boolean }).sig, regional);
+  return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 
 /** §5.1: in the near future and beyond, 50% of names in any kind that has sci-fi shapes are sci-fi shapes. */
@@ -433,14 +441,14 @@ function setup(options: MonumentOptions, seed = 0): Setup {
   const settingKey: InnSetting = INN_SETTINGS.some((s) => s.key === options.setting) ? options.setting! : "anywhere";
   const settingInfo = INN_SETTINGS.find((s) => s.key === settingKey)!;
   return {
-    rng: mulberry32(seed),
+    rng: mulberry32(regionOf(options.culture ?? "", options.region) ? regionSeed(seed, options.region!, "monumentNames") : seed),
     culture,
     era,
     fantastic,
     setting: routeSetting(era, fantastic),
     settingKey,
     mode: options.people ?? "placeholders",
-    region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : undefined,
+    region: regionOf(culture.key, options.region),
     // Buildings brief §3: the inn settings' themes, magical ×2 when fantastic.
     themes: { ...settingInfo.themes, ...(fantastic ? INN_DATA.fantasticThemes : {}) },
     honourees: monumentHonourees(options.honourees),

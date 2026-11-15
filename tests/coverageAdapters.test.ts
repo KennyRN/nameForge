@@ -97,7 +97,10 @@ test("mountains: Norse reaches the batch target (30 signature words, 10 shapes)"
 
 // Inns: a culture's `cultureShapes` list (Norse 4, Japanese 4, Polynesian 2) and the tagged words of the
 // pools "inns and taverns" reads (Norse 3, Japanese 23, Polynesian 1).
-test("inns and taverns: Norse 3 words and 4 shapes", () => assert.equal(cell("innNames", "scandinavian"), "3/4"));
+test("inns and taverns: Scandinavian reaches the batch target (30 signature words, 10 shapes)", () => {
+  const [w, sh] = cell("innNames", "scandinavian").split("/").map(Number);
+  assert.ok(w >= 30 && sh >= 10, cell("innNames", "scandinavian"));
+});
 test("inns and taverns: Japanese 23 words and 4 shapes", () => assert.equal(cell("innNames", "japanese"), "23/4"));
 test("inns and taverns: Polynesian 1 word and 2 shapes", () => assert.equal(cell("innNames", "polynesian"), "1/2"));
 

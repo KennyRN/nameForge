@@ -237,7 +237,8 @@ test("§11.6.7: German places are German people and a German generic until batch
   assert.ok(![...seen].some((t) => /(Castle|Mark|Mill|Heath) Ferry Gate$/.test(t)), [...seen].slice(0, 5).join("; "));
   const alone = new Set<string>();
   for (let seed = 1; seed <= 80; seed++) alone.add(fillSlots("[place]", { culture: "german", era: "MD", mode: "real", rng: mulberry32(seed) }));
-  assert.ok([...alone].some((t) => /'s (Castle|Mark|Mill|Heath)$/.test(t) || /(Castle|Mark|Mill|Heath)$/.test(t)), [...alone].slice(0, 5).join("; "));
+  // Brief 5b: a lone German place is one of the German settlement names ("Konrad's Village", "Castle of Ulrich", "Market Town of Heinrich").
+  assert.ok([...alone].some((t) => /(Village|Houses|Home|Town|Castle|Field|Mark|Clearing|Cloister)/.test(t)), [...alone].slice(0, 5).join("; "));
   assert.ok(![...seen].some((t) => /ings|ham |ton /.test(t)), [...seen].slice(0, 5).join("; "));
   const routes = generateRouteNames({ ...DEFAULT_ROUTE_STATE, culture: "german", count: 60, seed: 3, people: "real" } as never).names.map((n) => n.text);
   assert.ok(!routes.some((n) => /\[/.test(n)), routes.find((n) => /\[/.test(n)));

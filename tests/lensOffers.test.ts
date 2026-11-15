@@ -68,9 +68,9 @@ test("views appear only on modules with a region link, and only for Welsh, Scott
     if (m.views) for (const v of m.views) assert.ok(["welsh", "scottish", "cornish"].includes(v), `${key}: ${v}`);
   }
   for (const key of ["desertNames", "eventNames", "moneyNames", "deityNames", "calendarNames", "peoplesTongues", "ships", "realms"]) assert.equal(offers[key].views, undefined, `${key} reads no region`);
-  for (const key of ["innNames", "settlementKit"]) assert.ok(offers[key].views, `${key} reads a region`);
   // Northern Europe brief 5a: the modules of the batch have the nations as cultures of their own, so the probe records no views for them.
-  for (const key of ["routeNames", "mountainNames", "seasLakes"]) assert.equal(offers[key].views, undefined, `${key}: Welsh, Scottish and Cornish are cultures here`);
+  // Brief 5b: so do streets, inns, buildings, monuments and the settlement kit.
+  for (const key of ["routeNames", "mountainNames", "seasLakes", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit"]) assert.equal(offers[key].views, undefined, `${key}: Welsh, Scottish and Cornish are cultures here`);
 });
 
 // ── Hand-checked entries ───────────────────────────────────────────────────
@@ -88,12 +88,8 @@ test("inns and taverns: all seven eras apart; the fantastic world differs in eve
   const codes = LENS_ERAS.map((e) => e.code);
   for (let i = 0; i < codes.length - 1; i++) assert.ok(differs(inn, { era: codes[i] }, { era: codes[i + 1] }), `${codes[i]} and ${codes[i + 1]} differ`);
   for (const era of codes) assert.ok(differs(inn, { era, fantastic: true }, { era, fantastic: false }), `${era}: fantastic differs`);
-  // Welsh (WAL), Cornish (COR) and one Scottish region each change a Celtic inn's names.
-  const kinds = [{}, ...INN_KINDS.map((k) => ({ kind: k.key }))];
-  assert.ok(differsOver(inn, kinds, { culture: "celtic", region: "WAL" }, { culture: "celtic" }), "Welsh");
-  assert.ok(differsOver(inn, kinds, { culture: "celtic", region: "COR" }, { culture: "celtic" }), "Cornish");
-  assert.ok(["SBL", "SLO", "SHH", "NSI"].some((r) => differsOver(inn, kinds, { culture: "celtic", region: r }, { culture: "celtic" })), "Scottish");
-  assert.deepEqual(offers.innNames.views, ["welsh", "scottish", "cornish"]);
+  // Brief 5b: Welsh, Cornish and Scottish are cultures of their own in inns and taverns, so the probe records no views.
+  assert.equal(offers.innNames.views, undefined);
 });
 
 test("mountains: the near future and interstellar are one run; Welsh, Scottish and Cornish are real; deserts read no region", () => {

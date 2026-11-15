@@ -454,7 +454,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 682,
+   "rowCount": 1173,
    "cultures": {
     "general": {
      "words": 0,
@@ -463,8 +463,8 @@
      "below": false
     },
     "english": {
-     "words": 44,
-     "shapes": 15,
+     "words": 116,
+     "shapes": 22,
      "target": {
       "words": 30,
       "shapes": 10
@@ -473,8 +473,8 @@
      "below": false
     },
     "welsh": {
-     "words": 39,
-     "shapes": 14,
+     "words": 64,
+     "shapes": 22,
      "target": {
       "words": 30,
       "shapes": 10
@@ -483,8 +483,8 @@
      "below": false
     },
     "scottish": {
-     "words": 39,
-     "shapes": 14,
+     "words": 88,
+     "shapes": 21,
      "target": {
       "words": 30,
       "shapes": 10
@@ -493,8 +493,8 @@
      "below": false
     },
     "irish": {
-     "words": 39,
-     "shapes": 14,
+     "words": 64,
+     "shapes": 21,
      "target": {
       "words": 30,
       "shapes": 10
@@ -503,8 +503,8 @@
      "below": false
     },
     "cornish": {
-     "words": 39,
-     "shapes": 14,
+     "words": 64,
+     "shapes": 21,
      "target": {
       "words": 30,
       "shapes": 10
@@ -513,8 +513,8 @@
      "below": false
     },
     "celtic": {
-     "words": 39,
-     "shapes": 14,
+     "words": 63,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -523,33 +523,32 @@
      "below": false
     },
     "norse": {
-     "words": 6,
-     "shapes": 5,
+     "words": 60,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 6,
-     "shapes": 5,
+     "words": 54,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -779,49 +778,61 @@
     }
    },
    "eras": {
-    "AN": 5,
-    "MD": 12,
-    "EM": 16,
-    "ST": 121,
-    "MO": 59,
-    "NF": 72,
-    "IS": 70
+    "AN": 86,
+    "MD": 92,
+    "EM": 93,
+    "ST": 246,
+    "MO": 106,
+    "NF": 70,
+    "IS": 68
    },
    "styles": {
     "steampunk": {
      "words": 21,
      "shapes": 10
+    },
+    "high-fantasy": {
+     "words": 27,
+     "shapes": 0
+    },
+    "contemporary-fantasy": {
+     "words": 27,
+     "shapes": 0
+    },
+    "space-opera": {
+     "words": 27,
+     "shapes": 0
     }
    },
    "tones": {
-    "grand": 14,
-    "plain": 19,
+    "grand": 12,
+    "plain": 15,
     "grim": 17,
-    "light": 7,
+    "light": 6,
     "strange": 2
    },
    "regions": {
     "COR": 1,
-    "WCY": 1,
-    "SEA": 1,
-    "EAN": 2,
-    "WMM": 1,
-    "EMD": 3,
-    "NTH": 10,
-    "SBL": 4,
+    "WCY": 7,
+    "SEA": 7,
+    "EAN": 8,
+    "WMM": 7,
+    "EMD": 8,
+    "NTH": 15,
+    "SBL": 10,
     "WAL": 0,
-    "SLO": 4,
-    "SHH": 1,
-    "NSI": 0,
-    "DEN": 0,
-    "NOR": 0,
-    "SWE": 0,
-    "ICE": 0,
-    "NDT": 0,
-    "RHN": 0,
-    "MIT": 0,
-    "ALP": 0,
-    "OST": 0
+    "SLO": 10,
+    "SHH": 7,
+    "NSI": 6,
+    "DEN": 6,
+    "NOR": 6,
+    "SWE": 6,
+    "ICE": 6,
+    "NDT": 6,
+    "RHN": 6,
+    "MIT": 6,
+    "ALP": 6,
+    "OST": 6
    },
    "kinds": {
     "streets": 28,
@@ -831,7 +842,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -860,7 +870,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 780,
+   "rowCount": 1272,
    "cultures": {
     "general": {
      "words": 0,
@@ -869,93 +879,92 @@
      "below": false
     },
     "english": {
-     "words": 45,
-     "shapes": 3,
+     "words": 117,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 44,
-     "shapes": 3,
+     "words": 73,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 44,
-     "shapes": 3,
+     "words": 97,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 44,
-     "shapes": 3,
+     "words": 73,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 44,
-     "shapes": 3,
+     "words": 73,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 44,
-     "shapes": 3,
+     "words": 68,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 3,
-     "shapes": 4,
+     "words": 57,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 3,
-     "shapes": 4,
+     "words": 54,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 16,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -1185,11 +1194,11 @@
     }
    },
    "eras": {
-    "AN": 4,
-    "MD": 11,
-    "EM": 23,
-    "ST": 84,
-    "MO": 28,
+    "AN": 85,
+    "MD": 92,
+    "EM": 101,
+    "ST": 213,
+    "MO": 79,
     "NF": 26,
     "IS": 26
    },
@@ -1199,15 +1208,15 @@
      "shapes": 6
     },
     "high-fantasy": {
-     "words": 9,
+     "words": 36,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 9,
+     "words": 36,
      "shapes": 6
     },
     "space-opera": {
-     "words": 9,
+     "words": 36,
      "shapes": 6
     }
    },
@@ -1220,26 +1229,26 @@
    },
    "regions": {
     "COR": 1,
-    "WCY": 0,
-    "SEA": 0,
-    "EAN": 2,
-    "WMM": 0,
-    "EMD": 0,
-    "NTH": 3,
-    "SBL": 2,
+    "WCY": 6,
+    "SEA": 6,
+    "EAN": 8,
+    "WMM": 6,
+    "EMD": 6,
+    "NTH": 9,
+    "SBL": 8,
     "WAL": 2,
-    "SLO": 2,
-    "SHH": 1,
-    "NSI": 0,
-    "DEN": 0,
-    "NOR": 0,
-    "SWE": 0,
-    "ICE": 0,
-    "NDT": 0,
-    "RHN": 0,
-    "MIT": 0,
-    "ALP": 0,
-    "OST": 0
+    "SLO": 8,
+    "SHH": 7,
+    "NSI": 6,
+    "DEN": 6,
+    "NOR": 6,
+    "SWE": 6,
+    "ICE": 6,
+    "NDT": 6,
+    "RHN": 6,
+    "MIT": 6,
+    "ALP": 6,
+    "OST": 6
    },
    "kinds": {
     "inn": 44,
@@ -1253,7 +1262,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -1282,7 +1290,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 680,
+   "rowCount": 1163,
    "cultures": {
     "general": {
      "words": 0,
@@ -1291,8 +1299,8 @@
      "below": false
     },
     "english": {
-     "words": 43,
-     "shapes": 15,
+     "words": 115,
+     "shapes": 23,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1301,8 +1309,8 @@
      "below": false
     },
     "welsh": {
-     "words": 42,
-     "shapes": 18,
+     "words": 71,
+     "shapes": 22,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1311,8 +1319,8 @@
      "below": false
     },
     "scottish": {
-     "words": 42,
-     "shapes": 18,
+     "words": 95,
+     "shapes": 22,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1321,8 +1329,8 @@
      "below": false
     },
     "irish": {
-     "words": 42,
-     "shapes": 18,
+     "words": 71,
+     "shapes": 22,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1331,8 +1339,8 @@
      "below": false
     },
     "cornish": {
-     "words": 42,
-     "shapes": 18,
+     "words": 71,
+     "shapes": 23,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1341,8 +1349,8 @@
      "below": false
     },
     "celtic": {
-     "words": 42,
-     "shapes": 18,
+     "words": 66,
+     "shapes": 12,
      "target": {
       "words": 12,
       "shapes": 4
@@ -1351,33 +1359,32 @@
      "below": false
     },
     "norse": {
-     "words": 3,
-     "shapes": 4,
+     "words": 57,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 3,
-     "shapes": 4,
+     "words": 54,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -1607,11 +1614,11 @@
     }
    },
    "eras": {
-    "AN": 10,
-    "MD": 23,
-    "EM": 29,
-    "ST": 95,
-    "MO": 33,
+    "AN": 90,
+    "MD": 103,
+    "EM": 107,
+    "ST": 224,
+    "MO": 84,
     "NF": 35,
     "IS": 35
    },
@@ -1621,47 +1628,47 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 2,
+     "words": 29,
      "shapes": 0
     },
     "contemporary-fantasy": {
-     "words": 2,
+     "words": 29,
      "shapes": 0
     },
     "space-opera": {
-     "words": 2,
+     "words": 29,
      "shapes": 0
     }
    },
    "tones": {
     "grand": 6,
-    "plain": 18,
+    "plain": 12,
     "grim": 10,
     "light": 6,
     "strange": 6
    },
    "regions": {
     "COR": 0,
-    "WCY": 0,
-    "SEA": 0,
-    "EAN": 1,
-    "WMM": 0,
-    "EMD": 0,
-    "NTH": 3,
-    "SBL": 3,
+    "WCY": 6,
+    "SEA": 6,
+    "EAN": 7,
+    "WMM": 6,
+    "EMD": 6,
+    "NTH": 9,
+    "SBL": 9,
     "WAL": 0,
-    "SLO": 2,
-    "SHH": 2,
-    "NSI": 1,
-    "DEN": 0,
-    "NOR": 0,
-    "SWE": 0,
-    "ICE": 0,
-    "NDT": 0,
-    "RHN": 0,
-    "MIT": 0,
-    "ALP": 0,
-    "OST": 0
+    "SLO": 8,
+    "SHH": 8,
+    "NSI": 7,
+    "DEN": 6,
+    "NOR": 6,
+    "SWE": 6,
+    "ICE": 6,
+    "NDT": 6,
+    "RHN": 6,
+    "MIT": 6,
+    "ALP": 6,
+    "OST": 6
    },
    "kinds": {
     "defence": 21,
@@ -1678,7 +1685,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -1707,7 +1713,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 464,
+   "rowCount": 926,
    "cultures": {
     "general": {
      "words": 0,
@@ -1716,8 +1722,8 @@
      "below": false
     },
     "english": {
-     "words": 44,
-     "shapes": 30,
+     "words": 116,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1726,8 +1732,8 @@
      "below": false
     },
     "welsh": {
-     "words": 45,
-     "shapes": 28,
+     "words": 73,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1736,8 +1742,8 @@
      "below": false
     },
     "scottish": {
-     "words": 45,
-     "shapes": 28,
+     "words": 97,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1746,8 +1752,8 @@
      "below": false
     },
     "irish": {
-     "words": 45,
-     "shapes": 28,
+     "words": 73,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1756,8 +1762,8 @@
      "below": false
     },
     "cornish": {
-     "words": 45,
-     "shapes": 28,
+     "words": 73,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -1766,8 +1772,8 @@
      "below": false
     },
     "celtic": {
-     "words": 45,
-     "shapes": 28,
+     "words": 69,
+     "shapes": 8,
      "target": {
       "words": 12,
       "shapes": 4
@@ -1776,33 +1782,32 @@
      "below": false
     },
     "norse": {
-     "words": 4,
-     "shapes": 4,
+     "words": 58,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 4,
-     "shapes": 4,
+     "words": 54,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -2032,11 +2037,11 @@
     }
    },
    "eras": {
-    "AN": 99,
-    "MD": 92,
-    "EM": 55,
-    "ST": 72,
-    "MO": 43,
+    "AN": 169,
+    "MD": 158,
+    "EM": 127,
+    "ST": 194,
+    "MO": 94,
     "NF": 25,
     "IS": 23
    },
@@ -2046,47 +2051,47 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 0,
+     "words": 27,
      "shapes": 9
     },
     "contemporary-fantasy": {
-     "words": 0,
+     "words": 27,
      "shapes": 9
     },
     "space-opera": {
-     "words": 0,
+     "words": 27,
      "shapes": 9
     }
    },
    "tones": {
-    "grand": 56,
-    "plain": 29,
+    "grand": 54,
+    "plain": 17,
     "grim": 17,
-    "light": 14,
-    "strange": 29
+    "light": 12,
+    "strange": 26
    },
    "regions": {
     "COR": 7,
-    "WCY": 3,
-    "SEA": 1,
-    "EAN": 0,
-    "WMM": 1,
-    "EMD": 1,
-    "NTH": 3,
-    "SBL": 3,
+    "WCY": 9,
+    "SEA": 7,
+    "EAN": 6,
+    "WMM": 7,
+    "EMD": 7,
+    "NTH": 9,
+    "SBL": 9,
     "WAL": 1,
-    "SLO": 3,
-    "SHH": 4,
-    "NSI": 5,
-    "DEN": 0,
-    "NOR": 0,
-    "SWE": 0,
-    "ICE": 0,
-    "NDT": 0,
-    "RHN": 0,
-    "MIT": 0,
-    "ALP": 0,
-    "OST": 0
+    "SLO": 9,
+    "SHH": 10,
+    "NSI": 11,
+    "DEN": 6,
+    "NOR": 6,
+    "SWE": 6,
+    "ICE": 6,
+    "NDT": 6,
+    "RHN": 6,
+    "MIT": 6,
+    "ALP": 6,
+    "OST": 6
    },
    "kinds": {
     "cross": 10,
@@ -2103,7 +2108,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -2132,7 +2136,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2178,
+   "rowCount": 4695,
    "cultures": {
     "english": {
      "words": 102,
@@ -2145,44 +2149,44 @@
      "below": false
     },
     "welsh": {
-     "words": 25,
-     "shapes": 116,
+     "words": 205,
+     "shapes": 95,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 25,
-     "shapes": 116,
+     "words": 247,
+     "shapes": 217,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 25,
-     "shapes": 116,
+     "words": 170,
+     "shapes": 97,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 25,
-     "shapes": 116,
+     "words": 195,
+     "shapes": 87,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
      "words": 25,
@@ -2195,8 +2199,8 @@
      "below": false
     },
     "norse": {
-     "words": 67,
-     "shapes": 46,
+     "words": 199,
+     "shapes": 98,
      "target": {
       "words": 30,
       "shapes": 10
@@ -2205,8 +2209,8 @@
      "below": false
     },
     "scandinavian": {
-     "words": 67,
-     "shapes": 46,
+     "words": 302,
+     "shapes": 182,
      "target": {
       "words": 30,
       "shapes": 10
@@ -2215,13 +2219,12 @@
      "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 350,
+     "shapes": 186,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -2456,12 +2459,12 @@
    },
    "eras": {
     "AN": 228,
-    "MD": 466,
-    "EM": 227,
-    "ST": 148,
-    "MO": 148,
+    "MD": 726,
+    "EM": 336,
+    "ST": 432,
+    "MO": 432,
     "NF": 0,
-    "IS": 444
+    "IS": 633
    },
    "styles": {},
    "tones": {
@@ -2479,20 +2482,20 @@
     "WMM": 0,
     "EMD": 0,
     "NTH": 0,
-    "SBL": 0,
+    "SBL": 26,
     "WAL": 0,
-    "SLO": 0,
-    "SHH": 0,
-    "NSI": 0,
-    "DEN": 0,
-    "NOR": 0,
-    "SWE": 0,
-    "ICE": 0,
-    "NDT": 0,
-    "RHN": 0,
-    "MIT": 0,
-    "ALP": 0,
-    "OST": 0
+    "SLO": 29,
+    "SHH": 24,
+    "NSI": 25,
+    "DEN": 78,
+    "NOR": 80,
+    "SWE": 84,
+    "ICE": 80,
+    "NDT": 44,
+    "RHN": 46,
+    "MIT": 44,
+    "ALP": 42,
+    "OST": 42
    },
    "kinds": {
     "hamlet": 0,
@@ -2511,7 +2514,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -20167,36 +20169,36 @@
  "totals": {
   "cultures": {
    "english": {
-    "words": 1064,
-    "shapes": 2081
+    "words": 1352,
+    "shapes": 2095
    },
    "celtic": {
-    "words": 432,
-    "shapes": 370
+    "words": 528,
+    "shapes": 341
    },
    "welsh": {
-    "words": 756,
-    "shapes": 669
+    "words": 1051,
+    "shapes": 662
    },
    "scottish": {
-    "words": 767,
-    "shapes": 1135
+    "words": 1200,
+    "shapes": 1249
    },
    "irish": {
-    "words": 690,
-    "shapes": 453
+    "words": 950,
+    "shapes": 447
    },
    "cornish": {
-    "words": 690,
-    "shapes": 669
+    "words": 975,
+    "shapes": 654
    },
    "roman": {
     "words": 257,
     "shapes": 188
    },
    "norse": {
-    "words": 622,
-    "shapes": 796
+    "words": 970,
+    "shapes": 891
    },
    "arabic-persian": {
     "words": 151,
@@ -20271,12 +20273,12 @@
     "shapes": 105
    },
    "scandinavian": {
-    "words": 617,
-    "shapes": 775
+    "words": 1057,
+    "shapes": 952
    },
    "german": {
-    "words": 435,
-    "shapes": 1104
+    "words": 1025,
+    "shapes": 1350
    },
    "american": {
     "words": 44,
@@ -20308,25 +20310,25 @@
    }
   },
   "eras": {
-   "AN": 1867,
-   "MD": 2343,
-   "EM": 2477,
-   "ST": 2616,
-   "MO": 2484,
-   "NF": 764,
-   "IS": 1329
+   "AN": 2179,
+   "MD": 2910,
+   "EM": 2891,
+   "ST": 3405,
+   "MO": 2968,
+   "NF": 762,
+   "IS": 1516
   },
   "styles": {
    "high-fantasy": {
-    "words": 573,
+    "words": 681,
     "shapes": 312
    },
    "contemporary-fantasy": {
-    "words": 489,
+    "words": 597,
     "shapes": 310
    },
    "space-opera": {
-    "words": 625,
+    "words": 733,
     "shapes": 143
    },
    "steampunk": {
@@ -20347,11 +20349,11 @@
    }
   },
   "tones": {
-   "grand": 632,
-   "plain": 694,
+   "grand": 628,
+   "plain": 672,
    "grim": 503,
-   "light": 402,
-   "strange": 515
+   "light": 399,
+   "strange": 512
   }
  },
  "thinPools": [

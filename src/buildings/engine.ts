@@ -24,6 +24,8 @@ import { breaksInnWords, INN_DATA, INN_SETTINGS, innCapitals, type InnSetting } 
 import { mulberry32 } from "../markov";
 import {
   BRITISH_CULTURES,
+  readsRegions,
+  regionOf,
   countedWords,
   findRouteCulture,
   personNames,
@@ -36,6 +38,8 @@ import {
 import { selfPatterns, type SettlementContext } from "../settlement/contextShared";
 import { type BaseCtx, commonToken, fillBatch, fromPool, pickOne, renderPattern as renderShared, shapeAllowed, town, vocabPool, type Renderer } from "./shared";
 import { deityHooks } from "../deities/hook";
+import { balanceRegion, balanceSignature, regionSeed } from "../northData";
+import { mapShapes, NORTH5B } from "../northData5b";
 
 /** Deities brief §10.1: the christian cultures' temple weight, with fantastic on. */
 const DEITY_CHRISTIAN_WEIGHT = 3;
@@ -240,16 +244,20 @@ function live(ctx: Ctx, shapes: BuildingShape[], source: BuildingSource, only?: 
 function plans(ctx: Ctx, only?: string): [Plan, number][] {
   const d = BUILDING_DATA;
   const k = ctx.kind;
-  const culture = (d.cultureShapes[ctx.culture.key] ?? []).filter((s) => s.kind === k);
+  const culture = [...(d.cultureShapes[ctx.culture.key] ?? []), ...mapShapes(NORTH5B.buildings.cultureShapes as unknown as Record<string, BuildingShape[]>, ctx.culture.key)].filter((s) => s.kind === k);
   if (k === "faith" && d.sensitive.noFaith.includes(ctx.culture.key)) return [];
   const faithOnly = d.sensitive.faithOnly[ctx.culture.key];
   if (k === "faith" && faithOnly) return live(ctx, culture.filter((s) => faithOnly.includes(s.p)), "culture", only);
-  return [
+  const all: [Plan, number][] = [
     ...live(ctx, d.shared, "shared", only),
     ...live(ctx, d.kindShapes[k], "kind", only),
     ...live(ctx, culture, "culture", only),
     ...live(ctx, d.eraShapes, "era", only),
   ];
+  // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
+  const regional = (p: Plan) => !!(p.shape as { rg?: boolean }).rg && !!ctx.region;
+  const signed = balanceSignature(all, (p) => !!(p.shape as { sig?: boolean }).sig, regional);
+  return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 
 /** §5.1: in the near future and beyond, 60% of names in every kind are sci-fi shapes. */
@@ -317,14 +325,14 @@ function setup(options: BuildingOptions, seed = 0): Setup {
   const settingKey: InnSetting = INN_SETTINGS.some((s) => s.key === options.setting) ? options.setting! : "anywhere";
   const settingInfo = INN_SETTINGS.find((s) => s.key === settingKey)!;
   return {
-    rng: mulberry32(seed),
+    rng: mulberry32(regionOf(options.culture ?? "", options.region) ? regionSeed(seed, options.region!, "buildingNames") : seed),
     culture,
     era,
     fantastic,
     setting: routeSetting(era, fantastic),
     settingKey,
     mode: options.people ?? "placeholders",
-    region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : undefined,
+    region: regionOf(culture.key, options.region),
     // §3: the inn settings' themes, magical ×2 when fantastic.
     themes: { ...settingInfo.themes, ...(fantastic ? INN_DATA.fantasticThemes : {}) },
     options,

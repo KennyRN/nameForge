@@ -11,11 +11,11 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | module | English | Welsh | Scottish | Irish | Cornish | Celtic | Norse | Scandinavian | German | French | Dutch | Iberian | Roman | Greek and Byzantine | Slavic | Turkic and Mongol steppe | Arabic and Persian | Egyptian | Ethiopian | Bantu | West African | Indian | Chinese | Japanese | Korean | Aztec | Maya | Andean | Polynesian | American |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | route names | 54/50 | 45/22 | 45/32 | 45/22 | 45/22 | 35/17 | 37/37 | 30/34 | 30/40 | not offered | not offered | not offered | 25/5 | **8/3** | **10/7** | **7/5** | **7/5** | **4/4** | **4/3** | **4/1** | **4/5** | **5/5** | **8/6** | **10/4** | **4/4** | **4/3** | **4/3** | **3/3** | **6/3** | not offered |
-| streets and districts | 44/15 | 39/14 | 39/14 | 39/14 | 39/14 | 39/14 | **6/5** | **6/5** | not offered | not offered | not offered | not offered | 19/14 | 20/10 | 22/12 | **6/4** | 15/6 | **5/5** | **4/2** | **4/2** | **4/7** | **8/6** | **11/9** | 12/8 | **9/5** | **11/6** | **9/4** | **3/2** | **2/3** | not offered |
-| inns and taverns | **45/3** | **44/3** | **44/3** | **44/3** | **44/3** | **44/3** | **3/4** | **3/4** | not offered | not offered | not offered | not offered | 29/6 | 28/4 | 26/4 | **3/4** | 20/6 | **1/3** | **1/2** | **1/2** | **2/4** | 13/5 | 37/5 | 23/4 | **31/3** | **5/3** | **4/3** | **1/2** | **1/2** | not offered |
-| buildings and landmarks | 43/15 | 42/18 | 42/18 | 42/18 | 42/18 | 42/18 | **3/4** | **3/4** | not offered | not offered | not offered | not offered | 49/12 | 29/10 | 27/12 | **2/2** | 29/6 | **1/5** | **1/2** | **2/1** | **1/4** | 24/7 | 44/4 | 39/5 | 41/4 | **8/4** | **6/6** | **0/3** | **1/2** | not offered |
-| monuments and statues | 44/30 | 45/28 | 45/28 | 45/28 | 45/28 | 45/28 | **4/4** | **4/4** | not offered | not offered | not offered | not offered | **8/10** | **8/7** | **7/8** | **1/3** | **1/3** | **3/7** | **1/4** | **0/2** | **0/3** | **1/5** | **3/6** | **1/3** | **3/3** | **0/2** | **1/3** | **0/0** | **0/0** | not offered |
-| settlement names | 102/109 | **25/116** | **25/116** | **25/116** | **25/116** | 25/116 | 67/46 | 67/46 | not offered | not offered | not offered | not offered | 16/116 | not offered | 22/119 | not offered | **0/105** | **0/85** | 17/60 | 26/51 | **0/58** | **0/86** | **10/97** | 58/86 | 33/38 | **0/77** | **0/53** | not offered | not offered | not offered |
+| streets and districts | 116/22 | 64/22 | 88/21 | 64/21 | 64/21 | 63/10 | 60/15 | 54/15 | 60/15 | not offered | not offered | not offered | 19/14 | 20/10 | 22/12 | **6/4** | 15/6 | **5/5** | **4/2** | **4/2** | **4/7** | **8/6** | **11/9** | 12/8 | **9/5** | **11/6** | **9/4** | **3/2** | **2/3** | not offered |
+| inns and taverns | 117/14 | 73/15 | 97/15 | 73/15 | 73/15 | 68/4 | 57/15 | 54/15 | 60/16 | not offered | not offered | not offered | 29/6 | 28/4 | 26/4 | **3/4** | 20/6 | **1/3** | **1/2** | **1/2** | **2/4** | 13/5 | 37/5 | 23/4 | **31/3** | **5/3** | **4/3** | **1/2** | **1/2** | not offered |
+| buildings and landmarks | 115/23 | 71/22 | 95/22 | 71/22 | 71/23 | 66/12 | 57/15 | 54/14 | 60/15 | not offered | not offered | not offered | 49/12 | 29/10 | 27/12 | **2/2** | 29/6 | **1/5** | **1/2** | **2/1** | **1/4** | 24/7 | 44/4 | 39/5 | 41/4 | **8/4** | **6/6** | **0/3** | **1/2** | not offered |
+| monuments and statues | 116/18 | 73/18 | 97/18 | 73/18 | 73/18 | 69/8 | 58/15 | 54/14 | 60/14 | not offered | not offered | not offered | **8/10** | **8/7** | **7/8** | **1/3** | **1/3** | **3/7** | **1/4** | **0/2** | **0/3** | **1/5** | **3/6** | **1/3** | **3/3** | **0/2** | **1/3** | **0/0** | **0/0** | not offered |
+| settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/87 | 25/116 | 199/98 | 302/182 | 350/186 | not offered | not offered | not offered | 16/116 | not offered | 22/119 | not offered | **0/105** | **0/85** | 17/60 | 26/51 | **0/58** | **0/86** | **10/97** | 58/86 | 33/38 | **0/77** | **0/53** | not offered | not offered | not offered |
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | events and eras | **0/1** | **0/2** | **0/2** | **0/2** | **0/2** | **0/2** | **0/2** | **0/2** | not offered | not offered | not offered | not offered | **0/2** | **0/0** | **0/2** | **0/3** | 16/5 | **11/4** | **11/2** | **0/2** | **11/5** | **1/2** | 34/5 | **35/3** | 34/5 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
 | money and coins | **96/2 + profile** | **15/1 + profile** | **15/1 + profile** | **15/1 + profile** | **15/1 + profile** | **15/1 + profile** | **21/1 + profile** | **21/1 + profile** | not offered | **29/2 + profile** | **17/0 + profile** | **29/2 + profile** | **41/2** | **32/2** | **37/3** | **18/1 + profile** | **31/0** | **15/0 + profile** | **9/0 + profile** | **22/0 + profile** | **23/0 + profile** | **24/1** | **32/1** | **21/1 + profile** | **18/1 + profile** | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
@@ -86,11 +86,11 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | module | AN | MD | EM | ST | MO | NF | IS |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | route names | 118 | 139 | 129 | 178 | 79 | 33 | 51 |
-| streets and districts | **5** | 12 | 16 | 121 | 59 | 72 | 70 |
-| inns and taverns | **4** | **11** | 23 | 84 | 28 | 26 | 26 |
-| buildings and landmarks | **10** | 23 | 29 | 95 | 33 | 35 | 35 |
-| monuments and statues | 99 | 92 | 55 | 72 | 43 | 25 | 23 |
-| settlement names | 228 | 466 | 227 | 148 | 148 | **0** | 444 |
+| streets and districts | 86 | 92 | 93 | 246 | 106 | 70 | 68 |
+| inns and taverns | 85 | 92 | 101 | 213 | 79 | 26 | 26 |
+| buildings and landmarks | 90 | 103 | 107 | 224 | 84 | 35 | 35 |
+| monuments and statues | 169 | 158 | 127 | 194 | 94 | 25 | 23 |
+| settlement names | 228 | 726 | 336 | 432 | 432 | **0** | 633 |
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 | events and eras | **6** | 13 | 13 | 28 | **9** | 28 | 31 |
 | money and coins | 130 | 178 | 208 | 233 | 185 | 165 | 168 |
@@ -140,10 +140,10 @@ Style (words/shapes; target 16 and 4). Realistic is the default and isn't counte
 | module | historic or low fantasy | high or epic fantasy | contemporary fantasy | steampunk | dieselpunk | cyberpunk | post-apocalyptic | space opera |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | route names | **0/0** | 27/11 | 27/11 | **0/7** | **0/0** | **0/0** | **0/0** | 27/11 |
-| streets and districts | **0/0** | **0/0** | **0/0** | 21/10 | **0/0** | **0/0** | **0/0** | **0/0** |
-| inns and taverns | **0/0** | **9/6** | **9/6** | **9/6** | **0/0** | **0/0** | **0/0** | **9/6** |
-| buildings and landmarks | **0/0** | **2/0** | **2/0** | **18/3** | **0/0** | **0/0** | **0/0** | **2/0** |
-| monuments and statues | **0/0** | **0/9** | **0/9** | **6/3** | **0/0** | **0/0** | **0/0** | **0/9** |
+| streets and districts | **0/0** | **27/0** | **27/0** | 21/10 | **0/0** | **0/0** | **0/0** | **27/0** |
+| inns and taverns | **0/0** | 36/6 | 36/6 | **9/6** | **0/0** | **0/0** | **0/0** | 36/6 |
+| buildings and landmarks | **0/0** | **29/0** | **29/0** | **18/3** | **0/0** | **0/0** | **0/0** | **29/0** |
+| monuments and statues | **0/0** | 27/9 | 27/9 | **6/3** | **0/0** | **0/0** | **0/0** | 27/9 |
 | settlement names | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 | settlement kit | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 | events and eras | **0/0** | **0/0** | **0/0** | **3/6** | **0/0** | **0/0** | **0/0** | **0/0** |
@@ -196,10 +196,10 @@ Tagged entries per tone (target 8 for grand, grim, light and strange; plain is t
 | module | grand | plain | grim | light | strange |
 | --- | --- | --- | --- | --- | --- |
 | route names | 13 | 25 | 8 | **5** | **6** |
-| streets and districts | 14 | 19 | 17 | **7** | **2** |
+| streets and districts | 12 | 15 | 17 | **6** | **2** |
 | inns and taverns | **0** | 0 | 8 | 26 | **3** |
-| buildings and landmarks | **6** | 18 | 10 | **6** | **6** |
-| monuments and statues | 56 | 29 | 17 | 14 | 29 |
+| buildings and landmarks | **6** | 12 | 10 | **6** | **6** |
+| monuments and statues | 54 | 17 | 17 | 12 | 26 |
 | settlement names | **0** | 0 | **0** | **0** | **0** |
 | settlement kit | **0** | 0 | **0** | **0** | **0** |
 | events and eras | **4** | 13 | 20 | 12 | 12 |
@@ -252,11 +252,11 @@ Entries restricted to or multiplied for each British region (target 6), for the 
 | module | COR | WCY | SEA | EAN | WMM | EMD | NTH | SBL | WAL | SLO | SHH | NSI | DEN | NOR | SWE | ICE | NDT | RHN | MIT | ALP | OST |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | route names | **2** | 6 | 6 | 6 | 6 | 6 | 6 | 6 | **4** | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 |
-| streets and districts | **1** | **1** | **1** | **2** | **1** | **3** | 10 | **4** | **0** | **4** | **1** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| inns and taverns | **1** | **0** | **0** | **2** | **0** | **0** | **3** | **2** | **2** | **2** | **1** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| buildings and landmarks | **0** | **0** | **0** | **1** | **0** | **0** | **3** | **3** | **0** | **2** | **2** | **1** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| monuments and statues | 7 | **3** | **1** | **0** | **1** | **1** | **3** | **3** | **1** | **3** | **4** | **5** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| settlement names | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
+| streets and districts | **1** | 7 | 7 | 8 | 7 | 8 | 15 | 10 | **0** | 10 | 7 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 |
+| inns and taverns | **1** | 6 | 6 | 8 | 6 | 6 | 9 | 8 | **2** | 8 | 7 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 |
+| buildings and landmarks | **0** | 6 | 6 | 7 | 6 | 6 | 9 | 9 | **0** | 8 | 8 | 7 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 |
+| monuments and statues | 7 | 9 | 7 | 6 | 7 | 7 | 9 | 9 | **1** | 9 | 10 | 11 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 |
+| settlement names | **0** | **0** | **0** | **0** | **0** | **0** | **0** | 26 | **0** | 29 | 24 | 25 | 78 | 80 | 84 | 80 | 44 | 46 | 44 | 42 | 42 |
 | mountains | 34 | 34 | 40 | 29 | 33 | 37 | 42 | 43 | 34 | 40 | 42 | 34 | 28 | 42 | 35 | 37 | 32 | 25 | 32 | 29 | 35 |
 | forests and woods | 34 | 34 | 40 | 29 | 33 | 37 | 42 | 43 | 34 | 40 | 42 | 34 | 28 | 42 | 35 | 37 | 32 | 25 | 32 | 29 | 35 |
 | moors and heaths | 34 | 34 | 40 | 29 | 33 | 37 | 42 | 43 | 34 | 40 | 42 | 34 | 28 | 42 | 35 | 37 | 32 | 25 | 32 | 29 | 35 |
@@ -802,11 +802,11 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 The live lens cultures each module doesn't offer, and the keys it offers that are only its own.
 
 - **route names**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **streets and districts**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **inns and taverns**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **buildings and landmarks**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **monuments and statues**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **settlement names**: doesn't offer German, French, Dutch, Iberian, Greek and Byzantine, Turkic and Mongol steppe, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **streets and districts**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **inns and taverns**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **buildings and landmarks**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **monuments and statues**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **settlement names**: doesn't offer French, Dutch, Iberian, Greek and Byzantine, Turkic and Mongol steppe, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **events and eras**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **money and coins**: doesn't offer German, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **calendars and festivals**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
@@ -856,15 +856,15 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | lens culture | words | shapes |
 | --- | --- | --- |
-| English | 1064 | 2081 |
-| Welsh | 756 | 669 |
-| Scottish | 767 | 1135 |
-| Irish | 690 | 453 |
-| Cornish | 690 | 669 |
-| Celtic | 432 | 370 |
-| Norse | 622 | 796 |
-| Scandinavian | 617 | 775 |
-| German | 435 | 1104 |
+| English | 1352 | 2095 |
+| Welsh | 1051 | 662 |
+| Scottish | 1200 | 1249 |
+| Irish | 950 | 447 |
+| Cornish | 975 | 654 |
+| Celtic | 528 | 341 |
+| Norse | 970 | 891 |
+| Scandinavian | 1057 | 952 |
+| German | 1025 | 1350 |
 | French | 84 | 30 |
 | Dutch | 32 | 0 |
 | Iberian | 84 | 30 |
@@ -906,32 +906,32 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 1867 |
-| MD medieval | 2343 |
-| EM early modern | 2477 |
-| ST steam age | 2616 |
-| MO modern | 2484 |
-| NF near future | 764 |
-| IS interstellar | 1329 |
+| AN ancient | 2179 |
+| MD medieval | 2910 |
+| EM early modern | 2891 |
+| ST steam age | 3405 |
+| MO modern | 2968 |
+| NF near future | 762 |
+| IS interstellar | 1516 |
 
 | style | words | shapes |
 | --- | --- | --- |
 | historic or low fantasy | 0 | 140 |
-| high or epic fantasy | 573 | 312 |
-| contemporary fantasy | 489 | 310 |
+| high or epic fantasy | 681 | 312 |
+| contemporary fantasy | 597 | 310 |
 | steampunk | 84 | 57 |
 | dieselpunk | 34 | 8 |
 | cyberpunk | 0 | 0 |
 | post-apocalyptic | 70 | 18 |
-| space opera | 625 | 143 |
+| space opera | 733 | 143 |
 
 | tone | entries |
 | --- | --- |
-| grand | 632 |
-| plain | 694 |
+| grand | 628 |
+| plain | 672 |
 | grim | 503 |
-| light | 402 |
-| strange | 515 |
+| light | 399 |
+| strange | 512 |
 
 
 ## Shared tables

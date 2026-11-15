@@ -67,6 +67,7 @@ function generateAt(options: SettlementNamesOptions, size: SizeKey): NameGenerat
     const result = generateWorldPlaceNames({
       culture: options.culture,
       era: options.era,
+      region: options.region,
       biome: options.customBiome ?? (options.catalogue ?? BUILT_IN_BIOMES).find(options.biome),
       catalogue: options.catalogue,
       terrain: options.terrain,

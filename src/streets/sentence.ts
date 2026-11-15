@@ -10,7 +10,7 @@ import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
 import { findRouteCulture, ROUTE_CULTURES, ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
-import { fantasticWords, routeRegionText, showsRegion } from "../routes/sentence";
+import { fantasticWords, routeRegionText, showsRegion, showsRouteRegion } from "../routes/sentence";
 import { functionsForSize, kindsForSize, sizeLabel, STREET_ANY, STREET_FUNCTIONS, STREET_KINDS, STREET_SIZES, type StreetDialect, type StreetKind, type StreetSize } from "./engine";
 
 export interface StreetSentenceState {
@@ -193,7 +193,7 @@ export function chooseStreet(state: StreetSentenceState, field: StreetField, id:
   // §2.3: a kind the size lacks resets to Any; a function only with districts, and only one the size offers.
   if (next.kind && !kindsForSize(next.size).some((k) => k.key === next.kind)) next.kind = undefined;
   if (next.kind !== "districts" || !functionsForSize(next.size).some((f) => f.key === next.function)) next.function = undefined;
-  if (!showsRegion(next)) next.region = undefined;
+  if (!showsRouteRegion(next)) next.region = undefined;
   return next;
 }
 
@@ -207,7 +207,7 @@ export function streetHistoryLabel(state: StreetSentenceState): string {
     culture,
     ...(kind ? [kind.plural] : []),
     sizeLabel(state.size, state.era),
-    ...(state.region && showsRegion(state) ? [regionPhrase(state.region)] : []),
+    ...(state.region && showsRouteRegion(state) ? [regionPhrase(state.region)] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
     ...(state.tone !== "any" ? [state.tone] : []),
     ...(state.series ? ["one town"] : []),

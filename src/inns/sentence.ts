@@ -10,7 +10,7 @@ import { regionPhrase } from "../colonialSentence";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
 import { findRouteCulture, ROUTE_CULTURES, ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
-import { fantasticWords, routeRegionText, showsRegion } from "../routes/sentence";
+import { fantasticWords, routeRegionText, showsRouteRegion } from "../routes/sentence";
 import { hasSignTradition, INN_ANY, INN_FORMS, INN_KINDS, INN_SETTINGS, innKindsOffered, type InnForm, type InnKind, type InnSetting } from "./engine";
 
 export interface InnSentenceState {
@@ -168,7 +168,7 @@ export function chooseInn(state: InnSentenceState, field: InnField, id: string |
   }
   // §2.3: a kind the era lacks resets to Any; region resets away from the British cultures.
   if (next.kind && !innKindsOffered(next.era).some((k) => k.key === next.kind)) next.kind = undefined;
-  if (!showsRegion(next)) next.region = undefined;
+  if (!showsRouteRegion(next)) next.region = undefined;
   return next;
 }
 
@@ -185,7 +185,7 @@ export function innHistoryLabel(state: InnSentenceState): string {
     culture,
     ...(kind ? [kind.plural] : []),
     ...(state.setting !== "anywhere" ? [settingText(state.setting)] : []),
-    ...(state.region && showsRegion(state) ? [regionPhrase(state.region)] : []),
+    ...(state.region && showsRouteRegion(state) ? [regionPhrase(state.region)] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
     ...(state.tone !== "any" ? [state.tone] : []),
     ...(state.series ? ["one town"] : []),

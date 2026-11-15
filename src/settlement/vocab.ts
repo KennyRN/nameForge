@@ -5,8 +5,9 @@
 
 import vocabData from "../data/settlement-vocab.json";
 import { CELTIC_MIX, CELTIC_MIX_WEIGHT, NORTH } from "../northData";
+import { NORTH5B } from "../northData5b";
 import { creaturesFor, type Habitat } from "../creatures";
-import { inCultureGroup } from "../lens";
+import { inCultureGroup, LENS_REGIONS, regionsOfCulture } from "../lens";
 import { GROUP_TONES, type GroupTone, hasBannedWord } from "../groups/engine";
 import { scaleAllows, type ScaleChoice, type SpaceScale } from "../space/scale";
 
@@ -86,7 +87,8 @@ interface VocabData {
 const BASE_VOCAB = vocabData as unknown as VocabData;
 export const SETTLEMENT_VOCAB: VocabData = {
   ...BASE_VOCAB,
-  pools: { ...BASE_VOCAB.pools, ...(NORTH.vocab.pools as unknown as Record<string, VocabPool>) },
+  regions: [...new Set([...BASE_VOCAB.regions, ...LENS_REGIONS.map((r) => r.code)])],
+  pools: { ...BASE_VOCAB.pools, ...(NORTH.vocab.pools as unknown as Record<string, VocabPool>), ...(NORTH5B.vocab.pools as unknown as Record<string, VocabPool>) },
 };
 export const VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
 /** Money brief §3.2: the four cultures only money and coins offers; no other module's menu lists them. */
@@ -132,7 +134,7 @@ export interface VocabWhere {
 }
 
 /** Streets brief §3.1: the region a culture reads entries for (British cultures only). */
-const regionFor = (where: VocabWhere) => (where.region && inCultureGroup("british", where.culture, where.era) ? where.region : undefined);
+const regionFor = (where: VocabWhere) => (where.region && (inCultureGroup("british", where.culture, where.era) || regionsOfCulture(where.culture).includes(where.region)) ? where.region : undefined);
 
 /** §3.1: whether an entry is used here (era, culture, fantastic, region). */
 export function entryAllowed(e: VocabEntry, where: VocabWhere): boolean {

@@ -16,6 +16,8 @@ import { filterWorldList, type SizeKey, worldTemplateAllowed } from "../settleme
 import { hasSpaceBlock } from "../space/safeguards";
 import { drawScale, scaleFilter, SPACE_DATA, spaceDirections, type SpaceScale } from "../space/scale";
 import { drawStar } from "../space/stars";
+import { NORTH5B } from "../northData5b";
+import { balanceRegion, regionSeed } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -50,6 +52,8 @@ export interface WorldCulture {
   eras: WorldEra[];
   /** Land brief §7.1: the biome used when a terrain is chosen in Homeland mode. */
   homelandBiome: string;
+  /** Northern Europe brief 5b §12.1: a region's own templates and the lists they use, drawn only when the region is chosen (30% of the draws). */
+  regions?: Record<string, { templates: [string, number][]; lists: Record<string, string[]> }>;
 }
 
 /** Land brief §7.2: a list a biome replaces, with what replaces it and which entries stay. */
@@ -69,7 +73,13 @@ export interface WorldData {
   biomeSwaps: BiomeSwap[];
 }
 
-export const WORLD_DATA = worldData as unknown as WorldData;
+const WORLD_BASE = worldData as unknown as WorldData;
+// Northern Europe brief 5b: Welsh, Scottish, Irish, Cornish, Scandinavian and German settlement names are world cultures of their own, and Norse gains the Scandinavian regions.
+export const WORLD_DATA: WorldData = {
+  ...WORLD_BASE,
+  labels: { ...WORLD_BASE.labels, ...NORTH5B.settlement.labels },
+  cultures: [...WORLD_BASE.cultures.map((c) => (c.id === "norse" ? { ...c, regions: NORTH5B.settlement.norseRegions } : c)), ...(NORTH5B.settlement.cultures as unknown as WorldCulture[])],
+};
 export const WORLD_CULTURES: readonly WorldCulture[] = WORLD_DATA.cultures;
 
 export const WORLD_PLACE_NAMES = {
@@ -208,6 +218,8 @@ export interface WorldOptions {
   strictness?: number;
   /** Urban brief §6.2: draw settlement names at a size, from the settlement data's templates and list words. */
   settlement?: { size: SizeKey };
+  /** Northern Europe brief 5b: a region code, for a culture that has regions (Scottish, Norse, Scandinavian, German). */
+  region?: string;
 }
 
 /** Renders names for one culture and era. Holds the batch-level Markov pools. */
@@ -233,9 +245,21 @@ export class WorldRenderer {
     this.lists = { ...this.allLists };
     this.templates = this.era.templates;
     const settlement = options.settlement;
+    // Brief 5b §12.1: a chosen region adds its own templates (and lists), which hold the region share of the weight.
+    const region = options.region && options.region !== "all" ? this.culture.regions?.[options.region] : undefined;
+    if (region) {
+      this.allLists = { ...this.allLists, ...region.lists };
+      this.lists = { ...this.allLists };
+    }
+    const withRegion = (base: [string, number][]): [string, number][] => {
+      if (!region) return base;
+      const plans: [{ t: string; r: boolean }, number][] = [...base.map(([t, w]): [{ t: string; r: boolean }, number] => [{ t, r: false }, w]), ...region.templates.map(([t, w]): [{ t: string; r: boolean }, number] => [{ t, r: true }, w])];
+      return balanceRegion(plans, (p) => p.r).map(([p, w]): [string, number] => [p.t, w]);
+    };
+    this.templates = withRegion(this.era.templates);
     if (settlement) {
       // Urban brief §6.2: the era's templates cut to those listed at the size, and each listed list filtered.
-      this.templates = this.era.templates.filter(([t]) => worldTemplateAllowed(this.culture.id, this.era.id, t, settlement.size));
+      this.templates = withRegion(this.era.templates).filter(([t]) => worldTemplateAllowed(this.culture.id, this.era.id, t, settlement.size));
       if (this.templates.length === 0) throw new Error(`No eligible ${this.culture.label} ${this.era.label} templates at this size`);
       for (const [key, entries] of Object.entries(this.allLists)) {
         const filtered = filterWorldList(this.culture.id, key, entries, settlement.size);
@@ -533,8 +557,9 @@ export interface WorldBatchResult {
 export function generateWorldPlaceNames(options: WorldOptions & { count: number; seed?: number }): WorldBatchResult {
   const seed =
     options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
-  const rng = mulberry32(seed);
   const renderer = new WorldRenderer(options);
+  // Brief 5b §12.1: a chosen region draws from its own stream, so one seed gives different names in different regions.
+  const rng = mulberry32(renderer.culture.regions && options.region && options.region !== "all" ? regionSeed(seed, options.region, "settlementNames") : seed);
   const count = Math.max(0, Math.floor(options.count));
   const seen = new Set<string>();
   const names: WorldName[] = [];

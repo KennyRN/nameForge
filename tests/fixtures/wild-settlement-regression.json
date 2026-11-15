@@ -1313,38 +1313,38 @@
    ],
    [
     "Old Town",
-    "Foundry District",
-    "Weavers' Side"
+    "Tannery Side",
+    "East River Borough"
    ],
    [
     "High Street",
-    "Brewers' Street",
-    "Corn Hill",
-    "Earl's Street",
+    "West Street",
+    "Tanners' Close",
+    "Vintners' Way",
     "Spring Street",
-    "Barn Way",
+    "Brewer Street",
     "Cloth Trade Road",
-    "East Lane"
+    "Salt Lane"
    ],
    [
     "Market Place",
-    "Tin Exchange"
+    "Inn Square"
    ],
    [
     "the Sailor's Head",
-    "the Red Spider",
-    "the Thorn and Highwayman"
+    "Clean Spring Stopping Place",
+    "the Seven Thorns"
    ],
    [
     "King's Fountain",
-    "Red Hall",
-    "Old Court Fort",
-    "the Crooked Grange",
-    "Bear Bridge",
-    "Saint Elfrida's Church"
+    "Old Court Guildhall",
+    "Old Court Tower",
+    "Old Court Shrine",
+    "Saint Elfrida's Hospice",
+    "Hollow Manor"
    ],
    [
-    "[monarch]'s Memorial",
+    "Long Memorial",
     "[monarch]'s Arch"
    ],
    [
@@ -1379,34 +1379,34 @@
    [
     "Old Town",
     "Golden Tomb",
-    "Kiln End"
+    "New Plot Quarter"
    ],
    [
     "High Street",
+    "Golden Tomb Lane",
     "Salt Way",
-    "Fisher Street",
-    "Saint Mildred's Lane",
-    "Harbour Gate",
-    "South Street",
-    "Tin Lane",
-    "Shoemakers' Lane"
+    "Oak Stream Gate",
+    "Tailors' Road",
+    "Marcher Lane",
+    "Wool Row",
+    "Barbican Street"
    ],
    [
     "Market Place",
-    "Market Square"
+    "Corn Market"
    ],
    [
-    "the Lazy Lily",
-    "the Dyke",
-    "the Five Otters Inn"
+    "the Four Goshawks",
+    "[owner]'s House",
+    "the Otter and Lamprey"
    ],
    [
     "Saint Mildred's Bridge",
     "the Golden Lantern",
     "Bridge Homestead Manor",
-    "Bridge Homestead Gatehouse",
-    "Bridge Homestead Forge",
-    "Bridge Homestead Sanctuary"
+    "Old Tower",
+    "Shrine of [founder]",
+    "Round Customs House"
    ],
    [
     "Statue of [founder]",
@@ -1444,38 +1444,38 @@
    [
     "Old Town",
     "Foundry Ward",
-    "Standing Stones Quarter"
+    "Ropemakers' Ward"
    ],
    [
     "Long Street",
-    "Friar Street",
+    "Tweed Street",
+    "Old Middle Fort Road",
     "Ford Road",
     "Abbey Row",
-    "North Row",
+    "Marsh Way",
     "Hall Hill",
-    "Fullers' Street",
-    "Marsh Way"
+    "Red Pillar Street"
    ],
    [
     "Market Place",
-    "Market Cross"
+    "Tin Exchange"
    ],
    [
-    "the Pied Needle",
-    "the Six Mile House",
-    "the Well and Hart"
+    "Golden Brewhouse",
+    "the Greybeard and Tankard",
+    "the Staff"
    ],
    [
-    "Russet Bastion",
-    "Big Farmstead Mint",
-    "Big Farmstead Stepping Stones",
+    "Swift Gatehouse",
+    "the Burnt Court House",
+    "Palace of [dynasty]",
     "Saint Osyth's Sanctuary",
     "the Yellow Lantern",
     "Big Farmstead Kiln"
    ],
    [
-    "High Cross",
-    "Big Farmstead Arch"
+    "Broom Field Preaching Cross",
+    "the Red Pillar"
    ],
    [
     "Sisters of the Blessed Lantern",
@@ -1507,9 +1507,9 @@
    ],
    [
     "High Street",
-    "Granary Hill",
-    "Strand Street",
-    "Warehouse Street"
+    "West Street",
+    "Tanners' Close",
+    "Vintners' Way"
    ],
    [
     "Market Place"
@@ -1519,8 +1519,8 @@
    ],
    [
     "King's Fountain",
-    "the Red Shrine",
-    "New Lookout Fort"
+    "Saint Elfrida's Shrine",
+    "the Red Castle"
    ],
    [
     "the Giant"
@@ -1551,15 +1551,15 @@
    ],
    [
     "High Street",
-    "Goldsmith Street",
-    "Chandler Street",
-    "Salt Way"
+    "Eastgate",
+    "Southgate",
+    "Vintners' Road"
    ],
    [
     "Market Place"
    ],
    [
-    "the Lazy Fern"
+    "the Four Kingfishers"
    ],
    [
     "Holy Well",
@@ -1595,20 +1595,20 @@
    ],
    [
     "Long Street",
-    "Friar Street",
-    "Ford Road",
-    "Abbey Row"
+    "Tweed Street",
+    "Flintbeck Fort Road",
+    "Ford Road"
    ],
    [
     "Market Place"
    ],
    [
-    "the Pied Sceptre"
+    "Golden Brewhouse"
    ],
    [
-    "Russet Bastion",
-    "Little Warm Valley Cathedral",
-    "Little Warm Valley Cistern"
+    "Swift Gatehouse",
+    "the Burnt Church",
+    "Palace of [dynasty]"
    ],
    [
     "Red Column"

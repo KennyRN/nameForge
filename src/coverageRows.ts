@@ -292,3 +292,14 @@ export function profileKeys(table: unknown): string[] {
     typeof v === "string" ? v !== "" : Array.isArray(v) ? v.length > 0 : v && typeof v === "object" ? Object.values(v).some(nonEmpty) : typeof v === "number" ? true : v === true;
   return Object.entries(table as Record<string, unknown>).filter(([, v]) => nonEmpty(v)).map(([k]) => k);
 }
+
+/** Brief 5b: the batch's shapes keyed by culture, once per lens culture (`norman-british` repeats `anglo-saxon`'s English shapes). */
+export function northCultureShapes<T>(map: Record<string, T[]>): Record<string, T[]> {
+  return Object.fromEntries(Object.entries(map).filter(([k]) => k !== "norman-british"));
+}
+
+/** Brief 5b §B2 (the 5a fixes' counting): for a core culture only the module's own frames count (not the older shape tables); its words are the module's own nouns and the shared words tagged for it. Other cultures count as before. */
+const CORE_LENS = new Set(["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "celtic"]);
+export function ownRowsOnly(rows: CoverageRow[]): CoverageRow[] {
+  return rows.filter((r) => !(r.cultures && r.cultures.length > 0 && r.type === "shape" && r.cultures.every((c) => CORE_LENS.has(c)) && !/^(nb[A-Z]|north5b)/.test(r.source)));
+}

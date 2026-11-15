@@ -31,6 +31,8 @@ import {
 import { mulberry32 } from "../markov";
 import {
   BRITISH_CULTURES,
+  readsRegions,
+  regionOf,
   countedWords,
   findRouteCulture,
   generateRouteNames,
@@ -52,6 +54,8 @@ import { boostPool, contextLandmark, contextSaint, selfPatterns, TownTurn, type 
 import { breaksStreetWords, STREET_DATA } from "../streets/engine";
 import { cultureSet } from "../lens";
 
+import { balanceRegion, balanceSignature, freshNouns, noteNoun, REGION_SHARE, regionSeed, shapesOf, SIGNATURE_SHARE } from "../northData";
+import { mapShapes, NORTH5B } from "../northData5b";
 // ── Data ────────────────────────────────────────────────────────────────────
 
 export type InnKind = "inn" | "tavern" | "eating" | "wayhouse" | "rest" | "club" | "bar";
@@ -132,6 +136,8 @@ export const innKindsOffered = (era: RouteEra) => INN_KINDS.filter((k) => k.era[
 /** §6.1: the share of a culture's names that are English signs in an era. */
 export function englishShare(culture: string, era: RouteEra): number {
   const t = INN_DATA.tradition;
+  const north = NORTH5B.inns.tradition[culture];
+  if (north) return eraIndex(era) >= eraIndex(north[1] as RouteEra) ? north[0] : 0;
   if (t.full.includes(culture)) return 1;
   const from = t.fullFrom[culture];
   if (from) return eraIndex(era) >= eraIndex(from) ? 1 : 0;
@@ -263,8 +269,9 @@ function merged(ctx: Ctx, parts: [Word, number][][]): [Word, number][] {
 }
 
 function draw(ctx: Ctx, pool: string, items: [Word, number][], use?: string): string | undefined {
-  const word = pickWeighted(items, ctx.rng);
+  const word = pickWeighted(freshNouns(ctx.rng, pool, items), ctx.rng);
   if (!word) return undefined;
+  noteNoun(ctx.rng, pool, word.w);
   for (const t of word.t) ctx.drawn.add(t);
   ctx.words.push({ pool, word: word.w });
   if (use) ctx.uses.push(`${use}:${word.w}`);
@@ -615,6 +622,12 @@ function culturePlans(ctx: Ctx, only?: string): [Plan, number][] {
   return [...base, ...live(ctx, INN_DATA.fantastic, only).map(([s, w]): [Plan, number] => [{ tradition: "culture", anchor: "fantastic", shape: s }, w])];
 }
 
+/** Brief 5b: the batch's own shapes of the culture for the kind (a core culture's signature shapes). */
+function northPlans(ctx: Ctx, only?: string): [Plan, number][] {
+  const own = mapShapes(NORTH5B.inns.cultureShapes as unknown as Record<string, InnShape[]>, ctx.culture.key).filter((s) => (s.kinds ?? INN_DATA.cultureKinds).includes(ctx.kind));
+  return live(ctx, own, only).map(([s, w]): [Plan, number] => [{ tradition: "culture", anchor: "culture", shape: s }, w]);
+}
+
 /** §8.3: the era's shapes for the kind ("any" kind for the steampunk shapes). */
 function eraPlans(ctx: Ctx, only?: string): [Plan, number][] {
   const shapes = INN_DATA.eraShapes.filter((s) => !s.kinds || s.kinds.includes(ctx.kind));
@@ -629,7 +642,7 @@ export function generateInnNames(options: InnOptions): InnBatch {
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateInnNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
-  const rng = mulberry32(seed);
+  const rng = mulberry32(regionOf(options.culture ?? "", options.region) ? regionSeed(seed, options.region!, "innNames") : seed);
   const notices: string[] = [];
   const culture = findRouteCulture(options.culture) ?? findRouteCulture("norman-british")!;
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
@@ -639,7 +652,7 @@ export function generateInnNames(options: InnOptions): InnBatch {
   const settingInfo = INN_SETTINGS.find((s) => s.key === settingKey)!;
   const form: InnForm = options.form ?? "either";
   const mode = options.people ?? "placeholders";
-  const region = BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : undefined;
+  const region = regionOf(culture.key, options.region);
   const count = Math.max(0, Math.floor(options.count));
   const english = englishShare(culture.key, era);
   const offered = innKindsOffered(era);
@@ -672,6 +685,13 @@ export function generateInnNames(options: InnOptions): InnBatch {
   /** §7: era shapes 40% of names where there are some (60% for bars in the future); else the tradition. */
   const choosePlan = (ctx: Ctx, anchor?: string): Plan | undefined => {
     if (anchor) return pickWeighted(englishPlans(ctx, settingKey, options.shape).filter(([p]) => p.anchor === anchor), rng);
+    // Brief 5b §12.1: a core culture's own shapes take the signature share, and with a region chosen the region's take the region share.
+    const own = northPlans(ctx, options.shape);
+    if (own.length > 0) {
+      const regional = ctx.region ? own.filter(([p]) => (p.shape as { rg?: boolean }).rg) : [];
+      if (regional.length > 0 && rng() < REGION_SHARE) return pickWeighted(regional, rng);
+      if (rng() < SIGNATURE_SHARE) return pickWeighted(own, rng);
+    }
     const era = eraPlans(ctx, options.shape);
     const share = isFuture(ctx.era) && ctx.kind === "bar" ? INN_DATA.eraShare.futureBar : INN_DATA.eraShare.default;
     if (era.length > 0 && (eraIndex(ctx.era) >= eraIndex("ST") || options.shape) && rng() < share) return pickWeighted(era, rng);

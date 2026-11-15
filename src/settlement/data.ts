@@ -3,6 +3,7 @@
 // settlement names module; the source engines only consult it when given a `settlement` option.
 
 import raw from "../data/settlement-names.json";
+import { NORTH5B } from "../northData5b";
 
 export type SizeKey = "any" | "hamlet" | "village" | "town" | "city" | "great";
 
@@ -22,7 +23,16 @@ interface SettlementData {
   world: Record<string, { eras: Record<string, Record<string, string>>; lists: Record<string, Record<string, string>> }>;
 }
 
-export const SETTLEMENT_DATA = raw as unknown as SettlementData;
+const SETTLEMENT_BASE = raw as unknown as SettlementData;
+// Northern Europe brief 5b: the size codes of the new world cultures' templates, and of the Norse regions' ones.
+export const SETTLEMENT_DATA: SettlementData = {
+  ...SETTLEMENT_BASE,
+  world: {
+    ...SETTLEMENT_BASE.world,
+    ...NORTH5B.settlement.sizes,
+    norse: { ...SETTLEMENT_BASE.world.norse, eras: { ...SETTLEMENT_BASE.world.norse.eras, viking: { ...SETTLEMENT_BASE.world.norse.eras.viking, ...NORTH5B.settlement.norseSizes } } },
+  },
+};
 export const SETTLEMENT_SIZES: readonly SettlementSize[] = SETTLEMENT_DATA.sizes;
 /** Size fallback, largest first (§4). */
 export const SIZE_FALLBACK_ORDER: readonly SizeKey[] = SETTLEMENT_DATA.fallbackOrder;

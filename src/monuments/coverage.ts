@@ -1,6 +1,7 @@
 // Coverage adapter for monuments and statues (shared lens brief §6.1).
 import monumentData from "../data/monument-names.json";
-import { type CoverageAdapter, type CoverageRow, at, byCultureRows, byKindRows, listRows, makeRow, regionMultipliers, vocabularyRows, SHARED_ROSTER } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, at, byCultureRows, byKindRows, listRows, makeRow, regionMultipliers, vocabularyRows, NORTH_ROSTER, ownRowsOnly, northCultureShapes } from "../coverageRows";
+import { NORTH5B } from "../northData5b";
 
 const MODULE = "monumentNames";
 const KINDS = (monumentData.kinds as { key: string }[]).map((k) => k.key);
@@ -10,6 +11,7 @@ function rows(): CoverageRow[] {
   out.push(...listRows(at(monumentData, "shared"), { module: MODULE, source: "shared" }));
   out.push(...byKindRows(at(monumentData, "kindShapes"), { module: MODULE, source: "kindShapes" }));
   out.push(...byCultureRows(at(monumentData, "cultureShapes"), { module: MODULE, source: "cultureShapes" }));
+  out.push(...byCultureRows(northCultureShapes(NORTH5B.monuments.cultureShapes), { module: MODULE, source: "north5b/cultureShapes" }));
   out.push(...listRows(at(monumentData, "eraShapes"), { module: MODULE, source: "eraShapes" }));
   out.push(...listRows(at(monumentData, "scifi/shapes"), { module: MODULE, source: "scifi/shapes", eras: ["NF", "IS"] }));
   // The British region multipliers, one row per monument kind (stones in Cornwall, hill figures on the chalk).
@@ -17,7 +19,7 @@ function rows(): CoverageRow[] {
     out.push(makeRow({}, { module: MODULE, source: `regionX/${kind}`, kind, type: "shape", regions: regionMultipliers(table) }));
   }
   out.push(...vocabularyRows(MODULE));
-  return out;
+  return ownRowsOnly(out);
 }
 
-export const monumentCoverage: CoverageAdapter = { module: MODULE, kinds: KINDS, roster: SHARED_ROSTER, regions: true, rows };
+export const monumentCoverage: CoverageAdapter = { module: MODULE, kinds: KINDS, roster: NORTH_ROSTER, regions: true, rows };

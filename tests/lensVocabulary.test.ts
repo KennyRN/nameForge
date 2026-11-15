@@ -22,11 +22,12 @@ test("the vocabulary's culture groups are the lens's, key for key", () => {
   assert.deepEqual(Object.keys(SETTLEMENT_VOCAB.cultureGroups), Object.keys(LENS_CULTURE_GROUPS));
 });
 
-test("the vocabulary's regions are the lens's live British region codes, in order", () => {
-  // Northern Europe brief 5a: the nine Scandinavian and German regions are live in the lens (their data lives in the batch's tables), the vocabulary keeps the 12 British ones.
-  const british = LENS_REGIONS.filter((r) => r.status === "live" && SETTLEMENT_VOCAB.regions.includes(r.code)).map((r) => r.code);
-  assert.deepEqual(SETTLEMENT_VOCAB.regions, british.sort((a, b) => SETTLEMENT_VOCAB.regions.indexOf(a) - SETTLEMENT_VOCAB.regions.indexOf(b)));
-  assert.equal(LENS_REGIONS.filter((r) => r.status === "live").length, SETTLEMENT_VOCAB.regions.length + 9);
+test("the vocabulary's regions are the lens's live region codes, in order", () => {
+  // Northern Europe brief 5b: the batch's region words (streets, inns, buildings and monuments) carry the nine Scandinavian and German region codes, so the vocabulary knows all 21.
+  const live = LENS_REGIONS.filter((r) => r.status === "live").map((r) => r.code);
+  assert.deepEqual([...SETTLEMENT_VOCAB.regions].sort(), [...live].sort());
+  assert.deepEqual([...SETTLEMENT_VOCAB.regions.slice(0, 12)].sort(), [...live.slice(0, 12)].sort(), "the 12 British regions come first");
+  assert.deepEqual(SETTLEMENT_VOCAB.regions.slice(12), live.slice(12), "then the nine Scandinavian and German ones, in order");
 });
 
 test("settlement/vocab re-exports the lens's inCultureGroup", () => {

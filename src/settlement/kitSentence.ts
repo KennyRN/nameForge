@@ -9,7 +9,7 @@ import { lensClause } from "../lensView";
 import { type GroupPeople, type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { PLACE_SHAPE_REGIONS } from "../placeShapes";
 import { findRouteCulture, ROUTE_CULTURES, ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
-import { fantasticWords, routeRegionText, showsRegion } from "../routes/sentence";
+import { fantasticWords, routeRegionText, showsRouteRegion } from "../routes/sentence";
 import { sizeLabel } from "../streets/engine";
 import { KIT_CONTENTS, KIT_DETAILS, KIT_POSITIONS, KIT_SIZES, positionText, type KitContents, type KitDetail, type KitPosition, type KitSize } from "./kit";
 
@@ -157,7 +157,7 @@ export function chooseKit(state: KitSentenceState, field: KitField, id: string |
       next.people = (id as GroupPeople) ?? "real";
       break;
   }
-  if (!showsRegion(next)) next.region = undefined;
+  if (!showsRouteRegion(next)) next.region = undefined;
   return next;
 }
 

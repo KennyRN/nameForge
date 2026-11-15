@@ -15,7 +15,9 @@ const where = (culture: string, region?: string, era: VocabWhere["era"] = "MD"):
 const words = (vocab = BUILT_IN_VOCAB, pool: string, w: VocabWhere) => poolEntries(vocab, pool, w).map(([e]) => e.w);
 
 test("§16.1: the new pools exist; region codes are the place-shape regions", () => {
-  assert.deepEqual(VOCAB_REGIONS, PLACE_SHAPE_REGIONS.map((r) => r.code));
+  // The place-shape regions, and (Northern Europe brief 5b) the lens's other regions, which the batch's region words carry.
+  assert.deepEqual(VOCAB_REGIONS.slice(0, PLACE_SHAPE_REGIONS.length), PLACE_SHAPE_REGIONS.map((r) => r.code));
+  for (const code of ["DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"]) assert.ok(VOCAB_REGIONS.includes(code), code);
   for (const p of STREET_POOLS) assert.ok(SETTLEMENT_VOCAB.pools[p]?.entries.length > 0, p);
   // Every entry's validity is checked by the shared vocabulary test (RN §15.1 rules, region codes included).
 });

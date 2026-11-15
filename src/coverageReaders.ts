@@ -125,6 +125,29 @@ export const POOL_READER_TEXT: Readonly<Record<string, string>> = {
   "nSacredC": "–",
   "nSacredD": "–",
   "nSacredDOld": "–",
+  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
+  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
+  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
+  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
+  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
+  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
+  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
+  "nbStreetStreet": "streets and districts",
+  "nbStreetSquare": "streets and districts",
+  "nbStreetDistrict": "streets and districts",
+  "nbStreetRegion": "streets and districts",
+  "nbInnInn": "inns and taverns",
+  "nbInnTavern": "inns and taverns",
+  "nbInnWayhouse": "inns and taverns",
+  "nbInnRegion": "inns and taverns",
+  "nbBuildDefence": "buildings and landmarks",
+  "nbBuildFaith": "buildings and landmarks",
+  "nbBuildCivic": "buildings and landmarks",
+  "nbBuildRegion": "buildings and landmarks",
+  "nbMonStone": "monuments and statues",
+  "nbMonCross": "monuments and statues",
+  "nbMonMemorial": "monuments and statues",
+  "nbMonRegion": "monuments and statues",
   "direction": "route names, streets and districts, buildings and landmarks, seas and coasts",
   "directionAdj": "route names, streets and districts, inns and taverns, buildings and landmarks, seas and coasts, hills and valleys, lands and territories, stars and space",
   "travellers": "route names, streets and districts, inns and taverns",

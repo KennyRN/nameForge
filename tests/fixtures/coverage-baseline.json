@@ -660,98 +660,100 @@
    "v": 0
   },
   "culture|streetNames|english|words": {
-   "v": 44,
+   "v": 116,
    "t": 30
   },
   "culture|streetNames|english|shapes": {
-   "v": 15,
+   "v": 22,
    "t": 10
   },
   "culture|streetNames|english|profile": {
    "v": 0
   },
   "culture|streetNames|welsh|words": {
-   "v": 39,
+   "v": 64,
    "t": 30
   },
   "culture|streetNames|welsh|shapes": {
-   "v": 14,
+   "v": 22,
    "t": 10
   },
   "culture|streetNames|welsh|profile": {
    "v": 0
   },
   "culture|streetNames|scottish|words": {
-   "v": 39,
+   "v": 88,
    "t": 30
   },
   "culture|streetNames|scottish|shapes": {
-   "v": 14,
+   "v": 21,
    "t": 10
   },
   "culture|streetNames|scottish|profile": {
    "v": 0
   },
   "culture|streetNames|irish|words": {
-   "v": 39,
+   "v": 64,
    "t": 30
   },
   "culture|streetNames|irish|shapes": {
-   "v": 14,
+   "v": 21,
    "t": 10
   },
   "culture|streetNames|irish|profile": {
    "v": 0
   },
   "culture|streetNames|cornish|words": {
-   "v": 39,
+   "v": 64,
    "t": 30
   },
   "culture|streetNames|cornish|shapes": {
-   "v": 14,
+   "v": 21,
    "t": 10
   },
   "culture|streetNames|cornish|profile": {
    "v": 0
   },
   "culture|streetNames|celtic|words": {
-   "v": 39,
+   "v": 63,
    "t": 12
   },
   "culture|streetNames|celtic|shapes": {
-   "v": 14,
+   "v": 10,
    "t": 4
   },
   "culture|streetNames|celtic|profile": {
    "v": 0
   },
   "culture|streetNames|norse|words": {
-   "v": 6,
+   "v": 60,
    "t": 30
   },
   "culture|streetNames|norse|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|streetNames|norse|profile": {
    "v": 0
   },
   "culture|streetNames|scandinavian|words": {
-   "v": 6,
+   "v": 54,
    "t": 30
   },
   "culture|streetNames|scandinavian|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|streetNames|scandinavian|profile": {
    "v": 0
   },
   "culture|streetNames|german|words": {
-   "v": 0
+   "v": 60,
+   "t": 30
   },
   "culture|streetNames|german|shapes": {
-   "v": 0
+   "v": 15,
+   "t": 10
   },
   "culture|streetNames|german|profile": {
    "v": 0
@@ -991,31 +993,31 @@
    "v": 0
   },
   "era|streetNames|AN": {
-   "v": 5,
+   "v": 86,
    "t": 12
   },
   "era|streetNames|MD": {
-   "v": 12,
+   "v": 92,
    "t": 12
   },
   "era|streetNames|EM": {
-   "v": 16,
+   "v": 93,
    "t": 12
   },
   "era|streetNames|ST": {
-   "v": 121,
+   "v": 246,
    "t": 12
   },
   "era|streetNames|MO": {
-   "v": 59,
+   "v": 106,
    "t": 12
   },
   "era|streetNames|NF": {
-   "v": 72,
+   "v": 70,
    "t": 12
   },
   "era|streetNames|IS": {
-   "v": 70,
+   "v": 68,
    "t": 12
   },
   "style|streetNames|steampunk|words": {
@@ -1026,19 +1028,43 @@
    "v": 10,
    "t": 4
   },
+  "style|streetNames|high-fantasy|words": {
+   "v": 27,
+   "t": 16
+  },
+  "style|streetNames|high-fantasy|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "style|streetNames|contemporary-fantasy|words": {
+   "v": 27,
+   "t": 16
+  },
+  "style|streetNames|contemporary-fantasy|shapes": {
+   "v": 0,
+   "t": 4
+  },
+  "style|streetNames|space-opera|words": {
+   "v": 27,
+   "t": 16
+  },
+  "style|streetNames|space-opera|shapes": {
+   "v": 0,
+   "t": 4
+  },
   "tone|streetNames|grand": {
-   "v": 14,
+   "v": 12,
    "t": 8
   },
   "tone|streetNames|plain": {
-   "v": 19
+   "v": 15
   },
   "tone|streetNames|grim": {
    "v": 17,
    "t": 8
   },
   "tone|streetNames|light": {
-   "v": 7,
+   "v": 6,
    "t": 8
   },
   "tone|streetNames|strange": {
@@ -1050,31 +1076,31 @@
    "t": 6
   },
   "region|streetNames|WCY": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|streetNames|SEA": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|streetNames|EAN": {
-   "v": 2,
+   "v": 8,
    "t": 6
   },
   "region|streetNames|WMM": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|streetNames|EMD": {
-   "v": 3,
+   "v": 8,
    "t": 6
   },
   "region|streetNames|NTH": {
-   "v": 10,
+   "v": 15,
    "t": 6
   },
   "region|streetNames|SBL": {
-   "v": 4,
+   "v": 10,
    "t": 6
   },
   "region|streetNames|WAL": {
@@ -1082,51 +1108,51 @@
    "t": 6
   },
   "region|streetNames|SLO": {
-   "v": 4,
+   "v": 10,
    "t": 6
   },
   "region|streetNames|SHH": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|streetNames|NSI": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|DEN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|NOR": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|SWE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|ICE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|NDT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|RHN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|MIT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|ALP": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|streetNames|OST": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "kind|streetNames|streets": {
@@ -1151,98 +1177,100 @@
    "v": 0
   },
   "culture|innNames|english|words": {
-   "v": 45,
+   "v": 117,
    "t": 30
   },
   "culture|innNames|english|shapes": {
-   "v": 3,
+   "v": 14,
    "t": 10
   },
   "culture|innNames|english|profile": {
    "v": 0
   },
   "culture|innNames|welsh|words": {
-   "v": 44,
+   "v": 73,
    "t": 30
   },
   "culture|innNames|welsh|shapes": {
-   "v": 3,
+   "v": 15,
    "t": 10
   },
   "culture|innNames|welsh|profile": {
    "v": 0
   },
   "culture|innNames|scottish|words": {
-   "v": 44,
+   "v": 97,
    "t": 30
   },
   "culture|innNames|scottish|shapes": {
-   "v": 3,
+   "v": 15,
    "t": 10
   },
   "culture|innNames|scottish|profile": {
    "v": 0
   },
   "culture|innNames|irish|words": {
-   "v": 44,
+   "v": 73,
    "t": 30
   },
   "culture|innNames|irish|shapes": {
-   "v": 3,
+   "v": 15,
    "t": 10
   },
   "culture|innNames|irish|profile": {
    "v": 0
   },
   "culture|innNames|cornish|words": {
-   "v": 44,
+   "v": 73,
    "t": 30
   },
   "culture|innNames|cornish|shapes": {
-   "v": 3,
+   "v": 15,
    "t": 10
   },
   "culture|innNames|cornish|profile": {
    "v": 0
   },
   "culture|innNames|celtic|words": {
-   "v": 44,
+   "v": 68,
    "t": 12
   },
   "culture|innNames|celtic|shapes": {
-   "v": 3,
+   "v": 4,
    "t": 4
   },
   "culture|innNames|celtic|profile": {
    "v": 0
   },
   "culture|innNames|norse|words": {
-   "v": 3,
+   "v": 57,
    "t": 30
   },
   "culture|innNames|norse|shapes": {
-   "v": 4,
+   "v": 15,
    "t": 10
   },
   "culture|innNames|norse|profile": {
    "v": 0
   },
   "culture|innNames|scandinavian|words": {
-   "v": 3,
+   "v": 54,
    "t": 30
   },
   "culture|innNames|scandinavian|shapes": {
-   "v": 4,
+   "v": 15,
    "t": 10
   },
   "culture|innNames|scandinavian|profile": {
    "v": 0
   },
   "culture|innNames|german|words": {
-   "v": 0
+   "v": 60,
+   "t": 30
   },
   "culture|innNames|german|shapes": {
-   "v": 0
+   "v": 16,
+   "t": 10
   },
   "culture|innNames|german|profile": {
    "v": 0
@@ -1482,23 +1510,23 @@
    "v": 0
   },
   "era|innNames|AN": {
-   "v": 4,
+   "v": 85,
    "t": 12
   },
   "era|innNames|MD": {
-   "v": 11,
+   "v": 92,
    "t": 12
   },
   "era|innNames|EM": {
-   "v": 23,
+   "v": 101,
    "t": 12
   },
   "era|innNames|ST": {
-   "v": 84,
+   "v": 213,
    "t": 12
   },
   "era|innNames|MO": {
-   "v": 28,
+   "v": 79,
    "t": 12
   },
   "era|innNames|NF": {
@@ -1518,7 +1546,7 @@
    "t": 4
   },
   "style|innNames|high-fantasy|words": {
-   "v": 9,
+   "v": 36,
    "t": 16
   },
   "style|innNames|high-fantasy|shapes": {
@@ -1526,7 +1554,7 @@
    "t": 4
   },
   "style|innNames|contemporary-fantasy|words": {
-   "v": 9,
+   "v": 36,
    "t": 16
   },
   "style|innNames|contemporary-fantasy|shapes": {
@@ -1534,7 +1562,7 @@
    "t": 4
   },
   "style|innNames|space-opera|words": {
-   "v": 9,
+   "v": 36,
    "t": 16
   },
   "style|innNames|space-opera|shapes": {
@@ -1565,31 +1593,31 @@
    "t": 6
   },
   "region|innNames|WCY": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|SEA": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|EAN": {
-   "v": 2,
+   "v": 8,
    "t": 6
   },
   "region|innNames|WMM": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|EMD": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|NTH": {
-   "v": 3,
+   "v": 9,
    "t": 6
   },
   "region|innNames|SBL": {
-   "v": 2,
+   "v": 8,
    "t": 6
   },
   "region|innNames|WAL": {
@@ -1597,51 +1625,51 @@
    "t": 6
   },
   "region|innNames|SLO": {
-   "v": 2,
+   "v": 8,
    "t": 6
   },
   "region|innNames|SHH": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|innNames|NSI": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|DEN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|NOR": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|SWE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|ICE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|NDT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|RHN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|MIT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|ALP": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|innNames|OST": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "kind|innNames|inn": {
@@ -1682,98 +1710,100 @@
    "v": 0
   },
   "culture|buildingNames|english|words": {
-   "v": 43,
+   "v": 115,
    "t": 30
   },
   "culture|buildingNames|english|shapes": {
-   "v": 15,
+   "v": 23,
    "t": 10
   },
   "culture|buildingNames|english|profile": {
    "v": 0
   },
   "culture|buildingNames|welsh|words": {
-   "v": 42,
+   "v": 71,
    "t": 30
   },
   "culture|buildingNames|welsh|shapes": {
-   "v": 18,
+   "v": 22,
    "t": 10
   },
   "culture|buildingNames|welsh|profile": {
    "v": 0
   },
   "culture|buildingNames|scottish|words": {
-   "v": 42,
+   "v": 95,
    "t": 30
   },
   "culture|buildingNames|scottish|shapes": {
-   "v": 18,
+   "v": 22,
    "t": 10
   },
   "culture|buildingNames|scottish|profile": {
    "v": 0
   },
   "culture|buildingNames|irish|words": {
-   "v": 42,
+   "v": 71,
    "t": 30
   },
   "culture|buildingNames|irish|shapes": {
-   "v": 18,
+   "v": 22,
    "t": 10
   },
   "culture|buildingNames|irish|profile": {
    "v": 0
   },
   "culture|buildingNames|cornish|words": {
-   "v": 42,
+   "v": 71,
    "t": 30
   },
   "culture|buildingNames|cornish|shapes": {
-   "v": 18,
+   "v": 23,
    "t": 10
   },
   "culture|buildingNames|cornish|profile": {
    "v": 0
   },
   "culture|buildingNames|celtic|words": {
-   "v": 42,
+   "v": 66,
    "t": 12
   },
   "culture|buildingNames|celtic|shapes": {
-   "v": 18,
+   "v": 12,
    "t": 4
   },
   "culture|buildingNames|celtic|profile": {
    "v": 0
   },
   "culture|buildingNames|norse|words": {
-   "v": 3,
+   "v": 57,
    "t": 30
   },
   "culture|buildingNames|norse|shapes": {
-   "v": 4,
+   "v": 15,
    "t": 10
   },
   "culture|buildingNames|norse|profile": {
    "v": 0
   },
   "culture|buildingNames|scandinavian|words": {
-   "v": 3,
+   "v": 54,
    "t": 30
   },
   "culture|buildingNames|scandinavian|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|buildingNames|scandinavian|profile": {
    "v": 0
   },
   "culture|buildingNames|german|words": {
-   "v": 0
+   "v": 60,
+   "t": 30
   },
   "culture|buildingNames|german|shapes": {
-   "v": 0
+   "v": 15,
+   "t": 10
   },
   "culture|buildingNames|german|profile": {
    "v": 0
@@ -2013,23 +2043,23 @@
    "v": 0
   },
   "era|buildingNames|AN": {
-   "v": 10,
+   "v": 90,
    "t": 12
   },
   "era|buildingNames|MD": {
-   "v": 23,
+   "v": 103,
    "t": 12
   },
   "era|buildingNames|EM": {
-   "v": 29,
+   "v": 107,
    "t": 12
   },
   "era|buildingNames|ST": {
-   "v": 95,
+   "v": 224,
    "t": 12
   },
   "era|buildingNames|MO": {
-   "v": 33,
+   "v": 84,
    "t": 12
   },
   "era|buildingNames|NF": {
@@ -2049,7 +2079,7 @@
    "t": 4
   },
   "style|buildingNames|high-fantasy|words": {
-   "v": 2,
+   "v": 29,
    "t": 16
   },
   "style|buildingNames|high-fantasy|shapes": {
@@ -2057,7 +2087,7 @@
    "t": 4
   },
   "style|buildingNames|contemporary-fantasy|words": {
-   "v": 2,
+   "v": 29,
    "t": 16
   },
   "style|buildingNames|contemporary-fantasy|shapes": {
@@ -2065,7 +2095,7 @@
    "t": 4
   },
   "style|buildingNames|space-opera|words": {
-   "v": 2,
+   "v": 29,
    "t": 16
   },
   "style|buildingNames|space-opera|shapes": {
@@ -2077,7 +2107,7 @@
    "t": 8
   },
   "tone|buildingNames|plain": {
-   "v": 18
+   "v": 12
   },
   "tone|buildingNames|grim": {
    "v": 10,
@@ -2096,31 +2126,31 @@
    "t": 6
   },
   "region|buildingNames|WCY": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|SEA": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|EAN": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|buildingNames|WMM": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|EMD": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|NTH": {
-   "v": 3,
+   "v": 9,
    "t": 6
   },
   "region|buildingNames|SBL": {
-   "v": 3,
+   "v": 9,
    "t": 6
   },
   "region|buildingNames|WAL": {
@@ -2128,51 +2158,51 @@
    "t": 6
   },
   "region|buildingNames|SLO": {
-   "v": 2,
+   "v": 8,
    "t": 6
   },
   "region|buildingNames|SHH": {
-   "v": 2,
+   "v": 8,
    "t": 6
   },
   "region|buildingNames|NSI": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|buildingNames|DEN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|NOR": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|SWE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|ICE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|NDT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|RHN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|MIT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|ALP": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|buildingNames|OST": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "kind|buildingNames|defence": {
@@ -2225,98 +2255,100 @@
    "v": 0
   },
   "culture|monumentNames|english|words": {
-   "v": 44,
+   "v": 116,
    "t": 30
   },
   "culture|monumentNames|english|shapes": {
-   "v": 30,
+   "v": 18,
    "t": 10
   },
   "culture|monumentNames|english|profile": {
    "v": 0
   },
   "culture|monumentNames|welsh|words": {
-   "v": 45,
+   "v": 73,
    "t": 30
   },
   "culture|monumentNames|welsh|shapes": {
-   "v": 28,
+   "v": 18,
    "t": 10
   },
   "culture|monumentNames|welsh|profile": {
    "v": 0
   },
   "culture|monumentNames|scottish|words": {
-   "v": 45,
+   "v": 97,
    "t": 30
   },
   "culture|monumentNames|scottish|shapes": {
-   "v": 28,
+   "v": 18,
    "t": 10
   },
   "culture|monumentNames|scottish|profile": {
    "v": 0
   },
   "culture|monumentNames|irish|words": {
-   "v": 45,
+   "v": 73,
    "t": 30
   },
   "culture|monumentNames|irish|shapes": {
-   "v": 28,
+   "v": 18,
    "t": 10
   },
   "culture|monumentNames|irish|profile": {
    "v": 0
   },
   "culture|monumentNames|cornish|words": {
-   "v": 45,
+   "v": 73,
    "t": 30
   },
   "culture|monumentNames|cornish|shapes": {
-   "v": 28,
+   "v": 18,
    "t": 10
   },
   "culture|monumentNames|cornish|profile": {
    "v": 0
   },
   "culture|monumentNames|celtic|words": {
-   "v": 45,
+   "v": 69,
    "t": 12
   },
   "culture|monumentNames|celtic|shapes": {
-   "v": 28,
+   "v": 8,
    "t": 4
   },
   "culture|monumentNames|celtic|profile": {
    "v": 0
   },
   "culture|monumentNames|norse|words": {
-   "v": 4,
+   "v": 58,
    "t": 30
   },
   "culture|monumentNames|norse|shapes": {
-   "v": 4,
+   "v": 15,
    "t": 10
   },
   "culture|monumentNames|norse|profile": {
    "v": 0
   },
   "culture|monumentNames|scandinavian|words": {
-   "v": 4,
+   "v": 54,
    "t": 30
   },
   "culture|monumentNames|scandinavian|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|monumentNames|scandinavian|profile": {
    "v": 0
   },
   "culture|monumentNames|german|words": {
-   "v": 0
+   "v": 60,
+   "t": 30
   },
   "culture|monumentNames|german|shapes": {
-   "v": 0
+   "v": 14,
+   "t": 10
   },
   "culture|monumentNames|german|profile": {
    "v": 0
@@ -2556,23 +2588,23 @@
    "v": 0
   },
   "era|monumentNames|AN": {
-   "v": 99,
+   "v": 169,
    "t": 12
   },
   "era|monumentNames|MD": {
-   "v": 92,
+   "v": 158,
    "t": 12
   },
   "era|monumentNames|EM": {
-   "v": 55,
+   "v": 127,
    "t": 12
   },
   "era|monumentNames|ST": {
-   "v": 72,
+   "v": 194,
    "t": 12
   },
   "era|monumentNames|MO": {
-   "v": 43,
+   "v": 94,
    "t": 12
   },
   "era|monumentNames|NF": {
@@ -2592,7 +2624,7 @@
    "t": 4
   },
   "style|monumentNames|high-fantasy|words": {
-   "v": 0,
+   "v": 27,
    "t": 16
   },
   "style|monumentNames|high-fantasy|shapes": {
@@ -2600,7 +2632,7 @@
    "t": 4
   },
   "style|monumentNames|contemporary-fantasy|words": {
-   "v": 0,
+   "v": 27,
    "t": 16
   },
   "style|monumentNames|contemporary-fantasy|shapes": {
@@ -2608,7 +2640,7 @@
    "t": 4
   },
   "style|monumentNames|space-opera|words": {
-   "v": 0,
+   "v": 27,
    "t": 16
   },
   "style|monumentNames|space-opera|shapes": {
@@ -2616,22 +2648,22 @@
    "t": 4
   },
   "tone|monumentNames|grand": {
-   "v": 56,
+   "v": 54,
    "t": 8
   },
   "tone|monumentNames|plain": {
-   "v": 29
+   "v": 17
   },
   "tone|monumentNames|grim": {
    "v": 17,
    "t": 8
   },
   "tone|monumentNames|light": {
-   "v": 14,
+   "v": 12,
    "t": 8
   },
   "tone|monumentNames|strange": {
-   "v": 29,
+   "v": 26,
    "t": 8
   },
   "region|monumentNames|COR": {
@@ -2639,31 +2671,31 @@
    "t": 6
   },
   "region|monumentNames|WCY": {
-   "v": 3,
+   "v": 9,
    "t": 6
   },
   "region|monumentNames|SEA": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|monumentNames|EAN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|WMM": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|monumentNames|EMD": {
-   "v": 1,
+   "v": 7,
    "t": 6
   },
   "region|monumentNames|NTH": {
-   "v": 3,
+   "v": 9,
    "t": 6
   },
   "region|monumentNames|SBL": {
-   "v": 3,
+   "v": 9,
    "t": 6
   },
   "region|monumentNames|WAL": {
@@ -2671,51 +2703,51 @@
    "t": 6
   },
   "region|monumentNames|SLO": {
-   "v": 3,
+   "v": 9,
    "t": 6
   },
   "region|monumentNames|SHH": {
-   "v": 4,
+   "v": 10,
    "t": 6
   },
   "region|monumentNames|NSI": {
-   "v": 5,
+   "v": 11,
    "t": 6
   },
   "region|monumentNames|DEN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|NOR": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|SWE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|ICE": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|NDT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|RHN": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|MIT": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|ALP": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "region|monumentNames|OST": {
-   "v": 0,
+   "v": 6,
    "t": 6
   },
   "kind|monumentNames|cross": {
@@ -2770,44 +2802,44 @@
    "v": 0
   },
   "culture|settlementNames|welsh|words": {
-   "v": 25,
+   "v": 205,
    "t": 30
   },
   "culture|settlementNames|welsh|shapes": {
-   "v": 116,
+   "v": 95,
    "t": 10
   },
   "culture|settlementNames|welsh|profile": {
    "v": 0
   },
   "culture|settlementNames|scottish|words": {
-   "v": 25,
+   "v": 247,
    "t": 30
   },
   "culture|settlementNames|scottish|shapes": {
-   "v": 116,
+   "v": 217,
    "t": 10
   },
   "culture|settlementNames|scottish|profile": {
    "v": 0
   },
   "culture|settlementNames|irish|words": {
-   "v": 25,
+   "v": 170,
    "t": 30
   },
   "culture|settlementNames|irish|shapes": {
-   "v": 116,
+   "v": 97,
    "t": 10
   },
   "culture|settlementNames|irish|profile": {
    "v": 0
   },
   "culture|settlementNames|cornish|words": {
-   "v": 25,
+   "v": 195,
    "t": 30
   },
   "culture|settlementNames|cornish|shapes": {
-   "v": 116,
+   "v": 87,
    "t": 10
   },
   "culture|settlementNames|cornish|profile": {
@@ -2825,32 +2857,34 @@
    "v": 0
   },
   "culture|settlementNames|norse|words": {
-   "v": 67,
+   "v": 199,
    "t": 30
   },
   "culture|settlementNames|norse|shapes": {
-   "v": 46,
+   "v": 98,
    "t": 10
   },
   "culture|settlementNames|norse|profile": {
    "v": 0
   },
   "culture|settlementNames|scandinavian|words": {
-   "v": 67,
+   "v": 302,
    "t": 30
   },
   "culture|settlementNames|scandinavian|shapes": {
-   "v": 46,
+   "v": 182,
    "t": 10
   },
   "culture|settlementNames|scandinavian|profile": {
    "v": 0
   },
   "culture|settlementNames|german|words": {
-   "v": 0
+   "v": 350,
+   "t": 30
   },
   "culture|settlementNames|german|shapes": {
-   "v": 0
+   "v": 186,
+   "t": 10
   },
   "culture|settlementNames|german|profile": {
    "v": 0
@@ -3086,19 +3120,19 @@
    "t": 12
   },
   "era|settlementNames|MD": {
-   "v": 466,
+   "v": 726,
    "t": 12
   },
   "era|settlementNames|EM": {
-   "v": 227,
+   "v": 336,
    "t": 12
   },
   "era|settlementNames|ST": {
-   "v": 148,
+   "v": 432,
    "t": 12
   },
   "era|settlementNames|MO": {
-   "v": 148,
+   "v": 432,
    "t": 12
   },
   "era|settlementNames|NF": {
@@ -3106,7 +3140,7 @@
    "t": 12
   },
   "era|settlementNames|IS": {
-   "v": 444,
+   "v": 633,
    "t": 12
   },
   "tone|settlementNames|grand": {
@@ -3157,7 +3191,7 @@
    "t": 6
   },
   "region|settlementNames|SBL": {
-   "v": 0,
+   "v": 26,
    "t": 6
   },
   "region|settlementNames|WAL": {
@@ -3165,51 +3199,51 @@
    "t": 6
   },
   "region|settlementNames|SLO": {
-   "v": 0,
+   "v": 29,
    "t": 6
   },
   "region|settlementNames|SHH": {
-   "v": 0,
+   "v": 24,
    "t": 6
   },
   "region|settlementNames|NSI": {
-   "v": 0,
+   "v": 25,
    "t": 6
   },
   "region|settlementNames|DEN": {
-   "v": 0,
+   "v": 78,
    "t": 6
   },
   "region|settlementNames|NOR": {
-   "v": 0,
+   "v": 80,
    "t": 6
   },
   "region|settlementNames|SWE": {
-   "v": 0,
+   "v": 84,
    "t": 6
   },
   "region|settlementNames|ICE": {
-   "v": 0,
+   "v": 80,
    "t": 6
   },
   "region|settlementNames|NDT": {
-   "v": 0,
+   "v": 44,
    "t": 6
   },
   "region|settlementNames|RHN": {
-   "v": 0,
+   "v": 46,
    "t": 6
   },
   "region|settlementNames|MIT": {
-   "v": 0,
+   "v": 44,
    "t": 6
   },
   "region|settlementNames|ALP": {
-   "v": 0,
+   "v": 42,
    "t": 6
   },
   "region|settlementNames|OST": {
-   "v": 0,
+   "v": 42,
    "t": 6
   },
   "kind|settlementNames|hamlet": {
@@ -23246,40 +23280,40 @@
    "t": 6
   },
   "total|culture|english|words": {
-   "v": 1064
+   "v": 1352
   },
   "total|culture|english|shapes": {
-   "v": 2081
+   "v": 2095
   },
   "total|culture|celtic|words": {
-   "v": 432
+   "v": 528
   },
   "total|culture|celtic|shapes": {
-   "v": 370
+   "v": 341
   },
   "total|culture|welsh|words": {
-   "v": 756
+   "v": 1051
   },
   "total|culture|welsh|shapes": {
-   "v": 669
+   "v": 662
   },
   "total|culture|scottish|words": {
-   "v": 767
+   "v": 1200
   },
   "total|culture|scottish|shapes": {
-   "v": 1135
+   "v": 1249
   },
   "total|culture|irish|words": {
-   "v": 690
+   "v": 950
   },
   "total|culture|irish|shapes": {
-   "v": 453
+   "v": 447
   },
   "total|culture|cornish|words": {
-   "v": 690
+   "v": 975
   },
   "total|culture|cornish|shapes": {
-   "v": 669
+   "v": 654
   },
   "total|culture|roman|words": {
    "v": 257
@@ -23288,10 +23322,10 @@
    "v": 188
   },
   "total|culture|norse|words": {
-   "v": 622
+   "v": 970
   },
   "total|culture|norse|shapes": {
-   "v": 796
+   "v": 891
   },
   "total|culture|arabic-persian|words": {
    "v": 151
@@ -23402,16 +23436,16 @@
    "v": 105
   },
   "total|culture|scandinavian|words": {
-   "v": 617
+   "v": 1057
   },
   "total|culture|scandinavian|shapes": {
-   "v": 775
+   "v": 952
   },
   "total|culture|german|words": {
-   "v": 435
+   "v": 1025
   },
   "total|culture|german|shapes": {
-   "v": 1104
+   "v": 1350
   },
   "total|culture|american|words": {
    "v": 44
@@ -23456,40 +23490,40 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 1867
+   "v": 2179
   },
   "total|era|MD": {
-   "v": 2343
+   "v": 2910
   },
   "total|era|EM": {
-   "v": 2477
+   "v": 2891
   },
   "total|era|ST": {
-   "v": 2616
+   "v": 3405
   },
   "total|era|MO": {
-   "v": 2484
+   "v": 2968
   },
   "total|era|NF": {
-   "v": 764
+   "v": 762
   },
   "total|era|IS": {
-   "v": 1329
+   "v": 1516
   },
   "total|style|high-fantasy|words": {
-   "v": 573
+   "v": 681
   },
   "total|style|high-fantasy|shapes": {
    "v": 312
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 489
+   "v": 597
   },
   "total|style|contemporary-fantasy|shapes": {
    "v": 310
   },
   "total|style|space-opera|words": {
-   "v": 625
+   "v": 733
   },
   "total|style|space-opera|shapes": {
    "v": 143
@@ -23519,19 +23553,19 @@
    "v": 18
   },
   "total|tone|grand": {
-   "v": 632
+   "v": 628
   },
   "total|tone|plain": {
-   "v": 694
+   "v": 672
   },
   "total|tone|grim": {
    "v": 503
   },
   "total|tone|light": {
-   "v": 402
+   "v": 399
   },
   "total|tone|strange": {
-   "v": 515
+   "v": 512
   }
  },
  "thinPools": {

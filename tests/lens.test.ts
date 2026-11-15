@@ -85,7 +85,7 @@ test("§3.1: the cultures, tiers and statuses are the brief's", () => {
 
 test("§3.2: regions are shared out as the brief says, and the British live codes are the vocabulary's 12", () => {
   const live = LENS_REGIONS.filter((r) => r.status === "live").map((r) => r.code);
-  assert.deepEqual([...live.slice(0, 12)].sort(), [...VOCAB_REGIONS].sort(), "the vocabulary's 12 are the British regions");
+  assert.deepEqual([...live.slice(0, 12)].sort(), [...VOCAB_REGIONS.slice(0, 12)].sort(), "the vocabulary's first 12 are the British regions (batch 5b adds the other nine)");
   assert.deepEqual(live.slice(12), ["DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"], "Northern Europe brief 5a: the nine Scandinavian and German regions are live");
   assert.deepEqual(LENS_REGIONS.find((r) => r.code === "SBL")!.cultures, ["english", "scottish"]);
   assert.deepEqual(LENS_REGIONS.filter((r) => r.cultures.includes("english")).map((r) => r.code), ["WCY", "SEA", "EAN", "WMM", "EMD", "NTH", "SBL"]);
@@ -201,8 +201,8 @@ test("the lens maps every non-Markov module in the line-up, and river names", ()
 const ROSTERS: Record<string, string[]> = {};
 const shared = (keys: string[], modules: string[]) => modules.forEach((m) => (ROSTERS[m] = keys));
 const routeKeys = ROUTE_CULTURES.map((c) => c.key);
-shared(routeKeys, ["streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit", "eventNames", "calendarNames", "skyNames", "starsSpace", "hyperspaceCharts"]);
-shared(NORTH_CULTURES.map((c) => c.key), ["routeNames", ...WILDS_SECTIONS, ...WATERS_SECTIONS.filter((s) => s !== "hyperspaceCharts"), ...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace")]);
+shared(routeKeys, ["eventNames", "calendarNames", "skyNames", "starsSpace", "hyperspaceCharts"]);
+shared(NORTH_CULTURES.map((c) => c.key), ["routeNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit", ...WILDS_SECTIONS, ...WATERS_SECTIONS.filter((s) => s !== "hyperspaceCharts"), ...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace")]);
 shared(BYNAME_CULTURES.map((c) => c.key), ["epithets", "titles", "familyNames", "armsNames", "treasureNames", "bookNames", "realms", "peoplesTongues"]);
 shared(DEITY_CULTURES.map((c) => c.key), ["deityNames"]);
 shared(DEITY5A_CULTURES.map((c) => c.key), ["sacredPlaces"]);
@@ -236,7 +236,7 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
   assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_CULTURES.some((c) => c.key === k)), ["polynesian"]);
   // The 22, the 20, the 24 and the 34 are all inside the shared keys or the vehicle extras.
   for (const keys of [routeKeys, BYNAME_CULTURES.map((c) => c.key), MONEY_CULTURES.map((c) => c.key)]) for (const k of keys) assert.ok(cultureMapping("shared")[k], k);
-  assert.equal(WORLD_CULTURES.length, 16);
+  assert.equal(WORLD_CULTURES.length, 22, "the sixteen world cultures and the six of batch 5b");
   for (const c of WORLD_CULTURES) assert.ok(cultureMapping("world")[c.id], `world ${c.id}`);
 });
 
@@ -262,8 +262,8 @@ test("§4.1: tribal, colonial and vehicle mappings are the brief's tables", () =
   assert.deepEqual(lensCulturesFor("routeNames", "anglo-saxon"), ["english"]);
   assert.deepEqual(lensCulturesFor("routeNames", "norman-british"), ["english"]);
   // The modules outside the northern Europe batches read Celtic as the four nations and Norse as Scandinavian; a module in a batch has them as cultures of their own.
-  assert.deepEqual(lensCulturesFor("streetNames", "celtic"), ["welsh", "scottish", "irish", "cornish", "celtic"]);
-  assert.deepEqual(lensCulturesFor("streetNames", "norse"), ["norse", "scandinavian"]);
+  assert.deepEqual(lensCulturesFor("eventNames", "celtic"), ["welsh", "scottish", "irish", "cornish", "celtic"]);
+  assert.deepEqual(lensCulturesFor("eventNames", "norse"), ["norse", "scandinavian"]);
   assert.deepEqual(lensCulturesFor("routeNames", "celtic"), ["celtic"]);
   assert.deepEqual(lensCulturesFor("routeNames", "norse"), ["norse"]);
   assert.deepEqual(lensCulturesFor("routeNames", "welsh"), ["welsh"]);
@@ -305,7 +305,7 @@ test("no shared roster offers a planned culture, and the offered accessors never
   }
   // Every legacy key still reads as something live: `celtic` feeds only planned cultures but stays offered under its own key.
   assert.ok(routeKeys.includes("celtic"));
-  assert.deepEqual(offeredLensCulturesFor("streetNames", ["celtic"]), ["welsh", "scottish", "irish", "cornish", "celtic"], "outside the batches Celtic still feeds the four nations");
+  assert.deepEqual(offeredLensCulturesFor("eventNames", ["celtic"]), ["welsh", "scottish", "irish", "cornish", "celtic"], "outside the batches Celtic still feeds the four nations");
   assert.deepEqual(offeredLensCulturesFor("routeNames", ["celtic"]), ["celtic"], "in a batch 5a module Celtic is a culture of its own");
   assert.deepEqual(offeredLensCulturesFor("routeNames", ["anglo-saxon", "norman-british"]), ["english"]);
 });

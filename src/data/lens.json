@@ -1537,7 +1537,48 @@
    },
    "world": {
     "extends": "shared",
-    "entries": {}
+    "entries": {
+     "celtic": {
+      "lens": [
+       "celtic"
+      ]
+     },
+     "norse": {
+      "lens": [
+       "norse"
+      ]
+     },
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
    },
    "north": {
     "extends": "shared",
@@ -1755,6 +1796,67 @@
      "EM"
     ],
     "ethiopian:interstellar": [
+     "IS"
+    ],
+    "welsh:medieval": [
+     "MD"
+    ],
+    "welsh:modern": [
+     "ST",
+     "MO"
+    ],
+    "welsh:interstellar": [
+     "IS"
+    ],
+    "cornish:medieval": [
+     "MD"
+    ],
+    "cornish:modern": [
+     "ST",
+     "MO"
+    ],
+    "cornish:interstellar": [
+     "IS"
+    ],
+    "scottish:medieval": [
+     "MD"
+    ],
+    "scottish:modern": [
+     "ST",
+     "MO"
+    ],
+    "scottish:interstellar": [
+     "IS"
+    ],
+    "irish:medieval": [
+     "MD"
+    ],
+    "irish:modern": [
+     "ST",
+     "MO"
+    ],
+    "irish:interstellar": [
+     "IS"
+    ],
+    "scandinavian:early-modern": [
+     "EM"
+    ],
+    "scandinavian:modern": [
+     "ST",
+     "MO"
+    ],
+    "scandinavian:interstellar": [
+     "IS"
+    ],
+    "german:medieval": [
+     "MD"
+    ],
+    "german:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "german:interstellar": [
      "IS"
     ]
    },
@@ -2072,7 +2174,7 @@
    }
   },
   "streetNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2084,16 +2186,16 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "route",
+    "roster": "route5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": null,
      "keepWhenHidden": false
     }
    }
   },
   "innNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2105,16 +2207,16 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "route",
+    "roster": "route5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": null,
      "keepWhenHidden": false
     }
    }
   },
   "buildingNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2126,16 +2228,16 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "route",
+    "roster": "route5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": null,
      "keepWhenHidden": false
     }
    }
   },
   "monumentNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2147,16 +2249,16 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "route",
+    "roster": "route5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": null,
      "keepWhenHidden": false
     }
    }
   },
   "settlementKit": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2168,9 +2270,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "route",
+    "roster": "route5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": null,
      "keepWhenHidden": false
     }
@@ -3351,14 +3453,45 @@
  },
  "regionExempt": {
   "$comment": "Northern Europe brief 5b §12.2: regions that do not have a module's landscape. Their cells are exempt from the six-entry region depth, and a chosen region there falls back to the culture's own draws.",
-  "mountainNames": ["NDT", "DEN", "OST", "EAN"],
-  "forestNames": ["ICE", "NSI"],
-  "moorNames": ["RHN", "ALP"],
-  "wetlandNames": ["RHN", "MIT", "ALP"],
-  "grasslandNames": ["RHN"],
-  "seasLakes": ["ALP", "WMM", "EMD"],
-  "coastsIslands": ["WMM", "EMD"],
-  "seaCharts": ["RHN", "MIT", "ALP", "OST", "WMM", "EMD"]
+  "mountainNames": [
+   "NDT",
+   "DEN",
+   "OST",
+   "EAN"
+  ],
+  "forestNames": [
+   "ICE",
+   "NSI"
+  ],
+  "moorNames": [
+   "RHN",
+   "ALP"
+  ],
+  "wetlandNames": [
+   "RHN",
+   "MIT",
+   "ALP"
+  ],
+  "grasslandNames": [
+   "RHN"
+  ],
+  "seasLakes": [
+   "ALP",
+   "WMM",
+   "EMD"
+  ],
+  "coastsIslands": [
+   "WMM",
+   "EMD"
+  ],
+  "seaCharts": [
+   "RHN",
+   "MIT",
+   "ALP",
+   "OST",
+   "WMM",
+   "EMD"
+  ]
  },
  "sourceShares": {
   "$comment": "Place modules split brief §4.1: where a focused place module's draw comes from, before it falls back to its own shapes. A kind may list sources; the share is the chance a draw tries the source first.",
