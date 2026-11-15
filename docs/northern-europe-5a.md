@@ -791,9 +791,12 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 
 | Word | Used by |
 |---|---|
+| Ait | English |
 | Alp | German, regions |
 | Alps | German, regions |
+| Assart | English, Norse, German |
 | Avalanche | regions |
+| Ballybetagh | Irish |
 | Banshee | Irish |
 | Beck | English, Norse, Scandinavian, German |
 | Boggart | English |
@@ -803,46 +806,72 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Brownie | English, Welsh, Scottish, Norse, Scandinavian |
 | Burn | Scottish |
 | Cairn | English, Welsh, Scottish, Irish, Cornish, Norse, Scandinavian |
+| Callow | Irish |
+| Cantred | Irish |
 | Carr | English |
 | Carse | Scottish |
+| Clachan | Scottish |
+| Cleugh | Scottish |
 | Combe | English, Welsh, Cornish |
 | Crag | English, Welsh, Scottish, Cornish, German, regions |
+| Crannog | Welsh, Scottish, Irish, Celtic |
 | Croft | English, Scottish, Cornish |
+| Cromlech | English |
 | Dale | English, Scottish, Norse, Scandinavian, German |
+| Davoch | Scottish |
+| Dean | Scottish |
 | Dingle | English, Welsh |
 | Drumlin | Scottish, Irish |
 | Dyke | Scottish, German, regions |
+| Eisteddfod | Welsh |
 | Erlking | German |
 | Esker | Irish, Scandinavian, regions |
+| Eyot | English |
+| Fank | Scottish |
 | Fell | Norse, Scandinavian |
 | Fen | English, Irish, Norse, Scandinavian, German |
+| Fermtoun | Scottish |
+| Fianna | Irish |
 | Firth | English, Scottish, Norse, Scandinavian |
 | Fjord | Norse, Scandinavian, German, regions |
 | Flow | Scottish |
 | Fogou | Cornish |
 | Force | English, Scottish, Norse, Scandinavian |
 | Garth | English, Norse, Scandinavian, German |
+| Gat | English |
 | Geo | Scottish |
 | Glacier | regions, German lakes |
+| Gorsedd | Welsh |
 | Hanger | English, Welsh, Cornish |
 | Hanse | German |
+| Hard | English |
+| Haugh | Scottish |
+| Heugh | Scottish |
 | Holm | English, Scottish, Norse, Scandinavian |
 | Holt | English, Norse |
 | Howe | English, Scottish, Norse, Scandinavian |
+| Hundred | English, Welsh, Cornish, Norse, Scandinavian, German |
 | Hurst | English |
 | Hythe | English |
+| Inch | Scottish |
 | Kelpie | English, Scottish |
+| Kirk | Scottish |
 | Knocker | Cornish |
+| Knott | English |
 | Knowe | Scottish |
 | Kobold | German |
 | Kyle | Scottish |
 | Law | Scottish, Irish, Norse |
 | Leat | English, Welsh, Cornish |
+| Leaze | English |
 | Linn | English, Scottish |
 | Loch | Scottish |
+| Lode | English, Cornish |
 | Lough | Irish |
 | Machair | Scottish |
+| Maelstrom | Norse, Scandinavian |
 | Mark | German |
+| Megalith | German |
 | Mere | English, Norse, Scandinavian, German, regions, German lakes |
 | Moss | English, Scottish, Norse, Scandinavian, German |
 | Mudflat | German, regions |
@@ -851,28 +880,44 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Munro | Scottish |
 | Naze | English |
 | Ness | English, Scottish, Norse, Scandinavian |
+| Oppidum | Celtic |
+| Pike | English |
 | Pill | English, Cornish |
 | Piskie | Cornish |
 | Polder | German, regions |
 | Policy | Scottish |
 | Pooka | Irish |
+| Quag | English, Norse, Scandinavian, German |
 | Quoit | Cornish |
+| Rath | Irish |
 | Reach | English, regions |
 | Riding | English |
+| Rig | Scottish, Norse |
+| Roost | Scottish |
 | Runrig | Scottish |
+| Scaur | Scottish |
 | Selkie | Scottish, Irish |
 | Shieling | Scottish, Norse, Scandinavian |
+| Sidhe | Irish |
 | Skerry | English, Scottish, Norse, Scandinavian |
+| Slough | English |
+| Soke | English |
 | Spinney | English |
 | Spit | English, German |
 | Spriggan | Cornish |
 | Staithe | English, Welsh |
 | Steading | English, Scottish, Norse, Scandinavian |
+| Stell | Scottish |
+| Strath | Scottish |
+| Swatch | English |
 | Tarn | English, Welsh, Scottish, Norse, Scandinavian, German, German lakes |
+| Tithing | English, Cornish |
 | Toft | Norse |
 | Tor | English, Cornish |
+| Toun | Scottish |
 | Townland | Irish |
 | Troll | Norse, Scandinavian |
+| Tump | English |
 | Turlough | Irish |
 | Valkyrie | Norse |
 | Voe | Scottish, Norse |
