@@ -142,3 +142,39 @@ Each batch:
 - Region-level people tables (Northern English, Highland names): the people tables keep one list per culture and period.
 - Stars and space, spacecraft, hyperspace charts.
 - The retired engines' tables.
+
+## 11. Amendment, 16 November 2026: batch 5a fixes
+
+Agreed with Kenny after a run of the 5a modules. Earlier sections stand; this adds to §6 and §7 and fixes what the run showed.
+
+### 11.1 How the signature cells count (amends §6)
+
+The 30 words and 10 shapes per module were met by counting the shared pools and one set of land frames in every module that reads them. From now on, for the core cells of this brief:
+
+- **Signature words** are the module's own `{N}` nouns only. The shared pools (`nLandB`, `nLandC`, `nLandD` and their water, route and sacred twins) are still read by every module of their group, but are not counted towards a signature cell.
+- **Signature shapes** are the module's own frames only. The group frames (the same set read by every module of a group) are still drawn, but are not counted.
+- The targets stand: 30 words and 10 shapes per core culture per module; 12 and 4 for Celtic; 6 per region; 6 per era.
+
+### 11.2 Depth per module
+
+- Each module's three main kinds get a noun list of their own, of at least 8 words and in practice 10 (30 per module), each word right for its kind. A noun is never used on the wrong kind ("Saddle" as a range).
+- Each module has frames of its own, written for it (a coast frame reads like a coast), at least 10 per culture; the group frames are on top of them.
+- Sacred places have one kind, so their three lists are by site: water, stone and ground, and built places.
+- `B` (land use and material) and `C` (lore) stay shared by the group.
+
+### 11.3 Making the culture show
+
+- When a core culture (or Celtic) is chosen, its signature frames take 40% of the draws of a kind. General and other cultures are unchanged.
+- Within one batch a culture noun appears at most twice (until the module's nouns for that culture run out).
+
+### 11.4 Era words
+
+The `{D} {N}` frame is dropped: era words read on their own terms (`{town} {D}`, `{D} of {person}`, `Old {D}` from the steam age on for older eras' words). Ley Line is a 1920s idea: modern and fantastic only.
+
+### 11.5 Words
+
+Output is English words in a standard dictionary: Barrow Wight (a coinage) becomes Barrow Ghost; Autobahn becomes Motorway; Bal and Carn become Mine and Cairn; Draugr becomes Walking Dead. Wheal and Zawn stay for region COR only. Fixed whole names are checked against the real-place list of §9 in every wild lands, waters and place table, not only the new ones.
+
+### 11.6 Fills and sources
+
+Holy and title fills never follow a bare generic (they take "Saint {n}", or "of" or a possessive); folk fills never follow a bare generic and take "the" after "of"; old personal names go by culture first, region second; the British shapes source never runs for Norse, Scandinavian or German; rivers at home never use the native forms; the plain narrow-valley word reads "Combe" for Welsh and Cornish; German `[place]` fills read the German people tables (as "{given}'s {generic}" or "{surname} {generic}") until batch 5b adds German settlement names.
