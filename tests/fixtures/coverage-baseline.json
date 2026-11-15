@@ -12452,14 +12452,14 @@
    "t": 12
   },
   "tone|epithets|grand": {
-   "v": 57,
+   "v": 60,
    "t": 8
   },
   "tone|epithets|plain": {
-   "v": 29
+   "v": 34
   },
   "tone|epithets|grim": {
-   "v": 47,
+   "v": 49,
    "t": 8
   },
   "tone|epithets|light": {
@@ -12467,7 +12467,7 @@
    "t": 8
   },
   "tone|epithets|strange": {
-   "v": 28,
+   "v": 30,
    "t": 8
   },
   "kind|epithets|character": {
@@ -13226,14 +13226,14 @@
    "t": 12
   },
   "tone|familyNames|grand": {
-   "v": 3,
+   "v": 6,
    "t": 8
   },
   "tone|familyNames|plain": {
-   "v": 1
+   "v": 6
   },
   "tone|familyNames|grim": {
-   "v": 1,
+   "v": 3,
    "t": 8
   },
   "tone|familyNames|light": {
@@ -13241,7 +13241,7 @@
    "t": 8
   },
   "tone|familyNames|strange": {
-   "v": 0,
+   "v": 2,
    "t": 8
   },
   "kind|familyNames|patronymic": {
@@ -16909,11 +16909,11 @@
    "t": 4
   },
   "tone|mysticOrders|grand": {
-   "v": 80,
+   "v": 81,
    "t": 8
   },
   "tone|mysticOrders|plain": {
-   "v": 61
+   "v": 62
   },
   "tone|mysticOrders|grim": {
    "v": 38,
@@ -20123,7 +20123,7 @@
    "t": 4
   },
   "tone|ships|grand": {
-   "v": 17,
+   "v": 22,
    "t": 8
   },
   "tone|ships|plain": {
@@ -20659,7 +20659,7 @@
    "t": 4
   },
   "tone|spacecraft|grand": {
-   "v": 17,
+   "v": 22,
    "t": 8
   },
   "tone|spacecraft|plain": {
@@ -22501,23 +22501,23 @@
    "v": 18
   },
   "total|tone|grand": {
-   "v": 615
+   "v": 632
   },
   "total|tone|plain": {
-   "v": 683
+   "v": 694
   },
   "total|tone|grim": {
-   "v": 499
+   "v": 503
   },
   "total|tone|light": {
    "v": 402
   },
   "total|tone|strange": {
-   "v": 511
+   "v": 515
   }
  },
  "thinPools": {
-  "count": 473,
+  "count": 468,
   "entries": {
    "skyNames|constellations/anglo-saxon": 1,
    "realms|cultQualExtra/ethiopian": 1,
@@ -22697,15 +22697,11 @@
    "ships|lists/holyAdj": 4,
    "spacecraft|lists/holyAdj": 4,
    "tradeGuilds|lists/leagueBody": 4,
-   "aircraft|lists/metal": 4,
-   "landVehicles|lists/metal": 4,
    "powerFactions|lists/mundaneOffice": 4,
    "bookNames|lists/oldThings": 4,
    "bookNames|lists/realmWordPl": 4,
    "martialOrders|lists/regimentOf": 4,
    "adventureCompanies|lists/retrieval": 4,
-   "ships|lists/season": 4,
-   "spacecraft|lists/season": 4,
    "aircraft|lists/spiritMetal": 4,
    "landVehicles|lists/spiritMetal": 4,
    "deityNames|lists/spiritWord": 4,
@@ -22959,7 +22955,6 @@
    "realms|lists/peopleNoun": 7,
    "powerFactions|lists/rebelGroup": 7,
    "realms|lists/regional": 7,
-   "powerFactions|lists/season": 7,
    "aircraft|lists/siegeAgent": 7,
    "landVehicles|lists/siegeAgent": 7,
    "mysticOrders|lists/weekday": 7,

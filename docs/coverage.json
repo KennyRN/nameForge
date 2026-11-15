@@ -9773,7 +9773,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 499,
+   "rowCount": 515,
    "cultures": {
     "general": {
      "words": 0,
@@ -10089,11 +10089,11 @@
    },
    "styles": {},
    "tones": {
-    "grand": 57,
-    "plain": 29,
-    "grim": 47,
+    "grand": 60,
+    "plain": 34,
+    "grim": 49,
     "light": 49,
-    "strange": 28
+    "strange": 30
    },
    "kinds": {
     "character": 3,
@@ -10499,7 +10499,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 470,
+   "rowCount": 486,
    "cultures": {
     "general": {
      "words": 0,
@@ -10815,11 +10815,11 @@
    },
    "styles": {},
    "tones": {
-    "grand": 3,
-    "plain": 1,
-    "grim": 1,
+    "grand": 6,
+    "plain": 6,
+    "grim": 3,
     "light": 17,
-    "strange": 0
+    "strange": 2
    },
    "kinds": {
     "patronymic": 3,
@@ -13444,7 +13444,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 464,
+   "rowCount": 482,
    "cultures": {
     "general": {
      "words": 0,
@@ -13861,7 +13861,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 784,
+   "rowCount": 806,
    "cultures": {
     "general": {
      "words": 0,
@@ -14234,8 +14234,8 @@
     }
    },
    "tones": {
-    "grand": 80,
-    "plain": 61,
+    "grand": 81,
+    "plain": 62,
     "grim": 38,
     "light": 24,
     "strange": 92
@@ -14286,7 +14286,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 769,
+   "rowCount": 772,
    "cultures": {
     "general": {
      "words": 0,
@@ -14712,7 +14712,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 698,
+   "rowCount": 702,
    "cultures": {
     "general": {
      "words": 0,
@@ -15137,7 +15137,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 981,
+   "rowCount": 1086,
    "cultures": {
     "general": {
      "words": 0,
@@ -15559,7 +15559,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 440,
+   "rowCount": 444,
    "cultures": {
     "general": {
      "words": 0,
@@ -15981,7 +15981,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 780,
+   "rowCount": 788,
    "cultures": {
     "general": {
      "words": 0,
@@ -16407,7 +16407,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 620,
+   "rowCount": 636,
    "cultures": {
     "general": {
      "words": 0,
@@ -16833,7 +16833,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 759,
+   "rowCount": 794,
    "cultures": {
     "general": {
      "words": 0,
@@ -17267,7 +17267,7 @@
     }
    },
    "tones": {
-    "grand": 17,
+    "grand": 22,
     "plain": 9,
     "grim": 3,
     "light": 11,
@@ -17320,7 +17320,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 642,
+   "rowCount": 677,
    "cultures": {
     "general": {
      "words": 0,
@@ -17754,7 +17754,7 @@
     }
    },
    "tones": {
-    "grand": 17,
+    "grand": 22,
     "plain": 9,
     "grim": 3,
     "light": 11,
@@ -17809,7 +17809,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 596,
+   "rowCount": 615,
    "cultures": {
     "general": {
      "words": 0,
@@ -18297,7 +18297,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 648,
+   "rowCount": 667,
    "cultures": {
     "general": {
      "words": 0,
@@ -19294,11 +19294,11 @@
    }
   },
   "tones": {
-   "grand": 615,
-   "plain": 683,
-   "grim": 499,
+   "grand": 632,
+   "plain": 694,
+   "grim": 503,
    "light": 402,
-   "strange": 511
+   "strange": 515
   }
  },
  "thinPools": [
@@ -20360,18 +20360,6 @@
    "minimum": 8
   },
   {
-   "pool": "lists/metal",
-   "module": "aircraft",
-   "entries": 4,
-   "minimum": 8
-  },
-  {
-   "pool": "lists/metal",
-   "module": "landVehicles",
-   "entries": 4,
-   "minimum": 8
-  },
-  {
    "pool": "lists/mundaneOffice",
    "module": "powerFactions",
    "entries": 4,
@@ -20398,18 +20386,6 @@
   {
    "pool": "lists/retrieval",
    "module": "adventureCompanies",
-   "entries": 4,
-   "minimum": 8
-  },
-  {
-   "pool": "lists/season",
-   "module": "ships",
-   "entries": 4,
-   "minimum": 8
-  },
-  {
-   "pool": "lists/season",
-   "module": "spacecraft",
    "entries": 4,
    "minimum": 8
   },
@@ -21864,12 +21840,6 @@
   {
    "pool": "lists/regional",
    "module": "realms",
-   "entries": 7,
-   "minimum": 8
-  },
-  {
-   "pool": "lists/season",
-   "module": "powerFactions",
    "entries": 7,
    "minimum": 8
   },

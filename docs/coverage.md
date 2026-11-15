@@ -221,9 +221,9 @@ Tagged entries per tone (target 8 for grand, grim, light and strange; plain is t
 | coasts and islands | **7** | 14 | 21 | 14 | **4** |
 | sea charts | **4** | 18 | 11 | 8 | **7** |
 | hyperspace charts | **2** | 8 | 9 | **2** | 13 |
-| epithets and bynames | 57 | 29 | 47 | 49 | 28 |
+| epithets and bynames | 60 | 34 | 49 | 49 | 30 |
 | titles and honourifics | **1** | 1 | **0** | **0** | **0** |
-| family names | **3** | 1 | **1** | 17 | **0** |
+| family names | **6** | 6 | **3** | 17 | **2** |
 | arms and armour | **0** | 0 | 16 | 8 | **4** |
 | treasures and regalia | **0** | 0 | 8 | **3** | **4** |
 | books and writings | **0** | 0 | **6** | **3** | **2** |
@@ -232,15 +232,15 @@ Tagged entries per tone (target 8 for grand, grim, light and strange; plain is t
 | deities | **2** | 0 | **4** | **2** | 14 |
 | sacred places | **1** | 1 | **4** | **2** | 9 |
 | tribes and kin groups | **0** | 0 | **0** | **0** | **0** |
-| faiths and mystic orders | 80 | 61 | 38 | 24 | 92 |
+| faiths and mystic orders | 81 | 62 | 38 | 24 | 92 |
 | armies and martial orders | 59 | 80 | 48 | 13 | 13 |
 | thieves and the underworld | 21 | 75 | 43 | 50 | 33 |
 | guilds, companies, and trade | 37 | 63 | 10 | 8 | 11 |
 | adventurers and explorers | 30 | 39 | 23 | **7** | 14 |
 | powers and factions | 41 | 70 | 14 | 12 | 39 |
 | supernatural courts and hosts | 53 | 30 | 26 | 10 | 56 |
-| ships and boats | 17 | 9 | **3** | 11 | **4** |
-| spacecraft and stations | 17 | 9 | **3** | 11 | **4** |
+| ships and boats | 22 | 9 | **3** | 11 | **4** |
+| spacecraft and stations | 22 | 9 | **3** | 11 | **4** |
 | aircraft and airships | **1** | 1 | **2** | 10 | **0** |
 | land vehicles | **4** | 0 | **5** | 22 | **3** |
 | river names | **0** | 0 | **0** | **0** | **0** |
@@ -506,15 +506,11 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `lists/holyAdj` | ships and boats | 4 |
 | `lists/holyAdj` | spacecraft and stations | 4 |
 | `lists/leagueBody` | guilds, companies, and trade | 4 |
-| `lists/metal` | aircraft and airships | 4 |
-| `lists/metal` | land vehicles | 4 |
 | `lists/mundaneOffice` | powers and factions | 4 |
 | `lists/oldThings` | books and writings | 4 |
 | `lists/realmWordPl` | books and writings | 4 |
 | `lists/regimentOf` | armies and martial orders | 4 |
 | `lists/retrieval` | adventurers and explorers | 4 |
-| `lists/season` | ships and boats | 4 |
-| `lists/season` | spacecraft and stations | 4 |
 | `lists/spiritMetal` | aircraft and airships | 4 |
 | `lists/spiritMetal` | land vehicles | 4 |
 | `lists/spiritWord` | deities | 4 |
@@ -768,7 +764,6 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `lists/peopleNoun` | realms and polities | 7 |
 | `lists/rebelGroup` | powers and factions | 7 |
 | `lists/regional` | realms and polities | 7 |
-| `lists/season` | powers and factions | 7 |
 | `lists/siegeAgent` | aircraft and airships | 7 |
 | `lists/siegeAgent` | land vehicles | 7 |
 | `lists/weekday` | faiths and mystic orders | 7 |
@@ -930,11 +925,11 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | tone | entries |
 | --- | --- |
-| grand | 615 |
-| plain | 683 |
-| grim | 499 |
+| grand | 632 |
+| plain | 694 |
+| grim | 503 |
 | light | 402 |
-| strange | 511 |
+| strange | 515 |
 
 
 ## Shared tables
@@ -968,9 +963,9 @@ People lists against brief §3.1 (core 60/60/60/15/15/24, second tier 30/30/30/8
 | chinese | historic, modern | 37/30 | 30 | 8/8 | 12 | 8/8 |
 | japanese | historic, modern | 33/30 | 31 | 8/8 | 12 | 8/8 |
 | korean | historic, modern | 31/30 | 30 | 8/8 | 12 | 8/8 |
-| aztec | historic | 30/31 | – | 8/8 | 12 | 8/8 |
-| maya | historic | 31/31 | 32 | 8/8 | 12 | 8/8 |
-| andean | historic | 30/30 | – | 8/8 | 12 | 8/8 |
+| aztec | historic, modern | 36/33 | 36 | 8/8 | 12 | 8/8 |
+| maya | historic, modern | 38/32 | 32 | 8/8 | 13 | 8/8 |
+| andean | historic, modern | 32/31 | 35 | 8/8 | 14 | 8/8 |
 | polynesian | historic, modern | 32/31 | – | 8/8 | 12 | 8/8 |
 | american | historic, modern | 32/30 | 30 | 8/8 | 12 | 8/8 |
 | general | – | – | – | – | – | 30/30 |
