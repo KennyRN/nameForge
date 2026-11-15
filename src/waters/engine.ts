@@ -5,7 +5,7 @@
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { mergeRegionColumns, NORTH } from "../northData";
+import { mergeRegionColumns, NORTH, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
@@ -669,7 +669,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     const ctx = newCtx(scale);
     if (earthlyModule) {
       for (const kind of waterKinds(earthlyModule)) {
-        const shapes = [...(WATERS_DATA.shapes[earthlyModule][kind.key] ?? []), ...WATERS_DATA.cultureShapes.filter((s) => s.module === earthlyModule && s.kind === kind.key && s.culture === culture.key)];
+        const shapes = [...(WATERS_DATA.shapes[earthlyModule][kind.key] ?? []), ...shapesOf(WATERS_DATA.cultureShapes.filter((s) => s.module === earthlyModule && s.kind === kind.key), culture.key)];
         const live = shapes
           .filter((s) => !options.shape || s.p === options.shape)
           .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)])

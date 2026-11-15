@@ -1307,9 +1307,9 @@
   ],
   "sections": [
    [
-    "Cloth and Cattle Road",
-    "Cloth and Lead Road",
-    "Cloth and Corn Road"
+    "Coach Road",
+    "Smugglers' Road",
+    "Drove Road"
    ],
    [
     "Old Town",
@@ -1323,7 +1323,7 @@
     "Earl's Street",
     "Spring Street",
     "Barn Way",
-    "Cloth and Cattle Road",
+    "Coach Road",
     "East Lane"
    ],
    [
@@ -1437,9 +1437,9 @@
   ],
   "sections": [
    [
-    "Sacred Way to the Holy Well",
-    "Sacred Way to the Oracle",
-    "Calf Clearing Street"
+    "Wall Way",
+    "Mound Way",
+    "Ditch Way"
    ],
    [
     "Old Town",
@@ -1454,7 +1454,7 @@
     "North Row",
     "Hall Hill",
     "Fullers' Street",
-    "Calf Clearing Street"
+    "Wall Way"
    ],
    [
     "Market Place",
@@ -1502,8 +1502,8 @@
   ],
   "sections": [
    [
-    "Cloth and Cattle Road",
-    "Cloth and Lead Road"
+    "Coach Road",
+    "Smugglers' Road"
    ],
    [
     "High Street",
@@ -1590,8 +1590,8 @@
   ],
   "sections": [
    [
-    "Sacred Way to the Holy Well",
-    "Honeyhouse Street"
+    "Wall Way",
+    "Mound Way"
    ],
    [
     "Long Street",

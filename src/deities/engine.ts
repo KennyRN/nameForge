@@ -119,7 +119,10 @@ export const DEITY_DATA: DeityData = {
   styles: (() => {
     const out = { ...DEITY_BASE.styles } as DeityData["styles"];
     for (const [key, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key in out) && legacy in out) out[key] = out[legacy];
-    for (const [key, row] of Object.entries(NORTH.deities.styles)) out[key] = { ...(out[key] ?? {}), ...row } as DeityData["styles"][string];
+    for (const [key, row] of Object.entries(NORTH.deities.styles)) {
+      const base = (out[key] ?? {}) as { extra?: unknown[] };
+      out[key] = { ...base, ...row, extra: [...(base.extra ?? []), ...((row as { extra?: unknown[] }).extra ?? [])] } as unknown as DeityData["styles"][string];
+    }
     return out;
   })(),
 };

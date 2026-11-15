@@ -3,12 +3,13 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vocab from "../src/data/settlement-vocab.json";
+import { SETTLEMENT_VOCAB } from "../src/settlement/vocab";
 import { GROUP_LABELS, historySection, SECTION_GROUPS, SECTION_LABELS, SECTION_ORDER, SWITCHER_ORDER, WATERS_SECTIONS, WILDS_SECTIONS } from "../src/sections";
 import { countedWords } from "../src/routes/engine";
 import { generateWildsNames, WILDS_CULTURES, WILDS_DATA, WILDS_MODULES, type WildsShape } from "../src/wilds/engine";
 import { chooseWilds, defaultWildsState, wildsHistoryLabel, wildsSentence, wildsSentenceText } from "../src/wilds/sentence";
 
-const pools = (vocab as unknown as { pools: Record<string, { entries: unknown[] }> }).pools;
+const pools = (SETTLEMENT_VOCAB as unknown as { pools: Record<string, { entries: unknown[] }> }).pools;
 const SOURCES = new Set(["town", "number", "folk", "person", "kingdom", "holy", "god", "river", "beast", "tree", "stock"]);
 const CULTURE_KEYS = new Set(WILDS_CULTURES.map((c) => c.key));
 const FUSE_POOLS = new Set(["wildFuse", "lakeFuse", "mythFuse"]);
@@ -104,7 +105,8 @@ test("pools: every pool of wilds-pools.json is in settlement-vocab.json, unchang
   for (const [name, pool] of Object.entries(added)) assert.deepEqual(pools[name].entries, pool.entries, name);
   // 253 earlier pools, the 51 wild pools, and monuments and statues' 27 less the two building monument pools it took over
   // (docs/monuments-and-statues-brief.md §4, §10).
-  assert.equal(Object.keys(pools).length, 253 + 51 + 27 - 2);
+  // Northern Europe brief 5a adds 26 pools of signature words (nMountain … nSacredD).
+  assert.equal(Object.keys(pools).length, 253 + 51 + 27 - 2 + 26);
   for (const name of ["direction", "directionAdj", "explorerMood", "folkUncanny", "devilFeature", "gateWord", "lakeQuality", "lakeCreature", "lakeFuse", "lakeShape", "stackGroup", "fordBeast", "mariaWord"]) assert.ok(pools[name], name);
 });
 
@@ -231,7 +233,7 @@ test("stems: Roman has no usable stems so every fill is a biome animal or tree; 
   assert.ok(roman.length > 50);
   assert.ok(roman.every((f) => extras.has(f)), roman.filter((f) => !extras.has(f)).join(", "));
   const boreal = new Set(biomeStems(resolveWildsBiome("mountainNames", "norse", "home", "boreal").biome));
-  const norse = townFills(generateWildsNames({ module: "mountainNames", culture: "norse", biome: "boreal", people: "invented", count: 300, seed: 5 }).names);
+  const norse = townFills(generateWildsNames({ module: "mountainNames", culture: "norse", biome: "boreal", people: "invented", count: 900, seed: 5 }).names);
   assert.ok(norse.length > 50);
   assert.ok(norse.every((f) => !boreal.has(f)), norse.filter((f) => boreal.has(f)).join(", "));
 });

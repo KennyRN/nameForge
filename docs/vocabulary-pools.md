@@ -366,6 +366,32 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `grsFlora` | grassland plants: Grass, Clover, Cowslip, Poppy | x, bt | wild lands, farmland and countryside, hills and valleys, lands and territories |
 | `grsWork` | grassland trades: Drovers', Shepherds', Herders' | x | wild lands, farmland and countryside |
 | `grsBeast` | grassland creatures: Horse, Hare, Lark, Bison | x, bt, pl | wild lands, farmland and countryside, lands and territories |
+| `nMountain` | signature mountain words of the batch 5a cultures; entries tagged `c` with their culture | x, e, t, c, h | mountains |
+| `nWood` | signature wood words; entries tagged `c` with their culture | x, e, t, c, h | forests |
+| `nMoor` | signature moor words; entries tagged `c` with their culture | x, e, t, c, h | moors |
+| `nWet` | signature wetland words; entries tagged `c` with their culture | x, e, t, c, h | wetlands |
+| `nGrass` | signature grassland words; entries tagged `c` with their culture | x, e, t, c, h | grasslands |
+| `nLands` | signature words for lands and their divisions; entries tagged `c` with their culture | x, e, t, c, h | lands and territories |
+| `nFarm` | signature farm and field words; entries tagged `c` with their culture | x, e, t, c, h | farmland and countryside |
+| `nHill` | signature hill and valley words; entries tagged `c` with their culture | x, e, t, c, h | hills and valleys |
+| `nRiver` | signature stream, lake and falls words; entries tagged `c` with their culture | x, e, t, c, h | rivers and inland waters |
+| `nLandB` | signature land-use and material words (Slate, Peat, Shieling); entries tagged `c` with their culture | x, e, t, c, h | wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters |
+| `nLandC` | signature lore words of the land (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters |
+| `nLandD` | signature words of the land by era (Hillfort, Quarry); entries tagged `c` with their culture | x, e, t, c, h | wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters |
+| `nSea` | signature sea, bay and strait words; entries tagged `c` with their culture | x, e, t, c, h | seas and lakes |
+| `nCoast` | signature headland, cove and island words; entries tagged `c` with their culture | x, e, t, c, h | coasts and islands |
+| `nChart` | signature bank, reef and channel words; entries tagged `c` with their culture | x, e, t, c, h | sea charts |
+| `nWaterB` | signature water-use words (Herring, Slate); entries tagged `c` with their culture | x, e, t, c, h | seas and coasts, rivers and inland waters |
+| `nWaterC` | signature lore words of the water (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | seas and coasts, rivers and inland waters |
+| `nWaterD` | signature words of the water by era; entries tagged `c` with their culture | x, e, t, c, h | seas and coasts, rivers and inland waters |
+| `nRoute` | signature road nouns; entries tagged `c` with their culture | x, e, t, c, h | route names |
+| `nRouteB` | signature goods and users of a route; entries tagged `c` with their culture | x, e, t, c, h | route names |
+| `nRouteC` | signature lore words of a route (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | route names |
+| `nRouteD` | signature route words by era (Turnpike, Branch Line); entries tagged `c` with their culture | x, e, t, c, h | route names |
+| `nSacred` | signature sacred-place nouns; entries tagged `c` with their culture | x, e, t, c, h | sacred places |
+| `nSacredB` | signature qualifiers of a sacred place; entries tagged `c` with their culture | x, e, t, c, h | sacred places |
+| `nSacredC` | signature lore words of a sacred place (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | sacred places |
+| `nSacredD` | signature sacred-place words by era; entries tagged `c` with their culture | x, e, t, c, h | sacred places |
 
 ## The lens and the coverage report
 

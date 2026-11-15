@@ -31,7 +31,8 @@ const entryOf = (vocab: Vocabulary, pool: string, w: VocabWhere, word: string) =
 // ── §15.1 Vocabulary ────────────────────────────────────────────────────────
 
 test("§15.1: every entry has w; tones, eras, cultures and region tags are valid; no stray characters", () => {
-  const cultureKeys = new Set([...VOCAB_ALL_CULTURES, ...VOCAB_CULTURE_GROUPS]);
+  // Northern Europe brief 5a: the batch's pools tag the six cultures the batch modules offer.
+  const cultureKeys = new Set([...VOCAB_ALL_CULTURES, ...VOCAB_CULTURE_GROUPS, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
   const check = (pool: string, e: VocabEntry) => {
     assert.ok(typeof e.w === "string" && e.w.length > 0, `${pool}: entry without w`);
     assert.ok(!/[()§×?→]/.test(e.w), `${pool}: “${e.w}”`);

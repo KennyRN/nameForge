@@ -3,9 +3,21 @@
 // edit the content, not the JSON.
 import { readFileSync, writeFileSync } from "node:fs";
 import { columns, NORDIC_WATERS, NORDIC_WILDS } from "./north5a/regionColumns.mjs";
+import { LAND_MODULES, parseList, SHARED, WATER_MODULES } from "./north5a/lib.mjs";
+import { GERMAN_LAKES, REGION_TAGS, ROUTE_REGIONS } from "./north5a/regions.mjs";
+import celtic from "./north5a/celtic.mjs";
+import cornish from "./north5a/cornish.mjs";
+import english from "./north5a/english.mjs";
+import german from "./north5a/german.mjs";
+import irish from "./north5a/irish.mjs";
+import norse from "./north5a/norse.mjs";
+import scandinavian from "./north5a/scandinavian.mjs";
+import scottish from "./north5a/scottish.mjs";
+import welsh from "./north5a/welsh.mjs";
 
+const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic];
+const ALL_CODES = ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI", "DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"];
 const read = (f) => JSON.parse(readFileSync(new URL(`../src/data/${f}.json`, import.meta.url), "utf8"));
-
 const wilds = read("wilds");
 const waters = read("waters");
 
@@ -18,5 +30,124 @@ const out = {
   deities: { styles: {} },
 };
 
+// ── Words ──────────────────────────────────────────────────────────────────
+const pool = (name) => (out.vocab.pools[name] ??= { entries: [] });
+const add = (name, text, base) => pool(name).entries.push(...parseList(text, base));
+
+for (const c of CULTURES) {
+  const base = { c: c.keys };
+  const fantastic = { ...base, h: true };
+  for (const m of Object.values(LAND_MODULES)) add(m.pool, c.land.N[m.terrain], base);
+  add(SHARED.land.B, c.land.B, base);
+  add(SHARED.land.C, c.land.C, fantastic);
+  add(SHARED.land.D, c.land.D, base);
+  for (const m of Object.values(WATER_MODULES)) add(m.pool, c.water.N[m.terrain], base);
+  add(SHARED.water.B, c.water.B, base);
+  add(SHARED.water.C, c.water.C, fantastic);
+  add(SHARED.water.D, c.water.D, base);
+  for (const [k, name] of Object.entries(SHARED.route)) add(name, c.route[k], k === "C" ? fantastic : base);
+  for (const [k, name] of Object.entries(SHARED.sacred)) add(name, c.sacred[k], k === "C" ? fantastic : base);
+}
+
+// ── Shapes ─────────────────────────────────────────────────────────────────
+const ownership = (c) => (c.keys.length === 1 ? { culture: c.keys[0] } : { c: c.keys });
+const tokens = (p, map) => p.replace(/\{([NBCD])([:}])/g, (_m, t, tail) => `{${map[t]}${tail}`);
+
+for (const c of CULTURES) {
+  const own = ownership(c);
+  for (const [module, m] of Object.entries(LAND_MODULES)) {
+    c.frames.land.forEach(([p, w, f, flags], i) => {
+      const map = { N: m.pool, B: SHARED.land.B, C: SHARED.land.C, D: SHARED.land.D };
+      out.wilds.cultureShapes.push({ p: tokens(p, map), w, f, ...own, module, kind: m.kinds[i % m.kinds.length], ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+    });
+  }
+  for (const [module, m] of Object.entries(WATER_MODULES)) {
+    c.frames.water.forEach(([p, w, f, flags], i) => {
+      const map = { N: m.pool, B: SHARED.water.B, C: SHARED.water.C, D: SHARED.water.D };
+      out.waters.cultureShapes.push({ ...own, module, kind: m.kinds[i % m.kinds.length], p: tokens(p, map).replace("{beast}", "{seaCreature}").replace("{tree}", "{seaCreature}").replace("{wildColour}", "{seaColour}"), w, f, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+    });
+  }
+  for (const [kind, p, w, flags] of c.frames.route) {
+    const map = { N: SHARED.route.N, B: SHARED.route.B, C: SHARED.route.C, D: SHARED.route.D };
+    out.routes.cultureShapes.push({ ...own, kind, p: tokens(p, map), w, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+  }
+  for (const key of c.keys) {
+    const map = { N: SHARED.sacred.N, B: SHARED.sacred.B, C: SHARED.sacred.C, D: SHARED.sacred.D };
+    out.deities.styles[key] = { extra: c.frames.sacred.map(([p, w, flags]) => ({ p: tokens(p, map), w, kind: "place", form: "culture", ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) })) };
+  }
+}
+
+// ── Region words ───────────────────────────────────────────────────────────
+for (const t of REGION_TAGS) {
+  const file = out[t.g];
+  file.regionTags[t.tag] = Object.fromEntries(ALL_CODES.map((c) => [c, t.row[c] ?? 0]));
+  file.regionTagFor[t.tag] = t.for;
+  for (const [module, kind, p0, w, f] of t.shapes) {
+    // The water engine has `{seaCreature}` and `{seaColour}` where the land engine has `{beast}` and `{wildColour}`.
+    const p = t.g === "waters" ? p0.replace("{beast}", "{seaCreature}").replace("{wildColour}", "{seaColour}") : p0;
+    for (const key of t.for) file.cultureShapes.push({ p, w, f, culture: key, module, kind, rt: t.tag });
+  }
+}
+
+for (const [region, words] of Object.entries(GERMAN_LAKES)) {
+  words.forEach((word, i) => {
+    const tag = `lake${region.toLowerCase()}${i}`;
+    out.waters.regionTags[tag] = Object.fromEntries(ALL_CODES.map((c) => [c, c === region ? 3 : 0]));
+    out.waters.regionTagFor[tag] = ["german"];
+    out.waters.cultureShapes.push({ p: `{town} ${word}`, w: 4, f: "twn", culture: "german", module: "seasLakes", kind: "lake", rt: tag });
+  });
+}
+for (const [region, keys, items] of ROUTE_REGIONS) {
+  items.forEach(([kind, p], i) => {
+    const tag = `${region.toLowerCase()}${i}`;
+    out.routes.regions[tag] = Object.fromEntries(ALL_CODES.map((c) => [c, c === region ? 3 : 0.3]));
+    for (const key of keys) out.routes.cultureShapes.push({ culture: key, kind, p, w: 4, r: tag });
+  });
+}
+
+// ── The review document ────────────────────────────────────────────────────
+const LOANWORDS = ["Cairn", "Crag", "Dingle", "Esker", "Drumlin", "Fjord", "Fell", "Skerry", "Holm", "Geo", "Ness", "Voe", "Kyle", "Firth", "Mull", "Loch", "Lough", "Machair", "Munro", "Brae", "Burn", "Linn", "Knowe", "Law", "Broch", "Croft", "Shieling", "Runrig", "Steading", "Policy", "Carse", "Moss", "Flow", "Muir", "Wheal", "Bal", "Leat", "Zawn", "Fogou", "Quoit", "Carn", "Pill", "Boreen", "Townland", "Turlough", "Banshee", "Pooka", "Kelpie", "Selkie", "Brownie", "Boggart", "Knocker", "Piskie", "Spriggan", "Kobold", "Erlking", "Valkyrie", "Troll", "Polder", "Alp", "Alps", "Dyke", "Mudflat", "Autobahn", "Hythe", "Staithe", "Toft", "Garth", "Wapentake", "Riding", "Combe", "Hanger", "Wold", "Holt", "Hurst", "Spinney", "Fen", "Carr", "Mere", "Wash", "Naze", "Spit", "Reach", "Draugr", "Hanse", "Mark", "Glacier", "Avalanche", "Tarn", "Ghyll", "Force", "Beck", "Dale", "Howe", "Hause", "Tor", "Cwm"];
+const wordsIn = (text) => (text ?? "").split("|").map((i) => i.split(";")[0].trim()).filter(Boolean);
+const loanUsed = new Map();
+const note = (w, where) => { for (const t of w.split(/[^A-Za-z]+/)) if (LOANWORDS.includes(t)) loanUsed.set(t, [...new Set([...(loanUsed.get(t) ?? []), where])]); };
+const md = [];
+md.push("# Northern Europe tables: batch 5a\n");
+md.push("For Kenny's review. Generated by `scripts/make-north5a.mjs` from `scripts/north5a/`: every entry the batch adds to the 15 modules of batch 5a (lands and territories, farmland and countryside, hills and valleys, rivers and inland waters, route names, sacred places, the six wild lands, seas and bays, coasts and islands, sea charts), by culture, module, region and era. Words sit in the pools `nMountain`… `nSacredD`, tagged with their culture; shapes are frames that read them. Stars and space are not touched.\n");
+md.push("**How to read it.** A word list reads `Word` with its eras after a semicolon (`AN-MD`: ancient to medieval; `EM-MO`: early modern to modern); the fantastic words (lists C) appear only in fantastic worlds. A frame uses `{N}` for the module's own word list and `{B}`, `{C}`, `{D}` for the shared ones; each module takes its frames on its three main kinds. Shapes with a region tag are listed under Regions.\n");
+for (const c of CULTURES) {
+  md.push(`## ${c.label}\n`);
+  md.push(`Keys: ${c.keys.join(", ")}. ${c.key === "celtic" ? "A mix for fantasy and ancient settings: its own words, and each nation's at a quarter weight." : ""}\n`);
+  const block = (title, text) => { if (!text) return; const w = wordsIn(text); w.forEach((x) => note(x, c.label)); md.push(`- **${title}:** ${text.split("|").map((i) => i.replace(/;/g, " ‹").replace(/ ‹/, " ‹") + (i.includes(";") ? "›" : "")).join(", ")}`); };
+  md.push("### Land: lands and territories, farmland, hills and valleys, rivers, the six wild lands\n");
+  for (const m of Object.values(LAND_MODULES)) block(`${m.terrain} (${m.pool}; kinds ${m.kinds.join(", ")})`, c.land.N[m.terrain]);
+  block("land use and material (nLandB)", c.land.B); block("lore, fantastic only (nLandC)", c.land.C); block("by era (nLandD)", c.land.D);
+  md.push("\n### Water: seas and bays, coasts and islands, sea charts, rivers and inland waters\n");
+  for (const m of Object.values(WATER_MODULES)) block(`${m.terrain} (${m.pool}; kinds ${m.kinds.join(", ")})`, c.water.N[m.terrain]);
+  block("use (nWaterB)", c.water.B); block("lore, fantastic only (nWaterC)", c.water.C); block("by era (nWaterD)", c.water.D);
+  md.push("\n### Routes\n"); block("nouns (nRoute)", c.route.N); block("goods and users (nRouteB)", c.route.B); block("lore, fantastic only (nRouteC)", c.route.C); block("by era (nRouteD)", c.route.D);
+  md.push("\n### Sacred places\n"); block("nouns (nSacred)", c.sacred.N); block("qualifiers (nSacredB)", c.sacred.B); block("lore, fantastic only (nSacredC)", c.sacred.C); block("by era (nSacredD)", c.sacred.D);
+  md.push("\n### Frames\n");
+  md.push(`- Land: ${c.frames.land.map(([p]) => "`" + p + "`").join(", ")}`);
+  md.push(`- Water: ${c.frames.water.map(([p]) => "`" + p + "`").join(", ")}`);
+  md.push(`- Routes: ${c.frames.route.map(([k, p]) => `${k}: \`${p}\``).join(", ")}`);
+  md.push(`- Sacred places: ${c.frames.sacred.map(([p]) => "`" + p + "`").join(", ")}\n`);
+}
+md.push("## Regions\n");
+md.push("Region words: English words weighted per region (§4). Land tags are read by the land modules; water tags by seas and bays, coasts and islands and sea charts. A tag is drawn only for its cultures. The older words that read the Scandinavian regions (Norse-derived dialect words) are listed in the third table.\n");
+md.push("| Tag | Module group | Cultures | Regions (weight) | Shapes |\n|---|---|---|---|---|");
+for (const t of REGION_TAGS) md.push(`| ${t.tag} | ${t.g === "wilds" ? "land" : "water"} | ${t.for.join(", ")} | ${Object.entries(t.row).map(([r, w]) => `${r} ${w}`).join(", ")} | ${t.shapes.map(([m, k, p]) => `${m}/${k}: ${p}`).join("; ")} |`);
+md.push("\n### Route regions\n\n| Region | Cultures | Routes |\n|---|---|---|");
+for (const [region, keys, items] of ROUTE_REGIONS) md.push(`| ${region} | ${keys.join(", ")} | ${items.map(([k, p]) => `${k}: ${p}`).join("; ")} |`);
+md.push("\n### German lakes by region\n\n| Region | Lakes (seas and bays) |\n|---|---|");
+for (const [region, words] of Object.entries(GERMAN_LAKES)) md.push(`| ${region} | ${words.join(", ")} |`);
+md.push("\n### Norse-derived words that now read the Scandinavian regions\n\nDEN, NOR, SWE, ICE weights; every other new column is 0.\n\n| Land word | Weights | Water word | Weights |\n|---|---|---|---|");
+const wl = Object.entries(NORDIC_WILDS); const ww = Object.entries(NORDIC_WATERS);
+for (let i = 0; i < Math.max(wl.length, ww.length); i++) md.push(`| ${wl[i]?.[0] ?? ""} | ${wl[i]?.[1].join(", ") ?? ""} | ${ww[i]?.[0] ?? ""} | ${ww[i]?.[1].join(", ") ?? ""} |`);
+for (const t of REGION_TAGS) for (const [, , p] of t.shapes) note(p, "regions");
+for (const w of Object.values(GERMAN_LAKES).flat()) note(w, "German lakes");
+md.push("\n## Loanwords (rule 4)\n\nEvery dictionary loanword the batch uses, and where; no other non-English word is used.\n\n| Word | Used by |\n|---|---|");
+for (const [w, where] of [...loanUsed].sort((a, b) => a[0].localeCompare(b[0]))) md.push(`| ${w} | ${where.join(", ")} |`);
+writeFileSync(new URL("../docs/northern-europe-5a.md", import.meta.url), `${md.join("\n")}\n`);
+
 writeFileSync(new URL("../src/data/north5a.json", import.meta.url), `${JSON.stringify(out, null, 1)}\n`);
-console.log("wrote src/data/north5a.json");
+console.log("wrote src/data/north5a.json", { pools: Object.keys(out.vocab.pools).length, wilds: out.wilds.cultureShapes.length, waters: out.waters.cultureShapes.length, routes: out.routes.cultureShapes.length });

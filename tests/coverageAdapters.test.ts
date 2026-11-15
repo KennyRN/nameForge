@@ -90,7 +90,10 @@ test("a module's cells: culture targets by tier, excluded and unoffered cultures
 // of the shared pools "wild lands" reads that are tagged for the culture (Chinese 3, Indian 3, Norse 0).
 test("mountains: Chinese 3 fixed names and 3 pool words, 2 settlement shapes", () => assert.equal(cell("mountainNames", "chinese"), "6/2"));
 test("mountains: Indian 2 fixed names and 3 pool words, 2 settlement shapes", () => assert.equal(cell("mountainNames", "indian"), "5/2"));
-test("mountains: Norse 3 fixed names, no tagged pool word, no shape", () => assert.equal(cell("mountainNames", "norse"), "3/0"));
+test("mountains: Norse reaches the batch target (30 signature words, 10 shapes)", () => {
+  const [w, s] = cell("mountainNames", "norse").split("/").map(Number);
+  assert.ok(w >= 30 && s >= 10, cell("mountainNames", "norse"));
+});
 
 // Inns: a culture's `cultureShapes` list (Norse 4, Japanese 4, Polynesian 2) and the tagged words of the
 // pools "inns and taverns" reads (Norse 3, Japanese 23, Polynesian 1).

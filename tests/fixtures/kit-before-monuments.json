@@ -1,9 +1,9 @@
 {
  "kit norman-british town 1": {
   "roads": [
-   "Cloth and Cattle Road",
-   "Cloth and Lead Road",
-   "Cloth and Corn Road"
+   "Coach Road",
+   "Smugglers' Road",
+   "Drove Road"
   ],
   "groups": [
    "Poor Friars of the Lamb",
@@ -37,9 +37,9 @@
  },
  "kit norman-british town 3": {
   "roads": [
-   "Sacred Way to the Holy Well",
-   "Sacred Way to the Oracle",
-   "Calf Clearing Street"
+   "Wall Way",
+   "Mound Way",
+   "Ditch Way"
   ],
   "groups": [
    "Sisters of the Blessed Lantern",
@@ -55,8 +55,8 @@
  },
  "kit norman-british village 1": {
   "roads": [
-   "Cloth and Cattle Road",
-   "Cloth and Lead Road"
+   "Coach Road",
+   "Smugglers' Road"
   ],
   "groups": [
    "Poor Friars of the Lamb"
@@ -81,8 +81,8 @@
  },
  "kit norman-british village 3": {
   "roads": [
-   "Sacred Way to the Holy Well",
-   "Honeyhouse Street"
+   "Wall Way",
+   "Mound Way"
   ],
   "groups": [
    "Sisters of the Blessed Lantern"

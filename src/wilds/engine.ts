@@ -6,7 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { mergeRegionColumns, NORTH } from "../northData";
+import { mergeRegionColumns, NORTH, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -821,7 +821,7 @@ function featureRef(ctx: Ctx, kind: string): string | undefined {
 function kindShapes(ctx: Ctx, kind: string): WildsShape[] {
   const module = ctx.module;
   const D = wildsDataOf(module);
-  const own = [...(D.shapes[module][kind] ?? []), ...D.cultureShapes.filter((s) => s.module === module && s.kind === kind && s.culture === ctx.culture.key)];
+  const own = [...(D.shapes[module][kind] ?? []), ...shapesOf(D.cultureShapes.filter((s) => s.module === module && s.kind === kind), ctx.culture.key)];
   if (kind !== "settlement") return own;
   const dual: WildsShape[] = [];
   for (const [k, shapes] of Object.entries(D.shapes[module])) {

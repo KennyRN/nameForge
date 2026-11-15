@@ -439,7 +439,7 @@ test("every culture key in any data table is one the lens knows", () => {
 });
 
 test("every culture and era tag on a vocabulary entry names a lens culture, group or era", () => {
-  const known = new Set<string>([...VOCAB_ALL_CULTURES, ...Object.keys(SETTLEMENT_VOCAB.cultureGroups)]);
+  const known = new Set<string>([...VOCAB_ALL_CULTURES, ...Object.keys(SETTLEMENT_VOCAB.cultureGroups), "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
   const bad: string[] = [];
   let tagged = 0;
   for (const [pool, p] of Object.entries(SETTLEMENT_VOCAB.pools)) {

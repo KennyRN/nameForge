@@ -175,7 +175,7 @@ test("coverage: the module reports; borrowed sources count for it, and the deleg
   assert.ok(adapter);
   assert.deepEqual(adapter.kindFlags, { river: "delegated" });
   const rows = adapter.rows();
-  assert.ok(rows.some((r) => r.source === "sources/native/stream/clear-stream" && r.kind === "stream" && r.cultures?.includes("english")));
+  assert.ok(rows.some((r) => r.source === "sources/native/stream/clear-stream" && r.kind === "stream" && !r.cultures), "borrowed British shapes are open entries, not signature ones (Northern Europe brief §6)");
   assert.ok(rows.some((r) => r.source.startsWith("sources/colonial/stream/")), "colonial generics count too");
   assert.ok(rows.some((r) => r.source.startsWith("shapes/")), "own shapes count");
 });

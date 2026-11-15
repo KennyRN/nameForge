@@ -37,3 +37,17 @@ export function mergeRegionColumns(base: Rows, columns: Rows | undefined, extra:
   for (const [tag, row] of Object.entries(extra ?? {})) out[tag] = { ...(out[tag] ?? {}), ...row };
   return out;
 }
+
+/** Celtic is a mix (§3.2): each nation's signature entries at a quarter weight. */
+export const CELTIC_MIX = ["welsh", "scottish", "irish", "cornish"];
+export const CELTIC_MIX_WEIGHT = 0.25;
+
+/** The culture shapes a culture draws: its own (`culture`, or a `c` list of its keys), and for Celtic each nation's at a quarter weight. */
+export function shapesOf<T extends { culture?: string; c?: string[]; w: number }>(list: readonly T[], key: string): T[] {
+  const out: T[] = [];
+  for (const s of list) {
+    if (s.culture === key || (!s.culture && s.c?.includes(key))) out.push(s);
+    else if (key === "celtic" && s.culture && CELTIC_MIX.includes(s.culture)) out.push({ ...s, w: s.w * CELTIC_MIX_WEIGHT });
+  }
+  return out;
+}

@@ -99713,7 +99713,9 @@ var lens_offers_default = {
           "AN"
         ],
         [
-          "MD",
+          "MD"
+        ],
+        [
           "EM"
         ],
         [
@@ -117399,241 +117401,23266 @@ var settlement_vocab_default = {
   themes: ["rural", "urban", "maritime", "road", "magical"]
 };
 
-// src/settlement/vocab.ts
-var VALUE_TIERS = ["h", "m", "l"];
-var SETTLEMENT_VOCAB = settlement_vocab_default;
-var VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
-var _a3;
-var MONEY_ONLY_CULTURES = (_a3 = SETTLEMENT_VOCAB.moneyOnly) != null ? _a3 : [];
-var VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures.filter((c) => !MONEY_ONLY_CULTURES.includes(c));
-var VOCAB_ALL_CULTURES = SETTLEMENT_VOCAB.cultures;
-var VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
-var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
-var VOCAB_REGIONS = SETTLEMENT_VOCAB.regions;
-var VOCAB_THEMES = SETTLEMENT_VOCAB.themes;
-var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
-function cultureAllowed(c, culture, era) {
-  if (!c || c.length === 0) return true;
-  const matches = (key2) => key2 === culture || inCultureGroup(key2, culture, era);
-  const positive = c.filter((k) => !k.startsWith("!"));
-  if (c.some((k) => k.startsWith("!") && matches(k.slice(1)))) return false;
-  return positive.length === 0 || positive.some(matches);
-}
-var regionFor = (where2) => where2.region && inCultureGroup("british", where2.culture, where2.era) ? where2.region : void 0;
-function entryAllowed(e, where2) {
-  if (e.e && !e.e.includes(where2.era)) return false;
-  if (e.h !== void 0 && e.h !== where2.fantastic) return false;
-  if (where2.scale && !scaleAllows(e, where2.scale)) return false;
-  const region = regionFor(where2);
-  if (region && e.r && !e.r.includes(region)) return false;
-  return cultureAllowed(e.c, where2.culture, where2.era);
-}
-var regionX = (e, where2) => {
-  var _a7, _b4;
-  const region = regionFor(where2);
-  return region ? (_b4 = (_a7 = e.rx) == null ? void 0 : _a7[region]) != null ? _b4 : 1 : 1;
-};
-var themeX = (e, where2) => {
-  var _a7;
-  return ((_a7 = e.th) != null ? _a7 : []).reduce((n, t) => {
-    var _a8, _b4;
-    return n * ((_b4 = (_a8 = where2.themes) == null ? void 0 : _a8[t]) != null ? _b4 : 1);
-  }, 1);
-};
-var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
-var CREATURE_POOL_HABITATS = {
-  mtBeast: ["mountain", "sky"],
-  fstBeast: ["forest"],
-  dsrBeast: ["desert"],
-  mrBeast: ["moor"],
-  wetBeast: ["water"],
-  grsBeast: ["home", "sky"],
-  seaMonster: ["sea"],
-  seaCreature: ["sea", "water"],
-  lakeCreature: ["water"],
-  fordBeast: ["water"],
-  mythBeast: ["sky", "underground"],
-  figureBeast: ["home", "mountain", "forest", "sky"]
-};
-function mythicEntries(name, where2) {
-  const habitats = CREATURE_POOL_HABITATS[name];
-  if (!habitats || !where2.fantastic) return [];
-  const seen = /* @__PURE__ */ new Set();
-  const out = [];
-  for (const h of habitats) {
-    for (const c of creaturesFor(where2.culture, h)) {
-      const w = c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase());
-      if (seen.has(w)) continue;
-      seen.add(w);
-      out.push({ w, t: c.tones });
-    }
-  }
-  return out;
-}
-function poolEntries(vocab, name, where2) {
-  var _a7, _b4, _c4, _d3;
-  const pool3 = vocab.pools[name];
-  if (!pool3) throw new Error(`Settlement vocabulary: no pool \u201C${name}\u201D.`);
-  const out = [];
-  const at = /* @__PURE__ */ new Map();
-  const add2 = (e, w) => {
-    const i = at.get(e.w);
-    if (i !== void 0) out[i][1] += w;
-    else {
-      at.set(e.w, out.length);
-      out.push([e, w]);
-    }
-  };
-  for (const e of pool3.entries) if (entryAllowed(e, where2)) add2(e, ((_a7 = e.x) != null ? _a7 : 1) * regionX(e, where2) * themeX(e, where2));
-  for (const e of (_c4 = (_b4 = pool3.cultureExtra) == null ? void 0 : _b4[where2.culture]) != null ? _c4 : []) {
-    if (!entryAllowed(e, where2)) continue;
-    const i = at.get(e.w);
-    if (i !== void 0) out[i][1] *= 3;
-    else add2(e, ((_d3 = e.x) != null ? _d3 : 1) * 3);
-  }
-  for (const e of mythicEntries(name, where2)) if (!at.has(e.w)) add2(e, 1);
-  return out.filter(([, w]) => w > 0);
-}
-var VOCABULARY_TYPE = "vocabulary";
-function isVocabularyPackContent(content) {
-  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
-  return !!fm && new RegExp(`^type:\\s*["']?${VOCABULARY_TYPE}["']?\\s*$`, "m").test(fm[1]);
-}
-var RETIRED_POOLS = ["buildingWord:monument", "buildingFixed:monument"];
-var isMoneyPool = (pool3) => pool3.startsWith("moneyFixed:") || MONEY_WORD_POOLS.includes(pool3);
-var SEASON_POOLS = ["seasonWord", "workWord"];
-var THING_POOLS = ["thingObject", "deedTarget", "deedVerb", "thingAgent", "kenningSecond", "thingBodyPart"];
-var THING_KINDS = ["sword", "axe", "spear", "bow", "mace", "knife", "shield", "armour", "gun", "cannon", "crown", "ring", "jewel", "torc", "cup", "instrument", "sceptre", "banner", "seat", "bell", "relic", "mirror", "chronicle", "lay", "law", "holy", "lore", "grimoire", "paper", "log"];
-var SEASON_KEYS = ["spring", "summer", "autumn", "winter", "thaw", "rain", "monsoon", "flood", "drought", "harvest", "storm", "frost"];
-var MONEY_WORD_POOLS = ["coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney"];
-function parseLine(text, pool3 = "") {
-  const money = isMoneyPool(pool3);
-  let rest = text.trim();
-  let x;
-  let t;
-  let th;
-  let loan;
-  let v;
-  let seasons;
-  let kinds;
-  for (let i = 0; i < 3; i++) {
-    const themes = rest.match(/\s*\[([^[\]]*)\]$/);
-    if (themes && money && loan === void 0) {
-      loan = themes[1].trim();
-      rest = rest.slice(0, themes.index).trim();
-      continue;
-    }
-    if (themes && !money && th === void 0) {
-      th = themes[1].split(/[,\s]+/).map((x2) => x2.trim().toLowerCase()).filter((x2) => VOCAB_THEMES.includes(x2));
-      rest = rest.slice(0, themes.index).trim();
-      continue;
-    }
-    const weight = rest.match(/\s*×\s*(\d+(?:\.\d+)?)$/);
-    if (weight && x === void 0) {
-      x = parseFloat(weight[1]);
-      rest = rest.slice(0, weight.index).trim();
-      continue;
-    }
-    const tones = rest.match(/\s*\(([^()]*)\)$/);
-    if (tones && t === void 0) {
-      const words = tones[1].split(/[,\s]+/).map((s) => s.trim().toLowerCase());
-      t = words.filter((s) => GROUP_TONES.includes(s));
-      if (money) v = words.filter((s) => VALUE_TIERS.includes(s));
-      if (SEASON_POOLS.includes(pool3)) seasons = words.filter((s) => SEASON_KEYS.includes(s));
-      if (THING_POOLS.includes(pool3)) kinds = words.filter((s) => THING_KINDS.includes(s));
-      rest = rest.slice(0, tones.index).trim();
-    }
-  }
-  if (!rest) return void 0;
-  return {
-    w: rest,
-    ...x !== void 0 ? { x } : {},
-    ...t && t.length > 0 ? { t } : {},
-    ...th && th.length > 0 ? { th } : {},
-    ...v && v.length > 0 ? { v } : {},
-    ...loan ? { loan } : {},
-    ...seasons && seasons.length > 0 ? { s: seasons } : {},
-    ...kinds && kinds.length > 0 ? { k: kinds } : {}
-  };
-}
-function parseVocabularyPack(content, note2) {
-  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
-  const body = fm ? content.slice(fm[0].length) : content;
-  const sections = [];
-  const problems = [];
-  let current = null;
-  for (const raw of body.split(/\r?\n/)) {
-    const line = raw.trim();
-    const heading = line.match(/^##\s+(.+?)\s*#*$/);
-    if (heading) {
-      current = null;
-      const [pool3, ...parts] = heading[1].split(/\s*·\s*/).map((p) => p.trim());
-      if (RETIRED_POOLS.includes(pool3)) {
-        problems.push("Monument words now belong to monuments and statues: use monumentWord:\u2039kind\u203A or monumentFixed:\u2039kind\u203A.");
-        continue;
-      }
-      if (!SETTLEMENT_VOCAB.pools[pool3]) {
-        problems.push(`Unknown pool \u201C${pool3}\u201D in vocabulary pack \u201C${note2}\u201D.`);
-        continue;
-      }
-      const section = { pool: pool3, entries: [] };
-      let bad = false;
-      for (const part of parts) {
-        if (VOCAB_ERAS.includes(part)) section.era = part;
-        else if (VOCAB_ALL_CULTURES.includes(part)) section.culture = part;
-        else if (VOCAB_REGIONS.includes(part)) section.region = part;
-        else {
-          problems.push(`Unknown culture \u201C${part}\u201D in vocabulary pack \u201C${note2}\u201D.`);
-          bad = true;
-        }
-      }
-      if (bad) continue;
-      sections.push(section);
-      current = section;
-      continue;
-    }
-    const bullet = line.match(/^[-*+]\s+(.+)$/);
-    if (!bullet || !current) continue;
-    const entry = parseLine(bullet[1], current.pool);
-    if (entry) current.entries.push(entry);
-  }
-  return { sections, problems };
-}
-function mergeVocabularyPacks(packs, blocked2 = () => false) {
-  const notices = [];
-  if (packs.length === 0) return { vocab: BUILT_IN_VOCAB, notices };
-  const pools = {};
-  for (const [name, pool3] of Object.entries(SETTLEMENT_VOCAB.pools)) pools[name] = { ...pool3, entries: [...pool3.entries] };
-  for (const pack of packs) {
-    const { sections, problems } = parseVocabularyPack(pack.content, pack.name);
-    notices.push(...problems);
-    for (const s of sections) {
-      for (const e of s.entries) {
-        if (hasBannedWord(e.w) || blocked2(e.w, s.pool)) continue;
-        pools[s.pool].entries.push({ ...e, ...s.culture ? { c: [s.culture] } : {}, ...s.era ? { e: [s.era] } : {}, ...s.region ? { r: [s.region] } : {} });
-      }
-    }
-  }
-  return { vocab: { pools }, notices };
-}
-var VOCABULARY_PACK_TEMPLATE = [
-  "---",
-  `type: ${VOCABULARY_TYPE}`,
-  "---",
-  "",
-  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5`, ` (grim)` or ` [maritime]`, and narrow a heading with ` \xB7 japanese`, ` \xB7 MD` or ` \xB7 NTH`.",
-  "",
-  ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
-].join("\n");
-
 // src/data/north5a.json
 var north5a_default = {
   _about: "Northern Europe tables brief, batch 5a (docs/northern-europe-tables-brief.md): generated by scripts/make-north5a.mjs from the content in scripts/north5a/. Do not edit by hand.",
   vocab: {
-    pools: {}
+    pools: {
+      nMountain: {
+        entries: [
+          {
+            w: "Hog's Back",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Saddle",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "High Top",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Steep Rise",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Rocky Brow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Beacon Top",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Cairn",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Crag",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Bare Hill",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Valley Head",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Steep Rise",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hill Back",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Munro",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Ridge",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Buttress",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Shoulder",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Corrie Rim",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Rock Peak",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Mountain Gap",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Rock Face",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hill of the Fort",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cairn Hill",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Mountain Pass",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Round Hill",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Carn",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Tor",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Rocky Down",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Granite Crag",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Tin Hill",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Beacon",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Fell",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Scar",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Rock Wall",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Peak",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Ridge",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Wall",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Fell",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Peak",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ridge",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Plateau",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Rock Face",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Saddle",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Castle Hill",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Crag",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Peak",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Ridge",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Rock Tower",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "High Seat",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nWood: {
+        entries: [
+          {
+            w: "Copse",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Coppice",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Greenwood",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wood Edge",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Forest Bank",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Grove Wood",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Dingle",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Sheepwalk",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Wood Brow",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hazel Dingle",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Oak Slope",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Holy Grove",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Pinewood",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Birch Wood",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Caledonian Wood",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Policy",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Glen Wood",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Deer Forest",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Oak Wood",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hazel Wood",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Holy Grove",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Fairy Thorn",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Wooded Island",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Yew Wood",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Wooded Combe",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Hazel Coppice",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Oak Hanger",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Valley Wood",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Saint's Grove",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Sallow Copse",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Hold",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Wood",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Birch Wood",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Thing Wood",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Forest",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Holt",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Forest",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Pine Forest",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Birch Wood",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Beech Wood",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Clearing",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Logging Road",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Forest",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Hunting Forest",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Beech Wood",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Black Wood",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mark Wood",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Clearing",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nMoor: {
+        entries: [
+          {
+            w: "Common",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Waste",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Moorland",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Rough Pasture",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Furze Hill",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Gorse Common",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Mountain Pasture",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Moorland Meadow",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Peat Cutting",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Rush Moor",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hill Common",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Shepherd's Rest",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Grouse Moor",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Peat Moss",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Deer Moor",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Heather Hill",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Rough Bounds",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Muir",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Blanket Bog",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Mountain Bog",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Turf Moor",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Bog Road",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Heath Hill",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Turf Bank",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Downs",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Tinners' Moor",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Moorstone",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Bal",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Rough Ground",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Engine Moor",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Fell Moor",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Waste",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Bog",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Heath",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Shieling Moor",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Barrow Moor",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Fell Moor",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Heath",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Mire",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Bog",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Tundra",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Reindeer Moor",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Heath",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Moor",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "High Moor",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Peat Bog",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Moorland",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Rough Heath",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nWet: {
+        entries: [
+          {
+            w: "Marsh Meadow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Water Meadow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Reed Bed",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Flood Plain",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wet Level",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Osier Bed",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Alder Marsh",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Salt Marsh",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Quaking Bog",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Rush Bog",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Reed Pool",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Peat Bog",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Moss",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Flow",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Carse",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Loch Edge",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Flats",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Bog Pool",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Bog",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Turlough",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Callow",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Reed Fen",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Wet Meadow",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Flooded Plain",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Withy Bed",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Marsh Level",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Pill",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Reed Bed",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Streamwork",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Salt Marsh",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Bog",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Marsh",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Mire",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Mere",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Fen",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Wet Meadow",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Mire",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Bog",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Marsh",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Wet Meadow",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Reed Lake",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Flood Plain",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Marsh",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Dyke Marsh",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mudflat",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Polder",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Fen",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Reed Lake",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nGrass: {
+        entries: [
+          {
+            w: "Meadow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Leaze",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Green",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Pasture",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Hay Meadow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Home Close",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Sheepwalk",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hill Pasture",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Long Meadow",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Green Slope",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Summer Pasture",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Cow Meadow",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Machair",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Links",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Haugh",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Straths",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Sheep Hill",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Park",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Plain",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Green Meadow",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cow Pasture",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Mag",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Long Meadow",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hill Pasture",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Downland",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Cliff Pasture",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Sheep Down",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Ley",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Town Place",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Green Lane",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Field",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Home Field",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Meadow",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Thing Field",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Infield",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Pasture",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Meadow",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Field",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Pasture",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Heath Meadow",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Summer Farm",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Mountain Pasture",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Meadow",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mark",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Common Meadow",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Heath Meadow",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Alpine Meadow",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Pasture",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nLands: {
+        entries: [
+          {
+            w: "Shire",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Hundred",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Riding",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Manor",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Liberty",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wapentake",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Lordship",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hundred",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Princedom",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Border Lordship",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Upland Hundred",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Lowland Hundred",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Lordship",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Earldom",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Barony",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Shire",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Thanedom",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Clan Lands",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Kingdom",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Territory",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Barony",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Townland",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Lordship",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Province",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hundred",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Duchy",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Manor",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Stannary",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Parish",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Tithing",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Thing District",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Kingdom",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Earldom",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Shire",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Hundred",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Settlement",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "County",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Province",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Parish",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Kingdom",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Duchy",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Municipality",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Mark",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "County",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Margraviate",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Duchy",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Bishopric",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Free City",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nFarm: {
+        entries: [
+          {
+            w: "Barton",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Grange",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Fold",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Croft",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Close",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Furlong",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Summer Dairy",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Winter Farm",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hill Fold",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Cow Yard",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Sheepfold",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Dairy Yard",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Shieling",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Croft",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Mains",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Town",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Runrig",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Steading",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Townland",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Rath",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Ringfort",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cow Field",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Summer Pasture",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Potato Garden",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Barton",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Churchtown",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Fogou Field",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Cornfield",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Croft",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Tin Farm",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Farm",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Steading",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Infield",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Outfield",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Toft",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Garth",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Farm",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Croft",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Steading",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Home Farm",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Summer Farm",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Smallholding",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Mark",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Manor",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Temple",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Estate",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Vineyard",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Forest Farm",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nHill: {
+        entries: [
+          {
+            w: "Barrow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Beacon",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Rise",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Brow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Knoll",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Mound",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Hill Spur",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Round Hill",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Steep Slope",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Bare Brow",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Valley Head",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Green Hollow",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Brae",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Knowe",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Hill",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Dun",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Law",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Hillock",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Hill",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Esker",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Drumlin",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hillock",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Fort Hill",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Rocky Hill",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Combe",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Hill Fort",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Round",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Beacon Hill",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Rocky Brow",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Hollow",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Barrow",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Howe",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Hill",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Brow",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Ness Hill",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Heath Hill",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Hill",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ridge",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Esker",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Moraine",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Knoll",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Rock",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Castle Hill",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Vineyard Slope",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Crag",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Wooded Ridge",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Terrace",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Rock",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nRiver: {
+        entries: [
+          {
+            w: "Brook",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Weir",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Ford",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Mill Stream",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Spring",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Pool",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Brook",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Spout",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Waterfall",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Rushing Water",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Black Pool",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Mouth",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Burn",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Linn",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Pool",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Loch Side",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Falls",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Water",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Ford",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Mill Race",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Lake Island",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Spring",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Falls",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Combe Stream",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Leat",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Saint's Well",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Mill Leat",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Pool",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Waterwheel Pit",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Beck",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Force",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Tarn",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Mere",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Spring",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Water",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Falls",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Lake",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Rapids",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Stream",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "River Mouth",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Spring",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Gorge",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Falls",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Spring",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Lake",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Weir",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mill Stream",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nLandB: {
+        entries: [
+          {
+            w: "Oak",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Ash",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wool",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Barley",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Hop",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Clay",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Chalk",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Flint",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Thorn",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Honey",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Slate",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Peat",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Sheep",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Cattle",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Lead",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Copper",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Oak",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hazel",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Gorse",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Bracken",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Peat",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Heather",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Whisky",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Salmon",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Sheep",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Slate",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Kelp",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Deer",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Pine",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Birch",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Turf",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Peat",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cattle",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Black Cattle",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hazel",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Yew",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Blackthorn",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Heather",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Rushes",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Limestone",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Tin",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Copper",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Clay",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Arsenic",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Pilchard",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Granite",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Gorse",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Furze",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Wheal",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Engine",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Thing",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Longship",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Wolf",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Raven",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Bear",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Iron",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Silver",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Amber",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Thor's",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Odin's",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Iron",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Copper",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Silver",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Pine",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Birch",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Timber",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Tar",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Reindeer",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Granite",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Wine",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Iron",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Silver",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Beech",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Pine",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mill",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Brick",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Amber",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Hunting",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Horse",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Boar",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Oak",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Mistletoe",
+            c: [
+              "celtic"
+            ]
+          }
+        ]
+      },
+      nLandC: {
+        entries: [
+          {
+            w: "Barrow Wight",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Boggart",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Black Dog",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Green Man",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Hob",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Dragon",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Dragon",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Fair Folk",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Hag",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Lake Monster",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom Hound",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Kelpie",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Brownie",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Selkie",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Hag",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Washerwoman Ghost",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Banshee",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Pooka",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Fionn's",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Warrior's Ghost",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Knocker",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Piskie",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Spriggan",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Mermaid",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Wrecker's Ghost",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Troll",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Draugr",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Elf",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Wyrm",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Valkyrie",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Troll",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "House Goblin",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Forest Maiden",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Forest Spirit",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Water Sprite",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Wild Hunt",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Erlking",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Kobold",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Dwarf",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Wood Spirit",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Water Sprite",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Mother Goddess",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Horned God",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Otherworld",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "celtic"
+            ],
+            h: true
+          }
+        ]
+      },
+      nLandD: {
+        entries: [
+          {
+            w: "Fortified Town",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Moot Hill",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hundred Moot",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Mound",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ley Line",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Roman Villa",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Deer Park",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Abbey Grange",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Enclosure",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Turnpike Cutting",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Canal Cutting",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Railway Embankment",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Quarry",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Reservoir",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Bypass",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Hillfort",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Round Fort",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Cairn",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Enclosure",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Chieftain's Seat",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hermit's Cell",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Monks' Grange",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Chapel",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Slate Quarry",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mine Tip",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Reservoir",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Tram Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Colliery",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Drovers' Halt",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Broch",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Dun",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pictish Stone",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cairn",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Crannog",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cup-marked Rock",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Abbey Land",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Castle Hill",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Clearance Village",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Distillery",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Shooting Lodge",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Drove Stance",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Railway Viaduct",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Hydro Dam",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Forestry",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ringfort",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Crannog",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Passage Tomb",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hill Fort",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Monastic Site",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Round Tower",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Tower House",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Famine Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Workhouse",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Landlord's Lodge",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Creamery",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Bog Railway",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Peat Works",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Hill Fort",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Round",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fogou",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Saint's Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Church Town",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Tinners' Bounds",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Engine House",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Tin Mine",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "China Clay Pit",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Clay Tip",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mine Stack",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Wheal",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Quarry",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Thing Mound",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ship Setting",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Rune Stone",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Longhouse Site",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Mound",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ring Fort",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Trading Place",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Law Rock",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Mining Pit",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Charcoal Burners' Hut",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Sawmill",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ironworks",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Pulp Mill",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Hydro Dam",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Quarry",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mine Shaft",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Silver Mine",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ironworks",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Sawmill",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Pulp Mill",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Hydro Dam",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Logging Camp",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Beacon Hill",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Rune Stone",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cairn",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ship Setting",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ring Fort",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Mound",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Summer Farm",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Market Place",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Hill Fort",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ring Wall",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Roman Watchtower",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Mound",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Thing Place",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Castle Ruin",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Monastery Farm",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Mine Shaft",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Smelter",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Spa Garden",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Brickworks",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Autobahn Cutting",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Pumped Dam",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Quarry",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Hillfort",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Sacred Spring",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Chariot Road",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          }
+        ]
+      },
+      nSea: {
+        entries: [
+          {
+            w: "Reach",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Roads",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Haven",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wash",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Narrows",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Narrows",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Bay Mouth",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Haven",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Strand",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Estuary",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Firth",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Passage",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Loch",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Kyle",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Voe",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Lough",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Bay",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Narrows",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Estuary",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Haven",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pool",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Roads",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Haven",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Narrows",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "River Mouth",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Fjord",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Firth",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Strait",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Bay",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Narrows",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Fjord",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Strait",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Archipelago",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Bay",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Skerry Guard",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Bight",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Sound",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mudflat Sea",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Estuary",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Haven",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Lagoon",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nCoast: {
+        entries: [
+          {
+            w: "Ness",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Naze",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Bill",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Strand",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Spit",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Foreland",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Headland",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Cove",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Holy Isle",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Strand",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Sea Cliff",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Sea Cave",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Mull",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Ness",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Skerry",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Isle",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Geo",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Stack",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Strand",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Head",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Island",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Sea Stack",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cove",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pier",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cove",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Harbour",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Headland",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Island",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Zawn",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Sea Cliff",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Ness",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Holm",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Skerry",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Isle",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Stack",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Strand",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Skerry",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Holm",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ness",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Island",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Stack",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Strand",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Dyke",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Sandbank",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Island",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Polder Coast",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Spit",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Strand",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nChart: {
+        entries: [
+          {
+            w: "Bank",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Sand",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Ledge",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Gat",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Race",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Sandbank",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Race",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Rock Ledge",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Deep Channel",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Wreck Ground",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Bank",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Skerry",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Race",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Ledge",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Reef",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Bank",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Rock",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Race",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Reef",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Ledge",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Ledge",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Rock",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Race",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Bank",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Reef",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Bank",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Skerry",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Race",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Ledge",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Reef",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Bank",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Skerry",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Channel",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ledge",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Reef",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Sandbank",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Channel",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Shoal",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Ledge",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mudflat",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Reef",
+            c: [
+              "german"
+            ]
+          }
+        ]
+      },
+      nWaterB: {
+        entries: [
+          {
+            w: "Herring",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Oyster",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Cod",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Smuggler's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Sail",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wool",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Coal",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Shingle",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Samphire",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Slate",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Cockle",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Lime",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Coal",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Wool",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Lead",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Seaweed",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Pilgrims'",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Salmon",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Kelp",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Peat",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Whale",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Seal",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Cod",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Lobster",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Crofter's",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Drifter",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Salmon",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Seaweed",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Kelp",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Turf",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Currach",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pilgrims'",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Mackerel",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Eel",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pilchard",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Tin",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Copper",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Slate",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Saffron",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Smuggler's",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Wrecker's",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Seine",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Gig",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Lugger",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Longship",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Whale",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Seal",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Walrus",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Fish",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Stockfish",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Raider's",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Trader's",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Thing",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Cod",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Salmon",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Whale",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Timber",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ore",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ice",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ferry",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Pilot",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Amber",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Brick",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Dyke",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Hansa",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Cog",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Wool",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Wine",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Shrimp",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Amber",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Tin",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Horse",
+            c: [
+              "celtic"
+            ]
+          }
+        ]
+      },
+      nWaterC: {
+        entries: [
+          {
+            w: "Drowned Church",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Black Shuck",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Mermaid",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Hag",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Sunken Bell",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Hobman",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned Kingdom",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Mermaid",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Dragon",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Water Horse",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Bell Under the Sea",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Fair Folk",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Selkie",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Kelpie",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Blue Men",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Giant",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Water Horse",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Fin Folk",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Selkie",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Merrow",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Giant",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned Kingdom",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Water Horse",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Pooka",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Mermaid",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned Bell",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Lyonnesse",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Wreck Ghost",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Spriggan",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Giant",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Serpent",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Draugr",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Kraken",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Troll",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Wave Maiden",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Storm Giant",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Troll",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Kraken",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Mermaid",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Serpent",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Storm Giant",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Water Sprite",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Water Sprite",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Wife",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned Town",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Kobold",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Wave Giant",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Ghost Ship",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Water Goddess",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned Land",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Otherworld Isle",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Sea Giant",
+            c: [
+              "celtic"
+            ],
+            h: true
+          }
+        ]
+      },
+      nWaterD: {
+        entries: [
+          {
+            w: "Fish Weir",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hythe",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beach Market",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Saxon Shore Fort",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Trading Port",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Longship Landing",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Staithe",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Cinque Port",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Lifeboat Station",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Martello Tower",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Seaside Pier",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Coastguard Cottages",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Promenade",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Marina",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Fish Weir",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Island Hermitage",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pilgrim Landing",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beacon Hill",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sea Fort",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Saint's Landing",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Island",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Monks' Fishery",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Herring Quay",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Slate Quay",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lifeboat Station",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Packet Pier",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Coal Staithe",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Seaside Pier",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Broch",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fish Trap",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pictish Fort",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Isle",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sea Cave",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Norse Landing",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Monks' Isle",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Ferry Point",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Herring Quay",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Kelp Shore",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Drifter Harbour",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Steamer Pier",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Oil Terminal",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ferry Terminal",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Island Hermitage",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fish Weir",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sea Fort",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Island",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pilgrim Landing",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beehive Cell",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Monks' Landing",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Viking Harbour",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Coastguard Station",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Famine Pier",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lifeboat Station",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Harbour Wall",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Emigrant Quay",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ferry Slip",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Fish Cellar",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Saint's Landing",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Tinners' Landing",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cliff Castle",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Island",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beacon",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Chapel Rock",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Fishing Cove",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Pilchard Cellar",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Harbour",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lifeboat Slip",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mine Quay",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Engine Cove",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Quay",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ship Harbour",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Landing Place",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beach Market",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ship Burial",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Boat Shed",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Whaling Strand",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Trading Town Quay",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Fish Drying Rack",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Whaling Station",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Steam Ferry Quay",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cannery",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Oil Rig Mooring",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Fish Farm",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Harbour Wall",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Fishing Station",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ship Harbour",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beach Market",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beacon",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Boat Shed",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Whaling Strand",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Trading Quay",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Stockfish Rack",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Timber Float",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Steam Ferry Quay",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cannery",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Canal Lock",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Pilot Station",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Oil Terminal",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cog Harbour",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fish Weir",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Salt Pan",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hanse Quay",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Beacon",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Island Hermitage",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Merchant Landing",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Dyke Gate",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Lighthouse",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Steam Ferry Quay",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Seaside Pier",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Naval Base",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Canal Lock",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Spa Beach",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Container Terminal",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Votive Pool",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Sacred Lake",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Tidal Fort",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Trading Beach",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          }
+        ]
+      },
+      nRoute: {
+        entries: [
+          {
+            w: "Way",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Lane",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Causeway",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Ridgeway",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Highway",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Track",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Causeway",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hollow Way",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Mountain Road",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Pack Road",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Cattle Road",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Stone Road",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Drove Road",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Military Road",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Hill Road",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Coffin Road",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Wynd",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Kirk Road",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Bog Road",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hollow Way",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pilgrim Road",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cattle Road",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Green Road",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Boreen",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Lane",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Hollow Way",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Tin Road",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Saints' Way",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Coffin Path",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Track",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Way",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Road",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Path",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Track",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Ridge Road",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Ship Way",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Road",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Way",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Path",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Track",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Pass Road",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ferry Way",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Road",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Way",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Street",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Path",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Trade Road",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mark Road",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Way",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Road",
+            c: [
+              "celtic"
+            ]
+          }
+        ]
+      },
+      nRouteB: {
+        entries: [
+          {
+            w: "Salt",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wool",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Corn",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Pack",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Drove",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Market",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Church",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Coach",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Corpse",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Smugglers'",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Slate",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Wool",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Lead",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Black Cattle",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Coal",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Lime",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Drovers'",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Pilgrims'",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Saints'",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Drove",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Cattle",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Whisky",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Peat",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Kirk",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Smugglers'",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Wool",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Coffin",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Herring",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Turf",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cattle",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pilgrims'",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Butter",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Peat",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Cow",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Hazel",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Slate",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Tin",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Copper",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Clay",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Pilchard",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Fish",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Pack",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Miners'",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Church",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Saints'",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Coffin",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Thing",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Longship",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Trade",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Fur",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Amber",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Iron",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Silver",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Raiders'",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Merchants'",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Pilgrims'",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Timber",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ore",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Iron",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Fish",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Reindeer",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Post",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Ferry",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Mail",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Mining",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Tourist",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Wine",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Amber",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Iron",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Pilgrims'",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Merchants'",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Emperor's",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Post",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Coach",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Cloth",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Horse",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Tin",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Salt",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Amber",
+            c: [
+              "celtic"
+            ]
+          }
+        ]
+      },
+      nRouteC: {
+        entries: [
+          {
+            w: "Black Dog",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Wight's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Green Man's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Hob's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Dragon's",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Hounds'",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Dead Men's",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Kelpie's",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Brownie's",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Hag's",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Banshee's",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Warriors'",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Pooka's",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Piskie",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Knockers'",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Wreckers'",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Spriggan",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom Coach",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Troll",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Draugr's",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Valkyrie's",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Raven",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Troll",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Goblin's",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Forest Maiden's",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Forest",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Wild Hunt's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Erlking's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Kobold",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Robber Knight's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Mother's",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Otherworld",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Giants'",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Phantom",
+            c: [
+              "celtic"
+            ],
+            h: true
+          }
+        ]
+      },
+      nRouteD: {
+        entries: [
+          {
+            w: "Ridgeway",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Roman Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Saxon Way",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Army Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Way",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Salt Way",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pilgrims' Way",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Corpse Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Turnpike",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Coach Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Toll Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Drove Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Canal Towpath",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Stage Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Railway Line",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Tramway",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cycle Way",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Motorway",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Ring Road",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Pilgrim Path",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hillfort Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Saint's Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cattle Track",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ridgeway",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Monks' Way",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Church Path",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Turnpike",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Toll Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Canal Towpath",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mail Coach Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Plateway",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Drove Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Tramroad",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Railway Cutting",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mineral Line",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Bypass",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Link Road",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Drove Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pictish Way",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Kirk Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hill Track",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ferry Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pilgrim Way",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Market Cross Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Military Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Turnpike",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Drove Stance Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Coffin Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Toll Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Canal Towpath",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Railway Line",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ferry Line",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Postbus Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Trunk Road",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Bypass",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Pilgrim Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Royal Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cattle Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fort Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Saint's Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Monks' Way",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Esker Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Mail Coach Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Turnpike",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Famine Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Bog Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Canal Towpath",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mass Path",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Railway Line",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Narrow Gauge Line",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Bog Railway",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Motorway",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Bypass",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Saints' Way",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ridgeway",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Church Path",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Tinners' Track",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Lane",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cliff Path",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Coffin Path",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Market Way",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Turnpike",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Toll Road",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mail Coach Road",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Packhorse Road",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Tramway",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mine Road",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mineral Railway",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Harbour Line",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Clay Line",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Bypass",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Link Road",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Ridge Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Thing Way",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ship Haul",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Amber Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fur Trail",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Way",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pilgrim Way",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Church Path",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Post Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Coach Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Timber Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mining Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Canal Towpath",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Drove Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Railway Line",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ore Line",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ferry Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Motorway",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Tunnel Road",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Ridge Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Thing Way",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Way",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pilgrim Way",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fur Trail",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ship Haul",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Church Path",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Market Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Post Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Coach Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Timber Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mining Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Canal Towpath",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Float Way",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Railway Line",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ore Line",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ferry Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Motorway",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Tunnel Road",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Salt Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Roman Limes Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Amber Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hanse Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Ford Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pilgrim Way",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Emperor's Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Market Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Post Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Coach Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Paved Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Canal Towpath",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Toll Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Military Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Railway Line",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Ore Line",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Branch Line",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Station Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Viaduct",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cog Railway",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Autobahn",
+            c: [
+              "german"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Ring Road",
+            c: [
+              "german"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Chariot Way",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Hillfort Road",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Sacred Way",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Ford Way",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          }
+        ]
+      },
+      nSacred: {
+        entries: [
+          {
+            w: "Holy Well",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Minster",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Moot Hill",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Chantry",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Shrine",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Holy Enclosure",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Cairn",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Hermit's Cell",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Sacred Spring",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Standing Stones",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Cairn",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Chapel",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Hermit's Cave",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Kirk",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Holy Island",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Sacred Hill",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pilgrim Station",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Monastic Site",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Saint's Well",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Chapel",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Hermit's Cell",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Cross",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Temple",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Holy Grove",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Holy Mountain",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Thing Site",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Sacrifice Stone",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Ship Setting",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Church",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Holy Mountain",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Stone Church",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Cairn",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Pilgrim Path",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Holy Grove",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Cathedral",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Pilgrim Chapel",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Holy Spring",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Wayside Shrine",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Sacred Spring",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Hillfort Shrine",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Votive Pool",
+            c: [
+              "celtic"
+            ]
+          }
+        ]
+      },
+      nSacredB: {
+        entries: [
+          {
+            w: "Saint's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Healing",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Pilgrim",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Wishing",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Hermit's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Healing",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Pilgrim",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Fair Folk's",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Druids'",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "welsh"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Druid's",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Healing",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Fairy",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Clan",
+            c: [
+              "scottish"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Healing",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Pilgrim",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Fairy",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Penitential",
+            c: [
+              "irish"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Healing",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Pilgrim",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Drowned",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Hermit's",
+            c: [
+              "cornish"
+            ]
+          },
+          {
+            w: "Odin's",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Thor's",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Freyja's",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Warriors'",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Kin",
+            c: [
+              "norse"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Healing",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Pilgrim",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Miners'",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Seamen's",
+            c: [
+              "scandinavian"
+            ]
+          },
+          {
+            w: "Saint's",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Healing",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Pilgrim",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Holy",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Imperial",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Miners'",
+            c: [
+              "german"
+            ]
+          },
+          {
+            w: "Mother's",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Horned God's",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Sacred",
+            c: [
+              "celtic"
+            ]
+          },
+          {
+            w: "Druids'",
+            c: [
+              "celtic"
+            ]
+          }
+        ]
+      },
+      nSacredC: {
+        entries: [
+          {
+            w: "Green Man's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Wight's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Black Dog's",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            h: true
+          },
+          {
+            w: "Dragon's",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Otherworld",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned",
+            c: [
+              "welsh"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Kelpie's",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Witch's",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Selkie's",
+            c: [
+              "scottish"
+            ],
+            h: true
+          },
+          {
+            w: "Fairy",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Banshee's",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Otherworld",
+            c: [
+              "irish"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Piskie",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Knockers'",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Mermaid's",
+            c: [
+              "cornish"
+            ],
+            h: true
+          },
+          {
+            w: "Troll's",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Valkyrie's",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Elf",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Draugr's",
+            c: [
+              "norse"
+            ],
+            h: true
+          },
+          {
+            w: "Troll's",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Elf",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Forest Maiden's",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Goblin's",
+            c: [
+              "scandinavian"
+            ],
+            h: true
+          },
+          {
+            w: "Wild Hunt's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Kobold's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Wood Spirit's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Erlking's",
+            c: [
+              "german"
+            ],
+            h: true
+          },
+          {
+            w: "Otherworld",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Drowned",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Giant's",
+            c: [
+              "celtic"
+            ],
+            h: true
+          },
+          {
+            w: "Antlered",
+            c: [
+              "celtic"
+            ],
+            h: true
+          }
+        ]
+      },
+      nSacredD: {
+        entries: [
+          {
+            w: "Barrow",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Moot Hill",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hill Figure",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Minster",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Chantry",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Parish Church",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Meeting House",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Wayside Cross",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Almshouse Chapel",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Tithe Barn Chapel",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Churchyard Yew",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mission Hall",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cathedral",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Garden of Remembrance",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "War Memorial",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cemetery Chapel",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Village Hall Chapel",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Interfaith Room",
+            c: [
+              "anglo-saxon",
+              "norman-british"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Burial Chamber",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Lake",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Bardic Seat",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Stone Circle",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Hill",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Spring",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hermitage",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Monastery",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Chapel of Ease",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Meeting House",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Parish Church",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Almshouse Chapel",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Revival Chapel",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Holy Well House",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Nonconformist Chapel",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Hall",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Singing Chapel",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cemetery Chapel",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Eisteddfod Pavilion",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Garden of Remembrance",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "welsh"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Stone Circle",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cup-marked Rock",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Well",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cave Shrine",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Pictish Symbol Stone",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Celtic Cross",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Abbey",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Parish Kirk",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Covenanters' Stone",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Meeting House",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Conventicle Hill",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Free Kirk",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Manse",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mission Hall",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cathedral",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Cairn",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cemetery Chapel",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Kirk Hall",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "War Memorial",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Garden of Remembrance",
+            c: [
+              "scottish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Passage Tomb",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Hill",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Stone Circle",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Tree",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Fairy Fort",
+            c: [
+              "irish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Monastic Site",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Round Tower",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Penal Mass Rock",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Pilgrim Station",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Parish Chapel",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Holy Well Shrine",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mass House",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Wayside Shrine",
+            c: [
+              "irish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Grotto",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cathedral",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Roadside Shrine",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Hall",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Pilgrimage Basilica",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Holy Mountain Path",
+            c: [
+              "irish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Garden of Remembrance",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "irish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Fogou",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Stone Circle",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Well",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Quoit",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cliff Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Hermit's Cell",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Oratory",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Monastery",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Wayside Cross",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Parish Church",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mission Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mariners' Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Methodist Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Holy Well House",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Miners' Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Revival Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Hall",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Lifeboat Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cemetery Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Fishermen's Mission",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Garden of Remembrance",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "cornish"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Ship Setting",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Mound",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Rune Stone",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacrifice Stone",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Spring",
+            c: [
+              "norse"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Temple",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Stave Church",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Parish Church",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Pietist Meeting House",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Wayside Cross",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Seamen's Church",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mining Church",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Pilgrim Path",
+            c: [
+              "norse"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Free Church",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cathedral",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cemetery Chapel",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Stone",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mission House",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Folk High School Chapel",
+            c: [
+              "norse"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Garden of Remembrance",
+            c: [
+              "norse"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Rune Stone",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Mound",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Sacred Spring",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Mountain",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cairn",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Stave Church",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Hermitage",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Parish Church",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mining Church",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Seamen's Church",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Wayside Cross",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Pietist Hall",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Prayer House",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Free Church",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cathedral",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cemetery Chapel",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Stone",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Folk High School Chapel",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mission House",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Forest Chapel",
+            c: [
+              "scandinavian"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Thing Place",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Standing Stone",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Holy Spring",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Oak of the Gods",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Burial Mound",
+            c: [
+              "german"
+            ],
+            e: [
+              "AN",
+              "MD"
+            ]
+          },
+          {
+            w: "Cathedral",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Monastery",
+            c: [
+              "german"
+            ],
+            e: [
+              "MD"
+            ]
+          },
+          {
+            w: "Parish Church",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Pilgrim Chapel",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Wayside Shrine",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Calvary Hill",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Baroque Chapel",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Mining Chapel",
+            c: [
+              "german"
+            ],
+            e: [
+              "EM",
+              "ST"
+            ]
+          },
+          {
+            w: "Spa Chapel",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Church",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Cemetery Chapel",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Mission House",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Garden of Remembrance",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Memorial Hall",
+            c: [
+              "german"
+            ],
+            e: [
+              "ST",
+              "MO"
+            ]
+          },
+          {
+            w: "Crematorium Chapel",
+            c: [
+              "german"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Interfaith Room",
+            c: [
+              "german"
+            ],
+            e: [
+              "MO"
+            ]
+          },
+          {
+            w: "Sacred Grove",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Sacred Spring",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Votive Pool",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          },
+          {
+            w: "Hilltop Shrine",
+            c: [
+              "celtic"
+            ],
+            e: [
+              "AN"
+            ]
+          }
+        ]
+      }
+    }
   },
   wilds: {
-    cultureShapes: [],
+    cultureShapes: [
+      {
+        p: "{person:poss} {nMountain}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{tree} {nMountain}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{beast} {nMountain}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{holy:poss} {nMountain}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMountain}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "Old {nLandB} {nMountain}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{person:poss} {nWood}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{tree} {nWood}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{beast} {nWood}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{holy:poss} {nWood}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWood}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "Old {nLandB} {nWood}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{person:poss} {nMoor}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{tree} {nMoor}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{beast} {nMoor}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{holy:poss} {nMoor}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMoor}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "Old {nLandB} {nMoor}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{person:poss} {nWet}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{tree} {nWet}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{beast} {nWet}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{holy:poss} {nWet}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWet}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "Old {nLandB} {nWet}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{person:poss} {nGrass}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{tree} {nGrass}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{beast} {nGrass}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{holy:poss} {nGrass}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nGrass}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "Old {nLandB} {nGrass}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{person:poss} {nLands}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{tree} {nLands}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{beast} {nLands}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{holy:poss} {nLands}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nLands}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "Old {nLandB} {nLands}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{person:poss} {nFarm}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{tree} {nFarm}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{beast} {nFarm}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{holy:poss} {nFarm}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nFarm}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "Old {nLandB} {nFarm}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{person:poss} {nHill}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{tree} {nHill}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{beast} {nHill}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{holy:poss} {nHill}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nHill}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "Old {nLandB} {nHill}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{person:poss} {nRiver}",
+        w: 4,
+        f: "per",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{tree} {nRiver}",
+        w: 4,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{beast} {nRiver}",
+        w: 4,
+        f: "crt",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{holy:poss} {nRiver}",
+        w: 3,
+        f: "sai",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nRiver}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 3,
+        f: "twn",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "Old {nLandB} {nRiver}",
+        w: 3,
+        f: "work",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of the {tree}",
+        w: 2,
+        f: "flora",
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nMountain} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nMountain} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{nMountain} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nMountain} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nWood} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nWood} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{nWood} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nWood} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nMoor} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nMoor} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{nMoor} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nMoor} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nWet} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nWet} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{nWet} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nWet} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nGrass} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nGrass} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{nGrass} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nGrass} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nLands} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLands} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{nLands} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLands} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nFarm} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nFarm} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{nFarm} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nFarm} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nHill} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nHill} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{nHill} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nHill} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nRiver} of {person}",
+        w: 4,
+        f: "per",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nRiver} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{nRiver} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nRiver} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "welsh",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{person:poss} {nMountain}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{tree} {nMountain}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{beast} {nMountain}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{holy:poss} {nMountain}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMountain}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "Old {nLandB} {nMountain}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{person:poss} {nWood}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{tree} {nWood}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{beast} {nWood}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{holy:poss} {nWood}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWood}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "Old {nLandB} {nWood}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{person:poss} {nMoor}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{tree} {nMoor}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{beast} {nMoor}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{holy:poss} {nMoor}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMoor}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "Old {nLandB} {nMoor}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{person:poss} {nWet}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{tree} {nWet}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{beast} {nWet}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{holy:poss} {nWet}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWet}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "Old {nLandB} {nWet}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{person:poss} {nGrass}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{tree} {nGrass}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{beast} {nGrass}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{holy:poss} {nGrass}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nGrass}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "Old {nLandB} {nGrass}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{person:poss} {nLands}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{tree} {nLands}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{beast} {nLands}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{holy:poss} {nLands}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nLands}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "Old {nLandB} {nLands}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{person:poss} {nFarm}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{tree} {nFarm}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{beast} {nFarm}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{holy:poss} {nFarm}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nFarm}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "Old {nLandB} {nFarm}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{person:poss} {nHill}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{tree} {nHill}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{beast} {nHill}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{holy:poss} {nHill}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nHill}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "Old {nLandB} {nHill}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{person:poss} {nRiver}",
+        w: 4,
+        f: "per",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{tree} {nRiver}",
+        w: 4,
+        f: "flora",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{beast} {nRiver}",
+        w: 4,
+        f: "crt",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{holy:poss} {nRiver}",
+        w: 3,
+        f: "sai",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nRiver}",
+        w: 2,
+        f: "flora",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "Old {nLandB} {nRiver}",
+        w: 3,
+        f: "work",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of the {folk}",
+        w: 3,
+        f: "ppl",
+        culture: "scottish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nMountain} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nMountain} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{nMountain} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nMountain} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{holy:poss} {nMountain}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nWood} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nWood} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{nWood} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nWood} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{holy:poss} {nWood}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nMoor} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nMoor} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{nMoor} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nMoor} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{holy:poss} {nMoor}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nWet} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nWet} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{nWet} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nWet} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{holy:poss} {nWet}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nGrass} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nGrass} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{nGrass} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nGrass} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{holy:poss} {nGrass}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLands} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLands} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{nLands} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLands} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{holy:poss} {nLands}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nFarm} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nFarm} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{nFarm} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nFarm} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{holy:poss} {nFarm}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nHill} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nHill} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{nHill} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nHill} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{holy:poss} {nHill}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nRiver} of {person}",
+        w: 4,
+        f: "per",
+        culture: "irish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "irish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nRiver} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "irish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "irish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        culture: "irish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        culture: "irish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "irish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        culture: "irish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        culture: "irish",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{nRiver} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "irish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        culture: "irish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nRiver} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "irish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {person}'s Clan",
+        w: 3,
+        f: "per",
+        culture: "irish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{holy:poss} {nRiver}",
+        w: 4,
+        f: "sai",
+        culture: "irish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nMountain} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nMountain} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{nMountain} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nMountain} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{nWood} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nWood} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{nWood} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nWood} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{nMoor} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nMoor} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{nMoor} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nMoor} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{nWet} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nWet} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{nWet} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nWet} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{nGrass} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nGrass} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{nGrass} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nGrass} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{nLands} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLands} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{nLands} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLands} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{nFarm} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nFarm} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{nFarm} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nFarm} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{nHill} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nHill} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{nHill} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nHill} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{nRiver} of {person}",
+        w: 4,
+        f: "per",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nRiver} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {holy}",
+        w: 3,
+        f: "sai",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 4,
+        f: "twn",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{nRiver} of the {wildQuality} {tree}",
+        w: 2,
+        f: "flora",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nRiver} of the {nLandB}",
+        w: 3,
+        f: "work",
+        culture: "cornish",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{person:poss} {nMountain}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{tree} {nMountain}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{beast} {nMountain}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{holy:poss} {nMountain}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMountain}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "Old {nLandB} {nMountain}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{person:poss} Farm {nMountain}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{person:poss} {nWood}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{tree} {nWood}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{beast} {nWood}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{holy:poss} {nWood}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWood}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "Old {nLandB} {nWood}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{person:poss} Farm {nWood}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{person:poss} {nMoor}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{tree} {nMoor}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{beast} {nMoor}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{holy:poss} {nMoor}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMoor}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "Old {nLandB} {nMoor}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{person:poss} Farm {nMoor}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{person:poss} {nWet}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{tree} {nWet}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{beast} {nWet}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{holy:poss} {nWet}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWet}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "Old {nLandB} {nWet}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{person:poss} Farm {nWet}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{person:poss} {nGrass}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{tree} {nGrass}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{beast} {nGrass}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{holy:poss} {nGrass}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nGrass}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "Old {nLandB} {nGrass}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{person:poss} Farm {nGrass}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{person:poss} {nLands}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{tree} {nLands}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{beast} {nLands}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{holy:poss} {nLands}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nLands}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "Old {nLandB} {nLands}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{person:poss} Farm {nLands}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{person:poss} {nFarm}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{tree} {nFarm}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{beast} {nFarm}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{holy:poss} {nFarm}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nFarm}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "Old {nLandB} {nFarm}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{person:poss} Farm {nFarm}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{person:poss} {nHill}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{tree} {nHill}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{beast} {nHill}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{holy:poss} {nHill}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nHill}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "Old {nLandB} {nHill}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{person:poss} Farm {nHill}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{person:poss} {nRiver}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{tree} {nRiver}",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{beast} {nRiver}",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{holy:poss} {nRiver}",
+        w: 3,
+        f: "sai",
+        culture: "norse",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        culture: "norse",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        culture: "norse",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nRiver}",
+        w: 2,
+        f: "flora",
+        culture: "norse",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "Old {nLandB} {nRiver}",
+        w: 3,
+        f: "work",
+        culture: "norse",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{person:poss} Farm {nRiver}",
+        w: 3,
+        f: "per",
+        culture: "norse",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of the {folk}",
+        w: 2,
+        f: "ppl",
+        culture: "norse",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{person:poss} {nMountain}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{tree} {nMountain}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{beast} {nMountain}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{holy:poss} {nMountain}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMountain}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "Old {nLandB} {nMountain}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{person:poss} {nMountain}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{person:poss} {nWood}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{tree} {nWood}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{beast} {nWood}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{holy:poss} {nWood}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWood}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "Old {nLandB} {nWood}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{person:poss} {nWood}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{person:poss} {nMoor}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{tree} {nMoor}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{beast} {nMoor}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{holy:poss} {nMoor}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMoor}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "Old {nLandB} {nMoor}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{person:poss} {nMoor}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{person:poss} {nWet}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{tree} {nWet}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{beast} {nWet}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{holy:poss} {nWet}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWet}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "Old {nLandB} {nWet}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{person:poss} {nWet}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{person:poss} {nGrass}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{tree} {nGrass}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{beast} {nGrass}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{holy:poss} {nGrass}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nGrass}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "Old {nLandB} {nGrass}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{person:poss} {nGrass}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{person:poss} {nLands}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{tree} {nLands}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{beast} {nLands}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{holy:poss} {nLands}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nLands}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "Old {nLandB} {nLands}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{person:poss} {nLands}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{person:poss} {nFarm}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{tree} {nFarm}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{beast} {nFarm}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{holy:poss} {nFarm}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nFarm}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "Old {nLandB} {nFarm}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{person:poss} {nFarm}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{person:poss} {nHill}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{tree} {nHill}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{beast} {nHill}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{holy:poss} {nHill}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nHill}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "Old {nLandB} {nHill}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{person:poss} {nHill}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{person:poss} {nRiver}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{tree} {nRiver}",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{beast} {nRiver}",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{holy:poss} {nRiver}",
+        w: 3,
+        f: "sai",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nRiver}",
+        w: 2,
+        f: "flora",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "Old {nLandB} {nRiver}",
+        w: 3,
+        f: "work",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{person:poss} {nRiver}",
+        w: 3,
+        f: "per",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{person:poss} {nMountain}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{tree} {nMountain}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{beast} {nMountain}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{holy:poss} {nMountain}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nMountain}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{wildColour} {nMountain}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{town} {nMountain}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} {nMountain}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nMountain}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMountain}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "Old {nLandB} {nMountain}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "mountainNames",
+        kind: "range"
+      },
+      {
+        p: "{beast} Castle {nMountain}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nMountain} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{person:poss} {nWood}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{tree} {nWood}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{beast} {nWood}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{holy:poss} {nWood}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nWood}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{wildColour} {nWood}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{town} {nWood}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} {nWood}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nWood}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWood}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "Old {nLandB} {nWood}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "forestNames",
+        kind: "clearing"
+      },
+      {
+        p: "{beast} Castle {nWood}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nWood} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{person:poss} {nMoor}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{tree} {nMoor}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{beast} {nMoor}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{holy:poss} {nMoor}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nMoor}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{wildColour} {nMoor}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{town} {nMoor}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} {nMoor}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nMoor}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nMoor}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "Old {nLandB} {nMoor}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "moorNames",
+        kind: "stone"
+      },
+      {
+        p: "{beast} Castle {nMoor}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nMoor} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{person:poss} {nWet}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{tree} {nWet}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{beast} {nWet}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{holy:poss} {nWet}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nWet}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{wildColour} {nWet}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{town} {nWet}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} {nWet}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nWet}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nWet}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "Old {nLandB} {nWet}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "isle"
+      },
+      {
+        p: "{beast} Castle {nWet}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nWet} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{person:poss} {nGrass}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{tree} {nGrass}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{beast} {nGrass}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{holy:poss} {nGrass}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nGrass}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{wildColour} {nGrass}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{town} {nGrass}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} {nGrass}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nGrass}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nGrass}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "Old {nLandB} {nGrass}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "vale"
+      },
+      {
+        p: "{beast} Castle {nGrass}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nGrass} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{person:poss} {nLands}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{tree} {nLands}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{beast} {nLands}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{holy:poss} {nLands}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLands}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{wildColour} {nLands}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{town} {nLands}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} {nLands}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLands}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nLands}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "Old {nLandB} {nLands}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "lands",
+        kind: "parish"
+      },
+      {
+        p: "{beast} Castle {nLands}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLands} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{person:poss} {nFarm}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{tree} {nFarm}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{beast} {nFarm}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{holy:poss} {nFarm}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nFarm}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{wildColour} {nFarm}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{town} {nFarm}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} {nFarm}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nFarm}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nFarm}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "Old {nLandB} {nFarm}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "farmland",
+        kind: "enclosure"
+      },
+      {
+        p: "{beast} Castle {nFarm}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nFarm} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{person:poss} {nHill}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{tree} {nHill}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{beast} {nHill}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{holy:poss} {nHill}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nHill}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{wildColour} {nHill}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{town} {nHill}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} {nHill}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nHill}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nHill}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "Old {nLandB} {nHill}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ridge"
+      },
+      {
+        p: "{beast} Castle {nHill}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nHill} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{person:poss} {nRiver}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{tree} {nRiver}",
+        w: 4,
+        f: "flora",
+        culture: "german",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{beast} {nRiver}",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{holy:poss} {nRiver}",
+        w: 3,
+        f: "sai",
+        culture: "german",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nRiver}",
+        w: 5,
+        f: "work",
+        culture: "german",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{wildColour} {nRiver}",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{town} {nRiver}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandD} {nRiver}",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nRiver}",
+        w: 3,
+        f: "myth",
+        culture: "german",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{wildQuality} {tree} {nRiver}",
+        w: 2,
+        f: "flora",
+        culture: "german",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "Old {nLandB} {nRiver}",
+        w: 3,
+        f: "work",
+        culture: "german",
+        module: "riversInland",
+        kind: "falls"
+      },
+      {
+        p: "{beast} Castle {nRiver}",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nRiver} of the {nLandB}",
+        w: 2,
+        f: "work",
+        culture: "german",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "mountainNames",
+        kind: "ridge"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "mountainNames",
+        kind: "range",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "mountainNames",
+        kind: "peak"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "forestNames",
+        kind: "grove"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "forestNames",
+        kind: "clearing",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "forestNames",
+        kind: "forest"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "moorNames",
+        kind: "hill"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "moorNames",
+        kind: "stone",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "moorNames",
+        kind: "moor"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "wetlandNames",
+        kind: "bog"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "wetlandNames",
+        kind: "isle",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "wetlandNames",
+        kind: "marsh"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "grasslandNames",
+        kind: "down"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "grasslandNames",
+        kind: "vale",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "grasslandNames",
+        kind: "plain"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "lands",
+        kind: "shire"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "lands",
+        kind: "parish",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "lands",
+        kind: "country"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "farmland",
+        kind: "farm"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "farmland",
+        kind: "enclosure",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "farmland",
+        kind: "field"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "hillsValleys",
+        kind: "valley"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "hillsValleys",
+        kind: "ridge",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "hillsValleys",
+        kind: "hill"
+      },
+      {
+        p: "{nLandD} of the {tree}",
+        w: 4,
+        f: "flora",
+        culture: "celtic",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{nLandB} {nLandD}",
+        w: 4,
+        f: "work",
+        culture: "celtic",
+        module: "riversInland",
+        kind: "lake"
+      },
+      {
+        p: "{nLandC} {nLandD}",
+        w: 3,
+        f: "myth",
+        culture: "celtic",
+        module: "riversInland",
+        kind: "falls",
+        h: true
+      },
+      {
+        p: "{nLandD} of the {beast}",
+        w: 4,
+        f: "crt",
+        culture: "celtic",
+        module: "riversInland",
+        kind: "stream"
+      },
+      {
+        p: "{wildColour} Glacier",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "ice",
+        rt: "glacier"
+      },
+      {
+        p: "{wildColour} Glacier",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "ice",
+        rt: "glacier"
+      },
+      {
+        p: "{beast} Glacier",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "ice",
+        rt: "glacier"
+      },
+      {
+        p: "{beast} Glacier",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "ice",
+        rt: "glacier"
+      },
+      {
+        p: "Glacier {wildQuality} Valley",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "valley",
+        rt: "glacier"
+      },
+      {
+        p: "Glacier {wildQuality} Valley",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "valley",
+        rt: "glacier"
+      },
+      {
+        p: "{beast} Waterfall",
+        w: 5,
+        f: "crt",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "stream",
+        rt: "waterfall"
+      },
+      {
+        p: "{beast} Waterfall",
+        w: 5,
+        f: "crt",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "stream",
+        rt: "waterfall"
+      },
+      {
+        p: "{wildColour} Waterfall",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "riversInland",
+        kind: "falls",
+        rt: "waterfall"
+      },
+      {
+        p: "{wildColour} Waterfall",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "falls",
+        rt: "waterfall"
+      },
+      {
+        p: "Waterfall {wildQuality} Ravine",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "ravine",
+        rt: "waterfall"
+      },
+      {
+        p: "Waterfall {wildQuality} Ravine",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "ravine",
+        rt: "waterfall"
+      },
+      {
+        p: "{wildColour} Esker",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "ridge",
+        rt: "esker"
+      },
+      {
+        p: "{wildColour} Esker",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "ridge",
+        rt: "esker"
+      },
+      {
+        p: "{tree} Esker",
+        w: 4,
+        f: "flora",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "down",
+        rt: "esker"
+      },
+      {
+        p: "{tree} Esker",
+        w: 4,
+        f: "flora",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "down",
+        rt: "esker"
+      },
+      {
+        p: "{beast} Esker",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "moorNames",
+        kind: "hill",
+        rt: "esker"
+      },
+      {
+        p: "{beast} Esker",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "hill",
+        rt: "esker"
+      },
+      {
+        p: "{town} Beech Wood",
+        w: 6,
+        f: "twn",
+        culture: "norse",
+        module: "forestNames",
+        kind: "forest",
+        rt: "beechwood"
+      },
+      {
+        p: "{town} Beech Wood",
+        w: 6,
+        f: "twn",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "forest",
+        rt: "beechwood"
+      },
+      {
+        p: "Beech Grove of {person}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "forestNames",
+        kind: "grove",
+        rt: "beechwood"
+      },
+      {
+        p: "Beech Grove of {person}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "grove",
+        rt: "beechwood"
+      },
+      {
+        p: "Beech Close",
+        w: 3,
+        f: "flora",
+        culture: "norse",
+        module: "farmland",
+        kind: "enclosure",
+        rt: "beechwood"
+      },
+      {
+        p: "Beech Close",
+        w: 3,
+        f: "flora",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "enclosure",
+        rt: "beechwood"
+      },
+      {
+        p: "{wildColour} Lava Field",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "mountainNames",
+        kind: "range",
+        rt: "lava"
+      },
+      {
+        p: "{wildColour} Lava Field",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "mountainNames",
+        kind: "range",
+        rt: "lava"
+      },
+      {
+        p: "Lava Waste of {town}",
+        w: 4,
+        f: "twn",
+        culture: "norse",
+        module: "moorNames",
+        kind: "moor",
+        rt: "lava"
+      },
+      {
+        p: "Lava Waste of {town}",
+        w: 4,
+        f: "twn",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "moor",
+        rt: "lava"
+      },
+      {
+        p: "{beast} Lava Hill",
+        w: 3,
+        f: "crt",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "hill",
+        rt: "lava"
+      },
+      {
+        p: "{beast} Lava Hill",
+        w: 3,
+        f: "crt",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "hill",
+        rt: "lava"
+      },
+      {
+        p: "{wildColour} Hot Spring",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "riversInland",
+        kind: "spring",
+        rt: "hotspring"
+      },
+      {
+        p: "{wildColour} Hot Spring",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "spring",
+        rt: "hotspring"
+      },
+      {
+        p: "{person:poss} Hot Pool",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "riversInland",
+        kind: "pool",
+        rt: "hotspring"
+      },
+      {
+        p: "{person:poss} Hot Pool",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "pool",
+        rt: "hotspring"
+      },
+      {
+        p: "Steaming {wildQuality} Water",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "wetlandNames",
+        kind: "water",
+        rt: "hotspring"
+      },
+      {
+        p: "Steaming {wildQuality} Water",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "wetlandNames",
+        kind: "water",
+        rt: "hotspring"
+      },
+      {
+        p: "{town} Mine Hill",
+        w: 6,
+        f: "twn",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "hill",
+        rt: "mine"
+      },
+      {
+        p: "{town} Mine Hill",
+        w: 6,
+        f: "twn",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "hill",
+        rt: "mine"
+      },
+      {
+        p: "Mine Hill of {person}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "moorNames",
+        kind: "hill",
+        rt: "mine"
+      },
+      {
+        p: "Mine Hill of {person}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "moorNames",
+        kind: "hill",
+        rt: "mine"
+      },
+      {
+        p: "{wildMetal} Mine",
+        w: 5,
+        f: "work",
+        culture: "norse",
+        module: "farmland",
+        kind: "works",
+        rt: "mine"
+      },
+      {
+        p: "{wildMetal} Mine",
+        w: 5,
+        f: "work",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "works",
+        rt: "mine"
+      },
+      {
+        p: "{wildColour} Pine Forest",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "forestNames",
+        kind: "forest",
+        rt: "pineforest"
+      },
+      {
+        p: "{wildColour} Pine Forest",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "forest",
+        rt: "pineforest"
+      },
+      {
+        p: "Pine Clearing of {person}",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "forestNames",
+        kind: "clearing",
+        rt: "pineforest"
+      },
+      {
+        p: "Pine Clearing of {person}",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "forestNames",
+        kind: "clearing",
+        rt: "pineforest"
+      },
+      {
+        p: "Pine Country",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "lands",
+        kind: "country",
+        rt: "pineforest"
+      },
+      {
+        p: "Pine Country",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country",
+        rt: "pineforest"
+      },
+      {
+        p: "{wildColour} Lake",
+        w: 4,
+        f: "col",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "lake",
+        rt: "lakeland"
+      },
+      {
+        p: "{wildColour} Lake",
+        w: 4,
+        f: "col",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "lake",
+        rt: "lakeland"
+      },
+      {
+        p: "{person:poss} Lake",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "riversInland",
+        kind: "lake",
+        rt: "lakeland"
+      },
+      {
+        p: "{person:poss} Lake",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "riversInland",
+        kind: "lake",
+        rt: "lakeland"
+      },
+      {
+        p: "Lake Country",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "lands",
+        kind: "country",
+        rt: "lakeland"
+      },
+      {
+        p: "Lake Country",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country",
+        rt: "lakeland"
+      },
+      {
+        p: "{person:poss} Steep Farm",
+        w: 6,
+        f: "per",
+        culture: "norse",
+        module: "farmland",
+        kind: "farm",
+        rt: "steepfarm"
+      },
+      {
+        p: "{person:poss} Steep Farm",
+        w: 6,
+        f: "per",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "farm",
+        rt: "steepfarm"
+      },
+      {
+        p: "Steep Field of {town}",
+        w: 4,
+        f: "twn",
+        culture: "norse",
+        module: "farmland",
+        kind: "field",
+        rt: "steepfarm"
+      },
+      {
+        p: "Steep Field of {town}",
+        w: 4,
+        f: "twn",
+        culture: "scandinavian",
+        module: "farmland",
+        kind: "field",
+        rt: "steepfarm"
+      },
+      {
+        p: "{town} Farm Valley",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "hillsValleys",
+        kind: "valley",
+        rt: "steepfarm"
+      },
+      {
+        p: "{town} Farm Valley",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "hillsValleys",
+        kind: "valley",
+        rt: "steepfarm"
+      },
+      {
+        p: "{wildColour} Dune",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "down",
+        rt: "dune"
+      },
+      {
+        p: "{wildColour} Dune",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "down",
+        rt: "dune"
+      },
+      {
+        p: "Dune Plain of {town}",
+        w: 3,
+        f: "twn",
+        culture: "norse",
+        module: "grasslandNames",
+        kind: "plain",
+        rt: "dune"
+      },
+      {
+        p: "Dune Plain of {town}",
+        w: 3,
+        f: "twn",
+        culture: "scandinavian",
+        module: "grasslandNames",
+        kind: "plain",
+        rt: "dune"
+      },
+      {
+        p: "Dune Country",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "lands",
+        kind: "country",
+        rt: "dune"
+      },
+      {
+        p: "Dune Country",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "lands",
+        kind: "country",
+        rt: "dune"
+      },
+      {
+        p: "{town} Dyke",
+        w: 6,
+        f: "twn",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "causeway",
+        rt: "dyke"
+      },
+      {
+        p: "Dyke Channel of {person}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "channel",
+        rt: "dyke"
+      },
+      {
+        p: "{beast} Dyke Close",
+        w: 3,
+        f: "crt",
+        culture: "german",
+        module: "farmland",
+        kind: "enclosure",
+        rt: "dyke"
+      },
+      {
+        p: "{wildColour} Mudflat",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "delta",
+        rt: "mudflat"
+      },
+      {
+        p: "{town} Mudflats",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "marsh",
+        rt: "mudflat"
+      },
+      {
+        p: "Mudflat Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "mudflat"
+      },
+      {
+        p: "{person:poss} Polder",
+        w: 5,
+        f: "per",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "reed",
+        rt: "polder"
+      },
+      {
+        p: "{town} Polder",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "farmland",
+        kind: "field",
+        rt: "polder"
+      },
+      {
+        p: "Polder Parish",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "parish",
+        rt: "polder"
+      },
+      {
+        p: "{wildColour} Heath",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "heath",
+        rt: "heathland"
+      },
+      {
+        p: "{town} Heath",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor",
+        rt: "heathland"
+      },
+      {
+        p: "Heath Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "heathland"
+      },
+      {
+        p: "{wildColour} Gorge",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "mountainNames",
+        kind: "gorge",
+        rt: "gorge"
+      },
+      {
+        p: "{town} Gorge",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "mountainNames",
+        kind: "gorge",
+        rt: "gorge"
+      },
+      {
+        p: "{beast} Gorge",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ravine",
+        rt: "gorge"
+      },
+      {
+        p: "{town} Vineyard",
+        w: 6,
+        f: "twn",
+        culture: "german",
+        module: "farmland",
+        kind: "field",
+        rt: "vineyard"
+      },
+      {
+        p: "{wildColour} Vine Terraces",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "terrace",
+        rt: "vineyard"
+      },
+      {
+        p: "Wine Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "vineyard"
+      },
+      {
+        p: "{beast} Crag",
+        w: 5,
+        f: "crt",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak",
+        rt: "crag"
+      },
+      {
+        p: "{town} Crag",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ridge",
+        rt: "crag"
+      },
+      {
+        p: "Castle Crag of {person}",
+        w: 3,
+        f: "per",
+        culture: "german",
+        module: "moorNames",
+        kind: "hill",
+        rt: "crag"
+      },
+      {
+        p: "{town} Castle Hill",
+        w: 6,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill",
+        rt: "castlehill"
+      },
+      {
+        p: "{beast} Castle Peak",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak",
+        rt: "castlehill"
+      },
+      {
+        p: "Castle Mill of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "farmland",
+        kind: "works",
+        rt: "castlehill"
+      },
+      {
+        p: "Old Roman {town}",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "lands",
+        kind: "parish",
+        rt: "romantown"
+      },
+      {
+        p: "Roman Villa Farm",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "farmland",
+        kind: "farm",
+        rt: "romantown"
+      },
+      {
+        p: "Roman Valley of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley",
+        rt: "romantown"
+      },
+      {
+        p: "{wildColour} Forest Ridge",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ridge",
+        rt: "ridgeland"
+      },
+      {
+        p: "{town} Ridge",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "mountainNames",
+        kind: "ridge",
+        rt: "ridgeland"
+      },
+      {
+        p: "Ridge Ride of {person}",
+        w: 3,
+        f: "per",
+        culture: "german",
+        module: "forestNames",
+        kind: "ride",
+        rt: "ridgeland"
+      },
+      {
+        p: "{town} Beech Forest",
+        w: 6,
+        f: "twn",
+        culture: "german",
+        module: "forestNames",
+        kind: "forest",
+        rt: "beechland"
+      },
+      {
+        p: "Beech Clearing",
+        w: 4,
+        f: "qual",
+        culture: "german",
+        module: "forestNames",
+        kind: "clearing",
+        rt: "beechland"
+      },
+      {
+        p: "Beech Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "beechland"
+      },
+      {
+        p: "{wildColour} Spring",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "riversInland",
+        kind: "spring",
+        rt: "forestspring"
+      },
+      {
+        p: "Spring Pool of {person}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "forestNames",
+        kind: "pool",
+        rt: "forestspring"
+      },
+      {
+        p: "{town} Spring Valley",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley",
+        rt: "forestspring"
+      },
+      {
+        p: "{wildMetal} Mine Hill",
+        w: 6,
+        f: "work",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill",
+        rt: "minegerman"
+      },
+      {
+        p: "Miners' Ridge of {town}",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "mountainNames",
+        kind: "ridge",
+        rt: "minegerman"
+      },
+      {
+        p: "{town} Smelter",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "farmland",
+        kind: "works",
+        rt: "minegerman"
+      },
+      {
+        p: "{wildColour} Alps",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "mountainNames",
+        kind: "range",
+        rt: "alp"
+      },
+      {
+        p: "{town} Alp",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak",
+        rt: "alp"
+      },
+      {
+        p: "High Alp of {person}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "down",
+        rt: "alp"
+      },
+      {
+        p: "{beast} Alp Pasture",
+        w: 5,
+        f: "crt",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "meadow",
+        rt: "alppasture"
+      },
+      {
+        p: "{person:poss} High Pasture",
+        w: 5,
+        f: "per",
+        culture: "german",
+        module: "farmland",
+        kind: "field",
+        rt: "alppasture"
+      },
+      {
+        p: "Pasture Hill of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "hill",
+        rt: "alppasture"
+      },
+      {
+        p: "{town} Pass",
+        w: 6,
+        f: "twn",
+        culture: "german",
+        module: "mountainNames",
+        kind: "pass",
+        rt: "pass"
+      },
+      {
+        p: "{beast} Pass",
+        w: 5,
+        f: "crt",
+        culture: "german",
+        module: "mountainNames",
+        kind: "pass",
+        rt: "pass"
+      },
+      {
+        p: "Pass Valley of {person}",
+        w: 3,
+        f: "per",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "valley",
+        rt: "pass"
+      },
+      {
+        p: "Avalanche Valley",
+        w: 5,
+        f: "qual",
+        culture: "german",
+        module: "mountainNames",
+        kind: "valley",
+        rt: "avalanche"
+      },
+      {
+        p: "{wildColour} Avalanche Slope",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "mountainNames",
+        kind: "peak",
+        rt: "avalanche"
+      },
+      {
+        p: "Avalanche Ravine of {town}",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "hillsValleys",
+        kind: "ravine",
+        rt: "avalanche"
+      },
+      {
+        p: "{wildColour} Lake",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "lake",
+        rt: "alplake"
+      },
+      {
+        p: "{town} Lake",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "riversInland",
+        kind: "lake",
+        rt: "alplake"
+      },
+      {
+        p: "Lake Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "alplake"
+      },
+      {
+        p: "{wildColour} Pine Wood",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "forestNames",
+        kind: "forest",
+        rt: "pinesand"
+      },
+      {
+        p: "Sand Heath of {town}",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "grasslandNames",
+        kind: "heath",
+        rt: "pinesand"
+      },
+      {
+        p: "Pine and Sand Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "pinesand"
+      },
+      {
+        p: "{wildColour} Sand Moor",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor",
+        rt: "sandy"
+      },
+      {
+        p: "Sand Island of {person}",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "isle",
+        rt: "sandy"
+      },
+      {
+        p: "{town} Sand Field",
+        w: 3,
+        f: "twn",
+        culture: "german",
+        module: "farmland",
+        kind: "field",
+        rt: "sandy"
+      },
+      {
+        p: "{wildColour} Marsh",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "marsh",
+        rt: "eastmarsh"
+      },
+      {
+        p: "{town} Marsh",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "wetlandNames",
+        kind: "bog",
+        rt: "eastmarsh"
+      },
+      {
+        p: "Eastern March of {person}",
+        w: 3,
+        f: "per",
+        culture: "german",
+        module: "lands",
+        kind: "march",
+        rt: "eastmarsh"
+      },
+      {
+        p: "{wildColour} High Moor",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "moorNames",
+        kind: "moor",
+        rt: "highmoorg"
+      },
+      {
+        p: "{town} Peat Bog",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "moorNames",
+        kind: "bog",
+        rt: "highmoorg"
+      },
+      {
+        p: "Moor Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "highmoorg"
+      },
+      {
+        p: "{wildColour} Pine Pool",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "forestNames",
+        kind: "pool",
+        rt: "pinelakeG"
+      },
+      {
+        p: "{town} Pine Pool",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "riversInland",
+        kind: "pool",
+        rt: "pinelakeG"
+      },
+      {
+        p: "Pine Lake Country",
+        w: 3,
+        f: "qual",
+        culture: "german",
+        module: "lands",
+        kind: "country",
+        rt: "pinelakeG"
+      }
+    ],
     regionColumns: {
       ben: {
         DEN: 0,
@@ -118428,13 +141455,4034 @@ var north5a_default = {
         OST: 0
       }
     },
-    regionTags: {},
-    regionTagFor: {},
+    regionTags: {
+      glacier: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 2,
+        SWE: 0.3,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      waterfall: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 3,
+        SWE: 1,
+        ICE: 2,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      esker: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0.5,
+        NOR: 0.5,
+        SWE: 3,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      beechwood: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 3,
+        NOR: 0,
+        SWE: 1,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lava: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      hotspring: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0.3,
+        SWE: 0,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mine: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 1,
+        SWE: 3,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      pineforest: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0.3,
+        NOR: 1,
+        SWE: 3,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakeland: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0.3,
+        NOR: 1,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      steepfarm: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 3,
+        SWE: 0,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      dune: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 3,
+        NOR: 0,
+        SWE: 0.3,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      dyke: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mudflat: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      polder: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      heathland: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0.5,
+        ALP: 0,
+        OST: 2
+      },
+      gorge: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0.5,
+        ALP: 2,
+        OST: 0
+      },
+      vineyard: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      crag: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 2,
+        MIT: 1,
+        ALP: 1,
+        OST: 0
+      },
+      castlehill: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 1,
+        ALP: 0.5,
+        OST: 0.3
+      },
+      romantown: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      ridgeland: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 1,
+        MIT: 2,
+        ALP: 0,
+        OST: 0
+      },
+      beechland: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0.3,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0,
+        OST: 0.5
+      },
+      forestspring: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0.5,
+        MIT: 3,
+        ALP: 0,
+        OST: 0
+      },
+      minegerman: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0.3,
+        OST: 0
+      },
+      alp: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      alppasture: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      pass: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0.5,
+        ALP: 3,
+        OST: 0
+      },
+      avalanche: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      alplake: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 2,
+        OST: 3
+      },
+      pinesand: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      },
+      sandy: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      },
+      eastmarsh: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 1,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 2
+      },
+      highmoorg: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0.3,
+        OST: 0
+      },
+      pinelakeG: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0.3,
+        ALP: 0,
+        OST: 3
+      }
+    },
+    regionTagFor: {
+      glacier: [
+        "norse",
+        "scandinavian"
+      ],
+      waterfall: [
+        "norse",
+        "scandinavian"
+      ],
+      esker: [
+        "norse",
+        "scandinavian"
+      ],
+      beechwood: [
+        "norse",
+        "scandinavian"
+      ],
+      lava: [
+        "norse",
+        "scandinavian"
+      ],
+      hotspring: [
+        "norse",
+        "scandinavian"
+      ],
+      mine: [
+        "norse",
+        "scandinavian"
+      ],
+      pineforest: [
+        "norse",
+        "scandinavian"
+      ],
+      lakeland: [
+        "norse",
+        "scandinavian"
+      ],
+      steepfarm: [
+        "norse",
+        "scandinavian"
+      ],
+      dune: [
+        "norse",
+        "scandinavian"
+      ],
+      dyke: [
+        "german"
+      ],
+      mudflat: [
+        "german"
+      ],
+      polder: [
+        "german"
+      ],
+      heathland: [
+        "german"
+      ],
+      gorge: [
+        "german"
+      ],
+      vineyard: [
+        "german"
+      ],
+      crag: [
+        "german"
+      ],
+      castlehill: [
+        "german"
+      ],
+      romantown: [
+        "german"
+      ],
+      ridgeland: [
+        "german"
+      ],
+      beechland: [
+        "german"
+      ],
+      forestspring: [
+        "german"
+      ],
+      minegerman: [
+        "german"
+      ],
+      alp: [
+        "german"
+      ],
+      alppasture: [
+        "german"
+      ],
+      pass: [
+        "german"
+      ],
+      avalanche: [
+        "german"
+      ],
+      alplake: [
+        "german"
+      ],
+      pinesand: [
+        "german"
+      ],
+      sandy: [
+        "german"
+      ],
+      eastmarsh: [
+        "german"
+      ],
+      highmoorg: [
+        "german"
+      ],
+      pinelakeG: [
+        "german"
+      ]
+    },
     cultureMult: {},
     homeland: {}
   },
   waters: {
-    cultureShapes: [],
+    cultureShapes: [
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "bay",
+        p: "{person:poss} {nSea}",
+        w: 4,
+        f: "per"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{seaCreature} {nSea}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "bay",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{holy:poss} {nSea}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nSea} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "bay",
+        p: "Old {nWaterB} {nSea}",
+        w: 3,
+        f: "work"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of the {seaCreature}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{person:poss} {nCoast}",
+        w: 4,
+        f: "per"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{seaCreature} {nCoast}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{holy:poss} {nCoast}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nCoast} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "headland",
+        p: "Old {nWaterB} {nCoast}",
+        w: 3,
+        f: "work"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of the {seaCreature}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "bank",
+        p: "{person:poss} {nChart}",
+        w: 4,
+        f: "per"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "reef",
+        p: "{seaCreature} {nChart}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "bank",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "reef",
+        p: "{holy:poss} {nChart}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nChart} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "bank",
+        p: "Old {nWaterB} {nChart}",
+        w: 3,
+        f: "work"
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of the {seaCreature}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "welsh",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "welsh",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "welsh",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{person:poss} {nSea}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{seaCreature} {nSea}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{holy:poss} {nSea}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nSea} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "Old {nWaterB} {nSea}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "scottish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{person:poss} {nCoast}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{seaCreature} {nCoast}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{holy:poss} {nCoast}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nCoast} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "Old {nWaterB} {nCoast}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "scottish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{person:poss} {nChart}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{seaCreature} {nChart}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{holy:poss} {nChart}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nChart} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "Old {nWaterB} {nChart}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "scottish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "irish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{holy:poss} {nSea}",
+        w: 4,
+        f: "sai"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "irish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{holy:poss} {nCoast}",
+        w: 4,
+        f: "sai"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "irish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{holy:poss} {nChart}",
+        w: 4,
+        f: "sai"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nSea} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "cornish",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nSea} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nCoast} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "cornish",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nCoast} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of {person}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of {town}",
+        w: 4,
+        f: "twn"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nChart} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "cornish",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nChart} of the {number} {seaCreature:pl}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{person:poss} {nSea}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{seaCreature} {nSea}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{holy:poss} {nSea}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nSea} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "bay",
+        p: "Old {nWaterB} {nSea}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "norse",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{person:poss} Farm {nSea}",
+        w: 3,
+        f: "per"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{person:poss} {nCoast}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{seaCreature} {nCoast}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{holy:poss} {nCoast}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nCoast} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "Old {nWaterB} {nCoast}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{person:poss} Farm {nCoast}",
+        w: 3,
+        f: "per"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{person:poss} {nChart}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{seaCreature} {nChart}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{holy:poss} {nChart}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nChart} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "bank",
+        p: "Old {nWaterB} {nChart}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "norse",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{person:poss} Farm {nChart}",
+        w: 3,
+        f: "per"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{person:poss} {nSea}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{seaCreature} {nSea}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{holy:poss} {nSea}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nSea} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "bay",
+        p: "Old {nWaterB} {nSea}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{person:poss} {nSea}",
+        w: 3,
+        f: "per"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{person:poss} {nCoast}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{seaCreature} {nCoast}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{holy:poss} {nCoast}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nCoast} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "Old {nWaterB} {nCoast}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{person:poss} {nCoast}",
+        w: 3,
+        f: "per"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{person:poss} {nChart}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{seaCreature} {nChart}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{holy:poss} {nChart}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nChart} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "bank",
+        p: "Old {nWaterB} {nChart}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{person:poss} {nChart}",
+        w: 3,
+        f: "per"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{person:poss} {nSea}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{seaCreature} {nSea}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterB} {nSea}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{town} {nSea}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterD} {nSea}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nSea}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{seaColour} {nSea}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{holy:poss} {nSea}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nSea} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "bay",
+        p: "Old {nWaterB} {nSea}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "german",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{seaCreature} Castle {nSea}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{person:poss} {nCoast}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{seaCreature} {nCoast}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterB} {nCoast}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{town} {nCoast}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterD} {nCoast}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nCoast}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{seaColour} {nCoast}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{holy:poss} {nCoast}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nCoast} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "Old {nWaterB} {nCoast}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "german",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{seaCreature} Castle {nCoast}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{person:poss} {nChart}",
+        w: 4,
+        f: "per"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{seaCreature} {nChart}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterB} {nChart}",
+        w: 5,
+        f: "work"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{town} {nChart}",
+        w: 5,
+        f: "twn"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterD} {nChart}",
+        w: 4,
+        f: "qual"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nChart}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{seaColour} {nChart}",
+        w: 4,
+        f: "col"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{holy:poss} {nChart}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nChart} of {town}",
+        w: 3,
+        f: "twn"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "bank",
+        p: "Old {nWaterB} {nChart}",
+        w: 3,
+        f: "work"
+      },
+      {
+        culture: "german",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{seaCreature} Castle {nChart}",
+        w: 2,
+        f: "crt"
+      },
+      {
+        culture: "celtic",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nWaterD} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "celtic",
+        module: "seasLakes",
+        kind: "inlet",
+        p: "{nWaterB} {nWaterD}",
+        w: 4,
+        f: "work"
+      },
+      {
+        culture: "celtic",
+        module: "seasLakes",
+        kind: "strait",
+        p: "{nWaterC} {nWaterD}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "celtic",
+        module: "seasLakes",
+        kind: "bay",
+        p: "{nWaterD} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "celtic",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nWaterD} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "celtic",
+        module: "coastsIslands",
+        kind: "cove",
+        p: "{nWaterB} {nWaterD}",
+        w: 4,
+        f: "work"
+      },
+      {
+        culture: "celtic",
+        module: "coastsIslands",
+        kind: "island",
+        p: "{nWaterC} {nWaterD}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "celtic",
+        module: "coastsIslands",
+        kind: "headland",
+        p: "{nWaterD} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        culture: "celtic",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nWaterD} of the {seaCreature}",
+        w: 4,
+        f: "crt"
+      },
+      {
+        culture: "celtic",
+        module: "seaCharts",
+        kind: "reef",
+        p: "{nWaterB} {nWaterD}",
+        w: 4,
+        f: "work"
+      },
+      {
+        culture: "celtic",
+        module: "seaCharts",
+        kind: "channel",
+        p: "{nWaterC} {nWaterD}",
+        w: 3,
+        f: "myth",
+        h: true
+      },
+      {
+        culture: "celtic",
+        module: "seaCharts",
+        kind: "bank",
+        p: "{nWaterD} of {holy}",
+        w: 3,
+        f: "sai"
+      },
+      {
+        p: "{seaColour} Fjord",
+        w: 7,
+        f: "col",
+        culture: "norse",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "fjord"
+      },
+      {
+        p: "{seaColour} Fjord",
+        w: 7,
+        f: "col",
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "fjord"
+      },
+      {
+        p: "{town} Fjord",
+        w: 6,
+        f: "twn",
+        culture: "norse",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "fjord"
+      },
+      {
+        p: "{town} Fjord",
+        w: 6,
+        f: "twn",
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "fjord"
+      },
+      {
+        p: "{person:poss} Fjord",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "seasLakes",
+        kind: "bay",
+        rt: "fjord"
+      },
+      {
+        p: "{person:poss} Fjord",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "bay",
+        rt: "fjord"
+      },
+      {
+        p: "{seaCreature} Fjord",
+        w: 4,
+        f: "crt",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "cove",
+        rt: "fjord"
+      },
+      {
+        p: "{seaCreature} Fjord",
+        w: 4,
+        f: "crt",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "cove",
+        rt: "fjord"
+      },
+      {
+        p: "{seaColour} Sound",
+        w: 6,
+        f: "col",
+        culture: "norse",
+        module: "seasLakes",
+        kind: "strait",
+        rt: "sundDen"
+      },
+      {
+        p: "{seaColour} Sound",
+        w: 6,
+        f: "col",
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "strait",
+        rt: "sundDen"
+      },
+      {
+        p: "Sound of {town}",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "seasLakes",
+        kind: "strait",
+        rt: "sundDen"
+      },
+      {
+        p: "Sound of {town}",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "strait",
+        rt: "sundDen"
+      },
+      {
+        p: "{town} Sound Channel",
+        w: 4,
+        f: "twn",
+        culture: "norse",
+        module: "seaCharts",
+        kind: "channel",
+        rt: "sundDen"
+      },
+      {
+        p: "{town} Sound Channel",
+        w: 4,
+        f: "twn",
+        culture: "scandinavian",
+        module: "seaCharts",
+        kind: "channel",
+        rt: "sundDen"
+      },
+      {
+        p: "{seaCreature} Bird Cliff",
+        w: 6,
+        f: "crt",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "cliff",
+        rt: "birdcliff"
+      },
+      {
+        p: "{seaCreature} Bird Cliff",
+        w: 6,
+        f: "crt",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "cliff",
+        rt: "birdcliff"
+      },
+      {
+        p: "Bird Cliff of {town}",
+        w: 4,
+        f: "twn",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "headland",
+        rt: "birdcliff"
+      },
+      {
+        p: "Bird Cliff of {town}",
+        w: 4,
+        f: "twn",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "headland",
+        rt: "birdcliff"
+      },
+      {
+        p: "{seaColour} Cliffs",
+        w: 3,
+        f: "col",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "cliff",
+        rt: "birdcliff"
+      },
+      {
+        p: "{seaColour} Cliffs",
+        w: 3,
+        f: "col",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "cliff",
+        rt: "birdcliff"
+      },
+      {
+        p: "Black Sand Beach of {town}",
+        w: 6,
+        f: "twn",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "beach",
+        rt: "blacksand"
+      },
+      {
+        p: "Black Sand Beach of {town}",
+        w: 6,
+        f: "twn",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "beach",
+        rt: "blacksand"
+      },
+      {
+        p: "{person:poss} Black Sands",
+        w: 4,
+        f: "per",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "beach",
+        rt: "blacksand"
+      },
+      {
+        p: "{person:poss} Black Sands",
+        w: 4,
+        f: "per",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "beach",
+        rt: "blacksand"
+      },
+      {
+        p: "Black Sand Coast",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "blacksand"
+      },
+      {
+        p: "Black Sand Coast",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "blacksand"
+      },
+      {
+        p: "{town} Islets",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "archipelago"
+      },
+      {
+        p: "{town} Islets",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "archipelago"
+      },
+      {
+        p: "{seaColour} Skerries",
+        w: 5,
+        f: "col",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "archipelago"
+      },
+      {
+        p: "{seaColour} Skerries",
+        w: 5,
+        f: "col",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "archipelago"
+      },
+      {
+        p: "{town} Archipelago",
+        w: 4,
+        f: "twn",
+        culture: "norse",
+        module: "seasLakes",
+        kind: "bay",
+        rt: "archipelago"
+      },
+      {
+        p: "{town} Archipelago",
+        w: 4,
+        f: "twn",
+        culture: "scandinavian",
+        module: "seasLakes",
+        kind: "bay",
+        rt: "archipelago"
+      },
+      {
+        p: "{town} Low Island",
+        w: 5,
+        f: "twn",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "lowisland"
+      },
+      {
+        p: "{town} Low Island",
+        w: 5,
+        f: "twn",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "lowisland"
+      },
+      {
+        p: "{seaColour} Dunes",
+        w: 5,
+        f: "col",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "beach",
+        rt: "lowisland"
+      },
+      {
+        p: "{seaColour} Dunes",
+        w: 5,
+        f: "col",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "beach",
+        rt: "lowisland"
+      },
+      {
+        p: "Dune Coast",
+        w: 3,
+        f: "qual",
+        culture: "norse",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "lowisland"
+      },
+      {
+        p: "Dune Coast",
+        w: 3,
+        f: "qual",
+        culture: "scandinavian",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "lowisland"
+      },
+      {
+        p: "{town} Mudflats",
+        w: 6,
+        f: "twn",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "mudflatsea"
+      },
+      {
+        p: "{seaColour} Mudflat Bay",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "seasLakes",
+        kind: "bay",
+        rt: "mudflatsea"
+      },
+      {
+        p: "{town} Sand Flats",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "seaCharts",
+        kind: "bank",
+        rt: "mudflatsea"
+      },
+      {
+        p: "Dyke Coast of {person}",
+        w: 5,
+        f: "per",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "dykecoast"
+      },
+      {
+        p: "{town} Dyke Point",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "headland",
+        rt: "dykecoast"
+      },
+      {
+        p: "{town} Dyke Channel",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seaCharts",
+        kind: "channel",
+        rt: "dykecoast"
+      },
+      {
+        p: "{seaColour} Wadden Isle",
+        w: 5,
+        f: "col",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "frisianisle"
+      },
+      {
+        p: "{town} Sand Island",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "frisianisle"
+      },
+      {
+        p: "{seaCreature} Sand Bank",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "seaCharts",
+        kind: "bank",
+        rt: "frisianisle"
+      },
+      {
+        p: "Brick Harbour of {town}",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "cove",
+        rt: "brickharbour"
+      },
+      {
+        p: "{town} Brick Haven",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "brickharbour"
+      },
+      {
+        p: "{town} Roads",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seaCharts",
+        kind: "roads",
+        rt: "brickharbour"
+      },
+      {
+        p: "{seaColour} Lake",
+        w: 6,
+        f: "col",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "seelake"
+      },
+      {
+        p: "{town} Lake",
+        w: 6,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "seelake"
+      },
+      {
+        p: "{person:poss} Mere",
+        w: 4,
+        f: "per",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "seelake"
+      },
+      {
+        p: "Gorge Lake of {town}",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "rhinegorge"
+      },
+      {
+        p: "{seaColour} Gorge Water",
+        w: 3,
+        f: "col",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "rhinegorge"
+      },
+      {
+        p: "Alp Lake of {town}",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "mountainlake"
+      },
+      {
+        p: "{seaCreature} Alp Lake",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "mountainlake"
+      },
+      {
+        p: "Pine Lake of {town}",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "pinelake"
+      },
+      {
+        p: "{seaColour} Sand Lake",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "pinelake"
+      },
+      {
+        p: "Forest Lake of {town}",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "forestlake"
+      },
+      {
+        p: "{seaCreature} Forest Mere",
+        w: 4,
+        f: "crt",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "forestlake"
+      },
+      {
+        p: "{town} Wadden Isle",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "island",
+        rt: "wadden"
+      },
+      {
+        p: "{seaColour} Tidal Channel",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "seaCharts",
+        kind: "channel",
+        rt: "wadden"
+      },
+      {
+        p: "{town} Tidal Inlet",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "wadden"
+      },
+      {
+        p: "{town} Salt Marsh Coast",
+        w: 5,
+        f: "twn",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "saltmarshcoast"
+      },
+      {
+        p: "{seaColour} Mud Strand",
+        w: 4,
+        f: "col",
+        culture: "german",
+        module: "coastsIslands",
+        kind: "beach",
+        rt: "saltmarshcoast"
+      },
+      {
+        p: "{town} Salt Bank",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seaCharts",
+        kind: "bank",
+        rt: "saltmarshcoast"
+      },
+      {
+        p: "{town} Reach",
+        w: 6,
+        f: "twn",
+        culture: "anglo-saxon",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "severnreach"
+      },
+      {
+        p: "{town} Reach",
+        w: 6,
+        f: "twn",
+        culture: "norman-british",
+        module: "seasLakes",
+        kind: "inlet",
+        rt: "severnreach"
+      },
+      {
+        p: "{seaColour} Reach",
+        w: 4,
+        f: "col",
+        culture: "anglo-saxon",
+        module: "seasLakes",
+        kind: "bay",
+        rt: "severnreach"
+      },
+      {
+        p: "{seaColour} Reach",
+        w: 4,
+        f: "col",
+        culture: "norman-british",
+        module: "seasLakes",
+        kind: "bay",
+        rt: "severnreach"
+      },
+      {
+        p: "Marcher Shore of {person}",
+        w: 3,
+        f: "per",
+        culture: "anglo-saxon",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "severnreach"
+      },
+      {
+        p: "Marcher Shore of {person}",
+        w: 3,
+        f: "per",
+        culture: "norman-british",
+        module: "coastsIslands",
+        kind: "coast",
+        rt: "severnreach"
+      },
+      {
+        p: "{town} Oxbow Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakerhn0"
+      },
+      {
+        p: "{town} Quarry Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakerhn1"
+      },
+      {
+        p: "{town} Castle Mere",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakerhn2"
+      },
+      {
+        p: "{town} Vineyard Pond",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakerhn3"
+      },
+      {
+        p: "{town} Ferry Bay",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakerhn4"
+      },
+      {
+        p: "{town} Mill Pond",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakemit0"
+      },
+      {
+        p: "{town} Spring Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakemit1"
+      },
+      {
+        p: "{town} Reservoir",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakemit2"
+      },
+      {
+        p: "{town} Mining Pond",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakemit3"
+      },
+      {
+        p: "{town} Clearing Pool",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakemit4"
+      },
+      {
+        p: "{town} Glacier Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakealp0"
+      },
+      {
+        p: "{town} Mountain Tarn",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakealp1"
+      },
+      {
+        p: "{town} Mountain Mere",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakealp2"
+      },
+      {
+        p: "{town} Reservoir Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakealp3"
+      },
+      {
+        p: "{town} Snowmelt Pool",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakealp4"
+      },
+      {
+        p: "{town} Reed Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakeost0"
+      },
+      {
+        p: "{town} Chain Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakeost1"
+      },
+      {
+        p: "{town} Heath Pool",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakeost2"
+      },
+      {
+        p: "{town} Marsh Mere",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakeost3"
+      },
+      {
+        p: "{town} Sandy Lake",
+        w: 4,
+        f: "twn",
+        culture: "german",
+        module: "seasLakes",
+        kind: "lake",
+        rt: "lakeost4"
+      }
+    ],
     regionColumns: {
       ness: {
         DEN: 0.5,
@@ -118943,18 +145991,4858 @@ var north5a_default = {
         OST: 0
       }
     },
-    regionTags: {},
-    regionTagFor: {},
+    regionTags: {
+      fjord: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 3,
+        SWE: 0.3,
+        ICE: 2,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      sundDen: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 3,
+        NOR: 0.3,
+        SWE: 1,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      birdcliff: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 1,
+        SWE: 0,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      blacksand: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      archipelago: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 1,
+        NOR: 1,
+        SWE: 3,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lowisland: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 3,
+        NOR: 0,
+        SWE: 0.5,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mudflatsea: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      dykecoast: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      frisianisle: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      brickharbour: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      seelake: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 1,
+        ALP: 3,
+        OST: 3
+      },
+      rhinegorge: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mountainlake: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0.5,
+        ALP: 3,
+        OST: 0
+      },
+      pinelake: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      },
+      forestlake: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0,
+        OST: 0
+      },
+      wadden: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      saltmarshcoast: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 3,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      severnreach: {
+        COR: 0,
+        WCY: 1,
+        SEA: 0,
+        EAN: 0,
+        WMM: 3,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakerhn0: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakerhn1: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakerhn2: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakerhn3: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakerhn4: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 3,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakemit0: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0,
+        OST: 0
+      },
+      lakemit1: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0,
+        OST: 0
+      },
+      lakemit2: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0,
+        OST: 0
+      },
+      lakemit3: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0,
+        OST: 0
+      },
+      lakemit4: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 3,
+        ALP: 0,
+        OST: 0
+      },
+      lakealp0: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      lakealp1: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      lakealp2: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      lakealp3: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      lakealp4: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 3,
+        OST: 0
+      },
+      lakeost0: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      },
+      lakeost1: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      },
+      lakeost2: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      },
+      lakeost3: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      },
+      lakeost4: {
+        COR: 0,
+        WCY: 0,
+        SEA: 0,
+        EAN: 0,
+        WMM: 0,
+        WAL: 0,
+        EMD: 0,
+        NTH: 0,
+        SBL: 0,
+        SLO: 0,
+        SHH: 0,
+        NSI: 0,
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 3
+      }
+    },
+    regionTagFor: {
+      fjord: [
+        "norse",
+        "scandinavian"
+      ],
+      sundDen: [
+        "norse",
+        "scandinavian"
+      ],
+      birdcliff: [
+        "norse",
+        "scandinavian"
+      ],
+      blacksand: [
+        "norse",
+        "scandinavian"
+      ],
+      archipelago: [
+        "norse",
+        "scandinavian"
+      ],
+      lowisland: [
+        "norse",
+        "scandinavian"
+      ],
+      mudflatsea: [
+        "german"
+      ],
+      dykecoast: [
+        "german"
+      ],
+      frisianisle: [
+        "german"
+      ],
+      brickharbour: [
+        "german"
+      ],
+      seelake: [
+        "german"
+      ],
+      rhinegorge: [
+        "german"
+      ],
+      mountainlake: [
+        "german"
+      ],
+      pinelake: [
+        "german"
+      ],
+      forestlake: [
+        "german"
+      ],
+      wadden: [
+        "german"
+      ],
+      saltmarshcoast: [
+        "german"
+      ],
+      severnreach: [
+        "anglo-saxon",
+        "norman-british"
+      ],
+      lakerhn0: [
+        "german"
+      ],
+      lakerhn1: [
+        "german"
+      ],
+      lakerhn2: [
+        "german"
+      ],
+      lakerhn3: [
+        "german"
+      ],
+      lakerhn4: [
+        "german"
+      ],
+      lakemit0: [
+        "german"
+      ],
+      lakemit1: [
+        "german"
+      ],
+      lakemit2: [
+        "german"
+      ],
+      lakemit3: [
+        "german"
+      ],
+      lakemit4: [
+        "german"
+      ],
+      lakealp0: [
+        "german"
+      ],
+      lakealp1: [
+        "german"
+      ],
+      lakealp2: [
+        "german"
+      ],
+      lakealp3: [
+        "german"
+      ],
+      lakealp4: [
+        "german"
+      ],
+      lakeost0: [
+        "german"
+      ],
+      lakeost1: [
+        "german"
+      ],
+      lakeost2: [
+        "german"
+      ],
+      lakeost3: [
+        "german"
+      ],
+      lakeost4: [
+        "german"
+      ]
+    },
     cultureMult: {},
     homeland: {}
   },
   routes: {
-    cultureShapes: [],
+    cultureShapes: [
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "road",
+        p: "{town} {nRoute}",
+        w: 5
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "trade",
+        p: "{goods} {nRoute}",
+        w: 3
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "military",
+        p: "{folk} {nRoute}",
+        w: 3
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "drove",
+        p: "{nRouteB} Drove",
+        w: 5
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 4
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        c: [
+          "anglo-saxon",
+          "norman-british"
+        ],
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "welsh",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "welsh",
+        kind: "road",
+        p: "{nRoute} of {destination}",
+        w: 5
+      },
+      {
+        culture: "welsh",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        culture: "welsh",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        culture: "welsh",
+        kind: "trade",
+        p: "{nRoute} of the {goods} Trade",
+        w: 3
+      },
+      {
+        culture: "welsh",
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        culture: "welsh",
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "welsh",
+        kind: "military",
+        p: "{nRoute} of the {folk}",
+        w: 3
+      },
+      {
+        culture: "welsh",
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 5
+      },
+      {
+        culture: "welsh",
+        kind: "drove",
+        p: "{nRouteB} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "welsh",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "welsh",
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "scottish",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "scottish",
+        kind: "road",
+        p: "{town} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "scottish",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        culture: "scottish",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        culture: "scottish",
+        kind: "trade",
+        p: "{goods} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "scottish",
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "scottish",
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        culture: "scottish",
+        kind: "military",
+        p: "{folk} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "scottish",
+        kind: "drove",
+        p: "{nRouteB} Drove",
+        w: 5
+      },
+      {
+        culture: "scottish",
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 4
+      },
+      {
+        culture: "scottish",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "scottish",
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "irish",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "irish",
+        kind: "road",
+        p: "{nRoute} of {destination}",
+        w: 5
+      },
+      {
+        culture: "irish",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        culture: "irish",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        culture: "irish",
+        kind: "trade",
+        p: "{nRoute} of the {goods} Trade",
+        w: 3
+      },
+      {
+        culture: "irish",
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        culture: "irish",
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "irish",
+        kind: "military",
+        p: "{nRoute} of the {folk}",
+        w: 3
+      },
+      {
+        culture: "irish",
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 5
+      },
+      {
+        culture: "irish",
+        kind: "drove",
+        p: "{nRouteB} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "irish",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "irish",
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "cornish",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "cornish",
+        kind: "road",
+        p: "{nRoute} of {destination}",
+        w: 5
+      },
+      {
+        culture: "cornish",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        culture: "cornish",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        culture: "cornish",
+        kind: "trade",
+        p: "{nRoute} of the {goods} Trade",
+        w: 3
+      },
+      {
+        culture: "cornish",
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        culture: "cornish",
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "cornish",
+        kind: "military",
+        p: "{nRoute} of the {folk}",
+        w: 3
+      },
+      {
+        culture: "cornish",
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 5
+      },
+      {
+        culture: "cornish",
+        kind: "drove",
+        p: "{nRouteB} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "cornish",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "cornish",
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "{town} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        culture: "norse",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        culture: "norse",
+        kind: "trade",
+        p: "{goods} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "norse",
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "norse",
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        culture: "norse",
+        kind: "military",
+        p: "{folk} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "norse",
+        kind: "drove",
+        p: "{nRouteB} Drove",
+        w: 5
+      },
+      {
+        culture: "norse",
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 4
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "norse",
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "{person:poss} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "{town} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        culture: "scandinavian",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        culture: "scandinavian",
+        kind: "trade",
+        p: "{goods} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "scandinavian",
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "scandinavian",
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        culture: "scandinavian",
+        kind: "military",
+        p: "{folk} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "scandinavian",
+        kind: "drove",
+        p: "{nRouteB} Drove",
+        w: 5
+      },
+      {
+        culture: "scandinavian",
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 4
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "scandinavian",
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "{town} {nRoute}",
+        w: 5
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 3
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 5
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "{goods} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "german",
+        kind: "pilgrim",
+        p: "{holy:poss} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "german",
+        kind: "pilgrim",
+        p: "Pilgrims' {nRoute} to {holy}",
+        w: 4
+      },
+      {
+        culture: "german",
+        kind: "military",
+        p: "{folk} {nRoute}",
+        w: 3
+      },
+      {
+        culture: "german",
+        kind: "drove",
+        p: "{nRouteB} Drove",
+        w: 5
+      },
+      {
+        culture: "german",
+        kind: "drove",
+        p: "Drovers' {nRoute}",
+        w: 4
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "{nRouteD} Trade Route",
+        w: 2
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "{nRouteB} Road",
+        w: 4
+      },
+      {
+        culture: "celtic",
+        kind: "road",
+        p: "{nRouteB} {nRoute}",
+        w: 4
+      },
+      {
+        culture: "celtic",
+        kind: "road",
+        p: "{nRouteD}",
+        w: 4
+      },
+      {
+        culture: "celtic",
+        kind: "pilgrim",
+        p: "{nRoute} to the {nRouteD}",
+        w: 3
+      },
+      {
+        culture: "celtic",
+        kind: "road",
+        p: "{nRouteC} {nRoute}",
+        w: 3,
+        h: true
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "road",
+        p: "Downland Way",
+        w: 4,
+        r: "sea0"
+      },
+      {
+        culture: "norman-british",
+        kind: "road",
+        p: "Downland Way",
+        w: 4,
+        r: "sea0"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "trade",
+        p: "Wealden Iron Road",
+        w: 4,
+        r: "sea1"
+      },
+      {
+        culture: "norman-british",
+        kind: "trade",
+        p: "Wealden Iron Road",
+        w: 4,
+        r: "sea1"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "pilgrim",
+        p: "Chalk Pilgrims' Way",
+        w: 4,
+        r: "sea2"
+      },
+      {
+        culture: "norman-british",
+        kind: "pilgrim",
+        p: "Chalk Pilgrims' Way",
+        w: 4,
+        r: "sea2"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "road",
+        p: "Fen Causeway",
+        w: 4,
+        r: "ean0"
+      },
+      {
+        culture: "norman-british",
+        kind: "road",
+        p: "Fen Causeway",
+        w: 4,
+        r: "ean0"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "drove",
+        p: "Marsh Drove",
+        w: 4,
+        r: "ean1"
+      },
+      {
+        culture: "norman-british",
+        kind: "drove",
+        p: "Marsh Drove",
+        w: 4,
+        r: "ean1"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "road",
+        p: "Marcher Way",
+        w: 4,
+        r: "wmm0"
+      },
+      {
+        culture: "norman-british",
+        kind: "road",
+        p: "Marcher Way",
+        w: 4,
+        r: "wmm0"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "military",
+        p: "Border Military Road",
+        w: 4,
+        r: "wmm1"
+      },
+      {
+        culture: "norman-british",
+        kind: "military",
+        p: "Border Military Road",
+        w: 4,
+        r: "wmm1"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "drove",
+        p: "Welsh Drove",
+        w: 4,
+        r: "wmm2"
+      },
+      {
+        culture: "norman-british",
+        kind: "drove",
+        p: "Welsh Drove",
+        w: 4,
+        r: "wmm2"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "road",
+        p: "Wolds Way",
+        w: 4,
+        r: "emd0"
+      },
+      {
+        culture: "norman-british",
+        kind: "road",
+        p: "Wolds Way",
+        w: 4,
+        r: "emd0"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "trade",
+        p: "Wool Road",
+        w: 4,
+        r: "emd1"
+      },
+      {
+        culture: "norman-british",
+        kind: "trade",
+        p: "Wool Road",
+        w: 4,
+        r: "emd1"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "trade",
+        p: "Ironstone Road",
+        w: 4,
+        r: "emd2"
+      },
+      {
+        culture: "norman-british",
+        kind: "trade",
+        p: "Ironstone Road",
+        w: 4,
+        r: "emd2"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "trade",
+        p: "Packhorse Way",
+        w: 4,
+        r: "nth0"
+      },
+      {
+        culture: "norman-british",
+        kind: "trade",
+        p: "Packhorse Way",
+        w: 4,
+        r: "nth0"
+      },
+      {
+        culture: "anglo-saxon",
+        kind: "military",
+        p: "Reivers' Road",
+        w: 4,
+        r: "sbl0"
+      },
+      {
+        culture: "norman-british",
+        kind: "military",
+        p: "Reivers' Road",
+        w: 4,
+        r: "sbl0"
+      },
+      {
+        culture: "scottish",
+        kind: "drove",
+        p: "Lowland Drove",
+        w: 4,
+        r: "slo0"
+      },
+      {
+        culture: "scottish",
+        kind: "trade",
+        p: "Wool Gate",
+        w: 4,
+        r: "slo1"
+      },
+      {
+        culture: "scottish",
+        kind: "road",
+        p: "Kirk Wynd",
+        w: 4,
+        r: "slo2"
+      },
+      {
+        culture: "scottish",
+        kind: "road",
+        p: "Highland Military Road",
+        w: 4,
+        r: "shh0"
+      },
+      {
+        culture: "scottish",
+        kind: "drove",
+        p: "Glen Drove",
+        w: 4,
+        r: "shh1"
+      },
+      {
+        culture: "scottish",
+        kind: "pilgrim",
+        p: "Clan Burial Way",
+        w: 4,
+        r: "shh2"
+      },
+      {
+        culture: "scottish",
+        kind: "sea",
+        p: "Isles Ferry Route",
+        w: 4,
+        r: "nsi0"
+      },
+      {
+        culture: "scottish",
+        kind: "trade",
+        p: "Peat Road",
+        w: 4,
+        r: "nsi1"
+      },
+      {
+        culture: "scottish",
+        kind: "sea",
+        p: "Kelp Shore Track",
+        w: 4,
+        r: "nsi2"
+      },
+      {
+        culture: "scottish",
+        kind: "road",
+        p: "Island Crofters' Road",
+        w: 4,
+        r: "nsi3"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Heath Road",
+        w: 4,
+        r: "den0"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Heath Road",
+        w: 4,
+        r: "den0"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Beech Wood Way",
+        w: 4,
+        r: "den1"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Beech Wood Way",
+        w: 4,
+        r: "den1"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Dune Track",
+        w: 4,
+        r: "den2"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Dune Track",
+        w: 4,
+        r: "den2"
+      },
+      {
+        culture: "norse",
+        kind: "sea",
+        p: "Sound Ferry Route",
+        w: 4,
+        r: "den3"
+      },
+      {
+        culture: "scandinavian",
+        kind: "sea",
+        p: "Sound Ferry Route",
+        w: 4,
+        r: "den3"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Bog Causeway",
+        w: 4,
+        r: "den4"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Bog Causeway",
+        w: 4,
+        r: "den4"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Island Causeway",
+        w: 4,
+        r: "den5"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Island Causeway",
+        w: 4,
+        r: "den5"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Fjord Road",
+        w: 4,
+        r: "nor0"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Fjord Road",
+        w: 4,
+        r: "nor0"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Fell Track",
+        w: 4,
+        r: "nor1"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Fell Track",
+        w: 4,
+        r: "nor1"
+      },
+      {
+        culture: "norse",
+        kind: "pilgrim",
+        p: "Saint's Mountain Path",
+        w: 4,
+        r: "nor2"
+      },
+      {
+        culture: "scandinavian",
+        kind: "pilgrim",
+        p: "Saint's Mountain Path",
+        w: 4,
+        r: "nor2"
+      },
+      {
+        culture: "norse",
+        kind: "sea",
+        p: "Coastal Steamer Route",
+        w: 4,
+        r: "nor3"
+      },
+      {
+        culture: "scandinavian",
+        kind: "sea",
+        p: "Coastal Steamer Route",
+        w: 4,
+        r: "nor3"
+      },
+      {
+        culture: "norse",
+        kind: "drove",
+        p: "Summer Farm Track",
+        w: 4,
+        r: "nor4"
+      },
+      {
+        culture: "scandinavian",
+        kind: "drove",
+        p: "Summer Farm Track",
+        w: 4,
+        r: "nor4"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Waterfall Path",
+        w: 4,
+        r: "nor5"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Waterfall Path",
+        w: 4,
+        r: "nor5"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Forest Road",
+        w: 4,
+        r: "swe0"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Forest Road",
+        w: 4,
+        r: "swe0"
+      },
+      {
+        culture: "norse",
+        kind: "trade",
+        p: "Ore Road",
+        w: 4,
+        r: "swe1"
+      },
+      {
+        culture: "scandinavian",
+        kind: "trade",
+        p: "Ore Road",
+        w: 4,
+        r: "swe1"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Esker Ridge Road",
+        w: 4,
+        r: "swe2"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Esker Ridge Road",
+        w: 4,
+        r: "swe2"
+      },
+      {
+        culture: "norse",
+        kind: "sea",
+        p: "Skerry Fairway",
+        w: 4,
+        r: "swe3"
+      },
+      {
+        culture: "scandinavian",
+        kind: "sea",
+        p: "Skerry Fairway",
+        w: 4,
+        r: "swe3"
+      },
+      {
+        culture: "norse",
+        kind: "drove",
+        p: "Lake Shore Track",
+        w: 4,
+        r: "swe4"
+      },
+      {
+        culture: "scandinavian",
+        kind: "drove",
+        p: "Lake Shore Track",
+        w: 4,
+        r: "swe4"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Mining Road",
+        w: 4,
+        r: "swe5"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Mining Road",
+        w: 4,
+        r: "swe5"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Lava Track",
+        w: 4,
+        r: "ice0"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Lava Track",
+        w: 4,
+        r: "ice0"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Black Sand Way",
+        w: 4,
+        r: "ice1"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Black Sand Way",
+        w: 4,
+        r: "ice1"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Glacier Crossing",
+        w: 4,
+        r: "ice2"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Glacier Crossing",
+        w: 4,
+        r: "ice2"
+      },
+      {
+        culture: "norse",
+        kind: "sea",
+        p: "Fishing Fleet Route",
+        w: 4,
+        r: "ice3"
+      },
+      {
+        culture: "scandinavian",
+        kind: "sea",
+        p: "Fishing Fleet Route",
+        w: 4,
+        r: "ice3"
+      },
+      {
+        culture: "norse",
+        kind: "pilgrim",
+        p: "Hot Spring Path",
+        w: 4,
+        r: "ice4"
+      },
+      {
+        culture: "scandinavian",
+        kind: "pilgrim",
+        p: "Hot Spring Path",
+        w: 4,
+        r: "ice4"
+      },
+      {
+        culture: "norse",
+        kind: "road",
+        p: "Bare Fell Track",
+        w: 4,
+        r: "ice5"
+      },
+      {
+        culture: "scandinavian",
+        kind: "road",
+        p: "Bare Fell Track",
+        w: 4,
+        r: "ice5"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Dyke Road",
+        w: 4,
+        r: "ndt0"
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "Hanse Road",
+        w: 4,
+        r: "ndt1"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Marsh Causeway",
+        w: 4,
+        r: "ndt2"
+      },
+      {
+        culture: "german",
+        kind: "sea",
+        p: "Tidal Channel Route",
+        w: 4,
+        r: "ndt3"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Brick Town Way",
+        w: 4,
+        r: "ndt4"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Heath Road",
+        w: 4,
+        r: "ndt5"
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "Rhine Towpath",
+        w: 4,
+        r: "rhn0"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Vineyard Way",
+        w: 4,
+        r: "rhn1"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Castle Road",
+        w: 4,
+        r: "rhn2"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Roman Limes Road",
+        w: 4,
+        r: "rhn3"
+      },
+      {
+        culture: "german",
+        kind: "pilgrim",
+        p: "Gorge Pilgrim Path",
+        w: 4,
+        r: "rhn4"
+      },
+      {
+        culture: "german",
+        kind: "military",
+        p: "Old Roman Road",
+        w: 4,
+        r: "rhn5"
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "Salt Road",
+        w: 4,
+        r: "mit0"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Forest Ridge Road",
+        w: 4,
+        r: "mit1"
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "Mining Road",
+        w: 4,
+        r: "mit2"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Spring Path",
+        w: 4,
+        r: "mit3"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Clearing Way",
+        w: 4,
+        r: "mit4"
+      },
+      {
+        culture: "german",
+        kind: "pilgrim",
+        p: "Hill Pilgrim Way",
+        w: 4,
+        r: "mit5"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Pass Road",
+        w: 4,
+        r: "alp0"
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "Alpine Salt Road",
+        w: 4,
+        r: "alp1"
+      },
+      {
+        culture: "german",
+        kind: "drove",
+        p: "High Pasture Track",
+        w: 4,
+        r: "alp2"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Avalanche Gallery Way",
+        w: 4,
+        r: "alp3"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Gorge Path",
+        w: 4,
+        r: "alp4"
+      },
+      {
+        culture: "german",
+        kind: "military",
+        p: "Pass Fort Road",
+        w: 4,
+        r: "alp5"
+      },
+      {
+        culture: "german",
+        kind: "trade",
+        p: "Amber Road",
+        w: 4,
+        r: "ost0"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Pine Road",
+        w: 4,
+        r: "ost1"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Sand Track",
+        w: 4,
+        r: "ost2"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Lake Shore Way",
+        w: 4,
+        r: "ost3"
+      },
+      {
+        culture: "german",
+        kind: "road",
+        p: "Marsh Causeway",
+        w: 4,
+        r: "ost4"
+      },
+      {
+        culture: "german",
+        kind: "military",
+        p: "March Road",
+        w: 4,
+        r: "ost5"
+      }
+    ],
     regionColumns: {},
-    regions: {}
+    regions: {
+      sea0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      sea1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      sea2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ean0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ean1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      wmm0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      wmm1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      wmm2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      emd0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      emd1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      emd2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nth0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      sbl0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      slo0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      slo1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      slo2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      shh0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      shh1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      shh2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nsi0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nsi1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nsi2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nsi3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      den0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      den1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      den2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      den3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      den4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      den5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nor0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nor1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nor2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nor3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nor4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      nor5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      swe0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      swe1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      swe2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      swe3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      swe4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      swe5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ice0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ice1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ice2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ice3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ice4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ice5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ndt0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ndt1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ndt2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ndt3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ndt4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      ndt5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      rhn0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      rhn1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      rhn2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      rhn3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      rhn4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      rhn5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      mit0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      mit1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      mit2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      mit3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      mit4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      mit5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 3,
+        ALP: 0.3,
+        OST: 0.3
+      },
+      alp0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 3,
+        OST: 0.3
+      },
+      alp1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 3,
+        OST: 0.3
+      },
+      alp2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 3,
+        OST: 0.3
+      },
+      alp3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 3,
+        OST: 0.3
+      },
+      alp4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 3,
+        OST: 0.3
+      },
+      alp5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 3,
+        OST: 0.3
+      },
+      ost0: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 3
+      },
+      ost1: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 3
+      },
+      ost2: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 3
+      },
+      ost3: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 3
+      },
+      ost4: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 3
+      },
+      ost5: {
+        COR: 0.3,
+        WCY: 0.3,
+        SEA: 0.3,
+        EAN: 0.3,
+        WMM: 0.3,
+        WAL: 0.3,
+        EMD: 0.3,
+        NTH: 0.3,
+        SBL: 0.3,
+        SLO: 0.3,
+        SHH: 0.3,
+        NSI: 0.3,
+        DEN: 0.3,
+        NOR: 0.3,
+        SWE: 0.3,
+        ICE: 0.3,
+        NDT: 0.3,
+        RHN: 0.3,
+        MIT: 0.3,
+        ALP: 0.3,
+        OST: 3
+      }
+    }
   },
   deities: {
-    styles: {}
+    styles: {
+      "anglo-saxon": {
+        extra: [
+          {
+            p: "{deityRef} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      "norman-british": {
+        extra: [
+          {
+            p: "{deityRef} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      welsh: {
+        extra: [
+          {
+            p: "{nSacred} of {deityRef}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      scottish: {
+        extra: [
+          {
+            p: "{deityRef} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      irish: {
+        extra: [
+          {
+            p: "{nSacred} of {deityRef}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      cornish: {
+        extra: [
+          {
+            p: "{nSacred} of {deityRef}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      norse: {
+        extra: [
+          {
+            p: "{deityRef} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      scandinavian: {
+        extra: [
+          {
+            p: "{deityRef} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      german: {
+        extra: [
+          {
+            p: "{deityRef} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacred}",
+            w: 5,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {number}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "{place:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{holy:poss} {nSacred}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {place}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "the {sacredQuality} {nSacred}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacred} of the {nSacredB}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredD} of {deityRef}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      },
+      celtic: {
+        extra: [
+          {
+            p: "{nSacredD} of the Mother",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredB} {nSacredD}",
+            w: 4,
+            kind: "place",
+            form: "culture"
+          },
+          {
+            p: "{nSacredC} {nSacredD}",
+            w: 3,
+            kind: "place",
+            form: "culture",
+            h: true
+          },
+          {
+            p: "the {sacredQuality} {nSacredD}",
+            w: 3,
+            kind: "place",
+            form: "culture"
+          }
+        ]
+      }
+    }
   }
 };
 
@@ -118967,6 +150855,254 @@ function mergeRegionColumns(base, columns, extra) {
   for (const [tag, row] of Object.entries(extra != null ? extra : {})) out[tag] = { ...(_b4 = out[tag]) != null ? _b4 : {}, ...row };
   return out;
 }
+var CELTIC_MIX = ["welsh", "scottish", "irish", "cornish"];
+var CELTIC_MIX_WEIGHT = 0.25;
+function shapesOf(list, key2) {
+  var _a7;
+  const out = [];
+  for (const s of list) {
+    if (s.culture === key2 || !s.culture && ((_a7 = s.c) == null ? void 0 : _a7.includes(key2))) out.push(s);
+    else if (key2 === "celtic" && s.culture && CELTIC_MIX.includes(s.culture)) out.push({ ...s, w: s.w * CELTIC_MIX_WEIGHT });
+  }
+  return out;
+}
+
+// src/settlement/vocab.ts
+var VALUE_TIERS = ["h", "m", "l"];
+var BASE_VOCAB = settlement_vocab_default;
+var SETTLEMENT_VOCAB = {
+  ...BASE_VOCAB,
+  pools: { ...BASE_VOCAB.pools, ...NORTH.vocab.pools }
+};
+var VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
+var _a3;
+var MONEY_ONLY_CULTURES = (_a3 = SETTLEMENT_VOCAB.moneyOnly) != null ? _a3 : [];
+var VOCAB_CULTURES = SETTLEMENT_VOCAB.cultures.filter((c) => !MONEY_ONLY_CULTURES.includes(c));
+var VOCAB_ALL_CULTURES = SETTLEMENT_VOCAB.cultures;
+var VOCAB_CULTURE_GROUPS = Object.keys(SETTLEMENT_VOCAB.cultureGroups);
+var VOCAB_REGION_TAGS = SETTLEMENT_VOCAB.regionTags;
+var VOCAB_REGIONS = SETTLEMENT_VOCAB.regions;
+var VOCAB_THEMES = SETTLEMENT_VOCAB.themes;
+var POOL_NAMES = Object.keys(SETTLEMENT_VOCAB.pools);
+function cultureAllowed(c, culture, era) {
+  if (!c || c.length === 0) return true;
+  const matches = (key2) => key2 === culture || inCultureGroup(key2, culture, era);
+  const positive = c.filter((k) => !k.startsWith("!"));
+  if (c.some((k) => k.startsWith("!") && matches(k.slice(1)))) return false;
+  return positive.length === 0 || positive.some(matches);
+}
+var regionFor = (where2) => where2.region && inCultureGroup("british", where2.culture, where2.era) ? where2.region : void 0;
+function entryAllowed(e, where2) {
+  if (e.e && !e.e.includes(where2.era)) return false;
+  if (e.h !== void 0 && e.h !== where2.fantastic) return false;
+  if (where2.scale && !scaleAllows(e, where2.scale)) return false;
+  const region = regionFor(where2);
+  if (region && e.r && !e.r.includes(region)) return false;
+  return cultureAllowed(e.c, where2.culture, where2.era);
+}
+var regionX = (e, where2) => {
+  var _a7, _b4;
+  const region = regionFor(where2);
+  return region ? (_b4 = (_a7 = e.rx) == null ? void 0 : _a7[region]) != null ? _b4 : 1 : 1;
+};
+var themeX = (e, where2) => {
+  var _a7;
+  return ((_a7 = e.th) != null ? _a7 : []).reduce((n, t) => {
+    var _a8, _b4;
+    return n * ((_b4 = (_a8 = where2.themes) == null ? void 0 : _a8[t]) != null ? _b4 : 1);
+  }, 1);
+};
+var BUILT_IN_VOCAB = { pools: SETTLEMENT_VOCAB.pools };
+var CREATURE_POOL_HABITATS = {
+  mtBeast: ["mountain", "sky"],
+  fstBeast: ["forest"],
+  dsrBeast: ["desert"],
+  mrBeast: ["moor"],
+  wetBeast: ["water"],
+  grsBeast: ["home", "sky"],
+  seaMonster: ["sea"],
+  seaCreature: ["sea", "water"],
+  lakeCreature: ["water"],
+  fordBeast: ["water"],
+  mythBeast: ["sky", "underground"],
+  figureBeast: ["home", "mountain", "forest", "sky"]
+};
+function mythicEntries(name, where2) {
+  const habitats = CREATURE_POOL_HABITATS[name];
+  if (!habitats || !where2.fantastic) return [];
+  const seen = /* @__PURE__ */ new Set();
+  const out = [];
+  for (const h of habitats) {
+    for (const c of creaturesFor(where2.culture, h)) {
+      const w = c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase());
+      if (seen.has(w)) continue;
+      seen.add(w);
+      out.push({ w, t: c.tones });
+    }
+  }
+  return out;
+}
+function poolEntries(vocab, name, where2) {
+  var _a7, _b4, _c4, _d3, _e3;
+  const pool3 = vocab.pools[name];
+  if (!pool3) throw new Error(`Settlement vocabulary: no pool \u201C${name}\u201D.`);
+  const out = [];
+  const at = /* @__PURE__ */ new Map();
+  const add2 = (e, w) => {
+    const i = at.get(e.w);
+    if (i !== void 0) out[i][1] += w;
+    else {
+      at.set(e.w, out.length);
+      out.push([e, w]);
+    }
+  };
+  for (const e of pool3.entries) if (entryAllowed(e, where2)) add2(e, ((_a7 = e.x) != null ? _a7 : 1) * regionX(e, where2) * themeX(e, where2));
+  if (where2.culture === "celtic") {
+    for (const e of pool3.entries) {
+      if (!e.c || !e.c.some((k) => CELTIC_MIX.includes(k)) || at.has(e.w)) continue;
+      if (entryAllowed(e, { ...where2, culture: e.c.find((k) => CELTIC_MIX.includes(k)) })) add2(e, ((_b4 = e.x) != null ? _b4 : 1) * CELTIC_MIX_WEIGHT);
+    }
+  }
+  for (const e of (_d3 = (_c4 = pool3.cultureExtra) == null ? void 0 : _c4[where2.culture]) != null ? _d3 : []) {
+    if (!entryAllowed(e, where2)) continue;
+    const i = at.get(e.w);
+    if (i !== void 0) out[i][1] *= 3;
+    else add2(e, ((_e3 = e.x) != null ? _e3 : 1) * 3);
+  }
+  for (const e of mythicEntries(name, where2)) if (!at.has(e.w)) add2(e, 1);
+  return out.filter(([, w]) => w > 0);
+}
+var VOCABULARY_TYPE = "vocabulary";
+function isVocabularyPackContent(content) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  return !!fm && new RegExp(`^type:\\s*["']?${VOCABULARY_TYPE}["']?\\s*$`, "m").test(fm[1]);
+}
+var RETIRED_POOLS = ["buildingWord:monument", "buildingFixed:monument"];
+var isMoneyPool = (pool3) => pool3.startsWith("moneyFixed:") || MONEY_WORD_POOLS.includes(pool3);
+var SEASON_POOLS = ["seasonWord", "workWord"];
+var THING_POOLS = ["thingObject", "deedTarget", "deedVerb", "thingAgent", "kenningSecond", "thingBodyPart"];
+var THING_KINDS = ["sword", "axe", "spear", "bow", "mace", "knife", "shield", "armour", "gun", "cannon", "crown", "ring", "jewel", "torc", "cup", "instrument", "sceptre", "banner", "seat", "bell", "relic", "mirror", "chronicle", "lay", "law", "holy", "lore", "grimoire", "paper", "log"];
+var SEASON_KEYS = ["spring", "summer", "autumn", "winter", "thaw", "rain", "monsoon", "flood", "drought", "harvest", "storm", "frost"];
+var MONEY_WORD_POOLS = ["coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney"];
+function parseLine(text, pool3 = "") {
+  const money = isMoneyPool(pool3);
+  let rest = text.trim();
+  let x;
+  let t;
+  let th;
+  let loan;
+  let v;
+  let seasons;
+  let kinds;
+  for (let i = 0; i < 3; i++) {
+    const themes = rest.match(/\s*\[([^[\]]*)\]$/);
+    if (themes && money && loan === void 0) {
+      loan = themes[1].trim();
+      rest = rest.slice(0, themes.index).trim();
+      continue;
+    }
+    if (themes && !money && th === void 0) {
+      th = themes[1].split(/[,\s]+/).map((x2) => x2.trim().toLowerCase()).filter((x2) => VOCAB_THEMES.includes(x2));
+      rest = rest.slice(0, themes.index).trim();
+      continue;
+    }
+    const weight = rest.match(/\s*×\s*(\d+(?:\.\d+)?)$/);
+    if (weight && x === void 0) {
+      x = parseFloat(weight[1]);
+      rest = rest.slice(0, weight.index).trim();
+      continue;
+    }
+    const tones = rest.match(/\s*\(([^()]*)\)$/);
+    if (tones && t === void 0) {
+      const words = tones[1].split(/[,\s]+/).map((s) => s.trim().toLowerCase());
+      t = words.filter((s) => GROUP_TONES.includes(s));
+      if (money) v = words.filter((s) => VALUE_TIERS.includes(s));
+      if (SEASON_POOLS.includes(pool3)) seasons = words.filter((s) => SEASON_KEYS.includes(s));
+      if (THING_POOLS.includes(pool3)) kinds = words.filter((s) => THING_KINDS.includes(s));
+      rest = rest.slice(0, tones.index).trim();
+    }
+  }
+  if (!rest) return void 0;
+  return {
+    w: rest,
+    ...x !== void 0 ? { x } : {},
+    ...t && t.length > 0 ? { t } : {},
+    ...th && th.length > 0 ? { th } : {},
+    ...v && v.length > 0 ? { v } : {},
+    ...loan ? { loan } : {},
+    ...seasons && seasons.length > 0 ? { s: seasons } : {},
+    ...kinds && kinds.length > 0 ? { k: kinds } : {}
+  };
+}
+function parseVocabularyPack(content, note2) {
+  const fm = content.match(/^---\s*\n([\s\S]*?)\n---\s*/);
+  const body = fm ? content.slice(fm[0].length) : content;
+  const sections = [];
+  const problems = [];
+  let current = null;
+  for (const raw of body.split(/\r?\n/)) {
+    const line = raw.trim();
+    const heading = line.match(/^##\s+(.+?)\s*#*$/);
+    if (heading) {
+      current = null;
+      const [pool3, ...parts] = heading[1].split(/\s*·\s*/).map((p) => p.trim());
+      if (RETIRED_POOLS.includes(pool3)) {
+        problems.push("Monument words now belong to monuments and statues: use monumentWord:\u2039kind\u203A or monumentFixed:\u2039kind\u203A.");
+        continue;
+      }
+      if (!SETTLEMENT_VOCAB.pools[pool3]) {
+        problems.push(`Unknown pool \u201C${pool3}\u201D in vocabulary pack \u201C${note2}\u201D.`);
+        continue;
+      }
+      const section = { pool: pool3, entries: [] };
+      let bad = false;
+      for (const part of parts) {
+        if (VOCAB_ERAS.includes(part)) section.era = part;
+        else if (VOCAB_ALL_CULTURES.includes(part)) section.culture = part;
+        else if (VOCAB_REGIONS.includes(part)) section.region = part;
+        else {
+          problems.push(`Unknown culture \u201C${part}\u201D in vocabulary pack \u201C${note2}\u201D.`);
+          bad = true;
+        }
+      }
+      if (bad) continue;
+      sections.push(section);
+      current = section;
+      continue;
+    }
+    const bullet = line.match(/^[-*+]\s+(.+)$/);
+    if (!bullet || !current) continue;
+    const entry = parseLine(bullet[1], current.pool);
+    if (entry) current.entries.push(entry);
+  }
+  return { sections, problems };
+}
+function mergeVocabularyPacks(packs, blocked2 = () => false) {
+  const notices = [];
+  if (packs.length === 0) return { vocab: BUILT_IN_VOCAB, notices };
+  const pools = {};
+  for (const [name, pool3] of Object.entries(SETTLEMENT_VOCAB.pools)) pools[name] = { ...pool3, entries: [...pool3.entries] };
+  for (const pack of packs) {
+    const { sections, problems } = parseVocabularyPack(pack.content, pack.name);
+    notices.push(...problems);
+    for (const s of sections) {
+      for (const e of s.entries) {
+        if (hasBannedWord(e.w) || blocked2(e.w, s.pool)) continue;
+        pools[s.pool].entries.push({ ...e, ...s.culture ? { c: [s.culture] } : {}, ...s.era ? { e: [s.era] } : {}, ...s.region ? { r: [s.region] } : {} });
+      }
+    }
+  }
+  return { vocab: { pools }, notices };
+}
+var VOCABULARY_PACK_TEMPLATE = [
+  "---",
+  `type: ${VOCABULARY_TYPE}`,
+  "---",
+  "",
+  "Words added here join nameForge's shared pools: add `- word` lines under a pool, optionally with ` \xD70.5`, ` (grim)` or ` [maritime]`, and narrow a heading with ` \xB7 japanese`, ` \xB7 MD` or ` \xB7 NTH`.",
+  "",
+  ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
+].join("\n");
 
 // src/routes/engine.ts
 var ROUTE_FTL = [
@@ -119276,7 +151412,7 @@ function routeWordBlocked(word, guards) {
 var PERSON_TOKENS = /\{(person|founder|patron)[}:]/;
 var PLACE_TOKENS = /\{(destination|town)[}:]/;
 function shapesFor(kind, culture) {
-  return [...ROUTE_DATA.shapes[kind], ...ROUTE_DATA.cultureShapes.filter((s) => s.kind === kind && s.culture === culture)];
+  return [...ROUTE_DATA.shapes[kind], ...shapesOf(ROUTE_DATA.cultureShapes.filter((s) => s.kind === kind), culture)];
 }
 function shapeWeight2(ctx, kind, s, anyEra = false) {
   var _a7, _b4, _c4, _d3;
@@ -121134,10 +153270,13 @@ var DEITY_BASE = deity_names_default;
 var DEITY_DATA = {
   ...DEITY_BASE,
   styles: (() => {
-    var _a7;
+    var _a7, _b4, _c4;
     const out = { ...DEITY_BASE.styles };
     for (const [key2, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
-    for (const [key2, row] of Object.entries(NORTH.deities.styles)) out[key2] = { ...(_a7 = out[key2]) != null ? _a7 : {}, ...row };
+    for (const [key2, row] of Object.entries(NORTH.deities.styles)) {
+      const base = (_a7 = out[key2]) != null ? _a7 : {};
+      out[key2] = { ...base, ...row, extra: [...(_b4 = base.extra) != null ? _b4 : [], ...(_c4 = row.extra) != null ? _c4 : []] };
+    }
     return out;
   })()
 };
@@ -141454,7 +173593,7 @@ function kindShapes(ctx, kind) {
   var _a7;
   const module2 = ctx.module;
   const D = wildsDataOf(module2);
-  const own = [...(_a7 = D.shapes[module2][kind]) != null ? _a7 : [], ...D.cultureShapes.filter((s) => s.module === module2 && s.kind === kind && s.culture === ctx.culture.key)];
+  const own = [...(_a7 = D.shapes[module2][kind]) != null ? _a7 : [], ...shapesOf(D.cultureShapes.filter((s) => s.module === module2 && s.kind === kind), ctx.culture.key)];
   if (kind !== "settlement") return own;
   const dual = [];
   for (const [k, shapes] of Object.entries(D.shapes[module2])) {
@@ -143165,7 +175304,7 @@ function generateWatersNames(options) {
     const ctx = newCtx4(scale);
     if (earthlyModule) {
       for (const kind of waterKinds(earthlyModule)) {
-        const shapes = [...(_a8 = WATERS_DATA.shapes[earthlyModule][kind.key]) != null ? _a8 : [], ...WATERS_DATA.cultureShapes.filter((s) => s.module === earthlyModule && s.kind === kind.key && s.culture === culture.key)];
+        const shapes = [...(_a8 = WATERS_DATA.shapes[earthlyModule][kind.key]) != null ? _a8 : [], ...shapesOf(WATERS_DATA.cultureShapes.filter((s) => s.module === earthlyModule && s.kind === kind.key), culture.key)];
         const live5 = shapes.filter((s) => !options.shape || s.p === options.shape).map((s) => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)]).filter(([, w]) => w > 0);
         if (live5.length > 0) plans5.set(kind.key, live5);
       }

@@ -2,10 +2,13 @@
 import "../lexiconWiring";
 import deityData from "../data/deity-names.json";
 import bynameData from "../data/bynames.json";
+import { NORTH } from "../northData";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows, wordListRows } from "../coverageUse";
 
 const ROSTER = (bynameData.cultures as { key: string }[]).map((c) => c.key);
+/** Northern Europe brief 5a: sacred places also offer Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
+const ROSTER_5A = [...ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 /** §6.3: `unoffered` in deity-names.json (Polynesian and Andean) is excluded, not short. */
 const EXCLUDED = [{ cultures: deityData.unoffered as string[] }];
 type Shape = { kind: string };
@@ -18,7 +21,10 @@ function rows(module: string, kinds: readonly string[]): CoverageRow[] {
   const out: CoverageRow[] = [];
   out.push(...listRows((deityData.shapes as Shape[]).filter((s) => kinds.includes(s.kind)), { module, source: "shapes" }));
   // A culture's own extra shapes (the Feathered Serpent, a Norse tripling…) read as that culture's.
-  for (const [culture, style] of Object.entries(deityData.styles as unknown as Record<string, { extra?: Shape[] }>)) {
+  const styles = deityData.styles as unknown as Record<string, { extra?: Shape[] }>;
+  // English has one set of shapes for both its keys: counted once.
+  const north = module === "sacredPlaces" ? (NORTH.deities.styles as unknown as Record<string, { extra?: Shape[] }>) : {};
+  for (const [culture, style] of Object.entries({ ...styles, ...Object.fromEntries(Object.entries(north).map(([k, v]) => [k, { extra: [...(styles[k]?.extra ?? []), ...(k === "anglo-saxon" ? [] : v.extra ?? [])] }])) })) {
     out.push(...listRows((style.extra ?? []).filter((s) => kinds.includes(s.kind)), { module, source: `styles/${culture}/extra`, culture }));
   }
   if (module === "deityNames") {
@@ -39,7 +45,7 @@ const profiles = () => profileKeys(Object.fromEntries(Object.entries(deityData.s
 
 export const deityCoverage: CoverageAdapter[] = [
   { module: "deityNames", kinds: kindKeys(DEITY_KINDS), roster: ROSTER, excluded: EXCLUDED, profiles, rows: () => rows("deityNames", DEITY_KINDS) },
-  { module: "sacredPlaces", kinds: kindKeys(PLACE_KINDS), roster: ROSTER, excluded: EXCLUDED, profiles, rows: () => rows("sacredPlaces", PLACE_KINDS) },
+  { module: "sacredPlaces", kinds: kindKeys(PLACE_KINDS), roster: ROSTER_5A, excluded: EXCLUDED, profiles, rows: () => rows("sacredPlaces", PLACE_KINDS) },
 ];
 
 void makeRow;

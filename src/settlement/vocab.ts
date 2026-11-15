@@ -4,6 +4,7 @@
 // No Obsidian imports.
 
 import vocabData from "../data/settlement-vocab.json";
+import { CELTIC_MIX, CELTIC_MIX_WEIGHT, NORTH } from "../northData";
 import { creaturesFor, type Habitat } from "../creatures";
 import { inCultureGroup } from "../lens";
 import { GROUP_TONES, type GroupTone, hasBannedWord } from "../groups/engine";
@@ -81,7 +82,12 @@ interface VocabData {
   pools: Record<string, VocabPool>;
 }
 
-export const SETTLEMENT_VOCAB = vocabData as unknown as VocabData;
+/** Northern Europe brief 5a: the batch's own pools (signature words of the cultures in the batch modules) join the shared vocabulary. */
+const BASE_VOCAB = vocabData as unknown as VocabData;
+export const SETTLEMENT_VOCAB: VocabData = {
+  ...BASE_VOCAB,
+  pools: { ...BASE_VOCAB.pools, ...(NORTH.vocab.pools as unknown as Record<string, VocabPool>) },
+};
 export const VOCAB_ERAS = SETTLEMENT_VOCAB.eras;
 /** Money brief §3.2: the four cultures only money and coins offers; no other module's menu lists them. */
 export const MONEY_ONLY_CULTURES = SETTLEMENT_VOCAB.moneyOnly ?? [];
@@ -204,6 +210,13 @@ export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere):
     }
   };
   for (const e of pool.entries) if (entryAllowed(e, where)) add(e, (e.x ?? 1) * regionX(e, where) * themeX(e, where));
+  // Northern Europe brief 5a §3.2: Celtic also draws each nation's signature words at a quarter weight.
+  if (where.culture === "celtic") {
+    for (const e of pool.entries) {
+      if (!e.c || !e.c.some((k) => CELTIC_MIX.includes(k)) || at.has(e.w)) continue;
+      if (entryAllowed(e, { ...where, culture: e.c.find((k) => CELTIC_MIX.includes(k))! })) add(e, (e.x ?? 1) * CELTIC_MIX_WEIGHT);
+    }
+  }
   for (const e of pool.cultureExtra?.[where.culture] ?? []) {
     if (!entryAllowed(e, where)) continue;
     const i = at.get(e.w);

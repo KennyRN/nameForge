@@ -5,7 +5,8 @@
 import coloniaData from "../data/colonial-shapes.json";
 import placesData from "../data/places.json";
 import wildsData from "../data/wilds.json";
-import { type CoverageAdapter, type CoverageRow, at, byKindRows, listRows, makeRow, profileKeys, regionMultipliers, vocabularyRows, SHARED_ROSTER } from "../coverageRows";
+import { mergeRegionColumns, NORTH } from "../northData";
+import { type CoverageAdapter, type CoverageRow, at, byKindRows, listRows, makeRow, profileKeys, regionMultipliers, vocabularyRows, NORTH_ROSTER, SHARED_ROSTER } from "../coverageRows";
 import type { KindSources } from "./sources";
 
 type Kind = { key: string; sources?: KindSources };
@@ -28,7 +29,8 @@ function sourceRows(module: string): CoverageRow[] {
   for (const kind of kindsOf(module)) {
     const s = kind.sources;
     if (!s || s.delegate) continue;
-    for (const generic of s.native?.generics ?? []) out.push(makeRow({ c: ["anglo-saxon", "norman-british", "celtic"] }, { module, kind: kind.key, source: `sources/native/${kind.key}/${generic}`, type: "shape" }));
+    // Northern Europe brief §6: borrowed source entries (the British shapes) are not signature entries: the target is the module's own tables.
+    for (const generic of s.native?.generics ?? []) out.push(makeRow({}, { module, kind: kind.key, source: `sources/native/${kind.key}/${generic}`, type: "shape" }));
     if (s.colonial) for (const generic of colonialGenerics(s.colonial)) out.push(makeRow({}, { module, kind: kind.key, source: `sources/colonial/${kind.key}/${generic}`, type: "shape" }));
   }
   return out;
@@ -37,10 +39,10 @@ function sourceRows(module: string): CoverageRow[] {
 function rows(module: string): CoverageRow[] {
   const out: CoverageRow[] = [];
   out.push(...byKindRows(at(placesData, `shapes/${module}`), { module, source: `shapes/${module}` }));
-  const own = (placesData.cultureShapes as { module: string }[]).filter((s) => s.module === module);
+  const own = [...(placesData.cultureShapes as { module: string }[]), ...(NORTH.wilds.cultureShapes as { module: string }[])].filter((s) => s.module === module);
   out.push(...listRows(own, { module, source: "cultureShapes" }));
   if (readsRegions(module)) {
-    const tags = { ...(wildsData.regionTags as Record<string, Record<string, number>>), ...(placesData.regionTags as Record<string, Record<string, number>>) };
+    const tags = mergeRegionColumns({ ...(wildsData.regionTags as Record<string, Record<string, number>>), ...(placesData.regionTags as Record<string, Record<string, number>>) }, NORTH.wilds.regionColumns, NORTH.wilds.regionTags);
     for (const [word, table] of Object.entries(tags)) out.push({ ...makeRow({}, { module, source: `regionTags/${word}`, type: "word", regions: regionMultipliers(table) }), notPool: true });
   }
   out.push(...sourceRows(module));
@@ -55,7 +57,7 @@ export const placeCoverage: CoverageAdapter[] = MODULES.map((module) => ({
   module,
   kinds: kindsOf(module).map((k) => k.key),
   kindFlags: delegated(module),
-  roster: SHARED_ROSTER,
+  roster: module === "starsSpace" ? SHARED_ROSTER : NORTH_ROSTER,
   regions: readsRegions(module),
   profiles: () => profileKeys(wildsData.cultureMult),
   rows: () => rows(module),

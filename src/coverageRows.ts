@@ -3,7 +3,7 @@
 // reads a note or touches Obsidian. Adapters read the JSON tables and return rows.
 
 import routeData from "./data/route-names.json";
-import vocabData from "./data/settlement-vocab.json";
+import { SETTLEMENT_VOCAB } from "./settlement/vocab";
 import {
   LENS_CULTURE_GROUPS,
   LENS_ERAS,
@@ -68,6 +68,8 @@ export interface CoverageAdapter {
 
 /** The culture keys the route, street, inn, building, monument, event, calendar, sky, wild lands and waters modules all offer (22). */
 export const SHARED_ROSTER: readonly string[] = (routeData.cultures as { key: string }[]).map((c) => c.key);
+/** Northern Europe brief 5a: the roster of the modules in the batch: the shared roster and Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
+export const NORTH_ROSTER: readonly string[] = [...SHARED_ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 
 // ── Tags ────────────────────────────────────────────────────────────────────
 
@@ -252,7 +254,7 @@ interface VocabPool {
   entries: VocabEntry[];
   cultureExtra?: Record<string, { w: string }[]>;
 }
-const VOCAB_POOLS = (vocabData as unknown as { pools: Record<string, VocabPool> }).pools;
+const VOCAB_POOLS = (SETTLEMENT_VOCAB as unknown as { pools: Record<string, VocabPool> }).pools;
 
 /** Every shared-vocabulary pool name. */
 export const VOCAB_POOL_NAMES: readonly string[] = Object.keys(VOCAB_POOLS);

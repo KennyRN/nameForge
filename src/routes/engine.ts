@@ -41,7 +41,7 @@ import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type V
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
-import { mergeRegionColumns, NORTH } from "../northData";
+import { mergeRegionColumns, NORTH, shapesOf } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -601,7 +601,7 @@ const PLACE_TOKENS = /\{(destination|town)[}:]/;
 
 /** §8: the kind's shared shapes and the culture's own, for a culture. */
 function shapesFor(kind: RouteKind, culture: string): RouteShape[] {
-  return [...ROUTE_DATA.shapes[kind], ...ROUTE_DATA.cultureShapes.filter((s) => s.kind === kind && s.culture === culture)];
+  return [...ROUTE_DATA.shapes[kind], ...shapesOf(ROUTE_DATA.cultureShapes.filter((s) => s.kind === kind), culture)];
 }
 
 /** §7, §8: a shape's weight here (0 when it can't be drawn). `anyEra` for borrowed shapes. */
