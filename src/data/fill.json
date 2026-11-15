@@ -38,7 +38,7 @@
     "lord": { "source": "person", "slot": "person", "added": "a supernatural court's lord" },
     "sire": { "source": "person", "slot": "person", "added": "a supernatural court's sire" },
     "alpha": { "source": "person", "slot": "person", "added": "a pack's alpha" },
-    "name": { "source": "person", "slot": "givenMale", "added": "the byname modules' bare name slot" },
+    "name": { "source": "person", "slot": "given", "added": "the byname modules' bare name slot: a given name of the sex the byname is for (review of 15 November 2026)" },
     "father": { "source": "person", "slot": "givenMale", "added": "the family names' patronymic slot" },
     "child": { "source": "person", "slot": "given", "added": "the family names' child slot" },
     "man's name": { "source": "person", "slot": "givenMale", "added": "a vessel named for a man" },

@@ -18,7 +18,14 @@ export interface FillWhere {
   era: string | undefined;
   region?: string;
   series?: boolean;
+  /** Shared tables brief §13.2 item 6: a place module from the steam age on, or stars and space: [person] reads the founder forms. */
+  personAsFounder?: boolean;
 }
+
+const sexOf = (n: object): "male" | "female" | undefined => {
+  const g = (n as { gender?: unknown }).gender;
+  return g === "male" || g === "female" ? g : undefined;
+};
 
 /** A batch's names with the brackets of the slots the filler knows filled. */
 export function fillPeopleBatch<T extends { names: { text: string }[]; seed: number }>(batch: T, mode: FillMode, where: FillWhere): T {
@@ -26,7 +33,7 @@ export function fillPeopleBatch<T extends { names: { text: string }[]; seed: num
   const series = where.series ? new Map<string, string>() : undefined;
   return {
     ...batch,
-    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, mode, rng, series }) })),
+    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, mode, rng, series, sex: sexOf(n), personAsFounder: where.personAsFounder }) })),
   };
 }
 

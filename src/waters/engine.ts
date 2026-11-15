@@ -578,7 +578,7 @@ export const watersHasSeries = (module: WatersModule) => SERIES_MODULES.has(modu
 export function generateWatersNames(options: WatersOptions): WatersBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
+  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

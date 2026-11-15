@@ -97,12 +97,12 @@ test("placeholders and a missing link run exactly as before; a seed gives one ba
   }
 });
 
-test("real and generated names change only the brackets: names with none are as the engine made them", () => {
+test("real and generated names change only the brackets (and a bare title, §13.2.5): names with none are as the engine made them", () => {
   for (const c of cases) {
     const before = c.run("placeholders");
     const after = c.run("real");
     before.forEach((b, i) => {
-      if (!bracketLabels(b).some((l) => labelInfo(l))) assert.equal(after[i], b, `${c.key}: ${b}`);
+      if (!bracketLabels(b).some((l) => labelInfo(l)) && !/^(Sir|Dame|Lord|Lady|Sire|Master|Mistress|Madam)(?:'s\b|$)/.test(b)) assert.equal(after[i], b, `${c.key}: ${b}`);
     });
   }
 });

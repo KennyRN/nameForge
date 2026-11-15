@@ -416,7 +416,8 @@ class ColonialShapeGenerator {
     const types = [
       ...PLACE_SHAPE_DATA.affixes.map((a) => ({
         id: a.id,
-        forms: a.forms.filter((f) => formFits(f) && sizeFits(a.id, f)),
+        // Shared tables brief §13.2 item 3: under a source filter, no linking "by" or "with" ("Kiln-by-Ridge").
+        forms: a.forms.filter((f) => formFits(f) && sizeFits(a.id, f) && !(options.only && a.id === "location" && (f.text === "by" || f.text === "with"))),
         weight: PLACE_SHAPE_REGION_DATA.affixBaseline[a.id] ?? 0,
       })),
       // Place split fixes: a source's feature never takes the City affix ("Kiln City"); only when a filter is set.

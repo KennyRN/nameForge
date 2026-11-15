@@ -396,6 +396,8 @@ class PlaceShapeGenerator {
     this.affixWeights = source.affixes
       // Review amendment: a source's feature never takes the Market, Castle or Church affix; only when a filter is set.
       .filter((a) => !(this.filteredGenerics && a.id === "function"))
+      // Shared tables brief §13.2 item 3: nor the linking "by" and "with" ("Hale-by-Bank"); only when a filter is set.
+      .map((a) => (this.filteredGenerics && a.id === "location" ? { ...a, forms: a.forms.filter((f) => f.text !== "by" && f.text !== "with") } : a))
       .map((a) => (settlement ? { ...a, forms: a.forms.filter((f) => affixFormAllowed(a.id, f.text, settlement.size)) } : a))
       .filter((a) => a.forms.length > 0)
       .map((a): [AffixType, number] => [a, (regions.affixBaseline[a.id] ?? 0) * (region?.affixMultiplier[a.id] ?? 1)])

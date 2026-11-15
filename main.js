@@ -24520,7 +24520,7 @@ var PlaceShapeGenerator = class {
     }
     const stackGroup = source.groups.find((g) => g.id === STACK_SOURCE_GROUP);
     this.stackGenerics = ((_c4 = stackGroup == null ? void 0 : stackGroup.generics) != null ? _c4 : []).map((g) => g.id).filter((id) => !FOLK_GROUP_GENERICS.has(id) && (!settlement || genericAllowed(id, settlement.size)));
-    this.affixWeights = source.affixes.filter((a) => !(this.filteredGenerics && a.id === "function")).map((a) => settlement ? { ...a, forms: a.forms.filter((f) => affixFormAllowed(a.id, f.text, settlement.size)) } : a).filter((a) => a.forms.length > 0).map((a) => {
+    this.affixWeights = source.affixes.filter((a) => !(this.filteredGenerics && a.id === "function")).map((a) => this.filteredGenerics && a.id === "location" ? { ...a, forms: a.forms.filter((f) => f.text !== "by" && f.text !== "with") } : a).map((a) => settlement ? { ...a, forms: a.forms.filter((f) => affixFormAllowed(a.id, f.text, settlement.size)) } : a).filter((a) => a.forms.length > 0).map((a) => {
       var _a8, _b5;
       return [a, ((_a8 = regions.affixBaseline[a.id]) != null ? _a8 : 0) * ((_b5 = region == null ? void 0 : region.affixMultiplier[a.id]) != null ? _b5 : 1)];
     }).filter(([, w]) => w > 0);
@@ -31051,7 +31051,8 @@ var ColonialShapeGenerator = class {
         var _a8;
         return {
           id: a.id,
-          forms: a.forms.filter((f) => formFits(f) && sizeFits(a.id, f)),
+          // Shared tables brief §13.2 item 3: under a source filter, no linking "by" or "with" ("Kiln-by-Ridge").
+          forms: a.forms.filter((f) => formFits(f) && sizeFits(a.id, f) && !(options.only && a.id === "location" && (f.text === "by" || f.text === "with"))),
           weight: (_a8 = PLACE_SHAPE_REGION_DATA.affixBaseline[a.id]) != null ? _a8 : 0
         };
       }),
@@ -81313,7 +81314,7 @@ var fill_default = {
     lord: { source: "person", slot: "person", added: "a supernatural court's lord" },
     sire: { source: "person", slot: "person", added: "a supernatural court's sire" },
     alpha: { source: "person", slot: "person", added: "a pack's alpha" },
-    name: { source: "person", slot: "givenMale", added: "the byname modules' bare name slot" },
+    name: { source: "person", slot: "given", added: "the byname modules' bare name slot: a given name of the sex the byname is for (review of 15 November 2026)" },
     father: { source: "person", slot: "givenMale", added: "the family names' patronymic slot" },
     child: { source: "person", slot: "given", added: "the family names' child slot" },
     "man's name": { source: "person", slot: "givenMale", added: "a vessel named for a man" },
@@ -81391,6 +81392,17 @@ function fillGenre(era) {
 }
 var drawSeed = (rng) => Math.floor(rng() * 4294967296) >>> 0;
 var AGAIN = 8;
+var PLACE_AGAIN = 10;
+var PLACE_SOURCES = /* @__PURE__ */ new Set(["place", "earlierPlace"]);
+var STOP_WORDS = /* @__PURE__ */ new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a"]);
+function repeatsGeneric(fill, rest) {
+  var _a7, _b4;
+  const last = (_b4 = (_a7 = fill.trim().split(/\s+/).pop()) == null ? void 0 : _a7.toLowerCase().replace(/[^a-z]/g, "")) != null ? _b4 : "";
+  if (last.length < 3) return false;
+  return rest.replace(/\[[^\]]*\]/g, " ").toLowerCase().split(/[^a-z]+/).some((w) => w.length >= 3 && !STOP_WORDS.has(w) && (last === w || w.length >= 4 && last.endsWith(w)));
+}
+var NAME_TITLES = { Sir: "male", Lord: "male", Sire: "male", Master: "male", Dame: "female", Lady: "female", Madam: "female", Mistress: "female" };
+var BARE_TITLE = new RegExp(`^(${Object.keys(NAME_TITLES).join("|")})(?=['\u2019]s\\b|$)`);
 function fillSlots(name, ctx) {
   var _a7;
   const resolvers = (_a7 = ctx.resolvers) != null ? _a7 : REGISTERED;
@@ -81408,9 +81420,12 @@ function fillSlots(name, ctx) {
       const resolver = resolvers[info.source];
       if (!resolver) return whole;
       const avoid = (_b4 = used.get(key2)) != null ? _b4 : /* @__PURE__ */ new Set();
-      for (let attempt2 = 0; attempt2 < AGAIN; attempt2++) {
-        fill = resolver({ label: key2, source: info.source, slot: info.slot, culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, avoid });
-        if (fill === void 0 || !avoid.has(fill)) break;
+      const place4 = PLACE_SOURCES.has(info.source);
+      const slot = ctx.personAsFounder && info.source === "person" && (key2 === "person" || key2 === "personal name") ? "founder" : info.slot;
+      const rest = place4 ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
+      for (let attempt2 = 0; attempt2 < (place4 ? PLACE_AGAIN : AGAIN); attempt2++) {
+        fill = resolver({ label: key2, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
+        if (fill === void 0 || !avoid.has(fill) && !(place4 && repeatsGeneric(fill, rest))) break;
       }
       if (fill === void 0) return whole;
       (_c4 = ctx.series) == null ? void 0 : _c4.set(key2, fill);
@@ -81423,7 +81438,18 @@ function fillSlots(name, ctx) {
     any = true;
     return fill;
   });
-  return any ? filled.replace(/^the\b/, "The") : filled;
+  const out = any ? filled.replace(/^the\b/, "The") : filled;
+  return completeTitles(out, ctx, era, period, resolvers);
+}
+function completeTitles(text, ctx, era, period, resolvers) {
+  return text.replace(BARE_TITLE, (whole, title) => {
+    var _a7, _b4;
+    const sex = NAME_TITLES[title];
+    const base = { culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, sex, avoid: /* @__PURE__ */ new Set() };
+    const surname2 = ctx.rng() < 0.3 ? (_a7 = resolvers.surname) == null ? void 0 : _a7.call(resolvers, { ...base, label: "surname", source: "surname" }) : void 0;
+    const given2 = surname2 != null ? surname2 : (_b4 = resolvers.person) == null ? void 0 : _b4.call(resolvers, { ...base, label: "name", source: "person", slot: sex === "male" ? "givenMale" : "givenFemale" });
+    return given2 ? `${title} ${given2}` : whole;
+  });
 }
 
 // src/data/lens.json
@@ -95724,7 +95750,7 @@ function surname(c, sex) {
   return draw(c.table.surnames, c.req.era, c.req.rng, c.req.avoid);
 }
 var regnal = (c, sex) => draw(sex === "male" ? c.table.regnalMale : c.table.regnalFemale, c.req.era, c.req.rng, c.req.avoid);
-function person(c, slot) {
+function person(c, slot, known) {
   var _a7, _b4, _c4, _d3;
   const spec = SLOTS[slot];
   if (!spec) return void 0;
@@ -95732,7 +95758,8 @@ function person(c, slot) {
   const forms = (_c4 = (_b4 = (_a7 = c.table.surnames ? spec.withSurnames : spec.withoutSurnames) != null ? _a7 : spec.forms) != null ? _b4 : spec.withSurnames) != null ? _c4 : spec.withoutSurnames;
   if (!forms) return void 0;
   const share2 = (_d3 = spec.sexShare) != null ? _d3 : { male: 50, female: 50 };
-  const sex = rng() * (share2.male + share2.female) < share2.male ? "male" : "female";
+  const rolled = rng() * (share2.male + share2.female) < share2.male ? "male" : "female";
+  const sex = known != null ? known : rolled;
   const form = pickForm(forms, rng);
   return form.replace(/\{(g|gm|gf|s|t|r|rm|rf)\}/g, (_w, token17) => {
     var _a8;
@@ -95766,8 +95793,8 @@ function context(req) {
 var personResolver = (req) => {
   const c = context(req);
   if (!c || !req.slot) return void 0;
-  let said = person(c, req.slot);
-  for (let attempt2 = 0; said !== void 0 && isBlockedName(said) && attempt2 < 12; attempt2++) said = person(c, req.slot);
+  let said = person(c, req.slot, req.sex);
+  for (let attempt2 = 0; said !== void 0 && isBlockedName(said) && attempt2 < 12; attempt2++) said = person(c, req.slot, req.sex);
   return said !== void 0 && isBlockedName(said) ? void 0 : said;
 };
 var holyResolver = (req) => {
@@ -95787,6 +95814,10 @@ function registerPeopleResolvers() {
 // src/fill/batch.ts
 registerPeopleResolvers();
 var fillModeOf = (people2) => people2 === "real" || people2 === "generated" ? people2 : void 0;
+var sexOf = (n) => {
+  const g = n.gender;
+  return g === "male" || g === "female" ? g : void 0;
+};
 function fillPeopleBatch(batch, mode, where2) {
   const rng = mulberry32((batch.seed ^ 1592614637) >>> 0);
   const series = where2.series ? /* @__PURE__ */ new Map() : void 0;
@@ -95794,7 +95825,7 @@ function fillPeopleBatch(batch, mode, where2) {
     ...batch,
     names: batch.names.map((n) => {
       var _a7, _b4;
-      return { ...n, text: fillSlots(n.text, { culture: (_a7 = where2.culture) != null ? _a7 : "general", era: (_b4 = where2.era) != null ? _b4 : "MD", region: where2.region, mode, rng, series }) };
+      return { ...n, text: fillSlots(n.text, { culture: (_a7 = where2.culture) != null ? _a7 : "general", era: (_b4 = where2.era) != null ? _b4 : "MD", region: where2.region, mode, rng, series, sex: sexOf(n), personAsFounder: where2.personAsFounder }) };
     })
   };
 }
@@ -138810,14 +138841,19 @@ function drawFromDelegate(delegate, ctx) {
     return (_a7 = result.names[0]) == null ? void 0 : _a7.text;
   }
   const size = (_b4 = delegate.sizes[Math.floor(ctx.rng() * delegate.sizes.length)]) != null ? _b4 : "any";
-  const options = settlementDelegateOptions(delegate, ctx, size, seedFrom(ctx.rng));
-  if (!options) return void 0;
-  try {
-    return (_c4 = generateSettlementNames(options).names[0]) == null ? void 0 : _c4.text;
-  } catch (e) {
-    if (e instanceof Error && e.message.startsWith("No eligible")) return void 0;
-    throw e;
+  let name;
+  for (let attempt2 = 0; attempt2 < 8; attempt2++) {
+    const options = settlementDelegateOptions(delegate, ctx, size, seedFrom(ctx.rng));
+    if (!options) return void 0;
+    try {
+      name = (_c4 = generateSettlementNames(options).names[0]) == null ? void 0 : _c4.text;
+    } catch (e) {
+      if (e instanceof Error && e.message.startsWith("No eligible")) return void 0;
+      throw e;
+    }
+    if (name === void 0 || !/-(by|with)-/.test(name)) break;
   }
+  return name;
 }
 function drawKind(kind, ctx, own) {
   var _a7, _b4, _c4;
@@ -138829,19 +138865,37 @@ function drawKind(kind, ctx, own) {
   return (_c4 = own()) != null ? _c4 : drawFromSource(kind, source, ctx);
 }
 function fillPlace(culture, region, rng) {
-  for (let attempt2 = 0; attempt2 < 6; attempt2++) {
-    const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture, region, rng });
-    if (name && name.split(/\s+/).length <= 2) return name;
+  for (const candidate of placeCultures(culture)) {
+    for (let attempt2 = 0; attempt2 < 6; attempt2++) {
+      const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng });
+      if (name === void 0) break;
+      if (name.split(/\s+/).length <= 2) return name;
+    }
   }
   return void 0;
 }
+var LENS_CULTURES2 = lens_default.cultures;
+function placeCultures(culture) {
+  const keysOf = (c) => [c.key, ...c.keys];
+  const own = LENS_CULTURES2.find((c) => c.key === culture || c.keys.includes(culture));
+  const mates = (own == null ? void 0 : own.family) ? LENS_CULTURES2.filter((c) => c !== own && c.family === own.family) : [];
+  return [.../* @__PURE__ */ new Set([culture, ...own ? keysOf(own) : [], ...mates.flatMap(keysOf), "general"])];
+}
 var EARLIER = { "norman-british": "anglo-saxon" };
-registerResolver("place", (req) => fillPlace(req.culture, req.region, req.rng));
-registerResolver("earlierPlace", (req) => {
+var settled = (name, req) => name ? fillSlots(name, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng }) : void 0;
+var placeFill = (draw3, req) => {
+  let last;
+  for (let attempt2 = 0; attempt2 < 6; attempt2++) {
+    last = settled(draw3(), req);
+    if (last !== void 0 && !/\[/.test(last)) return last;
+  }
+  return last;
+};
+registerResolver("place", (req) => placeFill(() => fillPlace(req.culture, req.region, req.rng), req));
+registerResolver("earlierPlace", (req) => placeFill(() => {
   var _a7, _b4;
   return (_b4 = fillPlace((_a7 = EARLIER[req.culture]) != null ? _a7 : req.culture, req.region, req.rng)) != null ? _b4 : fillPlace(req.culture, req.region, req.rng);
-});
-var settled = (name, req) => name ? fillSlots(name, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng }) : void 0;
+}, req));
 registerResolver("river", (req) => settled(drawFromDelegate({ engine: "rivers" }, { where: "home", culture: req.culture, region: req.region, rng: req.rng }), req));
 
 // src/places/colonialCultures.ts
@@ -138852,6 +138906,7 @@ var COLONIAL_CULTURES = lens_default.menu.flatMap((block) => block.entries).filt
 var findColonialCulture = (key2) => COLONIAL_CULTURES.find((c) => c.key === key2);
 
 // src/wilds/engine.ts
+var placePersonsAsFounders = (module2, era) => module2 === "starsSpace" || !!era && ["ST", "MO", "NF", "IS"].includes(era);
 var WILDS_MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 var PLACE_MODULES = ["lands", "farmland", "hillsValleys", "riversInland", "starsSpace"];
 var isPlaceModule = (module2) => PLACE_MODULES.includes(module2);
@@ -138910,8 +138965,8 @@ var wildsKindsAt = (module2, era) => wildsKinds(module2).filter((k) => wildsKind
 var PLURAL_POOLS = /* @__PURE__ */ new Set();
 var FEATURE_STOP = "Hill Hills Ridge Edge Island Isle Isles Marsh Marshes Fen Fens Moor Moors Lake Mere Pool Pond Water Waters River Brook Beck Burn Dale Valley Vale Wood Woods Forest Heath Down Downs Pass Gap Bank Bay Shore Cape Point Head Ness Cliff Cliffs Crag Rock Rocks Stone Stones Holm Spring Springs Well Wells Mound Knoll Slope Spur Top Moss Mount Mountain Mountains Peak Glen Combe Fell Tor Gorge Field Fields Meadow Meadows Plain Plains Common Wash Creek Sands Dune Dunes Oasis Grove Copse Clearing Glade Lawn Hollow Cove Sound Bottom Bottoms Barrow Cave Caves Fjord Waterfall Falls Paddy Mouth Source";
 var HABITATION_STOP = "Village Town City Market Manor Farm Cottages Cottage Enclosure County District Prefecture Fort Fortress Camp Homestead Estate Court Hall House Houses Temple Church Chapel Minster Abbey Priory Castle Palace Mansion Seat Station Post Harbour Port Haven Landing";
-var STOP_WORDS = new Set(`${FEATURE_STOP} ${HABITATION_STOP}`.toLowerCase().split(" "));
-var isStopWord = (w) => STOP_WORDS.has(w.toLowerCase());
+var STOP_WORDS2 = new Set(`${FEATURE_STOP} ${HABITATION_STOP}`.toLowerCase().split(" "));
+var isStopWord = (w) => STOP_WORDS2.has(w.toLowerCase());
 var letters = (w) => Array.from(w.replace(/[^\p{L}]/gu, "")).length;
 var capitalised = (w) => /^\p{Lu}/u.test(w);
 function stemWeight(name, british) {
@@ -138921,7 +138976,7 @@ function stemWeight(name, british) {
     const w = words[0];
     const l = w.toLowerCase();
     if (!capitalised(w) || letters(w) > 10) return 0;
-    if (isStopWord(w) || l.endsWith("s") && STOP_WORDS.has(l.slice(0, -1))) return 0;
+    if (isStopWord(w) || l.endsWith("s") && STOP_WORDS2.has(l.slice(0, -1))) return 0;
     if (/(village|hamlet|homestead|headland|pasture)$/.test(l) || ["moot", "bath", "isthmus"].some((x) => l === x || l === `${x}s`)) return 0;
     return 3;
   }
@@ -139305,7 +139360,7 @@ function kindShapes(ctx, kind) {
 function generateWildsNames(options) {
   var _a7, _b4;
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
+  if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -140912,7 +140967,7 @@ var watersHasSeries = (module2) => SERIES_MODULES.has(module2);
 function generateWatersNames(options) {
   var _a7, _b4, _c4;
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
+  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];

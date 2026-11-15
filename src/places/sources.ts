@@ -4,6 +4,7 @@
 // the river engine). This is the one place that resolves a draw; no engine keeps a copy. Obsidian-free;
 // every roll comes from the stream the module passes in.
 
+import LENS from "../data/lens.json";
 import { generatePlaceNames, type ResolvedSlot } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
 import { generateRiverNames, type RiverSetting } from "../rivers/engine";
@@ -161,14 +162,20 @@ function drawFromDelegate(delegate: KindDelegate, ctx: SourceContext): string | 
     return result.names[0]?.text;
   }
   const size = delegate.sizes[Math.floor(ctx.rng() * delegate.sizes.length)] ?? "any";
-  const options = settlementDelegateOptions(delegate, ctx, size, seedFrom(ctx.rng));
-  if (!options) return undefined;
-  try {
-    return generateSettlementNames(options).names[0]?.text;
-  } catch (e) {
-    if (e instanceof Error && e.message.startsWith("No eligible")) return undefined;
-    throw e;
+  let name: string | undefined;
+  // Shared tables brief §13.2 item 3: a delegated settlement name never stacks a linking "-by-" or "-with-" ("Kiln-by-Ridge") onto a feature; drawn again.
+  for (let attempt = 0; attempt < 8; attempt++) {
+    const options = settlementDelegateOptions(delegate, ctx, size, seedFrom(ctx.rng));
+    if (!options) return undefined;
+    try {
+      name = generateSettlementNames(options).names[0]?.text;
+    } catch (e) {
+      if (e instanceof Error && e.message.startsWith("No eligible")) return undefined;
+      throw e;
+    }
+    if (name === undefined || !/-(by|with)-/.test(name)) break;
   }
+  return name;
 }
 
 /**
@@ -190,17 +197,39 @@ export function drawKind(kind: KindSources, ctx: SourceContext, own: () => strin
 
 /** "[place]", "[town]", "[homeland place name]": a settlement name of the state's culture at home, one word or two. */
 function fillPlace(culture: string, region: string | undefined, rng: () => number): string | undefined {
-  for (let attempt = 0; attempt < 6; attempt++) {
-    const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture, region, rng });
-    if (name && name.split(/\s+/).length <= 2) return name;
+  // Shared tables brief §13.2 item 2: the culture's settlement names, else those of the nearest lens-family culture that has some, else General.
+  for (const candidate of placeCultures(culture)) {
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng });
+      if (name === undefined) break; // this culture has no settlement names
+      if (name.split(/\s+/).length <= 2) return name;
+    }
   }
   return undefined;
+}
+
+const LENS_CULTURES = LENS.cultures as { key: string; keys: string[]; family: string | null }[];
+/** The cultures whose settlement names fill a place, nearest first: the culture, its lens keys, its family, then General. */
+export function placeCultures(culture: string): string[] {
+  const keysOf = (c: { key: string; keys: string[] }) => [c.key, ...c.keys];
+  const own = LENS_CULTURES.find((c) => c.key === culture || c.keys.includes(culture));
+  const mates = own?.family ? LENS_CULTURES.filter((c) => c !== own && c.family === own.family) : [];
+  return [...new Set([culture, ...(own ? keysOf(own) : []), ...mates.flatMap(keysOf), "general"])];
 }
 /** The earlier period's culture for "[earlier or district name]": Anglo-Saxon for Norman & British, else the culture itself. */
 const EARLIER: Record<string, string> = { "norman-british": "anglo-saxon" };
 
-registerResolver("place", (req) => fillPlace(req.culture, req.region, req.rng));
-registerResolver("earlierPlace", (req) => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng) ?? fillPlace(req.culture, req.region, req.rng));
 /** A delegated name may carry person brackets of its own ("[personal name]\'s Fleet"): they are filled here. */
 const settled = (name: string | undefined, req: FillRequest): string | undefined => (name ? fillSlots(name, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng }) : undefined);
+/** A drawn place whose own brackets are filled; one that still holds a bracket is drawn again (a few times). */
+const placeFill = (draw: () => string | undefined, req: FillRequest): string | undefined => {
+  let last: string | undefined;
+  for (let attempt = 0; attempt < 6; attempt++) {
+    last = settled(draw(), req);
+    if (last !== undefined && !/\[/.test(last)) return last;
+  }
+  return last;
+};
+registerResolver("place", (req) => placeFill(() => fillPlace(req.culture, req.region, req.rng), req));
+registerResolver("earlierPlace", (req) => placeFill(() => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng) ?? fillPlace(req.culture, req.region, req.rng), req));
 registerResolver("river", (req) => settled(drawFromDelegate({ engine: "rivers" }, { where: "home", culture: req.culture, region: req.region, rng: req.rng }), req));

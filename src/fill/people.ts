@@ -94,14 +94,16 @@ function surname(c: Ctx, sex: "male" | "female"): string {
 const regnal = (c: Ctx, sex: "male" | "female"): string => draw(sex === "male" ? c.table.regnalMale : c.table.regnalFemale, c.req.era, c.req.rng, c.req.avoid);
 
 /** Says one person slot in its form. */
-function person(c: Ctx, slot: string): string | undefined {
+function person(c: Ctx, slot: string, known?: "male" | "female"): string | undefined {
   const spec = SLOTS[slot];
   if (!spec) return undefined;
   const rng = c.req.rng;
   const forms = (c.table.surnames ? spec.withSurnames : spec.withoutSurnames) ?? spec.forms ?? spec.withSurnames ?? spec.withoutSurnames;
   if (!forms) return undefined;
   const share = spec.sexShare ?? { male: 50, female: 50 };
-  const sex: "male" | "female" = rng() * (share.male + share.female) < share.male ? "male" : "female";
+  const rolled: "male" | "female" = rng() * (share.male + share.female) < share.male ? "male" : "female";
+  // Shared tables brief §13.2 item 4: a name whose subject has a known sex (a female title) takes a given name of that sex.
+  const sex = known ?? rolled;
   const form = pickForm(forms, rng);
   return form.replace(/\{(g|gm|gf|s|t|r|rm|rf)\}/g, (_w, token: string) => {
     switch (token) {
@@ -130,9 +132,9 @@ function context(req: FillRequest): Ctx | undefined {
 export const personResolver: Resolver = (req) => {
   const c = context(req);
   if (!c || !req.slot) return undefined;
-  let said = person(c, req.slot);
+  let said = person(c, req.slot, req.sex);
   // A pair that makes a famous real person is drawn again.
-  for (let attempt = 0; said !== undefined && isBlockedName(said) && attempt < 12; attempt++) said = person(c, req.slot);
+  for (let attempt = 0; said !== undefined && isBlockedName(said) && attempt < 12; attempt++) said = person(c, req.slot, req.sex);
   return said !== undefined && isBlockedName(said) ? undefined : said;
 };
 export const holyResolver: Resolver = (req) => {

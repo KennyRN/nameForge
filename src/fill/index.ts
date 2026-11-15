@@ -27,6 +27,10 @@ export interface FillContext {
   mode: FillMode;
   /** The batch's seeded stream: the filler draws from it, never from Math.random. */
   rng: () => number;
+  /** The sex of the name's subject, where the engine knows it (a female title takes a woman's given name). */
+  sex?: "male" | "female";
+  /** Shared tables brief §13.2 item 6: a place module from the steam age on (and stars and space always): [person] reads the founder forms. */
+  personAsFounder?: boolean;
   /** Series mode: each label is filled once per batch and reused. Pass the same map for every name in a batch. */
   series?: Map<string, string>;
   /** The sources' resolvers; the registered ones when absent. */
@@ -44,6 +48,8 @@ export interface FillRequest {
   region?: string;
   mode: FillMode;
   rng: () => number;
+  /** The sex the name's subject is known to have (see FillContext). */
+  sex?: "male" | "female";
   /** Fills already used for this label in this name: a resolver should avoid them. */
   avoid: ReadonlySet<string>;
 }
@@ -111,6 +117,28 @@ export function fillGenre(era: FillEra): "fantasy" | "modern" | "scifi" {
 export const drawSeed = (rng: () => number): number => Math.floor(rng() * 4294967296) >>> 0;
 
 const AGAIN = 8;
+/** Shared tables brief §13.2 item 1: a place fill is drawn again, up to this many times, when it repeats the feature's generic. */
+const PLACE_AGAIN = 10;
+const PLACE_SOURCES = new Set(["place", "earlierPlace"]);
+const STOP_WORDS = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a"]);
+
+/**
+ * Whether a place fill repeats the generic of the feature it names: "Valley of [place]" with "Alder Valley",
+ * "[place] Hill" with "Ashhill". The fill's last word equals a word of the rest of the name, or ends with it.
+ */
+export function repeatsGeneric(fill: string, rest: string): boolean {
+  const last = fill.trim().split(/\s+/).pop()?.toLowerCase().replace(/[^a-z]/g, "") ?? "";
+  if (last.length < 3) return false;
+  return rest
+    .replace(/\[[^\]]*\]/g, " ")
+    .toLowerCase()
+    .split(/[^a-z]+/)
+    .some((w) => w.length >= 3 && !STOP_WORDS.has(w) && (last === w || (w.length >= 4 && last.endsWith(w))));
+}
+
+/** Shared tables brief §13.2 item 5: titles that need a name after them, and the sex each implies. */
+const NAME_TITLES: Record<string, "male" | "female"> = { Sir: "male", Lord: "male", Sire: "male", Master: "male", Dame: "female", Lady: "female", Madam: "female", Mistress: "female" };
+const BARE_TITLE = new RegExp(`^(${Object.keys(NAME_TITLES).join("|")})(?=['’]s\\b|$)`);
 
 /**
  * Replaces each bracket in a name that a registered source can fill, by the rules of brief §5.3:
@@ -135,9 +163,12 @@ export function fillSlots(name: string, ctx: FillContext): string {
       const resolver = resolvers[info.source];
       if (!resolver) return whole;
       const avoid = used.get(key) ?? new Set<string>();
-      for (let attempt = 0; attempt < AGAIN; attempt++) {
-        fill = resolver({ label: key, source: info.source, slot: info.slot, culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, avoid });
-        if (fill === undefined || !avoid.has(fill)) break;
+      const place = PLACE_SOURCES.has(info.source);
+      const slot = ctx.personAsFounder && info.source === "person" && (key === "person" || key === "personal name") ? "founder" : info.slot;
+      const rest = place ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
+      for (let attempt = 0; attempt < (place ? PLACE_AGAIN : AGAIN); attempt++) {
+        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
+        if (fill === undefined || (!avoid.has(fill) && !(place && repeatsGeneric(fill, rest)))) break;
       }
       if (fill === undefined) return whole;
       ctx.series?.set(key, fill);
@@ -151,5 +182,17 @@ export function fillSlots(name: string, ctx: FillContext): string {
     return fill;
   });
   // A name the filler changed never starts with a lower-case "the"; one it left alone is as the engine made it.
-  return any ? filled.replace(/^the\b/, "The") : filled;
+  const out = any ? filled.replace(/^the\b/, "The") : filled;
+  return completeTitles(out, ctx, era, period, resolvers);
+}
+
+/** A title that needs a name and has none ("Sir's Army Road") takes a given name of its sex, or a surname (§13.2 item 5). */
+function completeTitles(text: string, ctx: FillContext, era: FillEra, period: FillPeriod, resolvers: Resolvers): string {
+  return text.replace(BARE_TITLE, (whole: string, title: string) => {
+    const sex = NAME_TITLES[title];
+    const base = { culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, sex, avoid: new Set<string>() };
+    const surname = ctx.rng() < 0.3 ? resolvers.surname?.({ ...base, label: "surname", source: "surname" }) : undefined;
+    const given = surname ?? resolvers.person?.({ ...base, label: "name", source: "person", slot: sex === "male" ? "givenMale" : "givenFemale" });
+    return given ? `${title} ${given}` : whole;
+  });
 }
