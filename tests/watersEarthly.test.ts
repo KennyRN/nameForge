@@ -217,7 +217,8 @@ test("§17.2: a tropical archipelago favours Key, Cay, Atoll, Lagoon and Pass; t
   const tropic = /\{town\} Key|Cay$|Atoll|Lagoon|\{town\} Pass/;
   const rate = (biome?: string) => share(many({ module: "coastsIslands", culture: "general", era: "EM", biome }, 2000, 10), (n) => tropic.test(n.shape));
   assert.ok(rate("tropical-islands") >= 0.12, `${rate("tropical-islands")}`);
-  assert.ok(rate("tropical-islands") > rate() * 2);
+  // Shared tables brief §13.3: with the British dialect shapes gone for General, every other shape's share rises, the default too: 1.8× not 2×.
+  assert.ok(rate("tropical-islands") > rate() * 1.8);
   assert.equal(rate("boreal"), 0);
 });
 

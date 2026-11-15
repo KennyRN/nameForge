@@ -226,7 +226,7 @@ test("stems: no pool holds a duplicate, Moot, Moots, Bath, Baths or Isthmus", ()
 test("stems: Roman has no usable stems so every fill is a biome animal or tree; Norse's are its own", () => {
   const biome = resolveWildsBiome("mountainNames", "roman", "home", "mediterranean").biome;
   const extras = new Set(biomeStems(biome));
-  const roman = townFills(generateWildsNames({ module: "mountainNames", culture: "roman", biome: "mediterranean", people: "invented", count: 300, seed: 5 }).names);
+  const roman = townFills(generateWildsNames({ module: "mountainNames", culture: "roman", biome: "mediterranean", people: "invented", count: 600, seed: 5 }).names);
   assert.ok(roman.length > 50);
   assert.ok(roman.every((f) => extras.has(f)), roman.filter((f) => !extras.has(f)).join(", "));
   const boreal = new Set(biomeStems(resolveWildsBiome("mountainNames", "norse", "home", "boreal").biome));

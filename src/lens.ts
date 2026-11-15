@@ -261,6 +261,9 @@ export function lensCultureLabel(key: string | undefined, own: string): string {
 }
 
 /** §3.1: whether a culture belongs to a named group in an era (christian: greek-byzantine and roman from MD). */
+/** Shared tables brief §13.3: the British dialect words (regionTags) are drawn only for the lens's british culture group and norse. */
+export const readsBritishRegionWords = (culture: string, era: LensEra): boolean => culture === "norse" || inCultureGroup("british", culture, era);
+
 export function inCultureGroup(group: string, culture: string, era: LensEra): boolean {
   const g = LENS.cultureGroups[group];
   if (!g) return false;

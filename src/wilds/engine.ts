@@ -5,6 +5,7 @@
 // tone factor, and the river engine. The helpers are mirrored from the waters engine so that its
 // fixtures can't move. No Obsidian imports.
 
+import { readsBritishRegionWords, type LensEra } from "../lens";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -443,9 +444,12 @@ const MEAN_CACHE = new Map<string, number>();
 
 /** §3.3: a region tag's multiplier; the mean of its 12 values with no region chosen. */
 function regionMult(ctx: Ctx, tag: string | undefined): number {
-  if (!tag || !ctx.homeBritish) return 1;
+  if (!tag) return 1;
   const row = wildsDataOf(ctx.module).regionTags[tag];
   if (!row) return 1;
+  // Shared tables brief §13.3: a British dialect word is drawn only for the british culture group and norse.
+  if (!readsBritishRegionWords(ctx.culture.key, ctx.era as LensEra)) return 0;
+  if (!ctx.homeBritish) return 1;
   if (ctx.region) return row[ctx.region] ?? 1;
   let mean = MEAN_CACHE.get(tag);
   if (mean === undefined) {

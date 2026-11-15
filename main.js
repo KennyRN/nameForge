@@ -84728,6 +84728,7 @@ function lensCultureLabel(key2, own) {
   }
   return own;
 }
+var readsBritishRegionWords = (culture, era) => culture === "norse" || inCultureGroup("british", culture, era);
 function inCultureGroup(group, culture, era) {
   var _a7;
   const g = LENS.cultureGroups[group];
@@ -139070,9 +139071,11 @@ var pickOne8 = (items, rng) => items[Math.floor(rng() * items.length)];
 var MEAN_CACHE = /* @__PURE__ */ new Map();
 function regionMult2(ctx, tag) {
   var _a7;
-  if (!tag || !ctx.homeBritish) return 1;
+  if (!tag) return 1;
   const row = wildsDataOf(ctx.module).regionTags[tag];
   if (!row) return 1;
+  if (!readsBritishRegionWords(ctx.culture.key, ctx.era)) return 0;
+  if (!ctx.homeBritish) return 1;
   if (ctx.region) return (_a7 = row[ctx.region]) != null ? _a7 : 1;
   let mean = MEAN_CACHE.get(tag);
   if (mean === void 0) {
@@ -140700,9 +140703,11 @@ var pickOne9 = (items, rng) => items[Math.floor(rng() * items.length)];
 var MEAN_CACHE2 = /* @__PURE__ */ new Map();
 function regionMult3(ctx, tag) {
   var _a7;
-  if (!tag || !ctx.homeBritish) return 1;
+  if (!tag) return 1;
   const row = WATERS_DATA.regionTags[tag];
   if (!row) return 1;
+  if (!readsBritishRegionWords(ctx.culture.key, ctx.era)) return 0;
+  if (!ctx.homeBritish) return 1;
   if (ctx.region) return (_a7 = row[ctx.region]) != null ? _a7 : 1;
   let mean = MEAN_CACHE2.get(tag);
   if (mean === void 0) {
