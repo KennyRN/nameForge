@@ -8,7 +8,7 @@
 import { regionPhrase } from "./colonialSentence";
 import lensData from "./data/lens.json";
 import offersData from "./data/lens-offers.json";
-import { LENS_CULTURE_GROUPS, LENS_ERAS } from "./lens";
+import { cultureRegionInfo, LENS_CULTURE_GROUPS, LENS_ERAS, LENS_REGIONS, regionsOfCulture } from "./lens";
 import { rosterCultures } from "./lensRosters";
 import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 
@@ -149,7 +149,9 @@ const britishKeys = (): readonly string[] => LENS_CULTURE_GROUPS.british.culture
 function regionShown(entry: SentenceEntry, state: State): boolean {
   const f = entry.fields;
   if (!f?.region || !entry.region) return false;
-  if (!britishKeys().includes(String(get(state, f.culture)))) return false;
+  const cultureKey = String(get(state, f.culture));
+  // Northern Europe brief 5a §4: a module in the batch shows the link for every culture that has regions (and Celtic, for all of Britain).
+  if (entry.region.group === "regions" ? !cultureRegionInfo(cultureKey) : !britishKeys().includes(cultureKey)) return false;
   const requires = entry.region.requires;
   return !requires || Object.entries(requires).every(([field, value]) => state[field] === value);
 }
@@ -176,11 +178,15 @@ function cultureChoices(moduleKey: string, entry: SentenceEntry, current: string
     for (const e of block.entries) {
       let id: string | undefined;
       let label: string | undefined;
-      if (e.view) {
+      if (e.key && e.view && roster.has(e.key)) {
+        // Batch 5a: the culture is a real one in this module, not a view over Celtic.
+        id = e.key;
+        label = e.label ?? roster.get(e.key)!;
+      } else if (e.view) {
         if (!views.has(e.view)) continue;
         id = e.view;
         label = LENS.views[e.view].label;
-      } else if (e.scope === "colonial" && e.key) {
+      } else if (e.scope === "colonial" && e.key && !roster.has(e.key)) {
         // §7: a colonial tradition is a culture only where the where link is newly explored or settled and the probe found it differs there; a stored one is always shown.
         const offered = where && where !== "home" ? offer(moduleKey).colonial?.[where] ?? [] : [];
         if (!offered.includes(e.key) && current !== e.key) continue;
@@ -197,7 +203,7 @@ function cultureChoices(moduleKey: string, entry: SentenceEntry, current: string
     }
   }
   // From a view, the Celtic entry means "Celtic, all of Britain": its menu id says so, since choosing the stored culture key itself changes nothing (a preset's own mapping does that and must keep its region).
-  if (LENS.views[current]) for (const c of out) if (c.id === "celtic") c.id = CELTIC_ANY;
+  if (LENS.views[current] && !roster.has(current)) for (const c of out) if (c.id === "celtic") c.id = CELTIC_ANY;
   // A key the module has and the lens menu doesn't list keeps its own label, after the rest.
   for (const [key, label] of roster) if (!placed.has(key)) out.push({ id: key, label });
   // Rule 4: a stored culture the module doesn't list is still shown, and kept.
@@ -205,17 +211,39 @@ function cultureChoices(moduleKey: string, entry: SentenceEntry, current: string
   return out;
 }
 
-const regionLabel = (code: string | undefined): string => (code ? `in ${regionPhrase(code)}` : "across all of Britain");
+const regionLabel = (code: string | undefined, all = "Britain"): string => (code ? `in ${regionPhrase(code)}` : `across all of ${all}`);
 
-const regionChoices = (codes: readonly string[], withAll: boolean): LensChoice[] => [
-  ...(withAll ? [{ id: ALL, label: regionLabel(undefined) }] : []),
-  ...PLACE_SHAPE_REGIONS.filter((r) => codes.includes(r.code)).map((r) => ({ id: r.code, label: regionLabel(r.code), title: r.counties })),
+const regionChoices = (codes: readonly string[], withAll: boolean, all = "Britain"): LensChoice[] => [
+  ...(withAll ? [{ id: ALL, label: regionLabel(undefined, all) }] : []),
+  ...codes.flatMap((code): LensChoice[] => {
+    const british = PLACE_SHAPE_REGIONS.find((r) => r.code === code);
+    if (british) return [{ id: code, label: regionLabel(code), title: british.counties }];
+    const north = LENS_REGIONS.find((r) => r.code === code);
+    return north ? [{ id: code, label: regionLabel(code), ...(north.landscape ? { title: north.landscape } : {}) }] : [];
+  }),
 ];
 
 function regionSegment(moduleKey: string, entry: SentenceEntry, state: State, culture: string, opts: LensOptions): LensSegment | undefined {
   if (!regionShown(entry, state)) return undefined;
   const stored = get(state, entry.fields!.region) as string | undefined;
   const title = opts.regionTitle ?? REGION_TITLE;
+  const info = entry.region?.group === "regions" ? cultureRegionInfo(culture) : undefined;
+  if (info) {
+    // Northern Europe brief 5a §3.1, §4: the culture's own regions. One region is plain text; Celtic reads across all of Britain only.
+    const all = info.all ?? "Britain";
+    if (info.regions.length === 0) {
+      // Rule 4: a stored region (Celtic with the North, say) is still shown, and kept.
+      if (stored) return { field: "region", text: regionLabel(stored, all), title, choices: [...regionChoices([], true, all), ...regionChoices([stored], false)], current: stored };
+      return { field: "region", text: regionLabel(undefined, all), title, choices: regionChoices([], true, all), current: ALL, fixed: true };
+    }
+    if (info.fixed && (!stored || stored === info.regions[0])) return { field: "region", text: info.text ?? regionLabel(info.regions[0]), title, choices: regionChoices(info.regions, false), current: info.regions[0], fixed: true };
+    const codes = [...info.regions];
+    const choices = regionChoices(codes, !!info.all, all);
+    // Rule 4: a stored region the culture doesn't read is still shown (a fixed region too: Welsh with the West Country).
+    if (stored && !codes.includes(stored)) choices.push(...regionChoices([stored], false));
+    const current = stored ?? info.default ?? ALL;
+    return { field: "region", text: regionLabel(current === ALL ? undefined : current, all), title, choices, current };
+  }
   const view = LENS.views[culture];
   if (view && culture !== "scottish") {
     // Welsh and Cornish: one region, drawn as plain text.
@@ -402,7 +430,23 @@ export function applyLensChoice<S extends object>(moduleKey: string, state: S, f
         break;
       }
       const view = LENS.views[id];
-      if (view) {
+      const realKey = !!f.culture && !!entry.roster && rosterCultures(entry.roster).some((c) => c.key === id);
+      // Choosing the culture the sentence already reads (a stored Celtic state with a nation's region reads as that nation) changes nothing.
+      if (before === id) break;
+      if (realKey && LENS.views[id] && !(entry.region?.group === "regions" && cultureRegionInfo(id))) {
+        // A nation in a module with no region link (deserts): the culture itself, nothing else.
+        put(next, f.culture, id);
+      } else if (realKey && entry.region?.group === "regions" && cultureRegionInfo(id)) {
+        // Batch 5a: a real culture of the module. Its region is the stored one if it reads it, else its default, else all.
+        put(next, f.culture, id);
+        // Choosing the culture the state already holds changes nothing; a new one keeps the stored region if it reads it, else takes its default.
+        if (f.region && id !== get(previous, f.culture)) {
+          const stored = previous[f.region] as string | undefined;
+          const info = cultureRegionInfo(id);
+          const own = regionsOfCulture(id);
+          put(next, f.region, stored && own.includes(stored) ? stored : info?.default);
+        }
+      } else if (view) {
         put(next, f.culture, view.culture);
         if (f.region) {
           const stored = previous[f.region] as string | undefined;
@@ -441,6 +485,9 @@ export function applyLensChoice<S extends object>(moduleKey: string, state: S, f
     }
     case "region": {
       if (!f.region) break;
+      // Batch 5a: a culture with a default region shows it when none is stored (Welsh: Wales); choosing what is shown changes nothing.
+      const shown = cultureRegionInfo(viewOf(entry, previous) ?? String(get(previous, f.culture)));
+      if (entry.region?.group === "regions" && get(previous, f.region) === undefined && shown && id === (shown.default ?? ALL)) break;
       put(next, f.region, id === ALL ? undefined : id);
       break;
     }

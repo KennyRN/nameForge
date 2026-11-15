@@ -6,11 +6,14 @@
   "moneyOnly": ["french", "dutch", "iberian", "american"],
   "cultureGroups": {
     "british": {
-      "cultures": ["anglo-saxon", "celtic", "norman-british"]
+      "cultures": ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish"]
     },
     "christian": {
-      "cultures": ["anglo-saxon", "celtic", "norman-british", "slavic", "french", "iberian"],
+      "cultures": ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian"],
       "from": {"greek-byzantine": "MD", "roman": "MD"}
+    },
+    "nordic": {
+      "cultures": ["norse", "scandinavian"]
     }
   },
   "regionTags": ["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat", "scar"],

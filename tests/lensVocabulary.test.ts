@@ -22,9 +22,11 @@ test("the vocabulary's culture groups are the lens's, key for key", () => {
   assert.deepEqual(Object.keys(SETTLEMENT_VOCAB.cultureGroups), Object.keys(LENS_CULTURE_GROUPS));
 });
 
-test("the vocabulary's regions are the lens's live region codes, in order", () => {
-  assert.deepEqual(SETTLEMENT_VOCAB.regions, LENS_REGIONS.filter((r) => r.status === "live").map((r) => r.code).sort((a, b) => SETTLEMENT_VOCAB.regions.indexOf(a) - SETTLEMENT_VOCAB.regions.indexOf(b)));
-  assert.deepEqual([...SETTLEMENT_VOCAB.regions].sort(), LENS_REGIONS.filter((r) => r.status === "live").map((r) => r.code).sort());
+test("the vocabulary's regions are the lens's live British region codes, in order", () => {
+  // Northern Europe brief 5a: the nine Scandinavian and German regions are live in the lens (their data lives in the batch's tables), the vocabulary keeps the 12 British ones.
+  const british = LENS_REGIONS.filter((r) => r.status === "live" && SETTLEMENT_VOCAB.regions.includes(r.code)).map((r) => r.code);
+  assert.deepEqual(SETTLEMENT_VOCAB.regions, british.sort((a, b) => SETTLEMENT_VOCAB.regions.indexOf(a) - SETTLEMENT_VOCAB.regions.indexOf(b)));
+  assert.equal(LENS_REGIONS.filter((r) => r.status === "live").length, SETTLEMENT_VOCAB.regions.length + 9);
 });
 
 test("settlement/vocab re-exports the lens's inCultureGroup", () => {
@@ -46,7 +48,7 @@ test("a set that differs from the lens group of the same sort is kept as it was"
   assert.ok(!LENS_CULTURE_GROUPS.christian.cultures.includes("general") && !LENS_CULTURE_GROUPS.christian.cultures.includes("ethiopian"));
   assert.deepEqual([...cultureSet("realmsChristian")], CHRISTIAN_FOR_TEST);
   // The British set is the group, in its order.
-  assert.deepEqual(BRITISH_CULTURES, ["anglo-saxon", "celtic", "norman-british"]);
+  assert.deepEqual(BRITISH_CULTURES, ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish"]);
   assert.deepEqual(BRITISH_CULTURES, LENS_CULTURE_GROUPS.british.cultures);
   assert.deepEqual(cultureSetKeys("caste"), ["indian", "west-african"]);
 });

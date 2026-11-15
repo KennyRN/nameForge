@@ -28,9 +28,9 @@
    "label": "Welsh",
    "tier": "core",
    "family": "british",
-   "status": "planned",
+   "status": "live",
    "keys": [
-    "celtic"
+    "welsh"
    ]
   },
   {
@@ -38,9 +38,9 @@
    "label": "Scottish",
    "tier": "core",
    "family": "british",
-   "status": "planned",
+   "status": "live",
    "keys": [
-    "celtic"
+    "scottish"
    ]
   },
   {
@@ -48,9 +48,9 @@
    "label": "Irish",
    "tier": "core",
    "family": "british",
-   "status": "planned",
+   "status": "live",
    "keys": [
-    "celtic"
+    "irish"
    ]
   },
   {
@@ -58,9 +58,29 @@
    "label": "Cornish",
    "tier": "core",
    "family": "british",
-   "status": "planned",
+   "status": "live",
+   "keys": [
+    "cornish"
+   ]
+  },
+  {
+   "key": "celtic",
+   "label": "Celtic",
+   "tier": "second",
+   "family": "british",
+   "status": "live",
    "keys": [
     "celtic"
+   ]
+  },
+  {
+   "key": "norse",
+   "label": "Norse",
+   "tier": "core",
+   "family": "germanic",
+   "status": "live",
+   "keys": [
+    "norse"
    ]
   },
   {
@@ -70,7 +90,7 @@
    "family": "germanic",
    "status": "live",
    "keys": [
-    "norse"
+    "scandinavian"
    ]
   },
   {
@@ -79,8 +99,9 @@
    "tier": "core",
    "family": "germanic",
    "status": "live",
-   "scope": "colonial",
-   "keys": []
+   "keys": [
+    "german"
+   ]
   },
   {
    "key": "french",
@@ -489,9 +510,11 @@
    "welsh",
    "scottish",
    "irish",
-   "cornish"
+   "cornish",
+   "celtic"
   ],
   "norse": [
+   "norse",
    "scandinavian"
   ]
  },
@@ -500,7 +523,11 @@
    "cultures": [
     "anglo-saxon",
     "celtic",
-    "norman-british"
+    "norman-british",
+    "welsh",
+    "scottish",
+    "irish",
+    "cornish"
    ]
   },
   "christian": {
@@ -508,6 +535,10 @@
     "anglo-saxon",
     "celtic",
     "norman-british",
+    "welsh",
+    "scottish",
+    "irish",
+    "cornish",
     "slavic",
     "french",
     "iberian"
@@ -516,6 +547,12 @@
     "greek-byzantine": "MD",
     "roman": "MD"
    }
+  },
+  "nordic": {
+   "cultures": [
+    "norse",
+    "scandinavian"
+   ]
   }
  },
  "regions": [
@@ -622,7 +659,9 @@
    "cultures": [
     "scandinavian"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Low islands, heath, beech wood, sounds, dunes and bogs",
+   "phrase": "Denmark"
   },
   {
    "code": "NOR",
@@ -630,7 +669,9 @@
    "cultures": [
     "scandinavian"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Fjords, fells, high moor, glaciers, waterfalls and steep farms",
+   "phrase": "Norway"
   },
   {
    "code": "SWE",
@@ -638,7 +679,9 @@
    "cultures": [
     "scandinavian"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Lakes, forest, rock, skerries, eskers and mines",
+   "phrase": "Sweden"
   },
   {
    "code": "ICE",
@@ -646,7 +689,9 @@
    "cultures": [
     "scandinavian"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Lava, black sand, hot springs, ice caps, bare fell and bird cliffs",
+   "phrase": "Iceland and the Atlantic isles"
   },
   {
    "code": "NDT",
@@ -654,7 +699,9 @@
    "cultures": [
     "german"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Marsh, heath, moor, dykes, mudflats, islands and brick towns",
+   "phrase": "the North German plain and coast"
   },
   {
    "code": "RHN",
@@ -662,7 +709,9 @@
    "cultures": [
     "german"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "River gorge, vineyards, crags, castles and old roman towns",
+   "phrase": "the Rhineland"
   },
   {
    "code": "MIT",
@@ -670,7 +719,9 @@
    "cultures": [
     "german"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Forested hills, mining, springs, ridges and clearings",
+   "phrase": "the Central uplands"
   },
   {
    "code": "ALP",
@@ -678,7 +729,9 @@
    "cultures": [
     "german"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Alps, high pasture, passes, lakes, avalanches and gorges",
+   "phrase": "the Alpine south"
   },
   {
    "code": "OST",
@@ -686,7 +739,9 @@
    "cultures": [
     "german"
    ],
-   "status": "planned"
+   "status": "live",
+   "landscape": "Lakes, pine, sand, marsh and slavic-borrowed settlements",
+   "phrase": "the Eastern marches"
   }
  ],
  "eras": [
@@ -1066,11 +1121,13 @@
       "welsh",
       "scottish",
       "irish",
-      "cornish"
+      "cornish",
+      "celtic"
      ]
     },
     "norse": {
      "lens": [
+      "norse",
       "scandinavian"
      ]
     },
@@ -1481,6 +1538,51 @@
    "world": {
     "extends": "shared",
     "entries": {}
+   },
+   "north": {
+    "extends": "shared",
+    "entries": {
+     "celtic": {
+      "lens": [
+       "celtic"
+      ]
+     },
+     "norse": {
+      "lens": [
+       "norse"
+      ]
+     },
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
    }
   },
   "eras": {
@@ -1949,7 +2051,7 @@
  },
  "modules": {
   "routeNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -1961,9 +2063,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "route",
+    "roster": "route5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": null,
      "keepWhenHidden": false
     }
@@ -2123,7 +2225,7 @@
    }
   },
   "mountainNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2136,9 +2238,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2147,7 +2249,7 @@
    }
   },
   "forestNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2160,9 +2262,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2171,7 +2273,7 @@
    }
   },
   "desertNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2184,11 +2286,11 @@
      "genre": null,
      "region": null
     },
-    "roster": "wilds"
+    "roster": "wilds5a"
    }
   },
   "moorNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2201,9 +2303,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2212,7 +2314,7 @@
    }
   },
   "wetlandNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2225,9 +2327,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2236,7 +2338,7 @@
    }
   },
   "grasslandNames": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2249,9 +2351,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2260,7 +2362,7 @@
    }
   },
   "riversInland": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2273,9 +2375,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2284,7 +2386,7 @@
    }
   },
   "hillsValleys": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2297,9 +2399,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2308,7 +2410,7 @@
    }
   },
   "farmland": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2321,9 +2423,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2332,7 +2434,7 @@
    }
   },
   "seasLakes": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2345,9 +2447,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "waters",
+    "roster": "waters5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2356,7 +2458,7 @@
    }
   },
   "coastsIslands": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2369,9 +2471,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "waters",
+    "roster": "waters5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2380,7 +2482,7 @@
    }
   },
   "seaCharts": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2393,9 +2495,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "waters",
+    "roster": "waters5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -2557,7 +2659,7 @@
    }
   },
   "sacredPlaces": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2569,7 +2671,7 @@
      "genre": null,
      "region": null
     },
-    "roster": "deity"
+    "roster": "deity5a"
    }
   },
   "moneyNames": {
@@ -2832,7 +2934,7 @@
    }
   },
   "lands": {
-   "cultures": "shared",
+   "cultures": "north",
    "eras": "codes",
    "land": true,
    "sentence": {
@@ -2845,9 +2947,9 @@
      "genre": null,
      "region": "region"
     },
-    "roster": "wilds",
+    "roster": "wilds5a",
     "region": {
-     "group": "british",
+     "group": "regions",
      "requires": {
       "where": "home"
      },
@@ -3029,12 +3131,22 @@
      "label": "Anglo-Saxon"
     },
     {
+     "key": "welsh",
+     "label": "Welsh",
      "view": "welsh"
     },
     {
+     "key": "scottish",
+     "label": "Scottish",
      "view": "scottish"
     },
     {
+     "key": "irish",
+     "label": "Irish"
+    },
+    {
+     "key": "cornish",
+     "label": "Cornish",
      "view": "cornish"
     },
     {
@@ -3049,6 +3161,10 @@
     {
      "key": "norse",
      "label": "Norse"
+    },
+    {
+     "key": "scandinavian",
+     "label": "Scandinavian"
     },
     {
      "key": "dutch",
@@ -3230,8 +3346,121 @@
  ],
  "sourceShares": {
   "$comment": "Place modules split brief §4.1: where a focused place module's draw comes from, before it falls back to its own shapes. A kind may list sources; the share is the chance a draw tries the source first.",
-  "home": { "source": "native", "share": 0.4, "cultures": ["norman-british", "anglo-saxon", "celtic"] },
-  "new": { "source": "colonial", "part": "2", "share": 0.5 },
-  "settled": { "source": "colonial", "part": "2a", "share": 0.6 }
+  "home": {
+   "source": "native",
+   "share": 0.4,
+   "cultures": [
+    "norman-british",
+    "anglo-saxon",
+    "celtic",
+    "welsh",
+    "scottish",
+    "irish",
+    "cornish"
+   ]
+  },
+  "new": {
+   "source": "colonial",
+   "part": "2",
+   "share": 0.5
+  },
+  "settled": {
+   "source": "colonial",
+   "part": "2a",
+   "share": 0.6
+  }
+ },
+ "cultureRegions": {
+  "$comment": "Northern Europe brief §3.1, §4: the regions each module culture key reads, where the region link shows, its default and how it reads. `fixed`: one region, drawn as plain text; `all`: the link also offers the whole culture. Modules in a batch use the `regions` group; the rest keep `british`.",
+  "anglo-saxon": {
+   "regions": [
+    "WCY",
+    "SEA",
+    "EAN",
+    "WMM",
+    "EMD",
+    "NTH",
+    "SBL"
+   ],
+   "all": "Britain"
+  },
+  "norman-british": {
+   "regions": [
+    "WCY",
+    "SEA",
+    "EAN",
+    "WMM",
+    "EMD",
+    "NTH",
+    "SBL"
+   ],
+   "all": "Britain"
+  },
+  "welsh": {
+   "regions": [
+    "WAL"
+   ],
+   "fixed": true,
+   "default": "WAL",
+   "text": "in Wales"
+  },
+  "cornish": {
+   "regions": [
+    "COR"
+   ],
+   "fixed": true,
+   "default": "COR",
+   "text": "in Cornwall"
+  },
+  "scottish": {
+   "regions": [
+    "SBL",
+    "SLO",
+    "SHH",
+    "NSI"
+   ],
+   "default": "SLO"
+  },
+  "celtic": {
+   "regions": [],
+   "all": "Britain"
+  },
+  "norse": {
+   "regions": [
+    "DEN",
+    "NOR",
+    "SWE",
+    "ICE"
+   ],
+   "all": "Scandinavia"
+  },
+  "scandinavian": {
+   "regions": [
+    "DEN",
+    "NOR",
+    "SWE",
+    "ICE"
+   ],
+   "all": "Scandinavia"
+  },
+  "german": {
+   "regions": [
+    "NDT",
+    "RHN",
+    "MIT",
+    "ALP",
+    "OST"
+   ],
+   "all": "Germany"
+  }
+ },
+ "engineAlias": {
+  "$comment": "Northern Europe brief §3: the module culture keys that came after the legacy ones read the legacy key's plumbing (settlement names, people lists, realms, gods, the colonial link and the weight tables) wherever a table has no row of their own.",
+  "welsh": "celtic",
+  "scottish": "celtic",
+  "irish": "celtic",
+  "cornish": "celtic",
+  "scandinavian": "norse",
+  "german": "general"
  }
 }

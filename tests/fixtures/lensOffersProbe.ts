@@ -289,7 +289,8 @@ export function probeModule(spec: Spec): ModuleOffers {
   }
 
   let views: string[] | undefined;
-  if (regionLink && offeredCultures(spec).includes("celtic")) {
+  // Northern Europe brief 5a: where a module has the nations as cultures of its own there are no views over Celtic.
+  if (regionLink && offeredCultures(spec).includes("celtic") && !offeredCultures(spec).includes("welsh")) {
     views = [];
     // Kinds vary the runs; the culture is Celtic, so only the kinds (and the defaults) apply.
     const kindsOnly = [{} as State, ...spec.kinds.flatMap((field) => ids(segments, field).map((id): State => ({ [field]: id })))];
@@ -308,7 +309,9 @@ export function probeModule(spec: Spec): ModuleOffers {
       const general = signature(spec, kindsOnly, { ...base, where, culture: "general" });
       // A colonial tradition is a culture only where its part exists (Phoenician has no part 2a) and the names differ from General's.
       const part = where === "new" ? "2" : "2a";
+      // A colonial tradition the module has as a culture of its own (German, in the batch 5a modules) is not offered as a colonial one.
       colonial[where] = COLONIAL_CULTURES.filter((c) => {
+        if (offeredCultures(spec).includes(c.key)) return false;
         const tradition = WILDS_DATA.settlementLink.cultureToColonial[c.key];
         return typeof tradition === "string" && isTraditionAvailable(tradition, part) && signature(spec, kindsOnly, { ...base, where, culture: c.key }) !== general;
       }).map((c) => c.key);

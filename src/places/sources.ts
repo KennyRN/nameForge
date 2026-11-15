@@ -218,12 +218,18 @@ function fillPlace(culture: string, region: string | undefined, rng: () => numbe
 }
 
 const LENS_CULTURES = LENS.cultures as { key: string; keys: string[]; family: string | null }[];
+/** Northern Europe brief 5a: the Norse and Celtic lens cultures read through Scandinavian and the Celtic nations here, so another culture's nearest-family order is what it was. */
+const FOLDED = new Set(["norse", "celtic"]);
 /** The cultures whose settlement names fill a place, nearest first: the culture, its lens keys, its family, then General. */
 export function placeCultures(culture: string): string[] {
-  const keysOf = (c: { key: string; keys: string[] }) => [c.key, ...c.keys];
-  const own = LENS_CULTURES.find((c) => c.key === culture || c.keys.includes(culture));
-  const mates = own?.family ? LENS_CULTURES.filter((c) => c !== own && c.family === own.family) : [];
-  return [...new Set([culture, ...(own ? keysOf(own) : []), ...mates.flatMap(keysOf), "general"])];
+  // Northern Europe brief 5a: German places are not Norse ones ("Ox Fjord"): its own, then the general ones, until German settlement names (batch 5b).
+  if (culture === "german") return ["german", "general"];
+  const keysOf = (c: { key: string; keys: string[] }) => [c.key, ...c.keys, ...(c.key === "scandinavian" ? ["norse"] : [])];
+  const own = LENS_CULTURES.find((c) => !FOLDED.has(c.key) && (c.key === culture || c.keys.includes(culture) || (c.key === "scandinavian" && culture === "norse"))) ?? LENS_CULTURES.find((c) => c.key === culture);
+  const mates = own?.family ? LENS_CULTURES.filter((c) => c !== own && !FOLDED.has(c.key) && c.family === own.family) : [];
+  // Northern Europe brief 5a: a nation reads Celtic's settlement names (with its region) and Scandinavian reads Norse's before the family.
+  const legacy = ["welsh", "scottish", "irish", "cornish"].includes(culture) ? "celtic" : culture === "scandinavian" ? "norse" : undefined;
+  return [...new Set([culture, ...(legacy ? [legacy] : []), ...(own ? keysOf(own) : []), ...mates.flatMap(keysOf), "general"])];
 }
 /** The earlier period's culture for "[earlier or district name]": Anglo-Saxon for Norman & British, else the culture itself. */
 const EARLIER: Record<string, string> = { "norman-british": "anglo-saxon" };

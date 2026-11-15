@@ -390,9 +390,13 @@ test("§2.4: resets", () => {
   assert.equal(s.biome, undefined);
   s = chooseWaters(defaultWatersState("seaCharts"), "era", "IS", "seaCharts");
   assert.equal(s.era, "MD");
-  const sentence = watersSentence({ ...defaultWatersState("seasLakes"), culture: "norse" }, "seasLakes");
+  const sentence = watersSentence({ ...defaultWatersState("seasLakes"), culture: "japanese" }, "seasLakes");
   assert.ok(sentence.some((x) => typeof x !== "string" && x.field === "biome"));
   assert.ok(!sentence.some((x) => typeof x !== "string" && x.field === "region"));
+  // Northern Europe brief 5a: Norse has regions of its own (Denmark to Iceland), which take the place of the biome link in home waters as Britain's do.
+  const norse = watersSentence({ ...defaultWatersState("seasLakes"), culture: "norse" }, "seasLakes");
+  assert.ok(!norse.some((x) => typeof x !== "string" && x.field === "biome"));
+  assert.ok(norse.some((x) => typeof x !== "string" && x.field === "region"));
   assert.equal(waterEras("seaCharts").length, 5);
   assert.equal(waterEras("coastsIslands").length, 7);
 });

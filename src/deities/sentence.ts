@@ -10,9 +10,11 @@ import { lensClause } from "../lensView";
 import { type GroupToneChoice, GROUP_TONES, TONE_PHRASES } from "../groups/engine";
 import { ROUTE_ERAS, routeEraLabel, type RouteEra } from "../routes/engine";
 import { fantasticWords } from "../routes/sentence";
-import { DEITY_ANY, DEITY_CULTURES, DEITY_DOMAINS, DEITY_KINDS, domainsOffered, type DeityGender, type DeityKind, type DeityNames } from "./engine";
+import { DEITY_ANY, DEITY_CULTURES, DEITY5A_CULTURES, DEITY_DOMAINS, DEITY_KINDS, domainsOffered, type DeityGender, type DeityKind, type DeityNames } from "./engine";
 
 registerRoster("deity", DEITY_CULTURES);
+/** Northern Europe brief 5a: sacred places also offer Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
+registerRoster("deity5a", DEITY5A_CULTURES);
 
 export interface DeitySentenceState {
   culture: string;

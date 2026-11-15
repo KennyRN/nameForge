@@ -72,7 +72,8 @@ test("data: tags, cultures and sizes are valid", () => {
     if (shape.st) assert.notEqual(kind, "settlement", `${where}: st only on feature shapes`);
     assert.ok(WILDS_DATA.cultureMult.general && (shape.f in { ...WILDS_DATA.where, ...Object.fromEntries(["qual", "twn", "col", "dir", "ppl", "per", "god", "crt", "flora", "shp", "sai", "unc", "work", "fixed", "mood", "myth", "alien", "riv", "set"].map((f) => [f, 1])) }), `${where} family ${shape.f}`);
   }
-  for (const [tag, row] of Object.entries(WILDS_DATA.regionTags)) assert.deepEqual(Object.keys(row), WILDS_DATA.regions, tag);
+  // Northern Europe brief 5a §4: every tag also has the nine Scandinavian and German region columns.
+  for (const [tag, row] of Object.entries(WILDS_DATA.regionTags)) assert.deepEqual(Object.keys(row), [...WILDS_DATA.regions, "DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"], tag);
   for (const [tag, row] of Object.entries(WILDS_DATA.biomeTags)) assert.deepEqual(Object.keys(row), WILDS_DATA.modules.mountainNames.biomes, tag);
 });
 

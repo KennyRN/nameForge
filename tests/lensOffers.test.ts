@@ -68,7 +68,9 @@ test("views appear only on modules with a region link, and only for Welsh, Scott
     if (m.views) for (const v of m.views) assert.ok(["welsh", "scottish", "cornish"].includes(v), `${key}: ${v}`);
   }
   for (const key of ["desertNames", "eventNames", "moneyNames", "deityNames", "calendarNames", "peoplesTongues", "ships", "realms"]) assert.equal(offers[key].views, undefined, `${key} reads no region`);
-  for (const key of ["routeNames", "innNames", "mountainNames", "seasLakes", "settlementKit"]) assert.ok(offers[key].views, `${key} reads a region`);
+  for (const key of ["innNames", "settlementKit"]) assert.ok(offers[key].views, `${key} reads a region`);
+  // Northern Europe brief 5a: the modules of the batch have the nations as cultures of their own, so the probe records no views for them.
+  for (const key of ["routeNames", "mountainNames", "seasLakes"]) assert.equal(offers[key].views, undefined, `${key}: Welsh, Scottish and Cornish are cultures here`);
 });
 
 // ── Hand-checked entries ───────────────────────────────────────────────────
@@ -103,7 +105,7 @@ test("mountains: the near future and interstellar are one run; Welsh, Scottish a
   // The earlier eras differ from their neighbours.
   for (const [a, b] of [["AN", "MD"], ["MD", "EM"], ["EM", "ST"], ["ST", "MO"], ["MO", "NF"]]) assert.ok(differs(wilds, { era: a }, { era: b }), `${a} and ${b}`);
   assert.ok(differs(wilds, { culture: "celtic", region: "WAL" }, { culture: "celtic" }), "Welsh");
-  assert.deepEqual(offers.mountainNames.views, ["welsh", "scottish", "cornish"]);
+  assert.equal(offers.mountainNames.views, undefined, "batch 5a: the nations are cultures of the module, not views");
   assert.equal(offers.desertNames.views, undefined);
 });
 

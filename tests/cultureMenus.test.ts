@@ -45,18 +45,20 @@ for (const m of withCulture) {
       let first = true;
       for (const e of block.entries) {
         // A colonial tradition offered as a culture (§7) is checked on its own below: it is there only at new and settled.
-        if ((e as { scope?: string }).scope === "colonial") continue;
-        const id = e.view ?? e.key!;
-        if (e.view ? !views.has(e.view) : !roster.has(e.key!)) continue;
+        if ((e as { scope?: string }).scope === "colonial" && !roster.has(e.key!)) continue;
+        // Batch 5a: where the module has the culture itself, it is a culture and not a view over Celtic.
+        const real = !!e.key && roster.has(e.key);
+        const id = real ? e.key! : e.view ?? e.key!;
+        if (!real && (e.view ? !views.has(e.view) : true)) continue;
         listed.add(id);
-        expected.push({ id, label: e.view ? LENS.views[e.view].label : e.label ?? roster.get(e.key!)!, ...(first && block.heading ? { heading: block.heading } : {}) });
+        expected.push({ id, label: real ? e.label ?? roster.get(e.key!)! : LENS.views[e.view!].label, ...(first && block.heading ? { heading: block.heading } : {}) });
         first = false;
       }
     }
     for (const [key, label] of roster) if (!listed.has(key)) expected.push({ id: key, label });
     const colonial = new Set(["german", "italian", "phoenician", "belgian", "hellenistic"]);
     assert.deepEqual(
-      menu.filter((c) => !colonial.has(c.id!)).map((c) => ({ id: c.id, label: c.label, ...(c.heading ? { heading: c.heading } : {}) })),
+      menu.filter((c) => !colonial.has(c.id!) || roster.has(c.id!)).map((c) => ({ id: c.id, label: c.label, ...(c.heading ? { heading: c.heading } : {}) })),
       expected,
     );
     // No culture is removed: every culture the module offers is in its menu.
@@ -64,7 +66,7 @@ for (const m of withCulture) {
     // The module table's own `group` strings (route-names.json's "British Isles and northern Europe") are not the source.
     assert.ok(menu.every((c) => !c.heading || LENS.menu.some((b) => b.heading === c.heading)), `${m}: a heading that isn't the lens's`);
     // Views appear only where the probe found them.
-    for (const v of Object.keys(LENS.views)) assert.equal(menu.some((c) => c.id === v), views.has(v), `${m}: ${v}`);
+    for (const v of Object.keys(LENS.views)) assert.equal(menu.some((c) => c.id === v), views.has(v) || roster.has(v), `${m}: ${v}`);
   });
 }
 

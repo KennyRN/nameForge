@@ -23,7 +23,7 @@ const seedFrom = (rng: () => number) => Math.floor(rng() * 4294967296) >>> 0;
 // ── Data ───────────────────────────────────────────────────────────────────
 
 test("the shares are as §4.1 fixes them, in lens.json", () => {
-  assert.deepEqual(SOURCE_SHARES.home, { source: "native", share: 0.4, cultures: ["norman-british", "anglo-saxon", "celtic"] });
+  assert.deepEqual(SOURCE_SHARES.home, { source: "native", share: 0.4, cultures: ["norman-british", "anglo-saxon", "celtic", "welsh", "scottish", "irish", "cornish"] });
   assert.deepEqual(SOURCE_SHARES.new, { source: "colonial", part: "2", share: 0.5 });
   assert.deepEqual(SOURCE_SHARES.settled, { source: "colonial", part: "2a", share: 0.6 });
   assert.ok((lens as { sourceShares?: unknown }).sourceShares);
@@ -32,9 +32,12 @@ test("the shares are as §4.1 fixes them, in lens.json", () => {
 test("the culture-to-tradition map: §3.2's additions are merged into the one map (M7), the old entries stay, every tradition exists", () => {
   const link = WILDS_DATA.settlementLink as unknown as { cultureToColonial: Record<string, string | { tradition: string; weight: number }[]>; cultureToColonialAdded?: unknown };
   assert.equal(link.cultureToColonialAdded, undefined, "the separate key is gone");
+  // Northern Europe brief 5a: the newer culture keys read their legacy key's row (Welsh, Scottish, Irish and Cornish: Celtic's; Scandinavian: Norse's).
   assert.deepEqual(Object.keys(link.cultureToColonial).sort(), [
-    "american", "anglo-saxon", "arabic-persian", "belgian", "celtic", "chinese", "dutch", "french", "general", "german", "greek-byzantine", "hellenistic", "iberian", "italian", "japanese", "norman-british", "norse", "ottoman", "phoenician", "roman", "slavic",
+    "american", "anglo-saxon", "arabic-persian", "belgian", "celtic", "chinese", "cornish", "dutch", "french", "general", "german", "greek-byzantine", "hellenistic", "iberian", "irish", "italian", "japanese", "norman-british", "norse", "ottoman", "phoenician", "roman", "scandinavian", "scottish", "slavic", "welsh",
   ]);
+  for (const k of ["welsh", "scottish", "irish", "cornish"]) assert.equal(link.cultureToColonial[k], "british-imperial", k);
+  assert.deepEqual(link.cultureToColonial.scandinavian, link.cultureToColonial.norse);
   const old = { general: "general", "norman-british": "british-imperial", "anglo-saxon": "british-imperial", celtic: "british-imperial", roman: "roman", "greek-byzantine": "hellenistic", slavic: "russian", "arabic-persian": "arab", chinese: "chinese", japanese: "japanese" };
   for (const [k, v] of Object.entries(old)) assert.equal(link.cultureToColonial[k], v, `${k} keeps its tradition`);
   assert.deepEqual(link.cultureToColonial.norse, [{ tradition: "danish", weight: 50 }, { tradition: "swedish", weight: 50 }]);

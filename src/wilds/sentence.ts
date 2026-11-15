@@ -17,10 +17,12 @@ import { classSegment, isPlaceClass, kindInClass, type PlaceClass } from "../pla
 import { isSpaceModule, kindScalesAt, scaleOf } from "../places/space";
 import { scaleInfo, scaleLabel, scalePhrase, scalesFor, type ScaleChoice } from "../space/scale";
 import { fantasticWords } from "../routes/sentence";
+import { ROUTE_CULTURES } from "../routes/engine";
 import {
   findWildsCulture,
   findWildsKind,
   showsWildsRegion,
+  wildsReadsRegion,
   WILDS_CULTURES,
   wildsAny,
   wildsBiomes,
@@ -36,7 +38,9 @@ import {
   type WildsWhere,
 } from "./engine";
 
-registerRoster("wilds", WILDS_CULTURES);
+registerRoster("wilds", ROUTE_CULTURES);
+/** Northern Europe brief 5a: the wild lands and place modules (stars and space excepted) offer Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
+registerRoster("wilds5a", WILDS_CULTURES);
 
 export interface WildsSentenceState {
   culture: string;
@@ -260,6 +264,7 @@ export function wildsHistoryLabel(module: WildsLikeModule, state: WildsSentenceS
   const culture = lensCultureLabel(state.culture, findWildsCulture(state.culture)?.label ?? "General");
   const kind = findWildsKind(module, state.kind);
   const regionShown = showsWildsRegion(module, state.culture, state.where);
+  const regionRead = wildsReadsRegion(module, state.culture, state.where);
   const biome = wildsBiomes(module, catalogue).find((b) => biomeMatches(b, state.biome));
   return [
     moduleLabel,
@@ -267,7 +272,7 @@ export function wildsHistoryLabel(module: WildsLikeModule, state: WildsSentenceS
     culture,
     ...(isSpaceModule(module) ? (state.where === "settled" ? ["settled space"] : ["new space"]) : state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : []),
     ...(isSpaceModule(module) && state.scale && state.scale !== "any" ? [scaleLabel(state.scale).toLowerCase()] : []),
-    ...(regionShown && state.region ? [regionPhrase(state.region)] : []),
+    ...(regionRead && state.region ? [regionPhrase(state.region)] : []),
     ...(!regionShown && biome ? [biome.label] : []),
     ...(kind ? [kind.plural] : state.kindClass ? [state.kindClass] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),

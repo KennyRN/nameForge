@@ -152,7 +152,7 @@ test("class: the link shows (natural and managed); choosing one filters the kind
 test("the probe records the module: era runs AN to MO, the three views, natural and managed", () => {
   const offers = (lensOffers as unknown as { modules: Record<string, { eras: string[][]; views: string[]; classes: string[] }> }).modules;
   assert.deepEqual(offers[L].eras.flat(), ["AN", "MD", "EM", "ST", "MO"]);
-  assert.deepEqual(offers[L].views, ["welsh", "scottish", "cornish"]);
+  assert.equal(offers[L].views, undefined, "batch 5a: the nations are cultures of the module, not views");
   assert.deepEqual(offers[L].classes, ["natural", "managed"]);
 });
 

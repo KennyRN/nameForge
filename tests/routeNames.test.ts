@@ -319,7 +319,7 @@ test("§2.2–§2.3: the kind menu offers the era's kinds; a kind the new era la
   assert.equal(nf.kind, "pilgrim");
   assert.equal(chooseRoute(nf, "fantastic", "off").kind, undefined);
   // The 22 cultures, and the Welsh, Scottish and Cornish views the probe finds real for routes.
-  assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 25);
+  assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 28, "the 25 and, in batch 5a, Irish, Scandinavian and German");
 });
 
 test("§1: the module sits after the focused place modules; its history label and section", () => {

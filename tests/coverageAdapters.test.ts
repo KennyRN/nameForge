@@ -20,11 +20,11 @@ const cell = (module: string, culture: string) => {
 
 test("an entry counts once per lens culture it is restricted to; open entries and exclusions count as open", () => {
   assert.deepEqual(cultureTags("routeNames", { c: ["anglo-saxon", "norman-british"] }), ["english"], "two legacy keys, one lens culture, counted once");
-  assert.deepEqual(cultureTags("routeNames", { c: ["norse", "roman"] }), ["scandinavian", "roman"]);
+  assert.deepEqual(cultureTags("routeNames", { c: ["norse", "roman"] }), ["norse", "roman"]);
   assert.equal(cultureTags("routeNames", {}), undefined, "no tag: open");
   assert.equal(cultureTags("routeNames", { c: ["!indian", "!west-african"] }), undefined, "exclusions: open, not signature");
   assert.deepEqual(cultureTags("routeNames", { c: ["!indian", "roman"] }), ["roman"], "a positive tag beside an exclusion is signature");
-  assert.deepEqual(cultureTags("routeNames", { c: ["british"] }), ["english", "welsh", "scottish", "irish", "cornish"], "a group expands to its lens cultures");
+  assert.deepEqual(cultureTags("routeNames", { c: ["british"] }), ["english", "celtic", "welsh", "scottish", "irish", "cornish"], "a group expands to its lens cultures (Celtic is a lens culture of its own in the batch 5a modules)");
   assert.equal(cultureTags("routeNames", { culture: "general" }), undefined, "general is the unmarked baseline");
 });
 
@@ -42,7 +42,7 @@ test("five or more eras read as open; a land module reads the land band as one",
 test("fixed whole names are words; a table's own culture and `cultureExtra` words are signature", () => {
   const fixed = makeRow({ f: "fixed", culture: "norse" }, { module: "mountainNames", source: "cultureShapes" });
   assert.equal(fixed.type, "word");
-  assert.deepEqual(fixed.cultures, ["scandinavian"]);
+  assert.deepEqual(fixed.cultures, ["norse"]);
   assert.equal(makeRow({}, { module: "mountainNames", source: "shapes/x" }).type, "shape");
   // routeGoods' extras for a culture are rows for that culture, counted as words.
   const rows = vocabularyRows("routeNames").filter((r) => r.source === "routeGoods/cultureExtra");
@@ -64,15 +64,15 @@ test("a module's cells: culture targets by tier, excluded and unoffered cultures
     excluded: [{ cultures: ["polynesian"] }],
     regions: true,
     rows: () => [
-      { module: "mountainNames", kind: "range", type: "word", source: "w", cultures: ["scandinavian"], n: 1 },
-      { module: "mountainNames", kind: "range", type: "shape", source: "s", cultures: ["scandinavian"], eras: ["EM", "ST", "MO"], tones: ["grim"], regions: ["SHH"], n: 1 },
+      { module: "mountainNames", kind: "range", type: "word", source: "w", cultures: ["norse"], n: 1 },
+      { module: "mountainNames", kind: "range", type: "shape", source: "s", cultures: ["norse"], eras: ["EM", "ST", "MO"], tones: ["grim"], regions: ["SHH"], n: 1 },
       { module: "mountainNames", kind: "range", type: "shape", source: "s", n: 1 },
     ],
   };
   const m = moduleCoverage(adapter);
-  assert.deepEqual([m.cultures.scandinavian.words, m.cultures.scandinavian.shapes], [1, 1]);
-  assert.deepEqual(m.cultures.scandinavian.target, { words: 30, shapes: 10 }, "core tier");
-  assert.equal(m.cultures.scandinavian.below, true);
+  assert.deepEqual([m.cultures.norse.words, m.cultures.norse.shapes], [1, 1]);
+  assert.deepEqual(m.cultures.norse.target, { words: 30, shapes: 10 }, "core tier");
+  assert.equal(m.cultures.norse.below, true);
   assert.deepEqual(m.cultures.roman.notOffered, true, "not in the roster");
   assert.equal(m.cultures.polynesian.excluded, true);
   assert.equal(m.cultures.polynesian.below, false);
@@ -90,7 +90,7 @@ test("a module's cells: culture targets by tier, excluded and unoffered cultures
 // of the shared pools "wild lands" reads that are tagged for the culture (Chinese 3, Indian 3, Norse 0).
 test("mountains: Chinese 3 fixed names and 3 pool words, 2 settlement shapes", () => assert.equal(cell("mountainNames", "chinese"), "6/2"));
 test("mountains: Indian 2 fixed names and 3 pool words, 2 settlement shapes", () => assert.equal(cell("mountainNames", "indian"), "5/2"));
-test("mountains: Norse 3 fixed names, no tagged pool word, no shape", () => assert.equal(cell("mountainNames", "scandinavian"), "3/0"));
+test("mountains: Norse 3 fixed names, no tagged pool word, no shape", () => assert.equal(cell("mountainNames", "norse"), "3/0"));
 
 // Inns: a culture's `cultureShapes` list (Norse 4, Japanese 4, Polynesian 2) and the tagged words of the
 // pools "inns and taverns" reads (Norse 3, Japanese 23, Polynesian 1).

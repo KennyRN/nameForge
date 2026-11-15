@@ -212,7 +212,7 @@ test("the probe records both modules: era runs, worlds, the three views and thei
   const offers = (lensOffers as unknown as { modules: Record<string, { eras: string[][]; views: string[]; classes: string[] }> }).modules;
   for (const m of [H, F]) {
     assert.deepEqual(offers[m].eras.flat(), ["AN", "MD", "EM", "ST", "MO", "NF", "IS"], m);
-    assert.deepEqual(offers[m].views, ["welsh", "scottish", "cornish"], m);
+    assert.equal(offers[m].views, undefined, `${m}: batch 5a has the nations as cultures, not views`);
   }
   assert.deepEqual(offers[H].classes, ["natural", "managed", "constructed"]);
   assert.deepEqual(offers[F].classes, ["managed", "constructed"]);

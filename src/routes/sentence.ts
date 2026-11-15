@@ -17,6 +17,8 @@ import {
   findRouteKind,
   kindsOffered,
   ROUTE_ANY,
+  NORTH_CULTURES,
+  readsRegions,
   ROUTE_CULTURES,
   ROUTE_ERAS,
   ROUTE_FTL,
@@ -28,6 +30,8 @@ import {
 } from "./engine";
 
 registerRoster("route", ROUTE_CULTURES);
+/** Northern Europe brief 5a: route names also offer Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
+registerRoster("route5a", NORTH_CULTURES);
 
 export interface RouteSentenceState {
   culture: string;
@@ -76,6 +80,8 @@ export const fantasticWords = (era: RouteEra): [string, string] => ["realistic",
 
 /** §2.2: the region link shows for the three British cultures only. */
 export const showsRegion = (state: Pick<RouteSentenceState, "culture">) => BRITISH_CULTURES.includes(state.culture);
+/** Northern Europe brief 5a §4: route names also read the regions of Scandinavia and Germany. The other modules still show the link for the British cultures only until their batch. */
+export const showsRouteRegion = (state: Pick<RouteSentenceState, "culture">) => showsRegion(state) || readsRegions(state.culture);
 
 /** §2.2: "across all of Britain", or "in the North". */
 export const routeRegionText = (region: string | undefined) => (region ? `in ${regionPhrase(region)}` : "across all of Britain");
@@ -199,7 +205,7 @@ export function chooseRoute(state: RouteSentenceState, field: RouteField, id: st
   if (next.scale && next.scale !== "any") next.scale = validScale(next.scale, next.era === "NF" || next.era === "IS" ? next.era : undefined);
   // §2.3: a kind not offered in the era resets to Any; region resets away from the British cultures.
   if (next.kind && !kindsOffered(next.era, next.fantastic).some((k) => k.key === next.kind)) next.kind = undefined;
-  if (!showsRegion(next)) next.region = undefined;
+  if (!showsRouteRegion(next)) next.region = undefined;
   if (next.ftl && next.ftl !== "any" && !showsFtl(next.era, next.kind, next.scale ?? "any")) next.ftl = "any";
   return next;
 }
@@ -212,7 +218,7 @@ export function routeHistoryLabel(state: RouteSentenceState): string {
     "route names",
     routeEraLabel(state.era),
     culture,
-    ...(state.region && showsRegion(state) ? [regionPhrase(state.region)] : []),
+    ...(state.region && showsRouteRegion(state) ? [regionPhrase(state.region)] : []),
     ...(kind ? [kind.plural] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
     ...(state.tone !== "any" ? [state.tone] : []),

@@ -16,7 +16,7 @@ type Entry = { family: "A" | "B"; fields: Record<"culture" | "era" | "fantastic"
 const LENS = lensData as unknown as { modules: Record<string, { sentence: Entry | { family: "none" } }>; menu: { heading: string | null; entries: { key?: string; label?: string | null; view?: string; scope?: string }[] }[] };
 const OFFERS = (offersData as unknown as { modules: Record<string, { eras: (string[] | string)[]; eraRuns?: string[][]; worlds: Record<string, string[]>; views?: string[] }> }).modules;
 const entryOf = (m: string) => LENS.modules[m].sentence as Entry;
-const REGION_CODES = PLACE_SHAPE_REGIONS.map((r) => r.code);
+const REGION_CODES = [...PLACE_SHAPE_REGIONS.map((r) => r.code), "DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"];
 const ERA_CODES = ["AN", "MD", "EM", "ST", "MO", "NF", "IS"];
 
 /** A stored state with the four fields' own names, and whatever else the region link needs. */
@@ -49,8 +49,8 @@ test("every family A and B module has a sentence entry and an offers entry", () 
 
 const MENU_BRIEF: [string | null, string[]][] = [
   [null, ["general"]],
-  ["British Isles", ["norman-british", "anglo-saxon", "welsh", "scottish", "cornish", "celtic"]],
-  ["Northern Europe", ["norse", "dutch"]],
+  ["British Isles", ["norman-british", "anglo-saxon", "welsh", "scottish", "irish", "cornish", "celtic"]],
+  ["Northern Europe", ["norse", "scandinavian", "dutch"]],
   ["Western and southern Europe", ["french", "iberian", "roman", "greek-byzantine"]],
   ["Eastern Europe and the steppe", ["slavic", "steppe", "ottoman"]],
   ["Middle East and Africa", ["arabic-persian", "egyptian", "ethiopian", "swahili-omani", "bantu", "west-african"]],
@@ -224,8 +224,8 @@ test("rule 4: a stored value the probe wouldn't offer is shown, listed in its me
 
 // ── §6.3 The views ─────────────────────────────────────────────────────────
 
-test("views: Welsh, Cornish and Scottish are readings of (celtic, region), both ways", () => {
-  const m = "routeNames";
+test("views: Welsh, Cornish and Scottish are readings of (celtic, region), both ways, in the modules outside the northern Europe batches", () => {
+  const m = "streetNames";
   const rows: [string, string | undefined, string, string, boolean][] = [
     // [stored region, shown culture, region text, ...]
     ["WAL", "welsh", "in Wales", "WAL", true],
@@ -259,7 +259,7 @@ test("views: Welsh, Cornish and Scottish are readings of (celtic, region), both 
   assert.deepEqual(celtic.region!.choices.map((c) => c.id), ["all", "WCY", "SEA", "EAN", "WMM", "EMD", "NTH"]);
   // English keeps today's link: all of Britain and all 12.
   const english = lensClause(m, stateOf(m, { culture: "norman-british" }));
-  assert.deepEqual(english.region!.choices.map((c) => c.id), ["all", ...REGION_CODES]);
+  assert.deepEqual(english.region!.choices.map((c) => c.id), ["all", ...PLACE_SHAPE_REGIONS.map((r) => r.code)]);
   assert.equal(english.region!.text, "across all of Britain");
   assert.equal(lensClause(m, stateOf(m, { culture: "anglo-saxon", region: "NTH" })).region!.text, "in the North");
   // Changing culture away from a view clears the region.
@@ -285,7 +285,9 @@ test("views: offered only where the probe finds them, and only for modules with 
     const ids = lensClause(m, stateOf(m, {})).culture!.choices.map((c) => c.id);
     for (const v of ["welsh", "scottish", "cornish"]) {
       const offered = (OFFERS[m].views ?? []).includes(v);
-      assert.equal(ids.includes(v), offered, `${m}: ${v}`);
+      // Batch 5a: in a module of the batch they are cultures of the roster, not views.
+      const real = rosterCultures(e.roster!).some((c) => c.key === v);
+      assert.equal(ids.includes(v), offered || real, `${m}: ${v}`);
       if (!e.fields.region) assert.equal(offered, false, `${m} has no region link and no views`);
     }
   }
@@ -391,4 +393,58 @@ test("a module's registered rules narrow the worlds and add knock-ons", () => {
   }
   // Without the rule the clause is the plain one.
   assert.deepEqual(lensClause("supernaturalCourts", stateOf("supernaturalCourts", { genre: "modern" })).world!.choices.map((c) => c.id), ["plain", "fantastic"]);
+});
+
+// ── Northern Europe brief, batch 5a (§3.1, §4): the nations as cultures, the regions of Scandinavia and Germany ──
+
+test("batch 5a: Welsh, Scottish, Cornish and Irish are cultures of the module, and a stored Celtic state reads through to them", () => {
+  const m = "routeNames";
+  const read = (state: Record<string, unknown>) => lensClause(m, stateOf(m, state));
+  // A stored (celtic, region) reads as the nation; stored notes are not rewritten.
+  for (const [region, culture] of [["WAL", "welsh"], ["COR", "cornish"], ["SBL", "scottish"], ["SLO", "scottish"], ["SHH", "scottish"], ["NSI", "scottish"]] as const) {
+    const clause = read({ culture: "celtic", region });
+    assert.equal(clause.culture!.current, culture, `${region}`);
+    assert.equal(clause.region!.current, region);
+  }
+  assert.equal(read({ culture: "celtic", region: "NTH" }).culture!.current, "celtic", "any other region leaves Celtic as stored");
+  // Welsh and Cornish have one fixed region; Scottish four, defaulting to the Lowlands; Irish none.
+  assert.deepEqual([read({ culture: "welsh", region: "WAL" }).region!.text, read({ culture: "welsh", region: "WAL" }).region!.fixed], ["in Wales", true]);
+  assert.deepEqual([read({ culture: "cornish", region: "COR" }).region!.text, read({ culture: "cornish", region: "COR" }).region!.fixed], ["in Cornwall", true]);
+  const scottish = read({ culture: "scottish", region: "SHH" }).region!;
+  assert.deepEqual(scottish.choices.map((c) => c.id), ["SBL", "SLO", "SHH", "NSI"]);
+  assert.equal(applyLensChoice(m, stateOf(m, { culture: "norman-british" }), "culture", "scottish").region, "SLO");
+  assert.equal(applyLensChoice(m, stateOf(m, { culture: "norman-british" }), "culture", "welsh").region, "WAL");
+  assert.equal(applyLensChoice(m, stateOf(m, { culture: "norman-british" }), "culture", "cornish").region, "COR");
+  assert.equal(read({ culture: "irish" }).region, undefined, "Irish has no region link");
+  // Celtic is a mix: its link reads "across all of Britain" only.
+  const celtic = read({ culture: "celtic" }).region!;
+  assert.deepEqual([celtic.text, celtic.fixed, celtic.choices.length], ["across all of Britain", true, 1]);
+  // English keeps its seven regions; the choosing of a culture it already holds changes nothing.
+  assert.deepEqual(read({ culture: "norman-british" }).region!.choices.map((c) => c.id), ["all", "WCY", "SEA", "EAN", "WMM", "EMD", "NTH", "SBL"].filter((c) => c !== "all" || true));
+});
+
+test("batch 5a: Norse, Scandinavian and German read their regions, and Welsh is a menu entry of its own", () => {
+  const m = "mountainNames";
+  const clause = (state: Record<string, unknown>) => lensClause(m, stateOf(m, { where: "home", ...state }));
+  for (const culture of ["norse", "scandinavian"]) {
+    const r = clause({ culture }).region!;
+    assert.deepEqual(r.choices.map((c) => c.id), ["all", "DEN", "NOR", "SWE", "ICE"], culture);
+    assert.equal(r.text, "across all of Scandinavia");
+    assert.equal(clause({ culture, region: "NOR" }).region!.text, "in Norway");
+    assert.equal(clause({ culture, region: "ICE" }).region!.text, "in Iceland and the Atlantic isles");
+  }
+  const german = clause({ culture: "german" }).region!;
+  assert.deepEqual(german.choices.map((c) => c.id), ["all", "NDT", "RHN", "MIT", "ALP", "OST"]);
+  assert.equal(german.text, "across all of Germany");
+  assert.equal(clause({ culture: "german", region: "RHN" }).region!.text, "in the Rhineland");
+  assert.equal(clause({ culture: "german", region: "ALP" }).region!.text, "in the Alpine south");
+  // Choosing German from a British state drops the British region; a Scandinavian one drops it too.
+  assert.equal(applyLensChoice(m, stateOf(m, { culture: "norman-british", region: "NTH", where: "home" }), "culture", "german").region, undefined);
+  assert.equal(applyLensChoice(m, stateOf(m, { culture: "norse", region: "NOR", where: "home" }), "culture", "scandinavian").region, "NOR", "a region both read is kept");
+  // The region link shows in home country only.
+  assert.equal(lensClause(m, stateOf(m, { culture: "german", where: "new" })).region, undefined);
+  // The culture menu lists them under the lens headings.
+  const ids = clause({}).culture!.choices.map((c) => c.id);
+  assert.deepEqual(ids.slice(ids.indexOf("norman-british"), ids.indexOf("scandinavian") + 1), ["norman-british", "anglo-saxon", "welsh", "scottish", "irish", "cornish", "celtic", "norse", "scandinavian"]);
+  assert.ok(ids.includes("german"));
 });

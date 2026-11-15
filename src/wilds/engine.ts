@@ -5,7 +5,8 @@
 // tone factor, and the river engine. The helpers are mirrored from the waters engine so that its
 // fixtures can't move. No Obsidian imports.
 
-import { readsBritishRegionWords, type LensEra } from "../lens";
+import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
+import { mergeRegionColumns, NORTH } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -31,7 +32,7 @@ import {
 import { mulberry32 } from "../markov";
 import { riverFill, type RiverSetting } from "../rivers/engine";
 import { townSource } from "../bynames/engine";
-import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, personNames, ROUTE_CULTURES, ROUTE_ERAS, routeCapitals, routeFolk, routeKingdom, routeNorm, routePlace, routeSetting, type RouteCulture, type RouteEra } from "../routes/engine";
+import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, NORTH_CULTURES, personNames, readsRegions, ROUTE_CULTURES, ROUTE_ERAS, routeCapitals, routeFolk, routeKingdom, routeNorm, routePlace, routeSetting, type RouteCulture, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
 import { kindInClass, type PlaceClass } from "../places/classes";
@@ -130,7 +131,26 @@ interface WildsData {
   cap: number;
 }
 
-export const WILDS_DATA = wildsData as unknown as WildsData;
+/** Northern Europe brief 5a: a table keyed by culture, with a row for each newer culture key that has none of its own (it reads its legacy key's). */
+const withAliasRows = <T>(table: Record<string, T>): Record<string, T> => {
+  const out = { ...table };
+  for (const [key, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key in out) && legacy in out) out[key] = out[legacy];
+  return out;
+};
+const WILDS_BASE = wildsData as unknown as WildsData;
+const NORTH_WILDS_SHAPES = NORTH.wilds.cultureShapes as unknown as WildsData["cultureShapes"];
+export const WILDS_DATA: WildsData = {
+  ...WILDS_BASE,
+  cultureShapes: [...WILDS_BASE.cultureShapes, ...NORTH_WILDS_SHAPES.filter((s) => (WILDS_MODULES as string[]).includes(s.module))],
+  regionTags: mergeRegionColumns(WILDS_BASE.regionTags, NORTH.wilds.regionColumns, NORTH.wilds.regionTags),
+  cultureMult: { ...withAliasRows(WILDS_BASE.cultureMult), ...NORTH.wilds.cultureMult },
+  homeland: { ...withAliasRows(WILDS_BASE.homeland), ...NORTH.wilds.homeland },
+  settlementLink: {
+    ...WILDS_BASE.settlementLink,
+    cultureToColonial: withAliasRows(WILDS_BASE.settlementLink.cultureToColonial),
+    worldEraToRoute: withAliasRows(WILDS_BASE.settlementLink.worldEraToRoute),
+  },
+};
 const PLACES = placesData as unknown as Partial<WildsData> & { eraMult?: Record<string, Record<string, number>> };
 
 /**
@@ -142,8 +162,8 @@ const PLACES_DATA: WildsData = {
   ...WILDS_DATA,
   modules: PLACES.modules!,
   shapes: PLACES.shapes!,
-  cultureShapes: PLACES.cultureShapes ?? [],
-  regionTags: { ...WILDS_DATA.regionTags, ...PLACES.regionTags },
+  cultureShapes: [...(PLACES.cultureShapes ?? []), ...NORTH_WILDS_SHAPES.filter((s) => (PLACE_MODULES as string[]).includes(s.module))],
+  regionTags: mergeRegionColumns({ ...WILDS_DATA.regionTags, ...PLACES.regionTags }, NORTH.wilds.regionColumns, undefined),
   biomeTags: { ...WILDS_DATA.biomeTags, ...PLACES.biomeTags },
   eraMult: { ...WILDS_DATA.eraMult, ...PLACES.eraMult },
   kindMult: { britishHome: { ...WILDS_DATA.kindMult.britishHome, ...PLACES.kindMult?.britishHome }, biome: { ...WILDS_DATA.kindMult.biome, ...PLACES.kindMult?.biome } },
@@ -152,7 +172,7 @@ const PLACES_DATA: WildsData = {
 };
 /** The table a module reads. */
 export const wildsDataOf = (module: WildsLikeModule): WildsData => (isPlaceModule(module) ? PLACES_DATA : WILDS_DATA);
-export const WILDS_CULTURES: RouteCulture[] = ROUTE_CULTURES;
+export const WILDS_CULTURES: RouteCulture[] = NORTH_CULTURES;
 export const findWildsCulture = (key: string | undefined) => WILDS_CULTURES.find((c) => c.key === key) ?? findColonialCulture(key);
 export const isBritishCulture = (culture: string) => BRITISH_CULTURES.includes(culture);
 
@@ -170,6 +190,9 @@ export const wildsDefaultWhere = (module: WildsLikeModule): WildsWhere => (modul
 /** §2.2: the region link shows for the three British cultures in home country, never in deserts. */
 export const showsWildsRegion = (module: WildsLikeModule, culture: string, where: WildsWhere) =>
   wildsDataOf(module).modules[module].region && isBritishCulture(culture) && where === "home";
+/** Northern Europe brief 5a §4: the region link also shows for the cultures with regions of their own (Scandinavian, German), in home country. */
+export const wildsReadsRegion = (module: WildsLikeModule, culture: string, where: WildsWhere) =>
+  !!wildsDataOf(module).modules[module].region && readsRegions(culture) && where === "home";
 
 /**
  * The biomes a module offers (§3.4), in menu order. A biome pack shows where its root built-in does
@@ -292,7 +315,7 @@ export function wildsStemPool(source: string, region?: string, catalogue: BiomeC
 }
 
 /** §4.1: a culture's stem source, or undefined for Greek & Byzantine, steppe, Polynesian and Andean. */
-export const stemSourceOf = (culture: RouteCulture): string | undefined => (culture.sensitive ? undefined : townSource(culture.key));
+export const stemSourceOf = (culture: RouteCulture): string | undefined => (culture.sensitive ? undefined : townSource(engineCulture(culture.key)));
 
 /** §4.1: the resolved biome's one-word wild animals and trees, title case: the fallback stems. */
 export function biomeStems(biome: Biome): string[] {
@@ -359,11 +382,11 @@ export function nativeSettlementRequest(
     return tradition ? { ...base, setting: where === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? undefined : tradition } : undefined;
   }
   if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : undefined };
-  const worldCulture = WORLD_CULTURES.find((c) => c.id === culture);
+  const worldCulture = WORLD_CULTURES.find((c) => c.id === engineCulture(culture));
   if (!worldCulture) return undefined;
   const eras = worldCulture.eras.filter((e) => e.id !== INTERSTELLAR_ERA);
   const match = eras.find((e) => link.worldEraToRoute[culture]?.[e.id] === era) ?? eras[0];
-  return { ...base, setting: "native", culture, era: match?.id, biome: undefined, customBiome: biome ? catalogue.find(biome) : undefined };
+  return { ...base, setting: "native", culture: engineCulture(culture), era: match?.id, biome: undefined, customBiome: biome ? catalogue.find(biome) : undefined };
 }
 
 /** A weighted two-way tradition entry (§3.2): one roll, by weight. */
@@ -407,6 +430,8 @@ interface Ctx {
   where: WildsWhere;
   /** A British culture in home country, not deserts: the region tags apply and the Britain biome is used. */
   homeBritish: boolean;
+  /** A culture with regions of its own (not British) in home country: the region tags apply. */
+  homeRegional?: boolean;
   region?: string;
   /** The resolved biome (§3.4). */
   biome: Biome;
@@ -449,10 +474,15 @@ function regionMult(ctx: Ctx, tag: string | undefined): number {
   if (!tag) return 1;
   const row = wildsDataOf(ctx.module).regionTags[tag];
   if (!row) return 1;
-  // Shared tables brief §13.3: a British dialect word is drawn only for the british culture group and norse.
-  if (!readsBritishRegionWords(ctx.culture.key, ctx.era as LensEra)) return 0;
-  if (!ctx.homeBritish) return 1;
+  // Shared tables brief §13.3: a British dialect word is drawn only for the british culture group and norse. Northern Europe brief 5a §4: a Scandinavian or German region word only for its own cultures.
+  const only = NORTH.wilds.regionTagFor[tag];
+  if (only ? !only.includes(ctx.culture.key) : !readsBritishRegionWords(ctx.culture.key, ctx.era as LensEra)) return 0;
+  if (!ctx.homeBritish && !ctx.homeRegional) return 1;
   if (ctx.region) return row[ctx.region] ?? 1;
+  if (!ctx.homeBritish) {
+    const own = regionsOfCulture(ctx.culture.key);
+    return own.length > 0 ? own.reduce((n, code) => n + (row[code] ?? 1), 0) / own.length : 1;
+  }
   let mean = MEAN_CACHE.get(tag);
   if (mean === undefined) {
     mean = WILDS_DATA.regions.reduce((n, code) => n + (row[code] ?? 1), 0) / WILDS_DATA.regions.length;
@@ -805,6 +835,8 @@ function kindShapes(ctx: Ctx, kind: string): WildsShape[] {
 
 /** §7: a batch of unique names for one of the six modules. */
 export function generateWildsNames(options: WildsOptions): WildsBatch {
+  // Northern Europe brief 5a §3.1: a stored Celtic state with a nation's region reads as that nation, and a nation always has its region.
+  if (options.culture === "celtic" && options.region && options.region !== "all") options = { ...options, ...readCelticView("celtic", options.region) };
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
@@ -825,7 +857,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const fantastic = !!options.fantastic;
   const resolved = resolveWildsBiome(module, culture.key, where, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;
-  const region = homeBritish && options.region && options.region !== "all" ? options.region : undefined;
+  const homeRegional = !homeBritish && wildsReadsRegion(module, culture.key, where);
+  const region = (homeBritish || homeRegional) && options.region && options.region !== "all" ? options.region : undefined;
   const mode: GroupPeople = options.people ?? "placeholders";
   const count = Math.max(0, Math.floor(options.count));
   const block = blockSet(module, options.safeguards);
@@ -844,6 +877,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     fantastic,
     where,
     homeBritish,
+    homeRegional,
     region,
     biome: resolved.biome,
     biomeTags: resolved.tags,

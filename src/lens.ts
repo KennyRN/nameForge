@@ -40,6 +40,9 @@ export interface LensStyle {
 export interface LensRegion {
   code: string;
   label: string;
+  /** Northern Europe brief §4: what the region reads as in a sentence ("Norway", "the Rhineland") and its landscape (the tooltip). */
+  phrase?: string;
+  landscape?: string;
   cultures: string[];
   status: "live" | "planned";
 }
@@ -262,7 +265,7 @@ export function lensCultureLabel(key: string | undefined, own: string): string {
 
 /** §3.1: whether a culture belongs to a named group in an era (christian: greek-byzantine and roman from MD). */
 /** Shared tables brief §13.3: the British dialect words (regionTags) are drawn only for the lens's british culture group and norse. */
-export const readsBritishRegionWords = (culture: string, era: LensEra): boolean => culture === "norse" || inCultureGroup("british", culture, era);
+export const readsBritishRegionWords = (culture: string, era: LensEra): boolean => inCultureGroup("nordic", culture, era) || inCultureGroup("british", culture, era);
 
 export function inCultureGroup(group: string, culture: string, era: LensEra): boolean {
   const g = LENS.cultureGroups[group];
@@ -305,4 +308,46 @@ export function poolExemption(pool: string): "forPacks" | "closed" | undefined {
   if (LENS.poolExemptions.forPacks.includes(pool)) return "forPacks";
   if (LENS.poolExemptions.closed.includes(pool)) return "closed";
   return undefined;
+}
+
+// ── Northern Europe brief (batch 5a): the four Celtic nations, Scandinavian and German as cultures ──
+
+/** The legacy key whose plumbing a newer module culture key reads (`welsh` reads `celtic`'s settlement names, gods and weights) wherever a table has no row of its own. */
+export const ENGINE_ALIAS: Readonly<Record<string, string>> = Object.fromEntries(
+  Object.entries((LENS as unknown as { engineAlias: Record<string, string> }).engineAlias).filter(([k]) => k !== "$comment"),
+);
+export const engineCulture = (key: string): string => ENGINE_ALIAS[key] ?? key;
+
+interface CultureRegionInfo {
+  regions: string[];
+  /** One region only: drawn as plain text. */
+  fixed?: boolean;
+  default?: string;
+  text?: string;
+  /** The link also offers the whole culture ("Britain", "Scandinavia", "Germany"). */
+  all?: string;
+}
+const CULTURE_REGIONS = Object.fromEntries(
+  Object.entries((LENS as unknown as { cultureRegions: Record<string, CultureRegionInfo> }).cultureRegions).filter(([k]) => k !== "$comment"),
+) as Record<string, CultureRegionInfo>;
+
+/** The regions a module culture key reads (empty for a culture without any, and for Celtic, whose only link is all of Britain). */
+export const regionsOfCulture = (key: string): readonly string[] => CULTURE_REGIONS[key]?.regions ?? [];
+export const cultureRegionInfo = (key: string): CultureRegionInfo | undefined => CULTURE_REGIONS[key];
+/** Whether a region code is one the culture reads. */
+export const cultureReadsRegion = (culture: string, region: string | undefined): boolean => !!region && regionsOfCulture(culture).includes(region);
+
+/** The module culture keys of the new region-reading cultures: Welsh, Scottish, Cornish and Irish, Norse, Scandinavian and German. */
+export const REGION_CULTURES: readonly string[] = Object.keys(CULTURE_REGIONS);
+
+/**
+ * §3.1: a stored `celtic` + WAL state reads as `welsh` + WAL, `celtic` + COR as `cornish` + COR and `celtic` + SBL, SLO, SHH or NSI as
+ * `scottish` + that region; anything else is as stored. Stored notes are never rewritten: the engines and the sentence read through.
+ */
+export function readCelticView(culture: string, region: string | undefined): { culture: string; region: string | undefined } {
+  if (culture !== "celtic" || !region) return { culture, region };
+  if (region === "WAL") return { culture: "welsh", region };
+  if (region === "COR") return { culture: "cornish", region };
+  if (["SBL", "SLO", "SHH", "NSI"].includes(region)) return { culture: "scottish", region };
+  return { culture, region };
 }

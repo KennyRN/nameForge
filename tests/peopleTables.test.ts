@@ -12,7 +12,8 @@ import { fillSlots } from "../src/fill";
 import "../src/fill/batch";
 
 const CORE = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
-const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => c.tier === "second").map((c) => c.key);
+/** Celtic (Northern Europe brief §3.2) is a mix of the four nations and has no people table of its own: it reads theirs. */
+const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => c.tier === "second" && c.key !== "celtic").map((c) => c.key);
 /** Ancient peoples with only a historic table: later they read another culture. */
 const HISTORIC_ONLY = new Set(["anglo-saxon", "roman", "egyptian"]);
 const PERIODS: PeoplePeriod[] = ["historic", "modern"];

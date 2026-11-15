@@ -40,7 +40,8 @@ import { boostPool, contextSaint, selfPatterns, TownTurn, type SettlementContext
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet, LENS_CULTURE_GROUPS } from "../lens";
+import { cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
+import { mergeRegionColumns, NORTH } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -125,15 +126,30 @@ interface RouteData {
   safeguards: { block: string[]; flag: string[]; flagListBlocks: boolean; banned: string[] };
 }
 
-export const ROUTE_DATA = routeData as unknown as RouteData;
+const ROUTE_BASE = routeData as unknown as RouteData;
+// Northern Europe brief 5a: the batch's own culture shapes and region columns (src/data/north5a.json) join the route tables.
+export const ROUTE_DATA: RouteData = {
+  ...ROUTE_BASE,
+  cultureShapes: [...ROUTE_BASE.cultureShapes, ...(NORTH.routes.cultureShapes as unknown as RouteData["cultureShapes"])],
+  regions: mergeRegionColumns(ROUTE_BASE.regions, NORTH.routes.regionColumns, NORTH.routes.regions),
+};
 export const ROUTE_ERAS = ROUTE_DATA.eras;
 export const ROUTE_CULTURES = ROUTE_DATA.cultures;
+/** Northern Europe brief 5a §3: the cultures of the modules in the batch: the shared roster, and Welsh, Scottish, Irish, Cornish, Scandinavian and German as cultures of their own. */
+export const NORTH_CULTURES: RouteCulture[] = [
+  ...ROUTE_CULTURES,
+  ...["welsh", "scottish", "irish", "cornish"].map((key) => ({ key, label: key[0].toUpperCase() + key.slice(1), group: "British Isles and northern Europe" })),
+  { key: "scandinavian", label: "Scandinavian", group: "British Isles and northern Europe", kindMult: { sea: 2 } },
+  { key: "german", label: "German", group: "British Isles and northern Europe" },
+];
 export const ROUTE_KINDS = ROUTE_DATA.kinds;
 export const ROUTE_ANY = ROUTE_DATA.any;
 /** §4.1: the cultures the region link is offered for. */
 export const BRITISH_CULTURES = [...LENS_CULTURE_GROUPS.british.cultures];
 
-export const findRouteCulture = (key: string | undefined) => ROUTE_CULTURES.find((c) => c.key === key);
+export const findRouteCulture = (key: string | undefined) => ROUTE_CULTURES.find((c) => c.key === key) ?? NORTH_CULTURES.find((c) => c.key === key);
+/** Whether a culture takes a region in a module of the batch: the British cultures, and the cultures with regions of their own (Scandinavia, Germany). */
+export const readsRegions = (culture: string): boolean => BRITISH_CULTURES.includes(culture) || REGION_CULTURES.includes(culture);
 export const findRouteKind = (key: string | undefined) => ROUTE_KINDS.find((k) => k.key === key);
 export const routeEraLabel = (code: string) => ROUTE_ERAS.find((e) => e.code === code)?.label ?? code;
 
@@ -332,9 +348,9 @@ function gnWord(ctx: Ctx, token: string): string | undefined {
 /** §4.2: an invented place: the culture's places (a land compound for Polynesian and Andean). */
 export function routePlace(cultureKey: string, setting: GroupSetting, rng: () => number, catalogue?: BiomeCatalogue): string | undefined {
   const culture = findRouteCulture(cultureKey);
-  const source = culture?.sensitive ? undefined : townSource(cultureKey);
+  const source = culture?.sensitive ? undefined : townSource(engineCulture(cultureKey));
   // §12.3 / BT §11.4: no deity or saint names in the no-gods cultures' places.
-  const holy = holyNamesIn(cultureKey);
+  const holy = holyNamesIn(engineCulture(cultureKey));
   for (let i = 0; i < 20; i++) {
     const t = groupTown(setting, source, rng, catalogue).replace(/^The /, "");
     if (!holy || !holy.test(t)) return t;
@@ -344,22 +360,22 @@ export function routePlace(cultureKey: string, setting: GroupSetting, rng: () =>
 
 /** §4.2: invented people: the world culture's `name` list (anglo-saxon, norse). */
 export const personNames = (culture: string): string[] =>
-  (WORLD_CULTURES.find((c) => c.id === culture)?.lists.name ?? []).filter((w) => !w.includes("{")).map(stripPlural);
+  (WORLD_CULTURES.find((c) => c.id === engineCulture(culture))?.lists.name ?? []).filter((w) => !w.includes("{")).map(stripPlural);
 
 /** §4.2: `{god}`: the world culture's gods, for the five cultures of §12.3 only. */
 export const godNames = (culture: string): string[] =>
-  GOD_CULTURES.has(culture) ? (WORLD_CULTURES.find((c) => c.id === culture)?.lists.god ?? []).filter((w) => !w.includes("{")).map(stripPlural) : [];
+  GOD_CULTURES.has(engineCulture(culture)) ? (WORLD_CULTURES.find((c) => c.id === engineCulture(culture))?.lists.god ?? []).filter((w) => !w.includes("{")).map(stripPlural) : [];
 
 /** §4.2: `{figure}`: the culture's byname ranks, English men's form, at their weights. */
 export function routeFigure(cultureKey: string, setting: GroupSetting, rng: () => number): string | undefined {
   const culture = findRouteCulture(cultureKey);
   if (culture?.figure) return pickOne(culture.figure, rng);
-  const ranks = BYNAMES_DATA.ranks[cultureKey] ?? BYNAMES_DATA.ranks.general;
+  const ranks = BYNAMES_DATA.ranks[engineCulture(cultureKey)] ?? BYNAMES_DATA.ranks.general;
   const items: [string, number][] = [];
   for (const r of ranks) {
     if (r.s && !r.s.includes(setting)) continue;
     const form = entryForm(r, "male", false);
-    if (form) items.push([form.text, (r.x ?? 1) * (r.cx?.[cultureKey] ?? 1)]);
+    if (form) items.push([form.text, (r.x ?? 1) * (r.cx?.[engineCulture(cultureKey)] ?? 1)]);
   }
   return pickWeighted(items, rng);
 }
@@ -369,7 +385,7 @@ const figure = (ctx: Ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
 // The pools are cached per catalogue: a pack that replaces a built-in changes the homelands they draw from.
 const FOLK = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
 export function routeFolk(cultureKey: string, rng: () => number, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string | undefined {
-  const tradition = findRouteCulture(cultureKey)?.folk ?? REALM_DATA.tribal[cultureKey] ?? "general";
+  const tradition = findRouteCulture(cultureKey)?.folk ?? REALM_DATA.tribal[engineCulture(cultureKey)] ?? "general";
   let pools = FOLK.get(catalogue);
   if (!pools) FOLK.set(catalogue, (pools = new Map()));
   let pool = pools.get(tradition);
@@ -387,12 +403,12 @@ const KINGDOMS = new WeakMap<BiomeCatalogue, Map<string, string[]>>();
 /** Also events and eras' `{realm}` (Events brief §3). */
 export function routeKingdom(cultureKey: string, routeEra: RouteEra, rng: () => number, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): string | undefined {
   const era = REALM_ERAS.find((e) => e.code === routeEra)?.key ?? "medieval";
-  const key = `${cultureKey}|${era}`;
+  const key = `${engineCulture(cultureKey)}|${era}`;
   let pools = KINGDOMS.get(catalogue);
   if (!pools) KINGDOMS.set(catalogue, (pools = new Map()));
   let pool = pools.get(key);
   if (!pool) {
-    pool = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue })
+    pool = generateRealmNames({ culture: engineCulture(cultureKey), era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue })
       .names.map((n) => n.text.replace(/^the /i, ""))
       .filter((n) => !n.includes("["));
     pools.set(key, pool);
@@ -702,6 +718,8 @@ function compassValues(ctx: Ctx, token: string): string[] {
 
 /** §7: a batch of unique route names. */
 export function generateRouteNames(options: RouteOptions): RouteBatch {
+  // Northern Europe brief 5a §3.1: a stored Celtic state with a nation's region reads as that nation.
+  if (options.culture === "celtic" && options.region) options = { ...options, ...readCelticView("celtic", options.region) };
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateRouteNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
@@ -740,7 +758,7 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
     tone: options.tone ?? "any",
     vocab: options.vocab ?? BUILT_IN_VOCAB,
     catalogue: options.catalogue ?? BUILT_IN_BIOMES,
-    region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : undefined,
+    region: readsRegions(culture.key) && options.region && options.region !== "all" ? options.region : undefined,
     borrowed: false,
     drawn: new Set(),
     words: [],

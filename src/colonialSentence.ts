@@ -5,6 +5,7 @@ import { type Biome, type BiomeCatalogue, biomeCatalogue, BRITAIN, BUILT_IN_BIOM
 import { biomeClashes, biomeMenuItems } from "./biomeMenus";
 import { contextPhrasesFor } from "./colonialWording";
 import { COLONIAL_DATA, COLONIAL_TRADITIONS } from "./colonialShapes";
+import { LENS_REGIONS } from "./lens";
 import { PLACE_SHAPE_DATA, PLACE_SHAPE_REGIONS } from "./placeShapes";
 
 /** "General incomers", "Roman-themed incomers"; brackets and a trailing "Imperial" are dropped ("British-themed incomers"). */
@@ -98,7 +99,11 @@ const kebab = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace
 /** "all of Britain", "Wales", "the North". */
 export function regionPhrase(region: string | undefined): string {
   const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region ?? "").toUpperCase() || kebab(x.label) === kebab(region ?? ""));
-  if (!r) return "all of Britain";
+  if (!r) {
+    // Northern Europe brief 5a §4: the Scandinavian and German regions read from the lens ("Norway", "the Rhineland").
+    const north = LENS_REGIONS.find((x) => x.code === (region ?? "").toUpperCase() && x.phrase);
+    return north?.phrase ?? "all of Britain";
+  }
   return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
 }
 

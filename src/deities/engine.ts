@@ -27,6 +27,8 @@ import {
   wordTones,
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
+import { ENGINE_ALIAS } from "../lens";
+import { NORTH } from "../northData";
 import { countedWords, ROUTE_ERAS, routeCapitals, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, inCultureGroup, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { setDeityHooks } from "./hook";
@@ -110,13 +112,28 @@ interface DeityData {
   safeguards: { block: string[]; names: string[]; flag: string[]; flagListBlocks: boolean; banned: string[] };
 }
 
-export const DEITY_DATA = deityData as unknown as DeityData;
+const DEITY_BASE = deityData as unknown as DeityData;
+/** Northern Europe brief 5a: the batch's own style rows (extra shapes of the new cultures); a culture with none reads its legacy key's. */
+export const DEITY_DATA: DeityData = {
+  ...DEITY_BASE,
+  styles: (() => {
+    const out = { ...DEITY_BASE.styles } as DeityData["styles"];
+    for (const [key, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key in out) && legacy in out) out[key] = out[legacy];
+    for (const [key, row] of Object.entries(NORTH.deities.styles)) out[key] = { ...(out[key] ?? {}), ...row } as DeityData["styles"][string];
+    return out;
+  })(),
+};
 export const DEITY_KINDS = DEITY_DATA.kinds;
 export const DEITY_DOMAINS = DEITY_DATA.domains;
 export const DEITY_ANY = DEITY_DATA.any;
 /** §0: the byname cultures, without the sensitive ones. */
 export const DEITY_CULTURES = BYNAME_CULTURES.filter((c) => !DEITY_DATA.unoffered.includes(c.key));
-export const deityCultureOffered = (key: string) => DEITY_CULTURES.some((c) => c.key === key);
+export const deityCultureOffered = (key: string) => DEITY_CULTURES.some((c) => c.key === key) || key in ENGINE_ALIAS;
+/** Northern Europe brief 5a §3: the cultures sacred places offer: the deities' roster, and Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
+export const DEITY5A_CULTURES = [
+  ...DEITY_CULTURES,
+  ...Object.keys(ENGINE_ALIAS).map((key) => ({ key, label: key[0].toUpperCase() + key.slice(1), guide: "" })),
+];
 
 /** §4.1: the domains offered in an era (steampunk: the steam age with fantastic). */
 export const domainsOffered = (era: RouteEra, fantastic: boolean) => DEITY_DOMAINS.filter((d) => (!d.e || d.e.includes(era)) && (d.h === undefined || d.h === fantastic));
@@ -433,7 +450,7 @@ function domainWeights(ctx: Ctx): [Domain, number][] {
 /** §0: the culture the module runs as (Polynesian and Andean run as General, with a notice). */
 export function deityCulture(key: string | undefined): { culture: string; notice?: string } {
   if (key && DEITY_DATA.unoffered.includes(key)) return { culture: "general", notice: "This culture isn't offered for deities." };
-  return { culture: DEITY_CULTURES.some((c) => c.key === key) ? key! : "general" };
+  return { culture: DEITY5A_CULTURES.some((c) => c.key === key) ? key! : "general" };
 }
 
 /** §7: a batch of unique deity, pantheon and sacred place names; with series on, one pantheon (§8). */

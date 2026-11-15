@@ -81507,9 +81507,9 @@ var lens_default = {
       label: "Welsh",
       tier: "core",
       family: "british",
-      status: "planned",
+      status: "live",
       keys: [
-        "celtic"
+        "welsh"
       ]
     },
     {
@@ -81517,9 +81517,9 @@ var lens_default = {
       label: "Scottish",
       tier: "core",
       family: "british",
-      status: "planned",
+      status: "live",
       keys: [
-        "celtic"
+        "scottish"
       ]
     },
     {
@@ -81527,9 +81527,9 @@ var lens_default = {
       label: "Irish",
       tier: "core",
       family: "british",
-      status: "planned",
+      status: "live",
       keys: [
-        "celtic"
+        "irish"
       ]
     },
     {
@@ -81537,9 +81537,29 @@ var lens_default = {
       label: "Cornish",
       tier: "core",
       family: "british",
-      status: "planned",
+      status: "live",
+      keys: [
+        "cornish"
+      ]
+    },
+    {
+      key: "celtic",
+      label: "Celtic",
+      tier: "second",
+      family: "british",
+      status: "live",
       keys: [
         "celtic"
+      ]
+    },
+    {
+      key: "norse",
+      label: "Norse",
+      tier: "core",
+      family: "germanic",
+      status: "live",
+      keys: [
+        "norse"
       ]
     },
     {
@@ -81549,7 +81569,7 @@ var lens_default = {
       family: "germanic",
       status: "live",
       keys: [
-        "norse"
+        "scandinavian"
       ]
     },
     {
@@ -81558,8 +81578,9 @@ var lens_default = {
       tier: "core",
       family: "germanic",
       status: "live",
-      scope: "colonial",
-      keys: []
+      keys: [
+        "german"
+      ]
     },
     {
       key: "french",
@@ -81968,9 +81989,11 @@ var lens_default = {
       "welsh",
       "scottish",
       "irish",
-      "cornish"
+      "cornish",
+      "celtic"
     ],
     norse: [
+      "norse",
       "scandinavian"
     ]
   },
@@ -81979,7 +82002,11 @@ var lens_default = {
       cultures: [
         "anglo-saxon",
         "celtic",
-        "norman-british"
+        "norman-british",
+        "welsh",
+        "scottish",
+        "irish",
+        "cornish"
       ]
     },
     christian: {
@@ -81987,6 +82014,10 @@ var lens_default = {
         "anglo-saxon",
         "celtic",
         "norman-british",
+        "welsh",
+        "scottish",
+        "irish",
+        "cornish",
         "slavic",
         "french",
         "iberian"
@@ -81995,6 +82026,12 @@ var lens_default = {
         "greek-byzantine": "MD",
         roman: "MD"
       }
+    },
+    nordic: {
+      cultures: [
+        "norse",
+        "scandinavian"
+      ]
     }
   },
   regions: [
@@ -82101,7 +82138,9 @@ var lens_default = {
       cultures: [
         "scandinavian"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Low islands, heath, beech wood, sounds, dunes and bogs",
+      phrase: "Denmark"
     },
     {
       code: "NOR",
@@ -82109,7 +82148,9 @@ var lens_default = {
       cultures: [
         "scandinavian"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Fjords, fells, high moor, glaciers, waterfalls and steep farms",
+      phrase: "Norway"
     },
     {
       code: "SWE",
@@ -82117,7 +82158,9 @@ var lens_default = {
       cultures: [
         "scandinavian"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Lakes, forest, rock, skerries, eskers and mines",
+      phrase: "Sweden"
     },
     {
       code: "ICE",
@@ -82125,7 +82168,9 @@ var lens_default = {
       cultures: [
         "scandinavian"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Lava, black sand, hot springs, ice caps, bare fell and bird cliffs",
+      phrase: "Iceland and the Atlantic isles"
     },
     {
       code: "NDT",
@@ -82133,7 +82178,9 @@ var lens_default = {
       cultures: [
         "german"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Marsh, heath, moor, dykes, mudflats, islands and brick towns",
+      phrase: "the North German plain and coast"
     },
     {
       code: "RHN",
@@ -82141,7 +82188,9 @@ var lens_default = {
       cultures: [
         "german"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "River gorge, vineyards, crags, castles and old roman towns",
+      phrase: "the Rhineland"
     },
     {
       code: "MIT",
@@ -82149,7 +82198,9 @@ var lens_default = {
       cultures: [
         "german"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Forested hills, mining, springs, ridges and clearings",
+      phrase: "the Central uplands"
     },
     {
       code: "ALP",
@@ -82157,7 +82208,9 @@ var lens_default = {
       cultures: [
         "german"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Alps, high pasture, passes, lakes, avalanches and gorges",
+      phrase: "the Alpine south"
     },
     {
       code: "OST",
@@ -82165,7 +82218,9 @@ var lens_default = {
       cultures: [
         "german"
       ],
-      status: "planned"
+      status: "live",
+      landscape: "Lakes, pine, sand, marsh and slavic-borrowed settlements",
+      phrase: "the Eastern marches"
     }
   ],
   eras: [
@@ -82545,11 +82600,13 @@ var lens_default = {
             "welsh",
             "scottish",
             "irish",
-            "cornish"
+            "cornish",
+            "celtic"
           ]
         },
         norse: {
           lens: [
+            "norse",
             "scandinavian"
           ]
         },
@@ -82960,6 +83017,51 @@ var lens_default = {
       world: {
         extends: "shared",
         entries: {}
+      },
+      north: {
+        extends: "shared",
+        entries: {
+          celtic: {
+            lens: [
+              "celtic"
+            ]
+          },
+          norse: {
+            lens: [
+              "norse"
+            ]
+          },
+          welsh: {
+            lens: [
+              "welsh"
+            ]
+          },
+          scottish: {
+            lens: [
+              "scottish"
+            ]
+          },
+          irish: {
+            lens: [
+              "irish"
+            ]
+          },
+          cornish: {
+            lens: [
+              "cornish"
+            ]
+          },
+          scandinavian: {
+            lens: [
+              "scandinavian"
+            ]
+          },
+          german: {
+            lens: [
+              "german"
+            ]
+          }
+        }
       }
     },
     eras: {
@@ -83428,7 +83530,7 @@ var lens_default = {
   },
   modules: {
     routeNames: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: false,
       sentence: {
@@ -83440,9 +83542,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "route",
+        roster: "route5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: null,
           keepWhenHidden: false
         }
@@ -83602,7 +83704,7 @@ var lens_default = {
       }
     },
     mountainNames: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83615,9 +83717,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83626,7 +83728,7 @@ var lens_default = {
       }
     },
     forestNames: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83639,9 +83741,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83650,7 +83752,7 @@ var lens_default = {
       }
     },
     desertNames: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83663,11 +83765,11 @@ var lens_default = {
           genre: null,
           region: null
         },
-        roster: "wilds"
+        roster: "wilds5a"
       }
     },
     moorNames: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83680,9 +83782,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83691,7 +83793,7 @@ var lens_default = {
       }
     },
     wetlandNames: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83704,9 +83806,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83715,7 +83817,7 @@ var lens_default = {
       }
     },
     grasslandNames: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83728,9 +83830,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83739,7 +83841,7 @@ var lens_default = {
       }
     },
     riversInland: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83752,9 +83854,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83763,7 +83865,7 @@ var lens_default = {
       }
     },
     hillsValleys: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83776,9 +83878,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83787,7 +83889,7 @@ var lens_default = {
       }
     },
     farmland: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83800,9 +83902,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83811,7 +83913,7 @@ var lens_default = {
       }
     },
     seasLakes: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83824,9 +83926,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "waters",
+        roster: "waters5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83835,7 +83937,7 @@ var lens_default = {
       }
     },
     coastsIslands: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83848,9 +83950,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "waters",
+        roster: "waters5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -83859,7 +83961,7 @@ var lens_default = {
       }
     },
     seaCharts: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -83872,9 +83974,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "waters",
+        roster: "waters5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -84036,7 +84138,7 @@ var lens_default = {
       }
     },
     sacredPlaces: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: false,
       sentence: {
@@ -84048,7 +84150,7 @@ var lens_default = {
           genre: null,
           region: null
         },
-        roster: "deity"
+        roster: "deity5a"
       }
     },
     moneyNames: {
@@ -84311,7 +84413,7 @@ var lens_default = {
       }
     },
     lands: {
-      cultures: "shared",
+      cultures: "north",
       eras: "codes",
       land: true,
       sentence: {
@@ -84324,9 +84426,9 @@ var lens_default = {
           genre: null,
           region: "region"
         },
-        roster: "wilds",
+        roster: "wilds5a",
         region: {
-          group: "british",
+          group: "regions",
           requires: {
             where: "home"
           },
@@ -84508,12 +84610,22 @@ var lens_default = {
           label: "Anglo-Saxon"
         },
         {
+          key: "welsh",
+          label: "Welsh",
           view: "welsh"
         },
         {
+          key: "scottish",
+          label: "Scottish",
           view: "scottish"
         },
         {
+          key: "irish",
+          label: "Irish"
+        },
+        {
+          key: "cornish",
+          label: "Cornish",
           view: "cornish"
         },
         {
@@ -84528,6 +84640,10 @@ var lens_default = {
         {
           key: "norse",
           label: "Norse"
+        },
+        {
+          key: "scandinavian",
+          label: "Scandinavian"
         },
         {
           key: "dutch",
@@ -84709,9 +84825,122 @@ var lens_default = {
   ],
   sourceShares: {
     $comment: "Place modules split brief \xA74.1: where a focused place module's draw comes from, before it falls back to its own shapes. A kind may list sources; the share is the chance a draw tries the source first.",
-    home: { source: "native", share: 0.4, cultures: ["norman-british", "anglo-saxon", "celtic"] },
-    new: { source: "colonial", part: "2", share: 0.5 },
-    settled: { source: "colonial", part: "2a", share: 0.6 }
+    home: {
+      source: "native",
+      share: 0.4,
+      cultures: [
+        "norman-british",
+        "anglo-saxon",
+        "celtic",
+        "welsh",
+        "scottish",
+        "irish",
+        "cornish"
+      ]
+    },
+    new: {
+      source: "colonial",
+      part: "2",
+      share: 0.5
+    },
+    settled: {
+      source: "colonial",
+      part: "2a",
+      share: 0.6
+    }
+  },
+  cultureRegions: {
+    $comment: "Northern Europe brief \xA73.1, \xA74: the regions each module culture key reads, where the region link shows, its default and how it reads. `fixed`: one region, drawn as plain text; `all`: the link also offers the whole culture. Modules in a batch use the `regions` group; the rest keep `british`.",
+    "anglo-saxon": {
+      regions: [
+        "WCY",
+        "SEA",
+        "EAN",
+        "WMM",
+        "EMD",
+        "NTH",
+        "SBL"
+      ],
+      all: "Britain"
+    },
+    "norman-british": {
+      regions: [
+        "WCY",
+        "SEA",
+        "EAN",
+        "WMM",
+        "EMD",
+        "NTH",
+        "SBL"
+      ],
+      all: "Britain"
+    },
+    welsh: {
+      regions: [
+        "WAL"
+      ],
+      fixed: true,
+      default: "WAL",
+      text: "in Wales"
+    },
+    cornish: {
+      regions: [
+        "COR"
+      ],
+      fixed: true,
+      default: "COR",
+      text: "in Cornwall"
+    },
+    scottish: {
+      regions: [
+        "SBL",
+        "SLO",
+        "SHH",
+        "NSI"
+      ],
+      default: "SLO"
+    },
+    celtic: {
+      regions: [],
+      all: "Britain"
+    },
+    norse: {
+      regions: [
+        "DEN",
+        "NOR",
+        "SWE",
+        "ICE"
+      ],
+      all: "Scandinavia"
+    },
+    scandinavian: {
+      regions: [
+        "DEN",
+        "NOR",
+        "SWE",
+        "ICE"
+      ],
+      all: "Scandinavia"
+    },
+    german: {
+      regions: [
+        "NDT",
+        "RHN",
+        "MIT",
+        "ALP",
+        "OST"
+      ],
+      all: "Germany"
+    }
+  },
+  engineAlias: {
+    $comment: "Northern Europe brief \xA73: the module culture keys that came after the legacy ones read the legacy key's plumbing (settlement names, people lists, realms, gods, the colonial link and the weight tables) wherever a table has no row of their own.",
+    welsh: "celtic",
+    scottish: "celtic",
+    irish: "celtic",
+    cornish: "celtic",
+    scandinavian: "norse",
+    german: "general"
   }
 };
 
@@ -84752,7 +84981,7 @@ function lensCultureLabel(key2, own) {
   }
   return own;
 }
-var readsBritishRegionWords = (culture, era) => culture === "norse" || inCultureGroup("british", culture, era);
+var readsBritishRegionWords = (culture, era) => inCultureGroup("nordic", culture, era) || inCultureGroup("british", culture, era);
 function inCultureGroup(group, culture, era) {
   var _a7;
   const g = LENS.cultureGroups[group];
@@ -84775,6 +85004,29 @@ var cultureSetKeys = (name) => {
   return [...(_b4 = (_a7 = LENS.cultureSets[name]) == null ? void 0 : _a7.cultures) != null ? _b4 : []];
 };
 var LENS_CULTURE_SET_NAMES = Object.keys(LENS.cultureSets);
+var ENGINE_ALIAS = Object.fromEntries(
+  Object.entries(LENS.engineAlias).filter(([k]) => k !== "$comment")
+);
+var engineCulture = (key2) => {
+  var _a7;
+  return (_a7 = ENGINE_ALIAS[key2]) != null ? _a7 : key2;
+};
+var CULTURE_REGIONS = Object.fromEntries(
+  Object.entries(LENS.cultureRegions).filter(([k]) => k !== "$comment")
+);
+var regionsOfCulture = (key2) => {
+  var _a7, _b4;
+  return (_b4 = (_a7 = CULTURE_REGIONS[key2]) == null ? void 0 : _a7.regions) != null ? _b4 : [];
+};
+var cultureRegionInfo = (key2) => CULTURE_REGIONS[key2];
+var REGION_CULTURES = Object.keys(CULTURE_REGIONS);
+function readCelticView(culture, region) {
+  if (culture !== "celtic" || !region) return { culture, region };
+  if (region === "WAL") return { culture: "welsh", region };
+  if (region === "COR") return { culture: "cornish", region };
+  if (["SBL", "SLO", "SHH", "NSI"].includes(region)) return { culture: "scottish", region };
+  return { culture, region };
+}
 
 // src/tribes/engine.ts
 var TRIBAL_DATA = tribal_names_default;
@@ -99368,8 +99620,12 @@ function terrainPhrase(terrain, custom = []) {
 var NO_THE_REGIONS = /* @__PURE__ */ new Set(["Cornwall", "East Anglia", "Wales"]);
 var kebab = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 function regionPhrase(region) {
+  var _a7;
   const r = PLACE_SHAPE_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() || kebab(x.label) === kebab(region != null ? region : ""));
-  if (!r) return "all of Britain";
+  if (!r) {
+    const north = LENS_REGIONS.find((x) => x.code === (region != null ? region : "").toUpperCase() && x.phrase);
+    return (_a7 = north == null ? void 0 : north.phrase) != null ? _a7 : "all of Britain";
+  }
   return NO_THE_REGIONS.has(r.label) ? r.label : `the ${r.label}`;
 }
 function wizardSentenceText(part, settings, custom = []) {
@@ -99448,12 +99704,7 @@ var lens_offers_default = {
           "plain",
           "fantastic"
         ]
-      },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ]
+      }
     },
     sacredPlaces: {
       family: "A",
@@ -99861,20 +100112,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -99935,20 +100179,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -99997,11 +100234,6 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [],
         settled: []
@@ -100064,20 +100296,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100141,20 +100366,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100221,13 +100439,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100291,20 +100507,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100368,20 +100577,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100446,20 +100648,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100512,20 +100707,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100589,20 +100777,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100666,20 +100847,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -100744,20 +100918,13 @@ var lens_offers_default = {
           "fantastic"
         ]
       },
-      views: [
-        "welsh",
-        "scottish",
-        "cornish"
-      ],
       colonial: {
         new: [
-          "german",
           "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
-          "german",
           "belgian",
           "italian",
           "hellenistic"
@@ -101641,7 +101808,8 @@ var britishKeys = () => LENS_CULTURE_GROUPS.british.cultures;
 function regionShown(entry, state) {
   const f = entry.fields;
   if (!(f == null ? void 0 : f.region) || !entry.region) return false;
-  if (!britishKeys().includes(String(get(state, f.culture)))) return false;
+  const cultureKey = String(get(state, f.culture));
+  if (entry.region.group === "regions" ? !cultureRegionInfo(cultureKey) : !britishKeys().includes(cultureKey)) return false;
   const requires = entry.region.requires;
   return !requires || Object.entries(requires).every(([field, value]) => state[field] === value);
 }
@@ -101657,7 +101825,7 @@ var viewsOffered = (moduleKey) => {
   return (_a7 = offer(moduleKey).views) != null ? _a7 : [];
 };
 function cultureChoices(moduleKey, entry, current, where2) {
-  var _a7, _b4, _c4, _d3;
+  var _a7, _b4, _c4, _d3, _e3;
   const roster = new Map(rosterCultures(entry.roster).map((c) => [c.key, c.label]));
   const views = /* @__PURE__ */ new Set([...viewsOffered(moduleKey), ...LENS2.views[current] ? [current] : []]);
   const out = [];
@@ -101667,18 +101835,21 @@ function cultureChoices(moduleKey, entry, current, where2) {
     for (const e of block.entries) {
       let id;
       let label;
-      if (e.view) {
+      if (e.key && e.view && roster.has(e.key)) {
+        id = e.key;
+        label = (_a7 = e.label) != null ? _a7 : roster.get(e.key);
+      } else if (e.view) {
         if (!views.has(e.view)) continue;
         id = e.view;
         label = LENS2.views[e.view].label;
-      } else if (e.scope === "colonial" && e.key) {
-        const offered = where2 && where2 !== "home" ? (_b4 = (_a7 = offer(moduleKey).colonial) == null ? void 0 : _a7[where2]) != null ? _b4 : [] : [];
+      } else if (e.scope === "colonial" && e.key && !roster.has(e.key)) {
+        const offered = where2 && where2 !== "home" ? (_c4 = (_b4 = offer(moduleKey).colonial) == null ? void 0 : _b4[where2]) != null ? _c4 : [] : [];
         if (!offered.includes(e.key) && current !== e.key) continue;
         id = e.key;
-        label = (_c4 = e.label) != null ? _c4 : e.key;
+        label = (_d3 = e.label) != null ? _d3 : e.key;
       } else if (e.key && roster.has(e.key)) {
         id = e.key;
-        label = (_d3 = e.label) != null ? _d3 : roster.get(e.key);
+        label = (_e3 = e.label) != null ? _e3 : roster.get(e.key);
       }
       if (!id || !label) continue;
       placed.add(id);
@@ -101686,26 +101857,45 @@ function cultureChoices(moduleKey, entry, current, where2) {
       first = false;
     }
   }
-  if (LENS2.views[current]) {
+  if (LENS2.views[current] && !roster.has(current)) {
     for (const c of out) if (c.id === "celtic") c.id = CELTIC_ANY;
   }
   for (const [key2, label] of roster) if (!placed.has(key2)) out.push({ id: key2, label });
   if (!out.some((c) => c.id === current)) out.push({ id: current, label: current });
   return out;
 }
-var regionLabel = (code) => code ? `in ${regionPhrase(code)}` : "across all of Britain";
-var regionChoices = (codes, withAll) => [
-  ...withAll ? [{ id: ALL, label: regionLabel(void 0) }] : [],
-  ...PLACE_SHAPE_REGIONS.filter((r) => codes.includes(r.code)).map((r) => ({ id: r.code, label: regionLabel(r.code), title: r.counties }))
+var regionLabel = (code, all = "Britain") => code ? `in ${regionPhrase(code)}` : `across all of ${all}`;
+var regionChoices = (codes, withAll, all = "Britain") => [
+  ...withAll ? [{ id: ALL, label: regionLabel(void 0, all) }] : [],
+  ...codes.flatMap((code) => {
+    const british = PLACE_SHAPE_REGIONS.find((r) => r.code === code);
+    if (british) return [{ id: code, label: regionLabel(code), title: british.counties }];
+    const north = LENS_REGIONS.find((r) => r.code === code);
+    return north ? [{ id: code, label: regionLabel(code), ...north.landscape ? { title: north.landscape } : {} }] : [];
+  })
 ];
 function regionSegment(moduleKey, entry, state, culture, opts) {
-  var _a7, _b4;
+  var _a7, _b4, _c4, _d3, _e3, _f;
   if (!regionShown(entry, state)) return void 0;
   const stored = get(state, entry.fields.region);
   const title = (_a7 = opts.regionTitle) != null ? _a7 : REGION_TITLE;
+  const info = ((_b4 = entry.region) == null ? void 0 : _b4.group) === "regions" ? cultureRegionInfo(culture) : void 0;
+  if (info) {
+    const all = (_c4 = info.all) != null ? _c4 : "Britain";
+    if (info.regions.length === 0) {
+      if (stored) return { field: "region", text: regionLabel(stored, all), title, choices: [...regionChoices([], true, all), ...regionChoices([stored], false)], current: stored };
+      return { field: "region", text: regionLabel(void 0, all), title, choices: regionChoices([], true, all), current: ALL, fixed: true };
+    }
+    if (info.fixed && (!stored || stored === info.regions[0])) return { field: "region", text: (_d3 = info.text) != null ? _d3 : regionLabel(info.regions[0]), title, choices: regionChoices(info.regions, false), current: info.regions[0], fixed: true };
+    const codes2 = [...info.regions];
+    const choices2 = regionChoices(codes2, !!info.all, all);
+    if (stored && !codes2.includes(stored)) choices2.push(...regionChoices([stored], false));
+    const current = (_e3 = stored != null ? stored : info.default) != null ? _e3 : ALL;
+    return { field: "region", text: regionLabel(current === ALL ? void 0 : current, all), title, choices: choices2, current };
+  }
   const view = LENS2.views[culture];
   if (view && culture !== "scottish") {
-    return { field: "region", text: (_b4 = view.fixedText) != null ? _b4 : regionLabel(view.regions[0]), title, choices: regionChoices(view.regions, false), current: view.regions[0], fixed: true };
+    return { field: "region", text: (_f = view.fixedText) != null ? _f : regionLabel(view.regions[0]), title, choices: regionChoices(view.regions, false), current: view.regions[0], fixed: true };
   }
   if (view) {
     const codes2 = [...view.regions];
@@ -101831,7 +102021,7 @@ function put(state, key2, value) {
   if (state[key2] !== value) state[key2] = value;
 }
 function applyLensChoice(moduleKey, state, field, id) {
-  var _a7;
+  var _a7, _b4, _c4, _d3, _e3, _f;
   const entry = sentence2(moduleKey);
   const f = entry.fields;
   const previous = state;
@@ -101846,7 +102036,19 @@ function applyLensChoice(moduleKey, state, field, id) {
         break;
       }
       const view = LENS2.views[id];
-      if (view) {
+      const realKey = !!f.culture && !!entry.roster && rosterCultures(entry.roster).some((c) => c.key === id);
+      if (before === id) break;
+      if (realKey && LENS2.views[id] && !(((_a7 = entry.region) == null ? void 0 : _a7.group) === "regions" && cultureRegionInfo(id))) {
+        put(next, f.culture, id);
+      } else if (realKey && ((_b4 = entry.region) == null ? void 0 : _b4.group) === "regions" && cultureRegionInfo(id)) {
+        put(next, f.culture, id);
+        if (f.region && id !== get(previous, f.culture)) {
+          const stored = previous[f.region];
+          const info = cultureRegionInfo(id);
+          const own = regionsOfCulture(id);
+          put(next, f.region, stored && own.includes(stored) ? stored : info == null ? void 0 : info.default);
+        }
+      } else if (view) {
         put(next, f.culture, view.culture);
         if (f.region) {
           const stored = previous[f.region];
@@ -101882,12 +102084,14 @@ function applyLensChoice(moduleKey, state, field, id) {
     }
     case "region": {
       if (!f.region) break;
+      const shown = cultureRegionInfo((_c4 = viewOf(entry, previous)) != null ? _c4 : String(get(previous, f.culture)));
+      if (((_d3 = entry.region) == null ? void 0 : _d3.group) === "regions" && get(previous, f.region) === void 0 && shown && id === ((_e3 = shown.default) != null ? _e3 : ALL)) break;
       put(next, f.region, id === ALL ? void 0 : id);
       break;
     }
   }
   if (f.region && entry.region && !entry.region.keepWhenHidden && !regionShown(entry, next)) put(next, f.region, void 0);
-  const after = (_a7 = RULES[moduleKey]) == null ? void 0 : _a7.after;
+  const after = (_f = RULES[moduleKey]) == null ? void 0 : _f.after;
   return after ? after(previous, next, field, id) : next;
 }
 
@@ -111152,11 +111356,14 @@ var settlement_vocab_default = {
   moneyOnly: ["french", "dutch", "iberian", "american"],
   cultureGroups: {
     british: {
-      cultures: ["anglo-saxon", "celtic", "norman-british"]
+      cultures: ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish"]
     },
     christian: {
-      cultures: ["anglo-saxon", "celtic", "norman-british", "slavic", "french", "iberian"],
+      cultures: ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian"],
       from: { "greek-byzantine": "MD", roman: "MD" }
+    },
+    nordic: {
+      cultures: ["norse", "scandinavian"]
     }
   },
   regionTags: ["roman", "drove", "causeway", "corpse", "salt", "ridge", "packhorse", "army", "pedlar", "militaryRoad", "peat", "scar"],
@@ -117419,6 +117626,1348 @@ var VOCABULARY_PACK_TEMPLATE = [
   ...POOL_NAMES.flatMap((p) => [`## ${p}`, ""])
 ].join("\n");
 
+// src/data/north5a.json
+var north5a_default = {
+  _about: "Northern Europe tables brief, batch 5a (docs/northern-europe-tables-brief.md): generated by scripts/make-north5a.mjs from the content in scripts/north5a/. Do not edit by hand.",
+  vocab: {
+    pools: {}
+  },
+  wilds: {
+    cultureShapes: [],
+    regionColumns: {
+      ben: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      corrie: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      glen: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      fell: {
+        DEN: 0.2,
+        NOR: 3,
+        SWE: 1,
+        ICE: 2,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      pike: {
+        DEN: 0,
+        NOR: 1.5,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      beck: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      force: {
+        DEN: 0,
+        NOR: 2,
+        SWE: 0.5,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      ghyll: {
+        DEN: 0,
+        NOR: 2,
+        SWE: 0.5,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      hause: {
+        DEN: 0,
+        NOR: 2,
+        SWE: 0.3,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      knott: {
+        DEN: 0,
+        NOR: 1,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      tor: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      law: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      cwm: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      combe: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      clough: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      edge: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      scar: {
+        DEN: 0,
+        NOR: 1,
+        SWE: 0.3,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      linn: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      burn: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      crag: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      dale: {
+        DEN: 0.3,
+        NOR: 2,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mount: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      oldMan: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      pot: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      shieling: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      hope: {
+        DEN: 0,
+        NOR: 1,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      tarn: {
+        DEN: 0,
+        NOR: 2,
+        SWE: 2,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      loch: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lochan: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mere: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      broad: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakeLake: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakeWater: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      saltings: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      moor: {
+        DEN: 0.5,
+        NOR: 2,
+        SWE: 1.5,
+        ICE: 0.5,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      muir: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      rigg: {
+        DEN: 0,
+        NOR: 1,
+        SWE: 1,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      howe: {
+        DEN: 2,
+        NOR: 0.5,
+        SWE: 1,
+        ICE: 0.3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      cleave: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      moss: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 2,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      flow: {
+        DEN: 0,
+        NOR: 1,
+        SWE: 0,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      heath: {
+        DEN: 3,
+        NOR: 0.5,
+        SWE: 1,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      common: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      fen: {
+        DEN: 1,
+        NOR: 0,
+        SWE: 0.5,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      carr: {
+        DEN: 1,
+        NOR: 0,
+        SWE: 1,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      levels: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      rhyne: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lode: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      ings: {
+        DEN: 1,
+        NOR: 0,
+        SWE: 1,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      drain: {
+        DEN: 1,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      marsh: {
+        DEN: 2,
+        NOR: 0,
+        SWE: 0.5,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      holme: {
+        DEN: 2,
+        NOR: 1,
+        SWE: 2,
+        ICE: 0.3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      eyot: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      causeway: {
+        DEN: 0.5,
+        NOR: 0,
+        SWE: 0.5,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      down: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      wold: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      strath: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      haugh: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      carse: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      bourne: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      drove: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      hanger: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      hurst: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      den: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      holt: {
+        DEN: 2,
+        NOR: 0.3,
+        SWE: 1,
+        ICE: 0.3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      slade: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      frith: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      walk: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      shaw: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      spinney: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      weald: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      chase: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      }
+    },
+    regionTags: {},
+    regionTagFor: {},
+    cultureMult: {},
+    homeland: {}
+  },
+  waters: {
+    cultureShapes: [],
+    regionColumns: {
+      ness: {
+        DEN: 0.5,
+        NOR: 2,
+        SWE: 0.5,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      naze: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      bill: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mull: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      nab: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      foreland: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      cape: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      northIsle: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      geo: {
+        DEN: 0,
+        NOR: 0.5,
+        SWE: 0,
+        ICE: 3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      kyle: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      loch: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      firth: {
+        DEN: 1,
+        NOR: 1.5,
+        SWE: 0,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      soundOf: {
+        DEN: 3,
+        NOR: 1,
+        SWE: 2,
+        ICE: 0.5,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      inch: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      holm: {
+        DEN: 3,
+        NOR: 1,
+        SWE: 3,
+        ICE: 0.3,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      skerry: {
+        DEN: 0.5,
+        NOR: 2,
+        SWE: 3,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      stack: {
+        DEN: 0,
+        NOR: 2,
+        SWE: 0,
+        ICE: 2,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      porth: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      chine: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      pill: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      fleet: {
+        DEN: 1,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      creek: {
+        DEN: 0.5,
+        NOR: 0,
+        SWE: 0.5,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      cove: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      scar: {
+        DEN: 0,
+        NOR: 1,
+        SWE: 0.3,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      links: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      machair: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      denes: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      saltings: {
+        DEN: 1,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      snook: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      estuary: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      wash: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      deepChannel: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      tarn: {
+        DEN: 0,
+        NOR: 2,
+        SWE: 2,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakeWater: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      mere: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      broad: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      pool: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      llyn: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      lakeLake: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      bore: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      aegir: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      merryMen: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      cauldron: {
+        DEN: 0,
+        NOR: 1,
+        SWE: 0,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      roads: {
+        DEN: 1,
+        NOR: 0,
+        SWE: 1,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      fourteens: {
+        DEN: 0,
+        NOR: 0,
+        SWE: 0,
+        ICE: 0,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      },
+      riverSea: {
+        DEN: 1,
+        NOR: 1,
+        SWE: 1,
+        ICE: 1,
+        NDT: 0,
+        RHN: 0,
+        MIT: 0,
+        ALP: 0,
+        OST: 0
+      }
+    },
+    regionTags: {},
+    regionTagFor: {},
+    cultureMult: {},
+    homeland: {}
+  },
+  routes: {
+    cultureShapes: [],
+    regionColumns: {},
+    regions: {}
+  },
+  deities: {
+    styles: {}
+  }
+};
+
+// src/northData.ts
+var NORTH = north5a_default;
+function mergeRegionColumns(base, columns, extra) {
+  var _a7, _b4;
+  const out = {};
+  for (const [tag, row] of Object.entries(base)) out[tag] = { ...row, ...(_a7 = columns == null ? void 0 : columns[tag]) != null ? _a7 : {} };
+  for (const [tag, row] of Object.entries(extra != null ? extra : {})) out[tag] = { ...(_b4 = out[tag]) != null ? _b4 : {}, ...row };
+  return out;
+}
+
 // src/routes/engine.ts
 var ROUTE_FTL = [
   { id: "any", text: "with any faster-than-light travel" },
@@ -117427,13 +118976,28 @@ var ROUTE_FTL = [
   { id: "gate", text: "by gates" },
   { id: "hyper", text: "by hyperspace lanes" }
 ];
-var ROUTE_DATA = route_names_default;
+var ROUTE_BASE = route_names_default;
+var ROUTE_DATA = {
+  ...ROUTE_BASE,
+  cultureShapes: [...ROUTE_BASE.cultureShapes, ...NORTH.routes.cultureShapes],
+  regions: mergeRegionColumns(ROUTE_BASE.regions, NORTH.routes.regionColumns, NORTH.routes.regions)
+};
 var ROUTE_ERAS = ROUTE_DATA.eras;
 var ROUTE_CULTURES = ROUTE_DATA.cultures;
+var NORTH_CULTURES = [
+  ...ROUTE_CULTURES,
+  ...["welsh", "scottish", "irish", "cornish"].map((key2) => ({ key: key2, label: key2[0].toUpperCase() + key2.slice(1), group: "British Isles and northern Europe" })),
+  { key: "scandinavian", label: "Scandinavian", group: "British Isles and northern Europe", kindMult: { sea: 2 } },
+  { key: "german", label: "German", group: "British Isles and northern Europe" }
+];
 var ROUTE_KINDS = ROUTE_DATA.kinds;
 var ROUTE_ANY = ROUTE_DATA.any;
 var BRITISH_CULTURES = [...LENS_CULTURE_GROUPS.british.cultures];
-var findRouteCulture = (key2) => ROUTE_CULTURES.find((c) => c.key === key2);
+var findRouteCulture = (key2) => {
+  var _a7;
+  return (_a7 = ROUTE_CULTURES.find((c) => c.key === key2)) != null ? _a7 : NORTH_CULTURES.find((c) => c.key === key2);
+};
+var readsRegions = (culture) => BRITISH_CULTURES.includes(culture) || REGION_CULTURES.includes(culture);
 var findRouteKind = (key2) => ROUTE_KINDS.find((k) => k.key === key2);
 var routeEraLabel = (code) => {
   var _a7, _b4;
@@ -117530,8 +119094,8 @@ function gnWord2(ctx, token17) {
 }
 function routePlace(cultureKey, setting, rng, catalogue) {
   const culture = findRouteCulture(cultureKey);
-  const source = (culture == null ? void 0 : culture.sensitive) ? void 0 : townSource(cultureKey);
-  const holy2 = holyNamesIn(cultureKey);
+  const source = (culture == null ? void 0 : culture.sensitive) ? void 0 : townSource(engineCulture(cultureKey));
+  const holy2 = holyNamesIn(engineCulture(cultureKey));
   for (let i = 0; i < 20; i++) {
     const t = groupTown(setting, source, rng, catalogue).replace(/^The /, "");
     if (!holy2 || !holy2.test(t)) return t;
@@ -117540,22 +119104,22 @@ function routePlace(cultureKey, setting, rng, catalogue) {
 }
 var personNames = (culture) => {
   var _a7, _b4;
-  return ((_b4 = (_a7 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a7.lists.name) != null ? _b4 : []).filter((w) => !w.includes("{")).map(stripPlural);
+  return ((_b4 = (_a7 = WORLD_CULTURES.find((c) => c.id === engineCulture(culture))) == null ? void 0 : _a7.lists.name) != null ? _b4 : []).filter((w) => !w.includes("{")).map(stripPlural);
 };
 var godNames = (culture) => {
   var _a7, _b4;
-  return GOD_CULTURES.has(culture) ? ((_b4 = (_a7 = WORLD_CULTURES.find((c) => c.id === culture)) == null ? void 0 : _a7.lists.god) != null ? _b4 : []).filter((w) => !w.includes("{")).map(stripPlural) : [];
+  return GOD_CULTURES.has(engineCulture(culture)) ? ((_b4 = (_a7 = WORLD_CULTURES.find((c) => c.id === engineCulture(culture))) == null ? void 0 : _a7.lists.god) != null ? _b4 : []).filter((w) => !w.includes("{")).map(stripPlural) : [];
 };
 function routeFigure(cultureKey, setting, rng) {
   var _a7, _b4, _c4, _d3;
   const culture = findRouteCulture(cultureKey);
   if (culture == null ? void 0 : culture.figure) return pickOne4(culture.figure, rng);
-  const ranks = (_a7 = BYNAMES_DATA.ranks[cultureKey]) != null ? _a7 : BYNAMES_DATA.ranks.general;
+  const ranks = (_a7 = BYNAMES_DATA.ranks[engineCulture(cultureKey)]) != null ? _a7 : BYNAMES_DATA.ranks.general;
   const items = [];
   for (const r of ranks) {
     if (r.s && !r.s.includes(setting)) continue;
     const form = entryForm(r, "male", false);
-    if (form) items.push([form.text, ((_b4 = r.x) != null ? _b4 : 1) * ((_d3 = (_c4 = r.cx) == null ? void 0 : _c4[cultureKey]) != null ? _d3 : 1)]);
+    if (form) items.push([form.text, ((_b4 = r.x) != null ? _b4 : 1) * ((_d3 = (_c4 = r.cx) == null ? void 0 : _c4[engineCulture(cultureKey)]) != null ? _d3 : 1)]);
   }
   return pickWeighted6(items, rng);
 }
@@ -117563,7 +119127,7 @@ var figure = (ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
 var FOLK = /* @__PURE__ */ new WeakMap();
 function routeFolk(cultureKey, rng, catalogue = BUILT_IN_BIOMES) {
   var _a7, _b4, _c4;
-  const tradition = (_c4 = (_b4 = (_a7 = findRouteCulture(cultureKey)) == null ? void 0 : _a7.folk) != null ? _b4 : REALM_DATA.tribal[cultureKey]) != null ? _c4 : "general";
+  const tradition = (_c4 = (_b4 = (_a7 = findRouteCulture(cultureKey)) == null ? void 0 : _a7.folk) != null ? _b4 : REALM_DATA.tribal[engineCulture(cultureKey)]) != null ? _c4 : "general";
   let pools = FOLK.get(catalogue);
   if (!pools) FOLK.set(catalogue, pools = /* @__PURE__ */ new Map());
   let pool3 = pools.get(tradition);
@@ -117577,12 +119141,12 @@ var KINGDOMS = /* @__PURE__ */ new WeakMap();
 function routeKingdom(cultureKey, routeEra, rng, catalogue = BUILT_IN_BIOMES) {
   var _a7, _b4;
   const era = (_b4 = (_a7 = REALM_ERAS.find((e) => e.code === routeEra)) == null ? void 0 : _a7.key) != null ? _b4 : "medieval";
-  const key2 = `${cultureKey}|${era}`;
+  const key2 = `${engineCulture(cultureKey)}|${era}`;
   let pools = KINGDOMS.get(catalogue);
   if (!pools) KINGDOMS.set(catalogue, pools = /* @__PURE__ */ new Map());
   let pool3 = pools.get(key2);
   if (!pool3) {
-    pool3 = generateRealmNames({ culture: cultureKey, era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    pool3 = generateRealmNames({ culture: engineCulture(cultureKey), era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
     pools.set(key2, pool3);
   }
   return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
@@ -117791,6 +119355,7 @@ function compassValues(ctx, token17) {
 }
 function generateRouteNames(options) {
   var _a7;
+  if (options.culture === "celtic" && options.region) options = { ...options, ...readCelticView("celtic", options.region) };
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateRouteNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -117826,7 +119391,7 @@ function generateRouteNames(options) {
       tone: (_b4 = options.tone) != null ? _b4 : "any",
       vocab: (_c4 = options.vocab) != null ? _c4 : BUILT_IN_VOCAB,
       catalogue: (_d3 = options.catalogue) != null ? _d3 : BUILT_IN_BIOMES,
-      region: BRITISH_CULTURES.includes(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
+      region: readsRegions(culture.key) && options.region && options.region !== "all" ? options.region : void 0,
       borrowed: false,
       drawn: /* @__PURE__ */ new Set(),
       words: [],
@@ -119225,6 +120790,7 @@ function realmRowsWithPeoples(names, seed, options) {
 
 // src/routes/sentence.ts
 registerRoster("route", ROUTE_CULTURES);
+registerRoster("route5a", NORTH_CULTURES);
 var DEFAULT_ROUTE_STATE = {
   culture: "norman-british",
   era: "MD",
@@ -119237,6 +120803,7 @@ var PEOPLE_TEXT2 = { real: "real-world names for", generated: "generated names f
 var SERIES_TEXT2 = { off: "each one separate", on: "as one network" };
 var fantasticWords = (era) => ["realistic", era === "ST" ? "steampunk" : "fantastic"];
 var showsRegion = (state) => BRITISH_CULTURES.includes(state.culture);
+var showsRouteRegion = (state) => showsRegion(state) || readsRegions(state.culture);
 function routeSentence(state) {
   var _a7, _b4;
   const out = [];
@@ -119353,7 +120920,7 @@ function chooseRoute(state, field, id) {
   }
   if (next.scale && next.scale !== "any") next.scale = validScale(next.scale, next.era === "NF" || next.era === "IS" ? next.era : void 0);
   if (next.kind && !kindsOffered(next.era, next.fantastic).some((k) => k.key === next.kind)) next.kind = void 0;
-  if (!showsRegion(next)) next.region = void 0;
+  if (!showsRouteRegion(next)) next.region = void 0;
   if (next.ftl && next.ftl !== "any" && !showsFtl(next.era, next.kind, (_a7 = next.scale) != null ? _a7 : "any")) next.ftl = "any";
   return next;
 }
@@ -119365,7 +120932,7 @@ function routeHistoryLabel(state) {
     "route names",
     routeEraLabel(state.era),
     culture,
-    ...state.region && showsRegion(state) ? [regionPhrase(state.region)] : [],
+    ...state.region && showsRouteRegion(state) ? [regionPhrase(state.region)] : [],
     ...kind ? [kind.plural] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
     ...state.tone !== "any" ? [state.tone] : [],
@@ -119563,12 +121130,26 @@ var deity_names_default = {
 };
 
 // src/deities/engine.ts
-var DEITY_DATA = deity_names_default;
+var DEITY_BASE = deity_names_default;
+var DEITY_DATA = {
+  ...DEITY_BASE,
+  styles: (() => {
+    var _a7;
+    const out = { ...DEITY_BASE.styles };
+    for (const [key2, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+    for (const [key2, row] of Object.entries(NORTH.deities.styles)) out[key2] = { ...(_a7 = out[key2]) != null ? _a7 : {}, ...row };
+    return out;
+  })()
+};
 var DEITY_KINDS = DEITY_DATA.kinds;
 var DEITY_DOMAINS = DEITY_DATA.domains;
 var DEITY_ANY = DEITY_DATA.any;
 var DEITY_CULTURES = BYNAME_CULTURES.filter((c) => !DEITY_DATA.unoffered.includes(c.key));
-var deityCultureOffered = (key2) => DEITY_CULTURES.some((c) => c.key === key2);
+var deityCultureOffered = (key2) => DEITY_CULTURES.some((c) => c.key === key2) || key2 in ENGINE_ALIAS;
+var DEITY5A_CULTURES = [
+  ...DEITY_CULTURES,
+  ...Object.keys(ENGINE_ALIAS).map((key2) => ({ key: key2, label: key2[0].toUpperCase() + key2.slice(1), guide: "" }))
+];
 var domainsOffered = (era, fantastic) => DEITY_DOMAINS.filter((d) => (!d.e || d.e.includes(era)) && (d.h === void 0 || d.h === fantastic));
 var isChristianCulture = (culture, era) => inCultureGroup("christian", culture, era) || DEITY_DATA.christian.cultures.includes(culture);
 var defaultDeitySafeguards = () => ({ block: DEITY_DATA.safeguards.block, flag: DEITY_DATA.safeguards.flag, flagListBlocks: DEITY_DATA.safeguards.flagListBlocks });
@@ -119786,7 +121367,7 @@ function domainWeights(ctx) {
 }
 function deityCulture(key2) {
   if (key2 && DEITY_DATA.unoffered.includes(key2)) return { culture: "general", notice: "This culture isn't offered for deities." };
-  return { culture: DEITY_CULTURES.some((c) => c.key === key2) ? key2 : "general" };
+  return { culture: DEITY5A_CULTURES.some((c) => c.key === key2) ? key2 : "general" };
 }
 function generateDeityNames(options) {
   var _a7, _b4, _c4;
@@ -139367,11 +140948,15 @@ function fillPlace(culture, region, rng) {
   return void 0;
 }
 var LENS_CULTURES2 = lens_default.cultures;
+var FOLDED = /* @__PURE__ */ new Set(["norse", "celtic"]);
 function placeCultures(culture) {
-  const keysOf = (c) => [c.key, ...c.keys];
-  const own = LENS_CULTURES2.find((c) => c.key === culture || c.keys.includes(culture));
-  const mates = (own == null ? void 0 : own.family) ? LENS_CULTURES2.filter((c) => c !== own && c.family === own.family) : [];
-  return [.../* @__PURE__ */ new Set([culture, ...own ? keysOf(own) : [], ...mates.flatMap(keysOf), "general"])];
+  var _a7;
+  if (culture === "german") return ["german", "general"];
+  const keysOf = (c) => [c.key, ...c.keys, ...c.key === "scandinavian" ? ["norse"] : []];
+  const own = (_a7 = LENS_CULTURES2.find((c) => !FOLDED.has(c.key) && (c.key === culture || c.keys.includes(culture) || c.key === "scandinavian" && culture === "norse"))) != null ? _a7 : LENS_CULTURES2.find((c) => c.key === culture);
+  const mates = (own == null ? void 0 : own.family) ? LENS_CULTURES2.filter((c) => c !== own && !FOLDED.has(c.key) && c.family === own.family) : [];
+  const legacy = ["welsh", "scottish", "irish", "cornish"].includes(culture) ? "celtic" : culture === "scandinavian" ? "norse" : void 0;
+  return [.../* @__PURE__ */ new Set([culture, ...legacy ? [legacy] : [], ...own ? keysOf(own) : [], ...mates.flatMap(keysOf), "general"])];
 }
 var EARLIER = { "norman-british": "anglo-saxon" };
 var settled = (name, req) => name ? fillSlots(name, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng }) : void 0;
@@ -139402,15 +140987,33 @@ var placePersonsAsFounders = (module2, era) => module2 === "starsSpace" || !!era
 var WILDS_MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames"];
 var PLACE_MODULES = ["lands", "farmland", "hillsValleys", "riversInland", "starsSpace"];
 var isPlaceModule = (module2) => PLACE_MODULES.includes(module2);
-var WILDS_DATA = wilds_default;
+var withAliasRows = (table) => {
+  const out = { ...table };
+  for (const [key2, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+  return out;
+};
+var WILDS_BASE = wilds_default;
+var NORTH_WILDS_SHAPES = NORTH.wilds.cultureShapes;
+var WILDS_DATA = {
+  ...WILDS_BASE,
+  cultureShapes: [...WILDS_BASE.cultureShapes, ...NORTH_WILDS_SHAPES.filter((s) => WILDS_MODULES.includes(s.module))],
+  regionTags: mergeRegionColumns(WILDS_BASE.regionTags, NORTH.wilds.regionColumns, NORTH.wilds.regionTags),
+  cultureMult: { ...withAliasRows(WILDS_BASE.cultureMult), ...NORTH.wilds.cultureMult },
+  homeland: { ...withAliasRows(WILDS_BASE.homeland), ...NORTH.wilds.homeland },
+  settlementLink: {
+    ...WILDS_BASE.settlementLink,
+    cultureToColonial: withAliasRows(WILDS_BASE.settlementLink.cultureToColonial),
+    worldEraToRoute: withAliasRows(WILDS_BASE.settlementLink.worldEraToRoute)
+  }
+};
 var PLACES = places_default;
 var _a5, _b2, _c2;
 var PLACES_DATA = {
   ...WILDS_DATA,
   modules: PLACES.modules,
   shapes: PLACES.shapes,
-  cultureShapes: (_a5 = PLACES.cultureShapes) != null ? _a5 : [],
-  regionTags: { ...WILDS_DATA.regionTags, ...PLACES.regionTags },
+  cultureShapes: [...(_a5 = PLACES.cultureShapes) != null ? _a5 : [], ...NORTH_WILDS_SHAPES.filter((s) => PLACE_MODULES.includes(s.module))],
+  regionTags: mergeRegionColumns({ ...WILDS_DATA.regionTags, ...PLACES.regionTags }, NORTH.wilds.regionColumns, void 0),
   biomeTags: { ...WILDS_DATA.biomeTags, ...PLACES.biomeTags },
   eraMult: { ...WILDS_DATA.eraMult, ...PLACES.eraMult },
   kindMult: { britishHome: { ...WILDS_DATA.kindMult.britishHome, ...(_b2 = PLACES.kindMult) == null ? void 0 : _b2.britishHome }, biome: { ...WILDS_DATA.kindMult.biome, ...(_c2 = PLACES.kindMult) == null ? void 0 : _c2.biome } },
@@ -139418,7 +141021,7 @@ var PLACES_DATA = {
   safeguards: { ...PLACES.safeguards, bannedWords: WILDS_DATA.safeguards.bannedWords }
 };
 var wildsDataOf = (module2) => isPlaceModule(module2) ? PLACES_DATA : WILDS_DATA;
-var WILDS_CULTURES = ROUTE_CULTURES;
+var WILDS_CULTURES = NORTH_CULTURES;
 var findWildsCulture = (key2) => {
   var _a7;
   return (_a7 = WILDS_CULTURES.find((c) => c.key === key2)) != null ? _a7 : findColonialCulture(key2);
@@ -139437,6 +141040,7 @@ var wildsDefaultCulture = (module2) => module2 === "desertNames" || module2 === 
 var wildsDefaultEra = (module2) => module2 === "starsSpace" ? "IS" : "MD";
 var wildsDefaultWhere = (module2) => module2 === "starsSpace" ? "new" : "home";
 var showsWildsRegion = (module2, culture, where2) => wildsDataOf(module2).modules[module2].region && isBritishCulture(culture) && where2 === "home";
+var wildsReadsRegion = (module2, culture, where2) => !!wildsDataOf(module2).modules[module2].region && readsRegions(culture) && where2 === "home";
 var wildsBiomes = (module2, catalogue = BUILT_IN_BIOMES) => biomesRootedIn(catalogue, wildsDataOf(module2).modules[module2].biomes);
 var PARENT_KIND = { mountainNames: "range", forestNames: "forest", desertNames: "desert", moorNames: "moor", wetlandNames: "marsh", grasslandNames: "plain" };
 var parentKindOf = (module2) => {
@@ -139499,7 +141103,7 @@ function wildsStemPool(source, region, catalogue = BUILT_IN_BIOMES) {
   }
   return pool3;
 }
-var stemSourceOf = (culture) => culture.sensitive ? void 0 : townSource(culture.key);
+var stemSourceOf = (culture) => culture.sensitive ? void 0 : townSource(engineCulture(culture.key));
 function biomeStems(biome) {
   const out = [];
   for (const list of ["wildAnimals", "trees"])
@@ -139539,14 +141143,14 @@ function nativeSettlementRequest(module2, culture, era, where2, region, chosenBi
     return tradition ? { ...base, setting: where2 === "new" ? "new-lands" : "settled-lands", tradition: tradition === "general" ? void 0 : tradition } : void 0;
   }
   if (isBritishCulture(culture) || culture === "general") return { ...base, setting: "native", culture: "britain", region: isBritishCulture(culture) ? region : void 0 };
-  const worldCulture = WORLD_CULTURES.find((c) => c.id === culture);
+  const worldCulture = WORLD_CULTURES.find((c) => c.id === engineCulture(culture));
   if (!worldCulture) return void 0;
   const eras = worldCulture.eras.filter((e) => e.id !== INTERSTELLAR_ERA);
   const match = (_a7 = eras.find((e) => {
     var _a8;
     return ((_a8 = link.worldEraToRoute[culture]) == null ? void 0 : _a8[e.id]) === era;
   })) != null ? _a7 : eras[0];
-  return { ...base, setting: "native", culture, era: match == null ? void 0 : match.id, biome: void 0, customBiome: biome ? catalogue.find(biome) : void 0 };
+  return { ...base, setting: "native", culture: engineCulture(culture), era: match == null ? void 0 : match.id, biome: void 0, customBiome: biome ? catalogue.find(biome) : void 0 };
 }
 function pickTradition(entry, rng) {
   const total = entry.reduce((sum, e) => sum + e.weight, 0);
@@ -139565,9 +141169,17 @@ function regionMult2(ctx, tag) {
   if (!tag) return 1;
   const row = wildsDataOf(ctx.module).regionTags[tag];
   if (!row) return 1;
-  if (!readsBritishRegionWords(ctx.culture.key, ctx.era)) return 0;
-  if (!ctx.homeBritish) return 1;
+  const only = NORTH.wilds.regionTagFor[tag];
+  if (only ? !only.includes(ctx.culture.key) : !readsBritishRegionWords(ctx.culture.key, ctx.era)) return 0;
+  if (!ctx.homeBritish && !ctx.homeRegional) return 1;
   if (ctx.region) return (_a7 = row[ctx.region]) != null ? _a7 : 1;
+  if (!ctx.homeBritish) {
+    const own = regionsOfCulture(ctx.culture.key);
+    return own.length > 0 ? own.reduce((n, code) => {
+      var _a8;
+      return n + ((_a8 = row[code]) != null ? _a8 : 1);
+    }, 0) / own.length : 1;
+  }
   let mean = MEAN_CACHE.get(tag);
   if (mean === void 0) {
     mean = WILDS_DATA.regions.reduce((n, code) => {
@@ -139853,6 +141465,7 @@ function kindShapes(ctx, kind) {
 }
 function generateWildsNames(options) {
   var _a7, _b4;
+  if (options.culture === "celtic" && options.region && options.region !== "all") options = { ...options, ...readCelticView("celtic", options.region) };
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -139870,7 +141483,8 @@ function generateWildsNames(options) {
   const fantastic = !!options.fantastic;
   const resolved = resolveWildsBiome(module2, culture.key, where2, options.biome, options.catalogue);
   const homeBritish = resolved.homeBritish;
-  const region = homeBritish && options.region && options.region !== "all" ? options.region : void 0;
+  const homeRegional = !homeBritish && wildsReadsRegion(module2, culture.key, where2);
+  const region = (homeBritish || homeRegional) && options.region && options.region !== "all" ? options.region : void 0;
   const mode = (_b4 = options.people) != null ? _b4 : "placeholders";
   const count = Math.max(0, Math.floor(options.count));
   const block = blockSet(module2, options.safeguards);
@@ -139889,6 +141503,7 @@ function generateWildsNames(options) {
       fantastic,
       where: where2,
       homeBritish,
+      homeRegional,
       region,
       biome: resolved.biome,
       biomeTags: resolved.tags,
@@ -140089,7 +141704,8 @@ function generateWildsNames(options) {
 }
 
 // src/wilds/sentence.ts
-registerRoster("wilds", WILDS_CULTURES);
+registerRoster("wilds", ROUTE_CULTURES);
+registerRoster("wilds5a", WILDS_CULTURES);
 function defaultWildsState(module2) {
   return { culture: wildsDefaultCulture(module2), era: wildsDefaultEra(module2), where: wildsDefaultWhere(module2), fantastic: false, tone: "any", people: "real", series: false };
 }
@@ -140258,6 +141874,7 @@ function wildsHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BI
   const culture = lensCultureLabel(state.culture, (_b4 = (_a7 = findWildsCulture(state.culture)) == null ? void 0 : _a7.label) != null ? _b4 : "General");
   const kind = findWildsKind(module2, state.kind);
   const regionShown2 = showsWildsRegion(module2, state.culture, state.where);
+  const regionRead = wildsReadsRegion(module2, state.culture, state.where);
   const biome = wildsBiomes(module2, catalogue).find((b) => biomeMatches(b, state.biome));
   return [
     moduleLabel2,
@@ -140265,7 +141882,7 @@ function wildsHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_BI
     culture,
     ...isSpaceModule(module2) ? state.where === "settled" ? ["settled space"] : ["new space"] : state.where === "new" ? ["new country"] : state.where === "settled" ? ["settled lands"] : [],
     ...isSpaceModule(module2) && state.scale && state.scale !== "any" ? [scaleLabel(state.scale).toLowerCase()] : [],
-    ...regionShown2 && state.region ? [regionPhrase(state.region)] : [],
+    ...regionRead && state.region ? [regionPhrase(state.region)] : [],
     ...!regionShown2 && biome ? [biome.label] : [],
     ...kind ? [kind.plural] : state.kindClass ? [state.kindClass] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
@@ -141149,8 +142766,19 @@ var waters_default = {
 };
 
 // src/waters/engine.ts
-var WATERS_DATA = waters_default;
-var WATERS_CULTURES = ROUTE_CULTURES;
+var WATERS_BASE = waters_default;
+var withAliasRows2 = (table) => {
+  const out = { ...table };
+  for (const [key2, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+  return out;
+};
+var WATERS_DATA = {
+  ...WATERS_BASE,
+  cultureShapes: [...WATERS_BASE.cultureShapes, ...NORTH.waters.cultureShapes],
+  regionTags: mergeRegionColumns(WATERS_BASE.regionTags, NORTH.waters.regionColumns, NORTH.waters.regionTags),
+  cultureMult: { ...withAliasRows2(WATERS_BASE.cultureMult), ...NORTH.waters.cultureMult }
+};
+var WATERS_CULTURES = NORTH_CULTURES;
 var findWatersCulture = (key2) => {
   var _a7;
   return (_a7 = WATERS_CULTURES.find((c) => c.key === key2)) != null ? _a7 : findColonialCulture(key2);
@@ -141181,6 +142809,7 @@ var watersEraLabel = (code) => {
   return (_b4 = (_a7 = ROUTE_ERAS.find((e) => e.code === code)) == null ? void 0 : _a7.label) != null ? _b4 : code;
 };
 var showsWatersRegion = (culture, where2) => isBritishCulture2(culture) && where2 === "home";
+var watersReadsRegion = (culture, where2) => readsRegions(culture) && where2 === "home";
 var FIXED_POOLS = {
   seasLakes: "watersFixed:seas",
   coastsIslands: "watersFixed:coasts",
@@ -141197,9 +142826,17 @@ function regionMult3(ctx, tag) {
   if (!tag) return 1;
   const row = WATERS_DATA.regionTags[tag];
   if (!row) return 1;
-  if (!readsBritishRegionWords(ctx.culture.key, ctx.era)) return 0;
-  if (!ctx.homeBritish) return 1;
+  const only = NORTH.waters.regionTagFor[tag];
+  if (only ? !only.includes(ctx.culture.key) : !readsBritishRegionWords(ctx.culture.key, ctx.era)) return 0;
+  if (!ctx.homeBritish && !ctx.homeRegional) return 1;
   if (ctx.region) return (_a7 = row[ctx.region]) != null ? _a7 : 1;
+  if (!ctx.homeBritish) {
+    const own = regionsOfCulture(ctx.culture.key);
+    return own.length > 0 ? own.reduce((n, code) => {
+      var _a8;
+      return n + ((_a8 = row[code]) != null ? _a8 : 1);
+    }, 0) / own.length : 1;
+  }
   let mean = MEAN_CACHE2.get(tag);
   if (mean === void 0) {
     mean = WATERS_DATA.regions.reduce((n, code) => {
@@ -141261,7 +142898,7 @@ function shipName(ctx) {
     const genre = ctx.era === "ST" || ctx.era === "MO" ? "modern" : ctx.era === "NF" || ctx.era === "IS" ? "scifi" : "fantasy";
     pool3 = generateVesselNames({
       module: "ships",
-      culture: (_a7 = VESSEL_CULTURE[ctx.culture.key]) != null ? _a7 : ctx.culture.key,
+      culture: (_a7 = VESSEL_CULTURE[ctx.culture.key]) != null ? _a7 : engineCulture(ctx.culture.key),
       function: "explore",
       technology: SHIP_TECH[ctx.era],
       genre,
@@ -141462,6 +143099,7 @@ var SERIES_MODULES = /* @__PURE__ */ new Set(["coastsIslands", "seaCharts", "hyp
 var watersHasSeries = (module2) => SERIES_MODULES.has(module2);
 function generateWatersNames(options) {
   var _a7, _b4, _c4;
+  if (options.culture === "celtic" && options.region && options.region !== "all") options = { ...options, ...readCelticView("celtic", options.region) };
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -141476,7 +143114,8 @@ function generateWatersNames(options) {
   const where2 = !hyper && (options.where === "new" || options.where === "settled") ? options.where : "home";
   const fantastic = !hyper && !!options.fantastic;
   const homeBritish = !hyper && isBritishCulture2(culture.key) && where2 === "home";
-  const region = homeBritish && options.region && options.region !== "all" ? options.region : void 0;
+  const homeRegional = !homeBritish && !hyper && watersReadsRegion(culture.key, where2);
+  const region = (homeBritish || homeRegional) && options.region && options.region !== "all" ? options.region : void 0;
   const biomes = (_b4 = options.catalogue) != null ? _b4 : BUILT_IN_BIOMES;
   const chosenBiome = !homeBritish && !hyper && options.biome ? biomesRootedIn(biomes).find((b) => {
     var _a8;
@@ -141501,6 +143140,7 @@ function generateWatersNames(options) {
       fantastic,
       where: where2,
       homeBritish,
+      homeRegional,
       region,
       biome,
       mode,
@@ -141718,6 +143358,7 @@ function generateWatersNames(options) {
 
 // src/waters/sentence.ts
 registerRoster("waters", WATERS_CULTURES);
+registerRoster("waters5a", WATERS_CULTURES);
 function defaultWatersState(module2) {
   return {
     culture: module2 === "hyperspaceCharts" ? "general" : "norman-british",
@@ -141923,7 +143564,7 @@ function chooseWaters(state, field, id, module2) {
   const offered = hyper ? hyperKindsAt(next.scale) : waterKinds(module2);
   if (next.kind && !offered.some((k) => k.key === next.kind)) next.kind = void 0;
   const shown = !hyper && showsWatersRegion(next.culture, next.where);
-  if (!shown) next.region = void 0;
+  if (!(!hyper && watersReadsRegion(next.culture, next.where))) next.region = void 0;
   if (shown && !regionShown2) next.biome = void 0;
   if (hyper) {
     next.region = void 0;
@@ -141951,13 +143592,14 @@ function watersHistoryLabel(module2, state, moduleLabel2, catalogue = BUILT_IN_B
   }
   const kind = findWaterKind(module2, state.kind);
   const regionShown2 = showsWatersRegion(state.culture, state.where);
+  const regionRead = watersReadsRegion(state.culture, state.where);
   const biome = biomesRootedIn(catalogue).find((b) => biomeMatches(b, state.biome));
   return [
     moduleLabel2,
     watersEraLabel(state.era),
     culture,
     ...state.where === "new" ? ["new shores"] : state.where === "settled" ? ["settled shores"] : [],
-    ...regionShown2 && state.region ? [regionPhrase(state.region)] : [],
+    ...regionRead && state.region ? [regionPhrase(state.region)] : [],
     ...!regionShown2 && biome ? [biome.label] : [],
     ...kind ? [kind.plural] : state.kindClass ? [state.kindClass] : [],
     ...state.fantastic ? [fantasticWords(state.era)[1]] : [],
@@ -156241,6 +157883,7 @@ function timeHistoryLabel(module2, state, limits) {
 
 // src/deities/sentence.ts
 registerRoster("deity", DEITY_CULTURES);
+registerRoster("deity5a", DEITY5A_CULTURES);
 var DEFAULT_DEITY_STATE = {
   culture: "general",
   gender: "any",

@@ -43,7 +43,9 @@ test("§13.2.1: a fill that ends in the feature's own generic is redrawn, up to 
 
 test("§13.2.2: German and Andean (no settlement names) fill through the family, then General", () => {
   assert.deepEqual(placeCultures("german").slice(-1), ["general"]);
-  assert.ok(placeCultures("german").includes("scandinavian"), "its lens family comes before General");
+  // Northern Europe brief 5a: German places skip the Scandinavian settlement names the family would give ("Ox Fjord") until German settlement names arrive (batch 5b).
+  assert.deepEqual(placeCultures("german"), ["german", "general"]);
+  assert.ok(placeCultures("dutch").includes("scandinavian"), "the other Germanic cultures keep the family order");
   for (const culture of ["german", "andean", "french", "roman", "polynesian", "steppe"]) {
     for (const label of ["place", "homeland place name", "town"]) {
       for (let seed = 1; seed <= 12; seed++) {

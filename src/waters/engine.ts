@@ -4,7 +4,8 @@
 // and reuses its places, peoples, kingdoms and capitals, the group engine's weighted draws and tone
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
-import { readsBritishRegionWords, type LensEra } from "../lens";
+import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
+import { mergeRegionColumns, NORTH } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
@@ -29,7 +30,7 @@ import {
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { riverFill, type RiverSetting } from "../rivers/engine";
-import { ROUTE_CULTURES, ROUTE_ERAS, routePlace, routeFolk, routeKingdom, routeSetting, personNames, godNames, countedWords, routeCapitals, routeNorm, breaksRouteWords, BRITISH_CULTURES, type RouteCulture, type RouteEra } from "../routes/engine";
+import { NORTH_CULTURES, readsRegions, ROUTE_ERAS, routePlace, routeFolk, routeKingdom, routeSetting, personNames, godNames, countedWords, routeCapitals, routeNorm, breaksRouteWords, BRITISH_CULTURES, type RouteCulture, type RouteEra } from "../routes/engine";
 import { hasSpaceBlock } from "../space/safeguards";
 import { SPACE_DATA, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { dropStarWord, drawStarOfKind, type StarKind } from "../space/stars";
@@ -124,8 +125,20 @@ interface WatersData {
   cap: number;
 }
 
-export const WATERS_DATA = watersData as unknown as WatersData;
-export const WATERS_CULTURES: RouteCulture[] = ROUTE_CULTURES;
+const WATERS_BASE = watersData as unknown as WatersData;
+/** Northern Europe brief 5a: a table keyed by culture, with a row for each newer culture key that has none of its own (it reads its legacy key's). */
+const withAliasRows = <T>(table: Record<string, T>): Record<string, T> => {
+  const out = { ...table };
+  for (const [key, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key in out) && legacy in out) out[key] = out[legacy];
+  return out;
+};
+export const WATERS_DATA: WatersData = {
+  ...WATERS_BASE,
+  cultureShapes: [...WATERS_BASE.cultureShapes, ...(NORTH.waters.cultureShapes as unknown as WatersData["cultureShapes"])],
+  regionTags: mergeRegionColumns(WATERS_BASE.regionTags, NORTH.waters.regionColumns, NORTH.waters.regionTags),
+  cultureMult: { ...withAliasRows(WATERS_BASE.cultureMult), ...NORTH.waters.cultureMult },
+};
+export const WATERS_CULTURES: RouteCulture[] = NORTH_CULTURES;
 export const findWatersCulture = (key: string | undefined) => WATERS_CULTURES.find((c) => c.key === key) ?? findColonialCulture(key);
 export const HYPER_ANY = WATERS_DATA.hyper.any;
 export const HYPER_KINDS = WATERS_DATA.hyper.kinds;
@@ -156,6 +169,8 @@ export const watersEraLabel = (code: string) => ROUTE_ERAS.find((e) => e.code ==
 
 /** §2.2: the region link shows for the three British cultures on home shores. */
 export const showsWatersRegion = (culture: string, where: WatersWhere) => isBritishCulture(culture) && where === "home";
+/** Northern Europe brief 5a §4: the region link also shows for the cultures with regions of their own (Scandinavian, German) on home shores. */
+export const watersReadsRegion = (culture: string, where: WatersWhere) => readsRegions(culture) && where === "home";
 
 /** §0: the module's fixed-name pool. */
 export const FIXED_POOLS: Record<WatersModule, string> = {
@@ -240,6 +255,8 @@ interface Ctx {
   where: WatersWhere;
   /** A British culture on home shores: the region tags apply. */
   homeBritish: boolean;
+  /** A culture with regions of its own (not British) on home shores: the region tags apply. */
+  homeRegional?: boolean;
   region?: string;
   biome?: string;
   mode: GroupPeople;
@@ -267,9 +284,14 @@ function regionMult(ctx: Ctx, tag: string | undefined): number {
   const row = WATERS_DATA.regionTags[tag];
   if (!row) return 1;
   // Shared tables brief §13.3: a British dialect word is drawn only for the british culture group and norse.
-  if (!readsBritishRegionWords(ctx.culture.key, ctx.era as LensEra)) return 0;
-  if (!ctx.homeBritish) return 1;
+  const only = NORTH.waters.regionTagFor[tag];
+  if (only ? !only.includes(ctx.culture.key) : !readsBritishRegionWords(ctx.culture.key, ctx.era as LensEra)) return 0;
+  if (!ctx.homeBritish && !ctx.homeRegional) return 1;
   if (ctx.region) return row[ctx.region] ?? 1;
+  if (!ctx.homeBritish) {
+    const own = regionsOfCulture(ctx.culture.key);
+    return own.length > 0 ? own.reduce((n, code) => n + (row[code] ?? 1), 0) / own.length : 1;
+  }
   let mean = MEAN_CACHE.get(tag);
   if (mean === undefined) {
     mean = WATERS_DATA.regions.reduce((n, code) => n + (row[code] ?? 1), 0) / WATERS_DATA.regions.length;
@@ -341,7 +363,7 @@ function shipName(ctx: Ctx): string | undefined {
     const genre = ctx.era === "ST" || ctx.era === "MO" ? "modern" : ctx.era === "NF" || ctx.era === "IS" ? "scifi" : "fantasy";
     pool = generateVesselNames({
       module: "ships",
-      culture: VESSEL_CULTURE[ctx.culture.key] ?? ctx.culture.key,
+      culture: VESSEL_CULTURE[ctx.culture.key] ?? engineCulture(ctx.culture.key),
       function: "explore",
       technology: SHIP_TECH[ctx.era],
       genre,
@@ -582,6 +604,8 @@ export const watersHasSeries = (module: WatersModule) => SERIES_MODULES.has(modu
 
 /** §7: a batch of unique names for one of the four modules. */
 export function generateWatersNames(options: WatersOptions): WatersBatch {
+  // Northern Europe brief 5a §3.1: a stored Celtic state with a nation's region reads as that nation.
+  if (options.culture === "celtic" && options.region && options.region !== "all") options = { ...options, ...readCelticView("celtic", options.region) };
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
@@ -597,7 +621,8 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   const where: WatersWhere = !hyper && (options.where === "new" || options.where === "settled") ? options.where : "home";
   const fantastic = !hyper && !!options.fantastic;
   const homeBritish = !hyper && isBritishCulture(culture.key) && where === "home";
-  const region = homeBritish && options.region && options.region !== "all" ? options.region : undefined;
+  const homeRegional = !homeBritish && !hyper && watersReadsRegion(culture.key, where);
+  const region = (homeBritish || homeRegional) && options.region && options.region !== "all" ? options.region : undefined;
   // The biome tags are keyed by the 12 built-ins: a pack uses the one it replaces or descends from.
   const biomes = options.catalogue ?? BUILT_IN_BIOMES;
   const chosenBiome = !homeBritish && !hyper && options.biome ? biomesRootedIn(biomes).find((b) => b.id === options.biome || b.custom?.path === options.biome) : undefined;
@@ -619,6 +644,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     fantastic,
     where,
     homeBritish,
+    homeRegional,
     region,
     biome,
     mode,

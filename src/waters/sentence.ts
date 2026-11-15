@@ -26,6 +26,7 @@ import {
   HYPER_SCALES,
   hyperKindsAt,
   showsWatersRegion,
+  watersReadsRegion,
   waterAny,
   waterEras,
   waterKinds,
@@ -42,6 +43,7 @@ import {
 } from "./engine";
 
 registerRoster("waters", WATERS_CULTURES);
+registerRoster("waters5a", WATERS_CULTURES);
 
 export interface WatersSentenceState {
   culture: string;
@@ -301,7 +303,7 @@ export function chooseWaters(state: WatersSentenceState, field: WatersField, id:
   if (next.kind && !offered.some((k) => k.key === next.kind)) next.kind = undefined;
   // §2.4: region resets away from the British cultures and new shores; biome resets when region shows again.
   const shown = !hyper && showsWatersRegion(next.culture, next.where);
-  if (!shown) next.region = undefined;
+  if (!(!hyper && watersReadsRegion(next.culture, next.where))) next.region = undefined;
   if (shown && !regionShown) next.biome = undefined;
   if (hyper) {
     next.region = undefined;
@@ -331,13 +333,14 @@ export function watersHistoryLabel(module: WatersModule, state: WatersSentenceSt
   }
   const kind = findWaterKind(module, state.kind);
   const regionShown = showsWatersRegion(state.culture, state.where);
+  const regionRead = watersReadsRegion(state.culture, state.where);
   const biome = biomesRootedIn(catalogue).find((b) => biomeMatches(b, state.biome));
   return [
     moduleLabel,
     watersEraLabel(state.era),
     culture,
     ...(state.where === "new" ? ["new shores"] : state.where === "settled" ? ["settled shores"] : []),
-    ...(regionShown && state.region ? [regionPhrase(state.region)] : []),
+    ...(regionRead && state.region ? [regionPhrase(state.region)] : []),
     ...(!regionShown && biome ? [biome.label] : []),
     ...(kind ? [kind.plural] : state.kindClass ? [state.kindClass] : []),
     ...(state.fantastic ? [fantasticWords(state.era)[1]] : []),
