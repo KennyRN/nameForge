@@ -267,3 +267,30 @@ They are no longer on the stay-bracketed list; `fill.json` maps each to its own 
 - **River names:** when the river engine is called from rivers and inland waters, the "River {name}" form applies only where the water word is "river" (so no "River Bear Brook"). Old presets are unchanged.
 - **"Association":** left for the style tables brief.
 - **Blocked list (M6):** it must catch "Richard Trevithick", since Trevithick stays in the Cornish modern surnames.
+
+## 13. Amendment: fixes after a run of the real modules (15 November 2026)
+
+Added after a run of the modules at seed 42, default settings and `people: real`. It amends §5, §7, §8 and §3 and does not rewrite them. The core brief comes after the table overhaul (briefs 5 to 7), not next.
+
+### 13.1 Fixtures
+
+The brief always meant the lexicon and creatures to change output (§1.1 rule 1). These may be re-recorded **for lexicon and creature changes only**: `tests/fixtures/settlement-engines.json`, the tone brief snapshots and any other frozen fixture. Before re-recording, every changed entry is diffed and the only differences must be words from a merged lexicon list or the creatures table; any other difference is a bug to fix. Each commit lists every re-recorded fixture and its count of changed entries. Retired presets (place-split baseline parts 1 and 2) still must not change, except for lexicon words, checked the same way.
+
+M7 and M8 then stand as written: every module that held a merged lexicon list reads the shared list plus its extras, and creatures reach every module §8 names (inns, the six wild lands, the seas and coasts modules, ships, monuments, the named things modules) by habitat.
+
+### 13.2 Filler fixes (amends §5)
+
+1. **Place fills keep their plain-English form** ("Moot", "Grove", "Hollow", "Edge Hut", "Alder Valley"). They are not filtered. One guard only: a fill whose last word is the same generic as the feature it names ("Valley of Alder Valley", "Ashhill Hill") is redrawn, up to ten times.
+2. **No unfilled `[place]` in real mode.** The chain is: settlement names in the culture; settlement names in the nearest lens-family culture that has one; General. Likewise `[homeland place name]` and `[town]`.
+3. **No affix stacking after a fill.** Under a source filter the British engine skips its "-by-" and "-with-" affixes, and the colonial engine its equivalents.
+4. **Titles match the person's sex.** When a title is female or male, the given name is drawn to match.
+5. **Bare title slots** ([sir], [lord], [sire] and the like) fill as title plus name ("Sir Hugh's Army Road") or as a surname, never as the title alone.
+6. **Person slots in place names from the steam age on.** In every place module, from ST onward and in stars and space always, `[person]` and `[personal name]` use the founder forms (surname-led). Before ST they keep the person forms.
+
+### 13.3 British dialect words (amends §3 of the place briefs)
+
+Every word in `regionTags` (in `wilds.json`, `waters.json` and `places.json`) is a British dialect word. It is drawn only for the lens's `british` culture group and `norse`, and has weight 0 for every other culture, in every module that reads it.
+
+### 13.4 Aztec, Maya and Andean tables (amends §12)
+
+The §12 rules apply to these three tables, which did not yet meet them: rulers flagged `r` and lists filled with ordinary names, a `modern` period (Spanish given names tagged by era, with the surnames each people carries now), and the per-culture corrections in the commit. Roman and Egyptian have no `modern` period; their later eras resolve to Italian and to Arabic and Persian respectively. Kenny's template names stay: Hengest, Horsa, Wealhtheow and Beadohild remain in Anglo-Saxon at the lowest weight, and Andersson and Andersen-type pairs stay as separate names.
