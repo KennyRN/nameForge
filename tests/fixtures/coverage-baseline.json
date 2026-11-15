@@ -2839,7 +2839,7 @@
    "t": 30
   },
   "culture|settlementNames|cornish|shapes": {
-   "v": 87,
+   "v": 84,
    "t": 10
   },
   "culture|settlementNames|cornish|profile": {
@@ -3128,11 +3128,11 @@
    "t": 12
   },
   "era|settlementNames|ST": {
-   "v": 432,
+   "v": 429,
    "t": 12
   },
   "era|settlementNames|MO": {
-   "v": 432,
+   "v": 429,
    "t": 12
   },
   "era|settlementNames|NF": {
@@ -23313,7 +23313,7 @@
    "v": 975
   },
   "total|culture|cornish|shapes": {
-   "v": 654
+   "v": 651
   },
   "total|culture|roman|words": {
    "v": 257
@@ -23499,10 +23499,10 @@
    "v": 2891
   },
   "total|era|ST": {
-   "v": 3405
+   "v": 3402
   },
   "total|era|MO": {
-   "v": 2968
+   "v": 2965
   },
   "total|era|NF": {
    "v": 762
