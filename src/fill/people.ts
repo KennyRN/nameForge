@@ -95,12 +95,15 @@ function surname(c: Ctx, sex: "male" | "female"): string {
 const regnal = (c: Ctx, sex: "male" | "female"): string => draw(sex === "male" ? c.table.regnalMale : c.table.regnalFemale, c.req.era, c.req.rng, c.req.avoid);
 
 /** Says one person slot in its form. */
-function person(c: Ctx, slot: string, known?: "male" | "female"): string | undefined {
+function person(c: Ctx, slot: string, known?: "male" | "female", plain = false): string | undefined {
   const spec = SLOTS[slot];
   if (!spec) return undefined;
   const rng = c.req.rng;
-  const forms = (c.table.surnames ? spec.withSurnames : spec.withoutSurnames) ?? spec.forms ?? spec.withSurnames ?? spec.withoutSurnames;
-  if (!forms) return undefined;
+  const all = (c.table.surnames ? spec.withSurnames : spec.withoutSurnames) ?? spec.forms ?? spec.withSurnames ?? spec.withoutSurnames;
+  if (!all) return undefined;
+  // Northern Europe brief 5a §11.6: straight after a bare generic a person takes no title ("Lake Duke Hale"): only the forms without one.
+  const untitled = plain ? all.filter((f) => !/\{(t|r)\}/.test(f[0])) : all;
+  const forms = untitled.length > 0 ? untitled : all;
   const share = spec.sexShare ?? { male: 50, female: 50 };
   const rolled: "male" | "female" = rng() * (share.male + share.female) < share.male ? "male" : "female";
   // Shared tables brief §13.2 item 4: a name whose subject has a known sex (a female title) takes a given name of that sex.
@@ -126,8 +129,8 @@ function person(c: Ctx, slot: string, known?: "male" | "female"): string | undef
   });
 }
 
-function holy(c: Ctx): string {
-  const form = pickForm(c.table.holyForms, c.req.rng);
+function holy(c: Ctx, plain = false): string {
+  const form = plain ? (c.req.rng() < 0.7 ? "Saint {n}" : "{n}") : pickForm(c.table.holyForms, c.req.rng);
   const name = draw(c.table.holy, c.req.era, c.req.rng, c.req.avoid);
   // Shared tables brief §13.4: a colonial saint ("Rose", "Martin de Porres") only ever takes the "Saint {n}" form.
   return (c.table.saintOnly?.includes(name) ? "Saint {n}" : form).replace("{n}", name);
@@ -141,14 +144,14 @@ function context(req: FillRequest): Ctx | undefined {
 export const personResolver: Resolver = (req) => {
   const c = context(req);
   if (!c || !req.slot) return undefined;
-  let said = person(c, req.slot, req.sex);
+  let said = person(c, req.slot, req.sex, req.plain);
   // A pair that makes a famous real person is drawn again.
-  for (let attempt = 0; said !== undefined && isBlockedName(said) && attempt < 12; attempt++) said = person(c, req.slot, req.sex);
+  for (let attempt = 0; said !== undefined && isBlockedName(said) && attempt < 12; attempt++) said = person(c, req.slot, req.sex, req.plain);
   return said !== undefined && isBlockedName(said) ? undefined : said;
 };
 export const holyResolver: Resolver = (req) => {
   const c = context(req);
-  return c ? holy(c) : undefined;
+  return c ? holy(c, req.plain) : undefined;
 };
 export const surnameResolver: Resolver = (req) => {
   const c = context(req);
@@ -159,10 +162,13 @@ export const surnameResolver: Resolver = (req) => {
  * Shared tables brief §14.2: the people who coined old place names ("Godricing Tarn"). The culture is drawn by the
  * `oldNames` weights in fill.json (Anglo-Saxon by default, Scandinavian, Welsh, Cornish or Scottish by region), and the
  * name is a man's given name from that culture's historic table, whatever the state's culture or era.
+ * Northern Europe brief 5a §11.6: the culture first (Irish names are Irish, Welsh Welsh, Norse and Scandinavian Scandinavian, German German;
+ * Celtic by its region, else evenly the four nations), the region second, and only the English keys (and the rest) draw Anglo-Saxon, with the Danelaw share.
  */
-const OLD_NAMES = (FILL as unknown as { oldNames: { default: [string, number][]; regions: Record<string, [string, number][]> } }).oldNames;
+const OLD_NAMES = (FILL as unknown as { oldNames: { default: [string, number][]; regions: Record<string, [string, number][]>; cultures: Record<string, [string, number][]> } }).oldNames;
 export const oldPersonResolver: Resolver = (req) => {
-  const weights = (req.region ? OLD_NAMES.regions[req.region] : undefined) ?? OLD_NAMES.default;
+  const byCulture = OLD_NAMES.cultures[req.culture];
+  const weights = (req.culture === "celtic" && req.region ? OLD_NAMES.regions[req.region] : undefined) ?? byCulture ?? (req.region ? OLD_NAMES.regions[req.region] : undefined) ?? OLD_NAMES.default;
   const culture = pickWeighted(weights.map((w) => w[0]), weights.map((w) => w[1]), req.rng);
   const c = context({ ...req, culture, era: "MD", period: "historic", region: undefined });
   return c ? given(c, "male") : undefined;

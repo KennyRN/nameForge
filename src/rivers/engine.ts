@@ -59,6 +59,8 @@ export interface RiverOptions {
   peoplesTradition?: string;
   /** Review amendment: called from rivers and inland waters; "River {name}" then applies only where the water word is "river". */
   sourced?: boolean;
+  /** Northern Europe brief 5a §11.6: at home the river engine never uses its native forms ("River of the [native people]"). */
+  noNative?: boolean;
 }
 
 export interface RiverName {
@@ -194,7 +196,8 @@ const NATIVE_PLACEHOLDERS: Record<string, string> = {
 };
 
 function patternName(options: RiverOptions, rng: () => number): Built {
-  const items = RIVER_DATA.patterns[options.setting];
+  const all = RIVER_DATA.patterns[options.setting];
+  const items = options.noNative ? all.filter((p) => !/\[(native|tribal name)/.test(p.pattern)) : all;
   const picked = pickWeighted(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
   // Land brief §8.1: peoples from tribal names, straight after the pattern, left to right.
   const pattern =

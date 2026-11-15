@@ -83,6 +83,11 @@ export function mergeRegionColumns(base: Rows, columns: Rows | undefined, extra:
   return out;
 }
 
+/** Northern Europe brief 5a §11.6: the plain word for a narrow valley reads "Combe" for Welsh and Cornish (wherever chosen) and in WAL and COR; "Glen" stays for Scottish, Irish and the north. */
+export function combeFor(text: string, culture: string, region?: string): string {
+  return culture === "welsh" || culture === "cornish" || region === "WAL" || region === "COR" ? text.replace(/\bGlen\b/g, "Combe") : text;
+}
+
 /** Celtic is a mix (§3.2): each nation's signature entries at a quarter weight. */
 export const CELTIC_MIX = ["welsh", "scottish", "irish", "cornish"];
 export const CELTIC_MIX_WEIGHT = 0.25;

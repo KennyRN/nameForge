@@ -138,3 +138,103 @@ test("§11.5: \"{endWord} End\" no longer makes Land's End; Land's End is never 
   }
   assert.deepEqual(hits, []);
 });
+
+// ── §11.6: fills and sources ───────────────────────────────────────────────────────────────────
+
+const ctx = (extra: Partial<FillContext> = {}): FillContext => ({ culture: "norman-british", era: "MD", mode: "real", rng: mulberry32(3), ...extra });
+
+test("§11.6.1: a holy fill after a bare generic is 'Saint {n}' or the bare name; titles only with 'of' or a possessive", () => {
+  assert.ok(followsBareGeneric("Lake ", ""));
+  assert.ok(followsBareGeneric("Glen ", ""));
+  assert.ok(!followsBareGeneric("Lake of ", ""));
+  assert.ok(!followsBareGeneric("Glen ", "'s Cairn"));
+  assert.ok(!followsBareGeneric("", " Range"));
+  for (let seed = 1; seed <= 200; seed++) {
+    for (const [template, culture] of [["Lake [holy person]", "welsh"], ["Glen [holy person]", "irish"], ["Isle [holy person]", "norman-british"]] as const) {
+      const text = fillSlots(template, { culture, era: "MD", mode: "real", rng: mulberry32(seed) });
+      assert.ok(!/(Blessed|Abbot|Father|Bishop|Brother|Holy|Venerable)/.test(text), text);
+    }
+    const titled = fillSlots("Mount [official]", { culture: "norman-british", era: "MD", mode: "real", rng: mulberry32(seed) });
+    assert.ok(!/(Duke|Earl|Lord|Baron|Count|Sir|Bishop|Abbot) /.test(titled), titled);
+  }
+  // With "of" and a possessive the other forms stay.
+  const forms = new Set<string>();
+  for (let seed = 1; seed <= 200; seed++) forms.add(fillSlots("Chapel of [holy person]", { culture: "norman-british", era: "MD", mode: "real", rng: mulberry32(seed) }).split(" ")[2]);
+  assert.ok(forms.size > 1, [...forms].join(", "));
+});
+
+test("§11.6.2: a folk fill never follows a bare generic; after 'of' it takes 'the'; one people is not 'Peoples'", () => {
+  const resolvers: Resolvers = { folk: () => "Fell Peoples", person: () => "Hale" };
+  assert.equal(fillSlots("Glen [folk]", ctx({ resolvers })), "Glen Hale");
+  assert.equal(fillSlots("Isle of [folk]", ctx({ resolvers })), "Isle of the Fell Peoples");
+  assert.equal(fillSlots("[folk] Lake", ctx({ resolvers })), "Fell Peoples Lake");
+  for (let seed = 1; seed <= 60; seed++) {
+    const text = fillSlots("Lake of [people]", { culture: "norman-british", era: "MD", mode: "real", rng: mulberry32(seed), biome: "temperate" });
+    assert.ok(!/Peoples/.test(text), text);
+    assert.ok(/ of the /.test(text), text);
+  }
+});
+
+test("§11.6.3: old personal names go by culture first, region second", () => {
+  const first = (culture: string, region?: string) => {
+    const seen = new Set<string>();
+    for (let seed = 1; seed <= 80; seed++) seen.add(fillSlots("[personal name]ing Tarn", { culture, era: "MD", region, mode: "real", rng: mulberry32(seed) }));
+    return [...seen];
+  };
+  // An Irish name never takes an English one (Sigebert, Aldred, Morcar, Athelwald).
+  const english = /Sigebert|Aldred|Morcar|Athelwald|Ethelwald|Godric|Cuthbert|Wulf|Eadric|Leofric/;
+  for (const culture of ["irish", "welsh", "cornish", "scottish", "german", "scandinavian", "norse"]) {
+    for (const n of first(culture, culture === "welsh" ? "WAL" : culture === "cornish" ? "COR" : undefined)) assert.ok(!english.test(n), `${culture}: ${n}`);
+  }
+  assert.ok(first("norman-british").some((n) => english.test(n)), "the English keys still draw Anglo-Saxon names");
+  assert.ok(first("norman-british", "NTH").length > 1);
+});
+
+test("§11.6.4: the British shapes source (native) never runs for Norse, Scandinavian or German", () => {
+  const kind = { native: { generics: ["Hill"] } } as unknown as KindSources;
+  for (const culture of ["norse", "scandinavian", "german", "dutch", "japanese"]) assert.equal(sourceFor(kind, { where: "home", culture }), undefined, culture);
+  for (const culture of ["norman-british", "welsh", "irish"]) assert.equal(sourceFor(kind, { where: "home", culture }), "native", culture);
+  // drawKind falls back to the module's own shapes.
+  void drawKind;
+});
+
+test("§11.6.5: at home the river engine never uses its native forms, for any culture", () => {
+  for (const setting of ["established", "new-land"] as const) {
+    const names = generateRiverNames({ setting, count: 200, seed: 4, sourced: true, noNative: true }).names.map((n) => n.text);
+    assert.ok(!names.some((n) => /\[native|\[tribal/.test(n)), setting);
+  }
+  for (const culture of ["norse", "scandinavian", "german"]) {
+    const names = generateWildsNames({ ...defaultWildsState("riversInland"), module: "riversInland", culture, where: "home", count: 150, seed: 6, people: "placeholders" } as never).names.map((n) => n.text);
+    assert.ok(!names.some((n) => /native people|tribal name/.test(n)), `${culture}: ${names.find((n) => /native people/.test(n))}`);
+  }
+  // New country keeps them.
+  const fresh = generateRiverNames({ setting: "new-land", count: 200, seed: 4, sourced: true }).names.map((n) => n.text);
+  assert.ok(fresh.some((n) => /\[native people\]/.test(n)));
+});
+
+test("§11.6.6: the plain word for a narrow valley reads Combe for Welsh and Cornish and in WAL and COR; Glen stays for Scottish and Irish", () => {
+  assert.equal(combeFor("Glen of the Oak", "welsh"), "Combe of the Oak");
+  assert.equal(combeFor("Oak Glen", "cornish"), "Oak Combe");
+  assert.equal(combeFor("Oak Glen", "norman-british", "WAL"), "Oak Combe");
+  assert.equal(combeFor("Oak Glen", "norman-british", "COR"), "Oak Combe");
+  assert.equal(combeFor("Oak Glen", "scottish", "SHH"), "Oak Glen");
+  assert.equal(combeFor("Oak Glen", "irish"), "Oak Glen");
+  for (const culture of ["welsh", "cornish"]) {
+    for (const module of ["hillsValleys", "mountainNames", "grasslandNames"] as const) {
+      const names = generateWildsNames({ ...defaultWildsState(module), module, culture, where: "home", count: 300, seed: 2, people: "placeholders" } as never).names.map((n) => n.text);
+      assert.ok(!names.some((n) => /\bGlen\b/.test(n)), `${culture} ${module}: ${names.find((n) => /\bGlen\b/.test(n))}`);
+    }
+  }
+  const scottish = generateWildsNames({ ...defaultWildsState("hillsValleys"), module: "hillsValleys", culture: "scottish", where: "home", count: 300, seed: 2, people: "placeholders" } as never).names.map((n) => n.text);
+  assert.ok(scottish.some((n) => /\bGlen\b/.test(n)), "Glen stays for Scottish");
+});
+
+test("§11.6.7: German places are German people and a German generic until batch 5b, never English ones", () => {
+  const seen = new Set<string>();
+  for (let seed = 1; seed <= 80; seed++) seen.add(fillSlots("[place] Ferry Gate", { culture: "german", era: "MD", mode: "real", rng: mulberry32(seed) }));
+  for (const text of seen) assert.ok(!/\[/.test(text), text);
+  assert.ok([...seen].some((t) => /'s Ferry Gate$/.test(t) || /(Castle|Mark|Mill|Heath) Ferry Gate$/.test(t)), [...seen].slice(0, 5).join("; "));
+  assert.ok(![...seen].some((t) => /ings|ham |ton /.test(t)), [...seen].slice(0, 5).join("; "));
+  const routes = generateRouteNames({ ...DEFAULT_ROUTE_STATE, culture: "german", count: 60, seed: 3, people: "real" } as never).names.map((n) => n.text);
+  assert.ok(!routes.some((n) => /\[/.test(n)), routes.find((n) => /\[/.test(n)));
+});

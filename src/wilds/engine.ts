@@ -6,7 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { balanceSignature, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceSignature, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -1097,6 +1097,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
       if (attempt > 200 && names.length === 0) break;
       continue;
     }
+    name.text = combeFor(name.text, culture.key, region);
     const key = name.text.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);

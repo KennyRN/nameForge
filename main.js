@@ -81277,8 +81277,18 @@ var river_names_default = {
 var fill_default = {
   _about: "Shared tables brief \xA75.2: every bracket label an engine produces, and where its fill comes from. Labels are matched ignoring case. `source` names a resolver in src/fill/; `slot` is the form it is said in (people.json \xA73.4). Labels not listed here and not under `stayBracketed` fail the label sweep test.",
   oldNames: {
-    _about: "Shared tables brief \xA714.2: which historic people table fills an old personal name, by region code. Pairs of culture and weight.",
+    _about: "Shared tables brief \xA714.2: which historic people table fills an old personal name, by region code. Pairs of culture and weight. Northern Europe brief 5a \xA711.6: `cultures` goes first (the state's own culture; Celtic by its region, else the four nations evenly) and `regions` second; the default and the Danelaw shares are for the English keys and the rest.",
     default: [["anglo-saxon", 1]],
+    cultures: {
+      welsh: [["welsh", 1]],
+      scottish: [["scottish", 1]],
+      irish: [["irish", 1]],
+      cornish: [["cornish", 1]],
+      norse: [["scandinavian", 1]],
+      scandinavian: [["scandinavian", 1]],
+      german: [["german", 1]],
+      celtic: [["welsh", 1], ["scottish", 1], ["irish", 1], ["cornish", 1]]
+    },
     regions: {
       NTH: [["anglo-saxon", 50], ["norse", 50]],
       EMD: [["anglo-saxon", 50], ["norse", 50]],
@@ -81412,6 +81422,12 @@ var AGAIN = 8;
 var BATCH_AGAIN = 40;
 var PLACE_AGAIN = 10;
 var PLACE_SOURCES = /* @__PURE__ */ new Set(["place", "earlierPlace"]);
+var NOT_GENERIC = /* @__PURE__ */ new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a", "from", "for", "near"]);
+function followsBareGeneric(before, after) {
+  if (/^['’]s\b/.test(after)) return false;
+  const m = before.match(/(?:^|\s)([A-Z][\w'’-]*)\s$/);
+  return !!m && !NOT_GENERIC.has(m[1].toLowerCase());
+}
 var OLD_ENDING = /^(ing|ings|ington|ingham|inghams)\b/i;
 var STOP_WORDS = /* @__PURE__ */ new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a"]);
 function repeatsGeneric(fill, rest) {
@@ -81435,6 +81451,8 @@ function fillSlots(name, ctx) {
     if (!info) return whole;
     const key2 = label.trim().toLowerCase();
     if (info.source === "person" && key2 === "personal name" && OLD_ENDING.test(name.slice(offset + whole.length))) info = (_a8 = labelInfo("old personal name")) != null ? _a8 : info;
+    const plain = (info.source === "holy" || info.source === "person" || info.source === "folk") && followsBareGeneric(name.slice(0, offset), name.slice(offset + whole.length));
+    if (plain && info.source === "folk") info = { source: "person", slot: "founder" };
     let fill = (_b4 = ctx.series) == null ? void 0 : _b4.get(key2);
     if (fill === void 0) {
       const resolver = resolvers[info.source];
@@ -81447,7 +81465,7 @@ function fillSlots(name, ctx) {
       const rest = place4 ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
       const tries = seen && seen.size > 0 ? BATCH_AGAIN : place4 ? PLACE_AGAIN : AGAIN;
       for (let attempt2 = 0; attempt2 < tries; attempt2++) {
-        fill = resolver({ label: key2, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
+        fill = resolver({ label: key2, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...plain ? { plain } : {}, avoid });
         if (fill === void 0 || !avoid.has(fill) && !(place4 && repeatsGeneric(fill, rest))) break;
       }
       if (fill === void 0) return whole;
@@ -81458,6 +81476,7 @@ function fillSlots(name, ctx) {
     const before = name.slice(0, offset);
     const after = name.slice(offset + whole.length);
     if (/\bthe\s$/i.test(before)) fill = fill.replace(/^the\s+/i, "");
+    else if (info.source === "folk" && /\bof\s$/i.test(before) && !/^the\s/i.test(fill)) fill = `the ${fill}`;
     if (/^['’]s\b/.test(after)) fill = fill.replace(/['’]s$/, "");
     any = true;
     return fill;
@@ -86075,6 +86094,7 @@ function traditionForCulture(culture) {
   return best;
 }
 var FOLK_WORDS = (name) => name.replace(/^the\s+/i, "").split(/\s+/).length;
+var onePeople = (name) => name.replace(/\bPeoples\b/g, "People");
 registerResolver("folk", (req) => {
   var _a7;
   const tradition = traditionForCulture(req.culture);
@@ -86084,13 +86104,13 @@ registerResolver("folk", (req) => {
     for (let attempt2 = 0; attempt2 < 24; attempt2++) {
       const name = (_a7 = generateTribalNames({ tradition, ...biome ? { biome } : {}, count: 1, seed: drawSeed(req.rng) }).names[0]) == null ? void 0 : _a7.name;
       if (name === void 0) return void 0;
-      if (FOLK_WORDS(name) <= 2) return name;
+      if (FOLK_WORDS(name) <= 2) return onePeople(name);
       if (shortest === void 0 || FOLK_WORDS(name) < FOLK_WORDS(shortest)) shortest = name;
     }
   } catch (e) {
-    return shortest;
+    return shortest === void 0 ? void 0 : onePeople(shortest);
   }
-  return shortest;
+  return shortest === void 0 ? void 0 : onePeople(shortest);
 });
 
 // src/tribes/slotFill.ts
@@ -86265,7 +86285,8 @@ var NATIVE_PLACEHOLDERS = {
   "[native plant]": "wild-plant"
 };
 function patternName(options, rng) {
-  const items = RIVER_DATA.patterns[options.setting];
+  const all = RIVER_DATA.patterns[options.setting];
+  const items = options.noNative ? all.filter((p) => !/\[(native|tribal name)/.test(p.pattern)) : all;
   const picked = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
   const pattern = options.peoples === "tribal" ? picked.replace(/\[(tribal name|native people)\]/g, () => {
     var _a7;
@@ -96472,13 +96493,15 @@ function surname(c, sex) {
   return draw(c.table.surnames, c.req.era, c.req.rng, c.req.avoid);
 }
 var regnal = (c, sex) => draw(sex === "male" ? c.table.regnalMale : c.table.regnalFemale, c.req.era, c.req.rng, c.req.avoid);
-function person(c, slot, known) {
+function person(c, slot, known, plain = false) {
   var _a7, _b4, _c4, _d3;
   const spec = SLOTS[slot];
   if (!spec) return void 0;
   const rng = c.req.rng;
-  const forms = (_c4 = (_b4 = (_a7 = c.table.surnames ? spec.withSurnames : spec.withoutSurnames) != null ? _a7 : spec.forms) != null ? _b4 : spec.withSurnames) != null ? _c4 : spec.withoutSurnames;
-  if (!forms) return void 0;
+  const all = (_c4 = (_b4 = (_a7 = c.table.surnames ? spec.withSurnames : spec.withoutSurnames) != null ? _a7 : spec.forms) != null ? _b4 : spec.withSurnames) != null ? _c4 : spec.withoutSurnames;
+  if (!all) return void 0;
+  const untitled = plain ? all.filter((f) => !/\{(t|r)\}/.test(f[0])) : all;
+  const forms = untitled.length > 0 ? untitled : all;
   const share2 = (_d3 = spec.sexShare) != null ? _d3 : { male: 50, female: 50 };
   const rolled = rng() * (share2.male + share2.female) < share2.male ? "male" : "female";
   const sex = known != null ? known : rolled;
@@ -96509,9 +96532,9 @@ function person(c, slot, known) {
     }
   });
 }
-function holy(c) {
+function holy(c, plain = false) {
   var _a7;
-  const form = pickForm(c.table.holyForms, c.req.rng);
+  const form = plain ? c.req.rng() < 0.7 ? "Saint {n}" : "{n}" : pickForm(c.table.holyForms, c.req.rng);
   const name = draw(c.table.holy, c.req.era, c.req.rng, c.req.avoid);
   return (((_a7 = c.table.saintOnly) == null ? void 0 : _a7.includes(name)) ? "Saint {n}" : form).replace("{n}", name);
 }
@@ -96522,13 +96545,13 @@ function context(req) {
 var personResolver = (req) => {
   const c = context(req);
   if (!c || !req.slot) return void 0;
-  let said = person(c, req.slot, req.sex);
-  for (let attempt2 = 0; said !== void 0 && isBlockedName(said) && attempt2 < 12; attempt2++) said = person(c, req.slot, req.sex);
+  let said = person(c, req.slot, req.sex, req.plain);
+  for (let attempt2 = 0; said !== void 0 && isBlockedName(said) && attempt2 < 12; attempt2++) said = person(c, req.slot, req.sex, req.plain);
   return said !== void 0 && isBlockedName(said) ? void 0 : said;
 };
 var holyResolver = (req) => {
   const c = context(req);
-  return c ? holy(c) : void 0;
+  return c ? holy(c, req.plain) : void 0;
 };
 var surnameResolver = (req) => {
   const c = context(req);
@@ -96536,8 +96559,9 @@ var surnameResolver = (req) => {
 };
 var OLD_NAMES = fill_default.oldNames;
 var oldPersonResolver = (req) => {
-  var _a7;
-  const weights = (_a7 = req.region ? OLD_NAMES.regions[req.region] : void 0) != null ? _a7 : OLD_NAMES.default;
+  var _a7, _b4, _c4;
+  const byCulture = OLD_NAMES.cultures[req.culture];
+  const weights = (_c4 = (_b4 = (_a7 = req.culture === "celtic" && req.region ? OLD_NAMES.regions[req.region] : void 0) != null ? _a7 : byCulture) != null ? _b4 : req.region ? OLD_NAMES.regions[req.region] : void 0) != null ? _c4 : OLD_NAMES.default;
   const culture = pickWeighted4(weights.map((w) => w[0]), weights.map((w) => w[1]), req.rng);
   const c = context({ ...req, culture, era: "MD", period: "historic", region: void 0 });
   return c ? given(c, "male") : void 0;
@@ -117442,6 +117466,9 @@ function mergeRegionColumns(base, columns, extra) {
   for (const [tag, row] of Object.entries(base)) out[tag] = { ...row, ...(_a7 = columns == null ? void 0 : columns[tag]) != null ? _a7 : {} };
   for (const [tag, row] of Object.entries(extra != null ? extra : {})) out[tag] = { ...(_b4 = out[tag]) != null ? _b4 : {}, ...row };
   return out;
+}
+function combeFor(text, culture, region) {
+  return culture === "welsh" || culture === "cornish" || region === "WAL" || region === "COR" ? text.replace(/\bGlen\b/g, "Combe") : text;
 }
 var CELTIC_MIX = ["welsh", "scottish", "irish", "cornish"];
 var CELTIC_MIX_WEIGHT = 0.25;
@@ -139647,7 +139674,7 @@ function drawFromDelegate(delegate, ctx) {
   var _a7, _b4, _c4;
   if (delegate.engine === "rivers") {
     const setting = riverSettingFor(ctx);
-    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : void 0, count: 1, seed: seedFrom(ctx.rng), sourced: true });
+    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : void 0, count: 1, seed: seedFrom(ctx.rng), sourced: true, ...ctx.where === "home" ? { noNative: true } : {} });
     return (_a7 = result.names[0]) == null ? void 0 : _a7.text;
   }
   const size = (_b4 = delegate.sizes[Math.floor(ctx.rng() * delegate.sizes.length)]) != null ? _b4 : "any";
@@ -139705,11 +139732,26 @@ var placeFill = (draw3, req) => {
   }
   return last;
 };
-registerResolver("place", (req) => placeFill(() => fillPlace(req.culture, req.region, req.rng), req));
-registerResolver("earlierPlace", (req) => placeFill(() => {
-  var _a7, _b4;
-  return (_b4 = fillPlace((_a7 = EARLIER[req.culture]) != null ? _a7 : req.culture, req.region, req.rng)) != null ? _b4 : fillPlace(req.culture, req.region, req.rng);
-}, req));
+var GERMAN_GENERICS = [["Castle", 4], ["Mark", 3], ["Mill", 3], ["Heath", 2]];
+function germanPlace(req) {
+  var _a7;
+  let roll = req.rng() * GERMAN_GENERICS.reduce((s, g) => s + g[1], 0);
+  const generic = ((_a7 = GERMAN_GENERICS.find((g) => (roll -= g[1]) < 0)) != null ? _a7 : GERMAN_GENERICS[0])[0];
+  const template = req.rng() < 0.5 ? `[name]'s ${generic}` : `[surname] ${generic}`;
+  const name = fillSlots(template, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });
+  return /\[/.test(name) ? void 0 : name;
+}
+registerResolver("place", (req) => {
+  var _a7;
+  return (_a7 = req.culture === "german" ? germanPlace(req) : void 0) != null ? _a7 : placeFill(() => fillPlace(req.culture, req.region, req.rng), req);
+});
+registerResolver("earlierPlace", (req) => {
+  var _a7;
+  return (_a7 = req.culture === "german" ? germanPlace(req) : void 0) != null ? _a7 : placeFill(() => {
+    var _a8, _b4;
+    return (_b4 = fillPlace((_a8 = EARLIER[req.culture]) != null ? _a8 : req.culture, req.region, req.rng)) != null ? _b4 : fillPlace(req.culture, req.region, req.rng);
+  }, req);
+});
 registerResolver("river", (req) => settled(drawFromDelegate({ engine: "rivers" }, { where: "home", culture: req.culture, region: req.region, rng: req.rng }), req));
 
 // src/places/colonialCultures.ts
@@ -140434,6 +140476,7 @@ function generateWildsNames(options) {
       if (attempt2 > 200 && names.length === 0) break;
       continue;
     }
+    name.text = combeFor(name.text, culture.key, region);
     const key2 = name.text.toLowerCase();
     if (seen.has(key2)) continue;
     seen.add(key2);
@@ -142092,6 +142135,7 @@ function generateWatersNames(options) {
       if (attempt2 > 200 && names.length === 0) break;
       continue;
     }
+    name.text = combeFor(name.text, culture.key, region);
     const key2 = name.text.toLowerCase();
     if (seen.has(key2)) continue;
     seen.add(key2);

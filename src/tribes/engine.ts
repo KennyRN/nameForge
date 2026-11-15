@@ -1469,6 +1469,8 @@ export function traditionForCulture(culture: string): string {
 // The filler's folk source (shared tables brief §5.2): "[folk]", "[folk group]", "[tribal name]", "[people]".
 // Shared tables brief §14.3: at most two words after an optional "the", and drawn in the state's biome when it has one.
 const FOLK_WORDS = (name: string): number => name.replace(/^the\s+/i, "").split(/\s+/).length;
+/** Northern Europe brief 5a §11.6: one people is "People", not "Peoples" ("Fell Peoples" → "Fell People"). */
+const onePeople = (name: string): string => name.replace(/\bPeoples\b/g, "People");
 registerResolver("folk", (req) => {
   const tradition = traditionForCulture(req.culture);
   const biome = req.biome && findBiome(req.biome) ? req.biome : undefined;
@@ -1477,11 +1479,11 @@ registerResolver("folk", (req) => {
     for (let attempt = 0; attempt < 24; attempt++) {
       const name = generateTribalNames({ tradition, ...(biome ? { biome } : {}), count: 1, seed: drawSeed(req.rng) }).names[0]?.name;
       if (name === undefined) return undefined;
-      if (FOLK_WORDS(name) <= 2) return name;
+      if (FOLK_WORDS(name) <= 2) return onePeople(name);
       if (shortest === undefined || FOLK_WORDS(name) < FOLK_WORDS(shortest)) shortest = name;
     }
   } catch {
-    return shortest;
+    return shortest === undefined ? undefined : onePeople(shortest);
   }
-  return shortest;
+  return shortest === undefined ? undefined : onePeople(shortest);
 });

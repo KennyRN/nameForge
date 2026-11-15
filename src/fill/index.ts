@@ -55,6 +55,8 @@ export interface FillRequest {
   rng: () => number;
   /** The sex the name's subject is known to have (see FillContext). */
   sex?: "male" | "female";
+  /** Northern Europe brief 5a §11.6: the fill follows a bare generic ("Lake [holy person]"): a holy fill takes "Saint {n}" or the bare name, a person fill no title. */
+  plain?: boolean;
   /** Fills already used for this label in this name: a resolver should avoid them. */
   avoid: ReadonlySet<string>;
 }
@@ -128,6 +130,15 @@ const BATCH_AGAIN = 40;
 const PLACE_AGAIN = 10;
 const PLACE_SOURCES = new Set(["place", "earlierPlace"]);
 /** Shared tables brief §14.2: the endings that make a personal name an old one ("Godricing", "Cuthbertington", "Wulfingham"). */
+/** Northern Europe brief 5a §11.6: words after which a fill is not following a generic ("Isle of [folk]", "Hall in [place]"). */
+const NOT_GENERIC = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a", "from", "for", "near"]);
+/** Whether the text before a fill ends in a bare generic: a capitalised word that isn't a joining word ("Lake ", "Glen "). */
+export function followsBareGeneric(before: string, after: string): boolean {
+  if (/^['’]s\b/.test(after)) return false;
+  const m = before.match(/(?:^|\s)([A-Z][\w'’-]*)\s$/);
+  return !!m && !NOT_GENERIC.has(m[1].toLowerCase());
+}
+
 const OLD_ENDING = /^(ing|ings|ington|ingham|inghams)\b/i;
 const STOP_WORDS = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a"]);
 
@@ -169,6 +180,9 @@ export function fillSlots(name: string, ctx: FillContext): string {
     const key = label.trim().toLowerCase();
     // Shared tables brief §14.2: a personal name that an "-ing", "-ington" or "-ingham" ending follows was coined by an early people.
     if (info.source === "person" && key === "personal name" && OLD_ENDING.test(name.slice(offset + whole.length))) info = labelInfo("old personal name") ?? info;
+    // Northern Europe brief 5a §11.6: a holy or person fill straight after a bare generic is plain; a folk fill never is (a person takes its place).
+    const plain = (info.source === "holy" || info.source === "person" || info.source === "folk") && followsBareGeneric(name.slice(0, offset), name.slice(offset + whole.length));
+    if (plain && info.source === "folk") info = { source: "person", slot: "founder" };
     let fill = ctx.series?.get(key);
     if (fill === undefined) {
       const resolver = resolvers[info.source];
@@ -181,7 +195,7 @@ export function fillSlots(name: string, ctx: FillContext): string {
       const rest = place ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
       const tries = seen && seen.size > 0 ? BATCH_AGAIN : place ? PLACE_AGAIN : AGAIN;
       for (let attempt = 0; attempt < tries; attempt++) {
-        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
+        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...(plain ? { plain } : {}), avoid });
         if (fill === undefined || (!avoid.has(fill) && !(place && repeatsGeneric(fill, rest)))) break;
       }
       if (fill === undefined) return whole;
@@ -192,6 +206,8 @@ export function fillSlots(name: string, ctx: FillContext): string {
     const before = name.slice(0, offset);
     const after = name.slice(offset + whole.length);
     if (/\bthe\s$/i.test(before)) fill = fill.replace(/^the\s+/i, "");
+    // A folk fill after "of" takes "the" ("Isle of the Fell People").
+    else if (info.source === "folk" && /\bof\s$/i.test(before) && !/^the\s/i.test(fill)) fill = `the ${fill}`;
     if (/^['’]s\b/.test(after)) fill = fill.replace(/['’]s$/, "");
     any = true;
     return fill;

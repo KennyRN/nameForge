@@ -5,7 +5,7 @@
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { balanceSignature, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceSignature, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
@@ -877,6 +877,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
       if (attempt > 200 && names.length === 0) break;
       continue;
     }
+    name.text = combeFor(name.text, culture.key, region);
     const key = name.text.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);

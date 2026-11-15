@@ -167,7 +167,7 @@ export function riverSettingFor(ctx: Pick<SourceContext, "where" | "culture">): 
 function drawFromDelegate(delegate: KindDelegate, ctx: SourceContext): string | undefined {
   if (delegate.engine === "rivers") {
     const setting = riverSettingFor(ctx);
-    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : undefined, count: 1, seed: seedFrom(ctx.rng), sourced: true });
+    const result = generateRiverNames({ setting, region: setting === "british" ? ctx.region : undefined, count: 1, seed: seedFrom(ctx.rng), sourced: true, ...(ctx.where === "home" ? { noNative: true } : {}) });
     return result.names[0]?.text;
   }
   const size = delegate.sizes[Math.floor(ctx.rng() * delegate.sizes.length)] ?? "any";
@@ -245,6 +245,15 @@ const placeFill = (draw: () => string | undefined, req: FillRequest): string | u
   }
   return last;
 };
-registerResolver("place", (req) => placeFill(() => fillPlace(req.culture, req.region, req.rng), req));
-registerResolver("earlierPlace", (req) => placeFill(() => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng) ?? fillPlace(req.culture, req.region, req.rng), req));
+/** Northern Europe brief 5a §11.6: until batch 5b gives German settlement names, a German place is a person and a generic of its own ("Hugo\'s Mill", "Keller Castle"). */
+const GERMAN_GENERICS: [string, number][] = [["Castle", 4], ["Mark", 3], ["Mill", 3], ["Heath", 2]];
+function germanPlace(req: FillRequest): string | undefined {
+  let roll = req.rng() * GERMAN_GENERICS.reduce((s, g) => s + g[1], 0);
+  const generic = (GERMAN_GENERICS.find((g) => (roll -= g[1]) < 0) ?? GERMAN_GENERICS[0])[0];
+  const template = req.rng() < 0.5 ? `[name]'s ${generic}` : `[surname] ${generic}`;
+  const name = fillSlots(template, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });
+  return /\[/.test(name) ? undefined : name;
+}
+registerResolver("place", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(req.culture, req.region, req.rng), req));
+registerResolver("earlierPlace", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng) ?? fillPlace(req.culture, req.region, req.rng), req));
 registerResolver("river", (req) => settled(drawFromDelegate({ engine: "rivers" }, { where: "home", culture: req.culture, region: req.region, rng: req.rng }), req));

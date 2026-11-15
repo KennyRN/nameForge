@@ -1,8 +1,18 @@
 {
   "_about": "Shared tables brief §5.2: every bracket label an engine produces, and where its fill comes from. Labels are matched ignoring case. `source` names a resolver in src/fill/; `slot` is the form it is said in (people.json §3.4). Labels not listed here and not under `stayBracketed` fail the label sweep test.",
   "oldNames": {
-    "_about": "Shared tables brief §14.2: which historic people table fills an old personal name, by region code. Pairs of culture and weight.",
+    "_about": "Shared tables brief §14.2: which historic people table fills an old personal name, by region code. Pairs of culture and weight. Northern Europe brief 5a §11.6: `cultures` goes first (the state's own culture; Celtic by its region, else the four nations evenly) and `regions` second; the default and the Danelaw shares are for the English keys and the rest.",
     "default": [["anglo-saxon", 1]],
+    "cultures": {
+      "welsh": [["welsh", 1]],
+      "scottish": [["scottish", 1]],
+      "irish": [["irish", 1]],
+      "cornish": [["cornish", 1]],
+      "norse": [["scandinavian", 1]],
+      "scandinavian": [["scandinavian", 1]],
+      "german": [["german", 1]],
+      "celtic": [["welsh", 1], ["scottish", 1], ["irish", 1], ["cornish", 1]]
+    },
     "regions": {
       "NTH": [["anglo-saxon", 50], ["norse", 50]],
       "EMD": [["anglo-saxon", 50], ["norse", 50]],
