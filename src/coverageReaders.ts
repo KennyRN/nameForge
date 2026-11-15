@@ -127,11 +127,6 @@ export const POOL_READER_TEXT: Readonly<Record<string, string>> = {
   "nSacredDOld": "–",
   // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
   // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
-  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
-  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
-  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
-  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
-  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.
   "nbStreetStreet": "streets and districts",
   "nbStreetSquare": "streets and districts",
   "nbStreetDistrict": "streets and districts",

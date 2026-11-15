@@ -38,7 +38,7 @@ export default {
     ],
     hill: [
       "Law;AN-MD|Knowe;AN-MD|Dun;AN-MD|Brae;EM-ST|Hillock;EM-ST|Monument Hill;EM-ST|Viewpoint;ST-MO|Country Park Hill;ST-MO|Fairy Knowe;h|Hill",
-      "Glen;AN-MD|Dean;AN-MD|Cleugh;AN-MD|Gorge;EM-ST|Mill Glen;EM-ST|Clearance Glen;EM-ST|Hydro Glen;ST-MO|Heritage Glen;ST-MO|Glen of the Fair Folk;h|Valley",
+      "Glen;AN-MD|Dean;AN-MD|Clough;AN-MD|Gorge;EM-ST|Mill Glen;EM-ST|Clearance Glen;EM-ST|Hydro Glen;ST-MO|Heritage Glen;ST-MO|Glen of the Fair Folk;h|Valley",
       "Rig;AN-MD|Shoulder;AN-MD|Edge;AN-MD|Cliff;EM-ST|Scaur;EM-ST|Crag Ridge;EM-ST|Skyline;ST-MO|Escarpment;ST-MO|Giant's Back;h|Ridge",
     ],
     river: [

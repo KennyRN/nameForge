@@ -22,7 +22,7 @@ export default {
       "Eyot;AN-MD|Ait;AN-MD|Holm;AN-MD|Willow Island;EM-ST|Mud Bank;EM-ST|Osier Isle;EM-ST|Gravel Island;ST-MO|Spit;ST-MO|Fairy Isle;h|Isle",
     ],
     grass: [
-      "Leaze;AN-MD|Lea;AN-MD|Meadow;AN-MD|Green;EM-ST|Common Field;EM-ST|Hay Meadow;EM-ST|Playing Field;ST-MO|Airfield;ST-MO|Hobgoblin Green;h|Pasture",
+      "Lea;AN-MD|Lea;AN-MD|Meadow;AN-MD|Green;EM-ST|Common Field;EM-ST|Hay Meadow;EM-ST|Playing Field;ST-MO|Airfield;ST-MO|Hobgoblin Green;h|Pasture",
       "Down;AN-MD|Chalk Down;AN-MD|Sheep Down;AN-MD|Upland;EM-ST|Racing Down;EM-ST|Warren;EM-ST|Gallop;ST-MO|Open Down;ST-MO|Chalk Giant's Down;h|Hill Pasture",
       "Dene;AN-MD|Bottom;AN-MD|Dell;AN-MD|Water Meadow;EM-ST|Flood Meadow;EM-ST|Cress Bed;EM-ST|Allotment Strip;ST-MO|Meadow Bottom;ST-MO|Elf Dell;h|Vale",
     ],

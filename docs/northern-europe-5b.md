@@ -371,3 +371,21 @@ Six per region and module; drawn only for the cultures that read the region. Eac
 
 Words in this batch that are dictionary loanwords or regional entries: Tolbooth, Howff, Wynd, Vennel, Gait, Brae, Close, Bothy, Kirk, Strath, Glen, Voe, Haaf, Haa, Broch, Dun, Rath, Quoit, Cromlech, Dolmen, Ogham, Boreen, Shebeen, Torg, Tron, Mercat, Peel, Dyke, Polder, Esker, Fjord, Skerry, Ness, Holm, Wick, Thorp, Hythe, Burg, Gasthof, Calvary, Hunebed, Cairn, Combe, Tor, Wheal, Knocker, Tomte, Piskie, Draugr (replaced by Walking Dead in 5a).
 
+## Dictionary check, online (batch 5b)
+
+Looked up on collinsdictionary.com (only the word was sent). Only these twelve words were checked online; the other loanwords in the 5a table and in this batch have not been looked up, and the check made earlier from memory stands for them until they are.
+
+| Word | In Collins | Kept or replaced |
+|---|---|---|
+| Leaze | no (only an archaic spelling of lease) | replaced by Lea |
+| Cleugh | no (clough is there) | replaced by Clough |
+| Spriggan | no | replaced by Treasure Guardian |
+| Carse | yes | kept |
+| Tump | yes (British dialect) | kept |
+| Pooka | yes | kept |
+| Gorsedd | yes | kept |
+| Hirsel | yes | kept |
+| Eyot | yes | kept |
+| Fogou | yes | kept |
+| Sidhe | yes | kept |
+| Runrig | yes | kept |

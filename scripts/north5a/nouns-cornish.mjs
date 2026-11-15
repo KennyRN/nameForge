@@ -8,17 +8,17 @@ export default {
     ],
     wood: [
       "Wooded Combe;AN-MD|Oak Hanger;AN-MD|Hazel Coppice;AN-MD|Valley Wood;EM-ST|Mine Wood;EM-ST|Estate Wood;EM-ST|Conifer Plantation;ST-MO|Heritage Woodland;ST-MO|Piskie Wood;h|Wood",
-      "Saint's Grove;AN-MD|Holy Grove;AN-MD|Sallow Grove;AN-MD|Chapel Grove;EM-ST|Methodist Grove;EM-ST|Gentry's Grove;EM-ST|Memorial Grove;ST-MO|Garden Grove;ST-MO|Spriggan Grove;h|Grove",
+      "Saint's Grove;AN-MD|Holy Grove;AN-MD|Sallow Grove;AN-MD|Chapel Grove;EM-ST|Methodist Grove;EM-ST|Gentry's Grove;EM-ST|Memorial Grove;ST-MO|Garden Grove;ST-MO|Treasure Guardian Grove;h|Grove",
       "Clearing;AN-MD|Forest Glade;AN-MD|Round Clearing;AN-MD|Charcoal Clearing;EM-ST|Tinners' Clearing;EM-ST|Mine Glade;EM-ST|Forestry Clearing;ST-MO|Picnic Glade;ST-MO|Knockers' Glade;h|Glade",
     ],
     moor: [
-      "Downs;AN-MD|Tinners' Moor;AN-MD|Rough Ground;AN-MD|Streamworks Moor;EM-ST|Engine Moor;EM-ST|Mining Moor;EM-ST|Clay Moor;ST-MO|Reserve Moor;ST-MO|Spriggan Moor;h|Moor",
+      "Downs;AN-MD|Tinners' Moor;AN-MD|Rough Ground;AN-MD|Streamworks Moor;EM-ST|Engine Moor;EM-ST|Mining Moor;EM-ST|Clay Moor;ST-MO|Reserve Moor;ST-MO|Treasure Guardian Moor;h|Moor",
       "Round;AN-MD|Hill Fort;AN-MD|Beacon Hill;AN-MD|Mine Hill;EM-ST|Spoil Hill;EM-ST|Engine Hill;EM-ST|Clay Tip;ST-MO|Viewpoint Hill;ST-MO|Giant's Hill;h|Hill",
       "Moorstone;AN-MD|Standing Stone;AN-MD|Cross Stone;AN-MD|Boundary Stone;EM-ST|Tinners' Stone;EM-ST|Mine Marker;EM-ST|Memorial Stone;ST-MO|Heritage Stone;ST-MO|Giant's Stone;h|Rock",
     ],
     wet: [
       "Salt Marsh;AN-MD|Marsh Level;AN-MD|Reed Marsh;AN-MD|Streamwork Marsh;EM-ST|Drained Marsh;EM-ST|Withy Bed;EM-ST|Nature Reserve;ST-MO|Reedbed;ST-MO|Piskie's Marsh;h|Marsh",
-      "Moor Bog;AN-MD|Peat Bog;AN-MD|Turf Bog;AN-MD|Streamworks Bog;EM-ST|Mine Bog;EM-ST|Clay Bog;EM-ST|Bog Reserve;ST-MO|Wetland Trail;ST-MO|Spriggan's Bog;h|Bog",
+      "Moor Bog;AN-MD|Peat Bog;AN-MD|Turf Bog;AN-MD|Streamworks Bog;EM-ST|Mine Bog;EM-ST|Clay Bog;EM-ST|Bog Reserve;ST-MO|Wetland Trail;ST-MO|Treasure Guardian's Bog;h|Bog",
       "Pill;AN-MD|Creek Isle;AN-MD|Island Chapel;AN-MD|Heron Isle;EM-ST|Quay Isle;EM-ST|Duck Isle;EM-ST|Bird Isle;ST-MO|Nature Isle;ST-MO|Lyonnesse Isle;h|Isle",
     ],
     grass: [
@@ -66,12 +66,12 @@ export default {
   },
   route: [
     "Green Lane;AN-MD|Hollow Way;AN-MD|Church Path;AN-MD|Turnpike;EM-ST|Mine Road;EM-ST|Coach Road;EM-ST|Link Road;ST-MO|Bypass;ST-MO|Piskie Path;h|Lane",
-    "Tinners' Way;AN-MD|Pack Road;AN-MD|Fish Road;AN-MD|Mineral Tramway;EM-ST|Clay Tramway;EM-ST|Mine Railway;EM-ST|Freight Line;ST-MO|Heritage Railway;ST-MO|Spriggan's Road;h|Tin Road",
+    "Tinners' Way;AN-MD|Pack Road;AN-MD|Fish Road;AN-MD|Mineral Tramway;EM-ST|Clay Tramway;EM-ST|Mine Railway;EM-ST|Freight Line;ST-MO|Heritage Railway;ST-MO|Treasure Guardian's Road;h|Tin Road",
     "Saints' Way;AN-MD|Pilgrim Path;AN-MD|Church Path;AN-MD|Coffin Path;EM-ST|Chapel Road;EM-ST|Methodist Path;EM-ST|Pilgrim Trail;ST-MO|Heritage Path;ST-MO|Piskie-led Path;h|Holy Way",
   ],
   sacred: [
     "Holy Well;AN-MD|Saint's Well;AN-MD|Healing Well;AN-MD|Baptism Well;EM-ST|Wishing Well;EM-ST|Well House;EM-ST|Well Garden;ST-MO|Heritage Well;ST-MO|Well of the Piskies;h|Sacred Spring",
     "Standing Stone;AN-MD|Fogou;AN-MD|Quoit;AN-MD|Cross Stone;EM-ST|Wayside Cross;EM-ST|Memorial Cairn;EM-ST|War Memorial;ST-MO|Memorial Garden;ST-MO|Giant's Quoit;h|Holy Hill",
-    "Saint's Chapel;AN-MD|Hermit's Cell;AN-MD|Churchtown Church;AN-MD|Parish Church;EM-ST|Methodist Chapel;EM-ST|Mining Chapel;EM-ST|Cathedral;ST-MO|Memorial Hall;ST-MO|Spriggan Chapel;h|Shrine",
+    "Saint's Chapel;AN-MD|Hermit's Cell;AN-MD|Churchtown Church;AN-MD|Parish Church;EM-ST|Methodist Chapel;EM-ST|Mining Chapel;EM-ST|Cathedral;ST-MO|Memorial Hall;ST-MO|Treasure Guardian Chapel;h|Shrine",
   ],
 };

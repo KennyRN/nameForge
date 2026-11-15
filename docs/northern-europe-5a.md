@@ -22,7 +22,7 @@ Keys: anglo-saxon, norman-british. Names with the generic last.
 - **wetlandNames, marsh (nWetMarsh):** Fen ‹AN-MD›, Carr ‹AN-MD›, Mere ‹AN-MD›, Marsh Meadow ‹EM-ST›, Reed Bed ‹EM-ST›, Osier Bed ‹EM-ST›, Nature Reserve ‹ST-MO›, Reedbed ‹ST-MO›, Will-o'-the-Wisp Marsh ‹h›, Marsh
 - **wetlandNames, bog (nWetBog):** Moss ‹AN-MD›, Quag ‹AN-MD›, Slough ‹AN-MD›, Peat Cutting ‹EM-ST›, Turf Moor ‹EM-ST›, Bog Hole ‹EM-ST›, Peat Works ‹ST-MO›, Wet Level ‹ST-MO›, Boggart Bog ‹h›, Bog
 - **wetlandNames, isle (nWetIsle):** Eyot ‹AN-MD›, Ait ‹AN-MD›, Holm ‹AN-MD›, Willow Island ‹EM-ST›, Mud Bank ‹EM-ST›, Osier Isle ‹EM-ST›, Gravel Island ‹ST-MO›, Spit ‹ST-MO›, Fairy Isle ‹h›, Isle
-- **grasslandNames, plain (nGrassPlain):** Leaze ‹AN-MD›, Lea ‹AN-MD›, Meadow ‹AN-MD›, Green ‹EM-ST›, Common Field ‹EM-ST›, Hay Meadow ‹EM-ST›, Playing Field ‹ST-MO›, Airfield ‹ST-MO›, Hobgoblin Green ‹h›, Pasture
+- **grasslandNames, plain (nGrassPlain):** Lea ‹AN-MD›, Lea ‹AN-MD›, Meadow ‹AN-MD›, Green ‹EM-ST›, Common Field ‹EM-ST›, Hay Meadow ‹EM-ST›, Playing Field ‹ST-MO›, Airfield ‹ST-MO›, Hobgoblin Green ‹h›, Pasture
 - **grasslandNames, down (nGrassDown):** Down ‹AN-MD›, Chalk Down ‹AN-MD›, Sheep Down ‹AN-MD›, Upland ‹EM-ST›, Racing Down ‹EM-ST›, Warren ‹EM-ST›, Gallop ‹ST-MO›, Open Down ‹ST-MO›, Chalk Giant's Down ‹h›, Hill Pasture
 - **grasslandNames, vale (nGrassVale):** Dene ‹AN-MD›, Bottom ‹AN-MD›, Dell ‹AN-MD›, Water Meadow ‹EM-ST›, Flood Meadow ‹EM-ST›, Cress Bed ‹EM-ST›, Allotment Strip ‹ST-MO›, Meadow Bottom ‹ST-MO›, Elf Dell ‹h›, Vale
 - **lands, country (nLandsCountry):** Shire ‹AN-MD›, Hundred ‹AN-MD›, Wapentake ‹AN-MD›, County ‹EM-ST›, Riding ‹EM-ST›, Liberty ‹EM-ST›, District ‹ST-MO›, Borough ‹ST-MO›, Kingdom Under the Hill ‹h›, Realm
@@ -176,7 +176,7 @@ Keys: scottish. Names with the generic last.
 - **farmland, farm (nFarmFarm):** Croft ‹AN-MD›, Steading ‹AN-MD›, Farm Town ‹AN-MD›, Home Town ‹EM-ST›, Mains ‹EM-ST›, Home Farm ‹EM-ST›, Crofting Township ‹ST-MO›, Farm Shop ‹ST-MO›, Fairy Croft ‹h›, Farm
 - **farmland, enclosure (nFarmEnclosure):** Sheep Pen ‹AN-MD›, Fold ‹AN-MD›, Park Dyke ‹AN-MD›, Dyked Park ‹EM-ST›, Drove Stance ‹EM-ST›, Stell ‹EM-ST›, Livestock Pen ‹ST-MO›, Paddock ‹ST-MO›, Fairy Fold ‹h›, Pen
 - **hillsValleys, hill (nHillHill):** Law ‹AN-MD›, Knowe ‹AN-MD›, Dun ‹AN-MD›, Brae ‹EM-ST›, Hillock ‹EM-ST›, Monument Hill ‹EM-ST›, Viewpoint ‹ST-MO›, Country Park Hill ‹ST-MO›, Fairy Knowe ‹h›, Hill
-- **hillsValleys, valley (nHillValley):** Glen ‹AN-MD›, Dean ‹AN-MD›, Cleugh ‹AN-MD›, Gorge ‹EM-ST›, Mill Glen ‹EM-ST›, Clearance Glen ‹EM-ST›, Hydro Glen ‹ST-MO›, Heritage Glen ‹ST-MO›, Glen of the Fair Folk ‹h›, Valley
+- **hillsValleys, valley (nHillValley):** Glen ‹AN-MD›, Dean ‹AN-MD›, Clough ‹AN-MD›, Gorge ‹EM-ST›, Mill Glen ‹EM-ST›, Clearance Glen ‹EM-ST›, Hydro Glen ‹ST-MO›, Heritage Glen ‹ST-MO›, Glen of the Fair Folk ‹h›, Valley
 - **hillsValleys, ridge (nHillRidge):** Rig ‹AN-MD›, Shoulder ‹AN-MD›, Edge ‹AN-MD›, Cliff ‹EM-ST›, Scaur ‹EM-ST›, Crag Ridge ‹EM-ST›, Skyline ‹ST-MO›, Escarpment ‹ST-MO›, Giant's Back ‹h›, Ridge
 - **riversInland, stream (nRiverStream):** Burn ‹AN-MD›, Water ‹AN-MD›, Rill ‹AN-MD›, Mill Lade ‹EM-ST›, Lade ‹EM-ST›, Cut ‹EM-ST›, Culvert ‹ST-MO›, Drain ‹ST-MO›, Kelpie's Burn ‹h›, Stream
 - **riversInland, lake (nRiverLake):** Loch ‹AN-MD›, Lochan ‹AN-MD›, Tarn ‹AN-MD›, Mill Dam ‹EM-ST›, Curling Pond ‹EM-ST›, Estate Loch ‹EM-ST›, Hydro Loch ‹ST-MO›, Reservoir ‹ST-MO›, Loch Monster's Loch ‹h›, Lake
@@ -302,13 +302,13 @@ Keys: cornish. Names with the generic first.
 - **mountainNames, ridge (nMountainRidge):** Granite Ridge ‹AN-MD›, Beacon Ridge ‹AN-MD›, Bare Ridge ‹AN-MD›, Lode Ridge ‹EM-ST›, Mine Ridge ‹EM-ST›, Engine Ridge ‹EM-ST›, Clay Ridge ‹ST-MO›, Coastal Ridge ‹ST-MO›, Giant's Back ‹h›, Crest
 - **mountainNames, range (nMountainRange):** Granite Downs ‹AN-MD›, Tin Downs ‹AN-MD›, Moor Hills ‹AN-MD›, Mining Downs ‹EM-ST›, Copper Hills ‹EM-ST›, Stannary Downs ‹EM-ST›, Clay Hills ‹ST-MO›, Heritage Downs ‹ST-MO›, Giants' Hills ‹h›, Downs
 - **forestNames, forest (nWoodForest):** Wooded Combe ‹AN-MD›, Oak Hanger ‹AN-MD›, Hazel Coppice ‹AN-MD›, Valley Wood ‹EM-ST›, Mine Wood ‹EM-ST›, Estate Wood ‹EM-ST›, Conifer Plantation ‹ST-MO›, Heritage Woodland ‹ST-MO›, Piskie Wood ‹h›, Wood
-- **forestNames, grove (nWoodGrove):** Saint's Grove ‹AN-MD›, Holy Grove ‹AN-MD›, Sallow Grove ‹AN-MD›, Chapel Grove ‹EM-ST›, Methodist Grove ‹EM-ST›, Gentry's Grove ‹EM-ST›, Memorial Grove ‹ST-MO›, Garden Grove ‹ST-MO›, Spriggan Grove ‹h›, Grove
+- **forestNames, grove (nWoodGrove):** Saint's Grove ‹AN-MD›, Holy Grove ‹AN-MD›, Sallow Grove ‹AN-MD›, Chapel Grove ‹EM-ST›, Methodist Grove ‹EM-ST›, Gentry's Grove ‹EM-ST›, Memorial Grove ‹ST-MO›, Garden Grove ‹ST-MO›, Treasure Guardian Grove ‹h›, Grove
 - **forestNames, clearing (nWoodClearing):** Clearing ‹AN-MD›, Forest Glade ‹AN-MD›, Round Clearing ‹AN-MD›, Charcoal Clearing ‹EM-ST›, Tinners' Clearing ‹EM-ST›, Mine Glade ‹EM-ST›, Forestry Clearing ‹ST-MO›, Picnic Glade ‹ST-MO›, Knockers' Glade ‹h›, Glade
-- **moorNames, moor (nMoorMoor):** Downs ‹AN-MD›, Tinners' Moor ‹AN-MD›, Rough Ground ‹AN-MD›, Streamworks Moor ‹EM-ST›, Engine Moor ‹EM-ST›, Mining Moor ‹EM-ST›, Clay Moor ‹ST-MO›, Reserve Moor ‹ST-MO›, Spriggan Moor ‹h›, Moor
+- **moorNames, moor (nMoorMoor):** Downs ‹AN-MD›, Tinners' Moor ‹AN-MD›, Rough Ground ‹AN-MD›, Streamworks Moor ‹EM-ST›, Engine Moor ‹EM-ST›, Mining Moor ‹EM-ST›, Clay Moor ‹ST-MO›, Reserve Moor ‹ST-MO›, Treasure Guardian Moor ‹h›, Moor
 - **moorNames, hill (nMoorHill):** Round ‹AN-MD›, Hill Fort ‹AN-MD›, Beacon Hill ‹AN-MD›, Mine Hill ‹EM-ST›, Spoil Hill ‹EM-ST›, Engine Hill ‹EM-ST›, Clay Tip ‹ST-MO›, Viewpoint Hill ‹ST-MO›, Giant's Hill ‹h›, Hill
 - **moorNames, stone (nMoorStone):** Moorstone ‹AN-MD›, Standing Stone ‹AN-MD›, Cross Stone ‹AN-MD›, Boundary Stone ‹EM-ST›, Tinners' Stone ‹EM-ST›, Mine Marker ‹EM-ST›, Memorial Stone ‹ST-MO›, Heritage Stone ‹ST-MO›, Giant's Stone ‹h›, Rock
 - **wetlandNames, marsh (nWetMarsh):** Salt Marsh ‹AN-MD›, Marsh Level ‹AN-MD›, Reed Marsh ‹AN-MD›, Streamwork Marsh ‹EM-ST›, Drained Marsh ‹EM-ST›, Withy Bed ‹EM-ST›, Nature Reserve ‹ST-MO›, Reedbed ‹ST-MO›, Piskie's Marsh ‹h›, Marsh
-- **wetlandNames, bog (nWetBog):** Moor Bog ‹AN-MD›, Peat Bog ‹AN-MD›, Turf Bog ‹AN-MD›, Streamworks Bog ‹EM-ST›, Mine Bog ‹EM-ST›, Clay Bog ‹EM-ST›, Bog Reserve ‹ST-MO›, Wetland Trail ‹ST-MO›, Spriggan's Bog ‹h›, Bog
+- **wetlandNames, bog (nWetBog):** Moor Bog ‹AN-MD›, Peat Bog ‹AN-MD›, Turf Bog ‹AN-MD›, Streamworks Bog ‹EM-ST›, Mine Bog ‹EM-ST›, Clay Bog ‹EM-ST›, Bog Reserve ‹ST-MO›, Wetland Trail ‹ST-MO›, Treasure Guardian's Bog ‹h›, Bog
 - **wetlandNames, isle (nWetIsle):** Pill ‹AN-MD›, Creek Isle ‹AN-MD›, Island Chapel ‹AN-MD›, Heron Isle ‹EM-ST›, Quay Isle ‹EM-ST›, Duck Isle ‹EM-ST›, Bird Isle ‹ST-MO›, Nature Isle ‹ST-MO›, Lyonnesse Isle ‹h›, Isle
 - **grasslandNames, plain (nGrassPlain):** Cliff Pasture ‹AN-MD›, Downland ‹AN-MD›, Sheep Down ‹AN-MD›, Cliff Ley ‹EM-ST›, Common Ley ‹EM-ST›, Drove Ley ‹EM-ST›, Nature Pasture ‹ST-MO›, Coastal Grassland ‹ST-MO›, Piskie Pasture ‹h›, Ley
 - **grasslandNames, down (nGrassDown):** Green Lane ‹AN-MD›, Town Place ‹AN-MD›, Churchtown Green ‹AN-MD›, Fair Green ‹EM-ST›, Wrestling Green ‹EM-ST›, Mine Green ‹EM-ST›, Playing Field ‹ST-MO›, Village Green ‹ST-MO›, Piskie Green ‹h›, Green
@@ -335,22 +335,22 @@ Keys: cornish. Names with the generic first.
 - **seaCharts, reef (nChartReef):** Ledge ‹AN-MD›, Rock ‹AN-MD›, Sunken Rock ‹AN-MD›, Lighthouse Rock ‹EM-ST›, Wreck Rock ‹EM-ST›, Pilot Rock ‹EM-ST›, Wreck Marker ‹ST-MO›, Divers' Reef ‹ST-MO›, Wreckers' Reef ‹h›, Reef
 - **seaCharts, channel (nChartChannel):** Race ‹AN-MD›, Tidal Race ‹AN-MD›, Narrows ‹AN-MD›, Pilot Channel ‹EM-ST›, Packet Channel ‹EM-ST›, Dredged Channel ‹EM-ST›, Traffic Channel ‹ST-MO›, Cable Channel ‹ST-MO›, Mermaid's Channel ‹h›, Channel
 - **routeNames, road (nRouteRoad):** Green Lane ‹AN-MD›, Hollow Way ‹AN-MD›, Church Path ‹AN-MD›, Turnpike ‹EM-ST›, Mine Road ‹EM-ST›, Coach Road ‹EM-ST›, Link Road ‹ST-MO›, Bypass ‹ST-MO›, Piskie Path ‹h›, Lane
-- **routeNames, trade (nRouteTrade):** Tinners' Way ‹AN-MD›, Pack Road ‹AN-MD›, Fish Road ‹AN-MD›, Mineral Tramway ‹EM-ST›, Clay Tramway ‹EM-ST›, Mine Railway ‹EM-ST›, Freight Line ‹ST-MO›, Heritage Railway ‹ST-MO›, Spriggan's Road ‹h›, Tin Road
+- **routeNames, trade (nRouteTrade):** Tinners' Way ‹AN-MD›, Pack Road ‹AN-MD›, Fish Road ‹AN-MD›, Mineral Tramway ‹EM-ST›, Clay Tramway ‹EM-ST›, Mine Railway ‹EM-ST›, Freight Line ‹ST-MO›, Heritage Railway ‹ST-MO›, Treasure Guardian's Road ‹h›, Tin Road
 - **routeNames, pilgrim (nRoutePilgrim):** Saints' Way ‹AN-MD›, Pilgrim Path ‹AN-MD›, Church Path ‹AN-MD›, Coffin Path ‹EM-ST›, Chapel Road ‹EM-ST›, Methodist Path ‹EM-ST›, Pilgrim Trail ‹ST-MO›, Heritage Path ‹ST-MO›, Piskie-led Path ‹h›, Holy Way
 - **sacredPlaces, water (nSacredWater):** Holy Well ‹AN-MD›, Saint's Well ‹AN-MD›, Healing Well ‹AN-MD›, Baptism Well ‹EM-ST›, Wishing Well ‹EM-ST›, Well House ‹EM-ST›, Well Garden ‹ST-MO›, Heritage Well ‹ST-MO›, Well of the Piskies ‹h›, Sacred Spring
 - **sacredPlaces, stone and ground (nSacredStone):** Standing Stone ‹AN-MD›, Fogou ‹AN-MD›, Quoit ‹AN-MD›, Cross Stone ‹EM-ST›, Wayside Cross ‹EM-ST›, Memorial Cairn ‹EM-ST›, War Memorial ‹ST-MO›, Memorial Garden ‹ST-MO›, Giant's Quoit ‹h›, Holy Hill
-- **sacredPlaces, built places (nSacredBuilt):** Saint's Chapel ‹AN-MD›, Hermit's Cell ‹AN-MD›, Churchtown Church ‹AN-MD›, Parish Church ‹EM-ST›, Methodist Chapel ‹EM-ST›, Mining Chapel ‹EM-ST›, Cathedral ‹ST-MO›, Memorial Hall ‹ST-MO›, Spriggan Chapel ‹h›, Shrine
+- **sacredPlaces, built places (nSacredBuilt):** Saint's Chapel ‹AN-MD›, Hermit's Cell ‹AN-MD›, Churchtown Church ‹AN-MD›, Parish Church ‹EM-ST›, Methodist Chapel ‹EM-ST›, Mining Chapel ‹EM-ST›, Cathedral ‹ST-MO›, Memorial Hall ‹ST-MO›, Treasure Guardian Chapel ‹h›, Shrine
 
 ### Shared by the group (read by every module of the group; not counted towards the cells)
 
 - **land use and material (nLandB):** Tin, Copper, Clay, Arsenic, Pilchard, Granite, Gorse, Furze, Wheal, Engine
-- **lore, fantastic only (nLandC):** Knocker, Piskie, Giant, Spriggan, Mermaid, Wrecker's Ghost
+- **lore, fantastic only (nLandC):** Knocker, Piskie, Giant, Treasure Guardian, Mermaid, Wrecker's Ghost
 - **by era (nLandD):** Hill Fort ‹AN-MD›, Round ‹AN-MD›, Fogou ‹AN-MD›, Standing Stone ‹AN-MD›, Holy Well ‹AN-MD›, Saint's Chapel ‹AN-MD›, Church Town ‹MD›, Tinners' Bounds ‹MD›, Engine House ‹EM-MO›, Tin Mine ‹EM-MO›, China Clay Pit ‹EM-MO›, Clay Tip ‹EM-MO›, Mine Stack ‹EM-MO›, Wheal ‹EM-MO›, Quarry ‹EM-MO›
 - **water use (nWaterB):** Pilchard, Tin, Copper, Slate, Saffron, Smuggler's, Wrecker's, Seine, Gig, Lugger
-- **water lore, fantastic only (nWaterC):** Mermaid, Drowned Bell, Lyonnesse, Wreck Ghost, Spriggan, Giant
+- **water lore, fantastic only (nWaterC):** Mermaid, Drowned Bell, Lyonnesse, Wreck Ghost, Treasure Guardian, Giant
 - **water by era (nWaterD):** Fish Cellar ‹AN-MD›, Saint's Landing ‹AN-MD›, Tinners' Landing ‹AN-MD›, Cliff Castle ‹AN-MD›, Holy Island ‹AN-MD›, Beacon ‹AN-MD›, Chapel Rock ‹MD›, Fishing Cove ‹MD›, Pilchard Cellar ‹EM-MO›, Harbour ‹EM-MO›, Lifeboat Slip ‹EM-MO›, Mine Quay ‹EM-MO›, Lighthouse ‹EM-MO›, Engine Cove ‹EM-MO›, Quay ‹EM-MO›
 - **route goods and users (nRouteB):** Tin, Copper, Clay, Pilchard, Fish, Pack, Miners', Church, Saints', Coffin
-- **route lore, fantastic only (nRouteC):** Piskie, Knockers', Giants', Wreckers', Spriggan, Phantom Coach
+- **route lore, fantastic only (nRouteC):** Piskie, Knockers', Giants', Wreckers', Treasure Guardian, Phantom Coach
 - **route words by era (nRouteD):** Saints' Way ‹AN-MD›, Ridgeway ‹AN-MD›, Church Path ‹AN-MD›, Tinners' Track ‹AN-MD›, Ford Lane ‹AN-MD›, Cliff Path ‹AN-MD›, Coffin Path ‹MD›, Market Way ‹MD›, Turnpike ‹EM-ST›, Toll Road ‹EM-ST›, Mail Coach Road ‹EM-ST›, Packhorse Road ‹EM-ST›, Tramway ‹EM-ST›, Mine Road ‹EM-ST›, Mineral Railway ‹ST-MO›, Branch Line ‹ST-MO›, Viaduct ‹ST-MO›, Harbour Line ‹ST-MO›, Station Road ‹ST-MO›, Clay Line ‹ST-MO›, Bypass ‹MO›, Link Road ‹MO›
 - **sacred qualifiers (nSacredB):** Saint's, Healing, Holy, Pilgrim, Drowned, Hermit's
 - **sacred lore, fantastic only (nSacredC):** Giant's, Piskie, Knockers', Drowned, Mermaid's
@@ -908,7 +908,7 @@ Region words: English words weighted per region (§4). Land tags are read by the
 | psblborder | land | anglo-saxon, norman-british, scottish | SBL 3 | lands/country: Border Country; lands/parish: {town} Border; lands/shire: {wildColour} Border Shire; lands/province: Border Province; lands/parish: Border of {town}; lands/shire: {town} Border Shire |
 | psbllowland | land | anglo-saxon, norman-british, scottish | SBL 3 | lands/country: Lowland Country; lands/parish: {town} Lowland; lands/shire: {wildColour} Lowland Shire; lands/province: Lowland Province; lands/parish: Lowland of {town}; lands/shire: {town} Lowland Shire |
 | psbllinn | land | anglo-saxon, norman-british, scottish | SBL 3 | riversInland/stream: {beast} Linn; riversInland/spring: {town} Linn; riversInland/pool: {wildColour} Linn; riversInland/stream: Linn of {person}; riversInland/spring: {person:poss} Linn; riversInland/pool: Linn of {town} |
-| psblcleugh | land | anglo-saxon, norman-british, scottish | SBL 3 | riversInland/stream: {beast} Cleugh; riversInland/spring: {town} Cleugh; riversInland/pool: {wildColour} Cleugh; riversInland/stream: Cleugh of {person}; riversInland/spring: {person:poss} Cleugh; riversInland/pool: Cleugh of {town} |
+| psblclough | land | anglo-saxon, norman-british, scottish | SBL 3 | riversInland/stream: {beast} Clough; riversInland/spring: {town} Clough; riversInland/pool: {wildColour} Clough; riversInland/stream: Clough of {person}; riversInland/spring: {person:poss} Clough; riversInland/pool: Clough of {town} |
 | psblburn | land | anglo-saxon, norman-british, scottish | SBL 3 | riversInland/stream: {beast} Burn; riversInland/spring: {town} Burn; riversInland/pool: {wildColour} Burn; riversInland/stream: Burn of {person}; riversInland/spring: {person:poss} Burn; riversInland/pool: Burn of {town} |
 | psblwater | land | anglo-saxon, norman-british, scottish | SBL 3 | riversInland/stream: {beast} Water; riversInland/spring: {town} Water; riversInland/pool: {wildColour} Water; riversInland/stream: Water of {person}; riversInland/spring: {person:poss} Water; riversInland/pool: Water of {town} |
 | psblmoss | land | anglo-saxon, norman-british, scottish | SBL 3 | wetlandNames/marsh: {beast} Moss; wetlandNames/bog: {town} Moss; wetlandNames/water: {wildColour} Moss; wetlandNames/marsh: Moss of {person}; wetlandNames/bog: {person:poss} Moss; wetlandNames/water: Moss of {town} |
@@ -938,7 +938,7 @@ Region words: English words weighted per region (§4). Land tags are read by the
 | pslolinn | land | scottish | SLO 3 | riversInland/stream: {beast} Linn; riversInland/spring: {town} Linn; riversInland/pool: {wildColour} Linn; riversInland/stream: Linn of {person}; riversInland/spring: {person:poss} Linn; riversInland/pool: Linn of {town} |
 | psloburn | land | scottish | SLO 3 | riversInland/stream: {beast} Burn; riversInland/spring: {town} Burn; riversInland/pool: {wildColour} Burn; riversInland/stream: Burn of {person}; riversInland/spring: {person:poss} Burn; riversInland/pool: Burn of {town} |
 | pslowater | land | scottish | SLO 3 | riversInland/stream: {beast} Water; riversInland/spring: {town} Water; riversInland/pool: {wildColour} Water; riversInland/stream: Water of {person}; riversInland/spring: {person:poss} Water; riversInland/pool: Water of {town} |
-| pslocleugh | land | scottish | SLO 3 | riversInland/stream: {beast} Cleugh; riversInland/spring: {town} Cleugh; riversInland/pool: {wildColour} Cleugh; riversInland/stream: Cleugh of {person}; riversInland/spring: {person:poss} Cleugh; riversInland/pool: Cleugh of {town} |
+| psloclough | land | scottish | SLO 3 | riversInland/stream: {beast} Clough; riversInland/spring: {town} Clough; riversInland/pool: {wildColour} Clough; riversInland/stream: Clough of {person}; riversInland/spring: {person:poss} Clough; riversInland/pool: Clough of {town} |
 | pslomoss | land | scottish | SLO 3 | wetlandNames/marsh: {beast} Moss; wetlandNames/bog: {town} Moss; wetlandNames/water: {wildColour} Moss; wetlandNames/marsh: Moss of {person}; wetlandNames/bog: {person:poss} Moss; wetlandNames/water: Moss of {town} |
 | psloflow | land | scottish | SLO 3 | wetlandNames/marsh: {beast} Flow; wetlandNames/bog: {town} Flow; wetlandNames/water: {wildColour} Flow; wetlandNames/marsh: Flow of {person}; wetlandNames/bog: {person:poss} Flow; wetlandNames/water: Flow of {town} |
 | pslomire | land | scottish | SLO 3 | wetlandNames/marsh: {beast} Mire; wetlandNames/bog: {town} Mire; wetlandNames/water: {wildColour} Mire; wetlandNames/marsh: Mire of {person}; wetlandNames/bog: {person:poss} Mire; wetlandNames/water: Mire of {town} |
@@ -968,7 +968,7 @@ Region words: English words weighted per region (§4). Land tags are read by the
 | pshhtorrent | land | scottish | SHH 3 | riversInland/stream: {beast} Torrent; riversInland/spring: {town} Torrent; riversInland/pool: {wildColour} Torrent; riversInland/stream: Torrent of {person}; riversInland/spring: {person:poss} Torrent; riversInland/pool: Torrent of {town} |
 | pshhlinn | land | scottish | SHH 3 | riversInland/stream: {beast} Linn; riversInland/spring: {town} Linn; riversInland/pool: {wildColour} Linn; riversInland/stream: Linn of {person}; riversInland/spring: {person:poss} Linn; riversInland/pool: Linn of {town} |
 | pshhburn | land | scottish | SHH 3 | riversInland/stream: {beast} Burn; riversInland/spring: {town} Burn; riversInland/pool: {wildColour} Burn; riversInland/stream: Burn of {person}; riversInland/spring: {person:poss} Burn; riversInland/pool: Burn of {town} |
-| pshhcleugh | land | scottish | SHH 3 | riversInland/stream: {beast} Cleugh; riversInland/spring: {town} Cleugh; riversInland/pool: {wildColour} Cleugh; riversInland/stream: Cleugh of {person}; riversInland/spring: {person:poss} Cleugh; riversInland/pool: Cleugh of {town} |
+| pshhclough | land | scottish | SHH 3 | riversInland/stream: {beast} Clough; riversInland/spring: {town} Clough; riversInland/pool: {wildColour} Clough; riversInland/stream: Clough of {person}; riversInland/spring: {person:poss} Clough; riversInland/pool: Clough of {town} |
 | pshhmoss | land | scottish | SHH 3 | wetlandNames/marsh: {beast} Moss; wetlandNames/bog: {town} Moss; wetlandNames/water: {wildColour} Moss; wetlandNames/marsh: Moss of {person}; wetlandNames/bog: {person:poss} Moss; wetlandNames/water: Moss of {town} |
 | pshhflow | land | scottish | SHH 3 | wetlandNames/marsh: {beast} Flow; wetlandNames/bog: {town} Flow; wetlandNames/water: {wildColour} Flow; wetlandNames/marsh: Flow of {person}; wetlandNames/bog: {person:poss} Flow; wetlandNames/water: Flow of {town} |
 | pshhbog | land | scottish | SHH 3 | wetlandNames/marsh: {beast} Bog; wetlandNames/bog: {town} Bog; wetlandNames/water: {wildColour} Bog; wetlandNames/marsh: Bog of {person}; wetlandNames/bog: {person:poss} Bog; wetlandNames/water: Bog of {town} |
@@ -1291,7 +1291,7 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Carr | English, regions |
 | Carse | Scottish, regions |
 | Clachan | Scottish |
-| Cleugh | Scottish, regions |
+| Clough | Scottish, regions |
 | Combe | English, Welsh, Cornish, regions |
 | Corrie | Scottish, regions |
 | Crag | English, Welsh, Scottish, Cornish, German, regions |
@@ -1341,8 +1341,8 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Kobold | German |
 | Kyle | Scottish |
 | Law | Scottish, Irish, Norse, regions |
+| Lea | English |
 | Leat | English, Welsh, Cornish, regions |
-| Leaze | English |
 | Links | Scottish, regions |
 | Linn | English, Scottish, regions |
 | Loch | Scottish, regions |
@@ -1387,7 +1387,6 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Soke | English |
 | Spinney | English |
 | Spit | English, German |
-| Spriggan | Cornish |
 | Staithe | English, Welsh |
 | Steading | English, Scottish, Norse, Scandinavian, regions |
 | Stell | Scottish |
@@ -1417,6 +1416,9 @@ Every word above was checked against standard English dictionaries (Collins, Oxf
 
 | Replaced | By | Why |
 |---|---|---|
+| Spriggan | Treasure Guardian | checked online: not in Collins |
+| Cleugh | Clough | checked online: Collins has clough, not cleugh |
+| Leaze | Lea | checked online: Collins has only an archaic spelling of lease |
 | Ballybetagh | Tribal District | an Irish land unit, not in a standard dictionary |
 | Cantred | Hundred | the same division, in a word the dictionary has |
 | Callow | River Meadow | 'callow' as a riverside meadow is Irish-English only |
