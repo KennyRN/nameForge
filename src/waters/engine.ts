@@ -36,7 +36,7 @@ import { dropStarWord, drawStarOfKind, type StarKind } from "../space/stars";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateVesselNames } from "../vessels/engine";
 import { kindInClass, type PlaceClass } from "../places/classes";
-import { drawKind, sourceFor, type KindSources } from "../places/sources";
+import { biomeForFill, drawKind, sourceFor, type KindSources } from "../places/sources";
 import { findColonialCulture } from "../places/colonialCultures";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -191,6 +191,8 @@ export interface WatersOptions {
   catalogue?: BiomeCatalogue;
   tone?: GroupToneChoice;
   people?: GroupPeople;
+  /** Internal, shared tables brief §14.2: the filler wrapper marks the native source's personal names as old ones. */
+  oldNames?: boolean;
   series?: boolean;
   /** Hyperspace only. */
   scale?: ScaleChoice;
@@ -582,7 +584,7 @@ export const watersHasSeries = (module: WatersModule) => SERIES_MODULES.has(modu
 export function generateWatersNames(options: WatersOptions): WatersBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
+  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
@@ -778,7 +780,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
       const sourced = !fixed && earthlyModule && kindKey && !(options.series && watersHasSeries(module)) ? findWaterKind(earthlyModule, kindKey)?.sources : undefined;
       if (sourced && kindKey && sourceReaches(sourced)) {
         let own: WatersName | undefined;
-        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: false, rng }, () => {
+        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: false, oldNames: options.oldNames, rng }, () => {
           own = drawOwn(plans.get(kindKey!), scale, anchors);
           return own?.text;
         });

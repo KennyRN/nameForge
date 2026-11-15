@@ -17,6 +17,8 @@ export interface FillWhere {
   /** An era code, or a band's genre. */
   era: string | undefined;
   region?: string;
+  /** Shared tables brief §14.3: the state's biome id, for folk fills. */
+  biome?: string;
   series?: boolean;
   /** Shared tables brief §13.2 item 6: a place module from the steam age on, or stars and space: [person] reads the founder forms. */
   personAsFounder?: boolean;
@@ -31,9 +33,11 @@ const sexOf = (n: object): "male" | "female" | undefined => {
 export function fillPeopleBatch<T extends { names: { text: string }[]; seed: number }>(batch: T, mode: FillMode, where: FillWhere): T {
   const rng = mulberry32((batch.seed ^ 0x5eed5eed) >>> 0);
   const series = where.series ? new Map<string, string>() : undefined;
+  // Shared tables brief §14.1: outside series mode a fill isn't reused within the batch while its list has others.
+  const batchSeen = series ? undefined : new Map<string, Set<string>>();
   return {
     ...batch,
-    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, mode, rng, series, sex: sexOf(n), personAsFounder: where.personAsFounder }) })),
+    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, biome: where.biome, mode, rng, series, batchSeen, sex: sexOf(n), personAsFounder: where.personAsFounder }) })),
   };
 }
 

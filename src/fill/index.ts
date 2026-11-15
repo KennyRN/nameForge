@@ -24,6 +24,8 @@ export interface FillContext {
   /** An era code, or a band's genre (`fantasy`, `modern`, `scifi`) for the modules that store only a band. */
   era: string;
   region?: string;
+  /** Shared tables brief §14.3: the state's biome id, which folk fills are drawn in (a British home is temperate). */
+  biome?: string;
   mode: FillMode;
   /** The batch's seeded stream: the filler draws from it, never from Math.random. */
   rng: () => number;
@@ -33,6 +35,8 @@ export interface FillContext {
   personAsFounder?: boolean;
   /** Series mode: each label is filled once per batch and reused. Pass the same map for every name in a batch. */
   series?: Map<string, string>;
+  /** Shared tables brief §14.1: the fills already used in this batch, by label. Outside series mode a fill isn't reused while the list has others. Pass the same map for every name in a batch. */
+  batchSeen?: Map<string, Set<string>>;
   /** The sources' resolvers; the registered ones when absent. */
   resolvers?: Resolvers;
 }
@@ -46,6 +50,7 @@ export interface FillRequest {
   era: FillEra;
   period: FillPeriod;
   region?: string;
+  biome?: string;
   mode: FillMode;
   rng: () => number;
   /** The sex the name's subject is known to have (see FillContext). */
@@ -117,9 +122,13 @@ export function fillGenre(era: FillEra): "fantasy" | "modern" | "scifi" {
 export const drawSeed = (rng: () => number): number => Math.floor(rng() * 4294967296) >>> 0;
 
 const AGAIN = 8;
+/** Shared tables brief §14.1: tries to find a fill not yet used in the batch before accepting a repeat (a short list has run out). */
+const BATCH_AGAIN = 40;
 /** Shared tables brief §13.2 item 1: a place fill is drawn again, up to this many times, when it repeats the feature's generic. */
 const PLACE_AGAIN = 10;
 const PLACE_SOURCES = new Set(["place", "earlierPlace"]);
+/** Shared tables brief §14.2: the endings that make a personal name an old one ("Godricing", "Cuthbertington", "Wulfingham"). */
+const OLD_ENDING = /^(ing|ings|ington|ingham|inghams)\b/i;
 const STOP_WORDS = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a"]);
 
 /**
@@ -155,23 +164,29 @@ export function fillSlots(name: string, ctx: FillContext): string {
   const used = new Map<string, Set<string>>();
   let any = false;
   const filled = name.replace(/\[([^\]]+)\]/g, (whole: string, label: string, offset: number) => {
-    const info = labelInfo(label);
+    let info = labelInfo(label);
     if (!info) return whole;
     const key = label.trim().toLowerCase();
+    // Shared tables brief §14.2: a personal name that an "-ing", "-ington" or "-ingham" ending follows was coined by an early people.
+    if (info.source === "person" && key === "personal name" && OLD_ENDING.test(name.slice(offset + whole.length))) info = labelInfo("old personal name") ?? info;
     let fill = ctx.series?.get(key);
     if (fill === undefined) {
       const resolver = resolvers[info.source];
       if (!resolver) return whole;
-      const avoid = used.get(key) ?? new Set<string>();
+      const inName = used.get(key) ?? new Set<string>();
+      const seen = ctx.series ? undefined : ctx.batchSeen?.get(key);
+      const avoid = seen && seen.size > 0 ? new Set([...inName, ...seen]) : inName;
       const place = PLACE_SOURCES.has(info.source);
       const slot = ctx.personAsFounder && info.source === "person" && (key === "person" || key === "personal name") ? "founder" : info.slot;
       const rest = place ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
-      for (let attempt = 0; attempt < (place ? PLACE_AGAIN : AGAIN); attempt++) {
-        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
+      const tries = seen && seen.size > 0 ? BATCH_AGAIN : place ? PLACE_AGAIN : AGAIN;
+      for (let attempt = 0; attempt < tries; attempt++) {
+        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
         if (fill === undefined || (!avoid.has(fill) && !(place && repeatsGeneric(fill, rest)))) break;
       }
       if (fill === undefined) return whole;
       ctx.series?.set(key, fill);
+      if (ctx.batchSeen && !ctx.series) ctx.batchSeen.set(key, (ctx.batchSeen.get(key) ?? new Set<string>()).add(fill));
     }
     used.set(key, (used.get(key) ?? new Set<string>()).add(fill));
     const before = name.slice(0, offset);

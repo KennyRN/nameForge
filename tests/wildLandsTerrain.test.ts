@@ -85,13 +85,13 @@ test("references: a {@kind} result is at most two words, never begins The and ne
   assert.ok(seen > 200, `${seen} references`);
 });
 
-test("explorer's mood: at least 4% in new country (early modern, any land), under 5% at home (1.5% before the dialect words were kept to the British), in every module", () => {
+test("explorer's mood: at least 4% in new country (early modern, any land), under 1.5% at home, in every module", () => {
   for (const module of WILDS_MODULES) {
     const fresh = share(batches({ module, culture: "general", era: "EM", where: "new" }), module, "mood");
     const home = share(batches({ module, culture: "general", era: "EM", where: "home" }), module, "mood");
     assert.ok(fresh >= 0.04, `${module} new ${fresh}`);
-    // Shared tables brief §13.3: General no longer draws the British dialect kinds at home, so the other kinds' shares rise (moors most): 5% not 1.5%.
-    assert.ok(home < 0.05, `${module} home ${home}`);
+    // Shared tables brief §14.4: the home multiplier in wilds.json brings the share back to 1.5% after the dialect words were kept to the British.
+    assert.ok(home < 0.015, `${module} home ${home}`);
   }
 });
 

@@ -81276,7 +81276,23 @@ var river_names_default = {
 // src/data/fill.json
 var fill_default = {
   _about: "Shared tables brief \xA75.2: every bracket label an engine produces, and where its fill comes from. Labels are matched ignoring case. `source` names a resolver in src/fill/; `slot` is the form it is said in (people.json \xA73.4). Labels not listed here and not under `stayBracketed` fail the label sweep test.",
+  oldNames: {
+    _about: "Shared tables brief \xA714.2: which historic people table fills an old personal name, by region code. Pairs of culture and weight.",
+    default: [["anglo-saxon", 1]],
+    regions: {
+      NTH: [["anglo-saxon", 50], ["norse", 50]],
+      EMD: [["anglo-saxon", 50], ["norse", 50]],
+      EAN: [["anglo-saxon", 50], ["norse", 50]],
+      NSI: [["anglo-saxon", 30], ["norse", 70]],
+      WAL: [["welsh", 1]],
+      COR: [["cornish", 1]],
+      SBL: [["scottish", 1]],
+      SLO: [["scottish", 1]],
+      SHH: [["scottish", 1]]
+    }
+  },
   sources: {
+    oldPerson: "a man's given name from the historic table of the people who coined old place names (Anglo-Saxon by default; Scandinavian, Welsh, Cornish or Scottish by region), whatever the state's culture or era (brief \xA714.2)",
     person: "the people tables, the culture and period of the state, said in the form of the slot (brief \xA73.4)",
     holy: "the people tables' `holy` list with `holyForms`",
     surname: "the people tables' `surnames`; for cultures without, the family names module in that culture",
@@ -81291,6 +81307,7 @@ var fill_default = {
     company: "the trade family of group names (guilds, companies and trade), the state's culture and setting (review amendment, brief \xA712)"
   },
   labels: {
+    "old personal name": { source: "oldPerson", slot: "givenMale", added: "a personal name inside a name from the British shapes source, or before -ing, -ington or -ingham (brief \xA714.2)" },
     founder: { source: "person", slot: "founder" },
     explorer: { source: "person", slot: "founder" },
     commander: { source: "person", slot: "founder" },
@@ -81392,8 +81409,10 @@ function fillGenre(era) {
 }
 var drawSeed = (rng) => Math.floor(rng() * 4294967296) >>> 0;
 var AGAIN = 8;
+var BATCH_AGAIN = 40;
 var PLACE_AGAIN = 10;
 var PLACE_SOURCES = /* @__PURE__ */ new Set(["place", "earlierPlace"]);
+var OLD_ENDING = /^(ing|ings|ington|ingham|inghams)\b/i;
 var STOP_WORDS = /* @__PURE__ */ new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a"]);
 function repeatsGeneric(fill, rest) {
   var _a7, _b4;
@@ -81411,26 +81430,31 @@ function fillSlots(name, ctx) {
   const used = /* @__PURE__ */ new Map();
   let any = false;
   const filled = name.replace(/\[([^\]]+)\]/g, (whole, label, offset) => {
-    var _a8, _b4, _c4, _d3;
-    const info = labelInfo(label);
+    var _a8, _b4, _c4, _d3, _e3, _f, _g;
+    let info = labelInfo(label);
     if (!info) return whole;
     const key2 = label.trim().toLowerCase();
-    let fill = (_a8 = ctx.series) == null ? void 0 : _a8.get(key2);
+    if (info.source === "person" && key2 === "personal name" && OLD_ENDING.test(name.slice(offset + whole.length))) info = (_a8 = labelInfo("old personal name")) != null ? _a8 : info;
+    let fill = (_b4 = ctx.series) == null ? void 0 : _b4.get(key2);
     if (fill === void 0) {
       const resolver = resolvers[info.source];
       if (!resolver) return whole;
-      const avoid = (_b4 = used.get(key2)) != null ? _b4 : /* @__PURE__ */ new Set();
+      const inName = (_c4 = used.get(key2)) != null ? _c4 : /* @__PURE__ */ new Set();
+      const seen = ctx.series ? void 0 : (_d3 = ctx.batchSeen) == null ? void 0 : _d3.get(key2);
+      const avoid = seen && seen.size > 0 ? /* @__PURE__ */ new Set([...inName, ...seen]) : inName;
       const place4 = PLACE_SOURCES.has(info.source);
       const slot = ctx.personAsFounder && info.source === "person" && (key2 === "person" || key2 === "personal name") ? "founder" : info.slot;
       const rest = place4 ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
-      for (let attempt2 = 0; attempt2 < (place4 ? PLACE_AGAIN : AGAIN); attempt2++) {
-        fill = resolver({ label: key2, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
+      const tries = seen && seen.size > 0 ? BATCH_AGAIN : place4 ? PLACE_AGAIN : AGAIN;
+      for (let attempt2 = 0; attempt2 < tries; attempt2++) {
+        fill = resolver({ label: key2, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, avoid });
         if (fill === void 0 || !avoid.has(fill) && !(place4 && repeatsGeneric(fill, rest))) break;
       }
       if (fill === void 0) return whole;
-      (_c4 = ctx.series) == null ? void 0 : _c4.set(key2, fill);
+      (_e3 = ctx.series) == null ? void 0 : _e3.set(key2, fill);
+      if (ctx.batchSeen && !ctx.series) ctx.batchSeen.set(key2, ((_f = ctx.batchSeen.get(key2)) != null ? _f : /* @__PURE__ */ new Set()).add(fill));
     }
-    used.set(key2, ((_d3 = used.get(key2)) != null ? _d3 : /* @__PURE__ */ new Set()).add(fill));
+    used.set(key2, ((_g = used.get(key2)) != null ? _g : /* @__PURE__ */ new Set()).add(fill));
     const before = name.slice(0, offset);
     const after = name.slice(offset + whole.length);
     if (/\bthe\s$/i.test(before)) fill = fill.replace(/^the\s+/i, "");
@@ -85798,13 +85822,23 @@ function traditionForCulture(culture) {
   }
   return best;
 }
+var FOLK_WORDS = (name) => name.replace(/^the\s+/i, "").split(/\s+/).length;
 registerResolver("folk", (req) => {
   var _a7;
+  const tradition = traditionForCulture(req.culture);
+  const biome = req.biome && findBiome(req.biome) ? req.biome : void 0;
+  let shortest;
   try {
-    return (_a7 = generateTribalNames({ tradition: traditionForCulture(req.culture), count: 1, seed: drawSeed(req.rng) }).names[0]) == null ? void 0 : _a7.name;
+    for (let attempt2 = 0; attempt2 < 24; attempt2++) {
+      const name = (_a7 = generateTribalNames({ tradition, ...biome ? { biome } : {}, count: 1, seed: drawSeed(req.rng) }).names[0]) == null ? void 0 : _a7.name;
+      if (name === void 0) return void 0;
+      if (FOLK_WORDS(name) <= 2) return name;
+      if (shortest === void 0 || FOLK_WORDS(name) < FOLK_WORDS(shortest)) shortest = name;
+    }
   } catch (e) {
-    return void 0;
+    return shortest;
   }
+  return shortest;
 });
 
 // src/tribes/slotFill.ts
@@ -96147,12 +96181,9 @@ function pickWeighted4(items, weights, rng) {
 }
 var pickForm = (forms, rng) => pickWeighted4(forms.map((f) => f[0]), forms.map((f) => f[1]), rng);
 function draw(list, era, rng, avoid) {
-  const w = eraWeights(list, era);
-  for (let attempt2 = 0; attempt2 < 6; attempt2++) {
-    const name = pickWeighted4(list, w, rng)[0];
-    if (!avoid.has(name)) return name;
-  }
-  return pickWeighted4(list, w, rng)[0];
+  const free = avoid.size > 0 ? list.filter((e) => !avoid.has(e[0])) : list;
+  const from = free.length > 0 ? free : list;
+  return pickWeighted4(from, eraWeights(from, era), rng)[0];
 }
 var ROYAL = /king|queen|prince|emperor|empress|pharaoh|khan|sultan|shah|caliph|tsar|inca|sovereign|chief$/i;
 function officialTitle(culture, female, rng) {
@@ -96251,10 +96282,19 @@ var surnameResolver = (req) => {
   const c = context(req);
   return c ? surname(c, req.rng() < 0.7 ? "male" : "female") : void 0;
 };
+var OLD_NAMES = fill_default.oldNames;
+var oldPersonResolver = (req) => {
+  var _a7;
+  const weights = (_a7 = req.region ? OLD_NAMES.regions[req.region] : void 0) != null ? _a7 : OLD_NAMES.default;
+  const culture = pickWeighted4(weights.map((w) => w[0]), weights.map((w) => w[1]), req.rng);
+  const c = context({ ...req, culture, era: "MD", period: "historic", region: void 0 });
+  return c ? given(c, "male") : void 0;
+};
 function registerPeopleResolvers() {
   registerResolver("person", personResolver);
   registerResolver("holy", holyResolver);
   registerResolver("surname", surnameResolver);
+  registerResolver("oldPerson", oldPersonResolver);
 }
 
 // src/fill/batch.ts
@@ -96267,11 +96307,12 @@ var sexOf = (n) => {
 function fillPeopleBatch(batch, mode, where2) {
   const rng = mulberry32((batch.seed ^ 1592614637) >>> 0);
   const series = where2.series ? /* @__PURE__ */ new Map() : void 0;
+  const batchSeen = series ? void 0 : /* @__PURE__ */ new Map();
   return {
     ...batch,
     names: batch.names.map((n) => {
       var _a7, _b4;
-      return { ...n, text: fillSlots(n.text, { culture: (_a7 = where2.culture) != null ? _a7 : "general", era: (_b4 = where2.era) != null ? _b4 : "MD", region: where2.region, mode, rng, series, sex: sexOf(n), personAsFounder: where2.personAsFounder }) };
+      return { ...n, text: fillSlots(n.text, { culture: (_a7 = where2.culture) != null ? _a7 : "general", era: (_b4 = where2.era) != null ? _b4 : "MD", region: where2.region, biome: where2.biome, mode, rng, series, batchSeen, sex: sexOf(n), personAsFounder: where2.personAsFounder }) };
     })
   };
 }
@@ -125177,7 +125218,7 @@ var wilds_default = {
   ],
   where: {
     mood: {
-      home: 0.1,
+      home: 0.015,
       new: 4,
       settled: 1
     },
@@ -139235,7 +139276,8 @@ function drawFromSource(kind, source, ctx) {
     if (source === "native") {
       const recipe2 = britishPlaceNamesRecipe(ctx.region);
       const result2 = generatePlaceNames({ recipe: recipe2, slots, count: 1, seed: seedFrom(ctx.rng), only: { generics: kind.native.generics } });
-      return (_b4 = result2.names[0]) == null ? void 0 : _b4.text;
+      const text = (_b4 = result2.names[0]) == null ? void 0 : _b4.text;
+      return ctx.oldNames ? text == null ? void 0 : text.replace(/\[personal name\]/gi, "[old personal name]") : text;
     }
     const tradition = colonialTraditionOf(ctx.culture, ctx.rng);
     const part = ctx.where === "new" ? "new-land" : "established";
@@ -139254,6 +139296,10 @@ function drawFromSource(kind, source, ctx) {
     if (e instanceof Error && e.message.startsWith("No eligible")) return void 0;
     throw e;
   }
+}
+function biomeForFill(biome, where2, culture) {
+  if (biome && biome !== "any") return biome;
+  return (where2 === void 0 || where2 === "home") && culture !== void 0 && SOURCE_SHARES.home.cultures.includes(culture) ? "temperate" : void 0;
 }
 function settlementDelegateOptions(delegate, ctx, size, seed) {
   var _a7;
@@ -139808,7 +139854,7 @@ function kindShapes(ctx, kind) {
 function generateWildsNames(options) {
   var _a7, _b4;
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
+  if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -139995,7 +140041,7 @@ function generateWildsNames(options) {
       if (spaceModule && sourced && !scale) sourced = { ...sourced, colonial: void 0, delegate: void 0 };
       if (kindKey && sourced) {
         let own;
-        const text = drawKind(sourced, { where: where2, culture: culture.key, region, people: mode, series: !!options.series, rng, ...scale ? { scale } : {} }, () => {
+        const text = drawKind(sourced, { where: where2, culture: culture.key, region, people: mode, series: !!options.series, oldNames: options.oldNames, rng, ...scale ? { scale } : {} }, () => {
           const list2 = listFor(kindKey, parent);
           own = list2 && list2.length > 0 ? drawFromList(list2, parent) : void 0;
           return own == null ? void 0 : own.text;
@@ -141417,7 +141463,7 @@ var watersHasSeries = (module2) => SERIES_MODULES.has(module2);
 function generateWatersNames(options) {
   var _a7, _b4, _c4;
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
+  if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
@@ -141598,7 +141644,7 @@ function generateWatersNames(options) {
       const sourced = !fixed && earthlyModule && kindKey && !(options.series && watersHasSeries(module2)) ? (_a8 = findWaterKind(earthlyModule, kindKey)) == null ? void 0 : _a8.sources : void 0;
       if (sourced && kindKey && sourceReaches(sourced)) {
         let own;
-        const text = drawKind(sourced, { where: where2, culture: culture.key, region, people: mode, series: false, rng }, () => {
+        const text = drawKind(sourced, { where: where2, culture: culture.key, region, people: mode, series: false, oldNames: options.oldNames, rng }, () => {
           own = drawOwn(plans5.get(kindKey), scale, anchors);
           return own == null ? void 0 : own.text;
         });

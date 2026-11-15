@@ -6,6 +6,7 @@
 
 import "../lexiconWiring";
 import BYNAMES from "../data/bynames.json";
+import FILL from "../data/fill.json";
 import PEOPLE from "../data/people.json";
 import { eraWeights, PERSON_SLOT_FORMS, peopleSourceFor, type PeopleEntry, type PeoplePeriod, type PeopleTable } from "../people";
 import { generatedName, type GeneratedList } from "../peopleGenerated";
@@ -31,14 +32,14 @@ function pickWeighted<T>(items: readonly T[], weights: readonly number[], rng: (
 }
 const pickForm = (forms: readonly Form[], rng: () => number): string => pickWeighted(forms.map((f) => f[0]), forms.map((f) => f[1]), rng);
 
-/** A name from a list, weighted by the list's order and (where it carries them) the state's era. */
+/**
+ * A name from a list, weighted by the list's order and (where it carries them) the state's era. Names in
+ * `avoid` are skipped while the list has others (shared tables brief §14.1); when it has none left a repeat is allowed.
+ */
 function draw(list: readonly PeopleEntry[], era: string, rng: () => number, avoid: ReadonlySet<string>): string {
-  const w = eraWeights(list, era);
-  for (let attempt = 0; attempt < 6; attempt++) {
-    const name = pickWeighted(list, w, rng)[0];
-    if (!avoid.has(name)) return name;
-  }
-  return pickWeighted(list, w, rng)[0];
+  const free = avoid.size > 0 ? list.filter((e) => !avoid.has(e[0])) : list;
+  const from = free.length > 0 ? free : list;
+  return pickWeighted(from, eraWeights(from, era), rng)[0];
 }
 
 /** Titles for officials: the bynames module's ranks in the culture's bynames culture, without the royal ones. */
@@ -154,9 +155,23 @@ export const surnameResolver: Resolver = (req) => {
   return c ? surname(c, req.rng() < 0.7 ? "male" : "female") : undefined;
 };
 
+/**
+ * Shared tables brief §14.2: the people who coined old place names ("Godricing Tarn"). The culture is drawn by the
+ * `oldNames` weights in fill.json (Anglo-Saxon by default, Scandinavian, Welsh, Cornish or Scottish by region), and the
+ * name is a man's given name from that culture's historic table, whatever the state's culture or era.
+ */
+const OLD_NAMES = (FILL as unknown as { oldNames: { default: [string, number][]; regions: Record<string, [string, number][]> } }).oldNames;
+export const oldPersonResolver: Resolver = (req) => {
+  const weights = (req.region ? OLD_NAMES.regions[req.region] : undefined) ?? OLD_NAMES.default;
+  const culture = pickWeighted(weights.map((w) => w[0]), weights.map((w) => w[1]), req.rng);
+  const c = context({ ...req, culture, era: "MD", period: "historic", region: undefined });
+  return c ? given(c, "male") : undefined;
+};
+
 /** Registers the people sources with the filler. */
 export function registerPeopleResolvers(): void {
   registerResolver("person", personResolver);
   registerResolver("holy", holyResolver);
   registerResolver("surname", surnameResolver);
+  registerResolver("oldPerson", oldPersonResolver);
 }

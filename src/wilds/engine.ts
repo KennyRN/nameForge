@@ -35,7 +35,7 @@ import { BRITISH_CULTURES, breaksRouteWords, countedWords, godNames, personNames
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { generateSettlementNames, type SettlementNamesOptions } from "../settlement/names";
 import { kindInClass, type PlaceClass } from "../places/classes";
-import { drawKind, sourceFor, type KindSources } from "../places/sources";
+import { biomeForFill, drawKind, sourceFor, type KindSources } from "../places/sources";
 import { findColonialCulture } from "../places/colonialCultures";
 import { isSpaceModule, kindScalesAt, scaleForDraw } from "../places/space";
 import type { ScaleChoice } from "../space/scale";
@@ -221,6 +221,8 @@ export interface WildsOptions {
   biome?: string;
   tone?: GroupToneChoice;
   people?: GroupPeople;
+  /** Internal, shared tables brief §14.2: the filler wrapper marks the native source's personal names as old ones. */
+  oldNames?: boolean;
   series?: boolean;
   count: number;
   seed?: number;
@@ -805,7 +807,7 @@ function kindShapes(ctx: Ctx, kind: string): WildsShape[] {
 export function generateWildsNames(options: WildsOptions): WildsBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
+  if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
@@ -1013,7 +1015,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
       if (spaceModule && sourced && !scale) sourced = { ...sourced, colonial: undefined, delegate: undefined };
       if (kindKey && sourced) {
         let own: WildsName | undefined;
-        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: !!options.series, rng, ...(scale ? { scale } : {}) }, () => {
+        const text = drawKind(sourced, { where, culture: culture.key, region, people: mode, series: !!options.series, oldNames: options.oldNames, rng, ...(scale ? { scale } : {}) }, () => {
           const list = listFor(kindKey, parent);
           own = list && list.length > 0 ? drawFromList(list, parent) : undefined;
           return own?.text;

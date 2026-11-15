@@ -57,6 +57,8 @@ export interface SourceContext {
   people?: "real" | "generated" | "placeholders" | "invented";
   /** Series mode draws from own shapes only. */
   series?: boolean;
+  /** Shared tables brief §14.2: the filler will name the people, so the native source's "[personal name]" is marked as an old one ("[old personal name]"). */
+  oldNames?: boolean;
   /** Stars and space: the scale this name is drawn at. The colonial source then runs under that scale's space biome, restricted to the kind's groups there. */
   scale?: SpaceScale;
   /** The batch's stream. */
@@ -103,7 +105,8 @@ export function drawFromSource(kind: KindSources, source: "native" | "colonial",
     if (source === "native") {
       const recipe = britishPlaceNamesRecipe(ctx.region);
       const result = generatePlaceNames({ recipe, slots, count: 1, seed: seedFrom(ctx.rng), only: { generics: kind.native!.generics } });
-      return result.names[0]?.text;
+      const text = result.names[0]?.text;
+      return ctx.oldNames ? text?.replace(/\[personal name\]/gi, "[old personal name]") : text;
     }
     const tradition = colonialTraditionOf(ctx.culture, ctx.rng);
     const part = ctx.where === "new" ? "new-land" : "established";
@@ -125,6 +128,12 @@ export function drawFromSource(kind: KindSources, source: "native" | "colonial",
     if (e instanceof Error && e.message.startsWith("No eligible")) return undefined;
     throw e;
   }
+}
+
+/** Shared tables brief §14.3: the biome a folk fill is drawn in: the state's own, else temperate for a British culture at home, else none (the folk's homeland). */
+export function biomeForFill(biome: string | undefined, where: string | undefined, culture: string | undefined): string | undefined {
+  if (biome && biome !== "any") return biome;
+  return (where === undefined || where === "home") && culture !== undefined && SOURCE_SHARES.home.cultures.includes(culture) ? "temperate" : undefined;
 }
 
 /** The settlement names options a delegated settlement kind runs with, from the module's where and culture. */

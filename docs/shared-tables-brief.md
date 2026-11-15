@@ -294,3 +294,27 @@ Every word in `regionTags` (in `wilds.json`, `waters.json` and `places.json`) is
 ### 13.4 Aztec, Maya and Andean tables (amends §12)
 
 The §12 rules apply to these three tables, which did not yet meet them: rulers flagged `r` and lists filled with ordinary names, a `modern` period (Spanish given names tagged by era, with the surnames each people carries now), and the per-culture corrections in the commit. Roman and Egyptian have no `modern` period; their later eras resolve to Italian and to Arabic and Persian respectively. Kenny's template names stay: Hengest, Horsa, Wealhtheow and Beadohild remain in Anglo-Saxon at the lowest weight, and Andersson and Andersen-type pairs stay as separate names.
+
+## 14. Amendment: filler polish (15 November 2026)
+
+Added after a run of the real modules following §13. It amends §5 and §13 and does not rewrite them.
+
+### 14.1 No repeats within a batch (amends §5.3)
+
+Outside series mode a fill is not reused within one batch until its list has nothing left. The filler keeps the fills used so far for each label and draws again (up to 40 times, and from the names not yet used) when a fill repeats; once a list has run out, a repeat is allowed. Ten Aztec, Maya or Andean founders at seed 42 no longer repeat a name.
+
+### 14.2 Old personal names in old place names (amends §5.2)
+
+A `[personal name]` that the British shapes source brings, or that an "-ing", "-ings", "-ington" or "-ingham" ending follows in any module, is an old personal name: it draws a man's given name from the historic table of the people who coined such names, whatever the state's culture or era. The new label `[old personal name]` (source `oldPerson`) is what the British shapes source gives when the filler follows; with `placeholders` the engine still says `[personal name]`. The weights are in `fill.json` (`oldNames`): Anglo-Saxon by default; Scandinavian 50% in NTH, EMD and EAN and 70% in NSI; Welsh in WAL; Cornish in COR; Scottish in SBL, SLO and SHH. "Henrying Tarn" becomes a name like "Godricing Tarn".
+
+### 14.3 Folk fills stay short and suit the biome (amends §5.2)
+
+`[folk]`, `[folk group]`, `[tribal name]` and `[people]` fill with at most two words after an optional "the", and are drawn in the state's biome: the biome the module has, else temperate for a British culture at home, else the folk's own homeland. No mango or millet on a temperate British coast.
+
+### 14.4 Explorer's mood at home (amends §13.3)
+
+The home multiplier for the explorer's-mood shapes in `wilds.json` is lowered (0.1 to 0.015) so that the share at home is under 1.5% in every wild lands module again, as it was before the dialect words were kept to the British. The test is back at 1.5%. The other three tests loosened in §13.3 stay as they are.
+
+### 14.5 Founder forms in the place modules (confirms §13.2 item 6)
+
+Lands and territories, farmland and countryside, hills and valleys, and rivers and inland waters run on the wild lands engine, whose filler call already passes the founder-forms switch (`placePersonsAsFounders`) from the steam age on, so they use the founder forms like the six wild lands. No change was needed; a test now holds it for every place module.

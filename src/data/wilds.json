@@ -31,7 +31,7 @@
  ],
  "where": {
   "mood": {
-   "home": 0.1,
+   "home": 0.015,
    "new": 4,
    "settled": 1
   },
