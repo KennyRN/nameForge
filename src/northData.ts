@@ -52,6 +52,20 @@ export function balanceSignature<T>(plans: [T, number][], isSig: (p: T) => boole
   return plans.map(([p, w]): [T, number] => [p, isSig(p) ? w * k : w]);
 }
 
+/** Brief 5b §12.1: regions with no landscape of a module (their draws fall back to the culture's own). */
+const REGION_EXEMPT = (lensData as unknown as { regionExempt: Record<string, string[]> }).regionExempt;
+/**
+ * Brief 5b §12.1: the batch's seed for a chosen region. The same seed gives different names in different regions, so that
+ * a roll that lands on a shape in one region doesn't land on the same shape in all of them. A cell with no landscape of its
+ * own (exempt) keeps the plain seed.
+ */
+export function regionSeed(seed: number, region: string | undefined, module: string): number {
+  if (!region || (REGION_EXEMPT[module] ?? []).includes(region)) return seed;
+  let h = 2166136261;
+  for (const ch of region) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return (seed ^ h) >>> 0;
+}
+
 /** Tests: called with each region balance made (module, culture, region, the live regional plans, all live plans). */
 let regionProbe: ((info: { regional: number; total: number }) => void) | undefined;
 export const setRegionProbe = (fn: typeof regionProbe): void => { regionProbe = fn; };

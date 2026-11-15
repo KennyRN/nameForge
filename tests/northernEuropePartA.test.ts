@@ -8,9 +8,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import lens from "../src/data/lens.json";
 import realPlaces from "../src/data/real-places.json";
-import { balanceRegion, REGION_SHARE, SIGNATURE_SHARE, setRegionProbe } from "../src/northData";
+import { balanceRegion, NORTH, REGION_SHARE, SIGNATURE_SHARE, setRegionProbe } from "../src/northData";
 import { fillSlots, repeatsGeneric, type FillContext, type Resolvers } from "../src/fill";
-import { isRealPlace } from "../src/realPlaces";
+import { isRealPlace, isRealTownName } from "../src/realPlaces";
 import { oldPersonResolver } from "../src/fill/people";
 import { generateWildsNames } from "../src/wilds/engine";
 import { defaultWildsState } from "../src/wilds/sentence";
@@ -22,6 +22,12 @@ import { mulberry32 } from "../src/markov";
 
 const WILDS = ["mountainNames", "forestNames", "moorNames", "wetlandNames", "grasslandNames", "lands", "farmland", "hillsValleys", "riversInland"];
 const WATERS = ["seasLakes", "coastsIslands", "seaCharts"];
+/** The cells the region packs fill: module → regions (scripts/north5a/regionPacks.mjs). */
+const REGION_CELLS: Record<string, string[]> = {
+  hillsValleys: ["SEA", "WCY", "EAN", "WMM", "EMD", "WAL", "COR", "SLO", "SHH", "NSI", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST", "DEN"],
+  lands: ["SEA", "WCY", "EAN", "NTH", "SBL", "NOR", "NDT", "RHN", "MIT", "ALP", "OST"],
+  seasLakes: ["SEA", "WCY", "EAN", "WAL", "COR", "NDT"],
+};
 const EXEMPT = (lens as unknown as { regionExempt: Record<string, string[]> }).regionExempt;
 const REGIONS: Record<string, [string, string[]]> = {
   english: ["norman-british", ["WCY", "SEA", "EAN", "WMM", "EMD", "NTH", "SBL"]], welsh: ["welsh", ["WAL"]], cornish: ["cornish", ["COR"]], scottish: ["scottish", ["SBL", "SLO", "SHH", "NSI"]],
@@ -142,4 +148,45 @@ test("§12.3: a place fill that is a well-known real place is drawn again (\"Bat
 test("§12.4: no word replaced by the dictionary check is left in the batch's data", async () => {
   const north = JSON.stringify((await import("../src/data/north5a.json")).default);
   for (const w of ["Ballybetagh", "Cantred", "Callow", "Davoch", "Fank", "Fermtoun", "Fianna", "Heugh", "Knott"]) assert.ok(!new RegExp(`"[^"]*\\b${w}\\b`).test(north), w);
+});
+
+// ── §12.1, §12.2 (second pass): the regions visibly differ ─────────────────────────────────────
+
+test("§12.1: the same seed gives different names in different regions (five German regions, five seeds)", () => {
+  for (const seed of [1, 2, 3, 4, 5]) {
+    const all = ["NDT", "RHN", "MIT", "ALP", "OST"].flatMap((region) => generateWildsNames({ ...defaultWildsState("hillsValleys"), module: "hillsValleys", culture: "german", region, era: "MD", count: 5, seed } as never).names.map((n) => n.text));
+    assert.ok(new Set(all).size >= 22, `seed ${seed}: ${new Set(all).size} of 25`);
+  }
+  for (const seed of [1, 2, 3, 4, 5]) {
+    const all = ["SEA", "WCY", "EAN"].flatMap((region) => generateWildsNames({ ...defaultWildsState("hillsValleys"), module: "hillsValleys", culture: "norman-british", region, era: "MD", count: 5, seed } as never).names.map((n) => n.text));
+    assert.ok(new Set(all).size >= 13, `seed ${seed}: ${new Set(all).size} of 15`);
+  }
+});
+
+test("§12.1: a region's own words show: over 40 seeds, 25% or more of NDT hills carry an NDT word, and RHN's words do not show in NDT", () => {
+  const names = (region: string) => Array.from({ length: 40 }, (_, seed) => generateWildsNames({ ...defaultWildsState("hillsValleys"), module: "hillsValleys", culture: "german", region, era: "MD", count: 5, seed: seed + 1 } as never).names.map((n) => n.text)).flat();
+  const ndt = names("NDT");
+  const own = ndt.filter((t) => /\b(Rise|Barrow|Knoll|Mound)\b/.test(t)).length / ndt.length;
+  assert.ok(own >= 0.2, `NDT own words ${own}`);
+  const rhn = names("RHN");
+  assert.ok(rhn.filter((t) => /\b(Slope|Terrace|Crag)\b/.test(t)).length / rhn.length >= 0.1);
+});
+
+test("§12.2: each region has at least four region words in each module it has a pack for", () => {
+  const tagsOf = (g: "wilds" | "waters") => NORTH[g].regionTags as Record<string, Record<string, number>>;
+  const shapes = [...(NORTH.wilds.cultureShapes as { module: string; rt?: string }[]), ...(NORTH.waters.cultureShapes as { module: string; rt?: string }[])];
+  const short: string[] = [];
+  for (const [m, regions] of Object.entries(REGION_CELLS)) for (const region of regions) {
+    const words = new Set<string>();
+    for (const s of shapes) if (s.module === m && s.rt && ((tagsOf("wilds")[s.rt] ?? tagsOf("waters")[s.rt])?.[region] ?? 0) >= 3) words.add(s.rt);
+    if (words.size < 4) short.push(`${m} ${region} ${words.size}`);
+  }
+  assert.deepEqual(short, []);
+});
+
+test("§12.3: a generated name is never a real town, alone or after a qualifier (\"South Bath\")", () => {
+  assert.ok(isRealTownName("South Bath") && isRealTownName("Bath") && isRealTownName("The Old York") && !isRealTownName("Bath Creek") && !isRealTownName("The Black Mountains"));
+  for (const culture of ["norman-british", "anglo-saxon", "general", "german"]) for (let seed = 1; seed <= 60; seed++) {
+    for (const t of generateWildsNames({ ...defaultWildsState("hillsValleys"), module: "hillsValleys", culture, era: "MD", count: 12, seed, people: "placeholders" } as never).names.map((n) => n.text)) assert.ok(!isRealTownName(t), t);
+  }
 });

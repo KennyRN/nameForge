@@ -26,7 +26,8 @@ test("mountains: SHH gives Ben, Corrie and Lochan, and never Tor, Fell or Hause"
   const names = many({ module: "mountainNames", culture: "norman-british", region: "SHH" });
   for (const w of ["Ben", "Corrie", "Lochan"]) assert.ok(has(names, new RegExp(`\\b${w}\\b`)), w);
   // The module's own shapes never give them. A name drawn from the British source (M7, §8.1) keeps that engine's own rendering, which may.
-  const own = names.filter((n) => n.shape !== "source");
+  // Brief 5b Part A: a name from the British settlement engine ("native settlement") keeps that engine's rendering too.
+  const own = names.filter((n) => n.shape !== "source" && !/^native/.test(n.shape));
   for (const w of ["Tor", "Fell", "Hause"]) assert.ok(!has(own, new RegExp(`\\b${w}\\b`)), w);
 });
 

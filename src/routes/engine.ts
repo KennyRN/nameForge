@@ -41,7 +41,7 @@ import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type V
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
-import { balanceRegion, balanceSignature, regionWeighted, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceRegion, balanceSignature, regionSeed, regionWeighted, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -734,9 +734,11 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateRouteNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, region: options.region, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
-  const rng = mulberry32(seed);
+  let rng = mulberry32(seed);
   const notices: string[] = [];
   const culture = findRouteCulture(options.culture) ?? findRouteCulture("norman-british")!;
+  // Brief 5b §12.1: a chosen region draws from its own stream.
+  if (readsRegions(culture.key) && options.region && options.region !== "all") rng = mulberry32(regionSeed(seed, options.region, "routeNames"));
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const fantastic = !!options.fantastic;
   const setting = routeSetting(era, fantastic);

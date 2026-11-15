@@ -1,5 +1,5 @@
 {
- "$comment": "Northern Europe brief 5b \u00a712.3: well-known real places (brief 5a rule 5 and \u00a79) and real towns. A fixed whole name is never one, and a [place] fill that is one is drawn again.",
+ "$comment": "Northern Europe brief 5b \u00a712.3: well-known real places (brief 5a rule 5 and \u00a79: features) and real towns. A fixed whole name is never one; a [place] fill that is one is drawn again; a generated name that is a real town, alone or after a qualifier (\"South Bath\"), is drawn again.",
  "places": [
   "Land's End",
   "Snowdon",
@@ -151,7 +151,9 @@
   "Main",
   "Isar",
   "Inn",
-  "Lech",
+  "Lech"
+ ],
+ "towns": [
   "Bath",
   "York",
   "London",

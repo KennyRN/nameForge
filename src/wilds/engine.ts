@@ -6,7 +6,8 @@
 // fixtures can't move. No Obsidian imports.
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { balanceRegion, balanceSignature, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { isRealTownName } from "../realPlaces";
+import { balanceRegion, balanceSignature, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -855,7 +856,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateWildsNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: placePersonsAsFounders(options.module, options.era) });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
-  const rng = mulberry32(seed);
+  let rng = mulberry32(seed);
   const notices: string[] = [];
   const module = options.module;
   const D = wildsDataOf(module);
@@ -873,6 +874,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
   const homeBritish = resolved.homeBritish;
   const homeRegional = !homeBritish && wildsReadsRegion(module, culture.key, where);
   const region = (homeBritish || homeRegional) && options.region && options.region !== "all" ? options.region : undefined;
+  // Brief 5b §12.1: a chosen region draws from its own stream.
+  if (region) rng = mulberry32(regionSeed(seed, region, module));
   const mode: GroupPeople = options.people ?? "placeholders";
   const count = Math.max(0, Math.floor(options.count));
   const block = blockSet(module, options.safeguards);
@@ -983,6 +986,8 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     const n = routeNorm(text);
     if (block.has(n) || block.has(stripThe(n))) return false;
     if (breaksRouteWords(text) || hasBannedWord(text) || hasWildsBanned(text)) return false;
+    // Brief 5b §12.3: a name that is a real town ("South Bath") is drawn again.
+    if (isRealTownName(text)) return false;
     return true;
   };
 

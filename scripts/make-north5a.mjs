@@ -129,7 +129,7 @@ for (const t of REGION_TAGS) {
   for (const [module, kind, p0, w, f] of t.shapes) {
     // The water engine has `{seaCreature}` and `{seaColour}` where the land engine has `{beast}` and `{wildColour}`.
     const p = t.g === "waters" ? p0.replace("{beast}", "{seaCreature}").replace("{wildColour}", "{seaColour}") : p0;
-    for (const key of t.for) file.cultureShapes.push({ p, w, f, culture: key, module, kind, rt: t.tag, sig: true });
+    for (const key of t.for) file.cultureShapes.push({ p, w, f, culture: key, module, kind, rt: t.tag, sig: true, ...(t.homeOnly ? { nx: 0 } : {}) });
   }
 }
 

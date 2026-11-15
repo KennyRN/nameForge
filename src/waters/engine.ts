@@ -5,7 +5,8 @@
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { balanceRegion, balanceSignature, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { isRealTownName } from "../realPlaces";
+import { balanceRegion, balanceSignature, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
@@ -621,7 +622,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateWatersNames({ ...options, people: "placeholders", oldNames: true }), fillMode, { culture: options.culture, era: options.era, region: options.region, biome: biomeForFill(options.biome, options.where, options.culture), series: options.series, personAsFounder: !!options.era && ["ST", "MO", "NF", "IS"].includes(options.era) });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
-  const rng = mulberry32(seed);
+  let rng = mulberry32(seed);
   const notices: string[] = [];
   const module = options.module;
   const hyper = module === "hyperspaceCharts";
@@ -634,6 +635,8 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
   const homeBritish = !hyper && isBritishCulture(culture.key) && where === "home";
   const homeRegional = !homeBritish && !hyper && watersReadsRegion(culture.key, where);
   const region = (homeBritish || homeRegional) && options.region && options.region !== "all" ? options.region : undefined;
+  // Brief 5b §12.1: a chosen region draws from its own stream.
+  if (region) rng = mulberry32(regionSeed(seed, region, module));
   // The biome tags are keyed by the 12 built-ins: a pack uses the one it replaces or descends from.
   const biomes = options.catalogue ?? BUILT_IN_BIOMES;
   const chosenBiome = !homeBritish && !hyper && options.biome ? biomesRootedIn(biomes).find((b) => b.id === options.biome || b.custom?.path === options.biome) : undefined;
@@ -766,6 +769,8 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     if (block.has(n) || block.has(stripThe(n))) return false;
     if (breaksRouteWords(text) || hasBannedWord(text)) return false;
     if (hyper && hasSpaceBlock(text)) return false;
+    // Brief 5b §12.3: a name that is a real town ("South Bath") is drawn again.
+    if (!hyper && isRealTownName(text)) return false;
     return true;
   };
 
