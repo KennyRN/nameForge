@@ -58,9 +58,12 @@ Sizes are minimums (brief §12): a table may be larger when a built-in template 
 | Japanese | modern | 34 | 34 | 31 | 8 | 8 | 12 |
 | Korean | historic | 31 | 30 | 30 | 8 | 8 | 12 |
 | Korean | modern | 30 | 30 | 30 | 8 | 8 | 12 |
-| Aztec | historic | 30 | 31 | – | 8 | 8 | 12 |
-| Maya | historic | 31 | 31 | 32 | 8 | 8 | 12 |
-| Andean | historic | 30 | 30 | – | 8 | 8 | 12 |
+| Aztec | historic | 36 | 33 | – | 8 | 8 | 12 |
+| Aztec | modern | 36 | 35 | 36 | 8 | 8 | 12 |
+| Maya | historic | 38 | 32 | 32 | 8 | 8 | 13 |
+| Maya | modern | 36 | 35 | 32 | 8 | 8 | 12 |
+| Andean | historic | 32 | 31 | – | 8 | 8 | 14 |
+| Andean | modern | 36 | 35 | 35 | 8 | 8 | 12 |
 | Polynesian | historic | 32 | 31 | – | 8 | 8 | 12 |
 | Polynesian | modern | 34 | 34 | – | 8 | 8 | 12 |
 | American | historic | 32 | 30 | 30 | 8 | 8 | 12 |
@@ -1060,9 +1063,9 @@ The same rules as the core (brief §12) apply to every list. Weights follow list
 
 ### historic (AN, MD, EM)
 
-**Male given names** (30): Moctezuma (10), Cuauhtemoc (10), Itzcoatl (10), Nezahualcoyotl (10), Tlacaelel (10), Ahuitzotl (7), Axayacatl (7), Tizoc (7), Cuitlahuac (7), Chimalpopoca (7), Acamapichtli (5), Huitzilihuitl (5), Nezahualpilli (5), Maxtla (5), Cacama (5), Tlacotzin (5), Ixtlilxochitl (5), Tezozomoc (5), Totoquihuatzin (3), Tlaltecatzin (3), Tochihuitzin (3), Coanacoch (3), Tenoch (3), Tlacahuepan (3), Tlilpotonqui (3), Quauhpopoca (3), Xicotencatl (2), Maxixcatzin (2), Cuauhtlatoa (2), Tecayehuatzin (2)
+**Male given names** (36): Moctezuma (4)ʳ, Cuauhtemoc (4)ʳ, Itzcoatl (3)ʳ, Nezahualcoyotl (3)ʳ, Ahuitzotl (2)ʳ, Axayacatl (2)ʳ, Tlacaelel (7), Yaotl (7), Tochtli (7), Cuauhtli (7), Ocelotl (7), Ce Acatl (7), Ome Tochtli (7), Maxixcatzin (5), Xicotencatl (5), Tlahuicole (5), Tlacotzin (5), Tlilpotonqui (5), Quauhpopoca (5), Quiahuitl (5), Itzcuin (5), Coatl (5), Ehecatl (5), Chimalli (5), Tecpatl (5), Chicome Xochitl (5), Yei Calli (5), Ome Acatl (5), Chicuei Cuauhtli (5), Tecayehuatzin (3), Tochihuitzin (3), Cuetzpalin (3), Macuil Ocelotl (3), Nahui Ollin (3), Matlactli Atl (3), Xipil (3)
 
-**Female given names** (31): Atotoztli (10), Tecuichpo (10), Malinalli (10), Chimalxochitl (10), Azcalxochitl (10), Miahuaxihuitl (7), Chalchiuhnenetzin (7), Papantzin (7), Tlacoehua (7), Tzihuacxochitzin (7), Tozquentzin (5), Ilancueitl (5), Xochitl (5), Citlali (5), Quetzalli (5), Yoloxochitl (5), Itzel (5), Nochtli (5), Ihuicatl (3), Tonalli (3), Cuicatl (3), Mazatl (3), Xilonen (3), Tecpatl (3), Eztli (3), Yaretzi (3), Nahui (2), Ayotl (2), Teicuih (2), Oceloxochitl (2), Tlazohtzin (2)
+**Female given names** (33): Tecuichpo (3)ʳ, Atotoztli (3)ʳ, Chimalxochitl (2)ʳ, Azcalxochitl (2)ʳ, Chalchiuhnenetzin (2)ʳ, Papantzin (2)ʳ, Malinalli (7), Xochitl (7), Citlali (7), Quetzalli (7), Yoloxochitl (7), Tzihuacxochitzin (5), Tozquentzin (5), Tlacoehua (5), Nochtli (5), Cozcatl (5), Quetzalxochitl (5), Citlalxochitl (5), Cuetlaxochitl (5), Ce Xochitl (5), Macuil Xochitl (5), Ome Malinalli (5), Ihuicatl (3), Tonalli (3), Cuicatl (3), Mazatl (3), Eztli (3), Ayotl (3), Oceloxochitl (3), Tlazohtzin (3), Teoxochitl (3), Nahui Calli (3), Chicome Atl (3)
 
 **Surnames**: none (see notes)
 
@@ -1076,13 +1079,31 @@ The same rules as the core (brief §12) apply to every list. Weights follow list
 
 **Ruler forms**: male Emperor {m} (60), King {m} (40); female Queen {f} (70), Princess {f} (30)
 
+### modern (ST, MO, NF, IS)
+
+**Male given names** (36): Javier (10, ST+MO), David (10, ST+MO), Alberto (10, ST+MO), Jorge (10, ST+MO), Marcos (10, ST+MO), Jose (7, ST), Hugo (7, MO), Juan (7, ST), Martin (7, MO), Antonio (7, ST), Lucas (5, MO), Manuel (5, ST), Mateo (5, MO), Francisco (5, ST), Daniel (5, MO), Luis (5, ST), Pablo (5, MO), Miguel (5, ST), Alejandro (3, MO), Jesus (3, ST), Adrian (3, MO), Pedro (3, ST), Diego (3, MO), Joaquin (3, ST), Sergio (3, MO), Ramon (3, ST), Leo (2, MO), Fernando (2, ST), Enzo (2, MO), Rafael (2, ST), Thiago (2, MO), Angel (2, ST), Gabriel (2, MO), Carlos (2, ST), Santiago (2, MO), Joao (2, ST)
+
+**Female given names** (35): Elena (10, ST+MO), Marta (10, ST+MO), Cristina (10, ST+MO), Silvia (10, ST+MO), Raquel (10, ST+MO), Maria (7, ST), Lucia (7, MO), Carmen (7, ST), Sofia (7, MO), Dolores (7, ST), Martina (5, MO), Josefa (5, ST), Paula (5, MO), Francisca (5, ST), Valeria (5, MO), Antonia (5, ST), Julia (5, MO), Rosa (5, ST), Emma (3, MO), Pilar (3, ST), Daniela (3, MO), Concepcion (3, ST), Alba (3, MO), Teresa (3, ST), Carla (3, MO), Isabel (3, ST), Sara (2, MO), Ana (2, ST), Noa (2, MO), Manuela (2, ST), Vega (2, MO), Mercedes (2, ST), Laura (2, MO), Juana (2, ST), Valentina (2, MO)
+
+**Surnames** (36): Hernandez (10), Garcia (10), Martinez (10), Lopez (10), Gonzalez (10), Rodriguez (7), Perez (7), Sanchez (7), Ramirez (7), Flores (7), Gomez (7), Morales (7), Cruz (5), Reyes (5), Jimenez (5), Torres (5), Diaz (5), Vazquez (5), Ramos (5), Mendoza (5), Ruiz (5), Aguilar (5), Castillo (3), Ortiz (3), Moreno (3), Romero (3), Gutierrez (3), Chavez (3), Herrera (3), Medina (3), Vargas (3), Castro (3), Guerrero (2), Rojas (2), Cuautle (2), Xicotencatl (2)
+
+**Regnal names, male** (8): Alfonso (10), Carlos (10), Juan (10), Felipe (10), Fernando (10), Luis (7), Pedro (7), Joao (7)
+
+**Regnal names, female** (8): Isabel (10), Maria (10), Victoria (10), Eugenia (10), Amelia (10), Carlota (7), Mercedes (7), Cristina (7)
+
+**Holy names** (12): Teresa (10), Ignatius (10), John (10), Francis (10), Vincent (10), Rita (7), Joseph (7), Isidore (7), Josemaria (7), Dominic (7), Rose (5), Anthony (5)
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Brother {n} (10)
+
+**Ruler forms**: male King {m} (70), Emperor {m} (10), Prince {m} (20); female Queen {f} (80), Infanta {f} (10), Empress {f} (10)
+
 ## Maya
 
 ### historic (AN, MD, EM)
 
-**Male given names** (31): Pakal (10), Yax Pasaj (10), Jasaw Chan K'awiil (10), Yuknoom Ch'een (10), Kan Bahlam (10), Chan Bahlam (7), Yik'in Chan K'awiil (7), Siyaj Chan K'awiil (7), Wak Chan K'awiil (7), Itzamnaaj Bahlam (7), Hanab Pakal (5), Tecun Uman (5), Kikab (5), Tepepul (5), Oxib Keh (5), Beleheb Tzy (5), Nachi Cocom (5), Tutul Xiu (5), Ah Canul (3), Kan Ek (3), Kinich Ahkal (3), Ukit Kan Lek (3), Yuknoom Yich'aak K'ak' (3), Yax Nuun Ayiin (3), Sihyaj K'ahk' (3), Chak Tok Ich'aak (3), Yaxun Bahlam (2), Kinich Yo'nal Ahk (2), Tajoom Uk'ab' K'ak' (2), Aj Ne' Ohl Mat (2), Cocom (2)
+**Male given names** (38): Pakal (3)ʳ, Yax Pasaj (3)ʳ, Yuknoom (3)ʳ, Kikab (2)ʳ, Tecun (2)ʳ, Tutul (2)ʳ, Kinich (6), Bahlam (6), Itzamnaaj (6), Yik'in (6), Kan Ek (6), Chak Xib (6), Yaxun (6), Sihyaj (6), Hanab (6), Nachi (6), Ah Chan (5), Ah Pol (5), Ah Nah (5), Ah Cab (5), Ah Uc (5), Ah May (5), Ah Coh (5), Ah Tun (5), Ah Zac (5), Ah Balam (5), Ah Kan (5), Ah Tzul (5), Ah Than (3), Ah Ayin (3), Ah Pat (3), Ah Ek (3), Ah Cen (3), Ah Ku (3), Ukit Kan (3), Kinich Ahkal (3), Oxib Keh (3), Beleheb Tzy (3)
 
-**Female given names** (31): Sak K'uk' (10), Yohl Ik'nal (10), Xoc (10), K'abel (10), Tz'akbu Ajaw (10), Sak Biyaan (7), Ix Mutal Ajaw (7), Ix Chan (7), Ix Kuk (7), Ix Ek (7), Ix Pol (5), Ix Nah (5), Ix Cab (5), Ix Pat (5), Ix Uc (5), Ix May (5), Ix Chel Ha (5), Ix Canul (5), Ix Coh (3), Ix Tun (3), Ix Zac (3), Ix Balam (3), Ix Kan (3), Ix Tzul (3), Ix Than (3), Ix Ayin (3), Ix Yaxche (2), Ix Ahau (2), Ix Cheel (2), Ix Be (2), Ix Chi (2)
+**Female given names** (32): Sak K'uk' (3)ʳ, Yohl Ik'nal (3)ʳ, K'abel (3)ʳ, Tz'akbu Ajaw (3)ʳ, Xoc (7), Sak Biyaan (7), Ix Chan (7), Ix Kuk (7), Ix Ek (7), Ix Pol (7), Ix Nah (7), Ix Cab (7), Ix Pat (5), Ix Uc (5), Ix May (5), Ix Canul (5), Ix Coh (5), Ix Tun (5), Ix Zac (5), Ix Balam (5), Ix Kan (5), Ix Tzul (5), Ix Than (3), Ix Ayin (3), Ix Yaxche (3), Ix Ahau (3), Ix Cheel (3), Ix Be (3), Ix Chi (3), Ix Mo (3), Ix Pop (3), Ix Xul (3)
 
 **Surnames** (32): Chan (10), Pech (10), Cocom (10), Canul (10), Chel (10), Xiu (7), Tun (7), Cupul (7), Couoh (7), May (7), Uc (5), Ek (5), Cab (5), Can (5), Cen (5), Chi (5), Ku (5), Poot (5), Dzul (3), Euan (3), Balam (3), Ake (3), Be (3), Chim (3), Tzab (3), Uicab (3), Yam (2), Tzuc (2), Pat (2), Mex (2), Cauich (2), Cituk (2)
 
@@ -1090,19 +1111,37 @@ The same rules as the core (brief §12) apply to every list. Weights follow list
 
 **Regnal names, female** (8): Sak K'uk' (10), Yohl Ik'nal (10), K'abel (10), Xoc (10), Tz'akbu Ajaw (10), Sak Biyaan (7), Ix Mutal Ajaw (7), Ix Chan (7)
 
-**Holy names** (12): Chilam Balam (10), Napuc Tun (10), Nakuk Pech (10), Gaspar Chi (10), Ah Kin Chi (10), Ah Kin Chel (7), Ah Kin Xiu (7), Ah Kin Pech (7), Ah Kin Cocom (7), Ah Kin Canul (7), Ah Kin Cupul (5), Ah Kin May (5)
+**Holy names** (13): Chilam Balam (10), Napuc Tun (10), Nakuk Pech (10), Gaspar Chi (10), Chi (7), Chel (7), Xiu (7), Pech (7), Cocom (7), Canul (5), Cupul (5), May (5), Couoh (5)
 
-**Holy forms**: Priest {n} (40), Seer {n} (30), Sage {n} (30)
+**Holy forms**: Ah Kin {n} (50), Priest {n} (20), Seer {n} (15), Sage {n} (15)
 
 **Ruler forms**: male King {m} (60), Lord {m} (40); female Queen {f} (60), Lady {f} (40)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (36): Javier (10, ST+MO), David (10, ST+MO), Alberto (10, ST+MO), Jorge (10, ST+MO), Marcos (10, ST+MO), Jose (7, ST), Hugo (7, MO), Juan (7, ST), Martin (7, MO), Antonio (7, ST), Lucas (5, MO), Manuel (5, ST), Mateo (5, MO), Francisco (5, ST), Daniel (5, MO), Luis (5, ST), Pablo (5, MO), Miguel (5, ST), Alejandro (3, MO), Jesus (3, ST), Adrian (3, MO), Pedro (3, ST), Diego (3, MO), Joaquin (3, ST), Sergio (3, MO), Ramon (3, ST), Leo (2, MO), Fernando (2, ST), Enzo (2, MO), Rafael (2, ST), Thiago (2, MO), Angel (2, ST), Gabriel (2, MO), Carlos (2, ST), Santiago (2, MO), Joao (2, ST)
+
+**Female given names** (35): Elena (10, ST+MO), Marta (10, ST+MO), Cristina (10, ST+MO), Silvia (10, ST+MO), Raquel (10, ST+MO), Maria (7, ST), Lucia (7, MO), Carmen (7, ST), Sofia (7, MO), Dolores (7, ST), Martina (5, MO), Josefa (5, ST), Paula (5, MO), Francisca (5, ST), Valeria (5, MO), Antonia (5, ST), Julia (5, MO), Rosa (5, ST), Emma (3, MO), Pilar (3, ST), Daniela (3, MO), Concepcion (3, ST), Alba (3, MO), Teresa (3, ST), Carla (3, MO), Isabel (3, ST), Sara (2, MO), Ana (2, ST), Noa (2, MO), Manuela (2, ST), Vega (2, MO), Mercedes (2, ST), Laura (2, MO), Juana (2, ST), Valentina (2, MO)
+
+**Surnames** (32): Chan (10), Pech (10), Cocom (10), Canul (10), Chel (10), Xiu (7), Tun (7), Cupul (7), Couoh (7), May (7), Uc (5), Ek (5), Cab (5), Can (5), Cen (5), Chi (5), Ku (5), Poot (5), Dzul (3), Euan (3), Balam (3), Ake (3), Be (3), Chim (3), Tzab (3), Uicab (3), Yam (2), Tzuc (2), Pat (2), Mex (2), Cauich (2), Cituk (2)
+
+**Regnal names, male** (8): Alfonso (10), Carlos (10), Juan (10), Felipe (10), Fernando (10), Luis (7), Pedro (7), Joao (7)
+
+**Regnal names, female** (8): Isabel (10), Maria (10), Victoria (10), Eugenia (10), Amelia (10), Carlota (7), Mercedes (7), Cristina (7)
+
+**Holy names** (12): Teresa (10), Ignatius (10), John (10), Francis (10), Vincent (10), Rita (7), Joseph (7), Isidore (7), Josemaria (7), Dominic (7), Rose (5), Anthony (5)
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Brother {n} (10)
+
+**Ruler forms**: male King {m} (70), Emperor {m} (10), Prince {m} (20); female Queen {f} (80), Infanta {f} (10), Empress {f} (10)
 
 ## Andean
 
 ### historic (AN, MD, EM)
 
-**Male given names** (30): Atahualpa (10), Huascar (10), Pachacuti (10), Tupac Yupanqui (10), Huayna Capac (10), Manco Inca (7), Sayri Tupac (7), Titu Cusi (7), Tupac Amaru (7), Viracocha Inca (7), Yahuar Huacac (5), Inca Roca (5), Lloque Yupanqui (5), Mayta Capac (5), Capac Yupanqui (5), Ruminahui (5), Chalcuchima (5), Quisquis (5), Cusi Yupanqui (3), Amaru (3), Paullu Inca (3), Ninan Cuyochi (3), Tupac Hualpa (3), Waman (3), Inti (3), Illari (3), Sinchi Roca (2), Kusi (2), Puma (2), Titu (2)
+**Male given names** (32): Atahualpa (3)ʳ, Huascar (3)ʳ, Pachacuti (3)ʳ, Tupac Yupanqui (2)ʳ, Huayna Capac (2)ʳ, Manco Inca (2)ʳ, Waman (7), Amaru (7), Puma (7), Titu (7), Illari (7), Atoq (7), Kuntur (7), Rumi (7), Tupac (7), Ruminahui (5), Chalcuchima (5), Quisquis (5), Tupac Amaru (5), Cusi (5), Sinchi (5), Huayna (5), Mayta (5), Ninan Cuyochi (5), Titu Atauchi (5), Wari Kuri (3), Willka (3), Yawar (3), Paucar (3), Sayri (3), Pillpintu (3), Yupanqui (3)
 
-**Female given names** (30): Quispe Sisa (10), Cura Ocllo (10), Contarhuacho (10), Chimpu Ocllo (10), Anahuarque (10), Rahua Ocllo (7), Mama Runtu (7), Chuqui Llanto (7), Pillcu Huaco (7), Cusi Rimay (7), Chuqui Huipa (5), Cusi Chimbo (5), Cori Ocllo (5), Mama Huaco (5), Sisa (5), Killa (5), Chaska (5), Kusi Ocllo (5), Kori (3), Wayra (3), Sumaq (3), Yurak (3), Illa (3), Tika (3), Qori (3), Sapay (3), Nusta (2), Mayta (2), Quilla (2), Chimpu (2)
+**Female given names** (31): Quispe Sisa (3)ʳ, Cura Ocllo (3)ʳ, Contarhuacho (2)ʳ, Chimpu Ocllo (2)ʳ, Sisa (7), Chaska (7), Wayra (7), Sumaq (7), Tika (7), Cori (7), Killa (7), Yurak (5), Illa (5), Sapay (5), Chimpu (5), Kantu (5), Nina (5), Puyu (5), Yana (5), Mayu (5), Cusi Ocllo (5), Mama Huaco (5), Mama Runtu (5), Cusi Rimay (3), Cusi Chimbo (3), Pillcu Huaco (3), Chuqui Huipa (3), Ccori (3), Sami (3), Paqari (3), Umina (3)
 
 **Surnames**: none (see notes)
 
@@ -1110,11 +1149,31 @@ The same rules as the core (brief §12) apply to every list. Weights follow list
 
 **Regnal names, female** (8): Anahuarque (10), Chuqui Llanto (10), Rahua Ocllo (10), Cusi Rimay (10), Contarhuacho (10), Chimpu Ocllo (7), Cura Ocllo (7), Pillcu Huaco (7)
 
-**Holy names** (12): Huillac Umu (10), Guaman Poma (10), Santacruz Pachacuti (10), Rose (10), Martin de Porres (10), Toribius (7), Francis Solano (7), Juan Macias (7), Taqui Onqoy (7), Anchanchu (7), Titu Atauchi (5), Wari Kuri (5)
+**Holy names** (14): Guaman Poma (10), Santacruz Pachacuti (10), Rose (7)ˢ, Martin de Porres (7)ˢ, Toribius (7)ˢ, Francis Solano (7)ˢ, Juan Macias (7)ˢ, Titu Atauchi (5), Wari Kuri (5), Juan Santos (5), Calixto (3), Santiago (3), Miguel (3), Anthony (3)
+
+**Only ever "Saint {n}"**: Rose, Martin de Porres, Toribius, Francis Solano, Juan Macias, Calixto, Santiago, Miguel, Anthony
 
 **Holy forms**: Priest {n} (50), Saint {n} (30), Sage {n} (20)
 
 **Ruler forms**: male Emperor {m} (50), Inca {m} (50); female Queen {f} (60), Princess {f} (40)
+
+### modern (ST, MO, NF, IS)
+
+**Male given names** (36): Javier (10, ST+MO), David (10, ST+MO), Alberto (10, ST+MO), Jorge (10, ST+MO), Marcos (10, ST+MO), Jose (7, ST), Hugo (7, MO), Juan (7, ST), Martin (7, MO), Antonio (7, ST), Lucas (5, MO), Manuel (5, ST), Mateo (5, MO), Francisco (5, ST), Daniel (5, MO), Luis (5, ST), Pablo (5, MO), Miguel (5, ST), Alejandro (3, MO), Jesus (3, ST), Adrian (3, MO), Pedro (3, ST), Diego (3, MO), Joaquin (3, ST), Sergio (3, MO), Ramon (3, ST), Leo (2, MO), Fernando (2, ST), Enzo (2, MO), Rafael (2, ST), Thiago (2, MO), Angel (2, ST), Gabriel (2, MO), Carlos (2, ST), Santiago (2, MO), Joao (2, ST)
+
+**Female given names** (35): Elena (10, ST+MO), Marta (10, ST+MO), Cristina (10, ST+MO), Silvia (10, ST+MO), Raquel (10, ST+MO), Maria (7, ST), Lucia (7, MO), Carmen (7, ST), Sofia (7, MO), Dolores (7, ST), Martina (5, MO), Josefa (5, ST), Paula (5, MO), Francisca (5, ST), Valeria (5, MO), Antonia (5, ST), Julia (5, MO), Rosa (5, ST), Emma (3, MO), Pilar (3, ST), Daniela (3, MO), Concepcion (3, ST), Alba (3, MO), Teresa (3, ST), Carla (3, MO), Isabel (3, ST), Sara (2, MO), Ana (2, ST), Noa (2, MO), Manuela (2, ST), Vega (2, MO), Mercedes (2, ST), Laura (2, MO), Juana (2, ST), Valentina (2, MO)
+
+**Surnames** (35): Quispe (10), Mamani (10), Condori (10), Huaman (10), Choque (10), Apaza (10), Yupanqui (7), Chambi (7), Colque (7), Cusi (7), Ccama (7), Ticona (7), Layme (5), Yucra (5), Challco (5), Puma (5), Huanca (5), Poma (5), Pari (5), Sirpa (5), Tito (5), Cahuana (5), Ccallo (3), Copa (3), Cutipa (3), Huallpa (3), Limachi (3), Mayta (3), Nina (3), Paucar (3), Vilca (3), Zapana (3), Amaru (2), Atauchi (2), Cori (2)
+
+**Regnal names, male** (8): Alfonso (10), Carlos (10), Juan (10), Felipe (10), Fernando (10), Luis (7), Pedro (7), Joao (7)
+
+**Regnal names, female** (8): Isabel (10), Maria (10), Victoria (10), Eugenia (10), Amelia (10), Carlota (7), Mercedes (7), Cristina (7)
+
+**Holy names** (12): Teresa (10), Ignatius (10), John (10), Francis (10), Vincent (10), Rita (7), Joseph (7), Isidore (7), Josemaria (7), Dominic (7), Rose (5), Anthony (5)
+
+**Holy forms**: Saint {n} (80), the Blessed {n} (10), Brother {n} (10)
+
+**Ruler forms**: male King {m} (70), Emperor {m} (10), Prince {m} (20); female Queen {f} (80), Infanta {f} (10), Empress {f} (10)
 
 ## Polynesian
 
@@ -1230,7 +1289,7 @@ Titles for officials (`{t}`) come from the titles module's office kind in the cu
 - **General** reads Norman & British. **Norse** reads Scandinavian.
 - **Anglo-Saxon** has only a `historic` table; in the steam age and later it reads Norman & British `modern`.
 - **Celtic** with no region draws evenly from Welsh, Scottish, Irish and Cornish. Region WAL gives Welsh; COR gives Cornish; SBL, SLO, SHH and NSI give Scottish. Any other region leaves Celtic drawing evenly. The Welsh, Scottish and Cornish views therefore have tables of their own, so they now differ in every module that fills person slots.
-- **Second tier:** each of the 22 lens cultures reads its own table. Roman, Egyptian, Aztec, Maya and Andean have only a `historic` table (ancient peoples with no modern naming of their own): in the steam age and later Roman reads Italian, Egyptian reads Arabic and Persian, and Aztec, Maya and Andean read Iberian.
+- **Second tier:** each of the 22 lens cultures reads its own table. Roman and Egyptian have only a `historic` table (ancient peoples with no modern naming of their own): in the steam age and later Roman reads Italian and Egyptian reads Arabic and Persian. Aztec, Maya and Andean have a `modern` table of their own (shared tables brief §13.4): Spanish given names tagged by era, and the surnames each people carries now.
 - **Local cultures** read the nearest second-tier culture: Maori, Hawaiian and Western Polynesian read Polynesian; Ottoman & Barbary reads Arabic and Persian plus the Turkish extra; Swahili & Omani and Phoenician read Arabic and Persian; Malay & Indonesian and Maritime South-East Asian read Indian historically and Arabic and Persian from the steam age; Hellenistic reads Greek and Byzantine; Belgian reads Dutch.
 - **No nearest culture:** Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, North American Woodlands & Plains, Pacific Northwest & Arctic, and Australia & New Guinea have no second-tier people table. They resolve to nothing, so their person brackets stay as they are, as native peoples' names do (brief §1.1).
 
@@ -1371,6 +1430,36 @@ The second-tier tables were written against the rules of brief §12, so there is
 - **West African:** Akan day names, Mande, Yoruba, Igbo, Hausa and Wolof; no surnames historic.
 - **Indian:** historic has no surnames; modern surnames are the common regional ones. Gods' names (Lakshmi, Parvati, Radha) stay as given names borne by real women.
 - **Chinese, Japanese, Korean:** surnames in both periods; the regnal lists use the dynastic and imperial names rulers took; living imperial figures left out (Michiko, Masako).
-- **Aztec, Maya, Andean:** historic only. These are the least sure tables: the historic women's names are thin in the record. For the Aztec the attested women and common Nahuatl given names are mixed; for the Maya the Classic queens are attested and the remainder are Yucatec women's names in the `Ix` form with family names; for the Andean, Inca queens and Quechua given names. **Please check these three first.**
+- **Aztec, Maya, Andean:** a `historic` and a `modern` table each (corrected on 15 November 2026, see "Changes after the fixes review"). The historic women's names are still thin in the record: please check these three first.
 - **Polynesian:** Hawaiian, Maori, Samoan and Tongan together; no surname list (modern surnames are mostly European or very varied).
 - **American:** colonial historic names; presidents' first names as regnal names (the monarch slot reads "President", "Governor" or "King"); modern surnames the common US ones.
+
+
+## Changes after the fixes review (15 November 2026)
+
+Shared tables brief §13.4. The §12 rules (one spelling per name, right sex, people only, rulers' and saints' share by weight, era tags) now hold for the Aztec, Maya and Andean tables.
+
+### Aztec
+
+- **historic, male given names**: 30 → 36; removed 16 (Tizoc, Cuitlahuac, Chimalpopoca, Acamapichtli, Huitzilihuitl, Nezahualpilli, Maxtla, Cacama, Ixtlilxochitl, Tezozomoc, Totoquihuatzin, Tlaltecatzin, Coanacoch, Tenoch, Tlacahuepan, Cuauhtlatoa); added 22 (Yaotl, Tochtli, Cuauhtli, Ocelotl, Ce Acatl, Ome Tochtli, Tlahuicole, Quiahuitl, Itzcuin, Coatl, Ehecatl, Chimalli, Tecpatl, Chicome Xochitl, Yei Calli, Ome Acatl, Chicuei Cuauhtli, Cuetzpalin, Macuil Ocelotl, Nahui Ollin, Matlactli Atl, Xipil).
+- **historic, female given names**: 31 → 33; removed 8 (Miahuaxihuitl, Ilancueitl, Itzel, Xilonen, Tecpatl, Yaretzi, Nahui, Teicuih); added 10 (Cozcatl, Quetzalxochitl, Citlalxochitl, Cuetlaxochitl, Ce Xochitl, Macuil Xochitl, Ome Malinalli, Teoxochitl, Nahui Calli, Chicome Atl).
+- **historic, holy names**: 12 → 12; removed 0 (none); added 0 (none).
+- **modern**: new. 36 men's and 35 women's Spanish given names tagged ST, MO or both (13 and 13 given in the last thirty years), 36 surnames, regnal and holy lists as the Iberian table.
+
+### Maya
+
+- **historic, male given names**: 31 → 38; removed 24 (Jasaw Chan K'awiil, Yuknoom Ch'een, Kan Bahlam, Chan Bahlam, Yik'in Chan K'awiil, Siyaj Chan K'awiil, Wak Chan K'awiil, Itzamnaaj Bahlam, Hanab Pakal, Tecun Uman, Tepepul, Nachi Cocom, Tutul Xiu, Ah Canul, Ukit Kan Lek, Yuknoom Yich'aak K'ak', Yax Nuun Ayiin, Sihyaj K'ahk', Chak Tok Ich'aak, Yaxun Bahlam, Kinich Yo'nal Ahk, Tajoom Uk'ab' K'ak', Aj Ne' Ohl Mat, Cocom); added 31 (Yuknoom, Tecun, Tutul, Kinich, Bahlam, Itzamnaaj, Yik'in, Chak Xib, Yaxun, Sihyaj, Hanab, Nachi, Ah Chan, Ah Pol, Ah Nah, Ah Cab, Ah Uc, Ah May, Ah Coh, Ah Tun, Ah Zac, Ah Balam, Ah Kan, Ah Tzul, Ah Than, Ah Ayin, Ah Pat, Ah Ek, Ah Cen, Ah Ku, Ukit Kan).
+- **historic, female given names**: 31 → 32; removed 2 (Ix Mutal Ajaw, Ix Chel Ha); added 3 (Ix Mo, Ix Pop, Ix Xul).
+- **historic, holy names**: 12 → 13; removed 8 (Ah Kin Chi, Ah Kin Chel, Ah Kin Xiu, Ah Kin Pech, Ah Kin Cocom, Ah Kin Canul, Ah Kin Cupul, Ah Kin May); added 9 (Chi, Chel, Xiu, Pech, Cocom, Canul, Cupul, May, Couoh).
+- **modern**: new. 36 men's and 35 women's Spanish given names tagged ST, MO or both (13 and 13 given in the last thirty years), 32 surnames, regnal and holy lists as the Iberian table.
+
+### Andean
+
+- **historic, male given names**: 30 → 32; removed 14 (Sayri Tupac, Titu Cusi, Viracocha Inca, Yahuar Huacac, Inca Roca, Lloque Yupanqui, Mayta Capac, Capac Yupanqui, Cusi Yupanqui, Paullu Inca, Tupac Hualpa, Inti, Sinchi Roca, Kusi); added 16 (Atoq, Kuntur, Rumi, Tupac, Cusi, Sinchi, Huayna, Mayta, Titu Atauchi, Wari Kuri, Willka, Yawar, Paucar, Sayri, Pillpintu, Yupanqui).
+- **historic, female given names**: 30 → 31; removed 10 (Anahuarque, Rahua Ocllo, Chuqui Llanto, Cori Ocllo, Kusi Ocllo, Kori, Qori, Nusta, Mayta, Quilla); added 11 (Cori, Kantu, Nina, Puyu, Yana, Mayu, Cusi Ocllo, Ccori, Sami, Paqari, Umiña).
+- **historic, holy names**: 12 → 14; removed 3 (Huillac Umu, Taqui Onqoy, Anchanchu); added 5 (Juan Santos, Calixto, Santiago, Miguel, Anthony).
+- **modern**: new. 36 men's and 35 women's Spanish given names tagged ST, MO or both (13 and 13 given in the last thirty years), 35 surnames, regnal and holy lists as the Iberian table.
+
+- **Anglo-Saxon:** Hengest, Horsa, Wealhtheow and Beadohild (Kenny's template names) are at the lowest weight, 1.
+- **Roman and Egyptian:** no modern period; the later eras read Italian and Arabic and Persian respectively.
+- **Holy forms:** the Maya take "Ah Kin {n}" beside Priest, Seer and Sage; the Andean colonial saints only ever take "Saint {n}", and "Inca {m}" is never put on a name that holds Inca.

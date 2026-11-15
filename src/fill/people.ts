@@ -113,8 +113,11 @@ function person(c: Ctx, slot: string, known?: "male" | "female"): string | undef
       case "s": return surname(c, sex);
       case "t": return officialTitle(c.culture, sex === "female", rng) ?? given(c, sex);
       case "r": {
-        const ruler = pickForm(c.table.rulerForms.male, rng);
-        return ruler.replace("{m}", regnal(c, "male"));
+        let ruler = pickForm(c.table.rulerForms.male, rng);
+        const name = regnal(c, "male");
+        // Shared tables brief §13.4: "Inca {m}" is never put on a name that already holds Inca ("Manco Inca", "Inca Roca").
+        if (/\bInca\b/.test(ruler) && /\bInca\b/.test(name)) ruler = c.table.rulerForms.male.map((f) => f[0]).find((f) => !/\bInca\b/.test(f)) ?? ruler;
+        return ruler.replace("{m}", name);
       }
       case "rm": return regnal(c, "male");
       default: return regnal(c, "female");
@@ -122,7 +125,12 @@ function person(c: Ctx, slot: string, known?: "male" | "female"): string | undef
   });
 }
 
-const holy = (c: Ctx): string => pickForm(c.table.holyForms, c.req.rng).replace("{n}", draw(c.table.holy, c.req.era, c.req.rng, c.req.avoid));
+function holy(c: Ctx): string {
+  const form = pickForm(c.table.holyForms, c.req.rng);
+  const name = draw(c.table.holy, c.req.era, c.req.rng, c.req.avoid);
+  // Shared tables brief §13.4: a colonial saint ("Rose", "Martin de Porres") only ever takes the "Saint {n}" form.
+  return (c.table.saintOnly?.includes(name) ? "Saint {n}" : form).replace("{n}", name);
+}
 
 function context(req: FillRequest): Ctx | undefined {
   const source = peopleSourceFor(req.culture, req.region, req.era, req.rng);

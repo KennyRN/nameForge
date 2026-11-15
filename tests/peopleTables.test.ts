@@ -8,11 +8,13 @@ import { mulberry32 } from "../src/markov";
 import { entryEras, entryFlag, eraWeights, otherCulture, PEOPLE_CULTURES, peopleCultureFor, peoplePeriod, peopleSourceFor, peopleTable, type PeopleEntry, type PeoplePeriod } from "../src/people";
 import TEMPLATES from "../src/data/builtin-templates.json";
 import LENS from "../src/data/lens.json";
+import { fillSlots } from "../src/fill";
+import "../src/fill/batch";
 
 const CORE = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => c.tier === "second").map((c) => c.key);
 /** Ancient peoples with only a historic table: later they read another culture. */
-const HISTORIC_ONLY = new Set(["anglo-saxon", "roman", "egyptian", "aztec", "maya", "andean"]);
+const HISTORIC_ONLY = new Set(["anglo-saxon", "roman", "egyptian"]);
 const PERIODS: PeoplePeriod[] = ["historic", "modern"];
 /** Periods where the culture named people by patronymic or had no inherited surnames, so it has no surname list. */
 const NO_SURNAMES = new Set([
@@ -475,9 +477,10 @@ test("local cultures read the nearest second-tier culture; historic-only peoples
   assert.equal(near("roman", "historic"), "roman");
   assert.equal(near("roman", "modern"), "italian");
   assert.equal(near("egyptian", "modern"), "arabic-persian");
+  // Shared tables brief §13.4: Aztec, Maya and Andean have a modern table of their own (Spanish given names, their own surnames).
   for (const c of ["aztec", "maya", "andean"]) {
     assert.equal(near(c, "historic"), c);
-    assert.equal(near(c, "modern"), "iberian");
+    assert.equal(near(c, "modern"), c);
   }
   // A modern state of a historic-only culture draws from the culture it reads.
   assert.equal(peopleSourceFor("roman", undefined, "MO", mulberry32(1))!.culture, "italian");
@@ -547,4 +550,93 @@ test("Greek and Byzantine, Roman and Egyptian tag their historic names AN or MD"
   const w = eraWeights(g, "AN");
   const anShare = g.reduce((s, e, i) => s + (entryEras(e).includes("AN") ? w[i] : 0), 0);
   assert.ok(Math.abs(anShare - 0.8) < 1e-9);
+});
+
+// ── Shared tables brief §13.4: Aztec, Maya and Andean ────────────────────────────────────────────
+
+const names = (list: PeopleEntry[] | undefined) => (list ?? []).map((e) => e[0]);
+
+test("§13.4: Aztec, Maya and Andean have a modern period with Spanish given names tagged by era and their own surnames", () => {
+  const iberian = peopleTable("iberian", "modern")!;
+  for (const c of ["aztec", "maya", "andean"]) {
+    const t = peopleTable(c, "modern")!;
+    assert.ok(t, c);
+    assert.deepEqual(names(t.male), names(iberian.male), c);
+    assert.ok(t.surnames && t.surnames.length >= 30, c);
+    assert.ok((t.recentMale?.length ?? 0) >= 12 && (t.recentFemale?.length ?? 0) >= 12, c);
+  }
+  assert.deepEqual(names(peopleTable("maya", "modern")!.surnames), names(peopleTable("maya", "historic")!.surnames), "Maya: as the historic list");
+  for (const n of ["Quispe", "Mamani", "Condori", "Huaman", "Choque", "Apaza", "Yupanqui"]) assert.ok(names(peopleTable("andean", "modern")!.surnames).includes(n), n);
+  assert.ok(names(peopleTable("aztec", "modern")!.surnames).includes("Hernandez"));
+});
+
+test("§13.4: the three male lists are mostly ordinary names, with the rulers flagged and a fifth of the weight at most", () => {
+  for (const c of ["aztec", "maya", "andean"]) {
+    const t = peopleTable(c, "historic")!;
+    for (const sex of ["male", "female"] as const) {
+      const flagged = t[sex].filter((e) => entryFlag(e) === "r");
+      assert.ok(flagged.length >= 3, `${c}/${sex}: rulers flagged`);
+      assert.ok(t[sex].length - flagged.length >= 24, `${c}/${sex}: ordinary names`);
+    }
+  }
+  for (const n of ["Moctezuma", "Cuauhtemoc"]) assert.equal(entryFlag(peopleTable("aztec", "historic")!.male.find((e) => e[0] === n)!), "r", n);
+});
+
+test("§13.4: Aztec: calendrical and descriptive Nahua names in; Itzel, Yaretzi, Teicuih, Nahui and Xilonen out", () => {
+  const t = peopleTable("aztec", "historic")!;
+  const all = [...names(t.male), ...names(t.female)];
+  for (const n of ["Ce Acatl", "Ome Tochtli", "Chicome Xochitl", "Yaotl", "Tochtli", "Cuauhtli", "Ocelotl", "Quiahuitl", "Itzcuin"]) assert.ok(names(t.male).includes(n), n);
+  for (const n of ["Itzel", "Yaretzi", "Teicuih", "Nahui", "Xilonen"]) assert.ok(!all.includes(n), n);
+  assert.ok(!names(t.female).some((n) => names(t.male).includes(n)), "no name in both lists");
+});
+
+test("§13.4: Maya: short personal names in the given lists, the long forms in regnalMale; no goddess; Ah Kin is a form", () => {
+  const t = peopleTable("maya", "historic")!;
+  assert.ok(names(t.male).includes("Pakal"));
+  for (const n of ["Jasaw Chan K'awiil", "Yuknoom Ch'een", "Kan Bahlam", "Yik'in Chan K'awiil"]) assert.ok(!names(t.male).includes(n), n);
+  assert.ok(names(t.regnalMale).includes("Jasaw Chan K'awiil"));
+  for (const sex of ["male", "female"] as const) for (const n of names(t[sex])) assert.ok(n.split(" ").length <= 2, n);
+  assert.ok(!names(t.female).includes("Ix Chel Ha"));
+  assert.ok(t.holyForms.some((f) => f[0] === "Ah Kin {n}"));
+  assert.ok(!names(t.holy).some((n) => /^Ah Kin/.test(n)));
+});
+
+test("§13.4: Andean: no duplicates by spelling, no Nusta, Inti or Mayta among the women; the movements and titles are out", () => {
+  const t = peopleTable("andean", "historic")!;
+  const lower = (list: string[]) => list.map((n) => n.toLowerCase());
+  const female = lower(names(t.female));
+  for (const n of ["nusta", "mayta", "inti", "kori", "qori", "quilla"]) assert.ok(!female.includes(n), n);
+  assert.ok(!lower(names(t.male)).includes("inti") && !lower(names(t.male)).includes("kusi"));
+  assert.ok(names(t.male).includes("Mayta"));
+  assert.equal(lower(names(t.female)).filter((n) => ["cusi", "kusi"].includes(n)).length, 0);
+  for (const n of ["Taqui Onqoy", "Anchanchu", "Huillac Umu"]) assert.ok(!names(t.holy).includes(n), n);
+  for (const n of ["Rose", "Martin de Porres", "Toribius", "Francis Solano", "Juan Macias"]) assert.ok(t.saintOnly!.includes(n) && names(t.holy).includes(n), n);
+});
+
+test("§13.4: a colonial saint of the Andean list only ever takes the Saint form, and Inca {m} never lands on a name ending in Inca", () => {
+  const seen = new Set<string>();
+  for (let seed = 1; seed <= 600; seed++) {
+    const h = fillSlots("[holy person]", { culture: "andean", era: "MD", mode: "real", rng: mulberry32(seed) });
+    seen.add(h);
+    if (/Rose|Porres|Toribius|Solano|Macias/.test(h)) assert.match(h, /^Saint /, h);
+    const m = fillSlots("[monarch]", { culture: "andean", era: "MD", mode: "real", rng: mulberry32(seed) });
+    assert.ok(!/Inca .*Inca/.test(m), m);
+  }
+  assert.ok([...seen].some((h) => /^Priest /.test(h)) && [...seen].some((h) => /Saint Rose/.test(h)));
+});
+
+test("§13.4: Roman and Egyptian have no modern period: later eras read Italian and Arabic and Persian", () => {
+  assert.equal(peopleTable("roman", "modern"), undefined);
+  assert.equal(peopleTable("egyptian", "modern"), undefined);
+  assert.equal(peopleSourceFor("roman", undefined, "MO", mulberry32(1))!.culture, "italian");
+  assert.equal(peopleSourceFor("egyptian", undefined, "MO", mulberry32(1))!.culture, "arabic-persian");
+});
+
+test("§13.4: Kenny's template names stay in Anglo-Saxon at the lowest weight", () => {
+  const t = peopleTable("anglo-saxon", "historic")!;
+  for (const [sex, ns] of [["male", ["Hengest", "Horsa"]], ["female", ["Wealhtheow", "Beadohild"]]] as const) {
+    const lowest = Math.min(...t[sex].map((e) => e[1]));
+    for (const n of ns) assert.equal(t[sex].find((e) => e[0] === n)![1], lowest, n);
+    assert.equal(t[sex].filter((e) => e[1] === lowest).length, 2, sex);
+  }
 });

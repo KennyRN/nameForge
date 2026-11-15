@@ -21,6 +21,8 @@ export interface PeopleTable {
   regnalMale: PeopleEntry[];
   regnalFemale: PeopleEntry[];
   holy: PeopleEntry[];
+  /** Holy names that only ever take the "Saint {n}" form (colonial saints beside a culture's own sages and priests). */
+  saintOnly?: string[];
   /** Modern given names that are given now (the last thirty years), all tagged `MO`. */
   recentMale?: string[];
   recentFemale?: string[];
