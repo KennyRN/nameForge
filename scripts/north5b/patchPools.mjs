@@ -18,7 +18,7 @@ kept.splice(last5a + 1, 0, ...rows.map(([p, holds, readers]) => `| \`${p}\` | ${
 writeFileSync(docPath, kept.join("\n"));
 
 const rdPath = new URL("../../src/coverageReaders.ts", import.meta.url);
-const src = readFileSync(rdPath, "utf8").split("\n").filter((l) => !/^  "nb[A-Z]/.test(l));
+const src = readFileSync(rdPath, "utf8").split("\n").filter((l) => !/^  "nb[A-Z]/.test(l) && !l.includes("Northern Europe brief 5b: the signature words"));
 const at = src.findIndex((l) => l.startsWith('  "direction":'));
 if (at < 0) throw new Error("coverageReaders.ts: marker not found");
 src.splice(at, 0, "  // Northern Europe brief 5b: the signature words of the cultures in the batch modules.", ...rows.map(([p, , readers]) => `  "${p}": "${readers}",`));

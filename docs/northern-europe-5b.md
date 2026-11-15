@@ -31,7 +31,7 @@ Generic first: Church of the saint, Mouth of the stream, Head of the valley, For
 Generic first: Farm of the chief, Church of the saint, Cove, Fort of the tree; mining towns from the steam age.
 
 - **Medieval:** `{saint}'s Church` (5, hvt), `{name:pos} Farm` (5, hv), `{saint}'s Cove` (3, hv), `Farm of {name}` (8, hv), `Church of {saint}` (9, hvt), `Fort of the {tree}` (5, hv), `{cove} of {saint}` (6, hvt), `Head of the {hill}` (4, hv), `Mouth of the Stream` (3, hv), `{spring} of {saint}` (5, hv), `Market of {name}` (3, tcg), `Castle of {name}` (4, tcg), `{adj} {cove}` (3, vtc), `Meeting of the {animal}` (2, hv)
-- **Modern:** `{saint}'s Cove` (4, hvt), `{name:pos} Mine` (5, hvt), `Farm of {name}` (4, hv), `Church of {saint}` (5, hvt), `{mine} of {name}` (7, hvt), `Mine {name:pos}` (4, hvt), `{cove} of {saint}` (4, hvt), `Harbour of {name}` (3, vtc), `Terrace of {name}` (3, vt), `{moor} of {name}` (3, hv), `Castle of {name}` (3, tcg), `Market of {name}` (3, tcg)
+- **Modern:** `{saint}'s Cove` (4, hvt), `{name:pos} Mine` (5, hvt), `Farm of {name}` (4, hv), `Church of {saint}` (5, hvt), `{mine} of {name}` (7, hvt), `{cove} of {saint}` (4, hvt), `Harbour of {name}` (3, vtc), `Terrace of {name}` (3, vt), `{moor} of {name}` (3, hv), `Castle of {name}` (3, tcg), `Market of {name}` (3, tcg)
 - **adj:** Old, New, High, Low, Great, Little, Upper, Lower, East, West, North, South, Long, Broad
 - **tree:** Oak, Ash, Elm, Birch, Alder, Willow, Hazel, Rowan, Yew, Thorn
 - **animal:** Wolf, Stag, Hawk, Fox, Otter, Raven, Boar, Heron, Eagle, Hare
