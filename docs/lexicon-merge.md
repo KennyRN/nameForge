@@ -7,14 +7,11 @@ Shared tables brief §7 (M7). Every module list that is one of the ten kinds (ge
 | Module list | Entries | Read as |
 |---|---|---|
 | group-names.json `lists.colour` | 24 | word with weight and tags |
-| group-names.json `lists.colourRich` | 46 | word with weight and tags |
-| group-names.json `lists.factionColour` | 6 | word with weight and tags |
 | bynames.json `lists.colourNick` | 11 | word with weight and tags |
 | money-names.json `lists.colourShort` | 6 | word with weight and tags |
 | tribal-names.json `vocabulary.colours` | 10 | word with weight and tags |
-| name-words.json `categories.colour` | 9 | `modern` of each entry |
 
-Merged: 57 words.
+Merged: 27 words.
 
 ## metals
 
@@ -34,7 +31,6 @@ Merged: 18 words.
 | group-names.json `lists.number` | 12 | word with weight and tags |
 | deity-names.json `lists.number` | 8 | word with weight and tags |
 | tribal-names.json `vocabulary.numbers` | 12 | word with weight and tags |
-| name-words.json `categories.number` | 5 | `modern` of each entry |
 
 Merged: 13 words.
 
@@ -62,10 +58,9 @@ Merged: 29 words.
 | Module list | Entries | Read as |
 |---|---|---|
 | group-names.json `lists.weather` | 8 | word with weight and tags |
-| time-sky.json `lists.weather` | 6 | word with weight and tags |
 | vehicles-air-land.json `lists.weatherWord` | 13 | word with weight and tags |
 
-Merged: 26 words.
+Merged: 20 words.
 
 ## seasons
 
@@ -73,7 +68,6 @@ Merged: 26 words.
 |---|---|---|
 | group-names.json `lists.season` | 7 | word with weight and tags |
 | vessels.json `lists.season` | 4 | word with weight and tags |
-| name-words.json `categories.season` | 2 | `modern` of each entry |
 
 Merged: 11 words.
 
@@ -83,10 +77,8 @@ Merged: 11 words.
 |---|---|---|
 | group-names.json `lists.tradesmen` | 88 | word with weight and tags |
 | group-names.json `lists.unionTrade` | 23 | word with weight and tags |
-| group-names.json `lists.businessTrade` | 9 | word with weight and tags |
-| group-names.json `lists.tradeActivity` | 6 | word with weight and tags |
 
-Merged: 120 words.
+Merged: 105 words.
 
 ## sizes
 
@@ -102,8 +94,9 @@ Merged: 9 words.
 
 | Module list | Entries | Read as |
 |---|---|---|
+| group-names.json `lists.colourRich` | 46 | word with weight and tags |
 
-Merged: 24 words.
+Merged: 60 words.
 
 ## directions
 
@@ -116,4 +109,21 @@ Merged: 8 words.
 
 ## Status
 
-The merged lists are in `src/data/lexicon.json` with an accessor in `src/lexicon.ts`. Every module list was surveyed above. No module reads the lexicon yet. `mergeLexicon` (`src/lexicon.ts`) is ready, but wiring group names (frozen tone-brief snapshots) and ships (the settlement engines fixture) changed fixtures no brief allows to be re-recorded, so both were backed out. Wiring needs those fixtures' owners to agree. The other modules keep their own lists; closed sets (the five Chinese elements, the compass, calendar names) stay closed.
+The merged lists are in `src/data/lexicon.json` with an accessor in `src/lexicon.ts`. Shared tables brief §13.1: every module list below that is one of the kinds reads the shared list plus its extras (the words already in it), merged once at load by `src/lexiconWiring.ts`.
+
+| Module list | Reads | Extras kept |
+|---|---|---|
+| group-names `colour` | colours | its own colours |
+| group-names `colourRich` | colours, gems and stones | its own rich colours |
+| group-names `resGoodsMetal` | metals | its own metals (setting-tagged) |
+| group-names `number`, `ordinalWord` | numbers, ordinals | |
+| group-names `weather`, `season` | weather, seasons | its own storm and festival words |
+| group-names `tradesmen`, `unionTrade` | trades (plural trade people) | the guild words by setting |
+| bynames `colourNick` | colours | |
+| money `colourShort` | colours | |
+| tribal `colours`, `numbers` | colours, numbers | |
+| vehicles `metal` | metals | |
+| vehicles `weatherWord` | weather, one word only (the list is glued to "Sky") | |
+| vessels `virtue`, `virtueAdj`, `season` | virtues, seasons | its own virtues |
+
+Closed or role-specific lists keep only their own words: the compass and other direction lists, the weekday ordinals, the sacred numbers of deities, the sci-fi and spirit metals, the settlement size codes, the temperance virtues of inns, and the faction colours, business sectors and trade activities of group names. The multilingual name-word categories stay as they are. Time and sky weather ("Lesser", "Greater") is not a weather list and is not merged. Gems and stones have no module list of their own: the seed list and the rich colours stand in, and group names read them.

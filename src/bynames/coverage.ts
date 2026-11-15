@@ -1,4 +1,5 @@
 // Coverage adapters for epithets and bynames, titles and honourifics, and family names (shared lens brief §6.1).
+import "../lexiconWiring";
 import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, vocabularyRows } from "../coverageRows";
 import { listsUsed, plainWordRows, wordListRows } from "../coverageUse";

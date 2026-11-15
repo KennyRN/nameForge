@@ -3,6 +3,8 @@
 // tags, tone factor, invented people and places, possessives, repetition check and safeguards.
 // No Obsidian imports.
 
+import { creaturesFor, type Habitat } from "../creatures";
+import "../lexiconWiring";
 import { drawSeed, fillGenre, registerResolver } from "../fill";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
@@ -538,6 +540,18 @@ function pool(ctx: Ctx, name: string): [{ w: string; t: GroupTone[] }, number][]
       else add(w, 3, []);
     }
     addEntries("beast", own.beastExtra);
+    // Shared tables brief §8: in the fantasy genre (ships have no fantastic switch) the culture's mythic creatures of the vehicle's habitats join the beasts.
+    if (ctx.setting === "FL" || ctx.setting === "FH") {
+      const habitats: Habitat[] = airLand ? (ctx.module === "landVehicles" ? ["home", "mountain", "forest"] : ["sky"]) : space ? ["sky", "underground"] : ["sea", "water"];
+      const have = new Set([...weights.keys()].map((w) => w.toLowerCase()));
+      for (const h of habitats) for (const c of creaturesFor(ctx.culture.key, h)) {
+        const w = c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase());
+        if (!have.has(w.toLowerCase())) {
+          have.add(w.toLowerCase());
+          add(w, 1, c.tones as GroupTone[]);
+        }
+      }
+    }
   } else if (name === "seaLand" && space) {
     // §11.3: spacecraft read spaceLand.
     for (const [w, n] of groupListWords("spaceLand", "SF")) add(w, n, wordTones("spaceLand", w));

@@ -4,6 +4,7 @@
 // surnames come from the starter models (src/peopleGenerated.ts); regnal and holy names stay real. A
 // culture with no table (a native people) gives nothing, so its bracket stays.
 
+import "../lexiconWiring";
 import BYNAMES from "../data/bynames.json";
 import PEOPLE from "../data/people.json";
 import { eraWeights, PERSON_SLOT_FORMS, peopleSourceFor, type PeopleEntry, type PeoplePeriod, type PeopleTable } from "../people";

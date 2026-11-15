@@ -11,7 +11,7 @@
   "Dog Assart Fortress",
   "Corvane Hill Fort",
   "the Silver Bastion",
-  "Crimson Hill Fort"
+  "Pale Hill Fort"
  ],
  "defence norman-british AN 2024": [
   "Swan Bastion",
@@ -21,7 +21,7 @@
   "the Old Fort",
   "the Drowned Castle",
   "Little Barley Plot Broch",
-  "Grey Hill Fort",
+  "Green Hill Fort",
   "Newport Keep",
   "the White Hold",
   "Great Peak Bastion",
@@ -39,7 +39,7 @@
   "Dog Assart Fortress",
   "Harrow Battery",
   "Silver Bastion",
-  "Crimson Battery"
+  "Pale Battery"
  ],
  "defence norman-british ST 2024": [
   "Corrow Bastion",
@@ -49,7 +49,7 @@
   "the Old Fort",
   "the Drowned Castle",
   "Little Barley Plot Redoubt",
-  "Grey Battery",
+  "Green Battery",
   "Newport Keep",
   "White Hold",
   "Great Peak Bastion",
@@ -63,7 +63,7 @@
   "Third Hydroponic Bay",
   "Alcor Refinery",
   "HIP 81931 Sky Elevator",
-  "Russet Castle",
+  "Azure Castle",
   "Observation Ring Alpha",
   "Horizon Dome",
   "Tether Head Rho",
@@ -75,7 +75,7 @@
   "Ice Works Pi",
   "the Old Keep",
   "Mizar Sky Elevator",
-  "Grey Watchtower",
+  "Green Watchtower",
   "Reactor Hall Nu",
   "Discovery Dome",
   "Friar's Tower",
@@ -128,7 +128,7 @@
  "defence chinese ST 2024": [
   "West Gate",
   "Bell Tower",
-  "Ashen Tower",
+  "Copper Tower",
   "the Red Hold",
   "White Fort",
   "Unicorn Castle",
@@ -155,7 +155,7 @@
  ],
  "defence chinese NF 2024": [
   "Bell Tower",
-  "Ashen Tower",
+  "Copper Tower",
   "Ice Works Pi",
   "White Keep",
   "Mizar Sky Elevator",
@@ -179,7 +179,7 @@
   "Raven Beck Fortress",
   "Castle of Ingjald",
   "Silver Bastion",
-  "Crimson Gatehouse"
+  "Pale Gatehouse"
  ],
  "defence norse AN 2024": [
   "Corrow Citadel",
@@ -189,7 +189,7 @@
   "the Old Fort",
   "the Drowned Castle",
   "Juniper Bay Hill Fort",
-  "Grey Gatehouse",
+  "Green Gatehouse",
   "Sheep Fjord Tower",
   "the White Hold",
   "Sheep Skerry Citadel",
@@ -207,7 +207,7 @@
   "Raven Beck Fortress",
   "Castle of Ingjald",
   "Prince's Bastion",
-  "Crimson Battery"
+  "Pale Battery"
  ],
  "defence norse ST 2024": [
   "Corrow Bastion",
@@ -217,7 +217,7 @@
   "the Old Fort",
   "the Drowned Castle",
   "Juniper Bay Redoubt",
-  "Grey Battery",
+  "Green Battery",
   "Sheep Fjord Keep",
   "White Hold",
   "Sheep Skerry Bastion",
@@ -231,7 +231,7 @@
   "Third Hydroponic Bay",
   "Alcor Refinery",
   "HIP 81931 Sky Elevator",
-  "Russet Castle",
+  "Azure Castle",
   "Observation Ring Alpha",
   "Horizon Dome",
   "Tether Head Rho",
@@ -243,7 +243,7 @@
   "Ice Works Pi",
   "the Old Keep",
   "Mizar Sky Elevator",
-  "Grey Watchtower",
+  "Green Watchtower",
   "Reactor Hall Nu",
   "Discovery Dome",
   "Sigrid's Tower",
@@ -2278,7 +2278,7 @@
   "the Burnt Lighthouse",
   "Robin Slope Light",
   "Wren Lighthouse",
-  "the Iron Lantern",
+  "the Crimson Lantern",
   "Minsterstone Light"
  ],
  "maritime norman-british AN 2024": [
@@ -2290,7 +2290,7 @@
   "the Old Light",
   "the Drowned Lighthouse",
   "Little Barley Plot Daymark",
-  "the Grey Lantern",
+  "the Green Lantern",
   "the Black Lantern",
   "the White Beacon",
   "the Broken Lighthouse"
@@ -2336,7 +2336,7 @@
   "the Burnt Lighthouse",
   "East of the Wei Light",
   "Wren Lighthouse",
-  "the Iron Lantern",
+  "the Crimson Lantern",
   "Secure the Frontier Light"
  ],
  "maritime chinese AN 2024": [
@@ -2348,7 +2348,7 @@
   "the Old Light",
   "the Drowned Lighthouse",
   "Harmony County Daymark",
-  "the Grey Lantern",
+  "the Green Lantern",
   "the Black Lantern",
   "the White Beacon",
   "the Broken Lighthouse"
@@ -2394,7 +2394,7 @@
   "the Burnt Lighthouse",
   "Sigurd's Island Light",
   "Sigrid's Lighthouse",
-  "the Iron Lantern",
+  "the Crimson Lantern",
   "Owl Daymark"
  ],
  "maritime norse AN 2024": [
@@ -2406,7 +2406,7 @@
   "Thorkel's Light",
   "Drowned Lighthouse",
   "Juniper Bay Daymark",
-  "the Grey Lantern",
+  "the Green Lantern",
   "the Black Lantern",
   "the White Beacon",
   "the Broken Lighthouse"

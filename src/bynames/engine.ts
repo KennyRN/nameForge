@@ -2,6 +2,7 @@
 // names for twenty cultures, built from shapes and lists. Reuses the group engine's weighted draws,
 // setting tags, tone factor, invented places and safeguards. No Obsidian imports.
 
+import "../lexiconWiring";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import type { BiomeCatalogue } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";

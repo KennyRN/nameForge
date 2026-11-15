@@ -4,6 +4,7 @@
 // vocabulary packs); places, realms and figures from the route engine, saints and companies from group
 // names, animals from bynames. No Obsidian imports.
 
+import "../lexiconWiring";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
 import moneyData from "../data/money-names.json";

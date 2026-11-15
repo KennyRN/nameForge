@@ -1,4 +1,5 @@
 // Coverage adapters for the seven group name families (shared lens brief §6.1).
+import "../lexiconWiring";
 import groupData from "../data/group-names.json";
 import tribalData from "../data/tribal-names.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow } from "../coverageRows";

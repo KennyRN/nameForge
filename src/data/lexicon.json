@@ -4,25 +4,25 @@
   "colours": [
    {
     "w": "Black",
+    "x": 2,
     "t": [
      "grim"
     ]
    },
    {
     "w": "White",
+    "x": 1.5
+   },
+   {
+    "w": "Red",
     "x": 1.5,
     "t": [
      "plain"
     ]
    },
    {
-    "w": "Red",
-    "t": [
-     "plain"
-    ]
-   },
-   {
     "w": "Grey",
+    "x": 1.5,
     "t": [
      "plain"
     ]
@@ -53,7 +53,6 @@
    },
    {
     "w": "Silver",
-    "x": 1.25,
     "t": [
      "grand"
     ]
@@ -99,7 +98,6 @@
    },
    {
     "w": "Russet",
-    "x": 0.75,
     "t": [
      "plain"
     ]
@@ -122,188 +120,39 @@
     ]
    },
    {
-    "w": "Jade"
+    "w": "Jade",
+    "x": 0.5
    },
    {
     "w": "Ivory",
-    "x": 0.75,
+    "x": 0.5,
     "t": [
      "grand"
     ]
    },
    {
     "w": "Violet",
-    "x": 0.75,
+    "x": 0.5,
     "t": [
      "strange"
     ]
    },
    {
     "w": "Purple",
-    "x": 0.75,
+    "x": 0.5,
     "t": [
      "grand"
-    ]
-   },
-   {
-    "w": "Amethyst",
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Aquamarine",
-    "x": 0.3
-   },
-   {
-    "w": "Beryl",
-    "x": 0.3
-   },
-   {
-    "w": "Brazen",
-    "x": 0.5
-   },
-   {
-    "w": "Carmine",
-    "x": 0.5
-   },
-   {
-    "w": "Cerulean",
-    "x": 0.5
-   },
-   {
-    "w": "Crystal",
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Ebony",
-    "t": [
-     "grim"
     ]
    },
    {
     "w": "Emerald",
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Incarnadine",
-    "x": 0.2,
-    "t": [
-     "strange"
-    ]
-   },
-   {
-    "w": "Indigo"
-   },
-   {
-    "w": "Jet",
-    "x": 0.5,
-    "t": [
-     "grim"
-    ]
-   },
-   {
-    "w": "Malachite",
-    "x": 0.3
-   },
-   {
-    "w": "Opal",
-    "x": 0.5,
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Pearl",
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Rainbow",
-    "x": 0.3,
-    "t": [
-     "light"
-    ]
-   },
-   {
-    "w": "Rosy",
-    "x": 0.5,
-    "t": [
-     "light"
-    ]
-   },
-   {
-    "w": "Ruby",
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Sapphire",
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Topaz",
-    "x": 0.3,
-    "t": [
-     "grand"
-    ]
-   },
-   {
-    "w": "Turquoise",
-    "x": 0.3
-   },
-   {
-    "w": "Umber",
-    "x": 0.5,
-    "t": [
-     "strange"
-    ]
-   },
-   {
-    "w": "Vermilion",
     "x": 0.5
-   },
-   {
-    "w": "Viridian",
-    "x": 0.3,
-    "t": [
-     "strange"
-    ]
-   },
-   {
-    "w": "Blues"
-   },
-   {
-    "w": "Greens"
-   },
-   {
-    "w": "Golds"
-   },
-   {
-    "w": "Greys"
-   },
-   {
-    "w": "Purples"
-   },
-   {
-    "w": "Ambers"
    },
    {
     "w": "Brown"
    },
    {
     "w": "Yellow"
-   },
-   {
-    "w": "grey-brown"
    }
   ],
   "metals": [
@@ -429,7 +278,8 @@
     "w": "Two"
    },
    {
-    "w": "Three"
+    "w": "Three",
+    "x": 1.5
    },
    {
     "w": "Four"
@@ -442,12 +292,14 @@
    },
    {
     "w": "Seven",
+    "x": 2,
     "t": [
      "strange"
     ]
    },
    {
     "w": "Nine",
+    "x": 1.5,
     "t": [
      "strange"
     ]
@@ -648,24 +500,6 @@
    },
    {
     "w": "Snow"
-   },
-   {
-    "w": "Lesser"
-   },
-   {
-    "w": "Greater"
-   },
-   {
-    "w": "Cold"
-   },
-   {
-    "w": "Warm"
-   },
-   {
-    "w": "White"
-   },
-   {
-    "w": "Clear"
    },
    {
     "w": "Cyclone"
@@ -1582,127 +1416,267 @@
     "s": [
      "SF"
     ]
-   },
-   {
-    "w": "Haulage"
-   },
-   {
-    "w": "Shipping"
-   },
-   {
-    "w": "Import–Export"
-   },
-   {
-    "w": "Scrap Metals"
-   },
-   {
-    "w": "Fine Wines"
-   },
-   {
-    "w": "Laundry"
-   },
-   {
-    "w": "Removals"
-   },
-   {
-    "w": "Pawnbrokers"
-   },
-   {
-    "w": "Builders' Merchants",
-    "s": [
-     "MR",
-     "MF"
-    ]
-   },
-   {
-    "w": "Trading",
-    "x": 4
-   },
-   {
-    "w": "Merchant",
-    "x": 2
-   },
-   {
-    "w": "Mercantile"
-   },
-   {
-    "w": "Commercial"
-   },
-   {
-    "w": "Commerce"
-   },
-   {
-    "w": "Exchange"
    }
   ],
   "sizes": [
    {
-    "w": "great"
+    "w": "Great"
    },
    {
-    "w": "little"
+    "w": "Little"
    },
    {
-    "w": "big"
+    "w": "Big"
    },
    {
-    "w": "small"
+    "w": "Small"
    },
    {
-    "w": "new"
+    "w": "New"
    },
    {
-    "w": "old"
+    "w": "Old"
    },
    {
-    "w": "vt"
+    "w": "Vt"
    },
    {
-    "w": "hv"
+    "w": "Hv"
    },
    {
-    "w": "hvt"
+    "w": "Hvt"
    }
   ],
   "gems": [
    {
-    "w": "Ruby"
+    "w": "Amber"
+   },
+   {
+    "w": "Amethyst"
+   },
+   {
+    "w": "Aquamarine",
+    "x": 0.3
+   },
+   {
+    "w": "Ashen",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Azure",
+    "x": 2,
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Beryl",
+    "x": 0.3
+   },
+   {
+    "w": "Black",
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Blue",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Brazen",
+    "x": 0.5
+   },
+   {
+    "w": "Bronze"
+   },
+   {
+    "w": "Carmine",
+    "x": 0.5
+   },
+   {
+    "w": "Cerulean",
+    "x": 0.5
+   },
+   {
+    "w": "Copper"
+   },
+   {
+    "w": "Crimson",
+    "x": 2,
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Crystal",
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Ebony",
+    "t": [
+     "grim"
+    ]
    },
    {
     "w": "Emerald"
    },
    {
-    "w": "Sapphire"
+    "w": "Golden",
+    "x": 2,
+    "t": [
+     "grand"
+    ]
    },
    {
-    "w": "Diamond"
+    "w": "Green",
+    "t": [
+     "plain"
+    ]
    },
    {
-    "w": "Opal"
+    "w": "Grey",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Incarnadine",
+    "x": 0.2,
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Indigo"
+   },
+   {
+    "w": "Ivory",
+    "t": [
+     "grand"
+    ]
    },
    {
     "w": "Jade"
    },
    {
-    "w": "Amber"
+    "w": "Jet"
+   },
+   {
+    "w": "Malachite",
+    "x": 0.3
+   },
+   {
+    "w": "Opal"
+   },
+   {
+    "w": "Pale",
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Pearl"
+   },
+   {
+    "w": "Purple"
+   },
+   {
+    "w": "Rainbow",
+    "x": 0.3,
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Red",
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Rosy",
+    "x": 0.5,
+    "t": [
+     "light"
+    ]
+   },
+   {
+    "w": "Ruby"
+   },
+   {
+    "w": "Russet",
+    "x": 0.5
+   },
+   {
+    "w": "Sable",
+    "x": 0.5,
+    "t": [
+     "grim"
+    ]
+   },
+   {
+    "w": "Sapphire"
+   },
+   {
+    "w": "Scarlet"
+   },
+   {
+    "w": "Silver",
+    "x": 2,
+    "t": [
+     "grand"
+    ]
+   },
+   {
+    "w": "Topaz"
+   },
+   {
+    "w": "Turquoise",
+    "x": 0.3
+   },
+   {
+    "w": "Umber",
+    "x": 0.5,
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "Vermilion",
+    "x": 0.5
+   },
+   {
+    "w": "Violet"
+   },
+   {
+    "w": "Viridian",
+    "x": 0.3,
+    "t": [
+     "strange"
+    ]
+   },
+   {
+    "w": "White",
+    "x": 2,
+    "t": [
+     "plain"
+    ]
+   },
+   {
+    "w": "Diamond"
    },
    {
     "w": "Garnet"
    },
    {
     "w": "Onyx"
-   },
-   {
-    "w": "Pearl"
-   },
-   {
-    "w": "Topaz"
-   },
-   {
-    "w": "Amethyst"
-   },
-   {
-    "w": "Jet"
    },
    {
     "w": "Agate"
@@ -1740,28 +1714,28 @@
   ],
   "directions": [
    {
-    "w": "north"
+    "w": "North"
    },
    {
-    "w": "south"
+    "w": "South"
    },
    {
-    "w": "east"
+    "w": "East"
    },
    {
-    "w": "west"
+    "w": "West"
    },
    {
-    "w": "upper"
+    "w": "Upper"
    },
    {
-    "w": "lower"
+    "w": "Lower"
    },
    {
-    "w": "middle"
+    "w": "Middle"
    },
    {
-    "w": "far"
+    "w": "Far"
    }
   ]
  }

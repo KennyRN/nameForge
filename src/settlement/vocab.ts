@@ -4,6 +4,7 @@
 // No Obsidian imports.
 
 import vocabData from "../data/settlement-vocab.json";
+import { creaturesFor, type Habitat } from "../creatures";
 import { inCultureGroup } from "../lens";
 import { GROUP_TONES, type GroupTone, hasBannedWord } from "../groups/engine";
 import { scaleAllows, type ScaleChoice, type SpaceScale } from "../space/scale";
@@ -155,6 +156,39 @@ export interface Vocabulary {
 
 export const BUILT_IN_VOCAB: Vocabulary = { pools: SETTLEMENT_VOCAB.pools };
 
+/** Shared tables brief §8 and §13.1: the creature pools that also read the shared creatures, and the habitats they take. Inns read their own (inns/engine). */
+export const CREATURE_POOL_HABITATS: Record<string, Habitat[]> = {
+  mtBeast: ["mountain", "sky"],
+  fstBeast: ["forest"],
+  dsrBeast: ["desert"],
+  mrBeast: ["moor"],
+  wetBeast: ["water"],
+  grsBeast: ["home", "sky"],
+  seaMonster: ["sea"],
+  seaCreature: ["sea", "water"],
+  lakeCreature: ["water"],
+  fordBeast: ["water"],
+  mythBeast: ["sky", "underground"],
+  figureBeast: ["home", "mountain", "forest", "sky"],
+};
+
+/** The shared creatures of a culture that live in a pool's habitats, as entries (fantastic worlds only). */
+function mythicEntries(name: string, where: VocabWhere): VocabEntry[] {
+  const habitats = CREATURE_POOL_HABITATS[name];
+  if (!habitats || !where.fantastic) return [];
+  const seen = new Set<string>();
+  const out: VocabEntry[] = [];
+  for (const h of habitats) {
+    for (const c of creaturesFor(where.culture, h)) {
+      const w = c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase());
+      if (seen.has(w)) continue;
+      seen.add(w);
+      out.push({ w, t: c.tones } as unknown as VocabEntry);
+    }
+  }
+  return out;
+}
+
 /** §3.1: a pool's words here, weighted; the culture's extra words ×3 (a word already there is tripled). */
 export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere): [VocabEntry, number][] {
   const pool = vocab.pools[name];
@@ -176,6 +210,8 @@ export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere):
     if (i !== undefined) out[i][1] *= 3;
     else add(e, (e.x ?? 1) * 3);
   }
+  // Shared tables brief §8: in a fantastic world the culture's mythic creatures of the pool's habitats join it, unless the pool has the word.
+  for (const e of mythicEntries(name, where)) if (!at.has(e.w)) add(e, 1);
   return out.filter(([, w]) => w > 0);
 }
 

@@ -2,6 +2,7 @@
 // families of organisations for fantasy, modern and sci-fi settings, built from shapes and lists.
 // No Obsidian imports.
 
+import "../lexiconWiring";
 import { drawSeed, fillGenre, registerResolver } from "../fill";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import groupData from "../data/group-names.json";

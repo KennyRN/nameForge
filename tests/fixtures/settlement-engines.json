@@ -1,7 +1,7 @@
 {
  "routes norman-british AN placeholders": [
   "Lead Road",
-  "Road of the Seven Shrines",
+  "Road of the Nine Shrines",
   "Amber Road",
   "Wool and Copper Road",
   "Duke's Army Road",
@@ -107,7 +107,7 @@
  ],
  "inns norman-british MD placeholders": [
   "the Apple",
-  "the Ashen Tower Way Station",
+  "the Copper Tower Way Station",
   "the Hare's Sett",
   "the Castle",
   "the Piper and Moon Inn",
@@ -280,7 +280,7 @@
   "the Mystic Club",
   "Mother [owner]'s",
   "[owner]'s Dining Rooms",
-  "the Scarlet Rope Music Hall",
+  "the Crimson Rope Music Hall",
   "the Lady"
  ],
  "buildings norman-british ST placeholders": [
@@ -318,7 +318,7 @@
  "inns norman-british ST invented": [
   "the Wise Roebuck",
   "the Toad and Judge Lodging House",
-  "the Iron Comet Music Hall",
+  "the Scarlet Comet Music Hall",
   "the Sign of the Silver Hydra",
   "the Scroll",
   "Drewitt's Coffee House",
@@ -623,7 +623,7 @@
   "[place] Well",
   "Shrine of the Father of Eclipses",
   "[founder]'s Citadel",
-  "the Jade Lantern",
+  "the Emerald Lantern",
   "[place] Manor",
   "[place] Spring",
   "the Lower Hall",
@@ -635,7 +635,7 @@
   "Lord's Road",
   "Silk Road",
   "Gold Road",
-  "Road of the Ten Forts",
+  "Road of the Twelve Forts",
   "Prince's Road",
   "South Road"
  ],
@@ -705,7 +705,7 @@
  ],
  "buildings general MD placeholders": [
   "the White Customs House",
-  "the Grey Lantern",
+  "the Green Lantern",
   "Duke's Shrine",
   "the Crooked Bastion",
   "[founder]'s Manor",
@@ -757,7 +757,7 @@
  ],
  "routes general EM placeholders": [
   "Tinkers' Way",
-  "Road of the Six Forts",
+  "Road of the Seven Forts",
   "[place] Road",
   "[place] Mail Road",
   "Road of the Seven Wells",
@@ -957,7 +957,7 @@
  ],
  "buildings general MO placeholders": [
   "[founder]'s Observatory",
-  "the Pale Lantern",
+  "the Bronze Lantern",
   "[surname] Library",
   "[founder]'s Hermitage",
   "[surname] Observatory",
@@ -1250,7 +1250,7 @@
   "Cherry Blossom Tea House"
  ],
  "buildings japanese AN invented": [
-  "Ashen Egret Castle",
+  "Copper Egret Castle",
   "High Valley Shrine",
   "Tenjin Bay Exchange",
   "New Mountain Tower",
@@ -1380,7 +1380,7 @@
   "Wool Works",
   "Ferry of [founder]",
   "[place] Ropewalk",
-  "Bronze Crane Castle",
+  "Amber Crane Castle",
   "the Lower Prison",
   "[place] Bridge",
   "Lord's Ropewalk"
@@ -1550,7 +1550,7 @@
   "the Long Shrine",
   "the Lower Mine",
   "the Hollow Library",
-  "the Golden Lantern",
+  "the Silver Lantern",
   "the New Conduit"
  ],
  "routes japanese MO invented": [
@@ -1835,12 +1835,12 @@
   "Caravan Court of the Western Gate",
   "Rose Coffee House",
   "Fountain Coffee House",
-  "House of the Hundred Wells"
+  "House of the Thirty Wells"
  ],
  "buildings arabic-persian AN invented": [
   "the Hollow Hall",
   "Temple of the Hearth Kin",
-  "Gold Hill Fort",
+  "Golden Hill Fort",
   "Osprey Courtyard Palace",
   "Abode of Wisdom Academy",
   "Bitter Island Bridge",
@@ -1877,7 +1877,7 @@
   "[patron]'s Caravan Court",
   "House of the Seven Wells",
   "Post House of [place]",
-  "House of the Ten Wells"
+  "House of the Twelve Wells"
  ],
  "buildings arabic-persian MD placeholders": [
   "[founder]'s Shrine",
@@ -2104,7 +2104,7 @@
   "Lead Route",
   "[place] Ring Road",
   "Northern Line",
-  "Road of the Thirteen Temples",
+  "Road of the Hundred Temples",
   "Eastern Highway",
   "[place] and [place] Railway",
   "Western Main Line"
@@ -2127,9 +2127,9 @@
   "[owner]'s Café",
   "Vertex Inn",
   "[owner]'s Bar",
-  "House of the Six Wells",
+  "House of the Seven Wells",
   "Bar of [place]",
-  "House of the Three Wells"
+  "House of the Four Wells"
  ],
  "buildings arabic-persian MO placeholders": [
   "[patron]'s Caravan Court",
@@ -2174,7 +2174,7 @@
   "Hotel of Pleasant Island"
  ],
  "buildings arabic-persian MO invented": [
-  "Gold Fortress",
+  "Golden Fortress",
   "Lord's Gaol",
   "the Old Civic Centre",
   "Little Island Exchange",
@@ -2233,7 +2233,7 @@
   "Verge Haul",
   "Helios Shuttle",
   "Old Whitlock's Star Ring Road",
-  "Scarlet Captain's Star Road"
+  "Crimson Captain's Star Road"
  ],
  "streets arabic-persian NF invented": [
   "Ring Road",
@@ -2253,7 +2253,7 @@
   "Inn of the Cattle Merchants",
   "HD 22526 Lounge",
   "Club of Ross 696",
-  "House of the Ten Wells",
+  "House of the Twelve Wells",
   "Gliese 850 Lounge",
   "Hotel of Red Duke's Star"
  ],
@@ -2380,7 +2380,7 @@
   "the Crossbow",
   "Post House of the Honey Way",
   "the Wren and Curlew Tavern",
-  "the Gold Spear Tavern",
+  "the Golden Spear Tavern",
   "the Lucky Glove"
  ],
  "buildings slavic AN placeholders": [
@@ -2460,8 +2460,8 @@
  "inns slavic MD placeholders": [
   "Post House of the Prince's Highway",
   "[place] Post House",
-  "the Ashen Apple Tavern",
-  "the Pale Cauldron Tavern",
+  "the Copper Apple Tavern",
+  "the Bronze Cauldron Tavern",
   "the Dragon and Friar",
   "the Tinker",
   "Post House of the Tinkers' Way",
@@ -2471,7 +2471,7 @@
   "[holy person]'s Cistern",
   "[place] Spring",
   "[place] Castle",
-  "Russet Tower",
+  "Jade Tower",
   "Lord's Fortress",
   "the White Mint",
   "Fox Treasury",
@@ -2503,7 +2503,7 @@
   "the Sign of the Book and Stag",
   "the Otter's Antlers",
   "the Gull's Head Tavern",
-  "the Blue Coin Tavern",
+  "the Gold Coin Tavern",
   "the Coin Eating House",
   "the Minnow and Flute",
   "Eating House of Daniil's Beyond the Woods",
@@ -2512,10 +2512,10 @@
  "buildings slavic MD invented": [
   "Boris's Beyond the Marsh Well",
   "Church of Saint Felix",
-  "Iron Bastion",
+  "Scarlet Bastion",
   "Ruined Mill",
   "the Old Fountain",
-  "Scarlet Bridge",
+  "Ashen Bridge",
   "Saint Ysolde's Church",
   "the Burnt Light"
  ],
@@ -2542,9 +2542,9 @@
   "Fishers' End"
  ],
  "inns slavic EM placeholders": [
-  "the Golden Trumpet Tavern",
+  "the Silver Trumpet Tavern",
   "the Highwayman Inn",
-  "the Green Compass Tavern",
+  "the Blue Compass Tavern",
   "[place] Post House",
   "the Copper Brazier",
   "Post House of the Honey Way",
@@ -2626,7 +2626,7 @@
   "Glovers' Row"
  ],
  "inns slavic ST placeholders": [
-  "the Golden Comet Tavern",
+  "the Silver Comet Tavern",
   "[holy person]'s Inn",
   "the Vintner and Oak Hotel",
   "Post House of the Amber Road",
@@ -2753,7 +2753,7 @@
  ],
  "inns slavic MO invented": [
   "the Black Coronet",
-  "the Black Fern Tavern",
+  "the White Fern Tavern",
   "the Wise Horseshoe",
   "the Blacksmith Café",
   "the Bottle Bar",
@@ -2801,7 +2801,7 @@
   "Eating House of [place]",
   "Club of [place]",
   "the Three Dragons",
-  "the Pale Tabor Tavern"
+  "the Copper Tabor Tavern"
  ],
  "buildings slavic NF placeholders": [
   "Ross 768 Observation Ring",
@@ -2815,7 +2815,7 @@
  ],
  "routes slavic NF invented": [
   "Castor 9 Expressway",
-  "Road to Golden Duke's Star",
+  "Road to Silver Duke's Star",
   "Western Highway",
   "The Long Fall",
   "Sheath Haul",
@@ -2836,7 +2836,7 @@
   "30th Corridor"
  ],
  "inns slavic NF invented": [
-  "Ashen Count's Star Transit Hostel",
+  "Copper Count's Star Transit Hostel",
   "Club of K2-145",
   "Eating House of Lalande 23773",
   "Eating House of Gamma Andromedae",
@@ -2880,7 +2880,7 @@
  "inns slavic IS placeholders": [
   "[holy person]'s Inn",
   "[owner]'s Club",
-  "the Copper Moon Tavern",
+  "the Russet Moon Tavern",
   "Eating House of [place]",
   "the Goat",
   "[owner]'s Rest",
@@ -2984,7 +2984,7 @@
  "routes polynesian AN invented": [
   "Star Path to Southstead",
   "Silk Road",
-  "Road of the Ten Stones",
+  "Road of the Twelve Stones",
   "Island Passage",
   "Sea Road to Thornmarch",
   "Northern Passage",
@@ -3141,7 +3141,7 @@
  ],
  "buildings polynesian EM placeholders": [
   "[place] House of Learning",
-  "Copper Tower",
+  "Bronze Tower",
   "Queen's Hall",
   "[place] Prison",
   "[founder]'s Bridge",
@@ -3531,7 +3531,7 @@
   "the Bell Brotherhood",
   "Circle of the Arcane Rose",
   "Grove of the Birch",
-  "Gatherers of the White Moon",
+  "Gatherers of the Coral Moon",
   "the Peacock School",
   "Cult of the Last Keeper",
   "Cabal of the Still Thread",
@@ -3572,7 +3572,7 @@
   "Grove of the Rowan",
   "Disciples of the Moon",
   "the Common Coven",
-  "Sisters of the Grey Moon",
+  "Sisters of the Rainbow Moon",
   "Church of the Seventh Mouth"
  ],
  "groups mystic general invented modern": [
@@ -3583,7 +3583,7 @@
   "Brotherhood of the Moon",
   "the Fountain Students",
   "Convocation of the Silent Lotus",
-  "Order of the Ashen Tree",
+  "Order of the Azure Tree",
   "Old Winship's Flock",
   "Veiled Initiates"
  ],
@@ -3592,24 +3592,24 @@
   "Captain Hartnell's School",
   "Collegium of the Forgotten Silence",
   "Brotherhood of the Silent Hand",
-  "Coterie of the Ivory Void",
+  "Coterie of the Sapphire Void",
   "Starry Dreamers",
   "the Long Voyage Friars",
   "Brothers of the Way",
-  "Lodge of the Purple Cowl",
+  "Lodge of the White Cowl",
   "Society of the Elder Light"
  ],
  "groups mystic anglo-saxon placeholders fantasy": [
-  "League of the Copper Pillar",
-  "Pure Cabal of the White Eye",
-  "the Ashen Fellowship",
+  "League of the Emerald Pillar",
+  "Pure Cabal of the Coral Eye",
+  "the Azure Fellowship",
   "Order of [holy Person]",
   "Friars of the Lamp",
   "Followers of the Turning Wheel",
   "Temple of the Bright Sun",
   "Cult of the Faceless Moon",
   "Hearth of the Black Toad",
-  "Coven of the Ashen Elder"
+  "Coven of the Copper Elder"
  ],
  "groups mystic anglo-saxon placeholders modern": [
   "Walk of the Turning Wheel",
@@ -3628,9 +3628,9 @@
   "Children of the Shadow",
   "the Azure Cabal",
   "Sisters of the Mystic Tree",
-  "Secret Sodality of the Azure Grail",
+  "Secret Sodality of the Black Grail",
   "Keepers of the Signal Elder",
-  "Silver Walkers",
+  "Granite Walkers",
   "Society of the Sleeping Tide",
   "Friars of the Open Hand",
   "Psions Beyond the Pentacle"
@@ -3653,29 +3653,29 @@
   "Order of Saint Wilfrid",
   "the Rowan School",
   "the Scorpion School",
-  "Brotherhood of the Russet Path",
+  "Brotherhood of the Diamond Path",
   "the Crossroads Coven",
   "the Unbound",
   "the White Friars",
-  "Ring of the Amber Mistletoe"
+  "Ring of the Jade Mistletoe"
  ],
  "groups mystic anglo-saxon invented scifi": [
   "Servants of the Gate",
   "the Dreamer's Flock",
   "Followers of the Common Good",
-  "the Opal Circle",
-  "Fellowship of the Green Lantern",
+  "the Topaz Circle",
+  "Fellowship of the Pearl Lantern",
   "Alliance of the Cosmic Seal",
   "Children of the Pale Dreamer",
   "Cult of the Hollow Father",
-  "the Scarlet Order",
-  "Conclave of the White Wisdom"
+  "the Granite Order",
+  "Conclave of the Coral Wisdom"
  ],
  "groups mystic japanese placeholders fantasy": [
   "Devotees of the Occult Path",
   "Society of the Lost Tide",
   "the Ninth Followers",
-  "Forgotten League of the Pearl Path",
+  "Forgotten League of the White Path",
   "Cult of the Lady of the Night Sky",
   "Dreamers of the Moon",
   "the Dagger School",
@@ -3687,13 +3687,13 @@
   "Brothers of the Bread",
   "Grove of the Black Mirror",
   "the Goshawk School",
-  "Confraternity of the Ebony Labyrinth",
+  "Confraternity of the Indigo Labyrinth",
   "Glowing Keepers",
   "Grove of the Ash",
   "Alliance of the Revealed Truth",
   "the Barefoot Sisters",
-  "Fraternity of the Golden Symbol",
-  "Moot of the Scarlet Hare"
+  "Fraternity of the Malachite Symbol",
+  "Moot of the Crimson Hare"
  ],
  "groups mystic japanese placeholders scifi": [
   "Heirs of the Still Path",
@@ -3703,8 +3703,8 @@
   "College of the Eternal Key",
   "Canons of the Mercy",
   "Sisters of the Patient Queen",
-  "Sisterhood of the Emerald Shrine",
-  "the Scarlet Circle",
+  "Sisterhood of the Jade Shrine",
+  "the Agate Circle",
   "Academy of the Dark Silence"
  ],
  "groups mystic japanese invented fantasy": [
@@ -3716,13 +3716,13 @@
   "the Blessed Penitents",
   "Grove of the Elder",
   "Sisterhood of the Radiant Word",
-  "the Ebony Assembly",
+  "the Indigo Assembly",
   "Order of Saint Bertilla"
  ],
  "groups mystic japanese invented modern": [
   "the Grace Brothers",
   "Pilgrims of Saint Ysolde",
-  "Violet Followers",
+  "Quartz Followers",
   "the Garden Listeners",
   "the Bridge Doubters",
   "Those Who Watch the Sky",
@@ -3749,7 +3749,7 @@
   "the White Spears",
   "11th ([place]) Regiment of Marines",
   "Fourth Troop of the Long Road",
-  "the Red Fleet",
+  "the Grey Fleet",
   "the [place] Watch",
   "the Sword Knights",
   "76th ([place]) Regiment of Horse",
@@ -3758,17 +3758,17 @@
  "groups martial general placeholders modern": [
   "[place] Navy",
   "7th Fleet",
-  "the Scarlet-Coats",
+  "the Ashen-Coats",
   "[captain]'s Marauders",
   "[surname] Risk Management",
   "5th Fleet",
   "[captain]'s Pirates",
-  "Order of the Copper Hart",
+  "Order of the Bronze Hart",
   "Flame Shields",
   "Blades of the Cape"
  ],
  "groups martial general placeholders scifi": [
-  "Order of the Iron Griffin",
+  "Order of the Crimson Griffin",
   "the [place] Watch",
   "Task Force Alpha",
   "7th Brigade",
@@ -3780,20 +3780,20 @@
   "Knights of the Ermine"
  ],
  "groups martial general invented fantasy": [
-  "the Copper-Coats",
-  "Order of the Violet Harp",
+  "the Russet-Coats",
+  "Order of the Yellow Harp",
   "Wreckers of the Shallows",
   "the Well of the Reed Watch",
-  "Most Noble Order of the Scarlet Boar",
+  "Most Noble Order of the Crimson Boar",
   "23rd Great Edge Rifles",
   "First Banner of the Wastes",
   "6th Golden Church Lancers",
   "the Home Squadron",
-  "the Sable Count's Freeswords"
+  "the Violet Count's Freeswords"
  ],
  "groups martial general invented modern": [
-  "the Gold Fleet",
-  "the Ashen-Coats",
+  "the Golden Fleet",
+  "the Copper-Coats",
   "Old Tolley's Reavers",
   "Rangers of the Old Road",
   "79th Force",
@@ -3804,14 +3804,14 @@
   "Abbot Farm Marshals"
  ],
  "groups martial general invented scifi": [
-  "the Amber Knights",
+  "the Jade Knights",
   "Knights of Sadr",
   "Stone Wardens",
   "Salt Vipers",
   "Master Callow's Brigands",
   "the Western Squadron",
-  "the Silver Wolverines",
-  "the Ashen Fleet",
+  "the Iron Wolverines",
+  "the Pale Fleet",
   "Bureau of Missing Persons",
   "Axiom Station Navy"
  ],
@@ -3837,7 +3837,7 @@
   "7th Fleet",
   "[surname] Security",
   "[captain]'s Bandits",
-  "Order of the Ashen Hand"
+  "Order of the Pale Hand"
  ],
  "groups martial anglo-saxon placeholders scifi": [
   "Keepers of the Key",
@@ -3852,12 +3852,12 @@
   "[place] Navy"
  ],
  "groups martial anglo-saxon invented fantasy": [
-  "the Copper Company",
-  "the Amber Fleet",
+  "the Russet Company",
+  "the Ivory Fleet",
   "the Swift Flotilla",
   "the Frost Dagger Company",
   "Knights of the Tower",
-  "Knights of the Silver Holly",
+  "Knights of the Iron Holly",
   "Fists of the Western Vale",
   "Order of the Black Ship",
   "Sixth Battalion of the Crossing",
@@ -3865,15 +3865,15 @@
  ],
  "groups martial anglo-saxon invented modern": [
   "Torch Warders",
-  "the Black Baron's Skirmishers",
-  "the Azure-Coats",
+  "the White Baron's Skirmishers",
+  "the Purple-Coats",
   "Order of the Hand",
   "20th Legion",
   "White Sudden Patrol",
   "Wind Green Company",
   "Free Protectors",
   "Order of Saint Juthwara",
-  "Order of the Blue Rose"
+  "Order of the Gold Rose"
  ],
  "groups martial anglo-saxon invented scifi": [
   "Major Lacey's Marauders",
@@ -3881,7 +3881,7 @@
   "Task Group Iota",
   "the Iron Swallow Company",
   "Nova Rats",
-  "the Copper Pelicans",
+  "the Bronze Pelicans",
   "the Night Lance Company",
   "Light Devils",
   "Winship Security",
@@ -3890,13 +3890,13 @@
  "groups martial japanese placeholders fantasy": [
   "the Night Hounds",
   "the [place] Watch",
-  "the Golden Spurs",
+  "the Silver Spurs",
   "[place] Constabulary",
   "[captain]'s Marauders",
   "the Swift Flotilla",
-  "the Copper Dragons",
+  "the Bronze Dragons",
   "the Grey Hounds",
-  "the Crimson Fleet",
+  "the Ashen Fleet",
   "Thunderbolt Spears"
  ],
  "groups martial japanese placeholders modern": [
@@ -3907,8 +3907,8 @@
   "the [place] Squadron",
   "26th [place] Light Infantry",
   "[place] Marshals",
-  "the Golden Keys",
-  "the Crimson-Coats",
+  "the Silver Keys",
+  "the Pale-Coats",
   "the Grey-Coats"
  ],
  "groups martial japanese placeholders scifi": [
@@ -3926,7 +3926,7 @@
  "groups martial japanese invented fantasy": [
   "the Thunder Panthers",
   "Colonel Tarrant's Pirates",
-  "the Green Knights",
+  "the Blue Knights",
   "Blue Pikes",
   "Order of the Hart",
   "9th (Lower Whitfield) Regiment of Foot",
@@ -3936,14 +3936,14 @@
   "Order of Saint Osyth"
  ],
  "groups martial japanese invented modern": [
-  "Order of the Copper Griffin",
+  "Order of the Russet Griffin",
   "Bureau of Inquiry",
-  "the Russet Captain's Irregulars",
+  "the Sable Captain's Irregulars",
   "3rd Brigade",
   "Green Storm Guard",
   "Vosper's Scythes",
   "the Black-Coats",
-  "Order of the Gold Bell",
+  "Order of the Golden Bell",
   "Master Selwyn's Panthers",
   "11th Fleet"
  ],
@@ -3966,7 +3966,7 @@
   "the Whisper Crows",
   "the Foxes",
   "the White Lanterns",
-  "Gentlemen of the Crimson Sound",
+  "Gentlemen of the Pale Sound",
   "the [surname] Organisation",
   "the Weasels",
   "the [place] Lodge"
@@ -3991,7 +3991,7 @@
   "the Eastside Jackals",
   "the [surname] Organisation",
   "the Ring Zeta Lasses",
-  "the Silver Lanterns",
+  "the Iron Lanterns",
   "the Fog Landers",
   "the Paper Alley Cats"
  ],
@@ -4002,10 +4002,10 @@
   "the Vipers",
   "Shadow Pickers",
   "Family of the Mask",
-  "the Blue Lowlands Runners",
+  "the Gold Lowlands Runners",
   "the Ash Walk Mob",
   "Gentlemen of the Wall",
-  "the Blue Lanterns"
+  "the Gold Lanterns"
  ],
  "groups underworld general invented modern": [
   "the Hale Family",
@@ -4025,14 +4025,14 @@
   "the Orbital Runners",
   "the Chrome Gang",
   "the Glass Lamplighters",
-  "the Six Wharves",
+  "the Seven Wharves",
   "the Vosper Cartel",
   "the Cluster Tide-Runners",
   "the Gliese 934 B Ring",
   "the Three Docks"
  ],
  "groups underworld anglo-saxon placeholders fantasy": [
-  "the Blue Coats",
+  "the Gold Coats",
   "the Bridge Runners",
   "the Brewer Road Lasses",
   "the Wolds Tide-Runners",
@@ -4041,7 +4041,7 @@
   "the Farthings",
   "the Pennies",
   "the Fish Street Lords",
-  "the Bronze Hoods"
+  "the Amber Hoods"
  ],
  "groups underworld anglo-saxon placeholders modern": [
   "the [place] Organisation",
@@ -4049,7 +4049,7 @@
   "the [surname] Family",
   "the Grey Lanterns",
   "the Rust Hooks",
-  "the Azure Frontier Landers",
+  "the Emerald Frontier Landers",
   "the Concrete Jackals",
   "[boss]'s Family",
   "the [place] Syndicate",
@@ -4057,14 +4057,14 @@
  ],
  "groups underworld anglo-saxon placeholders scifi": [
   "the Bloody Hand",
-  "the Twelve Saints",
+  "the Thirteen Saints",
   "the [surname] Family",
   "Kernel Club",
   "the Chrome Hooks",
   "the White Bee Brotherhood",
   "the Ring Rho Dogs",
   "the Nova Runners",
-  "the Nine Towers",
+  "the Ten Towers",
   "the [place] Consortium"
  ],
  "groups underworld anglo-saxon invented fantasy": [
@@ -4095,7 +4095,7 @@
   "House of the Long Sleep",
   "the Halo Runners",
   "the Eels",
-  "the Russet Lanterns",
+  "the Sable Lanterns",
   "the Deck 24 Boys",
   "the Sector 17 Gang",
   "the Level 28 Lasses",
@@ -4124,7 +4124,7 @@
   "Rust Wolves",
   "the Canalside Lads",
   "[leader]'s Gang",
-  "the Jade Lanterns",
+  "the Brown Lanterns",
   "the [surname] Outfit"
  ],
  "groups underworld japanese placeholders scifi": [
@@ -4158,7 +4158,7 @@
   "the Yelland Clan",
   "the Sand Way Ring",
   "the East Bean Hut Ring",
-  "the Copper Hats",
+  "the Russet Hats",
   "the Harrow Syndicate",
   "the Orme Family",
   "the Black Brook Heath Family"
@@ -4166,11 +4166,11 @@
  "groups underworld japanese invented scifi": [
   "the Three Lanes",
   "the Nanotech Runners",
-  "the Silver Lanterns",
+  "the Scarlet Lanterns",
   "Zero Front",
   "the Sheath Tide-Runners",
   "the Deck 36 Crew",
-  "the Ashen Bandanas",
+  "the Pale Bandanas",
   "Lodge of the Empty Chair",
   "Brotherhood of the Mask",
   "the Deck 19 Mob"
@@ -4189,25 +4189,25 @@
  ],
  "groups trade general placeholders modern": [
   "Southern Cloth Company",
-  "the Amber Diamond Line",
-  "[place] Steam Packet Company",
-  "New Horizon Company",
-  "[place] Corporation",
-  "the [place] Drapers",
-  "[surname] & [surname]",
-  "Southern Pearls Traders",
-  "the [place] Pepper Company",
-  "Honourable Company of Cutlers"
+  "[place] Freight",
+  "Southern Seas Commercial Company",
+  "[place] Railway Company",
+  "the [place] Barbers' Union",
+  "Western Iron Company",
+  "Solace Works",
+  "Honourable Company of Farriers",
+  "Harrow Dynamics",
+  "[place] Gas Company"
  ],
  "groups trade general placeholders scifi": [
   "the [place] Company",
   "the Northern Merchants' League",
   "Helium Deep Merchants",
-  "Guild of Nova Couriers",
+  "Guild of Nova Dock Hands",
   "Kynica",
   "Kepler Trading Company",
   "Ice and Deuterium Company",
-  "the Belt Miners' Collective",
+  "the Hydroponic Growers' Collective",
   "[place] Land Company",
   "[surname] Aerospace"
  ],
@@ -4224,9 +4224,9 @@
   "Southern Marble Company"
  ],
  "groups trade general invented modern": [
-  "the Stone of the Crow Engineers' Union",
-  "Good Merlin Glassblowers",
-  "the Lanternmakers' Guild",
+  "the Stone of the Crow Cutlers' Union",
+  "Good Merlin Grocers",
+  "the Needlemakers' Guild",
   "Wine Merchants of Butter Valley",
   "Old Cottage Trading House",
   "Amber Merchants of Old Mill",
@@ -4239,12 +4239,12 @@
   "the LHS 1337 Company",
   "Fairweather & Marchbank",
   "Data Merchants of Kepler-975",
-  "the Tessera Station Data-Brokers",
-  "Amalgamated Society of Belt Miners",
+  "the Tessera Station Dock Hands",
+  "Amalgamated Society of Hydroponic Growers",
   "Honourable Company of Salvage Merchants",
-  "the Dock Hands' Collective",
+  "the Ice Haulers' Collective",
   "Grice–Vosper",
-  "Guild of Pilots",
+  "Guild of Navigators",
   "the Fuel Merchants' League"
  ],
  "groups trade anglo-saxon placeholders fantasy": [
@@ -4260,10 +4260,10 @@
   "Southern Ocean Company"
  ],
  "groups trade anglo-saxon placeholders modern": [
-  "Gold Valley Smelting Company",
+  "Coal Valley Smelting Company",
   "Talova",
   "the Tin Merchants' League",
-  "Worshipful Company of Plumbers",
+  "Worshipful Company of Postal Workers",
   "Company of the Sapphire Coast",
   "[place] Canal Company",
   "[place] Colliery Company",
@@ -4288,19 +4288,19 @@
   "Guild of Painters",
   "Honourable Silver Sea Company",
   "West Moot Merchant Company",
-  "the Silver Star Line",
+  "the Iron Star Line",
   "Society of Adventurers to New Hope",
-  "the Pale Shield Banking House",
+  "the Bronze Shield Banking House",
   "Dunmore & Larkin",
   "the Sealheath Vintners",
   "Varden, Orme & Co."
  ],
  "groups trade anglo-saxon invented modern": [
-  "ASPW",
+  "ASS",
   "Stone of the Bluebell Gas Company",
-  "United Brotherhood of Nurses",
-  "Honourable Company of Mechanics",
-  "the Perfumers' Guild",
+  "United Brotherhood of Lanternmakers",
+  "Honourable Company of Nurses",
+  "the Shipwrights' Guild",
   "High Shingle Merchant Company",
   "Northern Copper Company",
   "Northstar Logistics",
@@ -4308,10 +4308,10 @@
   "Jessop & Rendell"
  ],
  "groups trade anglo-saxon invented scifi": [
-  "the Data-Brokers' Guild",
+  "the Ring Workers' Guild",
   "Inner Gap Industrial Syndicate",
   "Ventica",
-  "Honourable Company of Navigators",
+  "Honourable Company of Engineers",
   "Southern Frontier Company",
   "Knot Deuterium Company",
   "Delta Ursae Majoris Trade Consortium",
@@ -4324,19 +4324,19 @@
   "Guild of Ropemakers",
   "Guild of Coopers",
   "[place] Colonial Company",
-  "Marble Ridge Mining Company",
+  "Titanium Ridge Mining Company",
   "Salt Coast Mining Syndicate",
   "Eastern Frontier Company",
   "the Black Ribbon Line",
-  "Silver Peaks Mining Company",
+  "Coal Peaks Mining Company",
   "the Leathersellers' Guild"
  ],
  "groups trade japanese placeholders modern": [
   "Paragon Industries",
-  "the Candlemakers' Guild",
+  "the Cartographers' Guild",
   "League of Free Ports",
-  "the Black Diamond Line",
-  "Sable Holdings",
+  "[place] Freight",
+  "the Red Anchor Line",
   "Honourable Company of [place]",
   "the [place] Saffron Company",
   "Honourable Company of Salt Merchants",
@@ -4345,14 +4345,14 @@
  ],
  "groups trade japanese placeholders scifi": [
   "[place] Freight",
-  "the Shipwrights' Guild",
+  "the Ring Workers' Guild",
   "the Fuel Merchants' League",
   "the [place] Company",
-  "Prospectors of the Copper Lens",
+  "Spacers of the Russet Lens",
   "Ironvale Consolidated",
-  "the [place] Data-Brokers",
+  "the [place] Ring Workers",
   "Lalande 37359 Colonial Services",
-  "Fellowship of Couriers",
+  "Fellowship of Dock Hands",
   "the [surname] Line"
  ],
  "groups trade japanese invented fantasy": [
@@ -4360,9 +4360,9 @@
   "Western Isles Company",
   "Caravan of the Nine Wells",
   "the Woolmen's Guild",
-  "Iron Valley Mining Company",
+  "Silver Valley Mining Company",
   "the Salt Merchants' League",
-  "the Green Book Banking House",
+  "the Blue Book Banking House",
   "Great Little Hall Colonial Company",
   "League of Free Harbours",
   "Company of the Talisman"
@@ -4374,8 +4374,8 @@
   "Tressel, Eastlake & Co.",
   "Kestle Brothers",
   "the Whitlock Line",
-  "the Inner High Beach Mercers",
-  "Guild of Pewterers",
+  "the Inner High Beach Plasterers",
+  "Guild of Skinners",
   "Ironvale Labs",
   "Western Rail Syndicate"
  ],
@@ -4383,10 +4383,10 @@
   "House Esk",
   "the Hale Line",
   "Ironvale Station Corporation",
-  "Red Lobster Couriers",
+  "Red Lobster Belt Miners",
   "the Regulus Company",
-  "Golden Dove Medics",
-  "Guild of Pilots",
+  "Golden Dove Reactor Crews",
+  "Guild of Navigators",
   "House Marrow",
   "Kepler Trading Company",
   "Honourable Company of Alloys Merchants"
@@ -4407,9 +4407,9 @@
   "Department of Continuity",
   "Movement for Unity",
   "Council of Seven Keys",
-  "League of Thirteen Towers",
+  "League of Thousand Towers",
   "League of Five Harbours",
-  "Council of Thirteen Portcullises",
+  "Council of Hundred Portcullises",
   "Union of [place] and [place]",
   "the Liberty Party",
   "Department of Information",
@@ -4434,7 +4434,7 @@
   "Free Sparrow Valley Movement",
   "the Crown Compact",
   "the Inner Court",
-  "the Green Cabinet",
+  "the Blue Cabinet",
   "League of Seven Harbours",
   "House Blackmere",
   "Tressel's Rising"
@@ -4445,18 +4445,18 @@
   "the Red Sashes",
   "Honey Saltworks Assembly",
   "Department of Records",
-  "the Twelve",
+  "the Thirteen",
   "Plough and Commonweal",
   "Sons of the Last Plough",
   "Black River League",
   "Gedge's Rising"
  ],
  "groups power general invented scifi": [
-  "the Six",
+  "the Seven",
   "House Orrin of Vega",
   "the Inner Court",
   "Future and Harvest",
-  "the Pale Desk",
+  "the Bronze Desk",
   "Council of New Broad Haven",
   "Rebels of the Nebula",
   "the New Highpool Board",
@@ -4478,17 +4478,17 @@
  "groups power anglo-saxon placeholders modern": [
   "the Long Wigs",
   "the [place] Commission",
-  "Section Thirteen",
+  "Section Hundred",
   "Daughters of the Unbroken Sword",
   "[place] Witan",
-  "the Scarlet Glove",
-  "the Amber Table",
+  "the Crimson Glove",
+  "the Ivory Table",
   "[place] Liberation Front",
   "Society of the Sealed Lamp",
   "[leader]'s Rising"
  ],
  "groups power anglo-saxon placeholders scifi": [
-  "the Hundred",
+  "the Thirty",
   "Rose and Concord",
   "the Burning Hand",
   "Bureau of Unusual Affairs",
@@ -4512,7 +4512,7 @@
   "the Commons Faction"
  ],
  "groups power anglo-saxon invented modern": [
-  "the Seven",
+  "the Nine",
   "Tomorrow and Land",
   "Bureau of Unusual Affairs",
   "Council of Abbot Farm",
@@ -4527,24 +4527,24 @@
   "Section Seven",
   "the Last Thread",
   "the Morcants of New Wrenpool",
-  "the Copper Window",
+  "the Russet Window",
   "Free Epsilon Persei 1 Militia",
   "House of the Grey Shell",
   "OPS",
   "Daughters of the Fallen Sword",
-  "the Ashen Chamber",
+  "the Pale Chamber",
   "Army of the Anchor"
  ],
  "groups power japanese placeholders fantasy": [
   "House [house] of [place]",
   "Free Harbours Confederacy",
-  "the Gold Caps",
+  "the Golden Caps",
   "Free [place] Rising",
-  "the Sable Cabinet",
+  "the Violet Cabinet",
   "the Lantern Party",
   "Free [place] Alliance",
   "the Hearthmen",
-  "Rebels of the White Peaks",
+  "Rebels of the Red Peaks",
   "the Queen's Ravens"
  ],
  "groups power japanese placeholders modern": [
@@ -4552,7 +4552,7 @@
   "Rebels of the Tower",
   "the Ambers",
   "the Bread Faction",
-  "the Thousand Ports",
+  "the Thirty Ports",
   "Rebels of the Mere",
   "Free [place] Brotherhood",
   "Office of Public Safety",
@@ -4562,10 +4562,10 @@
  "groups power japanese placeholders scifi": [
   "Commons and Future",
   "Free Moons Covenant",
-  "the Blue Caps",
-  "the Scarlet Desk",
+  "the Gold Caps",
+  "the Crimson Desk",
   "the [place] Committee",
-  "the Bronze Door",
+  "the Amber Door",
   "the Covenant Party",
   "the Plough Federation",
   "[leader]'s Rising",
@@ -4587,8 +4587,8 @@
   "the Seven Cities",
   "Movement for Crown",
   "Market Shrines Liberation Front",
-  "the Five",
-  "the Thirteen",
+  "the Six",
+  "the Thousand",
   "Free Great Edge Movement",
   "Bureau of Continuity",
   "Office of Unusual Affairs",
@@ -4614,7 +4614,7 @@
   "the Great Forest Expedition",
   "[leader]'s Brotherhood",
   "Brotherhood of the Cloak",
-  "Lodge of the Violet Elephant",
+  "Lodge of the Yellow Elephant",
   "Adepts of the Inner Power",
   "the Wolf Wardens",
   "the Southern Ice Expedition"
@@ -4639,7 +4639,7 @@
   "Fraternity of the Hidden Wisdom",
   "the Nova Wardens",
   "Green Crow Hunters",
-  "the Crimson Whales",
+  "the Pale Whales",
   "[leader]'s Expedition",
   "Sacred Masters"
  ],
@@ -4648,11 +4648,11 @@
   "Company of the Cauldron",
   "Walkers Beyond the Mirror",
   "Golden Pheasant Wanderers",
-  "the Amber Captain's Sisterhood",
+  "the Jade Captain's Sisterhood",
   "the Western Ocean Expedition",
   "Old Fox Scouts",
-  "the Amber Admiral's Expedition",
-  "Order of the Purple Arrow",
+  "the Jade Admiral's Expedition",
+  "Order of the Yellow Arrow",
   "Company of the Tenth Otter"
  ],
  "groups adventure general invented modern": [
@@ -4660,7 +4660,7 @@
   "Society for the Exploration of the Sunken Coast",
   "the Long River Expedition",
   "the Burning Sands Expedition",
-  "the Sable Director's Expedition",
+  "the Violet Director's Expedition",
   "3rd Golden Wallow Expedition",
   "the Sunken Coast Expedition",
   "the Lost Valley Expedition",
@@ -4670,17 +4670,17 @@
  "groups adventure general invented scifi": [
   "the Silent Reach Expedition",
   "the Silent Reach Survey",
-  "the Ashen Doctor's Expedition",
+  "the Copper Doctor's Expedition",
   "Gravedigger Company",
   "Society for the Exploration of the Bubble Rim",
   "Dunmore Tactical",
   "Brotherhood of the Lightning Hunt",
-  "Lodge of the Crimson Wolf",
+  "Lodge of the Pale Wolf",
   "the Pulsar Takers",
-  "the Crimson Rooks"
+  "the Pale Rooks"
  ],
  "groups adventure anglo-saxon placeholders fantasy": [
-  "Company of the Golden Ring",
+  "Company of the Silver Ring",
   "[leader]'s Lifters",
   "[leader]'s Expedition",
   "Stone Champions",
@@ -4707,10 +4707,10 @@
   "[leader]'s Expedition",
   "Followers of the Hidden Lantern",
   "[leader]'s Raptors",
-  "the Silver Harts",
+  "the Iron Harts",
   "the Dove and Yew Company",
   "[surname] Tactical",
-  "the Sable Goats",
+  "the Violet Goats",
   "[leader]'s Sisterhood",
   "Society of the Grey Wren",
   "the Trojan Camp Expedition"
@@ -4736,7 +4736,7 @@
   "the Lost Valley Expedition",
   "Company of Far North Pathfinders",
   "the Long River Expedition",
-  "the Bronze Knight's Expedition",
+  "the Amber Knight's Expedition",
   "the Outer Isles Expedition"
  ],
  "groups adventure anglo-saxon invented scifi": [
@@ -4760,7 +4760,7 @@
   "[leader]'s Expedition",
   "the Crossbow and Brazier Company",
   "the Interior Survey",
-  "Lodge of the Scarlet Hound",
+  "Lodge of the Ashen Hound",
   "the Crackbones"
  ],
  "groups adventure japanese placeholders modern": [
@@ -4779,24 +4779,24 @@
   "Mu Expedition",
   "the Wolf Stalkers",
   "the Deep Rim Survey",
-  "the White Fraternity",
+  "the Coral Fraternity",
   "Photon Marines",
   "the Dark Rift Expedition",
   "the Orbital Goats",
-  "Lodge of the Amber Bear",
+  "Lodge of the Violet Bear",
   "[leader]'s Expedition",
   "Golden Shield Wanderers"
  ],
  "groups adventure japanese invented fantasy": [
-  "Brotherhood of the Silver Star",
+  "Brotherhood of the Basalt Star",
   "Brotherhood of the Loaf",
-  "Company of the Iron Thorn",
+  "Company of the Crimson Thorn",
   "the Stone of the Crow Huntsmen",
   "Wind Falcons",
   "Company of the Plum",
   "the Clover Bottom Huntsmen",
   "the Gatecrashers",
-  "the Seven in Green",
+  "the Nine in Blue",
   "the Boar Wardens"
  ],
  "groups adventure japanese invented modern": [
@@ -4807,17 +4807,17 @@
   "Royal Far North Survey",
   "Captain Drewitt's Expedition",
   "the Sunken Coast Survey",
-  "the Purple Mother's Expedition",
+  "the Yellow Mother's Expedition",
   "Royal Inland Sea Survey",
-  "the Green Mother's Expedition"
+  "the Blue Mother's Expedition"
  ],
  "groups adventure japanese invented scifi": [
-  "the Red Lady's Retrievals",
+  "the Grey Lady's Retrievals",
   "the Red Spiders",
   "the Boar Stalkers",
   "Outer Survey Corps",
   "7th Luyten's Star Expedition",
-  "Lodge of the Sable Fox",
+  "Lodge of the Purple Fox",
   "Captain Eastlake's Acquisitions",
   "the Quantum Takers",
   "the Boar Takers",
@@ -4900,7 +4900,7 @@
   "[name] of the East",
   "[name] the Lightning",
   "[name] Spearshaker",
-  "[name] White Otter",
+  "[name] Crimson Otter",
   "[name] the Black-Bearded",
   "[name] Strongbow",
   "[name] the Butcher",
@@ -5005,7 +5005,7 @@
  ],
  "vessels ships general placeholders": [
   "Pioneer",
-  "Defiance",
+  "Endurance",
   "Beak Aurora",
   "Red Mercy",
   "Honest Trader",
@@ -5013,30 +5013,30 @@
   "[place]",
   "Southern Dawn",
   "Fair Adventurer",
-  "Blue Endurance"
+  "Blue Faithful"
  ],
  "vessels ships general invented": [
-  "Navigator Fortitude",
+  "Navigator Swift",
   "Rower Aurora",
-  "The Golden Baron",
-  "Victory",
+  "The Silver Baron",
+  "Hope",
   "Carrier Sun",
-  "Constant Toad",
+  "Total Harpy",
   "Pride of Ridge Farm",
-  "Steel Ram",
+  "Steel Stag",
   "Star over West Spur",
   "Southern Adventure"
  ],
  "vessels ships norman-british placeholders": [
   "Brass Evening Star",
-  "True Lion",
+  "Triumph Lion",
   "Formidable of Funnel",
   "Duncan",
   "Daring",
   "Tyrant's Revenge",
   "Sacred Deliverance",
   "[place]",
-  "Turbine Cat",
+  "Turbine Weasel",
   "Peter of Rower"
  ],
  "vessels ships norman-british invented": [
@@ -5052,46 +5052,46 @@
   "Northern Surveyor"
  ],
  "vessels ships japanese placeholders": [
-  "The Constant",
+  "The Resolute",
   "Runner Swift Current",
   "Cherry Blossom",
   "Black Reckoning",
   "Regent of the Indies",
-  "Crane",
+  "Deer",
   "West Return",
-  "Red Boar",
+  "Grey Boar",
   "[place]",
   "Evening Snow over [place]"
  ],
  "vessels ships japanese invented": [
-  "Pennant Heron",
+  "Pennant Pheasant",
   "Emperor's Valiant",
   "Red Mountain",
   "Western Swift Current",
   "Gale Stag",
   "Willow Slope Pride",
-  "Steel Vigilant",
+  "Steel Brave",
   "Indies Venture",
   "Black Vengeance",
   "Capital of Virtue and Prosperity"
  ],
  "vessels ships hawaiian placeholders": [
   "[owner]",
-  "Sable Whale",
+  "Purple Frigatebird",
   "Wandering Rain from the Mountain",
   "Rain from the Mountain over [place]",
   "Rising Morning Star",
   "Trade Wind of the West",
   "Swift Star Path",
   "Northern Morning Star",
-  "Ox of Current",
+  "Cat of Current",
   "[woman's Name]"
  ],
  "vessels ships hawaiian invented": [
   "Trade Wind of the North",
   "Guiding Star",
   "Northern Morning Star",
-  "Victory",
+  "Fortitude",
   "Pride of Southwater",
   "Wind from the High Mountain",
   "Fair-Winded Child of the Ocean",
@@ -5100,8 +5100,8 @@
   "Rising Morning Star"
  ],
  "vessels spacecraft general placeholders": [
-  "Ion Glory",
-  "Ion Vigilant",
+  "Ion Intrepid",
+  "Ion Brave",
   "Belt Tempest",
   "Tender 17",
   "Bee of Shuttle",
@@ -5115,12 +5115,12 @@
   "Lighter 11",
   "Mary",
   "Honest Trader",
-  "Deep Steadfast",
-  "Rising Constant",
+  "Deep Triumph",
+  "Rising Victory",
   "Little Grace",
   "Northern Adventure",
   "Venture",
-  "Far Intrepid",
+  "Far Total",
   "New Valley of the Sedge"
  ],
  "vessels spacecraft norman-british placeholders": [
@@ -5149,14 +5149,14 @@
  ],
  "vessels spacecraft japanese placeholders": [
   "Rocket Heavenly Wind",
-  "Steadfast Fox",
+  "Fortitude Fox",
   "Morning Sun",
   "Beggar's Bargain",
   "Long Deer",
   "Drive Summer Cloud",
   "Sovereign",
   "Leap Valiant",
-  "Far Indomitable",
+  "Far Noble",
   "Interstellar Valiant"
  ],
  "vessels spacecraft japanese invented": [
@@ -5169,7 +5169,7 @@
   "Shuttle Boar",
   "Cherry Blossom",
   "Silver Heavenly Wind",
-  "Lunar Liberty"
+  "Lunar Bold"
  ],
  "vessels spacecraft hawaiian placeholders": [
   "Rising Child of the Ocean",
@@ -5179,18 +5179,18 @@
   "Drone 11",
   "Drive Resolute",
   "The Sea Remembers",
-  "Sail Intrepid",
+  "Sail Total",
   "New [place]",
   "Morning Star"
  ],
  "vessels spacecraft hawaiian invented": [
-  "The Russet Captain",
+  "The Azure Captain",
   "Drone 59",
   "Path of the Ancestors",
   "Trade Wind over Kappa Centauri",
   "Bright Trade Wind",
   "Booster Bear",
-  "The Brave",
+  "The Golden",
   "New Bastion Station",
   "Leap Ocean of Gladness",
   "Interstellar Ocean of Gladness"

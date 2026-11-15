@@ -2,6 +2,7 @@
 // (shared lens brief §6.1). The two vehicle data files share one shape: the vessels' and the air and land
 // modules'. Technology codes read through the lens's eras (T1–T7, S1–S3, A1–AF, L1–LF), styles through its
 // style table, and a shared list or shape counts in every module of its file.
+import "../lexiconWiring";
 import airLandData from "../data/vehicles-air-land.json";
 import vesselData from "../data/vessels.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys } from "../coverageRows";

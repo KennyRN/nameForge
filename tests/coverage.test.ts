@@ -63,7 +63,7 @@ test("coverage ratchet: it fails when a cell falls, and passes when it rises", (
   const [poolKey, entries] = Object.entries(baseline.thinPools.entries).find(([, n]) => n > 0)!;
   const richer: CoverageBaseline = { ...baseline, thinPools: { ...baseline.thinPools, entries: { ...baseline.thinPools.entries, [poolKey]: entries + 1 } } };
   assert.match(ratchetFailures(richer, report)[0], /^pool .*: fell from/);
-  const fewer: CoverageBaseline = { ...baseline, thinPools: { ...baseline.thinPools, count: baseline.thinPools.count - 1 } };
+  const fewer: CoverageBaseline = { ...baseline, thinPools: { ...baseline.thinPools, count: report.thinPools.length - 1 } };
   assert.match(ratchetFailures(fewer, report)[0], /^thin pools: /);
 });
 

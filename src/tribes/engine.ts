@@ -5,6 +5,7 @@
 // words exist (§3.1). Every draw comes from one seeded stream; the pipeline runs tradition → biome →
 // group type → perspective and tone → theme → template → words → rendering → safeguards (§4).
 
+import "../lexiconWiring";
 import { drawSeed, registerResolver } from "../fill";
 import { tribalCultureWeights } from "../lens";
 import tribalData from "../data/tribal-names.json";

@@ -6,6 +6,7 @@
 // culture's own names. All randomness comes from one seeded stream; Markov models take sub-seeds
 // from it, as the river engine does.
 
+import "../lexiconWiring";
 import worldData from "../data/world-place-names.json";
 import { type Biome, type BiomeCatalogue, biomeTitleCase, biomeWords, BRITAIN, BUILT_IN_BIOMES, pluralOf, shortWords, spaceBiomeFor, terrainWeights } from "../biomes";
 import groupData from "../data/group-names.json";

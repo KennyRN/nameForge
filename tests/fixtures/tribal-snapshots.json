@@ -78,7 +78,7 @@
    "drift": "passed to the land",
    "origin": "Priests and singers used the name; most people used something plainer. It refers to the Sandbanks at the heart of their lands. They took the name as their own and use it with pride. The land itself now bears the name. They called themselves the Guardians of the Sandbanks.",
    "alternativeNames": [
-    "Children of the Grey Sandbanks",
+    "Children of the Gold Sandbanks",
     "People by the Sandbanks",
     "Sandbanks People",
     "Guardians of the Sandbanks"
@@ -137,8 +137,8 @@
    ]
   },
   {
-   "name": "White Wolf Heirs",
-   "inText": "the White Wolf Heirs",
+   "name": "Grey Wolf Heirs",
+   "inText": "the Grey Wolf Heirs",
    "tradition": "general",
    "biome": "boreal",
    "biomeMode": "homeland",
@@ -187,7 +187,7 @@
    "drift": "passed to the land",
    "origin": "Their neighbours coined the name out of respect for their sheep emblem. The sheep was their nickname among outsiders. They tolerated the name but rarely used it among themselves. The land itself now bears the name. They called themselves Those Who Walk Before the Sheep.",
    "alternativeNames": [
-    "Golden Sheep Defenders",
+    "Iron Sheep Defenders",
     "Those Who Walk Before the Sheep"
    ]
   },
@@ -214,7 +214,7 @@
    "drift": "none",
    "origin": "Elders taught the name to children as the first thing they should know about who they were. It refers to the Ridge at the heart of their lands. They took the name as their own and use it with pride. Its meaning has not changed.",
    "alternativeNames": [
-    "Folk of the Green Ridge",
+    "Folk of the Amber Ridge",
     "Ridge People",
     "Dwellers Across the Ridge"
    ]
@@ -268,10 +268,10 @@
    "interpretation": null,
    "acceptance": "embraced",
    "drift": "broadened",
-   "origin": "Travellers gave them the name because it was the plainest way to say where they lived. The fern stood at the centre of their oldest settlement. They took the name as their own and use it with pride. In time it came to cover the whole of the surrounding region. They called themselves the Grey Fern Wanderers.",
+   "origin": "Travellers gave them the name because it was the plainest way to say where they lived. The fern stood at the centre of their oldest settlement. They took the name as their own and use it with pride. In time it came to cover the whole of the surrounding region. They called themselves the Gold Fern Wanderers.",
    "alternativeNames": [
     "Exiles of the Fern",
-    "Grey Fern Wanderers"
+    "Gold Fern Wanderers"
    ]
   },
   {
@@ -297,7 +297,7 @@
    "drift": "none",
    "origin": "Communities nearby first used the name for the people of the Twin Streams. It recalls the Twin Streams on which their lives depended. They accepted the name without complaint. Its meaning has not changed.",
    "alternativeNames": [
-    "People of the Golden Twin Streams",
+    "People of the Iron Twin Streams",
     "People Across the Twin Streams",
     "Upper Twin Streams People",
     "Those Who Hold the Twin Streams"
@@ -353,7 +353,7 @@
    "drift": "none",
    "origin": "Communities nearby first used the name for the people of the Sheer Cliffs. It boasts of the arrow and the battles fought with it. They tolerated the name but rarely used it among themselves. Its meaning has not changed.",
    "alternativeNames": [
-    "Green Shield Masters",
+    "Sable Shield Masters",
     "Lords of the Stronghold"
    ]
   },
@@ -546,8 +546,8 @@
  ],
  "general 2": [
   {
-   "name": "Folk of the Copper Rapids",
-   "inText": "the Folk of the Copper Rapids",
+   "name": "Folk of the Ivory Rapids",
+   "inText": "the Folk of the Ivory Rapids",
    "tradition": "general",
    "biome": "rainforest",
    "biomeMode": "homeland",
@@ -568,7 +568,7 @@
    "drift": "narrowed",
    "origin": "They called themselves this long before anyone wrote it down. It recalls the Rapids on which their lives depended. They accepted the name without complaint. In time it came to mean only the ruling families.",
    "alternativeNames": [
-    "White Rapids House",
+    "Golden Rapids House",
     "Upper Rapids House"
    ]
   },
@@ -624,7 +624,7 @@
    "drift": "passed to the land",
    "origin": "Communities nearby first used the name for the people of the Mountain Torrent. The deer was their nickname among outsiders. They accepted the name without complaint. The land itself now bears the name. They called themselves the Deer Bone.",
    "alternativeNames": [
-    "Blue Deer Folk",
+    "Bronze Deer Folk",
     "Deer Bone"
    ]
   },
@@ -734,7 +734,7 @@
    "origin": "They called themselves this long before anyone wrote it down. The weaver bird was their legendary ancestor. They took the name as their own and use it with pride. The land itself now bears the name.",
    "alternativeNames": [
     "Those Who Spare the Weaver Bird",
-    "Red Weaver Bird People"
+    "White Weaver Bird People"
    ]
   },
   {
@@ -1001,7 +1001,7 @@
    "origin": "Priests and singers used the name; most people used something plainer. It boasts of the axe and the battles fought with it. They took the name as their own and use it with pride. The land itself now bears the name.",
    "alternativeNames": [
     "Defenders of the March",
-    "Red Sword Guard"
+    "Black Sword Guard"
    ]
   },
   {
@@ -1054,7 +1054,7 @@
    "drift": "became a title",
    "origin": "The name was their own, used at gatherings and in the recitation of descent. It names the Ancestor Cave they held holy. They took the name as their own and use it with pride. It survives as a title rather than the name of a people.",
    "alternativeNames": [
-    "Folk of the Blue Ancestor Cave"
+    "Folk of the Pale Ancestor Cave"
    ]
   },
   {
@@ -1080,7 +1080,7 @@
    "drift": "broadened",
    "origin": "Map-makers wrote the name across a region they knew only from report. It names the Ancestor Stones they held holy. Whether they ever used the name themselves is not recorded. In time it came to cover the whole of the surrounding region.",
    "alternativeNames": [
-    "Clan of the Black Ancestor Stones"
+    "Clan of the Green Ancestor Stones"
    ]
   }
  ],
@@ -1163,7 +1163,7 @@
    "drift": "passed to the land",
    "origin": "Priests and singers used the name; most people used something plainer. It refers to the Chalkland at the heart of their lands. They took the name as their own and use it with pride. The land itself now bears the name. They called themselves the Guardians of the Chalkland.",
    "alternativeNames": [
-    "People of the Grey Chalkland",
+    "People of the Gold Chalkland",
     "People by the Chalkland",
     "Chalkland People",
     "Guardians of the Chalkland"
@@ -1242,7 +1242,7 @@
    "drift": "none",
    "origin": "The title was spoken at councils and in war-songs, never in ordinary speech. The raven was their legendary ancestor. They took the name as their own and use it with pride. Its meaning has not changed.",
    "alternativeNames": [
-    "Grey Raven Folk",
+    "Gold Raven Folk",
     "Those Who Walk Before the Raven"
    ]
   },
@@ -1297,7 +1297,7 @@
    "alternativeNames": [
     "Mistletoe Hand",
     "Half of the Mistletoe",
-    "Green Mistletoe Hand"
+    "Russet Mistletoe Hand"
    ]
   },
   {
@@ -1323,7 +1323,7 @@
    "drift": "passed to the land",
    "origin": "The ruling house traced its line to a founding ancestor, and the name proclaimed it. It recalls the Bay on which their lives depended. They took the name as their own and use it with pride. The land itself now bears the name.",
    "alternativeNames": [
-    "Dwellers of the Grey Bay",
+    "Dwellers of the Scarlet Bay",
     "Those Who Hold the Inner Bay"
    ]
   },
@@ -1383,8 +1383,8 @@
    ]
   },
   {
-   "name": "Silver Horse Descendants",
-   "inText": "the Silver Horse Descendants",
+   "name": "Purple Horse Descendants",
+   "inText": "the Purple Horse Descendants",
    "tradition": "celtic",
    "biome": "temperate",
    "biomeMode": "homeland",
@@ -1411,8 +1411,8 @@
    ]
   },
   {
-   "name": "Golden Salt Folk",
-   "inText": "the Golden Salt Folk",
+   "name": "Silver Salt Folk",
+   "inText": "the Silver Salt Folk",
    "tradition": "celtic",
    "biome": "temperate",
    "biomeMode": "homeland",
@@ -1484,7 +1484,7 @@
    "drift": "broadened",
    "origin": "The name was taken by the heirs of a founding ancestor to set them above other families. It boasts of the stronghold and the battles fought with it. They took the name as their own and use it with pride. In time it came to cover the whole of the surrounding region.",
    "alternativeNames": [
-    "White Salt Line"
+    "Grey Salt Line"
    ]
   },
   {
@@ -1534,7 +1534,7 @@
    "drift": "none",
    "origin": "The title was spoken at councils and in war-songs, never in ordinary speech. It names the Holy Well they held holy. They took the name as their own and use it with pride. Its meaning has not changed.",
    "alternativeNames": [
-    "Kin of the Green Holy Well",
+    "Kin of the Amber Holy Well",
     "Clan of the Holy Well"
    ]
   },
@@ -1759,8 +1759,8 @@
    ]
   },
   {
-   "name": "Silver Boar United Kindreds",
-   "inText": "the Silver Boar United Kindreds",
+   "name": "Purple Boar United Kindreds",
+   "inText": "the Purple Boar United Kindreds",
    "tradition": "celtic",
    "biome": "temperate",
    "biomeMode": "homeland",
@@ -1810,7 +1810,7 @@
    "alternativeNames": [
     "Folk Across the Bog",
     "South Bog Folk",
-    "Dwellers of the Black Bog",
+    "Dwellers of the Copper Bog",
     "Folk by the Bog"
    ]
   },
@@ -1867,7 +1867,7 @@
    "alternativeNames": [
     "Wanderers of the Thistle",
     "Thistle Settlers",
-    "Green Thistle Exiles"
+    "Amber Thistle Exiles"
    ]
   },
   {
@@ -1973,7 +1973,7 @@
    "drift": "passed to the land",
    "origin": "They called themselves this long before anyone wrote it down. The raven was their legendary ancestor. They took the name as their own and use it with pride. The land itself now bears the name.",
    "alternativeNames": [
-    "White Raven People",
+    "Grey Raven People",
     "Raven People"
    ]
   },
@@ -2217,7 +2217,7 @@
    "origin": "The ruling house traced its line to a founding ancestor, and the name proclaimed it. The kiwi was their emblem across the region. They took the name as their own and use it with pride. The land itself now bears the name. They called themselves Those Who Walk Before the Kiwi.",
    "alternativeNames": [
     "Kiwi Heirs",
-    "Green Kiwi Descendants",
+    "Sable Kiwi Descendants",
     "Those Who Walk Before the Kiwi"
    ]
   },
@@ -2246,8 +2246,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Blue Spear Descendants",
-   "inText": "the Blue Spear Descendants",
+   "name": "Pale Spear Descendants",
+   "inText": "the Pale Spear Descendants",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2295,7 +2295,7 @@
    "origin": "Travellers gave them the name because it was the plainest way to say where they lived. It recalls the Reef on which their lives depended. They tolerated the name but rarely used it among themselves. Its meaning has not changed.",
    "alternativeNames": [
     "Exiles of the Reef",
-    "Iron Reef Wanderers"
+    "Emerald Reef Wanderers"
    ]
   },
   {
@@ -2430,7 +2430,7 @@
    "drift": "none",
    "origin": "Their neighbours coined the name out of respect for their lizard emblem. The lizard was their emblem across the region. They accepted the name without complaint. Its meaning has not changed.",
    "alternativeNames": [
-    "Golden Lizard People",
+    "Silver Lizard People",
     "Children of the Lizard",
     "Those Who Spare the Lizard"
    ]
@@ -2487,7 +2487,7 @@
    "alternativeNames": [
     "Exiles of the Spruce",
     "Spruce Exiles",
-    "White Spruce Exiles"
+    "Golden Spruce Exiles"
    ]
   },
   {
@@ -2591,8 +2591,8 @@
    "drift": "passed to the land",
    "origin": "Elders taught the name to children as the first thing they should know about who they were. The yew stood at the centre of their oldest settlement. They accepted the name without complaint. The land itself now bears the name.",
    "alternativeNames": [
-    "Grey Yew Dwellers",
-    "People of the Silver Yew",
+    "Ashen Yew Dwellers",
+    "People of the Violet Yew",
     "Yew Men"
    ]
   },
@@ -2617,10 +2617,10 @@
    "interpretation": "legendary ancestor",
    "acceptance": "embraced",
    "drift": "broadened",
-   "origin": "They called themselves this long before anyone wrote it down. The parrot was their legendary ancestor. They took the name as their own and use it with pride. In time it came to cover the whole of the surrounding region. Their neighbours called them the Red Parrot Folk.",
+   "origin": "They called themselves this long before anyone wrote it down. The parrot was their legendary ancestor. They took the name as their own and use it with pride. In time it came to cover the whole of the surrounding region. Their neighbours called them the Black Parrot Folk.",
    "alternativeNames": [
     "Parrot People",
-    "Red Parrot Folk"
+    "Black Parrot Folk"
    ]
   },
   {
@@ -2784,7 +2784,7 @@
    "origin": "Elders taught the name to children as the first thing they should know about who they were. The pig was their warriors' badge. They accepted the name without complaint. Its meaning has not changed.",
    "alternativeNames": [
     "Pig House",
-    "Silver Pig Children"
+    "Violet Pig Children"
    ]
   },
   {
@@ -2808,11 +2808,11 @@
    "interpretation": null,
    "acceptance": "embraced",
    "drift": "became a title",
-   "origin": "The name was their own, used at gatherings and in the recitation of descent. The sorrel stood at the centre of their oldest settlement. They took the name as their own and use it with pride. It survives as a title rather than the name of a people. Their neighbours called them the Blue Sorrel Dwellers.",
+   "origin": "The name was their own, used at gatherings and in the recitation of descent. The sorrel stood at the centre of their oldest settlement. They took the name as their own and use it with pride. It survives as a title rather than the name of a people. Their neighbours called them the Pale Sorrel Dwellers.",
    "alternativeNames": [
     "Sorrel Dwellers",
-    "Silver Sorrel Dwellers",
-    "Blue Sorrel Dwellers"
+    "Purple Sorrel Dwellers",
+    "Pale Sorrel Dwellers"
    ]
   },
   {
@@ -2980,8 +2980,8 @@
    ]
   },
   {
-   "name": "People of the Green Lagoon",
-   "inText": "the People of the Green Lagoon",
+   "name": "People of the Amber Lagoon",
+   "inText": "the People of the Amber Lagoon",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3132,13 +3132,13 @@
    "origin": "The title was spoken at councils and in war-songs, never in ordinary speech. The flax stood at the centre of their oldest settlement. They took the name as their own and use it with pride. Its meaning has not changed.",
    "alternativeNames": [
     "Flax People",
-    "Black Flax Dwellers",
+    "Green Flax Dwellers",
     "People of the Flax"
    ]
   },
   {
-   "name": "Settlers of the Green Pandanus",
-   "inText": "the Settlers of the Green Pandanus",
+   "name": "Settlers of the Amber Pandanus",
+   "inText": "the Settlers of the Amber Pandanus",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3161,7 +3161,7 @@
    "alternativeNames": [
     "Pandanus House",
     "Pandanus Dwellers",
-    "Copper Pandanus Dwellers"
+    "Ivory Pandanus Dwellers"
    ]
   },
   {

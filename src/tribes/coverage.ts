@@ -1,4 +1,5 @@
 // Coverage adapter for tribes and kin groups (shared lens brief §6.1).
+import "../lexiconWiring";
 import tribalData from "../data/tribal-names.json";
 import { type CoverageAdapter, type CoverageRow, makeRow } from "../coverageRows";
 

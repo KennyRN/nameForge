@@ -199,16 +199,16 @@ test("the lens choices agree with the modules' own choose functions where both e
 // ── Rule 4: a stored value is always shown and kept ────────────────────────
 
 test("rule 4: a stored value the probe wouldn't offer is shown, listed in its menu and kept", () => {
-  // Monuments in the modern era: the probe finds the switch changes nothing, so only plain is offered.
-  const state = stateOf("monumentNames", { era: "MO", fantastic: true });
-  const world = lensClause("monumentNames", state).world!;
+  // Events in the modern era: the probe finds the switch changes nothing, so only plain is offered.
+  const state = stateOf("eventNames", { era: "MO", fantastic: true });
+  const world = lensClause("eventNames", state).world!;
   assert.equal(world.current, "fantastic");
   assert.equal(world.text, "contemporary fantasy");
   assert.deepEqual(world.choices.map((c) => c.id), ["plain", "fantastic"]);
   assert.equal(world.fixed, undefined);
-  assert.deepEqual(applyLensChoice("monumentNames", state, "world", "fantastic"), state);
+  assert.deepEqual(applyLensChoice("eventNames", state, "world", "fantastic"), state);
   // Where only plain is offered and plain is stored, the world is plain text.
-  const fixed = lensClause("monumentNames", stateOf("monumentNames", { era: "MO" })).world!;
+  const fixed = lensClause("eventNames", stateOf("eventNames", { era: "MO" })).world!;
   assert.equal(fixed.fixed, true);
   assert.deepEqual(fixed.choices.map((c) => c.id), ["plain"]);
   // A stored culture the module doesn't list.

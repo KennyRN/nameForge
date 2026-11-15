@@ -3614,16 +3614,16 @@
  "waters seaCharts temperate 1": [
   "[place] Race",
   "Endless Deep",
-  "The Ten Stones",
+  "The Twelve Stones",
   "[place] Breakers",
   "[place] Hole",
   "[place] Sands",
   "Herring Bank",
   "Race of [place]",
   "[place] Bank",
-  "The Twelve Stones",
   "Grey Reef",
-  "Silver Pit"
+  "Silver Pit",
+  "The [place] Rip"
  ],
  "waters seaCharts moorland 1": [
   "[place] Race",
@@ -3684,16 +3684,16 @@
  "waters seaCharts steppe 1": [
   "[place] Race",
   "Endless Deep",
-  "The Ten Stones",
+  "The Twelve Stones",
   "[place] Breakers",
   "[place] Hole",
   "[place] Sands",
   "Cod Bank",
   "Race of [place]",
   "[place] Bank",
-  "The Twelve Stones",
   "Grey Reef",
-  "Silver Pit"
+  "Silver Pit",
+  "The [place] Rip"
  ],
  "waters seaCharts desert 1": [
   "[place] Race",
@@ -3712,16 +3712,16 @@
  "waters seaCharts savannah 1": [
   "[place] Race",
   "Endless Deep",
-  "The Ten Stones",
+  "The Twelve Stones",
   "Outer [place] Reef",
   "[place] Hole",
   "[place] Sands",
   "Salmon Bank",
   "Race of [place]",
   "[place] Bank",
-  "The Twelve Stones",
   "Grey Reef",
-  "Silver Pit"
+  "Silver Pit",
+  "The [place] Rip"
  ],
  "waters seaCharts rainforest 1": [
   "[place] Race",
@@ -12670,7 +12670,7 @@
   "Isle of [holy person]"
  ],
  "waters coastsIslands rainforest 2024": [
-  "The Nine Isles",
+  "The Ten Isles",
   "Black Sands",
   "[place] Spit",
   "Little Crooked Islands",
@@ -12684,7 +12684,7 @@
   "Isle of [holy person]"
  ],
  "waters coastsIslands monsoon 2024": [
-  "The Nine Isles",
+  "The Ten Isles",
   "Broad Sands",
   "Skua Strand",
   "[ruler] of [native place]",
@@ -13259,7 +13259,7 @@
  ],
  "wilds desertNames default 2024": [
   "Dunes Lake",
-  "Six Wells",
+  "Seven Wells",
   "[place] Dunes",
   "Twin Water",
   "Contentment Oasis",
@@ -13273,7 +13273,7 @@
  ],
  "wilds desertNames desert 2024": [
   "Dunes Lake",
-  "Six Wells",
+  "Seven Wells",
   "[place] Dunes",
   "Twin Water",
   "Contentment Oasis",
@@ -13287,7 +13287,7 @@
  ],
  "wilds desertNames steppe 2024": [
   "Herders' Way",
-  "Six Wells",
+  "Seven Wells",
   "[native place] Dry Creek",
   "[place] Wells",
   "Contentment Oasis",
@@ -13301,7 +13301,7 @@
  ],
  "wilds desertNames highland 2024": [
   "Herders' Way",
-  "Six Wells",
+  "Seven Wells",
   "[native place] Dry Creek",
   "[place] Wells",
   "Contentment Oasis",
@@ -13315,7 +13315,7 @@
  ],
  "wilds desertNames savannah 2024": [
   "Herders' Way",
-  "Six Wells",
+  "Seven Wells",
   "[native place] Dry Creek",
   "[place] Wells",
   "Contentment Oasis",
@@ -13329,7 +13329,7 @@
  ],
  "wilds desertNames mediterranean 2024": [
   "Herders' Way",
-  "Six Wells",
+  "Seven Wells",
   "[native place] Dry Creek",
   "[place] Wells",
   "Contentment Oasis",

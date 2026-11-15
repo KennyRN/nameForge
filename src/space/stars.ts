@@ -1,6 +1,7 @@
 // Stellar brief §4: how stars are named. Five kinds - proper, possessive, Bayer, catalogue and planet.
 // Obsidian-free; the proper-name list is the group names' own `star` list.
 
+import "../lexiconWiring";
 import groupData from "../data/group-names.json";
 import { SPACE_DATA, type ScaleChoice } from "./scale";
 

@@ -1,4 +1,5 @@
 // Coverage adapter for money and coins (shared lens brief §6.1).
+import "../lexiconWiring";
 import moneyData from "../data/money-names.json";
 import vocabData from "../data/settlement-vocab.json";
 import { type CoverageAdapter, type CoverageRow, at, listRows, profileKeys, vocabularyRows } from "../coverageRows";

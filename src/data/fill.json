@@ -27,6 +27,7 @@
     "personal name": { "source": "person", "slot": "person" },
     "hero": { "source": "person", "slot": "person", "added": "a person honoured in a street, monument or book" },
     "owner": { "source": "person", "slot": "person", "added": "the keeper of an inn, building or vehicle" },
+    "master": { "source": "person", "slot": "person", "added": "the head of a trade guild or company, in a possessive ([master]'s Caravan)" },
     "leader": { "source": "person", "slot": "person", "added": "the head of a group or event" },
     "captain": { "source": "person", "slot": "person", "added": "a martial order's captain" },
     "admiral": { "source": "person", "slot": "person", "added": "a vessel named for its admiral" },

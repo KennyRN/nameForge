@@ -1,4 +1,5 @@
 // Coverage adapters for deities and for sacred places (shared lens brief §6.1).
+import "../lexiconWiring";
 import deityData from "../data/deity-names.json";
 import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";

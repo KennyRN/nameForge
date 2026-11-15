@@ -4,16 +4,16 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 const SOURCES = {
-  colours: [["group-names.json", "lists.colour"], ["group-names.json", "lists.colourRich"], ["group-names.json", "lists.factionColour"], ["bynames.json", "lists.colourNick"], ["money-names.json", "lists.colourShort"], ["tribal-names.json", "vocabulary.colours"], ["name-words.json", "categories.colour", "modern"]],
+  colours: [["group-names.json", "lists.colour"], ["bynames.json", "lists.colourNick"], ["money-names.json", "lists.colourShort"], ["tribal-names.json", "vocabulary.colours"]],
   metals: [["group-names.json", "lists.resGoodsMetal"], ["money-names.json", "lists.sfMetal"], ["vehicles-air-land.json", "lists.metal"], ["vehicles-air-land.json", "lists.spiritMetal"]],
-  numbers: [["group-names.json", "lists.number"], ["deity-names.json", "lists.number"], ["tribal-names.json", "vocabulary.numbers"], ["name-words.json", "categories.number", "modern"]],
+  numbers: [["group-names.json", "lists.number"], ["deity-names.json", "lists.number"], ["tribal-names.json", "vocabulary.numbers"]],
   ordinals: [["group-names.json", "lists.ordinalWord"], ["street-names.json", "lists.dayOrdinals"]],
   virtues: [["inn-names.json", "lists.virtue"], ["vessels.json", "lists.virtue"], ["vessels.json", "lists.virtueAdj"]],
-  weather: [["group-names.json", "lists.weather"], ["time-sky.json", "lists.weather"], ["vehicles-air-land.json", "lists.weatherWord"]],
-  seasons: [["group-names.json", "lists.season"], ["vessels.json", "lists.season"], ["name-words.json", "categories.season", "modern"]],
-  trades: [["group-names.json", "lists.tradesmen"], ["group-names.json", "lists.unionTrade"], ["group-names.json", "lists.businessTrade"], ["group-names.json", "lists.tradeActivity"]],
+  weather: [["group-names.json", "lists.weather"], ["vehicles-air-land.json", "lists.weatherWord"]],
+  seasons: [["group-names.json", "lists.season"], ["vessels.json", "lists.season"]],
+  trades: [["group-names.json", "lists.tradesmen"], ["group-names.json", "lists.unionTrade"]],
   sizes: [["name-words.json", "categories.size", "modern"], ["name-words.json", "categories.age", "modern"], ["settlement-names.json", "world.anglo-saxon.lists.size"]],
-  gems: [],
+  gems: [["group-names.json", "lists.colourRich"]],
   directions: [["name-words.json", "categories.position-or-direction", "modern"], ["tribal-names.json", "vocabulary.directions"]],
 };
 const get = (file, path) => path.split(".").reduce((o, k) => o?.[k], JSON.parse(readFileSync(`src/data/${file}`, "utf8")));
@@ -30,8 +30,9 @@ for (const [kind, lists] of Object.entries(SOURCES)) {
     const entries = Array.isArray(list) ? list : Object.values(list);
     doc.push(`| ${file} \`${path}\` | ${entries.length} | ${field ? `\`${field}\` of each entry` : "word with weight and tags"} |`);
     for (const e of entries) {
-      const w = typeof e === "string" ? e : field ? e[field] : e.w ?? e.noun ?? e.word;
-      if (typeof w !== "string") continue;
+      const w0 = typeof e === "string" ? e : field ? e[field] : e.w ?? e.noun ?? e.word;
+      if (typeof w0 !== "string") continue;
+      const w = w0[0].toUpperCase() + w0.slice(1);
       const key = w.toLowerCase();
       const cur = words.get(key) ?? { w, xs: [], t: new Set(), s: new Set() };
       cur.xs.push(typeof e === "object" && e.x ? e.x : 1);
@@ -44,7 +45,7 @@ for (const [kind, lists] of Object.entries(SOURCES)) {
   lexicon.kinds[kind] = [...words.values()].map((c) => ({ w: c.w, ...(median(c.xs) !== 1 ? { x: median(c.xs) } : {}), ...(c.t.size ? { t: [...c.t] } : {}), ...(c.s.size ? { s: [...c.s] } : {}) }));
   doc.push("", `Merged: ${lexicon.kinds[kind].length} words.`, "");
 }
-doc.push("## Status", "", "The merged lists are in `src/data/lexicon.json` with an accessor in `src/lexicon.ts`. Every module list was surveyed above. No module reads the lexicon yet. `mergeLexicon` (`src/lexicon.ts`) is ready, but wiring group names (frozen tone-brief snapshots) and ships (the settlement engines fixture) changed fixtures no brief allows to be re-recorded, so both were backed out. Wiring needs those fixtures' owners to agree. The other modules keep their own lists; closed sets (the five Chinese elements, the compass, calendar names) stay closed.", "");
+doc.push("## Status", "", "The merged lists are in `src/data/lexicon.json` with an accessor in `src/lexicon.ts`. Shared tables brief §13.1: every module list below that is one of the kinds reads the shared list plus its extras (the words already in it), merged once at load by `src/lexiconWiring.ts`.", "", "| Module list | Reads | Extras kept |", "|---|---|---|", "| group-names `colour` | colours | its own colours |", "| group-names `colourRich` | colours, gems and stones | its own rich colours |", "| group-names `resGoodsMetal` | metals | its own metals (setting-tagged) |", "| group-names `number`, `ordinalWord` | numbers, ordinals | |", "| group-names `weather`, `season` | weather, seasons | its own storm and festival words |", "| group-names `tradesmen`, `unionTrade` | trades (plural trade people) | the guild words by setting |", "| bynames `colourNick` | colours | |", "| money `colourShort` | colours | |", "| tribal `colours`, `numbers` | colours, numbers | |", "| vehicles `metal` | metals | |", "| vehicles `weatherWord` | weather, one word only (the list is glued to \"Sky\") | |", "| vessels `virtue`, `virtueAdj`, `season` | virtues, seasons | its own virtues |", "", "Closed or role-specific lists keep only their own words: the compass and other direction lists, the weekday ordinals, the sacred numbers of deities, the sci-fi and spirit metals, the settlement size codes, the temperance virtues of inns, and the faction colours, business sectors and trade activities of group names. The multilingual name-word categories stay as they are. Time and sky weather (\"Lesser\", \"Greater\") is not a weather list and is not merged. Gems and stones have no module list of their own: the seed list and the rich colours stand in, and group names read them.", "");
 writeFileSync("src/data/lexicon.json", JSON.stringify(lexicon, null, 1));
 writeFileSync("docs/lexicon-merge.md", doc.join("\n"));
 console.log(Object.fromEntries(Object.entries(lexicon.kinds).map(([k, v]) => [k, v.length])));

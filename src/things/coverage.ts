@@ -1,4 +1,5 @@
 // Coverage adapters for arms and armour, treasures and regalia, and books and writings (shared lens brief §6.1).
+import "../lexiconWiring";
 import thingData from "../data/named-things.json";
 import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, makeRow, profileKeys, vocabularyRows } from "../coverageRows";

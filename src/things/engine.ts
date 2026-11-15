@@ -3,6 +3,7 @@
 // packs); people, places, realms, folk, gods and saints from the groups, routes, bynames and deities
 // engines. One seeded stream a batch. No Obsidian imports.
 
+import { creaturesFor } from "../creatures";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { hasSpaceBlock } from "../space/safeguards";
 import { biomeTitleCase, type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
@@ -342,6 +343,8 @@ function beastItems(ctx: Ctx): [string, number][] {
   const merged = new Map<string, number>();
   for (const w of cultureAnimals(ctx.culture)) if (!w.includes("{")) merged.set(biomeTitleCase(w), (merged.get(biomeTitleCase(w)) ?? 0) + 3);
   for (const w of worldAnimals(ctx.culture)) if (!w.includes("{")) merged.set(biomeTitleCase(w), (merged.get(biomeTitleCase(w)) ?? 0) + 1);
+  // Shared tables brief §8: in a fantastic world the culture's mythic creatures join the beasts.
+  if (ctx.fantastic) for (const c of creaturesFor(ctx.culture)) if (!merged.has(biomeTitleCase(c.name))) merged.set(biomeTitleCase(c.name), 1);
   return [...merged.entries()];
 }
 

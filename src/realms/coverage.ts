@@ -1,4 +1,5 @@
 // Coverage adapter for realms and polities (shared lens brief §6.1).
+import "../lexiconWiring";
 import realmData from "../data/realms.json";
 import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";

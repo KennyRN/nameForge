@@ -1,4 +1,5 @@
 // Coverage adapter for peoples and tongues (shared lens brief §6.1).
+import "../lexiconWiring";
 import peopleData from "../data/peoples-tongues.json";
 import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
