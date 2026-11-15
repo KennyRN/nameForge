@@ -366,32 +366,67 @@ A pool's `cultureExtra` adds words for one culture at ×3 (a word already in the
 | `grsFlora` | grassland plants: Grass, Clover, Cowslip, Poppy | x, bt | wild lands, farmland and countryside, hills and valleys, lands and territories |
 | `grsWork` | grassland trades: Drovers', Shepherds', Herders' | x | wild lands, farmland and countryside |
 | `grsBeast` | grassland creatures: Horse, Hare, Lark, Bison | x, bt, pl | wild lands, farmland and countryside, lands and territories |
-| `nMountain` | signature mountain words of the batch 5a cultures; entries tagged `c` with their culture | x, e, t, c, h | mountains |
-| `nWood` | signature wood words; entries tagged `c` with their culture | x, e, t, c, h | forests |
-| `nMoor` | signature moor words; entries tagged `c` with their culture | x, e, t, c, h | moors |
-| `nWet` | signature wetland words; entries tagged `c` with their culture | x, e, t, c, h | wetlands |
-| `nGrass` | signature grassland words; entries tagged `c` with their culture | x, e, t, c, h | grasslands |
-| `nLands` | signature words for lands and their divisions; entries tagged `c` with their culture | x, e, t, c, h | lands and territories |
-| `nFarm` | signature farm and field words; entries tagged `c` with their culture | x, e, t, c, h | farmland and countryside |
-| `nHill` | signature hill and valley words; entries tagged `c` with their culture | x, e, t, c, h | hills and valleys |
-| `nRiver` | signature stream, lake and falls words; entries tagged `c` with their culture | x, e, t, c, h | rivers and inland waters |
-| `nLandB` | signature land-use and material words (Slate, Peat, Shieling); entries tagged `c` with their culture | x, e, t, c, h | wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters |
-| `nLandC` | signature lore words of the land (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters |
-| `nLandD` | signature words of the land by era (Hillfort, Quarry); entries tagged `c` with their culture | x, e, t, c, h | wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters |
-| `nSea` | signature sea, bay and strait words; entries tagged `c` with their culture | x, e, t, c, h | seas and lakes |
-| `nCoast` | signature headland, cove and island words; entries tagged `c` with their culture | x, e, t, c, h | coasts and islands |
-| `nChart` | signature bank, reef and channel words; entries tagged `c` with their culture | x, e, t, c, h | sea charts |
-| `nWaterB` | signature water-use words (Herring, Slate); entries tagged `c` with their culture | x, e, t, c, h | seas and coasts, rivers and inland waters |
-| `nWaterC` | signature lore words of the water (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | seas and coasts, rivers and inland waters |
-| `nWaterD` | signature words of the water by era; entries tagged `c` with their culture | x, e, t, c, h | seas and coasts, rivers and inland waters |
-| `nRoute` | signature road nouns; entries tagged `c` with their culture | x, e, t, c, h | route names |
-| `nRouteB` | signature goods and users of a route; entries tagged `c` with their culture | x, e, t, c, h | route names |
-| `nRouteC` | signature lore words of a route (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | route names |
-| `nRouteD` | signature route words by era (Turnpike, Branch Line); entries tagged `c` with their culture | x, e, t, c, h | route names |
-| `nSacred` | signature sacred-place nouns; entries tagged `c` with their culture | x, e, t, c, h | sacred places |
-| `nSacredB` | signature qualifiers of a sacred place; entries tagged `c` with their culture | x, e, t, c, h | sacred places |
-| `nSacredC` | signature lore words of a sacred place (fantastic only); entries tagged `c` with their culture | x, e, t, c, h | sacred places |
-| `nSacredD` | signature sacred-place words by era; entries tagged `c` with their culture | x, e, t, c, h | sacred places |
+| `nMountainPeak` | a culture's own peak nouns for mountains (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | mountains |
+| `nMountainRidge` | a culture's own ridge nouns for mountains (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | mountains |
+| `nMountainRange` | a culture's own range nouns for mountains (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | mountains |
+| `nWoodForest` | a culture's own forest nouns for forests (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | forests |
+| `nWoodGrove` | a culture's own grove nouns for forests (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | forests |
+| `nWoodClearing` | a culture's own clearing nouns for forests (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | forests |
+| `nMoorMoor` | a culture's own moor nouns for moors (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | moors |
+| `nMoorHill` | a culture's own hill nouns for moors (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | moors |
+| `nMoorStone` | a culture's own stone nouns for moors (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | moors |
+| `nWetMarsh` | a culture's own marsh nouns for wetlands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | wetlands |
+| `nWetBog` | a culture's own bog nouns for wetlands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | wetlands |
+| `nWetIsle` | a culture's own isle nouns for wetlands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | wetlands |
+| `nGrassPlain` | a culture's own plain nouns for grasslands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | grasslands |
+| `nGrassDown` | a culture's own down nouns for grasslands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | grasslands |
+| `nGrassVale` | a culture's own vale nouns for grasslands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | grasslands |
+| `nLandsCountry` | a culture's own country nouns for lands and territories (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | lands and territories |
+| `nLandsShire` | a culture's own shire nouns for lands and territories (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | lands and territories |
+| `nLandsParish` | a culture's own parish nouns for lands and territories (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | lands and territories |
+| `nFarmField` | a culture's own field nouns for farmland and countryside (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | farmland and countryside |
+| `nFarmFarm` | a culture's own farm nouns for farmland and countryside (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | farmland and countryside |
+| `nFarmEnclosure` | a culture's own enclosure nouns for farmland and countryside (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | farmland and countryside |
+| `nHillHill` | a culture's own hill nouns for hills and valleys (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | hills and valleys |
+| `nHillValley` | a culture's own valley nouns for hills and valleys (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | hills and valleys |
+| `nHillRidge` | a culture's own ridge nouns for hills and valleys (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | hills and valleys |
+| `nRiverStream` | a culture's own stream nouns for rivers and inland waters (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | rivers and inland waters |
+| `nRiverLake` | a culture's own lake nouns for rivers and inland waters (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | rivers and inland waters |
+| `nRiverFalls` | a culture's own falls nouns for rivers and inland waters (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | rivers and inland waters |
+| `nDesertDesert` | a culture's own desert nouns for deserts (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | deserts |
+| `nDesertDune` | a culture's own dune nouns for deserts (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | deserts |
+| `nDesertRock` | a culture's own rock nouns for deserts (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | deserts |
+| `nSeaBay` | a culture's own bay nouns for seas and lakes (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | seas and lakes |
+| `nSeaInlet` | a culture's own inlet nouns for seas and lakes (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | seas and lakes |
+| `nSeaStrait` | a culture's own strait nouns for seas and lakes (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | seas and lakes |
+| `nCoastHeadland` | a culture's own headland nouns for coasts and islands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | coasts and islands |
+| `nCoastCove` | a culture's own cove nouns for coasts and islands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | coasts and islands |
+| `nCoastIsland` | a culture's own island nouns for coasts and islands (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | coasts and islands |
+| `nChartBank` | a culture's own bank nouns for sea charts (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | sea charts |
+| `nChartReef` | a culture's own reef nouns for sea charts (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | sea charts |
+| `nChartChannel` | a culture's own channel nouns for sea charts (batch 5a; tagged `c` with their culture; counted) | x, e, t, c, h | sea charts |
+| `nRouteRoad` | a culture's own road route nouns (batch 5a; tagged `c`; counted) | x, e, t, c, h | route names |
+| `nRouteTrade` | a culture's own trade route nouns (batch 5a; tagged `c`; counted) | x, e, t, c, h | route names |
+| `nRoutePilgrim` | a culture's own pilgrim route nouns (batch 5a; tagged `c`; counted) | x, e, t, c, h | route names |
+| `nSacredWater` | a culture's own sacred place nouns: water (springs, wells, pools) (batch 5a; tagged `c`; counted) | x, e, t, c, h | sacred places |
+| `nSacredStone` | a culture's own sacred place nouns: stone and ground (stones, hills, barrows) (batch 5a; tagged `c`; counted) | x, e, t, c, h | sacred places |
+| `nSacredBuilt` | a culture's own sacred place nouns: built places (chapels, shrines, temples) (batch 5a; tagged `c`; counted) | x, e, t, c, h | sacred places |
+| `nLandB` | land-use and material words (Slate, Peat, Shieling) (batch 5a; tagged `c`; read by wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nLandC` | lore words of the land (fantastic only) (batch 5a; tagged `c`; read by wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nLandD` | words of the land by era (Hillfort, Quarry) (batch 5a; tagged `c`; read by wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nLandDOld` | the older eras' words of the land, for "Old {D}" from the steam age on (batch 5a; tagged `c`; read by wild lands, lands and territories, farmland and countryside, hills and valleys, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nWaterB` | water-use words (Herring, Slate) (batch 5a; tagged `c`; read by seas and coasts, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nWaterC` | lore words of the water (fantastic only) (batch 5a; tagged `c`; read by seas and coasts, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nWaterD` | words of the water by era (batch 5a; tagged `c`; read by seas and coasts, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nWaterDOld` | the older eras' words of the water, for "Old {D}" (batch 5a; tagged `c`; read by seas and coasts, rivers and inland waters, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nRouteB` | goods and users of a route (batch 5a; tagged `c`; read by route names, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nRouteC` | lore words of a route (fantastic only) (batch 5a; tagged `c`; read by route names, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nRouteD` | route words by era (Turnpike, Branch Line) (batch 5a; tagged `c`; read by route names, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nRouteDOld` | the older eras' route words, for "Old {D}" (batch 5a; tagged `c`; read by route names, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nSacredB` | qualifiers of a sacred place (batch 5a; tagged `c`; read by sacred places, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nSacredC` | lore words of a sacred place (fantastic only) (batch 5a; tagged `c`; read by sacred places, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nSacredD` | sacred place words by era (batch 5a; tagged `c`; read by sacred places, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
+| `nSacredDOld` | the older eras' sacred place words, for "Old {D}" (batch 5a; tagged `c`; read by sacred places, shared by the group and not counted towards a signature cell, §11.1) | x, e, t, c, h | – |
 
 ## The lens and the coverage report
 

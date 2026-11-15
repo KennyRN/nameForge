@@ -1307,9 +1307,9 @@
   ],
   "sections": [
    [
-    "Coach Road",
-    "Smugglers' Road",
-    "Drove Road"
+    "Cloth Trade Road",
+    "Cloth Packhorse Way",
+    "Cloth Wool Road"
    ],
    [
     "Old Town",
@@ -1323,7 +1323,7 @@
     "Earl's Street",
     "Spring Street",
     "Barn Way",
-    "Coach Road",
+    "Cloth Trade Road",
     "East Lane"
    ],
    [
@@ -1437,9 +1437,9 @@
   ],
   "sections": [
    [
-    "Wall Way",
-    "Mound Way",
-    "Ditch Way"
+    "Marsh Way",
+    "Fell Way",
+    "Downs Way"
    ],
    [
     "Old Town",
@@ -1454,7 +1454,7 @@
     "North Row",
     "Hall Hill",
     "Fullers' Street",
-    "Wall Way"
+    "Marsh Way"
    ],
    [
     "Market Place",
@@ -1502,8 +1502,8 @@
   ],
   "sections": [
    [
-    "Coach Road",
-    "Smugglers' Road"
+    "Cloth Trade Road",
+    "Cloth Packhorse Way"
    ],
    [
     "High Street",
@@ -1590,8 +1590,8 @@
   ],
   "sections": [
    [
-    "Wall Way",
-    "Mound Way"
+    "Marsh Way",
+    "Fell Way"
    ],
    [
     "Long Street",

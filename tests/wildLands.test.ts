@@ -105,8 +105,8 @@ test("pools: every pool of wilds-pools.json is in settlement-vocab.json, unchang
   for (const [name, pool] of Object.entries(added)) assert.deepEqual(pools[name].entries, pool.entries, name);
   // 253 earlier pools, the 51 wild pools, and monuments and statues' 27 less the two building monument pools it took over
   // (docs/monuments-and-statues-brief.md §4, §10).
-  // Northern Europe brief 5a adds 26 pools of signature words (nMountain … nSacredD).
-  assert.equal(Object.keys(pools).length, 253 + 51 + 27 - 2 + 26);
+  // Northern Europe brief 5a adds 61 pools: a noun pool for each module kind and the shared group pools (§11).
+  assert.equal(Object.keys(pools).length, 253 + 51 + 27 - 2 + 61);
   for (const name of ["direction", "directionAdj", "explorerMood", "folkUncanny", "devilFeature", "gateWord", "lakeQuality", "lakeCreature", "lakeFuse", "lakeShape", "stackGroup", "fordBeast", "mariaWord"]) assert.ok(pools[name], name);
 });
 

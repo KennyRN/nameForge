@@ -5,23 +5,11 @@ export default {
   keys: ["welsh"],
   label: "Welsh",
   land: {
-    N: {
-      mountain: "Cairn|Crag|Bare Hill|Valley Head|Steep Rise|Hill Back",
-      wood: "Dingle|Sheepwalk|Wood Brow|Hazel Dingle|Oak Slope|Holy Grove",
-      moor: "Mountain Pasture|Moorland Meadow|Peat Cutting|Rush Moor|Hill Common|Shepherd's Rest",
-      wet: "Alder Marsh|Salt Marsh|Quaking Bog|Rush Bog|Reed Pool|Peat Bog",
-      grass: "Sheepwalk|Hill Pasture|Long Meadow|Green Slope|Summer Pasture|Cow Meadow",
-      lands: "Lordship|Hundred|Princedom|Border Lordship|Upland Hundred|Lowland Hundred",
-      farm: "Summer Dairy|Winter Farm|Hill Fold|Cow Yard|Sheepfold|Dairy Yard",
-      hill: "Hill Spur|Round Hill|Steep Slope|Bare Brow|Valley Head|Green Hollow",
-      river: "Brook|Spout|Waterfall|Rushing Water|Black Pool|Mouth",
-    },
     B: "Slate|Peat|Sheep|Cattle|Lead|Copper|Oak|Hazel|Gorse|Bracken",
     C: "Dragon|Fair Folk|Giant|Hag|Lake Monster|Phantom Hound",
     D: "Hillfort;AN-MD|Round Fort;AN-MD|Burial Cairn;AN-MD|Holy Enclosure;AN-MD|Standing Stone;AN-MD|Chieftain's Seat;AN-MD|Hermit's Cell;MD|Monks' Grange;MD|Chapel;EM-MO|Slate Quarry;EM-MO|Mine Tip;EM-MO|Reservoir;EM-MO|Tram Road;EM-MO|Colliery;EM-MO|Drovers' Halt;EM-MO",
   },
   water: {
-    N: { sea: "Sound|Narrows|Bay Mouth|Haven|Strand|Estuary", coast: "Headland|Cove|Holy Isle|Strand|Sea Cliff|Sea Cave", chart: "Sandbank|Race|Rock Ledge|Deep Channel|Shoal|Wreck Ground" },
     B: "Slate|Herring|Salt|Cockle|Lime|Coal|Wool|Lead|Seaweed|Pilgrims'",
     C: "Drowned Kingdom|Mermaid|Sea Dragon|Water Horse|Bell Under the Sea|Fair Folk",
     D: "Fish Weir;AN-MD|Island Hermitage;AN-MD|Pilgrim Landing;AN-MD|Beacon Hill;AN-MD|Sea Fort;AN-MD|Saint's Landing;AN-MD|Holy Island;MD|Monks' Fishery;MD|Herring Quay;EM-MO|Slate Quay;EM-MO|Lifeboat Station;EM-MO|Packet Pier;EM-MO|Lighthouse;EM-MO|Coal Staithe;EM-MO|Seaside Pier;EM-MO",

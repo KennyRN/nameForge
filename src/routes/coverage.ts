@@ -11,7 +11,7 @@ function rows(): CoverageRow[] {
   const out: CoverageRow[] = [];
   out.push(...byKindRows(at(routeData, "shapes"), { module: MODULE, source: "shapes" }));
   // A culture's own shapes carry the culture and the kind.
-  out.push(...listRows([...(at(routeData, "cultureShapes") as unknown[]), ...NORTH.routes.cultureShapes], { module: MODULE, source: "cultureShapes" }));
+  out.push(...listRows([...(at(routeData, "cultureShapes") as unknown[]), ...NORTH.routes.cultureShapes.filter((s) => !(s as { grp?: boolean }).grp)], { module: MODULE, source: "cultureShapes" }));
   // The British region multipliers, one row per route family (`roman`, `drove`, `salt`…).
   for (const [family, table] of Object.entries(mergeRegionColumns(routeData.regions as Record<string, Record<string, number>>, NORTH.routes.regionColumns, NORTH.routes.regions))) {
     out.push(makeRow({}, { module: MODULE, source: `regions/${family}`, type: "shape", regions: regionMultipliers(table) }));

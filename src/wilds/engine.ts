@@ -6,7 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { mergeRegionColumns, NORTH, shapesOf } from "../northData";
+import { balanceSignature, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -77,6 +77,9 @@ export interface WildsShape {
   sz?: string;
   /** A feature shape that also works as a settlement name, with its sizes (§9.2). */
   st?: string;
+  /** Northern Europe brief 5a §11: a signature shape of a core culture (it takes a share of the draws); `grp` is a group frame, not counted towards a cell. */
+  sig?: boolean;
+  grp?: boolean;
 }
 
 export interface WildsKind {
@@ -498,7 +501,12 @@ function biomeMult(ctx: Ctx, tag: string | undefined): number {
 }
 
 /** A pool's words here: culture, era, fantastic, tone, region and biome; never light or grim for the sensitive cultures. */
+/** Northern Europe brief 5a §11.3: a culture noun is drawn at most twice in a batch. */
 function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
+  return freshNouns(ctx.rng, pool, vocabPoolAll(ctx, pool));
+}
+
+function vocabPoolAll(ctx: Ctx, pool: string): [VocabEntry, number][] {
   return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic })
     .filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [VocabEntry, number] => [e, w * toneFactor(e.t ?? [], ctx.tone) * regionMult(ctx, e.rt) * biomeMult(ctx, e.bt)])
@@ -508,6 +516,7 @@ function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
 function drawEntry(ctx: Ctx, pool: string): VocabEntry | undefined {
   const e = pickWeighted(vocabPool(ctx, pool), ctx.rng);
   if (!e) return undefined;
+  noteNoun(ctx.rng, pool, e.w);
   for (const t of e.t ?? []) ctx.drawn.add(t);
   ctx.words.push({ pool, word: e.w });
   return e;
@@ -909,7 +918,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
         .filter((s) => kind.key !== "settlement" || sizeOk(s))
         .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, shapeWeight(ctx, s)])
         .filter(([, w]) => w > 0);
-      if (live.length > 0) planCache.set(kind.key, live);
+      if (live.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceSignature(live, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt) : live);
     }
     return planCache;
   };

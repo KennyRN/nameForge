@@ -39,7 +39,7 @@ function sourceRows(module: string): CoverageRow[] {
 function rows(module: string): CoverageRow[] {
   const out: CoverageRow[] = [];
   out.push(...byKindRows(at(placesData, `shapes/${module}`), { module, source: `shapes/${module}` }));
-  const own = [...(placesData.cultureShapes as { module: string }[]), ...(NORTH.wilds.cultureShapes as { module: string }[])].filter((s) => s.module === module);
+  const own = [...(placesData.cultureShapes as { module: string }[]), ...(NORTH.wilds.cultureShapes as { module: string }[])].filter((s) => s.module === module).filter((s) => !(s as { grp?: boolean }).grp);
   out.push(...listRows(own, { module, source: "cultureShapes" }));
   if (readsRegions(module)) {
     const tags = mergeRegionColumns({ ...(wildsData.regionTags as Record<string, Record<string, number>>), ...(placesData.regionTags as Record<string, Record<string, number>>) }, NORTH.wilds.regionColumns, NORTH.wilds.regionTags);

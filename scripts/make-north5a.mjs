@@ -3,7 +3,7 @@
 // edit the content, not the JSON.
 import { readFileSync, writeFileSync } from "node:fs";
 import { columns, NORDIC_WATERS, NORDIC_WILDS } from "./north5a/regionColumns.mjs";
-import { LAND_MODULES, parseList, SHARED, WATER_MODULES } from "./north5a/lib.mjs";
+import { LAND_MODULES, ownFrames, ownRouteFrames, ownSacredFrames, parseList, ROUTE_MODULE, SACRED_MODULE, SHARED, WATER_MODULES } from "./north5a/lib.mjs";
 import { GERMAN_LAKES, REGION_TAGS, ROUTE_REGIONS } from "./north5a/regions.mjs";
 import celtic from "./north5a/celtic.mjs";
 import cornish from "./north5a/cornish.mjs";
@@ -14,8 +14,21 @@ import norse from "./north5a/norse.mjs";
 import scandinavian from "./north5a/scandinavian.mjs";
 import scottish from "./north5a/scottish.mjs";
 import welsh from "./north5a/welsh.mjs";
+import nCeltic from "./north5a/nouns-celtic.mjs";
+import nCornish from "./north5a/nouns-cornish.mjs";
+import nEnglish from "./north5a/nouns-english.mjs";
+import nGerman from "./north5a/nouns-german.mjs";
+import nIrish from "./north5a/nouns-irish.mjs";
+import nNorse from "./north5a/nouns-norse.mjs";
+import nScandinavian from "./north5a/nouns-scandinavian.mjs";
+import nScottish from "./north5a/nouns-scottish.mjs";
+import nWelsh from "./north5a/nouns-welsh.mjs";
 
 const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic];
+// §11.2: the module's own nouns, three lists per module (one per main kind), and the order each culture names in (§7).
+const NOUNS = { english: nEnglish, welsh: nWelsh, scottish: nScottish, irish: nIrish, cornish: nCornish, norse: nNorse, scandinavian: nScandinavian, german: nGerman, celtic: nCeltic };
+const STYLE = { english: "last", welsh: "first", scottish: "last", irish: "first", cornish: "first", norse: "last", scandinavian: "last", german: "last", celtic: "first" };
+for (const c of CULTURES) { c.nouns = NOUNS[c.key]; c.style = STYLE[c.key]; }
 const ALL_CODES = ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI", "DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"];
 const read = (f) => JSON.parse(readFileSync(new URL(`../src/data/${f}.json`, import.meta.url), "utf8"));
 const wilds = read("wilds");
@@ -33,47 +46,76 @@ const out = {
 // ── Words ──────────────────────────────────────────────────────────────────
 const pool = (name) => (out.vocab.pools[name] ??= { entries: [] });
 const add = (name, text, base) => pool(name).entries.push(...parseList(text, base));
+/** §11.4: the older eras' words, for "Old {D}" from the steam age on. */
+const oldOf = (text) => (text ?? "").split("|").map((i) => i.trim()).filter((i) => i.split(";").slice(1).includes("AN-MD")).map((i) => `${i.split(";")[0]};ST-IS`).join("|");
+out.nounPools = [];
 
 for (const c of CULTURES) {
   const base = { c: c.keys };
   const fantastic = { ...base, h: true };
-  for (const m of Object.values(LAND_MODULES)) add(m.pool, c.land.N[m.terrain], base);
+  for (const m of Object.values(LAND_MODULES)) if (c.nouns.land[m.terrain]) m.pools.forEach((p, i) => { add(p, c.nouns.land[m.terrain][i], base); if (!out.nounPools.includes(p)) out.nounPools.push(p); });
   add(SHARED.land.B, c.land.B, base);
   add(SHARED.land.C, c.land.C, fantastic);
   add(SHARED.land.D, c.land.D, base);
-  for (const m of Object.values(WATER_MODULES)) add(m.pool, c.water.N[m.terrain], base);
+  add(SHARED.land.Dold, oldOf(c.land.D), base);
+  for (const m of Object.values(WATER_MODULES)) m.pools.forEach((p, i) => { add(p, c.nouns.water[m.terrain][i], base); if (!out.nounPools.includes(p)) out.nounPools.push(p); });
   add(SHARED.water.B, c.water.B, base);
   add(SHARED.water.C, c.water.C, fantastic);
   add(SHARED.water.D, c.water.D, base);
-  for (const [k, name] of Object.entries(SHARED.route)) add(name, c.route[k], k === "C" ? fantastic : base);
-  for (const [k, name] of Object.entries(SHARED.sacred)) add(name, c.sacred[k], k === "C" ? fantastic : base);
+  add(SHARED.water.Dold, oldOf(c.water.D), base);
+  ROUTE_MODULE.pools.forEach((p, i) => { add(p, c.nouns.route[i], base); if (!out.nounPools.includes(p)) out.nounPools.push(p); });
+  add(SHARED.route.B, c.route.B, base);
+  add(SHARED.route.C, c.route.C, fantastic);
+  add(SHARED.route.D, c.route.D, base);
+  add(SHARED.route.Dold, oldOf(c.route.D), base);
+  SACRED_MODULE.pools.forEach((p, i) => { add(p, c.nouns.sacred[i], base); if (!out.nounPools.includes(p)) out.nounPools.push(p); });
+  add(SHARED.sacred.B, c.sacred.B, base);
+  add(SHARED.sacred.C, c.sacred.C, fantastic);
+  add(SHARED.sacred.D, c.sacred.D, base);
+  add(SHARED.sacred.Dold, oldOf(c.sacred.D), base);
 }
 
 // ── Shapes ─────────────────────────────────────────────────────────────────
+// §11.1: the group frames (`grp`) are read by every module of a group and don't count towards a signature cell; the module's own frames do.
 const ownership = (c) => (c.keys.length === 1 ? { culture: c.keys[0] } : { c: c.keys });
-const tokens = (p, map) => p.replace(/\{([NBCD])([:}])/g, (_m, t, tail) => `{${map[t]}${tail}`);
+const tokens = (p, map) => p.replace(/\{(Dold|[NBCD])([:}])/g, (_m, t, tail) => `{${map[t]}${tail}`);
+const waterTokens = (p) => p.replace("{beast}", "{seaCreature}").replace("{tree}", "{seaCreature}").replace("{wildColour}", "{seaColour}");
+/** §11.1: the group frames are read by every module of a group, so each takes a smaller share than a module's own frames (the module's own frames are the culture's voice there). */
+const GROUP_WEIGHT = 0.2;
+const OWN_WEIGHT = 0.4;
+const gw = (w) => +(w * GROUP_WEIGHT).toFixed(2);
+const ow = (w) => +(w * OWN_WEIGHT).toFixed(2);
+const own4 = (c, list) => (c.key === "celtic" ? list.slice(0, 4) : list);
 
 for (const c of CULTURES) {
   const own = ownership(c);
   for (const [module, m] of Object.entries(LAND_MODULES)) {
-    c.frames.land.forEach(([p, w, f, flags], i) => {
-      const map = { N: m.pool, B: SHARED.land.B, C: SHARED.land.C, D: SHARED.land.D };
-      out.wilds.cultureShapes.push({ p: tokens(p, map), w, f, ...own, module, kind: m.kinds[i % m.kinds.length], ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+    if (!c.nouns.land[m.terrain]) continue;
+    const desert = m.terrain === "desert";
+    if (!desert) c.frames.land.forEach(([p, w, f, flags], i) => {
+      const map = { N: m.pools[i % 3], B: SHARED.land.B, C: SHARED.land.C, D: SHARED.land.D, Dold: SHARED.land.Dold };
+      out.wilds.cultureShapes.push({ p: tokens(p, map), w: gw(w), f, ...own, module, kind: m.kinds[i % 3], grp: true, sig: true, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+    });
+    (desert ? ownFrames(c.style, m).slice(0, 4) : own4(c, ownFrames(c.style, m))).forEach(([k, p, w, f]) => {
+      out.wilds.cultureShapes.push({ p: tokens(p, { N: m.pools[k] }), w: ow(w), f, ...own, module, kind: m.kinds[k], sig: true });
     });
   }
   for (const [module, m] of Object.entries(WATER_MODULES)) {
     c.frames.water.forEach(([p, w, f, flags], i) => {
-      const map = { N: m.pool, B: SHARED.water.B, C: SHARED.water.C, D: SHARED.water.D };
-      out.waters.cultureShapes.push({ ...own, module, kind: m.kinds[i % m.kinds.length], p: tokens(p, map).replace("{beast}", "{seaCreature}").replace("{tree}", "{seaCreature}").replace("{wildColour}", "{seaColour}"), w, f, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+      const map = { N: m.pools[i % 3], B: SHARED.water.B, C: SHARED.water.C, D: SHARED.water.D, Dold: SHARED.water.Dold };
+      out.waters.cultureShapes.push({ ...own, module, kind: m.kinds[i % 3], p: waterTokens(tokens(p, map)), w: gw(w), f, grp: true, sig: true, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+    });
+    own4(c, ownFrames(c.style, m)).forEach(([k, p, w, f]) => {
+      out.waters.cultureShapes.push({ ...own, module, kind: m.kinds[k], p: tokens(p, { N: m.pools[k] }), w: ow(w), f, sig: true });
     });
   }
-  for (const [kind, p, w, flags] of c.frames.route) {
-    const map = { N: SHARED.route.N, B: SHARED.route.B, C: SHARED.route.C, D: SHARED.route.D };
-    out.routes.cultureShapes.push({ ...own, kind, p: tokens(p, map), w, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
-  }
+  const routeMap = (k) => ({ N: ROUTE_MODULE.pools[Math.max(0, ROUTE_MODULE.kinds.indexOf(k))], B: SHARED.route.B, C: SHARED.route.C, D: SHARED.route.D, Dold: SHARED.route.Dold });
+  for (const [kind, p, w, flags] of c.frames.route) out.routes.cultureShapes.push({ ...own, kind, p: tokens(p, routeMap(kind)), w: gw(w), grp: true, sig: true, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });
+  own4(c, ownRouteFrames(c.style, ROUTE_MODULE)).forEach(([k, p, w]) => out.routes.cultureShapes.push({ ...own, kind: ROUTE_MODULE.kinds[k], p: tokens(p, { N: ROUTE_MODULE.pools[k] }), w: ow(w), sig: true }));
   for (const key of c.keys) {
-    const map = { N: SHARED.sacred.N, B: SHARED.sacred.B, C: SHARED.sacred.C, D: SHARED.sacred.D };
-    out.deities.styles[key] = { extra: c.frames.sacred.map(([p, w, flags]) => ({ p: tokens(p, map), w, kind: "place", form: "culture", ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) })) };
+    const group = c.frames.sacred.map(([p, w, flags], i) => ({ p: tokens(p, { N: SACRED_MODULE.pools[i % 3], B: SHARED.sacred.B, C: SHARED.sacred.C, D: SHARED.sacred.D, Dold: SHARED.sacred.Dold }), w: gw(w), kind: "place", form: "culture", grp: true, sig: true, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) }));
+    const mine = own4(c, ownSacredFrames(c.style, SACRED_MODULE)).map(([k, p, w]) => ({ p: tokens(p, { N: SACRED_MODULE.pools[k] }), w: ow(w), kind: "place", form: "culture", sig: true }));
+    out.deities.styles[key] = { extra: [...group, ...mine] };
   }
 }
 
@@ -85,7 +127,7 @@ for (const t of REGION_TAGS) {
   for (const [module, kind, p0, w, f] of t.shapes) {
     // The water engine has `{seaCreature}` and `{seaColour}` where the land engine has `{beast}` and `{wildColour}`.
     const p = t.g === "waters" ? p0.replace("{beast}", "{seaCreature}").replace("{wildColour}", "{seaColour}") : p0;
-    for (const key of t.for) file.cultureShapes.push({ p, w, f, culture: key, module, kind, rt: t.tag });
+    for (const key of t.for) file.cultureShapes.push({ p, w, f, culture: key, module, kind, rt: t.tag, sig: true });
   }
 }
 
@@ -94,14 +136,14 @@ for (const [region, words] of Object.entries(GERMAN_LAKES)) {
     const tag = `lake${region.toLowerCase()}${i}`;
     out.waters.regionTags[tag] = Object.fromEntries(ALL_CODES.map((c) => [c, c === region ? 3 : 0]));
     out.waters.regionTagFor[tag] = ["german"];
-    out.waters.cultureShapes.push({ p: `{town} ${word}`, w: 4, f: "twn", culture: "german", module: "seasLakes", kind: "lake", rt: tag });
+    out.waters.cultureShapes.push({ p: `{town} ${word}`, w: 4, f: "twn", culture: "german", module: "seasLakes", kind: "lake", rt: tag, sig: true });
   });
 }
 for (const [region, keys, items] of ROUTE_REGIONS) {
   items.forEach(([kind, p], i) => {
     const tag = `${region.toLowerCase()}${i}`;
     out.routes.regions[tag] = Object.fromEntries(ALL_CODES.map((c) => [c, c === region ? 3 : 0.3]));
-    for (const key of keys) out.routes.cultureShapes.push({ culture: key, kind, p, w: 4, r: tag });
+    for (const key of keys) out.routes.cultureShapes.push({ culture: key, kind, p, w: 4, r: tag, sig: true });
   });
 }
 
@@ -116,21 +158,25 @@ md.push("For Kenny's review. Generated by `scripts/make-north5a.mjs` from `scrip
 md.push("**How to read it.** A word list reads `Word` with its eras after a semicolon (`AN-MD`: ancient to medieval; `EM-MO`: early modern to modern); the fantastic words (lists C) appear only in fantastic worlds. A frame uses `{N}` for the module's own word list and `{B}`, `{C}`, `{D}` for the shared ones; each module takes its frames on its three main kinds. Shapes with a region tag are listed under Regions.\n");
 for (const c of CULTURES) {
   md.push(`## ${c.label}\n`);
-  md.push(`Keys: ${c.keys.join(", ")}. ${c.key === "celtic" ? "A mix for fantasy and ancient settings: its own words, and each nation's at a quarter weight." : ""}\n`);
-  const block = (title, text) => { if (!text) return; const w = wordsIn(text); w.forEach((x) => note(x, c.label)); md.push(`- **${title}:** ${text.split("|").map((i) => i.replace(/;/g, " ‹").replace(/ ‹/, " ‹") + (i.includes(";") ? "›" : "")).join(", ")}`); };
-  md.push("### Land: lands and territories, farmland, hills and valleys, rivers, the six wild lands\n");
-  for (const m of Object.values(LAND_MODULES)) block(`${m.terrain} (${m.pool}; kinds ${m.kinds.join(", ")})`, c.land.N[m.terrain]);
+  md.push(`Keys: ${c.keys.join(", ")}. Names with the generic ${c.style === "first" ? "first" : "last"}. ${c.key === "celtic" ? "A mix for fantasy and ancient settings: its own words, and each nation's at a quarter weight." : ""}\n`);
+  const block = (title, text) => { if (!text) return; wordsIn(text).forEach((x) => note(x, c.label)); md.push(`- **${title}:** ${text.split("|").map((i) => { const [w, ...fl] = i.split(";"); return fl.length ? `${w} ‹${fl.join(" ")}›` : w; }).join(", ")}`); };
+  md.push("### Module nouns (§11.2): three lists per module, one per main kind\n");
+  for (const [mod, m] of Object.entries(LAND_MODULES)) if (c.nouns.land[m.terrain]) m.kinds.forEach((k, i) => block(`${mod}, ${k} (${m.pools[i]})`, c.nouns.land[m.terrain][i]));
+  for (const [mod, m] of Object.entries(WATER_MODULES)) m.kinds.forEach((k, i) => block(`${mod}, ${k} (${m.pools[i]})`, c.nouns.water[m.terrain][i]));
+  ROUTE_MODULE.kinds.forEach((k, i) => block(`routeNames, ${k} (${ROUTE_MODULE.pools[i]})`, c.nouns.route[i]));
+  ["water", "stone and ground", "built places"].forEach((k, i) => block(`sacredPlaces, ${k} (${SACRED_MODULE.pools[i]})`, c.nouns.sacred[i]));
+  md.push("\n### Shared by the group (read by every module of the group; not counted towards the cells)\n");
   block("land use and material (nLandB)", c.land.B); block("lore, fantastic only (nLandC)", c.land.C); block("by era (nLandD)", c.land.D);
-  md.push("\n### Water: seas and bays, coasts and islands, sea charts, rivers and inland waters\n");
-  for (const m of Object.values(WATER_MODULES)) block(`${m.terrain} (${m.pool}; kinds ${m.kinds.join(", ")})`, c.water.N[m.terrain]);
-  block("use (nWaterB)", c.water.B); block("lore, fantastic only (nWaterC)", c.water.C); block("by era (nWaterD)", c.water.D);
-  md.push("\n### Routes\n"); block("nouns (nRoute)", c.route.N); block("goods and users (nRouteB)", c.route.B); block("lore, fantastic only (nRouteC)", c.route.C); block("by era (nRouteD)", c.route.D);
-  md.push("\n### Sacred places\n"); block("nouns (nSacred)", c.sacred.N); block("qualifiers (nSacredB)", c.sacred.B); block("lore, fantastic only (nSacredC)", c.sacred.C); block("by era (nSacredD)", c.sacred.D);
+  block("water use (nWaterB)", c.water.B); block("water lore, fantastic only (nWaterC)", c.water.C); block("water by era (nWaterD)", c.water.D);
+  block("route goods and users (nRouteB)", c.route.B); block("route lore, fantastic only (nRouteC)", c.route.C); block("route words by era (nRouteD)", c.route.D);
+  block("sacred qualifiers (nSacredB)", c.sacred.B); block("sacred lore, fantastic only (nSacredC)", c.sacred.C); block("sacred by era (nSacredD)", c.sacred.D);
   md.push("\n### Frames\n");
-  md.push(`- Land: ${c.frames.land.map(([p]) => "`" + p + "`").join(", ")}`);
-  md.push(`- Water: ${c.frames.water.map(([p]) => "`" + p + "`").join(", ")}`);
-  md.push(`- Routes: ${c.frames.route.map(([k, p]) => `${k}: \`${p}\``).join(", ")}`);
-  md.push(`- Sacred places: ${c.frames.sacred.map(([p]) => "`" + p + "`").join(", ")}\n`);
+  const demo = LAND_MODULES.mountainNames;
+  md.push(`- Own frames of the land modules (written for each module; shown for mountains): ${own4(c, ownFrames(c.style, demo)).map(([k, p]) => "`" + p.replace("{N}", `{${demo.pools[k]}}`) + "`").join(", ")}`);
+  md.push(`- Own frames of the water modules (shown for coasts and islands): ${own4(c, ownFrames(c.style, WATER_MODULES.coastsIslands)).map(([k, p]) => "`" + p + "`").join(", ")}`);
+  md.push(`- Own route frames: ${own4(c, ownRouteFrames(c.style, ROUTE_MODULE)).map(([k, p]) => `${ROUTE_MODULE.kinds[k]}: \`${p}\``).join(", ")}`);
+  md.push(`- Own sacred place frames: ${own4(c, ownSacredFrames(c.style, SACRED_MODULE)).map(([, p]) => "`" + p + "`").join(", ")}`);
+  md.push(`- Group frames (land / water / routes / sacred places): ${[...c.frames.land, ...c.frames.water].map(([p]) => "`" + p + "`").join(", ")}; ${c.frames.route.map(([k, p]) => `${k}: \`${p}\``).join(", ")}; ${c.frames.sacred.map(([p]) => "`" + p + "`").join(", ")}\n`);
 }
 md.push("## Regions\n");
 md.push("Region words: English words weighted per region (§4). Land tags are read by the land modules; water tags by seas and bays, coasts and islands and sea charts. A tag is drawn only for its cultures. The older words that read the Scandinavian regions (Norse-derived dialect words) are listed in the third table.\n");
@@ -149,5 +195,6 @@ md.push("\n## Loanwords (rule 4)\n\nEvery dictionary loanword the batch uses, an
 for (const [w, where] of [...loanUsed].sort((a, b) => a[0].localeCompare(b[0]))) md.push(`| ${w} | ${where.join(", ")} |`);
 writeFileSync(new URL("../docs/northern-europe-5a.md", import.meta.url), `${md.join("\n")}\n`);
 
-writeFileSync(new URL("../src/data/north5a.json", import.meta.url), `${JSON.stringify(out, null, 1)}\n`);
+writeFileSync(new URL("../src/data/north5a.json", import.meta.url), `${JSON.stringify(out)}\n`);
+await import("./north5a/patchPools.mjs");
 console.log("wrote src/data/north5a.json", { pools: Object.keys(out.vocab.pools).length, wilds: out.wilds.cultureShapes.length, waters: out.waters.cultureShapes.length, routes: out.routes.cultureShapes.length });

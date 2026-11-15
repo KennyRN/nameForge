@@ -24,7 +24,7 @@ function rows(module: string, kinds: readonly string[]): CoverageRow[] {
   const styles = deityData.styles as unknown as Record<string, { extra?: Shape[] }>;
   // English has one set of shapes for both its keys: counted once.
   const north = module === "sacredPlaces" ? (NORTH.deities.styles as unknown as Record<string, { extra?: Shape[] }>) : {};
-  for (const [culture, style] of Object.entries({ ...styles, ...Object.fromEntries(Object.entries(north).map(([k, v]) => [k, { extra: [...(styles[k]?.extra ?? []), ...(k === "anglo-saxon" ? [] : v.extra ?? [])] }])) })) {
+  for (const [culture, style] of Object.entries({ ...styles, ...Object.fromEntries(Object.entries(north).map(([k, v]) => [k, { extra: [...(styles[k]?.extra ?? []), ...(k === "anglo-saxon" ? [] : (v.extra ?? []).filter((s) => !(s as { grp?: boolean }).grp))] }])) })) {
     out.push(...listRows((style.extra ?? []).filter((s) => kinds.includes(s.kind)), { module, source: `styles/${culture}/extra`, culture }));
   }
   if (module === "deityNames") {

@@ -28,7 +28,7 @@ import {
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { ENGINE_ALIAS } from "../lens";
-import { NORTH } from "../northData";
+import { balanceSignature, freshNouns, NORTH, noteNoun } from "../northData";
 import { countedWords, ROUTE_ERAS, routeCapitals, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, inCultureGroup, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { setDeityHooks } from "./hook";
@@ -221,6 +221,10 @@ const GENDERS: G[] = ["m", "f", "n"];
 const GENDER_OF: Record<Exclude<DeityGender, "any">, G> = { male: "m", female: "f", neither: "n" };
 
 function vocabPool(ctx: Ctx, pool: string, keep?: (e: VocabEntry) => boolean): [VocabEntry, number][] {
+  return freshNouns(ctx.rng, pool, vocabPoolAll(ctx, pool, keep));
+}
+
+function vocabPoolAll(ctx: Ctx, pool: string, keep?: (e: VocabEntry) => boolean): [VocabEntry, number][] {
   return poolEntries(ctx.vocab, pool, { culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic })
     .filter(([e]) => !keep || keep(e))
     .map(([e, w]): [VocabEntry, number] => [e, w * toneFactor(e.t ?? [], ctx.tone)])
@@ -231,6 +235,7 @@ function fromPool(ctx: Ctx, pool: string, keep?: (e: VocabEntry) => boolean, x?:
   const items = vocabPool(ctx, pool, keep).map(([e, w]): [VocabEntry, number] => [e, w * (x?.(e) ?? 1)]);
   const e = pickWeighted(items, ctx.rng);
   if (!e) return undefined;
+  noteNoun(ctx.rng, pool, e.w);
   for (const t of e.t ?? []) ctx.drawn.add(t);
   ctx.words.push({ pool, word: e.w });
   return e.w;
@@ -413,10 +418,12 @@ function shapeWeight(ctx: Ctx, s: DeityShape): number {
 const honourPattern = (ctx: Ctx, s: DeityShape) => (ctx.style.eastHonour && s.form === "A" ? "the {eastHonour} {figure} of {domainWord}" : ctx.style.tripleThree && s.form === "triple" ? "the Three {figure:pl} of the {sacredLand}" : s.p);
 
 function shapesFor(ctx: Ctx, kind: DeityKind, forms?: string[], only?: string): [DeityShape, number][] {
-  return [...DEITY_DATA.shapes, ...(ctx.style.extra ?? [])]
+  const live = [...DEITY_DATA.shapes, ...(ctx.style.extra ?? [])]
     .filter((s) => s.kind === kind && (!forms || forms.includes(s.form ?? "")) && (!only || s.p === only))
     .map((s): [DeityShape, number] => [s, shapeWeight({ ...ctx, shape: s }, s)])
     .filter(([, w]) => w > 0);
+  // Northern Europe brief 5a §11.3: a core culture's signature frames take their share.
+  return balanceSignature(live, (s) => !!(s as { sig?: boolean }).sig);
 }
 
 /** One deity title with these forms (back-links, sacred places). */

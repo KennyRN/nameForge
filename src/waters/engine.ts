@@ -5,7 +5,7 @@
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { mergeRegionColumns, NORTH, shapesOf } from "../northData";
+import { balanceSignature, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
@@ -307,7 +307,12 @@ function biomeMult(ctx: Ctx, tag: string | undefined): number {
 }
 
 /** A pool's words here: culture, era, fantastic, tone, region and biome; never light or grim for the sensitive cultures. */
+/** Northern Europe brief 5a §11.3: a culture noun is drawn at most twice in a batch. */
 function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
+  return freshNouns(ctx.rng, pool, vocabPoolAll(ctx, pool));
+}
+
+function vocabPoolAll(ctx: Ctx, pool: string): [VocabEntry, number][] {
   return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic })
     .filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [VocabEntry, number] => [e, w * toneFactor(e.t ?? [], ctx.tone) * regionMult(ctx, e.rt) * biomeMult(ctx, e.bt)])
@@ -317,6 +322,7 @@ function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
 function drawEntry(ctx: Ctx, pool: string): VocabEntry | undefined {
   const e = pickWeighted(vocabPool(ctx, pool), ctx.rng);
   if (!e) return undefined;
+  noteNoun(ctx.rng, pool, e.w);
   for (const t of e.t ?? []) ctx.drawn.add(t);
   ctx.words.push({ pool, word: e.w });
   return e;
@@ -674,7 +680,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
           .filter((s) => !options.shape || s.p === options.shape)
           .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)])
           .filter(([, w]) => w > 0);
-        if (live.length > 0) plans.set(kind.key, live);
+        if (live.length > 0) plans.set(kind.key, ctx.where === "home" ? balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!(plan.shape as { rt?: string }).rt) : live);
       }
     } else {
       for (const kind of hyperKindsAt(scale)) {

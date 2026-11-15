@@ -28,7 +28,52 @@ interface NorthData {
   deities: { styles: Record<string, Record<string, unknown>> };
 }
 
-export const NORTH = north as unknown as NorthData;
+export const NORTH = north as unknown as NorthData & { nounPools: string[] };
+
+// ── Brief 5a §11.3: the culture shows ───────────────────────────────────────
+
+/** The share of a kind's draws the signature frames of a core culture (or Celtic) take. */
+export const SIGNATURE_SHARE = 0.4;
+
+/**
+ * §11.3: scale the signature plans (the batch's own, `sig`) so they hold `SIGNATURE_SHARE` of the total weight, as the weights stand
+ * once era, fantastic, region and tone are applied, against the plain (non-regional) shapes. Nothing changes when a culture has none or when only they are left.
+ */
+export function balanceSignature<T>(plans: [T, number][], isSig: (p: T) => boolean, isRegional: (p: T) => boolean = () => false): [T, number][] {
+  let sig = 0;
+  let rest = 0;
+  // A shape that belongs to a region (fell and dale words, the Corpse Road) keeps its own weight on top: the share is of the plain shapes.
+  for (const [p, w] of plans) if (isSig(p)) sig += w; else if (!isRegional(p)) rest += w;
+  if (sig <= 0 || rest <= 0) return plans;
+  const k = (SIGNATURE_SHARE / (1 - SIGNATURE_SHARE)) * (rest / sig);
+  return plans.map(([p, w]): [T, number] => [p, isSig(p) ? w * k : w]);
+}
+
+// ── §11.3: no noun twice in a batch ─────────────────────────────────────────
+
+const NOUN_POOLS = new Set<string>(NORTH.nounPools);
+const NOUN_USE = new WeakMap<object, Map<string, number>>();
+const NOUN_LIMIT = 2;
+
+/** Whether the pool is one of a culture's own noun lists. */
+export const isNounPool = (pool: string): boolean => NOUN_POOLS.has(pool);
+
+/** §11.3: a pool's entries without the nouns already used twice in this batch (the stream is the batch's); all of them when none would be left. */
+export function freshNouns<E extends { w: string }>(batch: object, pool: string, items: [E, number][]): [E, number][] {
+  if (!NOUN_POOLS.has(pool)) return items;
+  const used = NOUN_USE.get(batch);
+  if (!used) return items;
+  const kept = items.filter(([e]) => (used.get(e.w.toLowerCase()) ?? 0) < NOUN_LIMIT);
+  return kept.length > 0 ? kept : items;
+}
+
+/** §11.3: note a noun drawn from a pool in this batch. */
+export function noteNoun(batch: object, pool: string, word: string): void {
+  if (!NOUN_POOLS.has(pool)) return;
+  let used = NOUN_USE.get(batch);
+  if (!used) NOUN_USE.set(batch, (used = new Map()));
+  used.set(word.toLowerCase(), (used.get(word.toLowerCase()) ?? 0) + 1);
+}
 
 /** A region table with the batch's columns added to its rows and its own rows added. */
 export function mergeRegionColumns(base: Rows, columns: Rows | undefined, extra: Rows | undefined): Rows {

@@ -13,7 +13,7 @@ function rows(module: WildsModuleKey): CoverageRow[] {
   const out: CoverageRow[] = [];
   // The module's shapes by kind; a `f: "fixed"` shape is a whole name, so a word.
   out.push(...byKindRows(at(wildsData, `shapes/${module}`), { module, source: `shapes/${module}` }));
-  const own = [...(wildsData.cultureShapes as { module: string }[]), ...(NORTH.wilds.cultureShapes as { module: string }[])].filter((s) => s.module === module);
+  const own = [...(wildsData.cultureShapes as { module: string }[]), ...(NORTH.wilds.cultureShapes as { module: string }[])].filter((s) => s.module === module).filter((s) => !(s as { grp?: boolean }).grp);
   out.push(...listRows(own, { module, source: "cultureShapes" }));
   // The British region tags (`ben`, `corrie`, `glen`…) multiply words in every wild lands module that reads regions.
   if (readsRegions(module)) {

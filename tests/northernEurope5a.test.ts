@@ -31,9 +31,9 @@ test("5a §6: every core culture has 30 signature words and 10 shapes in every m
   assert.deepEqual(short, []);
 });
 
-test("5a §6: deserts are exempt but hold the words; every region of every culture that reads regions has 6 entries", () => {
+test("5a §6, §11.1: deserts are exempt for every core culture but Norse and Scandinavian, which take 12 words and 4 shapes of their own; every region has 6 entries", () => {
   const desert = moduleCoverage(adapter("desertNames"));
-  for (const c of CORE) assert.ok(desert.cultures[c].words >= 12, `desertNames ${c}`);
+  for (const c of ["norse", "scandinavian"]) assert.ok(desert.cultures[c].words >= 12 && desert.cultures[c].shapes >= 4, `desertNames ${c} ${desert.cultures[c].words}/${desert.cultures[c].shapes}`);
   const short: string[] = [];
   for (const m of MODULES.filter((x) => adapter(x).regions)) {
     const regions = moduleCoverage(adapter(m)).regions!;

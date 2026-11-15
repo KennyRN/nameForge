@@ -41,7 +41,7 @@ import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type V
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
-import { mergeRegionColumns, NORTH, shapesOf } from "../northData";
+import { balanceSignature, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -297,7 +297,12 @@ function regionMult(ctx: Ctx, tag: string | undefined, eras?: RouteEra[]): numbe
 }
 
 /** A pool's words here: culture, era, fantastic, region, tone; never light or grim for the sensitive cultures. */
+/** Northern Europe brief 5a §11.3: a culture noun is drawn at most twice in a batch. */
 function vocabPool(ctx: Ctx, pool: string, token: string): [VocabEntry, number][] {
+  return freshNouns(ctx.rng, pool, vocabPoolAll(ctx, pool, token));
+}
+
+function vocabPoolAll(ctx: Ctx, pool: string, token: string): [VocabEntry, number][] {
   const shape = ctx.shape;
   const only = shape?.only?.[token];
   const cw = shape?.cw?.[ctx.culture.key]?.[token];
@@ -315,6 +320,7 @@ function vocabWord(ctx: Ctx, pool: string, token: string, keep?: (w: string) => 
   const items = boostPool(ctx.context, pool, vocabPool(ctx, pool, token)).filter(([e]) => !keep || keep(e.w));
   const e = pickWeighted(items, ctx.rng);
   if (!e) return undefined;
+  noteNoun(ctx.rng, pool, e.w);
   for (const t of e.t ?? []) ctx.drawn.add(t);
   ctx.words.push({ pool, word: e.w });
   return e.w;
@@ -632,10 +638,12 @@ function shapeWeight(ctx: Ctx, kind: RouteKind, s: RouteShape, anyEra = false): 
 }
 
 function kindPlans(ctx: Ctx, kind: RouteKind, only?: string): [Plan, number][] {
-  return shapesFor(kind, ctx.culture.key)
+  const live = shapesFor(kind, ctx.culture.key)
     .filter((s) => !only || s.p === only)
     .map((s): [Plan, number] => [{ kind, shape: s, borrowed: false, scale: ctx.scale }, shapeWeight(ctx, kind, s)])
     .filter(([, w]) => w > 0);
+  // Northern Europe brief 5a §11.3: a core culture's signature frames take their share.
+  return balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!plan.shape.r);
 }
 
 /** §7: the culture's road, trade, pilgrim and sea shapes with a place, as space lanes. */

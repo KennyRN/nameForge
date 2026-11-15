@@ -11,62 +11,62 @@
    "v": 0
   },
   "culture|routeNames|english|words": {
-   "v": 68,
+   "v": 54,
    "t": 30
   },
   "culture|routeNames|english|shapes": {
-   "v": 52,
+   "v": 50,
    "t": 10
   },
   "culture|routeNames|english|profile": {
    "v": 0
   },
   "culture|routeNames|welsh|words": {
-   "v": 59,
+   "v": 45,
    "t": 30
   },
   "culture|routeNames|welsh|shapes": {
-   "v": 24,
+   "v": 22,
    "t": 10
   },
   "culture|routeNames|welsh|profile": {
    "v": 0
   },
   "culture|routeNames|scottish|words": {
-   "v": 59,
+   "v": 45,
    "t": 30
   },
   "culture|routeNames|scottish|shapes": {
-   "v": 34,
+   "v": 32,
    "t": 10
   },
   "culture|routeNames|scottish|profile": {
    "v": 0
   },
   "culture|routeNames|irish|words": {
-   "v": 59,
+   "v": 45,
    "t": 30
   },
   "culture|routeNames|irish|shapes": {
-   "v": 24,
+   "v": 22,
    "t": 10
   },
   "culture|routeNames|irish|profile": {
    "v": 0
   },
   "culture|routeNames|cornish|words": {
-   "v": 59,
+   "v": 45,
    "t": 30
   },
   "culture|routeNames|cornish|shapes": {
-   "v": 24,
+   "v": 22,
    "t": 10
   },
   "culture|routeNames|cornish|profile": {
    "v": 0
   },
   "culture|routeNames|celtic|words": {
-   "v": 37,
+   "v": 35,
    "t": 12
   },
   "culture|routeNames|celtic|shapes": {
@@ -77,33 +77,33 @@
    "v": 0
   },
   "culture|routeNames|norse|words": {
-   "v": 51,
+   "v": 37,
    "t": 30
   },
   "culture|routeNames|norse|shapes": {
-   "v": 40,
+   "v": 37,
    "t": 10
   },
   "culture|routeNames|norse|profile": {
    "v": 0
   },
   "culture|routeNames|scandinavian|words": {
-   "v": 44,
+   "v": 30,
    "t": 30
   },
   "culture|routeNames|scandinavian|shapes": {
-   "v": 36,
+   "v": 34,
    "t": 10
   },
   "culture|routeNames|scandinavian|profile": {
    "v": 0
   },
   "culture|routeNames|german|words": {
-   "v": 44,
+   "v": 30,
    "t": 30
   },
   "culture|routeNames|german|shapes": {
-   "v": 43,
+   "v": 40,
    "t": 10
   },
   "culture|routeNames|german|profile": {
@@ -344,23 +344,23 @@
    "v": 0
   },
   "era|routeNames|AN": {
-   "v": 93,
+   "v": 118,
    "t": 12
   },
   "era|routeNames|MD": {
-   "v": 132,
+   "v": 139,
    "t": 12
   },
   "era|routeNames|EM": {
-   "v": 104,
+   "v": 129,
    "t": 12
   },
   "era|routeNames|ST": {
-   "v": 153,
+   "v": 178,
    "t": 12
   },
   "era|routeNames|MO": {
-   "v": 95,
+   "v": 79,
    "t": 12
   },
   "era|routeNames|NF": {
@@ -372,27 +372,27 @@
    "t": 12
   },
   "style|routeNames|high-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|routeNames|high-fantasy|shapes": {
-   "v": 20,
+   "v": 11,
    "t": 4
   },
   "style|routeNames|contemporary-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|routeNames|contemporary-fantasy|shapes": {
-   "v": 20,
+   "v": 11,
    "t": 4
   },
   "style|routeNames|space-opera|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|routeNames|space-opera|shapes": {
-   "v": 20,
+   "v": 11,
    "t": 4
   },
   "style|routeNames|steampunk|words": {
@@ -5015,55 +5015,55 @@
    "v": 0
   },
   "culture|mountainNames|english|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|mountainNames|english|shapes": {
-   "v": 15,
+   "v": 12,
    "t": 10
   },
   "culture|mountainNames|english|profile": {
    "v": 1
   },
   "culture|mountainNames|welsh|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|mountainNames|welsh|shapes": {
-   "v": 14,
+   "v": 12,
    "t": 10
   },
   "culture|mountainNames|welsh|profile": {
    "v": 0
   },
   "culture|mountainNames|scottish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|mountainNames|scottish|shapes": {
-   "v": 16,
+   "v": 12,
    "t": 10
   },
   "culture|mountainNames|scottish|profile": {
    "v": 0
   },
   "culture|mountainNames|irish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|mountainNames|irish|shapes": {
-   "v": 16,
+   "v": 12,
    "t": 10
   },
   "culture|mountainNames|irish|profile": {
    "v": 0
   },
   "culture|mountainNames|cornish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|mountainNames|cornish|shapes": {
-   "v": 14,
+   "v": 12,
    "t": 10
   },
   "culture|mountainNames|cornish|profile": {
@@ -5081,33 +5081,33 @@
    "v": 1
   },
   "culture|mountainNames|norse|words": {
-   "v": 40,
+   "v": 33,
    "t": 30
   },
   "culture|mountainNames|norse|shapes": {
-   "v": 18,
+   "v": 14,
    "t": 10
   },
   "culture|mountainNames|norse|profile": {
    "v": 1
   },
   "culture|mountainNames|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|mountainNames|scandinavian|shapes": {
-   "v": 17,
+   "v": 14,
    "t": 10
   },
   "culture|mountainNames|scandinavian|profile": {
    "v": 0
   },
   "culture|mountainNames|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|mountainNames|german|shapes": {
-   "v": 26,
+   "v": 22,
    "t": 10
   },
   "culture|mountainNames|german|profile": {
@@ -5348,23 +5348,23 @@
    "v": 0
   },
   "era|mountainNames|AN": {
-   "v": 56,
+   "v": 82,
    "t": 12
   },
   "era|mountainNames|MD": {
-   "v": 71,
+   "v": 79,
    "t": 12
   },
   "era|mountainNames|EM": {
-   "v": 61,
+   "v": 125,
    "t": 12
   },
   "era|mountainNames|ST": {
-   "v": 61,
+   "v": 125,
    "t": 12
   },
   "era|mountainNames|MO": {
-   "v": 61,
+   "v": 125,
    "t": 12
   },
   "era|mountainNames|NF": {
@@ -5376,27 +5376,27 @@
    "t": 12
   },
   "style|mountainNames|high-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|mountainNames|high-fantasy|shapes": {
-   "v": 22,
+   "v": 13,
    "t": 4
   },
   "style|mountainNames|contemporary-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|mountainNames|contemporary-fantasy|shapes": {
-   "v": 22,
+   "v": 13,
    "t": 4
   },
   "style|mountainNames|space-opera|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|mountainNames|space-opera|shapes": {
-   "v": 22,
+   "v": 13,
    "t": 4
   },
   "tone|mountainNames|grand": {
@@ -5560,55 +5560,55 @@
    "v": 0
   },
   "culture|forestNames|english|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|forestNames|english|shapes": {
-   "v": 20,
+   "v": 17,
    "t": 10
   },
   "culture|forestNames|english|profile": {
    "v": 1
   },
   "culture|forestNames|welsh|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|forestNames|welsh|shapes": {
-   "v": 14,
+   "v": 12,
    "t": 10
   },
   "culture|forestNames|welsh|profile": {
    "v": 0
   },
   "culture|forestNames|scottish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|forestNames|scottish|shapes": {
-   "v": 16,
+   "v": 12,
    "t": 10
   },
   "culture|forestNames|scottish|profile": {
    "v": 0
   },
   "culture|forestNames|irish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|forestNames|irish|shapes": {
-   "v": 16,
+   "v": 12,
    "t": 10
   },
   "culture|forestNames|irish|profile": {
    "v": 0
   },
   "culture|forestNames|cornish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|forestNames|cornish|shapes": {
-   "v": 14,
+   "v": 12,
    "t": 10
   },
   "culture|forestNames|cornish|profile": {
@@ -5626,33 +5626,33 @@
    "v": 1
   },
   "culture|forestNames|norse|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|forestNames|norse|shapes": {
-   "v": 18,
+   "v": 14,
    "t": 10
   },
   "culture|forestNames|norse|profile": {
    "v": 1
   },
   "culture|forestNames|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|scandinavian|shapes": {
-   "v": 17,
+   "v": 14,
    "t": 10
   },
   "culture|forestNames|scandinavian|profile": {
    "v": 0
   },
   "culture|forestNames|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|german|shapes": {
-   "v": 20,
+   "v": 16,
    "t": 10
   },
   "culture|forestNames|german|profile": {
@@ -5893,23 +5893,23 @@
    "v": 0
   },
   "era|forestNames|AN": {
-   "v": 54,
+   "v": 80,
    "t": 12
   },
   "era|forestNames|MD": {
-   "v": 82,
+   "v": 90,
    "t": 12
   },
   "era|forestNames|EM": {
-   "v": 81,
+   "v": 145,
    "t": 12
   },
   "era|forestNames|ST": {
-   "v": 81,
+   "v": 145,
    "t": 12
   },
   "era|forestNames|MO": {
-   "v": 81,
+   "v": 145,
    "t": 12
   },
   "era|forestNames|NF": {
@@ -5921,27 +5921,27 @@
    "t": 12
   },
   "style|forestNames|high-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|forestNames|high-fantasy|shapes": {
-   "v": 16,
+   "v": 7,
    "t": 4
   },
   "style|forestNames|contemporary-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|forestNames|contemporary-fantasy|shapes": {
-   "v": 16,
+   "v": 7,
    "t": 4
   },
   "style|forestNames|space-opera|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|forestNames|space-opera|shapes": {
-   "v": 16,
+   "v": 7,
    "t": 4
   },
   "tone|forestNames|grand": {
@@ -6097,7 +6097,7 @@
    "v": 0
   },
   "culture|desertNames|english|words": {
-   "v": 35,
+   "v": 4,
    "t": 30
   },
   "culture|desertNames|english|shapes": {
@@ -6108,7 +6108,7 @@
    "v": 1
   },
   "culture|desertNames|welsh|words": {
-   "v": 35,
+   "v": 4,
    "t": 30
   },
   "culture|desertNames|welsh|shapes": {
@@ -6119,7 +6119,7 @@
    "v": 0
   },
   "culture|desertNames|scottish|words": {
-   "v": 35,
+   "v": 4,
    "t": 30
   },
   "culture|desertNames|scottish|shapes": {
@@ -6130,7 +6130,7 @@
    "v": 0
   },
   "culture|desertNames|irish|words": {
-   "v": 35,
+   "v": 4,
    "t": 30
   },
   "culture|desertNames|irish|shapes": {
@@ -6141,7 +6141,7 @@
    "v": 0
   },
   "culture|desertNames|cornish|words": {
-   "v": 35,
+   "v": 4,
    "t": 30
   },
   "culture|desertNames|cornish|shapes": {
@@ -6152,7 +6152,7 @@
    "v": 0
   },
   "culture|desertNames|celtic|words": {
-   "v": 17,
+   "v": 5,
    "t": 12
   },
   "culture|desertNames|celtic|shapes": {
@@ -6163,29 +6163,29 @@
    "v": 1
   },
   "culture|desertNames|norse|words": {
-   "v": 31,
+   "v": 12,
    "t": 30
   },
   "culture|desertNames|norse|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 10
   },
   "culture|desertNames|norse|profile": {
    "v": 1
   },
   "culture|desertNames|scandinavian|words": {
-   "v": 31,
+   "v": 12,
    "t": 30
   },
   "culture|desertNames|scandinavian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 10
   },
   "culture|desertNames|scandinavian|profile": {
    "v": 0
   },
   "culture|desertNames|german|words": {
-   "v": 31,
+   "v": 0,
    "t": 30
   },
   "culture|desertNames|german|shapes": {
@@ -6430,23 +6430,23 @@
    "v": 0
   },
   "era|desertNames|AN": {
-   "v": 54,
+   "v": 10,
    "t": 12
   },
   "era|desertNames|MD": {
-   "v": 67,
+   "v": 11,
    "t": 12
   },
   "era|desertNames|EM": {
-   "v": 67,
+   "v": 21,
    "t": 12
   },
   "era|desertNames|ST": {
-   "v": 67,
+   "v": 21,
    "t": 12
   },
   "era|desertNames|MO": {
-   "v": 67,
+   "v": 21,
    "t": 12
   },
   "era|desertNames|NF": {
@@ -6458,7 +6458,7 @@
    "t": 12
   },
   "style|desertNames|high-fantasy|words": {
-   "v": 68,
+   "v": 22,
    "t": 16
   },
   "style|desertNames|high-fantasy|shapes": {
@@ -6466,7 +6466,7 @@
    "t": 4
   },
   "style|desertNames|contemporary-fantasy|words": {
-   "v": 68,
+   "v": 22,
    "t": 16
   },
   "style|desertNames|contemporary-fantasy|shapes": {
@@ -6474,7 +6474,7 @@
    "t": 4
   },
   "style|desertNames|space-opera|words": {
-   "v": 68,
+   "v": 22,
    "t": 16
   },
   "style|desertNames|space-opera|shapes": {
@@ -6550,55 +6550,55 @@
    "v": 0
   },
   "culture|moorNames|english|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|moorNames|english|shapes": {
-   "v": 15,
+   "v": 12,
    "t": 10
   },
   "culture|moorNames|english|profile": {
    "v": 1
   },
   "culture|moorNames|welsh|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|moorNames|welsh|shapes": {
-   "v": 14,
+   "v": 12,
    "t": 10
   },
   "culture|moorNames|welsh|profile": {
    "v": 0
   },
   "culture|moorNames|scottish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|moorNames|scottish|shapes": {
-   "v": 16,
+   "v": 12,
    "t": 10
   },
   "culture|moorNames|scottish|profile": {
    "v": 0
   },
   "culture|moorNames|irish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|moorNames|irish|shapes": {
-   "v": 16,
+   "v": 12,
    "t": 10
   },
   "culture|moorNames|irish|profile": {
    "v": 0
   },
   "culture|moorNames|cornish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|moorNames|cornish|shapes": {
-   "v": 14,
+   "v": 12,
    "t": 10
   },
   "culture|moorNames|cornish|profile": {
@@ -6616,33 +6616,33 @@
    "v": 1
   },
   "culture|moorNames|norse|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|norse|shapes": {
-   "v": 17,
+   "v": 13,
    "t": 10
   },
   "culture|moorNames|norse|profile": {
    "v": 1
   },
   "culture|moorNames|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|scandinavian|shapes": {
-   "v": 16,
+   "v": 13,
    "t": 10
   },
   "culture|moorNames|scandinavian|profile": {
    "v": 0
   },
   "culture|moorNames|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|german|shapes": {
-   "v": 19,
+   "v": 15,
    "t": 10
   },
   "culture|moorNames|german|profile": {
@@ -6883,23 +6883,23 @@
    "v": 0
   },
   "era|moorNames|AN": {
-   "v": 53,
+   "v": 79,
    "t": 12
   },
   "era|moorNames|MD": {
-   "v": 68,
+   "v": 76,
    "t": 12
   },
   "era|moorNames|EM": {
-   "v": 59,
+   "v": 123,
    "t": 12
   },
   "era|moorNames|ST": {
-   "v": 59,
+   "v": 123,
    "t": 12
   },
   "era|moorNames|MO": {
-   "v": 59,
+   "v": 123,
    "t": 12
   },
   "era|moorNames|NF": {
@@ -6911,27 +6911,27 @@
    "t": 12
   },
   "style|moorNames|high-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|moorNames|high-fantasy|shapes": {
-   "v": 12,
+   "v": 3,
    "t": 4
   },
   "style|moorNames|contemporary-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|moorNames|contemporary-fantasy|shapes": {
-   "v": 12,
+   "v": 3,
    "t": 4
   },
   "style|moorNames|space-opera|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|moorNames|space-opera|shapes": {
-   "v": 12,
+   "v": 3,
    "t": 4
   },
   "tone|moorNames|grand": {
@@ -7083,55 +7083,55 @@
    "v": 0
   },
   "culture|wetlandNames|english|words": {
-   "v": 42,
+   "v": 35,
    "t": 30
   },
   "culture|wetlandNames|english|shapes": {
-   "v": 14,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|english|profile": {
    "v": 1
   },
   "culture|wetlandNames|welsh|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|wetlandNames|welsh|shapes": {
-   "v": 13,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|welsh|profile": {
    "v": 0
   },
   "culture|wetlandNames|scottish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|wetlandNames|scottish|shapes": {
-   "v": 15,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|scottish|profile": {
    "v": 0
   },
   "culture|wetlandNames|irish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|wetlandNames|irish|shapes": {
-   "v": 15,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|irish|profile": {
    "v": 0
   },
   "culture|wetlandNames|cornish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|wetlandNames|cornish|shapes": {
-   "v": 13,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|cornish|profile": {
@@ -7149,33 +7149,33 @@
    "v": 1
   },
   "culture|wetlandNames|norse|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|norse|shapes": {
-   "v": 15,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|norse|profile": {
    "v": 1
   },
   "culture|wetlandNames|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|scandinavian|shapes": {
-   "v": 14,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|scandinavian|profile": {
    "v": 0
   },
   "culture|wetlandNames|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|german|shapes": {
-   "v": 22,
+   "v": 18,
    "t": 10
   },
   "culture|wetlandNames|german|profile": {
@@ -7416,23 +7416,23 @@
    "v": 0
   },
   "era|wetlandNames|AN": {
-   "v": 56,
+   "v": 82,
    "t": 12
   },
   "era|wetlandNames|MD": {
-   "v": 68,
+   "v": 76,
    "t": 12
   },
   "era|wetlandNames|EM": {
-   "v": 60,
+   "v": 124,
    "t": 12
   },
   "era|wetlandNames|ST": {
-   "v": 60,
+   "v": 124,
    "t": 12
   },
   "era|wetlandNames|MO": {
-   "v": 60,
+   "v": 124,
    "t": 12
   },
   "era|wetlandNames|NF": {
@@ -7444,27 +7444,27 @@
    "t": 12
   },
   "style|wetlandNames|high-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|wetlandNames|high-fantasy|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "style|wetlandNames|contemporary-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|wetlandNames|contemporary-fantasy|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "style|wetlandNames|space-opera|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|wetlandNames|space-opera|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "tone|wetlandNames|grand": {
@@ -7620,55 +7620,55 @@
    "v": 0
   },
   "culture|grasslandNames|english|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|grasslandNames|english|shapes": {
-   "v": 16,
+   "v": 13,
    "t": 10
   },
   "culture|grasslandNames|english|profile": {
    "v": 1
   },
   "culture|grasslandNames|welsh|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|grasslandNames|welsh|shapes": {
-   "v": 15,
+   "v": 13,
    "t": 10
   },
   "culture|grasslandNames|welsh|profile": {
    "v": 0
   },
   "culture|grasslandNames|scottish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|grasslandNames|scottish|shapes": {
-   "v": 17,
+   "v": 13,
    "t": 10
   },
   "culture|grasslandNames|scottish|profile": {
    "v": 0
   },
   "culture|grasslandNames|irish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|grasslandNames|irish|shapes": {
-   "v": 17,
+   "v": 13,
    "t": 10
   },
   "culture|grasslandNames|irish|profile": {
    "v": 0
   },
   "culture|grasslandNames|cornish|words": {
-   "v": 41,
+   "v": 34,
    "t": 30
   },
   "culture|grasslandNames|cornish|shapes": {
-   "v": 15,
+   "v": 13,
    "t": 10
   },
   "culture|grasslandNames|cornish|profile": {
@@ -7686,33 +7686,33 @@
    "v": 1
   },
   "culture|grasslandNames|norse|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|grasslandNames|norse|shapes": {
-   "v": 18,
+   "v": 14,
    "t": 10
   },
   "culture|grasslandNames|norse|profile": {
    "v": 1
   },
   "culture|grasslandNames|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|scandinavian|shapes": {
-   "v": 17,
+   "v": 14,
    "t": 10
   },
   "culture|grasslandNames|scandinavian|profile": {
    "v": 0
   },
   "culture|grasslandNames|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|german|shapes": {
-   "v": 19,
+   "v": 15,
    "t": 10
   },
   "culture|grasslandNames|german|profile": {
@@ -7953,23 +7953,23 @@
    "v": 0
   },
   "era|grasslandNames|AN": {
-   "v": 53,
+   "v": 79,
    "t": 12
   },
   "era|grasslandNames|MD": {
-   "v": 68,
+   "v": 76,
    "t": 12
   },
   "era|grasslandNames|EM": {
-   "v": 67,
+   "v": 131,
    "t": 12
   },
   "era|grasslandNames|ST": {
-   "v": 67,
+   "v": 131,
    "t": 12
   },
   "era|grasslandNames|MO": {
-   "v": 67,
+   "v": 131,
    "t": 12
   },
   "era|grasslandNames|NF": {
@@ -7981,27 +7981,27 @@
    "t": 12
   },
   "style|grasslandNames|high-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|grasslandNames|high-fantasy|shapes": {
-   "v": 13,
+   "v": 4,
    "t": 4
   },
   "style|grasslandNames|contemporary-fantasy|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|grasslandNames|contemporary-fantasy|shapes": {
-   "v": 13,
+   "v": 4,
    "t": 4
   },
   "style|grasslandNames|space-opera|words": {
-   "v": 68,
+   "v": 43,
    "t": 16
   },
   "style|grasslandNames|space-opera|shapes": {
-   "v": 13,
+   "v": 4,
    "t": 4
   },
   "tone|grasslandNames|grand": {
@@ -8157,55 +8157,55 @@
    "v": 0
   },
   "culture|lands|english|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|lands|english|shapes": {
-   "v": 13,
+   "v": 10,
    "t": 10
   },
   "culture|lands|english|profile": {
    "v": 1
   },
   "culture|lands|welsh|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|lands|welsh|shapes": {
-   "v": 12,
+   "v": 10,
    "t": 10
   },
   "culture|lands|welsh|profile": {
    "v": 0
   },
   "culture|lands|scottish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|lands|scottish|shapes": {
-   "v": 14,
+   "v": 10,
    "t": 10
   },
   "culture|lands|scottish|profile": {
    "v": 0
   },
   "culture|lands|irish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|lands|irish|shapes": {
-   "v": 14,
+   "v": 10,
    "t": 10
   },
   "culture|lands|irish|profile": {
    "v": 0
   },
   "culture|lands|cornish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|lands|cornish|shapes": {
-   "v": 12,
+   "v": 10,
    "t": 10
   },
   "culture|lands|cornish|profile": {
@@ -8223,33 +8223,33 @@
    "v": 1
   },
   "culture|lands|norse|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|lands|norse|shapes": {
-   "v": 17,
+   "v": 13,
    "t": 10
   },
   "culture|lands|norse|profile": {
    "v": 1
   },
   "culture|lands|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|lands|scandinavian|shapes": {
-   "v": 16,
+   "v": 13,
    "t": 10
   },
   "culture|lands|scandinavian|profile": {
    "v": 0
   },
   "culture|lands|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|lands|german|shapes": {
-   "v": 25,
+   "v": 21,
    "t": 10
   },
   "culture|lands|german|profile": {
@@ -8490,23 +8490,23 @@
    "v": 0
   },
   "era|lands|AN": {
-   "v": 52,
+   "v": 78,
    "t": 12
   },
   "era|lands|MD": {
-   "v": 64,
+   "v": 72,
    "t": 12
   },
   "era|lands|EM": {
-   "v": 61,
+   "v": 125,
    "t": 12
   },
   "era|lands|ST": {
-   "v": 61,
+   "v": 125,
    "t": 12
   },
   "era|lands|MO": {
-   "v": 61,
+   "v": 125,
    "t": 12
   },
   "era|lands|NF": {
@@ -8518,27 +8518,27 @@
    "t": 12
   },
   "style|lands|high-fantasy|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|lands|high-fantasy|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "style|lands|contemporary-fantasy|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|lands|contemporary-fantasy|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "style|lands|space-opera|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|lands|space-opera|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "tone|lands|grand": {
@@ -8678,62 +8678,62 @@
    "v": 0
   },
   "culture|riversInland|english|words": {
-   "v": 69,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|english|shapes": {
-   "v": 30,
+   "v": 27,
    "t": 10
   },
   "culture|riversInland|english|profile": {
    "v": 1
   },
   "culture|riversInland|welsh|words": {
-   "v": 69,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|welsh|shapes": {
-   "v": 29,
+   "v": 27,
    "t": 10
   },
   "culture|riversInland|welsh|profile": {
    "v": 0
   },
   "culture|riversInland|scottish|words": {
-   "v": 69,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|scottish|shapes": {
-   "v": 31,
+   "v": 27,
    "t": 10
   },
   "culture|riversInland|scottish|profile": {
    "v": 0
   },
   "culture|riversInland|irish|words": {
-   "v": 69,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|irish|shapes": {
-   "v": 31,
+   "v": 27,
    "t": 10
   },
   "culture|riversInland|irish|profile": {
    "v": 0
   },
   "culture|riversInland|cornish|words": {
-   "v": 69,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|cornish|shapes": {
-   "v": 29,
+   "v": 27,
    "t": 10
   },
   "culture|riversInland|cornish|profile": {
    "v": 0
   },
   "culture|riversInland|celtic|words": {
-   "v": 25,
+   "v": 13,
    "t": 12
   },
   "culture|riversInland|celtic|shapes": {
@@ -8744,33 +8744,33 @@
    "v": 1
   },
   "culture|riversInland|norse|words": {
-   "v": 68,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|norse|shapes": {
-   "v": 18,
+   "v": 14,
    "t": 10
   },
   "culture|riversInland|norse|profile": {
    "v": 1
   },
   "culture|riversInland|scandinavian|words": {
-   "v": 68,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|scandinavian|shapes": {
-   "v": 17,
+   "v": 14,
    "t": 10
   },
   "culture|riversInland|scandinavian|profile": {
    "v": 0
   },
   "culture|riversInland|german|words": {
-   "v": 68,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|german|shapes": {
-   "v": 17,
+   "v": 13,
    "t": 10
   },
   "culture|riversInland|german|profile": {
@@ -9011,23 +9011,23 @@
    "v": 0
   },
   "era|riversInland|AN": {
-   "v": 107,
+   "v": 81,
    "t": 12
   },
   "era|riversInland|MD": {
-   "v": 133,
+   "v": 77,
    "t": 12
   },
   "era|riversInland|EM": {
-   "v": 116,
+   "v": 124,
    "t": 12
   },
   "era|riversInland|ST": {
-   "v": 116,
+   "v": 124,
    "t": 12
   },
   "era|riversInland|MO": {
-   "v": 116,
+   "v": 124,
    "t": 12
   },
   "era|riversInland|NF": {
@@ -9039,27 +9039,27 @@
    "t": 12
   },
   "style|riversInland|high-fantasy|words": {
-   "v": 113,
+   "v": 36,
    "t": 16
   },
   "style|riversInland|high-fantasy|shapes": {
-   "v": 14,
+   "v": 5,
    "t": 4
   },
   "style|riversInland|contemporary-fantasy|words": {
-   "v": 113,
+   "v": 36,
    "t": 16
   },
   "style|riversInland|contemporary-fantasy|shapes": {
-   "v": 14,
+   "v": 5,
    "t": 4
   },
   "style|riversInland|space-opera|words": {
-   "v": 113,
+   "v": 36,
    "t": 16
   },
   "style|riversInland|space-opera|shapes": {
-   "v": 14,
+   "v": 5,
    "t": 4
   },
   "tone|riversInland|grand": {
@@ -9206,55 +9206,55 @@
    "v": 0
   },
   "culture|hillsValleys|english|words": {
-   "v": 39,
+   "v": 32,
    "t": 30
   },
   "culture|hillsValleys|english|shapes": {
-   "v": 26,
+   "v": 23,
    "t": 10
   },
   "culture|hillsValleys|english|profile": {
    "v": 1
   },
   "culture|hillsValleys|welsh|words": {
-   "v": 39,
+   "v": 32,
    "t": 30
   },
   "culture|hillsValleys|welsh|shapes": {
-   "v": 25,
+   "v": 23,
    "t": 10
   },
   "culture|hillsValleys|welsh|profile": {
    "v": 0
   },
   "culture|hillsValleys|scottish|words": {
-   "v": 39,
+   "v": 32,
    "t": 30
   },
   "culture|hillsValleys|scottish|shapes": {
-   "v": 27,
+   "v": 23,
    "t": 10
   },
   "culture|hillsValleys|scottish|profile": {
    "v": 0
   },
   "culture|hillsValleys|irish|words": {
-   "v": 39,
+   "v": 32,
    "t": 30
   },
   "culture|hillsValleys|irish|shapes": {
-   "v": 27,
+   "v": 23,
    "t": 10
   },
   "culture|hillsValleys|irish|profile": {
    "v": 0
   },
   "culture|hillsValleys|cornish|words": {
-   "v": 39,
+   "v": 32,
    "t": 30
   },
   "culture|hillsValleys|cornish|shapes": {
-   "v": 25,
+   "v": 23,
    "t": 10
   },
   "culture|hillsValleys|cornish|profile": {
@@ -9272,33 +9272,33 @@
    "v": 1
   },
   "culture|hillsValleys|norse|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|norse|shapes": {
-   "v": 20,
+   "v": 16,
    "t": 10
   },
   "culture|hillsValleys|norse|profile": {
    "v": 1
   },
   "culture|hillsValleys|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|scandinavian|shapes": {
-   "v": 19,
+   "v": 16,
    "t": 10
   },
   "culture|hillsValleys|scandinavian|profile": {
    "v": 0
   },
   "culture|hillsValleys|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|german|shapes": {
-   "v": 25,
+   "v": 21,
    "t": 10
   },
   "culture|hillsValleys|german|profile": {
@@ -9539,23 +9539,23 @@
    "v": 0
   },
   "era|hillsValleys|AN": {
-   "v": 52,
+   "v": 78,
    "t": 12
   },
   "era|hillsValleys|MD": {
-   "v": 64,
+   "v": 72,
    "t": 12
   },
   "era|hillsValleys|EM": {
-   "v": 56,
+   "v": 120,
    "t": 12
   },
   "era|hillsValleys|ST": {
-   "v": 56,
+   "v": 120,
    "t": 12
   },
   "era|hillsValleys|MO": {
-   "v": 56,
+   "v": 120,
    "t": 12
   },
   "era|hillsValleys|NF": {
@@ -9567,27 +9567,27 @@
    "t": 12
   },
   "style|hillsValleys|high-fantasy|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|hillsValleys|high-fantasy|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "style|hillsValleys|contemporary-fantasy|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|hillsValleys|contemporary-fantasy|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "style|hillsValleys|space-opera|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|hillsValleys|space-opera|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "tone|hillsValleys|grand": {
@@ -9730,55 +9730,55 @@
    "v": 0
   },
   "culture|farmland|english|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|farmland|english|shapes": {
-   "v": 16,
+   "v": 13,
    "t": 10
   },
   "culture|farmland|english|profile": {
    "v": 1
   },
   "culture|farmland|welsh|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|farmland|welsh|shapes": {
-   "v": 15,
+   "v": 13,
    "t": 10
   },
   "culture|farmland|welsh|profile": {
    "v": 0
   },
   "culture|farmland|scottish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|farmland|scottish|shapes": {
-   "v": 17,
+   "v": 13,
    "t": 10
   },
   "culture|farmland|scottish|profile": {
    "v": 0
   },
   "culture|farmland|irish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|farmland|irish|shapes": {
-   "v": 17,
+   "v": 13,
    "t": 10
   },
   "culture|farmland|irish|profile": {
    "v": 0
   },
   "culture|farmland|cornish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|farmland|cornish|shapes": {
-   "v": 15,
+   "v": 13,
    "t": 10
   },
   "culture|farmland|cornish|profile": {
@@ -9796,33 +9796,33 @@
    "v": 1
   },
   "culture|farmland|norse|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|norse|shapes": {
-   "v": 18,
+   "v": 14,
    "t": 10
   },
   "culture|farmland|norse|profile": {
    "v": 1
   },
   "culture|farmland|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|scandinavian|shapes": {
-   "v": 17,
+   "v": 14,
    "t": 10
   },
   "culture|farmland|scandinavian|profile": {
    "v": 0
   },
   "culture|farmland|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|german|shapes": {
-   "v": 22,
+   "v": 18,
    "t": 10
   },
   "culture|farmland|german|profile": {
@@ -10063,23 +10063,23 @@
    "v": 0
   },
   "era|farmland|AN": {
-   "v": 52,
+   "v": 78,
    "t": 12
   },
   "era|farmland|MD": {
-   "v": 65,
+   "v": 73,
    "t": 12
   },
   "era|farmland|EM": {
-   "v": 58,
+   "v": 122,
    "t": 12
   },
   "era|farmland|ST": {
-   "v": 58,
+   "v": 122,
    "t": 12
   },
   "era|farmland|MO": {
-   "v": 58,
+   "v": 122,
    "t": 12
   },
   "era|farmland|NF": {
@@ -10091,27 +10091,27 @@
    "t": 12
   },
   "style|farmland|high-fantasy|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|farmland|high-fantasy|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "style|farmland|contemporary-fantasy|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|farmland|contemporary-fantasy|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "style|farmland|space-opera|words": {
-   "v": 61,
+   "v": 36,
    "t": 16
   },
   "style|farmland|space-opera|shapes": {
-   "v": 15,
+   "v": 6,
    "t": 4
   },
   "tone|farmland|grand": {
@@ -10688,18 +10688,18 @@
    "v": 1
   },
   "culture|seasLakes|english|words": {
-   "v": 44,
+   "v": 37,
    "t": 30
   },
   "culture|seasLakes|english|shapes": {
-   "v": 32,
+   "v": 31,
    "t": 10
   },
   "culture|seasLakes|english|profile": {
    "v": 1
   },
   "culture|seasLakes|welsh|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|welsh|shapes": {
@@ -10710,29 +10710,29 @@
    "v": 0
   },
   "culture|seasLakes|scottish|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|scottish|shapes": {
-   "v": 28,
+   "v": 27,
    "t": 10
   },
   "culture|seasLakes|scottish|profile": {
    "v": 0
   },
   "culture|seasLakes|irish|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|irish|shapes": {
-   "v": 28,
+   "v": 27,
    "t": 10
   },
   "culture|seasLakes|irish|profile": {
    "v": 0
   },
   "culture|seasLakes|cornish|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|cornish|shapes": {
@@ -10754,33 +10754,33 @@
    "v": 1
   },
   "culture|seasLakes|norse|words": {
-   "v": 45,
+   "v": 38,
    "t": 30
   },
   "culture|seasLakes|norse|shapes": {
-   "v": 20,
+   "v": 19,
    "t": 10
   },
   "culture|seasLakes|norse|profile": {
    "v": 1
   },
   "culture|seasLakes|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|scandinavian|shapes": {
-   "v": 17,
+   "v": 16,
    "t": 10
   },
   "culture|seasLakes|scandinavian|profile": {
    "v": 0
   },
   "culture|seasLakes|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|german|shapes": {
-   "v": 45,
+   "v": 44,
    "t": 10
   },
   "culture|seasLakes|german|profile": {
@@ -11021,23 +11021,23 @@
    "v": 0
   },
   "era|seasLakes|AN": {
-   "v": 62,
+   "v": 88,
    "t": 12
   },
   "era|seasLakes|MD": {
-   "v": 71,
+   "v": 79,
    "t": 12
   },
   "era|seasLakes|EM": {
-   "v": 56,
+   "v": 120,
    "t": 12
   },
   "era|seasLakes|ST": {
-   "v": 56,
+   "v": 120,
    "t": 12
   },
   "era|seasLakes|MO": {
-   "v": 56,
+   "v": 120,
    "t": 12
   },
   "era|seasLakes|NF": {
@@ -11049,27 +11049,27 @@
    "t": 12
   },
   "style|seasLakes|high-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|seasLakes|high-fantasy|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "style|seasLakes|contemporary-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|seasLakes|contemporary-fantasy|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "style|seasLakes|space-opera|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|seasLakes|space-opera|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "tone|seasLakes|grand": {
@@ -11209,18 +11209,18 @@
    "v": 1
   },
   "culture|coastsIslands|english|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|coastsIslands|english|shapes": {
-   "v": 45,
+   "v": 44,
    "t": 10
   },
   "culture|coastsIslands|english|profile": {
    "v": 1
   },
   "culture|coastsIslands|welsh|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|coastsIslands|welsh|shapes": {
@@ -11231,29 +11231,29 @@
    "v": 0
   },
   "culture|coastsIslands|scottish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|coastsIslands|scottish|shapes": {
-   "v": 43,
+   "v": 42,
    "t": 10
   },
   "culture|coastsIslands|scottish|profile": {
    "v": 0
   },
   "culture|coastsIslands|irish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|coastsIslands|irish|shapes": {
-   "v": 43,
+   "v": 42,
    "t": 10
   },
   "culture|coastsIslands|irish|profile": {
    "v": 0
   },
   "culture|coastsIslands|cornish|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|coastsIslands|cornish|shapes": {
@@ -11275,33 +11275,33 @@
    "v": 1
   },
   "culture|coastsIslands|norse|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|norse|shapes": {
-   "v": 35,
+   "v": 34,
    "t": 10
   },
   "culture|coastsIslands|norse|profile": {
    "v": 1
   },
   "culture|coastsIslands|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|scandinavian|shapes": {
-   "v": 23,
+   "v": 22,
    "t": 10
   },
   "culture|coastsIslands|scandinavian|profile": {
    "v": 0
   },
   "culture|coastsIslands|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|german|shapes": {
-   "v": 20,
+   "v": 19,
    "t": 10
   },
   "culture|coastsIslands|german|profile": {
@@ -11542,23 +11542,23 @@
    "v": 0
   },
   "era|coastsIslands|AN": {
-   "v": 53,
+   "v": 79,
    "t": 12
   },
   "era|coastsIslands|MD": {
-   "v": 64,
+   "v": 72,
    "t": 12
   },
   "era|coastsIslands|EM": {
-   "v": 58,
+   "v": 122,
    "t": 12
   },
   "era|coastsIslands|ST": {
-   "v": 58,
+   "v": 122,
    "t": 12
   },
   "era|coastsIslands|MO": {
-   "v": 58,
+   "v": 122,
    "t": 12
   },
   "era|coastsIslands|NF": {
@@ -11570,27 +11570,27 @@
    "t": 12
   },
   "style|coastsIslands|high-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|coastsIslands|high-fantasy|shapes": {
-   "v": 10,
+   "v": 1,
    "t": 4
   },
   "style|coastsIslands|contemporary-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|coastsIslands|contemporary-fantasy|shapes": {
-   "v": 10,
+   "v": 1,
    "t": 4
   },
   "style|coastsIslands|space-opera|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|coastsIslands|space-opera|shapes": {
-   "v": 10,
+   "v": 1,
    "t": 4
   },
   "tone|coastsIslands|grand": {
@@ -11730,18 +11730,18 @@
    "v": 1
   },
   "culture|seaCharts|english|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|english|shapes": {
-   "v": 28,
+   "v": 27,
    "t": 10
   },
   "culture|seaCharts|english|profile": {
    "v": 1
   },
   "culture|seaCharts|welsh|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|welsh|shapes": {
@@ -11752,29 +11752,29 @@
    "v": 0
   },
   "culture|seaCharts|scottish|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|scottish|shapes": {
-   "v": 28,
+   "v": 27,
    "t": 10
   },
   "culture|seaCharts|scottish|profile": {
    "v": 0
   },
   "culture|seaCharts|irish|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|irish|shapes": {
-   "v": 28,
+   "v": 27,
    "t": 10
   },
   "culture|seaCharts|irish|profile": {
    "v": 0
   },
   "culture|seaCharts|cornish|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|cornish|shapes": {
@@ -11796,33 +11796,33 @@
    "v": 1
   },
   "culture|seaCharts|norse|words": {
-   "v": 38,
+   "v": 31,
    "t": 30
   },
   "culture|seaCharts|norse|shapes": {
-   "v": 15,
+   "v": 14,
    "t": 10
   },
   "culture|seaCharts|norse|profile": {
    "v": 1
   },
   "culture|seaCharts|scandinavian|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|scandinavian|shapes": {
-   "v": 12,
+   "v": 11,
    "t": 10
   },
   "culture|seaCharts|scandinavian|profile": {
    "v": 0
   },
   "culture|seaCharts|german|words": {
-   "v": 37,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|german|shapes": {
-   "v": 17,
+   "v": 16,
    "t": 10
   },
   "culture|seaCharts|german|profile": {
@@ -12063,23 +12063,23 @@
    "v": 0
   },
   "era|seaCharts|AN": {
-   "v": 53,
+   "v": 79,
    "t": 12
   },
   "era|seaCharts|MD": {
-   "v": 67,
+   "v": 75,
    "t": 12
   },
   "era|seaCharts|EM": {
-   "v": 77,
+   "v": 141,
    "t": 12
   },
   "era|seaCharts|ST": {
-   "v": 77,
+   "v": 141,
    "t": 12
   },
   "era|seaCharts|MO": {
-   "v": 77,
+   "v": 141,
    "t": 12
   },
   "era|seaCharts|NF": {
@@ -12091,27 +12091,27 @@
    "t": 12
   },
   "style|seaCharts|high-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|seaCharts|high-fantasy|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "style|seaCharts|contemporary-fantasy|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|seaCharts|contemporary-fantasy|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "style|seaCharts|space-opera|words": {
-   "v": 52,
+   "v": 27,
    "t": 16
   },
   "style|seaCharts|space-opera|shapes": {
-   "v": 11,
+   "v": 2,
    "t": 4
   },
   "tone|seaCharts|grand": {
@@ -16410,7 +16410,7 @@
    "v": 0
   },
   "culture|sacredPlaces|english|words": {
-   "v": 69,
+   "v": 60,
    "t": 30
   },
   "culture|sacredPlaces|english|shapes": {
@@ -16421,7 +16421,7 @@
    "v": 1
   },
   "culture|sacredPlaces|welsh|words": {
-   "v": 38,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|welsh|shapes": {
@@ -16432,7 +16432,7 @@
    "v": 0
   },
   "culture|sacredPlaces|scottish|words": {
-   "v": 39,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|scottish|shapes": {
@@ -16443,7 +16443,7 @@
    "v": 0
   },
   "culture|sacredPlaces|irish|words": {
-   "v": 39,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|irish|shapes": {
@@ -16454,7 +16454,7 @@
    "v": 0
   },
   "culture|sacredPlaces|cornish|words": {
-   "v": 39,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|cornish|shapes": {
@@ -16465,7 +16465,7 @@
    "v": 0
   },
   "culture|sacredPlaces|celtic|words": {
-   "v": 32,
+   "v": 28,
    "t": 12
   },
   "culture|sacredPlaces|celtic|shapes": {
@@ -16476,7 +16476,7 @@
    "v": 1
   },
   "culture|sacredPlaces|norse|words": {
-   "v": 56,
+   "v": 47,
    "t": 30
   },
   "culture|sacredPlaces|norse|shapes": {
@@ -16487,7 +16487,7 @@
    "v": 1
   },
   "culture|sacredPlaces|scandinavian|words": {
-   "v": 39,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|scandinavian|shapes": {
@@ -16498,7 +16498,7 @@
    "v": 0
   },
   "culture|sacredPlaces|german|words": {
-   "v": 39,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|german|shapes": {
@@ -16739,23 +16739,23 @@
    "v": 0
   },
   "era|sacredPlaces|AN": {
-   "v": 52,
+   "v": 78,
    "t": 12
   },
   "era|sacredPlaces|MD": {
-   "v": 64,
+   "v": 72,
    "t": 12
   },
   "era|sacredPlaces|EM": {
-   "v": 48,
+   "v": 72,
    "t": 12
   },
   "era|sacredPlaces|ST": {
-   "v": 97,
+   "v": 122,
    "t": 12
   },
   "era|sacredPlaces|MO": {
-   "v": 63,
+   "v": 48,
    "t": 12
   },
   "era|sacredPlaces|NF": {
@@ -16775,27 +16775,27 @@
    "t": 4
   },
   "style|sacredPlaces|high-fantasy|words": {
-   "v": 48,
+   "v": 31,
    "t": 16
   },
   "style|sacredPlaces|high-fantasy|shapes": {
-   "v": 9,
+   "v": 0,
    "t": 4
   },
   "style|sacredPlaces|contemporary-fantasy|words": {
-   "v": 48,
+   "v": 31,
    "t": 16
   },
   "style|sacredPlaces|contemporary-fantasy|shapes": {
-   "v": 9,
+   "v": 0,
    "t": 4
   },
   "style|sacredPlaces|space-opera|words": {
-   "v": 48,
+   "v": 31,
    "t": 16
   },
   "style|sacredPlaces|space-opera|shapes": {
-   "v": 9,
+   "v": 0,
    "t": 4
   },
   "tone|sacredPlaces|grand": {
@@ -23246,40 +23246,40 @@
    "t": 6
   },
   "total|culture|english|words": {
-   "v": 861
+   "v": 1064
   },
   "total|culture|english|shapes": {
-   "v": 529
+   "v": 497
   },
   "total|culture|celtic|words": {
-   "v": 318
+   "v": 432
   },
   "total|culture|celtic|shapes": {
    "v": 370
   },
   "total|culture|welsh|words": {
-   "v": 552
+   "v": 756
   },
   "total|culture|welsh|shapes": {
-   "v": 473
+   "v": 453
   },
   "total|culture|scottish|words": {
-   "v": 564
+   "v": 767
   },
   "total|culture|scottish|shapes": {
-   "v": 504
+   "v": 463
   },
   "total|culture|irish|words": {
-   "v": 487
+   "v": 690
   },
   "total|culture|irish|shapes": {
-   "v": 494
+   "v": 453
   },
   "total|culture|cornish|words": {
-   "v": 487
+   "v": 690
   },
   "total|culture|cornish|shapes": {
-   "v": 473
+   "v": 453
   },
   "total|culture|roman|words": {
    "v": 257
@@ -23288,10 +23288,10 @@
    "v": 188
   },
   "total|culture|norse|words": {
-   "v": 407
+   "v": 622
   },
   "total|culture|norse|shapes": {
-   "v": 354
+   "v": 316
   },
   "total|culture|arabic-persian|words": {
    "v": 151
@@ -23402,16 +23402,16 @@
    "v": 105
   },
   "total|culture|scandinavian|words": {
-   "v": 402
+   "v": 617
   },
   "total|culture|scandinavian|shapes": {
-   "v": 323
+   "v": 295
   },
   "total|culture|german|words": {
-   "v": 232
+   "v": 435
   },
   "total|culture|german|shapes": {
-   "v": 330
+   "v": 288
   },
   "total|culture|american|words": {
    "v": 44
@@ -23456,19 +23456,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 976
+   "v": 1867
   },
   "total|era|MD": {
-   "v": 1584
+   "v": 2343
   },
   "total|era|EM": {
-   "v": 1090
+   "v": 2477
   },
   "total|era|ST": {
-   "v": 1228
+   "v": 2616
   },
   "total|era|MO": {
-   "v": 1177
+   "v": 2484
   },
   "total|era|NF": {
    "v": 764
@@ -23477,22 +23477,22 @@
    "v": 1329
   },
   "total|style|high-fantasy|words": {
-   "v": 389
+   "v": 573
   },
   "total|style|high-fantasy|shapes": {
-   "v": 438
+   "v": 312
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 305
+   "v": 489
   },
   "total|style|contemporary-fantasy|shapes": {
-   "v": 436
+   "v": 310
   },
   "total|style|space-opera|words": {
-   "v": 441
+   "v": 625
   },
   "total|style|space-opera|shapes": {
-   "v": 269
+   "v": 143
   },
   "total|style|steampunk|words": {
    "v": 84

@@ -10,7 +10,7 @@ const kindsOf = (module: EarthlyModule) => ((watersData.modules as Record<string
 function earthlyRows(module: EarthlyModule): CoverageRow[] {
   const out: CoverageRow[] = [];
   out.push(...byKindRows(at(watersData, `shapes/${module}`), { module, source: `shapes/${module}` }));
-  const own = [...(watersData.cultureShapes as { module: string }[]), ...(NORTH.waters.cultureShapes as { module: string }[])].filter((s) => s.module === module);
+  const own = [...(watersData.cultureShapes as { module: string }[]), ...(NORTH.waters.cultureShapes as { module: string }[])].filter((s) => s.module === module).filter((s) => !(s as { grp?: boolean }).grp);
   out.push(...listRows(own, { module, source: "cultureShapes" }));
   // The British region tags (`ness`, `naze`, `bill`…).
   for (const [word, table] of Object.entries(mergeRegionColumns(watersData.regionTags as Record<string, Record<string, number>>, NORTH.waters.regionColumns, NORTH.waters.regionTags))) {
