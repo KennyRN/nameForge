@@ -19,6 +19,8 @@ import { drawKind, sourceFor, type KindSources } from "../src/places/sources";
 import { mulberry32 } from "../src/markov";
 import vocab from "../src/data/settlement-vocab.json";
 
+/** The 150 well-known real places of tests/northernEurope5a.test.ts (brief rule 5). */
+const FAMOUS_PLACES = `Land's End|Snowdon|Black Forest|Ben Nevis|Scafell Pike|Skiddaw|Helvellyn|Cader Idris|Pen y Fan|Lake District|Peak District|Dartmoor|Exmoor|Bodmin Moor|Cairngorms|Loch Ness|Loch Lomond|Isle of Skye|Isle of Man|Orkney|Shetland|Hebrides|Giant's Causeway|Slieve Donard|Mount Brandon|Carrauntoohil|Wicklow Mountains|Cliffs of Moher|Ring of Kerry|Connemara|Lough Neagh|River Thames|River Severn|River Wye|River Tyne|River Clyde|River Shannon|Hadrian's Wall|Offa's Dyke|Stonehenge|Avebury|Glastonbury Tor|White Cliffs of Dover|Cheddar Gorge|Lizard Point|St Michael's Mount|Mount's Bay|Tintagel|Fowey|Bodmin|Mousehole|Zennor|Gower|Anglesey|Snowdonia|Brecon Beacons|Black Mountains|Pembrokeshire|Fair Isle|Ben Lomond|Glencoe|Rannoch Moor|Trossachs|Jotunheimen|Galdhopiggen|Sognefjord|Geirangerfjord|Hardangervidda|Lofoten|Nordkapp|Trollstigen|Preikestolen|Oslofjord|Kattegat|Skagerrak|Oresund|Bornholm|Zealand|Jutland|Funen|Mols Bjerge|Mons Klint|Skagen|Gotland|Oland|Vattern|Vanern|Malaren|Kebnekaise|Sarek|Abisko|Laponia|Iceland|Vatnajokull|Thingvellir|Gullfoss|Geysir|Hekla|Surtsey|Snaefellsjokull|Jokulsarlon|Faroe Islands|Reykjanes|Rhine Gorge|Loreley|Mosel|Black Forest|Harz|Brocken|Thuringian Forest|Bavarian Forest|Zugspitze|Watzmann|Konigssee|Bodensee|Lake Constance|Chiemsee|Berchtesgaden|Rugen|Sylt|Wadden Sea|Heligoland|Luneburg Heath|Spreewald|Elbe Sandstone Mountains|Saxon Switzerland|Fichtelgebirge|Eifel|Taunus|Odenwald|Swabian Jura|Hohenzollern|Neuschwanstein|Drachenfels|Kyffhauser|Rothaargebirge|Teutoburg Forest|Mecklenburg Lake District|Mueritz|Frisian Islands|Wannsee|Havel|Oder|Elbe|Weser|Ems|Danube|Neckar|Main|Isar|Inn|Lech`.split("|").map((n) => n.trim());
 const CORE = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
 const CELTIC = ["celtic"];
 const pools = NORTH.vocab.pools as Record<string, { entries?: { w: string; c?: string[]; e?: string[]; h?: boolean }[] }>;
@@ -113,3 +115,26 @@ test("§11.5: no Barrow Wight, Autobahn, Bal, Carn or Draugr", () => {
   for (const e of Object.values(pools).flatMap((p) => p.entries ?? [])) assert.ok(!/^(Bal|Carn)$/.test(e.w), e.w);
 });
 
+
+// ── §11.5: Land's End ──────────────────────────────────────────────────────────────────────────
+
+test("§11.5: \"{endWord} End\" no longer makes Land's End; Land's End is never made", () => {
+  assert.ok(!JSON.stringify(vocab.pools.endWord).includes("Land's"));
+  // Brief rule 5: a generated compound that happens to match a real place (Black Forest, Fair Isle) is fine; a fixed or idiom name is not.
+  assert.ok(FAMOUS_PLACES.includes("Land's End"));
+  const famous = new Set(["land's end", "lands end"]);
+  const hits: string[] = [];
+  for (const seed of [1, 7, 42, 99]) {
+    for (const culture of ["norman-british", "anglo-saxon", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "celtic", "general"]) {
+      for (const module of ["coastsIslands", "seasLakes", "seaCharts"] as const) {
+        const names = generateWatersNames({ ...defaultWatersState(module), module, culture, count: 150, seed, people: "placeholders" } as never).names.map((n) => n.text);
+        for (const n of names) if (famous.has(n.toLowerCase())) hits.push(`${culture} ${module}: ${n}`);
+      }
+      for (const module of ["mountainNames", "hillsValleys", "moorNames", "lands", "forestNames", "riversInland"] as const) {
+        const names = generateWildsNames({ ...defaultWildsState(module), module, culture, where: "home", count: 150, seed, people: "placeholders" } as never).names.map((n) => n.text);
+        for (const n of names) if (famous.has(n.toLowerCase())) hits.push(`${culture} ${module}: ${n}`);
+      }
+    }
+  }
+  assert.deepEqual(hits, []);
+});

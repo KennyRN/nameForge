@@ -114320,7 +114320,7 @@ var settlement_vocab_default = {
     },
     endWord: {
       entries: [
-        { w: "Land's", x: 3 },
+        { w: "Island's", x: 3 },
         { w: "World's" },
         { w: "Earth's" }
       ]
