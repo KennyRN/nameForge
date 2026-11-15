@@ -4,7 +4,7 @@ export default {
     mountain: [
       "Cairn;AN-MD|Cliff Top;AN-MD|Saint's Peak;AN-MD|Penal Mass Rock;EM-ST|Famine Peak;EM-ST|Copper Mine Hill;EM-ST|Pilgrim Peak;ST-MO|Climbers' Peak;ST-MO|Fairy Peak;h|Pinnacle",
       "Hill Spur;AN-MD|Shoulder;AN-MD|Cliff Edge;AN-MD|Lazy Bed Ridge;EM-ST|Mine Ridge;EM-ST|Spoil Ridge;EM-ST|Walkers' Ridge;ST-MO|Skyline;ST-MO|Giant's Back;h|Ridge",
-      "Mountains;AN-MD|Uplands;AN-MD|Hills;AN-MD|Rebel Hills;EM-ST|Mining Hills;EM-ST|Bog Hills;EM-ST|National Park;ST-MO|Heights;ST-MO|Fianna Hills;h|Range",
+      "Mountains;AN-MD|Uplands;AN-MD|Hills;AN-MD|Rebel Hills;EM-ST|Mining Hills;EM-ST|Bog Hills;EM-ST|National Park;ST-MO|Heights;ST-MO|War Band Hills;h|Range",
     ],
     wood: [
       "Oak Wood;AN-MD|Yew Wood;AN-MD|Holy Wood;AN-MD|Demesne Wood;EM-ST|Estate Wood;EM-ST|Planted Wood;EM-ST|Conifer Forest;ST-MO|Heritage Woodland;ST-MO|Fairy Wood;h|Forest",
@@ -18,7 +18,7 @@ export default {
     ],
     wet: [
       "Raised Bog;AN-MD|Turf Bog;AN-MD|Fen;AN-MD|Cutaway Bog;EM-ST|Peat Bog;EM-ST|Drained Bog;EM-ST|Bog Reserve;ST-MO|Boardwalk Bog;ST-MO|Bog Spirit's Bog;h|Bog",
-      "Turlough;AN-MD|Callow;AN-MD|Water Meadow;AN-MD|Flood Meadow;EM-ST|Reclaimed Callow;EM-ST|Shannon Callow;EM-ST|Nature Reserve;ST-MO|Wetland Trail;ST-MO|Vanishing Lake;h|Marsh",
+      "Turlough;AN-MD|River Meadow;AN-MD|Water Meadow;AN-MD|Flood Meadow;EM-ST|Reclaimed Meadow;EM-ST|Floodplain Meadow;EM-ST|Nature Reserve;ST-MO|Wetland Trail;ST-MO|Vanishing Lake;h|Marsh",
       "Crannog;AN-MD|Lake Isle;AN-MD|Island Hermitage;AN-MD|Heron Isle;EM-ST|Abbey Isle;EM-ST|Duck Isle;EM-ST|Bird Isle;ST-MO|Nature Isle;ST-MO|Isle of the Ever Young;h|Isle",
     ],
     grass: [
@@ -28,7 +28,7 @@ export default {
     ],
     lands: [
       "Kingdom;AN-MD|Over-kingdom;AN-MD|Petty Kingdom;AN-MD|Earldom;EM-ST|Palatine;EM-ST|County;EM-ST|Republic;ST-MO|Province;ST-MO|Land of the Ever Young;h|Territory",
-      "Townland;AN-MD|Ballybetagh;AN-MD|Cantred;AN-MD|Barony;EM-ST|Plantation Estate;EM-ST|Estate;EM-ST|Congested District;ST-MO|Electoral Division;ST-MO|Fairy Territory;h|Lands",
+      "Townland;AN-MD|Tribal District;AN-MD|Hundred;AN-MD|Barony;EM-ST|Plantation Estate;EM-ST|Estate;EM-ST|Congested District;ST-MO|Electoral Division;ST-MO|Fairy Territory;h|Lands",
       "Parish;AN-MD|Saint's Parish;AN-MD|Church Land;AN-MD|Civil Parish;EM-ST|Union;EM-ST|Poor Law Union;EM-ST|Community;ST-MO|Ward;ST-MO|Haunted Parish;h|Hamlet",
     ],
     farm: [

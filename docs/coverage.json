@@ -4146,7 +4146,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1398,
+   "rowCount": 1643,
    "cultures": {
     "general": {
      "words": 0,
@@ -4156,7 +4156,7 @@
     },
     "english": {
      "words": 34,
-     "shapes": 12,
+     "shapes": 36,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4166,7 +4166,7 @@
     },
     "welsh": {
      "words": 34,
-     "shapes": 12,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4500,27 +4500,27 @@
     "strange": 32
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 18,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 8,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 26,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 21,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "range": 23,
@@ -4567,7 +4567,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1313,
+   "rowCount": 1612,
    "cultures": {
     "general": {
      "words": 0,
@@ -4577,7 +4577,7 @@
     },
     "english": {
      "words": 34,
-     "shapes": 17,
+     "shapes": 29,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4587,7 +4587,7 @@
     },
     "welsh": {
      "words": 34,
-     "shapes": 12,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4597,7 +4597,7 @@
     },
     "scottish": {
      "words": 34,
-     "shapes": 12,
+     "shapes": 30,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4617,7 +4617,7 @@
     },
     "cornish": {
      "words": 34,
-     "shapes": 12,
+     "shapes": 18,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4637,7 +4637,7 @@
     },
     "norse": {
      "words": 31,
-     "shapes": 14,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4647,7 +4647,7 @@
     },
     "scandinavian": {
      "words": 30,
-     "shapes": 14,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4657,7 +4657,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 16,
+     "shapes": 46,
      "target": {
       "words": 30,
       "shapes": 10
@@ -4921,27 +4921,27 @@
     "strange": 27
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 18,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 8,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 26,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 21,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "forest": 28,
@@ -5382,7 +5382,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1262,
+   "rowCount": 1495,
    "cultures": {
     "general": {
      "words": 0,
@@ -5472,7 +5472,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 15,
+     "shapes": 33,
      "target": {
       "words": 30,
       "shapes": 10
@@ -5736,27 +5736,27 @@
     "strange": 24
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 18,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 8,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 26,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 21,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "moor": 24,
@@ -5800,7 +5800,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1264,
+   "rowCount": 1539,
    "cultures": {
     "general": {
      "words": 0,
@@ -5810,7 +5810,7 @@
     },
     "english": {
      "words": 35,
-     "shapes": 11,
+     "shapes": 23,
      "target": {
       "words": 30,
       "shapes": 10
@@ -5830,7 +5830,7 @@
     },
     "scottish": {
      "words": 34,
-     "shapes": 11,
+     "shapes": 35,
      "target": {
       "words": 30,
       "shapes": 10
@@ -5850,7 +5850,7 @@
     },
     "cornish": {
      "words": 34,
-     "shapes": 11,
+     "shapes": 17,
      "target": {
       "words": 30,
       "shapes": 10
@@ -5870,7 +5870,7 @@
     },
     "norse": {
      "words": 30,
-     "shapes": 11,
+     "shapes": 17,
      "target": {
       "words": 30,
       "shapes": 10
@@ -5880,7 +5880,7 @@
     },
     "scandinavian": {
      "words": 30,
-     "shapes": 11,
+     "shapes": 17,
      "target": {
       "words": 30,
       "shapes": 10
@@ -5890,7 +5890,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 18,
+     "shapes": 24,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6154,27 +6154,27 @@
     "strange": 24
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 18,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 8,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 26,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 21,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "marsh": 22,
@@ -6219,7 +6219,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1273,
+   "rowCount": 1578,
    "cultures": {
     "general": {
      "words": 0,
@@ -6229,7 +6229,7 @@
     },
     "english": {
      "words": 34,
-     "shapes": 13,
+     "shapes": 25,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6239,7 +6239,7 @@
     },
     "welsh": {
      "words": 34,
-     "shapes": 13,
+     "shapes": 19,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6249,7 +6249,7 @@
     },
     "scottish": {
      "words": 34,
-     "shapes": 13,
+     "shapes": 31,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6269,7 +6269,7 @@
     },
     "cornish": {
      "words": 34,
-     "shapes": 13,
+     "shapes": 19,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6289,7 +6289,7 @@
     },
     "norse": {
      "words": 31,
-     "shapes": 14,
+     "shapes": 26,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6299,7 +6299,7 @@
     },
     "scandinavian": {
      "words": 30,
-     "shapes": 14,
+     "shapes": 26,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6309,7 +6309,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 15,
+     "shapes": 39,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6573,27 +6573,27 @@
     "strange": 22
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 18,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 8,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 26,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 21,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "plain": 18,
@@ -6638,7 +6638,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 644,
+   "rowCount": 1057,
    "cultures": {
     "general": {
      "words": 0,
@@ -6648,7 +6648,7 @@
     },
     "english": {
      "words": 31,
-     "shapes": 10,
+     "shapes": 94,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6658,7 +6658,7 @@
     },
     "welsh": {
      "words": 31,
-     "shapes": 10,
+     "shapes": 16,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6668,7 +6668,7 @@
     },
     "scottish": {
      "words": 31,
-     "shapes": 10,
+     "shapes": 34,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6688,7 +6688,7 @@
     },
     "cornish": {
      "words": 31,
-     "shapes": 10,
+     "shapes": 16,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6708,7 +6708,7 @@
     },
     "norse": {
      "words": 30,
-     "shapes": 13,
+     "shapes": 37,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6718,7 +6718,7 @@
     },
     "scandinavian": {
      "words": 30,
-     "shapes": 13,
+     "shapes": 37,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6728,7 +6728,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 21,
+     "shapes": 51,
      "target": {
       "words": 30,
       "shapes": 10
@@ -6992,27 +6992,27 @@
     "strange": 6
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 19,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 9,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 27,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 22,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "country": 13,
@@ -7053,7 +7053,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 894,
+   "rowCount": 1211,
    "cultures": {
     "general": {
      "words": 0,
@@ -7063,7 +7063,7 @@
     },
     "english": {
      "words": 31,
-     "shapes": 27,
+     "shapes": 63,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7073,7 +7073,7 @@
     },
     "welsh": {
      "words": 31,
-     "shapes": 27,
+     "shapes": 33,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7083,7 +7083,7 @@
     },
     "scottish": {
      "words": 31,
-     "shapes": 27,
+     "shapes": 51,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7103,7 +7103,7 @@
     },
     "cornish": {
      "words": 31,
-     "shapes": 27,
+     "shapes": 33,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7143,7 +7143,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 13,
+     "shapes": 43,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7407,27 +7407,27 @@
     "strange": 10
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 19,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 9,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 27,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 22,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "river": 0,
@@ -7473,7 +7473,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 818,
+   "rowCount": 1201,
    "cultures": {
     "general": {
      "words": 0,
@@ -7483,7 +7483,7 @@
     },
     "english": {
      "words": 32,
-     "shapes": 23,
+     "shapes": 83,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7493,7 +7493,7 @@
     },
     "welsh": {
      "words": 32,
-     "shapes": 23,
+     "shapes": 29,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7503,7 +7503,7 @@
     },
     "scottish": {
      "words": 32,
-     "shapes": 23,
+     "shapes": 41,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7523,7 +7523,7 @@
     },
     "cornish": {
      "words": 32,
-     "shapes": 23,
+     "shapes": 29,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7543,7 +7543,7 @@
     },
     "norse": {
      "words": 30,
-     "shapes": 16,
+     "shapes": 40,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7553,7 +7553,7 @@
     },
     "scandinavian": {
      "words": 30,
-     "shapes": 16,
+     "shapes": 40,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7563,7 +7563,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 21,
+     "shapes": 51,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7827,27 +7827,27 @@
     "strange": 7
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 19,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 9,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 27,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 22,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "hill": 27,
@@ -7892,7 +7892,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 749,
+   "rowCount": 1162,
    "cultures": {
     "general": {
      "words": 0,
@@ -7902,7 +7902,7 @@
     },
     "english": {
      "words": 31,
-     "shapes": 13,
+     "shapes": 97,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7912,7 +7912,7 @@
     },
     "welsh": {
      "words": 31,
-     "shapes": 13,
+     "shapes": 19,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7922,7 +7922,7 @@
     },
     "scottish": {
      "words": 31,
-     "shapes": 13,
+     "shapes": 37,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7942,7 +7942,7 @@
     },
     "cornish": {
      "words": 31,
-     "shapes": 13,
+     "shapes": 19,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7962,7 +7962,7 @@
     },
     "norse": {
      "words": 30,
-     "shapes": 14,
+     "shapes": 38,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7972,7 +7972,7 @@
     },
     "scandinavian": {
      "words": 30,
-     "shapes": 14,
+     "shapes": 38,
      "target": {
       "words": 30,
       "shapes": 10
@@ -7982,7 +7982,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 18,
+     "shapes": 48,
      "target": {
       "words": 30,
       "shapes": 10
@@ -8246,27 +8246,27 @@
     "strange": 8
    },
    "regions": {
-    "COR": 7,
-    "WCY": 18,
-    "SEA": 20,
-    "EAN": 17,
-    "WMM": 19,
-    "EMD": 25,
-    "NTH": 34,
-    "SBL": 19,
-    "WAL": 9,
-    "SLO": 17,
-    "SHH": 15,
-    "NSI": 10,
-    "DEN": 17,
-    "NOR": 26,
-    "SWE": 23,
-    "ICE": 19,
-    "NDT": 6,
-    "RHN": 6,
-    "MIT": 6,
-    "ALP": 7,
-    "OST": 6
+    "COR": 21,
+    "WCY": 26,
+    "SEA": 30,
+    "EAN": 23,
+    "WMM": 27,
+    "EMD": 31,
+    "NTH": 38,
+    "SBL": 31,
+    "WAL": 22,
+    "SLO": 29,
+    "SHH": 29,
+    "NSI": 22,
+    "DEN": 23,
+    "NOR": 35,
+    "SWE": 29,
+    "ICE": 29,
+    "NDT": 20,
+    "RHN": 15,
+    "MIT": 20,
+    "ALP": 19,
+    "OST": 22
    },
    "kinds": {
     "field": 30,
@@ -8708,7 +8708,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 868,
+   "rowCount": 956,
    "cultures": {
     "general": {
      "words": 0,
@@ -8718,7 +8718,7 @@
     },
     "english": {
      "words": 37,
-     "shapes": 31,
+     "shapes": 67,
      "target": {
       "words": 30,
       "shapes": 10
@@ -8728,7 +8728,7 @@
     },
     "welsh": {
      "words": 30,
-     "shapes": 27,
+     "shapes": 33,
      "target": {
       "words": 30,
       "shapes": 10
@@ -8758,7 +8758,7 @@
     },
     "cornish": {
      "words": 30,
-     "shapes": 27,
+     "shapes": 33,
      "target": {
       "words": 30,
       "shapes": 10
@@ -8798,7 +8798,7 @@
     },
     "german": {
      "words": 30,
-     "shapes": 44,
+     "shapes": 50,
      "target": {
       "words": 30,
       "shapes": 10
@@ -9062,23 +9062,23 @@
     "strange": 18
    },
    "regions": {
-    "COR": 6,
-    "WCY": 15,
-    "SEA": 14,
-    "EAN": 13,
+    "COR": 10,
+    "WCY": 19,
+    "SEA": 16,
+    "EAN": 15,
     "WMM": 6,
     "EMD": 8,
-    "NTH": 11,
-    "SBL": 10,
-    "WAL": 10,
-    "SLO": 8,
-    "SHH": 16,
+    "NTH": 13,
+    "SBL": 12,
+    "WAL": 14,
+    "SLO": 10,
+    "SHH": 18,
     "NSI": 13,
-    "DEN": 18,
-    "NOR": 21,
-    "SWE": 16,
-    "ICE": 20,
-    "NDT": 6,
+    "DEN": 20,
+    "NOR": 23,
+    "SWE": 18,
+    "ICE": 22,
+    "NDT": 8,
     "RHN": 6,
     "MIT": 7,
     "ALP": 7,
@@ -9123,7 +9123,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 771,
+   "rowCount": 805,
    "cultures": {
     "general": {
      "words": 0,
@@ -9477,23 +9477,23 @@
     "strange": 4
    },
    "regions": {
-    "COR": 6,
-    "WCY": 15,
-    "SEA": 14,
-    "EAN": 13,
+    "COR": 10,
+    "WCY": 19,
+    "SEA": 16,
+    "EAN": 15,
     "WMM": 6,
     "EMD": 8,
-    "NTH": 11,
-    "SBL": 10,
-    "WAL": 10,
-    "SLO": 8,
-    "SHH": 16,
+    "NTH": 13,
+    "SBL": 12,
+    "WAL": 14,
+    "SLO": 10,
+    "SHH": 18,
     "NSI": 13,
-    "DEN": 18,
-    "NOR": 21,
-    "SWE": 16,
-    "ICE": 20,
-    "NDT": 6,
+    "DEN": 20,
+    "NOR": 23,
+    "SWE": 18,
+    "ICE": 22,
+    "NDT": 8,
     "RHN": 6,
     "MIT": 7,
     "ALP": 7,
@@ -9538,7 +9538,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 660,
+   "rowCount": 808,
    "cultures": {
     "general": {
      "words": 0,
@@ -9548,7 +9548,7 @@
     },
     "english": {
      "words": 30,
-     "shapes": 27,
+     "shapes": 63,
      "target": {
       "words": 30,
       "shapes": 10
@@ -9558,7 +9558,7 @@
     },
     "welsh": {
      "words": 30,
-     "shapes": 27,
+     "shapes": 33,
      "target": {
       "words": 30,
       "shapes": 10
@@ -9568,7 +9568,7 @@
     },
     "scottish": {
      "words": 30,
-     "shapes": 27,
+     "shapes": 45,
      "target": {
       "words": 30,
       "shapes": 10
@@ -9588,7 +9588,7 @@
     },
     "cornish": {
      "words": 30,
-     "shapes": 27,
+     "shapes": 33,
      "target": {
       "words": 30,
       "shapes": 10
@@ -9608,7 +9608,7 @@
     },
     "norse": {
      "words": 31,
-     "shapes": 14,
+     "shapes": 38,
      "target": {
       "words": 30,
       "shapes": 10
@@ -9618,7 +9618,7 @@
     },
     "scandinavian": {
      "words": 30,
-     "shapes": 11,
+     "shapes": 35,
      "target": {
       "words": 30,
       "shapes": 10
@@ -9892,23 +9892,23 @@
     "strange": 7
    },
    "regions": {
-    "COR": 6,
-    "WCY": 15,
-    "SEA": 14,
-    "EAN": 13,
+    "COR": 10,
+    "WCY": 19,
+    "SEA": 16,
+    "EAN": 15,
     "WMM": 6,
     "EMD": 8,
-    "NTH": 11,
-    "SBL": 10,
-    "WAL": 10,
-    "SLO": 8,
-    "SHH": 16,
+    "NTH": 13,
+    "SBL": 12,
+    "WAL": 14,
+    "SLO": 10,
+    "SHH": 18,
     "NSI": 13,
-    "DEN": 18,
-    "NOR": 21,
-    "SWE": 16,
-    "ICE": 20,
-    "NDT": 6,
+    "DEN": 20,
+    "NOR": 23,
+    "SWE": 18,
+    "ICE": 22,
+    "NDT": 8,
     "RHN": 6,
     "MIT": 7,
     "ALP": 7,
@@ -20168,7 +20168,7 @@
   "cultures": {
    "english": {
     "words": 1064,
-    "shapes": 497
+    "shapes": 893
    },
    "celtic": {
     "words": 432,
@@ -20176,11 +20176,11 @@
    },
    "welsh": {
     "words": 756,
-    "shapes": 453
+    "shapes": 507
    },
    "scottish": {
     "words": 767,
-    "shapes": 463
+    "shapes": 631
    },
    "irish": {
     "words": 690,
@@ -20188,7 +20188,7 @@
    },
    "cornish": {
     "words": 690,
-    "shapes": 453
+    "shapes": 507
    },
    "roman": {
     "words": 257,
@@ -20196,7 +20196,7 @@
    },
    "norse": {
     "words": 622,
-    "shapes": 316
+    "shapes": 436
    },
    "arabic-persian": {
     "words": 151,
@@ -20272,11 +20272,11 @@
    },
    "scandinavian": {
     "words": 617,
-    "shapes": 295
+    "shapes": 415
    },
    "german": {
     "words": 435,
-    "shapes": 288
+    "shapes": 492
    },
    "american": {
     "words": 44,

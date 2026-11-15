@@ -8,6 +8,7 @@ import "../lexiconWiring";
 import BYNAMES from "../data/bynames.json";
 import FILL from "../data/fill.json";
 import PEOPLE from "../data/people.json";
+import { NORTH } from "../northData";
 import { eraWeights, PERSON_SLOT_FORMS, peopleSourceFor, type PeopleEntry, type PeoplePeriod, type PeopleTable } from "../people";
 import { generatedName, type GeneratedList } from "../peopleGenerated";
 import { registerResolver, type FillRequest, type Resolver } from "./index";
@@ -166,12 +167,29 @@ export const surnameResolver: Resolver = (req) => {
  * Celtic by its region, else evenly the four nations), the region second, and only the English keys (and the rest) draw Anglo-Saxon, with the Danelaw share.
  */
 const OLD_NAMES = (FILL as unknown as { oldNames: { default: [string, number][]; regions: Record<string, [string, number][]>; cultures: Record<string, [string, number][]> } }).oldNames;
+/**
+ * Brief 5b §12.3: a name that is also a feature word of a module list ("Turlough", a seasonal lake) is not drawn for an old personal name
+ * ("Turloughing Tarn"): the names come from the people tables, but never one that reads as a landscape word.
+ */
+let featureWords: Set<string> | undefined;
+function featureWordSet(): Set<string> {
+  if (featureWords) return featureWords;
+  featureWords = new Set<string>();
+  const add = (w: unknown) => { if (typeof w === "string") featureWords!.add(w.trim()); };
+  for (const pool of Object.values(NORTH.vocab.pools)) {
+    for (const e of pool.entries ?? []) add(e.w);
+    for (const list of Object.values(pool.cultureExtra ?? {})) for (const e of list) add(e.w);
+  }
+  for (const tag of [...Object.keys(NORTH.wilds.regionTags), ...Object.keys(NORTH.waters.regionTags)]) add(tag.charAt(0).toUpperCase() + tag.slice(1));
+  return featureWords;
+}
 export const oldPersonResolver: Resolver = (req) => {
   const byCulture = OLD_NAMES.cultures[req.culture];
   const weights = (req.culture === "celtic" && req.region ? OLD_NAMES.regions[req.region] : undefined) ?? byCulture ?? (req.region ? OLD_NAMES.regions[req.region] : undefined) ?? OLD_NAMES.default;
   const culture = pickWeighted(weights.map((w) => w[0]), weights.map((w) => w[1]), req.rng);
   const c = context({ ...req, culture, era: "MD", period: "historic", region: undefined });
-  return c ? given(c, "male") : undefined;
+  if (!c) return undefined;
+  return given({ ...c, req: { ...c.req, avoid: new Set([...c.req.avoid, ...featureWordSet()]) } }, "male");
 };
 
 /** Registers the people sources with the filler. */

@@ -6,7 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { balanceSignature, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceRegion, balanceSignature, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -472,6 +472,11 @@ const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const MEAN_CACHE = new Map<string, number>();
 
+/** Brief 5b §12.1: with a region chosen, the shapes weighted for it take their share of the draws. */
+function balanceByRegion<T extends { shape: object }>(ctx: Ctx, plans: [T, number][]): [T, number][] {
+  return ctx.region ? balanceRegion(plans, (plan) => regionWeighted(wildsDataOf(ctx.module).regionTags, (plan.shape as { rt?: string }).rt, ctx.region)) : plans;
+}
+
 /** §3.3: a region tag's multiplier; the mean of its 12 values with no region chosen. */
 function regionMult(ctx: Ctx, tag: string | undefined): number {
   if (!tag) return 1;
@@ -918,7 +923,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
         .filter((s) => kind.key !== "settlement" || sizeOk(s))
         .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, shapeWeight(ctx, s)])
         .filter(([, w]) => w > 0);
-      if (live.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceSignature(live, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt) : live);
+      if (live.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt)) : live);
     }
     return planCache;
   };

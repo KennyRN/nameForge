@@ -4,6 +4,7 @@
 // the river engine). This is the one place that resolves a draw; no engine keeps a copy. Obsidian-free;
 // every roll comes from the stream the module passes in.
 
+import { isRealPlace } from "../realPlaces";
 import LENS from "../data/lens.json";
 import { generatePlaceNames, type ResolvedSlot } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
@@ -205,13 +206,14 @@ export function drawKind(kind: KindSources, ctx: SourceContext, own: () => strin
 // ── The filler's place and river sources (shared tables brief §5.2) ──────────────────────────────
 
 /** "[place]", "[town]", "[homeland place name]": a settlement name of the state's culture at home, one word or two. */
-function fillPlace(culture: string, region: string | undefined, rng: () => number): string | undefined {
+function fillPlace(culture: string, region: string | undefined, rng: () => number, oneWord = false): string | undefined {
   // Shared tables brief §13.2 item 2: the culture's settlement names, else those of the nearest lens-family culture that has some, else General.
   for (const candidate of placeCultures(culture)) {
     for (let attempt = 0; attempt < 6; attempt++) {
       const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng });
       if (name === undefined) break; // this culture has no settlement names
-      if (name.split(/\s+/).length <= 2) return name;
+      // Brief 5b §12.3: a well-known real place ("Bath") is drawn again; a second place fill in one name is a single word.
+      if (name.split(/\s+/).length <= (oneWord ? 1 : 2) && !isRealPlace(name)) return name;
     }
   }
   return undefined;
@@ -241,19 +243,28 @@ const placeFill = (draw: () => string | undefined, req: FillRequest): string | u
   let last: string | undefined;
   for (let attempt = 0; attempt < 6; attempt++) {
     last = settled(draw(), req);
-    if (last !== undefined && !/\[/.test(last)) return last;
+    if (last !== undefined && !/\[/.test(last) && !isRealPlace(last)) return last;
   }
   return last;
 };
 /** Northern Europe brief 5a §11.6: until batch 5b gives German settlement names, a German place is a person and a generic of its own ("Hugo\'s Mill", "Keller Castle"). */
 const GERMAN_GENERICS: [string, number][] = [["Castle", 4], ["Mark", 3], ["Mill", 3], ["Heath", 2]];
+/** Brief 5b §12.3: words that join and do not name a feature, so a name made of them and a fill alone has no generic of its own. */
+const JOINING = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a", "from", "for", "near", "off", "beside", "under", "over", "above", "below", "beyond", "past", "new", "old", "great", "little", "upper", "lower", "north", "south", "east", "west"]);
+/** Whether the rest of a name already holds a word of its own besides joining words ("Hanse Quay", "Coast of"). */
+const hasOwnWords = (rest: string | undefined): boolean => (rest ?? "").split(/[^A-Za-z]+/).some((w) => w.length > 1 && !JOINING.has(w.toLowerCase()));
 function germanPlace(req: FillRequest): string | undefined {
+  // Brief 5b §12.3: a name takes one fill and one generic: with a feature word beside it (or another place fill) the German place is a bare name ("Becker").
+  if (req.placeBefore || hasOwnWords(req.rest)) {
+    const bare = fillSlots(req.rng() < 0.5 ? "[surname]" : "[name]", { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });
+    return /\[/.test(bare) ? undefined : bare;
+  }
   let roll = req.rng() * GERMAN_GENERICS.reduce((s, g) => s + g[1], 0);
   const generic = (GERMAN_GENERICS.find((g) => (roll -= g[1]) < 0) ?? GERMAN_GENERICS[0])[0];
   const template = req.rng() < 0.5 ? `[name]'s ${generic}` : `[surname] ${generic}`;
   const name = fillSlots(template, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });
   return /\[/.test(name) ? undefined : name;
 }
-registerResolver("place", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(req.culture, req.region, req.rng), req));
-registerResolver("earlierPlace", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng) ?? fillPlace(req.culture, req.region, req.rng), req));
+registerResolver("place", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(req.culture, req.region, req.rng, !!req.placeBefore), req));
+registerResolver("earlierPlace", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng, !!req.placeBefore) ?? fillPlace(req.culture, req.region, req.rng, !!req.placeBefore), req));
 registerResolver("river", (req) => settled(drawFromDelegate({ engine: "rivers" }, { where: "home", culture: req.culture, region: req.region, rng: req.rng }), req));

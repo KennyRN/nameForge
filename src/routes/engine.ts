@@ -41,7 +41,7 @@ import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type V
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
-import { balanceSignature, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceRegion, balanceSignature, regionWeighted, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -643,7 +643,9 @@ function kindPlans(ctx: Ctx, kind: RouteKind, only?: string): [Plan, number][] {
     .map((s): [Plan, number] => [{ kind, shape: s, borrowed: false, scale: ctx.scale }, shapeWeight(ctx, kind, s)])
     .filter(([, w]) => w > 0);
   // Northern Europe brief 5a §11.3: a core culture's signature frames take their share.
-  return balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!plan.shape.r);
+  const signed = balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!plan.shape.r);
+  // Brief 5b §12.1: with a region chosen, the shapes weighted for it take their share.
+  return ctx.region ? balanceRegion(signed, (plan) => regionWeighted(ROUTE_DATA.regions, plan.shape.r, ctx.region)) : signed;
 }
 
 /** §7: the culture's road, trade, pilgrim and sea shapes with a place, as space lanes. */

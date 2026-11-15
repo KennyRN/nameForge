@@ -1,6 +1,7 @@
 // Northern Europe tables brief, batch 5a: the batch's own data (src/data/north5a.json, written by
 // scripts/make-north5a.mjs) and the merges the engines and coverage adapters share. No Obsidian imports.
 
+import lensData from "./data/lens.json";
 import north from "./data/north5a.json";
 
 type Row = Record<string, number>;
@@ -33,7 +34,9 @@ export const NORTH = north as unknown as NorthData & { nounPools: string[] };
 // ── Brief 5a §11.3: the culture shows ───────────────────────────────────────
 
 /** The share of a kind's draws the signature frames of a core culture (or Celtic) take. */
-export const SIGNATURE_SHARE = 0.4;
+export const SIGNATURE_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.signature;
+/** Brief 5b §12.1: the share of a module's own-shape draws that region-weighted shapes take when a region is chosen. */
+export const REGION_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.region;
 
 /**
  * §11.3: scale the signature plans (the batch's own, `sig`) so they hold `SIGNATURE_SHARE` of the total weight, as the weights stand
@@ -48,6 +51,28 @@ export function balanceSignature<T>(plans: [T, number][], isSig: (p: T) => boole
   const k = (SIGNATURE_SHARE / (1 - SIGNATURE_SHARE)) * (rest / sig);
   return plans.map(([p, w]): [T, number] => [p, isSig(p) ? w * k : w]);
 }
+
+/** Tests: called with each region balance made (module, culture, region, the live regional plans, all live plans). */
+let regionProbe: ((info: { regional: number; total: number }) => void) | undefined;
+export const setRegionProbe = (fn: typeof regionProbe): void => { regionProbe = fn; };
+
+/**
+ * Brief 5b §12.1: when a region is chosen, the plans weighted for it (`isRegional`) hold `REGION_SHARE` of the total weight, as the weights stand.
+ * Nothing changes when none are live or when only they are.
+ */
+export function balanceRegion<T>(plans: [T, number][], isRegional: (p: T) => boolean): [T, number][] {
+  let reg = 0;
+  let rest = 0;
+  let n = 0;
+  for (const [p, w] of plans) if (isRegional(p)) { reg += w; n++; } else rest += w;
+  regionProbe?.({ regional: n, total: plans.length });
+  if (reg <= 0 || rest <= 0) return plans;
+  const k = (REGION_SHARE / (1 - REGION_SHARE)) * (rest / reg);
+  return plans.map(([p, w]): [T, number] => [p, isRegional(p) ? w * k : w]);
+}
+
+/** Whether a region tag is weighted for the chosen region: its row gives the region a weight of 1 or more. */
+export const regionWeighted = (rows: Record<string, Record<string, number>>, tag: string | undefined, region: string | undefined): boolean => !!tag && !!region && (rows[tag]?.[region] ?? 0) >= 1;
 
 // ── §11.3: no noun twice in a batch ─────────────────────────────────────────
 

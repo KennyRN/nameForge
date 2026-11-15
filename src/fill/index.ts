@@ -57,6 +57,10 @@ export interface FillRequest {
   sex?: "male" | "female";
   /** Northern Europe brief 5a §11.6: the fill follows a bare generic ("Lake [holy person]"): a holy fill takes "Saint {n}" or the bare name, a person fill no title. */
   plain?: boolean;
+  /** Brief 5b §12.3: the rest of the name around the bracket, other brackets left out ("Coast of", "Hanse Quay"); only for place sources. */
+  rest?: string;
+  /** Brief 5b §12.3: the name already holds a place fill: a name takes at most one, so this one is a single word. */
+  placeBefore?: boolean;
   /** Fills already used for this label in this name: a resolver should avoid them. */
   avoid: ReadonlySet<string>;
 }
@@ -129,6 +133,8 @@ const BATCH_AGAIN = 40;
 /** Shared tables brief §13.2 item 1: a place fill is drawn again, up to this many times, when it repeats the feature's generic. */
 const PLACE_AGAIN = 10;
 const PLACE_SOURCES = new Set(["place", "earlierPlace"]);
+/** Brief 5b §12.3: the sources whose fill must not repeat the generic it follows or precedes ("Lake of Alder Valley", "River River Mother"). */
+const GUARDED_SOURCES = new Set(["place", "earlierPlace", "deity", "folk"]);
 /** Shared tables brief §14.2: the endings that make a personal name an old one ("Godricing", "Cuthbertington", "Wulfingham"). */
 /** Northern Europe brief 5a §11.6: words after which a fill is not following a generic ("Isle of [folk]", "Hall in [place]"). */
 const NOT_GENERIC = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "with", "to", "a", "from", "for", "near"]);
@@ -147,13 +153,19 @@ const STOP_WORDS = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", 
  * "[place] Hill" with "Ashhill". The fill's last word equals a word of the rest of the name, or ends with it.
  */
 export function repeatsGeneric(fill: string, rest: string): boolean {
-  const last = fill.trim().split(/\s+/).pop()?.toLowerCase().replace(/[^a-z]/g, "") ?? "";
-  if (last.length < 3) return false;
-  return rest
+  const words = fill.trim().split(/\s+/);
+  const clean = (w: string | undefined) => w?.toLowerCase().replace(/[^a-z]/g, "") ?? "";
+  const last = clean(words[words.length - 1]);
+  // Brief 5b §12.3: a fill that starts with the generic it follows ("River" + "River Mother") repeats it too.
+  const first = clean(words[0].toLowerCase() === "the" ? words[1] : words[0]);
+  const around = rest
     .replace(/\[[^\]]*\]/g, " ")
     .toLowerCase()
     .split(/[^a-z]+/)
-    .some((w) => w.length >= 3 && !STOP_WORDS.has(w) && (last === w || (w.length >= 4 && last.endsWith(w))));
+    .filter((w) => w.length >= 3 && !STOP_WORDS.has(w));
+  if (first.length >= 3 && words.length > 1 && around.includes(first)) return true;
+  if (last.length < 3) return false;
+  return around.some((w) => last === w || (w.length >= 4 && last.endsWith(w)));
 }
 
 /** Shared tables brief §13.2 item 5: titles that need a name after them, and the sex each implies. */
@@ -174,6 +186,7 @@ export function fillSlots(name: string, ctx: FillContext): string {
   const period = fillPeriod(era);
   const used = new Map<string, Set<string>>();
   let any = false;
+  let placeDone = 0;
   const filled = name.replace(/\[([^\]]+)\]/g, (whole: string, label: string, offset: number) => {
     let info = labelInfo(label);
     if (!info) return whole;
@@ -191,14 +204,18 @@ export function fillSlots(name: string, ctx: FillContext): string {
       const seen = ctx.series ? undefined : ctx.batchSeen?.get(key);
       const avoid = seen && seen.size > 0 ? new Set([...inName, ...seen]) : inName;
       const place = PLACE_SOURCES.has(info.source);
+      const guarded = GUARDED_SOURCES.has(info.source);
       const slot = ctx.personAsFounder && info.source === "person" && (key === "person" || key === "personal name") ? "founder" : info.slot;
-      const rest = place ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
-      const tries = seen && seen.size > 0 ? BATCH_AGAIN : place ? PLACE_AGAIN : AGAIN;
+      const rest = guarded ? `${name.slice(0, offset)} ${name.slice(offset + whole.length)}` : "";
+      const tries = seen && seen.size > 0 ? BATCH_AGAIN : guarded ? PLACE_AGAIN : AGAIN;
+      // Brief 5b §12.3: a name takes at most one place fill; a second is a single word.
+      const placeBefore = place && placeDone > 0;
       for (let attempt = 0; attempt < tries; attempt++) {
-        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...(plain ? { plain } : {}), avoid });
-        if (fill === undefined || (!avoid.has(fill) && !(place && repeatsGeneric(fill, rest)))) break;
+        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...(plain ? { plain } : {}), ...(place ? { rest: rest.replace(/\[[^\]]*\]/g, " ").replace(/\s+/g, " ").trim(), ...(placeBefore ? { placeBefore } : {}) } : {}), avoid });
+        if (fill === undefined || (!avoid.has(fill) && !(guarded && repeatsGeneric(fill, rest)))) break;
       }
       if (fill === undefined) return whole;
+      if (place) placeDone++;
       ctx.series?.set(key, fill);
       if (ctx.batchSeen && !ctx.series) ctx.batchSeen.set(key, (ctx.batchSeen.get(key) ?? new Set<string>()).add(fill));
     }
@@ -208,6 +225,8 @@ export function fillSlots(name: string, ctx: FillContext): string {
     if (/\bthe\s$/i.test(before)) fill = fill.replace(/^the\s+/i, "");
     // A folk fill after "of" takes "the" ("Isle of the Fell People").
     else if (info.source === "folk" && /\bof\s$/i.test(before) && !/^the\s/i.test(fill)) fill = `the ${fill}`;
+    // Brief 5b §12.3: a deity fill is an epithet ("Keeper of Masks"): after "of" it takes "the" ("Valley of the Keeper of Masks").
+    else if (info.source === "deity" && /\bof\s$/i.test(before) && !/^(the|she|he|they|one)\s/i.test(fill)) fill = `the ${fill}`;
     if (/^['’]s\b/.test(after)) fill = fill.replace(/['’]s$/, "");
     any = true;
     return fill;

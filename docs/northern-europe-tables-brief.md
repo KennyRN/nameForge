@@ -178,3 +178,34 @@ Output is English words in a standard dictionary: Barrow Wight (a coinage) becom
 ### 11.6 Fills and sources
 
 Holy and title fills never follow a bare generic (they take "Saint {n}", or "of" or a possessive); folk fills never follow a bare generic and take "the" after "of"; old personal names go by culture first, region second; the British shapes source never runs for Norse, Scandinavian or German; rivers at home never use the native forms; the plain narrow-valley word reads "Combe" for Welsh and Cornish; German `[place]` fills read the German people tables (as "{given}'s {generic}" or "{surname} {generic}") until batch 5b adds German settlement names.
+
+## 12. Amendment of 16 November 2026: regions, strays and batch 5b
+
+Part A finishes batch 5a; Part B is batch 5b (settlement names, streets and districts, inns and taverns, buildings and landmarks, monuments and statues, the settlement kit).
+
+### 12.1 Region share
+
+When a region is chosen (not "across all of…"), entries weighted for that region (a `regionTags` weight of 1 or more for the chosen region, or an `r` tag naming it) take **30%** of the module's own-shape draws, in every region-reading module, for British, Scandinavian and German regions alike. "Across all of…" is unchanged. The share is in `lens.json` (`shares.region`) beside the signature share (`shares.signature`, 40%). It is applied after the signature share.
+
+### 12.2 Region depth and exemptions
+
+Each region has at least **6** region-weighted shapes in each land and water module whose landscape it has (counted from the live plans of a chosen region, not from the tag tables). A region that lacks a module's landscape is marked exempt in `lens.json` (`regionExempt`) and its draws fall back to the culture's own: mountains for NDT, DEN, OST and EAN; forests for ICE and NSI; moors for RHN and ALP; wetlands for RHN, MIT and ALP; grasslands for RHN; seas and bays for ALP, WMM and EMD; coasts for WMM and EMD; sea charts for every inland region (RHN, MIT, ALP, OST, WMM, EMD). The new entries are in `scripts/north5a/regionPacks.mjs`: two region words per module, each with three frames written for it.
+
+### 12.3 Fills
+
+- A fill that starts with the generic it follows ("River" + "River Mother") is drawn again, as one that ends with it is; the guard covers place, earlier-name, deity and folk fills.
+- Old personal names come from the people tables only and never a name that is also a feature word of a module list ("Turlough").
+- A name takes at most one `[place]` fill: a second is a single word, and a German place beside a feature word is a bare name until German settlement names (Part B).
+- A deity fill after "of" takes "the" ("Valley of the Keeper of Masks").
+- A plural before a people word is singular ("Hill Ploughmen").
+- A `[place]` fill that is on the real-place list (`src/data/real-places.json`, the 150 of §9 and real towns such as Bath) is drawn again.
+
+### 12.4 Dictionary check
+
+Every loanword is checked against a standard English dictionary; those that are not there are replaced by their English sense (listed in `docs/northern-europe-5a.md`).
+
+### 12.5 Decisions for batch 5b
+
+- Settlement names come first, as the `[place]` source of every module. Each core culture gets settlement names of its own at home, translated into English; the `[place]` fill then reads each culture's own settlement names (replacing the interim German rule); the family chain stays as the fallback for cultures without their own. Newly explored and settled lands keep the colonial engine.
+- The other five modules meet §6 and §7 with the 5a counting and the region share and depth of §12.1 and §12.2 where they read regions; the settlement kit composes the others.
+- Non-core cultures stay byte-identical to a 5b M0 baseline in the six modules; retired presets are unchanged; English output only; no famous real place as a fixed name or fill; every entry is written to `docs/northern-europe-5b.md`.

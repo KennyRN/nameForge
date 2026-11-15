@@ -5,7 +5,7 @@
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { balanceSignature, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceRegion, balanceSignature, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
@@ -277,6 +277,11 @@ interface Ctx {
 const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("light") || t.includes("grim"));
 const pickOne = <T>(items: T[], rng: () => number): T => items[Math.floor(rng() * items.length)];
 const MEAN_CACHE = new Map<string, number>();
+
+/** Brief 5b §12.1: with a region chosen, the shapes weighted for it take their share of the draws. */
+function balanceByRegion<T extends { shape: object }>(ctx: Ctx, plans: [T, number][]): [T, number][] {
+  return ctx.region ? balanceRegion(plans, (plan) => regionWeighted(WATERS_DATA.regionTags, (plan.shape as { rt?: string }).rt, ctx.region)) : plans;
+}
 
 /** §3.3: a region tag's multiplier; the mean of its 12 values with no region chosen. */
 function regionMult(ctx: Ctx, tag: string | undefined): number {
@@ -680,7 +685,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
           .filter((s) => !options.shape || s.p === options.shape)
           .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)])
           .filter(([, w]) => w > 0);
-        if (live.length > 0) plans.set(kind.key, ctx.where === "home" ? balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!(plan.shape as { rt?: string }).rt) : live);
+        if (live.length > 0) plans.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!(plan.shape as { rt?: string }).rt)) : live);
       }
     } else {
       for (const kind of hyperKindsAt(scale)) {

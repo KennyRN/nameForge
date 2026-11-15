@@ -10,7 +10,7 @@ Keys: anglo-saxon, norman-british. Names with the generic last.
 
 ### Module nouns (§11.2): three lists per module, one per main kind
 
-- **mountainNames, peak (nMountainPeak):** Beacon Hill ‹AN-MD›, Crag ‹AN-MD›, Cairn Top ‹AN-MD›, Tor ‹EM-ST›, Pike ‹EM-ST›, Knott ‹EM-ST›, Summit Cairn ‹ST-MO›, Trig Point ‹ST-MO›, Giant's Seat ‹h›, High Top
+- **mountainNames, peak (nMountainPeak):** Beacon Hill ‹AN-MD›, Crag ‹AN-MD›, Cairn Top ‹AN-MD›, Tor ‹EM-ST›, Pike ‹EM-ST›, Knob ‹EM-ST›, Summit Cairn ‹ST-MO›, Trig Point ‹ST-MO›, Giant's Seat ‹h›, High Top
 - **mountainNames, ridge (nMountainRidge):** Edge ‹AN-MD›, Hog's Back ‹AN-MD›, Scar ‹AN-MD›, Rigg ‹EM-ST›, Escarpment ‹EM-ST›, Hanger ‹EM-ST›, Bluff ‹ST-MO›, Skyline ‹ST-MO›, Dragon's Back ‹h›, Brow
 - **mountainNames, range (nMountainRange):** Fells ‹AN-MD›, Downs ‹AN-MD›, Wolds ‹AN-MD›, Tops ‹EM-ST›, Uplands ‹EM-ST›, Pikes ‹EM-ST›, Heights ‹ST-MO›, Massif ‹ST-MO›, Giants' Chain ‹h›, Hills
 - **forestNames, forest (nWoodForest):** Greenwood ‹AN-MD›, Chase ‹AN-MD›, Weald ‹AN-MD›, Coppice ‹EM-ST›, Plantation ‹EM-ST›, Warren Wood ‹EM-ST›, Pinewood ‹ST-MO›, Woodland ‹ST-MO›, Green Man's Wood ‹h›, Forest
@@ -170,14 +170,14 @@ Keys: scottish. Names with the generic last.
 - **grasslandNames, down (nGrassDown):** Shieling ‹AN-MD›, Hill Grazing ‹AN-MD›, Summer Grazing ‹AN-MD›, Sheep Grazing ‹EM-ST›, Drove Grazing ‹EM-ST›, Common Grazing ‹EM-ST›, Crofters' Grazing ‹ST-MO›, Hill Farm Grazing ‹ST-MO›, Brownie's Shieling ‹h›, Grazing
 - **grasslandNames, vale (nGrassVale):** Strath ‹AN-MD›, Dale ‹AN-MD›, Haugh ‹AN-MD›, River Haugh ‹EM-ST›, Meadow Haugh ‹EM-ST›, Mill Haugh ‹EM-ST›, Reservoir Strath ‹ST-MO›, Bypass Strath ‹ST-MO›, Fairy Strath ‹h›, Vale
 - **lands, country (nLandsCountry):** Thanedom ‹AN-MD›, Earldom ‹AN-MD›, Lordship ‹AN-MD›, Regality ‹EM-ST›, Barony ‹EM-ST›, Sheriffdom ‹EM-ST›, Council Area ‹ST-MO›, Region ‹ST-MO›, Land Under the Hill ‹h›, Kingdom
-- **lands, shire (nLandsShire):** Davoch ‹AN-MD›, Ploughgate ‹AN-MD›, Toun ‹AN-MD›, Estate ‹EM-ST›, Barony Land ‹EM-ST›, Policy ‹EM-ST›, Community Land ‹ST-MO›, Land Reform Estate ‹ST-MO›, Fairy Land ‹h›, Lands
+- **lands, shire (nLandsShire):** Ploughland ‹AN-MD›, Ploughgate ‹AN-MD›, Town ‹AN-MD›, Estate ‹EM-ST›, Barony Land ‹EM-ST›, Policy ‹EM-ST›, Community Land ‹ST-MO›, Land Reform Estate ‹ST-MO›, Fairy Land ‹h›, Lands
 - **lands, parish (nLandsParish):** Parish ‹AN-MD›, Kirk Parish ‹AN-MD›, Clachan ‹AN-MD›, Burgh ‹EM-ST›, Landward Parish ‹EM-ST›, Mining Parish ‹EM-ST›, Community Council ‹ST-MO›, Ward ‹ST-MO›, Haunted Parish ‹h›, Township
 - **farmland, field (nFarmField):** Rig ‹AN-MD›, Runrig ‹AN-MD›, Infield ‹AN-MD›, Outfield ‹EM-ST›, Park ‹EM-ST›, Enclosed Park ‹EM-ST›, Croft Field ‹ST-MO›, Set-aside Park ‹ST-MO›, Brownie's Field ‹h›, Field
-- **farmland, farm (nFarmFarm):** Croft ‹AN-MD›, Steading ‹AN-MD›, Fermtoun ‹AN-MD›, Farm Toun ‹EM-ST›, Mains ‹EM-ST›, Home Farm ‹EM-ST›, Crofting Township ‹ST-MO›, Farm Shop ‹ST-MO›, Fairy Croft ‹h›, Farm
-- **farmland, enclosure (nFarmEnclosure):** Fank ‹AN-MD›, Fold ‹AN-MD›, Park Dyke ‹AN-MD›, Dyked Park ‹EM-ST›, Drove Stance ‹EM-ST›, Stell ‹EM-ST›, Livestock Pen ‹ST-MO›, Paddock ‹ST-MO›, Fairy Fold ‹h›, Pen
+- **farmland, farm (nFarmFarm):** Croft ‹AN-MD›, Steading ‹AN-MD›, Farm Town ‹AN-MD›, Home Town ‹EM-ST›, Mains ‹EM-ST›, Home Farm ‹EM-ST›, Crofting Township ‹ST-MO›, Farm Shop ‹ST-MO›, Fairy Croft ‹h›, Farm
+- **farmland, enclosure (nFarmEnclosure):** Sheep Pen ‹AN-MD›, Fold ‹AN-MD›, Park Dyke ‹AN-MD›, Dyked Park ‹EM-ST›, Drove Stance ‹EM-ST›, Stell ‹EM-ST›, Livestock Pen ‹ST-MO›, Paddock ‹ST-MO›, Fairy Fold ‹h›, Pen
 - **hillsValleys, hill (nHillHill):** Law ‹AN-MD›, Knowe ‹AN-MD›, Dun ‹AN-MD›, Brae ‹EM-ST›, Hillock ‹EM-ST›, Monument Hill ‹EM-ST›, Viewpoint ‹ST-MO›, Country Park Hill ‹ST-MO›, Fairy Knowe ‹h›, Hill
 - **hillsValleys, valley (nHillValley):** Glen ‹AN-MD›, Dean ‹AN-MD›, Cleugh ‹AN-MD›, Gorge ‹EM-ST›, Mill Glen ‹EM-ST›, Clearance Glen ‹EM-ST›, Hydro Glen ‹ST-MO›, Heritage Glen ‹ST-MO›, Glen of the Fair Folk ‹h›, Valley
-- **hillsValleys, ridge (nHillRidge):** Rig ‹AN-MD›, Shoulder ‹AN-MD›, Edge ‹AN-MD›, Heugh ‹EM-ST›, Scaur ‹EM-ST›, Crag Ridge ‹EM-ST›, Skyline ‹ST-MO›, Escarpment ‹ST-MO›, Giant's Back ‹h›, Ridge
+- **hillsValleys, ridge (nHillRidge):** Rig ‹AN-MD›, Shoulder ‹AN-MD›, Edge ‹AN-MD›, Cliff ‹EM-ST›, Scaur ‹EM-ST›, Crag Ridge ‹EM-ST›, Skyline ‹ST-MO›, Escarpment ‹ST-MO›, Giant's Back ‹h›, Ridge
 - **riversInland, stream (nRiverStream):** Burn ‹AN-MD›, Water ‹AN-MD›, Rill ‹AN-MD›, Mill Lade ‹EM-ST›, Lade ‹EM-ST›, Cut ‹EM-ST›, Culvert ‹ST-MO›, Drain ‹ST-MO›, Kelpie's Burn ‹h›, Stream
 - **riversInland, lake (nRiverLake):** Loch ‹AN-MD›, Lochan ‹AN-MD›, Tarn ‹AN-MD›, Mill Dam ‹EM-ST›, Curling Pond ‹EM-ST›, Estate Loch ‹EM-ST›, Hydro Loch ‹ST-MO›, Reservoir ‹ST-MO›, Loch Monster's Loch ‹h›, Lake
 - **riversInland, falls (nRiverFalls):** Linn ‹AN-MD›, Spout ‹AN-MD›, Force ‹AN-MD›, Cascade ‹EM-ST›, Salmon Leap ‹EM-ST›, Weir ‹EM-ST›, Hydro Fall ‹ST-MO›, Spillway ‹ST-MO›, Kelpie's Leap ‹h›, Falls
@@ -228,7 +228,7 @@ Keys: irish. Names with the generic first.
 
 - **mountainNames, peak (nMountainPeak):** Cairn ‹AN-MD›, Cliff Top ‹AN-MD›, Saint's Peak ‹AN-MD›, Penal Mass Rock ‹EM-ST›, Famine Peak ‹EM-ST›, Copper Mine Hill ‹EM-ST›, Pilgrim Peak ‹ST-MO›, Climbers' Peak ‹ST-MO›, Fairy Peak ‹h›, Pinnacle
 - **mountainNames, ridge (nMountainRidge):** Hill Spur ‹AN-MD›, Shoulder ‹AN-MD›, Cliff Edge ‹AN-MD›, Lazy Bed Ridge ‹EM-ST›, Mine Ridge ‹EM-ST›, Spoil Ridge ‹EM-ST›, Walkers' Ridge ‹ST-MO›, Skyline ‹ST-MO›, Giant's Back ‹h›, Ridge
-- **mountainNames, range (nMountainRange):** Mountains ‹AN-MD›, Uplands ‹AN-MD›, Hills ‹AN-MD›, Rebel Hills ‹EM-ST›, Mining Hills ‹EM-ST›, Bog Hills ‹EM-ST›, National Park ‹ST-MO›, Heights ‹ST-MO›, Fianna Hills ‹h›, Range
+- **mountainNames, range (nMountainRange):** Mountains ‹AN-MD›, Uplands ‹AN-MD›, Hills ‹AN-MD›, Rebel Hills ‹EM-ST›, Mining Hills ‹EM-ST›, Bog Hills ‹EM-ST›, National Park ‹ST-MO›, Heights ‹ST-MO›, War Band Hills ‹h›, Range
 - **forestNames, forest (nWoodForest):** Oak Wood ‹AN-MD›, Yew Wood ‹AN-MD›, Holy Wood ‹AN-MD›, Demesne Wood ‹EM-ST›, Estate Wood ‹EM-ST›, Planted Wood ‹EM-ST›, Conifer Forest ‹ST-MO›, Heritage Woodland ‹ST-MO›, Fairy Wood ‹h›, Forest
 - **forestNames, grove (nWoodGrove):** Hazel Grove ‹AN-MD›, Sacred Grove ‹AN-MD›, Saint's Grove ‹AN-MD›, Yew Grove ‹EM-ST›, Mass Grove ‹EM-ST›, Hedge School Grove ‹EM-ST›, Memorial Grove ‹ST-MO›, Picnic Grove ‹ST-MO›, Fairy Thorn Grove ‹h›, Grove
 - **forestNames, clearing (nWoodClearing):** Clearing ‹AN-MD›, Forest Glade ‹AN-MD›, Fort Clearing ‹AN-MD›, Charcoal Clearing ‹EM-ST›, Keeper's Glade ‹EM-ST›, Turf Glade ‹EM-ST›, Forestry Clearing ‹ST-MO›, Picnic Glade ‹ST-MO›, Pooka's Glade ‹h›, Glade
@@ -236,13 +236,13 @@ Keys: irish. Names with the generic first.
 - **moorNames, hill (nMoorHill):** Fairy Mound ‹AN-MD›, Round Hill ‹AN-MD›, Cairn Hill ‹AN-MD›, Fort Hill ‹EM-ST›, Mass Hill ‹EM-ST›, Beacon Hill ‹EM-ST›, Viewpoint Hill ‹ST-MO›, Heritage Hill ‹ST-MO›, Hill of the Sidhe Folk ‹h›, Hill
 - **moorNames, stone (nMoorStone):** Standing Stone ‹AN-MD›, Ogham Stone ‹AN-MD›, Boundary Stone ‹AN-MD›, Mass Rock ‹EM-ST›, Penal Stone ‹EM-ST›, Milestone ‹EM-ST›, Memorial Stone ‹ST-MO›, Heritage Stone ‹ST-MO›, Giant's Stone ‹h›, Rock
 - **wetlandNames, marsh (nWetMarsh):** Raised Bog ‹AN-MD›, Turf Bog ‹AN-MD›, Fen ‹AN-MD›, Cutaway Bog ‹EM-ST›, Peat Bog ‹EM-ST›, Drained Bog ‹EM-ST›, Bog Reserve ‹ST-MO›, Boardwalk Bog ‹ST-MO›, Bog Spirit's Bog ‹h›, Bog
-- **wetlandNames, bog (nWetBog):** Turlough ‹AN-MD›, Callow ‹AN-MD›, Water Meadow ‹AN-MD›, Flood Meadow ‹EM-ST›, Reclaimed Callow ‹EM-ST›, Shannon Callow ‹EM-ST›, Nature Reserve ‹ST-MO›, Wetland Trail ‹ST-MO›, Vanishing Lake ‹h›, Marsh
+- **wetlandNames, bog (nWetBog):** Turlough ‹AN-MD›, River Meadow ‹AN-MD›, Water Meadow ‹AN-MD›, Flood Meadow ‹EM-ST›, Reclaimed Meadow ‹EM-ST›, Floodplain Meadow ‹EM-ST›, Nature Reserve ‹ST-MO›, Wetland Trail ‹ST-MO›, Vanishing Lake ‹h›, Marsh
 - **wetlandNames, isle (nWetIsle):** Crannog ‹AN-MD›, Lake Isle ‹AN-MD›, Island Hermitage ‹AN-MD›, Heron Isle ‹EM-ST›, Abbey Isle ‹EM-ST›, Duck Isle ‹EM-ST›, Bird Isle ‹ST-MO›, Nature Isle ‹ST-MO›, Isle of the Ever Young ‹h›, Isle
 - **grasslandNames, plain (nGrassPlain):** Pasture ‹AN-MD›, Cow Pasture ‹AN-MD›, Rath Pasture ‹AN-MD›, Landlord's Pasture ‹EM-ST›, Grazing Ranch ‹EM-ST›, Common Pasture ‹EM-ST›, Stud Farm Pasture ‹ST-MO›, Show Field ‹ST-MO›, Fairy Pasture ‹h›, Green
 - **grasslandNames, down (nGrassDown):** Plain ‹AN-MD›, Fair Green ‹AN-MD›, Meadow ‹AN-MD›, Fair Field ‹EM-ST›, Hurling Field ‹EM-ST›, Racecourse ‹EM-ST›, Gaelic Pitch ‹ST-MO›, Playing Field ‹ST-MO›, Plain of Delight ‹h›, Meadow
 - **grasslandNames, vale (nGrassVale):** Glen ‹AN-MD›, Valley ‹AN-MD›, Bottom ‹AN-MD›, Mill Valley ‹EM-ST›, Estate Valley ‹EM-ST›, Famine Valley ‹EM-ST›, Reservoir Valley ‹ST-MO›, Heritage Valley ‹ST-MO›, Hidden Valley ‹h›, Vale
 - **lands, country (nLandsCountry):** Kingdom ‹AN-MD›, Over-kingdom ‹AN-MD›, Petty Kingdom ‹AN-MD›, Earldom ‹EM-ST›, Palatine ‹EM-ST›, County ‹EM-ST›, Republic ‹ST-MO›, Province ‹ST-MO›, Land of the Ever Young ‹h›, Territory
-- **lands, shire (nLandsShire):** Townland ‹AN-MD›, Ballybetagh ‹AN-MD›, Cantred ‹AN-MD›, Barony ‹EM-ST›, Plantation Estate ‹EM-ST›, Estate ‹EM-ST›, Congested District ‹ST-MO›, Electoral Division ‹ST-MO›, Fairy Territory ‹h›, Lands
+- **lands, shire (nLandsShire):** Townland ‹AN-MD›, Tribal District ‹AN-MD›, Hundred ‹AN-MD›, Barony ‹EM-ST›, Plantation Estate ‹EM-ST›, Estate ‹EM-ST›, Congested District ‹ST-MO›, Electoral Division ‹ST-MO›, Fairy Territory ‹h›, Lands
 - **lands, parish (nLandsParish):** Parish ‹AN-MD›, Saint's Parish ‹AN-MD›, Church Land ‹AN-MD›, Civil Parish ‹EM-ST›, Union ‹EM-ST›, Poor Law Union ‹EM-ST›, Community ‹ST-MO›, Ward ‹ST-MO›, Haunted Parish ‹h›, Hamlet
 - **farmland, field (nFarmField):** Field ‹AN-MD›, Rundale Field ‹AN-MD›, Cow Field ‹AN-MD›, Lazy Beds ‹EM-ST›, Potato Garden ‹EM-ST›, Strip Field ‹EM-ST›, Set-aside Field ‹ST-MO›, Paddock ‹ST-MO›, Fairy Field ‹h›, Garden
 - **farmland, farm (nFarmFarm):** Farm ‹AN-MD›, Cattle Farm ‹AN-MD›, Booley Farm ‹AN-MD›, Tenant Farm ‹EM-ST›, Big House Farm ‹EM-ST›, Creamery Farm ‹EM-ST›, Dairy Farm ‹ST-MO›, Farm Shop ‹ST-MO›, Leprechaun's Farm ‹h›, Holding
@@ -716,6 +716,255 @@ Region words: English words weighted per region (§4). Land tags are read by the
 | wadden | water | german | NDT 3 | coastsIslands/island: {town} Wadden Isle; seaCharts/channel: {wildColour} Tidal Channel; seasLakes/inlet: {town} Tidal Inlet |
 | saltmarshcoast | water | german | NDT 3 | coastsIslands/coast: {town} Salt Marsh Coast; coastsIslands/beach: {wildColour} Mud Strand; seaCharts/bank: {town} Salt Bank |
 | severnreach | water | anglo-saxon, norman-british | WMM 3, WCY 1 | seasLakes/inlet: {town} Reach; seasLakes/bay: {wildColour} Reach; coastsIslands/coast: Marcher Shore of {person} |
+| pseaorchard | land | anglo-saxon, norman-british | SEA 3 | farmland/field: {town} Orchard; farmland/farm: {person:poss} Orchard; farmland/enclosure: {wildColour} Orchard |
+| pseahopfield | land | anglo-saxon, norman-british | SEA 3 | farmland/field: {town} Hopfield; farmland/farm: {person:poss} Hopfield; farmland/enclosure: {wildColour} Hopfield |
+| pseacombe | land | anglo-saxon, norman-british | SEA 3 | hillsValleys/hill: {town} Combe; hillsValleys/valley: {wildColour} Combe; hillsValleys/ridge: {beast} Combe |
+| pseahanger | land | anglo-saxon, norman-british | SEA 3 | hillsValleys/hill: {town} Hanger; hillsValleys/valley: {wildColour} Hanger; hillsValleys/ridge: {beast} Hanger |
+| pseaweald | land | anglo-saxon, norman-british | SEA 3 | lands/country: Weald Country; lands/parish: {town} Weald; lands/shire: {wildColour} Weald Shire |
+| pseadownland | land | anglo-saxon, norman-british | SEA 3 | lands/country: Downland Country; lands/parish: {town} Downland; lands/shire: {wildColour} Downland Shire |
+| pseabeacon | land | anglo-saxon, norman-british | SEA 3 | mountainNames/peak: {beast} Beacon; mountainNames/ridge: {town} Beacon; mountainNames/range: {wildColour} Beacon |
+| pseadowns | land | anglo-saxon, norman-british | SEA 3 | mountainNames/peak: {beast} Downs; mountainNames/ridge: {town} Downs; mountainNames/range: {wildColour} Downs |
+| pseabourne | land | anglo-saxon, norman-british | SEA 3 | riversInland/stream: {town} Bourne; riversInland/spring: {wildColour} Bourne; riversInland/pool: {beast} Bourne |
+| pseawinterbourne | land | anglo-saxon, norman-british | SEA 3 | riversInland/stream: {town} Winterbourne; riversInland/spring: {wildColour} Winterbourne; riversInland/pool: {beast} Winterbourne |
+| pseahaven | water | anglo-saxon, norman-british | SEA 3 | seasLakes/bay: {town} Haven; seasLakes/inlet: {seaColour} Haven; seasLakes/strait: Haven of {town} |
+| pseareach | water | anglo-saxon, norman-british | SEA 3 | seasLakes/bay: {town} Reach; seasLakes/inlet: {seaColour} Reach; seasLakes/strait: Reach of {town} |
+| pwcyorchard | land | anglo-saxon, norman-british | WCY 3 | farmland/field: {town} Orchard; farmland/farm: {person:poss} Orchard; farmland/enclosure: {wildColour} Orchard |
+| pwcydairy | land | anglo-saxon, norman-british | WCY 3 | farmland/field: {town} Dairy; farmland/farm: {person:poss} Dairy; farmland/enclosure: {wildColour} Dairy |
+| pwcycombe | land | anglo-saxon, norman-british | WCY 3 | hillsValleys/hill: {town} Combe; hillsValleys/valley: {wildColour} Combe; hillsValleys/ridge: {beast} Combe |
+| pwcytor | land | anglo-saxon, norman-british | WCY 3 | hillsValleys/hill: {town} Tor; hillsValleys/valley: {wildColour} Tor; hillsValleys/ridge: {beast} Tor |
+| pwcyrace | water | anglo-saxon, norman-british | WCY 3 | seaCharts/bank: {town} Race; seaCharts/channel: {seaColour} Race; seaCharts/roads: Race of {town} |
+| pwcyroads | water | anglo-saxon, norman-british | WCY 3 | seaCharts/bank: {town} Roads; seaCharts/channel: {seaColour} Roads; seaCharts/roads: Roads of {town} |
+| pwcymoorland | land | anglo-saxon, norman-british | WCY 3 | lands/country: Moorland Country; lands/parish: {town} Moorland; lands/shire: {wildColour} Moorland Shire |
+| pwcyvale | land | anglo-saxon, norman-british | WCY 3 | lands/country: Vale Country; lands/parish: {town} Vale; lands/shire: {wildColour} Vale Shire |
+| pwcyleat | land | anglo-saxon, norman-british | WCY 3 | riversInland/stream: {town} Leat; riversInland/spring: {wildColour} Leat; riversInland/pool: {beast} Leat |
+| pwcyrill | land | anglo-saxon, norman-british | WCY 3 | riversInland/stream: {town} Rill; riversInland/spring: {wildColour} Rill; riversInland/pool: {beast} Rill |
+| pwcyestuary | water | anglo-saxon, norman-british | WCY 3 | seasLakes/bay: {town} Estuary; seasLakes/inlet: {seaColour} Estuary; seasLakes/strait: Estuary of {town} |
+| pwcyhaven | water | anglo-saxon, norman-british | WCY 3 | seasLakes/bay: {town} Haven; seasLakes/inlet: {seaColour} Haven; seasLakes/strait: Haven of {town} |
+| peanwarren | land | anglo-saxon, norman-british | EAN 3 | farmland/field: {town} Warren; farmland/farm: {person:poss} Warren; farmland/enclosure: {wildColour} Warren |
+| peangrange | land | anglo-saxon, norman-british | EAN 3 | farmland/field: {town} Grange; farmland/farm: {person:poss} Grange; farmland/enclosure: {wildColour} Grange |
+| peanknoll | land | anglo-saxon, norman-british | EAN 3 | hillsValleys/hill: {town} Knoll; hillsValleys/valley: {wildColour} Knoll; hillsValleys/ridge: {beast} Knoll |
+| peanrise | land | anglo-saxon, norman-british | EAN 3 | hillsValleys/hill: {town} Rise; hillsValleys/valley: {wildColour} Rise; hillsValleys/ridge: {beast} Rise |
+| peanfenland | land | anglo-saxon, norman-british | EAN 3 | lands/country: Fenland Country; lands/parish: {town} Fenland; lands/shire: {wildColour} Fenland Shire |
+| peanbreckland | land | anglo-saxon, norman-british | EAN 3 | lands/country: Breckland Country; lands/parish: {town} Breckland; lands/shire: {wildColour} Breckland Shire |
+| peanwash | water | anglo-saxon, norman-british | EAN 3 | seasLakes/bay: {town} Wash; seasLakes/inlet: {seaColour} Wash; seasLakes/strait: Wash of {town} |
+| peanbroad | water | anglo-saxon, norman-british | EAN 3 | seasLakes/bay: {town} Broad; seasLakes/inlet: {seaColour} Broad; seasLakes/strait: Broad of {town} |
+| pwmmhopyard | land | anglo-saxon, norman-british | WMM 3 | farmland/field: {town} Hopyard; farmland/farm: {person:poss} Hopyard; farmland/enclosure: {wildColour} Hopyard |
+| pwmmpasture | land | anglo-saxon, norman-british | WMM 3 | farmland/field: {town} Pasture; farmland/farm: {person:poss} Pasture; farmland/enclosure: {wildColour} Pasture |
+| pwmmedge | land | anglo-saxon, norman-british | WMM 3 | hillsValleys/hill: {town} Edge; hillsValleys/valley: {wildColour} Edge; hillsValleys/ridge: {beast} Edge |
+| pwmmdingle | land | anglo-saxon, norman-british | WMM 3 | hillsValleys/hill: {town} Dingle; hillsValleys/valley: {wildColour} Dingle; hillsValleys/ridge: {beast} Dingle |
+| pwmmmarches | land | anglo-saxon, norman-british | WMM 3 | lands/country: Marches Country; lands/parish: {town} Marches; lands/shire: {wildColour} Marches Shire |
+| pwmmvale | land | anglo-saxon, norman-british | WMM 3 | lands/country: Vale Country; lands/parish: {town} Vale; lands/shire: {wildColour} Vale Shire |
+| pwmmbeacon | land | anglo-saxon, norman-british | WMM 3 | mountainNames/peak: {beast} Beacon; mountainNames/ridge: {town} Beacon; mountainNames/range: {wildColour} Beacon |
+| pwmmcrag | land | anglo-saxon, norman-british | WMM 3 | mountainNames/peak: {beast} Crag; mountainNames/ridge: {town} Crag; mountainNames/range: {wildColour} Crag |
+| pemdgrange | land | anglo-saxon, norman-british | EMD 3 | farmland/field: {town} Grange; farmland/farm: {person:poss} Grange; farmland/enclosure: {wildColour} Grange |
+| pemddairy | land | anglo-saxon, norman-british | EMD 3 | farmland/field: {town} Dairy; farmland/farm: {person:poss} Dairy; farmland/enclosure: {wildColour} Dairy |
+| pemdwold | land | anglo-saxon, norman-british | EMD 3 | hillsValleys/hill: {town} Wold; hillsValleys/valley: {wildColour} Wold; hillsValleys/ridge: {beast} Wold |
+| pemdedge | land | anglo-saxon, norman-british | EMD 3 | hillsValleys/hill: {town} Edge; hillsValleys/valley: {wildColour} Edge; hillsValleys/ridge: {beast} Edge |
+| pemdwolds | land | anglo-saxon, norman-british | EMD 3 | lands/country: Wolds Country; lands/parish: {town} Wolds; lands/shire: {wildColour} Wolds Shire |
+| pemdheartland | land | anglo-saxon, norman-british | EMD 3 | lands/country: Heartland Country; lands/parish: {town} Heartland; lands/shire: {wildColour} Heartland Shire |
+| pnthsheepwalk | land | anglo-saxon, norman-british | NTH 3 | farmland/field: {town} Sheepwalk; farmland/farm: {person:poss} Sheepwalk; farmland/enclosure: {wildColour} Sheepwalk |
+| pnthdairy | land | anglo-saxon, norman-british | NTH 3 | farmland/field: {town} Dairy; farmland/farm: {person:poss} Dairy; farmland/enclosure: {wildColour} Dairy |
+| pnthrace | water | anglo-saxon, norman-british | NTH 3 | seaCharts/bank: {town} Race; seaCharts/channel: {seaColour} Race; seaCharts/roads: Race of {town} |
+| pnthbank | water | anglo-saxon, norman-british | NTH 3 | seaCharts/bank: {town} Bank; seaCharts/channel: {seaColour} Bank; seaCharts/roads: Bank of {town} |
+| pnthriding | land | anglo-saxon, norman-british | NTH 3 | lands/country: Riding Country; lands/parish: {town} Riding; lands/shire: {wildColour} Riding Shire |
+| pnthmoorland | land | anglo-saxon, norman-british | NTH 3 | lands/country: Moorland Country; lands/parish: {town} Moorland; lands/shire: {wildColour} Moorland Shire |
+| pwalsheepwalk | land | welsh | WAL 3 | farmland/field: {town} Sheepwalk; farmland/farm: {person:poss} Sheepwalk; farmland/enclosure: {wildColour} Sheepwalk |
+| pwalsmallholding | land | welsh | WAL 3 | farmland/field: {town} Smallholding; farmland/farm: {person:poss} Smallholding; farmland/enclosure: {wildColour} Smallholding |
+| pwaloakwood | land | welsh | WAL 3 | forestNames/forest: {town} Oakwood; forestNames/grove: Oakwood of {person}; forestNames/clearing: {beast} Oakwood |
+| pwalhazelwood | land | welsh | WAL 3 | forestNames/forest: {town} Hazelwood; forestNames/grove: Hazelwood of {person}; forestNames/clearing: {beast} Hazelwood |
+| pwalpasture | land | welsh | WAL 3 | grasslandNames/meadow: {town} Pasture; grasslandNames/down: {wildColour} Pasture; grasslandNames/heath: {beast} Pasture |
+| pwalupland | land | welsh | WAL 3 | grasslandNames/meadow: {town} Upland; grasslandNames/down: {wildColour} Upland; grasslandNames/heath: {beast} Upland; lands/country: Upland Country; lands/parish: {town} Upland; lands/shire: {wildColour} Upland Shire |
+| pwalcombe | land | welsh | WAL 3 | hillsValleys/hill: {town} Combe; hillsValleys/valley: {wildColour} Combe; hillsValleys/ridge: {beast} Combe |
+| pwaldingle | land | welsh | WAL 3 | hillsValleys/hill: {town} Dingle; hillsValleys/valley: {wildColour} Dingle; hillsValleys/ridge: {beast} Dingle |
+| pwalrace | water | welsh | WAL 3 | seaCharts/bank: {town} Race; seaCharts/channel: {seaColour} Race; seaCharts/roads: Race of {town} |
+| pwalroads | water | welsh | WAL 3 | seaCharts/bank: {town} Roads; seaCharts/channel: {seaColour} Roads; seaCharts/roads: Roads of {town} |
+| pwalvalley | land | welsh | WAL 3 | lands/country: Valley Country; lands/parish: {town} Valley; lands/shire: {wildColour} Valley Shire |
+| pwalcrag | land | welsh | WAL 3 | mountainNames/peak: {beast} Crag; mountainNames/ridge: {town} Crag; mountainNames/range: {wildColour} Crag |
+| pwalcairn | land | welsh | WAL 3 | mountainNames/peak: {beast} Cairn; mountainNames/ridge: {town} Cairn; mountainNames/range: {wildColour} Cairn |
+| pwaltorrent | land | welsh | WAL 3 | riversInland/stream: {town} Torrent; riversInland/spring: {wildColour} Torrent; riversInland/pool: {beast} Torrent |
+| pwalcascade | land | welsh | WAL 3 | riversInland/stream: {town} Cascade; riversInland/spring: {wildColour} Cascade; riversInland/pool: {beast} Cascade |
+| pwalestuary | water | welsh | WAL 3 | seasLakes/bay: {town} Estuary; seasLakes/inlet: {seaColour} Estuary; seasLakes/strait: Estuary of {town} |
+| pwalsound | water | welsh | WAL 3 | seasLakes/bay: {town} Sound; seasLakes/inlet: {seaColour} Sound; seasLakes/strait: Sound of {town} |
+| pcorsmallholding | land | cornish | COR 3 | farmland/field: {town} Smallholding; farmland/farm: {person:poss} Smallholding; farmland/enclosure: {wildColour} Smallholding |
+| pcororchard | land | cornish | COR 3 | farmland/field: {town} Orchard; farmland/farm: {person:poss} Orchard; farmland/enclosure: {wildColour} Orchard |
+| pcoroakwood | land | cornish | COR 3 | forestNames/forest: {town} Oakwood; forestNames/grove: Oakwood of {person}; forestNames/clearing: {beast} Oakwood |
+| pcorhazelwood | land | cornish | COR 3 | forestNames/forest: {town} Hazelwood; forestNames/grove: Hazelwood of {person}; forestNames/clearing: {beast} Hazelwood |
+| pcorpasture | land | cornish | COR 3 | grasslandNames/meadow: {town} Pasture; grasslandNames/down: {wildColour} Pasture; grasslandNames/heath: {beast} Pasture |
+| pcordownland | land | cornish | COR 3 | grasslandNames/meadow: {town} Downland; grasslandNames/down: {wildColour} Downland; grasslandNames/heath: {beast} Downland |
+| pcorcombe | land | cornish | COR 3 | hillsValleys/hill: {town} Combe; hillsValleys/valley: {wildColour} Combe; hillsValleys/ridge: {beast} Combe |
+| pcortor | land | cornish | COR 3 | hillsValleys/hill: {town} Tor; hillsValleys/valley: {wildColour} Tor; hillsValleys/ridge: {beast} Tor |
+| pcorledge | water | cornish | COR 3 | seaCharts/bank: {town} Ledge; seaCharts/channel: {seaColour} Ledge; seaCharts/roads: Ledge of {town} |
+| pcorroads | water | cornish | COR 3 | seaCharts/bank: {town} Roads; seaCharts/channel: {seaColour} Roads; seaCharts/roads: Roads of {town} |
+| pcormoorland | land | cornish | COR 3 | lands/country: Moorland Country; lands/parish: {town} Moorland; lands/shire: {wildColour} Moorland Shire |
+| pcorpeninsula | land | cornish | COR 3 | lands/country: Peninsula Country; lands/parish: {town} Peninsula; lands/shire: {wildColour} Peninsula Shire |
+| pcorleat | land | cornish | COR 3 | riversInland/stream: {town} Leat; riversInland/spring: {wildColour} Leat; riversInland/pool: {beast} Leat |
+| pcorrill | land | cornish | COR 3 | riversInland/stream: {town} Rill; riversInland/spring: {wildColour} Rill; riversInland/pool: {beast} Rill |
+| pcorcreek | water | cornish | COR 3 | seasLakes/bay: {town} Creek; seasLakes/inlet: {seaColour} Creek; seasLakes/strait: Creek of {town} |
+| pcorestuary | water | cornish | COR 3 | seasLakes/bay: {town} Estuary; seasLakes/inlet: {seaColour} Estuary; seasLakes/strait: Estuary of {town} |
+| pcormire | land | cornish | COR 3 | wetlandNames/marsh: {town} Mire; wetlandNames/bog: {wildColour} Mire; wetlandNames/water: {beast} Mire |
+| pcorbog | land | cornish | COR 3 | wetlandNames/marsh: {town} Bog; wetlandNames/bog: {wildColour} Bog; wetlandNames/water: {beast} Bog |
+| psblhirsel | land | anglo-saxon, norman-british, scottish | SBL 3 | farmland/field: {town} Hirsel; farmland/farm: {person:poss} Hirsel; farmland/enclosure: {wildColour} Hirsel |
+| psblsheepwalk | land | anglo-saxon, norman-british, scottish | SBL 3 | farmland/field: {town} Sheepwalk; farmland/farm: {person:poss} Sheepwalk; farmland/enclosure: {wildColour} Sheepwalk |
+| psblchase | land | anglo-saxon, norman-british, scottish | SBL 3 | forestNames/forest: {town} Chase; forestNames/grove: Chase of {person}; forestNames/clearing: {beast} Chase |
+| psblplantation | land | anglo-saxon, norman-british, scottish | SBL 3 | forestNames/forest: {town} Plantation; forestNames/grove: Plantation of {person}; forestNames/clearing: {beast} Plantation |
+| psblhaugh | land | anglo-saxon, norman-british, scottish | SBL 3 | grasslandNames/meadow: {town} Haugh; grasslandNames/down: {wildColour} Haugh; grasslandNames/heath: {beast} Haugh |
+| psblpasture | land | anglo-saxon, norman-british, scottish | SBL 3 | grasslandNames/meadow: {town} Pasture; grasslandNames/down: {wildColour} Pasture; grasslandNames/heath: {beast} Pasture |
+| psblbank | water | anglo-saxon, norman-british, scottish | SBL 3 | seaCharts/bank: {town} Bank; seaCharts/channel: {seaColour} Bank; seaCharts/roads: Bank of {town} |
+| psblrace | water | anglo-saxon, norman-british, scottish | SBL 3 | seaCharts/bank: {town} Race; seaCharts/channel: {seaColour} Race; seaCharts/roads: Race of {town} |
+| psblmarches | land | anglo-saxon, norman-british, scottish | SBL 3 | lands/country: Marches Country; lands/parish: {town} Marches; lands/shire: {wildColour} Marches Shire |
+| psblbarony | land | anglo-saxon, norman-british, scottish | SBL 3 | lands/country: Barony Country; lands/parish: {town} Barony; lands/shire: {wildColour} Barony Shire |
+| psbllinn | land | anglo-saxon, norman-british, scottish | SBL 3 | riversInland/stream: {town} Linn; riversInland/spring: {wildColour} Linn; riversInland/pool: {beast} Linn |
+| psblcleugh | land | anglo-saxon, norman-british, scottish | SBL 3 | riversInland/stream: {town} Cleugh; riversInland/spring: {wildColour} Cleugh; riversInland/pool: {beast} Cleugh |
+| psblmoss | land | anglo-saxon, norman-british, scottish | SBL 3 | wetlandNames/marsh: {town} Moss; wetlandNames/bog: {wildColour} Moss; wetlandNames/water: {beast} Moss |
+| psblflow | land | anglo-saxon, norman-british, scottish | SBL 3 | wetlandNames/marsh: {town} Flow; wetlandNames/bog: {wildColour} Flow; wetlandNames/water: {beast} Flow |
+| pslogrange | land | scottish | SLO 3 | farmland/field: {town} Grange; farmland/farm: {person:poss} Grange; farmland/enclosure: {wildColour} Grange |
+| pslosteading | land | scottish | SLO 3 | farmland/field: {town} Steading; farmland/farm: {person:poss} Steading; farmland/enclosure: {wildColour} Steading |
+| psloplantation | land | scottish | SLO 3 | forestNames/forest: {town} Plantation; forestNames/grove: Plantation of {person}; forestNames/clearing: {beast} Plantation |
+| psloforest | land | scottish | SLO 3 | forestNames/forest: {town} Forest; forestNames/grove: Forest of {person}; forestNames/clearing: {beast} Forest |
+| pslobrae | land | scottish | SLO 3 | hillsValleys/hill: {town} Brae; hillsValleys/valley: {wildColour} Brae; hillsValleys/ridge: {beast} Brae |
+| pslolaw | land | scottish | SLO 3 | hillsValleys/hill: {town} Law; hillsValleys/valley: {wildColour} Law; hillsValleys/ridge: {beast} Law |
+| pslobank | water | scottish | SLO 3 | seaCharts/bank: {town} Bank; seaCharts/channel: {seaColour} Bank; seaCharts/roads: Bank of {town} |
+| psloroads | water | scottish | SLO 3 | seaCharts/bank: {town} Roads; seaCharts/channel: {seaColour} Roads; seaCharts/roads: Roads of {town} |
+| pslocarse | land | scottish | SLO 3 | lands/country: Carse Country; lands/parish: {town} Carse; lands/shire: {wildColour} Carse Shire |
+| pslolowland | land | scottish | SLO 3 | lands/country: Lowland Country; lands/parish: {town} Lowland; lands/shire: {wildColour} Lowland Shire |
+| pslolinn | land | scottish | SLO 3 | riversInland/stream: {town} Linn; riversInland/spring: {wildColour} Linn; riversInland/pool: {beast} Linn |
+| psloburn | land | scottish | SLO 3 | riversInland/stream: {town} Burn; riversInland/spring: {wildColour} Burn; riversInland/pool: {beast} Burn |
+| pslomoss | land | scottish | SLO 3 | wetlandNames/marsh: {town} Moss; wetlandNames/bog: {wildColour} Moss; wetlandNames/water: {beast} Moss |
+| psloflow | land | scottish | SLO 3 | wetlandNames/marsh: {town} Flow; wetlandNames/bog: {wildColour} Flow; wetlandNames/water: {beast} Flow |
+| pshhshieling | land | scottish | SHH 3 | farmland/field: {town} Shieling; farmland/farm: {person:poss} Shieling; farmland/enclosure: {wildColour} Shieling |
+| pshhcroft | land | scottish | SHH 3 | farmland/field: {town} Croft; farmland/farm: {person:poss} Croft; farmland/enclosure: {wildColour} Croft |
+| pshhpinewood | land | scottish | SHH 3 | forestNames/forest: {town} Pinewood; forestNames/grove: Pinewood of {person}; forestNames/clearing: {beast} Pinewood |
+| pshhbirchwood | land | scottish | SHH 3 | forestNames/forest: {town} Birchwood; forestNames/grove: Birchwood of {person}; forestNames/clearing: {beast} Birchwood |
+| pshhmachair | land | scottish | SHH 3 | grasslandNames/meadow: {town} Machair; grasslandNames/down: {wildColour} Machair; grasslandNames/heath: {beast} Machair |
+| pshhupland | land | scottish | SHH 3 | grasslandNames/meadow: {town} Upland; grasslandNames/down: {wildColour} Upland; grasslandNames/heath: {beast} Upland |
+| pshhcorrie | land | scottish | SHH 3 | hillsValleys/hill: {town} Corrie; hillsValleys/valley: {wildColour} Corrie; hillsValleys/ridge: {beast} Corrie |
+| pshhbrae | land | scottish | SHH 3 | hillsValleys/hill: {town} Brae; hillsValleys/valley: {wildColour} Brae; hillsValleys/ridge: {beast} Brae |
+| pshhskerry | water | scottish | SHH 3 | seaCharts/bank: {town} Skerry; seaCharts/channel: {seaColour} Skerry; seaCharts/roads: Skerry of {town} |
+| pshhrace | water | scottish | SHH 3 | seaCharts/bank: {town} Race; seaCharts/channel: {seaColour} Race; seaCharts/roads: Race of {town} |
+| pshhstrath | land | scottish | SHH 3 | lands/country: Strath Country; lands/parish: {town} Strath; lands/shire: {wildColour} Strath Shire |
+| pshhclanland | land | scottish | SHH 3 | lands/country: Clanland Country; lands/parish: {town} Clanland; lands/shire: {wildColour} Clanland Shire |
+| pshhtorrent | land | scottish | SHH 3 | riversInland/stream: {town} Torrent; riversInland/spring: {wildColour} Torrent; riversInland/pool: {beast} Torrent |
+| pshhlinn | land | scottish | SHH 3 | riversInland/stream: {town} Linn; riversInland/spring: {wildColour} Linn; riversInland/pool: {beast} Linn |
+| pshhmoss | land | scottish | SHH 3 | wetlandNames/marsh: {town} Moss; wetlandNames/bog: {wildColour} Moss; wetlandNames/water: {beast} Moss |
+| pshhflow | land | scottish | SHH 3 | wetlandNames/marsh: {town} Flow; wetlandNames/bog: {wildColour} Flow; wetlandNames/water: {beast} Flow |
+| pnsicroft | land | scottish | NSI 3 | farmland/field: {town} Croft; farmland/farm: {person:poss} Croft; farmland/enclosure: {wildColour} Croft |
+| pnsisteading | land | scottish | NSI 3 | farmland/field: {town} Steading; farmland/farm: {person:poss} Steading; farmland/enclosure: {wildColour} Steading |
+| pnsimachair | land | scottish | NSI 3 | grasslandNames/meadow: {town} Machair; grasslandNames/down: {wildColour} Machair; grasslandNames/heath: {beast} Machair |
+| pnsilinks | land | scottish | NSI 3 | grasslandNames/meadow: {town} Links; grasslandNames/down: {wildColour} Links; grasslandNames/heath: {beast} Links |
+| pnsiknowe | land | scottish | NSI 3 | hillsValleys/hill: {town} Knowe; hillsValleys/valley: {wildColour} Knowe; hillsValleys/ridge: {beast} Knowe |
+| pnsibrae | land | scottish | NSI 3 | hillsValleys/hill: {town} Brae; hillsValleys/valley: {wildColour} Brae; hillsValleys/ridge: {beast} Brae |
+| pnsiisle | land | scottish | NSI 3 | lands/country: Isle Country; lands/parish: {town} Isle; lands/shire: {wildColour} Isle Shire |
+| pnsimainland | land | scottish | NSI 3 | lands/country: Mainland Country; lands/parish: {town} Mainland; lands/shire: {wildColour} Mainland Shire |
+| pnsivoe | land | scottish | NSI 3 | riversInland/stream: {town} Voe; riversInland/spring: {wildColour} Voe; riversInland/pool: {beast} Voe |
+| pnsiburn | land | scottish | NSI 3 | riversInland/stream: {town} Burn; riversInland/spring: {wildColour} Burn; riversInland/pool: {beast} Burn |
+| pnsimoss | land | scottish | NSI 3 | wetlandNames/marsh: {town} Moss; wetlandNames/bog: {wildColour} Moss; wetlandNames/water: {beast} Moss |
+| pnsiflow | land | scottish | NSI 3 | wetlandNames/marsh: {town} Flow; wetlandNames/bog: {wildColour} Flow; wetlandNames/water: {beast} Flow |
+| pdenmeadow | land | norse, scandinavian | DEN 3 | farmland/field: {town} Meadow; farmland/farm: {person:poss} Meadow; farmland/enclosure: {wildColour} Meadow |
+| pdengrange | land | norse, scandinavian | DEN 3 | farmland/field: {town} Grange; farmland/farm: {person:poss} Grange; farmland/enclosure: {wildColour} Grange |
+| pdenbarrow | land | norse, scandinavian | DEN 3 | hillsValleys/hill: {town} Barrow; hillsValleys/valley: {wildColour} Barrow; hillsValleys/ridge: {beast} Barrow |
+| pdenknoll | land | norse, scandinavian | DEN 3 | hillsValleys/hill: {town} Knoll; hillsValleys/valley: {wildColour} Knoll; hillsValleys/ridge: {beast} Knoll |
+| pdensound | water | norse, scandinavian | DEN 3 | seaCharts/bank: {town} Sound; seaCharts/channel: {seaColour} Sound; seaCharts/roads: Sound of {town} |
+| pdenroads | water | norse, scandinavian | DEN 3 | seaCharts/bank: {town} Roads; seaCharts/channel: {seaColour} Roads; seaCharts/roads: Roads of {town} |
+| pdenisle | land | norse, scandinavian | DEN 3 | lands/country: Isle Country; lands/parish: {town} Isle; lands/shire: {wildColour} Isle Shire |
+| pdenlowland | land | norse, scandinavian | DEN 3 | lands/country: Lowland Country; lands/parish: {town} Lowland; lands/shire: {wildColour} Lowland Shire |
+| pnorshieling | land | norse, scandinavian | NOR 3 | farmland/field: {town} Shieling; farmland/farm: {person:poss} Shieling; farmland/enclosure: {wildColour} Shieling; grasslandNames/meadow: {town} Shieling; grasslandNames/down: {wildColour} Shieling; grasslandNames/heath: {beast} Shieling |
+| pnorsteading | land | norse, scandinavian | NOR 3 | farmland/field: {town} Steading; farmland/farm: {person:poss} Steading; farmland/enclosure: {wildColour} Steading |
+| pnorpinewood | land | norse, scandinavian | NOR 3 | forestNames/forest: {town} Pinewood; forestNames/grove: Pinewood of {person}; forestNames/clearing: {beast} Pinewood |
+| pnorbirchwood | land | norse, scandinavian | NOR 3 | forestNames/forest: {town} Birchwood; forestNames/grove: Birchwood of {person}; forestNames/clearing: {beast} Birchwood |
+| pnorupland | land | norse, scandinavian | NOR 3 | grasslandNames/meadow: {town} Upland; grasslandNames/down: {wildColour} Upland; grasslandNames/heath: {beast} Upland |
+| pnorfell | land | norse, scandinavian | NOR 3 | hillsValleys/hill: {town} Fell; hillsValleys/valley: {wildColour} Fell; hillsValleys/ridge: {beast} Fell |
+| pnorknoll | land | norse, scandinavian | NOR 3 | hillsValleys/hill: {town} Knoll; hillsValleys/valley: {wildColour} Knoll; hillsValleys/ridge: {beast} Knoll |
+| pnorskerry | water | norse, scandinavian | NOR 3 | seaCharts/bank: {town} Skerry; seaCharts/channel: {seaColour} Skerry; seaCharts/roads: Skerry of {town} |
+| pnorsound | water | norse, scandinavian | NOR 3 | seaCharts/bank: {town} Sound; seaCharts/channel: {seaColour} Sound; seaCharts/roads: Sound of {town} |
+| pnorfjordland | land | norse, scandinavian | NOR 3 | lands/country: Fjordland Country; lands/parish: {town} Fjordland; lands/shire: {wildColour} Fjordland Shire |
+| pnorhighland | land | norse, scandinavian | NOR 3 | lands/country: Highland Country; lands/parish: {town} Highland; lands/shire: {wildColour} Highland Shire |
+| pswemeadow | land | norse, scandinavian | SWE 3 | farmland/field: {town} Meadow; farmland/farm: {person:poss} Meadow; farmland/enclosure: {wildColour} Meadow |
+| pswesmallholding | land | norse, scandinavian | SWE 3 | farmland/field: {town} Smallholding; farmland/farm: {person:poss} Smallholding; farmland/enclosure: {wildColour} Smallholding |
+| pswehummock | land | norse, scandinavian | SWE 3 | hillsValleys/hill: {town} Hummock; hillsValleys/valley: {wildColour} Hummock; hillsValleys/ridge: {beast} Hummock |
+| psweknoll | land | norse, scandinavian | SWE 3 | hillsValleys/hill: {town} Knoll; hillsValleys/valley: {wildColour} Knoll; hillsValleys/ridge: {beast} Knoll |
+| psweskerry | water | norse, scandinavian | SWE 3 | seaCharts/bank: {town} Skerry; seaCharts/channel: {seaColour} Skerry; seaCharts/roads: Skerry of {town} |
+| pswesound | water | norse, scandinavian | SWE 3 | seaCharts/bank: {town} Sound; seaCharts/channel: {seaColour} Sound; seaCharts/roads: Sound of {town} |
+| pswewoodland | land | norse, scandinavian | SWE 3 | lands/country: Woodland Country; lands/parish: {town} Woodland; lands/shire: {wildColour} Woodland Shire |
+| psweforestland | land | norse, scandinavian | SWE 3 | lands/country: Forestland Country; lands/parish: {town} Forestland; lands/shire: {wildColour} Forestland Shire |
+| picehayfield | land | norse, scandinavian | ICE 3 | farmland/field: {town} Hayfield; farmland/farm: {person:poss} Hayfield; farmland/enclosure: {wildColour} Hayfield |
+| picesheepwalk | land | norse, scandinavian | ICE 3 | farmland/field: {town} Sheepwalk; farmland/farm: {person:poss} Sheepwalk; farmland/enclosure: {wildColour} Sheepwalk |
+| piceupland | land | norse, scandinavian | ICE 3 | grasslandNames/meadow: {town} Upland; grasslandNames/down: {wildColour} Upland; grasslandNames/heath: {beast} Upland |
+| picepasture | land | norse, scandinavian | ICE 3 | grasslandNames/meadow: {town} Pasture; grasslandNames/down: {wildColour} Pasture; grasslandNames/heath: {beast} Pasture |
+| piceknoll | land | norse, scandinavian | ICE 3 | hillsValleys/hill: {town} Knoll; hillsValleys/valley: {wildColour} Knoll; hillsValleys/ridge: {beast} Knoll |
+| picebluff | land | norse, scandinavian | ICE 3 | hillsValleys/hill: {town} Bluff; hillsValleys/valley: {wildColour} Bluff; hillsValleys/ridge: {beast} Bluff |
+| piceskerry | water | norse, scandinavian | ICE 3 | seaCharts/bank: {town} Skerry; seaCharts/channel: {seaColour} Skerry; seaCharts/roads: Skerry of {town} |
+| picerace | water | norse, scandinavian | ICE 3 | seaCharts/bank: {town} Race; seaCharts/channel: {seaColour} Race; seaCharts/roads: Race of {town} |
+| picehighland | land | norse, scandinavian | ICE 3 | lands/country: Highland Country; lands/parish: {town} Highland; lands/shire: {wildColour} Highland Shire |
+| picewasteland | land | norse, scandinavian | ICE 3 | lands/country: Wasteland Country; lands/parish: {town} Wasteland; lands/shire: {wildColour} Wasteland Shire |
+| picemire | land | norse, scandinavian | ICE 3 | wetlandNames/marsh: {town} Mire; wetlandNames/bog: {wildColour} Mire; wetlandNames/water: {beast} Mire |
+| picemoss | land | norse, scandinavian | ICE 3 | wetlandNames/marsh: {town} Moss; wetlandNames/bog: {wildColour} Moss; wetlandNames/water: {beast} Moss |
+| pndtorchard | land | german | NDT 3 | farmland/field: {town} Orchard; farmland/farm: {person:poss} Orchard; farmland/enclosure: {wildColour} Orchard |
+| pndtpasture | land | german | NDT 3 | farmland/field: {town} Pasture; farmland/farm: {person:poss} Pasture; farmland/enclosure: {wildColour} Pasture |
+| pndtrise | land | german | NDT 3 | hillsValleys/hill: {town} Rise; hillsValleys/valley: {wildColour} Rise; hillsValleys/ridge: {beast} Rise |
+| pndtbarrow | land | german | NDT 3 | hillsValleys/hill: {town} Barrow; hillsValleys/valley: {wildColour} Barrow; hillsValleys/ridge: {beast} Barrow |
+| pndtalderwood | land | german | NDT 3 | forestNames/forest: {town} Alderwood; forestNames/grove: Alderwood of {person}; forestNames/clearing: {beast} Alderwood |
+| pndtpinewood | land | german | NDT 3 | forestNames/forest: {town} Pinewood; forestNames/grove: Pinewood of {person}; forestNames/clearing: {beast} Pinewood |
+| pndtmeadow | land | german | NDT 3 | grasslandNames/meadow: {town} Meadow; grasslandNames/down: {wildColour} Meadow; grasslandNames/heath: {beast} Meadow |
+| pndtcommon | land | german | NDT 3 | grasslandNames/meadow: {town} Common; grasslandNames/down: {wildColour} Common; grasslandNames/heath: {beast} Common |
+| pndtmarshland | land | german | NDT 3 | lands/country: Marshland Country; lands/parish: {town} Marshland; lands/shire: {wildColour} Marshland Shire |
+| pndtlowland | land | german | NDT 3 | lands/country: Lowland Country; lands/parish: {town} Lowland; lands/shire: {wildColour} Lowland Shire |
+| pndtpeatland | land | german | NDT 3 | moorNames/moor: {wildColour} Peatland; moorNames/hill: {town} Peatland; moorNames/bog: {beast} Peatland |
+| pndtmoss | land | german | NDT 3 | moorNames/moor: {wildColour} Moss; moorNames/hill: {town} Moss; moorNames/bog: {beast} Moss |
+| pndtestuary | land | german | NDT 3 | riversInland/stream: {town} Estuary; riversInland/spring: {wildColour} Estuary; riversInland/pool: {beast} Estuary |
+| pndtbackwater | land | german | NDT 3 | riversInland/stream: {town} Backwater; riversInland/spring: {wildColour} Backwater; riversInland/pool: {beast} Backwater |
+| pndtbight | water | german | NDT 3 | seasLakes/bay: {town} Bight; seasLakes/inlet: {seaColour} Bight; seasLakes/strait: Bight of {town} |
+| pndthaven | water | german | NDT 3 | seasLakes/bay: {town} Haven; seasLakes/inlet: {seaColour} Haven; seasLakes/strait: Haven of {town} |
+| prhnorchard | land | german | RHN 3 | farmland/field: {town} Orchard; farmland/farm: {person:poss} Orchard; farmland/enclosure: {wildColour} Orchard |
+| prhnterrace | land | german | RHN 3 | farmland/field: {town} Terrace; farmland/farm: {person:poss} Terrace; farmland/enclosure: {wildColour} Terrace; hillsValleys/hill: {town} Terrace; hillsValleys/valley: {wildColour} Terrace; hillsValleys/ridge: {beast} Terrace |
+| prhnbeechwood | land | german | RHN 3 | forestNames/forest: {town} Beechwood; forestNames/grove: Beechwood of {person}; forestNames/clearing: {beast} Beechwood |
+| prhnoakwood | land | german | RHN 3 | forestNames/forest: {town} Oakwood; forestNames/grove: Oakwood of {person}; forestNames/clearing: {beast} Oakwood |
+| prhnslope | land | german | RHN 3 | hillsValleys/hill: {town} Slope; hillsValleys/valley: {wildColour} Slope; hillsValleys/ridge: {beast} Slope |
+| prhnwineland | land | german | RHN 3 | lands/country: Wineland Country; lands/parish: {town} Wineland; lands/shire: {wildColour} Wineland Shire |
+| prhnriverland | land | german | RHN 3 | lands/country: Riverland Country; lands/parish: {town} Riverland; lands/shire: {wildColour} Riverland Shire |
+| prhnbackwater | land | german | RHN 3 | riversInland/stream: {town} Backwater; riversInland/spring: {wildColour} Backwater; riversInland/pool: {beast} Backwater |
+| prhnoxbow | land | german | RHN 3 | riversInland/stream: {town} Oxbow; riversInland/spring: {wildColour} Oxbow; riversInland/pool: {beast} Oxbow |
+| pmitpasture | land | german | MIT 3 | farmland/field: {town} Pasture; farmland/farm: {person:poss} Pasture; farmland/enclosure: {wildColour} Pasture |
+| pmithopfield | land | german | MIT 3 | farmland/field: {town} Hopfield; farmland/farm: {person:poss} Hopfield; farmland/enclosure: {wildColour} Hopfield |
+| pmitbeechwood | land | german | MIT 3 | forestNames/forest: {town} Beechwood; forestNames/grove: Beechwood of {person}; forestNames/clearing: {beast} Beechwood |
+| pmitoakwood | land | german | MIT 3 | forestNames/forest: {town} Oakwood; forestNames/grove: Oakwood of {person}; forestNames/clearing: {beast} Oakwood |
+| pmitclearing | land | german | MIT 3 | grasslandNames/meadow: {town} Clearing; grasslandNames/down: {wildColour} Clearing; grasslandNames/heath: {beast} Clearing |
+| pmitupland | land | german | MIT 3 | grasslandNames/meadow: {town} Upland; grasslandNames/down: {wildColour} Upland; grasslandNames/heath: {beast} Upland |
+| pmitknoll | land | german | MIT 3 | hillsValleys/hill: {town} Knoll; hillsValleys/valley: {wildColour} Knoll; hillsValleys/ridge: {beast} Knoll |
+| pmitspur | land | german | MIT 3 | hillsValleys/hill: {town} Spur; hillsValleys/valley: {wildColour} Spur; hillsValleys/ridge: {beast} Spur |
+| pmituplands | land | german | MIT 3 | lands/country: Uplands Country; lands/parish: {town} Uplands; lands/shire: {wildColour} Uplands Shire |
+| pmitwoodland | land | german | MIT 3 | lands/country: Woodland Country; lands/parish: {town} Woodland; lands/shire: {wildColour} Woodland Shire |
+| pmitpeat | land | german | MIT 3 | moorNames/moor: {wildColour} Peat; moorNames/hill: {town} Peat; moorNames/bog: {beast} Peat |
+| pmitmoorland | land | german | MIT 3 | moorNames/moor: {wildColour} Moorland; moorNames/hill: {town} Moorland; moorNames/bog: {beast} Moorland |
+| pmitrill | land | german | MIT 3 | riversInland/stream: {town} Rill; riversInland/spring: {wildColour} Rill; riversInland/pool: {beast} Rill |
+| pmitmillrace | land | german | MIT 3 | riversInland/stream: {town} Millrace; riversInland/spring: {wildColour} Millrace; riversInland/pool: {beast} Millrace |
+| palpdairy | land | german | ALP 3 | farmland/field: {town} Dairy; farmland/farm: {person:poss} Dairy; farmland/enclosure: {wildColour} Dairy |
+| palphayfield | land | german | ALP 3 | farmland/field: {town} Hayfield; farmland/farm: {person:poss} Hayfield; farmland/enclosure: {wildColour} Hayfield |
+| palppinewood | land | german | ALP 3 | forestNames/forest: {town} Pinewood; forestNames/grove: Pinewood of {person}; forestNames/clearing: {beast} Pinewood |
+| palplarchwood | land | german | ALP 3 | forestNames/forest: {town} Larchwood; forestNames/grove: Larchwood of {person}; forestNames/clearing: {beast} Larchwood |
+| palpmeadow | land | german | ALP 3 | grasslandNames/meadow: {town} Meadow; grasslandNames/down: {wildColour} Meadow; grasslandNames/heath: {beast} Meadow |
+| palppasture | land | german | ALP 3 | grasslandNames/meadow: {town} Pasture; grasslandNames/down: {wildColour} Pasture; grasslandNames/heath: {beast} Pasture |
+| palpslope | land | german | ALP 3 | hillsValleys/hill: {town} Slope; hillsValleys/valley: {wildColour} Slope; hillsValleys/ridge: {beast} Slope |
+| palpspur | land | german | ALP 3 | hillsValleys/hill: {town} Spur; hillsValleys/valley: {wildColour} Spur; hillsValleys/ridge: {beast} Spur |
+| palphighland | land | german | ALP 3 | lands/country: Highland Country; lands/parish: {town} Highland; lands/shire: {wildColour} Highland Shire |
+| palpuplands | land | german | ALP 3 | lands/country: Uplands Country; lands/parish: {town} Uplands; lands/shire: {wildColour} Uplands Shire |
+| palptorrent | land | german | ALP 3 | riversInland/stream: {town} Torrent; riversInland/spring: {wildColour} Torrent; riversInland/pool: {beast} Torrent |
+| palpcascade | land | german | ALP 3 | riversInland/stream: {town} Cascade; riversInland/spring: {wildColour} Cascade; riversInland/pool: {beast} Cascade |
+| postgrange | land | german | OST 3 | farmland/field: {town} Grange; farmland/farm: {person:poss} Grange; farmland/enclosure: {wildColour} Grange |
+| postpasture | land | german | OST 3 | farmland/field: {town} Pasture; farmland/farm: {person:poss} Pasture; farmland/enclosure: {wildColour} Pasture |
+| postmoraine | land | german | OST 3 | hillsValleys/hill: {town} Moraine; hillsValleys/valley: {wildColour} Moraine; hillsValleys/ridge: {beast} Moraine |
+| posthummock | land | german | OST 3 | hillsValleys/hill: {town} Hummock; hillsValleys/valley: {wildColour} Hummock; hillsValleys/ridge: {beast} Hummock |
+| postpinewood | land | german | OST 3 | forestNames/forest: {town} Pinewood; forestNames/grove: Pinewood of {person}; forestNames/clearing: {beast} Pinewood |
+| postbirchwood | land | german | OST 3 | forestNames/forest: {town} Birchwood; forestNames/grove: Birchwood of {person}; forestNames/clearing: {beast} Birchwood |
+| postmeadow | land | german | OST 3 | grasslandNames/meadow: {town} Meadow; grasslandNames/down: {wildColour} Meadow; grasslandNames/heath: {beast} Meadow |
+| postcommon | land | german | OST 3 | grasslandNames/meadow: {town} Common; grasslandNames/down: {wildColour} Common; grasslandNames/heath: {beast} Common |
+| postsandland | land | german | OST 3 | lands/country: Sandland Country; lands/parish: {town} Sandland; lands/shire: {wildColour} Sandland Shire |
+| postmarchland | land | german | OST 3 | lands/country: Marchland Country; lands/parish: {town} Marchland; lands/shire: {wildColour} Marchland Shire |
+| postmoorland | land | german | OST 3 | moorNames/moor: {wildColour} Moorland; moorNames/hill: {town} Moorland; moorNames/bog: {beast} Moorland |
+| postpeat | land | german | OST 3 | moorNames/moor: {wildColour} Peat; moorNames/hill: {town} Peat; moorNames/bog: {beast} Peat |
+| postbackwater | land | german | OST 3 | riversInland/stream: {town} Backwater; riversInland/spring: {wildColour} Backwater; riversInland/pool: {beast} Backwater |
+| postmillrace | land | german | OST 3 | riversInland/stream: {town} Millrace; riversInland/spring: {wildColour} Millrace; riversInland/pool: {beast} Millrace |
+| postfen | land | german | OST 3 | wetlandNames/marsh: {town} Fen; wetlandNames/bog: {wildColour} Fen; wetlandNames/water: {beast} Fen |
+| postcarr | land | german | OST 3 | wetlandNames/marsh: {town} Carr; wetlandNames/bog: {wildColour} Carr; wetlandNames/water: {beast} Carr |
 
 ### Route regions
 
@@ -796,45 +1045,42 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Alps | German, regions |
 | Assart | English, Norse, German |
 | Avalanche | regions |
-| Ballybetagh | Irish |
 | Banshee | Irish |
 | Beck | English, Norse, Scandinavian, German |
+| Bight | German, regions |
 | Boggart | English |
 | Boreen | Irish |
-| Brae | Scottish |
+| Bourne | regions |
+| Brae | Scottish, regions |
+| Breckland | regions |
 | Broch | Scottish |
 | Brownie | English, Welsh, Scottish, Norse, Scandinavian |
-| Burn | Scottish |
-| Cairn | English, Welsh, Scottish, Irish, Cornish, Norse, Scandinavian |
-| Callow | Irish |
-| Cantred | Irish |
-| Carr | English |
-| Carse | Scottish |
+| Burn | Scottish, regions |
+| Cairn | English, Welsh, Scottish, Irish, Cornish, Norse, Scandinavian, regions |
+| Carr | English, regions |
+| Carse | Scottish, regions |
 | Clachan | Scottish |
-| Cleugh | Scottish |
-| Combe | English, Welsh, Cornish |
+| Cleugh | Scottish, regions |
+| Combe | English, Welsh, Cornish, regions |
+| Corrie | Scottish, regions |
 | Crag | English, Welsh, Scottish, Cornish, German, regions |
 | Crannog | Welsh, Scottish, Irish, Celtic |
-| Croft | English, Scottish, Cornish |
+| Croft | English, Scottish, Cornish, regions |
 | Cromlech | English |
 | Dale | English, Scottish, Norse, Scandinavian, German |
-| Davoch | Scottish |
 | Dean | Scottish |
-| Dingle | English, Welsh |
+| Dingle | English, Welsh, regions |
 | Drumlin | Scottish, Irish |
 | Dyke | Scottish, German, regions |
 | Eisteddfod | Welsh |
 | Erlking | German |
 | Esker | Irish, Scandinavian, regions |
 | Eyot | English |
-| Fank | Scottish |
-| Fell | Norse, Scandinavian |
-| Fen | English, Irish, Norse, Scandinavian, German |
-| Fermtoun | Scottish |
-| Fianna | Irish |
+| Fell | Norse, Scandinavian, regions |
+| Fen | English, Irish, Norse, Scandinavian, German, regions |
 | Firth | English, Scottish, Norse, Scandinavian |
 | Fjord | Norse, Scandinavian, German, regions |
-| Flow | Scottish |
+| Flow | Scottish, regions |
 | Fogou | Cornish |
 | Force | English, Scottish, Norse, Scandinavian |
 | Garth | English, Norse, Scandinavian, German |
@@ -842,38 +1088,42 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Geo | Scottish |
 | Glacier | regions, German lakes |
 | Gorsedd | Welsh |
-| Hanger | English, Welsh, Cornish |
+| Hanger | English, Welsh, Cornish, regions |
 | Hanse | German |
 | Hard | English |
-| Haugh | Scottish |
-| Heugh | Scottish |
+| Haugh | Scottish, regions |
+| Hirsel | regions |
 | Holm | English, Scottish, Norse, Scandinavian |
 | Holt | English, Norse |
+| Hopfield | regions |
+| Hopyard | regions |
 | Howe | English, Scottish, Norse, Scandinavian |
-| Hundred | English, Welsh, Cornish, Norse, Scandinavian, German |
+| Hummock | regions |
+| Hundred | English, Welsh, Irish, Cornish, Norse, Scandinavian, German |
 | Hurst | English |
 | Hythe | English |
 | Inch | Scottish |
 | Kelpie | English, Scottish |
 | Kirk | Scottish |
 | Knocker | Cornish |
-| Knott | English |
-| Knowe | Scottish |
+| Knowe | Scottish, regions |
 | Kobold | German |
 | Kyle | Scottish |
-| Law | Scottish, Irish, Norse |
-| Leat | English, Welsh, Cornish |
+| Law | Scottish, Irish, Norse, regions |
+| Leat | English, Welsh, Cornish, regions |
 | Leaze | English |
-| Linn | English, Scottish |
+| Links | Scottish, regions |
+| Linn | English, Scottish, regions |
 | Loch | Scottish |
 | Lode | English, Cornish |
 | Lough | Irish |
-| Machair | Scottish |
+| Machair | Scottish, regions |
 | Maelstrom | Norse, Scandinavian |
 | Mark | German |
 | Megalith | German |
 | Mere | English, Norse, Scandinavian, German, regions, German lakes |
-| Moss | English, Scottish, Norse, Scandinavian, German |
+| Millrace | regions |
+| Moss | English, Scottish, Norse, Scandinavian, German, regions |
 | Mudflat | German, regions |
 | Muir | Scottish |
 | Mull | Scottish |
@@ -881,6 +1131,7 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Naze | English |
 | Ness | English, Scottish, Norse, Scandinavian |
 | Oppidum | Celtic |
+| Oxbow | regions, German lakes |
 | Pike | English |
 | Pill | English, Cornish |
 | Piskie | Cornish |
@@ -891,37 +1142,60 @@ Every dictionary loanword the batch uses, and where; no other non-English word i
 | Quoit | Cornish |
 | Rath | Irish |
 | Reach | English, regions |
-| Riding | English |
+| Riding | English, regions |
 | Rig | Scottish, Norse |
 | Roost | Scottish |
 | Runrig | Scottish |
 | Scaur | Scottish |
 | Selkie | Scottish, Irish |
-| Shieling | Scottish, Norse, Scandinavian |
+| Sheepwalk | Welsh, regions |
+| Shieling | Scottish, Norse, Scandinavian, regions |
 | Sidhe | Irish |
-| Skerry | English, Scottish, Norse, Scandinavian |
+| Skerry | English, Scottish, Norse, Scandinavian, regions |
 | Slough | English |
 | Soke | English |
 | Spinney | English |
 | Spit | English, German |
 | Spriggan | Cornish |
 | Staithe | English, Welsh |
-| Steading | English, Scottish, Norse, Scandinavian |
+| Steading | English, Scottish, Norse, Scandinavian, regions |
 | Stell | Scottish |
-| Strath | Scottish |
+| Strath | Scottish, regions |
 | Swatch | English |
 | Tarn | English, Welsh, Scottish, Norse, Scandinavian, German, German lakes |
 | Tithing | English, Cornish |
 | Toft | Norse |
-| Tor | English, Cornish |
-| Toun | Scottish |
+| Tor | English, Cornish, regions |
 | Townland | Irish |
 | Troll | Norse, Scandinavian |
 | Tump | English |
 | Turlough | Irish |
 | Valkyrie | Norse |
-| Voe | Scottish, Norse |
+| Voe | Scottish, Norse, regions |
 | Wapentake | English |
-| Wash | English |
+| Wash | English, regions |
+| Weald | English, regions |
 | Wheal | Cornish |
+| Winterbourne | regions |
+| Wold | regions |
 | Zawn | Cornish |
+
+### Dictionary check (batch 5b, Part A)
+
+Every word above was checked against standard English dictionaries (Collins, Oxford). Words not found there, or found only as a different sense, were replaced by their English sense:
+
+| Replaced | By | Why |
+|---|---|---|
+| Ballybetagh | Tribal District | an Irish land unit, not in a standard dictionary |
+| Cantred | Hundred | the same division, in a word the dictionary has |
+| Callow | River Meadow | 'callow' as a riverside meadow is Irish-English only |
+| Davoch | Ploughland | a Scottish land measure, not in a standard dictionary |
+| Fank | Sheep Pen | Scots, not in a standard dictionary |
+| Fermtoun | Farm Town | a Scots spelling |
+| Toun | Town | a Scots spelling |
+| Fianna | War Band | the legendary warrior bands, not an English noun |
+| Heugh | Cliff | Scots, not in a standard dictionary |
+| Knott | Knob | a Lake District spelling of knoll |
+
+Kept: every other word in the table is a Collins or Oxford entry (regional entries such as brae, carse, linn, machair, combe, tor, wheal and zawn are marked as such there). The words added for region depth (dialect and landscape nouns such as bourne, weald, hirsel, corrie, links, bight) are standard dictionary words. A compound written as one word (oakwood, larchwood, fjordland, clanland) is two English words joined.
+

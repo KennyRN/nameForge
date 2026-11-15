@@ -2,7 +2,7 @@
 export default {
   land: {
     mountain: [
-      "Beacon Hill;AN-MD|Crag;AN-MD|Cairn Top;AN-MD|Tor;EM-ST|Pike;EM-ST|Knott;EM-ST|Summit Cairn;ST-MO|Trig Point;ST-MO|Giant's Seat;h|High Top",
+      "Beacon Hill;AN-MD|Crag;AN-MD|Cairn Top;AN-MD|Tor;EM-ST|Pike;EM-ST|Knob;EM-ST|Summit Cairn;ST-MO|Trig Point;ST-MO|Giant's Seat;h|High Top",
       "Edge;AN-MD|Hog's Back;AN-MD|Scar;AN-MD|Rigg;EM-ST|Escarpment;EM-ST|Hanger;EM-ST|Bluff;ST-MO|Skyline;ST-MO|Dragon's Back;h|Brow",
       "Fells;AN-MD|Downs;AN-MD|Wolds;AN-MD|Tops;EM-ST|Uplands;EM-ST|Pikes;EM-ST|Heights;ST-MO|Massif;ST-MO|Giants' Chain;h|Hills",
     ],

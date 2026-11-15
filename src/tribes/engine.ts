@@ -1470,7 +1470,12 @@ export function traditionForCulture(culture: string): string {
 // Shared tables brief §14.3: at most two words after an optional "the", and drawn in the state's biome when it has one.
 const FOLK_WORDS = (name: string): number => name.replace(/^the\s+/i, "").split(/\s+/).length;
 /** Northern Europe brief 5a §11.6: one people is "People", not "Peoples" ("Fell Peoples" → "Fell People"). */
-const onePeople = (name: string): string => name.replace(/\bPeoples\b/g, "People");
+const onePeople = (name: string): string => singularBefore(name.replace(/\bPeoples\b/g, "People"));
+/** Brief 5b §12.3: a plural noun before a people word is singular ("Hills Ploughmen" becomes "Hill Ploughmen"). */
+function singularBefore(name: string): string {
+  const m = name.match(/^(the\s+)?([A-Z][a-z]{2,}[b-df-hj-np-rt-vw-z])s(\s+[A-Z][\w'-]*)$/);
+  return m ? `${m[1] ?? ""}${m[2]}${m[3]}` : name;
+}
 registerResolver("folk", (req) => {
   const tradition = traditionForCulture(req.culture);
   const biome = req.biome && findBiome(req.biome) ? req.biome : undefined;

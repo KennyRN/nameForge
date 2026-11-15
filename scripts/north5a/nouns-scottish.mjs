@@ -28,18 +28,18 @@ export default {
     ],
     lands: [
       "Thanedom;AN-MD|Earldom;AN-MD|Lordship;AN-MD|Regality;EM-ST|Barony;EM-ST|Sheriffdom;EM-ST|Council Area;ST-MO|Region;ST-MO|Land Under the Hill;h|Kingdom",
-      "Davoch;AN-MD|Ploughgate;AN-MD|Toun;AN-MD|Estate;EM-ST|Barony Land;EM-ST|Policy;EM-ST|Community Land;ST-MO|Land Reform Estate;ST-MO|Fairy Land;h|Lands",
+      "Ploughland;AN-MD|Ploughgate;AN-MD|Town;AN-MD|Estate;EM-ST|Barony Land;EM-ST|Policy;EM-ST|Community Land;ST-MO|Land Reform Estate;ST-MO|Fairy Land;h|Lands",
       "Parish;AN-MD|Kirk Parish;AN-MD|Clachan;AN-MD|Burgh;EM-ST|Landward Parish;EM-ST|Mining Parish;EM-ST|Community Council;ST-MO|Ward;ST-MO|Haunted Parish;h|Township",
     ],
     farm: [
       "Rig;AN-MD|Runrig;AN-MD|Infield;AN-MD|Outfield;EM-ST|Park;EM-ST|Enclosed Park;EM-ST|Croft Field;ST-MO|Set-aside Park;ST-MO|Brownie's Field;h|Field",
-      "Croft;AN-MD|Steading;AN-MD|Fermtoun;AN-MD|Farm Toun;EM-ST|Mains;EM-ST|Home Farm;EM-ST|Crofting Township;ST-MO|Farm Shop;ST-MO|Fairy Croft;h|Farm",
-      "Fank;AN-MD|Fold;AN-MD|Park Dyke;AN-MD|Dyked Park;EM-ST|Drove Stance;EM-ST|Stell;EM-ST|Livestock Pen;ST-MO|Paddock;ST-MO|Fairy Fold;h|Pen",
+      "Croft;AN-MD|Steading;AN-MD|Farm Town;AN-MD|Home Town;EM-ST|Mains;EM-ST|Home Farm;EM-ST|Crofting Township;ST-MO|Farm Shop;ST-MO|Fairy Croft;h|Farm",
+      "Sheep Pen;AN-MD|Fold;AN-MD|Park Dyke;AN-MD|Dyked Park;EM-ST|Drove Stance;EM-ST|Stell;EM-ST|Livestock Pen;ST-MO|Paddock;ST-MO|Fairy Fold;h|Pen",
     ],
     hill: [
       "Law;AN-MD|Knowe;AN-MD|Dun;AN-MD|Brae;EM-ST|Hillock;EM-ST|Monument Hill;EM-ST|Viewpoint;ST-MO|Country Park Hill;ST-MO|Fairy Knowe;h|Hill",
       "Glen;AN-MD|Dean;AN-MD|Cleugh;AN-MD|Gorge;EM-ST|Mill Glen;EM-ST|Clearance Glen;EM-ST|Hydro Glen;ST-MO|Heritage Glen;ST-MO|Glen of the Fair Folk;h|Valley",
-      "Rig;AN-MD|Shoulder;AN-MD|Edge;AN-MD|Heugh;EM-ST|Scaur;EM-ST|Crag Ridge;EM-ST|Skyline;ST-MO|Escarpment;ST-MO|Giant's Back;h|Ridge",
+      "Rig;AN-MD|Shoulder;AN-MD|Edge;AN-MD|Cliff;EM-ST|Scaur;EM-ST|Crag Ridge;EM-ST|Skyline;ST-MO|Escarpment;ST-MO|Giant's Back;h|Ridge",
     ],
     river: [
       "Burn;AN-MD|Water;AN-MD|Rill;AN-MD|Mill Lade;EM-ST|Lade;EM-ST|Cut;EM-ST|Culvert;ST-MO|Drain;ST-MO|Kelpie's Burn;h|Stream",
