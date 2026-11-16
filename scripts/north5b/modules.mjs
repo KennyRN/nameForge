@@ -3,6 +3,7 @@
 import { ENGLISH, WELSH, SCOTTISH, IRISH, CORNISH } from "./content-a.mjs";
 import { NORSE, SCANDINAVIAN, GERMAN, CELTIC } from "./content-b.mjs";
 import { REGIONS } from "./regions.mjs";
+import * as C6 from "../tier6a/north5b-content.mjs";
 
 export const CULTURES = [
   { key: "english", keys: ["anglo-saxon", "norman-british"], label: "English", c: ENGLISH },
@@ -15,6 +16,12 @@ export const CULTURES = [
   { key: "german", keys: ["german"], label: "German", c: GERMAN },
   { key: "celtic", keys: ["celtic"], label: "Celtic", c: CELTIC },
 ];
+// Brief 6a: the batch's cultures (no regions of their own); the mixes hold four words per list and four frames, like Celtic.
+const four = (t) => t.split("|").filter((_w, i) => [0, 3, 8, 9].includes(i)).join("|");
+const mixOf = (c) => ({ ...c, streets: c.streets.map(four), inns: c.inns.map(four), buildings: c.buildings.map(four), monuments: c.monuments.map(four) });
+for (const [key, label, c] of [["spanish", "Spanish", C6.SPANISH], ["portuguese", "Portuguese", C6.PORTUGUESE], ["french", "French", C6.FRENCH], ["dutch", "Dutch", C6.DUTCH], ["italian", "Italian", C6.ITALIAN], ["roman", "Roman", C6.ROMAN], ["slavic", "Slavic", C6.SLAVIC], ["greek", "Greek", C6.GREEK], ["byzantine", "Byzantine", C6.BYZANTINE]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
+CULTURES.push({ key: "iberian", keys: ["iberian"], label: "Iberian", c: mixOf(C6.SPANISH), tier6a: true, mix: true });
+CULTURES.push({ key: "greek-byzantine", keys: ["greek-byzantine"], label: "Greek and Byzantine", c: mixOf(C6.GREEK), tier6a: true, mix: true });
 
 /** The modules: pools (one per main kind, then the region pool), kinds, and the tokens their own frames use. */
 export const MODULES = {
@@ -81,10 +88,10 @@ export function buildModules() {
       listing.push({ module, culture: c.label, lists, x: c.c.x?.[m.id] ?? [] });
       const style = c.c.style;
       const frames = [...FRAMES[m.id][style]];
-      const own = c.key === "celtic" ? frames.slice(0, 4) : frames;
-      const extras = c.key === "celtic" ? [] : (c.c.x?.[m.id] ?? []);
+      const own = c.key === "celtic" || c.mix ? frames.slice(0, 4) : frames;
+      const extras = c.key === "celtic" || c.mix ? [] : (c.c.x?.[m.id] ?? []);
       const shapes = [...own, ...extras].map(([p, w, k]) => ({ p: sub(p, c.c, m), w, kind: m.kinds[k], sig: true }));
-      const regional = c.key === "celtic" ? [] : REGION_FRAMES(m.person, m.id === "streets" ? "destination" : "town").map(([p, w], i) => ({ p: p.replace("{R}", `{${m.region}}`), w, kind: m.kinds[i], sig: true, rg: true }));
+      const regional = c.key === "celtic" || c.tier6a ? [] : REGION_FRAMES(m.person, m.id === "streets" ? "destination" : "town").map(([p, w], i) => ({ p: p.replace("{R}", `{${m.region}}`), w, kind: m.kinds[i], sig: true, rg: true }));
       const mark = { ...(c.keys.length === 1 ? { culture: c.keys[0] } : { c: c.keys }) };
       const all = [...shapes, ...regional];
       if (m.id === "streets") {

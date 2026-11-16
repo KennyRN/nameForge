@@ -54,7 +54,7 @@ test("5b §12.2: each module's own nouns are three lists of at least eight words
   for (const [module, map] of [["inns", NORTH5B.inns.cultureShapes], ["buildings", NORTH5B.buildings.cultureShapes], ["monuments", NORTH5B.monuments.cultureShapes]] as [string, Record<string, { rg?: boolean }[]>][]) {
     for (const [k, list] of Object.entries(map)) shapes[`${module} ${k}`] = list.filter((s) => !s.rg).length;
   }
-  for (const [key, n] of Object.entries(shapes)) assert.ok(n >= (key.endsWith("celtic") ? 4 : 10), `${key} ${n}`);
+  for (const [key, n] of Object.entries(shapes)) assert.ok(n >= (key.endsWith("celtic") || key.endsWith("iberian") || key.endsWith("greek-byzantine") ? 4 : 10), `${key} ${n}`);
 });
 
 test("5b §6, §12.2: every region has 6 entries in every module that reads it", () => {

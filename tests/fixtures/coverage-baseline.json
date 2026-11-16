@@ -110,105 +110,105 @@
    "v": 0
   },
   "culture|routeNames|french|words": {
-   "v": 4
+   "v": 34
   },
   "culture|routeNames|french|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|routeNames|french|profile": {
    "v": 0
   },
   "culture|routeNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|routeNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|routeNames|dutch|profile": {
    "v": 0
   },
   "culture|routeNames|spanish|words": {
-   "v": 4
+   "v": 34
   },
   "culture|routeNames|spanish|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|routeNames|spanish|profile": {
    "v": 0
   },
   "culture|routeNames|portuguese|words": {
-   "v": 4
+   "v": 34
   },
   "culture|routeNames|portuguese|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|routeNames|portuguese|profile": {
    "v": 0
   },
   "culture|routeNames|iberian|words": {
-   "v": 4
+   "v": 16
   },
   "culture|routeNames|iberian|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|routeNames|iberian|profile": {
    "v": 0
   },
   "culture|routeNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|routeNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|routeNames|italian|profile": {
    "v": 0
   },
   "culture|routeNames|roman|words": {
-   "v": 25,
+   "v": 55,
    "t": 30
   },
   "culture|routeNames|roman|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|routeNames|roman|profile": {
    "v": 0
   },
   "culture|routeNames|greek|words": {
-   "v": 4
+   "v": 34
   },
   "culture|routeNames|greek|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|routeNames|greek|profile": {
    "v": 0
   },
   "culture|routeNames|byzantine|words": {
-   "v": 4
+   "v": 34
   },
   "culture|routeNames|byzantine|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|routeNames|byzantine|profile": {
    "v": 0
   },
   "culture|routeNames|greek-byzantine|words": {
-   "v": 8,
+   "v": 20,
    "t": 12
   },
   "culture|routeNames|greek-byzantine|shapes": {
-   "v": 3,
+   "v": 13,
    "t": 4
   },
   "culture|routeNames|greek-byzantine|profile": {
    "v": 0
   },
   "culture|routeNames|slavic|words": {
-   "v": 10,
+   "v": 40,
    "t": 30
   },
   "culture|routeNames|slavic|shapes": {
-   "v": 7,
+   "v": 17,
    "t": 10
   },
   "culture|routeNames|slavic|profile": {
@@ -378,23 +378,23 @@
    "v": 0
   },
   "era|routeNames|AN": {
-   "v": 118,
+   "v": 205,
    "t": 12
   },
   "era|routeNames|MD": {
-   "v": 139,
+   "v": 220,
    "t": 12
   },
   "era|routeNames|EM": {
-   "v": 129,
+   "v": 216,
    "t": 12
   },
   "era|routeNames|ST": {
-   "v": 178,
+   "v": 313,
    "t": 12
   },
   "era|routeNames|MO": {
-   "v": 79,
+   "v": 133,
    "t": 12
   },
   "era|routeNames|NF": {
@@ -406,7 +406,7 @@
    "t": 12
   },
   "style|routeNames|high-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|routeNames|high-fantasy|shapes": {
@@ -414,7 +414,7 @@
    "t": 4
   },
   "style|routeNames|contemporary-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|routeNames|contemporary-fantasy|shapes": {
@@ -422,7 +422,7 @@
    "t": 4
   },
   "style|routeNames|space-opera|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|routeNames|space-opera|shapes": {
@@ -793,105 +793,105 @@
    "v": 0
   },
   "culture|streetNames|french|words": {
-   "v": 15
+   "v": 45
   },
   "culture|streetNames|french|shapes": {
-   "v": 5
+   "v": 15
   },
   "culture|streetNames|french|profile": {
    "v": 0
   },
   "culture|streetNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|streetNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|streetNames|dutch|profile": {
    "v": 0
   },
   "culture|streetNames|spanish|words": {
-   "v": 15
+   "v": 45
   },
   "culture|streetNames|spanish|shapes": {
-   "v": 5
+   "v": 15
   },
   "culture|streetNames|spanish|profile": {
    "v": 0
   },
   "culture|streetNames|portuguese|words": {
-   "v": 15
+   "v": 45
   },
   "culture|streetNames|portuguese|shapes": {
-   "v": 5
+   "v": 15
   },
   "culture|streetNames|portuguese|profile": {
    "v": 0
   },
   "culture|streetNames|iberian|words": {
-   "v": 15
+   "v": 27
   },
   "culture|streetNames|iberian|shapes": {
-   "v": 5
+   "v": 9
   },
   "culture|streetNames|iberian|profile": {
    "v": 0
   },
   "culture|streetNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|streetNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|streetNames|italian|profile": {
    "v": 0
   },
   "culture|streetNames|roman|words": {
-   "v": 19,
+   "v": 49,
    "t": 30
   },
   "culture|streetNames|roman|shapes": {
-   "v": 14,
+   "v": 24,
    "t": 10
   },
   "culture|streetNames|roman|profile": {
    "v": 0
   },
   "culture|streetNames|greek|words": {
-   "v": 15
+   "v": 45
   },
   "culture|streetNames|greek|shapes": {
-   "v": 5
+   "v": 15
   },
   "culture|streetNames|greek|profile": {
    "v": 0
   },
   "culture|streetNames|byzantine|words": {
-   "v": 15
+   "v": 45
   },
   "culture|streetNames|byzantine|shapes": {
-   "v": 5
+   "v": 15
   },
   "culture|streetNames|byzantine|profile": {
    "v": 0
   },
   "culture|streetNames|greek-byzantine|words": {
-   "v": 20,
+   "v": 32,
    "t": 12
   },
   "culture|streetNames|greek-byzantine|shapes": {
-   "v": 10,
+   "v": 14,
    "t": 4
   },
   "culture|streetNames|greek-byzantine|profile": {
    "v": 0
   },
   "culture|streetNames|slavic|words": {
-   "v": 22,
+   "v": 52,
    "t": 30
   },
   "culture|streetNames|slavic|shapes": {
-   "v": 12,
+   "v": 22,
    "t": 10
   },
   "culture|streetNames|slavic|profile": {
@@ -1061,23 +1061,23 @@
    "v": 0
   },
   "era|streetNames|AN": {
-   "v": 86,
+   "v": 185,
    "t": 12
   },
   "era|streetNames|MD": {
-   "v": 92,
+   "v": 191,
    "t": 12
   },
   "era|streetNames|EM": {
-   "v": 93,
+   "v": 180,
    "t": 12
   },
   "era|streetNames|ST": {
-   "v": 246,
+   "v": 387,
    "t": 12
   },
   "era|streetNames|MO": {
-   "v": 106,
+   "v": 160,
    "t": 12
   },
   "era|streetNames|NF": {
@@ -1097,7 +1097,7 @@
    "t": 4
   },
   "style|streetNames|high-fantasy|words": {
-   "v": 27,
+   "v": 54,
    "t": 16
   },
   "style|streetNames|high-fantasy|shapes": {
@@ -1105,7 +1105,7 @@
    "t": 4
   },
   "style|streetNames|contemporary-fantasy|words": {
-   "v": 27,
+   "v": 54,
    "t": 16
   },
   "style|streetNames|contemporary-fantasy|shapes": {
@@ -1113,7 +1113,7 @@
    "t": 4
   },
   "style|streetNames|space-opera|words": {
-   "v": 27,
+   "v": 54,
    "t": 16
   },
   "style|streetNames|space-opera|shapes": {
@@ -1344,105 +1344,105 @@
    "v": 0
   },
   "culture|innNames|french|words": {
-   "v": 24
+   "v": 54
   },
   "culture|innNames|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|innNames|french|profile": {
    "v": 0
   },
   "culture|innNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|innNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|innNames|dutch|profile": {
    "v": 0
   },
   "culture|innNames|spanish|words": {
-   "v": 24
+   "v": 54
   },
   "culture|innNames|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|innNames|spanish|profile": {
    "v": 0
   },
   "culture|innNames|portuguese|words": {
-   "v": 24
+   "v": 54
   },
   "culture|innNames|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|innNames|portuguese|profile": {
    "v": 0
   },
   "culture|innNames|iberian|words": {
-   "v": 24
+   "v": 36
   },
   "culture|innNames|iberian|shapes": {
-   "v": 0
+   "v": 4
   },
   "culture|innNames|iberian|profile": {
    "v": 0
   },
   "culture|innNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|innNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|innNames|italian|profile": {
    "v": 0
   },
   "culture|innNames|roman|words": {
-   "v": 29,
+   "v": 59,
    "t": 30
   },
   "culture|innNames|roman|shapes": {
-   "v": 6,
+   "v": 16,
    "t": 10
   },
   "culture|innNames|roman|profile": {
    "v": 0
   },
   "culture|innNames|greek|words": {
-   "v": 24
+   "v": 54
   },
   "culture|innNames|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|innNames|greek|profile": {
    "v": 0
   },
   "culture|innNames|byzantine|words": {
-   "v": 24
+   "v": 54
   },
   "culture|innNames|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|innNames|byzantine|profile": {
    "v": 0
   },
   "culture|innNames|greek-byzantine|words": {
-   "v": 28,
+   "v": 40,
    "t": 12
   },
   "culture|innNames|greek-byzantine|shapes": {
-   "v": 4,
+   "v": 8,
    "t": 4
   },
   "culture|innNames|greek-byzantine|profile": {
    "v": 0
   },
   "culture|innNames|slavic|words": {
-   "v": 26,
+   "v": 56,
    "t": 30
   },
   "culture|innNames|slavic|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|innNames|slavic|profile": {
@@ -1612,23 +1612,23 @@
    "v": 0
   },
   "era|innNames|AN": {
-   "v": 85,
+   "v": 184,
    "t": 12
   },
   "era|innNames|MD": {
-   "v": 92,
+   "v": 191,
    "t": 12
   },
   "era|innNames|EM": {
-   "v": 101,
+   "v": 188,
    "t": 12
   },
   "era|innNames|ST": {
-   "v": 213,
+   "v": 354,
    "t": 12
   },
   "era|innNames|MO": {
-   "v": 79,
+   "v": 133,
    "t": 12
   },
   "era|innNames|NF": {
@@ -1648,7 +1648,7 @@
    "t": 4
   },
   "style|innNames|high-fantasy|words": {
-   "v": 36,
+   "v": 63,
    "t": 16
   },
   "style|innNames|high-fantasy|shapes": {
@@ -1656,7 +1656,7 @@
    "t": 4
   },
   "style|innNames|contemporary-fantasy|words": {
-   "v": 36,
+   "v": 63,
    "t": 16
   },
   "style|innNames|contemporary-fantasy|shapes": {
@@ -1664,7 +1664,7 @@
    "t": 4
   },
   "style|innNames|space-opera|words": {
-   "v": 36,
+   "v": 63,
    "t": 16
   },
   "style|innNames|space-opera|shapes": {
@@ -1911,105 +1911,105 @@
    "v": 0
   },
   "culture|buildingNames|french|words": {
-   "v": 27
+   "v": 57
   },
   "culture|buildingNames|french|shapes": {
-   "v": 8
+   "v": 18
   },
   "culture|buildingNames|french|profile": {
    "v": 0
   },
   "culture|buildingNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|buildingNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|buildingNames|dutch|profile": {
    "v": 0
   },
   "culture|buildingNames|spanish|words": {
-   "v": 27
+   "v": 57
   },
   "culture|buildingNames|spanish|shapes": {
-   "v": 8
+   "v": 18
   },
   "culture|buildingNames|spanish|profile": {
    "v": 0
   },
   "culture|buildingNames|portuguese|words": {
-   "v": 27
+   "v": 57
   },
   "culture|buildingNames|portuguese|shapes": {
-   "v": 8
+   "v": 18
   },
   "culture|buildingNames|portuguese|profile": {
    "v": 0
   },
   "culture|buildingNames|iberian|words": {
-   "v": 27
+   "v": 39
   },
   "culture|buildingNames|iberian|shapes": {
-   "v": 8
+   "v": 12
   },
   "culture|buildingNames|iberian|profile": {
    "v": 0
   },
   "culture|buildingNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|buildingNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|buildingNames|italian|profile": {
    "v": 0
   },
   "culture|buildingNames|roman|words": {
-   "v": 49,
+   "v": 79,
    "t": 30
   },
   "culture|buildingNames|roman|shapes": {
-   "v": 12,
+   "v": 22,
    "t": 10
   },
   "culture|buildingNames|roman|profile": {
    "v": 0
   },
   "culture|buildingNames|greek|words": {
-   "v": 27
+   "v": 57
   },
   "culture|buildingNames|greek|shapes": {
-   "v": 8
+   "v": 18
   },
   "culture|buildingNames|greek|profile": {
    "v": 0
   },
   "culture|buildingNames|byzantine|words": {
-   "v": 27
+   "v": 57
   },
   "culture|buildingNames|byzantine|shapes": {
-   "v": 8
+   "v": 18
   },
   "culture|buildingNames|byzantine|profile": {
    "v": 0
   },
   "culture|buildingNames|greek-byzantine|words": {
-   "v": 29,
+   "v": 41,
    "t": 12
   },
   "culture|buildingNames|greek-byzantine|shapes": {
-   "v": 10,
+   "v": 14,
    "t": 4
   },
   "culture|buildingNames|greek-byzantine|profile": {
    "v": 0
   },
   "culture|buildingNames|slavic|words": {
-   "v": 27,
+   "v": 57,
    "t": 30
   },
   "culture|buildingNames|slavic|shapes": {
-   "v": 12,
+   "v": 22,
    "t": 10
   },
   "culture|buildingNames|slavic|profile": {
@@ -2179,23 +2179,23 @@
    "v": 0
   },
   "era|buildingNames|AN": {
-   "v": 90,
+   "v": 189,
    "t": 12
   },
   "era|buildingNames|MD": {
-   "v": 103,
+   "v": 202,
    "t": 12
   },
   "era|buildingNames|EM": {
-   "v": 107,
+   "v": 194,
    "t": 12
   },
   "era|buildingNames|ST": {
-   "v": 224,
+   "v": 365,
    "t": 12
   },
   "era|buildingNames|MO": {
-   "v": 84,
+   "v": 138,
    "t": 12
   },
   "era|buildingNames|NF": {
@@ -2215,7 +2215,7 @@
    "t": 4
   },
   "style|buildingNames|high-fantasy|words": {
-   "v": 29,
+   "v": 56,
    "t": 16
   },
   "style|buildingNames|high-fantasy|shapes": {
@@ -2223,7 +2223,7 @@
    "t": 4
   },
   "style|buildingNames|contemporary-fantasy|words": {
-   "v": 29,
+   "v": 56,
    "t": 16
   },
   "style|buildingNames|contemporary-fantasy|shapes": {
@@ -2231,7 +2231,7 @@
    "t": 4
   },
   "style|buildingNames|space-opera|words": {
-   "v": 29,
+   "v": 56,
    "t": 16
   },
   "style|buildingNames|space-opera|shapes": {
@@ -2490,105 +2490,105 @@
    "v": 0
   },
   "culture|monumentNames|french|words": {
-   "v": 6
+   "v": 36
   },
   "culture|monumentNames|french|shapes": {
-   "v": 4
+   "v": 14
   },
   "culture|monumentNames|french|profile": {
    "v": 0
   },
   "culture|monumentNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|monumentNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|monumentNames|dutch|profile": {
    "v": 0
   },
   "culture|monumentNames|spanish|words": {
-   "v": 6
+   "v": 36
   },
   "culture|monumentNames|spanish|shapes": {
-   "v": 4
+   "v": 14
   },
   "culture|monumentNames|spanish|profile": {
    "v": 0
   },
   "culture|monumentNames|portuguese|words": {
-   "v": 6
+   "v": 36
   },
   "culture|monumentNames|portuguese|shapes": {
-   "v": 4
+   "v": 14
   },
   "culture|monumentNames|portuguese|profile": {
    "v": 0
   },
   "culture|monumentNames|iberian|words": {
-   "v": 6
+   "v": 18
   },
   "culture|monumentNames|iberian|shapes": {
-   "v": 4
+   "v": 8
   },
   "culture|monumentNames|iberian|profile": {
    "v": 0
   },
   "culture|monumentNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|monumentNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|monumentNames|italian|profile": {
    "v": 0
   },
   "culture|monumentNames|roman|words": {
-   "v": 8,
+   "v": 38,
    "t": 30
   },
   "culture|monumentNames|roman|shapes": {
-   "v": 10,
+   "v": 20,
    "t": 10
   },
   "culture|monumentNames|roman|profile": {
    "v": 0
   },
   "culture|monumentNames|greek|words": {
-   "v": 6
+   "v": 36
   },
   "culture|monumentNames|greek|shapes": {
-   "v": 4
+   "v": 14
   },
   "culture|monumentNames|greek|profile": {
    "v": 0
   },
   "culture|monumentNames|byzantine|words": {
-   "v": 6
+   "v": 36
   },
   "culture|monumentNames|byzantine|shapes": {
-   "v": 4
+   "v": 14
   },
   "culture|monumentNames|byzantine|profile": {
    "v": 0
   },
   "culture|monumentNames|greek-byzantine|words": {
-   "v": 8,
+   "v": 20,
    "t": 12
   },
   "culture|monumentNames|greek-byzantine|shapes": {
-   "v": 7,
+   "v": 11,
    "t": 4
   },
   "culture|monumentNames|greek-byzantine|profile": {
    "v": 0
   },
   "culture|monumentNames|slavic|words": {
-   "v": 7,
+   "v": 37,
    "t": 30
   },
   "culture|monumentNames|slavic|shapes": {
-   "v": 8,
+   "v": 18,
    "t": 10
   },
   "culture|monumentNames|slavic|profile": {
@@ -2758,23 +2758,23 @@
    "v": 0
   },
   "era|monumentNames|AN": {
-   "v": 169,
+   "v": 268,
    "t": 12
   },
   "era|monumentNames|MD": {
-   "v": 158,
+   "v": 257,
    "t": 12
   },
   "era|monumentNames|EM": {
-   "v": 127,
+   "v": 214,
    "t": 12
   },
   "era|monumentNames|ST": {
-   "v": 194,
+   "v": 335,
    "t": 12
   },
   "era|monumentNames|MO": {
-   "v": 94,
+   "v": 148,
    "t": 12
   },
   "era|monumentNames|NF": {
@@ -2794,7 +2794,7 @@
    "t": 4
   },
   "style|monumentNames|high-fantasy|words": {
-   "v": 27,
+   "v": 54,
    "t": 16
   },
   "style|monumentNames|high-fantasy|shapes": {
@@ -2802,7 +2802,7 @@
    "t": 4
   },
   "style|monumentNames|contemporary-fantasy|words": {
-   "v": 27,
+   "v": 54,
    "t": 16
   },
   "style|monumentNames|contemporary-fantasy|shapes": {
@@ -2810,7 +2810,7 @@
    "t": 4
   },
   "style|monumentNames|space-opera|words": {
-   "v": 27,
+   "v": 54,
    "t": 16
   },
   "style|monumentNames|space-opera|shapes": {
@@ -5544,105 +5544,105 @@
    "v": 0
   },
   "culture|mountainNames|french|words": {
-   "v": 4
+   "v": 34
   },
   "culture|mountainNames|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|french|profile": {
    "v": 0
   },
   "culture|mountainNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|mountainNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|dutch|profile": {
    "v": 0
   },
   "culture|mountainNames|spanish|words": {
-   "v": 4
+   "v": 34
   },
   "culture|mountainNames|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|spanish|profile": {
    "v": 0
   },
   "culture|mountainNames|portuguese|words": {
-   "v": 4
+   "v": 34
   },
   "culture|mountainNames|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|portuguese|profile": {
    "v": 0
   },
   "culture|mountainNames|iberian|words": {
-   "v": 4
+   "v": 16
   },
   "culture|mountainNames|iberian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|iberian|profile": {
    "v": 0
   },
   "culture|mountainNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|mountainNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|italian|profile": {
    "v": 0
   },
   "culture|mountainNames|roman|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|mountainNames|roman|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|roman|profile": {
    "v": 1
   },
   "culture|mountainNames|greek|words": {
-   "v": 4
+   "v": 34
   },
   "culture|mountainNames|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|greek|profile": {
    "v": 0
   },
   "culture|mountainNames|byzantine|words": {
-   "v": 4
+   "v": 34
   },
   "culture|mountainNames|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|mountainNames|byzantine|profile": {
    "v": 0
   },
   "culture|mountainNames|greek-byzantine|words": {
-   "v": 6,
+   "v": 18,
    "t": 12
   },
   "culture|mountainNames|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|mountainNames|greek-byzantine|profile": {
    "v": 1
   },
   "culture|mountainNames|slavic|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|mountainNames|slavic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|slavic|profile": {
@@ -5812,23 +5812,23 @@
    "v": 0
   },
   "era|mountainNames|AN": {
-   "v": 82,
+   "v": 169,
    "t": 12
   },
   "era|mountainNames|MD": {
-   "v": 79,
+   "v": 160,
    "t": 12
   },
   "era|mountainNames|EM": {
-   "v": 125,
+   "v": 266,
    "t": 12
   },
   "era|mountainNames|ST": {
-   "v": 125,
+   "v": 266,
    "t": 12
   },
   "era|mountainNames|MO": {
-   "v": 125,
+   "v": 266,
    "t": 12
   },
   "era|mountainNames|NF": {
@@ -5840,7 +5840,7 @@
    "t": 12
   },
   "style|mountainNames|high-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|mountainNames|high-fantasy|shapes": {
@@ -5848,7 +5848,7 @@
    "t": 4
   },
   "style|mountainNames|contemporary-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|mountainNames|contemporary-fantasy|shapes": {
@@ -5856,7 +5856,7 @@
    "t": 4
   },
   "style|mountainNames|space-opera|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|mountainNames|space-opera|shapes": {
@@ -6123,105 +6123,105 @@
    "v": 0
   },
   "culture|forestNames|french|words": {
-   "v": 4
+   "v": 34
   },
   "culture|forestNames|french|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|forestNames|french|profile": {
    "v": 0
   },
   "culture|forestNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|forestNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|forestNames|dutch|profile": {
    "v": 0
   },
   "culture|forestNames|spanish|words": {
-   "v": 4
+   "v": 34
   },
   "culture|forestNames|spanish|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|forestNames|spanish|profile": {
    "v": 0
   },
   "culture|forestNames|portuguese|words": {
-   "v": 4
+   "v": 34
   },
   "culture|forestNames|portuguese|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|forestNames|portuguese|profile": {
    "v": 0
   },
   "culture|forestNames|iberian|words": {
-   "v": 4
+   "v": 16
   },
   "culture|forestNames|iberian|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|forestNames|iberian|profile": {
    "v": 0
   },
   "culture|forestNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|forestNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|forestNames|italian|profile": {
    "v": 0
   },
   "culture|forestNames|roman|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|forestNames|roman|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|forestNames|roman|profile": {
    "v": 1
   },
   "culture|forestNames|greek|words": {
-   "v": 4
+   "v": 34
   },
   "culture|forestNames|greek|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|forestNames|greek|profile": {
    "v": 0
   },
   "culture|forestNames|byzantine|words": {
-   "v": 4
+   "v": 34
   },
   "culture|forestNames|byzantine|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|forestNames|byzantine|profile": {
    "v": 0
   },
   "culture|forestNames|greek-byzantine|words": {
-   "v": 4,
+   "v": 16,
    "t": 12
   },
   "culture|forestNames|greek-byzantine|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 4
   },
   "culture|forestNames|greek-byzantine|profile": {
    "v": 1
   },
   "culture|forestNames|slavic|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|forestNames|slavic|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|forestNames|slavic|profile": {
@@ -6391,23 +6391,23 @@
    "v": 0
   },
   "era|forestNames|AN": {
-   "v": 80,
+   "v": 167,
    "t": 12
   },
   "era|forestNames|MD": {
-   "v": 90,
+   "v": 171,
    "t": 12
   },
   "era|forestNames|EM": {
-   "v": 145,
+   "v": 286,
    "t": 12
   },
   "era|forestNames|ST": {
-   "v": 145,
+   "v": 286,
    "t": 12
   },
   "era|forestNames|MO": {
-   "v": 145,
+   "v": 286,
    "t": 12
   },
   "era|forestNames|NF": {
@@ -6419,7 +6419,7 @@
    "t": 12
   },
   "style|forestNames|high-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|forestNames|high-fantasy|shapes": {
@@ -6427,7 +6427,7 @@
    "t": 4
   },
   "style|forestNames|contemporary-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|forestNames|contemporary-fantasy|shapes": {
@@ -6435,7 +6435,7 @@
    "t": 4
   },
   "style|forestNames|space-opera|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|forestNames|space-opera|shapes": {
@@ -7181,105 +7181,105 @@
    "v": 0
   },
   "culture|moorNames|french|words": {
-   "v": 4
+   "v": 34
   },
   "culture|moorNames|french|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|moorNames|french|profile": {
    "v": 0
   },
   "culture|moorNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|moorNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|moorNames|dutch|profile": {
    "v": 0
   },
   "culture|moorNames|spanish|words": {
-   "v": 4
+   "v": 34
   },
   "culture|moorNames|spanish|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|moorNames|spanish|profile": {
    "v": 0
   },
   "culture|moorNames|portuguese|words": {
-   "v": 4
+   "v": 34
   },
   "culture|moorNames|portuguese|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|moorNames|portuguese|profile": {
    "v": 0
   },
   "culture|moorNames|iberian|words": {
-   "v": 4
+   "v": 16
   },
   "culture|moorNames|iberian|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|moorNames|iberian|profile": {
    "v": 0
   },
   "culture|moorNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|moorNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|moorNames|italian|profile": {
    "v": 0
   },
   "culture|moorNames|roman|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|moorNames|roman|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|moorNames|roman|profile": {
    "v": 1
   },
   "culture|moorNames|greek|words": {
-   "v": 4
+   "v": 34
   },
   "culture|moorNames|greek|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|moorNames|greek|profile": {
    "v": 0
   },
   "culture|moorNames|byzantine|words": {
-   "v": 4
+   "v": 34
   },
   "culture|moorNames|byzantine|shapes": {
-   "v": 2
+   "v": 12
   },
   "culture|moorNames|byzantine|profile": {
    "v": 0
   },
   "culture|moorNames|greek-byzantine|words": {
-   "v": 4,
+   "v": 16,
    "t": 12
   },
   "culture|moorNames|greek-byzantine|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 4
   },
   "culture|moorNames|greek-byzantine|profile": {
    "v": 1
   },
   "culture|moorNames|slavic|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|moorNames|slavic|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|moorNames|slavic|profile": {
@@ -7449,23 +7449,23 @@
    "v": 0
   },
   "era|moorNames|AN": {
-   "v": 79,
+   "v": 166,
    "t": 12
   },
   "era|moorNames|MD": {
-   "v": 76,
+   "v": 157,
    "t": 12
   },
   "era|moorNames|EM": {
-   "v": 123,
+   "v": 264,
    "t": 12
   },
   "era|moorNames|ST": {
-   "v": 123,
+   "v": 264,
    "t": 12
   },
   "era|moorNames|MO": {
-   "v": 123,
+   "v": 264,
    "t": 12
   },
   "era|moorNames|NF": {
@@ -7477,7 +7477,7 @@
    "t": 12
   },
   "style|moorNames|high-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|moorNames|high-fantasy|shapes": {
@@ -7485,7 +7485,7 @@
    "t": 4
   },
   "style|moorNames|contemporary-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|moorNames|contemporary-fantasy|shapes": {
@@ -7493,7 +7493,7 @@
    "t": 4
   },
   "style|moorNames|space-opera|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|moorNames|space-opera|shapes": {
@@ -7748,105 +7748,105 @@
    "v": 0
   },
   "culture|wetlandNames|french|words": {
-   "v": 4
+   "v": 34
   },
   "culture|wetlandNames|french|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|wetlandNames|french|profile": {
    "v": 0
   },
   "culture|wetlandNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|wetlandNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|wetlandNames|dutch|profile": {
    "v": 0
   },
   "culture|wetlandNames|spanish|words": {
-   "v": 4
+   "v": 34
   },
   "culture|wetlandNames|spanish|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|wetlandNames|spanish|profile": {
    "v": 0
   },
   "culture|wetlandNames|portuguese|words": {
-   "v": 4
+   "v": 34
   },
   "culture|wetlandNames|portuguese|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|wetlandNames|portuguese|profile": {
    "v": 0
   },
   "culture|wetlandNames|iberian|words": {
-   "v": 4
+   "v": 16
   },
   "culture|wetlandNames|iberian|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|wetlandNames|iberian|profile": {
    "v": 0
   },
   "culture|wetlandNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|wetlandNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|wetlandNames|italian|profile": {
    "v": 0
   },
   "culture|wetlandNames|roman|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|wetlandNames|roman|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|roman|profile": {
    "v": 1
   },
   "culture|wetlandNames|greek|words": {
-   "v": 4
+   "v": 34
   },
   "culture|wetlandNames|greek|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|wetlandNames|greek|profile": {
    "v": 0
   },
   "culture|wetlandNames|byzantine|words": {
-   "v": 4
+   "v": 34
   },
   "culture|wetlandNames|byzantine|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|wetlandNames|byzantine|profile": {
    "v": 0
   },
   "culture|wetlandNames|greek-byzantine|words": {
-   "v": 4,
+   "v": 16,
    "t": 12
   },
   "culture|wetlandNames|greek-byzantine|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|wetlandNames|greek-byzantine|profile": {
    "v": 1
   },
   "culture|wetlandNames|slavic|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|wetlandNames|slavic|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|wetlandNames|slavic|profile": {
@@ -8016,23 +8016,23 @@
    "v": 0
   },
   "era|wetlandNames|AN": {
-   "v": 82,
+   "v": 169,
    "t": 12
   },
   "era|wetlandNames|MD": {
-   "v": 76,
+   "v": 157,
    "t": 12
   },
   "era|wetlandNames|EM": {
-   "v": 124,
+   "v": 265,
    "t": 12
   },
   "era|wetlandNames|ST": {
-   "v": 124,
+   "v": 265,
    "t": 12
   },
   "era|wetlandNames|MO": {
-   "v": 124,
+   "v": 265,
    "t": 12
   },
   "era|wetlandNames|NF": {
@@ -8044,7 +8044,7 @@
    "t": 12
   },
   "style|wetlandNames|high-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|wetlandNames|high-fantasy|shapes": {
@@ -8052,7 +8052,7 @@
    "t": 4
   },
   "style|wetlandNames|contemporary-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|wetlandNames|contemporary-fantasy|shapes": {
@@ -8060,7 +8060,7 @@
    "t": 4
   },
   "style|wetlandNames|space-opera|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|wetlandNames|space-opera|shapes": {
@@ -8319,105 +8319,105 @@
    "v": 0
   },
   "culture|grasslandNames|french|words": {
-   "v": 4
+   "v": 34
   },
   "culture|grasslandNames|french|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|grasslandNames|french|profile": {
    "v": 0
   },
   "culture|grasslandNames|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|grasslandNames|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|grasslandNames|dutch|profile": {
    "v": 0
   },
   "culture|grasslandNames|spanish|words": {
-   "v": 4
+   "v": 34
   },
   "culture|grasslandNames|spanish|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|grasslandNames|spanish|profile": {
    "v": 0
   },
   "culture|grasslandNames|portuguese|words": {
-   "v": 4
+   "v": 34
   },
   "culture|grasslandNames|portuguese|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|grasslandNames|portuguese|profile": {
    "v": 0
   },
   "culture|grasslandNames|iberian|words": {
-   "v": 4
+   "v": 16
   },
   "culture|grasslandNames|iberian|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|grasslandNames|iberian|profile": {
    "v": 0
   },
   "culture|grasslandNames|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|grasslandNames|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|grasslandNames|italian|profile": {
    "v": 0
   },
   "culture|grasslandNames|roman|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|grasslandNames|roman|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|grasslandNames|roman|profile": {
    "v": 1
   },
   "culture|grasslandNames|greek|words": {
-   "v": 4
+   "v": 34
   },
   "culture|grasslandNames|greek|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|grasslandNames|greek|profile": {
    "v": 0
   },
   "culture|grasslandNames|byzantine|words": {
-   "v": 4
+   "v": 34
   },
   "culture|grasslandNames|byzantine|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|grasslandNames|byzantine|profile": {
    "v": 0
   },
   "culture|grasslandNames|greek-byzantine|words": {
-   "v": 4,
+   "v": 16,
    "t": 12
   },
   "culture|grasslandNames|greek-byzantine|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|grasslandNames|greek-byzantine|profile": {
    "v": 1
   },
   "culture|grasslandNames|slavic|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|grasslandNames|slavic|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|grasslandNames|slavic|profile": {
@@ -8587,23 +8587,23 @@
    "v": 0
   },
   "era|grasslandNames|AN": {
-   "v": 79,
+   "v": 166,
    "t": 12
   },
   "era|grasslandNames|MD": {
-   "v": 76,
+   "v": 157,
    "t": 12
   },
   "era|grasslandNames|EM": {
-   "v": 131,
+   "v": 272,
    "t": 12
   },
   "era|grasslandNames|ST": {
-   "v": 131,
+   "v": 272,
    "t": 12
   },
   "era|grasslandNames|MO": {
-   "v": 131,
+   "v": 272,
    "t": 12
   },
   "era|grasslandNames|NF": {
@@ -8615,7 +8615,7 @@
    "t": 12
   },
   "style|grasslandNames|high-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|grasslandNames|high-fantasy|shapes": {
@@ -8623,7 +8623,7 @@
    "t": 4
   },
   "style|grasslandNames|contemporary-fantasy|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|grasslandNames|contemporary-fantasy|shapes": {
@@ -8631,7 +8631,7 @@
    "t": 4
   },
   "style|grasslandNames|space-opera|words": {
-   "v": 43,
+   "v": 76,
    "t": 16
   },
   "style|grasslandNames|space-opera|shapes": {
@@ -8890,105 +8890,105 @@
    "v": 0
   },
   "culture|lands|french|words": {
-   "v": 1
+   "v": 31
   },
   "culture|lands|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|french|profile": {
    "v": 0
   },
   "culture|lands|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|lands|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|dutch|profile": {
    "v": 0
   },
   "culture|lands|spanish|words": {
-   "v": 1
+   "v": 31
   },
   "culture|lands|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|spanish|profile": {
    "v": 0
   },
   "culture|lands|portuguese|words": {
-   "v": 1
+   "v": 31
   },
   "culture|lands|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|portuguese|profile": {
    "v": 0
   },
   "culture|lands|iberian|words": {
-   "v": 1
+   "v": 13
   },
   "culture|lands|iberian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|iberian|profile": {
    "v": 0
   },
   "culture|lands|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|lands|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|italian|profile": {
    "v": 0
   },
   "culture|lands|roman|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|lands|roman|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|roman|profile": {
    "v": 1
   },
   "culture|lands|greek|words": {
-   "v": 1
+   "v": 31
   },
   "culture|lands|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|greek|profile": {
    "v": 0
   },
   "culture|lands|byzantine|words": {
-   "v": 1
+   "v": 31
   },
   "culture|lands|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|lands|byzantine|profile": {
    "v": 0
   },
   "culture|lands|greek-byzantine|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|lands|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|lands|greek-byzantine|profile": {
    "v": 1
   },
   "culture|lands|slavic|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|lands|slavic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|slavic|profile": {
@@ -9158,23 +9158,23 @@
    "v": 0
   },
   "era|lands|AN": {
-   "v": 78,
+   "v": 165,
    "t": 12
   },
   "era|lands|MD": {
-   "v": 72,
+   "v": 153,
    "t": 12
   },
   "era|lands|EM": {
-   "v": 125,
+   "v": 266,
    "t": 12
   },
   "era|lands|ST": {
-   "v": 125,
+   "v": 266,
    "t": 12
   },
   "era|lands|MO": {
-   "v": 125,
+   "v": 266,
    "t": 12
   },
   "era|lands|NF": {
@@ -9186,7 +9186,7 @@
    "t": 12
   },
   "style|lands|high-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|lands|high-fantasy|shapes": {
@@ -9194,7 +9194,7 @@
    "t": 4
   },
   "style|lands|contemporary-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|lands|contemporary-fantasy|shapes": {
@@ -9202,7 +9202,7 @@
    "t": 4
   },
   "style|lands|space-opera|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|lands|space-opera|shapes": {
@@ -9445,105 +9445,105 @@
    "v": 0
   },
   "culture|riversInland|french|words": {
-   "v": 1
+   "v": 31
   },
   "culture|riversInland|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|french|profile": {
    "v": 0
   },
   "culture|riversInland|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|riversInland|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|dutch|profile": {
    "v": 0
   },
   "culture|riversInland|spanish|words": {
-   "v": 1
+   "v": 31
   },
   "culture|riversInland|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|spanish|profile": {
    "v": 0
   },
   "culture|riversInland|portuguese|words": {
-   "v": 1
+   "v": 31
   },
   "culture|riversInland|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|portuguese|profile": {
    "v": 0
   },
   "culture|riversInland|iberian|words": {
-   "v": 1
+   "v": 13
   },
   "culture|riversInland|iberian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|iberian|profile": {
    "v": 0
   },
   "culture|riversInland|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|riversInland|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|italian|profile": {
    "v": 0
   },
   "culture|riversInland|roman|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|roman|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|roman|profile": {
    "v": 1
   },
   "culture|riversInland|greek|words": {
-   "v": 1
+   "v": 31
   },
   "culture|riversInland|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|greek|profile": {
    "v": 0
   },
   "culture|riversInland|byzantine|words": {
-   "v": 1
+   "v": 31
   },
   "culture|riversInland|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|riversInland|byzantine|profile": {
    "v": 0
   },
   "culture|riversInland|greek-byzantine|words": {
-   "v": 2,
+   "v": 14,
    "t": 12
   },
   "culture|riversInland|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|riversInland|greek-byzantine|profile": {
    "v": 1
   },
   "culture|riversInland|slavic|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|slavic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|slavic|profile": {
@@ -9713,23 +9713,23 @@
    "v": 0
   },
   "era|riversInland|AN": {
-   "v": 81,
+   "v": 168,
    "t": 12
   },
   "era|riversInland|MD": {
-   "v": 77,
+   "v": 158,
    "t": 12
   },
   "era|riversInland|EM": {
-   "v": 124,
+   "v": 265,
    "t": 12
   },
   "era|riversInland|ST": {
-   "v": 124,
+   "v": 265,
    "t": 12
   },
   "era|riversInland|MO": {
-   "v": 124,
+   "v": 265,
    "t": 12
   },
   "era|riversInland|NF": {
@@ -9741,7 +9741,7 @@
    "t": 12
   },
   "style|riversInland|high-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|riversInland|high-fantasy|shapes": {
@@ -9749,7 +9749,7 @@
    "t": 4
   },
   "style|riversInland|contemporary-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|riversInland|contemporary-fantasy|shapes": {
@@ -9757,7 +9757,7 @@
    "t": 4
   },
   "style|riversInland|space-opera|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|riversInland|space-opera|shapes": {
@@ -10007,105 +10007,105 @@
    "v": 0
   },
   "culture|hillsValleys|french|words": {
-   "v": 2
+   "v": 32
   },
   "culture|hillsValleys|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|french|profile": {
    "v": 0
   },
   "culture|hillsValleys|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|hillsValleys|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|dutch|profile": {
    "v": 0
   },
   "culture|hillsValleys|spanish|words": {
-   "v": 2
+   "v": 32
   },
   "culture|hillsValleys|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|spanish|profile": {
    "v": 0
   },
   "culture|hillsValleys|portuguese|words": {
-   "v": 2
+   "v": 32
   },
   "culture|hillsValleys|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|portuguese|profile": {
    "v": 0
   },
   "culture|hillsValleys|iberian|words": {
-   "v": 2
+   "v": 14
   },
   "culture|hillsValleys|iberian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|iberian|profile": {
    "v": 0
   },
   "culture|hillsValleys|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|hillsValleys|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|italian|profile": {
    "v": 0
   },
   "culture|hillsValleys|roman|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|hillsValleys|roman|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|roman|profile": {
    "v": 1
   },
   "culture|hillsValleys|greek|words": {
-   "v": 2
+   "v": 32
   },
   "culture|hillsValleys|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|greek|profile": {
    "v": 0
   },
   "culture|hillsValleys|byzantine|words": {
-   "v": 2
+   "v": 32
   },
   "culture|hillsValleys|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|hillsValleys|byzantine|profile": {
    "v": 0
   },
   "culture|hillsValleys|greek-byzantine|words": {
-   "v": 2,
+   "v": 14,
    "t": 12
   },
   "culture|hillsValleys|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|hillsValleys|greek-byzantine|profile": {
    "v": 1
   },
   "culture|hillsValleys|slavic|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|hillsValleys|slavic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|slavic|profile": {
@@ -10275,23 +10275,23 @@
    "v": 0
   },
   "era|hillsValleys|AN": {
-   "v": 78,
+   "v": 165,
    "t": 12
   },
   "era|hillsValleys|MD": {
-   "v": 72,
+   "v": 153,
    "t": 12
   },
   "era|hillsValleys|EM": {
-   "v": 120,
+   "v": 261,
    "t": 12
   },
   "era|hillsValleys|ST": {
-   "v": 120,
+   "v": 261,
    "t": 12
   },
   "era|hillsValleys|MO": {
-   "v": 120,
+   "v": 261,
    "t": 12
   },
   "era|hillsValleys|NF": {
@@ -10303,7 +10303,7 @@
    "t": 12
   },
   "style|hillsValleys|high-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|hillsValleys|high-fantasy|shapes": {
@@ -10311,7 +10311,7 @@
    "t": 4
   },
   "style|hillsValleys|contemporary-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|hillsValleys|contemporary-fantasy|shapes": {
@@ -10319,7 +10319,7 @@
    "t": 4
   },
   "style|hillsValleys|space-opera|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|hillsValleys|space-opera|shapes": {
@@ -10565,105 +10565,105 @@
    "v": 0
   },
   "culture|farmland|french|words": {
-   "v": 1
+   "v": 31
   },
   "culture|farmland|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|french|profile": {
    "v": 0
   },
   "culture|farmland|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|farmland|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|dutch|profile": {
    "v": 0
   },
   "culture|farmland|spanish|words": {
-   "v": 1
+   "v": 31
   },
   "culture|farmland|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|spanish|profile": {
    "v": 0
   },
   "culture|farmland|portuguese|words": {
-   "v": 1
+   "v": 31
   },
   "culture|farmland|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|portuguese|profile": {
    "v": 0
   },
   "culture|farmland|iberian|words": {
-   "v": 1
+   "v": 13
   },
   "culture|farmland|iberian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|iberian|profile": {
    "v": 0
   },
   "culture|farmland|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|farmland|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|italian|profile": {
    "v": 0
   },
   "culture|farmland|roman|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|farmland|roman|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|roman|profile": {
    "v": 1
   },
   "culture|farmland|greek|words": {
-   "v": 1
+   "v": 31
   },
   "culture|farmland|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|greek|profile": {
    "v": 0
   },
   "culture|farmland|byzantine|words": {
-   "v": 1
+   "v": 31
   },
   "culture|farmland|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|farmland|byzantine|profile": {
    "v": 0
   },
   "culture|farmland|greek-byzantine|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|farmland|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|farmland|greek-byzantine|profile": {
    "v": 1
   },
   "culture|farmland|slavic|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|farmland|slavic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|slavic|profile": {
@@ -10833,23 +10833,23 @@
    "v": 0
   },
   "era|farmland|AN": {
-   "v": 78,
+   "v": 165,
    "t": 12
   },
   "era|farmland|MD": {
-   "v": 73,
+   "v": 154,
    "t": 12
   },
   "era|farmland|EM": {
-   "v": 122,
+   "v": 263,
    "t": 12
   },
   "era|farmland|ST": {
-   "v": 122,
+   "v": 263,
    "t": 12
   },
   "era|farmland|MO": {
-   "v": 122,
+   "v": 263,
    "t": 12
   },
   "era|farmland|NF": {
@@ -10861,7 +10861,7 @@
    "t": 12
   },
   "style|farmland|high-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|farmland|high-fantasy|shapes": {
@@ -10869,7 +10869,7 @@
    "t": 4
   },
   "style|farmland|contemporary-fantasy|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|farmland|contemporary-fantasy|shapes": {
@@ -10877,7 +10877,7 @@
    "t": 4
   },
   "style|farmland|space-opera|words": {
-   "v": 36,
+   "v": 69,
    "t": 16
   },
   "style|farmland|space-opera|shapes": {
@@ -11591,105 +11591,105 @@
    "v": 0
   },
   "culture|seasLakes|french|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seasLakes|french|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|seasLakes|french|profile": {
    "v": 0
   },
   "culture|seasLakes|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seasLakes|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seasLakes|dutch|profile": {
    "v": 0
   },
   "culture|seasLakes|spanish|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seasLakes|spanish|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|seasLakes|spanish|profile": {
    "v": 0
   },
   "culture|seasLakes|portuguese|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seasLakes|portuguese|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|seasLakes|portuguese|profile": {
    "v": 0
   },
   "culture|seasLakes|iberian|words": {
-   "v": 0
+   "v": 12
   },
   "culture|seasLakes|iberian|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|seasLakes|iberian|profile": {
    "v": 0
   },
   "culture|seasLakes|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seasLakes|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seasLakes|italian|profile": {
    "v": 0
   },
   "culture|seasLakes|roman|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|seasLakes|roman|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|seasLakes|roman|profile": {
    "v": 1
   },
   "culture|seasLakes|greek|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seasLakes|greek|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|seasLakes|greek|profile": {
    "v": 0
   },
   "culture|seasLakes|byzantine|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seasLakes|byzantine|shapes": {
-   "v": 1
+   "v": 11
   },
   "culture|seasLakes|byzantine|profile": {
    "v": 0
   },
   "culture|seasLakes|greek-byzantine|words": {
-   "v": 9,
+   "v": 21,
    "t": 12
   },
   "culture|seasLakes|greek-byzantine|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|seasLakes|greek-byzantine|profile": {
    "v": 1
   },
   "culture|seasLakes|slavic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|slavic|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|seasLakes|slavic|profile": {
@@ -11859,23 +11859,23 @@
    "v": 0
   },
   "era|seasLakes|AN": {
-   "v": 88,
+   "v": 175,
    "t": 12
   },
   "era|seasLakes|MD": {
-   "v": 79,
+   "v": 160,
    "t": 12
   },
   "era|seasLakes|EM": {
-   "v": 120,
+   "v": 261,
    "t": 12
   },
   "era|seasLakes|ST": {
-   "v": 120,
+   "v": 261,
    "t": 12
   },
   "era|seasLakes|MO": {
-   "v": 120,
+   "v": 261,
    "t": 12
   },
   "era|seasLakes|NF": {
@@ -11887,7 +11887,7 @@
    "t": 12
   },
   "style|seasLakes|high-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|seasLakes|high-fantasy|shapes": {
@@ -11895,7 +11895,7 @@
    "t": 4
   },
   "style|seasLakes|contemporary-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|seasLakes|contemporary-fantasy|shapes": {
@@ -11903,7 +11903,7 @@
    "t": 4
   },
   "style|seasLakes|space-opera|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|seasLakes|space-opera|shapes": {
@@ -12146,105 +12146,105 @@
    "v": 0
   },
   "culture|coastsIslands|french|words": {
-   "v": 1
+   "v": 31
   },
   "culture|coastsIslands|french|shapes": {
-   "v": 3
+   "v": 13
   },
   "culture|coastsIslands|french|profile": {
    "v": 0
   },
   "culture|coastsIslands|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|coastsIslands|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|coastsIslands|dutch|profile": {
    "v": 0
   },
   "culture|coastsIslands|spanish|words": {
-   "v": 1
+   "v": 31
   },
   "culture|coastsIslands|spanish|shapes": {
-   "v": 3
+   "v": 13
   },
   "culture|coastsIslands|spanish|profile": {
    "v": 0
   },
   "culture|coastsIslands|portuguese|words": {
-   "v": 1
+   "v": 31
   },
   "culture|coastsIslands|portuguese|shapes": {
-   "v": 3
+   "v": 13
   },
   "culture|coastsIslands|portuguese|profile": {
    "v": 0
   },
   "culture|coastsIslands|iberian|words": {
-   "v": 1
+   "v": 13
   },
   "culture|coastsIslands|iberian|shapes": {
-   "v": 3
+   "v": 13
   },
   "culture|coastsIslands|iberian|profile": {
    "v": 0
   },
   "culture|coastsIslands|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|coastsIslands|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|coastsIslands|italian|profile": {
    "v": 0
   },
   "culture|coastsIslands|roman|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|coastsIslands|roman|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|coastsIslands|roman|profile": {
    "v": 1
   },
   "culture|coastsIslands|greek|words": {
-   "v": 1
+   "v": 31
   },
   "culture|coastsIslands|greek|shapes": {
-   "v": 3
+   "v": 13
   },
   "culture|coastsIslands|greek|profile": {
    "v": 0
   },
   "culture|coastsIslands|byzantine|words": {
-   "v": 1
+   "v": 31
   },
   "culture|coastsIslands|byzantine|shapes": {
-   "v": 3
+   "v": 13
   },
   "culture|coastsIslands|byzantine|profile": {
    "v": 0
   },
   "culture|coastsIslands|greek-byzantine|words": {
-   "v": 2,
+   "v": 14,
    "t": 12
   },
   "culture|coastsIslands|greek-byzantine|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 4
   },
   "culture|coastsIslands|greek-byzantine|profile": {
    "v": 1
   },
   "culture|coastsIslands|slavic|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|coastsIslands|slavic|shapes": {
-   "v": 3,
+   "v": 13,
    "t": 10
   },
   "culture|coastsIslands|slavic|profile": {
@@ -12414,23 +12414,23 @@
    "v": 0
   },
   "era|coastsIslands|AN": {
-   "v": 79,
+   "v": 166,
    "t": 12
   },
   "era|coastsIslands|MD": {
-   "v": 72,
+   "v": 153,
    "t": 12
   },
   "era|coastsIslands|EM": {
-   "v": 122,
+   "v": 263,
    "t": 12
   },
   "era|coastsIslands|ST": {
-   "v": 122,
+   "v": 263,
    "t": 12
   },
   "era|coastsIslands|MO": {
-   "v": 122,
+   "v": 263,
    "t": 12
   },
   "era|coastsIslands|NF": {
@@ -12442,7 +12442,7 @@
    "t": 12
   },
   "style|coastsIslands|high-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|coastsIslands|high-fantasy|shapes": {
@@ -12450,7 +12450,7 @@
    "t": 4
   },
   "style|coastsIslands|contemporary-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|coastsIslands|contemporary-fantasy|shapes": {
@@ -12458,7 +12458,7 @@
    "t": 4
   },
   "style|coastsIslands|space-opera|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|coastsIslands|space-opera|shapes": {
@@ -12701,105 +12701,105 @@
    "v": 0
   },
   "culture|seaCharts|french|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seaCharts|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|french|profile": {
    "v": 0
   },
   "culture|seaCharts|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seaCharts|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|dutch|profile": {
    "v": 0
   },
   "culture|seaCharts|spanish|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seaCharts|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|spanish|profile": {
    "v": 0
   },
   "culture|seaCharts|portuguese|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seaCharts|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|portuguese|profile": {
    "v": 0
   },
   "culture|seaCharts|iberian|words": {
-   "v": 0
+   "v": 12
   },
   "culture|seaCharts|iberian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|iberian|profile": {
    "v": 0
   },
   "culture|seaCharts|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seaCharts|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|italian|profile": {
    "v": 0
   },
   "culture|seaCharts|roman|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|roman|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|roman|profile": {
    "v": 1
   },
   "culture|seaCharts|greek|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seaCharts|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|greek|profile": {
    "v": 0
   },
   "culture|seaCharts|byzantine|words": {
-   "v": 0
+   "v": 30
   },
   "culture|seaCharts|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|seaCharts|byzantine|profile": {
    "v": 0
   },
   "culture|seaCharts|greek-byzantine|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|seaCharts|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|seaCharts|greek-byzantine|profile": {
    "v": 1
   },
   "culture|seaCharts|slavic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|slavic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|slavic|profile": {
@@ -12969,23 +12969,23 @@
    "v": 0
   },
   "era|seaCharts|AN": {
-   "v": 79,
+   "v": 166,
    "t": 12
   },
   "era|seaCharts|MD": {
-   "v": 75,
+   "v": 156,
    "t": 12
   },
   "era|seaCharts|EM": {
-   "v": 141,
+   "v": 282,
    "t": 12
   },
   "era|seaCharts|ST": {
-   "v": 141,
+   "v": 282,
    "t": 12
   },
   "era|seaCharts|MO": {
-   "v": 141,
+   "v": 282,
    "t": 12
   },
   "era|seaCharts|NF": {
@@ -12997,7 +12997,7 @@
    "t": 12
   },
   "style|seaCharts|high-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|seaCharts|high-fantasy|shapes": {
@@ -13005,7 +13005,7 @@
    "t": 4
   },
   "style|seaCharts|contemporary-fantasy|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|seaCharts|contemporary-fantasy|shapes": {
@@ -13013,7 +13013,7 @@
    "t": 4
   },
   "style|seaCharts|space-opera|words": {
-   "v": 27,
+   "v": 60,
    "t": 16
   },
   "style|seaCharts|space-opera|shapes": {
@@ -18079,105 +18079,105 @@
    "v": 0
   },
   "culture|sacredPlaces|french|words": {
-   "v": 0
+   "v": 30
   },
   "culture|sacredPlaces|french|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|french|profile": {
    "v": 0
   },
   "culture|sacredPlaces|dutch|words": {
-   "v": 0
+   "v": 30
   },
   "culture|sacredPlaces|dutch|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|dutch|profile": {
    "v": 0
   },
   "culture|sacredPlaces|spanish|words": {
-   "v": 0
+   "v": 30
   },
   "culture|sacredPlaces|spanish|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|spanish|profile": {
    "v": 0
   },
   "culture|sacredPlaces|portuguese|words": {
-   "v": 0
+   "v": 30
   },
   "culture|sacredPlaces|portuguese|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|portuguese|profile": {
    "v": 0
   },
   "culture|sacredPlaces|iberian|words": {
-   "v": 0
+   "v": 12
   },
   "culture|sacredPlaces|iberian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|iberian|profile": {
    "v": 0
   },
   "culture|sacredPlaces|italian|words": {
-   "v": 0
+   "v": 30
   },
   "culture|sacredPlaces|italian|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|italian|profile": {
    "v": 0
   },
   "culture|sacredPlaces|roman|words": {
-   "v": 12,
+   "v": 42,
    "t": 30
   },
   "culture|sacredPlaces|roman|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|roman|profile": {
    "v": 0
   },
   "culture|sacredPlaces|greek|words": {
-   "v": 0
+   "v": 30
   },
   "culture|sacredPlaces|greek|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|greek|profile": {
    "v": 0
   },
   "culture|sacredPlaces|byzantine|words": {
-   "v": 0
+   "v": 30
   },
   "culture|sacredPlaces|byzantine|shapes": {
-   "v": 0
+   "v": 10
   },
   "culture|sacredPlaces|byzantine|profile": {
    "v": 0
   },
   "culture|sacredPlaces|greek-byzantine|words": {
-   "v": 7,
+   "v": 19,
    "t": 12
   },
   "culture|sacredPlaces|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|sacredPlaces|greek-byzantine|profile": {
    "v": 0
   },
   "culture|sacredPlaces|slavic|words": {
-   "v": 12,
+   "v": 42,
    "t": 30
   },
   "culture|sacredPlaces|slavic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|slavic|profile": {
@@ -18343,23 +18343,23 @@
    "v": 0
   },
   "era|sacredPlaces|AN": {
-   "v": 78,
+   "v": 165,
    "t": 12
   },
   "era|sacredPlaces|MD": {
-   "v": 72,
+   "v": 153,
    "t": 12
   },
   "era|sacredPlaces|EM": {
-   "v": 72,
+   "v": 159,
    "t": 12
   },
   "era|sacredPlaces|ST": {
-   "v": 122,
+   "v": 257,
    "t": 12
   },
   "era|sacredPlaces|MO": {
-   "v": 48,
+   "v": 102,
    "t": 12
   },
   "era|sacredPlaces|NF": {
@@ -18379,7 +18379,7 @@
    "t": 4
   },
   "style|sacredPlaces|high-fantasy|words": {
-   "v": 31,
+   "v": 64,
    "t": 16
   },
   "style|sacredPlaces|high-fantasy|shapes": {
@@ -18387,7 +18387,7 @@
    "t": 4
   },
   "style|sacredPlaces|contemporary-fantasy|words": {
-   "v": 31,
+   "v": 64,
    "t": 16
   },
   "style|sacredPlaces|contemporary-fantasy|shapes": {
@@ -18395,7 +18395,7 @@
    "t": 4
   },
   "style|sacredPlaces|space-opera|words": {
-   "v": 31,
+   "v": 64,
    "t": 16
   },
   "style|sacredPlaces|space-opera|shapes": {
@@ -25520,10 +25520,10 @@
    "v": 891
   },
   "total|culture|roman|words": {
-   "v": 382
+   "v": 922
   },
   "total|culture|roman|shapes": {
-   "v": 232
+   "v": 412
   },
   "total|culture|norse|words": {
    "v": 2068
@@ -25574,52 +25574,52 @@
    "v": 140
   },
   "total|culture|slavic|words": {
-   "v": 282
+   "v": 822
   },
   "total|culture|slavic|shapes": {
-   "v": 213
+   "v": 393
   },
   "total|culture|french|words": {
-   "v": 314
+   "v": 854
   },
   "total|culture|french|shapes": {
-   "v": 146
+   "v": 326
   },
   "total|culture|iberian|words": {
-   "v": 84
+   "v": 300
   },
   "total|culture|iberian|shapes": {
-   "v": 30
+   "v": 186
   },
   "total|culture|spanish|words": {
-   "v": 338
+   "v": 878
   },
   "total|culture|spanish|shapes": {
-   "v": 137
+   "v": 317
   },
   "total|culture|portuguese|words": {
-   "v": 303
+   "v": 843
   },
   "total|culture|portuguese|shapes": {
-   "v": 140
+   "v": 320
   },
   "total|culture|greek-byzantine|words": {
-   "v": 216
+   "v": 432
   },
   "total|culture|greek-byzantine|shapes": {
-   "v": 54
+   "v": 210
   },
   "total|culture|greek|words": {
-   "v": 288
+   "v": 828
   },
   "total|culture|greek|shapes": {
-   "v": 132
+   "v": 312
   },
   "total|culture|byzantine|words": {
-   "v": 273
+   "v": 813
   },
   "total|culture|byzantine|shapes": {
-   "v": 126
+   "v": 306
   },
   "total|culture|japanese|words": {
    "v": 309
@@ -25675,17 +25675,17 @@
   "total|culture|german|shapes": {
    "v": 1590
   },
-  "total|culture|dutch|words": {
-   "v": 257
-  },
-  "total|culture|dutch|shapes": {
-   "v": 93
-  },
   "total|culture|italian|words": {
-   "v": 222
+   "v": 762
   },
   "total|culture|italian|shapes": {
-   "v": 111
+   "v": 291
+  },
+  "total|culture|dutch|words": {
+   "v": 797
+  },
+  "total|culture|dutch|shapes": {
+   "v": 273
   },
   "total|culture|american|words": {
    "v": 44
@@ -25718,19 +25718,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 3560
+   "v": 5174
   },
   "total|era|MD": {
-   "v": 5320
+   "v": 6850
   },
   "total|era|EM": {
-   "v": 5088
+   "v": 7302
   },
   "total|era|ST": {
-   "v": 5037
+   "v": 7563
   },
   "total|era|MO": {
-   "v": 4533
+   "v": 6549
   },
   "total|era|NF": {
    "v": 762
@@ -25739,19 +25739,19 @@
    "v": 1642
   },
   "total|style|high-fantasy|words": {
-   "v": 1356
+   "v": 1926
   },
   "total|style|high-fantasy|shapes": {
    "v": 696
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 1272
+   "v": 1842
   },
   "total|style|contemporary-fantasy|shapes": {
    "v": 694
   },
   "total|style|space-opera|words": {
-   "v": 1408
+   "v": 1978
   },
   "total|style|space-opera|shapes": {
    "v": 527
