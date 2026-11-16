@@ -29,3 +29,5 @@ coverage/
 
 # Local machine settings (not for public release)
 .claude/
+# Scratch output (reports, samples, temporary files)
+scratchpad/
