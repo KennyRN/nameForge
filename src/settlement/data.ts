@@ -4,6 +4,7 @@
 
 import raw from "../data/settlement-names.json";
 import { NORTH5B } from "../northData5b";
+import { TIER6A_DATA } from "../tier6aData";
 
 export type SizeKey = "any" | "hamlet" | "village" | "town" | "city" | "great";
 
@@ -30,6 +31,16 @@ export const SETTLEMENT_DATA: SettlementData = {
   world: {
     ...SETTLEMENT_BASE.world,
     ...NORTH5B.settlement.sizes,
+    ...TIER6A_DATA.settlement.sizes,
+    ...Object.fromEntries(
+      Object.entries(TIER6A_DATA.settlement.augmentSizes).map(([id, add]) => [
+        id,
+        {
+          eras: { ...SETTLEMENT_BASE.world[id].eras, ...add.eras },
+          lists: { ...SETTLEMENT_BASE.world[id].lists, ...add.lists },
+        },
+      ]),
+    ),
     norse: { ...SETTLEMENT_BASE.world.norse, eras: { ...SETTLEMENT_BASE.world.norse.eras, viking: { ...SETTLEMENT_BASE.world.norse.eras.viking, ...NORTH5B.settlement.norseSizes } } },
   },
 };

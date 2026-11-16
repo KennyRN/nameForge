@@ -17,6 +17,7 @@ import { hasSpaceBlock } from "../space/safeguards";
 import { drawScale, scaleFilter, SPACE_DATA, spaceDirections, type SpaceScale } from "../space/scale";
 import { drawStar } from "../space/stars";
 import { NORTH5B } from "../northData5b";
+import { TIER6A_DATA } from "../tier6aData";
 import { balanceRegion, regionSeed } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -75,10 +76,15 @@ export interface WorldData {
 
 const WORLD_BASE = worldData as unknown as WorldData;
 // Northern Europe brief 5b: Welsh, Scottish, Irish, Cornish, Scandinavian and German settlement names are world cultures of their own, and Norse gains the Scandinavian regions.
+/** Brief 6a §5.1: Roman and Slavic gain an era each (before Interstellar), and French, Dutch, Italian, Spanish, Portuguese, Greek and Byzantine are world cultures of their own. */
+const withNewEras = (c: WorldCulture): WorldCulture => {
+  const more = TIER6A_DATA.settlement.newEras[c.id] as unknown as WorldCulture["eras"] | undefined;
+  return more ? { ...c, eras: [...c.eras.slice(0, -1), ...more, c.eras[c.eras.length - 1]] } : c;
+};
 export const WORLD_DATA: WorldData = {
   ...WORLD_BASE,
-  labels: { ...WORLD_BASE.labels, ...NORTH5B.settlement.labels },
-  cultures: [...WORLD_BASE.cultures.map((c) => (c.id === "norse" ? { ...c, regions: NORTH5B.settlement.norseRegions } : c)), ...(NORTH5B.settlement.cultures as unknown as WorldCulture[])],
+  labels: { ...WORLD_BASE.labels, ...NORTH5B.settlement.labels, ...TIER6A_DATA.settlement.labels },
+  cultures: [...WORLD_BASE.cultures.map((c) => withNewEras(c.id === "norse" ? { ...c, regions: NORTH5B.settlement.norseRegions } : c)), ...(NORTH5B.settlement.cultures as unknown as WorldCulture[]), ...(TIER6A_DATA.settlement.cultures as unknown as WorldCulture[])],
 };
 export const WORLD_CULTURES: readonly WorldCulture[] = WORLD_DATA.cultures;
 

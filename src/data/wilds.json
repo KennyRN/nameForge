@@ -9881,6 +9881,10 @@
     { "tradition": "spanish", "weight": 50 },
     { "tradition": "portuguese", "weight": 50 }
    ],
+   "spanish": "spanish",
+   "portuguese": "portuguese",
+   "greek": "hellenistic",
+   "byzantine": "hellenistic",
    "american": "english-speaking-settler",
    "ottoman": "ottoman",
    "german": "german",

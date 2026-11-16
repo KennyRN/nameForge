@@ -5,10 +5,10 @@ import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows } from "../coverageUse";
 import { north5cRows } from "../north5cCoverage";
-import { NORTH_5C_CULTURES } from "../north5c";
+import { addNorth5c } from "../north5c";
 
 const MODULE = "peoplesTongues";
-const ROSTER = [...(bynameData.cultures as { key: string }[]).map((c) => c.key), ...NORTH_5C_CULTURES.map((c) => c.key)];
+const ROSTER = addNorth5c(bynameData.cultures as { key: string }[], (c) => c).map((c) => c.key);
 
 /**
  * The module's tables hold weights per culture (suffix choices, the share of "-ic" forms), which

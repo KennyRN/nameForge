@@ -35,7 +35,8 @@ const WHERES: WildsWhere[] = ["home", "new", "settled"];
 
 /** The cultures that may change in this batch: the core seven and the Celtic nations (and their new keys). */
 export const CORE = new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian"]);
-const MAY_CHANGE = new Set([...CORE, "celtic"]);
+/** Brief 6a: the batch's cultures change in this batch too. */
+const MAY_CHANGE = new Set([...CORE, "celtic", "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
 
 type Texts = string[];
 const textsOf = (r: unknown): Texts => ((r as { names?: unknown[] }).names ?? []).map((n) => (typeof n === "string" ? n : (n as { text: string }).text));

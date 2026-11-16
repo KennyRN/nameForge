@@ -9,7 +9,7 @@ import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys 
 import { lensStyleFor } from "../lens";
 import { plainWordRows, wordListRows } from "../coverageUse";
 import { north5cRows } from "../north5cCoverage";
-import { NORTH_5C_CULTURES } from "../north5c";
+import { addNorth5c } from "../north5c";
 
 type R = Record<string, unknown>;
 type StyleDef = { key: string; modules: string[]; name: { w: string }[]; pools: Record<string, unknown[]>; shapes: string[] };
@@ -73,8 +73,8 @@ function airLandRows(module: "aircraft" | "landVehicles"): CoverageRow[] {
   return out;
 }
 
-const VESSEL_ROSTER = [...(vesselData.cultures as { key: string }[]).map((c) => c.key), ...NORTH_5C_CULTURES.map((c) => c.key)];
-const AIRLAND_ROSTER = [...Object.keys(airLandData.spans), ...NORTH_5C_CULTURES.map((c) => c.key)];
+const VESSEL_ROSTER = addNorth5c(vesselData.cultures as { key: string }[], (c) => c).map((c) => c.key);
+const AIRLAND_ROSTER = addNorth5c(Object.keys(airLandData.spans).map((key) => ({ key })), (c) => c).map((c) => c.key);
 const kindsOf = (list: { key: string }[]) => list.map((k) => k.key);
 
 /** §11.2: a culture's own technology span (ships: `cultures[].span`; air and land: `spans`), role weights and type leanings are its profile. */

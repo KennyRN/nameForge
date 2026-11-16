@@ -30,7 +30,7 @@ import { mulberry32 } from "../markov";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureSet, engineCulture, lensCultureLabel } from "../lens";
-import { applySignature, contentKey, GENRE_ERAS, nativeForms, noBracket, NORTH_5C_CULTURES } from "../north5c";
+import { addNorth5c, applySignature, contentKey, GENRE_ERAS, nativeForms, noBracket, NORTH_5C_CULTURES } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -123,7 +123,7 @@ export const BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
   return { key: c.key, label: c.label, guide: c.guide ?? world?.guide ?? "" };
 });
 /** Northern Europe brief 5c: the roster of the bynames, realms and peoples modules: those, and Welsh, Scottish, Irish, Cornish, Scandinavian and German, reading the legacy keys' tables (deities and the named things keep the twenty). */
-export const BYNAME_CULTURES_5C = [...BYNAME_CULTURES, ...NORTH_5C_CULTURES];
+export const BYNAME_CULTURES_5C = addNorth5c(BYNAME_CULTURES, (c) => c);
 
 export const BYNAME_MODULE_LABELS: Record<BynameModule, string> = {
   epithets: "epithets and bynames",

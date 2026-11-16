@@ -44,7 +44,7 @@ import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/co
 import { findTradition } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureSet, engineCulture, lensCultureLabel, lensErasFor } from "../lens";
-import { applySignature, noBracket, NORTH_5C_CULTURES } from "../north5c";
+import { addNorth5c, applySignature, noBracket } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -179,10 +179,7 @@ const VESSEL_SELF = selfPatterns(vesselData);
 /** The cultures with tables of their own. */
 export const VESSEL_BASE_CULTURES = VESSEL_DATA.cultures;
 /** The roster: those, and (Northern Europe brief 5c) Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy key's tables (`engineAlias`). */
-export const VESSEL_CULTURES: VesselCulture[] = [
-  ...VESSEL_BASE_CULTURES,
-  ...NORTH_5C_CULTURES.map((c) => ({ ...VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key))!, key: c.key, label: c.label })),
-];
+export const VESSEL_CULTURES: VesselCulture[] = addNorth5c(VESSEL_BASE_CULTURES, (c) => ({ ...(VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key, "vessels")) ?? VESSEL_BASE_CULTURES.find((b) => b.key === "general")!), key: c.key, label: c.label }));
 interface AirLandData {
   modules: Record<string, string>;
   technology: Record<string, { code: string; label: string; fantastic?: boolean }[]>;
@@ -229,7 +226,7 @@ export const VESSEL_MODULE_LABELS: Record<VesselModule, string> = { ...VESSEL_DA
 
 export function findVesselCulture(key: string | undefined): VesselCulture | undefined {
   // The newer keys read the legacy key's tables, so the culture found is that one.
-  return VESSEL_BASE_CULTURES.find((c) => c.key === (key === undefined ? key : engineCulture(key)));
+  return VESSEL_BASE_CULTURES.find((c) => c.key === (key === undefined ? key : engineCulture(key, "vessels")));
 }
 
 // ── Technology (§4) ─────────────────────────────────────────────────────────
@@ -264,7 +261,7 @@ export function spanLevels(culture: VesselCulture): string[] {
 /** Aircraft and land brief §3.2: a culture's native levels in an air or land module (empty: none). */
 export function moduleSpanLevels(module: VesselModule, culture: VesselCulture): string[] {
   if (!isAirLand(module)) return spanLevels(culture);
-  const row = AIR_LAND.spans[culture.key];
+  const row = AIR_LAND.spans[culture.key] ?? AIR_LAND.spans[engineCulture(culture.key, "vessels")];
   const span = row ? (module === "aircraft" ? row.airSpan : row.landSpan) : "";
   if (!span) return [];
   const [lo, hi] = range(span);
@@ -1076,7 +1073,8 @@ export const prefixSetting = (setting: GroupSetting) => setting === "MR" || sett
 /** §12.3: the real-world prefix rows that apply to a name. */
 function realPrefix(ctx: Ctx): string | undefined {
   // 5d §14.1 item 9: a row with `asked` is for those cultures only; the British and American rows (`cultures`) are not for German or Scandinavian craft.
-  const own = ctx.asked === "german" || ctx.asked === "scandinavian";
+  // Brief 6a: nor for any culture that reads General's tables (French, Dutch, Italian, Spanish, Portuguese, Greek, Byzantine).
+  const own = !!ctx.asked && ctx.asked !== "general" && ctx.asked !== "norman-british" && ctx.asked !== ctx.culture.key;
   const rows = VESSEL_DATA.prefixes.real.filter(
     (r) => (r.asked ? !!ctx.asked && r.asked.includes(ctx.asked) : (!r.cultures || r.cultures.includes(ctx.culture.key)) && !(own && r.cultures)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level),
   );
@@ -1216,7 +1214,7 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
 function generateVesselNamesCore(options: VesselOptions): VesselBatch {
   // German reads General's tables, which carry the British prefixes (HMS) and registrations (G-): not for German craft.
   // German reads General's tables, which carry the British registrations (G-): not for German aircraft and land vehicles. Its ships have the prefix SMS of their own (5d §14.1 item 9).
-  if (options.culture === "german" && options.prefixes && options.module !== "ships") options = { ...options, prefixes: false };
+  if (options.culture && options.culture !== "general" && options.culture !== "norman-british" && findVesselCulture(options.culture)?.key === "general" && options.prefixes && options.module !== "ships") options = { ...options, prefixes: false };
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateVesselNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, series: options.series, settlementPlaces: true });

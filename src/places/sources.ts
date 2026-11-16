@@ -64,6 +64,8 @@ export interface SourceContext {
   scale?: SpaceScale;
   /** Brief 5b: a non-core culture's place fills read the settlement names they read before the batch (rule 1), not the six new world cultures. */
   legacySettlement?: boolean;
+  /** Brief 6a: the place is for a culture outside the batch, which never reads the batch's settlement names. */
+  noBatchSettlement?: boolean;
   /** The batch's stream. */
   rng: () => number;
   /** Slots resolved by the caller for the source's renderer; absent is the engines' own default. */
@@ -141,7 +143,8 @@ export function biomeForFill(biome: string | undefined, where: string | undefine
 
 /** Brief 5b: the cultures with settlement names of their own (world cultures); the British engine serves the English ones and Celtic. */
 /** The world cultures batch 5b added. */
-const NEW_WORLD_CULTURES = ["welsh", "cornish", "scottish", "irish", "scandinavian", "german"];
+const NEW_WORLD_CULTURES = ["welsh", "cornish", "scottish", "irish", "scandinavian", "german", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"];
+const TIER6A_NEW_WORLD = ["french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"];
 const OWN_SETTLEMENT_CULTURES = ["welsh", "scottish", "irish", "cornish", "scandinavian", "german", "norse"];
 
 /** The settlement names options a delegated settlement kind runs with, from the module's where and culture. */
@@ -167,6 +170,8 @@ export function settlementDelegateOptions(delegate: Extract<KindDelegate, { engi
   const world = WORLD_CULTURES.find((c) => c.id === ctx.culture);
   // Brief 5b rule 1: before the batch Scandinavian and German had no settlement names of their own (a non-core culture's fills still don't read them).
   if (!world || (ctx.legacySettlement && NEW_WORLD_CULTURES.includes(world.id))) return undefined;
+  // Brief 6a: the batch's settlement names are read by the batch's cultures only (no other culture's places move).
+  if (ctx.noBatchSettlement && TIER6A_NEW_WORLD.includes(world.id)) return undefined;
   return { ...base, setting: "native", culture: world.id, era: world.eras.find((e) => e.id !== INTERSTELLAR_ERA)?.id };
 }
 
@@ -217,14 +222,14 @@ export function drawKind(kind: KindSources, ctx: SourceContext, own: () => strin
 // ── The filler's place and river sources (shared tables brief §5.2) ──────────────────────────────
 
 /** Brief 5b: the cultures whose place fills read the new settlement names: the core seven and Celtic. */
-const CORE_FILL = new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "celtic"]);
+const CORE_FILL = new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "celtic", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"]);
 
 /** "[place]", "[town]", "[homeland place name]": a settlement name of the state's culture at home, one word or two. */
 function fillPlace(culture: string, region: string | undefined, rng: () => number, oneWord = false): string | undefined {
   // Shared tables brief §13.2 item 2: the culture's settlement names, else those of the nearest lens-family culture that has some, else General.
   for (const candidate of placeCultures(culture)) {
     for (let attempt = 0; attempt < 6; attempt++) {
-      const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng, legacySettlement: !CORE_FILL.has(culture) });
+      const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng, legacySettlement: !CORE_FILL.has(culture), noBatchSettlement: !TIER6A_NEW_WORLD.includes(culture) });
       if (name === undefined) break; // this culture has no settlement names
       // Brief 5b §12.3: a well-known real place ("Bath") is drawn again; a second place fill in one name is a single word.
       if (name.split(/\s+/).length <= (oneWord ? 1 : 2) && !isRealPlace(name)) return name;

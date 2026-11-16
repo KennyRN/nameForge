@@ -28,7 +28,7 @@ import {
   wordTones,
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
-import { ENGINE_ALIAS } from "../lens";
+import { ENGINE_ALIAS, engineCulture } from "../lens";
 import { balanceSignature, freshNouns, NORTH, noteNoun } from "../northData";
 import { countedWords, withinCap, ROUTE_ERAS, routeCapitals, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, inCultureGroup, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
@@ -119,7 +119,7 @@ export const DEITY_DATA: DeityData = {
   ...DEITY_BASE,
   styles: (() => {
     const out = { ...DEITY_BASE.styles } as DeityData["styles"];
-    for (const [key, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key in out) && legacy in out) out[key] = out[legacy];
+    for (const key of Object.keys(ENGINE_ALIAS)) { const legacy = engineCulture(key); if (!(key in out) && legacy in out) out[key] = out[legacy]; }
     for (const [key, row] of Object.entries(NORTH.deities.styles)) {
       const base = (out[key] ?? {}) as { extra?: unknown[] };
       out[key] = { ...base, ...row, extra: [...(base.extra ?? []), ...((row as { extra?: unknown[] }).extra ?? [])] } as unknown as DeityData["styles"][string];

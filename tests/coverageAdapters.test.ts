@@ -76,7 +76,8 @@ test("a module's cells: culture targets by tier, excluded and unoffered cultures
   assert.deepEqual(m.cultures.roman.notOffered, true, "not in the roster");
   assert.equal(m.cultures.polynesian.excluded, true);
   assert.equal(m.cultures.polynesian.below, false);
-  assert.equal(m.cultures.french.target?.words, 12, "second tier");
+  assert.equal(m.cultures.french.target?.words, 30, "brief 6a: French is at core depth");
+  assert.equal(m.cultures.iberian.target?.words, 12, "the Iberian mix keeps the second-tier target");
   assert.deepEqual([m.eras.EM, m.eras.ST, m.eras.MO, m.eras.AN], [1, 1, 1, 0]);
   assert.equal(m.tones.grim, 1);
   assert.equal(m.regions?.SHH, 1);

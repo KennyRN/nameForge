@@ -316,9 +316,22 @@ export function poolExemption(pool: string): "forPacks" | "closed" | undefined {
 
 /** The legacy key whose plumbing a newer module culture key reads (`welsh` reads `celtic`'s settlement names, gods and weights) wherever a table has no row of its own. */
 export const ENGINE_ALIAS: Readonly<Record<string, string>> = Object.fromEntries(
-  Object.entries((LENS as unknown as { engineAlias: Record<string, string> }).engineAlias).filter(([k]) => k !== "$comment"),
+  Object.entries((LENS as unknown as { engineAlias: Record<string, string> }).engineAlias).filter(([k]) => !k.startsWith("$")),
 );
-export const engineCulture = (key: string): string => ENGINE_ALIAS[key] ?? key;
+/** Brief 6a: the modules (by their section family) where a key has tables of its own and so reads them instead of its alias. */
+const ENGINE_OWN = (LENS as unknown as { engineOwn: Record<string, string[]> }).engineOwn;
+/**
+ * The key whose tables a module culture key reads: itself, or (down the alias chain) the nearest key the module has tables for. `module` names the
+ * modules that keep tables for French, Dutch and Iberian (`money`, `vessels`); anywhere else they read General's, and Spanish and Portuguese read Iberian's where it has some.
+ */
+export function engineCulture(key: string, module?: string): string {
+  let k = key;
+  for (let guard = 0; ENGINE_ALIAS[k] !== undefined && guard < 4; guard++) {
+    if (module && ENGINE_OWN[k]?.includes(module)) break;
+    k = ENGINE_ALIAS[k];
+  }
+  return k;
+}
 
 interface CultureRegionInfo {
   regions: string[];

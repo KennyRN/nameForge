@@ -4,11 +4,11 @@ import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, vocabularyRows } from "../coverageRows";
 import { listsUsed, plainWordRows, wordListRows } from "../coverageUse";
 import { north5cRows } from "../north5cCoverage";
-import { NORTH_5C_CULTURES } from "../north5c";
+import { addNorth5c } from "../north5c";
 
 type Entry = Record<string, unknown>;
 const LISTS = bynameData.lists as unknown as Record<string, unknown[]>;
-const ROSTER = [...(bynameData.cultures as { key: string }[]).map((c) => c.key), ...NORTH_5C_CULTURES.map((c) => c.key)];
+const ROSTER = addNorth5c(bynameData.cultures as { key: string }[], (c) => c).map((c) => c.key);
 const kindsOf = (node: { kinds: { key: string }[] }) => node.kinds.map((k) => k.key);
 
 /** A table keyed by culture whose entries are plain entries (`{ w }`, `{ m, f … }`): each a word for that culture. */

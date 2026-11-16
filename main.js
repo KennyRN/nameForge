@@ -21230,7 +21230,7 @@ var lens_default = {
     {
       key: "french",
       label: "French",
-      tier: "second",
+      tier: "core",
       family: "romance",
       status: "live",
       keys: [
@@ -21240,11 +21240,31 @@ var lens_default = {
     {
       key: "dutch",
       label: "Dutch",
-      tier: "second",
+      tier: "core",
       family: "germanic",
       status: "live",
       keys: [
         "dutch"
+      ]
+    },
+    {
+      key: "spanish",
+      label: "Spanish",
+      tier: "core",
+      family: "romance",
+      status: "live",
+      keys: [
+        "spanish"
+      ]
+    },
+    {
+      key: "portuguese",
+      label: "Portuguese",
+      tier: "core",
+      family: "romance",
+      status: "live",
+      keys: [
+        "portuguese"
       ]
     },
     {
@@ -21260,20 +21280,41 @@ var lens_default = {
     {
       key: "italian",
       label: "Italian",
-      tier: "second",
+      tier: "core",
       family: "romance",
       status: "live",
-      scope: "colonial",
-      keys: []
+      keys: [
+        "italian"
+      ]
     },
     {
       key: "roman",
       label: "Roman",
-      tier: "second",
+      tier: "core",
       family: "classical",
       status: "live",
       keys: [
         "roman"
+      ]
+    },
+    {
+      key: "greek",
+      label: "Greek",
+      tier: "core",
+      family: "classical",
+      status: "live",
+      keys: [
+        "greek"
+      ]
+    },
+    {
+      key: "byzantine",
+      label: "Byzantine",
+      tier: "core",
+      family: "classical",
+      status: "live",
+      keys: [
+        "byzantine"
       ]
     },
     {
@@ -21289,7 +21330,7 @@ var lens_default = {
     {
       key: "slavic",
       label: "Slavic",
-      tier: "second",
+      tier: "core",
       family: "slavic",
       status: "live",
       keys: [
@@ -21665,11 +21706,15 @@ var lens_default = {
         "cornish",
         "slavic",
         "french",
-        "iberian"
+        "iberian",
+        "spanish",
+        "portuguese"
       ],
       from: {
         "greek-byzantine": "MD",
-        roman: "MD"
+        roman: "MD",
+        greek: "MD",
+        byzantine: "MD"
       }
     },
     nordic: {
@@ -22359,6 +22404,31 @@ var lens_default = {
           lens: [
             "american"
           ]
+        },
+        spanish: {
+          lens: [
+            "spanish"
+          ]
+        },
+        portuguese: {
+          lens: [
+            "portuguese"
+          ]
+        },
+        greek: {
+          lens: [
+            "greek"
+          ]
+        },
+        byzantine: {
+          lens: [
+            "byzantine"
+          ]
+        },
+        italian: {
+          lens: [
+            "italian"
+          ]
         }
       },
       tribal: {
@@ -22641,12 +22711,12 @@ var lens_default = {
         },
         spanish: {
           lens: [
-            "iberian"
+            "spanish"
           ]
         },
         portuguese: {
           lens: [
-            "iberian"
+            "portuguese"
           ]
         },
         italian: {
@@ -23141,6 +23211,89 @@ var lens_default = {
         ],
         "german:interstellar": [
           "IS"
+        ],
+        "french:medieval": [
+          "MD"
+        ],
+        "french:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "french:interstellar": [
+          "IS"
+        ],
+        "dutch:medieval": [
+          "MD"
+        ],
+        "dutch:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "dutch:interstellar": [
+          "IS"
+        ],
+        "italian:medieval": [
+          "MD"
+        ],
+        "italian:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "italian:interstellar": [
+          "IS"
+        ],
+        "spanish:medieval": [
+          "MD"
+        ],
+        "spanish:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "spanish:interstellar": [
+          "IS"
+        ],
+        "portuguese:medieval": [
+          "MD"
+        ],
+        "portuguese:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "portuguese:interstellar": [
+          "IS"
+        ],
+        "greek:classical": [
+          "AN"
+        ],
+        "greek:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "greek:interstellar": [
+          "IS"
+        ],
+        "byzantine:byzantine": [
+          "MD"
+        ],
+        "byzantine:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "byzantine:interstellar": [
+          "IS"
+        ],
+        "roman:republic": [
+          "AN"
+        ],
+        "slavic:tribal": [
+          "AN"
         ]
       },
       ships: {
@@ -24575,6 +24728,14 @@ var lens_default = {
           label: "French"
         },
         {
+          key: "spanish",
+          label: "Spanish"
+        },
+        {
+          key: "portuguese",
+          label: "Portuguese"
+        },
+        {
           key: "iberian",
           label: "Iberian"
         },
@@ -24583,13 +24744,21 @@ var lens_default = {
           label: "Roman"
         },
         {
-          key: "greek-byzantine",
-          label: "Greek and Byzantine"
-        },
-        {
           key: "italian",
           label: "Italian",
           scope: "colonial"
+        },
+        {
+          key: "greek",
+          label: "Greek"
+        },
+        {
+          key: "byzantine",
+          label: "Byzantine"
+        },
+        {
+          key: "greek-byzantine",
+          label: "Greek and Byzantine"
         },
         {
           key: "hellenistic",
@@ -24733,7 +24902,13 @@ var lens_default = {
     $comment: "Northern Europe brief 5a \xA711.3 and 5b \xA712.1: the share of a module's own-shape draws that a core culture's signature frames take (signature), and that region-weighted shapes take when a region is chosen (region; not 'across all of\u2026'). Brief 6a \xA71: `signatureShared` replaces `signature` for the cultures in `sharedLegacy`, which also read a legacy table another culture shares (the four nations read Celtic, Scandinavian reads Norse).",
     signature: 0.4,
     signatureShared: 0.6,
-    sharedLegacy: ["welsh", "scottish", "irish", "cornish", "scandinavian"],
+    sharedLegacy: [
+      "welsh",
+      "scottish",
+      "irish",
+      "cornish",
+      "scandinavian"
+    ],
     region: 0.3
   },
   regionExempt: {
@@ -24895,7 +25070,30 @@ var lens_default = {
     irish: "celtic",
     cornish: "celtic",
     scandinavian: "norse",
-    german: "general"
+    german: "general",
+    spanish: "iberian",
+    portuguese: "iberian",
+    greek: "greek-byzantine",
+    byzantine: "greek-byzantine",
+    italian: "general",
+    french: "general",
+    dutch: "general",
+    iberian: "general",
+    $ownTablesComment: "Brief 6a: a key that has tables of its own in some modules (French, Dutch and Iberian money, vessels and the settlement vocabulary) reads them there and its alias elsewhere; `engineOwn` lists those modules."
+  },
+  engineOwn: {
+    french: [
+      "money",
+      "vessels"
+    ],
+    dutch: [
+      "money",
+      "vessels"
+    ],
+    iberian: [
+      "money",
+      "vessels"
+    ]
   }
 };
 
@@ -25006,6 +25204,12 @@ function mapShapes(map, key2) {
   })];
 }
 
+// src/data/tier6a.json
+var tier6a_default = { _about: "Second-tier tables brief, batch 6a (docs/second-tier-tables-brief.md): generated by scripts/make-tier6a.mjs from the content in scripts/tier6a/. Do not edit by hand.", settlement: { cultures: [{ id: "french", homelandBiome: "temperate", label: "French", guide: "Saint towns, castles, bastides and new towns; abbeys and priories; mills and forges from the steam age.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], hill: ["Mount", "Hill", "Height", "Rock", "Crag", "Peak", "Ridge"], water: ["Spring", "Brook", "Stream", "River Bend", "Ford", "Weir", "Rapids"], field: ["Field", "Meadow", "Vineyard", "Orchard", "Pasture", "Clearing", "Garden"], castle: ["Castle", "Fort", "Tower", "Keep", "Stronghold", "Citadel"], church: ["Abbey", "Priory", "Chapel", "Minster", "Convent", "Hospice"], craft: ["Mill", "Forge", "Tannery", "Saltworks", "Quarry", "Kiln", "Glassworks"], town: ["Town", "Borough", "Bastide", "Village", "Hamlet", "Grange"], name: ["Jean", "Pierre", "Guillaume", "Jacques", "Henri", "Philippe", "Robert", "Raoul", "Thibaut", "Renaud", "Hugues", "Geoffroy", "Gautier", "Baudouin", "Etienne", "Bertrand", "Aymeric", "Eudes", "Foulques", "Gilles", "Lambert", "Olivier", "Roland", "Amaury", "Arnaud", "Bernard", "Gaston", "Guy"], saint: ["Martin", "Denis", "Hilaire", "Genevieve", "Radegonde", "Louis", "Remi", "Germain", "Bernard", "Francis", "Vincent", "Benedict"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Saint {saint}", 8], ["{church} of Saint {saint}", 5], ["{castle} of {name}", 6], ["New Town", 4], ["Bastide of {name}", 4], ["{adj} {hill}", 4], ["{field} of the {animal}", 3], ["Bridge of {name}", 4], ["Ford of the {tree}", 3], ["{name:pos} {field}", 4], ["Market of {name}", 3], ["Mount Saint {saint}", 3], ["Wood of the {animal}", 2], ["{hill} of {name}", 4], ["Royal Borough", 2], ["Walled Town of {name}", 3], ["Spring of Saint {saint}", 3], ["Crossroads of {name}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["Port of {name}", 5], ["{craft} of {name}", 5], ["New {town}", 3], ["Station of {name}", 3], ["Spa of Saint {saint}", 3], ["Harbour of {name}", 4], ["Bridge of {name}", 3], ["Mount Saint {saint}", 2], ["Market of {name}", 3], ["{adj} {hill}", 3], ["{castle} of {name}", 3], ["Royal {town}", 2], ["{name:pos} {craft}", 4]] }, { id: "interstellar", label: "Interstellar", guide: "French steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "dutch", homelandBiome: "temperate", label: "Dutch", guide: "Dikes, dams, polders and fens; havens and free towns; windmills and canals.", fuseChance: 0.2, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], dike: ["Dike", "Dam", "Sluice", "Lock", "Embankment", "Weir", "Levee"], fen: ["Fen", "Mere", "Marsh", "Peat Bog", "Polder", "Meadow", "Reclaimed Land"], haven: ["Haven", "Harbour", "Quay", "Landing", "Wharf", "Port"], ridge: ["Dune", "Sand Ridge", "Mound", "Hummock", "Dwelling Mound", "Rise", "Hook"], church: ["Church", "Chapel", "Abbey", "Cloister", "Hospital"], mill: ["Windmill", "Watermill", "Brewery", "Ropewalk", "Dyeworks", "Brickworks", "Cheese Market"], town: ["Town", "Borough", "City", "Village", "Hamlet", "Farm"], name: ["Jan", "Willem", "Dirk", "Pieter", "Hendrik", "Cornelis", "Gerrit", "Jacob", "Adriaan", "Floris", "Albrecht", "Reinier", "Claes", "Lambert", "Evert", "Joost", "Gijsbrecht", "Wouter", "Arnoud", "Hugo", "Simon", "Maarten", "Roelof", "Frederik", "Maurits", "Aert", "Bartholomeus", "Thomas"], saint: ["Willibrord", "Servatius", "Lebuin", "Ludger", "Bavo", "Lambert", "Liduina", "Gertrude", "Ursula", "Amand", "Remaclus", "Odulf"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["{name:pos} {dike}", 6], ["{animal} {dike}", 5], ["{dike} of {name}", 4], ["{adj} Polder", 4], ["{name:pos} {haven}", 5], ["{tree} Wood", 3], ["{church} {town}", 3], ["{fen} of {name}", 4], ["Mouth of the {animal}", 3], ["New {town}", 3], ["Free Town of {name}", 3], ["{name:pos} {ridge}", 4], ["{adj} {ridge}", 3], ["Bridge of {name}", 3], ["Cloth Market of {name}", 2]] }, { id: "modern", label: "Modern", templates: [["{name:pos} {dike}", 4], ["{animal} {dike}", 4], ["{name:pos} {haven}", 5], ["{mill} of {name}", 4], ["{adj} Polder", 3], ["New {town}", 3], ["{church} {town}", 3], ["Canal {town}", 3], ["{name:pos} {ridge}", 3], ["Station {town}", 3], ["Garden {town}", 3], ["Bridge of {name}", 3]] }, { id: "interstellar", label: "Interstellar", guide: "Dutch steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "italian", homelandBiome: "mediterranean", label: "Italian", guide: "Fortresses, free communes, saints, squares and palaces; ports and hill towns; new towns.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], tower: ["Tower", "Fortress", "Castle", "Keep", "Gate", "Rampart"], commune: ["Commune", "Free Town", "Republic", "League", "Borough", "Seigniory"], hill: ["Hill", "Hilltop", "Crag", "Peak", "Ridge", "Height"], square: ["Square", "Market Square", "Loggia", "Cloister", "Fountain", "Arcade"], harbour: ["Port", "Harbour", "Haven", "Landing", "Quay", "Mole"], church: ["Cathedral", "Abbey", "Basilica", "Chapel", "Hermitage", "Monastery"], town: ["Town", "Borough", "Village", "Hamlet", "Hill Town"], name: ["Giovanni", "Francesco", "Antonio", "Giuseppe", "Pietro", "Marco", "Lorenzo", "Giacomo", "Niccolo", "Matteo", "Bartolomeo", "Guido", "Ugo", "Ruggero", "Ludovico", "Cosimo", "Leonardo", "Alessandro", "Filippo", "Paolo", "Luca", "Tommaso", "Galeazzo", "Cesare", "Dante", "Piero", "Bernardo", "Girolamo"], saint: ["Francis", "Benedict", "Anthony", "Catherine", "Clare", "Bernard", "Dominic", "Bonaventure", "Thomas", "Ambrose", "Rita", "Lucy"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Fortress of {name}", 6], ["Free Commune", 4], ["Saint {saint}", 7], ["{name:pos} {tower}", 5], ["Port of {name}", 4], ["{hill} of {name}", 4], ["Bridge of {name}", 3], ["Square of {name}", 3], ["Palace of {name}", 3], ["Fountain of Saint {saint}", 3], ["New Town", 3], ["Great {tower}", 2], ["Fair {hill}", 3], ["{commune} of {name}", 3], ["{church} of Saint {saint}", 4], ["Cross of {name}", 2]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["Port of {name}", 5], ["{name:pos} {square}", 3], ["{hill} of {name}", 3], ["New Town", 3], ["Station of {name}", 3], ["Fortress of {name}", 3], ["Spa of Saint {saint}", 2], ["Palace of {name}", 3], ["{harbour} of {name}", 4], ["Quarter of {name}", 3]] }, { id: "interstellar", label: "Interstellar", guide: "Italian steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "spanish", homelandBiome: "mediterranean", label: "Spanish", guide: "Saints of the sea and the bridge, castles of counts, new towns, royal towns, holy crosses and fair views.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], castle: ["Castle", "Fortress", "Tower", "Keep", "Watchtower", "Citadel", "Stronghold"], rank: ["Count", "Duke", "Marquis", "Lord", "Knight", "King", "Queen", "Bishop", "Abbot"], where: ["Sea", "Bridge", "Fields", "Hills", "Orchard", "Vineyard", "Spring", "Cross"], hill: ["Hill", "Mount", "Rock", "Peak", "Ridge", "Height", "Crag"], water: ["Spring", "Fountain", "Stream", "River Bend", "Ford", "Weir", "Well"], land: ["View", "Pasture", "Valley", "Hill", "Spring", "Harbour", "Wind"], good: ["Good", "Fair", "Fine", "Pleasant", "Rich", "Green"], town: ["Town", "Borough", "Village", "Hamlet", "Farm"], name: ["Juan", "Pedro", "Diego", "Fernando", "Alonso", "Garcia", "Gonzalo", "Rodrigo", "Alvaro", "Sancho", "Ramiro", "Hernando", "Martin", "Lope", "Pelayo", "Bermudo", "Ordono", "Fruela", "Hernan", "Francisco", "Gil", "Mendo", "Suero", "Inigo", "Fortun", "Jaime", "Enrique", "Munio"], saint: ["Isidore", "Ildefonsus", "Dominic", "Teresa", "Vincent", "Ignatius", "Eulalia", "Leander", "Fructuosus", "Millan", "Ferdinand", "James"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Saint {saint}", 7], ["Saint Mary of the {where}", 5], ["Castle of the {rank}", 6], ["New Town", 4], ["Royal Town", 3], ["Holy Cross", 3], ["{good} {land}", 5], ["{castle} of {name}", 5], ["Bridge of {name}", 3], ["{name:pos} {town}", 4], ["Fountain of Saint {saint}", 3], ["Valley of the {animal}", 3], ["Watchtower of {name}", 3], ["Hill of the {tree}", 3], ["{adj} {hill}", 3], ["Market of {name}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["Port of {name}", 5], ["New Town", 4], ["{good} {land}", 4], ["Station of {name}", 3], ["Mine of {name}", 4], ["Saint Mary of the {where}", 3], ["Castle of the {rank}", 3], ["Colony of {name}", 3], ["{name:pos} {town}", 3], ["Bridge of {name}", 3], ["Royal Town", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Spanish steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "portuguese", homelandBiome: "mediterranean", label: "Portuguese", guide: "Holy crosses, good havens, saints, forts, quays, vineyards and salt pans; fishing villages and capes.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], harbour: ["Port", "Haven", "Harbour", "Landing", "Quay", "Bay", "Cove"], cape: ["Cape", "Point", "Headland", "Cliff", "Rock", "Beach"], vine: ["Vineyard", "Orchard", "Olive Grove", "Cork Wood", "Farm", "Estate"], fort: ["Fort", "Castle", "Tower", "Keep", "Wall", "Gate"], fishing: ["Fishing Village", "Salt Pans", "Fishery", "Net Quay", "Cannery", "Whale Station"], good: ["Good", "Fair", "Holy", "Great", "Blessed", "Pleasant"], land: ["Haven", "Hope", "Spring", "Valley", "Hill", "Harbour", "View"], town: ["Town", "Borough", "Village", "Hamlet", "Farm"], name: ["Joao", "Pedro", "Duarte", "Manuel", "Nuno", "Diogo", "Goncalo", "Rodrigo", "Fernando", "Henrique", "Dinis", "Sancho", "Vasco", "Bartolomeu", "Martim", "Egas", "Paio", "Mendo", "Lourenco", "Francisco", "Antonio", "Jorge", "Tomas", "Luis", "Miguel", "Gil", "Estevao", "Alvaro"], saint: ["Anthony", "Vincent", "Isabel", "Teotonius", "Gonzalo", "Nuno", "John of God", "Fructuosus", "Martin", "Rudesind", "Beatriz", "Mamede"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Holy Cross", 4], ["{good} {land}", 6], ["Saint {saint}", 7], ["{fort} of {name}", 5], ["Bridge of {name}", 3], ["Port of {name}", 4], ["{name:pos} Quay", 4], ["Cape of Saint {saint}", 3], ["{vine} of {name}", 4], ["Cork Oak Wood", 3], ["Salt Pans of {name}", 3], ["New Town", 3], ["{fishing} of {name}", 3], ["{adj} {cape}", 3], ["Market of {name}", 3], ["Royal Town", 2]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["{good} {land}", 5], ["Port of {name}", 5], ["{fishing} of {name}", 4], ["{name:pos} Quay", 4], ["Station of {name}", 3], ["Holy Cross", 3], ["New Town", 3], ["Colony of {name}", 3], ["{fort} of {name}", 3], ["Cape of Saint {saint}", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Portuguese steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "greek", homelandBiome: "mediterranean", label: "Greek", guide: "Cities and harbours of the gods, colonies, citadels, sacred groves and isles; saints' villages and ports in the modern world.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], god: ["Zeus", "Hera", "Athena", "Apollo", "Artemis", "Poseidon", "Demeter", "Hermes", "Dionysus", "Hephaestus"], city: ["City", "Town", "Colony", "Citadel", "Fortress", "Settlement"], harbour: ["Harbour", "Port", "Haven", "Landing", "Quay", "Anchorage"], hill: ["Hill", "Peak", "Crag", "Height", "Ridge", "Hillfort"], sacred: ["Temple", "Shrine", "Sacred Grove", "Oracle", "Altar", "Sanctuary"], island: ["Isle", "Island", "Cape", "Headland", "Strait", "Bay"], plain: ["Plain", "Vale", "Valley", "Meadow", "Olive Grove", "Vineyard"], name: ["Pericles", "Alexander", "Socrates", "Plato", "Aristotle", "Demetrius", "Nicias", "Themistocles", "Leonidas", "Theodorus", "Lysander", "Alcibiades", "Cimon", "Xenophon", "Thucydides", "Pythagoras", "Archimedes", "Solon", "Dionysius", "Aristides", "Epaminondas", "Pindar", "Hippocrates", "Euclid", "Diogenes", "Demosthenes", "Aeschylus", "Sophocles"], saint: ["Nicholas", "Basil", "Gregory", "Athanasius", "Demetrius", "George", "Spyridon", "Helena", "Catherine", "Barbara", "Photini", "Chrysostom"] }, eras: [{ id: "classical", label: "Classical", templates: [["City of {god}", 5], ["Harbour of {god}", 4], ["Sacred Grove of {god}", 3], ["City of {name}", 5], ["New City", 3], ["Colony of {name}", 4], ["High City", 3], ["{hill} of {god}", 3], ["Spring of {god}", 3], ["{island} of the {animal}", 3], ["Market of {name}", 3], ["Gate of the {animal}", 2], ["{sacred} of {god}", 4], ["Olive Grove of {name}", 3], ["{name:pos} {harbour}", 3], ["White {hill}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 6], ["New {city}", 4], ["{name:pos} Port", 4], ["Chapel of Saint {saint}", 4], ["Olive Grove of {name}", 3], ["White Village", 3], ["Harbour Town", 3], ["Mountain Village", 3], ["Monastery of Saint {saint}", 3], ["{island} of {name}", 3], ["Upper {city}", 3], ["Station Town", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Greek steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "byzantine", homelandBiome: "mediterranean", label: "Byzantine", guide: "Saints and holy places, fortresses and citadels, monasteries and great churches; ports and imperial towns.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], fortress: ["Fortress", "Citadel", "Fort", "Stronghold", "Tower", "Kastron", "Watchtower"], monastery: ["Monastery", "Hermitage", "Convent", "Cloister", "Lavra", "Cell"], church: ["Great Church", "Chapel", "Basilica", "Cathedral", "Shrine", "Holy Church"], harbour: ["Harbour", "Port", "Haven", "Landing", "Quay", "Anchorage"], hill: ["Hill", "Peak", "Crag", "Height", "Ridge", "Mount"], imperial: ["Imperial", "Royal", "Holy", "Great", "Fortified", "Golden"], town: ["Town", "City", "Borough", "Village", "Hamlet", "Farm"], name: ["Basil", "Michael", "Leo", "John", "Alexius", "Manuel", "Nicephorus", "Theodore", "Andronicus", "Isaac", "Romanus", "Stephen", "George", "Photius", "Heraclius", "Maurice", "Phocas", "Anastasius", "Zeno", "Marcian", "Bardas", "Theophilus", "Sergius", "Eustathius", "Leontius", "Symeon", "Niketas", "Kosmas"], saint: ["Nicholas", "Basil", "Gregory", "Athanasius", "Demetrius", "George", "Spyridon", "Helena", "Catherine", "Barbara", "Photini", "Chrysostom"] }, eras: [{ id: "byzantine", label: "Byzantine", templates: [["Saint {saint}", 7], ["{fortress} of {name}", 6], ["Monastery of Saint {saint}", 5], ["{church} of Saint {saint}", 4], ["Port of {name}", 4], ["{imperial} {town}", 4], ["{name:pos} {harbour}", 3], ["{hill} of Saint {saint}", 3], ["Bridge of {name}", 3], ["{name:pos} {town}", 4], ["Market of {name}", 3], ["Holy Spring of {saint}", 3], ["{adj} {hill}", 3], ["Citadel of {name}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 6], ["{name:pos} Port", 4], ["Monastery of Saint {saint}", 4], ["New {town}", 3], ["{fortress} of {name}", 3], ["Harbour Town", 3], ["Mountain Village", 3], ["{church} of Saint {saint}", 3], ["Station Town", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Byzantine steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }], sizes: { french: { eras: { medieval: { "Saint {saint}": "hvtcg", "{church} of Saint {saint}": "vtcg", "{castle} of {name}": "hvtcg", "New Town": "vtcg", "Bastide of {name}": "vt", "{adj} {hill}": "hvt", "{field} of the {animal}": "hv", "Bridge of {name}": "vt", "Ford of the {tree}": "hv", "{name:pos} {field}": "hv", "Market of {name}": "tcg", "Mount Saint {saint}": "hvt", "Wood of the {animal}": "hv", "{hill} of {name}": "hvt", "Royal Borough": "tcg", "Walled Town of {name}": "tcg", "Spring of Saint {saint}": "hv", "Crossroads of {name}": "hvt" }, modern: { "Saint {saint}": "hvtcg", "Port of {name}": "vtcg", "{craft} of {name}": "hvt", "New {town}": "vtcg", "Station of {name}": "vt", "Spa of Saint {saint}": "tcg", "Harbour of {name}": "vtcg", "Bridge of {name}": "vt", "Mount Saint {saint}": "hvt", "Market of {name}": "tcg", "{adj} {hill}": "hvt", "{castle} of {name}": "tcg", "Royal {town}": "tcg", "{name:pos} {craft}": "hvt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { hill: { Mount: "hvtcg", Hill: "hvtcg", Height: "hvtcg", Rock: "hvtcg", Crag: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg" }, water: { Spring: "hvtcg", Brook: "hvtcg", Stream: "hvtcg", "River Bend": "hvtcg", Ford: "hvtcg", Weir: "hvtcg", Rapids: "hvtcg" }, field: { Field: "hvtcg", Meadow: "hvtcg", Vineyard: "hvtcg", Orchard: "hvtcg", Pasture: "hvtcg", Clearing: "hvtcg", Garden: "hvtcg" }, castle: { Castle: "hvtcg", Fort: "hvtcg", Tower: "hvtcg", Keep: "hvtcg", Stronghold: "hvtcg", Citadel: "hvtcg" }, church: { Abbey: "hvtcg", Priory: "hvtcg", Chapel: "hvtcg", Minster: "hvtcg", Convent: "hvtcg", Hospice: "hvtcg" }, craft: { Mill: "hvtcg", Forge: "hvtcg", Tannery: "hvtcg", Saltworks: "hvtcg", Quarry: "hvtcg", Kiln: "hvtcg", Glassworks: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Bastide: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Grange: "hvtcg" } } }, dutch: { eras: { medieval: { "{name:pos} {dike}": "hv", "{animal} {dike}": "vtcg", "{dike} of {name}": "hvt", "{adj} Polder": "hv", "{name:pos} {haven}": "vtcg", "{tree} Wood": "hv", "{church} {town}": "vt", "{fen} of {name}": "hv", "Mouth of the {animal}": "vtcg", "New {town}": "tcg", "Free Town of {name}": "tcg", "{name:pos} {ridge}": "hv", "{adj} {ridge}": "hv", "Bridge of {name}": "vt", "Cloth Market of {name}": "tcg" }, modern: { "{name:pos} {dike}": "hv", "{animal} {dike}": "vtcg", "{name:pos} {haven}": "vtcg", "{mill} of {name}": "hvt", "{adj} Polder": "hv", "New {town}": "tcg", "{church} {town}": "vt", "Canal {town}": "vtcg", "{name:pos} {ridge}": "hv", "Station {town}": "vtcg", "Garden {town}": "tcg", "Bridge of {name}": "vt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { dike: { Dike: "hvtcg", Dam: "hvtcg", Sluice: "hvtcg", Lock: "hvtcg", Embankment: "hvtcg", Weir: "hvtcg", Levee: "hvtcg" }, fen: { Fen: "hvtcg", Mere: "hvtcg", Marsh: "hvtcg", "Peat Bog": "hvtcg", Polder: "hvtcg", Meadow: "hvtcg", "Reclaimed Land": "hvtcg" }, haven: { Haven: "hvtcg", Harbour: "hvtcg", Quay: "hvtcg", Landing: "hvtcg", Wharf: "hvtcg", Port: "hvtcg" }, ridge: { Dune: "hvtcg", "Sand Ridge": "hvtcg", Mound: "hvtcg", Hummock: "hvtcg", "Dwelling Mound": "hvtcg", Rise: "hvtcg", Hook: "hvtcg" }, church: { Church: "hvtcg", Chapel: "hvtcg", Abbey: "hvtcg", Cloister: "hvtcg", Hospital: "hvtcg" }, mill: { Windmill: "hvtcg", Watermill: "hvtcg", Brewery: "hvtcg", Ropewalk: "hvtcg", Dyeworks: "hvtcg", Brickworks: "hvtcg", "Cheese Market": "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", City: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } }, italian: { eras: { medieval: { "Fortress of {name}": "hvtcg", "Free Commune": "tcg", "Saint {saint}": "hvtcg", "{name:pos} {tower}": "hvt", "Port of {name}": "vtcg", "{hill} of {name}": "hvt", "Bridge of {name}": "vt", "Square of {name}": "tcg", "Palace of {name}": "vtcg", "Fountain of Saint {saint}": "hv", "New Town": "vtcg", "Great {tower}": "tcg", "Fair {hill}": "hvt", "{commune} of {name}": "tcg", "{church} of Saint {saint}": "vtcg", "Cross of {name}": "hv" }, modern: { "Saint {saint}": "hvtcg", "Port of {name}": "vtcg", "{name:pos} {square}": "vtcg", "{hill} of {name}": "hvt", "New Town": "vtcg", "Station of {name}": "vt", "Fortress of {name}": "hvtcg", "Spa of Saint {saint}": "tcg", "Palace of {name}": "tcg", "{harbour} of {name}": "vtcg", "Quarter of {name}": "tcg" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { tower: { Tower: "hvtcg", Fortress: "hvtcg", Castle: "hvtcg", Keep: "hvtcg", Gate: "hvtcg", Rampart: "hvtcg" }, commune: { Commune: "hvtcg", "Free Town": "hvtcg", Republic: "hvtcg", League: "hvtcg", Borough: "hvtcg", Seigniory: "hvtcg" }, hill: { Hill: "hvtcg", Hilltop: "hvtcg", Crag: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg", Height: "hvtcg" }, square: { Square: "hvtcg", "Market Square": "hvtcg", Loggia: "hvtcg", Cloister: "hvtcg", Fountain: "hvtcg", Arcade: "hvtcg" }, harbour: { Port: "hvtcg", Harbour: "hvtcg", Haven: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Mole: "hvtcg" }, church: { Cathedral: "hvtcg", Abbey: "hvtcg", Basilica: "hvtcg", Chapel: "hvtcg", Hermitage: "hvtcg", Monastery: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", "Hill Town": "hvtcg" } } }, spanish: { eras: { medieval: { "Saint {saint}": "hvtcg", "Saint Mary of the {where}": "vtcg", "Castle of the {rank}": "hvtcg", "New Town": "vtcg", "Royal Town": "tcg", "Holy Cross": "hvt", "{good} {land}": "hvt", "{castle} of {name}": "hvtcg", "Bridge of {name}": "vt", "{name:pos} {town}": "hv", "Fountain of Saint {saint}": "hv", "Valley of the {animal}": "hv", "Watchtower of {name}": "hv", "Hill of the {tree}": "hvt", "{adj} {hill}": "hvt", "Market of {name}": "tcg" }, modern: { "Saint {saint}": "hvtcg", "Port of {name}": "vtcg", "New Town": "vtcg", "{good} {land}": "hvt", "Station of {name}": "vt", "Mine of {name}": "hvt", "Saint Mary of the {where}": "vtcg", "Castle of the {rank}": "hvtcg", "Colony of {name}": "vt", "{name:pos} {town}": "hv", "Bridge of {name}": "vt", "Royal Town": "tcg" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { castle: { Castle: "hvtcg", Fortress: "hvtcg", Tower: "hvtcg", Keep: "hvtcg", Watchtower: "hvtcg", Citadel: "hvtcg", Stronghold: "hvtcg" }, rank: { Count: "hvtcg", Duke: "hvtcg", Marquis: "hvtcg", Lord: "hvtcg", Knight: "hvtcg", King: "hvtcg", Queen: "hvtcg", Bishop: "hvtcg", Abbot: "hvtcg" }, where: { Sea: "hvtcg", Bridge: "hvtcg", Fields: "hvtcg", Hills: "hvtcg", Orchard: "hvtcg", Vineyard: "hvtcg", Spring: "hvtcg", Cross: "hvtcg" }, hill: { Hill: "hvtcg", Mount: "hvtcg", Rock: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg", Height: "hvtcg", Crag: "hvtcg" }, water: { Spring: "hvtcg", Fountain: "hvtcg", Stream: "hvtcg", "River Bend": "hvtcg", Ford: "hvtcg", Weir: "hvtcg", Well: "hvtcg" }, land: { View: "hvtcg", Pasture: "hvtcg", Valley: "hvtcg", Hill: "hvtcg", Spring: "hvtcg", Harbour: "hvtcg", Wind: "hvtcg" }, good: { Good: "hvtcg", Fair: "hvtcg", Fine: "hvtcg", Pleasant: "hvtcg", Rich: "hvtcg", Green: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } }, portuguese: { eras: { medieval: { "Holy Cross": "hvt", "{good} {land}": "hvtcg", "Saint {saint}": "hvtcg", "{fort} of {name}": "hvtcg", "Bridge of {name}": "vt", "Port of {name}": "vtcg", "{name:pos} Quay": "vtcg", "Cape of Saint {saint}": "hvt", "{vine} of {name}": "hv", "Cork Oak Wood": "hv", "Salt Pans of {name}": "hv", "New Town": "vtcg", "{fishing} of {name}": "hvt", "{adj} {cape}": "hvt", "Market of {name}": "tcg", "Royal Town": "tcg" }, modern: { "Saint {saint}": "hvtcg", "{good} {land}": "hvtcg", "Port of {name}": "vtcg", "{fishing} of {name}": "hvt", "{name:pos} Quay": "vtcg", "Station of {name}": "vt", "Holy Cross": "hvt", "New Town": "vtcg", "Colony of {name}": "vt", "{fort} of {name}": "hvtcg", "Cape of Saint {saint}": "hvt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { harbour: { Port: "hvtcg", Haven: "hvtcg", Harbour: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Bay: "hvtcg", Cove: "hvtcg" }, cape: { Cape: "hvtcg", Point: "hvtcg", Headland: "hvtcg", Cliff: "hvtcg", Rock: "hvtcg", Beach: "hvtcg" }, vine: { Vineyard: "hvtcg", Orchard: "hvtcg", "Olive Grove": "hvtcg", "Cork Wood": "hvtcg", Farm: "hvtcg", Estate: "hvtcg" }, fort: { Fort: "hvtcg", Castle: "hvtcg", Tower: "hvtcg", Keep: "hvtcg", Wall: "hvtcg", Gate: "hvtcg" }, fishing: { "Fishing Village": "hvtcg", "Salt Pans": "hvtcg", Fishery: "hvtcg", "Net Quay": "hvtcg", Cannery: "hvtcg", "Whale Station": "hvtcg" }, good: { Good: "hvtcg", Fair: "hvtcg", Holy: "hvtcg", Great: "hvtcg", Blessed: "hvtcg", Pleasant: "hvtcg" }, land: { Haven: "hvtcg", Hope: "hvtcg", Spring: "hvtcg", Valley: "hvtcg", Hill: "hvtcg", Harbour: "hvtcg", View: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } }, greek: { eras: { classical: { "City of {god}": "tcg", "Harbour of {god}": "vtcg", "Sacred Grove of {god}": "hv", "City of {name}": "tcg", "New City": "tcg", "Colony of {name}": "vtcg", "High City": "tcg", "{hill} of {god}": "hvt", "Spring of {god}": "hv", "{island} of the {animal}": "hvt", "Market of {name}": "vtcg", "Gate of the {animal}": "vt", "{sacred} of {god}": "hvt", "Olive Grove of {name}": "hv", "{name:pos} {harbour}": "vtcg", "White {hill}": "hvt" }, modern: { "Saint {saint}": "hvtcg", "New {city}": "vtcg", "{name:pos} Port": "vtcg", "Chapel of Saint {saint}": "hvt", "Olive Grove of {name}": "hv", "White Village": "hv", "Harbour Town": "vtcg", "Mountain Village": "hv", "Monastery of Saint {saint}": "vt", "{island} of {name}": "hvt", "Upper {city}": "vtcg", "Station Town": "vt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { god: { Zeus: "hvtcg", Hera: "hvtcg", Athena: "hvtcg", Apollo: "hvtcg", Artemis: "hvtcg", Poseidon: "hvtcg", Demeter: "hvtcg", Hermes: "hvtcg", Dionysus: "hvtcg", Hephaestus: "hvtcg" }, city: { City: "hvtcg", Town: "hvtcg", Colony: "hvtcg", Citadel: "hvtcg", Fortress: "hvtcg", Settlement: "hvtcg" }, harbour: { Harbour: "hvtcg", Port: "hvtcg", Haven: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Anchorage: "hvtcg" }, hill: { Hill: "hvtcg", Peak: "hvtcg", Crag: "hvtcg", Height: "hvtcg", Ridge: "hvtcg", Hillfort: "hvtcg" }, sacred: { Temple: "hvtcg", Shrine: "hvtcg", "Sacred Grove": "hvtcg", Oracle: "hvtcg", Altar: "hvtcg", Sanctuary: "hvtcg" }, island: { Isle: "hvtcg", Island: "hvtcg", Cape: "hvtcg", Headland: "hvtcg", Strait: "hvtcg", Bay: "hvtcg" }, plain: { Plain: "hvtcg", Vale: "hvtcg", Valley: "hvtcg", Meadow: "hvtcg", "Olive Grove": "hvtcg", Vineyard: "hvtcg" } } }, byzantine: { eras: { byzantine: { "Saint {saint}": "hvtcg", "{fortress} of {name}": "hvtcg", "Monastery of Saint {saint}": "hvt", "{church} of Saint {saint}": "vtcg", "Port of {name}": "vtcg", "{imperial} {town}": "tcg", "{name:pos} {harbour}": "vtcg", "{hill} of Saint {saint}": "hvt", "Bridge of {name}": "vt", "{name:pos} {town}": "hv", "Market of {name}": "tcg", "Holy Spring of {saint}": "hv", "{adj} {hill}": "hvt", "Citadel of {name}": "tcg" }, modern: { "Saint {saint}": "hvtcg", "{name:pos} Port": "vtcg", "Monastery of Saint {saint}": "hvt", "New {town}": "vtcg", "{fortress} of {name}": "hvtcg", "Harbour Town": "vtcg", "Mountain Village": "hv", "{church} of Saint {saint}": "vtcg", "Station Town": "vt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { fortress: { Fortress: "hvtcg", Citadel: "hvtcg", Fort: "hvtcg", Stronghold: "hvtcg", Tower: "hvtcg", Kastron: "hvtcg", Watchtower: "hvtcg" }, monastery: { Monastery: "hvtcg", Hermitage: "hvtcg", Convent: "hvtcg", Cloister: "hvtcg", Lavra: "hvtcg", Cell: "hvtcg" }, church: { "Great Church": "hvtcg", Chapel: "hvtcg", Basilica: "hvtcg", Cathedral: "hvtcg", Shrine: "hvtcg", "Holy Church": "hvtcg" }, harbour: { Harbour: "hvtcg", Port: "hvtcg", Haven: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Anchorage: "hvtcg" }, hill: { Hill: "hvtcg", Peak: "hvtcg", Crag: "hvtcg", Height: "hvtcg", Ridge: "hvtcg", Mount: "hvtcg" }, imperial: { Imperial: "hvtcg", Royal: "hvtcg", Holy: "hvtcg", Great: "hvtcg", Fortified: "hvtcg", Golden: "hvtcg" }, town: { Town: "hvtcg", City: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } } }, newEras: { roman: [{ id: "republic", label: "Republic", guide: "Camps, forums, colonies and posting stations of the Republic; roads, baths and villas.", lists: { road: ["Road", "Milestone", "Crossing", "Posting Station", "Paved Way", "Ford", "Causeway"], craft: ["Baths", "Brickworks", "Quarry", "Mill", "Smithy", "Pottery"], rank: ["Legate", "Prefect", "Consul", "Tribune", "Governor", "Senator"], city: ["City", "Town", "Colony", "Camp", "Fort", "Settlement"], name: ["Marcus", "Boethius", "Lucius", "Cassiodorus", "Gaius", "Symmachus", "Publius", "Aetius", "Quintus", "Titus", "Gnaeus", "Aulus", "Sextus", "Decimus", "Tiberius", "Servius", "Appius", "Manius", "Spurius", "Marcellus", "Maximus", "Felix", "Rufus", "Crispus", "Cato", "Brutus", "Cassius", "Varro"] }, templates: [["Camp of {name}", 5], ["Forum of {name}", 4], ["Colony of {name}", 4], ["{road} of {name}", 4], ["Fort of the {rank}", 3], ["Veterans' Colony", 2], ["Posting Station of {name}", 3], ["{craft} of {name}", 4], ["Market of {name}", 3], ["Villa of {name}", 4], ["Bridge of {name}", 3], ["Harbour of {name}", 3], ["Walls of {name}", 3], ["New {city}", 3]] }], slavic: [{ id: "tribal", label: "Tribal", guide: "Stockades, hillforts and woodland clearings of the tribes; salt, iron and bees.", lists: { wood: ["Birch Wood", "Pine Wood", "Oak Grove", "Clearing", "Forest Edge", "Swamp"], fort: ["Stockade", "Palisade", "Hillfort", "Watchtower", "Refuge", "Enclosure"], craft: ["Pitch Works", "Salt Works", "Iron Works", "Beehives", "Smithy", "Mill"], name: ["Yaroslav", "Svyatoslav", "Oleg", "Igor", "Mstislav", "Vsevolod", "Dmitri", "Ivan", "Mikhail", "Andrei", "Stepan", "Bogdan", "Vyacheslav", "Boleslaw", "Mieszko", "Casimir", "Wladyslaw", "Milan", "Stefan", "Dusan", "Lazar", "Tvrtko", "Radoslav", "Bohumil", "Sviatopolk", "Rostislav", "Yuri", "Kiril"] }, templates: [["{name:pos} Stockade", 5], ["{fort} of {name}", 4], ["{wood} of the {animal}", 3], ["{craft} of {name}", 3], ["Clan of {name}", 3], ["Hillfort of the {animal}", 3], ["{adj} {fort}", 3], ["Ford of {name}", 3], ["Market of {name}", 3], ["Holy Grove of {name}", 2], ["{name:pos} Clearing", 4], ["Beehive Village", 2]] }] }, augmentSizes: { roman: { eras: { republic: { "Camp of {name}": "hvt", "Forum of {name}": "vtcg", "Colony of {name}": "tcg", "{road} of {name}": "hv", "Fort of the {rank}": "hvt", "Veterans' Colony": "tcg", "Posting Station of {name}": "hvt", "{craft} of {name}": "hvt", "Market of {name}": "vtcg", "Villa of {name}": "hv", "Bridge of {name}": "vt", "Harbour of {name}": "vtcg", "Walls of {name}": "hvtcg", "New {city}": "tcg" } }, lists: { road: { Road: "hvtcg", Milestone: "hvtcg", Crossing: "hvtcg", "Posting Station": "hvtcg", "Paved Way": "hvtcg", Ford: "hvtcg", Causeway: "hvtcg" }, craft: { Baths: "hvtcg", Brickworks: "hvtcg", Quarry: "hvtcg", Mill: "hvtcg", Smithy: "hvtcg", Pottery: "hvtcg" }, rank: { Legate: "hvtcg", Prefect: "hvtcg", Consul: "hvtcg", Tribune: "hvtcg", Governor: "hvtcg", Senator: "hvtcg" }, city: { City: "hvtcg", Town: "hvtcg", Colony: "hvtcg", Camp: "hvtcg", Fort: "hvtcg", Settlement: "hvtcg" } } }, slavic: { eras: { tribal: { "{name:pos} Stockade": "hvt", "{fort} of {name}": "hvtcg", "{wood} of the {animal}": "hv", "{craft} of {name}": "hvt", "Clan of {name}": "hvt", "Hillfort of the {animal}": "hvt", "{adj} {fort}": "hvt", "Ford of {name}": "hv", "Market of {name}": "vt", "Holy Grove of {name}": "hv", "{name:pos} Clearing": "hv", "Beehive Village": "hv" } }, lists: { wood: { "Birch Wood": "hvtcg", "Pine Wood": "hvtcg", "Oak Grove": "hvtcg", Clearing: "hvtcg", "Forest Edge": "hvtcg", Swamp: "hvtcg" }, fort: { Stockade: "hvtcg", Palisade: "hvtcg", Hillfort: "hvtcg", Watchtower: "hvtcg", Refuge: "hvtcg", Enclosure: "hvtcg" }, craft: { "Pitch Works": "hvtcg", "Salt Works": "hvtcg", "Iron Works": "hvtcg", Beehives: "hvtcg", Smithy: "hvtcg", Mill: "hvtcg" } } } }, labels: { castle: "fort word", craft: "works word", dike: "dike word", fen: "wet ground word", haven: "harbour word", ridge: "ridge word", mill: "works word", tower: "fort word", commune: "town word", square: "square word", rank: "status", cape: "cape word", vine: "farm word", fishing: "fishing word", island: "island word", plain: "plain word", fortress: "fort word", monastery: "monastery word", imperial: "status", road: "road word" }, eraMap: { french: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, dutch: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, italian: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, spanish: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, portuguese: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, greek: { classical: ["AN"], modern: ["EM", "ST", "MO"] }, byzantine: { byzantine: ["MD"], modern: ["EM", "ST", "MO"] }, roman: { republic: ["AN"] }, slavic: { tribal: ["AN"] } } } };
+
+// src/tier6aData.ts
+var TIER6A_DATA = tier6a_default;
+
 // src/settlement/data.ts
 var SETTLEMENT_BASE = settlement_names_default;
 var SETTLEMENT_DATA = {
@@ -25013,6 +25217,16 @@ var SETTLEMENT_DATA = {
   world: {
     ...SETTLEMENT_BASE.world,
     ...NORTH5B.settlement.sizes,
+    ...TIER6A_DATA.settlement.sizes,
+    ...Object.fromEntries(
+      Object.entries(TIER6A_DATA.settlement.augmentSizes).map(([id, add2]) => [
+        id,
+        {
+          eras: { ...SETTLEMENT_BASE.world[id].eras, ...add2.eras },
+          lists: { ...SETTLEMENT_BASE.world[id].lists, ...add2.lists }
+        }
+      ])
+    ),
     norse: { ...SETTLEMENT_BASE.world.norse, eras: { ...SETTLEMENT_BASE.world.norse.eras, viking: { ...SETTLEMENT_BASE.world.norse.eras.viking, ...NORTH5B.settlement.norseSizes } } }
   }
 };
@@ -86545,12 +86759,18 @@ var cultureSetKeys = (name) => {
 };
 var LENS_CULTURE_SET_NAMES = Object.keys(LENS.cultureSets);
 var ENGINE_ALIAS = Object.fromEntries(
-  Object.entries(LENS.engineAlias).filter(([k]) => k !== "$comment")
+  Object.entries(LENS.engineAlias).filter(([k]) => !k.startsWith("$"))
 );
-var engineCulture = (key2) => {
+var ENGINE_OWN = LENS.engineOwn;
+function engineCulture(key2, module2) {
   var _a8;
-  return (_a8 = ENGINE_ALIAS[key2]) != null ? _a8 : key2;
-};
+  let k = key2;
+  for (let guard = 0; ENGINE_ALIAS[k] !== void 0 && guard < 4; guard++) {
+    if (module2 && ((_a8 = ENGINE_OWN[k]) == null ? void 0 : _a8.includes(module2))) break;
+    k = ENGINE_ALIAS[k];
+  }
+  return k;
+}
 var CULTURE_REGIONS = Object.fromEntries(
   Object.entries(LENS.cultureRegions).filter(([k]) => k !== "$comment")
 );
@@ -87336,6 +87556,40 @@ var REAL_PHRASE = new RegExp(
 var containsRealGroup = (name) => REAL_PHRASE.test(name.toLowerCase().replace(/^the\s+/, "").replace(/[’]/g, "'"));
 var isRealGroup = (name) => GROUPS.has(name.trim().toLowerCase().replace(/^the\s+/, "").replace(/[’]/g, "'")) || isLiveryNearMatch(name);
 
+// src/tier6a.ts
+var TIER6A_CULTURES = ["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic"];
+var TIER6A_MIXES = ["iberian", "greek-byzantine"];
+var TIER6A_KEYS = [...TIER6A_CULTURES, ...TIER6A_MIXES];
+var TIER6A_LABELS = {
+  french: "French",
+  dutch: "Dutch",
+  italian: "Italian",
+  spanish: "Spanish",
+  portuguese: "Portuguese",
+  roman: "Roman",
+  greek: "Greek",
+  byzantine: "Byzantine",
+  slavic: "Slavic",
+  iberian: "Iberian",
+  "greek-byzantine": "Greek and Byzantine"
+};
+var TIER6A_GROUPS = {
+  french: "Western and southern Europe",
+  dutch: "British Isles and northern Europe",
+  italian: "Western and southern Europe",
+  spanish: "Western and southern Europe",
+  portuguese: "Western and southern Europe",
+  roman: "Western and southern Europe",
+  greek: "Western and southern Europe",
+  byzantine: "Western and southern Europe",
+  slavic: "Eastern Europe and the steppe",
+  iberian: "Western and southern Europe",
+  "greek-byzantine": "Western and southern Europe"
+};
+function withTier6a(roster, make) {
+  return [...roster, ...TIER6A_KEYS.filter((k) => !roster.some((r) => r.key === k)).map(make)];
+}
+
 // src/north5c.ts
 var NORTH5C = { modules: { ...north5c_default.modules, ...north5d_default.modules }, native: north5c_default.native };
 var CORE_5C = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
@@ -87459,7 +87713,11 @@ function applySignature(names, module2, culture, seed, opts = {}) {
   const draw3 = signatureDrawer(module2, culture);
   if (!draw3 || names.length === 0) return names;
   const extra = (_a8 = opts.allowed) != null ? _a8 : () => true;
-  const allowed = (text) => !isRealGroup(text) && !containsRealGroup(text) && extra(text);
+  const repeats = (text) => {
+    const content = text.split(" ").filter((w) => !/^(of|the|and|for|in|at|by|on|to|from)$/i.test(w) && !w.startsWith("[")).map((w) => w.toLowerCase().replace(/'s?$/, "").replace(/s$/, ""));
+    return new Set(content).size !== content.length;
+  };
+  const allowed = (text) => !isRealGroup(text) && !containsRealGroup(text) && !(module2 === "realms" && repeats(text)) && extra(text);
   const set = (_b4 = opts.set) != null ? _b4 : (n, text) => ({ ...n, text });
   const share2 = signatureShareFor(culture);
   const rng = mulberry32((seed ^ 1549556828 ^ cultureSalt(culture)) >>> 0);
@@ -87506,8 +87764,11 @@ var NORTH_5C_CULTURES = [
   { key: "irish", label: "Irish", guide: "" },
   { key: "cornish", label: "Cornish", guide: "" },
   { key: "scandinavian", label: "Scandinavian", guide: "" },
-  { key: "german", label: "German", guide: "" }
+  { key: "german", label: "German", guide: "" },
+  // Brief 6a: the batch's cultures (a module whose own roster has one already keeps its entry: `withKeys`).
+  ...TIER6A_KEYS.map((key2) => ({ key: key2, label: TIER6A_LABELS[key2], guide: "" }))
 ];
+var addNorth5c = (base, make) => [...base, ...NORTH_5C_CULTURES.filter((c) => !base.some((b) => b.key === c.key)).map(make)];
 var noBracket = (text) => !text.includes("[");
 
 // src/tribes/engine.ts
@@ -90464,6 +90725,54 @@ var people_default = {
         rulerForms: { male: [["King {m}", 70], ["Emperor {m}", 10], ["Prince {m}", 20]], female: [["Queen {f}", 80], ["Infanta {f}", 10], ["Empress {f}", 10]] }
       }
     },
+    spanish: {
+      historic: {
+        male: [["Juan", 10], ["Pedro", 10], ["Diego", 10], ["Fernando", 10], ["Alonso", 10], ["Garcia", 7], ["Gonzalo", 7], ["Rodrigo", 7], ["Alvaro", 7], ["Sancho", 7], ["Ramiro", 5], ["Alfonso", 5, "r"], ["Hernando", 5], ["Martin", 5], ["Lope", 5], ["Pelayo", 5], ["Bermudo", 3], ["Ordono", 3], ["Fruela", 3], ["Hernan", 3], ["Francisco", 3], ["Gil", 3], ["Mendo", 3], ["Suero", 3], ["Inigo", 2], ["Fortun", 2], ["Jaime", 2], ["Enrique", 2], ["Felipe", 2, "r"], ["Isidore", 2, "s"], ["Munio", 2], ["Velasco", 2], ["Tello", 2], ["Alvar", 2], ["Ximeno", 2]],
+        female: [["Maria", 10], ["Isabel", 10], ["Juana", 10], ["Catalina", 10], ["Leonor", 10], ["Urraca", 7], ["Teresa", 7], ["Beatriz", 7], ["Elvira", 7], ["Constanza", 7], ["Mencia", 5], ["Sancha", 5], ["Blanca", 5], ["Violante", 5], ["Berenguela", 5], ["Ines", 5], ["Mayor", 3], ["Sol", 3], ["Aldonza", 3], ["Guiomar", 3], ["Mafalda", 3], ["Ximena", 3], ["Velasquita", 3], ["Toda", 3], ["Clara", 2], ["Dulce", 2], ["Nuna", 2], ["Aurembiaix", 2], ["Sancia", 2], ["Petronila", 2], ["Jimena", 2], ["Oneca", 2]],
+        surnames: [["Garcia", 10], ["Fernandez", 10], ["Gonzalez", 10], ["Rodriguez", 10], ["Lopez", 10], ["Martinez", 7], ["Sanchez", 7], ["Perez", 7], ["Gomez", 7], ["Diaz", 7], ["Alvarez", 5], ["Ruiz", 5], ["Jimenez", 5], ["Moreno", 5], ["Munoz", 5], ["Hernandez", 5], ["Torres", 3], ["Romero", 3], ["Navarro", 3], ["Castro", 3], ["Mendoza", 3], ["Vega", 3], ["Ortega", 3], ["Iglesias", 3], ["Flores", 2], ["Herrera", 2], ["Medina", 2], ["Aguilar", 2], ["Cortes", 2], ["Vargas", 2]],
+        regnalMale: [["Alfonso", 10], ["Fernando", 10], ["Sancho", 10], ["Ramiro", 10], ["Pedro", 10], ["Juan", 7], ["Felipe", 7], ["Carlos", 7]],
+        regnalFemale: [["Isabel", 10], ["Juana", 10], ["Maria", 10], ["Leonor", 10], ["Urraca", 10], ["Catalina", 7], ["Berenguela", 7], ["Blanca", 7]],
+        holy: [["Isidore", 10], ["Ildefonsus", 10], ["Dominic", 10], ["Teresa", 10], ["Vincent", 10], ["Ignatius", 7], ["Eulalia", 7], ["Leander", 7], ["Fructuosus", 7], ["Millan", 7], ["Ferdinand", 5], ["James", 5]],
+        holyForms: [["Saint {n}", 80], ["the Blessed {n}", 10], ["Brother {n}", 10]],
+        rulerForms: { male: [["King {m}", 70], ["Emperor {m}", 10], ["Prince {m}", 20]], female: [["Queen {f}", 80], ["Infanta {f}", 10], ["Empress {f}", 10]] }
+      },
+      modern: {
+        male: [["Javier", 10, "", "ST MO"], ["David", 10, "", "ST MO"], ["Alberto", 10, "", "ST MO"], ["Jorge", 10, "", "ST MO"], ["Marcos", 10, "", "ST MO"], ["Jose", 7, "", "ST"], ["Hugo", 7, "", "MO"], ["Juan", 7, "", "ST"], ["Martin", 7, "", "MO"], ["Antonio", 7, "", "ST"], ["Lucas", 5, "", "MO"], ["Manuel", 5, "", "ST"], ["Mateo", 5, "", "MO"], ["Francisco", 5, "", "ST"], ["Daniel", 5, "", "MO"], ["Luis", 5, "", "ST"], ["Pablo", 3, "", "MO"], ["Miguel", 3, "", "ST"], ["Alejandro", 3, "", "MO"], ["Jesus", 3, "", "ST"], ["Adrian", 3, "", "MO"], ["Pedro", 3, "", "ST"], ["Diego", 3, "", "MO"], ["Joaquin", 3, "", "ST"], ["Sergio", 2, "", "MO"], ["Ramon", 2, "", "ST"], ["Leo", 2, "", "MO"], ["Fernando", 2, "", "ST"], ["Enzo", 2, "", "MO"], ["Rafael", 2, "", "ST"], ["Thiago", 2, "", "MO"], ["Angel", 2, "", "ST"], ["Gabriel", 2, "", "MO"], ["Carlos", 2, "", "ST"], ["Santiago", 2, "", "MO"], ["Ivan", 2, "", "ST"]],
+        female: [["Elena", 10, "", "ST MO"], ["Marta", 10, "", "ST MO"], ["Cristina", 10, "", "ST MO"], ["Silvia", 10, "", "ST MO"], ["Raquel", 10, "", "ST MO"], ["Maria", 7, "", "ST"], ["Lucia", 7, "", "MO"], ["Carmen", 7, "", "ST"], ["Sofia", 7, "", "MO"], ["Dolores", 7, "", "ST"], ["Martina", 5, "", "MO"], ["Josefa", 5, "", "ST"], ["Paula", 5, "", "MO"], ["Francisca", 5, "", "ST"], ["Valeria", 5, "", "MO"], ["Antonia", 5, "", "ST"], ["Julia", 3, "", "MO"], ["Rosa", 3, "", "ST"], ["Emma", 3, "", "MO"], ["Pilar", 3, "", "ST"], ["Daniela", 3, "", "MO"], ["Concepcion", 3, "", "ST"], ["Alba", 3, "", "MO"], ["Teresa", 3, "", "ST"], ["Carla", 2, "", "MO"], ["Isabel", 2, "", "ST"], ["Sara", 2, "", "MO"], ["Ana", 2, "", "ST"], ["Noa", 2, "", "MO"], ["Manuela", 2, "", "ST"], ["Vega", 2, "", "MO"], ["Mercedes", 2, "", "ST"], ["Laura", 2, "", "MO"], ["Juana", 2, "", "ST"], ["Valentina", 2, "", "MO"]],
+        surnames: [["Garcia", 10], ["Fernandez", 10], ["Gonzalez", 10], ["Rodriguez", 10], ["Lopez", 10], ["Martinez", 7], ["Sanchez", 7], ["Perez", 7], ["Gomez", 7], ["Martin", 7], ["Jimenez", 5], ["Ruiz", 5], ["Hernandez", 5], ["Diaz", 5], ["Moreno", 5], ["Alvarez", 5], ["Munoz", 3], ["Romero", 3], ["Alonso", 3], ["Gutierrez", 3], ["Navarro", 3], ["Torres", 3], ["Dominguez", 3], ["Vazquez", 3], ["Ramos", 2], ["Gil", 2], ["Ramirez", 2], ["Serrano", 2], ["Blanco", 2], ["Suarez", 2], ["Molina", 2]],
+        regnalMale: [["Alfonso", 10], ["Carlos", 10], ["Juan", 10], ["Felipe", 10], ["Fernando", 10], ["Luis", 7], ["Pedro", 7], ["Ramon", 7]],
+        regnalFemale: [["Isabel", 10], ["Maria", 10], ["Victoria", 10], ["Eugenia", 10], ["Amelia", 10], ["Carlota", 7], ["Mercedes", 7], ["Cristina", 7]],
+        holy: [["Teresa", 10], ["Ignatius", 10], ["John", 10], ["Francis", 10], ["Vincent", 10], ["Rita", 7], ["Joseph", 7], ["Isidore", 7], ["Josemaria", 7], ["Dominic", 7], ["Rose", 5], ["Anthony", 5]],
+        recentMale: ["Hugo", "Martin", "Lucas", "Mateo", "Pablo", "Alejandro", "Adrian", "Diego", "Leo", "Enzo", "Thiago", "Gabriel", "Santiago"],
+        recentFemale: ["Lucia", "Sofia", "Martina", "Paula", "Valeria", "Julia", "Emma", "Daniela", "Alba", "Carla", "Sara", "Noa", "Vega"],
+        holyForms: [["Saint {n}", 80], ["the Blessed {n}", 10], ["Brother {n}", 10]],
+        rulerForms: { male: [["King {m}", 70], ["Emperor {m}", 10], ["Prince {m}", 20]], female: [["Queen {f}", 80], ["Infanta {f}", 10], ["Empress {f}", 10]] }
+      }
+    },
+    portuguese: {
+      historic: {
+        male: [["Joao", 10], ["Pedro", 10], ["Afonso", 10, "r"], ["Duarte", 10], ["Manuel", 10], ["Nuno", 7], ["Diogo", 7], ["Goncalo", 7], ["Rodrigo", 7], ["Fernando", 7], ["Henrique", 5], ["Dinis", 5], ["Sancho", 5], ["Vasco", 5], ["Bartolomeu", 5], ["Martim", 5], ["Egas", 3], ["Paio", 3], ["Mendo", 3], ["Lourenco", 3], ["Francisco", 3], ["Antonio", 3], ["Jorge", 3], ["Tomas", 3], ["Luis", 2], ["Miguel", 2], ["Gil", 2], ["Estevao", 2], ["Alvaro", 2], ["Joaquim", 2, "s"], ["Ruy", 2], ["Garcia", 2], ["Fruela", 2], ["Alvar", 2]],
+        female: [["Maria", 10], ["Isabel", 10], ["Beatriz", 10], ["Leonor", 10], ["Teresa", 10], ["Catarina", 7], ["Ines", 7], ["Mafalda", 7], ["Filipa", 7], ["Constanca", 7], ["Brites", 5], ["Joana", 5], ["Urraca", 5], ["Sancha", 5], ["Dulce", 5], ["Violante", 5], ["Guiomar", 3], ["Aldonca", 3], ["Mor", 3], ["Sol", 3], ["Clara", 3], ["Margarida", 3], ["Brianda", 3], ["Antonia", 3], ["Luisa", 2], ["Madalena", 2], ["Helena", 2], ["Mecia", 2], ["Elvira", 2], ["Sancia", 2], ["Tareja", 2], ["Lucia", 2]],
+        surnames: [["Silva", 10], ["Santos", 10], ["Ferreira", 10], ["Pereira", 10], ["Oliveira", 10], ["Costa", 7], ["Carvalho", 7], ["Almeida", 7], ["Sousa", 7], ["Rodrigues", 7], ["Fernandes", 5], ["Gomes", 5], ["Martins", 5], ["Goncalves", 5], ["Lopes", 5], ["Marques", 5], ["Alves", 3], ["Ribeiro", 3], ["Pinto", 3], ["Teixeira", 3], ["Moreira", 3], ["Correia", 3], ["Mendes", 3], ["Nunes", 3], ["Soares", 2], ["Vieira", 2], ["Monteiro", 2], ["Cardoso", 2], ["Rocha", 2], ["Neves", 2]],
+        regnalMale: [["Afonso", 10], ["Sancho", 10], ["Dinis", 10], ["Joao", 10], ["Duarte", 10], ["Manuel", 7], ["Pedro", 7], ["Henrique", 7]],
+        regnalFemale: [["Maria", 10], ["Leonor", 10], ["Beatriz", 10], ["Isabel", 10], ["Teresa", 10], ["Mafalda", 7], ["Filipa", 7], ["Catarina", 7]],
+        holy: [["Anthony", 10], ["Vincent", 10], ["Isabel", 10], ["Teotonius", 10], ["Gonzalo", 10], ["Nuno", 7], ["John of God", 7], ["Fructuosus", 7], ["Martin", 7], ["Rudesind", 7], ["Beatriz", 5], ["Mamede", 5]],
+        holyForms: [["Saint {n}", 80], ["the Blessed {n}", 10], ["Brother {n}", 10]],
+        rulerForms: { male: [["King {m}", 80], ["Prince {m}", 20]], female: [["Queen {f}", 80], ["Infanta {f}", 20]] }
+      },
+      modern: {
+        male: [["Joao", 10, "", "ST MO"], ["Jose", 10, "", "ST MO"], ["Manuel", 10, "", "ST MO"], ["Antonio", 10, "", "ST MO"], ["Francisco", 10, "", "ST MO"], ["Luis", 7, "", "ST"], ["Pedro", 7, "", "ST"], ["Miguel", 7, "", "ST"], ["Tiago", 7, "", "MO"], ["Rui", 7, "", "ST"], ["Paulo", 5, "", "ST"], ["Jorge", 5, "", "ST"], ["Carlos", 5, "", "ST"], ["Nuno", 5, "", "ST"], ["Rafael", 5, "", "ST"], ["Diogo", 5, "", "MO"], ["Goncalo", 3, "", "MO"], ["Ricardo", 3, "", "ST"], ["Bruno", 3, "", "ST"], ["Tomas", 3, "", "MO"], ["Andre", 3, "", "ST"], ["Fernando", 3, "", "ST"], ["Vasco", 3, "", "ST"], ["Duarte", 3, "", "MO"], ["Martim", 2, "", "MO"], ["Afonso", 2, "", "MO"], ["Santiago", 2, "", "MO"], ["Lourenco", 2, "", "MO"], ["Salvador", 2, "", "MO"], ["Rodrigo", 2, "", "MO"], ["Henrique", 2, "", "ST"], ["Mateus", 2, "", "MO"], ["Dinis", 2, "", "MO"], ["Simao", 2, "", "MO"], ["Gabriel", 2, "", "MO"], ["Eduardo", 2, "", "ST"]],
+        female: [["Maria", 10, "", "ST MO"], ["Ana", 10, "", "ST MO"], ["Rita", 10, "", "ST MO"], ["Catarina", 10, "", "ST MO"], ["Marta", 10, "", "ST MO"], ["Sofia", 7, "", "MO"], ["Ines", 7, "", "MO"], ["Beatriz", 7, "", "MO"], ["Mariana", 7, "", "MO"], ["Carolina", 7, "", "MO"], ["Joana", 5, "", "ST"], ["Teresa", 5, "", "ST"], ["Isabel", 5, "", "ST"], ["Helena", 5, "", "ST"], ["Filipa", 5, "", "ST"], ["Margarida", 5, "", "MO"], ["Sara", 3, "", "MO"], ["Patricia", 3, "", "ST"], ["Sandra", 3, "", "ST"], ["Susana", 3, "", "ST"], ["Cristina", 3, "", "ST"], ["Paula", 3, "", "ST"], ["Raquel", 3, "", "ST"], ["Sonia", 3, "", "ST"], ["Carla", 2, "", "ST"], ["Claudia", 2, "", "ST"], ["Leonor", 2, "", "MO"], ["Matilde", 2, "", "MO"], ["Madalena", 2, "", "MO"], ["Francisca", 2, "", "MO"], ["Benedita", 2, "", "MO"], ["Alice", 2, "", "MO"], ["Laura", 2, "", "MO"], ["Diana", 2, "", "MO"], ["Eva", 2, "", "ST"]],
+        surnames: [["Silva", 10], ["Santos", 10], ["Ferreira", 10], ["Pereira", 10], ["Oliveira", 10], ["Costa", 7], ["Rodrigues", 7], ["Martins", 7], ["Sousa", 7], ["Fernandes", 7], ["Goncalves", 5], ["Gomes", 5], ["Lopes", 5], ["Marques", 5], ["Alves", 5], ["Almeida", 5], ["Ribeiro", 3], ["Pinto", 3], ["Carvalho", 3], ["Teixeira", 3], ["Moreira", 3], ["Correia", 3], ["Mendes", 3], ["Nunes", 3], ["Soares", 2], ["Vieira", 2], ["Monteiro", 2], ["Cardoso", 2], ["Rocha", 2], ["Neves", 2]],
+        regnalMale: [["Manuel", 10], ["Carlos", 10], ["Luis", 10], ["Pedro", 10], ["Miguel", 10], ["Joao", 7], ["Afonso", 7], ["Jose", 7]],
+        regnalFemale: [["Maria", 10], ["Amelia", 10], ["Isabel", 10], ["Carlota", 10], ["Teresa", 10], ["Leonor", 7], ["Filipa", 7], ["Catarina", 7]],
+        holy: [["Anthony", 10], ["Vincent", 10], ["Isabel", 10], ["John of God", 10], ["Nuno", 10], ["Teotonius", 7], ["Rose", 7], ["Francis", 7], ["Rita", 7], ["Teresa", 7], ["Joseph", 5], ["Martin", 5]],
+        recentMale: ["Afonso", "Rodrigo", "Martim", "Santiago", "Francisco", "Duarte", "Tomas", "Salvador", "Dinis", "Lourenco", "Simao", "Mateus", "Gabriel"],
+        recentFemale: ["Leonor", "Matilde", "Beatriz", "Mariana", "Maria", "Francisca", "Benedita", "Carolina", "Madalena", "Alice", "Diana", "Laura", "Margarida"],
+        holyForms: [["Saint {n}", 80], ["the Blessed {n}", 10], ["Brother {n}", 10]],
+        rulerForms: { male: [["King {m}", 80], ["Prince {m}", 20]], female: [["Queen {f}", 80], ["Infanta {f}", 20]] }
+      }
+    },
     italian: {
       historic: {
         male: [["Giovanni", 10], ["Francesco", 10], ["Antonio", 10], ["Giuseppe", 10], ["Pietro", 10], ["Marco", 7], ["Lorenzo", 7], ["Giacomo", 7], ["Niccolo", 7], ["Matteo", 7], ["Bartolomeo", 5], ["Guido", 5], ["Ugo", 5], ["Ruggero", 5], ["Ludovico", 5], ["Cosimo", 5], ["Leonardo", 5], ["Alessandro", 5], ["Filippo", 3], ["Paolo", 3], ["Luca", 3], ["Tommaso", 3], ["Federico", 3, "r"], ["Galeazzo", 3], ["Cesare", 3], ["Dante", 3], ["Piero", 2], ["Bernardo", 2], ["Domenico", 2, "s"], ["Benedetto", 2, "s"], ["Girolamo", 2], ["Ottaviano", 2]],
@@ -90504,6 +90813,41 @@ var people_default = {
       historic: {
         male: [["Pericles", 10, "", "AN"], ["Basil", 10, "", "MD"], ["Alexander", 10, "", "AN"], ["Constantine", 10, "r", "MD"], ["Socrates", 10, "", "AN"], ["Michael", 7, "", "MD"], ["Plato", 7, "", "AN"], ["Leo", 7, "", "MD"], ["Aristotle", 7, "", "AN"], ["John", 7, "", "MD"], ["Demetrius", 5, "", "AN"], ["Alexius", 5, "", "MD"], ["Nicias", 5, "", "AN"], ["Manuel", 5, "", "MD"], ["Themistocles", 5, "", "AN"], ["Nicephorus", 5, "", "MD"], ["Leonidas", 5, "", "AN"], ["Theodore", 5, "", "MD"], ["Philip", 3, "", "AN"], ["Andronicus", 3, "", "MD"], ["Theodorus", 3, "", "AN"], ["Isaac", 3, "", "MD"], ["Lysander", 3, "", "AN"], ["Romanus", 3, "", "MD"], ["Alcibiades", 3, "", "AN"], ["Stephen", 3, "", "MD"], ["Cimon", 2, "", "AN"], ["George", 2, "", "MD"], ["Xenophon", 2, "", "AN"], ["Photius", 2, "", "MD"], ["Thucydides", 2, "", "AN"], ["Justinian", 2, "r", "MD"], ["Pythagoras", 2, "", "AN"], ["Archimedes", 2, "", "AN"], ["Solon", 2, "", "AN"], ["Dionysius", 2, "", "AN"], ["Aristides", 2, "", "AN"], ["Epaminondas", 2, "", "AN"], ["Pindar", 2, "", "AN"], ["Hippocrates", 2, "", "AN"], ["Euclid", 2, "", "AN"], ["Diogenes", 2, "", "AN"], ["Demosthenes", 2, "", "AN"]],
         female: [["Helen", 10, "", "AN"], ["Theodora", 10, "r", "MD"], ["Penelope", 10, "", "AN"], ["Irene", 10, "", "MD"], ["Antigone", 10, "", "AN"], ["Zoe", 7, "", "MD"], ["Aspasia", 7, "", "AN"], ["Eudocia", 7, "", "MD"], ["Phryne", 7, "", "AN"], ["Anna", 7, "", "MD"], ["Sappho", 5, "", "AN"], ["Maria", 5, "", "MD"], ["Cassandra", 5, "", "AN"], ["Euphrosyne", 5, "", "MD"], ["Andromache", 5, "", "AN"], ["Theophano", 5, "", "MD"], ["Hypatia", 5, "", "AN"], ["Helena", 5, "", "MD"], ["Artemisia", 3, "", "AN"], ["Sophia", 3, "", "MD"], ["Berenice", 3, "", "AN"], ["Kassia", 3, "", "MD"], ["Cleopatra", 3, "", "AN"], ["Agatha", 3, "", "MD"], ["Arsinoe", 3, "", "AN"], ["Thekla", 3, "", "MD"], ["Olympias", 2, "", "AN"], ["Thais", 2, "", "AN"], ["Phila", 2, "", "AN"], ["Roxana", 2, "", "AN"], ["Stratonice", 2, "", "AN"], ["Laodice", 2, "", "AN"], ["Cynisca", 2, "", "AN"], ["Agariste", 2, "", "AN"], ["Xanthippe", 2, "", "AN"]],
+        regnalMale: [["Constantine", 10], ["Justinian", 10], ["Basil", 10], ["Leo", 10], ["Heraclius", 10], ["Alexius", 7], ["Michael", 7], ["Manuel", 7]],
+        regnalFemale: [["Theodora", 10], ["Irene", 10], ["Zoe", 10], ["Eudocia", 10], ["Helena", 10], ["Eudoxia", 7], ["Sophia", 7], ["Anna", 7]],
+        holy: [["Nicholas", 10], ["Basil", 10], ["Gregory", 10], ["Athanasius", 10], ["Demetrius", 10], ["George", 7], ["Spyridon", 7], ["Helena", 7], ["Catherine", 7], ["Barbara", 7], ["Photini", 5], ["Chrysostom", 5]],
+        holyForms: [["Saint {n}", 80], ["Elder {n}", 10], ["Patriarch {n}", 10]],
+        rulerForms: { male: [["Emperor {m}", 60], ["King {m}", 40]], female: [["Empress {f}", 60], ["Queen {f}", 40]] }
+      },
+      modern: {
+        male: [["Georgios", 10, "", "ST MO"], ["Dimitrios", 10, "", "ST MO"], ["Nikolaos", 10, "", "ST MO"], ["Ioannis", 10, "", "ST MO"], ["Panagiotis", 10, "", "ST MO"], ["Christos", 7, "", "ST MO"], ["Spyridon", 7, "", "ST"], ["Giannis", 7, "", "MO"], ["Stylianos", 7, "", "ST"], ["Nikos", 7, "", "MO"], ["Anastasios", 5, "", "ST"], ["Kostas", 5, "", "MO"], ["Aristides", 5, "", "ST"], ["Dimitris", 5, "", "MO"], ["Pantelis", 5, "", "ST"], ["Vasilis", 5, "", "MO"], ["Charalambos", 5, "", "ST"], ["Thanasis", 5, "", "MO"], ["Epameinondas", 3, "", "ST"], ["Manolis", 3, "", "MO"], ["Themistoklis", 3, "", "ST"], ["Alexandros", 3, "", "MO"], ["Periklis", 3, "", "ST"], ["Orestis", 3, "", "MO"], ["Eleftherios", 3, "", "ST"], ["Marios", 3, "", "MO"], ["Kyriakos", 2, "", "ST"], ["Odysseas", 2, "", "MO"], ["Efstathios", 2, "", "ST"], ["Lefteris", 2, "", "MO"], ["Ilias", 2, "", "ST"], ["Petros", 2, "", "MO"], ["Aristotelis", 2, "", "ST"], ["Fotis", 2, "", "MO"], ["Sotirios", 2, "", "ST"], ["Andreas", 2, "", "MO"]],
+        female: [["Angeliki", 10, "", "ST MO"], ["Konstantina", 10, "", "ST MO"], ["Efthymia", 10, "", "ST MO"], ["Chara", 10, "", "ST MO"], ["Eftychia", 10, "", "ST MO"], ["Maria", 7, "", "ST"], ["Marina", 7, "", "MO"], ["Eleni", 7, "", "ST"], ["Ioanna", 7, "", "MO"], ["Georgia", 7, "", "ST"], ["Dimitra", 5, "", "MO"], ["Katerina", 5, "", "ST"], ["Natalia", 5, "", "MO"], ["Despina", 5, "", "ST"], ["Eirini", 5, "", "MO"], ["Sofia", 5, "", "ST"], ["Christina", 5, "", "MO"], ["Aikaterini", 5, "", "ST"], ["Kalliopi", 3, "", "MO"], ["Vasiliki", 3, "", "ST"], ["Zoi", 3, "", "MO"], ["Chrysoula", 3, "", "ST"], ["Fotini", 3, "", "MO"], ["Anastasia", 3, "", "ST"], ["Artemis", 3, "", "MO"], ["Evangelia", 3, "", "ST"], ["Afroditi", 2, "", "MO"], ["Paraskevi", 2, "", "ST"], ["Myrto", 2, "", "MO"], ["Koula", 2, "", "ST"], ["Danai", 2, "", "MO"], ["Stavroula", 2, "", "ST"], ["Penelope", 2, "", "MO"], ["Panagiota", 2, "", "ST"], ["Ariadni", 2, "", "MO"]],
+        surnames: [["Papadopoulos", 10], ["Papadakis", 10], ["Georgiou", 10], ["Nikolaou", 10], ["Dimitriou", 10], ["Konstantinou", 7], ["Vasileiou", 7], ["Alexiou", 7], ["Ioannou", 7], ["Karagiannis", 7], ["Antoniou", 5], ["Papanikolaou", 5], ["Pappas", 5], ["Vlachos", 5], ["Makris", 5], ["Oikonomou", 5], ["Petrou", 5], ["Michailidis", 5], ["Stavrou", 3], ["Kostopoulos", 3], ["Theodorou", 3], ["Angelopoulos", 3], ["Mavridis", 3], ["Kalogeropoulos", 3], ["Samaras", 3], ["Doukas", 3], ["Laskaris", 2], ["Palaiologos", 2], ["Komninos", 2], ["Karamanlis", 2]],
+        regnalMale: [["Otto", 10], ["George", 10], ["Constantine", 10], ["Alexander", 10], ["Paul", 10], ["Basil", 7], ["Leo", 7], ["Justinian", 7]],
+        regnalFemale: [["Amalia", 10], ["Olga", 10], ["Sophia", 10], ["Frederica", 10], ["Aspasia", 10], ["Elisabeth", 7], ["Alexandra", 7], ["Theodora", 7]],
+        holy: [["Nicholas", 10], ["Basil", 10], ["Gregory", 10], ["Spyridon", 10], ["Nektarios", 10], ["Porphyrios", 7], ["Paisios", 7], ["Silouan", 7], ["Helena", 7], ["Catherine", 7], ["Barbara", 5], ["Photini", 5]],
+        recentMale: ["Alexandros", "Orestis", "Marios", "Odysseas", "Lefteris", "Petros", "Fotis", "Andreas", "Giannis", "Nikos", "Dimitris", "Manolis"],
+        recentFemale: ["Marina", "Ioanna", "Dimitra", "Natalia", "Eirini", "Christina", "Kalliopi", "Zoi", "Fotini", "Artemis", "Afroditi", "Myrto"],
+        holyForms: [["Saint {n}", 80], ["Elder {n}", 10], ["Patriarch {n}", 10]],
+        rulerForms: { male: [["Emperor {m}", 60], ["King {m}", 40]], female: [["Empress {f}", 60], ["Queen {f}", 40]] }
+      }
+    },
+    greek: {
+      historic: {
+        male: [["Pericles", 10, "", "AN"], ["Alexander", 10, "", "AN"], ["Socrates", 10, "", "AN"], ["Plato", 10, "", "AN"], ["Aristotle", 10, "", "AN"], ["Demetrius", 7, "", "AN"], ["Nicias", 7, "", "AN"], ["Themistocles", 7, "", "AN"], ["Leonidas", 7, "", "AN"], ["Philip", 7, "r", "AN"], ["Theodorus", 5, "", "AN"], ["Lysander", 5, "", "AN"], ["Alcibiades", 5, "", "AN"], ["Cimon", 5, "", "AN"], ["Xenophon", 5, "", "AN"], ["Thucydides", 5, "", "AN"], ["Pythagoras", 3, "", "AN"], ["Archimedes", 3, "", "AN"], ["Solon", 3, "", "AN"], ["Dionysius", 3, "", "AN"], ["Aristides", 3, "", "AN"], ["Epaminondas", 3, "", "AN"], ["Pindar", 3, "", "AN"], ["Hippocrates", 3, "", "AN"], ["Euclid", 2, "", "AN"], ["Diogenes", 2, "", "AN"], ["Demosthenes", 2, "", "AN"], ["Aeschylus", 2, "", "AN"], ["Sophocles", 2, "", "AN"], ["Herodotus", 2, "", "AN"], ["Heraclitus", 2, "", "AN"], ["Miltiades", 2, "", "AN"]],
+        female: [["Helen", 10, "", "AN"], ["Penelope", 10, "", "AN"], ["Antigone", 10, "", "AN"], ["Aspasia", 10, "", "AN"], ["Phryne", 10, "", "AN"], ["Sappho", 7, "", "AN"], ["Cassandra", 7, "", "AN"], ["Andromache", 7, "", "AN"], ["Hypatia", 7, "", "AN"], ["Artemisia", 7, "", "AN"], ["Berenice", 5, "", "AN"], ["Cleopatra", 5, "", "AN"], ["Arsinoe", 5, "", "AN"], ["Olympias", 5, "", "AN"], ["Thais", 5, "", "AN"], ["Phila", 5, "", "AN"], ["Roxana", 3, "", "AN"], ["Stratonice", 3, "", "AN"], ["Laodice", 3, "", "AN"], ["Cynisca", 3, "", "AN"], ["Agariste", 3, "", "AN"], ["Xanthippe", 3, "", "AN"], ["Corinna", 3, "", "AN"], ["Telesilla", 3, "", "AN"], ["Myia", 2, "", "AN"], ["Praxilla", 2, "", "AN"], ["Theano", 2, "", "AN"], ["Lasthenia", 2, "", "AN"], ["Aglaonice", 2, "", "AN"], ["Nossis", 2, "", "AN"]],
+        regnalMale: [["Alexander", 10], ["Philip", 10], ["Pyrrhus", 10], ["Leonidas", 10], ["Cleomenes", 10], ["Agesilaus", 7], ["Antigonus", 7], ["Demetrius", 7]],
+        regnalFemale: [["Olympias", 10], ["Arsinoe", 10], ["Berenice", 10], ["Cleopatra", 10], ["Roxana", 10], ["Laodice", 7], ["Stratonice", 7], ["Artemisia", 7]],
+        holy: [["Epimenides", 10], ["Empedocles", 10], ["Pythagoras", 10], ["Diotima", 10], ["Lysimache", 10], ["Theano", 7], ["Themistoclea", 7], ["Aglaonice", 7], ["Teisamenus", 7], ["Hegesistratus", 7], ["Megistias", 5], ["Callias", 5]],
+        holyForms: [["Priest {n}", 40], ["Seer {n}", 40], ["Elder {n}", 20]],
+        rulerForms: { male: [["King {m}", 70], ["Tyrant {m}", 30]], female: [["Queen {f}", 100]] }
+      }
+    },
+    byzantine: {
+      historic: {
+        male: [["Basil", 10, "", "MD"], ["Constantine", 10, "r", "MD"], ["Michael", 10, "", "MD"], ["Leo", 10, "", "MD"], ["John", 10, "", "MD"], ["Alexius", 7, "", "MD"], ["Manuel", 7, "", "MD"], ["Nicephorus", 7, "", "MD"], ["Theodore", 7, "", "MD"], ["Andronicus", 7, "", "MD"], ["Isaac", 5, "", "MD"], ["Romanus", 5, "", "MD"], ["Stephen", 5, "", "MD"], ["George", 5, "", "MD"], ["Photius", 5, "", "MD"], ["Justinian", 5, "r", "MD"], ["Heraclius", 3, "", "MD"], ["Maurice", 3, "", "MD"], ["Phocas", 3, "", "MD"], ["Anastasius", 3, "", "MD"], ["Zeno", 3, "", "MD"], ["Marcian", 3, "", "MD"], ["Bardas", 3, "", "MD"], ["Theophilus", 3, "", "MD"], ["Sergius", 2, "", "MD"], ["Eustathius", 2, "", "MD"], ["Leontius", 2, "", "MD"], ["Symeon", 2, "", "MD"], ["Niketas", 2, "", "MD"], ["Kosmas", 2, "", "MD"]],
+        female: [["Theodora", 10, "r", "MD"], ["Irene", 10, "", "MD"], ["Zoe", 10, "", "MD"], ["Eudocia", 10, "", "MD"], ["Anna", 10, "", "MD"], ["Maria", 7, "", "MD"], ["Euphrosyne", 7, "", "MD"], ["Theophano", 7, "", "MD"], ["Helena", 7, "", "MD"], ["Sophia", 7, "", "MD"], ["Kassia", 5, "", "MD"], ["Agatha", 5, "", "MD"], ["Thekla", 5, "", "MD"], ["Eudoxia", 5, "", "MD"], ["Pulcheria", 5, "", "MD"], ["Verina", 5, "", "MD"], ["Anastasia", 3, "", "MD"], ["Martina", 3, "", "MD"], ["Constantina", 3, "", "MD"], ["Danielis", 3, "", "MD"], ["Kale", 3, "", "MD"], ["Xene", 3, "", "MD"], ["Eupraxia", 3, "", "MD"], ["Zenonis", 3, "", "MD"], ["Photeine", 2, "", "MD"], ["Procopia", 2, "", "MD"], ["Euphemia", 2, "", "MD"], ["Theodosia", 2, "", "MD"], ["Eirene", 2, "", "MD"], ["Maximo", 2, "", "MD"]],
+        surnames: [["Komnenos", 10], ["Doukas", 10], ["Palaiologos", 10], ["Angelos", 10], ["Laskaris", 10], ["Kantakouzenos", 7], ["Phokas", 7], ["Skleros", 7], ["Choniates", 7], ["Argyros", 7], ["Gabras", 5], ["Melissenos", 5], ["Tornikes", 5], ["Synadenos", 5], ["Raoul", 5], ["Branas", 5], ["Kamateros", 3], ["Kourkouas", 3], ["Vatatzes", 3], ["Xiphilinos", 3], ["Psellos", 3], ["Chrysoloras", 3], ["Philanthropenos", 3], ["Apokaukos", 3], ["Mouzalon", 2], ["Monomachos", 2], ["Diogenes", 2], ["Botaneiates", 2], ["Bryennios", 2], ["Rhangabe", 2]],
         regnalMale: [["Constantine", 10], ["Justinian", 10], ["Basil", 10], ["Leo", 10], ["Heraclius", 10], ["Alexius", 7], ["Michael", 7], ["Manuel", 7]],
         regnalFemale: [["Theodora", 10], ["Irene", 10], ["Zoe", 10], ["Eudocia", 10], ["Helena", 10], ["Eudoxia", 7], ["Sophia", 7], ["Anna", 7]],
         holy: [["Nicholas", 10], ["Basil", 10], ["Gregory", 10], ["Athanasius", 10], ["Demetrius", 10], ["George", 7], ["Spyridon", 7], ["Helena", 7], ["Catherine", 7], ["Barbara", 7], ["Photini", 5], ["Chrysostom", 5]],
@@ -90885,12 +91229,12 @@ var people_default = {
       }
     }
   },
-  families: { "anglo-saxon": "british", "norman-british": "british", welsh: "british", scottish: "british", irish: "british", cornish: "british", scandinavian: "germanic", german: "germanic", french: "romance", dutch: "germanic", iberian: "romance", italian: "romance", roman: "classical", "greek-byzantine": "classical", slavic: "slavic", steppe: "steppe", "arabic-persian": "near-east", egyptian: "near-east", ethiopian: "africa", bantu: "africa", "west-african": "africa", indian: "south-asia", chinese: "east-asia", japanese: "east-asia", korean: "east-asia", aztec: "americas", maya: "americas", andean: "americas", polynesian: "pacific", american: "settler" },
-  resolve: { general: "norman-british", norse: "scandinavian", celtic: { even: ["welsh", "scottish", "irish", "cornish"], regions: { WAL: "welsh", COR: "cornish", SBL: "scottish", SLO: "scottish", SHH: "scottish", NSI: "scottish" } }, "anglo-saxon": { historic: "anglo-saxon", modern: "norman-british" }, maori: "polynesian", hawaiian: "polynesian", "w-polynesian": "polynesian", ottoman: { as: "arabic-persian", extra: "turkish" }, "swahili-omani": "arabic-persian", malay: { historic: "indian", modern: "arabic-persian" }, maritimeSEA: { historic: "indian", modern: "arabic-persian" }, phoenician: "arabic-persian", hellenistic: "greek-byzantine", belgian: "dutch", roman: { historic: "roman", modern: "italian" }, egyptian: { historic: "egyptian", modern: "arabic-persian" } },
+  families: { "anglo-saxon": "british", "norman-british": "british", welsh: "british", scottish: "british", irish: "british", cornish: "british", scandinavian: "germanic", german: "germanic", french: "romance", dutch: "germanic", iberian: "romance", italian: "romance", roman: "classical", "greek-byzantine": "classical", slavic: "slavic", steppe: "steppe", "arabic-persian": "near-east", egyptian: "near-east", ethiopian: "africa", bantu: "africa", "west-african": "africa", indian: "south-asia", chinese: "east-asia", japanese: "east-asia", korean: "east-asia", aztec: "americas", maya: "americas", andean: "americas", polynesian: "pacific", american: "settler", spanish: "romance", portuguese: "romance", greek: "classical", byzantine: "classical" },
+  resolve: { general: "norman-british", norse: "scandinavian", celtic: { even: ["welsh", "scottish", "irish", "cornish"], regions: { WAL: "welsh", COR: "cornish", SBL: "scottish", SLO: "scottish", SHH: "scottish", NSI: "scottish" } }, "anglo-saxon": { historic: "anglo-saxon", modern: "norman-british" }, maori: "polynesian", hawaiian: "polynesian", "w-polynesian": "polynesian", ottoman: { as: "arabic-persian", extra: "turkish" }, "swahili-omani": "arabic-persian", malay: { historic: "indian", modern: "arabic-persian" }, maritimeSEA: { historic: "indian", modern: "arabic-persian" }, phoenician: "arabic-persian", hellenistic: "greek-byzantine", belgian: "dutch", roman: { historic: "roman", modern: "italian" }, egyptian: { historic: "egyptian", modern: "arabic-persian" }, greek: { historic: "greek", modern: "byzantine" } },
   nearFuture: { otherShare: 0.25, sameFamilyWeight: 3, otherFamilyWeight: 1, _about: "NF and IS draw from the culture's own `modern` list, with this share of names from the other cultures' `modern` lists, each weighted by family." },
   tokens: { g: "a given name (male or female by the slot's sexShare)", gm: "a male given name", gf: "a female given name", s: "a surname; where a period has none, the slot falls back to {g}", t: "an official's title", r: "a ruler form filled with a regnal name", rm: "a male regnal name alone", rf: "a female regnal name alone", h: "a holy form filled with a holy name" },
   slotForms: { founder: { withSurnames: [["{s}", 60], ["{g} {s}", 15], ["{g}", 25]], withoutSurnames: [["{g}", 100]], sexShare: { male: 90, female: 10 } }, official: { withSurnames: [["{s}", 50], ["{t} {s}", 30], ["{g} {s}", 20]], withoutSurnames: [["{t} {g}", 50], ["{g}", 50]], sexShare: { male: 90, female: 10 } }, person: { withSurnames: [["{g}", 85], ["{s}", 15]], withoutSurnames: [["{g}", 100]], sexShare: { male: 70, female: 30 } }, monarch: { forms: [["{r}", 50], ["{rm}", 50]], sexShare: { male: 100, female: 0 } }, royalWoman: { forms: [["{rf}", 70], ["Queen {rf}", 30]] }, dynasty: { withSurnames: [["{s}", 100]], withoutSurnames: [["{g}", 100]] }, house: { withSurnames: [["{s}", 70], ["House of {s}", 30]], withoutSurnames: [["House of {g}", 100]] }, holy: { forms: [["{h}", 100]] }, givenMale: { forms: [["{gm}", 100]] }, givenFemale: { forms: [["{gf}", 100]] }, given: { forms: [["{g}", 100]], sexShare: { male: 50, female: 50 } } },
-  officialTitles: { from: "the titles module's office kind, in the culture's bynames culture (src/data/bynames.json: `officeWord` and `ranks`)", bynamesCulture: { "anglo-saxon": "anglo-saxon", "norman-british": "norman-british", welsh: "celtic", scottish: "celtic", irish: "celtic", cornish: "celtic", scandinavian: "norse", german: "general", french: "general", dutch: "general", iberian: "general", italian: "general", roman: "roman", "greek-byzantine": "greek-byzantine", slavic: "slavic", steppe: "steppe", "arabic-persian": "arabic-persian", egyptian: "egyptian", ethiopian: "ethiopian", bantu: "bantu", "west-african": "west-african", indian: "indian", chinese: "chinese", japanese: "japanese", korean: "korean", aztec: "aztec", maya: "maya", andean: "general", polynesian: "general", american: "general" } },
+  officialTitles: { from: "the titles module's office kind, in the culture's bynames culture (src/data/bynames.json: `officeWord` and `ranks`)", bynamesCulture: { "anglo-saxon": "anglo-saxon", "norman-british": "norman-british", welsh: "celtic", scottish: "celtic", irish: "celtic", cornish: "celtic", scandinavian: "norse", german: "general", french: "general", dutch: "general", iberian: "general", italian: "general", roman: "roman", "greek-byzantine": "greek-byzantine", slavic: "slavic", steppe: "steppe", "arabic-persian": "arabic-persian", egyptian: "egyptian", ethiopian: "ethiopian", bantu: "bantu", "west-african": "west-african", indian: "indian", chinese: "chinese", japanese: "japanese", korean: "korean", aztec: "aztec", maya: "maya", andean: "general", polynesian: "general", american: "general", spanish: "general", portuguese: "general", greek: "greek-byzantine", byzantine: "greek-byzantine" } },
   extras: { _about: "A short set added to a culture's lists when a local culture reads it (the Ottoman, Turkish names beside the Arabic and Persian). Weight 5 each; no surnames (Turkish surnames date from 1934).", turkish: { male: [["Orhan", 5, "", "ST MO"], ["Osman", 5, "", "ST MO"], ["Ertugrul", 5, "", "ST MO"], ["Murad", 5, "", "ST MO"], ["Bayezid", 5, "", "ST MO"], ["Mehmed", 5, "", "ST MO"], ["Selim", 5, "", "ST MO"], ["Suleyman", 5, "", "ST MO"], ["Kemal", 5, "", "ST MO"], ["Cem", 5, "", "ST MO"]], female: [["Hurrem", 5, "", "ST MO"], ["Nurbanu", 5, "", "ST MO"], ["Kosem", 5, "", "ST MO"], ["Safiye", 5, "", "ST MO"], ["Turhan", 5, "", "ST MO"], ["Mihrimah", 5, "", "ST MO"], ["Nilufer", 5, "", "ST MO"], ["Gulbahar", 5, "", "ST MO"], ["Gulnihal", 5, "", "ST MO"], ["Esma", 5, "", "ST MO"]] } },
   blocked: ["James Cook", "Francis Drake", "Walter Raleigh", "John Cabot", "Henry Hudson", "Martin Frobisher", "John Franklin", "Robert Scott", "Ernest Shackleton", "Richard Burton", "David Livingstone", "Mungo Park", "Matthew Flinders", "William Dampier", "John Davis", "Humphrey Gilbert", "George Vancouver", "William Bligh", "Abel Tasman", "Ferdinand Magellan", "Christopher Columbus", "Vasco Gama", "Amerigo Vespucci", "Hernan Cortes", "Francisco Pizarro", "Marco Polo", "Leif Erikson", "Roald Amundsen", "Fridtjof Nansen", "Vitus Bering", "Jacques Cartier", "Samuel Champlain", "Henry Stanley", "Meriwether Lewis", "William Clark", "Daniel Boone", "Juan Cabrillo", "Pedro Cabral", "Bartolomeu Dias", "Henry Morgan", "John Smith", "Thomas Cavendish", "John Hawkins", "Richard Grenville", "Martin Behaim", "Willem Barents", "Willem Janszoon", "Jan Riebeeck", "Louis Bougainville", "Jean Perouse", "Alexander Mackenzie", "Simon Fraser", "David Thompson", "John Rae", "James Ross", "George Bass", "Charles Sturt", "John Oxley", "Burke Wills", "Edmund Hillary", "Tenzing Norgay", "George Mallory", "Robert Peary", "Matthew Henson", "Thor Heyerdahl", "Jacques Cousteau", "Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "John Glenn", "Alan Shepard", "Valentina Tereshkova", "Oliver Cromwell", "William Wallace", "Robert Bruce", "Owain Glyndwr", "Henry Tudor", "Elizabeth Windsor", "Charles Windsor", "Mary Stuart", "Thomas More", "Thomas Becket", "Thomas Aquinas", "John Fisher", "Edmund Campion", "Francis Xavier", "Ignatius Loyola", "John Knox", "Martin Luther", "Thomas Cromwell", "William Pitt", "Horatio Nelson", "Arthur Wellesley", "Winston Churchill", "Margaret Thatcher", "Clement Attlee", "Tony Blair", "David Cameron", "Boris Johnson", "Isaac Newton", "Charles Darwin", "Albert Einstein", "Marie Curie", "Stephen Hawking", "Michael Faraday", "James Watt", "Alexander Fleming", "Alan Turing", "Ada Lovelace", "Charles Babbage", "Humphry Davy", "Richard Trevithick", "William Shakespeare", "Charles Dickens", "Jane Austen", "Virginia Woolf", "George Orwell", "Thomas Hardy", "Oscar Wilde", "James Joyce", "Samuel Beckett", "Bram Stoker", "Dylan Thomas", "Robert Burns", "Walter Scott", "Daphne Maurier", "Agatha Christie", "John Milton", "Geoffrey Chaucer", "Lord Byron", "Percy Shelley", "John Keats", "Mary Shelley", "Emily Bronte", "Charlotte Bronte", "Arthur Conan", "Sherlock Holmes", "James Bond", "Harry Potter", "Abraham Lincoln", "George Washington", "Thomas Jefferson", "Benjamin Franklin", "John Adams", "Andrew Jackson", "Theodore Roosevelt", "Franklin Roosevelt", "Ronald Reagan", "John Kennedy", "Richard Nixon", "Barack Obama", "Donald Trump", "Joe Biden", "Bill Clinton", "George Bush", "Jimmy Carter", "Martin King", "Malcolm Little", "Rosa Parks", "Muhammad Ali", "Elvis Presley", "John Lennon", "Paul McCartney", "George Harrison", "Ringo Starr", "Mick Jagger", "David Bowie", "Michael Jackson", "Bob Dylan", "Taylor Swift", "Tom Cruise", "Brad Pitt", "Tom Hanks", "Marilyn Monroe", "Audrey Hepburn", "Charlie Chaplin", "Walt Disney", "Steve Jobs", "Bill Gates", "Elon Musk", "Mark Zuckerberg", "Jeff Bezos", "Henry Ford", "Thomas Edison", "Alexander Bell", "Napoleon Bonaparte", "Victor Hugo", "Louis Pasteur", "Claude Monet", "Edith Piaf", "Joan Arc", "Charles Gaulle", "Louis Napoleon", "Pablo Picasso", "Salvador Dali", "Francisco Franco", "Miguel Cervantes", "Simon Bolivar", "Che Guevara", "Fidel Castro", "Hugo Chavez", "Eva Peron", "Diego Maradona", "Leonardo Vinci", "Galileo Galilei", "Michelangelo Buonarroti", "Giuseppe Garibaldi", "Benito Mussolini", "Dante Alighieri", "Enrico Fermi", "Johann Bach", "Ludwig Beethoven", "Wolfgang Mozart", "Johann Goethe", "Karl Marx", "Adolf Hitler", "Otto Bismarck", "Angela Merkel", "Friedrich Nietzsche", "Wilhelm Roentgen", "Vladimir Lenin", "Joseph Stalin", "Leo Tolstoy", "Fyodor Dostoevsky", "Vladimir Putin", "Mikhail Gorbachev", "Mao Zedong", "Deng Xiaoping", "Xi Jinping", "Bruce Lee", "Jackie Chan", "Jack Ma", "Hayao Miyazaki", "Akira Kurosawa", "Shinzo Abe", "Mohandas Gandhi", "Jawaharlal Nehru", "Indira Gandhi", "Rabindranath Tagore", "Narendra Modi", "Sachin Tendulkar", "Gamal Nasser", "Anwar Sadat", "Saddam Hussein", "Muammar Gaddafi", "Hosni Mubarak", "Mustafa Ataturk", "Recep Erdogan", "Nelson Mandela", "Kofi Annan", "Haile Selassie", "Jomo Kenyatta", "Kwame Nkrumah", "Desmond Tutu", "Patrice Lumumba", "Thomas Sankara", "Idi Amin", "Robert Mugabe", "Julius Nyerere", "Chinua Achebe", "Kim Jong", "Michael Collins", "Eamon Valera", "Adam Smith", "David Hume", "Andrew Carnegie", "Hans Andersen", "Alfred Nobel", "Edvard Munch", "Ingmar Bergman", "Greta Thunberg", "Soren Kierkegaard", "Carl Linnaeus", "Vincent Gogh", "Anne Frank", "Rembrandt Rijn", "Duke Kahanamoku", "Howard Carter", "Kamehameha Great"]
 };
@@ -90949,9 +91293,10 @@ var withExtra = (table, extra) => {
     surnames: table.surnames ? [...table.surnames, ...(_c4 = extra.surnames) != null ? _c4 : []] : table.surnames
   };
 };
+var SPLIT_TABLES = ["spanish", "portuguese", "greek", "byzantine"];
 function otherCulture(own, rng) {
   const family = FAMILIES[own];
-  const choices = PEOPLE_CULTURES.filter((c) => c !== own && CULTURES[c].modern).map((c) => ({ c, w: FAMILIES[c] === family ? people_default.nearFuture.sameFamilyWeight : people_default.nearFuture.otherFamilyWeight }));
+  const choices = PEOPLE_CULTURES.filter((c) => c !== own && CULTURES[c].modern && !SPLIT_TABLES.includes(c)).map((c) => ({ c, w: FAMILIES[c] === family ? people_default.nearFuture.sameFamilyWeight : people_default.nearFuture.otherFamilyWeight }));
   const total = choices.reduce((sum, x) => sum + x.w, 0);
   if (total === 0) return void 0;
   let roll = rng() * total;
@@ -95067,6 +95412,490 @@ var builtin_templates_default = [
     ]
   },
   {
+    name: "Spanish (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Juan",
+          "Pedro",
+          "Diego",
+          "Fernando",
+          "Alonso",
+          "Garcia",
+          "Gonzalo",
+          "Rodrigo",
+          "Alvaro",
+          "Sancho",
+          "Ramiro",
+          "Alfonso",
+          "Hernando",
+          "Martin",
+          "Lope",
+          "Pelayo",
+          "Bermudo",
+          "Ordono",
+          "Fruela",
+          "Hernan",
+          "Francisco",
+          "Gil",
+          "Mendo",
+          "Suero",
+          "Inigo",
+          "Fortun",
+          "Jaime",
+          "Enrique",
+          "Felipe",
+          "Isidore",
+          "Munio",
+          "Velasco",
+          "Tello",
+          "Alvar",
+          "Ximeno"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Maria",
+          "Isabel",
+          "Juana",
+          "Catalina",
+          "Leonor",
+          "Urraca",
+          "Teresa",
+          "Beatriz",
+          "Elvira",
+          "Constanza",
+          "Mencia",
+          "Sancha",
+          "Blanca",
+          "Violante",
+          "Berenguela",
+          "Ines",
+          "Mayor",
+          "Sol",
+          "Aldonza",
+          "Guiomar",
+          "Mafalda",
+          "Ximena",
+          "Velasquita",
+          "Toda",
+          "Clara",
+          "Dulce",
+          "Nuna",
+          "Aurembiaix",
+          "Sancia",
+          "Petronila",
+          "Jimena",
+          "Oneca"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Garcia",
+          "Fernandez",
+          "Gonzalez",
+          "Rodriguez",
+          "Lopez",
+          "Martinez",
+          "Sanchez",
+          "Perez",
+          "Gomez",
+          "Diaz",
+          "Alvarez",
+          "Ruiz",
+          "Jimenez",
+          "Moreno",
+          "Munoz",
+          "Hernandez",
+          "Torres",
+          "Romero",
+          "Navarro",
+          "Castro",
+          "Mendoza",
+          "Vega",
+          "Ortega",
+          "Iglesias",
+          "Flores",
+          "Herrera",
+          "Medina",
+          "Aguilar",
+          "Cortes",
+          "Vargas"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Spanish (modern)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Javier",
+          "David",
+          "Alberto",
+          "Jorge",
+          "Marcos",
+          "Jose",
+          "Hugo",
+          "Juan",
+          "Martin",
+          "Antonio",
+          "Lucas",
+          "Manuel",
+          "Mateo",
+          "Francisco",
+          "Daniel",
+          "Luis",
+          "Pablo",
+          "Miguel",
+          "Alejandro",
+          "Jesus",
+          "Adrian",
+          "Pedro",
+          "Diego",
+          "Joaquin",
+          "Sergio",
+          "Ramon",
+          "Leo",
+          "Fernando",
+          "Enzo",
+          "Rafael",
+          "Thiago",
+          "Angel",
+          "Gabriel",
+          "Carlos",
+          "Santiago",
+          "Ivan"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Elena",
+          "Marta",
+          "Cristina",
+          "Silvia",
+          "Raquel",
+          "Maria",
+          "Lucia",
+          "Carmen",
+          "Sofia",
+          "Dolores",
+          "Martina",
+          "Josefa",
+          "Paula",
+          "Francisca",
+          "Valeria",
+          "Antonia",
+          "Julia",
+          "Rosa",
+          "Emma",
+          "Pilar",
+          "Daniela",
+          "Concepcion",
+          "Alba",
+          "Teresa",
+          "Carla",
+          "Isabel",
+          "Sara",
+          "Ana",
+          "Noa",
+          "Manuela",
+          "Vega",
+          "Mercedes",
+          "Laura",
+          "Juana",
+          "Valentina"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Garcia",
+          "Fernandez",
+          "Gonzalez",
+          "Rodriguez",
+          "Lopez",
+          "Martinez",
+          "Sanchez",
+          "Perez",
+          "Gomez",
+          "Martin",
+          "Jimenez",
+          "Ruiz",
+          "Hernandez",
+          "Diaz",
+          "Moreno",
+          "Alvarez",
+          "Munoz",
+          "Romero",
+          "Alonso",
+          "Gutierrez",
+          "Navarro",
+          "Torres",
+          "Dominguez",
+          "Vazquez",
+          "Ramos",
+          "Gil",
+          "Ramirez",
+          "Serrano",
+          "Blanco",
+          "Suarez",
+          "Molina"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Portuguese (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Joao",
+          "Pedro",
+          "Afonso",
+          "Duarte",
+          "Manuel",
+          "Nuno",
+          "Diogo",
+          "Goncalo",
+          "Rodrigo",
+          "Fernando",
+          "Henrique",
+          "Dinis",
+          "Sancho",
+          "Vasco",
+          "Bartolomeu",
+          "Martim",
+          "Egas",
+          "Paio",
+          "Mendo",
+          "Lourenco",
+          "Francisco",
+          "Antonio",
+          "Jorge",
+          "Tomas",
+          "Luis",
+          "Miguel",
+          "Gil",
+          "Estevao",
+          "Alvaro",
+          "Joaquim",
+          "Ruy",
+          "Garcia",
+          "Fruela",
+          "Alvar"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Maria",
+          "Isabel",
+          "Beatriz",
+          "Leonor",
+          "Teresa",
+          "Catarina",
+          "Ines",
+          "Mafalda",
+          "Filipa",
+          "Constanca",
+          "Brites",
+          "Joana",
+          "Urraca",
+          "Sancha",
+          "Dulce",
+          "Violante",
+          "Guiomar",
+          "Aldonca",
+          "Mor",
+          "Sol",
+          "Clara",
+          "Margarida",
+          "Brianda",
+          "Antonia",
+          "Luisa",
+          "Madalena",
+          "Helena",
+          "Mecia",
+          "Elvira",
+          "Sancia",
+          "Tareja",
+          "Lucia"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Silva",
+          "Santos",
+          "Ferreira",
+          "Pereira",
+          "Oliveira",
+          "Costa",
+          "Carvalho",
+          "Almeida",
+          "Sousa",
+          "Rodrigues",
+          "Fernandes",
+          "Gomes",
+          "Martins",
+          "Goncalves",
+          "Lopes",
+          "Marques",
+          "Alves",
+          "Ribeiro",
+          "Pinto",
+          "Teixeira",
+          "Moreira",
+          "Correia",
+          "Mendes",
+          "Nunes",
+          "Soares",
+          "Vieira",
+          "Monteiro",
+          "Cardoso",
+          "Rocha",
+          "Neves"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Portuguese (modern)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Joao",
+          "Jose",
+          "Manuel",
+          "Antonio",
+          "Francisco",
+          "Luis",
+          "Pedro",
+          "Miguel",
+          "Tiago",
+          "Rui",
+          "Paulo",
+          "Jorge",
+          "Carlos",
+          "Nuno",
+          "Rafael",
+          "Diogo",
+          "Goncalo",
+          "Ricardo",
+          "Bruno",
+          "Tomas",
+          "Andre",
+          "Fernando",
+          "Vasco",
+          "Duarte",
+          "Martim",
+          "Afonso",
+          "Santiago",
+          "Lourenco",
+          "Salvador",
+          "Rodrigo",
+          "Henrique",
+          "Mateus",
+          "Dinis",
+          "Simao",
+          "Gabriel",
+          "Eduardo"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Maria",
+          "Ana",
+          "Rita",
+          "Catarina",
+          "Marta",
+          "Sofia",
+          "Ines",
+          "Beatriz",
+          "Mariana",
+          "Carolina",
+          "Joana",
+          "Teresa",
+          "Isabel",
+          "Helena",
+          "Filipa",
+          "Margarida",
+          "Sara",
+          "Patricia",
+          "Sandra",
+          "Susana",
+          "Cristina",
+          "Paula",
+          "Raquel",
+          "Sonia",
+          "Carla",
+          "Claudia",
+          "Leonor",
+          "Matilde",
+          "Madalena",
+          "Francisca",
+          "Benedita",
+          "Alice",
+          "Laura",
+          "Diana",
+          "Eva"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Silva",
+          "Santos",
+          "Ferreira",
+          "Pereira",
+          "Oliveira",
+          "Costa",
+          "Rodrigues",
+          "Martins",
+          "Sousa",
+          "Fernandes",
+          "Goncalves",
+          "Gomes",
+          "Lopes",
+          "Marques",
+          "Alves",
+          "Almeida",
+          "Ribeiro",
+          "Pinto",
+          "Carvalho",
+          "Teixeira",
+          "Moreira",
+          "Correia",
+          "Mendes",
+          "Nunes",
+          "Soares",
+          "Vieira",
+          "Monteiro",
+          "Cardoso",
+          "Rocha",
+          "Neves"
+        ]
+      }
+    ]
+  },
+  {
     name: "Italian (historic)",
     type: "people",
     fromTable: true,
@@ -95526,6 +96355,320 @@ var builtin_templates_default = [
   },
   {
     name: "Greek and Byzantine (modern)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Georgios",
+          "Dimitrios",
+          "Nikolaos",
+          "Ioannis",
+          "Panagiotis",
+          "Christos",
+          "Spyridon",
+          "Giannis",
+          "Stylianos",
+          "Nikos",
+          "Anastasios",
+          "Kostas",
+          "Aristides",
+          "Dimitris",
+          "Pantelis",
+          "Vasilis",
+          "Charalambos",
+          "Thanasis",
+          "Epameinondas",
+          "Manolis",
+          "Themistoklis",
+          "Alexandros",
+          "Periklis",
+          "Orestis",
+          "Eleftherios",
+          "Marios",
+          "Kyriakos",
+          "Odysseas",
+          "Efstathios",
+          "Lefteris",
+          "Ilias",
+          "Petros",
+          "Aristotelis",
+          "Fotis",
+          "Sotirios",
+          "Andreas"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Angeliki",
+          "Konstantina",
+          "Efthymia",
+          "Chara",
+          "Eftychia",
+          "Maria",
+          "Marina",
+          "Eleni",
+          "Ioanna",
+          "Georgia",
+          "Dimitra",
+          "Katerina",
+          "Natalia",
+          "Despina",
+          "Eirini",
+          "Sofia",
+          "Christina",
+          "Aikaterini",
+          "Kalliopi",
+          "Vasiliki",
+          "Zoi",
+          "Chrysoula",
+          "Fotini",
+          "Anastasia",
+          "Artemis",
+          "Evangelia",
+          "Afroditi",
+          "Paraskevi",
+          "Myrto",
+          "Koula",
+          "Danai",
+          "Stavroula",
+          "Penelope",
+          "Panagiota",
+          "Ariadni"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Papadopoulos",
+          "Papadakis",
+          "Georgiou",
+          "Nikolaou",
+          "Dimitriou",
+          "Konstantinou",
+          "Vasileiou",
+          "Alexiou",
+          "Ioannou",
+          "Karagiannis",
+          "Antoniou",
+          "Papanikolaou",
+          "Pappas",
+          "Vlachos",
+          "Makris",
+          "Oikonomou",
+          "Petrou",
+          "Michailidis",
+          "Stavrou",
+          "Kostopoulos",
+          "Theodorou",
+          "Angelopoulos",
+          "Mavridis",
+          "Kalogeropoulos",
+          "Samaras",
+          "Doukas",
+          "Laskaris",
+          "Palaiologos",
+          "Komninos",
+          "Karamanlis"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Greek (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Pericles",
+          "Alexander",
+          "Socrates",
+          "Plato",
+          "Aristotle",
+          "Demetrius",
+          "Nicias",
+          "Themistocles",
+          "Leonidas",
+          "Philip",
+          "Theodorus",
+          "Lysander",
+          "Alcibiades",
+          "Cimon",
+          "Xenophon",
+          "Thucydides",
+          "Pythagoras",
+          "Archimedes",
+          "Solon",
+          "Dionysius",
+          "Aristides",
+          "Epaminondas",
+          "Pindar",
+          "Hippocrates",
+          "Euclid",
+          "Diogenes",
+          "Demosthenes",
+          "Aeschylus",
+          "Sophocles",
+          "Herodotus",
+          "Heraclitus",
+          "Miltiades"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Helen",
+          "Penelope",
+          "Antigone",
+          "Aspasia",
+          "Phryne",
+          "Sappho",
+          "Cassandra",
+          "Andromache",
+          "Hypatia",
+          "Artemisia",
+          "Berenice",
+          "Cleopatra",
+          "Arsinoe",
+          "Olympias",
+          "Thais",
+          "Phila",
+          "Roxana",
+          "Stratonice",
+          "Laodice",
+          "Cynisca",
+          "Agariste",
+          "Xanthippe",
+          "Corinna",
+          "Telesilla",
+          "Myia",
+          "Praxilla",
+          "Theano",
+          "Lasthenia",
+          "Aglaonice",
+          "Nossis"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Byzantine (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Basil",
+          "Constantine",
+          "Michael",
+          "Leo",
+          "John",
+          "Alexius",
+          "Manuel",
+          "Nicephorus",
+          "Theodore",
+          "Andronicus",
+          "Isaac",
+          "Romanus",
+          "Stephen",
+          "George",
+          "Photius",
+          "Justinian",
+          "Heraclius",
+          "Maurice",
+          "Phocas",
+          "Anastasius",
+          "Zeno",
+          "Marcian",
+          "Bardas",
+          "Theophilus",
+          "Sergius",
+          "Eustathius",
+          "Leontius",
+          "Symeon",
+          "Niketas",
+          "Kosmas"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Theodora",
+          "Irene",
+          "Zoe",
+          "Eudocia",
+          "Anna",
+          "Maria",
+          "Euphrosyne",
+          "Theophano",
+          "Helena",
+          "Sophia",
+          "Kassia",
+          "Agatha",
+          "Thekla",
+          "Eudoxia",
+          "Pulcheria",
+          "Verina",
+          "Anastasia",
+          "Martina",
+          "Constantina",
+          "Danielis",
+          "Kale",
+          "Xene",
+          "Eupraxia",
+          "Zenonis",
+          "Photeine",
+          "Procopia",
+          "Euphemia",
+          "Theodosia",
+          "Eirene",
+          "Maximo"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Komnenos",
+          "Doukas",
+          "Palaiologos",
+          "Angelos",
+          "Laskaris",
+          "Kantakouzenos",
+          "Phokas",
+          "Skleros",
+          "Choniates",
+          "Argyros",
+          "Gabras",
+          "Melissenos",
+          "Tornikes",
+          "Synadenos",
+          "Raoul",
+          "Branas",
+          "Kamateros",
+          "Kourkouas",
+          "Vatatzes",
+          "Xiphilinos",
+          "Psellos",
+          "Chrysoloras",
+          "Philanthropenos",
+          "Apokaukos",
+          "Mouzalon",
+          "Monomachos",
+          "Diogenes",
+          "Botaneiates",
+          "Bryennios",
+          "Rhangabe"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Byzantine (modern)",
     type: "people",
     fromTable: true,
     sections: [
@@ -100758,10 +101901,14 @@ var world_place_names_default = {
 
 // src/world/engine.ts
 var WORLD_BASE = world_place_names_default;
+var withNewEras = (c) => {
+  const more = TIER6A_DATA.settlement.newEras[c.id];
+  return more ? { ...c, eras: [...c.eras.slice(0, -1), ...more, c.eras[c.eras.length - 1]] } : c;
+};
 var WORLD_DATA = {
   ...WORLD_BASE,
-  labels: { ...WORLD_BASE.labels, ...NORTH5B.settlement.labels },
-  cultures: [...WORLD_BASE.cultures.map((c) => c.id === "norse" ? { ...c, regions: NORTH5B.settlement.norseRegions } : c), ...NORTH5B.settlement.cultures]
+  labels: { ...WORLD_BASE.labels, ...NORTH5B.settlement.labels, ...TIER6A_DATA.settlement.labels },
+  cultures: [...WORLD_BASE.cultures.map((c) => withNewEras(c.id === "norse" ? { ...c, regions: NORTH5B.settlement.norseRegions } : c)), ...NORTH5B.settlement.cultures, ...TIER6A_DATA.settlement.cultures]
 };
 var WORLD_CULTURES = WORLD_DATA.cultures;
 var WORLD_PLACE_NAMES = {
@@ -102721,13 +103868,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -102788,13 +103933,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -102905,13 +104048,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -102975,13 +104116,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103046,13 +104185,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103116,13 +104253,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103186,13 +104321,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103257,13 +104390,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103316,13 +104447,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103386,13 +104515,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103456,13 +104583,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -103527,13 +104652,11 @@ var lens_offers_default = {
       },
       colonial: {
         new: [
-          "italian",
           "hellenistic",
           "phoenician"
         ],
         settled: [
           "belgian",
-          "italian",
           "hellenistic"
         ]
       },
@@ -105021,7 +106144,7 @@ var BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
   const world = WORLD_CULTURES.find((w) => w.id === c.key);
   return { key: c.key, label: c.label, guide: (_b4 = (_a8 = c.guide) != null ? _a8 : world == null ? void 0 : world.guide) != null ? _b4 : "" };
 });
-var BYNAME_CULTURES_5C = [...BYNAME_CULTURES, ...NORTH_5C_CULTURES];
+var BYNAME_CULTURES_5C = addNorth5c(BYNAME_CULTURES, (c) => c);
 var BYNAME_MODULE_LABELS = {
   epithets: "epithets and bynames",
   titles: "titles and honourifics",
@@ -110330,6 +111453,42 @@ var creatures_default = {
         tones: [
           "grim"
         ]
+      },
+      {
+        name: "tarasque",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "drac",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "korrigan",
+        habitats: [
+          "moor"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "dame blanche",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "strange"
+        ]
       }
     ],
     dutch: [
@@ -110400,6 +111559,42 @@ var creatures_default = {
         name: "sea monster",
         habitats: [
           "sea"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "kludde",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "aardmanneke",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "elf",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "hellhound",
+        habitats: [
+          "moor"
         ],
         tones: [
           "grim"
@@ -110480,6 +111675,226 @@ var creatures_default = {
         ]
       }
     ],
+    spanish: [
+      {
+        name: "cuelebre",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "xana",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "trasgu",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "tarasque",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "basilisk",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "sea monster",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "werewolf",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "duende",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "coco",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "nuberu",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "santa compana",
+        habitats: [
+          "moor"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "basajaun",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "plain"
+        ]
+      }
+    ],
+    portuguese: [
+      {
+        name: "moura encantada",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "lobisomem",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "papao",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "cuca",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "headless mule",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "sereia",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "alma penada",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "fada",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "sea monster",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "basilisk",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "dragon",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "xana",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "light"
+        ]
+      }
+    ],
     italian: [
       {
         name: "basilisk",
@@ -110552,6 +111967,42 @@ var creatures_default = {
         tones: [
           "grim"
         ]
+      },
+      {
+        name: "befana",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "orco",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "folletto",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "mazzamurello",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
       }
     ],
     roman: [
@@ -110622,6 +112073,42 @@ var creatures_default = {
         name: "gorgon",
         habitats: [
           "underground"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "satyr",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "centaur",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "sphinx",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "incubus",
+        habitats: [
+          "home"
         ],
         tones: [
           "grim"
@@ -110702,6 +112189,226 @@ var creatures_default = {
         ]
       }
     ],
+    greek: [
+      {
+        name: "minotaur",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "hydra",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "siren",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "cyclops",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "centaur",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "gorgon",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "chimera",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "harpy",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "satyr",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "nymph",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "sphinx",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "cerberus",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "grim"
+        ]
+      }
+    ],
+    byzantine: [
+      {
+        name: "neraida",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "vrykolakas",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "kallikantzaros",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "gello",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "lamia",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "dragon",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "basilisk",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "siren",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "centaur",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "sea monster",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "griffin",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "werewolf",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grim"
+        ]
+      }
+    ],
     slavic: [
       {
         name: "baba yaga",
@@ -110768,6 +112475,42 @@ var creatures_default = {
       },
       {
         name: "upyr",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "kikimora",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "bannik",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "vila",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "likho",
         habitats: [
           "home"
         ],
@@ -111906,14 +113649,14 @@ var isAirLand = (module2) => module2 === "aircraft" || module2 === "landVehicles
 var VESSEL_DATA = vessels_default;
 var VESSEL_SELF = selfPatterns(vessels_default);
 var VESSEL_BASE_CULTURES = VESSEL_DATA.cultures;
-var VESSEL_CULTURES = [
-  ...VESSEL_BASE_CULTURES,
-  ...NORTH_5C_CULTURES.map((c) => ({ ...VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key)), key: c.key, label: c.label }))
-];
+var VESSEL_CULTURES = addNorth5c(VESSEL_BASE_CULTURES, (c) => {
+  var _a8;
+  return { ...(_a8 = VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key, "vessels"))) != null ? _a8 : VESSEL_BASE_CULTURES.find((b) => b.key === "general"), key: c.key, label: c.label };
+});
 var AIR_LAND = vehicles_air_land_default;
 var VESSEL_MODULE_LABELS = { ...VESSEL_DATA.modules, ...AIR_LAND.modules };
 function findVesselCulture(key2) {
-  return VESSEL_BASE_CULTURES.find((c) => c.key === (key2 === void 0 ? key2 : engineCulture(key2)));
+  return VESSEL_BASE_CULTURES.find((c) => c.key === (key2 === void 0 ? key2 : engineCulture(key2, "vessels")));
 }
 var levelNumber = (code) => /^[AL]F$/.test(code) ? NaN : parseInt(code.slice(1), 10);
 function range(k) {
@@ -111935,8 +113678,9 @@ function spanLevels(culture) {
   return out;
 }
 function moduleSpanLevels(module2, culture) {
+  var _a8;
   if (!isAirLand(module2)) return spanLevels(culture);
-  const row = AIR_LAND.spans[culture.key];
+  const row = (_a8 = AIR_LAND.spans[culture.key]) != null ? _a8 : AIR_LAND.spans[engineCulture(culture.key, "vessels")];
   const span = row ? module2 === "aircraft" ? row.airSpan : row.landSpan : "";
   if (!span) return [];
   const [lo, hi] = range(span);
@@ -112506,7 +114250,7 @@ function availableStyles(module2, setting, technology) {
 }
 var prefixSetting = (setting) => setting === "MR" || setting === "MF" || setting === "SF";
 function realPrefix(ctx) {
-  const own = ctx.asked === "german" || ctx.asked === "scandinavian";
+  const own = !!ctx.asked && ctx.asked !== "general" && ctx.asked !== "norman-british" && ctx.asked !== ctx.culture.key;
   const rows = VESSEL_DATA.prefixes.real.filter(
     (r) => (r.asked ? !!ctx.asked && r.asked.includes(ctx.asked) : (!r.cultures || r.cultures.includes(ctx.culture.key)) && !(own && r.cultures)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level)
   );
@@ -112616,21 +114360,21 @@ function generateVesselNames(options) {
   };
 }
 function generateVesselNamesCore(options) {
-  var _a8, _b4, _c4, _d3, _e3;
-  if (options.culture === "german" && options.prefixes && options.module !== "ships") options = { ...options, prefixes: false };
+  var _a8, _b4, _c4, _d3, _e3, _f;
+  if (options.culture && options.culture !== "general" && options.culture !== "norman-british" && ((_a8 = findVesselCulture(options.culture)) == null ? void 0 : _a8.key) === "general" && options.prefixes && options.module !== "ships") options = { ...options, prefixes: false };
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateVesselNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, series: options.series, settlementPlaces: true });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const module2 = options.module;
   const notices = [];
-  const culture = (_a8 = findVesselCulture(options.culture)) != null ? _a8 : VESSEL_CULTURES[0];
-  const genre = (_b4 = options.genre) != null ? _b4 : module2 === "spacecraft" ? "scifi" : isAirLand(module2) ? "modern" : "fantasy";
+  const culture = (_b4 = findVesselCulture(options.culture)) != null ? _b4 : VESSEL_CULTURES[0];
+  const genre = (_c4 = options.genre) != null ? _c4 : module2 === "spacecraft" ? "scifi" : isAirLand(module2) ? "modern" : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
-  let tone = (_c4 = options.tone) != null ? _c4 : "any";
+  let tone = (_d3 = options.tone) != null ? _d3 : "any";
   const naming = isAirLand(module2) && options.naming === "types" ? "types" : "craft";
   const levels = techChoices(module2, setting);
-  let technology = (_d3 = options.technology) != null ? _d3 : "any";
+  let technology = (_e3 = options.technology) != null ? _e3 : "any";
   if (technology !== "any" && !levels.includes(technology)) {
     notices.push(`\u201C${technology}\u201D isn't available here; using any technology.`);
     technology = "any";
@@ -112644,7 +114388,7 @@ function generateVesselNamesCore(options) {
     notices.push("Styles don't apply to types and models.");
     style = void 0;
   }
-  const guards = (_e3 = options.safeguards) != null ? _e3 : isAirLand(module2) ? { block: AIR_LAND.safeguards.block, flag: AIR_LAND.safeguards.flag, flagListBlocks: AIR_LAND.safeguards.flagListBlocks } : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
+  const guards = (_f = options.safeguards) != null ? _f : isAirLand(module2) ? { block: AIR_LAND.safeguards.block, flag: AIR_LAND.safeguards.flag, flagListBlocks: AIR_LAND.safeguards.flagListBlocks } : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
   const guard = guardFor(module2, guards);
   const pools = /* @__PURE__ */ new Map();
   const count = Math.max(0, Math.floor(options.count));
@@ -114111,15 +115855,15 @@ var settlement_vocab_default = {
   $comment: "Shared settlement vocabulary (docs/route-names-brief.md \xA73, \xA76). Read through src/settlement/vocab.ts; vocabulary packs add to these pools. Every pool is listed in docs/vocabulary-pools.md.",
   version: 1,
   eras: ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
-  cultures: ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean", "french", "dutch", "iberian", "american"],
-  moneyOnly: ["french", "dutch", "iberian", "american"],
+  cultures: ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean", "french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"],
+  moneyOnly: ["french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"],
   cultureGroups: {
     british: {
       cultures: ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish"]
     },
     christian: {
-      cultures: ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian"],
-      from: { "greek-byzantine": "MD", roman: "MD" }
+      cultures: ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian", "spanish", "portuguese"],
+      from: { "greek-byzantine": "MD", roman: "MD", greek: "MD", byzantine: "MD" }
     },
     nordic: {
       cultures: ["norse", "scandinavian"]
@@ -120412,12 +122156,12 @@ var ROUTE_DATA = {
 };
 var ROUTE_ERAS = ROUTE_DATA.eras;
 var ROUTE_CULTURES = ROUTE_DATA.cultures;
-var NORTH_CULTURES = [
+var NORTH_CULTURES = withTier6a([
   ...ROUTE_CULTURES,
   ...["welsh", "scottish", "irish", "cornish"].map((key2) => ({ key: key2, label: key2[0].toUpperCase() + key2.slice(1), group: "British Isles and northern Europe" })),
   { key: "scandinavian", label: "Scandinavian", group: "British Isles and northern Europe", kindMult: { sea: 2 } },
   { key: "german", label: "German", group: "British Isles and northern Europe" }
-];
+], (key2) => ({ key: key2, label: TIER6A_LABELS[key2], group: TIER6A_GROUPS[key2] }));
 var ROUTE_KINDS = ROUTE_DATA.kinds;
 var ROUTE_ANY = ROUTE_DATA.any;
 var BRITISH_CULTURES = [...LENS_CULTURE_GROUPS.british.cultures];
@@ -121025,7 +122769,10 @@ function buildCultures() {
   }
   return out;
 }
-var MONEY_CULTURES = [...buildCultures(), ...NORTH_5C_CULTURES.map((c) => ({ key: c.key, label: c.label, group: "British Isles and northern Europe" }))];
+var MONEY_CULTURES = addNorth5c(buildCultures(), (c) => {
+  var _a8;
+  return { key: c.key, label: c.label, group: (_a8 = TIER6A_GROUPS[c.key]) != null ? _a8 : "British Isles and northern Europe" };
+});
 var findMoneyCulture = (key2) => MONEY_CULTURES.find((c) => c.key === key2);
 var DEFAULT_CULTURE = "norman-british";
 var ALL_SHAPES = MONEY_DATA.shapes;
@@ -121033,7 +122780,7 @@ var defaultMoneySafeguards = () => ({ block: MONEY_DATA.safeguards.block, flag: 
 var findMoneyKind = (key2) => MONEY_KINDS.find((k) => k.key === key2);
 function moneyKindWeight(kind, requested, era) {
   var _a8, _b4;
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "money");
   const info = findMoneyKind(kind);
   let w = info.era[era];
   if (kind === "paper" && era === "MD" && !MONEY_DATA.paperMiddleAges.includes(culture)) return 0;
@@ -121047,7 +122794,7 @@ var nicknameToneFactor = (tone) => tone === "any" ? 1 : tone === "light" ? toneF
 var LOAN_CULTURES = /* @__PURE__ */ new Map();
 function moneyHasLoans(requested, vocab = BUILT_IN_VOCAB) {
   var _a8;
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "money");
   let set = LOAN_CULTURES.get(vocab);
   if (!set) {
     set = /* @__PURE__ */ new Set();
@@ -121430,7 +123177,7 @@ var SERIES_KINDS = [void 0, "coin", "early", "goods"];
 var kindHasSeries = (kind) => SERIES_KINDS.includes(kind);
 function moneyLaddersFor(requested, era, kind) {
   var _a8, _b4;
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "money");
   if (!kindHasSeries(kind)) return [];
   const serve = kind != null ? kind : "any";
   return ((_b4 = (_a8 = MONEY_DATA.ladderCells[culture]) == null ? void 0 : _a8[era]) != null ? _b4 : []).map((k) => LADDER_BY_KEY.get(k)).filter((l) => l.serves.includes(serve));
@@ -121683,7 +123430,7 @@ function generateMoneyNamesCore(options) {
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
-  const culture = (_b4 = findMoneyCulture(engineCulture((_a8 = options.culture) != null ? _a8 : ""))) != null ? _b4 : findMoneyCulture(DEFAULT_CULTURE);
+  const culture = (_b4 = findMoneyCulture(engineCulture((_a8 = options.culture) != null ? _a8 : "", "money"))) != null ? _b4 : findMoneyCulture(DEFAULT_CULTURE);
   const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era : "MD";
   const fantastic = !!options.fantastic;
   const count = Math.max(0, Math.floor(options.count));
@@ -122612,7 +124359,10 @@ var DEITY_DATA = {
   styles: (() => {
     var _a8, _b4, _c4;
     const out = { ...DEITY_BASE.styles };
-    for (const [key2, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+    for (const key2 of Object.keys(ENGINE_ALIAS)) {
+      const legacy = engineCulture(key2);
+      if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+    }
     for (const [key2, row] of Object.entries(NORTH.deities.styles)) {
       const base = (_a8 = out[key2]) != null ? _a8 : {};
       out[key2] = { ...base, ...row, extra: [...(_b4 = base.extra) != null ? _b4 : [], ...(_c4 = row.extra) != null ? _c4 : []] };
@@ -138157,6 +139907,10 @@ var wilds_default = {
         { tradition: "spanish", weight: 50 },
         { tradition: "portuguese", weight: 50 }
       ],
+      spanish: "spanish",
+      portuguese: "portuguese",
+      greek: "hellenistic",
+      byzantine: "hellenistic",
       american: "english-speaking-settler",
       ottoman: "ottoman",
       german: "german",
@@ -142401,7 +144155,8 @@ function biomeForFill(biome, where2, culture) {
   if (biome && biome !== "any") return biome;
   return (where2 === void 0 || where2 === "home") && culture !== void 0 && SOURCE_SHARES.home.cultures.includes(culture) ? "temperate" : void 0;
 }
-var NEW_WORLD_CULTURES = ["welsh", "cornish", "scottish", "irish", "scandinavian", "german"];
+var NEW_WORLD_CULTURES = ["welsh", "cornish", "scottish", "irish", "scandinavian", "german", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"];
+var TIER6A_NEW_WORLD = ["french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"];
 var OWN_SETTLEMENT_CULTURES = ["welsh", "scottish", "irish", "cornish", "scandinavian", "german", "norse"];
 function settlementDelegateOptions(delegate, ctx, size, seed) {
   var _a8, _b4;
@@ -142423,6 +144178,7 @@ function settlementDelegateOptions(delegate, ctx, size, seed) {
   if (SOURCE_SHARES.home.cultures.includes(ctx.culture) || ctx.culture === "general") return { ...base, setting: "native", culture: "britain", region: SOURCE_SHARES.home.cultures.includes(ctx.culture) ? ctx.region : void 0 };
   const world = WORLD_CULTURES.find((c) => c.id === ctx.culture);
   if (!world || ctx.legacySettlement && NEW_WORLD_CULTURES.includes(world.id)) return void 0;
+  if (ctx.noBatchSettlement && TIER6A_NEW_WORLD.includes(world.id)) return void 0;
   return { ...base, setting: "native", culture: world.id, era: (_b4 = world.eras.find((e) => e.id !== INTERSTELLAR_ERA)) == null ? void 0 : _b4.id };
 }
 function riverSettingFor(ctx) {
@@ -142460,11 +144216,11 @@ function drawKind(kind, ctx, own) {
   if (ctx.rng() < shareOf(ctx.where, kind)) return (_b4 = drawFromSource(kind, source, ctx)) != null ? _b4 : own();
   return (_c4 = own()) != null ? _c4 : drawFromSource(kind, source, ctx);
 }
-var CORE_FILL = /* @__PURE__ */ new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "celtic"]);
+var CORE_FILL = /* @__PURE__ */ new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "celtic", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"]);
 function fillPlace(culture, region, rng, oneWord = false) {
   for (const candidate of placeCultures(culture)) {
     for (let attempt2 = 0; attempt2 < 6; attempt2++) {
-      const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng, legacySettlement: !CORE_FILL.has(culture) });
+      const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng, legacySettlement: !CORE_FILL.has(culture), noBatchSettlement: !TIER6A_NEW_WORLD.includes(culture) });
       if (name === void 0) break;
       if (name.split(/\s+/).length <= (oneWord ? 1 : 2) && !isRealPlace(name)) return name;
     }
@@ -142540,7 +144296,10 @@ var PLACE_MODULES = ["lands", "farmland", "hillsValleys", "riversInland", "stars
 var isPlaceModule = (module2) => PLACE_MODULES.includes(module2);
 var withAliasRows = (table) => {
   const out = { ...table };
-  for (const [key2, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+  for (const key2 of Object.keys(ENGINE_ALIAS)) {
+    const legacy = engineCulture(key2);
+    if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+  }
   return out;
 };
 var WILDS_BASE = wilds_default;
@@ -144330,7 +146089,10 @@ var waters_default = {
 var WATERS_BASE = waters_default;
 var withAliasRows2 = (table) => {
   const out = { ...table };
-  for (const [key2, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+  for (const key2 of Object.keys(ENGINE_ALIAS)) {
+    const legacy = engineCulture(key2);
+    if (!(key2 in out) && legacy in out) out[key2] = out[legacy];
+  }
   return out;
 };
 var WATERS_DATA = {

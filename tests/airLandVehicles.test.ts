@@ -1,4 +1,5 @@
 // Aircraft and land vehicles (docs/aircraft-and-land-vehicles-brief.md).
+import { engineCulture } from "../src/lens";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { groupSetting, hasBannedWord, normForBlock } from "../src/groups/engine";
@@ -41,7 +42,7 @@ const norm = normForBlock;
 test("§16.1: every culture has airSpan and landSpan inside its module's levels", () => {
   assert.equal(Object.keys(AIR_LAND.spans).length, 34);
   // Brief 5c: the six newer keys read the legacy key's span (`engineAlias`).
-  const NEWER = new Set(["welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
+  const NEWER = new Set(["welsh", "scottish", "irish", "cornish", "scandinavian", "german", "italian", "spanish", "portuguese", "greek", "byzantine"]);
   assert.deepEqual(Object.keys(AIR_LAND.spans).sort(), VESSEL_CULTURES.filter((c) => !NEWER.has(c.key)).map((c) => c.key).sort());
   for (const c of VESSEL_CULTURES.filter((c) => !NEWER.has(c.key))) {
     const row = AIR_LAND.spans[c.key];
@@ -630,7 +631,7 @@ test("§16.6: aircraft codes: G- only for general and norman-british, N only for
         assert.ok(!["A1", "AF"].includes(n.level), `${c.key} ${n.level}`);
         if (n.code.startsWith("G-")) assert.ok(["general", "norman-british"].includes(c.key), `${c.key} ${n.code}`);
         if (/^N\d/.test(n.code)) assert.equal(c.key, "american", n.code);
-        const mine = rows.filter((r) => r.cultures.includes(c.key));
+        const mine = rows.filter((r) => r.cultures.includes(c.key) || r.cultures.includes(engineCulture(c.key, "vessels")));
         assert.ok(mine.some((r) => r.patterns.some((p) => regex(p).test(n.code!))), `${c.key} ${n.level} ${n.code}`);
         assert.equal(n.text, `${n.name} (${n.code})`);
       }

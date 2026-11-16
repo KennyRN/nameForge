@@ -17,7 +17,7 @@ const fromTable = () => builtinTemplates("people").filter((t) => t.fromTable);
 
 test("a starter template for every table except the three Kenny's own templates cover", () => {
   assert.equal(fromTable().length, tables.length - COVERED.size);
-  assert.equal(fromTable().length, 54, "51 and the modern tables of the Aztec, Maya and Andean (shared tables brief §13.4)");
+  assert.equal(fromTable().length, 61, "7 more for the batch 6a splits, 51 and the modern tables of the Aztec, Maya and Andean (shared tables brief §13.4)");
   const names = fromTable().map((t) => t.name);
   assert.equal(new Set(names).size, names.length);
   // No duplicate of Kenny's three.

@@ -3,12 +3,12 @@ import "../lexiconWiring";
 import thingData from "../data/named-things.json";
 import bynameData from "../data/bynames.json";
 import { north5cRows } from "../north5cCoverage";
-import { NORTH_5C_CULTURES } from "../north5c";
+import { addNorth5c } from "../north5c";
 import { type CoverageAdapter, type CoverageRow, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { listsUsed, wordListRows } from "../coverageUse";
 
 const LISTS = thingData.lists as unknown as Record<string, unknown[]>;
-const ROSTER = [...(bynameData.cultures as { key: string }[]).map((c) => c.key), ...NORTH_5C_CULTURES.map((c) => c.key)];
+const ROSTER = addNorth5c(bynameData.cultures as { key: string }[], (c) => c).map((c) => c.key);
 type Shape = { m: string; k: string[] | string; e?: string };
 type KindSet = { k: string; c: string[]; e?: string };
 

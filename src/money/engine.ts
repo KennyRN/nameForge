@@ -51,7 +51,8 @@ import {
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, VALUE_TIERS, type ValueTier, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { findVesselCulture } from "../vessels/engine";
 import { cultureSet, engineCulture } from "../lens";
-import { applySignature, NORTH_5C_CULTURES, noBracket } from "../north5c";
+import { addNorth5c, applySignature, noBracket } from "../north5c";
+import { TIER6A_GROUPS } from "../tier6a";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -184,7 +185,7 @@ function buildCultures(): MoneyCulture[] {
 }
 
 /** Northern Europe brief 5d: the roster of the money menu: those, and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables (`engineAlias`) beneath their own words. */
-export const MONEY_CULTURES: MoneyCulture[] = [...buildCultures(), ...NORTH_5C_CULTURES.map((c) => ({ key: c.key, label: c.label, group: "British Isles and northern Europe" }))];
+export const MONEY_CULTURES: MoneyCulture[] = addNorth5c(buildCultures(), (c) => ({ key: c.key, label: c.label, group: TIER6A_GROUPS[c.key] ?? "British Isles and northern Europe" }));
 export const findMoneyCulture = (key: string | undefined) => MONEY_CULTURES.find((c) => c.key === key);
 const DEFAULT_CULTURE = "norman-british";
 
@@ -198,7 +199,7 @@ export const findMoneyKind = (key: string | undefined) => MONEY_KINDS.find((k) =
 
 /** §4.2–§4.3: a kind's weight for kind Any: the era weight × the culture's multiplier (paper in the Middle Ages only where it was used). */
 export function moneyKindWeight(kind: MoneyKind, requested: string, era: RouteEra): number {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "money");
   const info = findMoneyKind(kind)!;
   let w = info.era[era];
   if (kind === "paper" && era === "MD" && !MONEY_DATA.paperMiddleAges.includes(culture)) return 0;
@@ -221,7 +222,7 @@ const LOAN_CULTURES = new Map<Vocabulary, Set<string>>();
 
 /** §2.2: whether the culture has at least one loan form (so the words link shows). */
 export function moneyHasLoans(requested: string, vocab: Vocabulary = BUILT_IN_VOCAB): boolean {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "money");
   let set = LOAN_CULTURES.get(vocab);
   if (!set) {
     set = new Set();
@@ -761,7 +762,7 @@ export const kindHasSeries = (kind: MoneyKind | undefined) => SERIES_KINDS.inclu
 
 /** §10.3: the ladders the table offers for a culture, era and kind; none means "with values" is not offered. */
 export function moneyLaddersFor(requested: string, era: RouteEra, kind?: MoneyKind): MoneyLadder[] {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "money");
   if (!kindHasSeries(kind)) return [];
   const serve = kind ?? "any";
   return (MONEY_DATA.ladderCells[culture]?.[era] ?? []).map((k) => LADDER_BY_KEY.get(k)!).filter((l) => l.serves.includes(serve as "any"));
@@ -1073,7 +1074,7 @@ function generateMoneyNamesCore(options: MoneyOptions): MoneyBatch {
   const rng = mulberry32(seed);
   const notices: string[] = [];
   // Brief 5d: the newer culture keys read the legacy key's tables (`engineAlias`).
-  const culture = findMoneyCulture(engineCulture(options.culture ?? "")) ?? findMoneyCulture(DEFAULT_CULTURE)!;
+  const culture = findMoneyCulture(engineCulture(options.culture ?? "", "money")) ?? findMoneyCulture(DEFAULT_CULTURE)!;
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const fantastic = !!options.fantastic;
   const count = Math.max(0, Math.floor(options.count));

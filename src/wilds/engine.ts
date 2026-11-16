@@ -138,7 +138,7 @@ interface WildsData {
 /** Northern Europe brief 5a: a table keyed by culture, with a row for each newer culture key that has none of its own (it reads its legacy key's). */
 const withAliasRows = <T>(table: Record<string, T>): Record<string, T> => {
   const out = { ...table };
-  for (const [key, legacy] of Object.entries(ENGINE_ALIAS)) if (!(key in out) && legacy in out) out[key] = out[legacy];
+  for (const key of Object.keys(ENGINE_ALIAS)) { const legacy = engineCulture(key); if (!(key in out) && legacy in out) out[key] = out[legacy]; }
   return out;
 };
 const WILDS_BASE = wildsData as unknown as WildsData;

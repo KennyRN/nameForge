@@ -8,6 +8,7 @@ import north5d from "./data/north5d.json";
 import { mulberry32 } from "./markov";
 import { cultureSalt, signatureShareFor } from "./northData";
 import { containsRealGroup, isRealGroup } from "./realPlaces";
+import { TIER6A_KEYS, TIER6A_LABELS } from "./tier6a";
 
 /** A frame: its pattern, its weight, its tag (an era span and/or "*" for a fantastic frame; "" for none) and, for a frame of one kind of the module (a month, a festival), that kind (5d §14.3). */
 type Frame = [string, number] | [string, number, string] | [string, number, string, string];
@@ -207,7 +208,12 @@ export function applySignature<T extends { text: string }>(
   if (!draw || names.length === 0) return names;
   const extra = opts.allowed ?? (() => true);
   // Brief 5c §13.4: no well-known real group, realm, craft or object.
-  const allowed = (text: string) => !isRealGroup(text) && !containsRealGroup(text) && extra(text);
+  // Brief 6a: and a name never repeats a word of its own ("Kingdom of the Plains of the Red Plains").
+  const repeats = (text: string): boolean => {
+    const content = text.split(" ").filter((w) => !/^(of|the|and|for|in|at|by|on|to|from)$/i.test(w) && !w.startsWith("[")).map((w) => w.toLowerCase().replace(/'s?$/, "").replace(/s$/, ""));
+    return new Set(content).size !== content.length;
+  };
+  const allowed = (text: string) => !isRealGroup(text) && !containsRealGroup(text) && !(module === "realms" && repeats(text)) && extra(text);
   const set = opts.set ?? ((n: T, text: string): T => ({ ...n, text }));
   const share = signatureShareFor(culture);
   const rng = mulberry32((seed ^ 0x5c5c5c5c ^ cultureSalt(culture)) >>> 0);
@@ -263,6 +269,10 @@ export const NORTH_5C_CULTURES: { key: string; label: string; guide: string }[] 
   { key: "cornish", label: "Cornish", guide: "" },
   { key: "scandinavian", label: "Scandinavian", guide: "" },
   { key: "german", label: "German", guide: "" },
+  // Brief 6a: the batch's cultures (a module whose own roster has one already keeps its entry: `withKeys`).
+  ...TIER6A_KEYS.map((key) => ({ key, label: TIER6A_LABELS[key], guide: "" })),
 ];
+/** A module's roster with the entries of `NORTH_5C_CULTURES` it lacks added (a key it has already is kept as it is). */
+export const addNorth5c = <T extends { key: string }>(base: readonly T[], make: (c: { key: string; label: string; guide: string }) => T): T[] => [...base, ...NORTH_5C_CULTURES.filter((c) => !base.some((b) => b.key === c.key)).map(make)];
 /** The invented link leaves no bracket in a name. */
 export const noBracket = (text: string): boolean => !text.includes("[");

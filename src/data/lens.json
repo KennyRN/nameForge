@@ -106,7 +106,7 @@
   {
    "key": "french",
    "label": "French",
-   "tier": "second",
+   "tier": "core",
    "family": "romance",
    "status": "live",
    "keys": [
@@ -116,11 +116,31 @@
   {
    "key": "dutch",
    "label": "Dutch",
-   "tier": "second",
+   "tier": "core",
    "family": "germanic",
    "status": "live",
    "keys": [
     "dutch"
+   ]
+  },
+  {
+   "key": "spanish",
+   "label": "Spanish",
+   "tier": "core",
+   "family": "romance",
+   "status": "live",
+   "keys": [
+    "spanish"
+   ]
+  },
+  {
+   "key": "portuguese",
+   "label": "Portuguese",
+   "tier": "core",
+   "family": "romance",
+   "status": "live",
+   "keys": [
+    "portuguese"
    ]
   },
   {
@@ -136,20 +156,41 @@
   {
    "key": "italian",
    "label": "Italian",
-   "tier": "second",
+   "tier": "core",
    "family": "romance",
    "status": "live",
-   "scope": "colonial",
-   "keys": []
+   "keys": [
+    "italian"
+   ]
   },
   {
    "key": "roman",
    "label": "Roman",
-   "tier": "second",
+   "tier": "core",
    "family": "classical",
    "status": "live",
    "keys": [
     "roman"
+   ]
+  },
+  {
+   "key": "greek",
+   "label": "Greek",
+   "tier": "core",
+   "family": "classical",
+   "status": "live",
+   "keys": [
+    "greek"
+   ]
+  },
+  {
+   "key": "byzantine",
+   "label": "Byzantine",
+   "tier": "core",
+   "family": "classical",
+   "status": "live",
+   "keys": [
+    "byzantine"
    ]
   },
   {
@@ -165,7 +206,7 @@
   {
    "key": "slavic",
    "label": "Slavic",
-   "tier": "second",
+   "tier": "core",
    "family": "slavic",
    "status": "live",
    "keys": [
@@ -541,11 +582,15 @@
     "cornish",
     "slavic",
     "french",
-    "iberian"
+    "iberian",
+    "spanish",
+    "portuguese"
    ],
    "from": {
     "greek-byzantine": "MD",
-    "roman": "MD"
+    "roman": "MD",
+    "greek": "MD",
+    "byzantine": "MD"
    }
   },
   "nordic": {
@@ -1235,6 +1280,31 @@
      "lens": [
       "american"
      ]
+    },
+    "spanish": {
+     "lens": [
+      "spanish"
+     ]
+    },
+    "portuguese": {
+     "lens": [
+      "portuguese"
+     ]
+    },
+    "greek": {
+     "lens": [
+      "greek"
+     ]
+    },
+    "byzantine": {
+     "lens": [
+      "byzantine"
+     ]
+    },
+    "italian": {
+     "lens": [
+      "italian"
+     ]
     }
    },
    "tribal": {
@@ -1517,12 +1587,12 @@
     },
     "spanish": {
      "lens": [
-      "iberian"
+      "spanish"
      ]
     },
     "portuguese": {
      "lens": [
-      "iberian"
+      "portuguese"
      ]
     },
     "italian": {
@@ -2017,6 +2087,89 @@
     ],
     "german:interstellar": [
      "IS"
+    ],
+    "french:medieval": [
+     "MD"
+    ],
+    "french:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "french:interstellar": [
+     "IS"
+    ],
+    "dutch:medieval": [
+     "MD"
+    ],
+    "dutch:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "dutch:interstellar": [
+     "IS"
+    ],
+    "italian:medieval": [
+     "MD"
+    ],
+    "italian:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "italian:interstellar": [
+     "IS"
+    ],
+    "spanish:medieval": [
+     "MD"
+    ],
+    "spanish:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "spanish:interstellar": [
+     "IS"
+    ],
+    "portuguese:medieval": [
+     "MD"
+    ],
+    "portuguese:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "portuguese:interstellar": [
+     "IS"
+    ],
+    "greek:classical": [
+     "AN"
+    ],
+    "greek:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "greek:interstellar": [
+     "IS"
+    ],
+    "byzantine:byzantine": [
+     "MD"
+    ],
+    "byzantine:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "byzantine:interstellar": [
+     "IS"
+    ],
+    "roman:republic": [
+     "AN"
+    ],
+    "slavic:tribal": [
+     "AN"
     ]
    },
    "ships": {
@@ -3451,6 +3604,14 @@
      "label": "French"
     },
     {
+     "key": "spanish",
+     "label": "Spanish"
+    },
+    {
+     "key": "portuguese",
+     "label": "Portuguese"
+    },
+    {
      "key": "iberian",
      "label": "Iberian"
     },
@@ -3459,13 +3620,21 @@
      "label": "Roman"
     },
     {
-     "key": "greek-byzantine",
-     "label": "Greek and Byzantine"
-    },
-    {
      "key": "italian",
      "label": "Italian",
      "scope": "colonial"
+    },
+    {
+     "key": "greek",
+     "label": "Greek"
+    },
+    {
+     "key": "byzantine",
+     "label": "Byzantine"
+    },
+    {
+     "key": "greek-byzantine",
+     "label": "Greek and Byzantine"
     },
     {
      "key": "hellenistic",
@@ -3609,7 +3778,13 @@
   "$comment": "Northern Europe brief 5a §11.3 and 5b §12.1: the share of a module's own-shape draws that a core culture's signature frames take (signature), and that region-weighted shapes take when a region is chosen (region; not 'across all of…'). Brief 6a §1: `signatureShared` replaces `signature` for the cultures in `sharedLegacy`, which also read a legacy table another culture shares (the four nations read Celtic, Scandinavian reads Norse).",
   "signature": 0.4,
   "signatureShared": 0.6,
-  "sharedLegacy": ["welsh", "scottish", "irish", "cornish", "scandinavian"],
+  "sharedLegacy": [
+   "welsh",
+   "scottish",
+   "irish",
+   "cornish",
+   "scandinavian"
+  ],
   "region": 0.3
  },
  "regionExempt": {
@@ -3771,6 +3946,29 @@
   "irish": "celtic",
   "cornish": "celtic",
   "scandinavian": "norse",
-  "german": "general"
+  "german": "general",
+  "spanish": "iberian",
+  "portuguese": "iberian",
+  "greek": "greek-byzantine",
+  "byzantine": "greek-byzantine",
+  "italian": "general",
+  "french": "general",
+  "dutch": "general",
+  "iberian": "general",
+  "$ownTablesComment": "Brief 6a: a key that has tables of its own in some modules (French, Dutch and Iberian money, vessels and the settlement vocabulary) reads them there and its alias elsewhere; `engineOwn` lists those modules."
+ },
+ "engineOwn": {
+  "french": [
+   "money",
+   "vessels"
+  ],
+  "dutch": [
+   "money",
+   "vessels"
+  ],
+  "iberian": [
+   "money",
+   "vessels"
+  ]
  }
 }

@@ -51,7 +51,7 @@ const MENU_BRIEF: [string | null, string[]][] = [
   [null, ["general"]],
   ["British Isles", ["norman-british", "anglo-saxon", "welsh", "scottish", "irish", "cornish", "celtic"]],
   ["Northern Europe", ["norse", "scandinavian", "dutch"]],
-  ["Western and southern Europe", ["french", "iberian", "roman", "greek-byzantine"]],
+  ["Western and southern Europe", ["french", "spanish", "portuguese", "iberian", "roman", "greek", "byzantine", "greek-byzantine"]],
   ["Eastern Europe and the steppe", ["slavic", "steppe", "ottoman"]],
   ["Middle East and Africa", ["arabic-persian", "egyptian", "ethiopian", "swahili-omani", "bantu", "west-african"]],
   ["South and East Asia", ["indian", "malay", "chinese", "japanese", "korean"]],

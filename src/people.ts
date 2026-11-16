@@ -98,10 +98,12 @@ const withExtra = (table: PeopleTable, extra: ExtraSet): PeopleTable => ({
   surnames: table.surnames ? [...table.surnames, ...(extra.surnames ?? [])] : table.surnames,
 });
 
+const SPLIT_TABLES = ["spanish", "portuguese", "greek", "byzantine"];
 /** In the future eras a share of names come from other cultures' modern lists, weighted towards the same family. */
 export function otherCulture(own: string, rng: () => number): string | undefined {
   const family = FAMILIES[own];
-  const choices = PEOPLE_CULTURES.filter((c) => c !== own && CULTURES[c].modern).map((c) => ({ c, w: FAMILIES[c] === family ? PEOPLE.nearFuture.sameFamilyWeight : PEOPLE.nearFuture.otherFamilyWeight }));
+  // Brief 6a: the four tables the splits add are not drawn here (they repeat Iberian and Greek-and-Byzantine), so no other culture's future names move.
+  const choices = PEOPLE_CULTURES.filter((c) => c !== own && CULTURES[c].modern && !SPLIT_TABLES.includes(c)).map((c) => ({ c, w: FAMILIES[c] === family ? PEOPLE.nearFuture.sameFamilyWeight : PEOPLE.nearFuture.otherFamilyWeight }));
   const total = choices.reduce((sum, x) => sum + x.w, 0);
   if (total === 0) return undefined;
   let roll = rng() * total;

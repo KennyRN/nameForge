@@ -61,9 +61,10 @@ const lensJsonAny = lensJson as unknown as Record<string, unknown>;
 
 test("§3.1: the cultures, tiers and statuses are the brief's", () => {
   const tier = (t: string) => LENS_CULTURES.filter((c) => c.tier === t).map((c) => c.key);
-  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"]);
+  // Brief 6a: French, Dutch, Spanish, Portuguese, Italian, Roman, Greek, Byzantine and Slavic reach core depth.
+  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "french", "dutch", "spanish", "portuguese", "italian", "roman", "greek", "byzantine", "slavic"]);
   assert.deepEqual(tier("second"), [
-    "celtic", "french", "dutch", "iberian", "italian", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "egyptian", "ethiopian", "bantu", "west-african",
+    "celtic", "iberian", "greek-byzantine", "steppe", "arabic-persian", "egyptian", "ethiopian", "bantu", "west-african",
     "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american",
   ]);
   assert.deepEqual(tier("local").sort(), [
@@ -72,7 +73,7 @@ test("§3.1: the cultures, tiers and statuses are the brief's", () => {
   assert.deepEqual(tier("baseline"), ["general"]);
   assert.deepEqual(LENS_CULTURES.filter((c) => c.status === "planned").map((c) => c.key), [], "batch 5a: the four Celtic nations are live cultures");
   // Place modules split brief §7: Italian is live, with colonial scope: offered only at newly explored and settled lands. Northern Europe brief 5a §3.4: German is a full culture.
-  assert.deepEqual([lensCulture("italian")!.status, lensCulture("italian")!.scope], ["live", "colonial"]);
+  assert.deepEqual([lensCulture("italian")!.status, lensCulture("italian")!.scope], ["live", undefined]);
   assert.deepEqual([lensCulture("german")!.status, lensCulture("german")!.scope], ["live", undefined]);
   assert.equal(new Set(LENS_CULTURES.map((c) => c.key)).size, LENS_CULTURES.length, "keys are unique");
   assert.equal(lensCulture("english")!.keys.join(), "anglo-saxon,norman-british");
@@ -140,9 +141,9 @@ test("§3.3: the land modules are the brief's", () => {
 test("§3.1: the british and christian groups are the vocabulary's, and group membership agrees for every culture and era", () => {
   assert.deepEqual(LENS_CULTURE_GROUPS, SETTLEMENT_VOCAB.cultureGroups);
   assert.deepEqual(LENS_CULTURE_GROUPS["british"].cultures, ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish"]);
-  assert.deepEqual(LENS_CULTURE_GROUPS["christian"].cultures, ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian"]);
+  assert.deepEqual(LENS_CULTURE_GROUPS["christian"].cultures, ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian", "spanish", "portuguese"]);
   assert.deepEqual(LENS_CULTURE_GROUPS["nordic"].cultures, ["norse", "scandinavian"]);
-  assert.deepEqual(LENS_CULTURE_GROUPS["christian"].from, { "greek-byzantine": "MD", roman: "MD" });
+  assert.deepEqual(LENS_CULTURE_GROUPS["christian"].from, { "greek-byzantine": "MD", roman: "MD", greek: "MD", byzantine: "MD" });
   for (const group of [...Object.keys(LENS_CULTURE_GROUPS), "missing"]) {
     for (const culture of [...VOCAB_ALL_CULTURES, "nonsuch"]) {
       for (const era of eraCodes) assert.equal(inCultureGroup(group, culture, era as LensEra), vocabInCultureGroup(group, culture, era as LensEra), `${group} ${culture} ${era}`);
@@ -237,14 +238,14 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
   // The vehicle mapping is the shared roster plus the local extras; the vessel roster has no `polynesian` key of its own (it has hawaiian, maori and w-polynesian).
   const vehicleKeys = keysOf("vehicle");
   for (const c of VESSEL_BASE_CULTURES) assert.ok(vehicleKeys.includes(c.key), c.key);
-  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_BASE_CULTURES.some((c) => c.key === k)), ["polynesian"]);
+  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_BASE_CULTURES.some((c) => c.key === k)), ["byzantine", "greek", "italian", "polynesian", "portuguese", "spanish"]);
   // Brief 5c: ships, aircraft and land vehicles read `vehicle5c` (the vehicle roster and the six newer cultures); the bynames, realms and peoples read `north5c`.
   const vehicle5c = keysOf("vehicle5c");
   for (const c of VESSEL_CULTURES) assert.ok(vehicle5c.includes(c.key), c.key);
   for (const c of BYNAME_CULTURES_5C) assert.ok(keysOf("north5c").includes(c.key), c.key);
   // The 22, the 20, the 24 and the 34 are all inside the shared keys or the vehicle extras.
   for (const keys of [routeKeys, BYNAME_CULTURES.map((c) => c.key), MONEY_CULTURES.map((c) => c.key)]) for (const k of keys.filter((k) => !ENGINE_ALIAS[k])) assert.ok(cultureMapping("shared")[k], k);
-  assert.equal(WORLD_CULTURES.length, 22, "the sixteen world cultures and the six of batch 5b");
+  assert.equal(WORLD_CULTURES.length, 29, "the sixteen world cultures, the six of batch 5b and the seven of batch 6a");
   for (const c of WORLD_CULTURES) assert.ok(cultureMapping("world")[c.id], `world ${c.id}`);
 });
 
@@ -260,7 +261,7 @@ test("§4.1: tribal, colonial and vehicle mappings are the brief's tables", () =
   assert.deepEqual(m("colonial", "british-imperial").lens, ["english"]);
   assert.deepEqual(m("colonial", "english-speaking-settler").lens, ["american"]);
   assert.deepEqual([m("colonial", "danish").lens, m("colonial", "swedish").lens], [["scandinavian"], ["scandinavian"]]);
-  assert.deepEqual([m("colonial", "spanish").lens, m("colonial", "portuguese").lens], [["iberian"], ["iberian"]]);
+  assert.deepEqual([m("colonial", "spanish").lens, m("colonial", "portuguese").lens], [["spanish"], ["portuguese"]]);
   assert.deepEqual([m("colonial", "arab").lens, m("colonial", "ottoman").lens], [["arabic-persian"], ["arabic-persian"]]);
   assert.deepEqual(m("colonial", "russian").lens, ["slavic"]);
   for (const k of ["hellenistic", "phoenician", "belgian"]) assert.deepEqual([m("colonial", k).lens, m("colonial", k).local], [[], true], k);

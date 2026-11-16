@@ -13,14 +13,16 @@ import "../src/fill/batch";
 
 const CORE = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 /** Celtic (Northern Europe brief §3.2) is a mix of the four nations and has no people table of its own: it reads theirs. */
-const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => c.tier === "second" && c.key !== "celtic").map((c) => c.key);
+const TIER6A = new Set(["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic"]);
+/** Brief 6a: the second-tier cultures promoted to core depth (and the four the splits add) keep the second-tier table sizes of the people tables. */
+const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => (c.tier === "second" || TIER6A.has(c.key)) && c.key !== "celtic").map((c) => c.key);
 /** Ancient peoples with only a historic table: later they read another culture. */
-const HISTORIC_ONLY = new Set(["anglo-saxon", "roman", "egyptian"]);
+const HISTORIC_ONLY = new Set(["anglo-saxon", "roman", "egyptian", "greek"]);
 const PERIODS: PeoplePeriod[] = ["historic", "modern"];
 /** Periods where the culture named people by patronymic or had no inherited surnames, so it has no surname list. */
 const NO_SURNAMES = new Set([
   "anglo-saxon/historic", "welsh/historic", "scandinavian/historic",
-  "greek-byzantine/historic", "steppe/historic", "arabic-persian/historic", "egyptian/historic", "ethiopian/historic", "ethiopian/modern", "bantu/historic", "west-african/historic", "indian/historic",
+  "greek-byzantine/historic", "greek/historic", "steppe/historic", "arabic-persian/historic", "egyptian/historic", "ethiopian/historic", "ethiopian/modern", "bantu/historic", "west-african/historic", "indian/historic",
   "aztec/historic", "andean/historic", "polynesian/historic", "polynesian/modern",
 ]);
 const SECOND_SIZES = { male: 30, female: 30, surnames: 30, regnalMale: 8, regnalFemale: 8, holy: 12 } as const;
@@ -29,7 +31,7 @@ const SIZES = { male: 60, female: 60, surnames: 60, regnalMale: 15, regnalFemale
 
 test("every core culture has the periods the brief names: Anglo-Saxon historic only, the rest both", () => {
   assert.deepEqual([...PEOPLE_CULTURES].sort(), [...CORE, ...SECOND].sort());
-  assert.equal(SECOND.length, 22);
+  assert.equal(SECOND.length, 26);
   for (const c of [...CORE, ...SECOND]) {
     for (const p of PERIODS) {
       const expected = !(HISTORIC_ONLY.has(c) && p === "modern");

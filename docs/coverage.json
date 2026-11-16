@@ -107,8 +107,8 @@
      "words": 4,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -118,8 +118,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -140,19 +162,42 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 25,
      "shapes": 5,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -170,8 +215,8 @@
      "words": 10,
      "shapes": 7,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -428,7 +473,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -556,8 +606,8 @@
      "words": 15,
      "shapes": 5,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -567,8 +617,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 15,
+     "shapes": 5,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 15,
+     "shapes": 5,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -589,19 +661,42 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 19,
      "shapes": 14,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 15,
+     "shapes": 5,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 15,
+     "shapes": 5,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -619,11 +714,11 @@
      "words": 22,
      "shapes": 12,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
-     "below": false
+     "below": true
     },
     "steppe": {
      "words": 6,
@@ -844,7 +939,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -972,8 +1072,8 @@
      "words": 24,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -983,8 +1083,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 24,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 24,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -1005,19 +1127,42 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 29,
      "shapes": 6,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 24,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 24,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -1035,11 +1180,11 @@
      "words": 26,
      "shapes": 4,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
-     "below": false
+     "below": true
     },
     "steppe": {
      "words": 3,
@@ -1264,7 +1409,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -1392,8 +1542,8 @@
      "words": 27,
      "shapes": 8,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -1403,8 +1553,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 27,
+     "shapes": 8,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 27,
+     "shapes": 8,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -1425,19 +1597,42 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 49,
      "shapes": 12,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "profile": false,
+     "below": false
+    },
+    "greek": {
+     "words": 27,
+     "shapes": 8,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 27,
+     "shapes": 8,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -1455,11 +1650,11 @@
      "words": 27,
      "shapes": 12,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
-     "below": false
+     "below": true
     },
     "steppe": {
      "words": 2,
@@ -1687,7 +1882,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -1815,8 +2015,8 @@
      "words": 6,
      "shapes": 4,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -1826,8 +2026,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 6,
+     "shapes": 4,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 6,
+     "shapes": 4,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -1848,21 +2070,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 8,
      "shapes": 10,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 6,
+     "shapes": 4,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 6,
+     "shapes": 4,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 8,
@@ -1878,8 +2123,8 @@
      "words": 7,
      "shapes": 8,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -2110,7 +2355,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -2136,7 +2386,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 4692,
+   "rowCount": 7352,
    "cultures": {
     "english": {
      "words": 102,
@@ -2229,24 +2479,42 @@
      "below": false
     },
     "french": {
-     "words": 0,
-     "shapes": 0,
+     "words": 230,
+     "shapes": 116,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "dutch": {
-     "words": 0,
-     "shapes": 0,
+     "words": 225,
+     "shapes": 93,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 280,
+     "shapes": 108,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 245,
+     "shapes": 111,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
      "profile": false,
      "below": false
     },
@@ -2262,21 +2530,41 @@
      "below": false
     },
     "italian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 205,
+     "shapes": 111,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
-     "words": 16,
-     "shapes": 116,
+     "words": 141,
+     "shapes": 160,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": false
+    },
+    "greek": {
+     "words": 230,
+     "shapes": 103,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 215,
+     "shapes": 97,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": false
@@ -2293,11 +2581,11 @@
      "below": false
     },
     "slavic": {
-     "words": 22,
-     "shapes": 119,
+     "words": 112,
+     "shapes": 151,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": false
@@ -2458,13 +2746,13 @@
     }
    },
    "eras": {
-    "AN": 228,
-    "MD": 726,
-    "EM": 336,
-    "ST": 429,
-    "MO": 429,
+    "AN": 352,
+    "MD": 1022,
+    "EM": 605,
+    "ST": 698,
+    "MO": 698,
     "NF": 0,
-    "IS": 633
+    "IS": 759
    },
    "styles": {},
    "tones": {
@@ -2514,8 +2802,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
      "iberian",
      "greek-byzantine",
      "steppe",
@@ -2674,8 +2960,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -2685,8 +2971,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -2707,21 +3015,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 0,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -2737,8 +3068,8 @@
      "words": 0,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -2945,7 +3276,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -3073,8 +3409,8 @@
      "words": 29,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -3083,10 +3419,30 @@
      "words": 17,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "spanish": {
+     "words": 3,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 3,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "iberian": {
@@ -3103,8 +3459,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -3113,8 +3469,28 @@
      "words": 41,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 3,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 3,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -3133,8 +3509,8 @@
      "words": 37,
      "shapes": 3,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -3464,8 +3840,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -3475,8 +3851,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -3497,21 +3895,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 33,
      "shapes": 3,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 25,
@@ -3527,8 +3948,8 @@
      "words": 31,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -3732,7 +4153,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -3860,8 +4286,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -3871,8 +4297,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -3893,21 +4341,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 28,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 32,
@@ -3923,8 +4394,8 @@
      "words": 3,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -4126,7 +4597,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -4254,8 +4730,8 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -4265,8 +4741,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -4287,21 +4785,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 6,
@@ -4317,8 +4838,8 @@
      "words": 5,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -4547,7 +5068,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -4675,8 +5201,8 @@
      "words": 4,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -4686,8 +5212,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -4708,21 +5256,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 5,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 4,
@@ -4738,8 +5309,8 @@
      "words": 5,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -4966,7 +5537,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -5094,8 +5670,8 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -5105,8 +5681,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -5127,21 +5725,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 4,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 4,
@@ -5157,8 +5778,8 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -5362,7 +5983,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -5490,8 +6116,8 @@
      "words": 4,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -5501,8 +6127,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -5523,21 +6171,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 4,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 4,
+     "shapes": 2,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 4,
@@ -5553,8 +6224,8 @@
      "words": 4,
      "shapes": 2,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -5780,7 +6451,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -5908,8 +6584,8 @@
      "words": 4,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -5919,8 +6595,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -5941,21 +6639,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 4,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 4,
@@ -5971,8 +6692,8 @@
      "words": 4,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -6199,7 +6920,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -6327,8 +7053,8 @@
      "words": 4,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -6338,8 +7064,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -6360,21 +7108,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 4,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 4,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 4,
@@ -6390,8 +7161,8 @@
      "words": 5,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -6618,7 +7389,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -6746,8 +7522,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -6757,8 +7533,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -6779,21 +7577,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 1,
@@ -6809,8 +7630,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -7033,7 +7854,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -7161,8 +7987,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -7172,8 +7998,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -7194,21 +8042,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 2,
@@ -7224,8 +8095,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -7453,7 +8324,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -7581,8 +8457,8 @@
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -7592,8 +8468,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -7614,21 +8512,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 2,
@@ -7644,8 +8565,8 @@
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -7872,7 +8793,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -8000,8 +8926,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -8011,8 +8937,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -8033,21 +8981,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 1,
@@ -8063,8 +9034,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -8291,7 +9262,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -8420,8 +9396,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -8431,8 +9407,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -8453,21 +9451,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 1,
@@ -8483,8 +9504,8 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -8688,7 +9709,12 @@
      "german",
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -8816,8 +9842,8 @@
      "words": 0,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -8827,8 +9853,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -8849,21 +9897,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 2,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 1,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 9,
@@ -8879,8 +9950,8 @@
      "words": 0,
      "shapes": 1,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -9103,7 +10174,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -9231,8 +10307,8 @@
      "words": 1,
      "shapes": 3,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -9242,8 +10318,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 1,
+     "shapes": 3,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 1,
+     "shapes": 3,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -9264,21 +10362,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 1,
      "shapes": 5,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 1,
+     "shapes": 3,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 1,
+     "shapes": 3,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 2,
@@ -9294,8 +10415,8 @@
      "words": 1,
      "shapes": 3,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -9518,7 +10639,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -9646,8 +10772,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -9657,8 +10783,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -9679,21 +10827,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 1,
@@ -9709,8 +10880,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -9933,7 +11104,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -10055,8 +11231,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10065,8 +11241,28 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10085,8 +11281,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10095,8 +11291,28 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10115,8 +11331,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10408,36 +11624,43 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "iberian": {
+    "spanish": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "italian": {
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "iberian": {
      "words": 0,
      "shapes": 0,
      "target": {
@@ -10447,12 +11670,42 @@
      "profile": false,
      "below": true
     },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
     "roman": {
      "words": 6,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10471,8 +11724,8 @@
      "words": 3,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10675,9 +11928,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -10807,36 +12057,43 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "iberian": {
+    "spanish": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "italian": {
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "iberian": {
      "words": 0,
      "shapes": 0,
      "target": {
@@ -10846,12 +12103,42 @@
      "profile": false,
      "below": true
     },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
     "roman": {
      "words": 10,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -10870,8 +12157,8 @@
      "words": 7,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -11068,9 +12355,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -11200,36 +12484,43 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "iberian": {
+    "spanish": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "italian": {
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "iberian": {
      "words": 0,
      "shapes": 0,
      "target": {
@@ -11239,12 +12530,42 @@
      "profile": false,
      "below": true
     },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
     "roman": {
      "words": 0,
      "shapes": 6,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -11263,8 +12584,8 @@
      "words": 0,
      "shapes": 4,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -11464,9 +12785,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -11596,23 +12914,41 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
+    },
+    "spanish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
     },
     "iberian": {
      "words": 1,
@@ -11621,16 +12957,15 @@
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "italian": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -11639,10 +12974,30 @@
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -11659,8 +13014,8 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -11864,9 +13219,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -11996,23 +13348,41 @@
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
+    },
+    "spanish": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
     },
     "iberian": {
      "words": 2,
@@ -12021,16 +13391,15 @@
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "italian": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -12039,10 +13408,30 @@
      "words": 3,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 2,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -12059,8 +13448,8 @@
      "words": 5,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -12266,9 +13655,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -12398,23 +13784,41 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
+    },
+    "spanish": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
     },
     "iberian": {
      "words": 1,
@@ -12423,16 +13827,15 @@
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "italian": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -12441,10 +13844,30 @@
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 1,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -12461,8 +13884,8 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -12664,9 +14087,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -12796,36 +14216,43 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "iberian": {
+    "spanish": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "italian": {
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "iberian": {
      "words": 0,
      "shapes": 0,
      "target": {
@@ -12835,14 +14262,44 @@
      "profile": false,
      "below": true
     },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
     "roman": {
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -12859,8 +14316,8 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -13062,9 +14519,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -13194,36 +14648,43 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "dutch": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "iberian": {
+    "spanish": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
-    "italian": {
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "iberian": {
      "words": 0,
      "shapes": 0,
      "target": {
@@ -13233,14 +14694,44 @@
      "profile": false,
      "below": true
     },
+    "italian": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
     "roman": {
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -13257,8 +14748,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -13451,9 +14942,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "french",
-     "dutch",
-     "iberian",
      "andean",
      "polynesian",
      "american",
@@ -13583,8 +15071,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -13594,8 +15082,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -13616,21 +15126,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 12,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 7,
@@ -13646,8 +15179,8 @@
      "words": 12,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -13849,7 +15382,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -13977,8 +15515,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -13988,8 +15526,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -14010,21 +15570,44 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
+     "notOffered": true,
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 12,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 7,
@@ -14040,8 +15623,8 @@
      "words": 12,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -14242,7 +15825,12 @@
     "notOffered": [
      "french",
      "dutch",
+     "spanish",
+     "portuguese",
      "iberian",
+     "italian",
+     "greek",
+     "byzantine",
      "american",
      "ottoman",
      "swahili-omani",
@@ -14370,8 +15958,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -14381,11 +15969,33 @@
      "words": 8,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -14402,8 +16012,8 @@
      "words": 8,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -14412,11 +16022,33 @@
      "words": 8,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 8,
@@ -14432,8 +16064,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -14689,7 +16321,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -14820,8 +16456,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -14831,11 +16467,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -14852,8 +16510,8 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -14862,11 +16520,33 @@
      "words": 4,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 4,
@@ -14882,8 +16562,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -15138,7 +16818,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -15269,8 +16953,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -15280,11 +16964,33 @@
      "words": 5,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -15301,8 +17007,8 @@
      "words": 3,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -15311,11 +17017,33 @@
      "words": 3,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 3,
@@ -15331,8 +17059,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -15588,7 +17316,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -15719,8 +17451,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -15730,11 +17462,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -15751,8 +17505,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -15761,11 +17515,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -15781,8 +17557,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -16037,7 +17813,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -16168,8 +17948,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -16179,11 +17959,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -16200,8 +18002,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -16210,11 +18012,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -16230,8 +18054,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -16487,7 +18311,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -16618,8 +18446,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -16629,11 +18457,33 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -16650,8 +18500,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -16660,11 +18510,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -16680,8 +18552,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -16933,7 +18805,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -17064,8 +18940,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -17075,11 +18951,33 @@
      "words": 1,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -17096,8 +18994,8 @@
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -17106,11 +19004,33 @@
      "words": 2,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 2,
@@ -17126,8 +19046,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -17383,7 +19303,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -17514,8 +19438,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -17525,11 +19449,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -17546,8 +19492,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -17556,11 +19502,33 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "notOffered": true,
+     "profile": false,
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -17576,8 +19544,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "notOffered": true,
      "profile": false,
@@ -17833,7 +19801,11 @@
     ],
     "notOffered": [
      "french",
+     "spanish",
+     "portuguese",
      "iberian",
+     "greek",
+     "byzantine",
      "slavic",
      "egyptian",
      "ethiopian",
@@ -17964,8 +19936,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -17974,10 +19946,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "iberian": {
@@ -17994,8 +19986,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -18004,10 +19996,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -18024,8 +20036,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -18472,8 +20484,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -18482,8 +20494,28 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -18502,8 +20534,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -18512,8 +20544,28 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -18532,8 +20584,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -18982,8 +21034,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -18992,10 +21044,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "iberian": {
@@ -19012,8 +21084,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -19022,10 +21094,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -19042,8 +21134,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -19490,8 +21582,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -19500,10 +21592,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "iberian": {
@@ -19520,8 +21632,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -19530,10 +21642,30 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
      "below": true
     },
     "greek-byzantine": {
@@ -19550,8 +21682,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": true,
      "below": true
@@ -19990,8 +22122,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -20000,8 +22132,28 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "spanish": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "portuguese": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -20020,8 +22172,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -20030,8 +22182,28 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "greek": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": true
+    },
+    "byzantine": {
+     "words": 0,
+     "shapes": 0,
+     "target": {
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -20050,8 +22222,8 @@
      "words": 0,
      "shapes": 0,
      "target": {
-      "words": 12,
-      "shapes": 4
+      "words": 30,
+      "shapes": 10
      },
      "profile": false,
      "below": true
@@ -20277,8 +22449,8 @@
     "shapes": 891
    },
    "roman": {
-    "words": 257,
-    "shapes": 188
+    "words": 382,
+    "shapes": 232
    },
    "norse": {
     "words": 2068,
@@ -20313,20 +22485,36 @@
     "shapes": 140
    },
    "slavic": {
-    "words": 192,
-    "shapes": 181
+    "words": 282,
+    "shapes": 213
    },
    "french": {
-    "words": 84,
-    "shapes": 30
+    "words": 314,
+    "shapes": 146
    },
    "iberian": {
     "words": 84,
     "shapes": 30
    },
+   "spanish": {
+    "words": 338,
+    "shapes": 137
+   },
+   "portuguese": {
+    "words": 303,
+    "shapes": 140
+   },
    "greek-byzantine": {
     "words": 216,
     "shapes": 54
+   },
+   "greek": {
+    "words": 288,
+    "shapes": 132
+   },
+   "byzantine": {
+    "words": 273,
+    "shapes": 126
    },
    "japanese": {
     "words": 309,
@@ -20364,13 +22552,17 @@
     "words": 2159,
     "shapes": 1590
    },
+   "dutch": {
+    "words": 257,
+    "shapes": 93
+   },
+   "italian": {
+    "words": 222,
+    "shapes": 111
+   },
    "american": {
     "words": 44,
     "shapes": 2
-   },
-   "dutch": {
-    "words": 32,
-    "shapes": 0
    },
    "northAmerican": {
     "words": 12,
@@ -20378,10 +22570,6 @@
    },
    "maritimeSEA": {
     "words": 8,
-    "shapes": 0
-   },
-   "italian": {
-    "words": 17,
     "shapes": 0
    },
    "northernPacific": {
@@ -20394,13 +22582,13 @@
    }
   },
   "eras": {
-   "AN": 3436,
-   "MD": 5024,
-   "EM": 4819,
-   "ST": 4768,
-   "MO": 4264,
+   "AN": 3560,
+   "MD": 5320,
+   "EM": 5088,
+   "ST": 5037,
+   "MO": 4533,
    "NF": 762,
-   "IS": 1516
+   "IS": 1642
   },
   "styles": {
    "high-fantasy": {

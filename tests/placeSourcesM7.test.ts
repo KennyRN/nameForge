@@ -14,7 +14,7 @@ import { isTraditionAvailable } from "../src/colonialShapes";
 import offers from "../src/data/lens-offers.json";
 
 // Northern Europe brief 5a: German is a full culture of the modules in the batch, no longer only a colonial one.
-const COLONIAL = ["italian", "phoenician", "belgian", "hellenistic"];
+const COLONIAL = ["phoenician", "belgian", "hellenistic"];
 
 // ── §8.1: sources in the existing modules ──────────────────────────────────
 
@@ -200,17 +200,17 @@ test("colonial cultures: the engines resolve them by key and they change the nam
   assert.notEqual(names("italian", "settled"), names("general", "settled"));
 });
 
-test("lens: italian is a live colonial-scope culture; German is a full culture; nothing else about them is offered", async () => {
+test("lens: Italian and German are full cultures; nothing else about them is offered", async () => {
   const lens = JSON.parse(readFileSync("src/data/lens.json", "utf8")) as { cultures: { key: string; status: string; scope?: string }[] };
   const italian = lens.cultures.find((x) => x.key === "italian")!;
   assert.equal(italian.status, "live");
-  assert.equal(italian.scope, "colonial");
+  assert.equal(italian.scope, undefined, "brief 6a: Italian is a culture of its own, offered everywhere");
   const german = lens.cultures.find((x) => x.key === "german")!;
   assert.equal(german.status, "live");
   assert.equal(german.scope, undefined, "batch 5a §3.4: German loses its colonial-only scope");
   const { offeredLensCultures } = await import("../src/lens");
   const live = offeredLensCultures().map((c) => c.key);
-  assert.ok(live.includes("german") && !live.includes("italian"), "Italian is never counted as an ordinary live culture");
+  assert.ok(live.includes("german") && live.includes("italian"), "brief 6a: Italian is an ordinary live culture");
 });
 
 // ── The probe ──────────────────────────────────────────────────────────────

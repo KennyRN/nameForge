@@ -2,15 +2,15 @@
   "$comment": "Shared settlement vocabulary (docs/route-names-brief.md §3, §6). Read through src/settlement/vocab.ts; vocabulary packs add to these pools. Every pool is listed in docs/vocabulary-pools.md.",
   "version": 1,
   "eras": ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
-  "cultures": ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean", "french", "dutch", "iberian", "american"],
-  "moneyOnly": ["french", "dutch", "iberian", "american"],
+  "cultures": ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean", "french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"],
+  "moneyOnly": ["french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"],
   "cultureGroups": {
     "british": {
       "cultures": ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish"]
     },
     "christian": {
-      "cultures": ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian"],
-      "from": {"greek-byzantine": "MD", "roman": "MD"}
+      "cultures": ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish", "slavic", "french", "iberian", "spanish", "portuguese"],
+      "from": {"greek-byzantine": "MD", "roman": "MD", "greek": "MD", "byzantine": "MD"}
     },
     "nordic": {
       "cultures": ["norse", "scandinavian"]

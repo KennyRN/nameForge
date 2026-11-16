@@ -30,7 +30,8 @@ const VARIANTS: { era: string; fantastic: boolean }[] = [
 
 /** The cultures that may change in this batch: the core seven and the Celtic nations (and their new keys), and Celtic. */
 export const CORE = new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "britain"]);
-const MAY_CHANGE = new Set([...CORE, "celtic"]);
+/** Brief 6a: the batch's cultures (their rosters, settlement names and tables) change in this batch too. */
+const MAY_CHANGE = new Set([...CORE, "celtic", "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
 
 type Texts = string[];
 const textsOf = (r: unknown): Texts => ((r as { names?: unknown[] }).names ?? []).map((n) => (typeof n === "string" ? n : (n as { text: string }).text));
@@ -91,6 +92,6 @@ test("batch 5b baseline: non-core cultures are byte-identical to B0 (brief rule 
     checked++;
     if (JSON.stringify(now[key]) !== JSON.stringify(was)) bad.push(key);
   }
-  assert.ok(checked > 1000, `the baseline covers ${checked} non-core states`);
+  assert.ok(checked > 500, `the baseline covers ${checked} non-core states`);
   assert.deepEqual(bad.slice(0, 20), [], `${bad.length} non-core states changed`);
 });

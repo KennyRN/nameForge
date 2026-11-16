@@ -11,6 +11,7 @@ import { hasSpaceBlock } from "../space/safeguards";
 import { drawScale, scalesFor, SPACE_DATA, validScale, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { dropStarWord } from "../space/stars";
 import routeData from "../data/route-names.json";
+import { TIER6A_GROUPS, TIER6A_LABELS, withTier6a } from "../tier6a";
 import { BYNAMES_DATA, entryForm, holyNamesIn, stripPlural, townSource } from "../bynames/engine";
 import {
   type GroupPeople,
@@ -135,13 +136,13 @@ export const ROUTE_DATA: RouteData = {
 };
 export const ROUTE_ERAS = ROUTE_DATA.eras;
 export const ROUTE_CULTURES = ROUTE_DATA.cultures;
-/** Northern Europe brief 5a §3: the cultures of the modules in the batch: the shared roster, and Welsh, Scottish, Irish, Cornish, Scandinavian and German as cultures of their own. */
-export const NORTH_CULTURES: RouteCulture[] = [
+/** Northern Europe brief 5a §3: the cultures of the modules in the batch: the shared roster, and Welsh, Scottish, Irish, Cornish, Scandinavian and German as cultures of their own; brief 6a adds French, Dutch, Italian, Spanish, Portuguese, Greek, Byzantine and the two mixes (Roman and Slavic are in the roster already). */
+export const NORTH_CULTURES: RouteCulture[] = withTier6a([
   ...ROUTE_CULTURES,
   ...["welsh", "scottish", "irish", "cornish"].map((key) => ({ key, label: key[0].toUpperCase() + key.slice(1), group: "British Isles and northern Europe" })),
   { key: "scandinavian", label: "Scandinavian", group: "British Isles and northern Europe", kindMult: { sea: 2 } },
   { key: "german", label: "German", group: "British Isles and northern Europe" },
-];
+], (key) => ({ key, label: TIER6A_LABELS[key], group: TIER6A_GROUPS[key] }));
 export const ROUTE_KINDS = ROUTE_DATA.kinds;
 export const ROUTE_ANY = ROUTE_DATA.any;
 /** §4.1: the cultures the region link is offered for. */

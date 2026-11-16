@@ -39,7 +39,7 @@ const NEW_POOLS = [
   "coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney",
   ...["coin", "early", "goods", "paper", "scrip", "currency", "nickname"].map((k) => `moneyFixed:${k}`),
 ];
-const NEW_CULTURES = ["french", "dutch", "iberian", "american"];
+const NEW_CULTURES = ["french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"];
 
 // ── §16.1 Vocabulary and cultures ───────────────────────────────────────────
 
@@ -153,7 +153,8 @@ function many(o: Omit<MoneyOptions, "count" | "seed">, n: number, size = 5): Mon
 test("§3.1: the money menu is route names' cultures bar Polynesian and Andean, with the four new ones in place", () => {
   const keys = MONEY_CULTURES.map((c) => c.key);
   // Brief 5d: and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables.
-  assert.equal(keys.length, 30);
+  // Brief 6a: and Italian, Spanish, Portuguese, Greek and Byzantine.
+  assert.equal(keys.length, 35);
   assert.ok(!keys.includes("polynesian") && !keys.includes("andean"));
   assert.deepEqual(keys.slice(keys.indexOf("greek-byzantine"), keys.indexOf("greek-byzantine") + 4), ["greek-byzantine", "french", "dutch", "iberian"]);
   assert.equal(keys[keys.indexOf("maya") + 1], "american");
@@ -375,7 +376,7 @@ test("§16.5: 10,000 names across options hold no block-list match and no banned
 });
 
 test("§13.4, §3.3: {holy} only in christian cultures (dutch and american at ×0.3), {god} only in roman and greek-byzantine in the ancient world", () => {
-  const christian = new Set(["anglo-saxon", "celtic", "norman-british", "slavic", "french", "iberian", "greek-byzantine", "roman", "dutch", "american", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
+  const christian = new Set(["anglo-saxon", "celtic", "norman-british", "slavic", "french", "iberian", "greek-byzantine", "roman", "dutch", "american", "welsh", "scottish", "irish", "cornish", "scandinavian", "german", "italian", "spanish", "portuguese", "greek", "byzantine"]);
   let holy = 0;
   let gods = 0;
   for (const c of MONEY_CULTURES) {
@@ -387,7 +388,7 @@ test("§13.4, §3.3: {holy} only in christian cultures (dutch and american at ×
         }
         if (n.shape.includes("{god")) {
           gods++;
-          assert.ok((c.key === "roman" || c.key === "greek-byzantine") && era === "AN", `${c.key} ${era}: ${n.text}`);
+          assert.ok(["roman", "greek-byzantine", "greek", "byzantine"].includes(c.key) && era === "AN", `${c.key} ${era}: ${n.text}`);
         }
         for (const w of n.words) assert.ok(w.pool !== "coinEmblem" || !["Cross", "Angel", "Lamb"].includes(w.word) || christian.has(c.key), `${c.key}: ${n.text}`);
         if (c.key === "arabic-persian") assert.ok(!n.words.some((w) => ["Moon", "Star"].includes(w.word)), n.text);
@@ -914,7 +915,7 @@ test("§2.2: the kind link lists the kinds offered for the culture and era", () 
   assert.ok(!labels({ ...DEFAULT_MONEY_STATE, culture: "aztec", era: "MD" }).includes("Coins"));
   assert.equal(field(DEFAULT_MONEY_STATE, "kind")!.choices[1].title, "Struck and cast coins, from gold to copper");
   const culture = field(DEFAULT_MONEY_STATE, "culture")!;
-  assert.equal(culture.choices.length, 30);
+  assert.equal(culture.choices.length, 35);
   assert.equal(culture.choices.find((c) => c.id === "dutch")!.group, undefined);
   assert.ok(culture.choices.some((c) => c.id === "american"));
 });
