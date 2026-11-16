@@ -1,4 +1,5 @@
 // Coverage adapters for deities and for sacred places (shared lens brief §6.1).
+import { withTier6aKeys } from "../tier6a";
 import "../lexiconWiring";
 import deityData from "../data/deity-names.json";
 import bynameData from "../data/bynames.json";
@@ -8,9 +9,9 @@ import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys,
 import { plainWordRows, wordListRows } from "../coverageUse";
 
 const ROSTER = (bynameData.cultures as { key: string }[]).map((c) => c.key);
-const ROSTER_5D = [...ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
+const ROSTER_5D = withTier6aKeys([...ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
 /** Northern Europe brief 5a: sacred places also offer Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
-const ROSTER_5A = [...ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
+const ROSTER_5A = withTier6aKeys([...ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
 /** §6.3: `unoffered` in deity-names.json (Polynesian and Andean) is excluded, not short. */
 const EXCLUDED = [{ cultures: deityData.unoffered as string[] }];
 type Shape = { kind: string };

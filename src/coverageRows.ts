@@ -2,6 +2,7 @@
 // helpers that turn a table entry's own tags into lens terms. Pure: nothing here runs a generator,
 // reads a note or touches Obsidian. Adapters read the JSON tables and return rows.
 
+import { withTier6aKeys } from "./tier6a";
 import routeData from "./data/route-names.json";
 import { SETTLEMENT_VOCAB } from "./settlement/vocab";
 import {
@@ -69,7 +70,7 @@ export interface CoverageAdapter {
 /** The culture keys the route, street, inn, building, monument, event, calendar, sky, wild lands and waters modules all offer (22). */
 export const SHARED_ROSTER: readonly string[] = (routeData.cultures as { key: string }[]).map((c) => c.key);
 /** Northern Europe brief 5a: the roster of the modules in the batch: the shared roster and Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
-export const NORTH_ROSTER: readonly string[] = [...SHARED_ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
+export const NORTH_ROSTER: readonly string[] = withTier6aKeys([...SHARED_ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
 
 // ── Tags ────────────────────────────────────────────────────────────────────
 
