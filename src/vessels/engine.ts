@@ -43,7 +43,7 @@ import moneyData from "../data/money-names.json";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { findTradition } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet, engineCulture, lensCultureLabel } from "../lens";
+import { cultureSet, engineCulture, lensCultureLabel, lensErasFor } from "../lens";
 import { applySignature, noBracket, NORTH_5C_CULTURES } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -155,7 +155,7 @@ interface VesselData {
   space: Record<"station" | "colony", { p: string; w: number }[]>;
   personLabels: Record<string, string>;
   prefixes: {
-    real: { p: string; cultures?: string[]; fn: string[]; k: string; x?: number }[];
+    real: { p: string; cultures?: string[]; asked?: string[]; fn: string[]; k: string; x?: number }[];
     sf: Record<string, string[]>;
   };
   safeguards: {
@@ -439,6 +439,8 @@ interface Ctx {
   turn?: TownTurn;
   /** Aircraft and land brief §3.3: the highest native ship level, which the ships lists' tags read. */
   shipCustoms: string;
+  /** Northern Europe brief 5d §14.1 item 9: the culture the state asked for (German and Scandinavian read General's and Norse's tables, but have navies of their own). */
+  asked?: string;
   naming: VesselNaming;
   /** §9.4: a rank draws only words with this initial. */
   rankInitial?: string;
@@ -1073,8 +1075,10 @@ export const prefixSetting = (setting: GroupSetting) => setting === "MR" || sett
 
 /** §12.3: the real-world prefix rows that apply to a name. */
 function realPrefix(ctx: Ctx): string | undefined {
+  // 5d §14.1 item 9: a row with `asked` is for those cultures only; the British and American rows (`cultures`) are not for German or Scandinavian craft.
+  const own = ctx.asked === "german" || ctx.asked === "scandinavian";
   const rows = VESSEL_DATA.prefixes.real.filter(
-    (r) => (!r.cultures || r.cultures.includes(ctx.culture.key)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level),
+    (r) => (r.asked ? !!ctx.asked && r.asked.includes(ctx.asked) : (!r.cultures || r.cultures.includes(ctx.culture.key)) && !(own && r.cultures)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level),
   );
   return pickWeighted(rows.map((r): [string, number] => [r.p, r.x ?? 1]), ctx.rng);
 }
@@ -1202,16 +1206,20 @@ export function generateVesselNames(options: VesselOptions): VesselBatch {
       // A registration or a prefix (HMS) belongs to its craft: those keep their names.
       keep: (n) => !!n.code || !!n.prefix,
       set: (n, text) => ({ ...n, name: text, text }),
+      // 5d §14.1: a craft's words fit its technology level's eras (no longship in the modern era, no steam drifter in the medieval one), and
+      // fantastic words only in a fantastic setting.
+      ctxOf: (n) => ({ eras: lensErasFor(options.module, n.level), fantastic: !!options.fantastic && options.genre !== "scifi" }),
     }),
   };
 }
 
 function generateVesselNamesCore(options: VesselOptions): VesselBatch {
   // German reads General's tables, which carry the British prefixes (HMS) and registrations (G-): not for German craft.
-  if (options.culture === "german" && options.prefixes) options = { ...options, prefixes: false };
+  // German reads General's tables, which carry the British registrations (G-): not for German aircraft and land vehicles. Its ships have the prefix SMS of their own (5d §14.1 item 9).
+  if (options.culture === "german" && options.prefixes && options.module !== "ships") options = { ...options, prefixes: false };
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateVesselNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, series: options.series });
+  if (fillMode) return fillPeopleBatch(generateVesselNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, series: options.series, settlementPlaces: true });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const module = options.module;
@@ -1268,6 +1276,7 @@ function generateVesselNamesCore(options: VesselOptions): VesselBatch {
     level,
     customs: customsLevel(culture, level, module),
     shipCustoms: `T${range(culture.span)[1]}`,
+    asked: options.culture,
     naming,
     fn,
     style,

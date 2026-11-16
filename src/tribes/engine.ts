@@ -1396,12 +1396,16 @@ export function generateTribalNames(options: TribalOptions & { count: number; se
   if (options.signature === false || options.constraints || (options.biome && options.biome !== "homeland") || options.biomeData) return batch;
   const tradition = findTradition(options.tradition)?.key;
   if (!tradition || tradition === "germanic" || !contentKey(tradition)) return batch;
-  return { ...batch, names: applySignature(batch.names.map((n) => ({ ...n, text: n.name })), "tribalNames", tradition, batch.seed).map((n) => (n.text === n.name ? (({ text: _t, ...rest }) => rest)(n) as TribalName : ({ ...(({ text: _t, ...rest }) => rest)(n), name: n.text, inText: inTextOf(n.text) } as TribalName))) };
+  return { ...batch, names: applySignature(batch.names.map((n) => ({ ...n, text: n.name })), "tribalNames", tradition, batch.seed, { quota: true, ctx: { fantastic: true } }).map((n) => (n.text === n.name ? (({ text: _t, ...rest }) => rest)(n) as TribalName : ({ ...(({ text: _t, ...rest }) => rest)(n), name: n.text, inText: inTextOf(n.text) } as TribalName))) };
 }
+
+/** 5d §14.1 item 5: the eight traditions 5c added read their parent's tables, so each draws on a stream of its own (the same seed no longer gives "Spear Folk" in all of them). */
+const OWN_STREAM = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
+const streamOf = (tradition: string): number => (OWN_STREAM.includes(tradition) ? Math.imul(OWN_STREAM.indexOf(tradition) + 1, 0x9e3779b1) >>> 0 : 0);
 
 function generateTribalNamesCore(options: TribalOptions & { count: number; seed?: number }): TribalBatchResult {
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
-  const rng = mulberry32(seed);
+  const rng = mulberry32((seed ^ streamOf(options.tradition)) >>> 0);
   const count = Math.max(0, Math.floor(options.count));
   const seen = new Set<string>();
   const names: TribalName[] = [];

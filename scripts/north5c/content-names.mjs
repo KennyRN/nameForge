@@ -70,18 +70,19 @@ export const WORDS = {
 
 /** Native forms of the bynames modules (language setting native or mixed), as patterns; {x} is the word drawn. Kept to those settings only. */
 export const NATIVE = {
+  // 5d §14.2: `{man/woman}` is chosen by the bearer's sex; where a rank has no woman's form the woman is "Lady".
   titles: {
-    welsh: ["Tywysog of [place]", "Arglwydd of [place]", "Brenin of [place]", "Tywysog [name]", "Arglwydd [name]", "Brenin [name]"],
-    irish: ["Ard Rí", "Taoiseach of [place]", "Ollamh of [place]", "Rí of [place]", "Taoiseach [name]", "Ollamh [name]"],
-    scottish: ["Mormaer of [place]", "Thane of [place]", "Toiseach of [place]", "Mormaer [name]", "Toiseach [name]", "Thane [name]"],
-    norse: ["Jarl of [place]", "Hersir of [place]", "Lawspeaker of [place]", "Jarl [name]", "Hersir [name]", "Lawspeaker [name]"],
-    german: ["Graf von [place]", "Markgraf von [place]", "Kurfürst von [place]", "Freiherr von [place]", "Graf [name]", "Freiherr [name]"],
+    welsh: ["{Tywysog/Tywysoges} of [place]", "{Arglwydd/Arglwyddes} of [place]", "{Brenin/Brenhines} of [place]", "{Tywysog/Tywysoges} [name]", "{Arglwydd/Arglwyddes} [name]", "{Brenin/Brenhines} [name]"],
+    irish: ["{Rí/Banríon} of [place]", "{Taoiseach/Lady} of [place]", "{Ollamh/Lady} of [place]", "{Rí/Banríon} [name]", "{Taoiseach/Lady} [name]", "{Ollamh/Lady} [name]"],
+    scottish: ["{Mormaer/Lady} of [place]", "{Thane/Lady} of [place]", "{Toiseach/Lady} of [place]", "{Mormaer/Lady} [name]", "{Toiseach/Lady} [name]", "{Thane/Lady} [name]"],
+    norse: ["{Jarl/Lady} of [place]", "{Hersir/Lady} of [place]", "{Lawspeaker/Lady} of [place]", "{Jarl/Lady} [name]", "{Hersir/Lady} [name]", "{Lawspeaker/Lady} [name]"],
+    german: ["{Graf/Graefin} von [place]", "{Markgraf/Markgraefin} von [place]", "{Kurfuerst/Kurfuerstin} von [place]", "{Freiherr/Freifrau} von [place]", "{Graf/Graefin} [name]", "{Freiherr/Freifrau} [name]"],
   },
   familyNames: {
-    welsh: ["ap [father]", "ferch [father]", "ap [father] of [place]", "ferch [father] of [place]", "ap [father] ap [child]", "[place] ap [father]"],
-    irish: ["Mac [father]", "Ó [father]", "Ní [father]", "Mac [father] of [place]", "Ó [father] of [place]", "Ní [father] of [place]"],
-    scottish: ["Mac [father]", "Nic [father]", "Mac [father] of [place]", "Nic [father] of [place]", "Mac [father] Mac [child]", "[place] Mac [father]"],
-    norse: ["[father]son", "[father]dottir", "[father]son of [place]", "[father]dottir of [place]", "[father]sson", "[place] [father]son"],
+    welsh: ["{ap/ferch} [father]", "{ap/ferch} [father] of [place]", "{ap/ferch} [father] ap [child]", "[place] {ap/ferch} [father]"],
+    irish: ["{Mac/Ní} [father]", "{Ó/Ní} [father]", "{Mac/Ní} [father] of [place]", "{Ó/Ní} [father] of [place]"],
+    scottish: ["{Mac/Nic} [father]", "{Mac/Nic} [father] of [place]", "{Mac/Nic} [father] Mac [child]", "[place] {Mac/Nic} [father]"],
+    norse: ["[father]{son/dottir}", "[father]{son/dottir} of [place]", "[father]s{son/dottir}", "[place] [father]{son/dottir}"],
     german: ["von [place]", "zu [place]", "von und zu [place]", "von [place] zu [place]", "vom [place]", "von der [place]"],
   },
 };

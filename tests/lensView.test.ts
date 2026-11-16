@@ -296,7 +296,8 @@ test("world: the table of §7.1, both ways, for every era and band", () => {
 test("era: runs, bands and their labels, and how choosing one stores an era", () => {
   const labels = (m: string, parts = {}) => lensClause(m, stateOf(m, parts)).era!.choices.map((c) => c.label);
   assert.deepEqual(labels("routeNames"), ["ancient", "medieval", "early modern", "steam age", "modern", "near future", "interstellar"]);
-  assert.deepEqual(labels("peoplesTongues"), ["ancient", "medieval", "early modern to modern", "future"]);
+  // 5d §14.1: the era-tagged words of 5c make the peoples' eras differ one by one.
+  assert.deepEqual(labels("peoplesTongues"), ["ancient", "medieval", "early modern", "steam age", "modern", "future"]);
   assert.deepEqual(labels("skyNames"), ["ancient to modern", "future"]);
   assert.deepEqual(labels("deityNames"), ["ancient", "medieval to early modern", "steam age", "modern", "future"]);
   assert.deepEqual(labels("mountainNames"), ["ancient", "medieval", "early modern", "steam age", "modern", "future"]);
@@ -304,9 +305,9 @@ test("era: runs, bands and their labels, and how choosing one stores an era", ()
   assert.deepEqual(labels("realms"), ["ancient", "medieval", "early modern", "modern", "near future", "interstellar"]);
   // Choosing a run keeps the stored era if the run holds it; otherwise medieval if it does; otherwise the run's first.
   const peoples = (era: string) => stateOf("peoplesTongues", { era });
-  assert.equal(lensClause("peoplesTongues", peoples("ST")).era!.current, "EM-ST-MO");
-  assert.equal(applyLensChoice("peoplesTongues", peoples("ST"), "era", "EM-ST-MO").era, "ST");
-  assert.equal(applyLensChoice("peoplesTongues", peoples("AN"), "era", "EM-ST-MO").era, "EM");
+  assert.equal(lensClause("peoplesTongues", peoples("ST")).era!.current, "ST");
+  assert.equal(applyLensChoice("peoplesTongues", peoples("ST"), "era", "ST").era, "ST");
+  assert.equal(applyLensChoice("peoplesTongues", peoples("AN"), "era", "EM").era, "EM");
   assert.equal(applyLensChoice("deityNames", stateOf("deityNames", { era: "AN" }), "era", "MD-EM").era, "MD");
   assert.equal(applyLensChoice("deityNames", stateOf("deityNames", { era: "EM" }), "era", "MD-EM").era, "EM");
   assert.equal(applyLensChoice("skyNames", stateOf("skyNames", { era: "IS" }), "era", "AN-MD-EM-ST-MO").era, "MD");

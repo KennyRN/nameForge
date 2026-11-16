@@ -1,5 +1,6 @@
 // Northern Europe brief 5b §12.3: the well-known real places and towns (src/data/real-places.json).
 import data from "./data/real-places.json";
+import { isLiveryNearMatch } from "./guildForms";
 
 const FEATURES = new Set((data as { places: string[] }).places.map((n) => n.toLowerCase()));
 const TOWNS = new Set((data as { towns: string[] }).towns.map((n) => n.toLowerCase()));
@@ -25,5 +26,10 @@ export function isRealTownName(name: string): boolean {
 
 // Northern Europe brief 5c §13.4: the well-known real groups, realms, craft and objects (the Hanseatic League, the Black Watch, the Mary Rose…).
 const GROUPS = new Set(((data as unknown as { groups: string[] }).groups).map((n) => n.toLowerCase().replace(/^the\s+/, "")));
+const REAL_PHRASE = new RegExp(
+  `(?:^|[^a-z])(?:${[...GROUPS].filter((g) => g.split(" ").length >= 2).map((g) => g.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?:$|[^a-z])`,
+);
+/** 5d §14.1 item 6: whether a name holds a well-known real group, realm or craft as a whole phrase ("Black Watch of the Eagle", "Kingdom of the Isles and the Tinners"). */
+export const containsRealGroup = (name: string): boolean => REAL_PHRASE.test(name.toLowerCase().replace(/^the\s+/, "").replace(/[’]/g, "'"));
 /** Whether a name is a well-known real group, realm, craft or object ("the Black Watch", "Mary Rose"); a fixed name never is. */
-export const isRealGroup = (name: string): boolean => GROUPS.has(name.trim().toLowerCase().replace(/^the\s+/, "").replace(/[’]/g, "'"));
+export const isRealGroup = (name: string): boolean => GROUPS.has(name.trim().toLowerCase().replace(/^the\s+/, "").replace(/[’]/g, "'")) || isLiveryNearMatch(name);

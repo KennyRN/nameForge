@@ -117,11 +117,12 @@ test("powers and factions: three bands; science fiction is realistic only; no re
   for (const seed of SEEDS) assert.deepEqual(group({ genre: "scifi", fantastic: true }, seed), group({ genre: "scifi", fantastic: false }, seed), `science fiction ignores the fantastic switch (${seed})`);
 });
 
-test("ships and boats: the fantastic switch changes nothing in any band; the bands are real", () => {
+test("ships and boats: the fantastic switch changes the names in the pre-industrial and the industrial and modern bands (5d §14.1: fantastic words), nothing in the future; the bands are real", () => {
   assert.deepEqual(offers.ships.eras, ["pre-industrial", "industrial and modern", "future"]);
-  assert.deepEqual(offers.ships.worlds, { "pre-industrial": ["plain"], "industrial and modern": ["plain"], future: ["plain"] });
+  assert.deepEqual(offers.ships.worlds, { "pre-industrial": ["plain", "fantastic"], "industrial and modern": ["plain", "fantastic"], future: ["plain"] });
   const ship = (over: object, seed: number): string[] => names(generateVesselNames({ ...defaultVesselState("ships"), module: "ships", ...over, count: 12, seed } as never));
-  for (const seed of SEEDS) for (const genre of ["fantasy", "modern", "scifi"]) assert.deepEqual(ship({ genre, fantastic: true }, seed), ship({ genre, fantastic: false }, seed), `${genre} ${seed}`);
+  for (const seed of SEEDS) assert.deepEqual(ship({ genre: "scifi", fantastic: true }, seed), ship({ genre: "scifi", fantastic: false }, seed), `scifi ${seed}`);
+  assert.ok(differs(ship, { genre: "fantasy", culture: "norse", fantastic: false }, { genre: "fantasy", culture: "norse", fantastic: true }));
   // The genres themselves are different engines' worth of names.
   // The probe records the bands a module offers; it doesn't test that the genre itself changes the names
   // (for ships the technology carries the age, so at the default technology the genres can give the same names).

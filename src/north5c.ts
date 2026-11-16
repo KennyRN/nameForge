@@ -6,12 +6,17 @@
 import north from "./data/north5c.json";
 import { mulberry32 } from "./markov";
 import { SIGNATURE_SHARE } from "./northData";
-import { isRealGroup } from "./realPlaces";
+import { containsRealGroup, isRealGroup } from "./realPlaces";
 
-type Frame = [string, number];
+/** A frame: its pattern, its weight and, for a fantastic one, its tag ("*"). */
+type Frame = [string, number] | [string, number, string];
 interface CultureContent {
   /** The three lists of nouns, one per kind of the module. */
   n: string[][];
+  /** 5d §14: each noun's tag, parallel to `n`: eras ("AN-EM", "ST-MO", "MO") and a trailing "*" for a fantastic word; "" when it has none. */
+  nt?: string[][];
+  /** 5d §14.2: the culture's ranks as pairs, man's form first (`{R}` in a frame); where a rank has no woman's form the woman is "Lady". */
+  r?: [string, string][];
   /** The culture's adjectives. */
   a: string[];
   f: Frame[];
@@ -56,6 +61,52 @@ function sources(module: string, key: string): { content: CultureContent; weight
   return [{ content: own, weight: 1 }, ...CELTIC_NATIONS.map((k) => ({ content: m.cultures[k], weight: CELTIC_5C_WEIGHT }))];
 }
 
+/** What a name is drawn for (5d §14.1): the eras it may sit in, whether the setting is fantastic, and the bearer's sex (for a rank). */
+export interface DrawCtx {
+  eras?: readonly string[];
+  fantastic?: boolean;
+  sex?: "male" | "female";
+}
+const ERA_ORDER = ["AN", "MD", "EM", "ST", "MO", "NF", "IS"];
+const tagCache = new Map<string, { eras: string[] | null; h: boolean }>();
+/** A tag read: its eras (null for any) and whether it is a fantastic word. */
+export function readTag(tag: string | undefined): { eras: string[] | null; h: boolean } {
+  const key = tag ?? "";
+  let r = tagCache.get(key);
+  if (!r) {
+    const h = key.endsWith("*");
+    const span = h ? key.slice(0, -1) : key;
+    let eras: string[] | null = null;
+    if (span) {
+      const m = span.match(/^([A-Z]{2})(?:-([A-Z]{2}))?$/);
+      if (m) {
+        const from = ERA_ORDER.indexOf(m[1]);
+        const to = m[2] ? ERA_ORDER.indexOf(m[2]) : from;
+        eras = ERA_ORDER.slice(from, to + 1);
+      }
+    }
+    r = { eras, h };
+    tagCache.set(key, r);
+  }
+  return r;
+}
+/** Whether a tagged entry may be drawn in a context: a fantastic one only in a fantastic setting, an era one only where its eras meet the context's (unknown eras filter nothing). */
+export function tagOk(tag: string | undefined, ctx: DrawCtx | undefined): boolean {
+  if (!tag) return true;
+  const t = readTag(tag);
+  if (t.h && !ctx?.fantastic) return false;
+  if (t.eras && ctx?.eras && ctx.eras.length > 0 && !t.eras.some((e) => ctx.eras!.includes(e))) return false;
+  return true;
+}
+/** The eras a genre reads as, for the modules whose engine has no era of its own (5d §14.1). */
+export const GENRE_ERAS: Readonly<Record<string, readonly string[]>> = { fantasy: ["AN", "MD", "EM"], modern: ["ST", "MO"], scifi: ["NF", "IS"] };
+/** The rank of a pair for a sex. */
+const rankOf = (pair: [string, string], sex: "male" | "female"): string => (sex === "female" ? pair[1] : pair[0]);
+/** `{Graf/Graefin}` in a native form: the man's and the woman's. */
+export function resolveSexed(text: string, sex: "male" | "female"): string {
+  return text.replace(/\{([^{}/]+)\/([^{}/]+)\}/g, (_m, a: string, b: string) => (sex === "female" ? b : a));
+}
+
 const pick = <T>(list: readonly T[], rng: () => number): T => list[Math.min(list.length - 1, Math.floor(rng() * list.length))];
 function pickWeighted<T>(items: readonly [T, number][], rng: () => number): T {
   let total = 0;
@@ -72,25 +123,50 @@ function pickWeighted<T>(items: readonly [T, number][], rng: () => number): T {
 const NOUN_LIMIT = 2;
 
 /** A drawer of signature names for one module and culture, one per batch (it remembers the nouns it has used). */
-export function signatureDrawer(module: string, culture: string | undefined, frameFilter?: (pattern: string) => boolean, capitalise = true): ((rng: () => number) => string | undefined) | undefined {
+export function signatureDrawer(module: string, culture: string | undefined, frameFilter?: (pattern: string) => boolean, capitalise = true): ((rng: () => number, ctx?: DrawCtx) => string | undefined) | undefined {
   const key = contentKey(culture);
   if (!key) return undefined;
   const parts = sources(module, key).map((p) => ({ ...p, content: { ...p.content, f: frameFilter ? p.content.f.filter(([f]) => frameFilter(f)) : p.content.f } })).filter((p) => p.content.f.length > 0);
   if (parts.length === 0) return undefined;
   const used = new Map<string, number>();
-  return (rng) => {
+  return (rng, ctx) => {
     for (let attempt = 0; attempt < 12; attempt++) {
       const { content } = pickWeighted(parts.map((p) => [p, p.weight] as [typeof p, number]), rng);
-      const frame = pickWeighted(content.f, rng);
+      // 5d §14.1: a fantastic frame only where the setting is fantastic.
+      const frames = content.f.filter((f) => tagOk(f[2], ctx));
+      if (frames.length === 0) continue;
+      const frame = pickWeighted(frames.map((f) => [f[0], f[1]] as [string, number]), rng);
       const chosen: string[] = [];
-      const text = frame.replace(/\{(N[012]|A)\}/g, (_m, slot: string) => {
-        const list = slot === "A" ? content.a : content.n[Number(slot[1])];
-        const fresh = list.filter((w) => (used.get(w) ?? 0) < NOUN_LIMIT);
-        const word = pick(fresh.length ? fresh : list, rng);
+      let failed = false;
+      const text = frame.replace(/\{(N[012]|A|R)\}/g, (_m, slot: string) => {
+        if (slot === "R") {
+          const pairs = content.r ?? [];
+          if (pairs.length === 0) {
+            failed = true;
+            return "";
+          }
+          return rankOf(pick(pairs, rng), ctx?.sex ?? (rng() < 0.5 ? "female" : "male"));
+        }
+        if (slot === "A") {
+          const word = pick(content.a, rng);
+          chosen.push(word);
+          return word;
+        }
+        const i = Number(slot[1]);
+        const list = content.n[i];
+        const tags = content.nt?.[i];
+        const ok = list.filter((w, j) => tagOk(tags?.[j], ctx));
+        const fresh = ok.filter((w) => (used.get(w) ?? 0) < NOUN_LIMIT);
+        const pool = fresh.length ? fresh : ok;
+        if (pool.length === 0) {
+          failed = true;
+          return "";
+        }
+        const word = pick(pool, rng);
         chosen.push(word);
         return word;
       });
-      if (text.length > 60) continue;
+      if (failed || text.length > 60) continue;
       for (const w of chosen) used.set(w, (used.get(w) ?? 0) + 1);
       return capitalise ? text.charAt(0).toUpperCase() + text.slice(1) : text;
     }
@@ -116,23 +192,43 @@ export function applySignature<T extends { text: string }>(
     native?: { forms: string[]; share: number; all?: boolean };
     /** A name that is left as it is (a registration, a prefix, a pack's). */
     keep?: (n: T) => boolean;
+    /** 5d §14.1: what the batch is drawn for (eras, fantastic), and per name (a craft's technology level): the signature words are drawn to fit. */
+    ctx?: DrawCtx;
+    ctxOf?: (n: T) => DrawCtx | undefined;
+    /** 5d §14.1: tribes and kin groups take exactly their share of the names (rounded up) instead of drawing each name's share. */
+    quota?: boolean;
   } = {},
 ): T[] {
   const draw = signatureDrawer(module, culture);
   if (!draw || names.length === 0) return names;
   const extra = opts.allowed ?? (() => true);
   // Brief 5c §13.4: no well-known real group, realm, craft or object.
-  const allowed = (text: string) => !isRealGroup(text) && extra(text);
+  const allowed = (text: string) => !isRealGroup(text) && !containsRealGroup(text) && extra(text);
   const set = opts.set ?? ((n: T, text: string): T => ({ ...n, text }));
   const rng = mulberry32((seed ^ 0x5c5c5c5c) >>> 0);
   const seen = new Set(names.map((n) => n.text.toLowerCase()));
-  return names.map((n) => {
+  // Tribes: exactly ceil(share × batch) names, at positions the stream picks (a batch of five shows two, not "about two").
+  let chosen: Set<number> | undefined;
+  if (opts.quota) {
+    const idx = names.map((_n, i) => i).filter((i) => !opts.keep?.(names[i]));
+    for (let i = idx.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [idx[i], idx[j]] = [idx[j], idx[i]];
+    }
+    chosen = new Set(idx.slice(0, Math.min(idx.length, Math.ceil(names.length * SIGNATURE_SHARE))));
+  }
+  return names.map((n, index) => {
     if (opts.keep?.(n)) return n;
     const nativeAll = !!opts.native?.all && opts.native.forms.length > 0;
-    if (!nativeAll && rng() >= SIGNATURE_SHARE) return n;
+    if (chosen) {
+      if (!chosen.has(index)) return n;
+    } else if (!nativeAll && rng() >= SIGNATURE_SHARE) return n;
     const native = opts.native && opts.native.forms.length > 0 && rng() < opts.native.share;
+    const gender = (n as unknown as { gender?: unknown }).gender;
+    const sex: "male" | "female" = gender === "male" || gender === "female" ? gender : rng() < 0.5 ? "female" : "male";
+    const ctx: DrawCtx = { ...opts.ctx, ...opts.ctxOf?.(n), sex };
     for (let attempt = 0; attempt < 6; attempt++) {
-      const text = native ? pick(opts.native!.forms, rng) : draw(rng);
+      const text = native ? resolveSexed(pick(opts.native!.forms, rng), sex) : draw(rng, ctx);
       if (!text || seen.has(text.toLowerCase()) || !allowed(text)) continue;
       seen.add(text.toLowerCase());
       return set(n, text);

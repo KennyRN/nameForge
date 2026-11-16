@@ -255,9 +255,17 @@ const settled = (name: string | undefined, req: FillRequest): string | undefined
 /** A drawn place whose own brackets are filled; one that still holds a bracket is drawn again (a few times). */
 const placeFill = (draw: () => string | undefined, req: FillRequest): string | undefined => {
   let last: string | undefined;
-  for (let attempt = 0; attempt < 6; attempt++) {
+  for (let attempt = 0; attempt < (req.settlementPlaces ? 12 : 6); attempt++) {
     last = settled(draw(), req);
     if (last !== undefined && !/\[/.test(last) && !isRealPlace(last)) return last;
+  }
+  // Brief 5d §14.1 item 3: a place in a title, group, realm or craft name is a settlement's, never a person's: General's settlement names are the last resort.
+  if (req.settlementPlaces && (req.mode === "real" || req.mode === "generated")) {
+    for (let attempt = 0; attempt < 12; attempt++) {
+      const general = settled(fillPlace("general", req.region, req.rng, !!req.placeBefore), req);
+      if (general !== undefined && !/\[/.test(general) && !isRealPlace(general)) return general;
+    }
+    return undefined;
   }
   // Northern Europe brief 5c §13.1: no bracket from a fill reaches another module's output in real or generated mode: a drawn name that still holds one gives way to a person's name.
   if (last !== undefined && /\[/.test(last) && (req.mode === "real" || req.mode === "generated")) {
@@ -273,6 +281,7 @@ const JOINING = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", "wi
 /** Whether the rest of a name already holds a word of its own besides joining words ("Hanse Quay", "Coast of"). */
 const hasOwnWords = (rest: string | undefined): boolean => (rest ?? "").split(/[^A-Za-z]+/).some((w) => w.length > 1 && !JOINING.has(w.toLowerCase()));
 function germanPlace(req: FillRequest): string | undefined {
+  if (req.settlementPlaces) return undefined;
   // Brief 5b §12.3: a name takes one fill and one generic: with a feature word beside it (or another place fill) the German place is a bare name ("Becker").
   if (req.placeBefore || hasOwnWords(req.rest)) {
     const bare = fillSlots(req.rng() < 0.5 ? "[surname]" : "[name]", { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });

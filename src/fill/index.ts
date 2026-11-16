@@ -39,6 +39,8 @@ export interface FillContext {
   batchSeen?: Map<string, Set<string>>;
   /** Northern Europe brief 5c §13.1: when set, only brackets with these labels (lower case) are filled. */
   onlyLabels?: ReadonlySet<string>;
+  /** Brief 5d §14.1 item 3: a `[place]` is filled from settlement names only, never a person's name (the group, bynames, realms and craft modules). */
+  settlementPlaces?: boolean;
   /** The sources' resolvers; the registered ones when absent. */
   resolvers?: Resolvers;
 }
@@ -63,6 +65,8 @@ export interface FillRequest {
   rest?: string;
   /** Brief 5b §12.3: the name already holds a place fill: a name takes at most one, so this one is a single word. */
   placeBefore?: boolean;
+  /** Brief 5d §14.1 item 3: the place comes from settlement names only. */
+  settlementPlaces?: boolean;
   /** Fills already used for this label in this name: a resolver should avoid them. */
   avoid: ReadonlySet<string>;
 }
@@ -215,7 +219,7 @@ export function fillSlots(name: string, ctx: FillContext): string {
       // Brief 5b §12.3: a name takes at most one place fill; a second is a single word.
       const placeBefore = place && placeDone > 0;
       for (let attempt = 0; attempt < tries; attempt++) {
-        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...(plain ? { plain } : {}), ...(place ? { rest: rest.replace(/\[[^\]]*\]/g, " ").replace(/\s+/g, " ").trim(), ...(placeBefore ? { placeBefore } : {}) } : {}), avoid });
+        fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...(plain ? { plain } : {}), ...(place ? { rest: rest.replace(/\[[^\]]*\]/g, " ").replace(/\s+/g, " ").trim(), ...(placeBefore ? { placeBefore } : {}), ...(ctx.settlementPlaces ? { settlementPlaces: true } : {}) } : {}), avoid });
         if (fill === undefined || (!avoid.has(fill) && !(guarded && repeatsGeneric(fill, rest)))) break;
       }
       if (fill === undefined) return whole;

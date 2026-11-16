@@ -47,10 +47,10 @@ export const FRAMES = {
     comp: T("the {N0}*3~the {N1}*3~the {N2}*3~{N1}-{N0}*1~the {A} {N0}*1~{N0} the {N1}*1~the {N1} and {N2}*1~the {A} {N2}*1~the {N2} {N0}*1~the {N0} {N2}*1"),
   },
   title: {
-    adj: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{N0} and {N1}*1~{N1} to the {N0}*1~Master {N1}*1~{A} {N0}*1~Your {N2}*1~Master {N1} of [place]*1"),
-    of: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{N0} and {N1}*1~{N1} of the {A} {N0}*1~Master {N1}*1~{A} {N0}*1~Your {N2}*1~Master {N1} of [place]*1"),
-    poss: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{N0} and {N1}*1~{N1} to the {N0}*1~[founder]'s {N1}*1~{A} {N0}*1~Your {N2}*1~{A} {N1}*1"),
-    comp: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{N0} and {N1}*1~{N1} to the {N0}*1~Master {N1}*1~{A} {N0}*1~Your {N2}*1~{A} {N1} of [place]*1"),
+    adj: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{R} of [place]*3~{N1} to the {N0}*1~{R} [name]*2~{A} {N0}*1~Your {N2}*1~{N1} to {R} [name]*1"),
+    of: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{R} of [place]*3~{N1} of the {A} {N0}*1~{R} [name]*2~{A} {N0}*1~Your {N2}*1~{N1} to {R} [name]*1"),
+    poss: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{R} of [place]*3~{N1} to the {N0}*1~{R} [name]*2~{A} {N0}*1~Your {N2}*1~{A} {N1}*1"),
+    comp: T("{N0} of [place]*3~{N1} of [place]*3~{N0}*2~{N1}*2~{R} of [place]*3~{N1} to the {N0}*1~{R} [name]*2~{A} {N0}*1~Your {N2}*1~{A} {N1} of [place]*1"),
   },
   family: {
     adj: T("{N0}*3~{N1}*2~{N2}*2~{A} {N0}*1~{N1} {N0}*2~{N0} of {N1}*1~{A} {N1}*1~{N2} of the {N0}*1~{N0}-{N1}*1~{N1}side*1"),
@@ -90,3 +90,19 @@ export const CELTIC_FRAMES = {
   people: T("the {N0}*3~the {A} {N0}*2~the {A} {N1}*2~the {N2} {N0}*1"),
   tribe: T("{N0} of the {N1}*3~The {A} {N0}*2~{N0} of the {N2}*2~The {N1} {N0}*1"),
 };
+
+// 5d §14.1: the last two frames of every class and style are fantastic ones (drawn only where the setting is fantastic), so each module's
+// fantastic style cells have shapes as well as words. A frame is [pattern, weight] or [pattern, weight, tag].
+const FANT = {
+  group: [["The Spellbound {N0}", 1, "*"], ["{N0} of the Starlit {N1}", 1, "*"]],
+  tribe: [["The Spirit {N0}", 1, "*"], ["{N0} of the Moonlit {N1}", 1, "*"]],
+  vessel: [["Ghost {N1}", 1, "*"], ["Spellbound {N1}", 1, "*"]],
+  epithet: [["the Starborn", 1, "*"], ["the Moon-Touched", 1, "*"]],
+  title: [["Spellwarden of [place]", 1, "*"], ["Dragon-Warden of [place]", 1, "*"]],
+  family: [["{N1} Moonborn", 1, "*"], ["Starborn {N0}", 1, "*"]],
+  realm: [["The Dragon {N0}", 1, "*"], ["{N0} of the Fey {N1}", 1, "*"]],
+  people: [["the Fey {N0}", 1, "*"], ["the Moonlit {N0}", 1, "*"]],
+};
+for (const [cls, styles] of Object.entries(FRAMES)) {
+  for (const style of Object.keys(styles)) styles[style] = [...styles[style].slice(0, 8), ...FANT[cls]];
+}

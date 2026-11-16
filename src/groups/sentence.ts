@@ -137,6 +137,17 @@ export function cultureMenu(state: Pick<GroupSentenceState, "tradition" | "cultu
   return out;
 }
 
+/** Traditions that are broad mixes, not one culture: a stored one highlights nothing (5d §14.1 item 8). */
+const BROAD_TRADITIONS = new Set(["germanic"]);
+/** The menu entry a stored tradition highlights: the culture of the same key, or the only culture that reads it; none for a mix or a tradition several cultures read. */
+function highlightedFor(menu: { id: string }[], key: string): string | undefined {
+  const same = menu.find((c) => c.id === key);
+  if (same) return same.id;
+  if (BROAD_TRADITIONS.has(key)) return undefined;
+  const readers = menu.filter((c) => CULTURE_TRADITION[c.id] === key);
+  return readers.length === 1 ? readers[0].id : undefined;
+}
+
 export function groupSentence(state: GroupSentenceState, family: GroupFamily): GroupSegment[] {
   const out: GroupSegment[] = [];
   const tradition = TRIBAL_TRADITIONS.find((t) => t.key === state.tradition) ?? TRIBAL_TRADITIONS[0];
@@ -148,7 +159,7 @@ export function groupSentence(state: GroupSentenceState, family: GroupFamily): G
     text: picked ? picked.label : tradition.label,
     title: tradition.key === "general" ? "No cultural flavour" : tradition.drawsOn,
     choices: menu,
-    current: picked?.id ?? menu.find((c) => c.id === state.tradition)?.id ?? menu.find((c) => CULTURE_TRADITION[c.id] === tradition.key)?.id ?? tradition.key,
+    current: picked?.id ?? highlightedFor(menu, tradition.key),
   });
   out.push("-themed ");
   const setting = groupSetting(state.genre, state.fantastic);

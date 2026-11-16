@@ -611,14 +611,19 @@ export function generateRealmNames(options: RealmOptions): RealmBatch {
   const ok = (text: string) => !block.has(normForBlock(text)) && !breaksRealmWords(text) && !breaksGroupColourRule(text) && (options.people !== "invented" || noBracket(text));
   return {
     ...batch,
-    names: applySignature(batch.names, "realms", requested, batch.seed, { allowed: ok, set: (n, text) => ({ ...n, text, official: text, short: text }) }),
+    names: applySignature(batch.names, "realms", requested, batch.seed, {
+      allowed: ok,
+      set: (n, text) => ({ ...n, text, official: text, short: text }),
+      // 5d §14.1: the era's words only, and fantastic ones only in a fantastic setting.
+      ctx: { eras: [eraCode(options.era ?? "medieval")], fantastic: !!options.fantastic && options.genre !== "scifi" },
+    }),
   };
 }
 
 function generateRealmNamesCore(options: RealmOptions): RealmBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateRealmNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era ?? options.genre });
+  if (fillMode) return fillPeopleBatch(generateRealmNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era ?? options.genre, settlementPlaces: true });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];

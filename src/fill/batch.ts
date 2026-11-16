@@ -24,6 +24,8 @@ export interface FillWhere {
   personAsFounder?: boolean;
   /** Northern Europe brief 5c §13.1: fill only these labels (a per-slot run). */
   onlyLabels?: ReadonlySet<string>;
+  /** Brief 5d §14.1 item 3: a `[place]` is filled from settlement names only (never a person's name). */
+  settlementPlaces?: boolean;
 }
 
 const sexOf = (n: object): "male" | "female" | undefined => {
@@ -39,7 +41,7 @@ export function fillPeopleBatch<T extends { names: { text: string }[]; seed: num
   const batchSeen = series ? undefined : new Map<string, Set<string>>();
   return {
     ...batch,
-    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, biome: where.biome, mode, rng, series, batchSeen, sex: sexOf(n), personAsFounder: where.personAsFounder, onlyLabels: where.onlyLabels }) })),
+    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, biome: where.biome, mode, rng, series, batchSeen, sex: sexOf(n), personAsFounder: where.personAsFounder, onlyLabels: where.onlyLabels, settlementPlaces: where.settlementPlaces }) })),
   };
 }
 

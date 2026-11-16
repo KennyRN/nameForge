@@ -1739,8 +1739,12 @@
      "MD"
     ],
     [
-     "EM",
-     "ST",
+     "EM"
+    ],
+    [
+     "ST"
+    ],
+    [
      "MO"
     ],
     [
@@ -1823,7 +1827,8 @@
    ],
    "worlds": {
     "pre-industrial": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "industrial and modern": [
      "plain",
@@ -1986,10 +1991,12 @@
    ],
    "worlds": {
     "pre-industrial": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "industrial and modern": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "future": [
      "plain"
@@ -2062,10 +2069,12 @@
    ],
    "worlds": {
     "pre-industrial": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "industrial and modern": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "future": [
      "plain"

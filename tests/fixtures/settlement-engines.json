@@ -4838,13 +4838,13 @@
  "bynames titles norman-british": [
   "Knight of [place]",
   "[name], Sir of Upper Goat Valley",
-  "Captain",
+  "Castellan",
   "[name], Lady of Dry Lake",
-  "[name], Lord of Bank Building",
+  "[name], Lady of Bank Building",
   "[name], Seneschal of Falconfell",
   "[name], Lord of Sand Way",
   "[name], Captain of the Harbour",
-  "Your Honour",
+  "Baroness [name]",
   "[name], Keeper of the West"
  ],
  "bynames titles aztec": [
@@ -4898,12 +4898,12 @@
  "bynames epithets norman-british": [
   "[name] the Tide",
   "[name] of the East",
-  "The Confessor",
-  "The Steadfast",
+  "The Victorious",
+  "The Hardy",
   "The Careful",
   "The Noble",
   "[name] Strongbow",
-  "Unready the Lame",
+  "The Wise",
   "[name] of the Ford",
   "[name], the Hart of Falconfell"
  ],
@@ -4957,15 +4957,15 @@
  ],
  "bynames familyNames norman-british": [
   "[name] Bradmarsh",
-  "Mason",
+  "Wheelwright",
   "[name] Black",
-  "Ford Cooper",
-  "Neighbour",
+  "Moor Fletcher",
+  "Thorn Hedge",
   "[name] Smith",
   "[name] Butcher",
   "[name] Haywood",
   "[name] Shelford",
-  "Moor Baker"
+  "Stout Hundredman"
  ],
  "bynames familyNames aztec": [
   "[name] of Place of Dogs",
@@ -5029,27 +5029,27 @@
  ],
  "vessels ships norman-british placeholders": [
   "Brass Evening Star",
-  "Leopard",
+  "Dolphin",
   "Formidable of Funnel",
   "Duncan",
-  "Daring",
-  "Leopard of [place]",
-  "Sacred Deliverance",
+  "Greyhound",
+  "Tyrant's Revenge",
+  "Tide Runner",
   "[place]",
-  "Dolphin",
+  "Turbine Weasel",
   "Peter of Rower"
  ],
  "vessels ships norman-british invented": [
   "Grey Grange",
-  "Hart",
-  "Stout Fortune",
-  "Golden Resolution",
-  "Saint Brannoc",
+  "Golden Leopard",
+  "Ellen Ingram",
+  "Pride of Mire of the Beech",
+  "Concord",
   "Sparrow Valley Venture",
   "Christopher",
-  "Hope",
+  "Middle Church",
   "Lion",
-  "Northern Surveyor"
+  "Dolphin"
  ],
  "vessels ships japanese placeholders": [
   "The Resolute",

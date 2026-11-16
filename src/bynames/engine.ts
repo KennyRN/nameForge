@@ -30,7 +30,7 @@ import { mulberry32 } from "../markov";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureSet, engineCulture, lensCultureLabel } from "../lens";
-import { applySignature, nativeForms, noBracket, NORTH_5C_CULTURES } from "../north5c";
+import { applySignature, contentKey, GENRE_ERAS, nativeForms, noBracket, NORTH_5C_CULTURES } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -220,6 +220,8 @@ interface Ctx {
   rng: () => number;
   setting: GroupSetting;
   culture: string;
+  /** Northern Europe brief 5d §14.1 item 4: the Celtic nation chosen (Welsh, Scottish, Irish, Cornish): the module reads Celtic's tables, but only the forms that nation uses. */
+  nation?: string;
   tone: GroupToneChoice;
   sex: Sex;
   native: boolean;
@@ -273,6 +275,25 @@ function drawEntries(ctx: Ctx, entries: BynameEntry[], opts: { nativeOnly?: bool
   const pick = pickWeighted(live, ctx.rng);
   if (pick) for (const t of pick.entry.t ?? []) ctx.drawn.add(t);
   return pick;
+}
+
+/** 5d §14.1 item 4: Celtic's native rank forms are Irish ones: another nation draws the English forms there; its own native forms are the batch's. */
+function ranksFor(ctx: Ctx): BynameEntry[] {
+  const all = BYNAMES_DATA.ranks[ctx.culture] ?? [];
+  if (ctx.culture !== "celtic" || !ctx.nation || ctx.nation === "irish") return all;
+  return all.map(({ n: _n, nm: _nm, nf: _nf, ...rest }) => rest as BynameEntry);
+}
+/** 5d §14.1 item 4: the patronymic forms a Celtic nation does not use ("ap" for a Scot, "Mac" for a Welshman). Irish daughters are "Ní", not "Nic". */
+function nationForm(nation: string | undefined, p: string): string | undefined {
+  if (!nation) return p;
+  const mac = /^(Mac|O')\{/.test(p);
+  const nic = /^Nic\{/.test(p);
+  const welsh = /^\{father:welsh\}|^ferch /.test(p);
+  if (nation === "welsh") return mac || nic ? undefined : p;
+  if (nation === "scottish") return /^O'\{/.test(p) || welsh ? undefined : p;
+  if (nation === "irish") return welsh ? undefined : nic ? p.replace(/^Nic\{father\}/, "Ní {father}") : p;
+  if (nation === "cornish") return mac || nic || welsh ? undefined : p;
+  return p;
 }
 
 export const stripPlural = (raw: string) => raw.split("|")[0].replace(/~$/, "");
@@ -476,7 +497,7 @@ function token(ctx: Ctx, raw: string): string | undefined {
       return half ? joinClosed(half, suffix) : undefined;
     }
     case "rank": {
-      const pick = drawEntries(ctx, BYNAMES_DATA.ranks[ctx.culture] ?? []);
+      const pick = drawEntries(ctx, ranksFor(ctx));
       if (!pick) return undefined;
       ctx.rankAfter = pick.entry.pos === "after";
       ctx.rankNative = pick.native;
@@ -661,9 +682,12 @@ const SON_OF = /^(son|daughter|grandson|father|mother) of /;
 
 function buildFamily(ctx: Ctx, kind: string): Built | undefined {
   const system = BYNAMES_DATA.family.cultures[ctx.culture];
-  const forms = (system?.forms[kind] ?? []).filter(
-    (f) => (f.l === "both" || f.l === (ctx.native ? "n" : "e")) && (!f.g || f.g === (ctx.sex === "male" ? "m" : "f")),
-  );
+  const forms = (system?.forms[kind] ?? [])
+    .filter((f) => (f.l === "both" || f.l === (ctx.native ? "n" : "e")) && (!f.g || f.g === (ctx.sex === "male" ? "m" : "f")))
+    .flatMap((f) => {
+      const p = ctx.culture === "celtic" ? nationForm(ctx.nation, f.p) : f.p;
+      return p === undefined ? [] : [p === f.p ? f : { ...f, p }];
+    });
   const kindTones = BYNAMES_DATA.family.kinds.find((k) => k.key === kind)?.t ?? [];
   const form = pickWeighted(
     forms.map((f): [Form, number] => [f, f.w * toneFactor([...kindTones, ...(f.t ?? [])], ctx.tone)]),
@@ -685,7 +709,26 @@ function buildFamily(ctx: Ctx, kind: string): Built | undefined {
 // ── Batches ─────────────────────────────────────────────────────────────────
 
 /** §3: a batch of unique names. */
+/** 5d §14.2: a rank that precedes "of" comes as the pair for the bearer's sex ("Marjory, Queen of the Five Kingdoms"). */
+const RANK_PAIRS: [string, string][] = [["King", "Queen"], ["Lord", "Lady"], ["Master", "Mistress"], ["Duke", "Duchess"], ["Count", "Countess"], ["Baron", "Baroness"], ["Prince", "Princess"]];
+export function sexedRanks(text: string, sex: Sex): string {
+  for (const [m, f] of RANK_PAIRS) {
+    const from = sex === "female" ? m : f;
+    const to = sex === "female" ? f : m;
+    const re = new RegExp(`\\b${from}\\b(?= of\\b)`);
+    if (re.test(text)) return text.replace(re, to);
+  }
+  return text;
+}
+
 export function generateBynames(options: BynameOptions): BynameBatch {
+  const batch = generateBynamesInner(options);
+  // 5d §14.2: the core cultures' titles carry the rank pair of the bearer's sex.
+  if (options.module !== "titles" || !contentKey(options.culture)) return batch;
+  return { ...batch, names: batch.names.map((n) => ({ ...n, text: sexedRanks(n.text, n.gender) })) };
+}
+
+function generateBynamesInner(options: BynameOptions): BynameBatch {
   const batch = generateBynamesCore(options);
   // Northern Europe brief 5c: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
   // The frames are names of any kind, so a chosen kind, a full style, a pack's names and the settlement kit keep the module's own.
@@ -701,12 +744,14 @@ export function generateBynames(options: BynameOptions): BynameBatch {
     patterns: BYNAMES_DATA.safeguards.blockPatterns.map((p) => new RegExp(p, "i")),
   };
   const ok = (text: string) => acceptable(guard, { text, part: text, kind: "", shape: "", tones: [] }, 8) && (options.people !== "invented" || noBracket(text));
-  return { ...batch, names: applySignature(batch.names, options.module, requested, batch.seed, { allowed: ok, native }) };
+  const genre = options.genre ?? "fantasy";
+  const ctx = { eras: GENRE_ERAS[genre], fantastic: !!options.fantastic && genre !== "scifi" };
+  return { ...batch, names: applySignature(batch.names, options.module, requested, batch.seed, { allowed: ok, native, ctx }) };
 }
 
 function generateBynamesCore(options: BynameOptions): BynameBatch {
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateBynames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre });
+  if (fillMode) return fillPeopleBatch(generateBynames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, settlementPlaces: true });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const module = options.module;
@@ -733,6 +778,7 @@ function generateBynamesCore(options: BynameOptions): BynameBatch {
     rng,
     setting,
     culture,
+    ...(["welsh", "scottish", "irish", "cornish"].includes(requested) ? { nation: requested } : {}),
     tone,
     source: options.source ?? "placeholder",
     draw: options.draw,

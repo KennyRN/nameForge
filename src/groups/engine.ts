@@ -14,7 +14,8 @@ import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementCont
 import { generatePlaceNames } from "../names/engine";
 import { britishPlaceNamesRecipe } from "../names/recipe";
 import { findTradition, TRIBAL_DATA, traditionForCulture, type TribalTradition } from "../tribes/engine";
-import { applySignature, contentKey, noBracket } from "../north5c";
+import { applySignature, contentKey, GENRE_ERAS, noBracket } from "../north5c";
+import { guildForm } from "../guildForms";
 import { generateWorldPlaceNames } from "../world/engine";
 import { scaleAllows, scaleLabel, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { catalogueWorld, drawStarKind, drawStarOfKind, type DrawStarOptions } from "../space/stars";
@@ -1270,6 +1271,24 @@ function generateSeries(
 
 /** §4: a batch of unique names. */
 export function generateGroupNames(options: GroupOptions): GroupBatch {
+  const batch = generateGroupNamesInner(options);
+  // 5d §14.1 item 6: a core culture's guilds take their own form in English; English livery forms are for English only, and none is all but a real company's name.
+  const culture = options.culture ?? (options.tradition && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(options.tradition) ? options.tradition : undefined);
+  if (!culture || culture === "general" || !contentKey(culture)) return batch;
+  const asKey = culture === "norman-british" || culture === "anglo-saxon" ? "english" : culture;
+  const seen = new Set(batch.names.map((n) => n.text.toLowerCase()));
+  return {
+    ...batch,
+    names: batch.names.map((n) => {
+      const text = guildForm(n.text, asKey);
+      if (text === n.text || seen.has(text.toLowerCase())) return n;
+      seen.add(text.toLowerCase());
+      return { ...n, text };
+    }),
+  };
+}
+
+function generateGroupNamesInner(options: GroupOptions): GroupBatch {
   const batch = generateGroupNamesCore(options);
   // Northern Europe brief 5c: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
   // A stored `celtic` or `germanic` tradition keeps its old draw; the eight new traditions, and a culture picked in the sentence, add the frames.
@@ -1280,13 +1299,16 @@ export function generateGroupNames(options: GroupOptions): GroupBatch {
   const guards = options.safeguards ?? { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };
   const block = new Set([...guards.block, ...(guards.flagListBlocks ? guards.flag : [])].map(norm));
   const ok = (text: string) => !block.has(norm(text)) && !breaksGroupColourRule(text) && (options.people !== "invented" || noBracket(text));
-  return { ...batch, names: applySignature(batch.names, family.section, culture, batch.seed, { allowed: ok }) };
+  // 5d §14.1: the words are drawn to fit the setting's eras and to be fantastic only where it is (a supernatural court always is).
+  const genre = options.genre ?? "fantasy";
+  const ctx = { eras: GENRE_ERAS[genre], fantastic: family.section === "supernaturalCourts" || (!!options.fantastic && genre !== "scifi") };
+  return { ...batch, names: applySignature(batch.names, family.section, culture, batch.seed, { allowed: ok, ctx }) };
 }
 
 function generateGroupNamesCore(options: GroupOptions): GroupBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateGroupNames({ ...options, people: "placeholders" }), fillMode, { culture: options.tradition === "english" ? "norman-british" : options.tradition, era: options.genre, series: options.series });
+  if (fillMode) return fillPeopleBatch(generateGroupNames({ ...options, people: "placeholders" }), fillMode, { culture: options.tradition === "english" ? "norman-british" : options.tradition, era: options.genre, series: options.series, settlementPlaces: true });
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family “${options.family}”.`);
   if (options.series && !options.type) throw new Error("Series needs a type.");

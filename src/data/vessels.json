@@ -6075,6 +6075,49 @@
      "working"
     ],
     "k": "T6-T7"
+   },
+   {
+    "p": "SMS",
+    "asked": [
+     "german"
+    ],
+    "fn": [
+     "war"
+    ],
+    "k": "T5"
+   },
+   {
+    "p": "HDMS",
+    "asked": [
+     "scandinavian"
+    ],
+    "fn": [
+     "war"
+    ],
+    "k": "T5-T7",
+    "x": 0.34
+   },
+   {
+    "p": "HNoMS",
+    "asked": [
+     "scandinavian"
+    ],
+    "fn": [
+     "war"
+    ],
+    "k": "T6-T7",
+    "x": 0.33
+   },
+   {
+    "p": "HSwMS",
+    "asked": [
+     "scandinavian"
+    ],
+    "fn": [
+     "war"
+    ],
+    "k": "T6-T7",
+    "x": 0.33
    }
   ],
   "sf": {

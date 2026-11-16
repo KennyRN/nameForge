@@ -683,8 +683,9 @@ export function generatePeopleRows(options: PeopleOptions): PeopleBatch {
   return {
     rows: rows.map((row) => {
       if (rng() >= SIGNATURE_SHARE) return row;
-      const people = peopleOf(rng);
-      const language = tongueOf(rng);
+      const ctx = { eras: options.era ? [options.era] : undefined, fantastic: true };
+      const people = peopleOf(rng, ctx);
+      const language = tongueOf(rng, ctx);
       if (!people || !language) return row;
       const changed = { ...row, people, language };
       return { ...changed, text: formatPeopleRow(changed, giving) };
