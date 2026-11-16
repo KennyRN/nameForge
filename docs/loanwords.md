@@ -199,3 +199,50 @@ Every non-English word the Northern Europe batches 5a and 5b use, checked on col
 | Wold | yes |  |
 | Wynd | yes |  |
 | Zawn | yes | kept by the brief: Cornish sea inlet; Collins has a user-submitted entry |
+
+## Batch 5c
+
+The words batch 5c uses that a standard dictionary has as a borrowing or a regional word, looked up on collinsdictionary.com (only the word was sent; 46 lookups). Found means Collins has an entry in the sense the tables use.
+
+| Word | In Collins | Result |
+|---|---|---|
+| Hanse | yes: a medieval merchants' guild | kept |
+| Landsknecht | yes: a German mercenary pikeman | kept |
+| Jaeger | yes: a marksman of a German or Austrian unit | kept |
+| Hussar | yes | kept |
+| Grenadier | yes | kept |
+| Coracle | yes | kept |
+| Curragh | yes: a variant spelling of currach | kept |
+| Puffer (the Clyde boat) | no: only the fish and "one who puffs" | replaced by Steam Coaster |
+| Lugger | yes | kept |
+| Pooka | yes | kept |
+| Banshee | yes | kept |
+| Kelpie | yes: a Scottish water spirit | kept |
+| Leprechaun | yes | kept |
+| Selkie | yes: a Scottish variant of silkie | kept |
+| Kobold | yes | kept |
+| Nixie | yes: a water spirit | kept |
+| Knocker (the Cornish mine spirit) | no: only the door and critic senses | replaced by Mine Sprite |
+| Pisky | yes: a Cornish sprite | kept |
+| Spriggan | no (found in 5a) | Treasure Guardian |
+| Claymore | yes | kept |
+| Targe | yes: archaic, a shield | kept |
+| Reiver | yes: Scottish and northern English | kept |
+| Kern | yes: a lightly armed foot soldier of Ireland or Scotland | kept |
+| Gallowglass | yes: see galloglass | kept |
+| Tolbooth | yes: a Scottish town hall | kept |
+| Stannary | yes | kept |
+| Skald | yes | kept |
+| Jarl | yes | kept |
+| Thane | yes | kept |
+| Landgrave | yes | kept |
+| Margrave | yes | kept |
+| Burgrave | yes | kept |
+| Knowe | no | replaced by Mound |
+| Verderer | yes | kept |
+| Bailie | yes: a Scottish magistrate | kept |
+| Justiciar | yes | kept |
+| Steelyard | yes | kept |
+| Strath | yes: a wide river valley | kept |
+
+Common dictionary words used as they are and not looked up in this run: Dirk, Plaid, Glen, Loch, Fjord, Skerry, Fell, Wold, Weald, Brogue, Doric, Zeppelin, Burgomaster, Almoner, Franklin, Hooker, Drifter. The native forms (ap, ferch, Mac, Nic, Ó, Ní, Graf, Markgraf, Freiherr, von, zu, Tywysog, Arglwydd, Brenin, Taoiseach, Ollamh, Mormaer, Toiseach, Jarl, Hersir, Lawspeaker) appear only in the bynames modules' native and mixed language settings and are not counted as English output.

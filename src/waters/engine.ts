@@ -373,7 +373,7 @@ function shipName(ctx: Ctx): string | undefined {
   let pool = pools.get(key);
   if (!pool) {
     const genre = ctx.era === "ST" || ctx.era === "MO" ? "modern" : ctx.era === "NF" || ctx.era === "IS" ? "scifi" : "fantasy";
-    pool = generateVesselNames({
+    pool = generateVesselNames({ signature: false,
       module: "ships",
       culture: VESSEL_CULTURE[ctx.culture.key] ?? engineCulture(ctx.culture.key),
       function: "explore",

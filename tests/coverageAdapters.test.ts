@@ -159,9 +159,10 @@ test("adapters are pure: running them twice gives the same rows", () => {
 test("realms: hand-counted cells (words/shapes), counted by hand from realms.json", () => {
   // A culture's own forms, its qualifying words (cultQualExtra), its tribal noun and its homeland word.
   assert.equal(cell("realms", "chinese"), "3/0", "cultQualExtra 2 + tribal 1");
-  assert.equal(cell("realms", "scandinavian"), "4/0", "norse: forms 2 + cultQualExtra 1 + tribal 1");
+  // Brief 5c adds each core culture's own thirty words and ten frames (Scandinavian also reads Norse's four).
+  assert.equal(cell("realms", "scandinavian"), "64/20", "norse: forms 2 + cultQualExtra 1 + tribal 1, and the batch's own 30 and 10 for Norse and for Scandinavian");
   assert.equal(cell("realms", "egyptian"), "5/0", "forms 1 + cultQualExtra 3 + tribal 1");
-  assert.equal(cell("realms", "english"), "5/0", "anglo-saxon tribal 1; norman-british forms 2 + tribal 1 + homeland 1");
+  assert.equal(cell("realms", "english"), "35/10", "anglo-saxon tribal 1; norman-british forms 2 + tribal 1 + homeland 1, and the batch's own 30 and 10");
   // Entries confined to an era: the weighted forms (era weights above nought), the modifiers and the
   // ideology words; ST has none because the realms have no steam age.
   assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 8, MD: 26, EM: 30, ST: 0, MO: 30, NF: 34, IS: 42 });

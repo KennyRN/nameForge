@@ -97,7 +97,7 @@ import {
 import { chooseGroup, DEFAULT_GROUP_STATE, effectiveCommodity, effectiveFront, effectiveScale, groupPresetState, groupSentence, groupSentenceText, type GroupSentenceState } from "./groups/sentence";
 import { isGroupSafeguardPackContent } from "./groups/safeguardPacks";
 import {
-  BYNAME_CULTURES,
+  BYNAME_CULTURES_5C,
   BYNAMES_DATA,
   type BynameModule,
   type BynameOptions,
@@ -4768,7 +4768,7 @@ export class NameForgeModal extends Modal {
   /** §12: "{culture} · {kind or module}", described by the sentence. */
   private openSaveBynamePreset(module: BynameModule) {
     const state = this.bynameState(module);
-    const culture = BYNAME_CULTURES.find((c) => c.key === state.culture)?.label ?? "General";
+    const culture = BYNAME_CULTURES_5C.find((c) => c.key === state.culture)?.label ?? "General";
     const kind = moduleKinds(module).find((k) => k.key === state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS[module]].join(" · ");
     const description = bynameSentenceText(bynameSentence(state, module, this.bynamePacks));
@@ -5287,6 +5287,7 @@ export class NameForgeModal extends Modal {
       catalogue: await this.readyCatalogue(),
         family: family.key,
         tradition: state.tradition,
+        culture: state.culture,
         type: state.type,
         genre: state.genre,
         fantastic: state.fantastic,

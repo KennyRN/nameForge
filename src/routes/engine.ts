@@ -398,7 +398,7 @@ export function routeFolk(cultureKey: string, rng: () => number, catalogue: Biom
   if (!pools) FOLK.set(catalogue, (pools = new Map()));
   let pool = pools.get(tradition);
   if (!pool) {
-    pool = generateTribalNames({ tradition, count: 120, seed: 1789, catalogue })
+    pool = generateTribalNames({ signature: false, tradition, count: 120, seed: 1789, catalogue })
       .names.map((n) => n.name.replace(/^the /i, ""))
       .filter((n) => !n.includes("["));
     pools.set(tradition, pool);
@@ -416,7 +416,7 @@ export function routeKingdom(cultureKey: string, routeEra: RouteEra, rng: () => 
   if (!pools) KINGDOMS.set(catalogue, (pools = new Map()));
   let pool = pools.get(key);
   if (!pool) {
-    pool = generateRealmNames({ culture: engineCulture(cultureKey), era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue })
+    pool = generateRealmNames({ signature: false, culture: engineCulture(cultureKey), era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue })
       .names.map((n) => n.text.replace(/^the /i, ""))
       .filter((n) => !n.includes("["));
     pools.set(key, pool);

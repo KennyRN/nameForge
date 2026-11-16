@@ -27,7 +27,7 @@
       "MF",
       "SF"
      ],
-     "weight": 25.0,
+     "weight": 25,
      "front": "society",
      "person": "founder",
      "description": "Hermetic brotherhoods, secret lodges and questers after hidden knowledge, from harmless to sinister",
@@ -35,22 +35,22 @@
       {
        "p": "{group} of the {entity}",
        "f": "B",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{group} of the {quality} {entity}",
        "f": "F",
-       "w": 30.0
+       "w": 30
       },
       {
        "p": "{group} of the {colourRich} {entity}",
        "f": "F",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "{quality} {group} of the {colourRich} {entity}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "grand"
        ]
@@ -58,19 +58,19 @@
       {
        "p": "{members} of the {entity}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "sa": "entity"
       },
       {
        "p": "{members} of the {quality} {entity}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "sa": "entity"
       },
       {
        "p": "{members} Beyond the {entity}",
        "f": "B",
-       "w": 3.0,
+       "w": 3,
        "t": [
         "strange"
        ]
@@ -78,22 +78,22 @@
       {
        "p": "{colourRich} {members}",
        "f": "E",
-       "w": 6.0
+       "w": 6
       },
       {
        "p": "{quality} {members}",
        "f": "E",
-       "w": 4.0
+       "w": 4
       },
       {
        "p": "the {colourRich} {group}",
        "f": "E",
-       "w": 5.0
+       "w": 5
       },
       {
        "p": "the {entity} {group}",
        "f": "E",
-       "w": 4.0,
+       "w": 4,
        "t": [
         "plain"
        ]
@@ -101,7 +101,7 @@
       {
        "p": "Most Ancient {group} of the {quality} {entity}",
        "f": "F",
-       "w": 2.0,
+       "w": 2,
        "t": [
         "grand"
        ]
@@ -109,7 +109,7 @@
       {
        "p": "Hermetic {group} of the {entity}",
        "f": "F",
-       "w": 1.0,
+       "w": 1,
        "s": [
         "FL",
         "FH",
@@ -131,7 +131,7 @@
       "MF",
       "SF"
      ],
-     "weight": 20.0,
+     "weight": 20,
      "front": "society",
      "person": "founder",
      "description": "Orders of working magicians, wizards' colleges, psychic orders",
@@ -139,22 +139,22 @@
       {
        "p": "{group} of the {entity}",
        "f": "B",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{group} of the {quality} {entity}",
        "f": "F",
-       "w": 30.0
+       "w": 30
       },
       {
        "p": "{group} of the {colourRich} {entity}",
        "f": "F",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "{quality} {group} of the {colourRich} {entity}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "grand"
        ]
@@ -162,19 +162,19 @@
       {
        "p": "{members} of the {entity}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "sa": "entity"
       },
       {
        "p": "{members} of the {quality} {entity}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "sa": "entity"
       },
       {
        "p": "{members} Beyond the {entity}",
        "f": "B",
-       "w": 3.0,
+       "w": 3,
        "t": [
         "strange"
        ]
@@ -182,22 +182,22 @@
       {
        "p": "{colourRich} {members}",
        "f": "E",
-       "w": 6.0
+       "w": 6
       },
       {
        "p": "{quality} {members}",
        "f": "E",
-       "w": 4.0
+       "w": 4
       },
       {
        "p": "the {colourRich} {group}",
        "f": "E",
-       "w": 5.0
+       "w": 5
       },
       {
        "p": "the {entity} {group}",
        "f": "E",
-       "w": 4.0,
+       "w": 4,
        "t": [
         "plain"
        ]
@@ -205,7 +205,7 @@
       {
        "p": "Most Ancient {group} of the {quality} {entity}",
        "f": "F",
-       "w": 2.0,
+       "w": 2,
        "t": [
         "grand"
        ]
@@ -213,7 +213,7 @@
       {
        "p": "Hermetic {group} of the {entity}",
        "f": "F",
-       "w": 1.0,
+       "w": 1,
        "s": [
         "FL",
         "FH",
@@ -227,7 +227,7 @@
       {
        "p": "College of the {quality} {entity}",
        "f": "F",
-       "w": 6.0,
+       "w": 6,
        "t": [
         "grand"
        ]
@@ -235,7 +235,7 @@
       {
        "p": "the {colourRich} Tower",
        "f": "E",
-       "w": 2.0,
+       "w": 2,
        "s": [
         "FH"
        ]
@@ -243,7 +243,7 @@
       {
        "p": "the {quality} Choir",
        "f": "E",
-       "w": 3.0,
+       "w": 3,
        "s": [
         "SF"
        ],
@@ -254,7 +254,7 @@
       {
        "p": "{entity} Collective",
        "f": "E",
-       "w": 2.0,
+       "w": 2,
        "s": [
         "SF"
        ],
@@ -275,7 +275,7 @@
       "MF",
       "SF"
      ],
-     "weight": 20.0,
+     "weight": 20,
      "front": null,
      "person": "founder",
      "description": "Monks, nuns, friars and religious houses",
@@ -283,7 +283,7 @@
       {
        "p": "Order of {holy}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -291,35 +291,35 @@
       {
        "p": "{holyMembers} of the {deity}",
        "f": "B",
-       "w": 6.0,
+       "w": 6,
        "deity": true
       },
       {
        "p": "{holyMembers} of {holy}",
        "f": "F",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{holyMembers} of the {holyEntity}",
        "f": "B",
-       "w": 20.0,
+       "w": 20,
        "sa": "holyEntity"
       },
       {
        "p": "{holyQuality} {holyMembers} of the {holyEntity}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "sa": "holyEntity"
       },
       {
        "p": "{holyGroup} of the {holyQuality} {holyEntity}",
        "f": "F",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "the {holyQuality} {holyMembers}",
        "f": "E",
-       "w": 12.0,
+       "w": 12,
        "t": [
         "plain"
        ]
@@ -327,7 +327,7 @@
       {
        "p": "the {habit} {holyMembers}",
        "f": "E",
-       "w": 6.0,
+       "w": 6,
        "filter": {
         "holyMembers": [
          "Friars",
@@ -343,7 +343,7 @@
       {
        "p": "the {holyEntity} {holyGroup}",
        "f": "E",
-       "w": 7.0,
+       "w": 7,
        "t": [
         "plain"
        ]
@@ -361,7 +361,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "society",
      "person": "prophet",
      "description": "Cults, heresies and doomsday faiths",
@@ -369,31 +369,31 @@
       {
        "p": "Children of the {deity}",
        "f": "B",
-       "w": 8.0,
+       "w": 8,
        "deity": true
       },
       {
        "p": "Cult of the {deity}",
        "f": "B",
-       "w": 6.0,
+       "w": 6,
        "deity": true
       },
       {
        "p": "Children of the {cultQuality} {cultEntity}",
        "f": "B",
-       "w": 18.0,
+       "w": 18,
        "sa": "cultEntity"
       },
       {
        "p": "Cult of the {cultQuality} {cultEntity}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "sa": "cultEntity"
       },
       {
        "p": "Church of the {cultQuality} {cultEntity}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "grand"
        ]
@@ -401,12 +401,12 @@
       {
        "p": "the {cultQuality} {cultGroup}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Those Who {verbPhrase}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -414,12 +414,12 @@
       {
        "p": "the {cultEntity:poss} {cultGroup}",
        "f": "E",
-       "w": 8.0
+       "w": 8
       },
       {
        "p": "{cultGroup} of the {ordinalWord} {cultEntity}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "strange"
        ]
@@ -427,12 +427,12 @@
       {
        "p": "the {cultName}",
        "f": "E",
-       "w": 8.0
+       "w": 8
       },
       {
        "p": "{person:poss} {cultGroup}",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -449,7 +449,7 @@
       "MR",
       "MF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": "society",
      "person": "founder",
      "description": "Witches' covens, druids' groves, cunning folk",
@@ -457,7 +457,7 @@
       {
        "p": "the {covenLand} Coven",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -465,12 +465,12 @@
       {
        "p": "Circle of the {covenEmblem}",
        "f": "B",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "{covenMembers} of the {colourRich} Moon",
        "f": "B",
-       "w": 6.0,
+       "w": 6,
        "t": [
         "strange"
        ]
@@ -478,7 +478,7 @@
       {
        "p": "the {covenEmblem} {covenGroup}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "light"
        ]
@@ -486,12 +486,12 @@
       {
        "p": "{covenGroup} of the {colour} {covenEmblem}",
        "f": "F",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "the {covenLand} {covenMembers}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -499,12 +499,12 @@
       {
        "p": "Grove of the {tree}",
        "f": "B",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {number} of the {covenLand}",
        "f": "E",
-       "w": 6.0,
+       "w": 6,
        "t": [
         "strange"
        ]
@@ -522,7 +522,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "teacher",
      "description": "Philosophical schools and followers of a teaching",
@@ -530,7 +530,7 @@
       {
        "p": "the {emblem} School",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -538,22 +538,22 @@
       {
        "p": "{schoolGroup} of the {schoolIdea}",
        "f": "B",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "the {schoolPlace} {schoolMembers}",
        "f": "E",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "Followers of the {schoolIdea}",
        "f": "B",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "{person:poss} School",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -561,7 +561,7 @@
       {
        "p": "Academy of the {quality} {entity}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -569,7 +569,7 @@
       {
        "p": "the {schoolIdea}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "light"
        ]
@@ -596,7 +596,7 @@
       "MF",
       "SF"
      ],
-     "weight": 35.0,
+     "weight": 35,
      "front": null,
      "person": "commander",
      "description": "Legions, regiments, battalions and starship troops",
@@ -604,7 +604,7 @@
       {
        "p": "{person:poss} {band}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -612,12 +612,12 @@
       {
        "p": "{desc} {band}",
        "f": "E",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "{desc} {desc} {unitGroup}",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grim"
        ]
@@ -625,17 +625,17 @@
       {
        "p": "{band} of the {land}",
        "f": "B",
-       "w": 5.0
+       "w": 5
       },
       {
        "p": "{band} of {element}",
        "f": "B",
-       "w": 4.0
+       "w": 4
       },
       {
        "p": "{ordinal} {unitGroup}",
        "f": "F",
-       "w": 12.0,
+       "w": 12,
        "t": [
         "plain"
        ]
@@ -644,7 +644,7 @@
        "p": "{ordinal} ({town}) Regiment of {regimentOf}",
        "self": true,
        "f": "F",
-       "w": 6.0,
+       "w": 6,
        "s": [
         "FL",
         "MR"
@@ -657,7 +657,7 @@
        "p": "{ordinal} {town} {arm}",
        "self": true,
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -665,7 +665,7 @@
       {
        "p": "{ordinalWord} {unitGroup} of the {land}",
        "f": "F",
-       "w": 6.0,
+       "w": 6,
        "s": [
         "FL",
         "FH"
@@ -678,7 +678,7 @@
        "p": "{ordinal} Battalion, {town} {arm}",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -691,7 +691,7 @@
       {
        "p": "the {nickname}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -705,7 +705,7 @@
       {
        "p": "{greek} {greek} {starBand}",
        "f": "E",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "SF"
        ]
@@ -713,7 +713,7 @@
       {
        "p": "{ordinal} {tech} {soldiers}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "SF"
        ]
@@ -721,7 +721,7 @@
       {
        "p": "Task Force {greek}",
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "MR",
         "SF"
@@ -736,7 +736,7 @@
       {
        "p": "{tech} {band}",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "SF"
        ]
@@ -754,7 +754,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": null,
      "person": "founder",
      "description": "Orders of knighthood and honour",
@@ -762,7 +762,7 @@
       {
        "p": "Order of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 25.0,
+       "w": 25,
        "t": [
         "grand"
        ]
@@ -770,12 +770,12 @@
       {
        "p": "Order of the {knightEmblem}",
        "f": "F",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "Knights of the {knightEmblem}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "FL",
         "FH",
@@ -786,7 +786,7 @@
       {
        "p": "Knights of the {colour} {knightEmblem}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -797,7 +797,7 @@
       {
        "p": "Most Noble Order of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "t": [
         "grand"
        ]
@@ -805,7 +805,7 @@
       {
        "p": "Order of {holy}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH",
@@ -816,7 +816,7 @@
       {
        "p": "Knights Protector of the {land}",
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "FL",
         "FH",
@@ -829,7 +829,7 @@
       {
        "p": "{chivMembers} of the {knightEmblem}",
        "f": "B",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH",
@@ -840,7 +840,7 @@
       {
        "p": "the {colour} Knights",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "FL",
         "FH",
@@ -854,7 +854,7 @@
       {
        "p": "the {knightEmblem} Knights",
        "f": "E",
-       "w": 6.0,
+       "w": 6,
        "s": [
         "FL",
         "FH",
@@ -868,7 +868,7 @@
       {
        "p": "the {colour} {knightEmblem:pl}",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "light"
        ]
@@ -877,7 +877,7 @@
        "p": "Royal {town} Order",
        "self": true,
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "MR"
        ],
@@ -889,7 +889,7 @@
        "p": "Order of {town}",
        "self": true,
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "MR"
        ]
@@ -897,7 +897,7 @@
       {
        "p": "Knights of {star}",
        "f": "F",
-       "w": 6.0,
+       "w": 6,
        "s": [
         "SF"
        ]
@@ -905,7 +905,7 @@
       {
        "p": "Order of the {tech} Star",
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "SF"
        ],
@@ -926,7 +926,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": null,
      "person": "captain",
      "description": "Free companies, sellswords and private military firms",
@@ -934,7 +934,7 @@
       {
        "p": "the {desc} {emblem} Company",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "s": [
         "FL",
         "FH",
@@ -948,7 +948,7 @@
       {
        "p": "the {colour} Company",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH",
@@ -962,7 +962,7 @@
       {
        "p": "{person:poss} {mercs}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -970,7 +970,7 @@
       {
        "p": "Free Company of the {emblem}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH"
@@ -983,7 +983,7 @@
        "p": "the {town} {mercs}",
        "self": true,
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -991,12 +991,12 @@
       {
        "p": "the {desc} {creatures}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{surname} {securitySuffix}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "MR",
         "MF",
@@ -1009,7 +1009,7 @@
       {
        "p": "{brandRoot} {securitySuffix}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -1029,7 +1029,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "admiral",
      "description": "Navies, squadrons and flotillas",
@@ -1037,7 +1037,7 @@
       {
        "p": "the {compass} Squadron",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -1045,7 +1045,7 @@
       {
        "p": "{ordinal} Fleet",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -1054,7 +1054,7 @@
        "p": "the {town} {fleetGroup}",
        "self": true,
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1063,7 +1063,7 @@
        "p": "{town} Navy",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -1076,12 +1076,12 @@
       {
        "p": "the {fleetQuality} Flotilla",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{ordinal} {tech} Flotilla",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -1089,7 +1089,7 @@
       {
        "p": "Task Group {greek}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "MR",
         "SF"
@@ -1104,7 +1104,7 @@
       {
        "p": "Squadron of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH"
@@ -1116,12 +1116,12 @@
       {
        "p": "the {colour} Fleet",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {land} Patrol",
        "f": "E",
-       "w": 5.0
+       "w": 5
       }
      ]
     },
@@ -1136,7 +1136,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "captain",
      "description": "City watches, constabularies, marshals and police",
@@ -1145,7 +1145,7 @@
        "p": "the {town} Watch",
        "self": true,
        "f": "B",
-       "w": 20.0,
+       "w": 20,
        "s": [
         "FL",
         "FH",
@@ -1160,7 +1160,7 @@
        "p": "{town} Constabulary",
        "self": true,
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "MR",
@@ -1176,7 +1176,7 @@
       {
        "p": "the {land} Watch",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH",
@@ -1186,7 +1186,7 @@
       {
        "p": "Bureau of {lawPursuit}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "MR",
         "MF",
@@ -1199,7 +1199,7 @@
       {
        "p": "{ordinal} Precinct",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF"
@@ -1211,7 +1211,7 @@
       {
        "p": "the {colour}-Coats",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -1225,7 +1225,7 @@
       {
        "p": "Wardens of the {land}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -1240,7 +1240,7 @@
        "p": "{town} Marshals",
        "self": true,
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "plain"
        ]
@@ -1249,7 +1249,7 @@
        "p": "{town} {enforcement}",
        "self": true,
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "SF"
        ]
@@ -1257,7 +1257,7 @@
       {
        "p": "{watchGroup} of the {land}",
        "f": "B",
-       "w": 6.0
+       "w": 6
       }
      ]
     },
@@ -1271,7 +1271,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "captain",
      "description": "Bandits, pirates, corsairs and raiders",
@@ -1279,7 +1279,7 @@
       {
        "p": "Brethren of the {colour} {raiderEmblem}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -1292,7 +1292,7 @@
       {
        "p": "{person:poss} {raiders}",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -1300,7 +1300,7 @@
       {
        "p": "the {desc} {gear}",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "grim"
        ]
@@ -1308,17 +1308,17 @@
       {
        "p": "{raiders} of the {land}",
        "f": "B",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "the {land} {raiders}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {tech} {raiders}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "SF"
        ]
@@ -1326,7 +1326,7 @@
       {
        "p": "the {colour} {creatures}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       }
      ]
     },
@@ -1340,7 +1340,7 @@
       "MF",
       "SF"
      ],
-     "weight": 5.0,
+     "weight": 5,
      "front": null,
      "person": "founder",
      "description": "Sworn guardians of a pass, coast or tower",
@@ -1348,17 +1348,17 @@
       {
        "p": "{warders} of the {land}",
        "f": "B",
-       "w": 40.0
+       "w": 40
       },
       {
        "p": "the {land} {warders}",
        "f": "E",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "Guardians of the {desc} {land}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -1366,7 +1366,7 @@
       {
        "p": "the {colour} Watch",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1374,7 +1374,7 @@
       {
        "p": "Keepers of the {knightEmblem}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "strange"
        ]
@@ -1399,7 +1399,7 @@
       "FH",
       "MF"
      ],
-     "weight": 25.0,
+     "weight": 25,
      "front": "thieves",
      "person": "leader",
      "description": "Guilds of thieves, cutpurses and housebreakers",
@@ -1407,22 +1407,22 @@
       {
        "p": "the {shade} {uWeapon/uItem}",
        "f": "E",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "{shade} {agents}",
        "f": "E",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "{thiefGroup} of the {uItem}",
        "f": "B",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "the {agents:poss} {thiefGroup}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1430,7 +1430,7 @@
       {
        "p": "the {uCreature}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "light"
        ]
@@ -1438,12 +1438,12 @@
       {
        "p": "the {shade} {uCreature}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{person:poss} {agents}",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -1452,7 +1452,7 @@
        "p": "the {town} {thiefGroup}",
        "self": true,
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -1460,7 +1460,7 @@
       {
        "p": "Knights of the {uWeapon}",
        "f": "B",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "light"
        ]
@@ -1477,7 +1477,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "assassins",
      "person": "leader",
      "description": "Guilds of assassins, from a recognised trade to a whispered rumour",
@@ -1485,22 +1485,22 @@
       {
        "p": "House of the {lastThing}",
        "f": "B",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "the {shade} {uWeapon}",
        "f": "E",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "Brotherhood of the {uItem}",
        "f": "B",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "the {uCreature}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -1508,12 +1508,12 @@
       {
        "p": "{shade} {agents}",
        "f": "E",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "the {number} {uWeapon:pl}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grim"
        ]
@@ -1521,7 +1521,7 @@
       {
        "p": "{thiefGroup} of the {lastThing}",
        "f": "F",
-       "w": 10.0
+       "w": 10
       }
      ],
      "listFilter": {
@@ -1545,7 +1545,7 @@
       "MF",
       "SF"
      ],
-     "weight": 20.0,
+     "weight": 20,
      "front": "business",
      "person": "leader",
      "description": "Street gangs from rookeries to neon-lit levels",
@@ -1553,7 +1553,7 @@
       {
        "p": "the {street} {gangMembers}",
        "f": "E",
-       "w": 25.0,
+       "w": 25,
        "t": [
         "plain"
        ]
@@ -1561,7 +1561,7 @@
       {
        "p": "the {gangNoun}",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "s": [
         "FL",
         "FH",
@@ -1572,7 +1572,7 @@
       {
        "p": "the {colour} {gangWear}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -1580,7 +1580,7 @@
       {
        "p": "the {urbanArea} {gangMembers}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -1593,7 +1593,7 @@
       {
        "p": "the {urban} {gangNoun/gangMembers}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "MR",
         "MF",
@@ -1603,7 +1603,7 @@
       {
        "p": "{person:poss} {gangMembers}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1621,7 +1621,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "business",
      "person": "boss",
      "description": "Crime families, outfits and cartels",
@@ -1629,7 +1629,7 @@
       {
        "p": "the {surname} Family",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -1638,7 +1638,7 @@
        "p": "the {town} {firm}",
        "self": true,
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -1646,7 +1646,7 @@
       {
        "p": "the {number} {portPlaces}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "strange"
        ]
@@ -1654,7 +1654,7 @@
       {
        "p": "the {shade} Hand",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grim"
        ]
@@ -1662,7 +1662,7 @@
       {
        "p": "{person:poss} {firm}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1670,7 +1670,7 @@
       {
        "p": "the {surname} {firm}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1678,7 +1678,7 @@
       {
        "p": "the {urban} {firm}",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "SF"
        ]
@@ -1686,7 +1686,7 @@
       {
        "p": "the {colour} {emblem} {thiefGroup}",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grand"
        ]
@@ -1704,7 +1704,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "freeTraders",
      "person": "leader",
      "description": "Smuggling rings, owlers and blockade runners",
@@ -1713,7 +1713,7 @@
        "p": "the {town} Ring",
        "self": true,
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -1721,17 +1721,17 @@
       {
        "p": "the {land} {smugglerAgents}",
        "f": "E",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "the {shade} {smugglerAgents}",
        "f": "E",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "Gentlemen of the {land}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -1745,7 +1745,7 @@
       {
        "p": "{person:poss} {smugglerAgents}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1753,7 +1753,7 @@
       {
        "p": "the {tech} Runners",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "SF"
        ]
@@ -1761,7 +1761,7 @@
       {
        "p": "the {colour} Lanterns",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -1777,7 +1777,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": "business",
      "person": "leader",
      "description": "Heist crews and hacker collectives",
@@ -1785,12 +1785,12 @@
       {
        "p": "{techWord} {crewCollective}",
        "f": "E",
-       "w": 40.0
+       "w": 40
       },
       {
        "p": "the {techWord} {uCreature}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "light"
        ]
@@ -1798,7 +1798,7 @@
       {
        "p": "{person:poss} Crew",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -1806,7 +1806,7 @@
       {
        "p": "the {number} {crewNoun}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -1814,12 +1814,12 @@
       {
        "p": "the {colour} {gangWear}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{greek} {crewCollective}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -1846,7 +1846,7 @@
       "MF",
       "SF"
      ],
-     "weight": 30.0,
+     "weight": 30,
      "front": null,
      "person": "founder",
      "description": "Craft guilds and livery companies",
@@ -1854,7 +1854,7 @@
       {
        "p": "{craftHonorific} Company of {tradesmen}",
        "f": "F",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "grand"
        ]
@@ -1862,7 +1862,7 @@
       {
        "p": "Guild of {tradesmen}",
        "f": "F",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -1870,7 +1870,7 @@
       {
        "p": "the {tradesmen:poss} Guild",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -1878,7 +1878,7 @@
       {
        "p": "{tradeDesc} {emblem} {tradesmen}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "light"
        ]
@@ -1886,14 +1886,14 @@
       {
        "p": "{tradesmen} of the {colour} {emblem}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "sa": "emblem"
       },
       {
        "p": "the {town} {tradesmen}",
        "self": true,
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -1901,12 +1901,12 @@
       {
        "p": "Fellowship of {tradesmen}",
        "f": "F",
-       "w": 5.0
+       "w": 5
       },
       {
        "p": "Guild of {tech} {tradesmen}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -1925,7 +1925,7 @@
       "MF",
       "SF"
      ],
-     "weight": 25.0,
+     "weight": 25,
      "front": null,
      "person": "founder",
      "description": "Merchant houses, chartered companies and trade consortia",
@@ -1933,7 +1933,7 @@
       {
        "p": "House {house}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "FL",
         "FH",
@@ -1946,7 +1946,7 @@
       {
        "p": "the {compass} Company",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -1958,7 +1958,7 @@
        "p": "the {town} Company",
        "self": true,
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "plain"
        ]
@@ -1966,7 +1966,7 @@
       {
        "p": "Honourable Company of {goods} Merchants",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "grand"
        ]
@@ -1975,7 +1975,7 @@
        "p": "{goods} Merchants of {town}",
        "self": true,
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ],
@@ -1984,7 +1984,7 @@
       {
        "p": "{surname} & {surname}",
        "f": "B",
-       "w": 12.0,
+       "w": 12,
        "t": [
         "plain"
        ]
@@ -1993,7 +1993,7 @@
        "p": "Merchant Adventurers of {town}",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "FL",
         "FH"
@@ -2006,7 +2006,7 @@
        "p": "the {town} {goods} Company",
        "self": true,
        "f": "E",
-       "w": 12.0,
+       "w": 12,
        "t": [
         "plain"
        ]
@@ -2014,7 +2014,7 @@
       {
        "p": "Company of the {knightEmblem}",
        "f": "B",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH"
@@ -2026,7 +2026,7 @@
       {
        "p": "{brandRoot} Trading {combineWord}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -2035,7 +2035,7 @@
        "p": "{town} Trade Consortium",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -2048,7 +2048,7 @@
       {
        "p": "{compass} {goods} Traders",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "plain"
        ],
@@ -2065,14 +2065,14 @@
       {
        "p": "{commRegion} Merchants",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "sa": "commRegion"
       },
       {
        "p": "{town} Trading House",
        "self": true,
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -2080,7 +2080,7 @@
       {
        "p": "the {goods} Road Company",
        "f": "E",
-       "w": 3.0,
+       "w": 3,
        "s": [
         "FL",
         "FH",
@@ -2102,7 +2102,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": null,
      "person": "governor",
      "description": "Companies granted a charter to trade, and often to rule, a region. For the lands such a company rules, use realms and polities: company-states.",
@@ -2110,24 +2110,24 @@
       {
        "p": "{commRegion} Company",
        "f": "B",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "{compass} {seaWord} Company",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "sa": "compass"
       },
       {
        "p": "{compass} {seaWord} {tradeActivity} Company",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "sa": "compass"
       },
       {
        "p": "Company of the {commRegion}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -2135,7 +2135,7 @@
       {
        "p": "{charterHonorific} {commRegion} Company",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -2143,7 +2143,7 @@
       {
        "p": "{compass} {goods} Company",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ],
@@ -2152,7 +2152,7 @@
       {
        "p": "Company of Merchants Trading to the {commRegion}",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "FL",
         "FH",
@@ -2167,7 +2167,7 @@
        "p": "{town} {tradeActivity} Company",
        "self": true,
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -2175,7 +2175,7 @@
       {
        "p": "{sfRegion} {tradeActivity} Company",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -2183,7 +2183,7 @@
       {
        "p": "{sfRegion} Interstellar Company",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "SF"
        ],
@@ -2213,7 +2213,7 @@
       "MF",
       "SF"
      ],
-     "weight": 8.0,
+     "weight": 8,
      "front": null,
      "person": "governor",
      "description": "Companies founded to settle and govern new land. For the colony itself, use realms and polities.",
@@ -2221,7 +2221,7 @@
       {
        "p": "Company for the Settlement of {colonyTarget}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -2229,7 +2229,7 @@
       {
        "p": "{compass} Frontier Company",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -2237,19 +2237,19 @@
       {
        "p": "New {newLand} Company",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "New {town} Company",
        "self": true,
        "f": "E",
-       "w": 5.0
+       "w": 5
       },
       {
        "p": "{town} Land Company",
        "self": true,
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -2257,7 +2257,7 @@
       {
        "p": "{charterHonorific} Company of {colonyTarget}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -2266,7 +2266,7 @@
        "p": "{town} Colonial Company",
        "self": true,
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -2274,7 +2274,7 @@
       {
        "p": "Society of Adventurers to {colonyTarget}",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "FL",
         "FH",
@@ -2288,7 +2288,7 @@
       {
        "p": "{sfRegion} Colonial Services",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ],
@@ -2299,7 +2299,7 @@
       {
        "p": "{sfRegion} Settlement Company",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -2326,7 +2326,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "founder",
      "description": "Mining, timber, quarrying and extraction companies",
@@ -2334,7 +2334,7 @@
       {
        "p": "{mineLandPlace} {resourceActivity} Company",
        "f": "B",
-       "w": 20.0,
+       "w": 20,
        "s": [
         "FL",
         "FH",
@@ -2345,7 +2345,7 @@
       {
        "p": "{compass} {resGoods} Company",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ],
@@ -2354,14 +2354,14 @@
       {
        "p": "{commRegion} {resourceActivity} Syndicate",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "sa": "commRegion"
       },
       {
        "p": "{town} {resGoods} Company",
        "self": true,
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -2369,7 +2369,7 @@
       {
        "p": "{resGoods} and {resGoods} Company",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -2378,7 +2378,7 @@
        "p": "{town} Colliery Company",
        "self": true,
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF"
@@ -2390,7 +2390,7 @@
       {
        "p": "{resGoods} Trust",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF"
@@ -2399,7 +2399,7 @@
       {
        "p": "{sfRegion} {resourceActivity} Corporation",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "SF"
        ]
@@ -2407,7 +2407,7 @@
       {
        "p": "{spaceLand} {resGoods} Company",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ],
@@ -2437,7 +2437,7 @@
       "MF",
       "SF"
      ],
-     "weight": 8.0,
+     "weight": 8,
      "front": null,
      "person": "founder",
      "description": "Associations of merchants and trading towns",
@@ -2445,17 +2445,17 @@
       {
        "p": "the {leagueQual} League",
        "f": "E",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "League of Free {leaguePl}",
        "f": "F",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "the {compass} Merchants' League",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ],
@@ -2465,7 +2465,7 @@
        "p": "the {town} Merchants' League",
        "self": true,
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -2473,18 +2473,18 @@
       {
        "p": "League of {number} {leaguePl}",
        "f": "F",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {goods} Merchants' League",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{town} {leagueBody}",
        "self": true,
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -2492,7 +2492,7 @@
       {
        "p": "the {colour} Pennant League",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "light"
        ]
@@ -2500,7 +2500,7 @@
       {
        "p": "{spaceLand} Traders' League",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "SF"
        ]
@@ -2539,7 +2539,7 @@
       "MF",
       "SF"
      ],
-     "weight": 8.0,
+     "weight": 8,
      "front": null,
      "person": "founder",
      "description": "Syndicates, combines, trusts and early industrial companies such as railways and canals",
@@ -2547,7 +2547,7 @@
       {
        "p": "{compass} {industry} Syndicate",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ],
@@ -2556,14 +2556,14 @@
       {
        "p": "{commRegion} Syndicate",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "sa": "commRegion"
       },
       {
        "p": "{town} Industrial {combineBody}",
        "self": true,
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -2571,7 +2571,7 @@
       {
        "p": "the {surname} Trust",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF"
@@ -2580,7 +2580,7 @@
       {
        "p": "{surname}–{surname} Combine",
        "f": "B",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -2594,7 +2594,7 @@
        "p": "{town} {transport} Company",
        "self": true,
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "FL",
         "FH",
@@ -2609,7 +2609,7 @@
        "p": "{town} and {town} {transport}",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF"
@@ -2621,7 +2621,7 @@
       {
        "p": "{sfRegion} {industry} Combine",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "SF"
        ]
@@ -2629,7 +2629,7 @@
       {
        "p": "{brandRoot} Consolidated",
        "f": "B",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -2661,7 +2661,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "founder",
      "description": "Banks, counting houses and finance houses",
@@ -2669,7 +2669,7 @@
       {
        "p": "{surname} & {surname}",
        "f": "B",
-       "w": 25.0,
+       "w": 25,
        "t": [
         "plain"
        ]
@@ -2677,7 +2677,7 @@
       {
        "p": "{surname} Brothers",
        "f": "B",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "plain"
        ]
@@ -2686,7 +2686,7 @@
        "p": "Bank of {town}",
        "self": true,
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -2695,7 +2695,7 @@
        "p": "{town} {bankWord}",
        "self": true,
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -2703,7 +2703,7 @@
       {
        "p": "House of {surname}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH"
@@ -2715,7 +2715,7 @@
       {
        "p": "the {colour} {various} Bank",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "light"
        ]
@@ -2723,7 +2723,7 @@
       {
        "p": "{surname}, {surname} & Co.",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -2737,7 +2737,7 @@
       {
        "p": "{brandRoot} Capital",
        "f": "F",
-       "w": 7.0,
+       "w": 7,
        "s": [
         "MR",
         "MF",
@@ -2747,7 +2747,7 @@
       {
        "p": "the {colour} {various} Banking House",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "light"
        ]
@@ -2756,7 +2756,7 @@
        "p": "{town} Banking House",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -2764,7 +2764,7 @@
       {
        "p": "House {house}",
        "f": "B",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "FL",
         "FH",
@@ -2786,7 +2786,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": null,
      "person": "founder",
      "description": "Corporations, conglomerates and megacorps",
@@ -2794,7 +2794,7 @@
       {
        "p": "{brandRoot} {corpSuffix}",
        "f": "B",
-       "w": 45.0,
+       "w": 45,
        "s": [
         "MR",
         "MF",
@@ -2804,7 +2804,7 @@
       {
        "p": "{surname}–{surname}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -2815,7 +2815,7 @@
        "p": "{town} {corpSuffix}",
        "self": true,
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "MR",
         "MF",
@@ -2828,7 +2828,7 @@
       {
        "p": "{brandStart}{brandEnd}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -2841,7 +2841,7 @@
       {
        "p": "{surname} {corpSuffix}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -2854,7 +2854,7 @@
       {
        "p": "{initials}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -2867,7 +2867,7 @@
       {
        "p": "{sfRegion} {sfCorpWord} Corporation",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -2875,7 +2875,7 @@
       {
        "p": "{sfRegion} Colonial Services",
        "f": "B",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "SF"
        ],
@@ -2895,7 +2895,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "founder",
      "description": "Trade unions, friendly societies and workers' collectives",
@@ -2903,7 +2903,7 @@
       {
        "p": "Amalgamated Society of {unionTrade}",
        "f": "F",
-       "w": 20.0,
+       "w": 20,
        "s": [
         "MR",
         "MF",
@@ -2917,7 +2917,7 @@
        "p": "the {town} {unionTrade:poss} Union",
        "self": true,
        "f": "B",
-       "w": 25.0,
+       "w": 25,
        "s": [
         "MR",
         "MF",
@@ -2930,7 +2930,7 @@
       {
        "p": "National Union of {unionTrade}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "MR",
         "MF"
@@ -2939,7 +2939,7 @@
       {
        "p": "{unionTrade:poss} Friendly Society",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF"
@@ -2951,7 +2951,7 @@
       {
        "p": "United Brotherhood of {unionTrade}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -2964,7 +2964,7 @@
       {
        "p": "the {unionTrade:poss} Collective",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -2972,7 +2972,7 @@
       {
        "p": "{initials}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -2996,7 +2996,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "master",
      "description": "Caravans, shipping lines and freight companies",
@@ -3004,7 +3004,7 @@
       {
        "p": "the {land} Caravan",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "FL",
         "FH"
@@ -3013,7 +3013,7 @@
       {
        "p": "Caravan of the {number} {wellPlaces}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH"
@@ -3025,7 +3025,7 @@
       {
        "p": "{person:poss} Caravan",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH"
@@ -3037,7 +3037,7 @@
       {
        "p": "the {colour} {lineEmblem} Line",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "s": [
         "FL",
         "FH",
@@ -3052,7 +3052,7 @@
        "p": "{town} Steam Packet Company",
        "self": true,
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "MR",
         "MF"
@@ -3064,7 +3064,7 @@
       {
        "p": "the {surname} Line",
        "f": "E",
-       "w": 12.0,
+       "w": 12,
        "t": [
         "plain"
        ]
@@ -3073,7 +3073,7 @@
        "p": "{town} Freight",
        "self": true,
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -3086,7 +3086,7 @@
       {
        "p": "{brandRoot} Lines",
        "f": "B",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "SF"
        ]
@@ -3094,7 +3094,7 @@
       {
        "p": "{star} Transit",
        "f": "B",
-       "w": 7.0,
+       "w": 7,
        "s": [
         "SF"
        ]
@@ -3121,7 +3121,7 @@
       "MF",
       "SF"
      ],
-     "weight": 50.0,
+     "weight": 50,
      "front": null,
      "person": "leader",
      "description": "Adventuring parties with a name to build",
@@ -3129,17 +3129,17 @@
       {
        "p": "{companyGroup} of the {emblem}",
        "f": "B",
-       "w": 12.0
+       "w": 12
       },
       {
        "p": "{companyGroup} of the {colour} {emblem}",
        "f": "B",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {colour} {creature:pl}",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "plain"
        ]
@@ -3147,7 +3147,7 @@
       {
        "p": "{tradeDesc} {emblem} {vocation}",
        "f": "E",
-       "w": 6.0,
+       "w": 6,
        "t": [
         "light"
        ]
@@ -3155,7 +3155,7 @@
       {
        "p": "the {compound}",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "light"
        ]
@@ -3163,7 +3163,7 @@
       {
        "p": "{compound} Company",
        "f": "E",
-       "w": 3.0,
+       "w": 3,
        "t": [
         "light"
        ]
@@ -3171,7 +3171,7 @@
       {
        "p": "the {number} in {colour}",
        "f": "E",
-       "w": 3.0,
+       "w": 3,
        "t": [
         "light"
        ]
@@ -3179,7 +3179,7 @@
       {
        "p": "{person:poss} {companyGroup}",
        "f": "E",
-       "w": 6.0,
+       "w": 6,
        "t": [
         "plain"
        ]
@@ -3187,7 +3187,7 @@
       {
        "p": "Company of the {ordinalWord} {emblem}",
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "t": [
         "strange"
        ]
@@ -3195,7 +3195,7 @@
       {
        "p": "the {emblem} and {emblem} Company",
        "f": "E",
-       "w": 3.0,
+       "w": 3,
        "t": [
         "light"
        ]
@@ -3203,7 +3203,7 @@
       {
        "p": "the {tech} {creature:pl}",
        "f": "E",
-       "w": 6.0,
+       "w": 6,
        "s": [
         "SF"
        ]
@@ -3249,7 +3249,7 @@
       "MF",
       "SF"
      ],
-     "weight": 25.0,
+     "weight": 25,
      "front": null,
      "person": "leader",
      "description": "Expeditions, surveys and exploring societies",
@@ -3257,7 +3257,7 @@
       {
        "p": "the {expPlace} Expedition",
        "f": "B",
-       "w": 25.0,
+       "w": 25,
        "t": [
         "plain"
        ]
@@ -3265,7 +3265,7 @@
       {
        "p": "{person:poss} Expedition",
        "f": "B",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -3273,7 +3273,7 @@
       {
        "p": "the {expPlace} Survey",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -3281,7 +3281,7 @@
       {
        "p": "Royal {expPlace} Survey",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH",
@@ -3295,7 +3295,7 @@
       {
        "p": "{expQuality} Survey Corps",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -3303,7 +3303,7 @@
       {
        "p": "Society for the Exploration of the {expPlace}",
        "f": "F",
-       "w": 7.0,
+       "w": 7,
        "t": [
         "grand"
        ]
@@ -3311,13 +3311,13 @@
       {
        "p": "Company of {expPlace} Pathfinders",
        "f": "F",
-       "w": 5.0
+       "w": 5
       },
       {
        "p": "{ordinal} {town} Expedition",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -3330,7 +3330,7 @@
       {
        "p": "{greek} Expedition",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -3347,7 +3347,7 @@
       "MF",
       "SF"
      ],
-     "weight": 25.0,
+     "weight": 25,
      "front": null,
      "person": "leader",
      "description": "Lodges of monster hunters, slayers and bounty hunters",
@@ -3355,12 +3355,12 @@
       {
        "p": "Lodge of the {colour} {beast}",
        "f": "B",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "the {monster} {hunterNoun}",
        "f": "E",
-       "w": 25.0,
+       "w": 25,
        "t": [
         "plain"
        ]
@@ -3369,7 +3369,7 @@
        "p": "the {town} Huntsmen",
        "self": true,
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -3382,7 +3382,7 @@
       {
        "p": "Order of the {colour} {weapon}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "FL",
         "FH",
@@ -3395,7 +3395,7 @@
       {
        "p": "Brotherhood of the {desc} Hunt",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grim"
        ]
@@ -3403,7 +3403,7 @@
       {
        "p": "{person:poss} {retrieval}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MF",
         "SF"
@@ -3415,7 +3415,7 @@
       {
        "p": "the {tech} {hunterNoun}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ]
@@ -3423,7 +3423,7 @@
       {
        "p": "Hunters' Brotherhood of the {land}",
        "f": "F",
-       "w": 3.0,
+       "w": 3,
        "s": [
         "FL",
         "FH",
@@ -3455,7 +3455,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": null,
      "person": "founder",
      "description": "Ruling councils, courts and assemblies",
@@ -3463,7 +3463,7 @@
       {
        "p": "Council of {number} {various:pl}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "strange"
        ]
@@ -3471,7 +3471,7 @@
       {
        "p": "the {colour} Chamber",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -3480,7 +3480,7 @@
        "p": "Council of {town}",
        "self": true,
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -3488,7 +3488,7 @@
       {
        "p": "the {number}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -3496,7 +3496,7 @@
       {
        "p": "the {councilQuality} Court",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -3505,7 +3505,7 @@
        "p": "{town} {assemblyWord}",
        "self": true,
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -3514,7 +3514,7 @@
        "p": "the {town} {directorate}",
        "self": true,
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -3527,7 +3527,7 @@
       {
        "p": "{ordinal} Directorate",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "SF"
        ],
@@ -3538,7 +3538,7 @@
       {
        "p": "the {colour} Table",
        "f": "E",
-       "w": 5.0
+       "w": 5
       }
      ]
     },
@@ -3553,7 +3553,7 @@
       "MF",
       "SF"
      ],
-     "weight": 20.0,
+     "weight": 20,
      "front": null,
      "person": "leader",
      "description": "Political factions and parties",
@@ -3561,7 +3561,7 @@
       {
        "p": "the {ideal} Party",
        "f": "B",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -3569,7 +3569,7 @@
       {
        "p": "the {factionColour}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -3578,17 +3578,17 @@
        "p": "{town} {ideal} League",
        "self": true,
        "f": "F",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{ideal} and {ideal}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Friends of the {ideal}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "light"
        ]
@@ -3596,7 +3596,7 @@
       {
        "p": "the {factionNick}",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "s": [
         "FL",
         "FH",
@@ -3610,7 +3610,7 @@
       {
        "p": "the {ideal} Faction",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -3618,7 +3618,7 @@
       {
        "p": "Party of the {ideal}",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grand"
        ]
@@ -3626,7 +3626,7 @@
       {
        "p": "Movement for {ideal}",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -3646,7 +3646,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "society",
      "person": "founder",
      "description": "Conspiracies and secret societies with political aims",
@@ -3654,17 +3654,17 @@
       {
        "p": "Society of the {secretQuality} {secretItem}",
        "f": "B",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "the {secretQuality} {secretItem}",
        "f": "E",
-       "w": 20.0
+       "w": 20
       },
       {
        "p": "the {number}",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "strange"
        ]
@@ -3672,17 +3672,17 @@
       {
        "p": "Brotherhood of the {entity}",
        "f": "B",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {colour} {secretItem}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Friends of {person}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "light"
        ]
@@ -3690,7 +3690,7 @@
       {
        "p": "the {number} {secretItem:pl}",
        "f": "E",
-       "w": 12.0,
+       "w": 12,
        "t": [
         "strange"
        ]
@@ -3698,7 +3698,7 @@
       {
        "p": "Order of the {secretQuality} {secretItem}",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grand"
        ]
@@ -3716,7 +3716,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "society",
      "person": "leader",
      "description": "Rebels, resistance movements and risings",
@@ -3724,20 +3724,20 @@
       {
        "p": "Sons of the {rebelQuality} {rebelEmblem}",
        "f": "B",
-       "w": 12.0,
+       "w": 12,
        "sa": "rebelEmblem"
       },
       {
        "p": "Daughters of the {rebelQuality} {rebelEmblem}",
        "f": "B",
-       "w": 6.0,
+       "w": 6,
        "sa": "rebelEmblem"
       },
       {
        "p": "{town} Liberation Front",
        "self": true,
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -3751,12 +3751,12 @@
        "p": "Free {town} {rebelGroup}",
        "self": true,
        "f": "B",
-       "w": 12.0
+       "w": 12
       },
       {
        "p": "the {colour} {rebelWear}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -3764,7 +3764,7 @@
       {
        "p": "the {ordinalWord} of {season} Movement",
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "FL",
         "FH"
@@ -3776,7 +3776,7 @@
       {
        "p": "{ordinal} of {month} Movement",
        "f": "F",
-       "w": 4.0,
+       "w": 4,
        "s": [
         "MR",
         "MF"
@@ -3785,7 +3785,7 @@
       {
        "p": "Army of the {ideal}",
        "f": "F",
-       "w": 6.0,
+       "w": 6,
        "t": [
         "grand"
        ]
@@ -3793,7 +3793,7 @@
       {
        "p": "{person:poss} Rising",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -3801,7 +3801,7 @@
       {
        "p": "the {rebelQuality} Hand",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grim"
        ]
@@ -3809,7 +3809,7 @@
       {
        "p": "Rebels of the {land}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       }
      ]
     },
@@ -3824,7 +3824,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "founder",
      "description": "Leagues, alliances and compacts",
@@ -3832,7 +3832,7 @@
       {
        "p": "League of {number} {cityWord:pl}",
        "f": "F",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "grand"
        ]
@@ -3840,13 +3840,13 @@
       {
        "p": "the {councilQuality} Concord",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "{town} {leagueGroup}",
        "self": true,
        "f": "F",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -3854,13 +3854,13 @@
       {
        "p": "the {ideal} {leagueGroup}",
        "f": "B",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "Union of {town} and {town}",
        "self": true,
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "plain"
        ]
@@ -3868,7 +3868,7 @@
       {
        "p": "the {number} {cityWord:pl}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -3876,7 +3876,7 @@
       {
        "p": "Coalition of {number} Worlds",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ],
@@ -3887,7 +3887,7 @@
       {
        "p": "Free {cityWord:pl} {leagueGroup}",
        "f": "B",
-       "w": 10.0
+       "w": 10
       }
      ]
     },
@@ -3902,7 +3902,7 @@
       "MF",
       "SF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "office",
      "person": "spymaster",
      "description": "Spy networks and intelligence services",
@@ -3910,7 +3910,7 @@
       {
        "p": "Section {number}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "MR",
         "MF",
@@ -3923,7 +3923,7 @@
       {
        "p": "Bureau of {agencyPursuit}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "MR",
         "MF",
@@ -3936,7 +3936,7 @@
       {
        "p": "the {colour} Desk",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -3949,7 +3949,7 @@
       {
        "p": "Department of {agencyPursuit}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -3962,7 +3962,7 @@
       {
        "p": "Office of {agencyPursuit}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -3975,7 +3975,7 @@
       {
        "p": "{ordinal} Directorate",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "MR",
         "MF",
@@ -3988,7 +3988,7 @@
       {
        "p": "Directorate {greek}",
        "f": "F",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "SF"
        ]
@@ -3996,7 +3996,7 @@
       {
        "p": "the {ruler:poss} {spyWord}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "s": [
         "FL",
         "FH"
@@ -4008,7 +4008,7 @@
       {
        "p": "the {colour} Cabinet",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "s": [
         "FL",
         "FH"
@@ -4020,7 +4020,7 @@
       {
        "p": "the {secretQuality} Office",
        "f": "E",
-       "w": 8.0,
+       "w": 8,
        "t": [
         "strange"
        ]
@@ -4028,7 +4028,7 @@
       {
        "p": "{initials}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "MR",
         "MF",
@@ -4050,7 +4050,7 @@
       "MF",
       "SF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "founder",
      "description": "Noble and great houses",
@@ -4058,7 +4058,7 @@
       {
        "p": "House {house}",
        "f": "B",
-       "w": 35.0,
+       "w": 35,
        "t": [
         "grand"
        ]
@@ -4067,7 +4067,7 @@
        "p": "House {house} of {town}",
        "self": true,
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4076,7 +4076,7 @@
        "p": "the {house:pl} of {town}",
        "self": true,
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -4084,7 +4084,7 @@
       {
        "p": "House of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4092,7 +4092,7 @@
       {
        "p": "the {house} Line",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -4100,7 +4100,7 @@
       {
        "p": "House {house}–{house}",
        "f": "B",
-       "w": 5.0,
+       "w": 5,
        "s": [
         "SF"
        ]
@@ -4108,7 +4108,7 @@
       {
        "p": "House {house} of {star}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "s": [
         "SF"
        ],
@@ -4136,7 +4136,7 @@
       "FH",
       "MF"
      ],
-     "weight": 20.0,
+     "weight": 20,
      "front": "folk",
      "person": "lord",
      "description": "Fairy courts and the hidden folk under the hill",
@@ -4144,7 +4144,7 @@
       {
        "p": "Court of the {feyPlant} {skyThing}",
        "f": "B",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "strange"
        ],
@@ -4153,12 +4153,12 @@
       {
        "p": "the {feyTime} Court",
        "f": "E",
-       "w": 15.0
+       "w": 15
       },
       {
        "p": "Folk of the {feyPlace}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "light"
        ]
@@ -4166,12 +4166,12 @@
       {
        "p": "the {colour} {feyPlant} Court",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {number} Courts of the {feyPlace}",
        "f": "F",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grand"
        ]
@@ -4179,7 +4179,7 @@
       {
        "p": "the {feyTime} {feyTitle:poss} Court",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4187,7 +4187,7 @@
       {
        "p": "Riders of the {feyPlace}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -4195,7 +4195,7 @@
       {
        "p": "{person:poss} Court",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -4211,7 +4211,7 @@
       "FH",
       "MF"
      ],
-     "weight": 20.0,
+     "weight": 20,
      "front": "society",
      "person": "sire",
      "description": "Vampire bloodlines, houses and courts",
@@ -4219,7 +4219,7 @@
       {
        "p": "the {colour} Line",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -4227,7 +4227,7 @@
       {
        "p": "House {house}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4235,7 +4235,7 @@
       {
        "p": "Blood of {person}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grim"
        ]
@@ -4243,7 +4243,7 @@
       {
        "p": "Children of the {bloodQuality} {skyThing}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -4251,17 +4251,17 @@
       {
        "p": "the {bloodQuality} Kindred",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {house} Court",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Court of the {colour} {knightEmblem}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4269,7 +4269,7 @@
       {
        "p": "the {number} Bloods",
        "f": "E",
-       "w": 5.0,
+       "w": 5,
        "t": [
         "grim"
        ]
@@ -4285,7 +4285,7 @@
       "FH",
       "MF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "society",
      "person": "alpha",
      "description": "Werewolf and shapeshifter packs",
@@ -4293,12 +4293,12 @@
       {
        "p": "Pack of the {colour} {land}",
        "f": "B",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "the {land} Pack",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -4306,12 +4306,12 @@
       {
        "p": "the {colour}-{bodyPart} Pack",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Children of the {skyThing}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -4319,7 +4319,7 @@
       {
        "p": "the {shifter}-{kinWord}",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "plain"
        ]
@@ -4327,7 +4327,7 @@
       {
        "p": "{person:poss} Pack",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "plain"
        ]
@@ -4335,7 +4335,7 @@
       {
        "p": "the {number} {bodyPart:pl}",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grim"
        ]
@@ -4351,7 +4351,7 @@
       "FH",
       "MF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "folk",
      "person": "lord",
      "description": "Spirit courts, ghost hosts and wild hunts",
@@ -4359,12 +4359,12 @@
       {
        "p": "the {colour/feyTime} Hunt",
        "f": "E",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "Riders of the {weather}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "strange"
        ]
@@ -4372,12 +4372,12 @@
       {
        "p": "the {feyTime} Riders",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Court of the {feyPlace}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -4385,12 +4385,12 @@
       {
        "p": "Spirits of the {land}",
        "f": "B",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {number} Winds",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "strange"
        ]
@@ -4398,12 +4398,12 @@
       {
        "p": "the {deadQuality} Dead",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {deadQuality} Host",
        "f": "E",
-       "w": 10.0
+       "w": 10
       }
      ]
     },
@@ -4415,7 +4415,7 @@
       "FH",
       "MF"
      ],
-     "weight": 10.0,
+     "weight": 10,
      "front": null,
      "person": "lord",
      "description": "Legions of the risen dead",
@@ -4423,7 +4423,7 @@
       {
        "p": "Host of the {ordinalWord} {hellPlace}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4431,7 +4431,7 @@
       {
        "p": "Legion of the {deadQuality} Crown",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4439,12 +4439,12 @@
       {
        "p": "the {deadQuality} {undeadNoun}",
        "f": "E",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "Army of {person}",
        "f": "F",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -4452,7 +4452,7 @@
       {
        "p": "the {colour} Barrows",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grim"
        ]
@@ -4460,12 +4460,12 @@
       {
        "p": "the {number} {undeadNoun}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Legion of the {land}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4481,7 +4481,7 @@
       "FH",
       "MF"
      ],
-     "weight": 15.0,
+     "weight": 15,
      "front": "benefactor",
      "person": "lord",
      "description": "Demonic hosts and infernal courts",
@@ -4489,7 +4489,7 @@
       {
        "p": "Host of the {ordinalWord} {hellPlace}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4497,12 +4497,12 @@
       {
        "p": "Legion of {person}",
        "f": "F",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "the {demonQuality} Choir",
        "f": "E",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "strange"
        ]
@@ -4510,7 +4510,7 @@
       {
        "p": "Court of {number} {chainItem}",
        "f": "F",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "grand"
        ]
@@ -4518,7 +4518,7 @@
       {
        "p": "{person:poss} Own",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "light"
        ]
@@ -4526,12 +4526,12 @@
       {
        "p": "the {colour} {hellPlace}",
        "f": "E",
-       "w": 10.0
+       "w": 10
       },
       {
        "p": "Princes of the {hellPlace}",
        "f": "B",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -4546,7 +4546,7 @@
       "FH",
       "MF"
      ],
-     "weight": 5.0,
+     "weight": 5,
      "front": null,
      "person": "lord",
      "description": "Angelic choirs and heavenly hosts",
@@ -4554,12 +4554,12 @@
       {
        "p": "Host of the {heavenQuality} {heavenThing}",
        "f": "F",
-       "w": 25.0
+       "w": 25
       },
       {
        "p": "Choir of the {entity}",
        "f": "F",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "grand"
        ]
@@ -4567,7 +4567,7 @@
       {
        "p": "the {colour} Wings",
        "f": "E",
-       "w": 20.0,
+       "w": 20,
        "t": [
         "plain"
        ]
@@ -4575,7 +4575,7 @@
       {
        "p": "the {number} Thrones",
        "f": "E",
-       "w": 10.0,
+       "w": 10,
        "t": [
         "grand"
        ]
@@ -4583,7 +4583,7 @@
       {
        "p": "Watchers of the {heavenThing}",
        "f": "B",
-       "w": 15.0,
+       "w": 15,
        "t": [
         "strange"
        ]
@@ -4591,7 +4591,7 @@
       {
        "p": "the {heavenQuality} Host",
        "f": "E",
-       "w": 10.0
+       "w": 10
       }
      ]
     }
@@ -4604,12 +4604,12 @@
     {
      "p": "Society for {pursuit}",
      "f": "F",
-     "w": 25.0
+     "w": 25
     },
     {
      "p": "Friends of the {respectablePlace}",
      "f": "B",
-     "w": 20.0,
+     "w": 20,
      "t": [
       "strange"
      ]
@@ -4617,7 +4617,7 @@
     {
      "p": "the {weekday} Club",
      "f": "E",
-     "w": 15.0,
+     "w": 15,
      "t": [
       "light"
      ]
@@ -4625,7 +4625,7 @@
     {
      "p": "the {streetFirst} {club}",
      "f": "E",
-     "w": 20.0,
+     "w": 20,
      "t": [
       "light"
      ]
@@ -4634,7 +4634,7 @@
      "p": "{town} Benevolent Society",
      "self": true,
      "f": "F",
-     "w": 10.0,
+     "w": 10,
      "t": [
       "plain"
      ]
@@ -4643,7 +4643,7 @@
      "p": "{town} Philosophical Society",
      "self": true,
      "f": "F",
-     "w": 10.0,
+     "w": 10,
      "t": [
       "grand"
      ]
@@ -4668,7 +4668,7 @@
     {
      "p": "Honourable Company of {thiefEuph}",
      "f": "F",
-     "w": 25.0,
+     "w": 25,
      "t": [
       "grand"
      ]
@@ -4676,23 +4676,23 @@
     {
      "p": "Guild of {thiefEuph}",
      "f": "F",
-     "w": 20.0
+     "w": 20
     },
     {
      "p": "the {town} {thiefEuph}",
      "self": true,
      "f": "E",
-     "w": 20.0
+     "w": 20
     },
     {
      "p": "Society of {thiefEuph}",
      "f": "F",
-     "w": 15.0
+     "w": 15
     },
     {
      "p": "the {gentleAdj} {thiefEuph}",
      "f": "E",
-     "w": 20.0
+     "w": 20
     }
    ]
   },
@@ -4701,23 +4701,23 @@
     {
      "p": "{balancers} of {balance}",
      "f": "B",
-     "w": 35.0
+     "w": 35
     },
     {
      "p": "{redressAdj} {redress} {redressGroup}",
      "f": "B",
-     "w": 35.0
+     "w": 35
     },
     {
      "p": "the {town} {redress} Society",
      "self": true,
      "f": "F",
-     "w": 15.0
+     "w": 15
     },
     {
      "p": "{brandRoot} Resolution Services",
      "f": "F",
-     "w": 15.0,
+     "w": 15,
      "s": [
       "MR",
       "MF",
@@ -4734,7 +4734,7 @@
     {
      "p": "{surname} & Sons {businessTrade}",
      "f": "B",
-     "w": 30.0,
+     "w": 30,
      "t": [
       "plain"
      ]
@@ -4743,7 +4743,7 @@
      "p": "{town} {businessTrade} Company",
      "self": true,
      "f": "F",
-     "w": 20.0,
+     "w": 20,
      "t": [
       "plain"
      ]
@@ -4752,7 +4752,7 @@
      "p": "{town} {businessTrade}",
      "self": true,
      "f": "E",
-     "w": 15.0,
+     "w": 15,
      "t": [
       "plain"
      ]
@@ -4761,7 +4761,7 @@
      "p": "the {town} Social Club",
      "self": true,
      "f": "E",
-     "w": 15.0,
+     "w": 15,
      "s": [
       "FL",
       "FH",
@@ -4775,7 +4775,7 @@
     {
      "p": "{brandRoot} {corpSuffix}",
      "f": "B",
-     "w": 20.0,
+     "w": 20,
      "s": [
       "MR",
       "MF",
@@ -4793,7 +4793,7 @@
      "p": "{town} Free Traders",
      "self": true,
      "f": "E",
-     "w": 25.0,
+     "w": 25,
      "t": [
       "plain"
      ]
@@ -4802,7 +4802,7 @@
      "p": "{town} {fishWord} Company",
      "self": true,
      "f": "F",
-     "w": 25.0,
+     "w": 25,
      "s": [
       "FL",
       "FH",
@@ -4816,7 +4816,7 @@
     {
      "p": "Friends of the Harbour Lights",
      "f": "B",
-     "w": 10.0,
+     "w": 10,
      "t": [
       "light"
      ]
@@ -4825,7 +4825,7 @@
      "p": "{town} Pilots' Association",
      "self": true,
      "f": "F",
-     "w": 15.0,
+     "w": 15,
      "t": [
       "plain"
      ]
@@ -4833,7 +4833,7 @@
     {
      "p": "{brandRoot} Logistics",
      "f": "F",
-     "w": 20.0,
+     "w": 20,
      "s": [
       "MR",
       "MF",
@@ -4850,7 +4850,7 @@
     {
      "p": "Department of {mundane}",
      "f": "F",
-     "w": 30.0,
+     "w": 30,
      "s": [
       "MR",
       "MF",
@@ -4863,7 +4863,7 @@
     {
      "p": "Bureau of {mundane}",
      "f": "F",
-     "w": 25.0,
+     "w": 25,
      "s": [
       "MR",
       "MF",
@@ -4877,7 +4877,7 @@
      "p": "the {town} {mundaneOffice}",
      "self": true,
      "f": "E",
-     "w": 25.0,
+     "w": 25,
      "t": [
       "plain"
      ]
@@ -4885,7 +4885,7 @@
     {
      "p": "the {ruler:poss} {clerkWord}",
      "f": "E",
-     "w": 20.0,
+     "w": 20,
      "s": [
       "FL",
       "FH"
@@ -4901,12 +4901,12 @@
     {
      "p": "the {folkKind} {folkWord}",
      "f": "E",
-     "w": 40.0
+     "w": 40
     },
     {
      "p": "the People of {peace}",
      "f": "B",
-     "w": 20.0,
+     "w": 20,
      "t": [
       "strange"
      ]
@@ -4914,12 +4914,12 @@
     {
      "p": "{folkFixed}",
      "f": "E",
-     "w": 20.0
+     "w": 20
     },
     {
      "p": "Folk of the {respectablePlace}",
      "f": "B",
-     "w": 20.0,
+     "w": 20,
      "t": [
       "strange"
      ]
@@ -4931,18 +4931,18 @@
     {
      "p": "the {benefAdj} {benefGroup}",
      "f": "E",
-     "w": 40.0
+     "w": 40
     },
     {
      "p": "{town} Benefactors",
      "self": true,
      "f": "E",
-     "w": 20.0
+     "w": 20
     },
     {
      "p": "Friends of the {bargainWord}",
      "f": "B",
-     "w": 20.0,
+     "w": 20,
      "t": [
       "strange"
      ]
@@ -4951,7 +4951,7 @@
      "p": "{town} Mutual Assurance Society",
      "self": true,
      "f": "F",
-     "w": 20.0,
+     "w": 20,
      "t": [
       "plain"
      ]
@@ -4963,7 +4963,7 @@
   "colour": [
    {
     "w": "Black",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -4974,14 +4974,14 @@
    },
    {
     "w": "Red",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Grey",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -5127,7 +5127,7 @@
    },
    {
     "w": "Azure",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -5168,7 +5168,7 @@
    },
    {
     "w": "Crimson",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -5194,7 +5194,7 @@
    },
    {
     "w": "Golden",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -5312,7 +5312,7 @@
    },
    {
     "w": "Silver",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -5351,7 +5351,7 @@
    },
    {
     "w": "White",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -5363,7 +5363,7 @@
    },
    {
     "w": "Three",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Four"
@@ -5376,14 +5376,14 @@
    },
    {
     "w": "Seven",
-    "x": 3.0,
+    "x": 3,
     "t": [
      "strange"
     ]
    },
    {
     "w": "Nine",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -5393,7 +5393,7 @@
    },
    {
     "w": "Twelve",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Thirteen",
@@ -5431,14 +5431,14 @@
    },
    {
     "w": "Seventh",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Eighth"
    },
    {
     "w": "Ninth",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Tenth"
@@ -5620,7 +5620,7 @@
    },
    {
     "w": "Iron",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -5762,7 +5762,7 @@
    },
    {
     "w": "Storm",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sun",
@@ -5772,7 +5772,7 @@
    },
    {
     "w": "Thunder",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -6003,14 +6003,14 @@
    },
    {
     "w": "Nova",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ]
    },
    {
     "w": "Orbital",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ],
@@ -6120,7 +6120,7 @@
    },
    {
     "w": "Void",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ],
@@ -6181,7 +6181,7 @@
   "urban": [
    {
     "w": "Neon",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ]
@@ -6259,15 +6259,15 @@
   "land": [
    {
     "w": "Crags",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Deep",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Marches",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Fens"
@@ -6428,7 +6428,7 @@
   "spaceLand": [
    {
     "w": "Belt",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ],
@@ -6438,7 +6438,7 @@
    },
    {
     "w": "Rim",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ]
@@ -6887,7 +6887,7 @@
    },
    {
     "w": "Arm",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ],
@@ -6958,14 +6958,14 @@
   "quality": [
    {
     "w": "Ancient",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
    },
    {
     "w": "Arcane",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -7004,7 +7004,7 @@
    },
    {
     "w": "Dark",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -7025,7 +7025,7 @@
    },
    {
     "w": "Elder",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -7045,7 +7045,7 @@
    },
    {
     "w": "Eternal",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -7055,7 +7055,7 @@
    },
    {
     "w": "Forgotten",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -7084,7 +7084,7 @@
    },
    {
     "w": "Hidden",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -7098,14 +7098,14 @@
    },
    {
     "w": "Inner",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Lost",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -7192,14 +7192,14 @@
    },
    {
     "w": "Sacred",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
    },
    {
     "w": "Secret",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -7276,21 +7276,21 @@
    },
    {
     "w": "True",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
    },
    {
     "w": "Veiled",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
    },
    {
     "w": "Silent",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Still",
@@ -7450,7 +7450,7 @@
    },
    {
     "w": "Dawn",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Day"
@@ -7472,7 +7472,7 @@
    },
    {
     "w": "Eye",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -7489,14 +7489,14 @@
    },
    {
     "w": "Flame",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Fountain"
    },
    {
     "w": "Gate",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Glyph"
@@ -7510,7 +7510,7 @@
    },
    {
     "w": "Hand",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -7527,7 +7527,7 @@
    },
    {
     "w": "Key",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -7537,7 +7537,7 @@
    },
    {
     "w": "Light",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Lore"
@@ -7550,7 +7550,7 @@
    },
    {
     "w": "Moon",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Mystery"
@@ -7566,7 +7566,7 @@
    },
    {
     "w": "Path",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -7642,7 +7642,7 @@
    },
    {
     "w": "Shadow",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -7670,7 +7670,7 @@
    },
    {
     "w": "Star",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Stone",
@@ -7680,7 +7680,7 @@
    },
    {
     "w": "Sun",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -7713,7 +7713,7 @@
    },
    {
     "w": "Veil",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -7737,7 +7737,7 @@
    },
    {
     "w": "Way",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -7747,7 +7747,7 @@
    },
    {
     "w": "Word",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -7757,14 +7757,14 @@
    },
    {
     "w": "Lantern",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Mirror",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -7807,7 +7807,7 @@
    },
    {
     "w": "Rose",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Compass"
@@ -7838,7 +7838,7 @@
    },
    {
     "w": "Lamp",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -8482,7 +8482,7 @@
   "corpSuffix": [
    {
     "w": "Dynamics",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "MR",
      "MF",
@@ -8491,7 +8491,7 @@
    },
    {
     "w": "Systems",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "MR",
      "MF",
@@ -8500,7 +8500,7 @@
    },
    {
     "w": "Industries",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "MR",
      "MF",
@@ -8509,7 +8509,7 @@
    },
    {
     "w": "Holdings",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "MR",
      "MF",
@@ -8671,27 +8671,27 @@
   "group": [
    {
     "w": "Order",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Circle",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Brotherhood",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sisterhood",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Society",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Fellowship",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Conclave"
@@ -8746,7 +8746,7 @@
    },
    {
     "w": "College",
-    "x": 2.0,
+    "x": 2,
     "types": [
      "arcane"
     ]
@@ -8797,40 +8797,40 @@
   "members": [
    {
     "w": "Seekers",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Adepts",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
    },
    {
     "w": "Initiates",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Keepers",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Brothers",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Sisters",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Children",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -9036,15 +9036,15 @@
   "holyGroup": [
    {
     "w": "Order",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Brothers",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sisters",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Brotherhood"
@@ -9076,15 +9076,15 @@
   "holyMembers": [
    {
     "w": "Brothers",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sisters",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Friars",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Monks"
@@ -9116,7 +9116,7 @@
   "holyQuality": [
    {
     "w": "Holy",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -9135,7 +9135,7 @@
    },
    {
     "w": "Poor",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -9328,7 +9328,7 @@
   "habit": [
    {
     "w": "Grey",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "White"
@@ -9344,11 +9344,11 @@
   "cultGroup": [
    {
     "w": "Cult",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Children",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Church",
@@ -9389,14 +9389,14 @@
   "cultQuality": [
    {
     "w": "Hollow",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
    },
    {
     "w": "Pale",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -9502,7 +9502,7 @@
   "cultEntity": [
    {
     "w": "Sun",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -9700,11 +9700,11 @@
   "covenGroup": [
    {
     "w": "Coven",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Circle",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Lodge"
@@ -9759,7 +9759,7 @@
   "covenEmblem": [
    {
     "w": "Hare",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "light"
     ]
@@ -9784,7 +9784,7 @@
    },
    {
     "w": "Moon",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -9929,7 +9929,7 @@
   "schoolGroup": [
    {
     "w": "School",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Academy"
@@ -9959,7 +9959,7 @@
   "schoolMembers": [
    {
     "w": "Thinkers",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Walkers"
@@ -10096,7 +10096,7 @@
    },
    {
     "w": "Company",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Contingent",
@@ -10118,11 +10118,11 @@
    },
    {
     "w": "Guard",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Legion",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Militia"
@@ -10148,7 +10148,7 @@
    },
    {
     "w": "Regiment",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Section",
@@ -10273,7 +10273,7 @@
    },
    {
     "w": "Veterans",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Victors",
@@ -10443,7 +10443,7 @@
    },
    {
     "w": "Wardens",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -10453,7 +10453,7 @@
    },
    {
     "w": "Watchers",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -10521,7 +10521,7 @@
    {
     "w": "Condottieri",
     "tx": {
-     "mediterranean": 3.0
+     "mediterranean": 3
     },
     "x": 0.2,
     "t": [
@@ -10560,7 +10560,7 @@
    },
    {
     "w": "Blades",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Bows",
@@ -10815,7 +10815,7 @@
    },
    {
     "w": "Wolves",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -10965,7 +10965,7 @@
   "arm": [
    {
     "w": "Foot",
-    "x": 3.0,
+    "x": 3,
     "s": [
      "FL",
      "FH"
@@ -10973,7 +10973,7 @@
    },
    {
     "w": "Horse",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH"
@@ -10981,7 +10981,7 @@
    },
    {
     "w": "Rifles",
-    "x": 3.0,
+    "x": 3,
     "s": [
      "FL",
      "FH",
@@ -11126,7 +11126,11 @@
    {
     "w": "Highlanders",
     "only": [
-     "celtic"
+     "celtic",
+     "welsh",
+     "scottish",
+     "irish",
+     "cornish"
     ]
    },
    {
@@ -11163,7 +11167,7 @@
   "regimentOf": [
    {
     "w": "Foot",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Horse"
@@ -11333,7 +11337,7 @@
   "nickAdj": [
    {
     "w": "Fighting",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -11359,7 +11363,7 @@
    },
    {
     "w": "Old",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -11402,7 +11406,7 @@
    },
    {
     "w": "Rose",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Oak"
@@ -11430,14 +11434,14 @@
    },
    {
     "w": "Hart",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Leopard"
    },
    {
     "w": "Lion",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Panther"
@@ -11459,7 +11463,7 @@
    },
    {
     "w": "Star",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Spur"
@@ -11523,15 +11527,15 @@
   "chivMembers": [
    {
     "w": "Knights",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Companions",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Brothers",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sergeants",
@@ -11558,7 +11562,7 @@
   "securitySuffix": [
    {
     "w": "Security",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "MR",
      "MF",
@@ -11609,15 +11613,15 @@
   "fleetGroup": [
    {
     "w": "Fleet",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Squadron",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Flotilla",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Armada",
@@ -11728,11 +11732,11 @@
   "watchGroup": [
    {
     "w": "Watch",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Guard",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Wardens"
@@ -11916,14 +11920,14 @@
    },
    {
     "w": "Raiders",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Reavers",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -12003,7 +12007,7 @@
    },
    {
     "w": "Dusk",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -12028,7 +12032,7 @@
    },
    {
     "w": "Night",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Shade",
@@ -12038,7 +12042,7 @@
    },
    {
     "w": "Shadow",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Smoke",
@@ -12048,7 +12052,7 @@
    },
    {
     "w": "Quiet",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -12206,14 +12210,14 @@
    },
    {
     "w": "Hand",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "light"
     ]
    },
    {
     "w": "Knife",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -12288,7 +12292,7 @@
    },
    {
     "w": "Mask",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Glove"
@@ -12366,7 +12370,7 @@
    },
    {
     "w": "Rats",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -12453,7 +12457,7 @@
    },
    {
     "w": "Stalkers",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grim"
     ]
@@ -12507,11 +12511,11 @@
   "thiefGroup": [
    {
     "w": "Guild",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Brotherhood",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Fellowship"
@@ -12579,7 +12583,7 @@
   "gangMembers": [
    {
     "w": "Boys",
-    "x": 3.0,
+    "x": 3,
     "t": [
      "light"
     ]
@@ -12605,21 +12609,21 @@
    },
    {
     "w": "Mob",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Crew",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
    },
    {
     "w": "Gang",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -12869,11 +12873,11 @@
   "streetLast": [
    {
     "w": "Street",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Lane",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Row"
@@ -12997,7 +13001,7 @@
    },
    {
     "w": "Syndicate",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Cartel",
@@ -13013,7 +13017,7 @@
    },
    {
     "w": "Family",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Clan",
@@ -13058,7 +13062,7 @@
   "smugglerAgents": [
    {
     "w": "Owlers",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "light"
     ]
@@ -13089,7 +13093,7 @@
    },
    {
     "w": "Runners",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -13133,7 +13137,7 @@
    },
    {
     "w": "Crew",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "plain"
     ]
@@ -14044,7 +14048,7 @@
   "craftHonorific": [
    {
     "w": "Worshipful",
-    "x": 3.0,
+    "x": 3,
     "s": [
      "FL",
      "FH",
@@ -14054,7 +14058,7 @@
    },
    {
     "w": "Honourable",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Ancient"
@@ -14399,7 +14403,7 @@
   "bankWord": [
    {
     "w": "Bank",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Savings Bank",
@@ -14637,7 +14641,7 @@
   "lineEmblem": [
    {
     "w": "Pennant",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Star"
@@ -14686,15 +14690,15 @@
   "companyGroup": [
    {
     "w": "Company",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Fellowship",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Band",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Alliance"
@@ -15249,7 +15253,7 @@
   "hunterNoun": [
    {
     "w": "Hunters",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Wardens"
@@ -15307,7 +15311,7 @@
   "assemblyWord": [
    {
     "w": "Assembly",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Senate"
@@ -15338,7 +15342,11 @@
    {
     "w": "Witan",
     "tx": {
-     "germanic": 5.0
+     "germanic": 5,
+     "norse": 5,
+     "scandinavian": 5,
+     "german": 5,
+     "english": 5
     },
     "x": 0.3
    }
@@ -15879,7 +15887,7 @@
    },
    {
     "w": "Movement",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Army",
@@ -16158,11 +16166,11 @@
   "leagueGroup": [
    {
     "w": "League",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Alliance",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Concord"
@@ -16323,7 +16331,7 @@
   "spyWord": [
    {
     "w": "Eyes",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Ears"
@@ -16350,11 +16358,11 @@
   "ruler": [
    {
     "w": "King",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Queen",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Duke"
@@ -16410,7 +16418,7 @@
    },
    {
     "w": "Twilight",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
@@ -16487,7 +16495,7 @@
   "feyPlace": [
    {
     "w": "Hollow Hill",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Green Mound"
@@ -16518,11 +16526,11 @@
   "feyTitle": [
    {
     "w": "Queen",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "King",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Lady"
@@ -16543,14 +16551,14 @@
   "skyThing": [
    {
     "w": "Moon",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "strange"
     ]
    },
    {
     "w": "Star",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -16674,7 +16682,7 @@
   "kinWord": [
    {
     "w": "Kin",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sons"
@@ -16692,11 +16700,11 @@
   "shifter": [
    {
     "w": "Wolf",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Bear",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Boar"
@@ -16831,7 +16839,7 @@
   "hellPlace": [
    {
     "w": "Pit",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Abyss"
@@ -17275,7 +17283,7 @@
    },
    {
     "w": "Restorers",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -17305,7 +17313,7 @@
   "balance": [
    {
     "w": "Balance",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Congruity",
@@ -17495,7 +17503,7 @@
    },
    {
     "w": "Corporation",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "MR",
      "MF",
@@ -17507,7 +17515,7 @@
    },
    {
     "w": "Society",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Syndicate"
@@ -17660,7 +17668,7 @@
   "folkKind": [
    {
     "w": "Good",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Kindly"
@@ -17708,11 +17716,11 @@
   "folkWord": [
    {
     "w": "Neighbours",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Folk",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "People"
@@ -17836,7 +17844,7 @@
   "personTitle": [
    {
     "w": "Duke",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Count"
@@ -17846,7 +17854,7 @@
    },
    {
     "w": "Captain",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Lady"
@@ -17917,7 +17925,7 @@
   "rank": [
    {
     "w": "Captain",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Colonel",
@@ -18192,11 +18200,11 @@
   "beast": [
    {
     "w": "Bear",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Boar",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Bull"
@@ -18207,7 +18215,7 @@
    },
    {
     "w": "Hart",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Hind"
@@ -18220,18 +18228,18 @@
    },
    {
     "w": "Lion",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Ram"
    },
    {
     "w": "Stag",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Wolf",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Badger"
@@ -18333,7 +18341,7 @@
    },
    {
     "w": "Raven",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Rook"
@@ -18343,7 +18351,7 @@
    },
    {
     "w": "Eagle",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Falcon",
@@ -18469,14 +18477,14 @@
   "heraldicBeast": [
    {
     "w": "Dragon",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Wyvern"
    },
    {
     "w": "Griffin",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Unicorn",
@@ -18589,7 +18597,7 @@
    },
    {
     "w": "Sword",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sabre"
@@ -18621,7 +18629,7 @@
    },
    {
     "w": "Crown",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Gauntlet"
@@ -18658,7 +18666,7 @@
    },
    {
     "w": "Moon",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Crescent"
@@ -18669,11 +18677,11 @@
    },
    {
     "w": "Star",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Sun",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Thunderbolt",
@@ -18693,7 +18701,7 @@
    },
    {
     "w": "Oak",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Ash"
@@ -18730,7 +18738,7 @@
    },
    {
     "w": "Rose",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Lily"
@@ -18795,11 +18803,11 @@
    },
    {
     "w": "Harp",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Horn",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Lute"
@@ -19555,11 +19563,11 @@
   "supernaturalTitle": [
    {
     "w": "Queen",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "King",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Lady"
@@ -19586,7 +19594,7 @@
   "regionQual": [
    {
     "w": "Spice",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -19596,7 +19604,7 @@
    },
    {
     "w": "Silver",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -19606,7 +19614,7 @@
    },
    {
     "w": "Amber",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -19706,7 +19714,7 @@
    },
    {
     "w": "Golden",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -19772,7 +19780,7 @@
   "coastWord": [
    {
     "w": "Coast",
-    "x": 3.0,
+    "x": 3,
     "s": [
      "FL",
      "FH",
@@ -19791,7 +19799,7 @@
    },
    {
     "w": "Sea",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -19866,11 +19874,11 @@
   "seaWord": [
    {
     "w": "Seas",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Ocean",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Isles"
@@ -20005,7 +20013,7 @@
   "mineLand": [
    {
     "w": "Mountain",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Hills"
@@ -20041,11 +20049,11 @@
   "tradeActivity": [
    {
     "w": "Trading",
-    "x": 4.0
+    "x": 4
    },
    {
     "w": "Merchant",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Mercantile"
@@ -20063,7 +20071,7 @@
   "shipActivity": [
    {
     "w": "Shipping",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Navigation"
@@ -20105,7 +20113,7 @@
   "resourceActivity": [
    {
     "w": "Mining",
-    "x": 3.0,
+    "x": 3,
     "s": [
      "FL",
      "FH",
@@ -20165,7 +20173,7 @@
    },
    {
     "w": "Asteroid Mining",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ]
@@ -20210,11 +20218,11 @@
   "industry": [
    {
     "w": "Shipping",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Industrial",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Mining"
@@ -20277,7 +20285,7 @@
   "transport": [
    {
     "w": "Railway",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "MR",
      "MF"
@@ -20348,18 +20356,18 @@
   "charterHonorific": [
    {
     "w": "Royal",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
    },
    {
     "w": "Chartered",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Honourable",
-    "x": 2.0,
+    "x": 2,
     "t": [
      "grand"
     ]
@@ -20378,7 +20386,7 @@
   "combineBody": [
    {
     "w": "Syndicate",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Consortium"
@@ -20410,7 +20418,7 @@
   "leagueQual": [
    {
     "w": "Maritime",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Merchant"
@@ -20452,7 +20460,7 @@
   "leaguePl": [
    {
     "w": "Ports",
-    "x": 2.0
+    "x": 2
    },
    {
     "w": "Harbours"
@@ -20497,7 +20505,7 @@
   "leagueBody": [
    {
     "w": "League",
-    "x": 3.0
+    "x": 3
    },
    {
     "w": "Association"
@@ -20551,7 +20559,7 @@
   "resGoods": [
    {
     "w": "Timber",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -20561,7 +20569,7 @@
    },
    {
     "w": "Copper",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -20580,7 +20588,7 @@
    },
    {
     "w": "Iron",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -20706,14 +20714,14 @@
    },
    {
     "w": "Ore",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ]
    },
    {
     "w": "Ice",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "SF"
     ]
@@ -20758,7 +20766,7 @@
   "resGoodsMetal": [
    {
     "w": "Copper",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -20777,7 +20785,7 @@
    },
    {
     "w": "Iron",
-    "x": 2.0,
+    "x": 2,
     "s": [
      "FL",
      "FH",
@@ -21544,7 +21552,179 @@
      "Wanderers"
     ]
    },
-   "sahul": {}
+   "sahul": {},
+   "welsh": {
+    "group": [
+     "Grove"
+    ],
+    "covenGroup": [
+     "Grove"
+    ],
+    "members": [
+     [
+      "Druids",
+      "PM"
+     ]
+    ],
+    "soldiers": [
+     "Hounds",
+     "Champions"
+    ],
+    "companyGroup": [
+     "Band"
+    ],
+    "vocation": [
+     "Bards"
+    ]
+   },
+   "scottish": {
+    "group": [
+     "Grove"
+    ],
+    "covenGroup": [
+     "Grove"
+    ],
+    "members": [
+     [
+      "Druids",
+      "PM"
+     ]
+    ],
+    "soldiers": [
+     "Hounds",
+     "Champions"
+    ],
+    "companyGroup": [
+     "Band"
+    ],
+    "vocation": [
+     "Bards"
+    ]
+   },
+   "irish": {
+    "group": [
+     "Grove"
+    ],
+    "covenGroup": [
+     "Grove"
+    ],
+    "members": [
+     [
+      "Druids",
+      "PM"
+     ]
+    ],
+    "soldiers": [
+     "Hounds",
+     "Champions"
+    ],
+    "companyGroup": [
+     "Band"
+    ],
+    "vocation": [
+     "Bards"
+    ]
+   },
+   "cornish": {
+    "group": [
+     "Grove"
+    ],
+    "covenGroup": [
+     "Grove"
+    ],
+    "members": [
+     [
+      "Druids",
+      "PM"
+     ]
+    ],
+    "soldiers": [
+     "Hounds",
+     "Champions"
+    ],
+    "companyGroup": [
+     "Band"
+    ],
+    "vocation": [
+     "Bards"
+    ]
+   },
+   "norse": {
+    "unitGroup": [
+     "Hearth-Troop",
+     "Host"
+    ],
+    "soldiers": [
+     "Sworn Men",
+     "Wolf-Coats"
+    ],
+    "assemblyWord": [
+     "Moot"
+    ],
+    "raiders": [
+     "Sea-Wolves"
+    ],
+    "companyGroup": [
+     "Fellowship"
+    ]
+   },
+   "scandinavian": {
+    "unitGroup": [
+     "Hearth-Troop",
+     "Host"
+    ],
+    "soldiers": [
+     "Sworn Men",
+     "Wolf-Coats"
+    ],
+    "assemblyWord": [
+     "Moot"
+    ],
+    "raiders": [
+     "Sea-Wolves"
+    ],
+    "companyGroup": [
+     "Fellowship"
+    ]
+   },
+   "german": {
+    "unitGroup": [
+     "Hearth-Troop",
+     "Host"
+    ],
+    "soldiers": [
+     "Sworn Men",
+     "Wolf-Coats"
+    ],
+    "assemblyWord": [
+     "Moot"
+    ],
+    "raiders": [
+     "Sea-Wolves"
+    ],
+    "companyGroup": [
+     "Fellowship"
+    ]
+   },
+   "english": {
+    "unitGroup": [
+     "Hearth-Troop",
+     "Host"
+    ],
+    "soldiers": [
+     "Sworn Men",
+     "Wolf-Coats"
+    ],
+    "assemblyWord": [
+     "Moot"
+    ],
+    "raiders": [
+     "Sea-Wolves"
+    ],
+    "companyGroup": [
+     "Fellowship"
+    ]
+   }
   },
   "typeMultipliers": {
    "arabian": {
@@ -22033,13 +22213,29 @@
   "surnameTraditions": [
    "general",
    "celtic",
-   "germanic"
+   "germanic",
+   "welsh",
+   "scottish",
+   "irish",
+   "cornish",
+   "norse",
+   "scandinavian",
+   "german",
+   "english"
   ],
   "saintTraditions": [
    "general",
    "celtic",
    "germanic",
-   "mediterranean"
+   "mediterranean",
+   "welsh",
+   "scottish",
+   "irish",
+   "cornish",
+   "norse",
+   "scandinavian",
+   "german",
+   "english"
   ],
   "sfTown": [
    {
@@ -22128,40 +22324,40 @@
   "commRegion": [
    {
     "p": "{regionQual} {coastWord}",
-    "w": 1.0
+    "w": 1
    }
   ],
   "colonyTarget": [
    {
     "p": "{town}",
     "self": false,
-    "w": 40.0
+    "w": 40
    },
    {
     "p": "the {compass} Frontier",
-    "w": 25.0
+    "w": 25
    },
    {
     "p": "New {newLand}",
-    "w": 20.0
+    "w": 20
    },
    {
     "p": "New {town}",
     "self": false,
-    "w": 15.0
+    "w": 15
    }
   ],
   "sfRegion": [
    {
     "p": "{star}",
-    "w": 50.0,
+    "w": 50,
     "s": [
      "SF"
     ]
    },
    {
     "p": "{sfBody}",
-    "w": 50.0,
+    "w": 50,
     "s": [
      "SF"
     ]
@@ -22170,7 +22366,7 @@
   "mineLandPlace": [
    {
     "p": "{resGoodsMetal} {mineLand}",
-    "w": 1.0
+    "w": 1
    }
   ]
  },
@@ -22187,7 +22383,7 @@
    "words": [
     {
      "w": "Spice",
-     "x": 3.0
+     "x": 3
     },
     {
      "w": "Pepper"
@@ -22221,11 +22417,11 @@
    "words": [
     {
      "w": "Silk",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Wool",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Cloth"
@@ -22250,11 +22446,11 @@
    "words": [
     {
      "w": "Furs",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Timber",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Hides"
@@ -22273,11 +22469,11 @@
    "words": [
     {
      "w": "Iron",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Copper",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Tin"
@@ -22302,7 +22498,7 @@
     },
     {
      "w": "Silver",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Pearls"
@@ -22327,11 +22523,11 @@
    "words": [
     {
      "w": "Grain",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Salt",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Fish"
@@ -22356,11 +22552,11 @@
    "words": [
     {
      "w": "Wine",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Tea",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Coffee"
@@ -22382,7 +22578,7 @@
    "words": [
     {
      "w": "Horses",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Cattle"
@@ -22407,7 +22603,7 @@
    "words": [
     {
      "w": "Coal",
-     "x": 2.0,
+     "x": 2,
      "s": [
       "FL",
       "FH",
@@ -22451,7 +22647,7 @@
    "words": [
     {
      "w": "Ore",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Alloys"
@@ -22476,7 +22672,7 @@
    "words": [
     {
      "w": "Ice",
-     "x": 2.0
+     "x": 2
     },
     {
      "w": "Water"

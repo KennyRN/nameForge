@@ -43,7 +43,8 @@ import moneyData from "../data/money-names.json";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { findTradition } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet, lensCultureLabel } from "../lens";
+import { cultureSet, engineCulture, lensCultureLabel } from "../lens";
+import { applySignature, noBracket, NORTH_5C_CULTURES } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -175,7 +176,13 @@ interface VesselData {
 export const VESSEL_DATA = vesselData as unknown as VesselData;
 /** Settlement kit §4: the patterns and words whose `{town}` is the home port. */
 const VESSEL_SELF = selfPatterns(vesselData);
-export const VESSEL_CULTURES = VESSEL_DATA.cultures;
+/** The cultures with tables of their own. */
+export const VESSEL_BASE_CULTURES = VESSEL_DATA.cultures;
+/** The roster: those, and (Northern Europe brief 5c) Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy key's tables (`engineAlias`). */
+export const VESSEL_CULTURES: VesselCulture[] = [
+  ...VESSEL_BASE_CULTURES,
+  ...NORTH_5C_CULTURES.map((c) => ({ ...VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key))!, key: c.key, label: c.label })),
+];
 interface AirLandData {
   modules: Record<string, string>;
   technology: Record<string, { code: string; label: string; fantastic?: boolean }[]>;
@@ -221,7 +228,8 @@ export const AIR_LAND = airLandData as unknown as AirLandData;
 export const VESSEL_MODULE_LABELS: Record<VesselModule, string> = { ...VESSEL_DATA.modules, ...AIR_LAND.modules };
 
 export function findVesselCulture(key: string | undefined): VesselCulture | undefined {
-  return VESSEL_CULTURES.find((c) => c.key === key);
+  // The newer keys read the legacy key's tables, so the culture found is that one.
+  return VESSEL_BASE_CULTURES.find((c) => c.key === (key === undefined ? key : engineCulture(key)));
 }
 
 // ── Technology (§4) ─────────────────────────────────────────────────────────
@@ -342,6 +350,8 @@ export function availableFunctions(module: VesselModule, cultureKey: string, tec
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface VesselOptions {
+  /** Northern Europe brief 5c: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   module: VesselModule;
   culture?: string;
   /** A function key; undefined is Any. */
@@ -1178,6 +1188,27 @@ function typeShapes(ctx: Ctx, family: string): TypeShape[] {
 
 /** §5: a batch of unique names. */
 export function generateVesselNames(options: VesselOptions): VesselBatch {
+  const batch = generateVesselNamesCore(options);
+  // Northern Europe brief 5c: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
+  // Spacecraft is left to the style tables brief; a series and the settlement kit keep their own names.
+  if (options.signature === false || fillModeOf(options.people) || options.series || options.context || options.module === "spacecraft" || options.function || options.naming === "types" || (options.style && options.style !== "none") || options.shape) return batch;
+  const guards = options.safeguards ?? { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
+  const block = new Set([...guards.block, ...(guards.flagListBlocks ? guards.flag : [])].map(normForBlock));
+  const ok = (text: string) => !block.has(normForBlock(text)) && !breaksVesselWords(text, options.module) && (options.people !== "invented" || noBracket(text));
+  return {
+    ...batch,
+    names: applySignature(batch.names, options.module, options.culture, batch.seed, {
+      allowed: ok,
+      // A registration or a prefix (HMS) belongs to its craft: those keep their names.
+      keep: (n) => !!n.code || !!n.prefix,
+      set: (n, text) => ({ ...n, name: text, text }),
+    }),
+  };
+}
+
+function generateVesselNamesCore(options: VesselOptions): VesselBatch {
+  // German reads General's tables, which carry the British prefixes (HMS) and registrations (G-): not for German craft.
+  if (options.culture === "german" && options.prefixes) options = { ...options, prefixes: false };
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateVesselNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, series: options.series });

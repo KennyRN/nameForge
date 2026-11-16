@@ -4,9 +4,11 @@ import peopleData from "../data/peoples-tongues.json";
 import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows } from "../coverageUse";
+import { north5cRows } from "../north5cCoverage";
+import { NORTH_5C_CULTURES } from "../north5c";
 
 const MODULE = "peoplesTongues";
-const ROSTER = (bynameData.cultures as { key: string }[]).map((c) => c.key);
+const ROSTER = [...(bynameData.cultures as { key: string }[]).map((c) => c.key), ...NORTH_5C_CULTURES.map((c) => c.key)];
 
 /**
  * The module's tables hold weights per culture (suffix choices, the share of "-ic" forms), which
@@ -27,6 +29,7 @@ function rows(): CoverageRow[] {
   out.push(...(peopleData.endings as unknown[]).map(() => makeRow({}, { module: MODULE, source: "endings", type: "shape" })));
   out.push(...(peopleData.learned as unknown[]).map(() => makeRow({}, { module: MODULE, source: "learned", type: "shape" })));
   out.push(...vocabularyRows(MODULE));
+  out.push(...north5cRows(MODULE));
   return out;
 }
 

@@ -2,6 +2,7 @@
 import "../lexiconWiring";
 import tribalData from "../data/tribal-names.json";
 import { type CoverageAdapter, type CoverageRow, makeRow } from "../coverageRows";
+import { north5cRows } from "../north5cCoverage";
 
 const MODULE = "tribalNames";
 type R = Record<string, unknown>;
@@ -36,6 +37,8 @@ function rows(): CoverageRow[] {
     }
   }
   for (const _ of Object.keys((tribalData.templates as unknown as { weights: R }).weights)) out.push(makeRow({}, { module: MODULE, source: "templates", type: "shape" }));
+  // Northern Europe brief 5c: the core traditions' own words and frames.
+  out.push(...north5cRows(MODULE, (c) => c));
   return out;
 }
 

@@ -7,7 +7,7 @@ import { type BiomeCatalogue, BUILT_IN_BIOMES, findBiome, NATURAL_BIOME_IDS, TER
 import { findTradition, TRIBAL_GROUP_TYPES, TRIBAL_PERSPECTIVES, TRIBAL_REGISTERS } from "./tribes/engine";
 import { type TribalSlotFields, tribalSlotFill } from "./tribes/slotFill";
 import {
-  BYNAME_CULTURES,
+  BYNAME_CULTURES_5C,
   type BynameGender,
   type BynameLanguage,
   type BynameLength,
@@ -377,7 +377,7 @@ function parseBynamePreset(values: Record<string, string>, body: string, fileNam
   };
   const fantasticRaw = values.fantastic;
   if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic “${fantasticRaw}”.`);
-  const culture = pick("culture", "general", (v) => BYNAME_CULTURES.some((c) => c.key === v));
+  const culture = pick("culture", "general", (v) => BYNAME_CULTURES_5C.some((c) => c.key === v));
   return {
     byname: {
       packName: values.packName || fileName,

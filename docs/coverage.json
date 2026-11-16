@@ -2136,7 +2136,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 4695,
+   "rowCount": 4692,
    "cultures": {
     "english": {
      "words": 102,
@@ -2180,7 +2180,7 @@
     },
     "cornish": {
      "words": 195,
-     "shapes": 87,
+     "shapes": 84,
      "target": {
       "words": 30,
       "shapes": 10
@@ -2461,8 +2461,8 @@
     "AN": 228,
     "MD": 726,
     "EM": 336,
-    "ST": 432,
-    "MO": 432,
+    "ST": 429,
+    "MO": 429,
     "NF": 0,
     "IS": 633
    },
@@ -10302,7 +10302,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 515,
+   "rowCount": 851,
    "cultures": {
     "general": {
      "words": 0,
@@ -10311,93 +10311,92 @@
      "below": false
     },
     "english": {
-     "words": 19,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 4,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 4,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 4,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 4,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 4,
-     "shapes": 0,
+     "words": 16,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 5,
-     "shapes": 0,
+     "words": 35,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 5,
-     "shapes": 0,
+     "words": 65,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -10659,7 +10658,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -10690,7 +10688,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 214,
+   "rowCount": 550,
    "cultures": {
     "general": {
      "words": 0,
@@ -10699,93 +10697,92 @@
      "below": false
     },
     "english": {
-     "words": 20,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 5,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 5,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 5,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 5,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 5,
-     "shapes": 0,
+     "words": 17,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 6,
-     "shapes": 0,
+     "words": 36,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 6,
-     "shapes": 0,
+     "words": 66,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -11041,7 +11038,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -11072,7 +11068,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 486,
+   "rowCount": 822,
    "cultures": {
     "general": {
      "words": 0,
@@ -11081,93 +11077,92 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 19,
+     "words": 30,
+     "shapes": 29,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 9,
+     "words": 42,
+     "shapes": 23,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 9,
+     "words": 42,
+     "shapes": 23,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 9,
+     "words": 42,
+     "shapes": 23,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 9,
+     "words": 42,
+     "shapes": 23,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 9,
+     "words": 12,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 7,
+     "words": 30,
+     "shapes": 17,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 7,
+     "words": 60,
+     "shapes": 27,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -11426,7 +11421,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -12637,7 +12631,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 390,
+   "rowCount": 726,
    "cultures": {
     "general": {
      "words": 0,
@@ -12646,93 +12640,92 @@
      "below": false
     },
     "english": {
-     "words": 5,
-     "shapes": 0,
+     "words": 35,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 3,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 3,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 3,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 3,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 3,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 4,
-     "shapes": 0,
+     "words": 34,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 4,
-     "shapes": 0,
+     "words": 64,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -12993,7 +12986,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -13024,7 +13016,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 165,
+   "rowCount": 501,
    "cultures": {
     "general": {
      "words": 0,
@@ -13033,93 +13025,92 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -13371,7 +13362,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "german",
      "french",
      "dutch",
      "iberian",
@@ -14191,7 +14181,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 482,
+   "rowCount": 842,
    "cultures": {
     "general": {
      "words": 0,
@@ -14200,96 +14190,94 @@
      "below": false
     },
     "english": {
-     "words": 8,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 10,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 10,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 10,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 10,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
+     "words": 10,
      "shapes": 0,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
-     "below": false
+     "below": true
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 38,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 8,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 8,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -14600,8 +14588,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -14632,7 +14618,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 806,
+   "rowCount": 1154,
    "cultures": {
     "general": {
      "words": 0,
@@ -14641,96 +14627,94 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 3,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 3,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 3,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 3,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -15049,8 +15033,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -15081,7 +15063,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 772,
+   "rowCount": 1136,
    "cultures": {
     "general": {
      "words": 0,
@@ -15090,96 +15072,94 @@
      "below": false
     },
     "english": {
-     "words": 5,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 14,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 35,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 5,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 5,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -15499,8 +15479,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -15531,7 +15509,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 702,
+   "rowCount": 1038,
    "cultures": {
     "general": {
      "words": 0,
@@ -15540,96 +15518,94 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -15948,8 +15924,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -15980,7 +15954,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1086,
+   "rowCount": 1422,
    "cultures": {
     "general": {
      "words": 0,
@@ -15989,96 +15963,94 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -16394,8 +16366,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -16426,7 +16396,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 444,
+   "rowCount": 792,
    "cultures": {
     "general": {
      "words": 0,
@@ -16435,96 +16405,94 @@
      "below": false
     },
     "english": {
-     "words": 1,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 14,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 1,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -16840,8 +16808,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -16872,7 +16838,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 788,
+   "rowCount": 1128,
    "cultures": {
     "general": {
      "words": 0,
@@ -16881,96 +16847,94 @@
      "below": false
     },
     "english": {
-     "words": 1,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 1,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -17290,8 +17254,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -17322,7 +17284,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 636,
+   "rowCount": 972,
    "cultures": {
     "general": {
      "words": 0,
@@ -17331,96 +17293,94 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "french": {
      "words": 0,
@@ -17740,8 +17700,6 @@
      "sahul"
     ],
     "notOffered": [
-     "celtic",
-     "norse",
      "french",
      "iberian",
      "slavic",
@@ -17772,7 +17730,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 794,
+   "rowCount": 1130,
    "cultures": {
     "general": {
      "words": 0,
@@ -17781,93 +17739,92 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -18256,7 +18213,6 @@
      "na-woodlands"
     ],
     "notOffered": [
-     "german",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -18792,7 +18748,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 615,
+   "rowCount": 951,
    "cultures": {
     "general": {
      "words": 0,
@@ -18801,93 +18757,92 @@
      "below": false
     },
     "english": {
-     "words": 5,
-     "shapes": 0,
+     "words": 35,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -19277,7 +19232,6 @@
      "nw-coast"
     ],
     "notOffered": [
-     "german",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -19302,7 +19256,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 667,
+   "rowCount": 1003,
    "cultures": {
     "general": {
      "words": 0,
@@ -19311,93 +19265,92 @@
      "below": false
     },
     "english": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "welsh": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scottish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "irish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "cornish": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "celtic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "norse": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "scandinavian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 20,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "german": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -19785,7 +19738,6 @@
      "nw-coast"
     ],
     "notOffered": [
-     "german",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -20169,36 +20121,36 @@
  "totals": {
   "cultures": {
    "english": {
-    "words": 1352,
-    "shapes": 2095
+    "words": 1844,
+    "shapes": 2255
    },
    "celtic": {
-    "words": 528,
-    "shapes": 341
+    "words": 725,
+    "shapes": 401
    },
    "welsh": {
-    "words": 1051,
-    "shapes": 662
+    "words": 1723,
+    "shapes": 882
    },
    "scottish": {
-    "words": 1200,
-    "shapes": 1249
+    "words": 1872,
+    "shapes": 1469
    },
    "irish": {
-    "words": 950,
-    "shapes": 447
+    "words": 1622,
+    "shapes": 667
    },
    "cornish": {
-    "words": 975,
-    "shapes": 654
+    "words": 1647,
+    "shapes": 871
    },
    "roman": {
     "words": 257,
     "shapes": 188
    },
    "norse": {
-    "words": 970,
-    "shapes": 891
+    "words": 1465,
+    "shapes": 1051
    },
    "arabic-persian": {
     "words": 151,
@@ -20273,12 +20225,12 @@
     "shapes": 105
    },
    "scandinavian": {
-    "words": 1057,
-    "shapes": 952
+    "words": 1789,
+    "shapes": 1192
    },
    "german": {
-    "words": 1025,
-    "shapes": 1350
+    "words": 1517,
+    "shapes": 1510
    },
    "american": {
     "words": 44,
@@ -20313,8 +20265,8 @@
    "AN": 2179,
    "MD": 2910,
    "EM": 2891,
-   "ST": 3405,
-   "MO": 2968,
+   "ST": 3402,
+   "MO": 2965,
    "NF": 762,
    "IS": 1516
   },
@@ -20622,7 +20574,73 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/cornish/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/cornish/covenGroup",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/cornish/group",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/cornish/members",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/cornish/vocation",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/eastAsian/unitGroup",
+   "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/english/assemblyWord",
+   "module": "powerFactions",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/english/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/english/raiders",
+   "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/german/assemblyWord",
+   "module": "powerFactions",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/german/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/german/raiders",
    "module": "martialOrders",
    "entries": 1,
    "minimum": 8
@@ -20642,6 +20660,36 @@
   {
    "pool": "signatures/germanic/raiders",
    "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/irish/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/irish/covenGroup",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/irish/group",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/irish/members",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/irish/vocation",
+   "module": "adventureCompanies",
    "entries": 1,
    "minimum": 8
   },
@@ -20676,6 +20724,24 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/norse/assemblyWord",
+   "module": "powerFactions",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/norse/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/norse/raiders",
+   "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/northAmerican/assemblyWord",
    "module": "powerFactions",
    "entries": 1,
@@ -20694,6 +20760,54 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/scandinavian/assemblyWord",
+   "module": "powerFactions",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scandinavian/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scandinavian/raiders",
+   "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scottish/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scottish/covenGroup",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scottish/group",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scottish/members",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scottish/vocation",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/southAsian/assemblyWord",
    "module": "powerFactions",
    "entries": 1,
@@ -20702,6 +20816,36 @@
   {
    "pool": "signatures/steppe/assemblyWord",
    "module": "powerFactions",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/welsh/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/welsh/covenGroup",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/welsh/group",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/welsh/members",
+   "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/welsh/vocation",
+   "module": "adventureCompanies",
    "entries": 1,
    "minimum": 8
   },
@@ -20913,8 +21057,38 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/cornish/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/eastAsian/members",
    "module": "mysticOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/english/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/english/unitGroup",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/german/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/german/unitGroup",
+   "module": "martialOrders",
    "entries": 2,
    "minimum": 8
   },
@@ -20926,6 +21100,12 @@
   },
   {
    "pool": "signatures/germanic/unitGroup",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/irish/soldiers",
    "module": "martialOrders",
    "entries": 2,
    "minimum": 8
@@ -20950,6 +21130,18 @@
   },
   {
    "pool": "signatures/mesoamerican/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/norse/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/norse/unitGroup",
    "module": "martialOrders",
    "entries": 2,
    "minimum": 8
@@ -20991,6 +21183,24 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/scandinavian/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scandinavian/unitGroup",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/scottish/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/southAsian/group",
    "module": "mysticOrders",
    "entries": 2,
@@ -21010,6 +21220,12 @@
   },
   {
    "pool": "signatures/steppe/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/welsh/soldiers",
    "module": "martialOrders",
    "entries": 2,
    "minimum": 8
@@ -22023,13 +22239,37 @@
    "minimum": 8
   },
   {
+   "pool": "traditions/cornish/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
    "pool": "traditions/eastAsian/signatureCollectives",
    "module": "tribalNames",
    "entries": 5,
    "minimum": 8
   },
   {
+   "pool": "traditions/english/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/german/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
    "pool": "traditions/germanic/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/irish/signatureCollectives",
    "module": "tribalNames",
    "entries": 5,
    "minimum": 8
@@ -22047,6 +22287,12 @@
    "minimum": 8
   },
   {
+   "pool": "traditions/norse/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
    "pool": "traditions/northAmerican/signatureCollectives",
    "module": "tribalNames",
    "entries": 5,
@@ -22054,6 +22300,24 @@
   },
   {
    "pool": "traditions/polynesian/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/scandinavian/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/scottish/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/welsh/signatureCollectives",
    "module": "tribalNames",
    "entries": 5,
    "minimum": 8

@@ -5,6 +5,7 @@ import tribalData from "../data/tribal-names.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow } from "../coverageRows";
 import { lensStyleFor } from "../lens";
 import { listsUsed, plainWordRows, tokensOf, wordListRows, withReadings } from "../coverageUse";
+import { north5cRows } from "../north5cCoverage";
 
 type Type = { key: string; settings: string[]; front: string; shapes: unknown[] };
 type Family = { section: string; types: Type[] };
@@ -43,6 +44,8 @@ function rows(family: Family): CoverageRow[] {
   for (const [tradition, byType] of Object.entries(EXTRA)) {
     for (const [type, shapes] of Object.entries(byType)) if (kinds.has(type)) out.push(...listRows(shapes, { module, source: `extraShapes/${tradition}`, kind: type, culture: tradition }));
   }
+  // Northern Europe brief 5c: the core cultures' own words and frames (traditions of the same keys).
+  out.push(...north5cRows(module, (c) => c));
   return out;
 }
 

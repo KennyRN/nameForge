@@ -1,0 +1,77 @@
+// Northern Europe tables brief, batch 5c: the data patches the batch makes to existing files, written to be run again without effect:
+//  - tribal-names.json gains eight traditions (English, Welsh, Scottish, Irish, Cornish, Norse, Scandinavian, German) and every table keyed by
+//    tradition gains their keys (the four nations read Celtic's, the others Germanic's), so nothing that was drawn before changes;
+//  - group-names.json: the same keys in its tradition tables;
+//  - lens.json: the tribal mapping for the eight, the `north5c` and `vehicle5c` culture sets, and the cultures sets of the 5c modules.
+import { readFileSync, writeFileSync } from "node:fs";
+
+const read = (p) => JSON.parse(readFileSync(new URL(`../../${p}`, import.meta.url), "utf8"));
+const write = (p, v, indent) => writeFileSync(new URL(`../../${p}`, import.meta.url), `${JSON.stringify(v, null, indent)}\n`);
+const clone = (v) => JSON.parse(JSON.stringify(v));
+
+export const NATIONS = ["welsh", "scottish", "irish", "cornish"];
+export const GERMANIC = ["norse", "scandinavian", "german", "english"];
+const NEW = [...NATIONS, ...GERMANIC];
+
+/** Adds the new tradition keys to every dict keyed by tradition and every list of tradition keys. */
+function spread(node) {
+  if (Array.isArray(node)) {
+    for (const item of node) spread(item);
+    if (node.every((x) => typeof x === "string")) {
+      if (node.includes("celtic")) for (const k of NATIONS) if (!node.includes(k)) node.push(k);
+      if (node.includes("germanic")) for (const k of GERMANIC) if (!node.includes(k)) node.push(k);
+    }
+    return;
+  }
+  if (node && typeof node === "object") {
+    for (const v of Object.values(node)) spread(v);
+    if ("celtic" in node) for (const k of NATIONS) if (!(k in node)) node[k] = clone(node.celtic);
+    if ("germanic" in node) for (const k of GERMANIC) if (!(k in node)) node[k] = clone(node.germanic);
+  }
+}
+
+const TRADITIONS = {
+  english: { base: "germanic", label: "English", drawsOn: "Anglo-Saxon hundreds and tithings; medieval and later English kin, households and parishes", homeland: { temperate: 80, moorland: 20 }, terrainMultipliers: { coast: 1.1 }, flavour: { animals: ["Hart", "Boar", "Hound", "Swan", "Falcon", "Lion"], plants: ["Oak", "Hawthorn", "Yew", "Thorn"], land: ["Weald", "Down", "Fen", "Wold"], lifeways: ["Ploughmen", "Shepherds"] }, favouredLifeways: ["Ploughmen", "Shepherds", "Smiths", "Cattle Keepers"], signatureCollectives: ["Folk", "Kin", "House", "Hundred", "Neighbours"], themes: { landscape: 1.3, relationship: 1.2, qualities: 1.2, warfare: 0.8, dress: 1 }, templates: { A: 1.2, B: 1.1 }, groupTypes: { settlement: 1.3, regional: 1.2, confederation: 1 }, numbers: ["Three", "Seven", "Twelve"], special: {} },
+  welsh: { base: "celtic", label: "Welsh", drawsOn: "Welsh kindreds, princedoms and valley communities", homeland: { highland: 40, temperate: 40, moorland: 20 }, terrainMultipliers: { mountains: 1.2, coast: 1.1 }, flavour: { animals: ["Dragon", "Red Kite", "Raven", "Salmon", "Stag", "Hound"], plants: ["Oak", "Mistletoe", "Rowan", "Leek"], land: ["Valley", "Mountain", "Moor"], lifeways: ["Drovers", "Bards"] }, favouredLifeways: ["Drovers", "Cattle Keepers", "Smiths", "Ploughmen"], signatureCollectives: ["Kin", "Children", "Folk", "Descendants", "Hosts"], themes: { landscape: 1.5, qualities: 1.3, animals: 1.3, warfare: 1.1, vessel: 0.3 }, templates: { O: 1.4, A: 1.2 }, groupTypes: { dynasty: 1.3, regional: 1.3, kin: 1.2 }, numbers: ["Three", "Seven", "Nine"], special: {} },
+  scottish: { base: "celtic", label: "Scottish", drawsOn: "Highland clans and septs; Lowland and Border families; the Isles", homeland: { highland: 45, temperate: 25, moorland: 30 }, terrainMultipliers: { mountains: 1.3, coast: 1.3, islands: 1.3 }, flavour: { animals: ["Stag", "Wildcat", "Eagle", "Salmon", "Raven", "Hound"], plants: ["Thistle", "Rowan", "Heather", "Pine"], land: ["Glen", "Loch", "Strath", "Moor"], lifeways: ["Crofters", "Fishermen"] }, favouredLifeways: ["Cattle Keepers", "Fishermen", "Crofters", "Smiths"], signatureCollectives: ["Clan", "Sept", "Kin", "Children", "Descendants"], themes: { landscape: 1.4, warfare: 1.3, qualities: 1.2, animals: 1.2, relationship: 1.3 }, templates: { O: 1.3, A: 1.3 }, groupTypes: { dynasty: 1.4, kin: 1.3, warband: 1.2 }, numbers: ["Three", "Seven"], special: {} },
+  irish: { base: "celtic", label: "Irish", drawsOn: "Irish septs, kindreds and over-kingdoms", homeland: { temperate: 70, moorland: 30 }, terrainMultipliers: { coast: 1.2, islands: 1.2 }, flavour: { animals: ["Hound", "Boar", "Salmon", "Stag", "Hawk", "Raven"], plants: ["Hazel", "Ash", "Oak", "Shamrock"], land: ["Plain", "Bog", "Hill Fort"], lifeways: ["Cattle Keepers", "Poets"] }, favouredLifeways: ["Cattle Keepers", "Horse Breeders", "Smiths", "Ploughmen"], signatureCollectives: ["Sept", "Kin", "Children", "Descendants", "People"], themes: { landscape: 1.3, warfare: 1.3, qualities: 1.5, animals: 1.2, relationship: 1.3 }, templates: { O: 1.5, A: 1.3 }, groupTypes: { dynasty: 1.4, confederation: 1.3, kin: 1.3 }, numbers: ["Three", "Five", "Seven"], special: {} },
+  cornish: { base: "celtic", label: "Cornish", drawsOn: "Cornish kindreds, tinners and fishing communities", homeland: { temperate: 50, moorland: 50 }, terrainMultipliers: { coast: 1.6, islands: 1.2 }, flavour: { animals: ["Chough", "Gull", "Seal", "Hound", "Hare", "Raven"], plants: ["Oak", "Gorse", "Thrift"], land: ["Moor", "Cove", "Tor"], lifeways: ["Tinners", "Fishermen"] }, favouredLifeways: ["Fishermen", "Smiths", "Cattle Keepers", "Boatwrights"], signatureCollectives: ["Kin", "Children", "Folk", "Tinners", "Descendants"], themes: { landscape: 1.4, water: 1.3, qualities: 1.2, animals: 1.2, vessel: 0.8 }, templates: { O: 1.3, A: 1.2 }, groupTypes: { settlement: 1.3, kin: 1.2, regional: 1.2 }, numbers: ["Three", "Seven"], special: {} },
+  norse: { base: "germanic", label: "Norse", drawsOn: "Viking-age Norse kindreds, steadings and war-bands", homeland: { boreal: 50, temperate: 30, moorland: 20 }, terrainMultipliers: { coast: 1.5, islands: 1.4, mountains: 1.1 }, flavour: { animals: ["Wolf", "Raven", "Bear", "Serpent", "Eagle", "Boar"], plants: ["Ash", "Birch", "Pine", "Yew"], land: ["Fjord", "Fell", "Dale"], water: ["Fjord", "Long Inlet"], lifeways: ["Seafarers", "Boatwrights"] }, favouredLifeways: ["Seafarers", "Boatwrights", "Smiths", "Cattle Keepers"], signatureCollectives: ["Sons", "Kin", "Folk", "Host", "Men"], themes: { warfare: 1.5, dress: 1.5, relationship: 1.5, vessel: 1.6, sacred: 0.9 }, templates: { A: 1.3, L: 1.2 }, groupTypes: { warband: 1.6, migrant: 1.3, confederation: 1.2 }, numbers: ["Two", "Three", "Nine", "Twelve"], special: { longship: true } },
+  scandinavian: { base: "germanic", label: "Scandinavian", drawsOn: "Scandinavian farm-communities, parishes and seafarers, early modern to now", homeland: { boreal: 55, temperate: 30, highland: 15 }, terrainMultipliers: { coast: 1.3, islands: 1.3 }, flavour: { animals: ["Elk", "Wolf", "Bear", "Swan", "Raven", "Eagle"], plants: ["Pine", "Birch", "Spruce", "Rowan"], land: ["Heath", "Forest"], water: ["Fjord", "Lake"], lifeways: ["Foresters", "Seafarers"] }, favouredLifeways: ["Foresters", "Seafarers", "Ploughmen", "Smiths"], signatureCollectives: ["Folk", "Kin", "House", "Sons", "Neighbours"], themes: { landscape: 1.4, water: 1.3, relationship: 1.3, animals: 1.2, vessel: 1.2 }, templates: { A: 1.2, L: 1.1 }, groupTypes: { settlement: 1.3, regional: 1.2, kin: 1.2 }, numbers: ["Three", "Seven", "Nine"], special: {} },
+  german: { base: "germanic", label: "German", drawsOn: "German kin and free communities, leagues and imperial cities", homeland: { temperate: 60, boreal: 20, highland: 20 }, terrainMultipliers: { mountains: 1.1 }, flavour: { animals: ["Wolf", "Eagle", "Bear", "Stag", "Boar", "Hound"], plants: ["Oak", "Linden", "Beech", "Fir"], land: ["Heath", "Forest"], lifeways: ["Foresters", "Smiths"] }, favouredLifeways: ["Ploughmen", "Smiths", "Foresters", "Cattle Keepers"], signatureCollectives: ["Folk", "Kin", "House", "Brethren", "Neighbours"], themes: { landscape: 1.3, warfare: 1.2, relationship: 1.4, qualities: 1.2, sacred: 0.9 }, templates: { A: 1.2, B: 1.2 }, groupTypes: { confederation: 1.3, settlement: 1.2, regional: 1.2 }, numbers: ["Three", "Seven", "Nine", "Twelve"], special: {} },
+};
+
+export function patchData() {
+  // ── tribal-names.json
+  const tribal = read("src/data/tribal-names.json");
+  if (!tribal.traditions.some((t) => t.key === "english")) {
+    for (const [key, spec] of Object.entries(TRADITIONS)) {
+      const { base, ...own } = spec;
+      const from = tribal.traditions.find((t) => t.key === base);
+      tribal.traditions.push({ ...clone(from), key, group: "Northern Europe", ...own });
+    }
+  }
+  spread(tribal);
+  write("src/data/tribal-names.json", tribal, 1);
+
+  // ── group-names.json
+  const group = read("src/data/group-names.json");
+  spread(group);
+  write("src/data/group-names.json", group, 1);
+
+  // ── lens.json
+  const lens = read("src/data/lens.json");
+  const maps = lens.mappings.cultures;
+  for (const key of NEW) maps.tribal[key] = { lens: [key], weights: [[key, 1]] };
+  if (!maps.tribal.celtic.lens.includes("celtic")) maps.tribal.celtic.lens.push("celtic");
+  const six = ["welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
+  maps.north5c = { extends: "shared", entries: Object.fromEntries(six.map((k) => [k, { lens: [k] }])) };
+  maps.vehicle5c = { extends: "vehicle", entries: Object.fromEntries(six.map((k) => [k, { lens: [k] }])) };
+  for (const m of ["epithets", "titles", "familyNames", "realms", "peoplesTongues"]) lens.modules[m].cultures = "north5c";
+  for (const m of ["ships", "aircraft", "landVehicles"]) lens.modules[m].cultures = "vehicle5c";
+  // Spacecraft is left to the style tables brief: its roster and mapping stay the thirty-four.
+  lens.modules.spacecraft.sentence.roster = "vesselSpace";
+  write("src/data/lens.json", lens, 1);
+}
+
+if (process.argv[1] && process.argv[1].endsWith("patchData.mjs")) patchData();

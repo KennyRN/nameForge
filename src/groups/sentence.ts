@@ -7,7 +7,8 @@
 import { chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause, registerLensRules } from "../lensView";
 import { scalePhrase, scaleInfo, scalesFor, type ScaleChoice } from "../space/scale";
-import { TRIBAL_TRADITIONS } from "../tribes/engine";
+import { LENS_CULTURES, LENS_MENU } from "../lens";
+import { CULTURE_TRADITION, findTradition, TRIBAL_TRADITIONS, traditionOfCulture } from "../tribes/engine";
 import {
   canFront,
   commoditiesInSetting,
@@ -26,6 +27,8 @@ import {
 
 export interface GroupSentenceState {
   tradition: string;
+  /** Northern Europe brief 5c: the culture picked in the shared menu (its tradition is `tradition`); undefined for a stored tradition, which runs as saved. */
+  culture?: string;
   /** A type key; undefined is Any. */
   type?: string;
   genre: GroupGenre;
@@ -107,15 +110,45 @@ registerLensRules("supernaturalCourts", {
   after: (_previous, next, field) => (field === "era" && next.genre === "modern" && next.fantastic !== true ? { ...next, fantastic: true } : next),
 });
 
+/**
+ * Northern Europe brief 5c B1: the shared culture menu (the lens menu's headings and order), offering the cultures the families have a flavour for,
+ * and a stored tradition that isn't one of them (Germanic, or a stored local one) as it is.
+ */
+export function cultureMenu(state: Pick<GroupSentenceState, "tradition" | "culture">): { id: string; label: string; group?: string; heading?: string }[] {
+  const out: { id: string; label: string; group?: string; heading?: string }[] = [];
+  const seen = new Set<string>();
+  for (const block of LENS_MENU) {
+    let first = true;
+    for (const e of block.entries) {
+      const key = e.key;
+      if (!key || !CULTURE_TRADITION[key] || seen.has(key)) continue;
+      const label = e.label ?? LENS_CULTURES.find((c) => c.key === key)?.label;
+      if (!label) continue;
+      seen.add(key);
+      out.push({ id: key, label, ...(first && block.heading ? { group: block.heading, heading: block.heading } : {}) });
+      first = false;
+    }
+  }
+  // Traditions the menu has no culture for (Sahul…), and a stored tradition no culture reads (Germanic): kept, under their own labels.
+  const reachable = new Set(out.map((c) => CULTURE_TRADITION[c.id]));
+  for (const t of TRIBAL_TRADITIONS) {
+    if (!reachable.has(t.key) && (t.key === state.tradition || ["sahul"].includes(t.key))) out.push({ id: t.key, label: t.label });
+  }
+  return out;
+}
+
 export function groupSentence(state: GroupSentenceState, family: GroupFamily): GroupSegment[] {
   const out: GroupSegment[] = [];
   const tradition = TRIBAL_TRADITIONS.find((t) => t.key === state.tradition) ?? TRIBAL_TRADITIONS[0];
+  const menu = cultureMenu(state);
+  // A stored tradition is shown with its own label until a culture is picked (one sentence brief rule 4).
+  const picked = state.culture ? menu.find((c) => c.id === state.culture) : undefined;
   out.push({
     field: "tradition",
-    text: tradition.label,
+    text: picked ? picked.label : tradition.label,
     title: tradition.key === "general" ? "No cultural flavour" : tradition.drawsOn,
-    choices: TRIBAL_TRADITIONS.map((t) => ({ id: t.key, label: t.label })),
-    current: tradition.key,
+    choices: menu,
+    current: picked?.id ?? menu.find((c) => c.id === state.tradition)?.id ?? menu.find((c) => CULTURE_TRADITION[c.id] === tradition.key)?.id ?? tradition.key,
   });
   out.push("-themed ");
   const setting = groupSetting(state.genre, state.fantastic);
@@ -216,9 +249,14 @@ export function groupSentenceText(segments: GroupSegment[]): string {
 export function chooseGroup(state: GroupSentenceState, field: GroupField, id: string | undefined, family: GroupFamily): GroupSentenceState {
   let next: GroupSentenceState = { ...state };
   switch (field) {
-    case "tradition":
-      next.tradition = id ?? "general";
+    case "tradition": {
+      // A culture of the shared menu (or a tradition kept as it was): the tradition it reads, and the culture itself.
+      const key = id ?? "general";
+      next.tradition = traditionOfCulture(key);
+      next.culture = CULTURE_TRADITION[key] ? key : undefined;
+      if (!findTradition(next.tradition)) next.tradition = "general";
       break;
+    }
     case "type":
       next.type = id;
       break;

@@ -413,9 +413,9 @@ var NOISE = /* @__PURE__ */ new Set([
 var JOINERS = [" and ", " or ", " nor ", " & ", " + "];
 var LEADERS = ["and ", "or ", "nor ", "& ", "+ "];
 function extractNamesFromMarkdown(markdown) {
-  const sources = Array.isArray(markdown) ? markdown : [markdown];
+  const sources2 = Array.isArray(markdown) ? markdown : [markdown];
   const all = [];
-  for (const src of sources) all.push(...extractFromSingle(src));
+  for (const src of sources2) all.push(...extractFromSingle(src));
   return dedupe(all);
 }
 function extractFromSingle(markdown) {
@@ -1066,8 +1066,8 @@ function generateCompoundNamesDetailed(parts, options) {
   }
   return { names: result, seed, loosened };
 }
-function buildWeightedCorpus(sources) {
-  const filtered2 = sources.filter((source) => source.names.length > 0 && source.weight > 0);
+function buildWeightedCorpus(sources2) {
+  const filtered2 = sources2.filter((source) => source.names.length > 0 && source.weight > 0);
   if (filtered2.length === 0) return [];
   const totalWeight = filtered2.reduce((sum, source) => sum + source.weight, 0);
   if (totalWeight <= 0) return [];
@@ -1082,11 +1082,11 @@ function buildWeightedCorpus(sources) {
   }
   return out;
 }
-function generateMixNamesDetailed(sources, options) {
+function generateMixNamesDetailed(sources2, options) {
   var _a8, _b4;
   const count = Math.max(0, Math.floor(options.count));
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
-  const viable3 = sources.filter((source) => source.names.length > 0 && source.weight > 0);
+  const viable3 = sources2.filter((source) => source.names.length > 0 && source.weight > 0);
   if (count === 0 || viable3.length === 0) return { names: [], seed };
   const corpus = buildWeightedCorpus(viable3);
   if (corpus.length === 0) return { names: [], seed };
@@ -1546,16 +1546,16 @@ function generateCompoundTitled(parts, options) {
   const seen = /* @__PURE__ */ new Set();
   const live5 = titles.map((_, i) => i);
   while (out.length < count && live5.length > 0) {
-    const pick4 = live5[Math.floor(rng() * live5.length)];
-    const names = batch(pick4);
-    if (cursors[pick4] >= names.length) {
-      live5.splice(live5.indexOf(pick4), 1);
+    const pick5 = live5[Math.floor(rng() * live5.length)];
+    const names = batch(pick5);
+    if (cursors[pick5] >= names.length) {
+      live5.splice(live5.indexOf(pick5), 1);
       continue;
     }
-    const name = names[cursors[pick4]++];
+    const name = names[cursors[pick5]++];
     if (seen.has(name.toLowerCase())) continue;
     seen.add(name.toLowerCase());
-    out.push({ name, tag: titles[pick4] });
+    out.push({ name, tag: titles[pick5] });
   }
   return { names: out, seed, loosened };
 }
@@ -1773,11 +1773,11 @@ ${templateLine}---
 ${partsSections}
 `;
 }
-function createMixNamesFileContent(packName, sources, templateOf) {
+function createMixNamesFileContent(packName, sources2, templateOf) {
   const safePackName = (packName || "").trim().replace(/\s+/g, " ");
   const templateLine = templateOf ? `template-of: "[[${templateOf}]]"
 ` : "";
-  const sourceLines = sources.map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`).join("\n");
+  const sourceLines = sources2.map((source) => `- [[${source.packName}]] ${formatMixWeight(source.weight)}`).join("\n");
   return `---
 type: namePack
 packType: mixPack
@@ -1802,12 +1802,12 @@ function parseMixSourceLines(body) {
   const afterHeading = body.slice(headingMatch.index + headingMatch[0].length);
   const nextHeading = afterHeading.search(/^##\s+/m);
   const section = nextHeading >= 0 ? afterHeading.slice(0, nextHeading) : afterHeading;
-  const sources = [];
+  const sources2 = [];
   for (const line of section.split(/\r?\n/)) {
     const parsed = parseMixSourceLine(line);
-    if (parsed) sources.push(parsed);
+    if (parsed) sources2.push(parsed);
   }
-  return sources;
+  return sources2;
 }
 function parseMixSourceLine(line) {
   const trimmed = line.trim().replace(/^[-*+]\s+/, "").replace(/^\d+[.)]\s+/, "").trim();
@@ -1878,7 +1878,7 @@ function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ n
     return { sources: [], error: `Mix pack cycle involving ${mixData.packName || mixPath}.` };
   }
   visiting.add(mixPath);
-  const sources = [];
+  const sources2 = [];
   const refs = (_a8 = mixData.mixSources) != null ? _a8 : [];
   for (const ref of refs) {
     const found = findPackInIndex(index, ref.packName);
@@ -1895,13 +1895,13 @@ function resolveMixSources(mixPath, mixData, index, visiting = /* @__PURE__ */ n
       visiting.delete(mixPath);
       return { sources: [], error: nested.error };
     }
-    sources.push({ names: nested.names, weight: ref.weight });
+    sources2.push({ names: nested.names, weight: ref.weight });
   }
   visiting.delete(mixPath);
-  if (sources.length < 2) {
+  if (sources2.length < 2) {
     return { sources: [], error: "Mix pack needs at least two source packs." };
   }
-  return { sources };
+  return { sources: sources2 };
 }
 function resolvePackToCorpus(entry, index, visiting, sectionRequest2) {
   if (entry.parsed.packType !== "mixPack") {
@@ -22372,7 +22372,8 @@ var lens_default = {
             "welsh",
             "scottish",
             "irish",
-            "cornish"
+            "cornish",
+            "celtic"
           ]
         },
         germanic: {
@@ -22507,6 +22508,94 @@ var lens_default = {
         sahul: {
           lens: [],
           local: true
+        },
+        welsh: {
+          lens: [
+            "welsh"
+          ],
+          weights: [
+            [
+              "welsh",
+              1
+            ]
+          ]
+        },
+        scottish: {
+          lens: [
+            "scottish"
+          ],
+          weights: [
+            [
+              "scottish",
+              1
+            ]
+          ]
+        },
+        irish: {
+          lens: [
+            "irish"
+          ],
+          weights: [
+            [
+              "irish",
+              1
+            ]
+          ]
+        },
+        cornish: {
+          lens: [
+            "cornish"
+          ],
+          weights: [
+            [
+              "cornish",
+              1
+            ]
+          ]
+        },
+        norse: {
+          lens: [
+            "norse"
+          ],
+          weights: [
+            [
+              "norse",
+              1
+            ]
+          ]
+        },
+        scandinavian: {
+          lens: [
+            "scandinavian"
+          ],
+          weights: [
+            [
+              "scandinavian",
+              1
+            ]
+          ]
+        },
+        german: {
+          lens: [
+            "german"
+          ],
+          weights: [
+            [
+              "german",
+              1
+            ]
+          ]
+        },
+        english: {
+          lens: [
+            "english"
+          ],
+          weights: [
+            [
+              "english",
+              1
+            ]
+          ]
         }
       },
       colonial: {
@@ -22717,6 +22806,76 @@ var lens_default = {
               "norse"
             ]
           },
+          welsh: {
+            lens: [
+              "welsh"
+            ]
+          },
+          scottish: {
+            lens: [
+              "scottish"
+            ]
+          },
+          irish: {
+            lens: [
+              "irish"
+            ]
+          },
+          cornish: {
+            lens: [
+              "cornish"
+            ]
+          },
+          scandinavian: {
+            lens: [
+              "scandinavian"
+            ]
+          },
+          german: {
+            lens: [
+              "german"
+            ]
+          }
+        }
+      },
+      north5c: {
+        extends: "shared",
+        entries: {
+          welsh: {
+            lens: [
+              "welsh"
+            ]
+          },
+          scottish: {
+            lens: [
+              "scottish"
+            ]
+          },
+          irish: {
+            lens: [
+              "irish"
+            ]
+          },
+          cornish: {
+            lens: [
+              "cornish"
+            ]
+          },
+          scandinavian: {
+            lens: [
+              "scandinavian"
+            ]
+          },
+          german: {
+            lens: [
+              "german"
+            ]
+          }
+        }
+      },
+      vehicle5c: {
+        extends: "vehicle",
+        entries: {
           welsh: {
             lens: [
               "welsh"
@@ -23740,7 +23899,7 @@ var lens_default = {
       }
     },
     epithets: {
-      cultures: "shared",
+      cultures: "north5c",
       eras: "codes",
       land: false,
       sentence: {
@@ -23756,7 +23915,7 @@ var lens_default = {
       }
     },
     titles: {
-      cultures: "shared",
+      cultures: "north5c",
       eras: "codes",
       land: false,
       sentence: {
@@ -23772,7 +23931,7 @@ var lens_default = {
       }
     },
     familyNames: {
-      cultures: "shared",
+      cultures: "north5c",
       eras: "codes",
       land: false,
       sentence: {
@@ -23836,7 +23995,7 @@ var lens_default = {
       }
     },
     realms: {
-      cultures: "shared",
+      cultures: "north5c",
       eras: "realms",
       land: false,
       sentence: {
@@ -23853,7 +24012,7 @@ var lens_default = {
       }
     },
     peoplesTongues: {
-      cultures: "shared",
+      cultures: "north5c",
       eras: "codes",
       land: false,
       sentence: {
@@ -24044,7 +24203,7 @@ var lens_default = {
       }
     },
     ships: {
-      cultures: "vehicle",
+      cultures: "vehicle5c",
       eras: "ships",
       settings: "genreSettings",
       styles: "vessel",
@@ -24076,11 +24235,11 @@ var lens_default = {
           genre: "genre",
           region: null
         },
-        roster: "vessel"
+        roster: "vesselSpace"
       }
     },
     aircraft: {
-      cultures: "vehicle",
+      cultures: "vehicle5c",
       eras: "aircraft",
       settings: "genreSettings",
       styles: "vessel",
@@ -24098,7 +24257,7 @@ var lens_default = {
       }
     },
     landVehicles: {
-      cultures: "vehicle",
+      cultures: "vehicle5c",
       eras: "landVehicles",
       settings: "genreSettings",
       styles: "vessel",
@@ -28356,8 +28515,8 @@ function generatePlaceShapesDetailed(options, source = PLACE_SHAPE_DATA) {
   }
   let names;
   if (options.wording === "plain") {
-    const pick4 = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
-    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick4));
+    const pick5 = mulberry32((seed ^ PLAIN_WORDING_SALT) >>> 0);
+    names = shapes.map((shape) => formatter.formatPlain(shape, options.region, pick5));
   } else {
     names = shapes.map((shape) => formatter.format(shape));
   }
@@ -28383,7 +28542,7 @@ var PlaceShapeFormatter = class {
    * Part 1a wording: generics as plain words, with dropped generics rewritten and regional
    * variants added. `pick` is the secondary RNG; it is only drawn when a generic has two words.
    */
-  formatPlain(shape, region, pick4) {
+  formatPlain(shape, region, pick5) {
     var _a8;
     const rewrite = this.words.rewrites.find((r) => r.generic === shape.genericId);
     const effective = rewrite ? {
@@ -28395,7 +28554,7 @@ var PlaceShapeFormatter = class {
       if (rewrite && id === shape.genericId) return plural4 ? rewrite.plural || rewrite.word : rewrite.word;
       const entry = this.words.words[id];
       if (!entry) return bracket(this.generics.get(id));
-      const i = entry.words.length > 1 ? Math.floor(pick4() * entry.words.length) : 0;
+      const i = entry.words.length > 1 ? Math.floor(pick5() * entry.words.length) : 0;
       const usePlural = plural4 && entry.plurals[i] !== "";
       const word = usePlural ? entry.plurals[i] : entry.words[i];
       const variant = region ? this.words.variants.find((v) => v.generic === id && v.regions.includes(region)) : void 0;
@@ -47483,7 +47642,11 @@ var group_names_default = {
       {
         w: "Highlanders",
         only: [
-          "celtic"
+          "celtic",
+          "welsh",
+          "scottish",
+          "irish",
+          "cornish"
         ]
       },
       {
@@ -51695,7 +51858,11 @@ var group_names_default = {
       {
         w: "Witan",
         tx: {
-          germanic: 5
+          germanic: 5,
+          norse: 5,
+          scandinavian: 5,
+          german: 5,
+          english: 5
         },
         x: 0.3
       }
@@ -57901,7 +58068,179 @@ var group_names_default = {
           "Wanderers"
         ]
       },
-      sahul: {}
+      sahul: {},
+      welsh: {
+        group: [
+          "Grove"
+        ],
+        covenGroup: [
+          "Grove"
+        ],
+        members: [
+          [
+            "Druids",
+            "PM"
+          ]
+        ],
+        soldiers: [
+          "Hounds",
+          "Champions"
+        ],
+        companyGroup: [
+          "Band"
+        ],
+        vocation: [
+          "Bards"
+        ]
+      },
+      scottish: {
+        group: [
+          "Grove"
+        ],
+        covenGroup: [
+          "Grove"
+        ],
+        members: [
+          [
+            "Druids",
+            "PM"
+          ]
+        ],
+        soldiers: [
+          "Hounds",
+          "Champions"
+        ],
+        companyGroup: [
+          "Band"
+        ],
+        vocation: [
+          "Bards"
+        ]
+      },
+      irish: {
+        group: [
+          "Grove"
+        ],
+        covenGroup: [
+          "Grove"
+        ],
+        members: [
+          [
+            "Druids",
+            "PM"
+          ]
+        ],
+        soldiers: [
+          "Hounds",
+          "Champions"
+        ],
+        companyGroup: [
+          "Band"
+        ],
+        vocation: [
+          "Bards"
+        ]
+      },
+      cornish: {
+        group: [
+          "Grove"
+        ],
+        covenGroup: [
+          "Grove"
+        ],
+        members: [
+          [
+            "Druids",
+            "PM"
+          ]
+        ],
+        soldiers: [
+          "Hounds",
+          "Champions"
+        ],
+        companyGroup: [
+          "Band"
+        ],
+        vocation: [
+          "Bards"
+        ]
+      },
+      norse: {
+        unitGroup: [
+          "Hearth-Troop",
+          "Host"
+        ],
+        soldiers: [
+          "Sworn Men",
+          "Wolf-Coats"
+        ],
+        assemblyWord: [
+          "Moot"
+        ],
+        raiders: [
+          "Sea-Wolves"
+        ],
+        companyGroup: [
+          "Fellowship"
+        ]
+      },
+      scandinavian: {
+        unitGroup: [
+          "Hearth-Troop",
+          "Host"
+        ],
+        soldiers: [
+          "Sworn Men",
+          "Wolf-Coats"
+        ],
+        assemblyWord: [
+          "Moot"
+        ],
+        raiders: [
+          "Sea-Wolves"
+        ],
+        companyGroup: [
+          "Fellowship"
+        ]
+      },
+      german: {
+        unitGroup: [
+          "Hearth-Troop",
+          "Host"
+        ],
+        soldiers: [
+          "Sworn Men",
+          "Wolf-Coats"
+        ],
+        assemblyWord: [
+          "Moot"
+        ],
+        raiders: [
+          "Sea-Wolves"
+        ],
+        companyGroup: [
+          "Fellowship"
+        ]
+      },
+      english: {
+        unitGroup: [
+          "Hearth-Troop",
+          "Host"
+        ],
+        soldiers: [
+          "Sworn Men",
+          "Wolf-Coats"
+        ],
+        assemblyWord: [
+          "Moot"
+        ],
+        raiders: [
+          "Sea-Wolves"
+        ],
+        companyGroup: [
+          "Fellowship"
+        ]
+      }
     },
     typeMultipliers: {
       arabian: {
@@ -58390,13 +58729,29 @@ var group_names_default = {
     surnameTraditions: [
       "general",
       "celtic",
-      "germanic"
+      "germanic",
+      "welsh",
+      "scottish",
+      "irish",
+      "cornish",
+      "norse",
+      "scandinavian",
+      "german",
+      "english"
     ],
     saintTraditions: [
       "general",
       "celtic",
       "germanic",
-      "mediterranean"
+      "mediterranean",
+      "welsh",
+      "scottish",
+      "irish",
+      "cornish",
+      "norse",
+      "scandinavian",
+      "german",
+      "english"
     ],
     sfTown: [
       {
@@ -68547,6 +68902,772 @@ var tribal_names_default = {
           "Springs"
         ]
       }
+    },
+    {
+      key: "english",
+      label: "English",
+      group: "Northern Europe",
+      drawsOn: "Anglo-Saxon hundreds and tithings; medieval and later English kin, households and parishes",
+      homeland: {
+        temperate: 80,
+        moorland: 20
+      },
+      terrainMultipliers: {
+        coast: 1.1
+      },
+      flavour: {
+        animals: [
+          "Hart",
+          "Boar",
+          "Hound",
+          "Swan",
+          "Falcon",
+          "Lion"
+        ],
+        plants: [
+          "Oak",
+          "Hawthorn",
+          "Yew",
+          "Thorn"
+        ],
+        land: [
+          "Weald",
+          "Down",
+          "Fen",
+          "Wold"
+        ],
+        lifeways: [
+          "Ploughmen",
+          "Shepherds"
+        ]
+      },
+      favouredLifeways: [
+        "Ploughmen",
+        "Shepherds",
+        "Smiths",
+        "Cattle Keepers"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        },
+        {
+          system: "seaAxis",
+          mult: 1,
+          words: [
+            "Inland",
+            "Seaward"
+          ]
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Folk",
+        "Kin",
+        "House",
+        "Hundred",
+        "Neighbours"
+      ],
+      themes: {
+        landscape: 1.3,
+        relationship: 1.2,
+        qualities: 1.2,
+        warfare: 0.8,
+        dress: 1
+      },
+      templates: {
+        A: 1.2,
+        B: 1.1
+      },
+      groupTypes: {
+        settlement: 1.3,
+        regional: 1.2,
+        confederation: 1
+      },
+      numbers: [
+        "Three",
+        "Seven",
+        "Twelve"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "welsh",
+      label: "Welsh",
+      group: "Northern Europe",
+      drawsOn: "Welsh kindreds, princedoms and valley communities",
+      homeland: {
+        highland: 40,
+        temperate: 40,
+        moorland: 20
+      },
+      terrainMultipliers: {
+        mountains: 1.2,
+        coast: 1.1
+      },
+      flavour: {
+        animals: [
+          "Dragon",
+          "Red Kite",
+          "Raven",
+          "Salmon",
+          "Stag",
+          "Hound"
+        ],
+        plants: [
+          "Oak",
+          "Mistletoe",
+          "Rowan",
+          "Leek"
+        ],
+        land: [
+          "Valley",
+          "Mountain",
+          "Moor"
+        ],
+        lifeways: [
+          "Drovers",
+          "Bards"
+        ]
+      },
+      favouredLifeways: [
+        "Drovers",
+        "Cattle Keepers",
+        "Smiths",
+        "Ploughmen"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Kin",
+        "Children",
+        "Folk",
+        "Descendants",
+        "Hosts"
+      ],
+      themes: {
+        landscape: 1.5,
+        qualities: 1.3,
+        animals: 1.3,
+        warfare: 1.1,
+        vessel: 0.3
+      },
+      templates: {
+        O: 1.4,
+        A: 1.2
+      },
+      groupTypes: {
+        dynasty: 1.3,
+        regional: 1.3,
+        kin: 1.2
+      },
+      numbers: [
+        "Three",
+        "Seven",
+        "Nine"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "scottish",
+      label: "Scottish",
+      group: "Northern Europe",
+      drawsOn: "Highland clans and septs; Lowland and Border families; the Isles",
+      homeland: {
+        highland: 45,
+        temperate: 25,
+        moorland: 30
+      },
+      terrainMultipliers: {
+        mountains: 1.3,
+        coast: 1.3,
+        islands: 1.3
+      },
+      flavour: {
+        animals: [
+          "Stag",
+          "Wildcat",
+          "Eagle",
+          "Salmon",
+          "Raven",
+          "Hound"
+        ],
+        plants: [
+          "Thistle",
+          "Rowan",
+          "Heather",
+          "Pine"
+        ],
+        land: [
+          "Glen",
+          "Loch",
+          "Strath",
+          "Moor"
+        ],
+        lifeways: [
+          "Crofters",
+          "Fishermen"
+        ]
+      },
+      favouredLifeways: [
+        "Cattle Keepers",
+        "Fishermen",
+        "Crofters",
+        "Smiths"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Clan",
+        "Sept",
+        "Kin",
+        "Children",
+        "Descendants"
+      ],
+      themes: {
+        landscape: 1.4,
+        warfare: 1.3,
+        qualities: 1.2,
+        animals: 1.2,
+        relationship: 1.3
+      },
+      templates: {
+        O: 1.3,
+        A: 1.3
+      },
+      groupTypes: {
+        dynasty: 1.4,
+        kin: 1.3,
+        warband: 1.2
+      },
+      numbers: [
+        "Three",
+        "Seven"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "irish",
+      label: "Irish",
+      group: "Northern Europe",
+      drawsOn: "Irish septs, kindreds and over-kingdoms",
+      homeland: {
+        temperate: 70,
+        moorland: 30
+      },
+      terrainMultipliers: {
+        coast: 1.2,
+        islands: 1.2
+      },
+      flavour: {
+        animals: [
+          "Hound",
+          "Boar",
+          "Salmon",
+          "Stag",
+          "Hawk",
+          "Raven"
+        ],
+        plants: [
+          "Hazel",
+          "Ash",
+          "Oak",
+          "Shamrock"
+        ],
+        land: [
+          "Plain",
+          "Bog",
+          "Hill Fort"
+        ],
+        lifeways: [
+          "Cattle Keepers",
+          "Poets"
+        ]
+      },
+      favouredLifeways: [
+        "Cattle Keepers",
+        "Horse Breeders",
+        "Smiths",
+        "Ploughmen"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Sept",
+        "Kin",
+        "Children",
+        "Descendants",
+        "People"
+      ],
+      themes: {
+        landscape: 1.3,
+        warfare: 1.3,
+        qualities: 1.5,
+        animals: 1.2,
+        relationship: 1.3
+      },
+      templates: {
+        O: 1.5,
+        A: 1.3
+      },
+      groupTypes: {
+        dynasty: 1.4,
+        confederation: 1.3,
+        kin: 1.3
+      },
+      numbers: [
+        "Three",
+        "Five",
+        "Seven"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "cornish",
+      label: "Cornish",
+      group: "Northern Europe",
+      drawsOn: "Cornish kindreds, tinners and fishing communities",
+      homeland: {
+        temperate: 50,
+        moorland: 50
+      },
+      terrainMultipliers: {
+        coast: 1.6,
+        islands: 1.2
+      },
+      flavour: {
+        animals: [
+          "Chough",
+          "Gull",
+          "Seal",
+          "Hound",
+          "Hare",
+          "Raven"
+        ],
+        plants: [
+          "Oak",
+          "Gorse",
+          "Thrift"
+        ],
+        land: [
+          "Moor",
+          "Cove",
+          "Tor"
+        ],
+        lifeways: [
+          "Tinners",
+          "Fishermen"
+        ]
+      },
+      favouredLifeways: [
+        "Fishermen",
+        "Smiths",
+        "Cattle Keepers",
+        "Boatwrights"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Kin",
+        "Children",
+        "Folk",
+        "Tinners",
+        "Descendants"
+      ],
+      themes: {
+        landscape: 1.4,
+        water: 1.3,
+        qualities: 1.2,
+        animals: 1.2,
+        vessel: 0.8
+      },
+      templates: {
+        O: 1.3,
+        A: 1.2
+      },
+      groupTypes: {
+        settlement: 1.3,
+        kin: 1.2,
+        regional: 1.2
+      },
+      numbers: [
+        "Three",
+        "Seven"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "norse",
+      label: "Norse",
+      group: "Northern Europe",
+      drawsOn: "Viking-age Norse kindreds, steadings and war-bands",
+      homeland: {
+        boreal: 50,
+        temperate: 30,
+        moorland: 20
+      },
+      terrainMultipliers: {
+        coast: 1.5,
+        islands: 1.4,
+        mountains: 1.1
+      },
+      flavour: {
+        animals: [
+          "Wolf",
+          "Raven",
+          "Bear",
+          "Serpent",
+          "Eagle",
+          "Boar"
+        ],
+        plants: [
+          "Ash",
+          "Birch",
+          "Pine",
+          "Yew"
+        ],
+        land: [
+          "Fjord",
+          "Fell",
+          "Dale"
+        ],
+        water: [
+          "Fjord",
+          "Long Inlet"
+        ],
+        lifeways: [
+          "Seafarers",
+          "Boatwrights"
+        ]
+      },
+      favouredLifeways: [
+        "Seafarers",
+        "Boatwrights",
+        "Smiths",
+        "Cattle Keepers"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        },
+        {
+          system: "seaAxis",
+          mult: 1,
+          words: [
+            "Inland",
+            "Seaward"
+          ]
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Sons",
+        "Kin",
+        "Folk",
+        "Host",
+        "Men"
+      ],
+      themes: {
+        warfare: 1.5,
+        dress: 1.5,
+        relationship: 1.5,
+        vessel: 1.6,
+        sacred: 0.9
+      },
+      templates: {
+        A: 1.3,
+        L: 1.2
+      },
+      groupTypes: {
+        warband: 1.6,
+        migrant: 1.3,
+        confederation: 1.2
+      },
+      numbers: [
+        "Two",
+        "Three",
+        "Nine",
+        "Twelve"
+      ],
+      suppress: [],
+      special: {
+        longship: true
+      }
+    },
+    {
+      key: "scandinavian",
+      label: "Scandinavian",
+      group: "Northern Europe",
+      drawsOn: "Scandinavian farm-communities, parishes and seafarers, early modern to now",
+      homeland: {
+        boreal: 55,
+        temperate: 30,
+        highland: 15
+      },
+      terrainMultipliers: {
+        coast: 1.3,
+        islands: 1.3
+      },
+      flavour: {
+        animals: [
+          "Elk",
+          "Wolf",
+          "Bear",
+          "Swan",
+          "Raven",
+          "Eagle"
+        ],
+        plants: [
+          "Pine",
+          "Birch",
+          "Spruce",
+          "Rowan"
+        ],
+        land: [
+          "Heath",
+          "Forest"
+        ],
+        water: [
+          "Fjord",
+          "Lake"
+        ],
+        lifeways: [
+          "Foresters",
+          "Seafarers"
+        ]
+      },
+      favouredLifeways: [
+        "Foresters",
+        "Seafarers",
+        "Ploughmen",
+        "Smiths"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        },
+        {
+          system: "seaAxis",
+          mult: 1,
+          words: [
+            "Inland",
+            "Seaward"
+          ]
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Folk",
+        "Kin",
+        "House",
+        "Sons",
+        "Neighbours"
+      ],
+      themes: {
+        landscape: 1.4,
+        water: 1.3,
+        relationship: 1.3,
+        animals: 1.2,
+        vessel: 1.2
+      },
+      templates: {
+        A: 1.2,
+        L: 1.1
+      },
+      groupTypes: {
+        settlement: 1.3,
+        regional: 1.2,
+        kin: 1.2
+      },
+      numbers: [
+        "Three",
+        "Seven",
+        "Nine"
+      ],
+      suppress: [],
+      special: {}
+    },
+    {
+      key: "german",
+      label: "German",
+      group: "Northern Europe",
+      drawsOn: "German kin and free communities, leagues and imperial cities",
+      homeland: {
+        temperate: 60,
+        boreal: 20,
+        highland: 20
+      },
+      terrainMultipliers: {
+        mountains: 1.1
+      },
+      flavour: {
+        animals: [
+          "Wolf",
+          "Eagle",
+          "Bear",
+          "Stag",
+          "Boar",
+          "Hound"
+        ],
+        plants: [
+          "Oak",
+          "Linden",
+          "Beech",
+          "Fir"
+        ],
+        land: [
+          "Heath",
+          "Forest"
+        ],
+        lifeways: [
+          "Foresters",
+          "Smiths"
+        ]
+      },
+      favouredLifeways: [
+        "Ploughmen",
+        "Smiths",
+        "Foresters",
+        "Cattle Keepers"
+      ],
+      orientation: [
+        {
+          system: "compass",
+          mult: 1
+        },
+        {
+          system: "relative",
+          mult: 1
+        },
+        {
+          system: "seaAxis",
+          mult: 1,
+          words: [
+            "Inland",
+            "Seaward"
+          ]
+        }
+      ],
+      lineage: {
+        patrilineal: 90,
+        bilateral: 10
+      },
+      lineageMultipliers: {},
+      signatureCollectives: [
+        "Folk",
+        "Kin",
+        "House",
+        "Brethren",
+        "Neighbours"
+      ],
+      themes: {
+        landscape: 1.3,
+        warfare: 1.2,
+        relationship: 1.4,
+        qualities: 1.2,
+        sacred: 0.9
+      },
+      templates: {
+        A: 1.2,
+        B: 1.2
+      },
+      groupTypes: {
+        confederation: 1.3,
+        settlement: 1.2,
+        regional: 1.2
+      },
+      numbers: [
+        "Three",
+        "Seven",
+        "Nine",
+        "Twelve"
+      ],
+      suppress: [],
+      special: {}
     }
   ],
   groupTypes: [
@@ -68888,14 +70009,26 @@ var tribal_names_default = {
         mediterranean: 1,
         southAsian: 1,
         westAfrican: 1,
-        general: 1
+        general: 1,
+        welsh: 1,
+        scottish: 1,
+        irish: 1,
+        cornish: 1,
+        norse: 1,
+        scandinavian: 1,
+        german: 1,
+        english: 1
       },
       Chariot: {
         celtic: 1,
         mediterranean: 1,
         southAsian: 1,
         eastAsian: 1,
-        general: 0.3
+        general: 0.3,
+        welsh: 1,
+        scottish: 1,
+        irish: 1,
+        cornish: 1
       },
       Bow: {
         "*": 1,
@@ -68917,7 +70050,15 @@ var tribal_names_default = {
         germanic: 1,
         northAmerican: 1,
         northernPacific: 1,
-        general: 1
+        general: 1,
+        welsh: 1,
+        scottish: 1,
+        irish: 1,
+        cornish: 1,
+        norse: 1,
+        scandinavian: 1,
+        german: 1,
+        english: 1
       },
       Club: {
         polynesian: 1,
@@ -68967,7 +70108,11 @@ var tribal_names_default = {
     mythic: {
       Dragon: {
         eastAsian: 2,
-        germanic: 1.5
+        germanic: 1.5,
+        norse: 1.5,
+        scandinavian: 1.5,
+        german: 1.5,
+        english: 1.5
       },
       "Great Serpent": {},
       Giants: {},
@@ -69439,7 +70584,11 @@ var tribal_names_default = {
       registers: "all",
       person: true,
       traditions: [
-        "celtic"
+        "celtic",
+        "welsh",
+        "scottish",
+        "irish",
+        "cornish"
       ],
       lineage: true
     },
@@ -69495,7 +70644,11 @@ var tribal_names_default = {
         "legendary"
       ],
       traditions: [
-        "celtic"
+        "celtic",
+        "welsh",
+        "scottish",
+        "irish",
+        "cornish"
       ],
       lineage: true
     },
@@ -69509,7 +70662,11 @@ var tribal_names_default = {
         "legendary"
       ],
       traditions: [
-        "celtic"
+        "celtic",
+        "welsh",
+        "scottish",
+        "irish",
+        "cornish"
       ],
       lineage: true
     },
@@ -69954,7 +71111,11 @@ var tribal_names_default = {
       registers: "all",
       person: true,
       traditionMult: {
-        germanic: 2
+        germanic: 2,
+        norse: 2,
+        scandinavian: 2,
+        german: 2,
+        english: 2
       },
       mult: 0.3
     }
@@ -85241,6 +86402,7 @@ function completeTitles(text, ctx, era, period, resolvers) {
 // src/lens.ts
 var LENS = lens_default;
 var LENS_CULTURES = LENS.cultures;
+var LENS_MENU = LENS.menu;
 var LENS_ERAS = LENS.eras;
 var LENS_STYLES = LENS.styles;
 var LENS_TONES = LENS.tones.map((t) => t.key);
@@ -85323,6 +86485,635 @@ function readCelticView(culture, region) {
   return { culture, region };
 }
 
+// src/data/north5c.json
+var north5c_default = { _about: "Northern Europe tables brief, batch 5c (docs/northern-europe-tables-brief.md): generated by scripts/make-north5c.mjs from the content in scripts/north5c/. Do not edit by hand.", modules: { mysticOrders: { kinds: ["bodies", "emblems", "lore"], cultures: { english: { n: [["Brotherhood", "Fellowship", "Order", "Guild", "Society", "Lodge", "Chantry", "Convent", "Priory", "Circle"], ["Rose", "Oak", "Hawthorn", "Grail", "Lantern", "Chalice", "Swan", "Hart", "Thorn", "Wheel"], ["Mysteries", "Hallows", "Vigil", "Psalter", "Cloister", "Well", "Beacon", "Veil", "Covenant", "Vision"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["{N0} of the {N1}", 3], ["The {N1} {N0}", 2], ["{N0} of the {A} {N2}", 1], ["{A} {N0} of [place]", 1], ["{N2} {N0}", 2], ["The {A} {N2}", 1], ["[founder]'s {N0}", 1], ["{N0} of {N2}", 2], ["The {N0} of [place]", 1]] }, welsh: { n: [["Bardic Order", "Harpers' Lodge", "Chapel Society", "Seers", "Wise Ones", "Revival", "Brotherhood", "Chair", "Circle", "Ovates"], ["Dragon", "Harp", "Leek", "Oak", "Mistletoe", "Raven", "Red Kite", "Salmon", "Stag", "Sword"], ["Song", "Vision", "Spring", "Hill", "Cauldron", "Mound", "Mist", "Isle", "Wisdom", "Awakening"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, scottish: { n: [["Kirk Session", "Seers", "Brethren", "Covenanters", "Wise Women", "Society", "Lodge", "Order", "Circle", "Sisterhood"], ["Thistle", "Stag", "Salmon", "Rowan", "Heather", "Hawk", "Wildcat", "Selkie", "Cross", "Torch"], ["Second Sight", "Well", "Standing Stone", "Mist", "Cairn", "Isle", "Vigil", "Covenant", "Glen", "Dream"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, irish: { n: [["Druid Circle", "Brotherhood", "Bardic School", "Holy Order", "Seers", "Wise Women", "Sodality", "Hermits", "Pilgrims", "Society"], ["Shamrock", "Harp", "Salmon", "Hazel", "Crane", "Swan", "Ash", "Cross", "Hound", "Bell"], ["Holy Well", "Wisdom", "Vision", "Fire", "Cairn", "Island", "Mist", "Vigil", "Spring", "Dream"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, cornish: { n: [["Cunning Folk", "Wise Women", "Brotherhood", "Chapel Society", "Hermits", "Seers", "Circle", "Order", "Pilgrims", "Fellowship"], ["Chough", "Tin", "Gull", "Cross", "Pisky", "Hare", "Well", "Rose", "Lantern", "Stone"], ["Holy Well", "Mine", "Cove", "Moor", "Mist", "Vision", "Cairn", "Spring", "Vigil", "Hallows"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, norse: { n: [["Witch Circle", "Seeress Band", "Brotherhood", "Rune-Masters", "Seers", "Temple Guild", "Sworn Band", "Priests' Circle", "Wise Women", "Fellowship"], ["Raven", "Wolf", "Serpent", "Tree", "Hammer", "Ash", "Eagle", "Horn", "Bear", "Boar"], ["Runes", "Fate", "Well", "Sacrifice", "Hall", "Mist", "Mound", "Vision", "Oath", "Grove"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, scandinavian: { n: [["Rune Society", "Brotherhood", "Lodge", "Pietist Circle", "Order", "Seekers", "Lantern Society", "Fellowship", "Circle", "Sisterhood"], ["Elk", "Swan", "Raven", "Ash", "Torch", "Wolf", "Lantern", "Bear", "Pine", "Star"], ["Midnight Sun", "Mist", "Vigil", "Runes", "Fjord", "Aurora", "Covenant", "Well", "Light", "Dream"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, german: { n: [["Rosicrucian Brotherhood", "Cloister", "Lodge", "Secret Society", "Order", "Chapter", "Illuminated Circle", "Fraternity", "Brotherhood", "Hermitage"], ["Rose", "Eagle", "Cross", "Oak", "Raven", "Star", "Wheel", "Linden", "Lantern", "Hart"], ["Mysteries", "Vision", "Vigil", "Grail", "Shadow", "Forest", "Well", "Veil", "Covenant", "Light"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["{N0} of [place]", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] }, celtic: { n: [["Druids", "Seers", "Brotherhood", "Wise Ones"], ["Oak", "Mistletoe", "Boar", "Cauldron"], ["Sacred Grove", "Spring", "Mound", "Mist"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of the {N2}", 2], ["The {N1} {N0}", 1]] } } }, martialOrders: { kinds: ["units", "arms", "beasts"], cultures: { english: { n: [["Yeomanry", "Militia", "Regiment", "Company", "Watch", "Guard", "Battalion", "Muster", "Brigade", "Troop"], ["Longbow", "Bill", "Pike", "Halberd", "Lance", "Shield", "Banner", "Sabre", "Musket", "Cannon"], ["Lion", "Leopard", "Hart", "Hound", "Boar", "Falcon", "Mastiff", "Bull", "Hawk", "Bear"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["{N0} of the {N1}", 3], ["The {N1} {N0}", 2], ["{N0} of the {A} {N2}", 1], ["{A} {N0} of [place]", 1], ["{N2} {N0}", 2], ["The {A} {N2}", 1], ["[founder]'s {N0}", 1], ["{N0} of {N2}", 2], ["The {N0} of [place]", 1]] }, welsh: { n: [["Archers", "Spearmen", "Lancers", "Valley Guard", "Mountain Watch", "Border Guard", "Host", "Warband", "Fusiliers", "Marchers"], ["Longbow", "Spear", "Shield", "Dagger", "Pike", "Banner", "Sword", "Lance", "Rifle", "Torch"], ["Dragon", "Red Kite", "Wolf", "Boar", "Hawk", "Stag", "Raven", "Hound", "Bull", "Goat"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, scottish: { n: [["Highlanders", "Clansmen", "Border Riders", "Guard", "Regiment", "Pikemen", "Reivers", "Watch", "Company", "Fusiliers"], ["Claymore", "Targe", "Dirk", "Pike", "Banner", "Plaid", "Pipes", "Musket", "Lance", "Axe"], ["Wildcat", "Stag", "Lion", "Eagle", "Wolf", "Hound", "Boar", "Raven", "Bull", "Salmon"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, irish: { n: [["Kerns", "Gallowglasses", "Horsemen", "Hero Band", "Hosting", "Brigade", "Rangers", "Guard", "Company", "Spearmen"], ["Sword", "Spear", "Shield", "Sling", "Axe", "Banner", "Pike", "Musket", "Lance", "Dart"], ["Hound", "Boar", "Stag", "Hawk", "Wolf", "Raven", "Bull", "Salmon", "Horse", "Eagle"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, cornish: { n: [["Tinners' Guard", "Miners' Militia", "Archers", "Coast Watch", "Gunners", "Rebels", "Company", "Volunteers", "Guard", "Host"], ["Pick", "Bow", "Cannon", "Spear", "Banner", "Shield", "Axe", "Musket", "Pike", "Sword"], ["Chough", "Gull", "Hound", "Boar", "Hawk", "Stag", "Raven", "Bull", "Wolf", "Seal"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, norse: { n: [["Shield-Wall", "Raiding Band", "Household Guard", "Longship Crew", "Sworn Men", "Host", "Warband", "Berserkers", "Axemen", "Spearmen"], ["Axe", "Spear", "Shield", "Sword", "Bow", "Helm", "Banner", "Mail", "Dagger", "Horn"], ["Wolf", "Raven", "Bear", "Boar", "Eagle", "Serpent", "Hound", "Bull", "Falcon", "Stag"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, scandinavian: { n: [["Guard", "Regiment", "Life Guard", "Dragoons", "Skirmishers", "Naval Brigade", "Rifles", "Watch", "Battalion", "Company"], ["Sabre", "Musket", "Rifle", "Banner", "Cannon", "Lance", "Pike", "Shield", "Axe", "Bayonet"], ["Lion", "Elk", "Wolf", "Bear", "Eagle", "Hound", "Boar", "Raven", "Stag", "Lynx"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, german: { n: [["Landsknechts", "Teutonic Knights", "Free Company", "Jaegers", "Hussars", "Guard", "Regiment", "Lancers", "Grenadiers", "Order Brethren"], ["Halberd", "Pike", "Sword", "Banner", "Lance", "Shield", "Cannon", "Musket", "Crossbow", "Axe"], ["Eagle", "Lion", "Wolf", "Bear", "Boar", "Hound", "Raven", "Stag", "Falcon", "Bull"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["{N0} of [place]", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] }, celtic: { n: [["Warband", "Chariot Riders", "Spearmen", "Hosting"], ["Spear", "Shield", "Sword", "Torque"], ["Boar", "Hound", "Raven", "Horse"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of the {N2}", 2], ["The {N1} {N0}", 1]] } } }, underworldGroups: { kinds: ["gangs", "trades", "haunts"], cultures: { english: { n: [["Gang", "Mob", "Ring", "Syndicate", "Firm", "Crew", "Brotherhood", "Cartel", "Outfit", "Gang of Thieves"], ["Smugglers", "Footpads", "Poachers", "Highwaymen", "Pickpockets", "Cutpurses", "Fences", "Forgers", "Racketeers", "Bootleggers"], ["Alley", "Dockside", "Back Street", "Rookery", "Warehouse", "Tavern", "Wharf", "Crossroads", "Cellar", "Market"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["{N0} of the {N1}", 3], ["The {N1} {N0}", 2], ["{N0} of the {A} {N2}", 1], ["{A} {N0} of [place]", 1], ["{N2} {N0}", 2], ["The {A} {N2}", 1], ["[founder]'s {N0}", 1], ["{N0} of {N2}", 2], ["The {N0} of [place]", 1]] }, welsh: { n: [["Gang", "Crew", "Brotherhood", "Rebecca Rioters", "Ring", "Band", "Outfit", "Mob", "Circle", "Syndicate"], ["Poachers", "Smugglers", "Wreckers", "Sheep Stealers", "Rioters", "Bootleggers", "Highwaymen", "Drovers", "Forgers", "Fences"], ["Quay", "Quarry Row", "Back Street", "Valley Inn", "Dockside", "Pit Head", "Wharf", "Cellar", "Market", "Crossroads"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, scottish: { n: [["Reivers", "Gang", "Mob", "Smuggler Band", "Crew", "Ring", "Brotherhood", "Syndicate", "Outfit", "Pack"], ["Cattle Raiders", "Smugglers", "Poachers", "Body Snatchers", "Pickpockets", "Footpads", "Fences", "Forgers", "Illicit Distillers", "Blackmailers"], ["Close", "Wynd", "Dockside", "Back Street", "Tavern", "Wharf", "Border", "Cellar", "Market", "Crossroads"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, irish: { n: [["Whiteboys", "Gang", "Ribbonmen", "Crew", "Mob", "Brotherhood", "Band", "Ring", "Outfit", "Syndicate"], ["Smugglers", "Poachers", "Cattle Thieves", "Illicit Distillers", "Moneylenders", "Highwaymen", "Fences", "Forgers", "Racketeers", "Cutpurses"], ["Quay", "Back Lane", "Dockside", "Shebeen", "Wharf", "Bog", "Cellar", "Market", "Crossroads", "Alley"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, cornish: { n: [["Smuggler Band", "Wrecking Gang", "Gang", "Crew", "Ring", "Brotherhood", "Mob", "Outfit", "Syndicate", "Pack"], ["Smugglers", "Wreckers", "Poachers", "Fences", "Highwaymen", "Cutpurses", "Forgers", "Pirates", "Moonrakers", "Free Traders"], ["Cove", "Harbour", "Quay", "Moor", "Cellar", "Crossroads", "Back Street", "Wharf", "Cave", "Inn"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, norse: { n: [["Raiders", "Outlaw Band", "Gang", "Crew", "Pack", "Sworn Men", "Brotherhood", "Ring", "Outfit", "Wolves"], ["Raiders", "Cattle Thieves", "Shore Pirates", "Outlaws", "Slavers", "Thieves", "Poachers", "Smugglers", "Hired Blades", "Wreckers"], ["Fjord", "Skerry", "Forest", "Mountain Pass", "Harbour", "Strand", "Cave", "Crossroads", "Market", "Steading"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, scandinavian: { n: [["Gang", "Syndicate", "Crew", "Ring", "Mob", "Outfit", "Brotherhood", "Cartel", "Pack", "Firm"], ["Smugglers", "Bootleggers", "Poachers", "Pickpockets", "Fences", "Forgers", "Racketeers", "Cutpurses", "Pirates", "Rustlers"], ["Harbour", "Back Street", "Dockside", "Warehouse", "Wharf", "Cellar", "Market", "Crossroads", "Tavern", "Alley"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, german: { n: [["Robber Band", "Gang", "Crew", "Ring", "Mob", "Brotherhood", "Syndicate", "Outfit", "Pack", "Free Company"], ["Highwaymen", "Smugglers", "Poachers", "Forgers", "Racketeers", "Fences", "Pickpockets", "Cutpurses", "Rustlers", "Bootleggers"], ["Forest", "Back Street", "Dockside", "Cellar", "Crossroads", "Tavern", "Market", "Wharf", "Mill", "Alley"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["{N0} of [place]", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] }, celtic: { n: [["Cattle Raiders", "Gang", "Outlaw Band", "Brotherhood"], ["Raiders", "Thieves", "Poachers", "Smugglers"], ["Ford", "Forest", "Bog", "Crossroads"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of the {N2}", 2], ["The {N1} {N0}", 1]] } } }, tradeGuilds: { kinds: ["trades", "goods", "halls"], cultures: { english: { n: [["Mercers", "Drapers", "Goldsmiths", "Fishmongers", "Grocers", "Vintners", "Cordwainers", "Saddlers", "Skinners", "Weavers"], ["Wool", "Cloth", "Wine", "Salt", "Grain", "Leather", "Tin", "Silver", "Spices", "Candles"], ["Guildhall", "Livery Hall", "Staple", "Exchange", "Market Cross", "Counting House", "Wharf", "Fair", "Cheapside", "Common Hall"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["{N0} of the {N1}", 3], ["The {N1} {N0}", 2], ["{N0} of the {A} {N2}", 1], ["{A} {N0} of [place]", 1], ["{N2} {N0}", 2], ["The {A} {N2}", 1], ["[founder]'s {N0}", 1], ["{N0} of {N2}", 2], ["The {N0} of [place]", 1]] }, welsh: { n: [["Slate Quarriers", "Weavers", "Drovers", "Colliers", "Coopers", "Harpmakers", "Coracle Men", "Fullers", "Tanners", "Smiths"], ["Slate", "Wool", "Coal", "Cheese", "Leather", "Cattle", "Iron", "Flannel", "Lead", "Salt"], ["Quarry Hall", "Market Hall", "Fair", "Wharf", "Chapel Hall", "Exchange", "Staple", "Counting House", "Common Hall", "Cross"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, scottish: { n: [["Smiths", "Weavers", "Fleshers", "Bakers", "Coopers", "Cordwainers", "Wrights", "Tailors", "Skinners", "Fishermen"], ["Whisky", "Wool", "Herring", "Tweed", "Salt", "Oats", "Leather", "Tartan", "Linen", "Coal"], ["Tolbooth", "Merchants' House", "Trades Hall", "Market Cross", "Guildhall", "Exchange", "Harbour", "Fair", "Weigh House", "Staple"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, irish: { n: [["Weavers", "Coopers", "Brewers", "Tanners", "Smiths", "Glovers", "Salters", "Merchants", "Fishmongers", "Butchers"], ["Linen", "Butter", "Whiskey", "Wool", "Salt", "Leather", "Cattle", "Grain", "Cloth", "Porter"], ["Guildhall", "Market Hall", "Exchange", "Fair Green", "Custom House", "Quay", "Weigh House", "Common Hall", "Cross", "Staple"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, cornish: { n: [["Tinners", "Miners", "Fishermen", "Pilchard Curers", "Boatwrights", "Ropemakers", "Smiths", "Coopers", "Weavers", "Salters"], ["Tin", "Copper", "Pilchards", "Salt", "Clay", "Slate", "Wool", "Rope", "Grain", "Lead"], ["Stannary Hall", "Count House", "Harbour", "Quay", "Market Hall", "Exchange", "Wharf", "Fair", "Fish Cellar", "Cross"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, norse: { n: [["Smiths", "Shipwrights", "Traders", "Furriers", "Weavers", "Carvers", "Amber Workers", "Fishermen", "Boat Builders", "Merchants"], ["Furs", "Amber", "Iron", "Fish", "Walrus Ivory", "Salt", "Timber", "Wool", "Honey", "Silver"], ["Market Place", "Trading Post", "Wharf", "Hall", "Landing", "Fair", "Thing Place", "Harbour", "Storehouse", "Strand"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, scandinavian: { n: [["Shipwrights", "Iron Masters", "Timber Merchants", "Fishermen", "Coopers", "Smiths", "Brewers", "Weavers", "Traders", "Miners"], ["Timber", "Iron", "Herring", "Copper", "Grain", "Tar", "Furs", "Salt", "Matches", "Cloth"], ["Guild Hall", "Harbour", "Exchange", "Market Place", "Wharf", "Warehouse", "Staple", "Custom House", "Fair", "Counting House"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, german: { n: [["Hanse Merchants", "Weavers", "Goldsmiths", "Brewers", "Bakers", "Smiths", "Coopers", "Tanners", "Cloth Merchants", "Salt Merchants"], ["Salt", "Cloth", "Beer", "Wine", "Amber", "Iron", "Grain", "Furs", "Silver", "Timber"], ["Guildhall", "Hanse Hall", "Market Place", "Steelyard", "Exchange", "Weigh House", "Staple", "Fair", "Counting House", "Cloth Hall"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["{N0} of [place]", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] }, celtic: { n: [["Smiths", "Weavers", "Potters", "Traders"], ["Tin", "Salt", "Wool", "Amber"], ["Market", "Ford", "Fair", "Hillfort"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of the {N2}", 2], ["The {N1} {N0}", 1]] } } }, adventureCompanies: { kinds: ["bands", "deeds", "emblems"], cultures: { english: { n: [["Free Company", "Band", "Fellowship", "Company", "Wayfarers", "Rovers", "Venturers", "Adventurers", "Muster", "Crew"], ["Quest", "Pilgrimage", "Crusade", "Venture", "Voyage", "Hunt", "Errand", "Expedition", "Journey", "Rescue"], ["Griffin", "Stag", "Hart", "Lion", "Swan", "Rose", "Lantern", "Compass", "Anchor", "Chalice"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["{N0} of the {N1}", 3], ["The {N1} {N0}", 2], ["{N0} of the {A} {N2}", 1], ["{A} {N0} of [place]", 1], ["{N2} {N0}", 2], ["The {A} {N2}", 1], ["[founder]'s {N0}", 1], ["{N0} of {N2}", 2], ["The {N0} of [place]", 1]] }, welsh: { n: [["Wanderers", "Fellowship", "Band", "Company", "Drovers", "Rovers", "Seekers", "Wayfarers", "Host", "Crew"], ["Quest", "Pilgrimage", "Hunt", "Journey", "Voyage", "Rescue", "Raid", "Venture", "Errand", "Search"], ["Dragon", "Raven", "Harp", "Hawk", "Red Kite", "Stag", "Salmon", "Hound", "Wolf", "Leek"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, scottish: { n: [["Wanderers", "Fellowship", "Band", "Company", "Reivers", "Rovers", "Seekers", "Venturers", "Pack", "Crew"], ["Quest", "Pilgrimage", "Hunt", "Journey", "Voyage", "Rescue", "Raid", "Venture", "Errand", "Search"], ["Wildcat", "Stag", "Thistle", "Eagle", "Salmon", "Hound", "Raven", "Wolf", "Selkie", "Rowan"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, irish: { n: [["Wanderers", "Fellowship", "Band", "Company", "Rovers", "Seekers", "Voyagers", "Pilgrims", "Host", "Crew"], ["Quest", "Pilgrimage", "Hunt", "Journey", "Voyage", "Rescue", "Raid", "Venture", "Errand", "Search"], ["Hound", "Hawk", "Salmon", "Stag", "Swan", "Raven", "Harp", "Boar", "Crane", "Horse"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, cornish: { n: [["Wanderers", "Fellowship", "Band", "Company", "Free Traders", "Rovers", "Seekers", "Venturers", "Crew", "Pack"], ["Quest", "Treasure Hunt", "Hunt", "Journey", "Voyage", "Rescue", "Raid", "Venture", "Errand", "Search"], ["Chough", "Gull", "Hound", "Seal", "Hare", "Raven", "Stag", "Tin", "Lantern", "Anchor"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, norse: { n: [["Raiding Band", "Voyagers", "Sworn Band", "Company", "Wayfarers", "Longship Crew", "Fellowship", "Host", "Rovers", "Seekers"], ["Voyage", "Quest", "Raid", "Hunt", "Journey", "Saga", "Pilgrimage", "Venture", "Errand", "Search"], ["Wolf", "Raven", "Serpent", "Bear", "Eagle", "Boar", "Ship", "Hammer", "Horn", "Axe"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, scandinavian: { n: [["Expedition", "Company", "Fellowship", "Wayfarers", "Explorers", "Crew", "Band", "Rovers", "Seekers", "Venturers"], ["Expedition", "Quest", "Voyage", "Hunt", "Journey", "Rescue", "Survey", "Venture", "Errand", "Search"], ["Elk", "Wolf", "Bear", "Eagle", "Swan", "Raven", "Lynx", "Hound", "Compass", "Anchor"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, german: { n: [["Free Company", "Fellowship", "Band", "Company", "Wanderers", "Rovers", "Seekers", "Venturers", "Guild", "Crew"], ["Quest", "Pilgrimage", "Hunt", "Journey", "Campaign", "Rescue", "Raid", "Venture", "Errand", "Search"], ["Eagle", "Wolf", "Bear", "Stag", "Raven", "Lion", "Hound", "Falcon", "Star", "Compass"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["{N0} of [place]", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] }, celtic: { n: [["Wanderers", "Band", "Fellowship", "Rovers"], ["Quest", "Hunt", "Journey", "Raid"], ["Hound", "Boar", "Raven", "Stag"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of the {N2}", 2], ["The {N1} {N0}", 1]] } } }, powerFactions: { kinds: ["bodies", "causes", "seats"], cultures: { english: { n: [["Crown Party", "Parliament", "Council", "Barons", "Guilds", "Commons", "League", "Estates", "Court Party", "Faction"], ["Reform", "Crown", "Charter", "Liberty", "Trade", "Faith", "Union", "Law", "Peace", "Order"], ["Court", "Parliament", "Guildhall", "Abbey", "Castle", "Exchange", "Palace", "Manor", "Cathedral", "Council Chamber"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["{N0} of the {N1}", 3], ["The {N1} {N0}", 2], ["{N0} of the {A} {N2}", 1], ["{A} {N0} of [place]", 1], ["{N2} {N0}", 2], ["The {A} {N2}", 1], ["[founder]'s {N0}", 1], ["{N0} of {N2}", 2], ["The {N0} of [place]", 1]] }, welsh: { n: [["Princes", "Marcher Lords", "Chapel Party", "Council", "Estates", "League", "Assembly", "Commons", "Faction", "Union"], ["Independence", "Language", "Chapel", "Reform", "Land", "Crown", "Charter", "Liberty", "Faith", "Law"], ["Princely Court", "Chapel", "Castle", "Assembly Hall", "Market", "Abbey", "Council Chamber", "Hall", "Palace", "Hill Fort"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, scottish: { n: [["Lords of the Congregation", "Covenanters", "Clan Chiefs", "Estates", "Parliament", "Council", "League", "Faction", "Burgh Party", "Kirk Party"], ["Covenant", "Crown", "Reform", "Liberty", "Kirk", "Union", "Clan", "Trade", "Law", "Charter"], ["Parliament House", "Kirk", "Castle", "Council Chamber", "Palace", "Abbey", "Burgh Hall", "Market Cross", "Tolbooth", "Court"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, irish: { n: [["Chieftains", "High Council", "Judges", "Assembly", "League", "Volunteers", "Faction", "Parliament", "Estates", "Union"], ["Independence", "Land", "Faith", "Crown", "Reform", "Charter", "Liberty", "Law", "Tribute", "Hospitality"], ["High Seat", "Hill of Assembly", "Abbey", "Castle", "Council Hall", "Court", "Palace", "Fort", "Great House", "Market"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, cornish: { n: [["Miners' Parliament", "Tinners' Council", "Estates", "League", "Assembly", "Council", "Rebels", "Faction", "Commons", "Union"], ["Stannary Rights", "Language", "Prayer Book", "Tin", "Land", "Crown", "Liberty", "Reform", "Charter", "Law"], ["Stannary Court", "Parliament Hall", "Castle", "Abbey", "Council Chamber", "Market", "Count House", "Palace", "Hall", "Hill"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, norse: { n: [["Thing Assembly", "Jarls", "Chieftains", "Lawspeakers", "Council", "League", "Faction", "Kings' Men", "Free Farmers", "Estates"], ["Law", "Crown", "Honour", "Kin", "Land", "Tribute", "Trade", "Oath", "Freedom", "Peace"], ["Thing Field", "Hall", "Seat", "Steading", "Law Rock", "Fort", "Palace", "Market", "Harbour", "Great Hall"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, scandinavian: { n: [["Crown Council", "Parliament Party", "Estates", "Union Party", "League", "Faction", "Council", "Cabinet", "Commons", "Assembly"], ["Union", "Crown", "Reform", "Liberty", "Neutrality", "Trade", "Faith", "Law", "Welfare", "Peace"], ["Parliament House", "Palace", "Castle", "Council Hall", "Court", "Harbour", "Exchange", "Town Hall", "Cathedral", "Chancery"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, german: { n: [["Electors", "Imperial Diet", "Princes", "League", "Estates", "Council", "Faction", "Chancery", "Free Cities", "Assembly"], ["Empire", "Reform", "Faith", "Liberty", "Union", "Trade", "Law", "Peace", "Crown", "Order"], ["Imperial Court", "Diet Hall", "Castle", "Cathedral", "Town Hall", "Palace", "Chancery", "Council Chamber", "Free City", "Exchange"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["{N0} of [place]", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] }, celtic: { n: [["Chieftains", "Council", "Assembly", "Kings' Men"], ["Land", "Tribute", "Honour", "Kin"], ["Hillfort", "Sacred Grove", "Meeting Place", "Great Hall"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of the {N2}", 2], ["The {N1} {N0}", 1]] } } }, supernaturalCourts: { kinds: ["courts", "creatures", "realms"], cultures: { english: { n: [["Fair Court", "Dark Court", "Court", "Host", "Conclave", "Circle", "Parliament", "Coven", "Brood", "Assembly"], ["Hob", "Boggart", "Brownie", "Fetch", "Wight", "Redcap", "Fairy", "Sprite", "Goblin", "Barghest"], ["Greenwood", "Hollow Hill", "Fen", "Moor", "Twilight Fields", "Mere", "Shadow Wood", "Midnight Court", "Thorn Hedge", "Old Barrow"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["{N0} of the {N1}", 3], ["The {N1} {N0}", 2], ["{N0} of the {A} {N2}", 1], ["{A} {N0} of [place]", 1], ["{N2} {N0}", 2], ["The {A} {N2}", 1], ["[founder]'s {N0}", 1], ["{N0} of {N2}", 2], ["The {N0} of [place]", 1]] }, welsh: { n: [["Fair Folk Court", "Hollow Court", "Host", "Court", "Conclave", "Circle", "Assembly", "Brood", "Pack", "Throne"], ["Fairy", "Water Horse", "Hound of the Dark", "Lake Maiden", "Goblin", "Giant", "Dragon", "Mine Sprite", "Sprite", "Hag"], ["Underhill", "Lake", "Mist Hills", "Hollow Mountain", "Sunken Realm", "Twilight Valley", "Island of Glass", "Dark Wood", "Cairn", "Mere"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, scottish: { n: [["Bright Court", "Dark Court", "Host", "Court", "Conclave", "Circle", "Assembly", "Brood", "Pack", "Throne"], ["Kelpie", "Selkie", "Brownie", "Banshee", "Redcap", "Werewolf", "Fairy", "Sprite", "Hag", "Water Horse"], ["Fairy Mound", "Loch", "Mist", "Glen", "Hollow Hill", "Isle of Shadows", "Twilight Moor", "Dark Wood", "Cairn", "Mere"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, irish: { n: [["Shining Court", "Dark Court", "Host", "Court", "Conclave", "Circle", "Assembly", "Brood", "Throne", "Pack"], ["Banshee", "Pooka", "Leprechaun", "Water Horse", "Fairy", "Sprite", "Hag", "Giant", "Changeling", "Goblin"], ["Fairy Mound", "Lake", "Mist", "Hollow Hill", "Western Isle", "Twilight Fields", "Dark Wood", "Cairn", "Mere", "Sunken Land"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, cornish: { n: [["Pisky Court", "Mine Sprite Court", "Host", "Court", "Conclave", "Circle", "Assembly", "Brood", "Throne", "Pack"], ["Pisky", "Mine Sprite", "Treasure Guardian", "Mermaid", "Giant", "Hag", "Goblin", "Fairy", "Sprite", "Hobgoblin"], ["Mine", "Moor", "Cove", "Hollow Hill", "Drowned Land", "Twilight Cliffs", "Dark Wood", "Cairn", "Mere", "Sea Cave"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{N0} of [holy person]", 1], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["{N0} of [place]", 1], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["{N0} of [founder]", 1]] }, norse: { n: [["Elf Court", "Troll Court", "Host", "Court", "Conclave", "Circle", "Assembly", "Wild Hunt", "Throne", "Brood"], ["Elf", "Troll", "Dwarf", "Giant", "Walking Dead", "Wight", "Sprite", "Hag", "Serpent", "Wolf"], ["Hollow Mountain", "Fjord", "Mist", "Dark Forest", "Frozen Waste", "Twilight Fields", "Barrow", "Cairn", "Mere", "Underhill"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, scandinavian: { n: [["Troll Court", "Elf Court", "Host", "Court", "Conclave", "Circle", "Assembly", "Wild Hunt", "Throne", "Brood"], ["Troll", "Elf", "Nixie", "Sprite", "Giant", "Wight", "Hag", "Goblin", "Forest Spirit", "Water Spirit"], ["Hollow Mountain", "Fjord", "Mist", "Dark Forest", "Frozen Lake", "Twilight Fields", "Mine", "Cairn", "Mere", "Underhill"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["[founder]'s {N0}", 3], ["The {N1} {N0}", 3], ["{N0} of the {N1}", 2], ["{A} {N1} {N0}", 1], ["{N2} {N0}", 2], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N0} of [place]", 1], ["{N1} {N0} of [place]", 1]] }, german: { n: [["Wild Hunt", "Fair Court", "Dark Court", "Host", "Court", "Conclave", "Circle", "Assembly", "Throne", "Brood"], ["Kobold", "Elf", "Nixie", "Dwarf", "Giant", "Goblin", "Sprite", "Hag", "Forest Spirit", "Water Spirit"], ["Black Forest", "Hollow Mountain", "Mist", "Dark Hall", "Twilight Fields", "Mere", "Enchanted Wood", "Cairn", "Underhill", "Frozen Lake"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["{N0} of [place]", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] }, celtic: { n: [["Fair Court", "Dark Court", "Host", "Circle"], ["Fairy", "Water Horse", "Giant", "Hag"], ["Hollow Hill", "Mist", "Mere", "Sacred Grove"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of the {N2}", 2], ["The {N1} {N0}", 1]] } } }, tribalNames: { kinds: ["kin", "land", "emblems"], cultures: { english: { n: [["Hundred", "Kin", "House", "Family", "Folk", "Tithing", "Clan", "Households", "Neighbours", "Burghers"], ["Marsh", "Fell", "Heath", "Down", "Fen", "Moor", "Weald", "Dale", "Shore", "Wold"], ["Oak", "Hart", "Swan", "Hound", "Boar", "Falcon", "Wolf", "Rose", "Thorn", "Lion"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{A} {N0}", 3], ["The {N0} of the {N1}", 3], ["{N1} {N0}", 2], ["The {N2} {N0}", 2], ["{N0} of the {A} {N1}", 1], ["{A} {N1} {N0}", 2], ["The {N0} of {N1}", 1], ["{N2} {N0} of the {N1}", 1], ["The {A} {N2}", 1], ["{N0} of the {N2}", 2]] }, welsh: { n: [["Kin", "Children", "House", "Family", "Folk", "Clan", "Descendants", "Line", "Households", "Hosts"], ["Valley", "Mountain", "Mist Hill", "Lake", "Coast", "Moor", "Forest", "Mound", "Ford", "Hill Fort"], ["Dragon", "Red Kite", "Raven", "Salmon", "Stag", "Hound", "Wolf", "Harp", "Oak", "Hawk"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N1}", 2], ["{N2} {N0}", 1], ["{N0} of {N1}", 1]] }, scottish: { n: [["Clan", "Sept", "Kin", "Children", "Folk", "House", "Descendants", "Line", "Households", "Hosts"], ["Glen", "Loch", "Highland", "Isle", "Moor", "Coast", "Strath", "Forest", "Hill", "Island Sound"], ["Stag", "Wildcat", "Eagle", "Salmon", "Thistle", "Raven", "Hound", "Wolf", "Rowan", "Boar"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N1}", 2], ["{N2} {N0}", 1], ["{N0} of {N1}", 1]] }, irish: { n: [["Sept", "Kin", "Children", "Descendants", "Folk", "House", "Clan", "Line", "People", "Hosts"], ["Hill Fort", "Plain", "Lake", "Bog", "Island", "Coast", "Forest", "Mountain", "Ford", "Hill"], ["Hound", "Boar", "Salmon", "Stag", "Hawk", "Raven", "Crane", "Horse", "Hazel", "Swan"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N1}", 2], ["{N2} {N0}", 1], ["{N0} of {N1}", 1]] }, cornish: { n: [["Kin", "Children", "House", "Family", "Folk", "Clan", "Descendants", "Line", "Tinners", "Hosts"], ["Moor", "Cove", "Cliff", "Valley", "Coast", "Mine", "Hill Fort", "Ford", "Tor", "Island"], ["Chough", "Gull", "Seal", "Hound", "Hare", "Raven", "Stag", "Wolf", "Tin", "Oak"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {A} {N1}", 2], ["The {N0} of {N2}", 2], ["{A} {N0} of the {N2}", 1], ["{N0} of the {N2}", 2], ["The {A} {N0}", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N1}", 2], ["{N2} {N0}", 1], ["{N0} of {N1}", 1]] }, norse: { n: [["Sons", "Kin", "Folk", "House", "Family", "Clan", "Men", "Line", "Sworn Band", "Hosts"], ["Fjord", "Island", "Mountain", "Forest", "Coast", "Strand", "Dale", "Steading", "Skerry", "Fell"], ["Wolf", "Raven", "Bear", "Serpent", "Eagle", "Boar", "Hound", "Bull", "Falcon", "Stag"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["The {N1} {N0}", 3], ["{N0} of the {N1}", 3], ["{N2} {N0}", 2], ["{A} {N1} {N0}", 1], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N1} {N0} of the {N2}", 1], ["{A} {N0}", 1], ["{N1}-{N2} {N0}", 1]] }, scandinavian: { n: [["Kin", "Folk", "House", "Family", "Sons", "Households", "Clan", "Line", "Neighbours", "Hosts"], ["Fjord", "Lake", "Forest", "Mountain", "Coast", "Skerry", "Valley", "Island", "Bog", "Heath"], ["Elk", "Wolf", "Bear", "Swan", "Raven", "Eagle", "Lynx", "Hound", "Pine", "Stag"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["The {N1} {N0}", 3], ["{N0} of the {N1}", 3], ["{N2} {N0}", 2], ["{A} {N1} {N0}", 1], ["The {N0} of the {N2}", 2], ["{N1}-{N0}", 1], ["The {A} {N0}", 1], ["{N1} {N0} of the {N2}", 1], ["{A} {N0}", 1], ["{N1}-{N2} {N0}", 1]] }, german: { n: [["Kin", "Folk", "House", "Family", "Clan", "Brethren", "Households", "Line", "Neighbours", "Hosts"], ["Forest", "Mountain", "Marsh", "Heath", "River", "Valley", "Coast", "Hill", "Lake", "Plain"], ["Eagle", "Wolf", "Bear", "Stag", "Raven", "Boar", "Lion", "Hound", "Oak", "Falcon"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N2} {N1} {N0}", 2], ["{N0} of the {N1}", 3], ["{A} {N1} {N0}", 2], ["{N1} and {N2} {N0}", 1], ["The {N0} of {N2}", 2], ["{N1} {N0}", 3], ["{N2} {N0}", 2], ["The {A} {N1} {N0}", 1], ["The {A} {N1}", 1], ["{N1}-{N2} {N0}", 1]] } } }, epithets: { kinds: ["deeds", "bodies", "virtues"], cultures: { english: { n: [["Unready", "Peaceful", "Conqueror", "Lionheart", "Confessor", "Magnificent", "Bold", "Good", "Fair", "Victorious"], ["Tall", "Short", "Red", "Fair-Haired", "Stout", "Lame", "Hardy", "Grey", "Broad", "Bald"], ["Wise", "Just", "Pious", "Gentle", "Honest", "Steadfast", "Careful", "Kind", "Faithful", "Noble"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["the {N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["{N0} the {N1}", 1], ["the {N1} {N0}", 1], ["the {A} {N0}", 1], ["{N1}-{N0}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1]] }, welsh: { n: [["Dragon-Slayer", "Bold", "Great", "Victorious", "Fortunate", "Harper", "Lawgiver", "Peacemaker", "Defender", "Conqueror"], ["Tall", "Fair", "Red", "Dark", "Stout", "Lame", "Hardy", "Grey", "Broad", "Golden"], ["Wise", "Just", "Generous", "Gentle", "Faithful", "Steadfast", "Careful", "Kind", "Noble", "Eloquent"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["the {N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["the {A} {N1}", 1], ["the {N0} of the {N1}", 1], ["{N0} the {N2}", 1], ["{N1}-{N0}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1]] }, scottish: { n: [["Bold", "Great", "Victorious", "Maiden", "Defender", "Border-Raider", "Conqueror", "Lion", "Peacemaker", "Reiver"], ["Tall", "Fair", "Red", "Dark", "Stout", "Lame", "Hardy", "Grey", "Broad", "Black"], ["Wise", "Just", "Pious", "Gentle", "Faithful", "Steadfast", "Careful", "Kind", "Noble", "Canny"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["the {N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["the {A} {N1}", 1], ["the {N0} of the {N1}", 1], ["{N0} the {N2}", 1], ["{N1}-{N0}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1]] }, irish: { n: [["Battle-Winner", "Bold", "Great", "Victorious", "Poet", "Hostage-Taker", "Defender", "Conqueror", "Peacemaker", "Raider"], ["Tall", "Fair", "Red", "Dark", "Stout", "Lame", "Hardy", "Grey", "Broad", "Golden"], ["Wise", "Just", "Generous", "Gentle", "Faithful", "Steadfast", "Hospitable", "Kind", "Noble", "Pious"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["the {N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["the {A} {N1}", 1], ["the {N0} of the {N1}", 1], ["{N0} the {N2}", 1], ["{N1}-{N0}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1]] }, cornish: { n: [["Tinner", "Bold", "Great", "Victorious", "Pilot", "Defender", "Wrecker", "Pilgrim", "Peacemaker", "Fisher"], ["Tall", "Fair", "Red", "Dark", "Stout", "Lame", "Hardy", "Grey", "Broad", "Weathered"], ["Wise", "Just", "Pious", "Gentle", "Faithful", "Steadfast", "Careful", "Kind", "Noble", "Stubborn"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["the {N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["the {A} {N1}", 1], ["the {N0} of the {N1}", 1], ["{N0} the {N2}", 1], ["{N1}-{N0}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1]] }, norse: { n: [["Forkbeard", "Fairhair", "Bluetooth", "Boneless", "Hardrule", "Ironside", "Wolf-Slayer", "Oath-Breaker", "Sea-King", "Shield-Breaker"], ["Tall", "Fair-Haired", "Red", "One-Eyed", "Stout", "Lame", "Hardy", "Grey", "Broad", "Black"], ["Wise", "Just", "Generous", "Bold", "Faithful", "Steadfast", "Careful", "Kind", "Noble", "Stern"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["{N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["{N1}-{N0}", 2], ["the {A} {N0}", 1], ["{N0} the {N1}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1], ["{N1}{N0}", 1]] }, scandinavian: { n: [["Peaceful", "Bold", "Great", "Victorious", "Navigator", "Defender", "Reformer", "Builder", "Seafarer", "Conqueror"], ["Tall", "Fair", "Red", "Dark", "Stout", "Lame", "Hardy", "Grey", "Broad", "Golden"], ["Wise", "Just", "Pious", "Gentle", "Faithful", "Steadfast", "Careful", "Kind", "Noble", "Prudent"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["{N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["{N1}-{N0}", 2], ["the {A} {N0}", 1], ["{N0} the {N1}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1], ["{N1}{N0}", 1]] }, german: { n: [["Barbarossa", "Great", "Bold", "Victorious", "Pious", "Conqueror", "Builder", "Peacemaker", "Lion", "Defender"], ["Tall", "Fair", "Red", "Dark", "Stout", "Lame", "Hardy", "Grey", "Broad", "Stammerer"], ["Wise", "Just", "Pious", "Gentle", "Faithful", "Steadfast", "Careful", "Kind", "Noble", "Thrifty"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["the {N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["{N1}-{N0}", 1], ["the {A} {N0}", 1], ["{N0} the {N1}", 1], ["the {N1} and {N2}", 1], ["the {A} {N2}", 1], ["the {N2} {N0}", 1], ["the {N0} {N2}", 1]] }, celtic: { n: [["Bold", "Great", "Victorious", "Defender"], ["Tall", "Fair", "Red", "Dark"], ["Wise", "Just", "Generous", "Noble"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["the {N0}", 3], ["the {N1}", 3], ["the {N2}", 3], ["the {A} {N0}", 1]] } } }, titles: { kinds: ["ranks", "offices", "honours"], cultures: { english: { n: [["Knight", "Squire", "Baronet", "Yeoman", "Burgess", "Master", "Captain", "Provost", "Franklin", "Elder"], ["Steward", "Chamberlain", "Treasurer", "Bailiff", "Warden", "Almoner", "Falconer", "Butler", "Verderer", "Coroner"], ["Majesty", "Grace", "Worship", "Excellency", "Honour", "Reverence", "Eminence", "Serenity", "Splendour", "Renown"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} to the {N0}", 1], ["Master {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["Master {N1} of [place]", 1]] }, welsh: { n: [["Squire", "Judge", "Seer", "Master", "Captain", "Elder", "Burgess", "Franklin", "Provost", "Yeoman"], ["Steward", "Chamberlain", "Treasurer", "Bailiff", "Warden", "Harper", "Falconer", "Verderer", "Coroner", "Almoner"], ["Majesty", "Grace", "Worship", "Excellency", "Honour", "Reverence", "Eminence", "Serenity", "Splendour", "Renown"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} of the {A} {N0}", 1], ["Master {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["Master {N1} of [place]", 1]] }, scottish: { n: [["Provost", "Bailie", "Captain", "Master", "Elder", "Burgess", "Franklin", "Squire", "Yeoman", "Knight"], ["Steward", "Chamberlain", "Treasurer", "Warden", "Justiciar", "Falconer", "Almoner", "Coroner", "Verderer", "Piper"], ["Majesty", "Grace", "Worship", "Excellency", "Honour", "Reverence", "Eminence", "Serenity", "Splendour", "Renown"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} of the {A} {N0}", 1], ["Master {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["Master {N1} of [place]", 1]] }, irish: { n: [["Judge", "Poet", "Captain", "Master", "Elder", "Squire", "Yeoman", "Burgess", "Provost", "Seer"], ["Steward", "Chamberlain", "Treasurer", "Warden", "Harper", "Falconer", "Bailiff", "Almoner", "Coroner", "Verderer"], ["Majesty", "Grace", "Worship", "Excellency", "Honour", "Reverence", "Eminence", "Serenity", "Splendour", "Renown"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} of the {A} {N0}", 1], ["Master {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["Master {N1} of [place]", 1]] }, cornish: { n: [["Captain", "Master", "Elder", "Squire", "Yeoman", "Burgess", "Provost", "Pilot", "Knight", "Mayor"], ["Steward", "Chamberlain", "Treasurer", "Warden", "Bailiff", "Harbour Master", "Coroner", "Falconer", "Almoner", "Verderer"], ["Majesty", "Grace", "Worship", "Excellency", "Honour", "Reverence", "Eminence", "Serenity", "Splendour", "Renown"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} of the {A} {N0}", 1], ["Master {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["Master {N1} of [place]", 1]] }, norse: { n: [["Steersman", "Skald", "Captain", "Master", "Elder", "Yeoman", "Burgess", "Provost", "Shipmaster", "Seer"], ["Steward", "Treasurer", "Warden", "Standard-Bearer", "Harbour-Warden", "Chamberlain", "Bailiff", "Coroner", "Falconer", "Almoner"], ["Renown", "Glory", "Honour", "Fame", "Valour", "Might", "Worship", "Reverence", "Splendour", "Majesty"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} to the {N0}", 1], ["[founder]'s {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["{A} {N1}", 1]] }, scandinavian: { n: [["Admiral", "Captain", "Master", "Elder", "Burgess", "Provost", "Yeoman", "Knight", "Squire", "Pilot"], ["Steward", "Chamberlain", "Treasurer", "Warden", "Bailiff", "Harbour Master", "Coroner", "Falconer", "Almoner", "Lawman"], ["Majesty", "Grace", "Worship", "Excellency", "Honour", "Reverence", "Eminence", "Serenity", "Splendour", "Renown"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} to the {N0}", 1], ["[founder]'s {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["{A} {N1}", 1]] }, german: { n: [["Burgomaster", "Knight", "Master", "Elder", "Captain", "Burgess", "Provost", "Squire", "Yeoman", "Magistrate"], ["Steward", "Chamberlain", "Treasurer", "Warden", "Bailiff", "Auditor", "Coroner", "Falconer", "Almoner", "Verderer"], ["Majesty", "Grace", "Worship", "Excellency", "Honour", "Reverence", "Eminence", "Serenity", "Splendour", "Renown"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{N1}", 2], ["{N0} and {N1}", 1], ["{N1} to the {N0}", 1], ["Master {N1}", 1], ["{A} {N0}", 1], ["Your {N2}", 1], ["{A} {N1} of [place]", 1]] }, celtic: { n: [["Judge", "Seer", "Elder", "Squire"], ["Steward", "Warden", "Harper", "Treasurer"], ["Majesty", "Honour", "Grace", "Renown"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of [place]", 3], ["{N1} of [place]", 3], ["{N0}", 2], ["{A} {N0}", 1]] } } }, familyNames: { kinds: ["trades", "land", "kin"], cultures: { english: { n: [["Smith", "Miller", "Weaver", "Cooper", "Tanner", "Fletcher", "Baker", "Carter", "Mason", "Thatcher"], ["Hill", "Brook", "Wood", "Field", "Marsh", "Ford", "Dale", "Moor", "Heath", "Combe"], ["Kinsman", "Heir", "Cousin", "Freeman", "Younger", "Elder", "Goodchild", "Newman", "Neighbour", "Brotherly"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 2], ["{A} {N0}", 1], ["{N1} {N0}", 2], ["{N0} of {N1}", 1], ["{A} {N1}", 1], ["{N2} of the {N0}", 1], ["{N0}-{N1}", 1], ["{N1}side", 1]] }, welsh: { n: [["Smith", "Miller", "Weaver", "Cooper", "Drover", "Harper", "Carter", "Mason", "Collier", "Fuller"], ["Hill", "Brook", "Wood", "Field", "Rock", "Ford", "Valley", "Moor", "Lake", "Mount"], ["Son of the Wolf", "Son of the Hill", "Son of the Smith", "Son of the Bard", "Son of the Oak", "Heir", "Kinsman", "Descendant", "Kindred", "Cousin"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 3], ["{N0} of the {N1}", 2], ["{A} {N0}", 1], ["{N2} of the {N0}", 1], ["{N1} {N0}", 1], ["{A} {N1}", 1], ["{N0}-{N1}", 1], ["{N0} of [place]", 1]] }, scottish: { n: [["Smith", "Miller", "Weaver", "Cooper", "Fisher", "Shepherd", "Carter", "Mason", "Tailor", "Wright"], ["Hill", "Burn", "Wood", "Field", "Glen", "Ford", "Dale", "Moor", "Loch", "Craig"], ["Son of the Wolf", "Clansman", "Son of the Smith", "Son of the Priest", "Son of the Hill", "Kinsman", "Heir", "Descendant", "Kindred", "Cousin"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 3], ["{N0} of the {N1}", 2], ["{A} {N0}", 1], ["{N2} of the {N0}", 1], ["{N1} {N0}", 1], ["{A} {N1}", 1], ["{N0}-{N1}", 1], ["{N0} of [place]", 1]] }, irish: { n: [["Smith", "Miller", "Weaver", "Cooper", "Fisher", "Shepherd", "Carter", "Mason", "Tailor", "Wright"], ["Hill", "Brook", "Wood", "Field", "Lake", "Ford", "Dale", "Bog", "Rock", "Mount"], ["Grandson of the Raven", "Son of the Hound", "Son of the Hill", "Descendant", "Kinsman", "Heir", "Kindred", "Cousin", "Son of the Poet", "Descendant of the Salmon"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 3], ["{N0} of the {N1}", 2], ["{A} {N0}", 1], ["{N2} of the {N0}", 1], ["{N1} {N0}", 1], ["{A} {N1}", 1], ["{N0}-{N1}", 1], ["{N0} of [place]", 1]] }, cornish: { n: [["Smith", "Miller", "Weaver", "Cooper", "Fisher", "Tinner", "Carter", "Mason", "Tailor", "Miner"], ["Hill", "Cove", "Wood", "Field", "Rock", "Ford", "Valley", "Moor", "Cliff", "Tor"], ["Son of the Tinner", "Son of the Hill", "Kinsman", "Heir", "Descendant", "Kindred", "Cousin", "Son of the Cove", "Son of the Moor", "Son of the Smith"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 3], ["{N0} of the {N1}", 2], ["{A} {N0}", 1], ["{N2} of the {N0}", 1], ["{N1} {N0}", 1], ["{A} {N1}", 1], ["{N0}-{N1}", 1], ["{N0} of [place]", 1]] }, norse: { n: [["Smith", "Shipwright", "Weaver", "Cooper", "Fisher", "Farmer", "Carter", "Carver", "Tailor", "Skipper"], ["Hill", "Brook", "Wood", "Field", "Fjord", "Ford", "Dale", "Isle", "Strand", "Mount"], ["Ironside", "Stoneson", "Bearson", "Wolfson", "Ravenson", "Hammerson", "Axeson", "Greyson", "Fairson", "Redson"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 3], ["{N1} {N0}", 2], ["{A} {N0}", 1], ["{N0} of {N1}", 1], ["{A} {N1}", 1], ["{N2} of the {N0}", 1], ["{N0}-{N1}", 1], ["{N1}side", 1]] }, scandinavian: { n: [["Smith", "Miller", "Weaver", "Cooper", "Fisher", "Farmer", "Carter", "Mason", "Tailor", "Skipper"], ["Hill", "Brook", "Wood", "Field", "Lake", "Ford", "Dale", "Isle", "Strand", "Mount"], ["Son of the Smith", "Son of the Wolf", "Son of the Farm", "Kinsman", "Heir", "Descendant", "Kindred", "Cousin", "Son of the Isle", "Son of the Hill"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 3], ["{N1} {N0}", 2], ["{A} {N0}", 1], ["{N0} of {N1}", 1], ["{A} {N1}", 1], ["{N2} of the {N0}", 1], ["{N0}-{N1}", 1], ["{N1}side", 1]] }, german: { n: [["Smith", "Miller", "Weaver", "Cooper", "Fisher", "Farmer", "Carter", "Mason", "Tailor", "Baker"], ["Hill", "Brook", "Wood", "Field", "Lake", "Ford", "Dale", "Marsh", "Castle", "Mount"], ["Son of the Wolf", "Son of the Hill", "Kinsman", "Heir", "Descendant", "Kindred", "Cousin", "Son of the Forest", "Son of the Smith", "Son of the Mill"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 2], ["{N1} {N0}", 3], ["{A} {N0}", 1], ["{N0} of {N1}", 1], ["{A} {N1}", 1], ["{N2} of the {N0}", 1], ["{N1}-{N0}", 2], ["{N1}side", 1]] }, celtic: { n: [["Smith", "Weaver", "Cooper", "Fisher"], ["Hill", "Brook", "Wood", "Ford"], ["Kinsman", "Freeman", "Younger", "Cousins"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0}", 3], ["{N1}", 2], ["{N2}", 2], ["{A} {N0}", 1]] } } }, realms: { kinds: ["realms", "lands", "peoples"], cultures: { english: { n: [["Kingdom", "Earldom", "Shire", "Duchy", "Barony", "Lordship", "Commonwealth", "Realm", "March", "Palatinate"], ["Weald", "Fens", "Wolds", "Downs", "Dales", "Moors", "Marches", "Heartland", "Uplands", "Lowlands"], ["Anglia", "Mercia", "Northmen", "Southrons", "Fenlanders", "Highlanders", "Islanders", "Borderers", "Commons", "Freemen"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of {N1}", 2], ["The {N1} {N0}", 2], ["{N0} of the {N2}", 2], ["{A} {N0}", 1], ["{N0} of [place]", 1], ["The {N0} of the {A} {N1}", 1], ["{N1} {N0}", 2], ["{N0} of [founder]", 1]] }, welsh: { n: [["Principality", "Lordship", "Kingdom", "Marcher Lordship", "Barony", "Earldom", "Shire", "Realm", "Dominion", "Hundred"], ["Hills", "Valleys", "Mountains", "Marches", "Uplands", "Coast", "Lakes", "Moors", "Heartland", "Lowlands"], ["Hill-Men", "Valley-Men", "Mountain-Folk", "Marchers", "Islanders", "Border-Folk", "Coast-Folk", "Highlanders", "Free Men", "Kinsmen"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {N2}", 2], ["The {N0} of {N1}", 2], ["{N0} of [place]", 2], ["{N0} of the {A} {N1}", 1], ["The {A} {N0}", 1], ["{N0} of [founder]", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N2}", 1], ["{N0} of [holy person]", 1]] }, scottish: { n: [["Kingdom", "Earldom", "Lordship", "Burgh", "Barony", "Regality", "Realm", "Dominion", "Shire", "Thanedom"], ["Highlands", "Lowlands", "Isles", "Borders", "Glens", "Uplands", "Moors", "Coast", "Heartland", "Straths"], ["Highlanders", "Lowlanders", "Islanders", "Borderers", "Clansmen", "Burghers", "Northmen", "Glen-Folk", "Free Men", "Kinsmen"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N0} of the {N1}", 4], ["{N0} of the {N2}", 2], ["The {N0} of {N1}", 2], ["{N0} of [place]", 2], ["{N0} of the {A} {N1}", 1], ["The {A} {N0}", 1], ["{N0} of [founder]", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N2}", 1], ["{N0} of [holy person]", 1]] }, irish: { n: [["Over-Kingdom", "Kingdom", "Lordship", "Earldom", "Province", "Realm", "Dominion", "Hundred", "Palatine", "Territory"], ["Plains", "Hills", "Bogs", "Isles", "Coast", "Uplands", "Lakes", "Lowlands", "Heartland", "Western Shore"], ["Hill-Men", "Plain-Folk", "Islanders", "Coast-Folk", "Border-Folk", "Kinsmen", "Free Men", "Highlanders", "Boggers", "Clansmen"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N0} of the {N1}", 4], ["{N0} of the {N2}", 2], ["The {N0} of {N1}", 2], ["{N0} of [place]", 2], ["{N0} of the {A} {N1}", 1], ["The {A} {N0}", 1], ["{N0} of [founder]", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N2}", 1], ["{N0} of [holy person]", 1]] }, cornish: { n: [["Duchy", "Kingdom", "Earldom", "Stannary", "Hundred", "Lordship", "Shire", "Realm", "Dominion", "Barony"], ["Moors", "Coast", "Cliffs", "Valleys", "Tors", "Isles", "Uplands", "Heartland", "Downs", "Peninsula"], ["Tinners", "Miners", "Fishermen", "Coast-Folk", "Moor-Folk", "Islanders", "Borderers", "Seafarers", "Free Men", "Kinsmen"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N0} of the {N1}", 4], ["{N0} of the {N2}", 2], ["The {N0} of {N1}", 2], ["{N0} of [place]", 2], ["{N0} of the {A} {N1}", 1], ["The {A} {N0}", 1], ["{N0} of [founder]", 1], ["{N0} of the {N1} and the {N2}", 1], ["The {N0} of the {N2}", 1], ["{N0} of [holy person]", 1]] }, norse: { n: [["Jarldom", "Kingdom", "Thing-Land", "Lordship", "Realm", "Dominion", "Hundred", "Shire", "Earldom", "Holding"], ["Fjords", "Isles", "Fells", "Dales", "Coast", "Forests", "Steadings", "Heartland", "Uplands", "Northern Sea"], ["Northmen", "Sea-Folk", "Fjord-Folk", "Islanders", "Free Farmers", "Kinsmen", "Seafarers", "Dalesmen", "Shield-Men", "Sons"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["{N0} of the {N1}", 3], ["[founder]'s {N0}", 2], ["The {N1} {N0}", 3], ["{N0} of the {N2}", 2], ["The {A} {N0}", 1], ["{N0} of [place]", 2], ["{N1}-{N0}", 1], ["The {N0} of {N1}", 1], ["{N1} and {N2} {N0}", 1], ["{A} {N1} {N0}", 1]] }, scandinavian: { n: [["Kingdom", "Union", "Jarldom", "Duchy", "Realm", "Lordship", "Dominion", "County", "Province", "Commonwealth"], ["Fjords", "Isles", "Forests", "Lakes", "Coast", "Heartland", "Lowlands", "Uplands", "Straits", "Northern Sea"], ["Northmen", "Seafarers", "Islanders", "Forest-Folk", "Free Farmers", "Kinsmen", "Lake-Folk", "Highlanders", "Coast-Folk", "Commons"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["{N0} of the {N1}", 3], ["[founder]'s {N0}", 2], ["The {N1} {N0}", 3], ["{N0} of the {N2}", 2], ["The {A} {N0}", 1], ["{N0} of [place]", 2], ["{N1}-{N0}", 1], ["The {N0} of {N1}", 1], ["{N1} and {N2} {N0}", 1], ["{A} {N1} {N0}", 1]] }, german: { n: [["Duchy", "Margraviate", "Electorate", "Prince-Bishopric", "Free Imperial City", "League", "Empire", "County", "Landgraviate", "Kingdom"], ["Forests", "Marches", "Uplands", "Plains", "Rivers", "Heartland", "Alps", "Coast", "Lowlands", "Heath"], ["Imperial Free Men", "Burghers", "Forest-Folk", "Mountain-Folk", "Marchers", "Citizens", "Plainsmen", "Kinsmen", "River-Folk", "Free Men"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N1} {N0}", 3], ["{N0} of the {N1}", 3], ["{N2} {N0}", 2], ["{A} {N1} {N0}", 1], ["The {N0} of {N1}", 2], ["{N0} of [place]", 2], ["{N1}-{N2} {N0}", 1], ["The {A} {N0}", 1], ["{N0} of the {N2}", 2], ["{N1} and {N2} {N0}", 1]] }, celtic: { n: [["Kingdom", "Tribal Land", "Territory", "Realm"], ["Hills", "Forests", "Plains", "Isles"], ["Tribesmen", "Hill-Men", "Free Folk", "Kinsmen"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N0} of the {N1}", 3], ["The {A} {N0}", 2], ["{N0} of [place]", 2], ["The {N1} {N0}", 1]] } } }, peoplesTongues: { kinds: ["folk", "tongues", "lands"], cultures: { english: { n: [["Englishmen", "Northerners", "Southrons", "Fenlanders", "Wealdmen", "Dalesmen", "Borderers", "Islanders", "Moormen", "Townsfolk"], ["Speech", "Tongue", "Dialect", "Cant", "Lingo", "Talk", "Parlance", "Jargon", "Burr", "Drawl"], ["Marsh", "Weald", "Fen", "Dale", "Moor", "Down", "Wold", "Heath", "Shore", "Border"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {A} {N2} {N1}", 1], ["the {N0} of the {N2}", 1], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {A} {N2} {N0}", 1]] }, welsh: { n: [["Hill Welsh", "Valley-Men", "Marchers", "Mountain-Folk", "Islanders", "Coast-Folk", "Drovers", "Bards", "Quarrymen", "Borderers"], ["Speech", "Tongue", "Dialect", "Cant", "Lilt", "Talk", "Parlance", "Jargon", "Burr", "Song"], ["Valley", "Hill", "Mountain", "Coast", "Moor", "Lake", "Forest", "Border", "Island", "Mist"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {N1} of the {N2}", 1], ["the {N0} of the {N2}", 2], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {A} {N2} {N0}", 1]] }, scottish: { n: [["Highlanders", "Lowlanders", "Islanders", "Borderers", "Clansmen", "Glen-Folk", "Burghers", "Northmen", "Fishers", "Crofters"], ["Speech", "Tongue", "Dialect", "Cant", "Lilt", "Talk", "Parlance", "Burr", "Doric", "Broad Scots"], ["Glen", "Loch", "Strath", "Isle", "Moor", "Coast", "Border", "Highland", "Lowland", "Hill"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {N1} of the {N2}", 1], ["the {N0} of the {N2}", 2], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {A} {N2} {N0}", 1]] }, irish: { n: [["Islanders", "Hill-Men", "Plain-Folk", "Coast-Folk", "Border-Folk", "Clansmen", "Bog-Folk", "Western Folk", "Fishers", "Drovers"], ["Speech", "Tongue", "Dialect", "Cant", "Lilt", "Talk", "Parlance", "Brogue", "Song", "Burr"], ["Plain", "Hill", "Bog", "Coast", "Isle", "Lake", "Forest", "Border", "Mountain", "Shore"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {N1} of the {N2}", 1], ["the {N0} of the {N2}", 2], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {A} {N2} {N0}", 1]] }, cornish: { n: [["Tinners", "Miners", "Fishermen", "Coast-Folk", "Moor-Folk", "Islanders", "Borderers", "Seafarers", "Cornishmen", "Wreckers"], ["Speech", "Tongue", "Dialect", "Cant", "Lilt", "Talk", "Parlance", "Burr", "Drawl", "Song"], ["Moor", "Cove", "Cliff", "Valley", "Tor", "Isle", "Coast", "Down", "Peninsula", "Border"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {N1} of the {N2}", 1], ["the {N0} of the {N2}", 2], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {A} {N2} {N0}", 1]] }, norse: { n: [["Northmen", "Sea-Folk", "Fjord-Folk", "Islanders", "Dalesmen", "Seafarers", "Shield-Men", "Free Farmers", "Sons", "Raiders"], ["Speech", "Tongue", "Dialect", "Cant", "Talk", "Parlance", "Burr", "Skaldic Verse", "Saga-Speech", "Rune-Speech"], ["Fjord", "Isle", "Fell", "Dale", "Coast", "Forest", "Strand", "Steading", "Skerry", "Mountain"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {A} {N2} {N1}", 1], ["the {N0} of the {N2}", 1], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {A} {N2} {N0}", 1]] }, scandinavian: { n: [["Northmen", "Seafarers", "Islanders", "Forest-Folk", "Lake-Folk", "Highlanders", "Coast-Folk", "Free Farmers", "Fishers", "Townsfolk"], ["Speech", "Tongue", "Dialect", "Cant", "Lilt", "Talk", "Parlance", "Burr", "Drawl", "Song"], ["Fjord", "Isle", "Forest", "Lake", "Coast", "Heath", "Strait", "Mountain", "Valley", "Skerry"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {A} {N2} {N1}", 1], ["the {N0} of the {N2}", 1], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {A} {N2} {N0}", 1]] }, german: { n: [["Highlanders", "Lowlanders", "Forest-Folk", "Mountain-Folk", "River-Folk", "Burghers", "Marchers", "Plainsmen", "Townsfolk", "Coast-Folk"], ["Speech", "Tongue", "Dialect", "Cant", "Lilt", "Talk", "Parlance", "Jargon", "Burr", "Drawl"], ["Forest", "Mountain", "Marsh", "Heath", "River", "Valley", "Coast", "Hill", "Lake", "Plain"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {N2} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N1}", 2], ["the {A} {N2} {N1}", 1], ["the {N0} of the {N2}", 1], ["the {A} {N0} of the {N2}", 1], ["the {N1} of the {N0}", 1], ["the {N2}-{N0}", 1]] }, celtic: { n: [["Hill-Men", "Free Folk", "Islanders", "Tribesmen"], ["Speech", "Tongue", "Dialect", "Cant"], ["Hill", "Forest", "River", "Isle"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["the {N0}", 3], ["the {A} {N0}", 2], ["the {A} {N1}", 2], ["the {N2} {N0}", 1]] } } }, ships: { kinds: ["ships", "beasts", "virtues"], cultures: { english: { n: [["Cog", "Galleon", "Carrack", "Cutter", "Smack", "Brig", "Barque", "Man-of-War", "Collier", "Packet"], ["Lion", "Leopard", "Swan", "Hart", "Falcon", "Dolphin", "Greyhound", "Mastiff", "Hawk", "Salmon"], ["Fortune", "Hope", "Providence", "Endeavour", "Concord", "Prosperity", "Success", "Unity", "Good Fellowship", "Resolution"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{N1}", 3], ["The {N1}", 2], ["{A} {N1}", 3], ["{N2}", 3], ["{A} {N2}", 2], ["The {N2}", 1], ["{N1} of [place]", 1], ["[founder]'s {N1}", 1], ["{N2} of [place]", 1], ["{N1} of the {N2}", 2]] }, welsh: { n: [["Coracle", "Coaster", "Schooner", "Ketch", "Trawler", "Lugger", "Brig", "Barque", "Packet", "Slate Carrier"], ["Dragon", "Red Kite", "Salmon", "Seal", "Gull", "Dolphin", "Hawk", "Raven", "Stag", "Hound"], ["Hope", "Fortune", "Providence", "Concord", "Pilgrim", "Endeavour", "Faith", "Unity", "Prosperity", "Welcome"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, scottish: { n: [["Steam Coaster", "Drifter", "Herring Boat", "Fishing Smack", "Whaler", "Trawler", "Clipper", "Brig", "Barque", "Ketch"], ["Selkie", "Seal", "Gannet", "Eagle", "Salmon", "Stag", "Wildcat", "Raven", "Dolphin", "Gull"], ["Hope", "Fortune", "Providence", "Concord", "Endeavour", "Faith", "Unity", "Prosperity", "Welcome", "Guiding Star"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, irish: { n: [["Curragh", "Hooker", "Smack", "Trawler", "Coaster", "Schooner", "Ketch", "Brig", "Packet", "Galley"], ["Salmon", "Seal", "Swan", "Gannet", "Hound", "Stag", "Raven", "Dolphin", "Gull", "Hawk"], ["Hope", "Fortune", "Providence", "Concord", "Pilgrim", "Endeavour", "Faith", "Unity", "Prosperity", "Welcome"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, cornish: { n: [["Lugger", "Gig", "Pilchard Driver", "Smack", "Ketch", "Schooner", "Brig", "Barque", "Packet", "Tin Carrier"], ["Chough", "Gull", "Seal", "Hare", "Dolphin", "Raven", "Pilchard", "Mackerel", "Hawk", "Hound"], ["Hope", "Fortune", "Providence", "Concord", "Pilgrim", "Endeavour", "Faith", "Unity", "Prosperity", "Good Intent"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, norse: { n: [["Longship", "Knarr", "Raider", "Warship", "Skiff", "Dragon Ship", "Fishing Boat", "Ferry", "Cargo Ship", "Rowboat"], ["Sea Serpent", "Dragon", "Raven", "Wolf", "Eagle", "Bear", "Stag", "Horse", "Whale", "Hawk"], ["Sea Wolf", "Wave Rider", "Ocean Stallion", "Storm Bringer", "Foam Strider", "Sea Steed", "Swift Wind", "Long Reach", "Sea Glory", "Wave Breaker"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["{N1}", 3], ["[founder]'s {N1}", 3], ["{N2}", 3], ["{A} {N1}", 2], ["{N1} of the {N2}", 2], ["The {N1}", 2], ["{N2} of [place]", 1], ["{A} {N2}", 2], ["{N1}-{N2}", 1], ["[founder]'s {N2}", 1]] }, scandinavian: { n: [["Brig", "Barque", "Schooner", "Ferry", "Steamer", "Icebreaker", "Frigate", "Trawler", "Cutter", "Ketch"], ["Elk", "Swan", "Eagle", "Raven", "Wolf", "Bear", "Whale", "Seal", "Tern", "Salmon"], ["Hope", "Fortune", "Providence", "Concord", "Union", "Endeavour", "Faith", "Neutrality", "Prosperity", "Peace"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["{N1}", 3], ["[founder]'s {N1}", 3], ["{N2}", 3], ["{A} {N1}", 2], ["{N1} of the {N2}", 2], ["The {N1}", 2], ["{N2} of [place]", 1], ["{A} {N2}", 2], ["{N1}-{N2}", 1], ["[founder]'s {N2}", 1]] }, german: { n: [["Cog", "Hulk", "Carrack", "Frigate", "Schooner", "Barque", "Steamer", "Ketch", "Gunboat", "Liner"], ["Eagle", "Lion", "Wolf", "Bear", "Swan", "Stag", "Raven", "Hawk", "Dolphin", "Falcon"], ["Holy Ghost", "Fortune", "Providence", "Concord", "Hope", "Endeavour", "Faith", "Unity", "Prosperity", "Good Hope"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N1}", 3], ["{A} {N1}", 3], ["{N2}", 3], ["The {N1}", 2], ["{N1} of the {N2}", 2], ["{N2} {N1}", 2], ["{A} {N2}", 2], ["{N1} of [place]", 1], ["[holy person]", 1], ["The {A} {N2}", 1]] }, celtic: { n: [["Curragh", "Skiff", "Galley", "Longboat"], ["Seal", "Salmon", "Raven", "Swan"], ["Hope", "Fortune", "Welcome", "Voyage"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N1}", 3], ["The {N1}", 2], ["{A} {N2}", 2], ["{N2}", 2]] } } }, aircraft: { kinds: ["craft", "winds", "beasts"], cultures: { english: { n: [["Airship", "Zeppelin", "Biplane", "Monoplane", "Flying Boat", "Bomber", "Fighter", "Glider", "Mailplane", "Balloon"], ["West Wind", "North Wind", "South Wind", "East Wind", "Gale", "Breeze", "Zephyr", "Squall", "Trade Wind", "Storm"], ["Lion", "Falcon", "Swan", "Hawk", "Kestrel", "Eagle", "Skylark", "Swift", "Osprey", "Buzzard"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{N1}", 3], ["The {N1}", 2], ["{A} {N1}", 3], ["{N2}", 3], ["{A} {N2}", 2], ["The {N2}", 1], ["{N1} of [place]", 1], ["[founder]'s {N1}", 1], ["{N2} of [place]", 1], ["{N1} of the {N2}", 2]] }, welsh: { n: [["Airship", "Biplane", "Monoplane", "Flying Boat", "Glider", "Balloon", "Mailplane", "Fighter", "Bomber", "Seaplane"], ["West Wind", "North Wind", "South Wind", "East Wind", "Gale", "Breeze", "Mountain Wind", "Squall", "Mist", "Storm"], ["Dragon", "Red Kite", "Hawk", "Kestrel", "Eagle", "Skylark", "Swift", "Osprey", "Raven", "Buzzard"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, scottish: { n: [["Airship", "Biplane", "Monoplane", "Flying Boat", "Glider", "Balloon", "Mailplane", "Fighter", "Bomber", "Seaplane"], ["West Wind", "North Wind", "South Wind", "East Wind", "Gale", "Breeze", "Highland Wind", "Squall", "Mist", "Storm"], ["Golden Eagle", "Osprey", "Hawk", "Kestrel", "Skylark", "Swift", "Gannet", "Raven", "Buzzard", "Wildcat"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, irish: { n: [["Airship", "Biplane", "Monoplane", "Flying Boat", "Glider", "Balloon", "Mailplane", "Fighter", "Bomber", "Seaplane"], ["West Wind", "North Wind", "South Wind", "East Wind", "Gale", "Breeze", "Atlantic Wind", "Squall", "Mist", "Storm"], ["Hawk", "Kestrel", "Eagle", "Skylark", "Swift", "Osprey", "Raven", "Buzzard", "Gannet", "Crane"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, cornish: { n: [["Airship", "Biplane", "Monoplane", "Flying Boat", "Glider", "Balloon", "Mailplane", "Fighter", "Bomber", "Seaplane"], ["West Wind", "North Wind", "South Wind", "East Wind", "Gale", "Breeze", "Sea Wind", "Squall", "Mist", "Storm"], ["Chough", "Gull", "Hawk", "Kestrel", "Skylark", "Swift", "Gannet", "Raven", "Buzzard", "Osprey"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, norse: { n: [["Sky Serpent", "Sky Ship", "Cloud Rider", "Raven Craft", "Dragon Wing", "Storm Rider", "Wind Steed", "Eagle Craft", "Sky Skiff", "Wave of Air"], ["North Wind", "South Wind", "East Wind", "West Wind", "Gale", "Breeze", "Frost Wind", "Squall", "Mist", "Storm"], ["Raven", "Eagle", "Dragon", "Hawk", "Wolf", "Falcon", "Swan", "Owl", "Crane", "Gyrfalcon"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["{N1}", 3], ["[founder]'s {N1}", 3], ["{N2}", 3], ["{A} {N1}", 2], ["{N1} of the {N2}", 2], ["The {N1}", 2], ["{N2} of [place]", 1], ["{A} {N2}", 2], ["{N1}-{N2}", 1], ["[founder]'s {N2}", 1]] }, scandinavian: { n: [["Airship", "Seaplane", "Bush Plane", "Biplane", "Monoplane", "Glider", "Balloon", "Mailplane", "Fighter", "Airliner"], ["North Wind", "South Wind", "East Wind", "West Wind", "Gale", "Breeze", "Arctic Wind", "Squall", "Mist", "Storm"], ["Eagle", "Raven", "Hawk", "Swan", "Owl", "Falcon", "Kestrel", "Tern", "Crane", "Lynx"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["{N1}", 3], ["[founder]'s {N1}", 3], ["{N2}", 3], ["{A} {N1}", 2], ["{N1} of the {N2}", 2], ["The {N1}", 2], ["{N2} of [place]", 1], ["{A} {N2}", 2], ["{N1}-{N2}", 1], ["[founder]'s {N2}", 1]] }, german: { n: [["Zeppelin", "Airship", "Biplane", "Monoplane", "Glider", "Balloon", "Mailplane", "Fighter", "Bomber", "Airliner"], ["West Wind", "North Wind", "South Wind", "East Wind", "Gale", "Breeze", "Mountain Wind", "Squall", "Mist", "Storm"], ["Eagle", "Falcon", "Hawk", "Swan", "Stork", "Raven", "Kestrel", "Owl", "Condor", "Buzzard"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N1}", 3], ["{A} {N1}", 3], ["{N2}", 3], ["The {N1}", 2], ["{N1} of the {N2}", 2], ["{N2} {N1}", 2], ["{A} {N2}", 2], ["{N1} of [place]", 1], ["[holy person]", 1], ["The {A} {N2}", 1]] }, celtic: { n: [["Sky Ship", "Cloud Rider", "Balloon", "Glider"], ["West Wind", "North Wind", "Gale", "Mist"], ["Hawk", "Raven", "Eagle", "Swan"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N1}", 3], ["The {N1}", 2], ["{A} {N2}", 2], ["{N2}", 2]] } } }, landVehicles: { kinds: ["engines", "beasts", "places"], cultures: { english: { n: [["Locomotive", "Steam Engine", "Stagecoach", "Wagon", "Omnibus", "Tram", "Lorry", "Motorcar", "Tractor", "Cart"], ["Lion", "Hart", "Falcon", "Swan", "Greyhound", "Mastiff", "Hawk", "Leopard", "Bull", "Stag"], ["Station", "Junction", "Crossing", "Terminus", "Halt", "Depot", "Viaduct", "Cutting", "Siding", "Platform"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Noble", "Silent", "Stout", "Green", "Silver"], f: [["{N1}", 3], ["The {N1}", 2], ["{A} {N1}", 3], ["{N2}", 3], ["{A} {N2}", 2], ["The {N2}", 1], ["{N1} of [place]", 1], ["[founder]'s {N1}", 1], ["{N2} of [place]", 1], ["{N1} of the {N2}", 2]] }, welsh: { n: [["Locomotive", "Steam Engine", "Slate Wagon", "Coal Truck", "Omnibus", "Tram", "Lorry", "Motorcar", "Tractor", "Cart"], ["Dragon", "Red Kite", "Hawk", "Stag", "Goat", "Hound", "Raven", "Bull", "Wolf", "Salmon"], ["Valley", "Quarry", "Junction", "Terminus", "Halt", "Depot", "Viaduct", "Cutting", "Siding", "Pit Head"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Red"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, scottish: { n: [["Locomotive", "Steam Engine", "Stagecoach", "Wagon", "Omnibus", "Tram", "Lorry", "Motorcar", "Tractor", "Cart"], ["Golden Eagle", "Stag", "Wildcat", "Thistle", "Hound", "Raven", "Bull", "Wolf", "Hawk", "Salmon"], ["Highland Line", "Glen", "Junction", "Terminus", "Halt", "Depot", "Viaduct", "Cutting", "Siding", "Pass"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Stout", "Green", "Black"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, irish: { n: [["Locomotive", "Steam Engine", "Jaunting Car", "Wagon", "Omnibus", "Tram", "Lorry", "Motorcar", "Tractor", "Cart"], ["Hound", "Stag", "Hawk", "Salmon", "Raven", "Bull", "Wolf", "Boar", "Crane", "Horse"], ["Station", "Junction", "Crossing", "Terminus", "Halt", "Depot", "Viaduct", "Cutting", "Siding", "Quay"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Holy", "Green", "Red"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, cornish: { n: [["Locomotive", "Steam Engine", "Mine Wagon", "Wagon", "Omnibus", "Tram", "Lorry", "Motorcar", "Tractor", "Cart"], ["Chough", "Gull", "Hound", "Hare", "Raven", "Bull", "Wolf", "Hawk", "Stag", "Seal"], ["Mine", "Junction", "Crossing", "Terminus", "Halt", "Depot", "Viaduct", "Cutting", "Siding", "Harbour"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Wild", "Silent", "Hidden", "Green", "Salt"], f: [["{N1} of the {N2}", 3], ["{N2} of the {N1}", 2], ["{N1} of [place]", 2], ["{N2}", 3], ["The {N1}", 2], ["{A} {N1}", 2], ["{N2} of [holy person]", 1], ["[holy person]", 1], ["{N1} of the {A} {N2}", 1], ["The {A} {N2}", 1]] }, norse: { n: [["War Wagon", "Sled", "Wagon", "Cart", "Chariot", "Sledge", "Horse Cart", "Ox Wain", "Battle Sled", "Hall Wagon"], ["Wolf", "Boar", "Bear", "Elk", "Raven", "Eagle", "Horse", "Bull", "Stag", "Hound"], ["Steading", "Ford", "Mountain Pass", "Dale", "Fjord Road", "Thing Field", "Hall", "Hill", "Strand", "Moor"]], a: ["Old", "Grey", "Golden", "Bold", "Fair", "Wild", "Stern", "Black", "Iron", "Frost"], f: [["{N1}", 3], ["[founder]'s {N1}", 3], ["{N2}", 3], ["{A} {N1}", 2], ["{N1} of the {N2}", 2], ["The {N1}", 2], ["{N2} of [place]", 1], ["{A} {N2}", 2], ["{N1}-{N2}", 1], ["[founder]'s {N2}", 1]] }, scandinavian: { n: [["Locomotive", "Steam Engine", "Sleigh", "Wagon", "Omnibus", "Tram", "Lorry", "Motorcar", "Tractor", "Snowmobile"], ["Elk", "Wolf", "Bear", "Eagle", "Raven", "Swan", "Lynx", "Hound", "Stag", "Reindeer"], ["Station", "Junction", "Crossing", "Terminus", "Halt", "Depot", "Viaduct", "Cutting", "Siding", "Ferry Quay"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Northern", "Silent", "Stout", "Green", "Blue"], f: [["{N1}", 3], ["[founder]'s {N1}", 3], ["{N2}", 3], ["{A} {N1}", 2], ["{N1} of the {N2}", 2], ["The {N1}", 2], ["{N2} of [place]", 1], ["{A} {N2}", 2], ["{N1}-{N2}", 1], ["[founder]'s {N2}", 1]] }, german: { n: [["Locomotive", "Steam Engine", "Stagecoach", "Wagon", "Omnibus", "Tram", "Lorry", "Motorcar", "Tractor", "Cart"], ["Eagle", "Lion", "Wolf", "Bear", "Stag", "Raven", "Boar", "Hound", "Falcon", "Bull"], ["Station", "Junction", "Crossing", "Terminus", "Halt", "Depot", "Viaduct", "Cutting", "Siding", "Tunnel"]], a: ["Old", "Grey", "Golden", "Bright", "Fair", "Free", "Silent", "Black", "Green", "Holy"], f: [["{N1}", 3], ["{A} {N1}", 3], ["{N2}", 3], ["The {N1}", 2], ["{N1} of the {N2}", 2], ["{N2} {N1}", 2], ["{A} {N2}", 2], ["{N1} of [place]", 1], ["[holy person]", 1], ["The {A} {N2}", 1]] }, celtic: { n: [["Chariot", "Wagon", "Cart", "War Wagon"], ["Horse", "Boar", "Hound", "Stag"], ["Ford", "Hill", "Fort", "Crossing"]], a: ["Old", "Grey", "Golden", "Wild"], f: [["{N1}", 3], ["The {N1}", 2], ["{A} {N2}", 2], ["{N2}", 2]] } } } }, native: { titles: { welsh: ["Tywysog of [place]", "Arglwydd of [place]", "Brenin of [place]", "Tywysog [name]", "Arglwydd [name]", "Brenin [name]"], irish: ["Ard R\xED", "Taoiseach of [place]", "Ollamh of [place]", "R\xED of [place]", "Taoiseach [name]", "Ollamh [name]"], scottish: ["Mormaer of [place]", "Thane of [place]", "Toiseach of [place]", "Mormaer [name]", "Toiseach [name]", "Thane [name]"], norse: ["Jarl of [place]", "Hersir of [place]", "Lawspeaker of [place]", "Jarl [name]", "Hersir [name]", "Lawspeaker [name]"], german: ["Graf von [place]", "Markgraf von [place]", "Kurf\xFCrst von [place]", "Freiherr von [place]", "Graf [name]", "Freiherr [name]"] }, familyNames: { welsh: ["ap [father]", "ferch [father]", "ap [father] of [place]", "ferch [father] of [place]", "ap [father] ap [child]", "[place] ap [father]"], irish: ["Mac [father]", "\xD3 [father]", "N\xED [father]", "Mac [father] of [place]", "\xD3 [father] of [place]", "N\xED [father] of [place]"], scottish: ["Mac [father]", "Nic [father]", "Mac [father] of [place]", "Nic [father] of [place]", "Mac [father] Mac [child]", "[place] Mac [father]"], norse: ["[father]son", "[father]dottir", "[father]son of [place]", "[father]dottir of [place]", "[father]sson", "[place] [father]son"], german: ["von [place]", "zu [place]", "von und zu [place]", "von [place] zu [place]", "vom [place]", "von der [place]"] } } };
+
+// src/data/real-places.json
+var real_places_default = {
+  $comment: 'Northern Europe brief 5b \xA712.3: well-known real places (brief 5a rule 5 and \xA79: features) and real towns. A fixed whole name is never one; a [place] fill that is one is drawn again; a generated name that is a real town, alone or after a qualifier ("South Bath"), is drawn again. Northern Europe brief 5c \xA713.4: `groups` holds well-known real groups, realms, craft and objects; no generated name is one.',
+  places: [
+    "Land's End",
+    "Snowdon",
+    "Black Forest",
+    "Ben Nevis",
+    "Scafell Pike",
+    "Skiddaw",
+    "Helvellyn",
+    "Cader Idris",
+    "Pen y Fan",
+    "Lake District",
+    "Peak District",
+    "Dartmoor",
+    "Exmoor",
+    "Bodmin Moor",
+    "Cairngorms",
+    "Loch Ness",
+    "Loch Lomond",
+    "Isle of Skye",
+    "Isle of Man",
+    "Orkney",
+    "Shetland",
+    "Hebrides",
+    "Giant's Causeway",
+    "Slieve Donard",
+    "Mount Brandon",
+    "Carrauntoohil",
+    "Wicklow Mountains",
+    "Cliffs of Moher",
+    "Ring of Kerry",
+    "Connemara",
+    "Lough Neagh",
+    "River Thames",
+    "River Severn",
+    "River Wye",
+    "River Tyne",
+    "River Clyde",
+    "River Shannon",
+    "Hadrian's Wall",
+    "Offa's Dyke",
+    "Stonehenge",
+    "Avebury",
+    "Glastonbury Tor",
+    "White Cliffs of Dover",
+    "Cheddar Gorge",
+    "Lizard Point",
+    "St Michael's Mount",
+    "Mount's Bay",
+    "Tintagel",
+    "Fowey",
+    "Bodmin",
+    "Mousehole",
+    "Zennor",
+    "Gower",
+    "Anglesey",
+    "Snowdonia",
+    "Brecon Beacons",
+    "Black Mountains",
+    "Pembrokeshire",
+    "Fair Isle",
+    "Ben Lomond",
+    "Glencoe",
+    "Rannoch Moor",
+    "Trossachs",
+    "Jotunheimen",
+    "Galdhopiggen",
+    "Sognefjord",
+    "Geirangerfjord",
+    "Hardangervidda",
+    "Lofoten",
+    "Nordkapp",
+    "Trollstigen",
+    "Preikestolen",
+    "Oslofjord",
+    "Kattegat",
+    "Skagerrak",
+    "Oresund",
+    "Bornholm",
+    "Zealand",
+    "Jutland",
+    "Funen",
+    "Mols Bjerge",
+    "Mons Klint",
+    "Skagen",
+    "Gotland",
+    "Oland",
+    "Vattern",
+    "Vanern",
+    "Malaren",
+    "Kebnekaise",
+    "Sarek",
+    "Abisko",
+    "Laponia",
+    "Iceland",
+    "Vatnajokull",
+    "Thingvellir",
+    "Gullfoss",
+    "Geysir",
+    "Hekla",
+    "Surtsey",
+    "Snaefellsjokull",
+    "Jokulsarlon",
+    "Faroe Islands",
+    "Reykjanes",
+    "Rhine Gorge",
+    "Loreley",
+    "Mosel",
+    "Harz",
+    "Brocken",
+    "Thuringian Forest",
+    "Bavarian Forest",
+    "Zugspitze",
+    "Watzmann",
+    "Konigssee",
+    "Bodensee",
+    "Lake Constance",
+    "Chiemsee",
+    "Berchtesgaden",
+    "Rugen",
+    "Sylt",
+    "Wadden Sea",
+    "Heligoland",
+    "Luneburg Heath",
+    "Spreewald",
+    "Elbe Sandstone Mountains",
+    "Saxon Switzerland",
+    "Fichtelgebirge",
+    "Eifel",
+    "Taunus",
+    "Odenwald",
+    "Swabian Jura",
+    "Hohenzollern",
+    "Neuschwanstein",
+    "Drachenfels",
+    "Kyffhauser",
+    "Rothaargebirge",
+    "Teutoburg Forest",
+    "Mecklenburg Lake District",
+    "Mueritz",
+    "Frisian Islands",
+    "Wannsee",
+    "Havel",
+    "Oder",
+    "Elbe",
+    "Weser",
+    "Ems",
+    "Danube",
+    "Neckar",
+    "Main",
+    "Isar",
+    "Inn",
+    "Lech"
+  ],
+  towns: [
+    "Bath",
+    "York",
+    "London",
+    "Ely",
+    "Wells",
+    "Bury",
+    "Ripon",
+    "Leeds",
+    "Hull",
+    "Derby",
+    "Rugby",
+    "Reading",
+    "Dover",
+    "Deal",
+    "Hastings",
+    "Rye",
+    "Lewes",
+    "Oxford",
+    "Cambridge",
+    "Norwich",
+    "Lincoln",
+    "Durham",
+    "Carlisle",
+    "Chester",
+    "Exeter",
+    "Truro",
+    "Penzance",
+    "Falmouth",
+    "Newquay",
+    "Padstow",
+    "St Ives",
+    "Plymouth",
+    "Bristol",
+    "Gloucester",
+    "Worcester",
+    "Hereford",
+    "Shrewsbury",
+    "Lichfield",
+    "Coventry",
+    "Warwick",
+    "Stafford",
+    "Nottingham",
+    "Leicester",
+    "Northampton",
+    "Bedford",
+    "Luton",
+    "Ipswich",
+    "Colchester",
+    "Canterbury",
+    "Maidstone",
+    "Brighton",
+    "Portsmouth",
+    "Southampton",
+    "Winchester",
+    "Salisbury",
+    "Swindon",
+    "Newbury",
+    "Henley",
+    "Windsor",
+    "Slough",
+    "Watford",
+    "Harrow",
+    "Croydon",
+    "Sheffield",
+    "Manchester",
+    "Liverpool",
+    "Preston",
+    "Blackpool",
+    "Lancaster",
+    "Kendal",
+    "Keswick",
+    "Whitby",
+    "Scarborough",
+    "Harrogate",
+    "Skipton",
+    "Halifax",
+    "Bradford",
+    "Wakefield",
+    "Doncaster",
+    "Newcastle",
+    "Sunderland",
+    "Edinburgh",
+    "Glasgow",
+    "Aberdeen",
+    "Dundee",
+    "Perth",
+    "Stirling",
+    "Inverness",
+    "Oban",
+    "Fort William",
+    "Ullapool",
+    "Stornoway",
+    "Kirkwall",
+    "Lerwick",
+    "Dublin",
+    "Cork",
+    "Galway",
+    "Limerick",
+    "Waterford",
+    "Belfast",
+    "Derry",
+    "Sligo",
+    "Kilkenny",
+    "Cardiff",
+    "Swansea",
+    "Newport",
+    "Bangor",
+    "Aberystwyth",
+    "Caernarfon",
+    "Conwy",
+    "Llandudno",
+    "Wrexham",
+    "Brecon",
+    "Tenby",
+    "Bergen",
+    "Oslo",
+    "Trondheim",
+    "Stavanger",
+    "Tromso",
+    "Stockholm",
+    "Gothenburg",
+    "Malmo",
+    "Uppsala",
+    "Lund",
+    "Visby",
+    "Copenhagen",
+    "Aarhus",
+    "Odense",
+    "Aalborg",
+    "Roskilde",
+    "Reykjavik",
+    "Akureyri",
+    "Berlin",
+    "Hamburg",
+    "Bremen",
+    "Lubeck",
+    "Kiel",
+    "Rostock",
+    "Cologne",
+    "Bonn",
+    "Koblenz",
+    "Mainz",
+    "Trier",
+    "Dusseldorf",
+    "Frankfurt",
+    "Heidelberg",
+    "Stuttgart",
+    "Ulm",
+    "Munich",
+    "Augsburg",
+    "Nuremberg",
+    "Regensburg",
+    "Passau",
+    "Salzburg",
+    "Innsbruck",
+    "Dresden",
+    "Leipzig",
+    "Erfurt",
+    "Weimar",
+    "Gottingen",
+    "Hanover",
+    "Hildesheim",
+    "Bamberg",
+    "Wurzburg",
+    "Freiburg",
+    "Konstanz",
+    "Lindau",
+    "Hameln",
+    "Goslar",
+    "Quedlinburg",
+    "Meissen",
+    "Bayreuth",
+    "Potsdam",
+    "Stralsund",
+    "Wismar"
+  ],
+  groups: [
+    "Althing",
+    "Ark Royal",
+    "Bank of England",
+    "Beagle",
+    "Belfast",
+    "Benedictines",
+    "Bismarck",
+    "Black and Tans",
+    "Black Watch",
+    "Blue Peter",
+    "Book of Kells",
+    "Bounty",
+    "Boy Scouts",
+    "Britannia",
+    "British Army",
+    "Bundestag",
+    "Carthusians",
+    "Cavaliers",
+    "Chartists",
+    "Cistercians",
+    "City of Truro",
+    "Colada",
+    "Coldstream Guards",
+    "Concorde",
+    "Cutty Sark",
+    "Dail",
+    "Danelaw",
+    "Diggers",
+    "Domesday Book",
+    "Dominicans",
+    "Dreadnought",
+    "Duchy of Bavaria",
+    "Duchy of Cornwall",
+    "Duchy of Normandy",
+    "Duchy of Saxony",
+    "Durendal",
+    "Earldom of Mar",
+    "Earldom of Moray",
+    "Earldom of Orkney",
+    "East India Company",
+    "Electorate of Saxony",
+    "Enola Gay",
+    "Evening Star",
+    "Excalibur",
+    "Fenians",
+    "Flying Scotsman",
+    "Folketing",
+    "Fram",
+    "Franciscans",
+    "Free City of Danzig",
+    "Freemasons",
+    "German Empire",
+    "Gideons",
+    "Girl Guides",
+    "Gokstad",
+    "Golden Hind",
+    "Gorch Fock",
+    "Graf Zeppelin",
+    "Great Britain",
+    "Great Eastern",
+    "Grenadier Guards",
+    "Gungnir",
+    "Hanseatic League",
+    "Hell's Angels",
+    "High Kingdom of Ireland",
+    "Hindenburg",
+    "Holy Roman Empire",
+    "Holyrood",
+    "Honourable Artillery Company",
+    "Hood",
+    "Hospitallers",
+    "Hudson's Bay Company",
+    "Hurricane",
+    "Illuminati",
+    "Irish Guards",
+    "Jacobites",
+    "Janissaries",
+    "Jesuits",
+    "Kalmar Union",
+    "Kingdom of Alba",
+    "Kingdom of Bohemia",
+    "Kingdom of Connacht",
+    "Kingdom of Dalriada",
+    "Kingdom of Denmark",
+    "Kingdom of Dumnonia",
+    "Kingdom of Dyfed",
+    "Kingdom of Gwynedd",
+    "Kingdom of Kernow",
+    "Kingdom of Leinster",
+    "Kingdom of Mercia",
+    "Kingdom of Munster",
+    "Kingdom of Northumbria",
+    "Kingdom of Norway",
+    "Kingdom of Powys",
+    "Kingdom of Prussia",
+    "Kingdom of Scotland",
+    "Kingdom of Strathclyde",
+    "Kingdom of Sweden",
+    "Kingdom of the Isles",
+    "Kingdom of Ulster",
+    "Kingdom of Wessex",
+    "Knights Hospitaller",
+    "Knights of Malta",
+    "Knights Templar",
+    "Kon-Tiki",
+    "Lancaster",
+    "Levant Company",
+    "Levellers",
+    "Lindisfarne Gospels",
+    "Lloyd's of London",
+    "Locomotion",
+    "Long Serpent",
+    "Lordship of the Isles",
+    "Luddites",
+    "Lusitania",
+    "Magna Carta",
+    "Mallard",
+    "Mary Rose",
+    "Mayflower",
+    "Mjolnir",
+    "Muscovy Company",
+    "Orange Order",
+    "Order of Saint Patrick",
+    "Order of the Bath",
+    "Order of the Garter",
+    "Order of the Thistle",
+    "Orient Express",
+    "Oseberg",
+    "Parliament of England",
+    "Parliament of Scotland",
+    "Principality of Wales",
+    "Puffing Billy",
+    "Rainhill",
+    "Red Cross",
+    "Reichstag",
+    "Riksdag",
+    "Rocket",
+    "Rosicrucians",
+    "Roundheads",
+    "Royal Air Force",
+    "Royal Navy",
+    "Royal Society",
+    "Salvation Army",
+    "Santa Maria",
+    "Scots Guards",
+    "Sea Cloud",
+    "Sealed Knot",
+    "Seanad",
+    "Sirius",
+    "Society of Jesus",
+    "Spirit of Ecstasy",
+    "Spitfire",
+    "Storting",
+    "Suffragettes",
+    "Swiss Guard",
+    "Sword of Offa",
+    "Teamsters",
+    "Teutonic Order",
+    "Titanic",
+    "Tizona",
+    "Tornado",
+    "Tynwald",
+    "Vasa",
+    "Victory",
+    "Virginia Company",
+    "Wanderer",
+    "Warrior",
+    "Welsh Assembly",
+    "Welsh Guards",
+    "Westminster",
+    "Worshipful Company of Drapers",
+    "Worshipful Company of Fishmongers",
+    "Worshipful Company of Goldsmiths",
+    "Worshipful Company of Mercers",
+    "Wright Flyer"
+  ]
+};
+
+// src/realPlaces.ts
+var FEATURES = new Set(real_places_default.places.map((n) => n.toLowerCase()));
+var TOWNS = new Set(real_places_default.towns.map((n) => n.toLowerCase()));
+var QUALIFIERS = /* @__PURE__ */ new Set(["the", "north", "south", "east", "west", "northern", "southern", "eastern", "western", "upper", "lower", "inner", "outer", "old", "new", "great", "little", "greater", "lesser", "far", "near"]);
+var isRealPlace = (name) => {
+  const n = name.trim().toLowerCase();
+  return FEATURES.has(n) || TOWNS.has(n);
+};
+function isRealTownName(name) {
+  const words = name.trim().toLowerCase().split(/\s+/);
+  let i = 0;
+  while (i < words.length - 1 && QUALIFIERS.has(words[i])) i++;
+  return TOWNS.has(words.slice(i).join(" "));
+}
+var GROUPS = new Set(real_places_default.groups.map((n) => n.toLowerCase().replace(/^the\s+/, "")));
+var isRealGroup = (name) => GROUPS.has(name.trim().toLowerCase().replace(/^the\s+/, "").replace(/[’]/g, "'"));
+
+// src/north5c.ts
+var NORTH5C = north5c_default;
+var CORE_5C = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
+var CELTIC_NATIONS = ["welsh", "scottish", "irish", "cornish"];
+var CELTIC_5C_WEIGHT = 0.25;
+function contentKey(culture) {
+  if (!culture) return void 0;
+  if (culture === "anglo-saxon" || culture === "norman-british") return "english";
+  return culture === "celtic" || CORE_5C.includes(culture) ? culture : void 0;
+}
+function sources(module2, key2) {
+  const m = NORTH5C.modules[module2];
+  if (!m) return [];
+  const own = m.cultures[key2];
+  if (!own) return [];
+  if (key2 !== "celtic") return [{ content: own, weight: 1 }];
+  return [{ content: own, weight: 1 }, ...CELTIC_NATIONS.map((k) => ({ content: m.cultures[k], weight: CELTIC_5C_WEIGHT }))];
+}
+var pick = (list, rng) => list[Math.min(list.length - 1, Math.floor(rng() * list.length))];
+function pickWeighted2(items, rng) {
+  let total = 0;
+  for (const [, w] of items) total += w;
+  let r = rng() * total;
+  for (const [item2, w] of items) {
+    r -= w;
+    if (r <= 0) return item2;
+  }
+  return items[items.length - 1][0];
+}
+var NOUN_LIMIT2 = 2;
+function signatureDrawer(module2, culture, frameFilter, capitalise2 = true) {
+  const key2 = contentKey(culture);
+  if (!key2) return void 0;
+  const parts = sources(module2, key2).map((p) => ({ ...p, content: { ...p.content, f: frameFilter ? p.content.f.filter(([f]) => frameFilter(f)) : p.content.f } })).filter((p) => p.content.f.length > 0);
+  if (parts.length === 0) return void 0;
+  const used = /* @__PURE__ */ new Map();
+  return (rng) => {
+    var _a8;
+    for (let attempt2 = 0; attempt2 < 12; attempt2++) {
+      const { content } = pickWeighted2(parts.map((p) => [p, p.weight]), rng);
+      const frame = pickWeighted2(content.f, rng);
+      const chosen = [];
+      const text = frame.replace(/\{(N[012]|A)\}/g, (_m, slot) => {
+        const list = slot === "A" ? content.a : content.n[Number(slot[1])];
+        const fresh = list.filter((w) => {
+          var _a9;
+          return ((_a9 = used.get(w)) != null ? _a9 : 0) < NOUN_LIMIT2;
+        });
+        const word = pick(fresh.length ? fresh : list, rng);
+        chosen.push(word);
+        return word;
+      });
+      if (text.length > 60) continue;
+      for (const w of chosen) used.set(w, ((_a8 = used.get(w)) != null ? _a8 : 0) + 1);
+      return capitalise2 ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+    }
+    return void 0;
+  };
+}
+function applySignature(names, module2, culture, seed, opts = {}) {
+  var _a8, _b4;
+  const draw3 = signatureDrawer(module2, culture);
+  if (!draw3 || names.length === 0) return names;
+  const extra = (_a8 = opts.allowed) != null ? _a8 : () => true;
+  const allowed = (text) => !isRealGroup(text) && extra(text);
+  const set = (_b4 = opts.set) != null ? _b4 : (n, text) => ({ ...n, text });
+  const rng = mulberry32((seed ^ 1549556828) >>> 0);
+  const seen = new Set(names.map((n) => n.text.toLowerCase()));
+  return names.map((n) => {
+    var _a9, _b5;
+    if ((_a9 = opts.keep) == null ? void 0 : _a9.call(opts, n)) return n;
+    const nativeAll = !!((_b5 = opts.native) == null ? void 0 : _b5.all) && opts.native.forms.length > 0;
+    if (!nativeAll && rng() >= SIGNATURE_SHARE) return n;
+    const native = opts.native && opts.native.forms.length > 0 && rng() < opts.native.share;
+    for (let attempt2 = 0; attempt2 < 6; attempt2++) {
+      const text = native ? pick(opts.native.forms, rng) : draw3(rng);
+      if (!text || seen.has(text.toLowerCase()) || !allowed(text)) continue;
+      seen.add(text.toLowerCase());
+      return set(n, text);
+    }
+    return n;
+  });
+}
+var nativeForms = (module2, culture) => {
+  var _a8, _b4;
+  return culture ? (_b4 = (_a8 = NORTH5C.native[module2]) == null ? void 0 : _a8[culture]) != null ? _b4 : [] : [];
+};
+var NORTH_5C_CULTURES = [
+  { key: "welsh", label: "Welsh", guide: "" },
+  { key: "scottish", label: "Scottish", guide: "" },
+  { key: "irish", label: "Irish", guide: "" },
+  { key: "cornish", label: "Cornish", guide: "" },
+  { key: "scandinavian", label: "Scandinavian", guide: "" },
+  { key: "german", label: "German", guide: "" }
+];
+var noBracket = (text) => !text.includes("[");
+
 // src/tribes/engine.ts
 var TRIBAL_DATA = tribal_names_default;
 var V = TRIBAL_DATA.vocabulary;
@@ -85334,7 +87125,7 @@ var PERSON_COLLECTIVES = TRIBAL_DATA.personCollectives;
 function findTradition(key2) {
   return TRIBAL_TRADITIONS.find((t) => t.key === key2);
 }
-function pick(items, rng) {
+function pick2(items, rng) {
   const live5 = items.filter(([, w]) => w > 0);
   if (live5.length === 0) return void 0;
   const total = live5.reduce((n, [, w]) => n + w, 0);
@@ -85345,8 +87136,8 @@ function pick(items, rng) {
   }
   return live5[live5.length - 1][0];
 }
-var pickRecord = (weights, rng) => pick(Object.entries(weights), rng);
-var pickPool = (pool3, rng) => pick([...pool3.entries()], rng);
+var pickRecord = (weights, rng) => pick2(Object.entries(weights), rng);
+var pickPool = (pool3, rng) => pick2([...pool3.entries()], rng);
 var pickUniform2 = (items, rng) => items[Math.floor(rng() * items.length)];
 var add = (pool3, word, weight) => {
   var _a8;
@@ -85409,7 +87200,7 @@ function featureWord(ctx, kind) {
   if (pinned) return pinned;
   const k = kind === "any" ? ctx.rng() < 0.5 ? "land" : "water" : kind;
   const terrains = Object.keys(ctx.terrainWeights).map((t) => [t, landPool(ctx, k, t).size > 0 ? ctx.terrainWeights[t] : 0]);
-  const terrain = pick(terrains, ctx.rng);
+  const terrain = pick2(terrains, ctx.rng);
   if (!terrain) return kind === "any" ? featureWord(ctx, k === "land" ? "water" : "land") : void 0;
   ctx.terrain = terrain;
   return pickPool(landPool(ctx, k, terrain), ctx.rng);
@@ -85523,7 +87314,7 @@ function dressPool(ctx) {
 }
 function numberWord(ctx) {
   const preferred = new Set(ctx.trad.numbers);
-  return pick(V.numbers.map((n) => [n, preferred.has(n) ? 3 : 0.3]), ctx.rng);
+  return pick2(V.numbers.map((n) => [n, preferred.has(n) ? 3 : 0.3]), ctx.rng);
 }
 function countedOk(ctx, noun) {
   var _a8, _b4;
@@ -85790,11 +87581,11 @@ function templateJ(ctx, parts) {
   var _a8;
   const n = parts.number = numberWord(ctx);
   if (((_a8 = ctx.opts.constraints) == null ? void 0 : _a8.jFirstFormOnly) || ctx.rng() < 0.5) {
-    const noun2 = pick(V.countedNouns.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
+    const noun2 = pick2(V.countedNouns.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
     if (!noun2) return void 0;
     return `${n} ${noun2}`;
   }
-  const noun = pick(V.countedFeatures.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
+  const noun = pick2(V.countedFeatures.map((w) => [w, countedOk(ctx, w)]), ctx.rng);
   const c = collective(ctx);
   if (!noun || !c) return void 0;
   parts.collective = c;
@@ -86058,7 +87849,7 @@ function interpretationFor(ctx, template) {
     return [text, w];
   });
   if (template === "R" && special.migrationGuide) items.push(["guide on the long migration", special.migrationGuide]);
-  return pick(items, ctx.rng);
+  return pick2(items, ctx.rng);
 }
 function sentence(text, fills) {
   return text.replace(/\{(\w+)\}/g, (_, k) => {
@@ -86307,6 +88098,14 @@ function alternativeNames(ctx, a) {
   return { names, other };
 }
 function generateTribalNames(options) {
+  var _a8;
+  const batch = generateTribalNamesCore(options);
+  if (options.signature === false || options.constraints || options.biome && options.biome !== "homeland" || options.biomeData) return batch;
+  const tradition = (_a8 = findTradition(options.tradition)) == null ? void 0 : _a8.key;
+  if (!tradition || tradition === "germanic" || !contentKey(tradition)) return batch;
+  return { ...batch, names: applySignature(batch.names.map((n) => ({ ...n, text: n.name })), "tribalNames", tradition, batch.seed).map((n) => n.text === n.name ? (({ text: _t, ...rest }) => rest)(n) : { ...(({ text: _t, ...rest }) => rest)(n), name: n.text, inText: inTextOf(n.text) }) };
+}
+function generateTribalNamesCore(options) {
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const count = Math.max(0, Math.floor(options.count));
@@ -86356,8 +88155,57 @@ function tribalDetailsLine(name) {
   const biome = findBiome(name.biome);
   return `${short} \xB7 ${persp} \xB7 ${biome.label}${name.biomeMode === "homeland" ? " (homeland)" : ""}`;
 }
+var CULTURE_TRADITION = {
+  general: "general",
+  "norman-british": "english",
+  "anglo-saxon": "english",
+  english: "english",
+  welsh: "welsh",
+  scottish: "scottish",
+  irish: "irish",
+  cornish: "cornish",
+  celtic: "celtic",
+  norse: "norse",
+  scandinavian: "scandinavian",
+  german: "german",
+  dutch: "germanic",
+  roman: "mediterranean",
+  "greek-byzantine": "mediterranean",
+  italian: "mediterranean",
+  hellenistic: "mediterranean",
+  steppe: "steppe",
+  "arabic-persian": "arabian",
+  ottoman: "arabian",
+  bantu: "bantu",
+  "west-african": "westAfrican",
+  indian: "southAsian",
+  chinese: "eastAsian",
+  japanese: "eastAsian",
+  korean: "eastAsian",
+  aztec: "mesoamerican",
+  maya: "mesoamerican",
+  andean: "andean",
+  polynesian: "polynesian",
+  hawaiian: "polynesian",
+  maori: "polynesian",
+  "w-polynesian": "polynesian",
+  "na-woodlands": "northAmerican",
+  northAmerican: "northAmerican",
+  "nw-coast": "northernPacific",
+  arctic: "northernPacific",
+  northernPacific: "northernPacific",
+  malay: "maritimeSEA",
+  maritimeSEA: "maritimeSEA",
+  sahul: "sahul"
+};
+var traditionOfCulture = (culture) => {
+  var _a8;
+  return (_a8 = CULTURE_TRADITION[culture]) != null ? _a8 : findTradition(culture) ? culture : "general";
+};
 function traditionForCulture(culture) {
   var _a8, _b4, _c4;
+  const own = contentKey(culture);
+  if (own && own !== "celtic" && findTradition(own)) return own;
   let best = "general";
   let bestWeight = 0;
   for (const t of TRIBAL_TRADITIONS) {
@@ -86383,7 +88231,8 @@ registerResolver("folk", (req) => {
   let shortest;
   try {
     for (let attempt2 = 0; attempt2 < 24; attempt2++) {
-      const name = (_a8 = generateTribalNames({ tradition, ...biome ? { biome } : {}, count: 1, seed: drawSeed(req.rng) }).names[0]) == null ? void 0 : _a8.name;
+      let name = (_a8 = generateTribalNames({ tradition, ...biome ? { biome } : {}, count: 1, seed: drawSeed(req.rng) }).names[0]) == null ? void 0 : _a8.name;
+      if (name !== void 0 && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(tradition)) name = name.replace(/^The /, "");
       if (name === void 0) return void 0;
       if (FOLK_WORDS(name) <= 2) return onePeople(name);
       if (shortest === void 0 || FOLK_WORDS(name) < FOLK_WORDS(shortest)) shortest = name;
@@ -86478,7 +88327,7 @@ var RIVER_SETTINGS = [
 ];
 var RIVER_DATA = river_names_default;
 var REAL_NAMES = new Set(Object.values(RIVER_DATA.corpora).flat().map((n) => n.toLowerCase()));
-function pickWeighted2(weights, rng) {
+function pickWeighted3(weights, rng) {
   const items = Object.entries(weights).filter(([, w]) => w > 0);
   const total = items.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
@@ -86527,7 +88376,7 @@ function ancientName(options, rng) {
 }
 function ancientForm(name, region, rng) {
   const { scottishRegions, scottish, other } = RIVER_DATA.forms.ancient;
-  const form = pickWeighted2(region && scottishRegions.includes(region) ? scottish : other, rng);
+  const form = pickWeighted3(region && scottishRegions.includes(region) ? scottish : other, rng);
   if (form === "river-x") return { text: `River ${name}`, form };
   if (form === "x-water") return { text: `${name} Water`, form };
   if (form === "water-of-x") return { text: `Water of ${name}`, form };
@@ -86541,21 +88390,21 @@ function descriptiveName(options, rng, bare7) {
   const british = options.setting === "british";
   const biome = colonialBiome(options);
   const categories = RIVER_DATA.descriptiveCategories[british ? "british" : biome ? "colonialWithBiome" : "colonial"];
-  const category = pickWeighted2(categories, rng);
+  const category = pickWeighted3(categories, rng);
   const native = biome ? biomeEntries(biome, category) : void 0;
   const entry = native ? pickWeightedPair(native, rng) : pickUniform3(NAME_WORDS.categories[category], rng);
   const word = entry.modern;
-  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  const water = pickWeighted3(waterWordWeights(options.setting, options.region), rng);
   if (british) {
     const joined = entry.fuses === "yes" ? smoothJoin(word, water) : null;
     const fuses = joined !== null && letterCount2(joined) <= NAMES.maxFusedLetters && rng() < RIVER_DATA.britishFuseChance;
     const name = fuses ? titleCase2(joined.toLowerCase()) : titleCase2(`${word} ${water}`);
     if (bare7) return { text: name, water, form: "bare" };
-    const form2 = pickWeighted2(RIVER_DATA.forms.britishDescriptive, rng);
+    const form2 = pickWeighted3(RIVER_DATA.forms.britishDescriptive, rng);
     return { text: form2 === "river-x" && (!options.sourced || water === "river") ? `River ${name}` : name, water, form: form2 };
   }
   if (bare7) return water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
-  const form = pickWeighted2(RIVER_DATA.forms.colonialDescriptive, rng);
+  const form = pickWeighted3(RIVER_DATA.forms.colonialDescriptive, rng);
   return form === "bare" && water === "river" ? { text: titleCase2(word), water, form: "bare" } : { text: titleCase2(`${word} ${water}`), water, form: "x-water" };
 }
 var NATIVE_PLACEHOLDERS = {
@@ -86568,7 +88417,7 @@ var NATIVE_PLACEHOLDERS = {
 function patternName(options, rng) {
   const all = RIVER_DATA.patterns[options.setting];
   const items = options.noNative ? all.filter((p) => !/\[(native|tribal name)/.test(p.pattern)) : all;
-  const picked = pickWeighted2(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
+  const picked = pickWeighted3(Object.fromEntries(items.map((p) => [p.pattern, p.weight])), rng);
   const pattern = options.peoples === "tribal" ? picked.replace(/\[(tribal name|native people)\]/g, () => {
     var _a8;
     const british = options.setting === "british";
@@ -86583,11 +88432,11 @@ function patternName(options, rng) {
     return entries ? titleCase2(pickWeightedPair(entries, rng).modern) : slot;
   }) : pattern;
   if (!filled.includes("{water}")) return { text: filled, form: picked };
-  const water = pickWeighted2(waterWordWeights(options.setting, options.region), rng);
+  const water = pickWeighted3(waterWordWeights(options.setting, options.region), rng);
   return { text: filled.replace("{water}", titleCase2(water)), water, form: picked };
 }
 function riverName(options, rng) {
-  const kind = pickWeighted2(RIVER_DATA.kindWeights[options.setting], rng);
+  const kind = pickWeighted3(RIVER_DATA.kindWeights[options.setting], rng);
   if (kind === "pattern") {
     const built = patternName(options, rng);
     return { ...built, hasPlaceholder: /\[[^\]]+\]/.test(built.text), kind };
@@ -86600,7 +88449,7 @@ function riverName(options, rng) {
 }
 function riverFill(options, rng) {
   const { pattern: _pattern, ...weights } = RIVER_DATA.kindWeights[options.setting];
-  const kind = pickWeighted2(weights, rng);
+  const kind = pickWeighted3(weights, rng);
   if (kind === "ancient") {
     const name = ancientName(options, rng);
     if (name) return name;
@@ -86760,7 +88609,7 @@ var placeholderText = (categoryId) => {
   var _a8, _b4;
   return `[${(_b4 = (_a8 = RENDER_LABELS[categoryId]) != null ? _a8 : categoryLabels.get(categoryId)) != null ? _b4 : categoryId}]`;
 };
-function pickWeighted3(items, rng) {
+function pickWeighted4(items, rng) {
   const total = items.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
   for (const [item2, w] of items) {
@@ -86771,7 +88620,7 @@ function pickWeighted3(items, rng) {
 }
 var pickUniform4 = (items, rng) => items[Math.floor(rng() * items.length)];
 function pickItem(items, rng) {
-  return items.every((i) => i.weight === items[0].weight) ? pickUniform4(items, rng) : pickWeighted3(items.map((i) => [i, i.weight]), rng);
+  return items.every((i) => i.weight === items[0].weight) ? pickUniform4(items, rng) : pickWeighted4(items.map((i) => [i, i.weight]), rng);
 }
 function fillWord(fill) {
   if (fill.kind === "placeholder") return fill.label;
@@ -86907,7 +88756,7 @@ var NameRenderer = class {
       case "crop":
       case "produce": {
         const crops = biome.crops;
-        return crops.length > 0 ? word(spaceWord(pickWeighted3(crops, rng))) : void 0;
+        return crops.length > 0 ? word(spaceWord(pickWeighted4(crops, rng))) : void 0;
       }
     }
     return void 0;
@@ -86931,14 +88780,14 @@ var NameRenderer = class {
       let t = terrain;
       if (!t) {
         const weights = Object.entries(terrainWeights(biome, "any")).filter(([id, w]) => w > 0 && shortWords(biome, kind, id).length > 0);
-        t = pickWeighted3(weights, rng);
+        t = pickWeighted4(weights, rng);
       }
       let entries2 = shortWords(biome, kind, t);
       if (entries2.length === 0) {
         this.notices.add(`\u201C${t}\u201D has no short ${kind} words; using the plains.`);
         entries2 = shortWords(biome, kind, "plains");
       }
-      return entries2.length > 0 ? word(pickWeighted3(entries2, rng)) : void 0;
+      return entries2.length > 0 ? word(pickWeighted4(entries2, rng)) : void 0;
     }
     if (!LAND_BIOME_SLOTS.has(categoryId)) return void 0;
     if (this.colonial && (categoryId === "domestic-animal" || categoryId === "crop") && !chosenBiome) return void 0;
@@ -86954,11 +88803,11 @@ var NameRenderer = class {
     var _a8, _b4;
     const draws = (_b4 = (_a8 = biome.packDraws) == null ? void 0 : _a8[SLOT_LISTS[categoryId]]) != null ? _b4 : [];
     const asWord = (entry) => ({ kind: "word", entry, traditional: register ? this.chooseRegister(entry, rng) : false });
-    if (draws.length === 0) return asWord(pickWeighted3(entries, rng));
-    const choice = pickWeighted3([...entries.map(([entry, w]) => [{ entry }, w]), ...draws.map((d) => [{ draw: d.draw }, d.weight])], rng);
+    if (draws.length === 0) return asWord(pickWeighted4(entries, rng));
+    const choice = pickWeighted4([...entries.map(([entry, w]) => [{ entry }, w]), ...draws.map((d) => [{ draw: d.draw }, d.weight])], rng);
     if ("entry" in choice) return asWord(choice.entry);
     const text = choice.draw(rng);
-    return text ? { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false } : asWord(pickWeighted3(entries, rng));
+    return text ? { kind: "word", entry: { modern: text, forms: [], fuses: "no" }, traditional: false } : asWord(pickWeighted4(entries, rng));
   }
   /** Tribal brief §20.2: a short tribal name on the fill stream, as riverWordFill. */
   tribalWordFill(slot, rng) {
@@ -87031,7 +88880,7 @@ var NameRenderer = class {
     }
     if (slot.kind === "placeholder" || slot.kind === "ignore") return this.placeholder(categoryId);
     if (slot.kind === "built-in" || slot.kind === "biome") return wordFill(NAME_WORDS.categories[categoryId]);
-    const source = pickWeighted3(slot.sources.map((s) => [s, s.weight]), rng);
+    const source = pickWeighted4(slot.sources.map((s) => [s, s.weight]), rng);
     if (source.items) return this.itemFill(source, slot, categoryId, rng, whole, entryFill);
     if (source.entries) return wordFill(source.entries);
     if (!source.draw) return this.placeholder(categoryId);
@@ -87116,9 +88965,9 @@ var NameRenderer = class {
       var _a8;
       return s.entries ? s.entries.map((entry) => ({ weight: 1, entry })) : ((_a8 = s.items) != null ? _a8 : []).filter((i) => i.entry);
     };
-    const sources = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => wordsOf(s).length > 0) : [];
-    if (sources.length === 0) return placeholderText(genericId);
-    const source = pickWeighted3(sources.map((s) => [s, s.weight]), rng);
+    const sources2 = (slot == null ? void 0 : slot.kind) === "sources" ? slot.sources.filter((s) => wordsOf(s).length > 0) : [];
+    if (sources2.length === 0) return placeholderText(genericId);
+    const source = pickWeighted4(sources2.map((s) => [s, s.weight]), rng);
     return pickItem(wordsOf(source), rng).entry.modern;
   }
   fusionClass(word, genericId) {
@@ -87223,7 +89072,7 @@ var NameRenderer = class {
         ];
       }).filter(([a, w]) => a.forms.length > 0 && w > 0);
       if (options.length === 0) return void 0;
-      const type = pickWeighted3(options, rng);
+      const type = pickWeighted4(options, rng);
       typeId = type.id;
       form = pickUniform4(type.forms, rng);
     }
@@ -87548,20 +89397,20 @@ function readSlot(v, problems, id) {
     return { kind: "tribal", tradition, ...readTribalFields(v, problems, id) };
   }
   const raw = Array.isArray(v.sources) ? v.sources : [];
-  const sources = [];
+  const sources2 = [];
   for (const item2 of raw) {
     if (!isObject(item2)) continue;
     const pack = linkTarget(item2.pack);
     const list = linkTarget(item2.list);
     if (!pack && !list) continue;
     const weight = Number(item2.weight);
-    sources.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
+    sources2.push({ ...pack ? { pack } : {}, ...list ? { list } : {}, weight: Number.isFinite(weight) && weight > 0 ? weight : 1 });
   }
-  if (sources.length === 0) {
+  if (sources2.length === 0) {
     problems.push(`Slot \u201C${id}\u201D has no usable sources.`);
     return void 0;
   }
-  const slot = { kind: "sources", sources };
+  const slot = { kind: "sources", sources: sources2 };
   if (v.mode === "stem" || v.mode === "whole") slot.mode = v.mode;
   if (isObject(v.gender)) {
     const male = Number(v.gender.male);
@@ -96730,7 +98579,7 @@ function generatedName(culture, period, list, rng, avoid = /* @__PURE__ */ new S
 
 // src/fill/people.ts
 var SLOTS = PERSON_SLOT_FORMS;
-function pickWeighted4(items, weights, rng) {
+function pickWeighted5(items, weights, rng) {
   const total = weights.reduce((s, w) => s + w, 0);
   let roll = rng() * total;
   for (let i = 0; i < items.length; i++) {
@@ -96739,11 +98588,11 @@ function pickWeighted4(items, weights, rng) {
   }
   return items[items.length - 1];
 }
-var pickForm = (forms, rng) => pickWeighted4(forms.map((f) => f[0]), forms.map((f) => f[1]), rng);
+var pickForm = (forms, rng) => pickWeighted5(forms.map((f) => f[0]), forms.map((f) => f[1]), rng);
 function draw(list, era, rng, avoid) {
   const free = avoid.size > 0 ? list.filter((e) => !avoid.has(e[0])) : list;
   const from = free.length > 0 ? free : list;
-  return pickWeighted4(from, eraWeights(from, era), rng)[0];
+  return pickWeighted5(from, eraWeights(from, era), rng)[0];
 }
 var ROYAL = /king|queen|prince|emperor|empress|pharaoh|khan|sultan|shah|caliph|tsar|inca|sovereign|chief$/i;
 function officialTitle(culture, female, rng) {
@@ -96755,7 +98604,7 @@ function officialTitle(culture, female, rng) {
     return { word: (_b5 = r.w) != null ? _b5 : female ? (_a9 = r.f) != null ? _a9 : r.m : r.m, x: (_c4 = r.x) != null ? _c4 : 1 };
   }).filter((r) => !!r.word && !ROYAL.test(r.word));
   if (options.length === 0) return void 0;
-  return pickWeighted4(options.map((o) => o.word), options.map((o) => o.x), rng);
+  return pickWeighted5(options.map((o) => o.word), options.map((o) => o.x), rng);
 }
 var _a3;
 var blockedNames = new Set(((_a3 = people_default.blocked) != null ? _a3 : []).map((n) => n.toLowerCase()));
@@ -96864,7 +98713,7 @@ var oldPersonResolver = (req) => {
   var _a8, _b4, _c4;
   const byCulture = OLD_NAMES.cultures[req.culture];
   const weights = (_c4 = (_b4 = (_a8 = req.culture === "celtic" && req.region ? OLD_NAMES.regions[req.region] : void 0) != null ? _a8 : byCulture) != null ? _b4 : req.region ? OLD_NAMES.regions[req.region] : void 0) != null ? _c4 : OLD_NAMES.default;
-  const culture = pickWeighted4(weights.map((w) => w[0]), weights.map((w) => w[1]), req.rng);
+  const culture = pickWeighted5(weights.map((w) => w[0]), weights.map((w) => w[1]), req.rng);
   const c = context({ ...req, culture, era: "MD", period: "historic", region: void 0 });
   if (!c) return void 0;
   return given({ ...c, req: { ...c.req, avoid: /* @__PURE__ */ new Set([...c.req.avoid, ...featureWordSet()]) } }, "male");
@@ -98541,7 +100390,7 @@ function findEra(culture, eraId) {
   return (_a8 = culture.eras.find((e) => e.id === eraId)) != null ? _a8 : culture.eras[0];
 }
 var pickUniform5 = (items, rng) => items[Math.floor(rng() * items.length)];
-function pickWeighted5(entries, rng) {
+function pickWeighted6(entries, rng) {
   const live5 = entries.filter(([, w]) => w > 0);
   const total = live5.reduce((n, [, w]) => n + w, 0);
   let r = rng() * total;
@@ -98655,12 +100504,12 @@ var WorldRenderer = class {
     let fusable = true;
     switch (token17.key) {
       case "land": {
-        const terrain = (_a8 = state.terrain) != null ? _a8 : pickWeighted5(
+        const terrain = (_a8 = state.terrain) != null ? _a8 : pickWeighted6(
           Object.entries(terrainWeights(biome, "any")).filter(([t, w]) => w > 0 && shortWords(biome, "land", t).length > 0),
           rng
         );
         const words = shortWords(biome, "land", terrain);
-        word = biomeTitleCase(pickWeighted5(words.map(([e, w]) => [e.modern, w]), rng).toLowerCase());
+        word = biomeTitleCase(pickWeighted6(words.map(([e, w]) => [e.modern, w]), rng).toLowerCase());
         break;
       }
       case "region": {
@@ -98668,7 +100517,7 @@ var WorldRenderer = class {
           group_names_default.lists.spaceLand.filter((e) => (!e.s || e.s.includes("SF")) && !e.w.includes(" ")),
           scale
         );
-        word = pickWeighted5(entries.map((e) => {
+        word = pickWeighted6(entries.map((e) => {
           var _a9;
           return [e.w, (_a9 = e.x) != null ? _a9 : 1];
         }), rng);
@@ -98677,7 +100526,7 @@ var WorldRenderer = class {
       case "hab": {
         const gate = SPACE_DATA.worldHabGate;
         const words = [...SPACE_DATA.worldHab, ...scale === "Pl" || scale === "Sy" ? [] : [gate]];
-        word = pickWeighted5(words, rng);
+        word = pickWeighted6(words, rng);
         break;
       }
       case "resource":
@@ -98727,23 +100576,23 @@ var WorldRenderer = class {
     var _a8;
     const s = this.swaps.get(key2);
     if (!s) return void 0;
-    const pick4 = pickWeighted5([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
-    if (pick4 !== null) return pick4;
-    const sources = Object.entries(s.swap.replacedBy).filter(([k]) => k !== "terrain");
-    const source = sources.length === 1 ? sources[0][0] : pickWeighted5(sources, rng);
+    const pick5 = pickWeighted6([...s.kept.map((e) => [e, 1]), [null, s.slotWeight]], rng);
+    if (pick5 !== null) return pick5;
+    const sources2 = Object.entries(s.swap.replacedBy).filter(([k]) => k !== "terrain");
+    const source = sources2.length === 1 ? sources2[0][0] : pickWeighted6(sources2, rng);
     if (source === "shortLand" || source === "shortWater") {
       const kind = source === "shortLand" ? "land" : "water";
       const fixed = (_a8 = s.swap.replacedBy.terrain) != null ? _a8 : this.options.terrain && this.options.terrain !== "any" ? this.options.terrain : void 0;
-      const terrain = fixed != null ? fixed : pickWeighted5(
+      const terrain = fixed != null ? fixed : pickWeighted6(
         Object.entries(terrainWeights(s.biome, "any")).filter(([t, w]) => w > 0 && shortWords(s.biome, kind, t).length > 0),
         rng
       );
       let words2 = shortWords(s.biome, kind, terrain);
       if (words2.length === 0) words2 = shortWords(s.biome, kind, "plains");
-      return biomeListEntry(pickWeighted5(words2.map(([e, w]) => [e.modern, w]), rng));
+      return biomeListEntry(pickWeighted6(words2.map(([e, w]) => [e.modern, w]), rng));
     }
     const words = biomeWords(s.biome, source);
-    return biomeListEntry(pickWeighted5(words, rng));
+    return biomeListEntry(pickWeighted6(words, rng));
   }
   getNotices() {
     return [...this.notices];
@@ -98753,7 +100602,7 @@ var WorldRenderer = class {
     var _a8;
     this.space = this.interstellar ? this.drawSpace(rng) : void 0;
     const scale = (_a8 = this.space) == null ? void 0 : _a8.scale;
-    const template = pickWeighted5(this.templates, rng);
+    const template = pickWeighted6(this.templates, rng);
     const piece = this.render(template, rng, 0);
     const text = piece.text.charAt(0).toUpperCase() + piece.text.slice(1);
     return { text, etymology: piece.etym, template, ...scale ? { scale } : {} };
@@ -99081,7 +100930,7 @@ function breaksGroupColourRule(text) {
   const words = text.split(/\s+/);
   return words.some((w, i) => i < words.length - 1 && COLOUR_WORDS.has(w) && PERSON_NOUNS.has(words[i + 1]));
 }
-var pickWeighted6 = (items, rng) => {
+var pickWeighted7 = (items, rng) => {
   const total = items.reduce((n, [, w]) => n + w, 0);
   if (total <= 0) return void 0;
   let r = rng() * total;
@@ -99107,14 +100956,14 @@ function pool(ctx, name, type, filter) {
   const S = ctx.setting;
   const trad = ctx.vocab;
   const weights = /* @__PURE__ */ new Map();
-  const sources = S === "SF" && (name === "coastWord" || name === "seaWord") ? [name, "spaceLand"] : [name];
+  const sources2 = S === "SF" && (name === "coastWord" || name === "seaWord") ? [name, "spaceLand"] : [name];
   const toneList = /* @__PURE__ */ new Map();
   const add2 = (word, w) => {
     var _a9;
     return weights.set(word, ((_a9 = weights.get(word)) != null ? _a9 : 0) + w);
   };
   for (const scaled of ctx.scale === "any" ? [false] : [true, false]) {
-    for (const src of sources) {
+    for (const src of sources2) {
       for (const e of (_b4 = GROUP_DATA.lists[src]) != null ? _b4 : []) {
         if (e.s && !e.s.includes(S)) continue;
         if (e.types && !e.types.includes(type.key)) continue;
@@ -99174,10 +101023,10 @@ function pool(ctx, name, type, filter) {
   return out;
 }
 var CONTEXT_LISTS = { tradesmen: "trades", goods: "goods" };
-function pick2(ctx, name, type, filter) {
+function pick3(ctx, name, type, filter) {
   const which = ctx.context && CONTEXT_LISTS[name];
   const items = which ? boostContext(pool(ctx, name, type, filter), ctx.context[which], (w2) => w2) : pool(ctx, name, type, filter);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
   return w;
 }
@@ -99185,14 +101034,14 @@ function compositeWord(ctx, name, type) {
   const parts = GROUP_DATA.composites[name];
   if (name === "creature") {
     const merged2 = parts.flatMap(([sub2]) => pool(ctx, sub2, type));
-    const w = pickWeighted6(merged2, ctx.rng);
+    const w = pickWeighted7(merged2, ctx.rng);
     const from = parts.find(([sub2]) => w !== void 0 && pool(ctx, sub2, type).some(([x]) => x === w));
     if (w !== void 0 && from) for (const t of wordTones(from[0], w)) ctx.drawn.add(t);
     return w;
   }
   const live5 = parts.filter(([sub2]) => pool(ctx, sub2, type).length > 0);
-  const sub = pickWeighted6(live5, ctx.rng);
-  return sub ? pick2(ctx, sub, type) : void 0;
+  const sub = pickWeighted7(live5, ctx.rng);
+  return sub ? pick3(ctx, sub, type) : void 0;
 }
 var townPools = /* @__PURE__ */ new WeakMap();
 function townPool(key2, catalogue = BUILT_IN_BIOMES) {
@@ -99250,7 +101099,7 @@ function token(ctx, name, type, shape) {
   const placeholders = ctx.mode === "placeholders";
   const word = (list) => {
     var _a9;
-    const w = pick2(ctx, list, type, (_a9 = shape == null ? void 0 : shape.filter) == null ? void 0 : _a9[list]);
+    const w = pick3(ctx, list, type, (_a9 = shape == null ? void 0 : shape.filter) == null ? void 0 : _a9[list]);
     return w === void 0 ? void 0 : { text: w, plural: PLURAL_LISTS.has(list) };
   };
   switch (name) {
@@ -99264,8 +101113,8 @@ function token(ctx, name, type, shape) {
       }
       if (placeholders) return { text: "[holy person]", plural: false };
       const saints = GROUP_DATA.people.saintTraditions.includes((_d3 = (_c4 = ctx.people) == null ? void 0 : _c4.key) != null ? _d3 : "general");
-      if (!saints) return { text: `the ${pick2(ctx, "holyTitle", type)}`, plural: false };
-      const saint = pick2(ctx, "saintName", type);
+      if (!saints) return { text: `the ${pick3(ctx, "holyTitle", type)}`, plural: false };
+      const saint = pick3(ctx, "saintName", type);
       return { text: S === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`, plural: false };
     }
     case "deity": {
@@ -99284,18 +101133,18 @@ function token(ctx, name, type, shape) {
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
-      return { text: ordinalText(pickWeighted6(choices, rng)), plural: false };
+      return { text: ordinalText(pickWeighted7(choices, rng)), plural: false };
     }
     case "land": {
       if (S === "SF") {
-        const w2 = pick2(ctx, "spaceLand", type);
+        const w2 = pick3(ctx, "spaceLand", type);
         return { text: rng() < 0.3 ? spacePrefixed(ctx, type, w2) : w2, plural: false };
       }
-      const w = pick2(ctx, "land", type);
+      const w = pick3(ctx, "land", type);
       if (!w) return void 0;
       const holds = w.includes(" ") || GROUP_DATA.lists.land.some((e) => e.w === w && e.noPrefix);
       if (!holds && rng() < 0.3) {
-        const prefix = rng() < 0.5 ? pick2(ctx, "landPrefix", type) : pick2(ctx, "colour", type);
+        const prefix = rng() < 0.5 ? pick3(ctx, "landPrefix", type) : pick3(ctx, "colour", type);
         return { text: `${prefix} ${w}`, plural: false };
       }
       return { text: w, plural: false };
@@ -99303,12 +101152,12 @@ function token(ctx, name, type, shape) {
     case "street":
       if (S === "SF") {
         const n = (max) => 1 + Math.floor(rng() * max);
-        const forms = [() => `Deck ${n(40)}`, () => `Ring ${pick2(ctx, "greek", type)}`, () => `Level ${n(99)}`, () => `Sector ${n(20)}`];
+        const forms = [() => `Deck ${n(40)}`, () => `Ring ${pick3(ctx, "greek", type)}`, () => `Level ${n(99)}`, () => `Sector ${n(20)}`];
         return { text: pickOne(forms, rng)(), plural: false };
       }
-      return { text: `${pick2(ctx, "streetFirst", type)} ${pick2(ctx, "streetLast", type)}`, plural: false };
+      return { text: `${pick3(ctx, "streetFirst", type)} ${pick3(ctx, "streetLast", type)}`, plural: false };
     case "nickname": {
-      const shapeChoice = pickWeighted6(GROUP_DATA.nickname.map((n) => [n.p, n.w]), rng);
+      const shapeChoice = pickWeighted7(GROUP_DATA.nickname.map((n) => [n.p, n.w]), rng);
       const text = renderPattern(ctx, shapeChoice, type);
       return text ? { text, plural: true } : void 0;
     }
@@ -99319,21 +101168,21 @@ function token(ctx, name, type, shape) {
     case "starNumber":
       return { text: String(1 + Math.floor(rng() * 12)), plural: false };
     case "spaceLandPrefixed":
-      return { text: spacePrefixed(ctx, type, pick2(ctx, "spaceLand", type)), plural: false };
+      return { text: spacePrefixed(ctx, type, pick3(ctx, "spaceLand", type)), plural: false };
     case "britishPlace":
       return { text: pickOne(townPool("britain", ctx.catalogue), rng), plural: false };
     case "flavourAnimal": {
       const animals = (_j = ctx.vocab) == null ? void 0 : _j.flavour.animals;
       if (animals && animals.length > 0) return { text: pickOne(animals, rng), plural: false };
       const merged2 = [...pool(ctx, "beast", type), ...pool(ctx, "bird", type)];
-      return { text: pickWeighted6(merged2, rng), plural: false };
+      return { text: pickWeighted7(merged2, rng), plural: false };
     }
     case "personTitle":
       return word(ctx.family.key === "supernatural" ? "supernaturalTitle" : "personTitle");
     case "initials":
       return initialsToken(ctx, type);
     case "spaceLand": {
-      const w = pick2(ctx, "spaceLand", type, (_k = shape == null ? void 0 : shape.filter) == null ? void 0 : _k.spaceLand);
+      const w = pick3(ctx, "spaceLand", type, (_k = shape == null ? void 0 : shape.filter) == null ? void 0 : _k.spaceLand);
       if (w === void 0) return void 0;
       return { text: rng() < 0.3 ? spacePrefixed(ctx, type, w) : w, plural: false };
     }
@@ -99341,7 +101190,7 @@ function token(ctx, name, type, shape) {
   const patterns = GROUP_DATA.patterns[name];
   if (patterns) {
     const live5 = patterns.filter((p) => !p.s || p.s.includes(S)).map((p) => [p.p, p.w]);
-    const pattern = pickWeighted6(live5, rng);
+    const pattern = pickWeighted7(live5, rng);
     const text = pattern === void 0 ? void 0 : renderPattern(ctx, pattern, type, shape);
     return text === void 0 ? void 0 : { text, plural: false };
   }
@@ -99354,7 +101203,7 @@ function token(ctx, name, type, shape) {
 }
 function spacePrefixed(ctx, type, word) {
   for (let i = 0; i < 5; i++) {
-    const prefix = pick2(ctx, "spacePrefix", type);
+    const prefix = pick3(ctx, "spacePrefix", type);
     if (prefix && prefix.toLowerCase() !== word.toLowerCase()) return `${prefix} ${word}`;
   }
   return word;
@@ -99362,7 +101211,7 @@ function spacePrefixed(ctx, type, word) {
 function drawGroupStar(ctx, type) {
   const proper = () => {
     var _a8;
-    return (_a8 = pick2(ctx, "star", type)) != null ? _a8 : "Vega";
+    return (_a8 = pick3(ctx, "star", type)) != null ? _a8 : "Vega";
   };
   const person3 = () => {
     if (ctx.mode === "placeholders") return `[${type.person}]`;
@@ -99373,22 +101222,22 @@ function drawGroupStar(ctx, type) {
 function holyText(ctx, type, placeholders) {
   var _a8, _b4;
   if (placeholders) return "[holy person]";
-  if (!GROUP_DATA.people.saintTraditions.includes((_b4 = (_a8 = ctx.people) == null ? void 0 : _a8.key) != null ? _b4 : "general")) return `the ${pick2(ctx, "holyTitle", type)}`;
-  const saint = pick2(ctx, "saintName", type);
+  if (!GROUP_DATA.people.saintTraditions.includes((_b4 = (_a8 = ctx.people) == null ? void 0 : _a8.key) != null ? _b4 : "general")) return `the ${pick3(ctx, "holyTitle", type)}`;
+  const saint = pick3(ctx, "saintName", type);
   return ctx.setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
 }
 function inventedPerson(ctx, type) {
   var _a8, _b4;
   const surnames = GROUP_DATA.people.surnameTraditions.includes((_b4 = (_a8 = ctx.people) == null ? void 0 : _a8.key) != null ? _b4 : "general");
   const shapes = surnames ? GROUP_DATA.people.person : GROUP_DATA.people.personOther;
-  const pattern = pickWeighted6(shapes.map((s) => [s.p, s.w]), ctx.rng);
+  const pattern = pickWeighted7(shapes.map((s) => [s.p, s.w]), ctx.rng);
   return renderPattern(ctx, pattern, type);
 }
 function inventedTown(ctx, type) {
   var _a8, _b4, _c4;
   const rng = ctx.rng;
   if (ctx.setting === "SF") {
-    const pattern = pickWeighted6(GROUP_DATA.people.sfTown.map((s) => [s.p, s.w]), rng);
+    const pattern = pickWeighted7(GROUP_DATA.people.sfTown.map((s) => [s.p, s.w]), rng);
     return (_a8 = renderPattern(ctx, pattern, type)) != null ? _a8 : "Vega";
   }
   const key2 = (_c4 = (_b4 = ctx.people) == null ? void 0 : _b4.key) != null ? _c4 : "general";
@@ -99396,13 +101245,13 @@ function inventedTown(ctx, type) {
   if (GROUP_DATA.people.surnameTraditions.includes(key2)) source = "britain";
   else {
     const cultures = tribalCultureWeights(key2);
-    if (cultures) source = pickWeighted6(cultures, rng);
+    if (cultures) source = pickWeighted7(cultures, rng);
   }
   if (source) {
     const names = townPool(source);
     if (names.length > 0) return pickOne(names, rng);
   }
-  return `${pick2(ctx, "townPrefix", type)}${pick2(ctx, "townSuffix", type)}`;
+  return `${pick3(ctx, "townPrefix", type)}${pick3(ctx, "townSuffix", type)}`;
 }
 var sharedCtxs = /* @__PURE__ */ new Map();
 function sharedCtx(setting, rng, scale = "any") {
@@ -99423,7 +101272,7 @@ function groupTown(setting, source, rng, catalogue) {
     const names = townPool(source, catalogue);
     if (names.length > 0) return pickOne(names, rng);
   }
-  if (setting !== "SF") return `${pickWeighted6(pool(ctx, "townPrefix", type), rng)}${pickWeighted6(pool(ctx, "townSuffix", type), rng)}`;
+  if (setting !== "SF") return `${pickWeighted7(pool(ctx, "townPrefix", type), rng)}${pickWeighted7(pool(ctx, "townSuffix", type), rng)}`;
   return inventedTown(ctx, type);
 }
 function groupCommRegion(setting, rng) {
@@ -99439,7 +101288,7 @@ function groupStar(setting, scale, rng, opts) {
   const { ctx, type } = sharedCtx(setting, rng, scale);
   const proper = () => {
     var _a8;
-    return (_a8 = pickWeighted6(pool(ctx, "star", type), rng)) != null ? _a8 : "Vega";
+    return (_a8 = pickWeighted7(pool(ctx, "star", type), rng)) != null ? _a8 : "Vega";
   };
   return drawStarOfKind(drawStarKind(scale, rng), rng, proper, opts);
 }
@@ -99449,7 +101298,7 @@ function groupStarIn(scale, mode, rng) {
 function groupSpacePrefix(word, rng, scale = "any") {
   const prefixes = groupListWords("spacePrefix", "SF", scale);
   for (let i = 0; i < 5; i++) {
-    const prefix = pickWeighted6(prefixes, rng);
+    const prefix = pickWeighted7(prefixes, rng);
     if (prefix && prefix.toLowerCase() !== word.toLowerCase()) return `${prefix} ${word}`;
   }
   return word;
@@ -99458,25 +101307,25 @@ function prefixedLand(word, setting, rng) {
   const { ctx, type } = sharedCtx(setting, rng);
   const holds = word.includes(" ") || GROUP_DATA.lists.land.some((e) => e.w === word && e.noPrefix);
   if (holds || rng() >= 0.3) return word;
-  const prefix = rng() < 0.5 ? pickWeighted6(pool(ctx, "landPrefix", type), rng) : pickWeighted6(pool(ctx, "colour", type), rng);
+  const prefix = rng() < 0.5 ? pickWeighted7(pool(ctx, "landPrefix", type), rng) : pickWeighted7(pool(ctx, "colour", type), rng);
   return `${prefix} ${word}`;
 }
 function groupPerson(setting, surnames, rng, animals) {
   const { ctx, type } = sharedCtx(setting, rng);
   const shapes = surnames ? GROUP_DATA.people.person : GROUP_DATA.people.personOther;
-  let pattern = pickWeighted6(shapes.map((s) => [s.p, s.w]), rng);
+  let pattern = pickWeighted7(shapes.map((s) => [s.p, s.w]), rng);
   if (animals && animals.length > 0) pattern = pattern.replace("{flavourAnimal}", pickOne(animals, rng));
   return renderPattern(ctx, pattern, type);
 }
 function groupSaint(setting, rng) {
   const { ctx, type } = sharedCtx(setting, rng);
-  const saint = pick2(ctx, "saintName", type);
+  const saint = pick3(ctx, "saintName", type);
   return setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
 }
 function initialsToken(ctx, type) {
   const formal = type.shapes.filter((s) => s.f === "F" && !s.p.includes("{initials}") && shapeWeight(ctx, s) > 0);
   for (let i = 0; i < 20 && formal.length > 0; i++) {
-    const shape = pickWeighted6(formal.map((s) => [s, shapeWeight(ctx, s)]), ctx.rng);
+    const shape = pickWeighted7(formal.map((s) => [s, shapeWeight(ctx, s)]), ctx.rng);
     const text = renderPattern(ctx, shape.p, type, shape);
     if (!text || text.includes("[")) continue;
     const letters2 = initialsOf(capitalise(text, true));
@@ -99551,7 +101400,7 @@ function frontShapes(type) {
 }
 function companySource(ctx, type) {
   var _a8, _b4;
-  const share2 = pickWeighted6(((_a8 = type.borrow) != null ? _a8 : []).map((b) => [b, b.share]), ctx.rng);
+  const share2 = pickWeighted7(((_a8 = type.borrow) != null ? _a8 : []).map((b) => [b, b.share]), ctx.rng);
   if (!share2 || share2.own) return { shapes: type.shapes, listType: type };
   const family = (key2) => GROUP_FAMILIES.flatMap((f) => f.types).find((t) => t.key === key2);
   const source = family(share2.types[0]);
@@ -99570,7 +101419,7 @@ function drawDetailed(ctx, type, front) {
   else if (type.borrow) ({ shapes, listType } = companySource(ctx, type));
   else shapes = plainShapes(ctx, type);
   const choices = byForm(ctx, shapes);
-  const shape = pickWeighted6(choices, ctx.rng);
+  const shape = pickWeighted7(choices, ctx.rng);
   if (!shape) return void 0;
   return renderShape(ctx, type, listType, shape, front, {});
 }
@@ -99620,7 +101469,7 @@ function repeatsContent(counted3) {
   return colours > 1 || numbers > 1;
 }
 function oneName(ctx, options, chosen, types) {
-  const drawType = () => chosen != null ? chosen : pickWeighted6(types, ctx.rng);
+  const drawType = () => chosen != null ? chosen : pickWeighted7(types, ctx.rng);
   let type = drawType();
   const vocab = ctx.vocab;
   for (let round = 0; round < 2 && type; round++) {
@@ -99746,7 +101595,7 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
     const pool4 = matching.length > 0 ? matching : sisters;
     if (pool4.length > 0) {
       fill(() => {
-        const { shape, type: from } = pickWeighted6(pool4, ctx.rng);
+        const { shape, type: from } = pickWeighted7(pool4, ctx.rng);
         return renderShape(ctx, from, from, shape, false, { byName: anchor });
       });
       return { names, seriesTone };
@@ -99760,15 +101609,27 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
   if (pool3.length === 0) return { names, seriesTone };
   const frontSet = new Set(fronts);
   fill(() => {
-    const shape = pickWeighted6(pool3, ctx.rng);
+    const shape = pickWeighted7(pool3, ctx.rng);
     return renderShape(ctx, type, type, shape, frontSet.has(shape), { byName: anchor });
   });
   return { names, seriesTone };
 }
 function generateGroupNames(options) {
+  var _a8, _b4;
+  const batch = generateGroupNamesCore(options);
+  if (options.signature === false || fillModeOf(options.people) || options.series || options.context || options.type) return batch;
+  const culture = (_a8 = options.culture) != null ? _a8 : options.tradition && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(options.tradition) ? options.tradition : void 0;
+  const family = findFamily(options.family);
+  if (!culture || !family || !contentKey(culture)) return batch;
+  const guards = (_b4 = options.safeguards) != null ? _b4 : { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(norm2));
+  const ok = (text) => !block.has(norm2(text)) && !breaksGroupColourRule(text) && (options.people !== "invented" || noBracket(text));
+  return { ...batch, names: applySignature(batch.names, family.section, culture, batch.seed, { allowed: ok }) };
+}
+function generateGroupNamesCore(options) {
   var _a8, _b4, _c4, _d3, _e3, _f, _g, _h, _i;
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateGroupNames({ ...options, people: "placeholders" }), fillMode, { culture: options.tradition, era: options.genre, series: options.series });
+  if (fillMode) return fillPeopleBatch(generateGroupNames({ ...options, people: "placeholders" }), fillMode, { culture: options.tradition === "english" ? "norman-british" : options.tradition, era: options.genre, series: options.series });
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family \u201C${options.family}\u201D.`);
   if (options.series && !options.type) throw new Error("Series needs a type.");
@@ -99901,7 +101762,7 @@ function explorersPhrase(id, label) {
   if (id === "general") return "General explorers";
   return `${label.replace(/\s*\(.*?\)\s*/g, " ").trim()}-themed explorers`;
 }
-var FEATURES = [
+var FEATURES2 = [
   { id: "any", label: "Any feature" },
   { id: "settlement", label: "Settlement" },
   { id: "landscape", label: "Landscape" },
@@ -99909,11 +101770,11 @@ var FEATURES = [
 ];
 function featurePhrase(feature) {
   var _a8;
-  const f = (_a8 = FEATURES.find((x) => x.id === feature)) != null ? _a8 : FEATURES[0];
+  const f = (_a8 = FEATURES2.find((x) => x.id === feature)) != null ? _a8 : FEATURES2[0];
   return f.label.charAt(0).toLowerCase() + f.label.slice(1);
 }
 function featuresForBiome(biome) {
-  if (!(biome == null ? void 0 : biome.space)) return FEATURES;
+  if (!(biome == null ? void 0 : biome.space)) return FEATURES2;
   const rules = COLONIAL_DATA.space;
   const live5 = COLONIAL_DATA.groups.filter((g) => {
     var _a8;
@@ -99922,11 +101783,11 @@ function featuresForBiome(biome) {
     var _a8;
     return { id: g.id, label: (_a8 = g.label) != null ? _a8 : g.id };
   });
-  return [FEATURES[0], FEATURES[1], FEATURES[2], ...live5];
+  return [FEATURES2[0], FEATURES2[1], FEATURES2[2], ...live5];
 }
 function featurePhraseFor(feature, biome) {
   var _a8;
-  const f = (_a8 = featuresForBiome(biome).find((x) => x.id === feature)) != null ? _a8 : FEATURES[0];
+  const f = (_a8 = featuresForBiome(biome).find((x) => x.id === feature)) != null ? _a8 : FEATURES2[0];
   return f.label.charAt(0).toLowerCase() + f.label.slice(1);
 }
 var UNKNOWN_COUNTRY = "unknown country";
@@ -99977,7 +101838,7 @@ function wizardSentenceText(part, settings, custom = []) {
   const space = !!(biome == null ? void 0 : biome.space) && part !== "organic";
   const land = space && (!settings.terrain || settings.terrain === "any") ? `all of ${biomePhrase(settings.biome, part, custom)}` : `${terrainPhrase(settings.terrain, custom)} of ${biomePhrase(settings.biome, part, custom)}`;
   if (part === "organic") {
-    const f = (_a8 = FEATURES.find((x) => x.id === settings.feature)) != null ? _a8 : FEATURES[0];
+    const f = (_a8 = FEATURES2.find((x) => x.id === settings.feature)) != null ? _a8 : FEATURES2[0];
     return `${f.label} from ${regionPhrase(settings.region)}, set in ${land}`;
   }
   const colonialPart = part === "new-land" ? "2" : "2a";
@@ -102484,16 +104345,40 @@ registerLensRules("supernaturalCourts", {
   worlds: (state, ids) => state.genre === "modern" ? ids.filter((id) => id === "fantastic") : ids,
   after: (_previous, next, field) => field === "era" && next.genre === "modern" && next.fantastic !== true ? { ...next, fantastic: true } : next
 });
-function groupSentence(state, family) {
+function cultureMenu(state) {
   var _a8, _b4;
   const out = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (const block of LENS_MENU) {
+    let first = true;
+    for (const e of block.entries) {
+      const key2 = e.key;
+      if (!key2 || !CULTURE_TRADITION[key2] || seen.has(key2)) continue;
+      const label = (_b4 = e.label) != null ? _b4 : (_a8 = LENS_CULTURES.find((c) => c.key === key2)) == null ? void 0 : _a8.label;
+      if (!label) continue;
+      seen.add(key2);
+      out.push({ id: key2, label, ...first && block.heading ? { group: block.heading, heading: block.heading } : {} });
+      first = false;
+    }
+  }
+  const reachable = new Set(out.map((c) => CULTURE_TRADITION[c.id]));
+  for (const t of TRIBAL_TRADITIONS) {
+    if (!reachable.has(t.key) && (t.key === state.tradition || ["sahul"].includes(t.key))) out.push({ id: t.key, label: t.label });
+  }
+  return out;
+}
+function groupSentence(state, family) {
+  var _a8, _b4, _c4, _d3, _e3, _f, _g;
+  const out = [];
   const tradition = (_a8 = TRIBAL_TRADITIONS.find((t) => t.key === state.tradition)) != null ? _a8 : TRIBAL_TRADITIONS[0];
+  const menu = cultureMenu(state);
+  const picked = state.culture ? menu.find((c) => c.id === state.culture) : void 0;
   out.push({
     field: "tradition",
-    text: tradition.label,
+    text: picked ? picked.label : tradition.label,
     title: tradition.key === "general" ? "No cultural flavour" : tradition.drawsOn,
-    choices: TRIBAL_TRADITIONS.map((t) => ({ id: t.key, label: t.label })),
-    current: tradition.key
+    choices: menu,
+    current: (_f = (_e3 = (_c4 = picked == null ? void 0 : picked.id) != null ? _c4 : (_b4 = menu.find((c) => c.id === state.tradition)) == null ? void 0 : _b4.id) != null ? _e3 : (_d3 = menu.find((c) => CULTURE_TRADITION[c.id] === tradition.key)) == null ? void 0 : _d3.id) != null ? _f : tradition.key
   });
   out.push("-themed ");
   const setting = groupSetting(state.genre, state.fantastic);
@@ -102521,7 +104406,7 @@ function groupSentence(state, family) {
   }
   out.push(...eraWorldSegments(lensClause(family.section, state), "era", "fantastic"));
   if (state.genre === "scifi") {
-    const scale = (_b4 = state.scale) != null ? _b4 : "any";
+    const scale = (_g = state.scale) != null ? _g : "any";
     out.push(" at ");
     out.push({
       field: "scale",
@@ -102585,9 +104470,13 @@ function groupSentenceText(segments) {
 function chooseGroup(state, field, id, family) {
   let next = { ...state };
   switch (field) {
-    case "tradition":
-      next.tradition = id != null ? id : "general";
+    case "tradition": {
+      const key2 = id != null ? id : "general";
+      next.tradition = traditionOfCulture(key2);
+      next.culture = CULTURE_TRADITION[key2] ? key2 : void 0;
+      if (!findTradition(next.tradition)) next.tradition = "general";
       break;
+    }
     case "type":
       next.type = id;
       break;
@@ -102686,6 +104575,7 @@ var BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
   const world = WORLD_CULTURES.find((w) => w.id === c.key);
   return { key: c.key, label: c.label, guide: (_b4 = (_a8 = c.guide) != null ? _a8 : world == null ? void 0 : world.guide) != null ? _b4 : "" };
 });
+var BYNAME_CULTURES_5C = [...BYNAME_CULTURES, ...NORTH_5C_CULTURES];
 var BYNAME_MODULE_LABELS = {
   epithets: "epithets and bynames",
   titles: "titles and honourifics",
@@ -102697,7 +104587,8 @@ function moduleAny(module2) {
 function moduleKinds(module2) {
   return module2 === "epithets" ? BYNAMES_DATA.epithets.kinds : module2 === "titles" ? BYNAMES_DATA.titles.kinds : BYNAMES_DATA.family.kinds;
 }
-function availableKinds(module2, culture, setting) {
+function availableKinds(module2, requested, setting) {
+  const culture = engineCulture(requested);
   const kinds = moduleKinds(module2).filter((k) => (!k.s || k.s.includes(setting)) && (!k.cultures || k.cultures.includes(culture)));
   if (module2 === "familyNames") {
     const system = BYNAMES_DATA.family.cultures[culture];
@@ -102741,9 +104632,9 @@ function drawEntries(ctx, entries, opts = {}) {
     const w = ((_a8 = e.x) != null ? _a8 : 1) * ((_c4 = (_b4 = e.cx) == null ? void 0 : _b4[ctx.culture]) != null ? _c4 : 1) * toneFactor((_d3 = e.t) != null ? _d3 : [], ctx.tone);
     if (w > 0) live5.push([{ ...form, entry: e }, w]);
   }
-  const pick4 = pickWeighted6(live5, ctx.rng);
-  if (pick4) for (const t of (_e3 = pick4.entry.t) != null ? _e3 : []) ctx.drawn.add(t);
-  return pick4;
+  const pick5 = pickWeighted7(live5, ctx.rng);
+  if (pick5) for (const t of (_e3 = pick5.entry.t) != null ? _e3 : []) ctx.drawn.add(t);
+  return pick5;
 }
 var stripPlural = (raw) => raw.split("|")[0].replace(/~$/, "");
 function cultureAnimals(culture) {
@@ -102886,7 +104777,7 @@ function token2(ctx, raw) {
     }
     case "number":
     case "compass": {
-      return pickWeighted6(groupListWords(name, ctx.setting), rng);
+      return pickWeighted7(groupListWords(name, ctx.setting), rng);
     }
     case "star":
       return groupStarIn("any", "invented", rng);
@@ -102906,7 +104797,7 @@ function token2(ctx, raw) {
       const choices = [["material", 40]];
       if (["FH", "MF"].includes(ctx.setting)) choices.push(["clanBorn", 40]);
       if (ctx.setting === "SF") choices.push(["sf", 20]);
-      const which = pickWeighted6(choices, rng);
+      const which = pickWeighted7(choices, rng);
       if (which === "clanBorn") return token2(ctx, "clanBorn");
       if (which === "sf") return listWord(ctx, "clanStyleSF");
       const half = listWord(ctx, "material");
@@ -102914,15 +104805,15 @@ function token2(ctx, raw) {
       return half ? joinClosed(half, suffix) : void 0;
     }
     case "rank": {
-      const pick4 = drawEntries(ctx, (_d3 = BYNAMES_DATA.ranks[ctx.culture]) != null ? _d3 : []);
-      if (!pick4) return void 0;
-      ctx.rankAfter = pick4.entry.pos === "after";
-      ctx.rankNative = pick4.native;
-      return pick4.text;
+      const pick5 = drawEntries(ctx, (_d3 = BYNAMES_DATA.ranks[ctx.culture]) != null ? _d3 : []);
+      if (!pick5) return void 0;
+      ctx.rankAfter = pick5.entry.pos === "after";
+      ctx.rankNative = pick5.native;
+      return pick5.text;
     }
     case "style": {
-      const pick4 = drawEntries(ctx, (_e3 = BYNAMES_DATA.styles[ctx.culture]) != null ? _e3 : []);
-      return pick4 ? render2(ctx, pick4.text) : void 0;
+      const pick5 = drawEntries(ctx, (_e3 = BYNAMES_DATA.styles[ctx.culture]) != null ? _e3 : []);
+      return pick5 ? render2(ctx, pick5.text) : void 0;
     }
   }
   if (!BYNAMES_DATA.lists[name]) throw new Error(`Bynames: no list \u201C${name}\u201D.`);
@@ -102938,16 +104829,16 @@ function placeLand(ctx) {
   });
   if (ctx.setting === "SF") {
     const pool4 = [...groupListWords("spaceLand", "SF").map(([w, n]) => [{ word: w, gn: false }, n]), ...extras("epPlaceSpaceExtra")];
-    return (_a8 = pickWeighted6(pool4, rng)) == null ? void 0 : _a8.word;
+    return (_a8 = pickWeighted7(pool4, rng)) == null ? void 0 : _a8.word;
   }
   const pool3 = [
     ...groupListWords("land", ctx.setting).map(([w, n]) => [{ word: w, gn: true }, n]),
     ...cultureLand(ctx.culture).map((w) => [{ word: w, gn: false }, 1]),
     ...extras("epPlaceLandExtra")
   ];
-  const pick4 = pickWeighted6(pool3, rng);
-  if (!pick4) return void 0;
-  return pick4.gn ? prefixedLand(pick4.word, ctx.setting, rng) : pick4.word;
+  const pick5 = pickWeighted7(pool3, rng);
+  if (!pick5) return void 0;
+  return pick5.gn ? prefixedLand(pick5.word, ctx.setting, rng) : pick5.word;
 }
 var SMALL3 = /* @__PURE__ */ new Set(["of", "the", "and", "a", "an", "de", "le"]);
 var contentWords = (text) => text.replace(/[“”",.]/g, "").split(/[\s-]+/).map((w) => w.toLowerCase()).filter((w) => w && !SMALL3.has(w) && !w.startsWith("["));
@@ -102983,7 +104874,7 @@ function pickShape(ctx, shapes, kind) {
     var _a8;
     return [s, s.w * toneFactor((_a8 = s.t) != null ? _a8 : [], ctx.tone)];
   });
-  return pickWeighted6(live5, ctx.rng);
+  return pickWeighted7(live5, ctx.rng);
 }
 var NUMBER_WORDS2 = new Set(BYNAMES_DATA.lists.dayNumber.flatMap((e) => [e.w, e.n]));
 function joinEpithet(name, part, join2) {
@@ -103029,7 +104920,7 @@ function buildTitle(ctx, kind, length) {
   }
   const r = ctx.rng();
   const size = r < 0.4 ? 2 : r < 0.8 ? 3 : 4;
-  const firstShape = pickWeighted6([["{rank}", 100], ["{rank} of {town}", 15]], ctx.rng);
+  const firstShape = pickWeighted7([["{rank}", 100], ["{rank} of {town}", 15]], ctx.rng);
   const first = oneTitle(ctx, "rank", firstShape);
   if (!first) return void 0;
   const parts = [first.text];
@@ -103037,7 +104928,7 @@ function buildTitle(ctx, kind, length) {
   let offices = 0;
   const shapeTones2 = new Set((_a8 = first.shape.t) != null ? _a8 : []);
   for (let tries = 0; parts.length < size && tries < 40; tries++) {
-    const kindPick = offices > 0 ? "style" : pickWeighted6([["style", 20], ["office", 40]], ctx.rng);
+    const kindPick = offices > 0 ? "style" : pickWeighted7([["style", 20], ["office", 40]], ctx.rng);
     const next = oneTitle(ctx, kindPick);
     if (!next || next.rank) continue;
     const words = contentWords(next.text);
@@ -103066,7 +104957,7 @@ function buildFamily(ctx, kind) {
     (f) => (f.l === "both" || f.l === (ctx.native ? "n" : "e")) && (!f.g || f.g === (ctx.sex === "male" ? "m" : "f"))
   );
   const kindTones = (_c4 = (_b4 = BYNAMES_DATA.family.kinds.find((k) => k.key === kind)) == null ? void 0 : _b4.t) != null ? _c4 : [];
-  const form = pickWeighted6(
+  const form = pickWeighted7(
     forms.map((f) => {
       var _a9;
       return [f, f.w * toneFactor([...kindTones, ...(_a9 = f.t) != null ? _a9 : []], ctx.tone)];
@@ -103086,17 +104977,34 @@ function buildFamily(ctx, kind) {
   return { part, text, kind, shape: form.p, tones: tonesOf([...kindTones, ...(_d3 = form.t) != null ? _d3 : []], ctx.drawn) };
 }
 function generateBynames(options) {
+  var _a8, _b4;
+  const batch = generateBynamesCore(options);
+  if (options.signature === false || fillModeOf(options.people) || options.shapeFilter || options.officeWords || options.context || options.kind || options.length === "full" || options.source === "pack") return batch;
+  const requested = BYNAME_CULTURES_5C.some((c) => c.key === options.culture) ? options.culture : "general";
+  const language = showsLanguage(options.module, requested) ? (_a8 = options.language) != null ? _a8 : "english" : "english";
+  const forms = language === "english" ? [] : nativeForms(options.module, requested);
+  const native = forms.length === 0 ? void 0 : { forms, share: language === "native" ? 1 : 0.5 };
+  const guards = (_b4 = options.safeguards) != null ? _b4 : { block: BYNAMES_DATA.safeguards.block, flag: BYNAMES_DATA.safeguards.flag, flagListBlocks: BYNAMES_DATA.safeguards.flagListBlocks };
+  const guard = {
+    block: new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock)),
+    patterns: BYNAMES_DATA.safeguards.blockPatterns.map((p) => new RegExp(p, "i"))
+  };
+  const ok = (text) => acceptable2(guard, { text, part: text, kind: "", shape: "", tones: [] }, 8) && (options.people !== "invented" || noBracket(text));
+  return { ...batch, names: applySignature(batch.names, options.module, requested, batch.seed, { allowed: ok, native }) };
+}
+function generateBynamesCore(options) {
   var _a8, _b4, _c4, _d3, _e3, _f, _g, _h;
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateBynames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const module2 = options.module;
-  const culture = BYNAME_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
+  const requested = BYNAME_CULTURES_5C.some((c) => c.key === options.culture) ? options.culture : "general";
+  const culture = engineCulture(requested);
   const genre = (_a8 = options.genre) != null ? _a8 : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
   const tone = (_b4 = options.tone) != null ? _b4 : "any";
-  const language = showsLanguage(module2, culture) ? (_c4 = options.language) != null ? _c4 : "english" : "english";
+  const language = showsLanguage(module2, requested) && culture !== "general" ? (_c4 = options.language) != null ? _c4 : "english" : "english";
   const gender = (_d3 = options.gender) != null ? _d3 : "anyone";
   const length = module2 === "titles" ? (_e3 = options.length) != null ? _e3 : "single" : "single";
   const notices = [];
@@ -103130,7 +105038,7 @@ function generateBynames(options) {
     var _a9;
     const sex = gender === "men" ? "male" : gender === "women" ? "female" : rng() < 0.5 ? "male" : "female";
     const native = language === "native" || language === "mixed" && rng() < 0.5;
-    let kind = (_a9 = chosen == null ? void 0 : chosen.kind.key) != null ? _a9 : length === "full" ? "rank" : pickWeighted6(kindChoices, rng);
+    let kind = (_a9 = chosen == null ? void 0 : chosen.kind.key) != null ? _a9 : length === "full" ? "rank" : pickWeighted7(kindChoices, rng);
     for (let round = 0; round < 2 && kind; round++) {
       for (let i = 0; i < 20; i++) {
         const ctx = newCtx(base, sex, native);
@@ -103140,7 +105048,7 @@ function generateBynames(options) {
         if (ctx.setting === "SF" && hasSpaceBlock(built.text)) continue;
         return { text: built.text, module: module2, culture, kind: built.kind, shape: built.shape, gender: sex, language: native ? "native" : "english", tones: built.tones };
       }
-      if (!chosen) kind = pickWeighted6(kindChoices, rng);
+      if (!chosen) kind = pickWeighted7(kindChoices, rng);
     }
     return void 0;
   };
@@ -103160,7 +105068,7 @@ function generateBynames(options) {
 }
 function bynameHistoryLabel(module2, genre, fantastic, culture, tone = "any", language = "english") {
   var _a8, _b4;
-  const label = lensCultureLabel(culture, (_b4 = (_a8 = BYNAME_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a8.label) != null ? _b4 : "General");
+  const label = lensCultureLabel(culture, (_b4 = (_a8 = BYNAME_CULTURES_5C.find((c) => c.key === culture)) == null ? void 0 : _a8.label) != null ? _b4 : "General");
   return [
     BYNAME_MODULE_LABELS[module2],
     SETTING_PHRASES[groupSetting(genre, fantastic)],
@@ -103171,7 +105079,7 @@ function bynameHistoryLabel(module2, genre, fantastic, culture, tone = "any", la
 }
 
 // src/bynames/sentence.ts
-registerRoster("byname", BYNAME_CULTURES);
+registerRoster("byname", BYNAME_CULTURES_5C);
 var BYNAME_PEOPLE_TEXT = { real: "real-world names for", generated: "generated names for", placeholders: "placeholders for", invented: "placeholders for" };
 var DEFAULT_BYNAME_STATE = {
   culture: "general",
@@ -103210,7 +105118,7 @@ var sectionText = (state, headings) => {
 function bynameSentence(state, module2, packs = []) {
   var _a8, _b4, _c4, _d3, _e3;
   const out = [];
-  const culture = (_a8 = BYNAME_CULTURES.find((c) => c.key === state.culture)) != null ? _a8 : BYNAME_CULTURES[0];
+  const culture = (_a8 = BYNAME_CULTURES_5C.find((c) => c.key === state.culture)) != null ? _a8 : BYNAME_CULTURES_5C[0];
   const lens = lensClause(module2, state, { cultureTitle: "Naming culture: which customs the names follow" });
   out.push(asSegment(lens.culture, "culture"));
   out.push("-themed ");
@@ -109515,11 +111423,15 @@ var CREATURE_CULTURES = Object.keys(CULTURES2);
 var isAirLand = (module2) => module2 === "aircraft" || module2 === "landVehicles";
 var VESSEL_DATA = vessels_default;
 var VESSEL_SELF = selfPatterns(vessels_default);
-var VESSEL_CULTURES = VESSEL_DATA.cultures;
+var VESSEL_BASE_CULTURES = VESSEL_DATA.cultures;
+var VESSEL_CULTURES = [
+  ...VESSEL_BASE_CULTURES,
+  ...NORTH_5C_CULTURES.map((c) => ({ ...VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key)), key: c.key, label: c.label }))
+];
 var AIR_LAND = vehicles_air_land_default;
 var VESSEL_MODULE_LABELS = { ...VESSEL_DATA.modules, ...AIR_LAND.modules };
 function findVesselCulture(key2) {
-  return VESSEL_CULTURES.find((c) => c.key === key2);
+  return VESSEL_BASE_CULTURES.find((c) => c.key === (key2 === void 0 ? key2 : engineCulture(key2)));
 }
 var levelNumber = (code) => /^[AL]F$/.test(code) ? NaN : parseInt(code.slice(1), 10);
 function range(k) {
@@ -109758,11 +111670,11 @@ function pool2(ctx, name) {
 }
 function listWord2(ctx, name, filter) {
   const items = filter ? pool2(ctx, name).filter(([e]) => filter(e.w)) : pool2(ctx, name);
-  const pick4 = pickWeighted6(items, ctx.rng);
-  if (!pick4) return void 0;
-  for (const t of pick4.t) ctx.drawn.add(t);
-  ctx.words.push({ list: name, word: pick4.w });
-  return pick4.w.includes("{") ? renderPattern2(ctx, pick4.w) : pick4.w;
+  const pick5 = pickWeighted7(items, ctx.rng);
+  if (!pick5) return void 0;
+  for (const t of pick5.t) ctx.drawn.add(t);
+  ctx.words.push({ list: name, word: pick5.w });
+  return pick5.w.includes("{") ? renderPattern2(ctx, pick5.w) : pick5.w;
 }
 function town(ctx) {
   const rng = ctx.rng;
@@ -109838,7 +111750,7 @@ function baseToken(ctx, name) {
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
-      return ordinalText(pickWeighted6(choices, rng));
+      return ordinalText(pickWeighted7(choices, rng));
     }
     case "poetic":
       return ctx.poeticAllowed ? listWord2(ctx, "poetic") : void 0;
@@ -109879,8 +111791,8 @@ function baseToken(ctx, name) {
     case "rank":
       return listWord2(ctx, "rank", ctx.rankInitial ? (w) => w.startsWith(ctx.rankInitial) : void 0);
     case "cultureNoun": {
-      const sources = ["beast", "sky", "virtue", ...ctx.poeticAllowed && pool2(ctx, "poetic").length > 0 ? ["poetic"] : []];
-      return listWord2(ctx, pickOne2(sources, rng));
+      const sources2 = ["beast", "sky", "virtue", ...ctx.poeticAllowed && pool2(ctx, "poetic").length > 0 ? ["poetic"] : []];
+      return listWord2(ctx, pickOne2(sources2, rng));
     }
   }
   return listWord2(ctx, name);
@@ -110115,7 +112027,7 @@ function realPrefix(ctx) {
   const rows = VESSEL_DATA.prefixes.real.filter(
     (r) => (!r.cultures || r.cultures.includes(ctx.culture.key)) && r.fn.includes(ctx.fn) && inRange(r.k, ctx.level)
   );
-  return pickWeighted6(rows.map((r) => {
+  return pickWeighted7(rows.map((r) => {
     var _a8;
     return [r.p, (_a8 = r.x) != null ? _a8 : 1];
   }), ctx.rng);
@@ -110201,7 +112113,25 @@ function typeShapes(ctx, family) {
   });
 }
 function generateVesselNames(options) {
+  var _a8;
+  const batch = generateVesselNamesCore(options);
+  if (options.signature === false || fillModeOf(options.people) || options.series || options.context || options.module === "spacecraft" || options.function || options.naming === "types" || options.style && options.style !== "none" || options.shape) return batch;
+  const guards = (_a8 = options.safeguards) != null ? _a8 : { block: VESSEL_DATA.safeguards.block, flag: VESSEL_DATA.safeguards.flag, flagListBlocks: VESSEL_DATA.safeguards.flagListBlocks };
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
+  const ok = (text) => !block.has(normForBlock(text)) && !breaksVesselWords(text, options.module) && (options.people !== "invented" || noBracket(text));
+  return {
+    ...batch,
+    names: applySignature(batch.names, options.module, options.culture, batch.seed, {
+      allowed: ok,
+      // A registration or a prefix (HMS) belongs to its craft: those keep their names.
+      keep: (n) => !!n.code || !!n.prefix,
+      set: (n, text) => ({ ...n, name: text, text })
+    })
+  };
+}
+function generateVesselNamesCore(options) {
   var _a8, _b4, _c4, _d3, _e3;
+  if (options.culture === "german" && options.prefixes) options = { ...options, prefixes: false };
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateVesselNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre, series: options.series });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
@@ -110270,13 +112200,13 @@ function generateVesselNames(options) {
   const choosePlan3 = (ctx) => {
     if (style && !options.shape && rng() < styleShare) {
       ctx.boost = false;
-      return pickWeighted6(stylePlans(ctx), rng);
+      return pickWeighted7(stylePlans(ctx), rng);
     }
-    const role = pickWeighted6(roleWeights(ctx), rng);
+    const role = pickWeighted7(roleWeights(ctx), rng);
     if (!role) return void 0;
     const share2 = inSpan(culture, ctx.level, module2) ? VESSEL_DATA.hybrids.share.inSpan : VESSEL_DATA.hybrids.share.outOfSpan;
-    if (!options.shape && role !== "designation" && role !== "leisure" && rng() < share2) return pickWeighted6(hybridPlans(ctx), rng);
-    return pickWeighted6(rolePlans(ctx, role, options.shape), rng);
+    if (!options.shape && role !== "designation" && role !== "leisure" && rng() < share2) return pickWeighted7(hybridPlans(ctx), rng);
+    return pickWeighted7(rolePlans(ctx, role, options.shape), rng);
   };
   let classLetter;
   const result = (ctx, built, series) => {
@@ -110307,7 +112237,7 @@ function generateVesselNames(options) {
     if (levelPool.length === 0) return void 0;
     for (let round = 0; round < 2; round++) {
       const level = pickOne2(levelPool, rng);
-      const fn = chosenFn != null ? chosenFn : pickWeighted6(fnChoices(level).map((f) => [f, f.w]), rng);
+      const fn = chosenFn != null ? chosenFn : pickWeighted7(fnChoices(level).map((f) => [f, f.w]), rng);
       if (!fn) continue;
       for (let i = 0; i < 20; i++) {
         const ctx = newCtx4(level, fn.key);
@@ -110357,13 +112287,13 @@ function generateVesselNames(options) {
     if (levelPool.length === 0) return void 0;
     for (let round = 0; round < 2; round++) {
       const level = pickOne2(levelPool, rng);
-      const fn = chosenFn != null ? chosenFn : pickWeighted6(fnChoices(level).map((f) => [f, f.w]), rng);
+      const fn = chosenFn != null ? chosenFn : pickWeighted7(fnChoices(level).map((f) => [f, f.w]), rng);
       if (!fn) continue;
       for (let i = 0; i < 20; i++) {
         const ctx = newCtx4(level, fn.key);
-        const family = pickWeighted6(typeFamilyPool(ctx), rng);
+        const family = pickWeighted7(typeFamilyPool(ctx), rng);
         if (!family) break;
-        const shape = pickWeighted6(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
+        const shape = pickWeighted7(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
         if (!shape) continue;
         const R = AIR_LAND.types.rankInitial;
         if (family === "rank" && culture.key === R.culture && fn.key === R.fn && rng() < R.share) ctx.rankInitial = R.letter;
@@ -110376,7 +112306,7 @@ function generateVesselNames(options) {
   function typeFamilyBatch() {
     var _a9, _b5, _c5;
     const level = pickOne2(levelPool, rng);
-    const fn = chosenFn != null ? chosenFn : pickWeighted6(fnChoices(level).map((f) => [f, f.w]), rng);
+    const fn = chosenFn != null ? chosenFn : pickWeighted7(fnChoices(level).map((f) => [f, f.w]), rng);
     if (!fn) return;
     const info = { anchor: "family", value: null, counter: null };
     const used = /* @__PURE__ */ new Set();
@@ -110385,10 +112315,10 @@ function generateVesselNames(options) {
     let letter;
     for (let i = 0; i < 40 && !first; i++) {
       const ctx = newCtx4(level, fn.key);
-      family = pickWeighted6(typeFamilyPool(ctx), rng);
+      family = pickWeighted7(typeFamilyPool(ctx), rng);
       if (!family) return;
       if (family === "designation") break;
-      const shape = pickWeighted6(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
+      const shape = pickWeighted7(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
       if (!shape) continue;
       const R = AIR_LAND.types.rankInitial;
       if (family === "rank") {
@@ -110396,7 +112326,7 @@ function generateVesselNames(options) {
         for (const [e] of pool2(ctx, "rank")) initials.set(e.w.charAt(0), ((_a9 = initials.get(e.w.charAt(0))) != null ? _a9 : 0) + 1);
         const enough = [...initials].filter(([, n]) => n >= count);
         const choices = enough.length > 0 ? enough : [...initials].sort((a, b) => b[1] - a[1]).slice(0, 1);
-        letter = culture.key === R.culture && fn.key === R.fn && rng() < R.share && initials.has(R.letter) ? R.letter : pickWeighted6(choices, rng);
+        letter = culture.key === R.culture && fn.key === R.fn && rng() < R.share && initials.has(R.letter) ? R.letter : pickWeighted7(choices, rng);
         ctx.rankInitial = letter;
       }
       const built = renderType(ctx, family, shape);
@@ -110432,7 +112362,7 @@ function generateVesselNames(options) {
     for (let idle = 0; idle < 60 && names.length < count; ) {
       const ctx = newCtx4(level, fn.key);
       if (letter) ctx.rankInitial = letter;
-      const shape = pickWeighted6(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
+      const shape = pickWeighted7(typeShapes(ctx, family).map((sh) => [sh, sh.w]), rng);
       const built = shape ? renderType(ctx, family, shape) : void 0;
       const fresh = !!built && drawnWords(built.record).every((w) => !used.has(w));
       const name = fresh ? result(ctx, built, info) : void 0;
@@ -110501,7 +112431,7 @@ function generateVesselNames(options) {
     if (plans5.length === 0) return false;
     let allowed;
     for (let i = 0; i < 40 && !allowed; i++) {
-      const plan = pickWeighted6(plans5, rng);
+      const plan = pickWeighted7(plans5, rng);
       const keep = kind === "theme" ? plans5.filter(([p]) => p.theme === plan.theme) : kind === "shape" ? plans5.filter(([p]) => p.p === plan.p) : plans5;
       const ctx = newCtx4(level, fn);
       const probe = renderPlan(ctx, plan);
@@ -110510,7 +112440,7 @@ function generateVesselNames(options) {
     if (!allowed) return false;
     for (let idle = 0; idle < 40 && names.length < count; ) {
       const ctx = newCtx4(level, fn);
-      const built = renderPlan(ctx, pickWeighted6(allowed, rng));
+      const built = renderPlan(ctx, pickWeighted7(allowed, rng));
       const name = accept(built, result(ctx, built));
       if (name && built && !seen.has(name.text.toLowerCase())) {
         take(built, name);
@@ -110582,7 +112512,7 @@ function generateVesselNames(options) {
       ([p]) => p.p !== plan.p && [...p.p.matchAll(/\{([^}:]+)/g)].some((m) => m[1] === anchor.name)
     );
     if (others.length === 0) return tone;
-    fill(() => draw3({ byName: anchor }, pickWeighted6(others, rng)));
+    fill(() => draw3({ byName: anchor }, pickWeighted7(others, rng)));
     return tone;
   }
 }
@@ -110600,7 +112530,7 @@ var REALM_DATA = realms_default;
 var REALM_ERAS = REALM_DATA.eras;
 var REALM_CHARACTERS = REALM_DATA.characters;
 var REALM_NAMED_FOR = REALM_DATA.namedFor;
-var REALM_CULTURES = BYNAME_CULTURES;
+var REALM_CULTURES = BYNAME_CULTURES_5C;
 var DYNASTY_CULTURES = REALM_DATA.dynastyCultures;
 var eraCode = (era) => {
   var _a8, _b4;
@@ -110764,7 +112694,7 @@ function buildListPool(ctx, name) {
 }
 function listWord3(ctx, name, keep) {
   const pool3 = keep ? listPool(ctx, name).filter(([e2]) => keep(e2.w)) : listPool(ctx, name);
-  const e = pickWeighted6(pool3, ctx.rng);
+  const e = pickWeighted7(pool3, ctx.rng);
   if (!e) return void 0;
   for (const t of wordToneOf(name, e)) ctx.drawn.add(t);
   return e.w;
@@ -110772,7 +112702,7 @@ function listWord3(ctx, name, keep) {
 function gnWord(ctx, name, keep, setting = ctx.setting) {
   var _a8;
   const pool3 = groupListWords(name, setting, (_a8 = ctx.scale) != null ? _a8 : "any").filter(([w2]) => !keep || keep(w2)).map(([w2, n]) => [w2, n * toneFactor(wordTones(name, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(pool3, ctx.rng);
+  const w = pickWeighted7(pool3, ctx.rng);
   if (w !== void 0) for (const t of wordTones(name, w)) ctx.drawn.add(t);
   return w;
 }
@@ -110781,7 +112711,7 @@ function drawForm(ctx, keep) {
     var _a8, _b4;
     return [f2, w * characterMult(ctx.character, f2) * toneFactor(f2.t, ctx.tone) * (ctx.scale ? (_b4 = (_a8 = REALM_DATA.spaceForms[f2.w]) == null ? void 0 : _a8[ctx.scale]) != null ? _b4 : 1 : 1)];
   }).filter(([, w]) => w > 0);
-  const f = pickWeighted6(pool3, ctx.rng);
+  const f = pickWeighted7(pool3, ctx.rng);
   if (f) for (const t of f.t) ctx.drawn.add(t);
   return f;
 }
@@ -110797,7 +112727,7 @@ function drawModifier(ctx) {
     var _a9, _b5;
     return [e2, ((_a9 = e2.x) != null ? _a9 : 1) * toneFactor((_b5 = e2.t) != null ? _b5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
-  const e = pickWeighted6(pool3, ctx.rng);
+  const e = pickWeighted7(pool3, ctx.rng);
   if (!e) return void 0;
   for (const t of (_b4 = e.t) != null ? _b4 : []) ctx.drawn.add(t);
   return e.w;
@@ -110832,7 +112762,7 @@ function token4(ctx, name, shape, kind) {
         const t = w === "Free" && ctx.collNoun === "Ports" ? ["light"] : [];
         return [w, toneFactor(t, ctx.tone)];
       });
-      const q = pickWeighted6(pool3, rng);
+      const q = pickWeighted7(pool3, rng);
       if (q === "Free" && ctx.collNoun === "Ports") ctx.drawn.add("light");
       return ctx.collQual = q;
     }
@@ -110841,7 +112771,7 @@ function token4(ctx, name, shape, kind) {
         var _a9, _b5;
         return ((_b5 = (_a9 = ctx.lists.get(m[1])) == null ? void 0 : _a9.length) != null ? _b5 : 1) > 0;
       }));
-      const p = pickWeighted6(live5.map((s) => [s.p, s.w]), rng);
+      const p = pickWeighted7(live5.map((s) => [s.p, s.w]), rng);
       return renderTokens3(ctx, p, shape, kind);
     }
     case "place":
@@ -110870,7 +112800,7 @@ function token4(ctx, name, shape, kind) {
     case "beast": {
       const animals = cultureAnimals(ctx.culture);
       const pool3 = [...groupListWords("beast", ctx.setting), ...animals.map((a) => [a, 3])];
-      return pickWeighted6(pool3, rng);
+      return pickWeighted7(pool3, rng);
     }
     case "number":
       return gnWord(ctx, "number", (w) => !["Two", "Hundred", "Thousand"].includes(w));
@@ -110926,13 +112856,26 @@ function tribalPool(tradition, biome, terrain, custom) {
   return found;
 }
 function generateRealmNames(options) {
+  var _a8;
+  const batch = generateRealmNamesCore(options);
+  if (options.signature === false || fillModeOf(options.people) || options.character || options.namedFor && options.namedFor !== "anything") return batch;
+  const requested = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
+  const guards = (_a8 = options.safeguards) != null ? _a8 : { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
+  const block = new Set([...guards.block, ...guards.flagListBlocks ? guards.flag : []].map(normForBlock));
+  const ok = (text) => !block.has(normForBlock(text)) && !breaksRealmWords(text) && !breaksGroupColourRule(text) && (options.people !== "invented" || noBracket(text));
+  return {
+    ...batch,
+    names: applySignature(batch.names, "realms", requested, batch.seed, { allowed: ok, set: (n, text) => ({ ...n, text, official: text, short: text }) })
+  };
+}
+function generateRealmNamesCore(options) {
   var _a8, _b4, _c4, _d3, _e3, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateRealmNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: (_a8 = options.era) != null ? _a8 : options.genre });
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const rng = mulberry32(seed);
   const notices = [];
-  const culture = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general";
+  const culture = engineCulture(REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture : "general");
   const era = eraCode((_b4 = options.era) != null ? _b4 : "medieval");
   const genre = (_c4 = options.genre) != null ? _c4 : "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
@@ -110980,19 +112923,19 @@ function generateRealmNames(options) {
     }).filter(([, w]) => w > 0);
     const own = REALM_DATA.characterShapes[character];
     if (namedFor === "anything" && own && rng() < own.share) {
-      const s2 = pickWeighted6(weigh(own.shapes, own.t), rng);
+      const s2 = pickWeighted7(weigh(own.shapes, own.t), rng);
       if (s2) return { shape: s2, kind: "character", nf: "character", t: [...(_a9 = own.t) != null ? _a9 : [], ...(_b5 = s2.t) != null ? _b5 : []] };
     }
-    const resolved = nf === "anything" ? pickWeighted6(namedForWeights(character), rng) : nf;
+    const resolved = nf === "anything" ? pickWeighted7(namedForWeights(character), rng) : nf;
     if (!resolved || resolved === "anything") return void 0;
     const kind = (resolved === "land" || resolved === "place") && rng() < REALM_DATA.collectiveShare ? "collective" : resolved;
-    const s = pickWeighted6(weigh(REALM_DATA.shapes[kind]), rng);
+    const s = pickWeighted7(weigh(REALM_DATA.shapes[kind]), rng);
     return s ? { shape: s, kind, nf: resolved, t: (_c5 = s.t) != null ? _c5 : [] } : void 0;
   };
   const oneName2 = () => {
     var _a9;
     for (let round = 0; round < 2; round++) {
-      const character = (_a9 = chosen == null ? void 0 : chosen.key) != null ? _a9 : pickWeighted6(characters, rng);
+      const character = (_a9 = chosen == null ? void 0 : chosen.key) != null ? _a9 : pickWeighted7(characters, rng);
       if (!character) return void 0;
       for (let i = 0; i < 20; i++) {
         const choice = chooseShape(character, namedFor);
@@ -111044,7 +112987,7 @@ function generateRealmNames(options) {
         var _a10, _b6;
         return [e, ((_a10 = e.x) != null ? _a10 : 1) * toneFactor((_b6 = e.t) != null ? _b6 : [], tone)];
       }).filter(([, w]) => w > 0);
-      const h = pickWeighted6(pool3, rng);
+      const h = pickWeighted7(pool3, rng);
       if (!h) return void 0;
       honorific = h.w;
       for (const t of (_d4 = h.t) != null ? _d4 : []) ctx.drawn.add(t);
@@ -118064,7 +120007,7 @@ function vocabPoolAll(ctx, pool3, token17) {
 function vocabWord(ctx, pool3, token17, keep) {
   var _a8;
   const items = boostPool(ctx.context, pool3, vocabPool(ctx, pool3, token17)).filter(([e2]) => !keep || keep(e2.w));
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   noteNoun(ctx.rng, pool3, e.w);
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
@@ -118084,7 +120027,7 @@ function gnWord2(ctx, token17) {
   const list = GN_LISTS2[token17];
   const setting = SF_LISTS.has(token17) ? "SF" : ctx.setting;
   const items = groupListWords(list, setting, (_c4 = ctx.scale) != null ? _c4 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.words.push({ pool: list, word: w });
@@ -118119,7 +120062,7 @@ function routeFigure(cultureKey, setting, rng) {
     const form = entryForm(r, "male", false);
     if (form) items.push([form.text, ((_b4 = r.x) != null ? _b4 : 1) * ((_d3 = (_c4 = r.cx) == null ? void 0 : _c4[engineCulture(cultureKey)]) != null ? _d3 : 1)]);
   }
-  return pickWeighted6(items, rng);
+  return pickWeighted7(items, rng);
 }
 var figure = (ctx) => routeFigure(ctx.culture.key, ctx.setting, ctx.rng);
 var FOLK = /* @__PURE__ */ new WeakMap();
@@ -118130,7 +120073,7 @@ function routeFolk(cultureKey, rng, catalogue = BUILT_IN_BIOMES) {
   if (!pools) FOLK.set(catalogue, pools = /* @__PURE__ */ new Map());
   let pool3 = pools.get(tradition);
   if (!pool3) {
-    pool3 = generateTribalNames({ tradition, count: 120, seed: 1789, catalogue }).names.map((n) => n.name.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    pool3 = generateTribalNames({ signature: false, tradition, count: 120, seed: 1789, catalogue }).names.map((n) => n.name.replace(/^the /i, "")).filter((n) => !n.includes("["));
     pools.set(tradition, pool3);
   }
   return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
@@ -118144,14 +120087,14 @@ function routeKingdom(cultureKey, routeEra, rng, catalogue = BUILT_IN_BIOMES) {
   if (!pools) KINGDOMS.set(catalogue, pools = /* @__PURE__ */ new Map());
   let pool3 = pools.get(key2);
   if (!pool3) {
-    pool3 = generateRealmNames({ culture: engineCulture(cultureKey), era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
+    pool3 = generateRealmNames({ signature: false, culture: engineCulture(cultureKey), era, character: "territorial", namedFor: "land", output: "short", people: "invented", count: 80, seed: 1789, catalogue }).names.map((n) => n.text.replace(/^the /i, "")).filter((n) => !n.includes("["));
     pools.set(key2, pool3);
   }
   return pool3.length > 0 ? pickOne4(pool3, rng) : void 0;
 }
 var kingdom = (ctx) => routeKingdom(ctx.culture.key, ctx.era, ctx.rng, ctx.catalogue);
 function roadNumber(ctx, which) {
-  const range2 = pickWeighted6(ROUTE_DATA.roadNumbers[which].map((r) => [r, r[2] * (r[1] - r[0] + 1)]), ctx.rng);
+  const range2 = pickWeighted7(ROUTE_DATA.roadNumbers[which].map((r) => [r, r[2] * (r[1] - r[0] + 1)]), ctx.rng);
   return String(range2[0] + Math.floor(ctx.rng() * (range2[1] - range2[0] + 1)));
 }
 function token5(ctx, name) {
@@ -118197,14 +120140,14 @@ function token5(ctx, name) {
     }
     case "roadLetter": {
       const letters2 = Object.entries((_c4 = (_b4 = ctx.shape) == null ? void 0 : _b4.letters) != null ? _c4 : { A: 1 });
-      return ctx.letter = pickWeighted6(letters2, rng);
+      return ctx.letter = pickWeighted7(letters2, rng);
     }
     case "n":
       return roadNumber(ctx, (_d3 = ctx.letter) != null ? _d3 : "route");
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
-      return ordinalText(pickWeighted6(choices, rng));
+      return ordinalText(pickWeighted7(choices, rng));
     }
     case "spaceLand": {
       const w = gnWord2(ctx, "spaceLand");
@@ -118406,10 +120349,10 @@ function generateRouteNames(options) {
     var _a9;
     const share2 = ROUTE_DATA.spaceBorrow.share;
     if (kind === "space" && !options.shape && rng() < (typeof share2 === "number" ? share2 : share2[(_a9 = ctx.scale) != null ? _a9 : "Pl"])) {
-      const plan = pickWeighted6(borrowedPlans(ctx), rng);
+      const plan = pickWeighted7(borrowedPlans(ctx), rng);
       if (plan) return plan;
     }
-    return pickWeighted6(kindPlans(ctx, kind, options.shape), rng);
+    return pickWeighted7(kindPlans(ctx, kind, options.shape), rng);
   };
   const toName = (built, series) => ({
     text: built.text,
@@ -118424,7 +120367,7 @@ function generateRouteNames(options) {
   });
   const drawKind2 = (scale) => {
     var _a9, _b4;
-    return (_b4 = chosen == null ? void 0 : chosen.key) != null ? _b4 : (_a9 = pickWeighted6(kindWeightsFor(scale), rng)) == null ? void 0 : _a9.key;
+    return (_b4 = chosen == null ? void 0 : chosen.key) != null ? _b4 : (_a9 = pickWeighted7(kindWeightsFor(scale), rng)) == null ? void 0 : _a9.key;
   };
   const oneBuilt = (kindFor) => {
     const scale = drawNameScale();
@@ -118563,7 +120506,7 @@ function generateRouteNames(options) {
     );
     if (others.length === 0) return;
     fill(() => {
-      const b = draw3({ byName: anchor }, pickWeighted6(others, rng));
+      const b = draw3({ byName: anchor }, pickWeighted7(others, rng));
       return b && toName(b, series);
     });
   }
@@ -118664,7 +120607,7 @@ function note(ctx, pool3, e) {
 function fromPool(ctx, pool3, opts = {}) {
   const tiered = !!opts.tiered && !!ctx.want;
   const items = drawable(ctx, pool3, (e2) => (!opts.keep || opts.keep(e2)) && (!tiered || tiersReaching(e2.v, ctx.shift, ctx.want).length > 0));
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   note(ctx, pool3, e);
   if (opts.tiered) {
@@ -118701,7 +120644,7 @@ function companyPool(ctx, type) {
     if (typesInSetting(family, ctx.setting).some((t) => t.key === type)) {
       const [genre, fantastic] = GENRE_OF[ctx.setting];
       const drop = new Set(MONEY_DATA.companyDrop);
-      const batch = generateGroupNames({ family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789, catalogue: ctx.catalogue });
+      const batch = generateGroupNames({ signature: false, family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789, catalogue: ctx.catalogue });
       for (const n of batch.names) {
         const words = n.text.replace(/^the /i, "").split(" ");
         if (words.length > 1 && drop.has(words[words.length - 1])) words.pop();
@@ -118717,21 +120660,21 @@ function company(ctx) {
   if (ctx.mode === "placeholders") return "[company]";
   const family = findFamily("trade");
   const offered = new Set(typesInSetting(family, ctx.setting).map((t) => t.key));
-  const type = pickWeighted6(
+  const type = pickWeighted7(
     MONEY_DATA.companyTypes.filter((t) => offered.has(t.key) && companyPool(ctx, t.key).length > 0).map((t) => [t.key, t.w]),
     ctx.rng
   );
   return type ? pickOne5(companyPool(ctx, type), ctx.rng) : void 0;
 }
 function listWord4(ctx, list) {
-  return pickWeighted6(
+  return pickWeighted7(
     list.filter((e) => cultureAllowed(e.c, ctx.culture.key, ctx.era)).map((e) => [e.w, 1]),
     ctx.rng
   );
 }
 function gnWord3(ctx, list, setting = ctx.setting) {
   const items = groupListWords(list, setting).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.log.push({ pool: list, word: w });
@@ -118754,7 +120697,7 @@ function metalPool(ctx) {
   };
   const tiered = !ctx.exactMetal && !!ctx.want;
   const items = drawable(ctx, "coinMetal", (e2) => keep(e2) && (!tiered || tiersReaching(e2.v, ctx.shift, ctx.want).length > 0));
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   note(ctx, "coinMetal", e);
   const tiers = e.v && e.v.length > 0 ? e.v : void 0;
@@ -118782,7 +120725,7 @@ function emblem(ctx) {
     merged2.set(w2, [have == null ? void 0 : have[0], ((_c4 = have == null ? void 0 : have[1]) != null ? _c4 : 0) + n]);
   }
   const used = ctx.used;
-  const w = pickWeighted6(
+  const w = pickWeighted7(
     [...merged2.entries()].filter(([word]) => !(used == null ? void 0 : used.has(`emblem:${word}`))).map(([word, [, n]]) => [word, n]),
     ctx.rng
   );
@@ -118805,7 +120748,7 @@ function coinWord(ctx) {
 function fraction(ctx) {
   var _a8;
   const coins = cachedPool(ctx, "coinWord");
-  const e = pickWeighted6(
+  const e = pickWeighted7(
     drawable(ctx, "coinFraction", (f) => (!ctx.lowerOnly || f.ts === 1) && (!ctx.want || coins.some(([c]) => {
       var _a9;
       return tiersReaching(c.v, (_a9 = f.ts) != null ? _a9 : 0, ctx.want).length > 0;
@@ -118826,7 +120769,7 @@ function fixedWord(ctx) {
   const shape = ctx.shape;
   const tiered = !!ctx.want && ctx.kind !== "currency";
   const items = drawable(ctx, `moneyFixed:${shape.kind}`, (e2) => e2.fx === shape.fx && (!tiered || tiersReaching(e2.v, 0, ctx.want).length > 0));
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   note(ctx, `moneyFixed:${shape.kind}`, e);
   if (ctx.want && e.v && e.v.length > 0) ctx.tier = ctx.want;
@@ -119021,7 +120964,7 @@ function drawTheme(S) {
     if (t.key === "names") return names;
     return true;
   });
-  return pickWeighted6(options.map((t) => [t.key, t.w]), S.rng);
+  return pickWeighted7(options.map((t) => [t.key, t.w]), S.rng);
 }
 function generatedStep(S, kind, tier, lay, exactMetal) {
   var _a8, _b4, _c4, _d3;
@@ -119048,7 +120991,7 @@ function generatedStep(S, kind, tier, lay, exactMetal) {
       const w = shapeWeight3(ctx, f);
       if (w > 0) shapes.push([f, w]);
     }
-    const s = pickWeighted6(shapes, S.rng);
+    const s = pickWeighted7(shapes, S.rng);
     if (!s) {
       if (!relaxed && kind === "coin" && lay.theme) {
         attempt2 = 19;
@@ -119109,7 +121052,7 @@ function coinageExtras(S, room) {
   };
   if (room > 0 && ROUTE_ERAS.findIndex((e) => e.code === S.era) >= 2) {
     const kinds = ["paper", "scrip"].map((k) => [k, moneyKindWeight(k, S.culture.key, S.era)]).filter(([, w]) => w > 0);
-    for (let i = 0; i < 6 && out.length === 0 && kinds.length > 0; i++) take(S.build(pickWeighted6(kinds, S.rng)));
+    for (let i = 0; i < 6 && out.length === 0 && kinds.length > 0; i++) take(S.build(pickWeighted7(kinds, S.rng)));
     if (out.length > 0) room--;
   }
   if (room > 0 && moneyKindWeight("nickname", S.culture.key, S.era) > 0) {
@@ -119142,7 +121085,7 @@ function coinage(S, ladder, notices) {
   }
   const steps = ladder ? ladder.steps.slice(0, Math.max(0, room)) : (() => {
     var _a9, _b5;
-    const n = Math.min(pickWeighted6(MONEY_DATA.series.steps.map(([k, w]) => [k, w]), S.rng), Math.max(0, room));
+    const n = Math.min(pickWeighted7(MONEY_DATA.series.steps.map(([k, w]) => [k, w]), S.rng), Math.max(0, room));
     return (_b5 = (_a9 = MONEY_DATA.series.tiers[String(n)]) == null ? void 0 : _a9.map((tier) => ({ tier }))) != null ? _b5 : [];
   })();
   const share2 = (_b4 = S.options.realShare) != null ? _b4 : ladder ? MONEY_DATA.series.realShareValues : MONEY_DATA.series.realShare;
@@ -119278,7 +121221,7 @@ function generateMoneyNames(options) {
     var _a9, _b5;
     for (let i = 0; i < 30; i++) {
       const ctx = newCtx4(kind, { batchEmblems: base.batchEmblems });
-      const s = pickWeighted6(plansFor3(kind), rng);
+      const s = pickWeighted7(plansFor3(kind), rng);
       if (!s) return void 0;
       ctx.shape = s;
       const raw = renderPattern4(ctx, s.p);
@@ -119326,7 +121269,7 @@ function generateMoneyNames(options) {
     return true;
   };
   for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
-    const k = chosen != null ? chosen : pickWeighted6(kindWeights, rng);
+    const k = chosen != null ? chosen : pickWeighted7(kindWeights, rng);
     if (!k || chosen && plansFor3(chosen).length === 0) break;
     add2(build(k));
   }
@@ -119341,7 +121284,7 @@ function generateMoneyNames(options) {
 
 // src/peoples/engine.ts
 var PEOPLES_DATA = peoples_tongues_default;
-var PEOPLE_CULTURES2 = BYNAME_CULTURES;
+var PEOPLE_CULTURES2 = BYNAME_CULTURES_5C;
 var ERA_ORDER = LENS_ERAS.map((e) => e.code);
 var eraFrom = (era, from) => !from || ERA_ORDER.indexOf(era) >= ERA_ORDER.indexOf(from);
 var isFuture = (era) => era === "NF" || era === "IS";
@@ -119647,7 +121590,7 @@ function drawLanguage(base, ic, era, tone, detail, rng, ok) {
   }).filter(([, w]) => w > 0);
   let current = L;
   for (let i = 0; i < 20; i++) {
-    const shape = pickWeighted6(shapes, rng);
+    const shape = pickWeighted7(shapes, rng);
     if (!shape) break;
     const text = shape.p.replace("{L}", L).replace("{harbourWord}", shape.p.includes("{harbourWord}") ? harbour() : "");
     if (ok(text)) {
@@ -119688,7 +121631,7 @@ function formatPeopleRow(row, giving) {
 }
 function makePeopleDrawer(options) {
   var _a8, _b4, _c4, _d3;
-  const culture = PEOPLE_CULTURES2.some((c) => c.key === options.culture) ? options.culture : "general";
+  const culture = engineCulture(PEOPLE_CULTURES2.some((c) => c.key === options.culture) ? options.culture : "general");
   const era = asEra(options.era);
   const tone = (_a8 = options.tone) != null ? _a8 : "any";
   const giving = (_b4 = options.giving) != null ? _b4 : "both";
@@ -119706,14 +121649,14 @@ function makePeopleDrawer(options) {
     else {
       const generic = genericRow(parts, era);
       if (generic) {
-        const speech = (_a9 = pickWeighted6(PEOPLES_DATA.genericLanguage.map((l, i) => [i, l.w]), rng)) != null ? _a9 : 0;
+        const speech = (_a9 = pickWeighted7(PEOPLES_DATA.genericLanguage.map((l, i) => [i, l.w]), rng)) != null ? _a9 : 0;
         forms = genericForms(parts, era, { pick: Math.floor(rng() * generic.row.people.length), speech });
       } else if (!needsFallback(parts)) {
         const weights = weightsFor(parts.head, culture, era, tone);
         const pool3 = Object.entries(weights);
         const { id } = endingOf(parts.head);
         while (pool3.length > 0 && !forms) {
-          const family = pickWeighted6(pool3, rng);
+          const family = pickWeighted7(pool3, rng);
           pool3.splice(pool3.findIndex(([f]) => f === family), 1);
           const choice = {};
           if (family === "clip") {
@@ -119724,7 +121667,7 @@ function makePeopleDrawer(options) {
             const e = PEOPLES_DATA.erAdjective;
             const ic = isIcCulture(culture, id);
             const options2 = [["place", e.place], ["ish", e.ish + (ic ? 0 : e.ic)], ["ic", ic ? e.ic : 0]];
-            choice.adjective = pickWeighted6(options2.filter(([, w]) => w > 0), rng);
+            choice.adjective = pickWeighted7(options2.filter(([, w]) => w > 0), rng);
           }
           const built = familyForms(parts, family, culture, choice);
           if (built && formsOk(built)) forms = built;
@@ -119752,9 +121695,27 @@ function makePeopleDrawer(options) {
 }
 var peopleStreamSeed = (seed) => seed + 2654435769 >>> 0;
 function generatePeopleRows(options) {
+  var _a8;
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   const draw3 = makePeopleDrawer({ ...options, rng: mulberry32(peopleStreamSeed(seed)) });
-  return { rows: options.names.map(draw3), seed, notices: [] };
+  const rows = options.names.map(draw3);
+  const peopleOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && !f.includes("{N1}"), false);
+  const tongueOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && f.includes("{N1}"), false);
+  if (!peopleOf || !tongueOf) return { rows, seed, notices: [] };
+  const rng = mulberry32((seed ^ 1549556828) >>> 0);
+  const giving = (_a8 = options.giving) != null ? _a8 : "both";
+  return {
+    rows: rows.map((row) => {
+      if (rng() >= SIGNATURE_SHARE) return row;
+      const people2 = peopleOf(rng);
+      const language = tongueOf(rng);
+      if (!people2 || !language) return row;
+      const changed = { ...row, people: people2, language };
+      return { ...changed, text: formatPeopleRow(changed, giving) };
+    }),
+    seed,
+    notices: []
+  };
 }
 function parseTypedNames(text) {
   const seen = /* @__PURE__ */ new Set();
@@ -120175,7 +122136,7 @@ function fromPool2(ctx, pool3, keep, x) {
     var _a9;
     return [e2, w * ((_a9 = x == null ? void 0 : x(e2)) != null ? _a9 : 1)];
   });
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   noteNoun(ctx.rng, pool3, e.w);
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
@@ -120204,7 +122165,7 @@ function domainWord(ctx) {
     var _a8;
     return [w2, (_a8 = w2.x) != null ? _a8 : 1];
   });
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w) ctx.words.push({ pool: "domainWord", word: w.w });
   return w;
 }
@@ -120232,7 +122193,7 @@ function token7(ctx, name) {
       return (_b4 = domainWord(ctx)) == null ? void 0 : _b4.sg;
     case "archetype": {
       const pantheon = ((_c4 = ctx.shape) == null ? void 0 : _c4.kind) === "pantheon";
-      const a = pickWeighted6(archetypes(ctx, ctx.domain, pantheon).filter(([t]) => !pantheon || !/^the /.test(t) || true), rng);
+      const a = pickWeighted7(archetypes(ctx, ctx.domain, pantheon).filter(([t]) => !pantheon || !/^the /.test(t) || true), rng);
       if (a) ctx.words.push({ pool: "archetype", word: a });
       return pantheon ? a == null ? void 0 : a.replace(/^the /, "") : a;
     }
@@ -120243,7 +122204,7 @@ function token7(ctx, name) {
         var _a9;
         return !(((_a9 = ctx.shape) == null ? void 0 : _a9.p.includes("Eternal")) && L.steppeNoColour.includes(w2));
       });
-      const w = pickWeighted6(items.map(([w2, n]) => [w2, n * toneFactor(wordTones("colour", w2), ctx.tone)]), rng);
+      const w = pickWeighted7(items.map(([w2, n]) => [w2, n * toneFactor(wordTones("colour", w2), ctx.tone)]), rng);
       if (w) ctx.words.push({ pool: "colour", word: w });
       return w;
     }
@@ -120252,11 +122213,11 @@ function token7(ctx, name) {
     case "underAbove":
       return pickOne6(L[name], rng);
     case "eastHonour":
-      return pickWeighted6(L.eastHonour, rng);
+      return pickWeighted7(L.eastHonour, rng);
     case "number":
-      return pickWeighted6(L.number.map(([w, n]) => [w, n * toneFactor(L.strangeNumber.includes(w) ? ["strange"] : [], ctx.tone)]), rng);
+      return pickWeighted7(L.number.map(([w, n]) => [w, n * toneFactor(L.strangeNumber.includes(w) ? ["strange"] : [], ctx.tone)]), rng);
     case "ordinal": {
-      const w = pickWeighted6(groupListWords("ordinalWord", ctx.setting), rng);
+      const w = pickWeighted7(groupListWords("ordinalWord", ctx.setting), rng);
       return w != null ? w : ordinalText(1 + Math.floor(rng() * 12));
     }
     case "divineVerb": {
@@ -120350,8 +122311,8 @@ function deityTitleIn(ctx, forms) {
   var _a8;
   for (let i = 0; i < 20; i++) {
     const sub = { ...ctx, gender: pickOne6(GENDERS, ctx.rng), deityRef: void 0 };
-    sub.domain = (_a8 = pickWeighted6(domainWeights(sub), ctx.rng)) != null ? _a8 : sub.domain;
-    const s = pickWeighted6(shapesFor2(sub, "deity", forms), ctx.rng);
+    sub.domain = (_a8 = pickWeighted7(domainWeights(sub), ctx.rng)) != null ? _a8 : sub.domain;
+    const s = pickWeighted7(shapesFor2(sub, "deity", forms), ctx.rng);
     if (!s) return void 0;
     sub.shape = s;
     const raw = renderPattern5(sub, honourPattern(sub, s));
@@ -120420,8 +122381,8 @@ function generateDeityNames(options) {
     var _a9, _b5, _c5;
     for (let i = 0; i < 20; i++) {
       const ctx = { ...base, drawn: /* @__PURE__ */ new Set(), words: [], gender: genderFixed != null ? genderFixed : pickOne6(GENDERS, rng), ...extra };
-      if (!extra.domain) ctx.domain = chosenDomain != null ? chosenDomain : pickWeighted6(domainWeights(ctx), rng);
-      const s = pickWeighted6(shapesFor2(ctx, kind, options.forms, options.shape), rng);
+      if (!extra.domain) ctx.domain = chosenDomain != null ? chosenDomain : pickWeighted7(domainWeights(ctx), rng);
+      const s = pickWeighted7(shapesFor2(ctx, kind, options.forms, options.shape), rng);
       if (!s) return void 0;
       ctx.shape = s;
       const raw = renderPattern5(ctx, honourPattern(ctx, s));
@@ -120461,7 +122422,7 @@ function generateDeityNames(options) {
   };
   const drawKind2 = () => {
     var _a9;
-    return (_a9 = options.kind) != null ? _a9 : pickWeighted6(kindWeights, rng);
+    return (_a9 = options.kind) != null ? _a9 : pickWeighted7(kindWeights, rng);
   };
   if (options.series) pantheon();
   else for (let attempt2 = 0; attempt2 < count * 50 && out.length < count; attempt2++) add2(build(drawKind2()));
@@ -124664,7 +126625,7 @@ function drawPool(ctx, pool3, opts = {}) {
     var _a9;
     return [e2, w * toneFactor((_a9 = e2.t) != null ? _a9 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
   ctx.log.push({ pool: pool3, word: e.w });
@@ -124679,7 +126640,7 @@ function drawList(ctx, name, extra = []) {
     var _a9, _b5;
     return [e2, ((_a9 = e2.x) != null ? _a9 : 1) * toneFactor((_b5 = e2.t) != null ? _b5 : [], ctx.tone)];
   }).filter(([, w]) => w > 0);
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_b4 = e.t) != null ? _b4 : []) ctx.drawn.add(t);
   ctx.log.push({ pool: name, word: e.w });
@@ -124690,7 +126651,7 @@ function drawList(ctx, name, extra = []) {
 function gnWord4(ctx, list, setting = ctx.setting) {
   const used = ctx.picked.get(list);
   const items = groupListWords(list, setting).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([w2, n]) => n > 0 && !(used == null ? void 0 : used.has(w2)));
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.log.push({ pool: list, word: w });
@@ -124705,7 +126666,7 @@ function housePool(ctx) {
   let pool3 = HOUSES.get(key2);
   if (!pool3) {
     const [genre, fantastic] = GENRE_OF2[ctx.setting];
-    const batch = generateBynames({ module: "familyNames", culture: ctx.culture, genre, fantastic, language: "english", source: "placeholder", count: 80, seed: 1789 });
+    const batch = generateBynames({ signature: false, module: "familyNames", culture: ctx.culture, genre, fantastic, language: "english", source: "placeholder", count: 80, seed: 1789 });
     pool3 = [...new Set(batch.names.map((n) => n.text.replace(/^the /i, "")).filter((t) => t && !t.includes("[")))];
     HOUSES.set(key2, pool3);
   }
@@ -124790,7 +126751,7 @@ function token8(ctx, name, mod) {
       return f && mod === "poss" ? groupPossessive(f, false) : f;
     }
     case "beast": {
-      const w = shared(ctx, "beast", () => pickWeighted6(beastItems(ctx), ctx.rng));
+      const w = shared(ctx, "beast", () => pickWeighted7(beastItems(ctx), ctx.rng));
       if (w === void 0) return void 0;
       return mod === "poss" ? groupPossessive(w, false) : w;
     }
@@ -124807,7 +126768,7 @@ function token8(ctx, name, mod) {
       return ctx.setting === "SF" ? gnWord4(ctx, "spaceLand", "SF") : void 0;
     case "metal": {
       const items = poolEntries(ctx.vocab, "coinMetal", { culture: ctx.culture, era: ctx.era, fantastic: ctx.fantastic }).map(([e, w]) => [e.w, w]);
-      return pickWeighted6(items, ctx.rng);
+      return pickWeighted7(items, ctx.rng);
     }
     case "object": {
       const e = drawPool(ctx, "thingObject", { kind: ctx.kind });
@@ -124823,7 +126784,7 @@ function token8(ctx, name, mod) {
       return (_c4 = drawPool(ctx, "thingTemper", { keep: (e) => !(ctx.female && e.g === "m") })) == null ? void 0 : _c4.w;
     case "fanTarget": {
       const items = fantasticTargets(ctx).map(([e, w]) => [e.w, w]);
-      return ctx.fantastic ? pickWeighted6(items, ctx.rng) : void 0;
+      return ctx.fantastic ? pickWeighted7(items, ctx.rng) : void 0;
     }
     case "baneTarget": {
       const own = drawList(ctx, "baneTarget");
@@ -125005,7 +126966,7 @@ function generateThingNames(options) {
   const build = (kind) => {
     for (let i = 0; i < 40; i++) {
       const ctx = { ...base, kind, drawn: /* @__PURE__ */ new Set(), log: [], values: /* @__PURE__ */ new Map(), picked: /* @__PURE__ */ new Map(), object: void 0, person: false, female: false };
-      const plan = pickWeighted6(plansFor(ctx, options.shape), rng);
+      const plan = pickWeighted7(plansFor(ctx, options.shape), rng);
       if (!plan) return void 0;
       ctx.female = plan.p.includes(":f}");
       let raw = renderPattern6(ctx, plan.p);
@@ -125027,7 +126988,7 @@ function generateThingNames(options) {
   const names = [];
   const seen = /* @__PURE__ */ new Set();
   for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
-    const kind = chosen != null ? chosen : pickWeighted6(kindWeights, rng);
+    const kind = chosen != null ? chosen : pickWeighted7(kindWeights, rng);
     if (!kind) break;
     const n = build(kind);
     if (!n || seen.has(n.name.toLowerCase())) continue;
@@ -125227,12 +127188,12 @@ function peopleSentence(state, packs = []) {
   const lens = lensClause("peoplesTongues", state, { cultureTitle: "The culture the names come from. It decides which endings English would use: -er and -ish for English places, -ian and -an for Latin ones, -i for Arabic and Indian ones, -ese for East Asian ones." });
   out.push(asSegment(lens.culture, "culture"));
   out.push(" peoples and tongues for ");
-  const sources = ["typed", "pack", "realms", "places"].filter((s) => s !== "places" || placesOffered(state.culture));
+  const sources2 = ["typed", "pack", "realms", "places"].filter((s) => s !== "places" || placesOffered(state.culture));
   out.push({
     field: "source",
     text: state.source === "pack" ? "names from" : SOURCE_TEXT2[state.source],
     title: "Names to work from: typed, drawn from one of your packs, or new names from realms and polities or the place names modules.",
-    choices: sources.map((s) => ({ id: s, label: SOURCE_TEXT2[s] })),
+    choices: sources2.map((s) => ({ id: s, label: SOURCE_TEXT2[s] })),
     current: state.source
   });
   if (state.source === "pack") {
@@ -125548,6 +127509,7 @@ Names to take off the flag list. Built-in block-list names can't be allowed.
 
 // src/vessels/sentence.ts
 registerRoster("vessel", VESSEL_CULTURES);
+registerRoster("vesselSpace", VESSEL_BASE_CULTURES);
 function defaultVesselState(module2) {
   return {
     // Aircraft and land brief §2.2: aircraft default to General, land vehicles to Norman & British, in a modern world.
@@ -125773,356 +127735,6 @@ Names to allow, though they echo a real or well-known vessel.
 
 Names to take off the flag list. Built-in block-list names can't be allowed.
 `;
-
-// src/data/real-places.json
-var real_places_default = {
-  $comment: 'Northern Europe brief 5b \xA712.3: well-known real places (brief 5a rule 5 and \xA79: features) and real towns. A fixed whole name is never one; a [place] fill that is one is drawn again; a generated name that is a real town, alone or after a qualifier ("South Bath"), is drawn again.',
-  places: [
-    "Land's End",
-    "Snowdon",
-    "Black Forest",
-    "Ben Nevis",
-    "Scafell Pike",
-    "Skiddaw",
-    "Helvellyn",
-    "Cader Idris",
-    "Pen y Fan",
-    "Lake District",
-    "Peak District",
-    "Dartmoor",
-    "Exmoor",
-    "Bodmin Moor",
-    "Cairngorms",
-    "Loch Ness",
-    "Loch Lomond",
-    "Isle of Skye",
-    "Isle of Man",
-    "Orkney",
-    "Shetland",
-    "Hebrides",
-    "Giant's Causeway",
-    "Slieve Donard",
-    "Mount Brandon",
-    "Carrauntoohil",
-    "Wicklow Mountains",
-    "Cliffs of Moher",
-    "Ring of Kerry",
-    "Connemara",
-    "Lough Neagh",
-    "River Thames",
-    "River Severn",
-    "River Wye",
-    "River Tyne",
-    "River Clyde",
-    "River Shannon",
-    "Hadrian's Wall",
-    "Offa's Dyke",
-    "Stonehenge",
-    "Avebury",
-    "Glastonbury Tor",
-    "White Cliffs of Dover",
-    "Cheddar Gorge",
-    "Lizard Point",
-    "St Michael's Mount",
-    "Mount's Bay",
-    "Tintagel",
-    "Fowey",
-    "Bodmin",
-    "Mousehole",
-    "Zennor",
-    "Gower",
-    "Anglesey",
-    "Snowdonia",
-    "Brecon Beacons",
-    "Black Mountains",
-    "Pembrokeshire",
-    "Fair Isle",
-    "Ben Lomond",
-    "Glencoe",
-    "Rannoch Moor",
-    "Trossachs",
-    "Jotunheimen",
-    "Galdhopiggen",
-    "Sognefjord",
-    "Geirangerfjord",
-    "Hardangervidda",
-    "Lofoten",
-    "Nordkapp",
-    "Trollstigen",
-    "Preikestolen",
-    "Oslofjord",
-    "Kattegat",
-    "Skagerrak",
-    "Oresund",
-    "Bornholm",
-    "Zealand",
-    "Jutland",
-    "Funen",
-    "Mols Bjerge",
-    "Mons Klint",
-    "Skagen",
-    "Gotland",
-    "Oland",
-    "Vattern",
-    "Vanern",
-    "Malaren",
-    "Kebnekaise",
-    "Sarek",
-    "Abisko",
-    "Laponia",
-    "Iceland",
-    "Vatnajokull",
-    "Thingvellir",
-    "Gullfoss",
-    "Geysir",
-    "Hekla",
-    "Surtsey",
-    "Snaefellsjokull",
-    "Jokulsarlon",
-    "Faroe Islands",
-    "Reykjanes",
-    "Rhine Gorge",
-    "Loreley",
-    "Mosel",
-    "Harz",
-    "Brocken",
-    "Thuringian Forest",
-    "Bavarian Forest",
-    "Zugspitze",
-    "Watzmann",
-    "Konigssee",
-    "Bodensee",
-    "Lake Constance",
-    "Chiemsee",
-    "Berchtesgaden",
-    "Rugen",
-    "Sylt",
-    "Wadden Sea",
-    "Heligoland",
-    "Luneburg Heath",
-    "Spreewald",
-    "Elbe Sandstone Mountains",
-    "Saxon Switzerland",
-    "Fichtelgebirge",
-    "Eifel",
-    "Taunus",
-    "Odenwald",
-    "Swabian Jura",
-    "Hohenzollern",
-    "Neuschwanstein",
-    "Drachenfels",
-    "Kyffhauser",
-    "Rothaargebirge",
-    "Teutoburg Forest",
-    "Mecklenburg Lake District",
-    "Mueritz",
-    "Frisian Islands",
-    "Wannsee",
-    "Havel",
-    "Oder",
-    "Elbe",
-    "Weser",
-    "Ems",
-    "Danube",
-    "Neckar",
-    "Main",
-    "Isar",
-    "Inn",
-    "Lech"
-  ],
-  towns: [
-    "Bath",
-    "York",
-    "London",
-    "Ely",
-    "Wells",
-    "Bury",
-    "Ripon",
-    "Leeds",
-    "Hull",
-    "Derby",
-    "Rugby",
-    "Reading",
-    "Dover",
-    "Deal",
-    "Hastings",
-    "Rye",
-    "Lewes",
-    "Oxford",
-    "Cambridge",
-    "Norwich",
-    "Lincoln",
-    "Durham",
-    "Carlisle",
-    "Chester",
-    "Exeter",
-    "Truro",
-    "Penzance",
-    "Falmouth",
-    "Newquay",
-    "Padstow",
-    "St Ives",
-    "Plymouth",
-    "Bristol",
-    "Gloucester",
-    "Worcester",
-    "Hereford",
-    "Shrewsbury",
-    "Lichfield",
-    "Coventry",
-    "Warwick",
-    "Stafford",
-    "Nottingham",
-    "Leicester",
-    "Northampton",
-    "Bedford",
-    "Luton",
-    "Ipswich",
-    "Colchester",
-    "Canterbury",
-    "Maidstone",
-    "Brighton",
-    "Portsmouth",
-    "Southampton",
-    "Winchester",
-    "Salisbury",
-    "Swindon",
-    "Newbury",
-    "Henley",
-    "Windsor",
-    "Slough",
-    "Watford",
-    "Harrow",
-    "Croydon",
-    "Sheffield",
-    "Manchester",
-    "Liverpool",
-    "Preston",
-    "Blackpool",
-    "Lancaster",
-    "Kendal",
-    "Keswick",
-    "Whitby",
-    "Scarborough",
-    "Harrogate",
-    "Skipton",
-    "Halifax",
-    "Bradford",
-    "Wakefield",
-    "Doncaster",
-    "Newcastle",
-    "Sunderland",
-    "Edinburgh",
-    "Glasgow",
-    "Aberdeen",
-    "Dundee",
-    "Perth",
-    "Stirling",
-    "Inverness",
-    "Oban",
-    "Fort William",
-    "Ullapool",
-    "Stornoway",
-    "Kirkwall",
-    "Lerwick",
-    "Dublin",
-    "Cork",
-    "Galway",
-    "Limerick",
-    "Waterford",
-    "Belfast",
-    "Derry",
-    "Sligo",
-    "Kilkenny",
-    "Cardiff",
-    "Swansea",
-    "Newport",
-    "Bangor",
-    "Aberystwyth",
-    "Caernarfon",
-    "Conwy",
-    "Llandudno",
-    "Wrexham",
-    "Brecon",
-    "Tenby",
-    "Bergen",
-    "Oslo",
-    "Trondheim",
-    "Stavanger",
-    "Tromso",
-    "Stockholm",
-    "Gothenburg",
-    "Malmo",
-    "Uppsala",
-    "Lund",
-    "Visby",
-    "Copenhagen",
-    "Aarhus",
-    "Odense",
-    "Aalborg",
-    "Roskilde",
-    "Reykjavik",
-    "Akureyri",
-    "Berlin",
-    "Hamburg",
-    "Bremen",
-    "Lubeck",
-    "Kiel",
-    "Rostock",
-    "Cologne",
-    "Bonn",
-    "Koblenz",
-    "Mainz",
-    "Trier",
-    "Dusseldorf",
-    "Frankfurt",
-    "Heidelberg",
-    "Stuttgart",
-    "Ulm",
-    "Munich",
-    "Augsburg",
-    "Nuremberg",
-    "Regensburg",
-    "Passau",
-    "Salzburg",
-    "Innsbruck",
-    "Dresden",
-    "Leipzig",
-    "Erfurt",
-    "Weimar",
-    "Gottingen",
-    "Hanover",
-    "Hildesheim",
-    "Bamberg",
-    "Wurzburg",
-    "Freiburg",
-    "Konstanz",
-    "Lindau",
-    "Hameln",
-    "Goslar",
-    "Quedlinburg",
-    "Meissen",
-    "Bayreuth",
-    "Potsdam",
-    "Stralsund",
-    "Wismar"
-  ]
-};
-
-// src/realPlaces.ts
-var FEATURES2 = new Set(real_places_default.places.map((n) => n.toLowerCase()));
-var TOWNS = new Set(real_places_default.towns.map((n) => n.toLowerCase()));
-var QUALIFIERS = /* @__PURE__ */ new Set(["the", "north", "south", "east", "west", "northern", "southern", "eastern", "western", "upper", "lower", "inner", "outer", "old", "new", "great", "little", "greater", "lesser", "far", "near"]);
-var isRealPlace = (name) => {
-  const n = name.trim().toLowerCase();
-  return FEATURES2.has(n) || TOWNS.has(n);
-};
-function isRealTownName(name) {
-  const words = name.trim().toLowerCase().split(/\s+/);
-  let i = 0;
-  while (i < words.length - 1 && QUALIFIERS.has(words[i])) i++;
-  return TOWNS.has(words.slice(i).join(" "));
-}
 
 // src/data/wilds.json
 var wilds_default = {
@@ -140066,7 +141678,7 @@ function generateWithWilds(options, size, seed) {
     return modules[modules.length - 1][0];
   };
   const names = [];
-  const sources = [];
+  const sources2 = [];
   const seen = /* @__PURE__ */ new Set();
   const spare = [...normal.names];
   const takeNormal = () => {
@@ -140084,28 +141696,28 @@ function generateWithWilds(options, size, seed) {
     if (module2 && text !== void 0) {
       seen.add(text.toLowerCase());
       names.push({ text, hasPlaceholder: text.includes("["), etymology: "" });
-      sources.push(module2);
+      sources2.push(module2);
       continue;
     }
     const n = takeNormal();
     if (!n) break;
     seen.add(n.text.toLowerCase());
     names.push(n);
-    sources.push("own");
+    sources2.push("own");
   }
-  return { result: { ...normal, names }, sources };
+  return { result: { ...normal, names }, sources: sources2 };
 }
 function generateSettlementNames(options) {
   const seed = options.seed !== void 0 && Number.isFinite(options.seed) ? options.seed >>> 0 : Math.random() * 4294967295 >>> 0;
   let failure;
   for (const size of sizesToTry(options.size)) {
     try {
-      const { result, sources } = generateWithWilds(options, size, seed);
+      const { result, sources: sources2 } = generateWithWilds(options, size, seed);
       const notices = [...result.notices];
       if (size !== options.size) {
         notices.unshift(`${cultureLabel(options)} names don't run to a ${sizeLabel(options.size)}; these are ${sizeLabel(size)} names.`);
       }
-      return { ...result, notices, size, sources };
+      return { ...result, notices, size, sources: sources2 };
     } catch (e) {
       if (!(e instanceof Error) || !e.message.startsWith("No eligible")) throw e;
       failure = e;
@@ -140156,28 +141768,28 @@ function groupScale(id) {
   var _a8;
   return (_a8 = COLONIAL_DATA.groups.find((g) => g.id === id)) == null ? void 0 : _a8.scale;
 }
-function kindScales(sources) {
+function kindScales(sources2) {
   var _a8, _b4;
-  if (!sources) return [];
-  if (sources.delegate) return [...SCALES];
+  if (!sources2) return [];
+  if (sources2.delegate) return [...SCALES];
   const found = /* @__PURE__ */ new Set();
-  for (const id of (_b4 = (_a8 = sources.colonial) == null ? void 0 : _a8.groups) != null ? _b4 : []) {
+  for (const id of (_b4 = (_a8 = sources2.colonial) == null ? void 0 : _a8.groups) != null ? _b4 : []) {
     const scale = groupScale(id);
     if (scale) found.add(scale);
   }
   return SCALES.filter((s) => found.has(s));
 }
-function kindScalesAt(sources, era) {
+function kindScalesAt(sources2, era) {
   const offered = scalesAtEra(era);
-  return kindScales(sources).filter((s) => offered.includes(s));
+  return kindScales(sources2).filter((s) => offered.includes(s));
 }
-function groupsAtScale(sources, scale) {
+function groupsAtScale(sources2, scale) {
   var _a8, _b4;
-  return ((_b4 = (_a8 = sources == null ? void 0 : sources.colonial) == null ? void 0 : _a8.groups) != null ? _b4 : []).filter((id) => groupScale(id) === scale);
+  return ((_b4 = (_a8 = sources2 == null ? void 0 : sources2.colonial) == null ? void 0 : _a8.groups) != null ? _b4 : []).filter((id) => groupScale(id) === scale);
 }
 var scaleOf = (choice, era) => validScale(choice, scaleEraOf(era));
-function scaleForDraw(sources, era, choice, rng) {
-  const own = kindScalesAt(sources, era);
+function scaleForDraw(sources2, era, choice, rng) {
+  const own = kindScalesAt(sources2, era);
   if (own.length === 0) return void 0;
   const chosen = scaleOf(choice, era);
   if (chosen !== "any" && own.includes(chosen)) return chosen;
@@ -140446,9 +142058,9 @@ function wildsKindLive(module2, kind, era) {
   const data = wildsDataOf(module2);
   const shapes = [...(_a8 = data.shapes[module2][kind]) != null ? _a8 : [], ...data.cultureShapes.filter((s) => s.module === module2 && s.kind === kind)];
   if (kind === "settlement") return true;
-  const sources = (_b4 = findWildsKind(module2, kind)) == null ? void 0 : _b4.sources;
-  if (sources && isSpaceModule(module2)) return kindScalesAt(sources, era).length > 0;
-  if (sources && isPlaceModule(module2)) return true;
+  const sources2 = (_b4 = findWildsKind(module2, kind)) == null ? void 0 : _b4.sources;
+  if (sources2 && isSpaceModule(module2)) return kindScalesAt(sources2, era).length > 0;
+  if (sources2 && isPlaceModule(module2)) return true;
   return shapes.some((s) => !s.e || s.e.includes(era));
 }
 var wildsKindsAt = (module2, era) => wildsKinds(module2).filter((k) => wildsKindLive(module2, k.key, era));
@@ -140603,7 +142215,7 @@ function vocabPoolAll3(ctx, pool3) {
 }
 function drawEntry(ctx, pool3) {
   var _a8;
-  const e = pickWeighted6(vocabPool3(ctx, pool3), ctx.rng);
+  const e = pickWeighted7(vocabPool3(ctx, pool3), ctx.rng);
   if (!e) return void 0;
   noteNoun(ctx.rng, pool3, e.w);
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
@@ -140615,8 +142227,8 @@ function resolveWildsBiome(module2, culture, where2, chosen, catalogue = BUILT_I
   const data = wildsDataOf(module2).modules[module2];
   if (showsWildsRegion(module2, culture, where2)) return { biome: (_a8 = catalogue.find("britain")) != null ? _a8 : BRITAIN, tags: false, homeBritish: true };
   const offered = wildsBiomes(module2, catalogue);
-  const pick4 = (id) => id ? offered.find((b) => biomeMatches(b, id)) : void 0;
-  const biome = (_c4 = (_b4 = pick4(chosen)) != null ? _b4 : pick4(WILDS_DATA.homeland[culture])) != null ? _c4 : pick4(data.defaultBiome);
+  const pick5 = (id) => id ? offered.find((b) => biomeMatches(b, id)) : void 0;
+  const biome = (_c4 = (_b4 = pick5(chosen)) != null ? _b4 : pick5(WILDS_DATA.homeland[culture])) != null ? _c4 : pick5(data.defaultBiome);
   return { biome, tags: true, homeBritish: false };
 }
 function godName2(ctx) {
@@ -140656,7 +142268,7 @@ function drawStem(ctx, guard) {
       stem = t && stemWeight(t, false) > 0 ? t : void 0;
     } else {
       const entries = st.thin ? [...st.pool, ...st.extras.map((e) => [e, 1])] : st.pool;
-      stem = pickWeighted6(entries, ctx.rng);
+      stem = pickWeighted7(entries, ctx.rng);
     }
     if (stem && !(guard && clashes(stem, ctx.generics))) return stem;
   }
@@ -140664,7 +142276,7 @@ function drawStem(ctx, guard) {
 }
 function listWord5(ctx, list) {
   const items = groupListWords(list, ctx.setting, "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM2(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.words.push({ pool: list, word: w });
@@ -140681,7 +142293,7 @@ function biomeWord(ctx, lists) {
       entries.push([{ w: biomeTitleCase(lowered), pl: biomeTitleCase(pluralOf(lowered)) }, share2 * w / total]);
     }
   }
-  const e = pickWeighted6(entries, ctx.rng);
+  const e = pickWeighted7(entries, ctx.rng);
   if (e) ctx.words.push({ pool: "biome", word: e.w });
   return e;
 }
@@ -140839,7 +142451,7 @@ function featureRef(ctx, kind) {
   const plans5 = refPlans(ctx, kind);
   if (plans5.length === 0) return void 0;
   for (let i = 0; i < 10; i++) {
-    const plan = pickWeighted6(plans5, ctx.rng);
+    const plan = pickWeighted7(plans5, ctx.rng);
     if (!plan) return void 0;
     const raw = renderPattern7(ctx, plan.shape.p, true);
     if (!raw) continue;
@@ -141016,7 +142628,7 @@ function generateWildsNames(options) {
       const ctx = newCtx4();
       ctx.anchor = anchor;
       ctx.forceAnchor = parent;
-      const plan = pickWeighted6(list, rng);
+      const plan = pickWeighted7(list, rng);
       if (!plan) break;
       ctx.shape = plan.shape;
       const raw = renderPattern7(ctx, plan.shape.p);
@@ -141052,7 +142664,7 @@ function generateWildsNames(options) {
       let kindKey;
       if (chosenKind) kindKey = chosenKind.key;
       else if (parent) kindKey = parentKindOf(module2);
-      else kindKey = pickWeighted6(kindWeights(), rng);
+      else kindKey = pickWeighted7(kindWeights(), rng);
       let sourced = kindKey ? (_a9 = findWildsKind(module2, kindKey)) == null ? void 0 : _a9.sources : void 0;
       if (sourced && !isPlaceModule(module2) && (options.series || !sourceReaches(sourced))) sourced = void 0;
       const scale = spaceModule ? scaleForDraw(sourced, era, options.scale, rng) : void 0;
@@ -142270,7 +143882,7 @@ function vocabPoolAll4(ctx, pool3) {
 }
 function drawEntry2(ctx, pool3) {
   var _a8;
-  const e = pickWeighted6(vocabPool4(ctx, pool3), ctx.rng);
+  const e = pickWeighted7(vocabPool4(ctx, pool3), ctx.rng);
   if (!e) return void 0;
   noteNoun(ctx.rng, pool3, e.w);
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
@@ -142308,6 +143920,7 @@ function shipName(ctx) {
   if (!pool3) {
     const genre = ctx.era === "ST" || ctx.era === "MO" ? "modern" : ctx.era === "NF" || ctx.era === "IS" ? "scifi" : "fantasy";
     pool3 = generateVesselNames({
+      signature: false,
       module: "ships",
       culture: (_a8 = VESSEL_CULTURE[ctx.culture.key]) != null ? _a8 : engineCulture(ctx.culture.key),
       function: "explore",
@@ -142334,11 +143947,11 @@ function starName(ctx) {
   }).filter(([, w]) => w > 0);
   const draw3 = () => {
     var _a9;
-    const kind = (_a9 = pickWeighted6(kinds, ctx.rng)) != null ? _a9 : "proper";
+    const kind = (_a9 = pickWeighted7(kinds, ctx.rng)) != null ? _a9 : "proper";
     const proper = () => {
       var _a10;
       const words = groupListWords("star", "SF", scale).map(([w, n]) => [w, n * toneFactor(wordTones("star", w), ctx.tone)]).filter(([, n]) => n > 0);
-      return (_a10 = pickWeighted6(words, ctx.rng)) != null ? _a10 : "Vega";
+      return (_a10 = pickWeighted7(words, ctx.rng)) != null ? _a10 : "Vega";
     };
     return dropStarWord(drawStarOfKind(kind, ctx.rng, proper, { person: () => groupPerson("SF", false, ctx.rng) }));
   };
@@ -142359,7 +143972,7 @@ function anchored2(ctx, free) {
 function listWord6(ctx, list) {
   var _a8;
   const items = groupListWords(list, ctx.setting, (_a8 = ctx.scale) != null ? _a8 : "any").filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM3(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.words.push({ pool: list, word: w });
@@ -142408,7 +144021,7 @@ function token10(ctx, name) {
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
-      return ordinalText(pickWeighted6(choices, rng));
+      return ordinalText(pickWeighted7(choices, rng));
     }
   }
   return drawEntry2(ctx, name);
@@ -142602,8 +144215,8 @@ function generateWatersNames(options) {
     const base = [];
     const kinds = earthlyModule ? waterKinds(earthlyModule) : hyperKindsAt(scale);
     for (const k of kinds) {
-      const sources = k.sources;
-      if (!plans5.has(k.key) && !(sources && sourceReaches(sources))) continue;
+      const sources2 = k.sources;
+      if (!plans5.has(k.key) && !(sources2 && sourceReaches(sources2))) continue;
       if (!kindInClass(k, options.kindClass)) continue;
       let w = k.weight;
       if (homeBritish && earthlyModule === "seasLakes") {
@@ -142638,7 +144251,7 @@ function generateWatersNames(options) {
   }
   function drawHyperScale() {
     const items = HYPER_SCALES.map((s) => [s, WATERS_DATA.hyper.scaleWeights[s]]);
-    return pickWeighted6(items, rng);
+    return pickWeighted7(items, rng);
   }
   const acceptable7 = (text) => {
     const counted3 = countedWords2(text);
@@ -142660,7 +144273,7 @@ function generateWatersNames(options) {
       ctx.drawn = /* @__PURE__ */ new Set();
       ctx.words = [];
       ctx.stars = [];
-      const plan = pickWeighted6(list, rng);
+      const plan = pickWeighted7(list, rng);
       if (!plan) break;
       ctx.shape = plan.shape;
       const raw = renderPattern8(ctx, plan.shape.p);
@@ -142680,7 +144293,7 @@ function generateWatersNames(options) {
       else if (chosenKind) {
         const allowed = chosenKind.scales;
         const items = allowed.map((s) => [s, WATERS_DATA.hyper.scaleWeights[s]]);
-        scale = pickWeighted6(items, rng);
+        scale = pickWeighted7(items, rng);
       } else scale = drawHyperScale();
     }
     const plans5 = plansAt(scale);
@@ -142691,7 +144304,7 @@ function generateWatersNames(options) {
       else {
         const weights = kindWeights(plans5, scale);
         if (withFixed && !options.kindClass) weights.push(["fixed", FIXED_WEIGHT]);
-        kindKey = pickWeighted6(weights, rng);
+        kindKey = pickWeighted7(weights, rng);
         fixed = kindKey === "fixed";
       }
       const sourced = !fixed && earthlyModule && kindKey && !(options.series && watersHasSeries(module2)) ? (_a9 = findWaterKind(earthlyModule, kindKey)) == null ? void 0 : _a9.sources : void 0;
@@ -142729,7 +144342,7 @@ function generateWatersNames(options) {
           raw = e == null ? void 0 : e.w;
           plan = { kind: "fixed", shape: { p: "fixed", w: 0, f: "fixed" }, fixed: true };
         } else {
-          plan = pickWeighted6(list, rng);
+          plan = pickWeighted7(list, rng);
           if (!plan) break;
           ctx.shape = plan.shape;
           raw = renderPattern8(ctx, plan.shape.p);
@@ -144534,8 +146147,8 @@ function plans2(ctx, only) {
 function choosePlan(ctx, only) {
   const sf = isFuture3(ctx.era) ? live(ctx, MONUMENT_DATA.scifi.shapes, "scifi", only) : [];
   const rest = plans2(ctx, only);
-  if (sf.length > 0 && (rest.length === 0 || ctx.rng() < MONUMENT_DATA.scifi.share)) return pickWeighted6(sf, ctx.rng);
-  return pickWeighted6(rest, ctx.rng);
+  if (sf.length > 0 && (rest.length === 0 || ctx.rng() < MONUMENT_DATA.scifi.share)) return pickWeighted7(sf, ctx.rng);
+  return pickWeighted7(rest, ctx.rng);
 }
 var newCtx2 = (s, kind, extra = {}) => {
   var _a8, _b4, _c4;
@@ -144748,7 +146361,7 @@ function vocabPool6(ctx, pool3, region = ctx.region) {
 }
 function fromPool4(ctx, pool3, items) {
   var _a8;
-  const e = pickWeighted6(freshNouns(ctx.rng, pool3, items), ctx.rng);
+  const e = pickWeighted7(freshNouns(ctx.rng, pool3, items), ctx.rng);
   if (!e) return void 0;
   noteNoun(ctx.rng, pool3, e.w);
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
@@ -144763,7 +146376,7 @@ function gnWord6(ctx, list, keep) {
     return star;
   }
   const items = groupListWords(list, SF_LISTS2.has(list) ? "SF" : ctx.setting).filter(([w2]) => (!keep || keep(w2)) && !(ctx.culture.sensitive && LIGHT_OR_GRIM4(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w !== void 0) {
     for (const t of wordTones(list, w)) ctx.drawn.add(t);
     ctx.words.push({ pool: list, word: w });
@@ -144786,7 +146399,7 @@ function componentPools(ctx) {
   }).filter(([p]) => vocabPool6(ctx, p).length > 0);
 }
 function component(ctx) {
-  const pool3 = pickWeighted6(componentPools(ctx), ctx.rng);
+  const pool3 = pickWeighted7(componentPools(ctx), ctx.rng);
   const w = pool3 && vocabWord2(ctx, pool3);
   if (w) ctx.uses.push(`component:${w}`);
   return w;
@@ -144820,7 +146433,7 @@ function route(ctx) {
     return context2.throughRoute;
   }
   const kinds = ROUTE_ERAS.findIndex((e) => e.code === ctx.era) >= ROUTE_ERAS.findIndex((e) => e.code === "MO") ? STREET_DATA.route.modern : STREET_DATA.route.kinds;
-  const kind = pickWeighted6(Object.entries(kinds), ctx.rng);
+  const kind = pickWeighted7(Object.entries(kinds), ctx.rng);
   const o = ctx.options;
   const r = generateRouteNames({
     culture: ctx.culture.key,
@@ -144964,13 +146577,13 @@ function token12(ctx, name, alt, pattern) {
       return gods.length > 0 ? pickOne11(gods, rng) : void 0;
     }
     case "weekday":
-      return pickWeighted6(STREET_DATA.lists.weekday, rng);
+      return pickWeighted7(STREET_DATA.lists.weekday, rng);
     case "hill":
       return pickOne11(STREET_DATA.lists.hill, rng);
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 99; n++) choices.push([n, n <= 12 ? 3 : n <= 30 ? 1 : 0.2]);
-      return ordinalText(pickWeighted6(choices, rng));
+      return ordinalText(pickWeighted7(choices, rng));
     }
     case "ordinalWord":
       return gnWord6(ctx, "ordinalWord", pattern.includes("-Day") ? (w) => STREET_DATA.lists.dayOrdinals.includes(w) : void 0);
@@ -145202,7 +146815,7 @@ function generateStreetNames(options) {
       const fn = k === "districts" ? fnFor() : void 0;
       if (k === "districts" && !fn) return void 0;
       const ctx = newCtx4(fn);
-      const s = shape != null ? shape : pickWeighted6(shapesFor3(ctx, k), rng);
+      const s = shape != null ? shape : pickWeighted7(shapesFor3(ctx, k), rng);
       if (!s) continue;
       const built = render3(ctx, s);
       if (built && acceptable7(built) && ok(built)) return { built, fn };
@@ -145230,8 +146843,8 @@ function generateStreetNames(options) {
     names.push(toName(k, found.built, found.fn));
     return true;
   };
-  const drawKind2 = () => kind != null ? kind : pickWeighted6(kindWeights, rng);
-  const anyFn = () => chosenFn != null ? chosenFn : pickWeighted6(functionWeights(size, era), rng);
+  const drawKind2 = () => kind != null ? kind : pickWeighted7(kindWeights, rng);
+  const anyFn = () => chosenFn != null ? chosenFn : pickWeighted7(functionWeights(size, era), rng);
   if (series) drawTown();
   else {
     for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
@@ -145251,7 +146864,7 @@ function generateStreetNames(options) {
       if (chosenFn) return chosenFn;
       if (fnLeft.length === 0) fnLeft = functionWeights(size, era).map(([f]) => f);
       const weights = functionWeights(size, era).filter(([f]) => fnLeft.includes(f));
-      return pickWeighted6(weights, rng);
+      return pickWeighted7(weights, rng);
     };
     const fresh = (b) => !b.uses.some((u) => used.has(u)) && !(b.isRoute && routeUsed);
     const keep = (k, found) => {
@@ -145318,7 +146931,7 @@ function monumentNeighbours(site, districtWorthy, o) {
   const word = (pool3) => {
     var _a9;
     const items = poolEntries(vocab, pool3, { culture: culture.key, era, fantastic, region, themes }).filter(([e]) => !(culture.sensitive && LIGHT_OR_GRIM4(e.t)));
-    return (_a9 = pickWeighted6(items, rng)) == null ? void 0 : _a9.w;
+    return (_a9 = pickWeighted7(items, rng)) == null ? void 0 : _a9.w;
   };
   const acceptable7 = (text, kind) => {
     const counted3 = countedWords2(text);
@@ -145343,7 +146956,7 @@ function monumentNeighbours(site, districtWorthy, o) {
   const kinds = /* @__PURE__ */ new Set();
   for (let slot = 0; slot < 2; slot++) {
     for (let i = 0; i < 20; i++) {
-      const shape = pickWeighted6(
+      const shape = pickWeighted7(
         eligible.filter((s) => !kinds.has(s.kind)).map((s) => [s, s.w]),
         rng
       );
@@ -145372,7 +146985,7 @@ function vocabPool5(ctx, pool3) {
 }
 function fromPool3(ctx, pool3, items, use = false) {
   var _a8;
-  const e = pickWeighted6(freshNouns(ctx.rng, pool3, items), ctx.rng);
+  const e = pickWeighted7(freshNouns(ctx.rng, pool3, items), ctx.rng);
   if (!e) return void 0;
   noteNoun(ctx.rng, pool3, e.w);
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
@@ -145387,7 +147000,7 @@ function gnWord5(ctx, list, use = false) {
     return star;
   }
   const items = groupListWords(list, SF_LISTS3.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.words.push({ pool: list, word: w });
@@ -145398,7 +147011,7 @@ function creature2(ctx) {
   const items = SHARED_LISTS.creatureLists.flatMap(
     (l) => groupListWords(l, ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM5(wordTones(l, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(l, w2), ctx.tone)])
   );
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w) {
     ctx.words.push({ pool: "creature", word: w });
     ctx.uses.push(`q:${w}`);
@@ -145471,7 +147084,7 @@ function commonToken(r, ctx, name) {
     case "goods":
       return fromPool3(ctx, "streetGoods", vocabPool5(ctx, "streetGoods"));
     case "weekday":
-      return pickWeighted6(STREET_DATA.lists.weekday, rng);
+      return pickWeighted7(STREET_DATA.lists.weekday, rng);
     case "discovery":
     case "headland":
       return pickOne10(SHARED_LISTS[name], rng);
@@ -145532,7 +147145,7 @@ function fillBatch(o) {
     names.push(n);
     return true;
   };
-  const drawKind2 = () => chosen ? weights.some(([k]) => k === chosen) ? chosen : void 0 : pickWeighted6(weights, rng);
+  const drawKind2 = () => chosen ? weights.some(([k]) => k === chosen) ? chosen : void 0 : pickWeighted7(weights, rng);
   if (o.series) {
     const used = /* @__PURE__ */ new Set();
     let founders = 0;
@@ -145540,7 +147153,7 @@ function fillBatch(o) {
     const nextKind = () => {
       if (chosen) return drawKind2();
       if (round.length === 0) round = [...weights];
-      const k = pickWeighted6(round, rng);
+      const k = pickWeighted7(round, rng);
       return k;
     };
     for (let idle = 0; idle < 80 && names.length < count; ) {
@@ -145659,8 +147272,8 @@ function plans3(ctx, only) {
 function choosePlan2(ctx, only) {
   const sf = isFuture5(ctx.era) ? live3(ctx, BUILDING_DATA.scifi.shapes, "scifi", only) : [];
   const rest = plans3(ctx, only);
-  if (sf.length > 0 && (rest.length === 0 || ctx.rng() < BUILDING_DATA.scifi.share)) return pickWeighted6(sf, ctx.rng);
-  return pickWeighted6(rest, ctx.rng);
+  if (sf.length > 0 && (rest.length === 0 || ctx.rng() < BUILDING_DATA.scifi.share)) return pickWeighted7(sf, ctx.rng);
+  return pickWeighted7(rest, ctx.rng);
 }
 var newCtx3 = (s, kind, extra = {}) => {
   var _a8, _b4, _c4;
@@ -145838,7 +147451,7 @@ function merged(ctx, parts) {
   return [...out.values()].map(([word, n]) => [word, n * toneFactor(word.t, ctx.tone)]).filter(([, n]) => n > 0);
 }
 function draw2(ctx, pool3, items, use) {
-  const word = pickWeighted6(freshNouns(ctx.rng, pool3, items), ctx.rng);
+  const word = pickWeighted7(freshNouns(ctx.rng, pool3, items), ctx.rng);
   if (!word) return void 0;
   noteNoun(ctx.rng, pool3, word.w);
   for (const t of word.t) ctx.drawn.add(t);
@@ -145873,7 +147486,7 @@ function route2(ctx) {
     ctx.isRoute = true;
     return context2.throughRoute.replace(/^the /i, "");
   }
-  const kind = pickWeighted6(Object.entries(INN_DATA.lists.routeKinds), ctx.rng);
+  const kind = pickWeighted7(Object.entries(INN_DATA.lists.routeKinds), ctx.rng);
   const r = generateRouteNames({
     culture: ctx.culture.key,
     era: ctx.era,
@@ -145999,7 +147612,7 @@ function token14(ctx, name) {
       return groupSpacePrefix(w, rng);
     }
     case "weekday":
-      return pickWeighted6(STREET_DATA.lists.weekday, rng);
+      return pickWeighted7(STREET_DATA.lists.weekday, rng);
     case "grandAdj":
     case "virtue":
     case "drink":
@@ -146021,7 +147634,7 @@ function pairTokens(ctx) {
   const l = INN_DATA.lists;
   const kinds = Object.entries(l.abWeights);
   const one = (k, keep) => k === "creature" ? creature3(ctx, keep) : k === "item" ? item(ctx, keep) : person2(ctx, keep);
-  const ka = pickWeighted6(kinds, ctx.rng);
+  const ka = pickWeighted7(kinds, ctx.rng);
   const a = one(ka);
   if (!a) return void 0;
   if (ka === "creature") {
@@ -146031,7 +147644,7 @@ function pairTokens(ctx) {
       return [a, mate];
     }
   }
-  const b = one(pickWeighted6(kinds, ctx.rng), (w) => w !== a);
+  const b = one(pickWeighted7(kinds, ctx.rng), (w) => w !== a);
   return b ? [a, b] : void 0;
 }
 function renderPattern12(ctx, pattern) {
@@ -146199,21 +147812,21 @@ function generateInnNames(options) {
   };
   const choosePlan3 = (ctx, anchor) => {
     var _a9;
-    if (anchor) return pickWeighted6(englishPlans(ctx, settingKey, options.shape).filter(([p]) => p.anchor === anchor), rng);
+    if (anchor) return pickWeighted7(englishPlans(ctx, settingKey, options.shape).filter(([p]) => p.anchor === anchor), rng);
     const own = northPlans(ctx, options.shape);
     if (own.length > 0) {
       const regional = ctx.region ? own.filter(([p]) => p.shape.rg) : [];
-      if (regional.length > 0 && rng() < REGION_SHARE) return pickWeighted6(regional, rng);
-      if (rng() < SIGNATURE_SHARE) return pickWeighted6(own, rng);
+      if (regional.length > 0 && rng() < REGION_SHARE) return pickWeighted7(regional, rng);
+      if (rng() < SIGNATURE_SHARE) return pickWeighted7(own, rng);
     }
     const era2 = eraPlans(ctx, options.shape);
     const share2 = isFuture6(ctx.era) && ctx.kind === "bar" ? INN_DATA.eraShare.futureBar : INN_DATA.eraShare.default;
-    if (era2.length > 0 && (eraIndex(ctx.era) >= eraIndex("ST") || options.shape) && rng() < share2) return pickWeighted6(era2, rng);
+    if (era2.length > 0 && (eraIndex(ctx.era) >= eraIndex("ST") || options.shape) && rng() < share2) return pickWeighted7(era2, rng);
     if (english > 0 && rng() < english) {
-      const plan = pickWeighted6(englishPlans(ctx, settingKey, options.shape), rng);
+      const plan = pickWeighted7(englishPlans(ctx, settingKey, options.shape), rng);
       if (plan) return plan;
     }
-    return (_a9 = pickWeighted6(culturePlans(ctx, options.shape), rng)) != null ? _a9 : pickWeighted6(era2, rng);
+    return (_a9 = pickWeighted7(culturePlans(ctx, options.shape), rng)) != null ? _a9 : pickWeighted7(era2, rng);
   };
   const withHouse = (ctx, sign) => {
     const share2 = form === "signs" ? 0 : form === "house" ? 1 : INN_DATA.formShare.either;
@@ -146277,7 +147890,7 @@ function generateInnNames(options) {
     names.push(n);
     return true;
   };
-  const drawKind2 = () => chosen != null ? chosen : pickWeighted6(kindWeights, rng);
+  const drawKind2 = () => chosen != null ? chosen : pickWeighted7(kindWeights, rng);
   if (options.series) drawTown();
   else {
     for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
@@ -146518,7 +148131,7 @@ function vocabPool7(ctx, pool3) {
 }
 function fromPool5(ctx, pool3) {
   var _a8;
-  const e = pickWeighted6(vocabPool7(ctx, pool3), ctx.rng);
+  const e = pickWeighted7(vocabPool7(ctx, pool3), ctx.rng);
   if (!e) return void 0;
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
   ctx.words.push({ pool: pool3, word: e.w });
@@ -146531,7 +148144,7 @@ function gnWord7(ctx, list) {
     return star;
   }
   const items = groupListWords(list, SF_LISTS4.has(list) ? "SF" : ctx.setting).filter(([w2]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM7(wordTones(list, w2)))).map(([w2, n]) => [w2, n * toneFactor(wordTones(list, w2), ctx.tone)]).filter(([, n]) => n > 0);
-  const w = pickWeighted6(items, ctx.rng);
+  const w = pickWeighted7(items, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of wordTones(list, w)) ctx.drawn.add(t);
   ctx.words.push({ pool: list, word: w });
@@ -146567,7 +148180,7 @@ function epithet(ctx) {
     const form = entryForm(e, "male", false);
     if (form) items.push([form.text, ((_b4 = e.x) != null ? _b4 : 1) * toneFactor((_c4 = e.t) != null ? _c4 : [], ctx.tone)]);
   }
-  return pickWeighted6(items.filter(([, w]) => w > 0), ctx.rng);
+  return pickWeighted7(items.filter(([, w]) => w > 0), ctx.rng);
 }
 function token15(ctx, name) {
   var _a8, _b4, _c4;
@@ -146609,7 +148222,7 @@ function token15(ctx, name) {
     case "ordinal": {
       const choices = [];
       for (let n = 1; n <= 30; n++) choices.push([n, n <= 12 ? 3 : 1]);
-      return ordinalText(pickWeighted6(choices, rng));
+      return ordinalText(pickWeighted7(choices, rng));
     }
     case "number":
     case "colour":
@@ -146737,7 +148350,7 @@ function generateEventNames(options) {
     var _a9;
     for (let i = 0; i < 20; i++) {
       const ctx = newCtx4(extra);
-      const s = pickWeighted6(plans4(ctx, kind, only != null ? only : options.shape), rng);
+      const s = pickWeighted7(plans4(ctx, kind, only != null ? only : options.shape), rng);
       if (!s) return void 0;
       ctx.shape = s;
       let raw = renderPattern13(ctx, s.p);
@@ -146767,7 +148380,7 @@ function generateEventNames(options) {
     names.push(n);
     return true;
   };
-  const drawKind2 = () => chosen != null ? chosen : pickWeighted6(kindWeights, rng);
+  const drawKind2 = () => chosen != null ? chosen : pickWeighted7(kindWeights, rng);
   if (options.series) chronicle();
   else {
     for (let attempt2 = 0; attempt2 < count * 50 && names.length < count; attempt2++) {
@@ -153682,7 +155295,7 @@ function twoWords(vocab, pool3, o, rng, extra = []) {
   }
   const out = [];
   for (let i = 0; i < 20 && out.length < 2; i++) {
-    const w = pickWeighted6(items.filter(([x]) => !out.includes(x)), rng);
+    const w = pickWeighted7(items.filter(([x]) => !out.includes(x)), rng);
     if (!w) break;
     out.push(w);
   }
@@ -153714,6 +155327,7 @@ function buildContext(o, rng) {
   let realm2 = null;
   if (!(o.village && rng() < 0.5)) {
     const r = generateRealmNames({
+      signature: false,
       culture: o.culture,
       era: realmEraFor(o.era),
       genre: groupGenreFor(o.era),
@@ -153903,6 +155517,7 @@ function generateKit(options) {
   let ruler = options.keep ? options.keep.ruler : null;
   if (o.contents !== "places" && !options.keep) {
     const r = generateBynames({
+      signature: false,
       module: "titles",
       culture: o.culture,
       kind: "office",
@@ -154002,7 +155617,7 @@ function generateKit(options) {
     const technology = (_m = KIT_DATA.vessels[module2][o.era]) != null ? _m : module2 === "ships" ? "T7" : "S3";
     const fn = (isFuture8(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : void 0;
     run("ships", want("ships"), (seed, count) => {
-      const b = generateVesselNames({ module: module2, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context: context2, catalogue: options.catalogue });
+      const b = generateVesselNames({ signature: false, module: module2, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context: context2, catalogue: options.catalogue });
       return { names: b.names.map((n) => ({ text: n.text, kind: n.function })), notices: b.notices };
     });
   }
@@ -154060,6 +155675,7 @@ function generateKit(options) {
       const front = KIT_DATA.hideFront.includes(row.family) || type === "secret" ? "may" : void 0;
       for (let t = 0; t <= KIT_DATA.dedupeTries; t++) {
         const n = generateGroupNames({
+          signature: false,
           catalogue: options.catalogue,
           family: row.family,
           type,
@@ -154176,7 +155792,7 @@ function parseModulePreset(content, fileName) {
     return { problems };
   }
   const d = TRIBAL_PRESET_DEFAULTS;
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154192,13 +155808,13 @@ function parseModulePreset(content, fileName) {
       packName: values.packName || fileName,
       setting: (_b4 = values.setting) != null ? _b4 : "",
       description: body.trim(),
-      tradition: pick4("tradition", d.tradition, (v) => !!findTradition(v)),
+      tradition: pick5("tradition", d.tradition, (v) => !!findTradition(v)),
       // Stellar brief §5.1: space biomes are never tribal biomes.
-      biome: pick4("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) && !findBiome(v).space || /^\[\[.+\]\]$/.test(v)),
-      terrain: pick4("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
-      register: pick4("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
-      groupType: pick4("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
-      perspective: pick4("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
+      biome: pick5("biome", d.biome, (v) => v === "homeland" || !!findBiome(v) && !findBiome(v).space || /^\[\[.+\]\]$/.test(v)),
+      terrain: pick5("terrain", d.terrain, (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
+      register: pick5("register", d.register, (v) => TRIBAL_REGISTERS.includes(v)),
+      groupType: pick5("groupType", d.groupType, (v) => v === "any" || TRIBAL_GROUP_TYPES.some((g) => g.key === v)),
+      perspective: pick5("perspective", d.perspective, (v) => v === "any" || TRIBAL_PERSPECTIVES.includes(v)),
       hostile
     },
     problems
@@ -154254,7 +155870,7 @@ function parseGroupPreset(values, body, fileName) {
     problems.push(`Unknown family \u201C${(_b4 = values.family) != null ? _b4 : ""}\u201D.`);
     return { problems };
   }
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154267,17 +155883,17 @@ function parseGroupPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const groupType = pick4("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v));
+  const groupType = pick5("groupType", "any", (v) => v === "any" || family.types.some((t) => t.key === v));
   let series = flag("series");
   if (series && groupType === "any") {
     problems.push("Series needs a type.");
     series = false;
   }
-  const genre = pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const genre = pick5("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
   const fantastic = flag("fantastic");
   let commodity;
   if (family.key === "trade") {
-    commodity = pick4("commodity", "any", (v) => v === "any" || !!findCommodity(v));
+    commodity = pick5("commodity", "any", (v) => v === "any" || !!findCommodity(v));
     if (commodity !== "any" && !findCommodity(commodity).settings.includes(groupSetting(genre, genre === "scifi" ? false : fantastic))) {
       problems.push(`Commodity \u201C${commodity}\u201D isn't available here.`);
       commodity = "any";
@@ -154289,17 +155905,17 @@ function parseGroupPreset(values, body, fileName) {
       setting: (_c4 = values.setting) != null ? _c4 : "",
       description: body.trim(),
       family: family.key,
-      tradition: pick4("tradition", "general", (v) => !!findTradition(v)),
+      tradition: pick5("tradition", "general", (v) => !!findTradition(v)),
       groupType,
       genre,
       fantastic,
-      form: pick4("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
-      front: pick4("front", "say", (v) => ["say", "hide", "may"].includes(v)),
-      people: pick4("people", "real", isGroupPeople),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      form: pick5("form", "any", (v) => ["any", "formal", "everyday"].includes(v)),
+      front: pick5("front", "say", (v) => ["say", "hide", "may"].includes(v)),
+      people: pick5("people", "real", isGroupPeople),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       series,
       ...commodity !== void 0 ? { commodity } : {},
-      ...genre === "scifi" ? { scale: pick4("scale", "any", (v) => scalesFor(void 0).includes(v)) } : {}
+      ...genre === "scifi" ? { scale: pick5("scale", "any", (v) => scalesFor(void 0).includes(v)) } : {}
     },
     problems
   };
@@ -154339,7 +155955,7 @@ function parseBynamePreset(values, body, fileName) {
     problems.push(`Unknown bynameModule \u201C${(_a8 = values.bynameModule) != null ? _a8 : ""}\u201D.`);
     return { problems };
   }
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154348,7 +155964,7 @@ function parseBynamePreset(values, body, fileName) {
   };
   const fantasticRaw = values.fantastic;
   if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic \u201C${fantasticRaw}\u201D.`);
-  const culture = pick4("culture", "general", (v) => BYNAME_CULTURES.some((c) => c.key === v));
+  const culture = pick5("culture", "general", (v) => BYNAME_CULTURES_5C.some((c) => c.key === v));
   return {
     byname: {
       packName: values.packName || fileName,
@@ -154356,15 +155972,15 @@ function parseBynamePreset(values, body, fileName) {
       description: body.trim(),
       bynameModule: module2,
       culture,
-      kind: pick4("kind", "any", (v) => v === "any" || moduleKinds(module2).some((k) => k.key === v)),
-      genre: pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      kind: pick5("kind", "any", (v) => v === "any" || moduleKinds(module2).some((k) => k.key === v)),
+      genre: pick5("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
       fantastic: fantasticRaw === "true",
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      language: pick4("language", "english", (v) => ["english", "native", "mixed"].includes(v)),
-      gender: pick4("gender", "anyone", (v) => ["men", "women", "anyone"].includes(v)),
-      length: pick4("length", "single", (v) => ["single", "full"].includes(v)),
-      source: pick4("source", "placeholder", (v) => ["placeholder", "pack", "none"].includes(v)),
-      people: /* @__PURE__ */ ((v) => v === "invented" ? "placeholders" : v)(pick4("people", "real", isGroupPeople)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      language: pick5("language", "english", (v) => ["english", "native", "mixed"].includes(v)),
+      gender: pick5("gender", "anyone", (v) => ["men", "women", "anyone"].includes(v)),
+      length: pick5("length", "single", (v) => ["single", "full"].includes(v)),
+      source: pick5("source", "placeholder", (v) => ["placeholder", "pack", "none"].includes(v)),
+      people: /* @__PURE__ */ ((v) => v === "invented" ? "placeholders" : v)(pick5("people", "real", isGroupPeople)),
       ...values.pack ? { pack: values.pack.replace(/^\[\[|\]\]$/g, "") } : {},
       section: values.section || "gender"
     },
@@ -154401,7 +156017,7 @@ var REALM_PRESET_MODULE = "realms";
 function parseRealmPreset(values, body, fileName) {
   var _a8;
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154414,8 +156030,8 @@ function parseRealmPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", "medieval", (v) => REALM_ERAS.some((e) => e.key === v));
-  let namedFor = pick4("namedFor", "anything", (v) => ["anything", "land", "place", "dynasty", "people", "stars"].includes(v));
+  const era = pick5("era", "medieval", (v) => REALM_ERAS.some((e) => e.key === v));
+  let namedFor = pick5("namedFor", "anything", (v) => ["anything", "land", "place", "dynasty", "people", "stars"].includes(v));
   if (namedFor === "stars" && !namedForOffered("stars", era)) {
     problems.push("\u201CThe stars\u201D needs the near-future or interstellar era.");
     namedFor = "anything";
@@ -154425,20 +156041,20 @@ function parseRealmPreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: (_a8 = values.setting) != null ? _a8 : "",
       description: body.trim(),
-      culture: pick4("culture", "general", (v) => REALM_CULTURES.some((c) => c.key === v)),
-      character: pick4("character", "any", (v) => v === "any" || REALM_CHARACTERS.some((c) => c.key === v)),
+      culture: pick5("culture", "general", (v) => REALM_CULTURES.some((c) => c.key === v)),
+      character: pick5("character", "any", (v) => v === "any" || REALM_CHARACTERS.some((c) => c.key === v)),
       era,
-      genre: pick4("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
+      genre: pick5("genre", "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v)),
       fantastic: flag("fantastic"),
       namedFor,
-      biome: pick4("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
-      terrain: pick4("terrain", "any", (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      length: pick4("length", "plain", (v) => ["plain", "ceremonial"].includes(v)),
-      output: pick4("output", "official", (v) => ["official", "short", "both"].includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      biome: pick5("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+      terrain: pick5("terrain", "any", (v) => TERRAIN_CHOICES.some((t) => t.id === v) || /^[a-z0-9-]+$/.test(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      length: pick5("length", "plain", (v) => ["plain", "ceremonial"].includes(v)),
+      output: pick5("output", "official", (v) => ["official", "short", "both"].includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       // §10.2: presets without the key run as off.
-      ...pick4("peoples", "off", (v) => v === "on" || v === "off") === "on" ? { peoples: true } : {}
+      ...pick5("peoples", "off", (v) => v === "on" || v === "off") === "on" ? { peoples: true } : {}
     },
     problems
   };
@@ -154474,7 +156090,7 @@ var ROUTE_PRESET_MODULE = "route-names";
 function parseRoutePreset(values, body, fileName) {
   var _a8;
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154487,9 +156103,9 @@ function parseRoutePreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
   const fantastic = flag("fantastic");
-  let kind = pick4("kind", "any", (v) => v === "any" || !!findRouteKind(v));
+  let kind = pick5("kind", "any", (v) => v === "any" || !!findRouteKind(v));
   if (kind !== "any" && !kindsOffered(era, fantastic).some((k) => k.key === kind)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
     kind = "any";
@@ -154499,16 +156115,16 @@ function parseRoutePreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: (_a8 = values.setting) != null ? _a8 : "",
       description: body.trim(),
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       routeKind: kind,
       era,
       fantastic,
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       series: flag("series"),
-      ...values.scale ? { scale: pick4("scale", "any", (v) => scalesFor(era === "NF" || era === "IS" ? era : void 0).includes(v)) } : {},
-      ...values.ftl ? { ftl: pick4("ftl", "any", (v) => ROUTE_FTL.some((f) => f.id === v)) } : {}
+      ...values.scale ? { scale: pick5("scale", "any", (v) => scalesFor(era === "NF" || era === "IS" ? era : void 0).includes(v)) } : {},
+      ...values.ftl ? { ftl: pick5("ftl", "any", (v) => ROUTE_FTL.some((f) => f.id === v)) } : {}
     },
     problems
   };
@@ -154540,7 +156156,7 @@ var STREET_PRESET_MODULE = "street-names";
 function parseStreetPreset(values, body, fileName) {
   var _a8;
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154553,8 +156169,8 @@ function parseStreetPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const size = pick4("size", "town", (v) => STREET_SIZES.some((s) => s.key === v));
-  let kind = pick4("kind", "any", (v) => v === "any" || STREET_KINDS.some((k) => k.key === v));
+  const size = pick5("size", "town", (v) => STREET_SIZES.some((s) => s.key === v));
+  let kind = pick5("kind", "any", (v) => v === "any" || STREET_KINDS.some((k) => k.key === v));
   if (kind === "districts" && size === "village") {
     problems.push("A village has no districts.");
     kind = "streets";
@@ -154564,16 +156180,16 @@ function parseStreetPreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: (_a8 = values.setting) != null ? _a8 : "",
       description: body.trim(),
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       streetKind: kind,
-      function: pick4("function", "any", (v) => v === "any" || STREET_FUNCTIONS.some((f) => f.key === v)),
-      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      function: pick5("function", "any", (v) => v === "any" || STREET_FUNCTIONS.some((f) => f.key === v)),
+      era: pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
       fantastic: flag("fantastic"),
       size,
-      dialect: pick4("dialect", "variants", (v) => ["plain", "variants", "instead"].includes(v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      dialect: pick5("dialect", "variants", (v) => ["plain", "variants", "instead"].includes(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       series: flag("series")
     },
     problems
@@ -154606,7 +156222,7 @@ function streetPresetContent(preset) {
 var INN_PRESET_MODULE = "inn-names";
 function parseInnPreset(values, body, fileName) {
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154619,8 +156235,8 @@ function parseInnPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
-  let kind = pick4("kind", "any", (v) => v === "any" || INN_KINDS.some((k) => k.key === v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick5("kind", "any", (v) => v === "any" || INN_KINDS.some((k) => k.key === v));
   if (kind !== "any" && !(INN_KINDS.find((k) => k.key === kind).era[era] > 0)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
     kind = "any";
@@ -154630,15 +156246,15 @@ function parseInnPreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: "",
       description: body.trim(),
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       innKind: kind,
       era,
       fantastic: flag("fantastic"),
-      innSetting: pick4("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
-      form: pick4("form", "either", (v) => ["signs", "house", "either"].includes(v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      innSetting: pick5("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      form: pick5("form", "either", (v) => ["signs", "house", "either"].includes(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       series: flag("series")
     },
     problems
@@ -154669,7 +156285,7 @@ function innPresetContent(preset) {
 var BUILDING_PRESET_MODULE = "building-names";
 function parseBuildingPreset(values, body, fileName) {
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154682,10 +156298,10 @@ function parseBuildingPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
   const retired = values.kind === "monument";
   if (retired) problems.push("Monuments and follies have moved to monuments and statues.");
-  let kind = retired ? "any" : pick4("kind", "any", (v) => v === "any" || BUILDING_KINDS.some((k) => k.key === v));
+  let kind = retired ? "any" : pick5("kind", "any", (v) => v === "any" || BUILDING_KINDS.some((k) => k.key === v));
   if (kind !== "any" && !(BUILDING_KINDS.find((k) => k.key === kind).era[era] > 0)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
     kind = "any";
@@ -154695,14 +156311,14 @@ function parseBuildingPreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: "",
       description: body.trim(),
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       buildingKind: kind,
       era,
       fantastic: flag("fantastic"),
-      buildingSetting: pick4("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      buildingSetting: pick5("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       series: flag("series")
     },
     problems
@@ -154732,7 +156348,7 @@ function buildingPresetContent(preset) {
 var MONUMENT_PRESET_MODULE = "monument-names";
 function parseMonumentPreset(values, body, fileName) {
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154745,8 +156361,8 @@ function parseMonumentPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
-  let kind = pick4("kind", "any", (v) => v === "any" || MONUMENT_KINDS.some((k) => k.key === v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick5("kind", "any", (v) => v === "any" || MONUMENT_KINDS.some((k) => k.key === v));
   if (kind !== "any" && !(MONUMENT_KINDS.find((k) => k.key === kind).era[era] > 0)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
     kind = "any";
@@ -154756,14 +156372,14 @@ function parseMonumentPreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: "",
       description: body.trim(),
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       monumentKind: kind,
       era,
       fantastic: flag("fantastic"),
-      monumentSetting: pick4("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      monumentSetting: pick5("setting", "anywhere", (v) => INN_SETTINGS.some((s) => s.key === v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       nearby: flag("nearby"),
       series: flag("series")
     },
@@ -154795,7 +156411,7 @@ function monumentPresetContent(preset) {
 var KIT_PRESET_MODULE = "settlement-kit";
 function parseKitPreset(values, body, fileName) {
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154809,16 +156425,16 @@ function parseKitPreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: "",
       description: body.trim(),
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
-      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      era: pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
       fantastic,
-      size: pick4("size", "town", (v) => KIT_SIZES.includes(v)),
-      position: pick4("position", "inland", (v) => KIT_POSITIONS.some((p) => p.key === v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      contents: pick4("contents", "whole", (v) => v in KIT_CONTENTS),
-      detail: pick4("detail", "standard", (v) => KIT_DETAILS.includes(v)),
-      people: pick4("people", "real", isGroupPeople)
+      size: pick5("size", "town", (v) => KIT_SIZES.includes(v)),
+      position: pick5("position", "inland", (v) => KIT_POSITIONS.some((p) => p.key === v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      contents: pick5("contents", "whole", (v) => v in KIT_CONTENTS),
+      detail: pick5("detail", "standard", (v) => KIT_DETAILS.includes(v)),
+      people: pick5("people", "real", isGroupPeople)
     },
     problems
   };
@@ -154848,7 +156464,7 @@ function kitPresetContent(preset) {
 var EVENT_PRESET_MODULE = "event-names";
 function parseEventPreset(values, body, fileName) {
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154861,8 +156477,8 @@ function parseEventPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
-  let kind = pick4("kind", "any", (v) => v === "any" || EVENT_KINDS.some((k) => k.key === v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  let kind = pick5("kind", "any", (v) => v === "any" || EVENT_KINDS.some((k) => k.key === v));
   if (kind !== "any" && !(EVENT_KINDS.find((k) => k.key === kind).era[era] > 0)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered in the ${routeEraLabel(era)} era.`);
     kind = "any";
@@ -154872,13 +156488,13 @@ function parseEventPreset(values, body, fileName) {
       packName: values.packName || fileName,
       setting: "",
       description: body.trim(),
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
       eventKind: kind,
       era,
       fantastic: flag("fantastic"),
-      scale: pick4("scale", "realm", (v) => EVENT_SCALES.some((s) => s.key === v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      scale: pick5("scale", "realm", (v) => EVENT_SCALES.some((s) => s.key === v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       series: flag("series")
     },
     problems
@@ -154909,16 +156525,16 @@ var MONEY_SERIES = ["separate", "coinage", "values"];
 function parseMoneyPreset(values, body, fileName) {
   var _a8;
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
     problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return fallback;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
-  const culture = pick4("culture", "norman-british", (v) => !!findMoneyCulture(v));
-  let kind = pick4("kind", "any", (v) => v === "any" || MONEY_KINDS.some((k) => k.key === v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const culture = pick5("culture", "norman-british", (v) => !!findMoneyCulture(v));
+  let kind = pick5("kind", "any", (v) => v === "any" || MONEY_KINDS.some((k) => k.key === v));
   const fantasticRaw = values.fantastic;
   if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic \u201C${fantasticRaw}\u201D.`);
   const draft = {
@@ -154929,11 +156545,11 @@ function parseMoneyPreset(values, body, fileName) {
     moneyKind: kind,
     era,
     fantastic: fantasticRaw === "true",
-    value: pick4("value", "any", (v) => MONEY_VALUES.some((x) => x.key === v)),
-    words: pick4("words", "translated", (v) => MONEY_WORDS.some((x) => x.key === v)),
-    tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-    people: pick4("people", "real", isGroupPeople),
-    series: pick4("series", "separate", (v) => MONEY_SERIES.includes(v))
+    value: pick5("value", "any", (v) => MONEY_VALUES.some((x) => x.key === v)),
+    words: pick5("words", "translated", (v) => MONEY_WORDS.some((x) => x.key === v)),
+    tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+    people: pick5("people", "real", isGroupPeople),
+    series: pick5("series", "separate", (v) => MONEY_SERIES.includes(v))
   };
   const state = normaliseMoney({ ...draft, kind: draft.moneyKind === "any" ? void 0 : draft.moneyKind });
   if (draft.moneyKind !== "any" && state.kind === void 0) problems.push(`Kind \u201C${draft.moneyKind}\u201D isn't offered here.`);
@@ -154964,7 +156580,7 @@ function moneyPresetContent(preset) {
 var DEITY_PRESET_MODULE = "deity-names";
 function parseDeityPreset(values, body, fileName) {
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -154986,13 +156602,13 @@ function parseDeityPreset(values, body, fileName) {
       setting: "",
       description: body.trim(),
       culture,
-      deityKind: pick4("kind", "any", (v) => v === "any" || DEITY_KINDS.some((k) => k.key === v)),
-      domain: pick4("domain", "any", (v) => v === "any" || DEITY_DOMAINS.some((d) => d.key === v)),
-      gender: pick4("gender", "any", (v) => ["any", "male", "female", "neither"].includes(v)),
-      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      deityKind: pick5("kind", "any", (v) => v === "any" || DEITY_KINDS.some((k) => k.key === v)),
+      domain: pick5("domain", "any", (v) => v === "any" || DEITY_DOMAINS.some((d) => d.key === v)),
+      gender: pick5("gender", "any", (v) => ["any", "male", "female", "neither"].includes(v)),
+      era: pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
       fantastic: flag("fantastic"),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      names: pick4("names", "titles", (v) => ["titles", "placeholder", "pack"].includes(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      names: pick5("names", "titles", (v) => ["titles", "placeholder", "pack"].includes(v)),
       ...values.pack ? { pack: values.pack } : {},
       ...values.section ? { section: values.section } : {},
       series: flag("series")
@@ -155032,7 +156648,7 @@ function parseVesselPreset(values, body, fileName) {
     problems.push(`Unknown vesselModule \u201C${(_a8 = values.vesselModule) != null ? _a8 : ""}\u201D.`);
     return { problems };
   }
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -155046,17 +156662,17 @@ function parseVesselPreset(values, body, fileName) {
     return false;
   };
   const airLand = isAirLand(module2);
-  const genre = pick4("genre", module2 === "spacecraft" ? "scifi" : airLand ? "modern" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
+  const genre = pick5("genre", module2 === "spacecraft" ? "scifi" : airLand ? "modern" : "fantasy", (v) => ["fantasy", "modern", "scifi"].includes(v));
   const fantastic = flag("fantastic");
   const setting = groupSetting(genre, genre === "scifi" ? false : fantastic);
-  const naming = airLand ? pick4("naming", "craft", (v) => v === "craft" || v === "types") : void 0;
-  const fn = pick4("function", "any", (v) => v === "any" || moduleFunctions(module2).some((f) => f.key === v));
-  let technology = pick4("technology", "any", (v) => v === "any" || (airLand ? AIR_LAND.technology[module2].some((t) => t.code === v) : techChoices(module2, "SF").includes(v)));
+  const naming = airLand ? pick5("naming", "craft", (v) => v === "craft" || v === "types") : void 0;
+  const fn = pick5("function", "any", (v) => v === "any" || moduleFunctions(module2).some((f) => f.key === v));
+  let technology = pick5("technology", "any", (v) => v === "any" || (airLand ? AIR_LAND.technology[module2].some((t) => t.code === v) : techChoices(module2, "SF").includes(v)));
   if (airLand && technology !== "any" && /F$/.test(technology) && !techChoices(module2, setting).includes(technology)) {
     problems.push(`Technology \u201C${technology}\u201D isn't available here; using any technology.`);
     technology = "any";
   }
-  let style = pick4("style", "none", (v) => v === "none" || VESSEL_DATA.styles.some((st) => st.key === v));
+  let style = pick5("style", "none", (v) => v === "none" || VESSEL_DATA.styles.some((st) => st.key === v));
   if (style !== "none" && !availableStyles(module2, setting, technology).some((s) => s.key === style)) {
     problems.push(`Style \u201C${style}\u201D isn't available here.`);
     style = "none";
@@ -155072,15 +156688,15 @@ function parseVesselPreset(values, body, fileName) {
       setting: (_b4 = values.setting) != null ? _b4 : "",
       description: body.trim(),
       vesselModule: module2,
-      culture: pick4("culture", module2 === "landVehicles" ? "norman-british" : "general", (v) => !!findVesselCulture(v)),
+      culture: pick5("culture", module2 === "landVehicles" ? "norman-british" : "general", (v) => !!findVesselCulture(v)),
       function: fn,
       technology,
       genre,
       fantastic,
       style,
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       prefixes: flag("prefixes"),
-      people: pick4("people", "real", isGroupPeople),
+      people: pick5("people", "real", isGroupPeople),
       series,
       ...naming ? { naming } : {}
     },
@@ -155129,7 +156745,7 @@ function parseWatersPreset(values, body, fileName) {
     return { problems };
   }
   const hyper = module2 === "hyperspaceCharts";
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -155142,13 +156758,13 @@ function parseWatersPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const scale = hyper ? pick4("scale", "any", (v) => v === "any" || HYPER_SCALES.includes(v)) : "any";
-  let kind = pick4("kind", "any", (v) => v === "any" || !!(hyper ? findHyperKind(v) : findWaterKind(module2, v)));
+  const scale = hyper ? pick5("scale", "any", (v) => v === "any" || HYPER_SCALES.includes(v)) : "any";
+  let kind = pick5("kind", "any", (v) => v === "any" || !!(hyper ? findHyperKind(v) : findWaterKind(module2, v)));
   if (kind !== "any" && hyper && !hyperKindsAt(scale).some((k) => k.key === kind)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered at that scale.`);
     kind = "any";
   }
-  const culture = pick4("culture", hyper ? "general" : "norman-british", (v) => !!findWatersCulture(v));
+  const culture = pick5("culture", hyper ? "general" : "norman-british", (v) => !!findWatersCulture(v));
   const kindClass = hyper ? void 0 : classValue(values, problems);
   return {
     waters: {
@@ -155159,18 +156775,18 @@ function parseWatersPreset(values, body, fileName) {
       culture,
       waterKind: kind,
       ...kindClass ? { waterClass: kindClass } : {},
-      era: hyper ? "IS" : pick4("era", "MD", (v) => waterEras(module2).includes(v)),
-      where: hyper ? "home" : pick4("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
+      era: hyper ? "IS" : pick5("era", "MD", (v) => waterEras(module2).includes(v)),
+      where: hyper ? "home" : pick5("where", "home", (v) => v === "home" || v === "new" || v === "settled"),
       fantastic: hyper ? false : flag("fantastic"),
-      region: hyper ? "all" : pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      region: hyper ? "all" : pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
       // A built-in's id, or a biome pack's path (a pack's biome shows in seas and coasts where its root built-in does).
-      biome: hyper ? "any" : pick4("biome", "any", (v) => v === "any" || NATURAL_BIOME_IDS.includes(v) || /\.md$/i.test(v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      biome: hyper ? "any" : pick5("biome", "any", (v) => v === "any" || NATURAL_BIOME_IDS.includes(v) || /\.md$/i.test(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       series: watersHasSeries(module2) ? flag("series") : false,
       scale,
-      medium: hyper ? pick4("medium", "sea", (v) => WATERS_MEDIA.some((m) => m.id === v)) : "sea",
-      register: hyper ? pick4("register", "any", (v) => WATERS_REGISTERS.some((r) => r.id === v)) : "any"
+      medium: hyper ? pick5("medium", "sea", (v) => WATERS_MEDIA.some((m) => m.id === v)) : "sea",
+      register: hyper ? pick5("register", "any", (v) => WATERS_REGISTERS.some((r) => r.id === v)) : "any"
     },
     problems
   };
@@ -155216,7 +156832,7 @@ function parseWildsPreset(values, body, fileName) {
   var _a8;
   const problems = [];
   const module2 = WILDS_PRESET_MODULES[values.module];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -155229,8 +156845,8 @@ function parseWildsPreset(values, body, fileName) {
     if (v) problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return false;
   };
-  const era = pick4("era", wildsDefaultEra(module2), (v) => wildsEras(module2).includes(v));
-  let kind = pick4("kind", "any", (v) => v === "any" || !!findWildsKind(module2, v));
+  const era = pick5("era", wildsDefaultEra(module2), (v) => wildsEras(module2).includes(v));
+  let kind = pick5("kind", "any", (v) => v === "any" || !!findWildsKind(module2, v));
   if (kind !== "any" && !wildsKindsAt(module2, era).some((k) => k.key === kind)) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered in that era.`);
     kind = "any";
@@ -155245,17 +156861,17 @@ function parseWildsPreset(values, body, fileName) {
       setting: (_a8 = values.setting) != null ? _a8 : "",
       description: body.trim(),
       wildsModule: module2,
-      culture: pick4("culture", wildsDefaultCulture(module2), (v) => !!findWildsCulture(v)),
+      culture: pick5("culture", wildsDefaultCulture(module2), (v) => !!findWildsCulture(v)),
       wildsKind: kind,
       ...kindClass ? { wildsClass: kindClass } : {},
       era,
-      where: pick4("where", wildsDefaultWhere(module2), (v) => v === "home" || v === "new" || v === "settled"),
+      where: pick5("where", wildsDefaultWhere(module2), (v) => v === "home" || v === "new" || v === "settled"),
       ...scaleValue ? { wildsScale: scaleValue } : {},
       fantastic: flag("fantastic"),
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
-      biome: pick4("biome", "any", (v) => v === "any" || wildsBiomes(module2).some((b) => b.id === v) || /\.md$/i.test(v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      biome: pick5("biome", "any", (v) => v === "any" || wildsBiomes(module2).some((b) => b.id === v) || /\.md$/i.test(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       series: flag("series")
     },
     problems
@@ -155311,26 +156927,26 @@ var SKY_PRESET_MODULE = "sky-names";
 function parseTimePreset(values, body, fileName) {
   const problems = [];
   const timeModule = values.module === SKY_PRESET_MODULE ? "sky" : "calendar";
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
     problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return fallback;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
-  const culture = pick4("culture", "norman-british", (v) => !!findTimeCulture(v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const culture = pick5("culture", "norman-british", (v) => !!findTimeCulture(v));
   const fallbackKind = timeModule === "calendar" ? "month" : "constellation";
-  const kind = pick4("kind", fallbackKind, (v) => {
+  const kind = pick5("kind", fallbackKind, (v) => {
     var _a8;
     return ((_a8 = findTimeKind(v)) == null ? void 0 : _a8.module) === timeModule;
   });
   const fantasticRaw = values.fantastic;
   if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic \u201C${fantasticRaw}\u201D.`);
   const sensitive = TIME_SKY.sensitive.includes(culture);
-  let tone = pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v));
+  let tone = pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v));
   if (sensitive && (tone === "light" || tone === "grim")) tone = "any";
-  const seriesRaw = pick4("series", "off", (v) => v === "on" || v === "off");
+  const seriesRaw = pick5("series", "off", (v) => v === "on" || v === "off");
   const draft = {
     packName: values.packName || fileName,
     setting: "",
@@ -155340,11 +156956,11 @@ function parseTimePreset(values, body, fileName) {
     kind,
     era,
     fantastic: !sensitive && fantasticRaw === "true",
-    biome: pick4("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
-    start: pick4("start", "own", (v) => v === "own" || Object.keys(TIME_SKY.seasons).includes(v)),
-    words: pick4("words", "translated", (v) => v === "translated" || v === "loanwords"),
+    biome: pick5("biome", "homeland", (v) => v === "homeland" || !!findBiome(v) || /^\[\[.+\]\]$/.test(v)),
+    start: pick5("start", "own", (v) => v === "own" || Object.keys(TIME_SKY.seasons).includes(v)),
+    words: pick5("words", "translated", (v) => v === "translated" || v === "loanwords"),
     tone,
-    people: pick4("people", "real", isGroupPeople),
+    people: pick5("people", "real", isGroupPeople),
     series: seriesRaw === "on"
   };
   if (!kindsOffered2(timeModule, culture, era).some((k) => k.key === kind)) {
@@ -155380,19 +156996,19 @@ function parseThingPreset(values, body, fileName) {
   var _a8;
   const problems = [];
   const thingModule = THING_MODULE_OF[values.module];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
     problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return fallback;
   };
-  const era = pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
-  const culture = pick4("culture", "norman-british", (v) => !!findThingCulture(v));
+  const era = pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v));
+  const culture = pick5("culture", "norman-british", (v) => !!findThingCulture(v));
   const fantasticRaw = values.fantastic;
   if (fantasticRaw && fantasticRaw !== "true" && fantasticRaw !== "false") problems.push(`Unknown fantastic \u201C${fantasticRaw}\u201D.`);
   const fantastic = fantasticRaw === "true";
-  let kind = pick4("kind", "any", (v) => {
+  let kind = pick5("kind", "any", (v) => {
     var _a9;
     return v === "any" || ((_a9 = findThingKind(v)) == null ? void 0 : _a9.module) === thingModule;
   });
@@ -155400,7 +157016,7 @@ function parseThingPreset(values, body, fileName) {
     problems.push(`Kind \u201C${kind}\u201D isn't offered here.`);
     kind = "any";
   }
-  const describeRaw = pick4("describe", "off", (v) => v === "on" || v === "off");
+  const describeRaw = pick5("describe", "off", (v) => v === "on" || v === "off");
   const owner = ((_a8 = values.owner) != null ? _a8 : "").replace(/^\[\[(.+)\]\]$/, "$1") || "anyone";
   return {
     thing: {
@@ -155412,8 +157028,8 @@ function parseThingPreset(values, body, fileName) {
       kind,
       era,
       fantastic,
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      people: pick4("people", "real", isGroupPeople),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      people: pick5("people", "real", isGroupPeople),
       owner,
       ownerSection: values.ownerSection || "",
       describe: describeRaw === "on"
@@ -155447,14 +157063,14 @@ var PEOPLE_PRESET_MODULE = "peoples-tongues";
 function parsePeoplePreset(values, body, fileName) {
   var _a8, _b4;
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
     problems.push(`Unknown ${key2} \u201C${v}\u201D.`);
     return fallback;
   };
-  const culture = pick4("culture", "norman-british", (v) => PEOPLE_CULTURES2.some((c) => c.key === v));
+  const culture = pick5("culture", "norman-british", (v) => PEOPLE_CULTURES2.some((c) => c.key === v));
   const rawSource = ((_a8 = values.source) != null ? _a8 : "").trim();
   const link = rawSource.match(/^\[\[(.+)\]\]$/);
   let peopleSource = "typed";
@@ -155468,8 +157084,8 @@ function parsePeoplePreset(values, body, fileName) {
     problems.push("New place names isn't offered for this culture; using new realms.");
     peopleSource = "realms";
   }
-  const giving = pick4("giving", "both", (v) => ["both", "peoples", "languages"].includes(v));
-  const detail = pick4("detail", "one", (v) => v === "one" || v === "older" || v === "dialects");
+  const giving = pick5("giving", "both", (v) => ["both", "peoples", "languages"].includes(v));
+  const detail = pick5("detail", "one", (v) => v === "one" || v === "older" || v === "dialects");
   return {
     peoples: {
       packName: values.packName || fileName,
@@ -155480,9 +157096,9 @@ function parsePeoplePreset(values, body, fileName) {
       ...pack ? { pack } : {},
       section: values.section || "",
       names: ((_b4 = values.names) != null ? _b4 : "").split("\n").map((n) => n.trim()).filter(Boolean),
-      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      era: pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
       giving,
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
       detail: giving === "peoples" ? "one" : detail
     },
     problems
@@ -155844,7 +157460,7 @@ function poolWords2(ctx, pool3, season) {
 function drawWord(ctx, cls, pool3, opts = {}) {
   var _a8;
   const items = poolWords2(ctx, pool3, opts.season === void 0 ? ctx.season : opts.season).filter(([e2]) => (!opts.keep || opts.keep(e2)) && !(ctx.distinct && ctx.used.has(`${cls}:${e2.w}`)));
-  const e = pickWeighted6(items, ctx.rng);
+  const e = pickWeighted7(items, ctx.rng);
   if (!e) return void 0;
   for (const t of (_a8 = e.t) != null ? _a8 : []) ctx.drawn.add(t);
   ctx.log.push({ pool: pool3, word: e.w });
@@ -155854,7 +157470,7 @@ function drawWord(ctx, cls, pool3, opts = {}) {
 function drawFrom(ctx, cls, pool3, items, tones) {
   var _a8;
   const ok = items.filter(([w2, n]) => n > 0 && !(ctx.distinct && ctx.used.has(`${cls}:${w2}`)) && !blockedTone(ctx, tones == null ? void 0 : tones(w2)));
-  const w = pickWeighted6(ok, ctx.rng);
+  const w = pickWeighted7(ok, ctx.rng);
   if (w === void 0) return void 0;
   for (const t of (_a8 = tones == null ? void 0 : tones(w)) != null ? _a8 : []) ctx.drawn.add(t);
   ctx.log.push({ pool: pool3, word: w });
@@ -156185,7 +157801,7 @@ function buildName(ctx, kind, filter, only) {
     ctx.drawn = /* @__PURE__ */ new Set();
     ctx.log = [];
     const plans5 = plansFor2(ctx, kind, only ? (p) => p.p === only : filter);
-    const plan = pickWeighted6(plans5, ctx.rng);
+    const plan = pickWeighted7(plans5, ctx.rng);
     if (!plan) return void 0;
     const raw = renderPattern14(ctx, plan.p);
     if (!raw) continue;
@@ -156226,7 +157842,7 @@ function cultureName(ctx, kind, systems) {
 }
 function drawSystem(ctx, cell) {
   if (cell.length === 0) return void 0;
-  return cell.length === 1 ? cell[0][0] : pickWeighted6(cell, ctx.rng);
+  return cell.length === 1 ? cell[0][0] : pickWeighted7(cell, ctx.rng);
 }
 function kindSystems(ctx, kind) {
   switch (kind) {
@@ -156282,7 +157898,7 @@ function buildSign(ctx, only) {
     ctx.drawn = /* @__PURE__ */ new Set();
     ctx.log = [];
     const plans5 = signPlans(ctx).filter(([p]) => !only || p.p === only);
-    const plan = pickWeighted6(plans5, ctx.rng);
+    const plan = pickWeighted7(plans5, ctx.rng);
     if (!plan) return void 0;
     const raw = renderPattern14(ctx, plan.p);
     if (!raw) continue;
@@ -156362,7 +157978,7 @@ function monthTheme(S, lines2) {
     var _a9, _b4;
     return [t, w * ((_b4 = (_a9 = mult[t]) == null ? void 0 : _a9[ctx.culture]) != null ? _b4 : 1)];
   });
-  return (_a8 = pickWeighted6(options, ctx.rng)) != null ? _a8 : "ordinal";
+  return (_a8 = pickWeighted7(options, ctx.rng)) != null ? _a8 : "ordinal";
 }
 var THEME_PATTERNS = {
   seasons: ["{seasonWord} Month", "Month of {seasonWord}", "{seasonWord}"],
@@ -156509,7 +158125,7 @@ function nameSpecial(S, line, systemKey, previous, allowReal) {
     options.push([p, w]);
   }
   for (let attempt2 = 0; attempt2 < 30; attempt2++) {
-    const choice = pickWeighted6(options, ctx.rng);
+    const choice = pickWeighted7(options, ctx.rng);
     if (choice === "@cn") {
       const n = pickOne14(rows, ctx.rng);
       S.seen.add(n.text.toLowerCase());
@@ -156536,7 +158152,7 @@ function nameSpecial(S, line, systemKey, previous, allowReal) {
 function moonSeries(S, lines2, _ring) {
   var _a8, _b4, _c4, _d3, _e3, _f, _g;
   const ctx = S.ctx;
-  const theme = (_a8 = pickWeighted6(TIME_SKY.themes.moon.map(([t, w]) => [t, ctx.cycle ? w : t === "mixed" ? w : 0]), ctx.rng)) != null ? _a8 : "mixed";
+  const theme = (_a8 = pickWeighted7(TIME_SKY.themes.moon.map(([t, w]) => [t, ctx.cycle ? w : t === "mixed" ? w : 0]), ctx.rng)) != null ? _a8 : "mixed";
   const patterns = {
     seasons: ["{seasonWord} Moon", "Moon of {seasonWord}"],
     nature: ["{wildAnimal} Moon", "{bird} Moon", "{tree} Moon", "{crop} Moon"],
@@ -156546,7 +158162,7 @@ function moonSeries(S, lines2, _ring) {
   for (const line of lines2) {
     if (line.type === "leap") {
       const options = ((_b4 = PLANS2.moonleap) != null ? _b4 : []).filter((p2) => !blockedTone(ctx, p2.tones));
-      const p = pickWeighted6(options.map((x) => [x, toneFactor(x.tones, ctx.tone)]), ctx.rng);
+      const p = pickWeighted7(options.map((x) => [x, toneFactor(x.tones, ctx.tone)]), ctx.rng);
       let text = p ? timeCapitals(p.p) : "Lone Moon";
       if (S.seen.has(text.toLowerCase())) text = "Lone Moon";
       S.seen.add(text.toLowerCase());
@@ -156615,7 +158231,7 @@ function daySeries(S, systemKey) {
     if (t === "towns" || t === "goods") return true;
     return true;
   });
-  theme = (_a8 = pickWeighted6(themeOpts, ctx.rng)) != null ? _a8 : "ordinal";
+  theme = (_a8 = pickWeighted7(themeOpts, ctx.rng)) != null ? _a8 : "ordinal";
   let skyNames;
   const planetsFor = (slotList) => {
     skyNames != null ? skyNames : skyNames = S.sky = lightSeries(neutralCtx(S), S, true).map((x) => x.text);
@@ -156776,7 +158392,7 @@ function festivalSeries(S, cycleKey) {
     if (t === "commemorations") return inEras2("ST+", ctx.era);
     return true;
   });
-  const theme = (_a8 = pickWeighted6(themes, ctx.rng)) != null ? _a8 : "seasons";
+  const theme = (_a8 = pickWeighted7(themes, ctx.rng)) != null ? _a8 : "seasons";
   const rows = rowsFor(ctx, "festival", [cycleKey]);
   const used = /* @__PURE__ */ new Set();
   const names = slots.map(() => void 0);
@@ -157003,7 +158619,7 @@ function lightSeries(base, S, neutral) {
   var _a8, _b4, _c4, _d3;
   const ctx = { ...base, kind: "light", distinct: true, used: /* @__PURE__ */ new Set(), season: null };
   const gods = !neutral && !ctx.sensitive && ctx.mode === "invented";
-  const theme = pickWeighted6(TIME_SKY.themes.light.map(([t, w]) => [t, t === "gods" && !gods ? 0 : w]), ctx.rng);
+  const theme = pickWeighted7(TIME_SKY.themes.light.map(([t, w]) => [t, t === "gods" && !gods ? 0 : w]), ctx.rng);
   const seen = /* @__PURE__ */ new Set();
   const out = Array.from({ length: 7 }, () => void 0);
   const culture = TIME_SKY.lights[ctx.culture];
@@ -157102,9 +158718,9 @@ function signSeries(S, system) {
     let theme;
     if (system === "animals-12") theme = "animals";
     else if (system === "day-signs-20") theme = "daysigns";
-    else if (system === "mansions-28") theme = pickWeighted6(TIME_SKY.themes.mansions, ctx.rng);
+    else if (system === "mansions-28") theme = pickWeighted7(TIME_SKY.themes.mansions, ctx.rng);
     else {
-      theme = pickWeighted6(TIME_SKY.themes.sign, ctx.rng);
+      theme = pickWeighted7(TIME_SKY.themes.sign, ctx.rng);
       if (system === "zodiac-12" && ctx.rng() < TIME_SKY.themes.mixedZodiac) theme = "mixed";
     }
     const flavour = [...new Set(cultureAnimals(ctx.culture))].filter((w) => !w.includes("{")).map((w) => biomeTitleCase(w));
@@ -157723,7 +159339,7 @@ function parseKitNote(content) {
   }
   if (values.type !== SETTLEMENT_NOTE_TYPE) return { problems: ["This note isn't a settlement."] };
   const problems = [];
-  const pick4 = (key2, fallback, ok) => {
+  const pick5 = (key2, fallback, ok) => {
     const v = values[key2];
     if (v === void 0 || v === "") return fallback;
     if (ok(v)) return v;
@@ -157736,16 +159352,16 @@ function parseKitNote(content) {
   if (values.fantastic && values.fantastic !== "true" && values.fantastic !== "false") problems.push(`Unknown fantastic \u201C${values.fantastic}\u201D.`);
   return {
     settings: {
-      culture: pick4("culture", "norman-british", (v) => !!findRouteCulture(v)),
-      era: pick4("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
+      culture: pick5("culture", "norman-british", (v) => !!findRouteCulture(v)),
+      era: pick5("era", "MD", (v) => ROUTE_ERAS.some((e) => e.code === v)),
       fantastic,
-      region: pick4("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
-      size: pick4("size", "town", (v) => KIT_SIZES.includes(v)),
-      position: pick4("position", "inland", (v) => KIT_POSITIONS.some((p) => p.key === v)),
-      tone: pick4("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
-      contents: pick4("contents", "whole", (v) => v in KIT_CONTENTS),
-      detail: pick4("detail", "standard", (v) => KIT_DETAILS.includes(v)),
-      people: pick4("people", "placeholders", (v) => v === "placeholders" || v === "invented"),
+      region: pick5("region", "all", (v) => v === "all" || PLACE_SHAPE_REGIONS.some((r) => r.code === v)),
+      size: pick5("size", "town", (v) => KIT_SIZES.includes(v)),
+      position: pick5("position", "inland", (v) => KIT_POSITIONS.some((p) => p.key === v)),
+      tone: pick5("tone", "any", (v) => v === "any" || GROUP_TONES.includes(v)),
+      contents: pick5("contents", "whole", (v) => v in KIT_CONTENTS),
+      detail: pick5("detail", "standard", (v) => KIT_DETAILS.includes(v)),
+      people: pick5("people", "placeholders", (v) => v === "placeholders" || v === "invented"),
       seed: Number.isInteger(seed) && seed >= 0 ? seed : 0
     },
     problems
@@ -159250,7 +160866,7 @@ var import_obsidian10 = require("obsidian");
 
 // src/packs/placeDraw.ts
 var seedFrom2 = (rng) => Math.floor(rng() * 4294967296) >>> 0;
-var pick3 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+var pick4 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
 function placePackDraw(parsed, settings, notice = () => {
 }) {
   var _a8, _b4;
@@ -159274,7 +160890,7 @@ function placePackDraw(parsed, settings, notice = () => {
       if (mode === "stem") {
         const first = (_b5 = parts[0]) != null ? _b5 : [];
         if (first.length === 0) return null;
-        return partIsBreakdown(options.generator, parsed.compoundPartGenerators, 0) ? model(`part1|${keyOf(request)}`, first).sampleStem(rng, faithfulness, strictness) : pick3(first, rng);
+        return partIsBreakdown(options.generator, parsed.compoundPartGenerators, 0) ? model(`part1|${keyOf(request)}`, first).sampleStem(rng, faithfulness, strictness) : pick4(first, rng);
       }
       return (_c4 = generateCompoundNamesDetailed(parts, { count: 1, ...options, seed: seedFrom2(rng) }).names[0]) != null ? _c4 : null;
     };
@@ -159460,8 +161076,8 @@ var RecipeHost = class {
    * are. Placeholders (and names left on "placeholders") map nothing, so the engine's own defaults
    * apply and the output is unchanged. A missing pack or list falls back to a placeholder with a notice.
    */
-  async resolveSlotSources(recipe, part, sources, from) {
-    const active = activeSlots(part, sources);
+  async resolveSlotSources(recipe, part, sources2, from) {
+    const active = activeSlots(part, sources2);
     if (Object.keys(active).length === 0) return {};
     return this.resolveSlots({ ...recipe, slots: active }, from);
   }
@@ -159493,17 +161109,17 @@ var RecipeHost = class {
         out[categoryId] = { kind: slot.kind };
         continue;
       }
-      const sources = [];
+      const sources2 = [];
       for (const ref of slot.sources) {
         if (ref.list) {
           const list = await this.wordListSource(ref.list, recipePath, categoryId);
-          if (list) sources.push({ weight: ref.weight, ...list });
+          if (list) sources2.push({ weight: ref.weight, ...list });
         } else if (ref.pack) {
           const draw3 = await this.packSource(ref.pack, recipePath);
-          if (draw3) sources.push({ weight: ref.weight, draw: draw3 });
+          if (draw3) sources2.push({ weight: ref.weight, draw: draw3 });
         }
       }
-      out[categoryId] = sources.length > 0 ? { kind: "sources", sources, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a8 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a8.length) ? { kind: "built-in" } : { kind: "placeholder" };
+      out[categoryId] = sources2.length > 0 ? { kind: "sources", sources: sources2, mode: slot.mode, gender: slot.gender, section: slot.section } : ((_a8 = NAME_WORDS.categories[categoryId]) == null ? void 0 : _a8.length) ? { kind: "built-in" } : { kind: "placeholder" };
     }
     if (recipe.native && recipe.shape.part !== "organic") {
       for (const categoryId of NATIVE_PACK_CATEGORIES) {
@@ -159602,7 +161218,7 @@ var RecipeHost = class {
     const faithfulness = (_a8 = this.settings.faithfulness) != null ? _a8 : 2;
     const strictness = (_b4 = this.settings.strictness) != null ? _b4 : 3;
     const seedFrom3 = (rng) => Math.floor(rng() * 4294967296) >>> 0;
-    const pick4 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
+    const pick5 = (items, rng) => items.length > 0 ? items[Math.floor(rng() * items.length)] : null;
     const cache = /* @__PURE__ */ new Map();
     const cached = (key2, build) => {
       if (!cache.has(key2)) cache.set(key2, build());
@@ -159625,7 +161241,7 @@ var RecipeHost = class {
       const label = listLabels.get(key2);
       const loosened = label ? breakdownSettingsFor(names.length, strictness) : { allowSourceCopies: false, strictness };
       if (label && loosened.allowSourceCopies) this.notices.add(`${parsed.packName}: ${smallListNotice(label, names.length)}`);
-      return (_a9 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom3(rng) }).names[0]) != null ? _a9 : pick4(names, rng);
+      return (_a9 = model.generateDetailed({ count: 1, faithfulness, ...loosened, seed: seedFrom3(rng) }).names[0]) != null ? _a9 : pick5(names, rng);
     };
     const requestKey = (r) => {
       var _a9, _b5;
@@ -159633,7 +161249,7 @@ var RecipeHost = class {
     };
     switch (parsed.packType) {
       case "listPack":
-        return (request, _mode, rng) => pick4(namesFor2(request), rng);
+        return (request, _mode, rng) => pick5(namesFor2(request), rng);
       case "breakdownPack":
         return (request, _mode, rng) => markovName(namesFor2(request), requestKey(request), rng);
       case "placePack":
@@ -159646,7 +161262,7 @@ var RecipeHost = class {
           const parts = compoundPartsFor(data, (_a9 = request.section) != null ? _a9 : request.gender);
           if (mode === "stem") {
             const first = (_b5 = parts[0]) != null ? _b5 : [];
-            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick4(first, rng);
+            return partIsBreakdown(settings.generator, parsed.compoundPartGenerators, 0) ? markovName(first, `part1|${requestKey(request)}`, rng) : pick5(first, rng);
           }
           return (_c4 = generateCompoundNamesDetailed(parts, { count: 1, ...settings, faithfulness, strictness, seed: seedFrom3(rng) }).names[0]) != null ? _c4 : null;
         };
@@ -159681,16 +161297,16 @@ function generateWorldPlace(state, biome, run) {
   return generateWorldPlaceNames({ culture: state.culture, era: state.era, biome, terrain: state.land.terrain, ...run });
 }
 function sourcesOfPreset(placeNames, placeSlots, part) {
-  let sources = { ...freshSlotSources(), names: placeNames };
+  let sources2 = { ...freshSlotSources(), names: placeNames };
   for (const [id, choice] of Object.entries(placeSlots)) {
-    if (slotSettingOf(part, choice)) sources = chooseSlotSource(sources, part, id, choice);
+    if (slotSettingOf(part, choice)) sources2 = chooseSlotSource(sources2, part, id, choice);
   }
-  return sources;
+  return sources2;
 }
-function slotsForPreset(sources, part) {
+function slotsForPreset(sources2, part) {
   const out = {};
   for (const slot of slotInventory(part)) {
-    const choice = slotChoiceId(sources.slots[slot.id]);
+    const choice = slotChoiceId(sources2.slots[slot.id]);
     if (choice !== "placeholder") out[slot.id] = choice;
   }
   return out;
@@ -159764,23 +161380,23 @@ function choiceOfRecipeSlot(setting, part) {
   return void 0;
 }
 function sourcesOfRecipeSlots(slots, part) {
-  let sources = freshSlotSources();
+  let sources2 = freshSlotSources();
   const unsupported = [];
   for (const [id, setting] of Object.entries(slots != null ? slots : {})) {
     const choice = choiceOfRecipeSlot(setting, part);
-    if (choice && slotChoiceAllowed(part, id, choice)) sources = chooseSlotSource(sources, part, id, choice);
+    if (choice && slotChoiceAllowed(part, id, choice)) sources2 = chooseSlotSource(sources2, part, id, choice);
     else unsupported.push(id);
   }
-  if (Object.keys(sources.slots).length > 0) sources = { ...sources, names: "perSlot" };
-  const modes = new Set(Object.values(sources.slots).map((s) => s.kind === "people" ? s.mode : void 0));
+  if (Object.keys(sources2.slots).length > 0) sources2 = { ...sources2, names: "perSlot" };
+  const modes = new Set(Object.values(sources2.slots).map((s) => s.kind === "people" ? s.mode : void 0));
   if (modes.size === 1 && !modes.has(void 0)) {
     const offered = slotInventory(part).filter((s) => allowsPeopleChoice(part, s.id)).length;
-    if (Object.keys(sources.slots).length === offered) sources = { names: [...modes][0], slots: {} };
+    if (Object.keys(sources2.slots).length === offered) sources2 = { names: [...modes][0], slots: {} };
   }
-  return { sources, unsupported };
+  return { sources: sources2, unsupported };
 }
-function withPresetSources(all, setting, sources) {
-  return { ...all, [setting]: sources };
+function withPresetSources(all, setting, sources2) {
+  return { ...all, [setting]: sources2 };
 }
 
 // src/packs/labelled.ts
@@ -159821,24 +161437,24 @@ function generateLabelledNames(lists, options) {
   while (result.length < count && live5.length > 0) {
     const total = live5.reduce((sum, i) => sum + viable3[i].names.length, 0);
     let roll = masterRng() * total;
-    let pick4 = live5[live5.length - 1];
+    let pick5 = live5[live5.length - 1];
     for (const i of live5) {
       roll -= viable3[i].names.length;
       if (roll < 0) {
-        pick4 = i;
+        pick5 = i;
         break;
       }
     }
-    const names = pool3(pick4);
-    if (cursors[pick4] >= names.length) {
-      live5.splice(live5.indexOf(pick4), 1);
+    const names = pool3(pick5);
+    if (cursors[pick5] >= names.length) {
+      live5.splice(live5.indexOf(pick5), 1);
       continue;
     }
-    const name = names[cursors[pick4]++];
+    const name = names[cursors[pick5]++];
     const key2 = name.toLowerCase();
     if (seen.has(key2)) continue;
     seen.add(key2);
-    result.push({ name, ...viable3[pick4].tag !== void 0 ? { tag: viable3[pick4].tag } : {} });
+    result.push({ name, ...viable3[pick5].tag !== void 0 ? { tag: viable3[pick5].tag } : {} });
   }
   return { names: result, seed, small: small2 };
 }
@@ -161083,18 +162699,18 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     const files = ((_a8 = folder == null ? void 0 : folder.children) != null ? _a8 : []).filter((c) => c instanceof import_obsidian12.TFile && c.extension === "md");
     const stamp = files.map((f) => `${f.path}:${f.stat.mtime}`).join("|");
     if (stamp === this.biomeStamp) return this.customBiomes;
-    const sources = [];
+    const sources2 = [];
     const notes = [];
     for (const file of files) {
       try {
         const content = await this.app.vault.cachedRead(file);
         notes.push({ path: file.path, basename: file.basename, packName: packNameOfNote(content) });
-        if (isBiomePackContent(content)) sources.push({ path: file.path, content });
+        if (isBiomePackContent(content)) sources2.push({ path: file.path, content });
       } catch (e) {
         continue;
       }
     }
-    const { biomes, problems } = resolveBiomePacks(sources);
+    const { biomes, problems } = resolveBiomePacks(sources2);
     this.customBiomes = biomes;
     this.biomeProblems = problems;
     this.folderNotes = notes;
@@ -161510,10 +163126,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
    * Wizard retirement brief §3.5: the sentence's slot sources resolved into the engine's slots by the
    * recipe host, with its notices. On placeholders it maps nothing, exactly as before.
    */
-  async resolveSlotSources(part, sources, recipe) {
-    if (!usesOwnNames(part, sources)) return { slots: {}, notices: [] };
+  async resolveSlotSources(part, sources2, recipe) {
+    if (!usesOwnNames(part, sources2)) return { slots: {}, notices: [] };
     const host = new RecipeHost(this.app, this.plugin.settings, await this.scanFolderPacks(), void 0, this.catalogue());
-    const slots = await host.resolveSlotSources(recipe, part, sources, `${(0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
+    const slots = await host.resolveSlotSources(recipe, part, sources2, `${(0, import_obsidian12.normalizePath)(this.getFolderPath() || DEFAULT_NAMES_FOLDER)}/`);
     return { slots, notices: host.getNotices() };
   }
   /** The region link: "‹all of Britain›", "‹the North›". */
@@ -161693,10 +163309,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     let options;
     let tail;
     const sourcePart = s.setting === "native" ? s.culture === PLACE_BRITAIN ? "organic" : void 0 : slotPartOf(s.setting === "new-lands" ? "2" : "2a");
-    const sources = s.slots[s.setting];
+    const sources2 = s.slots[s.setting];
     const own = sourcePart ? await this.resolveSlotSources(
       sourcePart,
-      sources,
+      sources2,
       sourcePart === "organic" ? britishPlaceNamesRecipe(s.region) : colonialPlaceNamesRecipe(sourcePart, s.tradition[s.setting === "new-lands" ? "2" : "2a"], s.context[s.setting === "new-lands" ? "2" : "2a"])
     ) : { slots: {}, notices: [] };
     const base = { size: s.size, count: this.generationCount, seed: seedOverride, faithfulness: this.plugin.settings.faithfulness, strictness: this.plugin.settings.strictness, slots: own.slots, catalogue };
@@ -161723,10 +163339,10 @@ var NameForgeModal = class _NameForgeModal extends import_obsidian12.Modal {
     }
     const generated = this.tryLand(() => generateSettlementNames(options));
     if (!generated) return;
-    const result = sourcePart ? fillSettlementNames(generated, options, fillPlan(sourcePart, sources)) : generated;
+    const result = sourcePart ? fillSettlementNames(generated, options, fillPlan(sourcePart, sources2)) : generated;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
-    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} \xB7 ${sizeLabel(result.size)} \xB7 ${tail}${sourcePart ? ownNamesSuffix(sourcePart, sources) : ""}`);
+    await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} \xB7 ${sizeLabel(result.size)} \xB7 ${tail}${sourcePart ? ownNamesSuffix(sourcePart, sources2) : ""}`);
     this.setStatus([...result.notices, ...own.notices].join(" "));
   }
   /** Urban brief §8: a settlement names preset, saved as the source module's recipe with the size. */
@@ -161792,8 +163408,8 @@ ${text}
       this.landStates[`settlement:colonial:${part}`] = land;
     }
     const slotPart = shape.part === "organic" ? "organic" : slotPartOf(shape.part === "new-land" ? "2" : "2a");
-    const { sources, unsupported } = sourcesOfRecipeSlots(recipeSlots, slotPart);
-    s.slots = withPresetSources(s.slots, s.setting, sources);
+    const { sources: sources2, unsupported } = sourcesOfRecipeSlots(recipeSlots, slotPart);
+    s.slots = withPresetSources(s.slots, s.setting, sources2);
     this.switchSection("settlementNames");
     if (unsupported.length > 0) this.setStatus(`The preset's source for ${unsupported.map((id) => `\u201C${id}\u201D`).join(", ")} can't be shown in the sentence; ${unsupported.length === 1 ? "it stays a placeholder" : "they stay placeholders"}.`);
   }
@@ -164293,7 +165909,7 @@ ${n.origin}${also}${echo}` };
   openSaveBynamePreset(module2) {
     var _a8, _b4;
     const state = this.bynameState(module2);
-    const culture = (_b4 = (_a8 = BYNAME_CULTURES.find((c) => c.key === state.culture)) == null ? void 0 : _a8.label) != null ? _b4 : "General";
+    const culture = (_b4 = (_a8 = BYNAME_CULTURES_5C.find((c) => c.key === state.culture)) == null ? void 0 : _a8.label) != null ? _b4 : "General";
     const kind = moduleKinds(module2).find((k) => k.key === state.kind);
     const name = [culture, kind ? kind.menu : SECTION_LABELS[module2]].join(" \xB7 ");
     const description = bynameSentenceText(bynameSentence(state, module2, this.bynamePacks));
@@ -164783,6 +166399,7 @@ ${n.origin}${also}${echo}` };
         catalogue: await this.readyCatalogue(),
         family: family.key,
         tradition: state.tradition,
+        culture: state.culture,
         type: state.type,
         genre: state.genre,
         fantastic: state.fantastic,
@@ -165460,14 +167077,14 @@ ${n.origin}${also}${echo}` };
       )
     );
   }
-  async saveMixToConfiguredFile(sources, templateOf) {
+  async saveMixToConfiguredFile(sources2, templateOf) {
     var _a8, _b4;
     const filePath = this.getResolvedFilePath();
     if (!filePath) {
       this.setStatus("No folder set for name packs. Set one first.");
       return;
     }
-    if (!templateOf && sources.length < 2) {
+    if (!templateOf && sources2.length < 2) {
       this.setStatus("A mix pack needs at least two source packs.");
       return;
     }
@@ -165483,7 +167100,7 @@ ${n.origin}${also}${echo}` };
       this.setStatus(nameIssue);
       return;
     }
-    const content = createMixNamesFileContent(packName, sources, templateOf);
+    const content = createMixNamesFileContent(packName, sources2, templateOf);
     try {
       const existingFile = this.app.vault.getFileByPath(normalizedFilePath);
       if (existingFile instanceof import_obsidian12.TFile) {
@@ -165499,7 +167116,7 @@ ${n.origin}${also}${echo}` };
       this.setStatus(`Failed to save mix pack to ${filePath}.`);
       return;
     }
-    this.currentMixSources = sources;
+    this.currentMixSources = sources2;
     this.setStatus("");
   }
   async refreshPackDropdown(options = {}) {
@@ -167432,12 +169049,12 @@ ${(_b4 = entry.text) != null ? _b4 : ((_a8 = entry.names) != null ? _a8 : []).jo
       return;
     }
     if (this.selectedPackType === "mixPack") {
-      const sources = this.mixSources.map((source) => ({
+      const sources2 = this.mixSources.map((source) => ({
         packName: source.packName.trim(),
         weight: source.weight > 0 ? source.weight : 1
       })).filter((source) => source.packName.length > 0);
-      const unique = new Set(sources.map((source) => source.packName));
-      if (!templateOf && (sources.length < 2 || unique.size < 2)) {
+      const unique = new Set(sources2.map((source) => source.packName));
+      if (!templateOf && (sources2.length < 2 || unique.size < 2)) {
         this.parent.setStatus("A mix pack needs at least two different source packs.");
         return;
       }
@@ -167456,7 +169073,7 @@ ${(_b4 = entry.text) != null ? _b4 : ((_a8 = entry.names) != null ? _a8 : []).jo
       const fileName2 = sanitizePackNameForFilename(packName);
       this.parent.plugin.settings.namesFilePath = (0, import_obsidian12.normalizePath)(`${folderPath2}/${fileName2}.md`);
       await this.parent.plugin.saveSettings();
-      await this.parent.saveMixToConfiguredFile(sources, templateOf);
+      await this.parent.saveMixToConfiguredFile(sources2, templateOf);
       this.close();
       return;
     }

@@ -4836,15 +4836,15 @@
   "Baroness [name]"
  ],
  "bynames titles norman-british": [
-  "[name], Guardian of the Marshes",
+  "Knight of [place]",
   "[name], Sir of Upper Goat Valley",
-  "[name], Keeper of the Wall",
+  "Captain",
   "[name], Lady of Dry Lake",
   "[name], Lord of Bank Building",
   "[name], Seneschal of Falconfell",
   "[name], Lord of Sand Way",
   "[name], Captain of the Harbour",
-  "[name], Lord Protector",
+  "Your Honour",
   "[name], Keeper of the West"
  ],
  "bynames titles aztec": [
@@ -4898,12 +4898,12 @@
  "bynames epithets norman-british": [
   "[name] the Tide",
   "[name] of the East",
-  "[name] the Lightning",
-  "[name] Spearshaker",
-  "[name] Crimson Otter",
-  "[name] the Black-Bearded",
+  "The Confessor",
+  "The Steadfast",
+  "The Careful",
+  "The Noble",
   "[name] Strongbow",
-  "[name] the Butcher",
+  "Unready the Lame",
   "[name] of the Ford",
   "[name], the Hart of Falconfell"
  ],
@@ -4957,15 +4957,15 @@
  ],
  "bynames familyNames norman-british": [
   "[name] Bradmarsh",
-  "[name] Radholt",
+  "Mason",
   "[name] Black",
-  "[name] [father]s",
-  "[name] [father]son",
+  "Ford Cooper",
+  "Neighbour",
   "[name] Smith",
   "[name] Butcher",
   "[name] Haywood",
   "[name] Shelford",
-  "[name] Elmhill"
+  "Moor Baker"
  ],
  "bynames familyNames aztec": [
   "[name] of Place of Dogs",
@@ -5029,25 +5029,25 @@
  ],
  "vessels ships norman-british placeholders": [
   "Brass Evening Star",
-  "Triumph Lion",
+  "Leopard",
   "Formidable of Funnel",
   "Duncan",
   "Daring",
-  "Tyrant's Revenge",
+  "Leopard of [place]",
   "Sacred Deliverance",
   "[place]",
-  "Turbine Weasel",
+  "Dolphin",
   "Peter of Rower"
  ],
  "vessels ships norman-british invented": [
   "Grey Grange",
-  "Swan",
-  "Ellen Ingram",
-  "Pride of Mire of the Beech",
+  "Hart",
+  "Stout Fortune",
+  "Golden Resolution",
   "Saint Brannoc",
   "Sparrow Valley Venture",
   "Christopher",
-  "Middle Church",
+  "Hope",
   "Lion",
   "Northern Surveyor"
  ],

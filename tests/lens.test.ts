@@ -11,14 +11,14 @@ import groupData from "../src/data/group-names.json";
 import lensJson from "../src/data/lens.json";
 import vesselData from "../src/data/vessels.json";
 import { COLONIAL_TRADITIONS } from "../src/colonialShapes";
-import { BYNAME_CULTURES } from "../src/bynames/engine";
+import { BYNAME_CULTURES, BYNAME_CULTURES_5C } from "../src/bynames/engine";
 import { DEITY_CULTURES, DEITY5A_CULTURES } from "../src/deities/engine";
 import { MONEY_CULTURES } from "../src/money/engine";
 import { REALM_ERAS } from "../src/realms/engine";
 import { NORTH_CULTURES, ROUTE_CULTURES, ROUTE_ERAS } from "../src/routes/engine";
 import { SETTLEMENT_VOCAB, inCultureGroup as vocabInCultureGroup, VOCAB_ALL_CULTURES, VOCAB_ERAS, VOCAB_REGIONS } from "../src/settlement/vocab";
 import { TRIBAL_TRADITIONS } from "../src/tribes/engine";
-import { VESSEL_CULTURES } from "../src/vessels/engine";
+import { VESSEL_CULTURES, VESSEL_BASE_CULTURES } from "../src/vessels/engine";
 import { WORLD_CULTURES } from "../src/world/engine";
 import {
   cultureMapping,
@@ -203,11 +203,14 @@ const shared = (keys: string[], modules: string[]) => modules.forEach((m) => (RO
 const routeKeys = ROUTE_CULTURES.map((c) => c.key);
 shared(routeKeys, ["eventNames", "calendarNames", "skyNames", "starsSpace", "hyperspaceCharts"]);
 shared(NORTH_CULTURES.map((c) => c.key), ["routeNames", "streetNames", "innNames", "buildingNames", "monumentNames", "settlementKit", ...WILDS_SECTIONS, ...WATERS_SECTIONS.filter((s) => s !== "hyperspaceCharts"), ...PLACE_MODULE_SECTIONS.filter((s) => s !== "starsSpace")]);
-shared(BYNAME_CULTURES.map((c) => c.key), ["epithets", "titles", "familyNames", "armsNames", "treasureNames", "bookNames", "realms", "peoplesTongues"]);
+shared(BYNAME_CULTURES.map((c) => c.key), ["armsNames", "treasureNames", "bookNames"]);
+// Brief 5c: the bynames, realms and peoples modules also offer Welsh, Scottish, Irish, Cornish, Scandinavian and German.
+shared(BYNAME_CULTURES_5C.map((c) => c.key), ["epithets", "titles", "familyNames", "realms", "peoplesTongues"]);
 shared(DEITY_CULTURES.map((c) => c.key), ["deityNames"]);
 shared(DEITY5A_CULTURES.map((c) => c.key), ["sacredPlaces"]);
 shared(MONEY_CULTURES.map((c) => c.key), ["moneyNames"]);
-shared(VESSEL_CULTURES.map((c) => c.key), ["ships", "spacecraft", "aircraft", "landVehicles"]);
+shared(VESSEL_CULTURES.map((c) => c.key), ["ships", "aircraft", "landVehicles"]);
+shared(VESSEL_BASE_CULTURES.map((c) => c.key), ["spacecraft"]);
 shared(TRIBAL_TRADITIONS.map((t) => t.key), ["tribalNames", ...GROUP_NAME_SECTIONS]);
 shared(COLONIAL_TRADITIONS.map((t) => t.id), ["explorationPlaceShapes", "empireExpansionPlaceShapes"]);
 shared(WORLD_CULTURES.map((c) => c.id), ["placeShapes", "settlementNames"]);
@@ -232,8 +235,12 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
   assert.deepEqual(keysOf("shared"), [...VOCAB_ALL_CULTURES].sort(), "the shared roster is the vocabulary's 26");
   // The vehicle mapping is the shared roster plus the local extras; the vessel roster has no `polynesian` key of its own (it has hawaiian, maori and w-polynesian).
   const vehicleKeys = keysOf("vehicle");
-  for (const c of VESSEL_CULTURES) assert.ok(vehicleKeys.includes(c.key), c.key);
-  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_CULTURES.some((c) => c.key === k)), ["polynesian"]);
+  for (const c of VESSEL_BASE_CULTURES) assert.ok(vehicleKeys.includes(c.key), c.key);
+  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_BASE_CULTURES.some((c) => c.key === k)), ["polynesian"]);
+  // Brief 5c: ships, aircraft and land vehicles read `vehicle5c` (the vehicle roster and the six newer cultures); the bynames, realms and peoples read `north5c`.
+  const vehicle5c = keysOf("vehicle5c");
+  for (const c of VESSEL_CULTURES) assert.ok(vehicle5c.includes(c.key), c.key);
+  for (const c of BYNAME_CULTURES_5C) assert.ok(keysOf("north5c").includes(c.key), c.key);
   // The 22, the 20, the 24 and the 34 are all inside the shared keys or the vehicle extras.
   for (const keys of [routeKeys, BYNAME_CULTURES.map((c) => c.key), MONEY_CULTURES.map((c) => c.key)]) for (const k of keys) assert.ok(cultureMapping("shared")[k], k);
   assert.equal(WORLD_CULTURES.length, 22, "the sixteen world cultures and the six of batch 5b");
@@ -242,7 +249,8 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
 
 test("§4.1: tribal, colonial and vehicle mappings are the brief's tables", () => {
   const m = (name: string, key: string) => cultureMapping(name)[key];
-  assert.deepEqual(m("tribal", "celtic").lens, ["welsh", "scottish", "irish", "cornish"]);
+  // Brief 5c: Celtic itself reads the Celtic tradition too (its own twelve words and four shapes in the group families).
+  assert.deepEqual(m("tribal", "celtic").lens, ["welsh", "scottish", "irish", "cornish", "celtic"]);
   assert.deepEqual(m("tribal", "germanic").lens, ["english", "scandinavian", "german", "dutch"]);
   assert.deepEqual(m("tribal", "mediterranean").lens, ["roman", "greek-byzantine", "italian"]);
   assert.deepEqual(m("tribal", "eastAsian").lens, ["chinese", "japanese", "korean"]);
@@ -285,8 +293,11 @@ const FORMER_CULTURE_MAP: Record<string, [string, number][]> = {
 };
 
 test("the group engine's tradition draws are the lens's weights, exactly as traditions.cultureMap had them", () => {
-  for (const t of TRIBAL_TRADITIONS) assert.deepEqual(tribalCultureWeights(t.key), FORMER_CULTURE_MAP[t.key], t.key);
-  assert.deepEqual(Object.keys(FORMER_CULTURE_MAP).sort(), TRIBAL_TRADITIONS.map((t) => t.key).filter((k) => tribalCultureWeights(k)).sort());
+  // Brief 5c: the eight traditions of Northern Europe draw from their own culture alone.
+  const NORTHERN = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
+  for (const t of TRIBAL_TRADITIONS.filter((t) => !NORTHERN.includes(t.key))) assert.deepEqual(tribalCultureWeights(t.key), FORMER_CULTURE_MAP[t.key], t.key);
+  for (const k of NORTHERN) assert.deepEqual(tribalCultureWeights(k), [[k, 1]], k);
+  assert.deepEqual(Object.keys(FORMER_CULTURE_MAP).sort(), TRIBAL_TRADITIONS.map((t) => t.key).filter((k) => !NORTHERN.includes(k) && tribalCultureWeights(k)).sort());
   // The map no longer lives in group-names.json.
   assert.equal((groupData as unknown as { traditions: Record<string, unknown> }).traditions.cultureMap, undefined);
   // A tradition the lens maps to more cultures than it draws from keeps drawing from the same ones.

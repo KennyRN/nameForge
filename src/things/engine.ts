@@ -331,7 +331,7 @@ function housePool(ctx: Ctx): string[] {
   let pool = HOUSES.get(key);
   if (!pool) {
     const [genre, fantastic] = GENRE_OF[ctx.setting];
-    const batch = generateBynames({ module: "familyNames", culture: ctx.culture, genre, fantastic, language: "english", source: "placeholder", count: 80, seed: 1789 });
+    const batch = generateBynames({ signature: false, module: "familyNames", culture: ctx.culture, genre, fantastic, language: "english", source: "placeholder", count: 80, seed: 1789 });
     pool = [...new Set(batch.names.map((n) => n.text.replace(/^the /i, "")).filter((t) => t && !t.includes("[")))];
     HOUSES.set(key, pool);
   }

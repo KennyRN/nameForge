@@ -311,7 +311,7 @@ export function generateKit(options: KitOptions): Kit {
   // 2. Ruler (§6 step 2): one office title "… of {town}".
   let ruler: string | null = options.keep ? options.keep.ruler : null;
   if (o.contents !== "places" && !options.keep) {
-    const r = generateBynames({
+    const r = generateBynames({ signature: false,
       module: "titles",
       culture: o.culture,
       kind: "office",
@@ -432,7 +432,7 @@ export function generateKit(options: KitOptions): Kit {
     const technology = KIT_DATA.vessels[module][o.era] ?? (module === "ships" ? "T7" : "S3");
     const fn = (isFuture(o.era) && o.position === "crossroads" ? "any" : pos.ships) === "working" ? "working" : undefined;
     run("ships", want("ships"), (seed, count) => {
-      const b = generateVesselNames({ module, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context, catalogue: options.catalogue });
+      const b = generateVesselNames({ signature: false, module, culture: vesselCulture, technology, function: fn, genre: groupGenreFor(o.era), fantastic: o.fantastic, tone: o.tone, people: o.people, count, seed, safeguards: g.vessel, context, catalogue: options.catalogue });
       return { names: b.names.map((n) => ({ text: n.text, kind: n.function })), notices: b.notices };
     });
   }
@@ -497,7 +497,7 @@ export function generateKit(options: KitOptions): Kit {
       if (offered.length === 0 || (type && !offered.some((t) => t.key === type))) continue;
       const front = KIT_DATA.hideFront.includes(row.family) || type === "secret" ? "may" : undefined;
       for (let t = 0; t <= KIT_DATA.dedupeTries; t++) {
-        const n = generateGroupNames({
+        const n = generateGroupNames({ signature: false,
           catalogue: options.catalogue,
           family: row.family,
           type,

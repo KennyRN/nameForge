@@ -163,7 +163,7 @@ export function buildContext(o: ContextOptions, rng: () => number): SettlementCo
   // §3: a realm, official, territorial (any character in NF–IS); a village skips it half the time.
   let realm: string | null = null;
   if (!(o.village && rng() < 0.5)) {
-    const r = generateRealmNames({
+    const r = generateRealmNames({ signature: false,
       culture: o.culture,
       era: realmEraFor(o.era),
       genre: groupGenreFor(o.era),

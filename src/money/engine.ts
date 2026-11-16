@@ -422,7 +422,7 @@ function companyPool(ctx: Ctx, type: string): string[] {
     if (typesInSetting(family, ctx.setting).some((t) => t.key === type)) {
       const [genre, fantastic] = GENRE_OF[ctx.setting];
       const drop = new Set(MONEY_DATA.companyDrop);
-      const batch = generateGroupNames({ family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789, catalogue: ctx.catalogue });
+      const batch = generateGroupNames({ signature: false, family: "trade", type, tradition, genre, fantastic, form: "everyday", people: "invented", tone: ctx.tone, count: 40, seed: 1789, catalogue: ctx.catalogue });
       for (const n of batch.names) {
         const words = n.text.replace(/^the /i, "").split(" ");
         if (words.length > 1 && drop.has(words[words.length - 1])) words.pop();

@@ -22,3 +22,8 @@ export function isRealTownName(name: string): boolean {
   while (i < words.length - 1 && QUALIFIERS.has(words[i])) i++;
   return TOWNS.has(words.slice(i).join(" "));
 }
+
+// Northern Europe brief 5c §13.4: the well-known real groups, realms, craft and objects (the Hanseatic League, the Black Watch, the Mary Rose…).
+const GROUPS = new Set(((data as unknown as { groups: string[] }).groups).map((n) => n.toLowerCase().replace(/^the\s+/, "")));
+/** Whether a name is a well-known real group, realm, craft or object ("the Black Watch", "Mary Rose"); a fixed name never is. */
+export const isRealGroup = (name: string): boolean => GROUPS.has(name.trim().toLowerCase().replace(/^the\s+/, "").replace(/[’]/g, "'"));

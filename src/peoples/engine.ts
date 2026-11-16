@@ -5,13 +5,16 @@
 
 import peoplesData from "../data/peoples-tongues.json";
 import { pluralOf } from "../biomes";
-import { BYNAME_CULTURES } from "../bynames/engine";
+import { BYNAME_CULTURES_5C } from "../bynames/engine";
 import { type GroupSafeguards, type GroupToneChoice, normForBlock, pickWeighted, repeatsContent, toneFactor } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { breaksMoneyWords } from "../money/engine";
 import { ALL_FORMS } from "../realms/engine";
 import { ROUTE_ERAS } from "../routes/engine";
 import { LENS_ERAS, lensCultureLabel } from "../lens";
+import { engineCulture } from "../lens";
+import { signatureDrawer } from "../north5c";
+import { SIGNATURE_SHARE } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -62,7 +65,7 @@ interface PeoplesData {
 
 export const PEOPLES_DATA = peoplesData as unknown as PeoplesData;
 /** BT's twenty cultures (§3), in BT's order. */
-export const PEOPLE_CULTURES = BYNAME_CULTURES;
+export const PEOPLE_CULTURES = BYNAME_CULTURES_5C;
 export const PEOPLE_ERAS = ROUTE_ERAS;
 export const PEOPLE_FAMILIES: PeopleFamily[] = ["an", "ian", "er", "ish", "ese", "i", "ite", "ine", "iot", "ene", "itan", "ec", "clip", "man", "folk", "ings", "learned", "born", "sider"];
 
@@ -204,7 +207,8 @@ function clipStem(head: string, id: string): string | undefined {
 export type FamilyWeights = Partial<Record<PeopleFamily, number>>;
 
 /** The family weights for a head word: culture weights, then endings, era and tone. */
-export function familyWeights(name: string, culture: string, era: PeopleEra = "MD", tone: GroupToneChoice = "any"): FamilyWeights {
+export function familyWeights(name: string, requested: string, era: PeopleEra = "MD", tone: GroupToneChoice = "any"): FamilyWeights {
+  const culture = engineCulture(requested);
   const parts = normaliseName(name);
   return weightsFor(parts.head, culture, era, tone);
 }
@@ -453,7 +457,8 @@ function familyForms(parts: NameParts, family: PeopleFamily, culture: string, ch
  * and the `er` adjective. A name with a special case (the Sun's system, a generic land word, the fallback) uses
  * its own forms whatever the family.
  */
-export function peopleForms(name: string, family: PeopleFamily | "generic" | "fallback" | "sun", culture = "norman-british", choice: PeopleChoice = {}, era: PeopleEra = "MD"): PeopleForms | undefined {
+export function peopleForms(name: string, family: PeopleFamily | "generic" | "fallback" | "sun", requested = "norman-british", choice: PeopleChoice = {}, era: PeopleEra = "MD"): PeopleForms | undefined {
+  const culture = engineCulture(requested);
   const parts = normaliseName(name);
   const special = specialForms(parts, era, choice);
   if (special) return special;
@@ -578,7 +583,7 @@ export interface PeopleDrawerOptions {
 
 /** A drawer of rows for names, on the given stream (the second stream for the realms link, §10.2). */
 export function makePeopleDrawer(options: PeopleDrawerOptions): (name: string) => PeopleRow {
-  const culture = PEOPLE_CULTURES.some((c) => c.key === options.culture) ? options.culture! : "general";
+  const culture = engineCulture(PEOPLE_CULTURES.some((c) => c.key === options.culture) ? options.culture! : "general");
   const era = asEra(options.era);
   const tone = options.tone ?? "any";
   const giving = options.giving ?? "both";
@@ -668,7 +673,25 @@ export const peopleStreamSeed = (seed: number) => (seed + 0x9e3779b9) >>> 0;
 export function generatePeopleRows(options: PeopleOptions): PeopleBatch {
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const draw = makePeopleDrawer({ ...options, rng: mulberry32(peopleStreamSeed(seed)) });
-  return { rows: options.names.map(draw), seed, notices: [] };
+  const rows = options.names.map(draw);
+  // Northern Europe brief 5c: a core culture's own words name the people and the tongue of a share of the rows.
+  const peopleOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && !f.includes("{N1}"), false);
+  const tongueOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && f.includes("{N1}"), false);
+  if (!peopleOf || !tongueOf) return { rows, seed, notices: [] };
+  const rng = mulberry32((seed ^ 0x5c5c5c5c) >>> 0);
+  const giving = options.giving ?? "both";
+  return {
+    rows: rows.map((row) => {
+      if (rng() >= SIGNATURE_SHARE) return row;
+      const people = peopleOf(rng);
+      const language = tongueOf(rng);
+      if (!people || !language) return row;
+      const changed = { ...row, people, language };
+      return { ...changed, text: formatPeopleRow(changed, giving) };
+    }),
+    seed,
+    notices: [],
+  };
 }
 
 /** §2.3: the typed names: one per line or separated by commas, duplicates removed, at most 50. */

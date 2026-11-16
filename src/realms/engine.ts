@@ -10,7 +10,7 @@ import { hasSpaceBlock } from "../space/safeguards";
 import { spaceDirections, type SpaceScale } from "../space/scale";
 import realmData from "../data/realms.json";
 import { availableTerrains, type Biome, type BiomeCatalogue, biomeTitleCase, BUILT_IN_BIOMES, pluralOf, terrainWords } from "../biomes";
-import { BYNAME_CULTURES, cultureAnimals, holyNamesIn, townSource } from "../bynames/engine";
+import { BYNAME_CULTURES_5C, cultureAnimals, holyNamesIn, townSource } from "../bynames/engine";
 import {
   breaksGroupColourRule,
   type GroupGenre,
@@ -43,7 +43,8 @@ import { registerRealmSource, withDeityPlaceholders } from "../vessels/engine";
 
 export { withDeityPlaceholders };
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet, lensCultureLabel } from "../lens";
+import { cultureSet, engineCulture, lensCultureLabel } from "../lens";
+import { applySignature, noBracket } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -137,7 +138,7 @@ export const REALM_ERAS = REALM_DATA.eras;
 export const REALM_CHARACTERS = REALM_DATA.characters;
 export const REALM_NAMED_FOR = REALM_DATA.namedFor;
 /** §0: the 20 byname cultures. */
-export const REALM_CULTURES = BYNAME_CULTURES;
+export const REALM_CULTURES = BYNAME_CULTURES_5C;
 /** §6.1: the cultures whose `{dynasty}` is a house name (buildings brief §6 reads it too). */
 export const DYNASTY_CULTURES = REALM_DATA.dynastyCultures;
 
@@ -234,6 +235,8 @@ export function compatibleCollQuals(noun: string): string[] {
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface RealmOptions {
+  /** Northern Europe brief 5c: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   culture?: string;
   /** A character key; undefined is Any. */
   character?: string;
@@ -599,13 +602,28 @@ type ShapeKind = "land" | "place" | "dynasty" | "stars" | "collective" | "people
 
 /** §4: a batch of unique names. */
 export function generateRealmNames(options: RealmOptions): RealmBatch {
+  const batch = generateRealmNamesCore(options);
+  // Northern Europe brief 5c: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
+  if (options.signature === false || fillModeOf(options.people) || options.character || (options.namedFor && options.namedFor !== "anything")) return batch;
+  const requested = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture! : "general";
+  const guards = options.safeguards ?? { block: REALM_DATA.safeguards.block, flag: REALM_DATA.safeguards.flag, flagListBlocks: REALM_DATA.safeguards.flagListBlocks };
+  const block = new Set([...guards.block, ...(guards.flagListBlocks ? guards.flag : [])].map(normForBlock));
+  const ok = (text: string) => !block.has(normForBlock(text)) && !breaksRealmWords(text) && !breaksGroupColourRule(text) && (options.people !== "invented" || noBracket(text));
+  return {
+    ...batch,
+    names: applySignature(batch.names, "realms", requested, batch.seed, { allowed: ok, set: (n, text) => ({ ...n, text, official: text, short: text }) }),
+  };
+}
+
+function generateRealmNamesCore(options: RealmOptions): RealmBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateRealmNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era ?? options.genre });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
-  const culture = REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture! : "general";
+  // Brief 5c: the newer culture keys read the legacy key's tables (`engineAlias`).
+  const culture = engineCulture(REALM_CULTURES.some((c) => c.key === options.culture) ? options.culture! : "general");
   const era = eraCode(options.era ?? "medieval");
   const genre = options.genre ?? "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);

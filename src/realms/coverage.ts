@@ -4,12 +4,14 @@ import realmData from "../data/realms.json";
 import bynameData from "../data/bynames.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows, wordListRows } from "../coverageUse";
+import { north5cRows } from "../north5cCoverage";
+import { NORTH_5C_CULTURES } from "../north5c";
 
 const MODULE = "realms";
 type R = Record<string, unknown>;
 const data = realmData as unknown as R;
 const KINDS = (realmData.characters as { key: string }[]).map((c) => c.key);
-const ROSTER = (bynameData.cultures as { key: string }[]).map((c) => c.key);
+const ROSTER = [...(bynameData.cultures as { key: string }[]).map((c) => c.key), ...NORTH_5C_CULTURES.map((c) => c.key)];
 /** The era codes a weighted form is available in: those with a weight above nought. */
 const erasOf = (era: Record<string, number>) => Object.entries(era).filter(([, w]) => w > 0).map(([e]) => e);
 
@@ -40,6 +42,7 @@ function rows(): CoverageRow[] {
     out.push(...listRows(c.shapes, { module: MODULE, source: `characterShapes/${kind}`, kind }).map((r) => (c.t && !r.tones ? { ...r, tones: [...c.t] } : r)));
   }
   out.push(...vocabularyRows(MODULE));
+  out.push(...north5cRows(MODULE));
   return out;
 }
 

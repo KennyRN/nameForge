@@ -10,7 +10,7 @@ import { registerRoster } from "../lensRosters";
 import type { SectionRequest } from "../packs/sections";
 import {
   availableKinds,
-  BYNAME_CULTURES,
+  BYNAME_CULTURES_5C,
   type BynameGender,
   type BynameLanguage,
   type BynameLength,
@@ -21,7 +21,7 @@ import {
   showsLanguage,
 } from "./engine";
 
-registerRoster("byname", BYNAME_CULTURES);
+registerRoster("byname", BYNAME_CULTURES_5C);
 
 export interface BynameSentenceState {
   culture: string;
@@ -108,7 +108,7 @@ const sectionText = (state: BynameSentenceState, headings: string[]) => {
 
 export function bynameSentence(state: BynameSentenceState, module: BynameModule, packs: BynamePackInfo[] = []): BynameSegment[] {
   const out: BynameSegment[] = [];
-  const culture = BYNAME_CULTURES.find((c) => c.key === state.culture) ?? BYNAME_CULTURES[0];
+  const culture = BYNAME_CULTURES_5C.find((c) => c.key === state.culture) ?? BYNAME_CULTURES_5C[0];
   const lens = lensClause(module, state, { cultureTitle: "Naming culture: which customs the names follow" });
   out.push(asSegment(lens.culture!, "culture"));
   out.push("-themed ");

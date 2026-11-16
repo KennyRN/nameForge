@@ -29,7 +29,8 @@ import {
 import { mulberry32 } from "../markov";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { WORLD_CULTURES } from "../world/engine";
-import { cultureSet, lensCultureLabel } from "../lens";
+import { cultureSet, engineCulture, lensCultureLabel } from "../lens";
+import { applySignature, nativeForms, noBracket, NORTH_5C_CULTURES } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -121,6 +122,8 @@ export const BYNAME_CULTURES = BYNAMES_DATA.cultures.map((c) => {
   const world = WORLD_CULTURES.find((w) => w.id === c.key);
   return { key: c.key, label: c.label, guide: c.guide ?? world?.guide ?? "" };
 });
+/** Northern Europe brief 5c: the roster of the bynames, realms and peoples modules: those, and Welsh, Scottish, Irish, Cornish, Scandinavian and German, reading the legacy keys' tables (deities and the named things keep the twenty). */
+export const BYNAME_CULTURES_5C = [...BYNAME_CULTURES, ...NORTH_5C_CULTURES];
 
 export const BYNAME_MODULE_LABELS: Record<BynameModule, string> = {
   epithets: "epithets and bynames",
@@ -138,7 +141,8 @@ export function moduleKinds(module: BynameModule): Kind[] {
 }
 
 /** The kinds a module offers for a culture and setting, with their weights (§5.1, §6.1, §7.1). */
-export function availableKinds(module: BynameModule, culture: string, setting: GroupSetting): { kind: Kind; weight: number }[] {
+export function availableKinds(module: BynameModule, requested: string, setting: GroupSetting): { kind: Kind; weight: number }[] {
+  const culture = engineCulture(requested);
   const kinds = moduleKinds(module).filter((k) => (!k.s || k.s.includes(setting)) && (!k.cultures || k.cultures.includes(culture)));
   if (module === "familyNames") {
     const system = BYNAMES_DATA.family.cultures[culture];
@@ -160,6 +164,8 @@ export function showsLanguage(module: BynameModule, culture: string): boolean {
 export type NameRole = "self" | "father" | "mother" | "child";
 
 export interface BynameOptions {
+  /** Northern Europe brief 5c: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
   catalogue?: BiomeCatalogue;
   module: BynameModule;
@@ -680,16 +686,38 @@ function buildFamily(ctx: Ctx, kind: string): Built | undefined {
 
 /** §3: a batch of unique names. */
 export function generateBynames(options: BynameOptions): BynameBatch {
+  const batch = generateBynamesCore(options);
+  // Northern Europe brief 5c: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
+  // The frames are names of any kind, so a chosen kind, a full style, a pack's names and the settlement kit keep the module's own.
+  if (options.signature === false || fillModeOf(options.people) || options.shapeFilter || options.officeWords || options.context || options.kind || options.length === "full" || options.source === "pack") return batch;
+  const requested = BYNAME_CULTURES_5C.some((c) => c.key === options.culture) ? options.culture! : "general";
+  const language = showsLanguage(options.module, requested) ? options.language ?? "english" : "english";
+  // Native and mixed settings: a share of the names take the culture's own forms (Mac, ap, -son, von): all of those for native and half for mixed.
+  const forms = language === "english" ? [] : nativeForms(options.module, requested);
+  const native = forms.length === 0 ? undefined : { forms, share: language === "native" ? 1 : 0.5 };
+  const guards = options.safeguards ?? { block: BYNAMES_DATA.safeguards.block, flag: BYNAMES_DATA.safeguards.flag, flagListBlocks: BYNAMES_DATA.safeguards.flagListBlocks };
+  const guard: Guard = {
+    block: new Set([...guards.block, ...(guards.flagListBlocks ? guards.flag : [])].map(normForBlock)),
+    patterns: BYNAMES_DATA.safeguards.blockPatterns.map((p) => new RegExp(p, "i")),
+  };
+  const ok = (text: string) => acceptable(guard, { text, part: text, kind: "", shape: "", tones: [] }, 8) && (options.people !== "invented" || noBracket(text));
+  return { ...batch, names: applySignature(batch.names, options.module, requested, batch.seed, { allowed: ok, native }) };
+}
+
+function generateBynamesCore(options: BynameOptions): BynameBatch {
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateBynames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.genre });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const module = options.module;
-  const culture = BYNAME_CULTURES.some((c) => c.key === options.culture) ? options.culture! : "general";
+  const requested = BYNAME_CULTURES_5C.some((c) => c.key === options.culture) ? options.culture! : "general";
+  // Brief 5c: the newer keys read the legacy key's tables (`engineAlias`).
+  const culture = engineCulture(requested);
   const genre = options.genre ?? "fantasy";
   const setting = groupSetting(genre, genre === "scifi" ? false : !!options.fantastic);
   const tone = options.tone ?? "any";
-  const language: BynameLanguage = showsLanguage(module, culture) ? options.language ?? "english" : "english";
+  // A culture that reads General's tables (German) has no native forms there: its native forms are the batch's own, applied after.
+  const language: BynameLanguage = showsLanguage(module, requested) && culture !== "general" ? options.language ?? "english" : "english";
   const gender = options.gender ?? "anyone";
   const length = module === "titles" ? options.length ?? "single" : "single";
   const notices: string[] = [];
@@ -756,7 +784,7 @@ export function generateBynames(options: BynameOptions): BynameBatch {
 
 /** §1.2: "titles and honourifics · high or epic fantasy · Norse · grim · native". */
 export function bynameHistoryLabel(module: BynameModule, genre: GroupGenre, fantastic: boolean, culture: string, tone: GroupToneChoice = "any", language: BynameLanguage = "english"): string {
-  const label = lensCultureLabel(culture, BYNAME_CULTURES.find((c) => c.key === culture)?.label ?? "General");
+  const label = lensCultureLabel(culture, BYNAME_CULTURES_5C.find((c) => c.key === culture)?.label ?? "General");
   return [
     BYNAME_MODULE_LABELS[module],
     SETTING_PHRASES[groupSetting(genre, fantastic)],

@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   availableKinds,
-  BYNAME_CULTURES,
+  BYNAME_CULTURES, BYNAME_CULTURES_5C,
   BYNAMES_DATA,
   generateBynames,
   showsLanguage,
@@ -31,7 +31,8 @@ const texts = (e: BynameEntry) => [e.w, e.m, e.f, e.n, e.nm, e.nf].filter((x): x
 
 // §15.1 Data
 
-test("bynames: 20 cultures in the §4.1 order", () => {
+test("bynames: 20 cultures in the §4.1 order, then (brief 5c) the six newer ones", () => {
+  assert.deepEqual(BYNAME_CULTURES_5C.slice(20).map((c) => c.key), ["welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
   assert.deepEqual(BYNAME_CULTURES.map((c) => c.key), [
     "general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian",
     "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya",

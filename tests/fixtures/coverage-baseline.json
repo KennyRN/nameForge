@@ -12709,98 +12709,100 @@
    "v": 0
   },
   "culture|epithets|english|words": {
-   "v": 19,
+   "v": 49,
    "t": 30
   },
   "culture|epithets|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|english|profile": {
    "v": 0
   },
   "culture|epithets|welsh|words": {
-   "v": 4,
+   "v": 46,
    "t": 30
   },
   "culture|epithets|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|epithets|welsh|profile": {
    "v": 0
   },
   "culture|epithets|scottish|words": {
-   "v": 4,
+   "v": 46,
    "t": 30
   },
   "culture|epithets|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|epithets|scottish|profile": {
    "v": 0
   },
   "culture|epithets|irish|words": {
-   "v": 4,
+   "v": 46,
    "t": 30
   },
   "culture|epithets|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|epithets|irish|profile": {
    "v": 0
   },
   "culture|epithets|cornish|words": {
-   "v": 4,
+   "v": 46,
    "t": 30
   },
   "culture|epithets|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|epithets|cornish|profile": {
    "v": 0
   },
   "culture|epithets|celtic|words": {
-   "v": 4,
+   "v": 16,
    "t": 12
   },
   "culture|epithets|celtic|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|epithets|celtic|profile": {
    "v": 0
   },
   "culture|epithets|norse|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|epithets|norse|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|norse|profile": {
    "v": 0
   },
   "culture|epithets|scandinavian|words": {
-   "v": 5,
+   "v": 65,
    "t": 30
   },
   "culture|epithets|scandinavian|shapes": {
-   "v": 0,
+   "v": 20,
    "t": 10
   },
   "culture|epithets|scandinavian|profile": {
    "v": 0
   },
   "culture|epithets|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|epithets|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|epithets|german|profile": {
    "v": 0
@@ -13128,98 +13130,100 @@
    "v": 0
   },
   "culture|titles|english|words": {
-   "v": 20,
+   "v": 50,
    "t": 30
   },
   "culture|titles|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|english|profile": {
    "v": 0
   },
   "culture|titles|welsh|words": {
-   "v": 5,
+   "v": 47,
    "t": 30
   },
   "culture|titles|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|titles|welsh|profile": {
    "v": 0
   },
   "culture|titles|scottish|words": {
-   "v": 5,
+   "v": 47,
    "t": 30
   },
   "culture|titles|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|titles|scottish|profile": {
    "v": 0
   },
   "culture|titles|irish|words": {
-   "v": 5,
+   "v": 47,
    "t": 30
   },
   "culture|titles|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|titles|irish|profile": {
    "v": 0
   },
   "culture|titles|cornish|words": {
-   "v": 5,
+   "v": 47,
    "t": 30
   },
   "culture|titles|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|titles|cornish|profile": {
    "v": 0
   },
   "culture|titles|celtic|words": {
-   "v": 5,
+   "v": 17,
    "t": 12
   },
   "culture|titles|celtic|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|titles|celtic|profile": {
    "v": 0
   },
   "culture|titles|norse|words": {
-   "v": 6,
+   "v": 36,
    "t": 30
   },
   "culture|titles|norse|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|norse|profile": {
    "v": 0
   },
   "culture|titles|scandinavian|words": {
-   "v": 6,
+   "v": 66,
    "t": 30
   },
   "culture|titles|scandinavian|shapes": {
-   "v": 0,
+   "v": 20,
    "t": 10
   },
   "culture|titles|scandinavian|profile": {
    "v": 0
   },
   "culture|titles|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|titles|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|titles|german|profile": {
    "v": 0
@@ -13523,98 +13527,100 @@
    "v": 0
   },
   "culture|familyNames|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|familyNames|english|shapes": {
-   "v": 19,
+   "v": 29,
    "t": 10
   },
   "culture|familyNames|english|profile": {
    "v": 0
   },
   "culture|familyNames|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|familyNames|welsh|shapes": {
-   "v": 9,
+   "v": 23,
    "t": 10
   },
   "culture|familyNames|welsh|profile": {
    "v": 0
   },
   "culture|familyNames|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|familyNames|scottish|shapes": {
-   "v": 9,
+   "v": 23,
    "t": 10
   },
   "culture|familyNames|scottish|profile": {
    "v": 0
   },
   "culture|familyNames|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|familyNames|irish|shapes": {
-   "v": 9,
+   "v": 23,
    "t": 10
   },
   "culture|familyNames|irish|profile": {
    "v": 0
   },
   "culture|familyNames|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|familyNames|cornish|shapes": {
-   "v": 9,
+   "v": 23,
    "t": 10
   },
   "culture|familyNames|cornish|profile": {
    "v": 0
   },
   "culture|familyNames|celtic|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|familyNames|celtic|shapes": {
-   "v": 9,
+   "v": 13,
    "t": 4
   },
   "culture|familyNames|celtic|profile": {
    "v": 0
   },
   "culture|familyNames|norse|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|familyNames|norse|shapes": {
-   "v": 7,
+   "v": 17,
    "t": 10
   },
   "culture|familyNames|norse|profile": {
    "v": 0
   },
   "culture|familyNames|scandinavian|words": {
-   "v": 0,
+   "v": 60,
    "t": 30
   },
   "culture|familyNames|scandinavian|shapes": {
-   "v": 7,
+   "v": 27,
    "t": 10
   },
   "culture|familyNames|scandinavian|profile": {
    "v": 0
   },
   "culture|familyNames|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|familyNames|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|familyNames|german|profile": {
    "v": 0
@@ -15223,98 +15229,100 @@
    "v": 0
   },
   "culture|realms|english|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|realms|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|english|profile": {
    "v": 1
   },
   "culture|realms|welsh|words": {
-   "v": 3,
+   "v": 45,
    "t": 30
   },
   "culture|realms|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|realms|welsh|profile": {
    "v": 1
   },
   "culture|realms|scottish|words": {
-   "v": 3,
+   "v": 45,
    "t": 30
   },
   "culture|realms|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|realms|scottish|profile": {
    "v": 1
   },
   "culture|realms|irish|words": {
-   "v": 3,
+   "v": 45,
    "t": 30
   },
   "culture|realms|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|realms|irish|profile": {
    "v": 1
   },
   "culture|realms|cornish|words": {
-   "v": 3,
+   "v": 45,
    "t": 30
   },
   "culture|realms|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|realms|cornish|profile": {
    "v": 1
   },
   "culture|realms|celtic|words": {
-   "v": 3,
+   "v": 15,
    "t": 12
   },
   "culture|realms|celtic|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|realms|celtic|profile": {
    "v": 1
   },
   "culture|realms|norse|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|realms|norse|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|norse|profile": {
    "v": 1
   },
   "culture|realms|scandinavian|words": {
-   "v": 4,
+   "v": 64,
    "t": 30
   },
   "culture|realms|scandinavian|shapes": {
-   "v": 0,
+   "v": 20,
    "t": 10
   },
   "culture|realms|scandinavian|profile": {
    "v": 1
   },
   "culture|realms|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|realms|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|realms|german|profile": {
    "v": 0
@@ -15638,98 +15646,100 @@
    "v": 1
   },
   "culture|peoplesTongues|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|peoplesTongues|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|english|profile": {
    "v": 1
   },
   "culture|peoplesTongues|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|peoplesTongues|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|peoplesTongues|welsh|profile": {
    "v": 1
   },
   "culture|peoplesTongues|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|peoplesTongues|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|peoplesTongues|scottish|profile": {
    "v": 1
   },
   "culture|peoplesTongues|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|peoplesTongues|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|peoplesTongues|irish|profile": {
    "v": 1
   },
   "culture|peoplesTongues|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|peoplesTongues|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|peoplesTongues|cornish|profile": {
    "v": 1
   },
   "culture|peoplesTongues|celtic|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|peoplesTongues|celtic|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|peoplesTongues|celtic|profile": {
    "v": 1
   },
   "culture|peoplesTongues|norse|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|peoplesTongues|norse|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|norse|profile": {
    "v": 1
   },
   "culture|peoplesTongues|scandinavian|words": {
-   "v": 0,
+   "v": 60,
    "t": 30
   },
   "culture|peoplesTongues|scandinavian|shapes": {
-   "v": 0,
+   "v": 20,
    "t": 10
   },
   "culture|peoplesTongues|scandinavian|profile": {
    "v": 1
   },
   "culture|peoplesTongues|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|peoplesTongues|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|peoplesTongues|german|profile": {
    "v": 0
@@ -16865,95 +16875,99 @@
    "v": 0
   },
   "culture|tribalNames|english|words": {
-   "v": 8,
+   "v": 43,
    "t": 30
   },
   "culture|tribalNames|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|english|profile": {
    "v": 0
   },
   "culture|tribalNames|welsh|words": {
-   "v": 10,
+   "v": 45,
    "t": 30
   },
   "culture|tribalNames|welsh|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|welsh|profile": {
    "v": 0
   },
   "culture|tribalNames|scottish|words": {
-   "v": 10,
+   "v": 45,
    "t": 30
   },
   "culture|tribalNames|scottish|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|scottish|profile": {
    "v": 0
   },
   "culture|tribalNames|irish|words": {
-   "v": 10,
+   "v": 45,
    "t": 30
   },
   "culture|tribalNames|irish|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|irish|profile": {
    "v": 0
   },
   "culture|tribalNames|cornish|words": {
-   "v": 10,
+   "v": 45,
    "t": 30
   },
   "culture|tribalNames|cornish|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|cornish|profile": {
    "v": 0
   },
   "culture|tribalNames|celtic|words": {
-   "v": 0
+   "v": 10,
+   "t": 12
   },
   "culture|tribalNames|celtic|shapes": {
-   "v": 0
+   "v": 0,
+   "t": 4
   },
   "culture|tribalNames|celtic|profile": {
    "v": 0
   },
   "culture|tribalNames|norse|words": {
-   "v": 0
+   "v": 38,
+   "t": 30
   },
   "culture|tribalNames|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tribalNames|norse|profile": {
    "v": 0
   },
   "culture|tribalNames|scandinavian|words": {
-   "v": 8,
+   "v": 43,
    "t": 30
   },
   "culture|tribalNames|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|scandinavian|profile": {
    "v": 0
   },
   "culture|tribalNames|german|words": {
-   "v": 8,
+   "v": 43,
    "t": 30
   },
   "culture|tribalNames|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|german|profile": {
@@ -17326,95 +17340,99 @@
    "v": 0
   },
   "culture|mysticOrders|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mysticOrders|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mysticOrders|english|profile": {
    "v": 0
   },
   "culture|mysticOrders|welsh|words": {
-   "v": 3,
+   "v": 48,
    "t": 30
   },
   "culture|mysticOrders|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|mysticOrders|welsh|profile": {
    "v": 0
   },
   "culture|mysticOrders|scottish|words": {
-   "v": 3,
+   "v": 48,
    "t": 30
   },
   "culture|mysticOrders|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|mysticOrders|scottish|profile": {
    "v": 0
   },
   "culture|mysticOrders|irish|words": {
-   "v": 3,
+   "v": 48,
    "t": 30
   },
   "culture|mysticOrders|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|mysticOrders|irish|profile": {
    "v": 0
   },
   "culture|mysticOrders|cornish|words": {
-   "v": 3,
+   "v": 48,
    "t": 30
   },
   "culture|mysticOrders|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|mysticOrders|cornish|profile": {
    "v": 0
   },
   "culture|mysticOrders|celtic|words": {
-   "v": 0
+   "v": 15,
+   "t": 12
   },
   "culture|mysticOrders|celtic|shapes": {
-   "v": 0
+   "v": 4,
+   "t": 4
   },
   "culture|mysticOrders|celtic|profile": {
    "v": 0
   },
   "culture|mysticOrders|norse|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|mysticOrders|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|mysticOrders|norse|profile": {
    "v": 0
   },
   "culture|mysticOrders|scandinavian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mysticOrders|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mysticOrders|scandinavian|profile": {
    "v": 0
   },
   "culture|mysticOrders|german|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mysticOrders|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mysticOrders|german|profile": {
@@ -17791,95 +17809,99 @@
    "v": 0
   },
   "culture|martialOrders|english|words": {
-   "v": 5,
+   "v": 40,
    "t": 30
   },
   "culture|martialOrders|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|martialOrders|english|profile": {
    "v": 0
   },
   "culture|martialOrders|welsh|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|martialOrders|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|martialOrders|welsh|profile": {
    "v": 0
   },
   "culture|martialOrders|scottish|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|martialOrders|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|martialOrders|scottish|profile": {
    "v": 0
   },
   "culture|martialOrders|irish|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|martialOrders|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|martialOrders|irish|profile": {
    "v": 0
   },
   "culture|martialOrders|cornish|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|martialOrders|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|martialOrders|cornish|profile": {
    "v": 0
   },
   "culture|martialOrders|celtic|words": {
-   "v": 0
+   "v": 14,
+   "t": 12
   },
   "culture|martialOrders|celtic|shapes": {
-   "v": 0
+   "v": 4,
+   "t": 4
   },
   "culture|martialOrders|celtic|profile": {
    "v": 0
   },
   "culture|martialOrders|norse|words": {
-   "v": 0
+   "v": 35,
+   "t": 30
   },
   "culture|martialOrders|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|martialOrders|norse|profile": {
    "v": 0
   },
   "culture|martialOrders|scandinavian|words": {
-   "v": 5,
+   "v": 40,
    "t": 30
   },
   "culture|martialOrders|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|martialOrders|scandinavian|profile": {
    "v": 0
   },
   "culture|martialOrders|german|words": {
-   "v": 5,
+   "v": 40,
    "t": 30
   },
   "culture|martialOrders|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|martialOrders|german|profile": {
@@ -18260,95 +18282,99 @@
    "v": 0
   },
   "culture|underworldGroups|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|underworldGroups|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|underworldGroups|english|profile": {
    "v": 0
   },
   "culture|underworldGroups|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|underworldGroups|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|underworldGroups|welsh|profile": {
    "v": 0
   },
   "culture|underworldGroups|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|underworldGroups|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|underworldGroups|scottish|profile": {
    "v": 0
   },
   "culture|underworldGroups|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|underworldGroups|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|underworldGroups|irish|profile": {
    "v": 0
   },
   "culture|underworldGroups|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|underworldGroups|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|underworldGroups|cornish|profile": {
    "v": 0
   },
   "culture|underworldGroups|celtic|words": {
-   "v": 0
+   "v": 12,
+   "t": 12
   },
   "culture|underworldGroups|celtic|shapes": {
-   "v": 0
+   "v": 4,
+   "t": 4
   },
   "culture|underworldGroups|celtic|profile": {
    "v": 0
   },
   "culture|underworldGroups|norse|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|underworldGroups|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|underworldGroups|norse|profile": {
    "v": 0
   },
   "culture|underworldGroups|scandinavian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|underworldGroups|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|underworldGroups|scandinavian|profile": {
    "v": 0
   },
   "culture|underworldGroups|german|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|underworldGroups|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|underworldGroups|german|profile": {
@@ -18725,95 +18751,99 @@
    "v": 0
   },
   "culture|tradeGuilds|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|tradeGuilds|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tradeGuilds|english|profile": {
    "v": 0
   },
   "culture|tradeGuilds|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|tradeGuilds|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|tradeGuilds|welsh|profile": {
    "v": 0
   },
   "culture|tradeGuilds|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|tradeGuilds|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|tradeGuilds|scottish|profile": {
    "v": 0
   },
   "culture|tradeGuilds|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|tradeGuilds|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|tradeGuilds|irish|profile": {
    "v": 0
   },
   "culture|tradeGuilds|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|tradeGuilds|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|tradeGuilds|cornish|profile": {
    "v": 0
   },
   "culture|tradeGuilds|celtic|words": {
-   "v": 0
+   "v": 12,
+   "t": 12
   },
   "culture|tradeGuilds|celtic|shapes": {
-   "v": 0
+   "v": 4,
+   "t": 4
   },
   "culture|tradeGuilds|celtic|profile": {
    "v": 0
   },
   "culture|tradeGuilds|norse|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|tradeGuilds|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tradeGuilds|norse|profile": {
    "v": 0
   },
   "culture|tradeGuilds|scandinavian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|tradeGuilds|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tradeGuilds|scandinavian|profile": {
    "v": 0
   },
   "culture|tradeGuilds|german|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|tradeGuilds|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tradeGuilds|german|profile": {
@@ -19194,95 +19224,99 @@
    "v": 0
   },
   "culture|adventureCompanies|english|words": {
-   "v": 1,
+   "v": 32,
    "t": 30
   },
   "culture|adventureCompanies|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|adventureCompanies|english|profile": {
    "v": 0
   },
   "culture|adventureCompanies|welsh|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|adventureCompanies|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|adventureCompanies|welsh|profile": {
    "v": 0
   },
   "culture|adventureCompanies|scottish|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|adventureCompanies|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|adventureCompanies|scottish|profile": {
    "v": 0
   },
   "culture|adventureCompanies|irish|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|adventureCompanies|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|adventureCompanies|irish|profile": {
    "v": 0
   },
   "culture|adventureCompanies|cornish|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|adventureCompanies|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|adventureCompanies|cornish|profile": {
    "v": 0
   },
   "culture|adventureCompanies|celtic|words": {
-   "v": 0
+   "v": 14,
+   "t": 12
   },
   "culture|adventureCompanies|celtic|shapes": {
-   "v": 0
+   "v": 4,
+   "t": 4
   },
   "culture|adventureCompanies|celtic|profile": {
    "v": 0
   },
   "culture|adventureCompanies|norse|words": {
-   "v": 0
+   "v": 31,
+   "t": 30
   },
   "culture|adventureCompanies|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|adventureCompanies|norse|profile": {
    "v": 0
   },
   "culture|adventureCompanies|scandinavian|words": {
-   "v": 1,
+   "v": 32,
    "t": 30
   },
   "culture|adventureCompanies|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|adventureCompanies|scandinavian|profile": {
    "v": 0
   },
   "culture|adventureCompanies|german|words": {
-   "v": 1,
+   "v": 32,
    "t": 30
   },
   "culture|adventureCompanies|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|adventureCompanies|german|profile": {
@@ -19647,95 +19681,99 @@
    "v": 0
   },
   "culture|powerFactions|english|words": {
-   "v": 1,
+   "v": 32,
    "t": 30
   },
   "culture|powerFactions|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|powerFactions|english|profile": {
    "v": 0
   },
   "culture|powerFactions|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|powerFactions|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|powerFactions|welsh|profile": {
    "v": 0
   },
   "culture|powerFactions|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|powerFactions|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|powerFactions|scottish|profile": {
    "v": 0
   },
   "culture|powerFactions|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|powerFactions|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|powerFactions|irish|profile": {
    "v": 0
   },
   "culture|powerFactions|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|powerFactions|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|powerFactions|cornish|profile": {
    "v": 0
   },
   "culture|powerFactions|celtic|words": {
-   "v": 0
+   "v": 12,
+   "t": 12
   },
   "culture|powerFactions|celtic|shapes": {
-   "v": 0
+   "v": 4,
+   "t": 4
   },
   "culture|powerFactions|celtic|profile": {
    "v": 0
   },
   "culture|powerFactions|norse|words": {
-   "v": 0
+   "v": 31,
+   "t": 30
   },
   "culture|powerFactions|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|powerFactions|norse|profile": {
    "v": 0
   },
   "culture|powerFactions|scandinavian|words": {
-   "v": 1,
+   "v": 32,
    "t": 30
   },
   "culture|powerFactions|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|powerFactions|scandinavian|profile": {
    "v": 0
   },
   "culture|powerFactions|german|words": {
-   "v": 1,
+   "v": 32,
    "t": 30
   },
   "culture|powerFactions|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|powerFactions|german|profile": {
@@ -20116,95 +20154,99 @@
    "v": 0
   },
   "culture|supernaturalCourts|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|supernaturalCourts|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|supernaturalCourts|english|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|supernaturalCourts|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|supernaturalCourts|welsh|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|supernaturalCourts|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|supernaturalCourts|scottish|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|supernaturalCourts|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|supernaturalCourts|irish|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|supernaturalCourts|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|supernaturalCourts|cornish|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|celtic|words": {
-   "v": 0
+   "v": 12,
+   "t": 12
   },
   "culture|supernaturalCourts|celtic|shapes": {
-   "v": 0
+   "v": 4,
+   "t": 4
   },
   "culture|supernaturalCourts|celtic|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|norse|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|supernaturalCourts|norse|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|supernaturalCourts|norse|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|scandinavian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|supernaturalCourts|scandinavian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|supernaturalCourts|scandinavian|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|german|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|supernaturalCourts|german|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|supernaturalCourts|german|profile": {
@@ -20585,98 +20627,100 @@
    "v": 1
   },
   "culture|ships|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|ships|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|english|profile": {
    "v": 1
   },
   "culture|ships|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|ships|welsh|profile": {
    "v": 1
   },
   "culture|ships|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|ships|scottish|profile": {
    "v": 1
   },
   "culture|ships|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|ships|irish|profile": {
    "v": 1
   },
   "culture|ships|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|ships|cornish|profile": {
    "v": 1
   },
   "culture|ships|celtic|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|ships|celtic|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|ships|celtic|profile": {
    "v": 1
   },
   "culture|ships|norse|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|ships|norse|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|norse|profile": {
    "v": 1
   },
   "culture|ships|scandinavian|words": {
-   "v": 0,
+   "v": 60,
    "t": 30
   },
   "culture|ships|scandinavian|shapes": {
-   "v": 0,
+   "v": 20,
    "t": 10
   },
   "culture|ships|scandinavian|profile": {
    "v": 1
   },
   "culture|ships|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|ships|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|ships|german|profile": {
    "v": 0
@@ -21705,98 +21749,100 @@
    "v": 1
   },
   "culture|aircraft|english|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|aircraft|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|english|profile": {
    "v": 1
   },
   "culture|aircraft|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|aircraft|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|aircraft|welsh|profile": {
    "v": 1
   },
   "culture|aircraft|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|aircraft|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|aircraft|scottish|profile": {
    "v": 1
   },
   "culture|aircraft|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|aircraft|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|aircraft|irish|profile": {
    "v": 1
   },
   "culture|aircraft|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|aircraft|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|aircraft|cornish|profile": {
    "v": 1
   },
   "culture|aircraft|celtic|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|aircraft|celtic|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|aircraft|celtic|profile": {
    "v": 1
   },
   "culture|aircraft|norse|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|aircraft|norse|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|norse|profile": {
    "v": 0
   },
   "culture|aircraft|scandinavian|words": {
-   "v": 0,
+   "v": 60,
    "t": 30
   },
   "culture|aircraft|scandinavian|shapes": {
-   "v": 0,
+   "v": 20,
    "t": 10
   },
   "culture|aircraft|scandinavian|profile": {
    "v": 0
   },
   "culture|aircraft|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|aircraft|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|aircraft|german|profile": {
    "v": 0
@@ -22265,98 +22311,100 @@
    "v": 1
   },
   "culture|landVehicles|english|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|landVehicles|english|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|english|profile": {
    "v": 1
   },
   "culture|landVehicles|welsh|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|landVehicles|welsh|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|landVehicles|welsh|profile": {
    "v": 1
   },
   "culture|landVehicles|scottish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|landVehicles|scottish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|landVehicles|scottish|profile": {
    "v": 1
   },
   "culture|landVehicles|irish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|landVehicles|irish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|landVehicles|irish|profile": {
    "v": 1
   },
   "culture|landVehicles|cornish|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|landVehicles|cornish|shapes": {
-   "v": 0,
+   "v": 14,
    "t": 10
   },
   "culture|landVehicles|cornish|profile": {
    "v": 1
   },
   "culture|landVehicles|celtic|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|landVehicles|celtic|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|landVehicles|celtic|profile": {
    "v": 1
   },
   "culture|landVehicles|norse|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|landVehicles|norse|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|norse|profile": {
    "v": 1
   },
   "culture|landVehicles|scandinavian|words": {
-   "v": 0,
+   "v": 60,
    "t": 30
   },
   "culture|landVehicles|scandinavian|shapes": {
-   "v": 0,
+   "v": 20,
    "t": 10
   },
   "culture|landVehicles|scandinavian|profile": {
    "v": 1
   },
   "culture|landVehicles|german|words": {
-   "v": 0
+   "v": 30,
+   "t": 30
   },
   "culture|landVehicles|german|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|landVehicles|german|profile": {
    "v": 0
@@ -23280,40 +23328,40 @@
    "t": 6
   },
   "total|culture|english|words": {
-   "v": 1352
+   "v": 1844
   },
   "total|culture|english|shapes": {
-   "v": 2095
+   "v": 2255
   },
   "total|culture|celtic|words": {
-   "v": 528
+   "v": 725
   },
   "total|culture|celtic|shapes": {
-   "v": 341
+   "v": 401
   },
   "total|culture|welsh|words": {
-   "v": 1051
+   "v": 1723
   },
   "total|culture|welsh|shapes": {
-   "v": 662
+   "v": 882
   },
   "total|culture|scottish|words": {
-   "v": 1200
+   "v": 1872
   },
   "total|culture|scottish|shapes": {
-   "v": 1249
+   "v": 1469
   },
   "total|culture|irish|words": {
-   "v": 950
+   "v": 1622
   },
   "total|culture|irish|shapes": {
-   "v": 447
+   "v": 667
   },
   "total|culture|cornish|words": {
-   "v": 975
+   "v": 1647
   },
   "total|culture|cornish|shapes": {
-   "v": 651
+   "v": 871
   },
   "total|culture|roman|words": {
    "v": 257
@@ -23322,10 +23370,10 @@
    "v": 188
   },
   "total|culture|norse|words": {
-   "v": 970
+   "v": 1465
   },
   "total|culture|norse|shapes": {
-   "v": 891
+   "v": 1051
   },
   "total|culture|arabic-persian|words": {
    "v": 151
@@ -23436,16 +23484,16 @@
    "v": 105
   },
   "total|culture|scandinavian|words": {
-   "v": 1057
+   "v": 1789
   },
   "total|culture|scandinavian|shapes": {
-   "v": 952
+   "v": 1192
   },
   "total|culture|german|words": {
-   "v": 1025
+   "v": 1517
   },
   "total|culture|german|shapes": {
-   "v": 1350
+   "v": 1510
   },
   "total|culture|american|words": {
    "v": 44
@@ -23569,7 +23617,7 @@
   }
  },
  "thinPools": {
-  "count": 468,
+  "count": 520,
   "entries": {
    "skyNames|constellations/anglo-saxon": 1,
    "realms|cultQualExtra/ethiopian": 1,
@@ -23615,20 +23663,52 @@
    "mysticOrders|signatures/celtic/group": 1,
    "mysticOrders|signatures/celtic/members": 1,
    "adventureCompanies|signatures/celtic/vocation": 1,
+   "adventureCompanies|signatures/cornish/companyGroup": 1,
+   "mysticOrders|signatures/cornish/covenGroup": 1,
+   "mysticOrders|signatures/cornish/group": 1,
+   "mysticOrders|signatures/cornish/members": 1,
+   "adventureCompanies|signatures/cornish/vocation": 1,
    "martialOrders|signatures/eastAsian/unitGroup": 1,
+   "powerFactions|signatures/english/assemblyWord": 1,
+   "adventureCompanies|signatures/english/companyGroup": 1,
+   "martialOrders|signatures/english/raiders": 1,
+   "powerFactions|signatures/german/assemblyWord": 1,
+   "adventureCompanies|signatures/german/companyGroup": 1,
+   "martialOrders|signatures/german/raiders": 1,
    "powerFactions|signatures/germanic/assemblyWord": 1,
    "adventureCompanies|signatures/germanic/companyGroup": 1,
    "martialOrders|signatures/germanic/raiders": 1,
+   "adventureCompanies|signatures/irish/companyGroup": 1,
+   "mysticOrders|signatures/irish/covenGroup": 1,
+   "mysticOrders|signatures/irish/group": 1,
+   "mysticOrders|signatures/irish/members": 1,
+   "adventureCompanies|signatures/irish/vocation": 1,
    "adventureCompanies|signatures/maritimeSEA/companyGroup": 1,
    "martialOrders|signatures/maritimeSEA/fleetGroup": 1,
    "martialOrders|signatures/maritimeSEA/raiders": 1,
    "mysticOrders|signatures/mesoamerican/group": 1,
    "tradeGuilds|signatures/mesoamerican/tradesmen": 1,
+   "powerFactions|signatures/norse/assemblyWord": 1,
+   "adventureCompanies|signatures/norse/companyGroup": 1,
+   "martialOrders|signatures/norse/raiders": 1,
    "powerFactions|signatures/northAmerican/assemblyWord": 1,
    "mysticOrders|signatures/northernPacific/members": 1,
    "mysticOrders|signatures/polynesian/members": 1,
+   "powerFactions|signatures/scandinavian/assemblyWord": 1,
+   "adventureCompanies|signatures/scandinavian/companyGroup": 1,
+   "martialOrders|signatures/scandinavian/raiders": 1,
+   "adventureCompanies|signatures/scottish/companyGroup": 1,
+   "mysticOrders|signatures/scottish/covenGroup": 1,
+   "mysticOrders|signatures/scottish/group": 1,
+   "mysticOrders|signatures/scottish/members": 1,
+   "adventureCompanies|signatures/scottish/vocation": 1,
    "powerFactions|signatures/southAsian/assemblyWord": 1,
    "powerFactions|signatures/steppe/assemblyWord": 1,
+   "adventureCompanies|signatures/welsh/companyGroup": 1,
+   "mysticOrders|signatures/welsh/covenGroup": 1,
+   "mysticOrders|signatures/welsh/group": 1,
+   "mysticOrders|signatures/welsh/members": 1,
+   "adventureCompanies|signatures/welsh/vocation": 1,
    "powerFactions|signatures/westAfrican/assemblyWord": 1,
    "mysticOrders|signatures/westAfrican/group": 1,
    "shared|buildingFixed:defence": 2,
@@ -23664,23 +23744,35 @@
    "martialOrders|signatures/bantu/soldiers": 2,
    "martialOrders|signatures/bantu/unitGroup": 2,
    "martialOrders|signatures/celtic/soldiers": 2,
+   "martialOrders|signatures/cornish/soldiers": 2,
    "mysticOrders|signatures/eastAsian/members": 2,
+   "martialOrders|signatures/english/soldiers": 2,
+   "martialOrders|signatures/english/unitGroup": 2,
+   "martialOrders|signatures/german/soldiers": 2,
+   "martialOrders|signatures/german/unitGroup": 2,
    "martialOrders|signatures/germanic/soldiers": 2,
    "martialOrders|signatures/germanic/unitGroup": 2,
+   "martialOrders|signatures/irish/soldiers": 2,
    "powerFactions|signatures/mediterranean/assemblyWord": 2,
    "mysticOrders|signatures/mediterranean/group": 2,
    "mysticOrders|signatures/mediterranean/schoolGroup": 2,
    "martialOrders|signatures/mesoamerican/soldiers": 2,
+   "martialOrders|signatures/norse/soldiers": 2,
+   "martialOrders|signatures/norse/unitGroup": 2,
    "mysticOrders|signatures/northAmerican/group": 2,
    "martialOrders|signatures/northAmerican/soldiers": 2,
    "mysticOrders|signatures/northernPacific/group": 2,
    "tradeGuilds|signatures/northernPacific/tradesmen": 2,
    "adventureCompanies|signatures/polynesian/companyGroup": 2,
    "tradeGuilds|signatures/polynesian/tradesmen": 2,
+   "martialOrders|signatures/scandinavian/soldiers": 2,
+   "martialOrders|signatures/scandinavian/unitGroup": 2,
+   "martialOrders|signatures/scottish/soldiers": 2,
    "mysticOrders|signatures/southAsian/group": 2,
    "mysticOrders|signatures/southAsian/members": 2,
    "mysticOrders|signatures/southAsian/schoolGroup": 2,
    "martialOrders|signatures/steppe/soldiers": 2,
+   "martialOrders|signatures/welsh/soldiers": 2,
    "tradeGuilds|signatures/westAfrican/tradesmen": 2,
    "adventureCompanies|composites/creature": 3,
    "skyNames|constellations/arabic-persian": 3,
@@ -23853,12 +23945,20 @@
    "epithets|styles/norse": 5,
    "epithets|styles/steppe": 5,
    "tribalNames|traditions/andean/signatureCollectives": 5,
+   "tribalNames|traditions/cornish/signatureCollectives": 5,
    "tribalNames|traditions/eastAsian/signatureCollectives": 5,
+   "tribalNames|traditions/english/signatureCollectives": 5,
+   "tribalNames|traditions/german/signatureCollectives": 5,
    "tribalNames|traditions/germanic/signatureCollectives": 5,
+   "tribalNames|traditions/irish/signatureCollectives": 5,
    "tribalNames|traditions/mediterranean/signatureCollectives": 5,
    "tribalNames|traditions/mesoamerican/signatureCollectives": 5,
+   "tribalNames|traditions/norse/signatureCollectives": 5,
    "tribalNames|traditions/northAmerican/signatureCollectives": 5,
    "tribalNames|traditions/polynesian/signatureCollectives": 5,
+   "tribalNames|traditions/scandinavian/signatureCollectives": 5,
+   "tribalNames|traditions/scottish/signatureCollectives": 5,
+   "tribalNames|traditions/welsh/signatureCollectives": 5,
    "tribalNames|vocabulary/colourDirections": 5,
    "riverNames|waterWords/british/COR": 5,
    "riverNames|waterWords/british/EMD": 5,

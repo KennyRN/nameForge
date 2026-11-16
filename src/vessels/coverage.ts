@@ -8,6 +8,8 @@ import vesselData from "../data/vessels.json";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys } from "../coverageRows";
 import { lensStyleFor } from "../lens";
 import { plainWordRows, wordListRows } from "../coverageUse";
+import { north5cRows } from "../north5cCoverage";
+import { NORTH_5C_CULTURES } from "../north5c";
 
 type R = Record<string, unknown>;
 type StyleDef = { key: string; modules: string[]; name: { w: string }[]; pools: Record<string, unknown[]>; shapes: string[] };
@@ -47,6 +49,7 @@ function vesselRows(module: "ships" | "spacecraft"): CoverageRow[] {
     for (const pool of Object.values(style.pools)) for (const _ of pool) out.push(styleRow(module, style.key, makeRow({}, { module, source: `styles/${style.key}`, type: "word" })));
     for (const _ of style.shapes) out.push(styleRow(module, style.key, makeRow({}, { module, source: `styles/${style.key}`, type: "shape" })));
   }
+  out.push(...north5cRows(module));
   return out;
 }
 
@@ -66,11 +69,12 @@ function airLandRows(module: "aircraft" | "landVehicles"): CoverageRow[] {
     if (value === undefined) continue;
     for (const _ of Array.isArray(value) ? value : [value]) out.push(styleRow(module, key, makeRow({}, { module, source: `styles/${key}`, type: "shape" })));
   }
+  out.push(...north5cRows(module));
   return out;
 }
 
-const VESSEL_ROSTER = (vesselData.cultures as { key: string }[]).map((c) => c.key);
-const AIRLAND_ROSTER = Object.keys(airLandData.spans);
+const VESSEL_ROSTER = [...(vesselData.cultures as { key: string }[]).map((c) => c.key), ...NORTH_5C_CULTURES.map((c) => c.key)];
+const AIRLAND_ROSTER = [...Object.keys(airLandData.spans), ...NORTH_5C_CULTURES.map((c) => c.key)];
 const kindsOf = (list: { key: string }[]) => list.map((k) => k.key);
 
 /** §11.2: a culture's own technology span (ships: `cultures[].span`; air and land: `spans`), role weights and type leanings are its profile. */

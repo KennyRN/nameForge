@@ -1,4 +1,5 @@
 // Peoples and tongues (docs/peoples-and-tongues-brief.md).
+import { engineCulture } from "../src/lens";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { normForBlock } from "../src/groups/engine";
@@ -170,7 +171,7 @@ test("§6.2: generic land words, with a qualifier, and the Ring only from the ne
 test("§15.2: every culture's weights sum to 100", () => {
   assert.equal(Object.keys(PEOPLES_DATA.weights).length, 20);
   for (const c of PEOPLE_CULTURES) {
-    const sum = Object.values(PEOPLES_DATA.weights[c.key]).reduce((a, b) => a + b, 0);
+    const sum = Object.values(PEOPLES_DATA.weights[engineCulture(c.key)]).reduce((a, b) => a + b, 0);
     assert.equal(sum, 100, c.key);
   }
 });

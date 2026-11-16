@@ -37,8 +37,8 @@ function names(options: TribalOptions, n: number, seed = 1, full = false): Triba
 }
 const has = (text: string, word: string) => new RegExp(`(^|[^A-Za-z])${word}($|[^A-Za-z])`, "i").test(text);
 
-test("tribal: the 17 traditions, homelands and terrain multipliers", () => {
-  assert.deepEqual(TRIBAL_TRADITIONS.map((t) => t.key), KEYS);
+test("tribal: the 17 traditions, then (brief 5c) the eight of Northern Europe, homelands and terrain multipliers", () => {
+  assert.deepEqual(TRIBAL_TRADITIONS.map((t) => t.key), [...KEYS, "english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"]);
   for (const t of TRIBAL_TRADITIONS) {
     assert.equal(Object.values(t.homeland).reduce((n, w) => n + w, 0), 100, t.key);
     for (const id of Object.keys(t.homeland)) assert.ok(findBiome(id), `${t.key}: ${id}`);

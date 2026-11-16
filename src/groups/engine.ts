@@ -14,6 +14,7 @@ import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementCont
 import { generatePlaceNames } from "../names/engine";
 import { britishPlaceNamesRecipe } from "../names/recipe";
 import { findTradition, TRIBAL_DATA, traditionForCulture, type TribalTradition } from "../tribes/engine";
+import { applySignature, contentKey, noBracket } from "../north5c";
 import { generateWorldPlaceNames } from "../world/engine";
 import { scaleAllows, scaleLabel, type ScaleChoice, type SpaceScale } from "../space/scale";
 import { catalogueWorld, drawStarKind, drawStarOfKind, type DrawStarOptions } from "../space/stars";
@@ -347,11 +348,15 @@ export function breaksGroupColourRule(text: string): boolean {
 // ── Generation ──────────────────────────────────────────────────────────────
 
 export interface GroupOptions {
+  /** Northern Europe brief 5c: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   /** Wizard retirement brief §5: the biome lookups the invented-town pool draws from (a pack can replace Britain); the built-ins when absent. */
   catalogue?: BiomeCatalogue;
   family: string;
   /** A tribal tradition key; "general" (the default) adds no cultural flavour. */
   tradition?: string;
+  /** Northern Europe brief 5c: the culture picked in the sentence (`celtic` is the one that is also a legacy tradition). A core culture's own frames take their share of the names. */
+  culture?: string;
   /** A type key of the family; undefined is Any. */
   type?: string;
   genre?: GroupGenre;
@@ -1265,9 +1270,23 @@ function generateSeries(
 
 /** §4: a batch of unique names. */
 export function generateGroupNames(options: GroupOptions): GroupBatch {
+  const batch = generateGroupNamesCore(options);
+  // Northern Europe brief 5c: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
+  // A stored `celtic` or `germanic` tradition keeps its old draw; the eight new traditions, and a culture picked in the sentence, add the frames.
+  if (options.signature === false || fillModeOf(options.people) || options.series || options.context || options.type) return batch;
+  const culture = options.culture ?? (options.tradition && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(options.tradition) ? options.tradition : undefined);
+  const family = findFamily(options.family);
+  if (!culture || !family || !contentKey(culture)) return batch;
+  const guards = options.safeguards ?? { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };
+  const block = new Set([...guards.block, ...(guards.flagListBlocks ? guards.flag : [])].map(norm));
+  const ok = (text: string) => !block.has(norm(text)) && !breaksGroupColourRule(text) && (options.people !== "invented" || noBracket(text));
+  return { ...batch, names: applySignature(batch.names, family.section, culture, batch.seed, { allowed: ok }) };
+}
+
+function generateGroupNamesCore(options: GroupOptions): GroupBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
-  if (fillMode) return fillPeopleBatch(generateGroupNames({ ...options, people: "placeholders" }), fillMode, { culture: options.tradition, era: options.genre, series: options.series });
+  if (fillMode) return fillPeopleBatch(generateGroupNames({ ...options, people: "placeholders" }), fillMode, { culture: options.tradition === "english" ? "norman-british" : options.tradition, era: options.genre, series: options.series });
   const family = findFamily(options.family);
   if (!family) throw new Error(`Unknown family “${options.family}”.`);
   if (options.series && !options.type) throw new Error("Series needs a type.");

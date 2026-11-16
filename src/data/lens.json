@@ -1248,7 +1248,8 @@
       "welsh",
       "scottish",
       "irish",
-      "cornish"
+      "cornish",
+      "celtic"
      ]
     },
     "germanic": {
@@ -1383,6 +1384,94 @@
     "sahul": {
      "lens": [],
      "local": true
+    },
+    "welsh": {
+     "lens": [
+      "welsh"
+     ],
+     "weights": [
+      [
+       "welsh",
+       1
+      ]
+     ]
+    },
+    "scottish": {
+     "lens": [
+      "scottish"
+     ],
+     "weights": [
+      [
+       "scottish",
+       1
+      ]
+     ]
+    },
+    "irish": {
+     "lens": [
+      "irish"
+     ],
+     "weights": [
+      [
+       "irish",
+       1
+      ]
+     ]
+    },
+    "cornish": {
+     "lens": [
+      "cornish"
+     ],
+     "weights": [
+      [
+       "cornish",
+       1
+      ]
+     ]
+    },
+    "norse": {
+     "lens": [
+      "norse"
+     ],
+     "weights": [
+      [
+       "norse",
+       1
+      ]
+     ]
+    },
+    "scandinavian": {
+     "lens": [
+      "scandinavian"
+     ],
+     "weights": [
+      [
+       "scandinavian",
+       1
+      ]
+     ]
+    },
+    "german": {
+     "lens": [
+      "german"
+     ],
+     "weights": [
+      [
+       "german",
+       1
+      ]
+     ]
+    },
+    "english": {
+     "lens": [
+      "english"
+     ],
+     "weights": [
+      [
+       "english",
+       1
+      ]
+     ]
     }
    },
    "colonial": {
@@ -1593,6 +1682,76 @@
        "norse"
       ]
      },
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
+   },
+   "north5c": {
+    "extends": "shared",
+    "entries": {
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
+   },
+   "vehicle5c": {
+    "extends": "vehicle",
+    "entries": {
      "welsh": {
       "lens": [
        "welsh"
@@ -2616,7 +2775,7 @@
    }
   },
   "epithets": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2632,7 +2791,7 @@
    }
   },
   "titles": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2648,7 +2807,7 @@
    }
   },
   "familyNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2712,7 +2871,7 @@
    }
   },
   "realms": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "realms",
    "land": false,
    "sentence": {
@@ -2729,7 +2888,7 @@
    }
   },
   "peoplesTongues": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2920,7 +3079,7 @@
    }
   },
   "ships": {
-   "cultures": "vehicle",
+   "cultures": "vehicle5c",
    "eras": "ships",
    "settings": "genreSettings",
    "styles": "vessel",
@@ -2952,11 +3111,11 @@
      "genre": "genre",
      "region": null
     },
-    "roster": "vessel"
+    "roster": "vesselSpace"
    }
   },
   "aircraft": {
-   "cultures": "vehicle",
+   "cultures": "vehicle5c",
    "eras": "aircraft",
    "settings": "genreSettings",
    "styles": "vessel",
@@ -2974,7 +3133,7 @@
    }
   },
   "landVehicles": {
-   "cultures": "vehicle",
+   "cultures": "vehicle5c",
    "eras": "landVehicles",
    "settings": "genreSettings",
    "styles": "vessel",

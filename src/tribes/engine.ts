@@ -11,6 +11,7 @@ import { tribalCultureWeights } from "../lens";
 import tribalData from "../data/tribal-names.json";
 import { type Biome, type BiomeCatalogue, biomeCatalogue, biomeInline, biomeTitleCase, biomeWords, BUILT_IN_BIOMES, findBiome, pluralOf, TERRAIN_CHOICES, type TerrainId, TERRAINS, terrainWords } from "../biomes";
 import { mulberry32 } from "../markov";
+import { applySignature, contentKey } from "../north5c";
 
 export type TribalRegister = "plain" | "historical" | "legendary" | "administrative";
 export type BiomeMode = "homeland" | "chosen";
@@ -179,6 +180,8 @@ export interface TribalConstraints {
 }
 
 export interface TribalOptions {
+  /** Northern Europe brief 5c: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   tradition: string;
   /** A biome id; undefined is Homeland (§3.7). */
   biome?: string;
@@ -1388,6 +1391,15 @@ export interface TribalBatchResult {
 
 /** §4: `count` names, unique case-insensitively, at most count × 50 attempts. */
 export function generateTribalNames(options: TribalOptions & { count: number; seed?: number }): TribalBatchResult {
+  const batch = generateTribalNamesCore(options);
+  // Northern Europe brief 5c: a core tradition's own frames take their share of the names (homeland runs only: a chosen biome has its own words).
+  if (options.signature === false || options.constraints || (options.biome && options.biome !== "homeland") || options.biomeData) return batch;
+  const tradition = findTradition(options.tradition)?.key;
+  if (!tradition || tradition === "germanic" || !contentKey(tradition)) return batch;
+  return { ...batch, names: applySignature(batch.names.map((n) => ({ ...n, text: n.name })), "tribalNames", tradition, batch.seed).map((n) => (n.text === n.name ? (({ text: _t, ...rest }) => rest)(n) as TribalName : ({ ...(({ text: _t, ...rest }) => rest)(n), name: n.text, inText: inTextOf(n.text) } as TribalName))) };
+}
+
+function generateTribalNamesCore(options: TribalOptions & { count: number; seed?: number }): TribalBatchResult {
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const count = Math.max(0, Math.floor(options.count));
@@ -1452,8 +1464,25 @@ export function tribalDetailsLine(name: TribalName): string {
 }
 
 
+/**
+ * Northern Europe brief 5c: the tradition each culture of the lens menu reads in the group-name families (which offer the shared culture menu
+ * where they used to offer the traditions). A culture with no tradition (French, Slavic…) isn't offered there: it would read General.
+ */
+export const CULTURE_TRADITION: Readonly<Record<string, string>> = {
+  general: "general", "norman-british": "english", "anglo-saxon": "english", english: "english", welsh: "welsh", scottish: "scottish", irish: "irish", cornish: "cornish", celtic: "celtic",
+  norse: "norse", scandinavian: "scandinavian", german: "german", dutch: "germanic", roman: "mediterranean", "greek-byzantine": "mediterranean", italian: "mediterranean", hellenistic: "mediterranean",
+  steppe: "steppe", "arabic-persian": "arabian", ottoman: "arabian", bantu: "bantu", "west-african": "westAfrican", indian: "southAsian", chinese: "eastAsian", japanese: "eastAsian", korean: "eastAsian",
+  aztec: "mesoamerican", maya: "mesoamerican", andean: "andean", polynesian: "polynesian", hawaiian: "polynesian", maori: "polynesian", "w-polynesian": "polynesian",
+  "na-woodlands": "northAmerican", northAmerican: "northAmerican", "nw-coast": "northernPacific", arctic: "northernPacific", northernPacific: "northernPacific", malay: "maritimeSEA", maritimeSEA: "maritimeSEA", sahul: "sahul",
+};
+/** The tradition a culture of the menu reads; a key that is itself a tradition reads as it is. */
+export const traditionOfCulture = (culture: string): string => CULTURE_TRADITION[culture] ?? (findTradition(culture) ? culture : "general");
+
 /** The tribal tradition a culture's folk and kin groups are drawn from: the one whose lens mapping gives it the most weight, else General. */
 export function traditionForCulture(culture: string): string {
+  // Northern Europe brief 5c: the core cultures have traditions of their own (the two Englishes read English).
+  const own = contentKey(culture);
+  if (own && own !== "celtic" && findTradition(own)) return own;
   let best = "general";
   let bestWeight = 0;
   for (const t of TRIBAL_TRADITIONS) {
@@ -1482,7 +1511,9 @@ registerResolver("folk", (req) => {
   let shortest: string | undefined;
   try {
     for (let attempt = 0; attempt < 24; attempt++) {
-      const name = generateTribalNames({ tradition, ...(biome ? { biome } : {}), count: 1, seed: drawSeed(req.rng) }).names[0]?.name;
+      // Brief 5c: the core traditions' own frames begin "The …"; the fill says its own article.
+      let name = generateTribalNames({ tradition, ...(biome ? { biome } : {}), count: 1, seed: drawSeed(req.rng) }).names[0]?.name;
+      if (name !== undefined && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(tradition)) name = name.replace(/^The /, "");
       if (name === undefined) return undefined;
       if (FOLK_WORDS(name) <= 2) return onePeople(name);
       if (shortest === undefined || FOLK_WORDS(name) < FOLK_WORDS(shortest)) shortest = name;

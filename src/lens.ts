@@ -119,6 +119,8 @@ interface LensData {
 const LENS = lensData as unknown as LensData;
 
 export const LENS_CULTURES: readonly LensCulture[] = LENS.cultures;
+/** The culture menu's headings and entries (the lens's own order). */
+export const LENS_MENU = (LENS as unknown as { menu: { heading: string | null; entries: { key?: string; label?: string | null; view?: string; scope?: string }[] }[] }).menu;
 export const LENS_ERAS: readonly LensEraInfo[] = LENS.eras;
 export const LENS_STYLES: readonly LensStyle[] = LENS.styles;
 export const LENS_TONES: readonly string[] = LENS.tones.map((t) => t.key);

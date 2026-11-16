@@ -18,12 +18,15 @@ import {
   prefixSetting,
   techChoices,
   techLabel,
+  VESSEL_BASE_CULTURES,
   VESSEL_CULTURES,
   type VesselModule,
   type VesselNaming,
 } from "./engine";
 
 registerRoster("vessel", VESSEL_CULTURES);
+// Spacecraft is left to the style tables brief: its roster stays the thirty-four.
+registerRoster("vesselSpace", VESSEL_BASE_CULTURES);
 
 export interface VesselSentenceState {
   culture: string;
