@@ -5,6 +5,13 @@ import { KINDS, WORDS } from "./north5d/content-words.mjs";
 import { ADJ, CELTIC_FRAMES, CLASS, FRAMES, STYLE } from "./north5d/content-frames.mjs";
 import { OFFER, POOLS, TAGS } from "./north5d/content-pools.mjs";
 
+import { ADJ6, STYLE6 } from "./tier6a/north5c-build.mjs";
+import { MIXES6, NEW6 } from "./tier6a/north5c-words.mjs";
+import { WORDS5D } from "./tier6a/north5d-build.mjs";
+Object.assign(ADJ, ADJ6);
+Object.assign(STYLE, STYLE6);
+for (const [m, byCulture] of Object.entries(WORDS5D)) WORDS[m] = { ...WORDS[m], ...byCulture };
+const isMix = (c) => c === "celtic" || MIXES6.includes(c);
 export const CORE = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
 const ENGLISH_WORD = /^[A-Za-z][A-Za-z' -]*$/;
 const TAG = /^(?:(?:AN|MD|EM|ST|MO|NF|IS)(?:-(?:AN|MD|EM|ST|MO|NF|IS))?)?\*?$/;
@@ -42,7 +49,7 @@ function fillFromPools(module, culture, lists, nt) {
       nt[Number(k)].push(tag);
     }
   };
-  if (culture !== "celtic") {
+  if (!isMix(culture)) {
     take(pools.pre, () => ["AN", "MD", "EM"].every((e) => eraCount(lists, nt, e) >= 6));
     take(pools.mod, () => ["ST", "MO"].every((e) => eraCount(lists, nt, e) >= 6));
   }
@@ -52,9 +59,9 @@ function fillFromPools(module, culture, lists, nt) {
 for (const [module, byCulture] of Object.entries(WORDS)) {
   const cls = CLASS[module];
   modules[module] = { kinds: KINDS[module], cultures: {} };
-  for (const culture of [...CORE, "celtic"]) {
+  for (const culture of [...CORE, ...NEW6, "celtic", ...MIXES6]) {
     const lists = byCulture[culture].split(";").map((l) => l.split("|"));
-    const want = culture === "celtic" ? 4 : 10;
+    const want = isMix(culture) ? 4 : 10;
     if (lists.length !== 3) problems.push(`${module} ${culture}: ${lists.length} lists`);
     const dict = { ...(TAGS[module]?._all ?? {}), ...(TAGS[module]?.[culture] ?? {}) };
     const nt = lists.map((l) => l.map((w) => dict[w] ?? ""));
@@ -71,7 +78,7 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
     for (const t of nt.flat()) if (t && !TAG.test(t)) problems.push(`${module} ${culture}: bad tag "${t}"`);
     for (const l of lists) if (new Set(l.map((w) => w.toLowerCase())).size !== l.length) problems.push(`${module} ${culture}: a word twice after the pools`);
     const eraWords = lists.flatMap((l, i) => l.map((w, j) => ({ w, tag: nt[i][j], eras: readTagEras(nt[i][j]) })));
-    if (culture !== "celtic") {
+    if (!isMix(culture)) {
       for (const e of OFFER) {
         const n = eraWords.filter((x) => x.eras && x.eras.length < 5 && x.eras.includes(e)).length;
         if (n < 6) shortfalls.push(`${module} ${culture} ${e}: ${n}`);
@@ -79,8 +86,8 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
     }
     const nFantastic = eraWords.filter((x) => x.tag.endsWith("*")).length;
     if (nFantastic < 3) shortfalls.push(`${module} ${culture} fantastic: ${nFantastic}`);
-    const frames = culture === "celtic" ? CELTIC_FRAMES[cls] : FRAMES[cls][STYLE[culture]];
-    if (frames.length !== (culture === "celtic" ? 4 : 10)) problems.push(`${module} ${culture}: ${frames.length} frames`);
+    const frames = isMix(culture) ? CELTIC_FRAMES[cls] : FRAMES[cls][STYLE[culture]];
+    if (frames.length !== (isMix(culture) ? 4 : 10)) problems.push(`${module} ${culture}: ${frames.length} frames`);
     const patterns = frames.map(([p]) => p);
     for (const [pattern, , tag] of frames) {
       if (tag && !TAG.test(tag)) problems.push(`${module} ${culture}: bad frame tag "${tag}"`);
