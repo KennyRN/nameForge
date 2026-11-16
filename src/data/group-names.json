@@ -10521,7 +10521,16 @@
    {
     "w": "Condottieri",
     "tx": {
-     "mediterranean": 3
+     "mediterranean": 3,
+     "french": 3,
+     "spanish": 3,
+     "portuguese": 3,
+     "italian": 3,
+     "roman": 3,
+     "greek": 3,
+     "byzantine": 3,
+     "iberian": 3,
+     "greek-byzantine": 3
     },
     "x": 0.2,
     "t": [
@@ -15346,7 +15355,9 @@
      "norse": 5,
      "scandinavian": 5,
      "german": 5,
-     "english": 5
+     "english": 5,
+     "dutch": 5,
+     "slavic": 5
     },
     "x": 0.3
    }
@@ -21724,6 +21735,215 @@
     "companyGroup": [
      "Fellowship"
     ]
+   },
+   "french": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "spanish": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "portuguese": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "italian": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "roman": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "greek": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "byzantine": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "iberian": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "greek-byzantine": {
+    "unitGroup": [
+     "Legion",
+     "Cohort",
+     "Century"
+    ],
+    "group": [
+     "College",
+     "Sodality"
+    ],
+    "schoolGroup": [
+     "Porch",
+     "Garden"
+    ],
+    "assemblyWord": [
+     "Senate",
+     "Assembly"
+    ]
+   },
+   "dutch": {
+    "unitGroup": [
+     "Hearth-Troop",
+     "Host"
+    ],
+    "soldiers": [
+     "Sworn Men",
+     "Wolf-Coats"
+    ],
+    "assemblyWord": [
+     "Moot"
+    ],
+    "raiders": [
+     "Sea-Wolves"
+    ],
+    "companyGroup": [
+     "Fellowship"
+    ]
+   },
+   "slavic": {
+    "unitGroup": [
+     "Hearth-Troop",
+     "Host"
+    ],
+    "soldiers": [
+     "Sworn Men",
+     "Wolf-Coats"
+    ],
+    "assemblyWord": [
+     "Moot"
+    ],
+    "raiders": [
+     "Sea-Wolves"
+    ],
+    "companyGroup": [
+     "Fellowship"
+    ]
    }
   },
   "typeMultipliers": {
@@ -22221,7 +22441,9 @@
    "norse",
    "scandinavian",
    "german",
-   "english"
+   "english",
+   "dutch",
+   "slavic"
   ],
   "saintTraditions": [
    "general",
@@ -22235,7 +22457,18 @@
    "norse",
    "scandinavian",
    "german",
-   "english"
+   "english",
+   "french",
+   "spanish",
+   "portuguese",
+   "italian",
+   "roman",
+   "greek",
+   "byzantine",
+   "iberian",
+   "greek-byzantine",
+   "dutch",
+   "slavic"
   ],
   "sfTown": [
    {

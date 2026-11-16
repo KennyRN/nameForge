@@ -8,7 +8,7 @@ import north5d from "./data/north5d.json";
 import { mulberry32 } from "./markov";
 import { cultureSalt, signatureShareFor } from "./northData";
 import { containsRealGroup, isRealGroup } from "./realPlaces";
-import { TIER6A_KEYS, TIER6A_LABELS } from "./tier6a";
+import { MIX_HALVES, MIX_HALF_WEIGHT, TIER6A_KEYS, TIER6A_LABELS } from "./tier6a";
 
 /** A frame: its pattern, its weight, its tag (an era span and/or "*" for a fantastic frame; "" for none) and, for a frame of one kind of the module (a month, a festival), that kind (5d §14.3). */
 type Frame = [string, number] | [string, number, string] | [string, number, string, string];
@@ -45,7 +45,7 @@ export const CELTIC_5C_WEIGHT = 0.25;
 export function contentKey(culture: string | undefined): string | undefined {
   if (!culture) return undefined;
   if (culture === "anglo-saxon" || culture === "norman-british") return "english";
-  return culture === "celtic" || (CORE_5C as readonly string[]).includes(culture) ? culture : undefined;
+  return culture === "celtic" || (CORE_5C as readonly string[]).includes(culture) || TIER6A_KEYS.includes(culture) ? culture : undefined;
 }
 
 /** Whether a module has signature content for a culture. */
@@ -60,6 +60,8 @@ function sources(module: string, key: string): { content: CultureContent; weight
   if (!m) return [];
   const own = m.cultures[key];
   if (!own) return [];
+  // Brief 6a §2: a mix draws its own entries and both halves' at half weight each.
+  if (MIX_HALVES[key]) return [{ content: own, weight: 1 }, ...MIX_HALVES[key].flatMap((k) => (m.cultures[k] ? [{ content: m.cultures[k], weight: MIX_HALF_WEIGHT }] : []))];
   if (key !== "celtic") return [{ content: own, weight: 1 }];
   return [{ content: own, weight: 1 }, ...CELTIC_NATIONS.map((k) => ({ content: m.cultures[k], weight: CELTIC_5C_WEIGHT }))];
 }

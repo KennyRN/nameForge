@@ -41,6 +41,43 @@ const TRADITIONS = {
   german: { base: "germanic", label: "German", drawsOn: "German kin and free communities, leagues and imperial cities", homeland: { temperate: 60, boreal: 20, highland: 20 }, terrainMultipliers: { mountains: 1.1 }, flavour: { animals: ["Wolf", "Eagle", "Bear", "Stag", "Boar", "Hound"], plants: ["Oak", "Linden", "Beech", "Fir"], land: ["Heath", "Forest"], lifeways: ["Foresters", "Smiths"] }, favouredLifeways: ["Ploughmen", "Smiths", "Foresters", "Cattle Keepers"], signatureCollectives: ["Folk", "Kin", "House", "Brethren", "Neighbours"], themes: { landscape: 1.3, warfare: 1.2, relationship: 1.4, qualities: 1.2, sacred: 0.9 }, templates: { A: 1.2, B: 1.2 }, groupTypes: { confederation: 1.3, settlement: 1.2, regional: 1.2 }, numbers: ["Three", "Seven", "Nine", "Twelve"], special: {} },
 };
 
+// Brief 6a: the batch's cultures as tribal traditions: the Latin and Greek ones read the Mediterranean tradition's tables, Dutch and Slavic the Germanic ones.
+export const MEDITERRANEAN6 = ["french", "spanish", "portuguese", "italian", "roman", "greek", "byzantine", "iberian", "greek-byzantine"];
+export const GERMANIC6 = ["dutch", "slavic"];
+const LABEL6 = { french: "French", spanish: "Spanish", portuguese: "Portuguese", italian: "Italian", roman: "Roman", greek: "Greek", byzantine: "Byzantine", iberian: "Iberian", "greek-byzantine": "Greek and Byzantine", dutch: "Dutch", slavic: "Slavic" };
+function patch6a() {
+  const tribal = read("src/data/tribal-names.json");
+  if (!tribal.traditions.some((t) => t.key === "french")) {
+    for (const key of [...MEDITERRANEAN6, ...GERMANIC6]) {
+      const from = tribal.traditions.find((t) => t.key === (GERMANIC6.includes(key) ? "germanic" : "mediterranean"));
+      tribal.traditions.push({ ...clone(from), key, group: "Western and southern Europe", label: LABEL6[key], drawsOn: `${LABEL6[key]} kin, households and communities` });
+    }
+  }
+  const spread6 = (node) => {
+    if (Array.isArray(node)) {
+      for (const item of node) spread6(item);
+      if (node.every((x) => typeof x === "string")) {
+        if (node.includes("mediterranean")) for (const k of MEDITERRANEAN6) if (!node.includes(k)) node.push(k);
+        if (node.includes("germanic")) for (const k of GERMANIC6) if (!node.includes(k)) node.push(k);
+      }
+      return;
+    }
+    if (node && typeof node === "object") {
+      for (const [k, v] of Object.entries(node)) if (k !== "homeland") spread6(v);
+      if ("mediterranean" in node && !("temperate" in node)) for (const k of MEDITERRANEAN6) if (!(k in node)) node[k] = clone(node.mediterranean);
+      if ("germanic" in node && !("temperate" in node)) for (const k of GERMANIC6) if (!(k in node)) node[k] = clone(node.germanic);
+    }
+  };
+  spread6(tribal);
+  write("src/data/tribal-names.json", tribal, 1);
+  const group = read("src/data/group-names.json");
+  spread6(group);
+  write("src/data/group-names.json", group, 1);
+  const lens = read("src/data/lens.json");
+  for (const key of [...MEDITERRANEAN6, ...GERMANIC6]) if (!lens.mappings.cultures.tribal[key]) lens.mappings.cultures.tribal[key] = { lens: [key], weights: [[key, 1]] };
+  write("src/data/lens.json", lens, 1);
+}
+
 export function patchData() {
   // ── tribal-names.json
   const tribal = read("src/data/tribal-names.json");
@@ -72,6 +109,7 @@ export function patchData() {
   // Spacecraft is left to the style tables brief: its roster and mapping stay the thirty-four.
   lens.modules.spacecraft.sentence.roster = "vesselSpace";
   write("src/data/lens.json", lens, 1);
+  patch6a();
 }
 
 if (process.argv[1] && process.argv[1].endsWith("patchData.mjs")) patchData();

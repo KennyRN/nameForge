@@ -1542,6 +1542,127 @@
        1
       ]
      ]
+    },
+    "french": {
+     "lens": [
+      "french"
+     ],
+     "weights": [
+      [
+       "french",
+       1
+      ]
+     ]
+    },
+    "spanish": {
+     "lens": [
+      "spanish"
+     ],
+     "weights": [
+      [
+       "spanish",
+       1
+      ]
+     ]
+    },
+    "portuguese": {
+     "lens": [
+      "portuguese"
+     ],
+     "weights": [
+      [
+       "portuguese",
+       1
+      ]
+     ]
+    },
+    "italian": {
+     "lens": [
+      "italian"
+     ],
+     "weights": [
+      [
+       "italian",
+       1
+      ]
+     ]
+    },
+    "roman": {
+     "lens": [
+      "roman"
+     ],
+     "weights": [
+      [
+       "roman",
+       1
+      ]
+     ]
+    },
+    "greek": {
+     "lens": [
+      "greek"
+     ],
+     "weights": [
+      [
+       "greek",
+       1
+      ]
+     ]
+    },
+    "byzantine": {
+     "lens": [
+      "byzantine"
+     ],
+     "weights": [
+      [
+       "byzantine",
+       1
+      ]
+     ]
+    },
+    "iberian": {
+     "lens": [
+      "iberian"
+     ],
+     "weights": [
+      [
+       "iberian",
+       1
+      ]
+     ]
+    },
+    "greek-byzantine": {
+     "lens": [
+      "greek-byzantine"
+     ],
+     "weights": [
+      [
+       "greek-byzantine",
+       1
+      ]
+     ]
+    },
+    "dutch": {
+     "lens": [
+      "dutch"
+     ],
+     "weights": [
+      [
+       "dutch",
+       1
+      ]
+     ]
+    },
+    "slavic": {
+     "lens": [
+      "slavic"
+     ],
+     "weights": [
+      [
+       "slavic",
+       1
+      ]
+     ]
     }
    },
    "colonial": {

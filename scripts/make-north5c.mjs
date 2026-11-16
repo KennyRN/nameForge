@@ -13,6 +13,14 @@ import { RANKS } from "./north5c/content-ranks.mjs";
 export const CORE = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
 const KINDS = { ...G.KINDS, ...N.KINDS, ...V.KINDS };
 const WORDS = { ...G.WORDS, ...N.WORDS, ...V.WORDS };
+// Brief 6a: the batch's cultures join the loops; the mixes are held to Celtic's target (four words and four frames).
+import { ADJ6, ALL6, RANKS6, STYLE6, WORDS6 } from "./tier6a/north5c-build.mjs";
+import { MIXES6, NEW6 } from "./tier6a/north5c-words.mjs";
+for (const [m, byCulture] of Object.entries(WORDS6)) WORDS[m] = { ...WORDS[m], ...byCulture };
+Object.assign(ADJ, ADJ6);
+Object.assign(STYLE, STYLE6);
+Object.assign(RANKS, RANKS6);
+const isMix = (c) => c === "celtic" || MIXES6.includes(c);
 const ENGLISH_WORD = /^[A-Za-z][A-Za-z' -]*$/;
 
 const modules = {};
@@ -22,7 +30,7 @@ const fantasticCount = (nt) => nt.flat().filter((t) => t.endsWith("*")).length;
 function fillFromPools(module, culture, lists, nt) {
   const pools = POOLS[module];
   if (!pools) return;
-  const offer = culture === "celtic" ? [] : OFFER[module] ?? OFFER._default;
+  const offer = isMix(culture) ? [] : OFFER[module] ?? OFFER._default;
   const start = Math.max(0, CORE.indexOf(culture)) * 3;
   const take = (pool, enough) => {
     for (let n = 0; n < pool.length && !enough(); n++) {
@@ -57,9 +65,9 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
   const cls = CLASS[module];
   modules[module] = { kinds: KINDS[module], cultures: {} };
   // Tribes and kin groups keep Celtic as the broad mix it is (brief 5c B1): no Celtic content of its own there.
-  for (const culture of [...CORE, ...(module === "tribalNames" ? [] : ["celtic"])]) {
+  for (const culture of [...CORE, ...NEW6, ...(module === "tribalNames" ? [] : ["celtic", ...MIXES6])]) {
     const lists = byCulture[culture].split(";").map((l) => l.split("|"));
-    const want = culture === "celtic" ? 4 : 10;
+    const want = isMix(culture) ? 4 : 10;
     if (lists.length !== 3) problems.push(`${module} ${culture}: ${lists.length} lists`);
     // 5d §14.1: the words' era and fantastic tags (the module's shared dictionary, then the culture's own), and the era words and fantastic words added.
     const dict = { ...(TAGS[module]?._all ?? {}), ...(TAGS[module]?.[culture] ?? {}) };
@@ -100,7 +108,7 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
     for (const l of lists) if (new Set(l.map((w) => w.toLowerCase())).size !== l.length) problems.push(`${module} ${culture}: a word twice after the extras`);
     // Cells (brief 6, 7): six words restricted to each era the module offers (core cultures) and three fantastic; Celtic three fantastic.
     const eraWords = lists.flatMap((l, i) => l.map((w, j) => ({ w, tag: nt[i][j], eras: readTagEras(nt[i][j]) })));
-    if (culture !== "celtic") {
+    if (!isMix(culture)) {
       for (const e of OFFER[module] ?? OFFER._default) {
         const n = eraWords.filter((x) => x.eras && x.eras.length < 5 && x.eras.includes(e)).length;
         if (n < 6) shortfalls.push(`${module} ${culture} ${e}: ${n}`);
@@ -108,8 +116,8 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
     }
     const nFantastic = eraWords.filter((x) => x.tag.endsWith("*")).length;
     if (nFantastic < 3) shortfalls.push(`${module} ${culture} fantastic: ${nFantastic}`);
-    const frames = culture === "celtic" ? CELTIC_FRAMES[cls] : FRAMES[cls][STYLE[culture]];
-    if (frames.length !== (culture === "celtic" ? 4 : 10)) problems.push(`${module} ${culture}: ${frames.length} frames`);
+    const frames = isMix(culture) ? CELTIC_FRAMES[cls] : FRAMES[cls][STYLE[culture]];
+    if (frames.length !== (isMix(culture) ? 4 : 10)) problems.push(`${module} ${culture}: ${frames.length} frames`);
     const patterns = frames.map(([p]) => p);
     for (const [, , tag] of frames) if (tag && !TAG.test(tag)) problems.push(`${module} ${culture}: bad frame tag "${tag}"`);
     if (new Set(patterns).size !== patterns.length) problems.push(`${module} ${culture}: a frame twice`);
