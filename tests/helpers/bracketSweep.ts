@@ -45,52 +45,49 @@ const texts = (r: unknown): string[] => {
 /** Tests and scratch runs: how many batches each module ran, and how many threw. */
 export const stats = { runs: new Map<string, number>(), errors: new Map<string, number>(), sample: [] as string[] };
 
-/** Every bracket label left in a finished name, with where it was found (module, culture, kind). */
-export function sweepBrackets(opts: { seeds?: number[]; count?: number; cultures?: string[]; thorough?: boolean } = {}): Map<string, Set<string>> {
-  const found = new Map<string, Set<string>>();
-  const seeds = opts.seeds ?? [3, 11];
+export interface StateOptions {
+  count?: number;
+  /** Only these cultures (the module's own keys and the lens keys given are tried in every module). */
+  cultures?: string[];
+  thorough?: boolean;
+  /** Eras swept for a module's default kind (all seven by default). */
+  eras?: string[];
+  /** Whether the named kinds are swept too (default yes). */
+  kinds?: boolean;
+  /** The people link (default `real`). */
+  people?: "real" | "placeholders" | "invented" | "generated";
+}
+/** Calls `visit` for every state: a key and a function that runs it at a seed and gives the finished names (it throws for a state the module doesn't offer). */
+export function visitStates(opts: StateOptions, run: (where: string, make: (seed: number) => unknown) => void): void {
   const count = opts.count ?? 12;
   const only = opts.cultures ? new Set(opts.cultures) : undefined;
-  const run = (where: string, make: (seed: number) => unknown) => {
-    for (const seed of seeds) {
-      let out: string[] = [];
-      try {
-        out = texts(make(seed));
-      } catch (e) {
-        stats.errors.set(where.split(" ")[0], (stats.errors.get(where.split(" ")[0]) ?? 0) + 1);
-        if (stats.sample.length < 12) stats.sample.push(`${where}: ${(e as Error).message}`);
-        continue; // a state the module doesn't offer
-      }
-      stats.runs.set(where.split(" ")[0], (stats.runs.get(where.split(" ")[0]) ?? 0) + 1);
-      for (const t of out) for (const label of bracketLabels(t)) found.set(label, (found.get(label) ?? new Set()).add(where));
-    }
-  };
   const extraCultures = opts.cultures ?? [];
   const each = (list: string[]) => [...new Set([...list, ...extraCultures])].filter((c) => !only || only.has(c));
-  const ERAS = ALL_ERAS;
+  const ERAS = opts.eras ?? ALL_ERAS;
   /** Every era for the module's default kind; a named kind is swept in the middle ages and the modern world unless `thorough`. */
   const eraOk = (era: string, kind: string | undefined) => opts.thorough || kind === undefined || era === "MD" || era === "MO";
-  const base = { people: "real" as const, count };
+  const kindsOf = (list: readonly { key?: string; id?: string }[]): (string | undefined)[] => (opts.kinds === false ? [undefined] : [undefined, ...keys(list)]);
+  const base = { people: opts.people ?? ("real" as const), count };
   for (const c of each(keys(THING_CULTURES))) for (const module of ["arms", "treasure", "book"] as const) {
-    for (const era of ERAS) for (const kind of [undefined, ...keys(THING_KINDS)]) for (const fantastic of [false, true]) if (eraOk(era, kind))
+    for (const era of ERAS) for (const kind of kindsOf(THING_KINDS)) for (const fantastic of [false, true]) if (eraOk(era, kind))
       run(`things.${module} ${c} ${era} ${kind ?? "any"}`, (seed) => generateThingNames({ ...DEFAULT_THING_STATE, ...base, module, culture: c, era, kind, fantastic, seed } as never));
   }
   for (const c of each(keys(ROUTE_CULTURES))) {
     for (const era of ERAS) {
-      for (const kind of [undefined, ...keys(INN_KINDS)]) if (eraOk(era, kind)) {
+      for (const kind of kindsOf(INN_KINDS)) if (eraOk(era, kind)) {
         const s = { ...DEFAULT_INN_STATE, ...base, culture: c, era, kind } as never;
         run(`inns ${c} ${era} ${kind ?? "any"}`, (seed) => generateInnNames({ ...(s as object), form: innFormFor(s), seed } as never));
       }
-      for (const kind of [undefined, ...keys(STREET_KINDS)]) if (eraOk(era, kind)) run(`streets ${c} ${era} ${kind ?? "any"}`, (seed) => generateStreetNames({ ...DEFAULT_STREET_STATE, ...base, culture: c, era, kind, seed } as never));
-      for (const kind of [undefined, ...keys(BUILDING_KINDS)]) if (eraOk(era, kind)) run(`buildings ${c} ${era} ${kind ?? "any"}`, (seed) => generateBuildingNames({ ...DEFAULT_BUILDING_STATE, ...base, culture: c, era, kind, seed } as never));
-      for (const kind of [undefined, ...keys(MONUMENT_KINDS)]) if (eraOk(era, kind)) run(`monuments ${c} ${era} ${kind ?? "any"}`, (seed) => generateMonumentNames({ ...DEFAULT_MONUMENT_STATE, ...base, culture: c, era, kind, seed } as never));
-      for (const kind of [undefined, ...keys(ROUTE_KINDS)]) if (eraOk(era, kind)) run(`routes ${c} ${era} ${kind ?? "any"}`, (seed) => generateRouteNames({ ...DEFAULT_ROUTE_STATE, ...base, culture: c, era, kind, seed } as never));
-      for (const kind of [undefined, ...keys(EVENT_KINDS)]) if (eraOk(era, kind)) run(`events ${c} ${era} ${kind ?? "any"}`, (seed) => generateEventNames({ ...DEFAULT_EVENT_STATE, ...base, culture: c, era, kind, seed } as never));
+      for (const kind of kindsOf(STREET_KINDS)) if (eraOk(era, kind)) run(`streets ${c} ${era} ${kind ?? "any"}`, (seed) => generateStreetNames({ ...DEFAULT_STREET_STATE, ...base, culture: c, era, kind, seed } as never));
+      for (const kind of kindsOf(BUILDING_KINDS)) if (eraOk(era, kind)) run(`buildings ${c} ${era} ${kind ?? "any"}`, (seed) => generateBuildingNames({ ...DEFAULT_BUILDING_STATE, ...base, culture: c, era, kind, seed } as never));
+      for (const kind of kindsOf(MONUMENT_KINDS)) if (eraOk(era, kind)) run(`monuments ${c} ${era} ${kind ?? "any"}`, (seed) => generateMonumentNames({ ...DEFAULT_MONUMENT_STATE, ...base, culture: c, era, kind, seed } as never));
+      for (const kind of kindsOf(ROUTE_KINDS)) if (eraOk(era, kind)) run(`routes ${c} ${era} ${kind ?? "any"}`, (seed) => generateRouteNames({ ...DEFAULT_ROUTE_STATE, ...base, culture: c, era, kind, seed } as never));
+      for (const kind of kindsOf(EVENT_KINDS)) if (eraOk(era, kind)) run(`events ${c} ${era} ${kind ?? "any"}`, (seed) => generateEventNames({ ...DEFAULT_EVENT_STATE, ...base, culture: c, era, kind, seed } as never));
     }
   }
-  for (const c of each(keys(MONEY_CULTURES))) for (const era of ERAS) for (const kind of [undefined, ...keys(MONEY_KINDS)])
+  for (const c of each(keys(MONEY_CULTURES))) for (const era of ERAS) for (const kind of kindsOf(MONEY_KINDS))
     run(`money ${c} ${era} ${kind ?? "any"}`, (seed) => generateMoneyNames({ ...DEFAULT_MONEY_STATE, ...base, culture: c, era, kind, seed } as never));
-  for (const c of each(keys(TIME_CULTURES))) for (const era of ERAS) for (const kind of [undefined, ...keys(TIME_KINDS)]) if (eraOk(era, kind)) {
+  for (const c of each(keys(TIME_CULTURES))) for (const era of ERAS) for (const kind of kindsOf(TIME_KINDS)) if (eraOk(era, kind)) {
     run(`calendars ${c} ${era} ${kind ?? "any"}`, (seed) => generateTimeSkyNames({ ...DEFAULT_CALENDAR_STATE, ...base, culture: c, era, kind, seed } as never));
     run(`sky ${c} ${era} ${kind ?? "any"}`, (seed) => generateTimeSkyNames({ ...DEFAULT_SKY_STATE, ...base, culture: c, era, kind, seed } as never));
   }
@@ -102,7 +99,7 @@ export function sweepBrackets(opts: { seeds?: number[]; count?: number; cultures
     run(`realms ${c} ${era} ${output}`, (seed) => generateRealmNames({ ...DEFAULT_REALM_STATE, ...base, culture: c, era, output, seed } as never));
   for (const module of ["epithets", "familyNames", "titles"] as const) for (const c of each(keys(BYNAME_CULTURES))) for (const genre of ["FL", "modern"])
     run(`${module} ${c} ${genre}`, (seed) => generateBynames({ ...DEFAULT_BYNAME_STATE, ...base, module, culture: c, genre, seed } as never));
-  for (const c of each(keys(DEITY_CULTURES))) for (const era of ERAS) for (const kind of keys(DEITY_KINDS)) if (eraOk(era, kind))
+  for (const c of each(keys(DEITY_CULTURES))) for (const era of ERAS) for (const kind of opts.kinds === false ? ["deity"] : keys(DEITY_KINDS)) if (eraOk(era, kind))
     run(`deities ${c} ${era} ${kind}`, (seed) => generateDeityNames({ ...DEFAULT_DEITY_STATE, ...base, culture: c, era, kind, seed } as never));
   for (const module of ["seasLakes", "coastsIslands", "seaCharts"] as const) for (const c of each(keys(WATERS_CULTURES))) for (const era of ["MD", "MO", "AN"])
     run(`${module} ${c} ${era}`, (seed) => generateWatersNames({ ...defaultWatersState(module), ...base, module, culture: c, era, seed } as never));
@@ -110,5 +107,28 @@ export function sweepBrackets(opts: { seeds?: number[]; count?: number; cultures
     run(`${module} ${c} ${era}`, (seed) => generateWildsNames({ ...defaultWildsState(module), ...base, module, culture: c, era, seed } as never));
   for (const c of each(WORLD_CULTURES.map((w) => w.id))) for (const size of ["any", "city", "village"]) for (const era of [undefined, "MD", "MO"])
     run(`settlements ${c} ${size} ${era ?? "-"}`, (seed) => generateSettlementNames({ setting: "native", culture: c, size, era, ...base, seed, faithfulness: 2, strictness: 3 } as never));
+}
+
+/** Every bracket label left in a finished name, with where it was found (module, culture, kind). */
+export function sweepBrackets(opts: StateOptions & { seeds?: number[] } = {}): Map<string, Set<string>> {
+  const found = new Map<string, Set<string>>();
+  const seeds = opts.seeds ?? [3, 11];
+  visitStates(opts, (where, make) => {
+    const module = where.split(" ")[0];
+    for (const seed of seeds) {
+      let out: string[] = [];
+      try {
+        out = texts(make(seed));
+      } catch (e) {
+        stats.errors.set(module, (stats.errors.get(module) ?? 0) + 1);
+        if (stats.sample.length < 12) stats.sample.push(`${where}: ${(e as Error).message}`);
+        continue; // a state the module doesn't offer
+      }
+      stats.runs.set(module, (stats.runs.get(module) ?? 0) + 1);
+      for (const t of out) for (const label of bracketLabels(t)) found.set(label, (found.get(label) ?? new Set()).add(where));
+    }
+  });
   return found;
 }
+
+export { texts as textsOf };
