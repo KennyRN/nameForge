@@ -26,10 +26,11 @@ import nScandinavian from "./north5a/nouns-scandinavian.mjs";
 import nScottish from "./north5a/nouns-scottish.mjs";
 import nWelsh from "./north5a/nouns-welsh.mjs";
 
-const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic];
+import { CULTURES_6A, NOUNS_6A, STYLE_6A } from "./tier6a/north5a/index.mjs";
+const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic, ...CULTURES_6A];
 // §11.2: the module's own nouns, three lists per module (one per main kind), and the order each culture names in (§7).
-const NOUNS = { english: nEnglish, welsh: nWelsh, scottish: nScottish, irish: nIrish, cornish: nCornish, norse: nNorse, scandinavian: nScandinavian, german: nGerman, celtic: nCeltic };
-const STYLE = { english: "last", welsh: "first", scottish: "last", irish: "first", cornish: "first", norse: "last", scandinavian: "last", german: "last", celtic: "first" };
+const NOUNS = { english: nEnglish, welsh: nWelsh, scottish: nScottish, irish: nIrish, cornish: nCornish, norse: nNorse, scandinavian: nScandinavian, german: nGerman, celtic: nCeltic, ...NOUNS_6A };
+const STYLE = { english: "last", welsh: "first", scottish: "last", irish: "first", cornish: "first", norse: "last", scandinavian: "last", german: "last", celtic: "first", ...STYLE_6A };
 for (const c of CULTURES) { c.nouns = NOUNS[c.key]; c.style = STYLE[c.key]; }
 const ALL_CODES = ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI", "DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"];
 const read = (f) => JSON.parse(readFileSync(new URL(`../src/data/${f}.json`, import.meta.url), "utf8"));
