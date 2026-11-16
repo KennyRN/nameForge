@@ -36,6 +36,7 @@
     "folk": "tribes and kin groups, the culture's tradition (lens mapping), short form",
     "realm": "realms and polities, short form",
     "river": "the river engine, as rivers and inland waters' river kind",
+    "event": "the events and eras module, a treaty, battle or rebellion of the state's culture and era, bare and one or two words (brief 6a Part A §2)",
     "battle": "the events and eras module, battle kind, the state's culture and era, short form (review amendment, brief §12)",
     "ship": "ships and boats, the state's culture, technology matching the era (review amendment, brief §12)",
     "company": "the trade family of group names (guilds, companies and trade), the state's culture and setting (review amendment, brief §12)"
@@ -96,8 +97,20 @@
     "kingdom": { "source": "realm", "added": "a realm named in a place or object" },
     "river": { "source": "river" },
     "battle": { "source": "battle" },
+    "event": { "source": "event", "added": "a festival or month named for an event ([event] Day), brief 6a Part A §2" },
     "ship": { "source": "ship" },
     "company": { "source": "company" }
+  },
+  "stayBracketedFor": {
+    "_about": "Brief 6a Part A §2: brackets that survive in `real` mode because the state has no source for them, listed by culture or module with the reason. The sweep test fails on any other.",
+    "cultures": {
+      "nw-coast": "an Indigenous local culture with no people tables: native peoples' names stay bracketed (brief rule 4)",
+      "arctic": "as nw-coast",
+      "na-woodlands": "as nw-coast"
+    },
+    "modules": {
+      "deities": "invented gods only (brief 1.1 rule 4): the module has no people link, and a god's [place] is the user's own place"
+    }
   },
   "stayBracketed": {
     "native people": "native peoples and places stay bracketed in newly explored and settled lands (brief rule 4)",

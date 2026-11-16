@@ -3855,10 +3855,10 @@
     },
     "moneyFixed:early": {
       "entries": [
-        {"w": "Hacksilver", "x": 2, "e": ["AN", "MD"], "c": ["anglo-saxon"], "v": ["m"]},
+        {"w": "Cut Silver", "x": 2, "e": ["AN", "MD"], "c": ["anglo-saxon"], "v": ["m"]},
         {"w": "Arm Ring", "e": ["AN", "MD"], "c": ["anglo-saxon"], "v": ["m"]},
         {"w": "Ring Money", "e": ["AN", "MD"], "c": ["anglo-saxon"], "v": ["m"]},
-        {"w": "Hacksilver", "x": 3, "e": ["AN", "MD"], "c": ["norse"], "v": ["m"]},
+        {"w": "Cut Silver", "x": 3, "e": ["AN", "MD"], "c": ["norse"], "v": ["m"]},
         {"w": "Arm Ring", "x": 2, "e": ["AN", "MD"], "c": ["norse"], "v": ["m"]},
         {"w": "Ring Money", "e": ["AN", "MD"], "c": ["norse"], "v": ["m"]},
         {"w": "Weight of Silver", "e": ["AN", "MD"], "c": ["norse"], "v": ["h"]},
@@ -3896,7 +3896,7 @@
         {"w": "Tin Piece", "e": ["AN", "MD", "EM"], "c": ["aztec"], "v": ["l"]},
         {"w": "Quill of Gold Dust", "x": 2, "e": ["AN", "MD", "EM"], "c": ["aztec"], "v": ["h"]},
         {"w": "Ring Money", "e": ["AN", "MD"], "c": ["general"], "fx": "general-early"},
-        {"w": "Hacksilver", "e": ["AN", "MD"], "c": ["general"], "fx": "general-early"},
+        {"w": "Cut Silver", "e": ["AN", "MD"], "c": ["general"], "fx": "general-early"},
         {"w": "Arm Ring", "e": ["AN", "MD"], "c": ["general"], "fx": "general-early"}
       ]
     },

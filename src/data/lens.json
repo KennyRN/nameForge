@@ -3606,8 +3606,10 @@
   }
  ],
  "shares": {
-  "$comment": "Northern Europe brief 5a §11.3 and 5b §12.1: the share of a module's own-shape draws that a core culture's signature frames take (signature), and that region-weighted shapes take when a region is chosen (region; not 'across all of…').",
+  "$comment": "Northern Europe brief 5a §11.3 and 5b §12.1: the share of a module's own-shape draws that a core culture's signature frames take (signature), and that region-weighted shapes take when a region is chosen (region; not 'across all of…'). Brief 6a §1: `signatureShared` replaces `signature` for the cultures in `sharedLegacy`, which also read a legacy table another culture shares (the four nations read Celtic, Scandinavian reads Norse).",
   "signature": 0.4,
+  "signatureShared": 0.6,
+  "sharedLegacy": ["welsh", "scottish", "irish", "cornish", "scandinavian"],
   "region": 0.3
  },
  "regionExempt": {

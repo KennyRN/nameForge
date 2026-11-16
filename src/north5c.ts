@@ -6,7 +6,7 @@
 import north from "./data/north5c.json";
 import north5d from "./data/north5d.json";
 import { mulberry32 } from "./markov";
-import { SIGNATURE_SHARE } from "./northData";
+import { cultureSalt, signatureShareFor } from "./northData";
 import { containsRealGroup, isRealGroup } from "./realPlaces";
 
 /** A frame: its pattern, its weight, its tag (an era span and/or "*" for a fantastic frame; "" for none) and, for a frame of one kind of the module (a month, a festival), that kind (5d §14.3). */
@@ -209,7 +209,8 @@ export function applySignature<T extends { text: string }>(
   // Brief 5c §13.4: no well-known real group, realm, craft or object.
   const allowed = (text: string) => !isRealGroup(text) && !containsRealGroup(text) && extra(text);
   const set = opts.set ?? ((n: T, text: string): T => ({ ...n, text }));
-  const rng = mulberry32((seed ^ 0x5c5c5c5c) >>> 0);
+  const share = signatureShareFor(culture);
+  const rng = mulberry32((seed ^ 0x5c5c5c5c ^ cultureSalt(culture)) >>> 0);
   const seen = new Set(names.map((n) => n.text.toLowerCase()));
   // Tribes: exactly ceil(share × batch) names, at positions the stream picks (a batch of five shows two, not "about two").
   let chosen: Set<number> | undefined;
@@ -219,14 +220,14 @@ export function applySignature<T extends { text: string }>(
       const j = Math.floor(rng() * (i + 1));
       [idx[i], idx[j]] = [idx[j], idx[i]];
     }
-    chosen = new Set(idx.slice(0, Math.min(idx.length, Math.ceil(names.length * SIGNATURE_SHARE))));
+    chosen = new Set(idx.slice(0, Math.min(idx.length, Math.ceil(names.length * share))));
   }
   return names.map((n, index) => {
     if (opts.keep?.(n)) return n;
     const nativeAll = !!opts.native?.all && opts.native.forms.length > 0;
     if (chosen) {
       if (!chosen.has(index)) return n;
-    } else if (!nativeAll && rng() >= SIGNATURE_SHARE) return n;
+    } else if (!nativeAll && rng() >= share) return n;
     const native = opts.native && opts.native.forms.length > 0 && rng() < opts.native.share;
     const gender = (n as unknown as { gender?: unknown }).gender;
     const sex: "male" | "female" = gender === "male" || gender === "female" ? gender : rng() < 0.5 ? "female" : "male";

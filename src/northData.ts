@@ -36,6 +36,16 @@ export const NORTH = north as unknown as NorthData & { nounPools: string[] };
 
 /** The share of a kind's draws the signature frames of a core culture (or Celtic) take. */
 export const SIGNATURE_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.signature;
+/** Brief 6a Part A §1: the share where a culture also reads a legacy table it shares with another (the four nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian…). */
+const SHARES = (lensData as unknown as { shares: { signatureShared: number; sharedLegacy: string[] } }).shares;
+/** Brief 6a Part A §1: a culture that shares a legacy table has its own stream for its replacements, so that the nations don't replace the same positions of the same batch. */
+export function cultureSalt(culture: string | undefined): number {
+  if (!culture || !SHARES.sharedLegacy.includes(culture)) return 0;
+  let h = 2166136261;
+  for (const ch of culture) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return h >>> 0;
+}
+export const signatureShareFor = (culture: string | undefined): number => (culture && SHARES.sharedLegacy.includes(culture) ? SHARES.signatureShared : SIGNATURE_SHARE);
 /** Brief 5b §12.1: the share of a module's own-shape draws that region-weighted shapes take when a region is chosen. */
 export const REGION_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.region;
 
@@ -43,13 +53,14 @@ export const REGION_SHARE = (lensData as unknown as { shares: { signature: numbe
  * §11.3: scale the signature plans (the batch's own, `sig`) so they hold `SIGNATURE_SHARE` of the total weight, as the weights stand
  * once era, fantastic, region and tone are applied, against the plain (non-regional) shapes. Nothing changes when a culture has none or when only they are left.
  */
-export function balanceSignature<T>(plans: [T, number][], isSig: (p: T) => boolean, isRegional: (p: T) => boolean = () => false): [T, number][] {
+export function balanceSignature<T>(plans: [T, number][], isSig: (p: T) => boolean, isRegional: (p: T) => boolean = () => false, culture?: string): [T, number][] {
   let sig = 0;
   let rest = 0;
   // A shape that belongs to a region (fell and dale words, the Corpse Road) keeps its own weight on top: the share is of the plain shapes.
   for (const [p, w] of plans) if (isSig(p)) sig += w; else if (!isRegional(p)) rest += w;
   if (sig <= 0 || rest <= 0) return plans;
-  const k = (SIGNATURE_SHARE / (1 - SIGNATURE_SHARE)) * (rest / sig);
+  const share = signatureShareFor(culture);
+  const k = (share / (1 - share)) * (rest / sig);
   return plans.map(([p, w]): [T, number] => [p, isSig(p) ? w * k : w]);
 }
 

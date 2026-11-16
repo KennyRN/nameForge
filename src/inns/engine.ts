@@ -54,7 +54,7 @@ import { boostPool, contextLandmark, contextSaint, selfPatterns, TownTurn, type 
 import { breaksStreetWords, STREET_DATA } from "../streets/engine";
 import { cultureSet } from "../lens";
 
-import { balanceRegion, balanceSignature, freshNouns, noteNoun, REGION_SHARE, regionSeed, shapesOf, SIGNATURE_SHARE } from "../northData";
+import { balanceRegion, balanceSignature, freshNouns, noteNoun, REGION_SHARE, regionSeed, shapesOf, signatureShareFor } from "../northData";
 import { mapShapes, NORTH5B } from "../northData5b";
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -690,7 +690,7 @@ export function generateInnNames(options: InnOptions): InnBatch {
     if (own.length > 0) {
       const regional = ctx.region ? own.filter(([p]) => (p.shape as { rg?: boolean }).rg) : [];
       if (regional.length > 0 && rng() < REGION_SHARE) return pickWeighted(regional, rng);
-      if (rng() < SIGNATURE_SHARE) return pickWeighted(own, rng);
+      if (rng() < signatureShareFor(ctx.culture.key)) return pickWeighted(own, rng);
     }
     const era = eraPlans(ctx, options.shape);
     const share = isFuture(ctx.era) && ctx.kind === "bar" ? INN_DATA.eraShare.futureBar : INN_DATA.eraShare.default;

@@ -46,7 +46,7 @@
       "key": "early",
       "menu": "Early and shaped money",
       "plural": "early and shaped money",
-      "description": "Ingots, rings, bars, hacksilver and money in the shape of tools",
+      "description": "Ingots, rings, bars, cut silver and money in the shape of tools",
       "series": true,
       "era": {"AN": 15, "MD": 8, "EM": 3, "ST": 0, "MO": 0, "NF": 0, "IS": 0}
     },

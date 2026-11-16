@@ -423,7 +423,7 @@ function shapesFor(ctx: Ctx, kind: DeityKind, forms?: string[], only?: string): 
     .map((s): [DeityShape, number] => [s, shapeWeight({ ...ctx, shape: s }, s)])
     .filter(([, w]) => w > 0);
   // Northern Europe brief 5a §11.3: a core culture's signature frames take their share.
-  return balanceSignature(live, (s) => !!(s as { sig?: boolean }).sig);
+  return balanceSignature(live, (s) => !!(s as { sig?: boolean }).sig, undefined, ctx.culture);
 }
 
 /** One deity title with these forms (back-links, sacred places). */

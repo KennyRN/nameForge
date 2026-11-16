@@ -642,7 +642,7 @@ const live = (ctx: Ctx, shapes: StreetShape[], only?: string): [StreetShape, num
     .filter(([, w]) => w > 0);
   // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
   const regional = (s: StreetShape) => !!(s as { rg?: boolean }).rg && !!ctx.region;
-  const signed = balanceSignature(plans, (s) => !!(s as { sig?: boolean }).sig, regional);
+  const signed = balanceSignature(plans, (s) => !!(s as { sig?: boolean }).sig, regional, ctx.culture.key);
   return ctx.region ? balanceRegion(signed, regional) : signed;
 };
 

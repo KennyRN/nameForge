@@ -24730,8 +24730,10 @@ var lens_default = {
     }
   ],
   shares: {
-    $comment: "Northern Europe brief 5a \xA711.3 and 5b \xA712.1: the share of a module's own-shape draws that a core culture's signature frames take (signature), and that region-weighted shapes take when a region is chosen (region; not 'across all of\u2026').",
+    $comment: "Northern Europe brief 5a \xA711.3 and 5b \xA712.1: the share of a module's own-shape draws that a core culture's signature frames take (signature), and that region-weighted shapes take when a region is chosen (region; not 'across all of\u2026'). Brief 6a \xA71: `signatureShared` replaces `signature` for the cultures in `sharedLegacy`, which also read a legacy table another culture shares (the four nations read Celtic, Scandinavian reads Norse).",
     signature: 0.4,
+    signatureShared: 0.6,
+    sharedLegacy: ["welsh", "scottish", "irish", "cornish", "scandinavian"],
     region: 0.3
   },
   regionExempt: {
@@ -24903,14 +24905,23 @@ var north5a_default = { _about: "Northern Europe tables brief, batch 5a (docs/no
 // src/northData.ts
 var NORTH = north5a_default;
 var SIGNATURE_SHARE = lens_default.shares.signature;
+var SHARES = lens_default.shares;
+function cultureSalt(culture) {
+  if (!culture || !SHARES.sharedLegacy.includes(culture)) return 0;
+  let h = 2166136261;
+  for (const ch of culture) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return h >>> 0;
+}
+var signatureShareFor = (culture) => culture && SHARES.sharedLegacy.includes(culture) ? SHARES.signatureShared : SIGNATURE_SHARE;
 var REGION_SHARE = lens_default.shares.region;
-function balanceSignature(plans5, isSig, isRegional = () => false) {
+function balanceSignature(plans5, isSig, isRegional = () => false, culture) {
   let sig = 0;
   let rest = 0;
   for (const [p, w] of plans5) if (isSig(p)) sig += w;
   else if (!isRegional(p)) rest += w;
   if (sig <= 0 || rest <= 0) return plans5;
-  const k = SIGNATURE_SHARE / (1 - SIGNATURE_SHARE) * (rest / sig);
+  const share2 = signatureShareFor(culture);
+  const k = share2 / (1 - share2) * (rest / sig);
   return plans5.map(([p, w]) => [p, isSig(p) ? w * k : w]);
 }
 var REGION_EXEMPT = lens_default.regionExempt;
@@ -66270,7 +66281,7 @@ var money_names_default = {
       key: "early",
       menu: "Early and shaped money",
       plural: "early and shaped money",
-      description: "Ingots, rings, bars, hacksilver and money in the shape of tools",
+      description: "Ingots, rings, bars, cut silver and money in the shape of tools",
       series: true,
       era: { AN: 15, MD: 8, EM: 3, ST: 0, MO: 0, NF: 0, IS: 0 }
     },
@@ -86242,6 +86253,7 @@ var fill_default = {
     folk: "tribes and kin groups, the culture's tradition (lens mapping), short form",
     realm: "realms and polities, short form",
     river: "the river engine, as rivers and inland waters' river kind",
+    event: "the events and eras module, a treaty, battle or rebellion of the state's culture and era, bare and one or two words (brief 6a Part A \xA72)",
     battle: "the events and eras module, battle kind, the state's culture and era, short form (review amendment, brief \xA712)",
     ship: "ships and boats, the state's culture, technology matching the era (review amendment, brief \xA712)",
     company: "the trade family of group names (guilds, companies and trade), the state's culture and setting (review amendment, brief \xA712)"
@@ -86302,8 +86314,20 @@ var fill_default = {
     kingdom: { source: "realm", added: "a realm named in a place or object" },
     river: { source: "river" },
     battle: { source: "battle" },
+    event: { source: "event", added: "a festival or month named for an event ([event] Day), brief 6a Part A \xA72" },
     ship: { source: "ship" },
     company: { source: "company" }
+  },
+  stayBracketedFor: {
+    _about: "Brief 6a Part A \xA72: brackets that survive in `real` mode because the state has no source for them, listed by culture or module with the reason. The sweep test fails on any other.",
+    cultures: {
+      "nw-coast": "an Indigenous local culture with no people tables: native peoples' names stay bracketed (brief rule 4)",
+      arctic: "as nw-coast",
+      "na-woodlands": "as nw-coast"
+    },
+    modules: {
+      deities: "invented gods only (brief 1.1 rule 4): the module has no people link, and a god's [place] is the user's own place"
+    }
   },
   stayBracketed: {
     "native people": "native peoples and places stay bracketed in newly explored and settled lands (brief rule 4)",
@@ -86337,6 +86361,7 @@ function labelInfo(label) {
 function staysBracketed(label) {
   return STAYS.has(label.trim().toLowerCase());
 }
+var STAY_FOR = fill_default.stayBracketedFor;
 var BAND_ERA = { fantasy: "MD", modern: "MO", scifi: "IS" };
 var ERAS = ["AN", "MD", "EM", "ST", "MO", "NF", "IS"];
 function fillEra(era) {
@@ -86411,9 +86436,14 @@ function fillSlots(name, ctx) {
       const placeBefore = place4 && placeDone > 0;
       for (let attempt2 = 0; attempt2 < tries; attempt2++) {
         fill = resolver({ label: key2, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...plain ? { plain } : {}, ...place4 ? { rest: rest.replace(/\[[^\]]*\]/g, " ").replace(/\s+/g, " ").trim(), ...placeBefore ? { placeBefore } : {}, ...ctx.settlementPlaces ? { settlementPlaces: true } : {} } : {}, avoid });
-        if (fill === void 0 || !avoid.has(fill) && !(guarded && repeatsGeneric(fill, rest))) break;
+        if (fill === void 0 || !avoid.has(fill) && !/\[/.test(fill) && !(guarded && repeatsGeneric(fill, rest))) break;
       }
       if (fill === void 0) return whole;
+      if (/\[/.test(fill)) {
+        if (ctx.nested) return whole;
+        fill = fillSlots(fill, { ...ctx, nested: true, series: void 0, batchSeen: void 0, onlyLabels: void 0 });
+        if (/\[/.test(fill)) return whole;
+      }
       if (place4) placeDone++;
       (_e3 = ctx.series) == null ? void 0 : _e3.set(key2, fill);
       if (ctx.batchSeen && !ctx.series) ctx.batchSeen.set(key2, ((_f = ctx.batchSeen.get(key2)) != null ? _f : /* @__PURE__ */ new Set()).add(fill));
@@ -87431,7 +87461,8 @@ function applySignature(names, module2, culture, seed, opts = {}) {
   const extra = (_a8 = opts.allowed) != null ? _a8 : () => true;
   const allowed = (text) => !isRealGroup(text) && !containsRealGroup(text) && extra(text);
   const set = (_b4 = opts.set) != null ? _b4 : (n, text) => ({ ...n, text });
-  const rng = mulberry32((seed ^ 1549556828) >>> 0);
+  const share2 = signatureShareFor(culture);
+  const rng = mulberry32((seed ^ 1549556828 ^ cultureSalt(culture)) >>> 0);
   const seen = new Set(names.map((n) => n.text.toLowerCase()));
   let chosen;
   if (opts.quota) {
@@ -87443,7 +87474,7 @@ function applySignature(names, module2, culture, seed, opts = {}) {
       const j = Math.floor(rng() * (i + 1));
       [idx[i], idx[j]] = [idx[j], idx[i]];
     }
-    chosen = new Set(idx.slice(0, Math.min(idx.length, Math.ceil(names.length * SIGNATURE_SHARE))));
+    chosen = new Set(idx.slice(0, Math.min(idx.length, Math.ceil(names.length * share2))));
   }
   return names.map((n, index) => {
     var _a9, _b5, _c4;
@@ -87451,7 +87482,7 @@ function applySignature(names, module2, culture, seed, opts = {}) {
     const nativeAll = !!((_b5 = opts.native) == null ? void 0 : _b5.all) && opts.native.forms.length > 0;
     if (chosen) {
       if (!chosen.has(index)) return n;
-    } else if (!nativeAll && rng() >= SIGNATURE_SHARE) return n;
+    } else if (!nativeAll && rng() >= share2) return n;
     const native = opts.native && opts.native.forms.length > 0 && rng() < opts.native.share;
     const gender = n.gender;
     const sex = gender === "male" || gender === "female" ? gender : rng() < 0.5 ? "female" : "male";
@@ -99050,6 +99081,11 @@ var personResolver = (req) => {
   if (!c || !req.slot) return void 0;
   let said = person(c, req.slot, req.sex, req.plain);
   for (let attempt2 = 0; said !== void 0 && isBlockedName(said) && attempt2 < 12; attempt2++) said = person(c, req.slot, req.sex, req.plain);
+  if (said !== void 0 && isBlockedName(said) && req.avoid.size > 0) {
+    const open = { ...c, req: { ...c.req, avoid: /* @__PURE__ */ new Set() } };
+    said = person(open, req.slot, req.sex, req.plain);
+    for (let attempt2 = 0; said !== void 0 && isBlockedName(said) && attempt2 < 12; attempt2++) said = person(open, req.slot, req.sex, req.plain);
+  }
   return said !== void 0 && isBlockedName(said) ? void 0 : said;
 };
 var holyResolver = (req) => {
@@ -117928,10 +117964,10 @@ var settlement_vocab_default = {
     },
     "moneyFixed:early": {
       entries: [
-        { w: "Hacksilver", x: 2, e: ["AN", "MD"], c: ["anglo-saxon"], v: ["m"] },
+        { w: "Cut Silver", x: 2, e: ["AN", "MD"], c: ["anglo-saxon"], v: ["m"] },
         { w: "Arm Ring", e: ["AN", "MD"], c: ["anglo-saxon"], v: ["m"] },
         { w: "Ring Money", e: ["AN", "MD"], c: ["anglo-saxon"], v: ["m"] },
-        { w: "Hacksilver", x: 3, e: ["AN", "MD"], c: ["norse"], v: ["m"] },
+        { w: "Cut Silver", x: 3, e: ["AN", "MD"], c: ["norse"], v: ["m"] },
         { w: "Arm Ring", x: 2, e: ["AN", "MD"], c: ["norse"], v: ["m"] },
         { w: "Ring Money", e: ["AN", "MD"], c: ["norse"], v: ["m"] },
         { w: "Weight of Silver", e: ["AN", "MD"], c: ["norse"], v: ["h"] },
@@ -117969,7 +118005,7 @@ var settlement_vocab_default = {
         { w: "Tin Piece", e: ["AN", "MD", "EM"], c: ["aztec"], v: ["l"] },
         { w: "Quill of Gold Dust", x: 2, e: ["AN", "MD", "EM"], c: ["aztec"], v: ["h"] },
         { w: "Ring Money", e: ["AN", "MD"], c: ["general"], fx: "general-early" },
-        { w: "Hacksilver", e: ["AN", "MD"], c: ["general"], fx: "general-early" },
+        { w: "Cut Silver", e: ["AN", "MD"], c: ["general"], fx: "general-early" },
         { w: "Arm Ring", e: ["AN", "MD"], c: ["general"], fx: "general-early" }
       ]
     },
@@ -120703,7 +120739,7 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
 }
 function kindPlans(ctx, kind, only) {
   const live5 = shapesFor(kind, ctx.culture.key).filter((s) => !only || s.p === only).map((s) => [{ kind, shape: s, borrowed: false, scale: ctx.scale }, shapeWeight2(ctx, kind, s)]).filter(([, w]) => w > 0);
-  const signed = balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.r);
+  const signed = balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.r, ctx.culture.key);
   return ctx.region ? balanceRegion(signed, (plan) => regionWeighted(ROUTE_DATA.regions, plan.shape.r, ctx.region)) : signed;
 }
 function borrowedPlans(ctx) {
@@ -122179,11 +122215,11 @@ function generatePeopleRows(options) {
   const peopleOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && !f.includes("{N1}"), false);
   const tongueOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && f.includes("{N1}"), false);
   if (!peopleOf || !tongueOf) return { rows, seed, notices: [] };
-  const rng = mulberry32((seed ^ 1549556828) >>> 0);
+  const rng = mulberry32((seed ^ 1549556828 ^ cultureSalt(options.culture)) >>> 0);
   const giving = (_a8 = options.giving) != null ? _a8 : "both";
   return {
     rows: rows.map((row) => {
-      if (rng() >= SIGNATURE_SHARE) return row;
+      if (rng() >= signatureShareFor(options.culture)) return row;
       const ctx = { eras: options.era ? [options.era] : void 0, fantastic: true };
       const people2 = peopleOf(rng, ctx);
       const language = tongueOf(rng, ctx);
@@ -122780,7 +122816,7 @@ function shapesFor2(ctx, kind, forms, only) {
     var _a9;
     return s.kind === kind && (!forms || forms.includes((_a9 = s.form) != null ? _a9 : "")) && (!only || s.p === only);
   }).map((s) => [s, shapeWeight4({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
-  return balanceSignature(live5, (s) => !!s.sig);
+  return balanceSignature(live5, (s) => !!s.sig, void 0, ctx.culture);
 }
 function deityTitleIn(ctx, forms) {
   var _a8;
@@ -143054,7 +143090,7 @@ function generateWildsNames(options) {
     const ctx = newCtx4();
     for (const kind of data.kinds) {
       const live5 = kindShapes(ctx, kind.key).filter((s) => !options.shape || s.p === options.shape).filter((s) => kind.key !== "settlement" || sizeOk(s)).map((s) => [{ kind: kind.key, shape: s }, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
-      if (live5.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt)) : live5);
+      if (live5.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt, ctx.culture.key)) : live5);
     }
     return planCache;
   };
@@ -144701,7 +144737,7 @@ function generateWatersNames(options) {
       for (const kind of waterKinds(earthlyModule)) {
         const shapes = [...(_a9 = WATERS_DATA.shapes[earthlyModule][kind.key]) != null ? _a9 : [], ...shapesOf(WATERS_DATA.cultureShapes.filter((s) => s.module === earthlyModule && s.kind === kind.key), culture.key)];
         const live5 = shapes.filter((s) => !options.shape || s.p === options.shape).map((s) => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)]).filter(([, w]) => w > 0);
-        if (live5.length > 0) plans5.set(kind.key, ctx.where === "home" ? balanceByRegion2(ctx, balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt)) : live5);
+        if (live5.length > 0) plans5.set(kind.key, ctx.where === "home" ? balanceByRegion2(ctx, balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt, culture.key)) : live5);
       }
     } else {
       for (const kind of hyperKindsAt(scale)) {
@@ -146650,7 +146686,7 @@ function plans2(ctx, only) {
   const culture = [...(_a8 = d.cultureShapes[ctx.culture.key]) != null ? _a8 : [], ...mapShapes(NORTH5B.monuments.cultureShapes, ctx.culture.key)].filter((s) => s.kind === k);
   const all = [...live(ctx, d.shared, "shared", only), ...live(ctx, (_b4 = d.kindShapes[k]) != null ? _b4 : [], "kind", only), ...live(ctx, culture, "culture", only), ...live(ctx, d.eraShapes, "era", only)];
   const regional = (p) => !!p.shape.rg && !!ctx.region;
-  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional);
+  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional, ctx.culture.key);
   return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 function choosePlan(ctx, only) {
@@ -147198,7 +147234,7 @@ function shapeWeight7(ctx, s) {
 var live2 = (ctx, shapes, only) => {
   const plans5 = shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight7(ctx, s)]).filter(([, w]) => w > 0);
   const regional = (s) => !!s.rg && !!ctx.region;
-  const signed = balanceSignature(plans5, (s) => !!s.sig, regional);
+  const signed = balanceSignature(plans5, (s) => !!s.sig, regional, ctx.culture.key);
   return ctx.region ? balanceRegion(signed, regional) : signed;
 };
 function streetShapes(ctx, only) {
@@ -147775,7 +147811,7 @@ function plans3(ctx, only) {
     ...live3(ctx, d.eraShapes, "era", only)
   ];
   const regional = (p) => !!p.shape.rg && !!ctx.region;
-  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional);
+  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional, ctx.culture.key);
   return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 function choosePlan2(ctx, only) {
@@ -148326,7 +148362,7 @@ function generateInnNames(options) {
     if (own.length > 0) {
       const regional = ctx.region ? own.filter(([p]) => p.shape.rg) : [];
       if (regional.length > 0 && rng() < REGION_SHARE) return pickWeighted7(regional, rng);
-      if (rng() < SIGNATURE_SHARE) return pickWeighted7(own, rng);
+      if (rng() < signatureShareFor(ctx.culture.key)) return pickWeighted7(own, rng);
     }
     const era2 = eraPlans(ctx, options.shape);
     const share2 = isFuture6(ctx.era) && ctx.kind === "bar" ? INN_DATA.eraShare.futureBar : INN_DATA.eraShare.default;
@@ -148993,6 +149029,21 @@ registerResolver("battle", (req) => {
   } catch (e) {
     return void 0;
   }
+});
+registerResolver("event", (req) => {
+  var _a8;
+  const kinds = ["treaty", "battle", "rebellion"];
+  for (let attempt2 = 0; attempt2 < 12; attempt2++) {
+    try {
+      const kind = kinds[Math.floor(req.rng() * kinds.length)];
+      const text = (_a8 = generateEventNames({ culture: attempt2 < 6 ? req.culture : "general", era: req.era, kind, people: "invented", count: 1, seed: drawSeed(req.rng) }).names[0]) == null ? void 0 : _a8.text;
+      const bare7 = text == null ? void 0 : text.replace(/^the /i, "").replace(/^(Battle|Treaty) of /i, "");
+      if (bare7 && !bare7.includes("[") && bare7.split(/\s+/).length <= 2) return bare7;
+    } catch (e) {
+      return void 0;
+    }
+  }
+  return void 0;
 });
 
 // src/money/sentence.ts

@@ -14,7 +14,7 @@ import { ROUTE_ERAS } from "../routes/engine";
 import { LENS_ERAS, lensCultureLabel } from "../lens";
 import { engineCulture } from "../lens";
 import { signatureDrawer } from "../north5c";
-import { SIGNATURE_SHARE } from "../northData";
+import { cultureSalt, signatureShareFor } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -678,11 +678,11 @@ export function generatePeopleRows(options: PeopleOptions): PeopleBatch {
   const peopleOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && !f.includes("{N1}"), false);
   const tongueOf = signatureDrawer("peoplesTongues", options.culture, (f) => f.startsWith("the ") && f.includes("{N1}"), false);
   if (!peopleOf || !tongueOf) return { rows, seed, notices: [] };
-  const rng = mulberry32((seed ^ 0x5c5c5c5c) >>> 0);
+  const rng = mulberry32((seed ^ 0x5c5c5c5c ^ cultureSalt(options.culture)) >>> 0);
   const giving = options.giving ?? "both";
   return {
     rows: rows.map((row) => {
-      if (rng() >= SIGNATURE_SHARE) return row;
+      if (rng() >= signatureShareFor(options.culture)) return row;
       const ctx = { eras: options.era ? [options.era] : undefined, fantastic: true };
       const people = peopleOf(rng, ctx);
       const language = tongueOf(rng, ctx);

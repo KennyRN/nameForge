@@ -148,6 +148,12 @@ export const personResolver: Resolver = (req) => {
   let said = person(c, req.slot, req.sex, req.plain);
   // A pair that makes a famous real person is drawn again.
   for (let attempt = 0; said !== undefined && isBlockedName(said) && attempt < 12; attempt++) said = person(c, req.slot, req.sex, req.plain);
+  // Brief 6a Part A §2: a short list whose unused names are all blocked ones repeats a name rather than leave the bracket.
+  if (said !== undefined && isBlockedName(said) && req.avoid.size > 0) {
+    const open: Ctx = { ...c, req: { ...c.req, avoid: new Set<string>() } };
+    said = person(open, req.slot, req.sex, req.plain);
+    for (let attempt = 0; said !== undefined && isBlockedName(said) && attempt < 12; attempt++) said = person(open, req.slot, req.sex, req.plain);
+  }
   return said !== undefined && isBlockedName(said) ? undefined : said;
 };
 export const holyResolver: Resolver = (req) => {

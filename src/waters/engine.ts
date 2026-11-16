@@ -688,7 +688,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
           .filter((s) => !options.shape || s.p === options.shape)
           .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)])
           .filter(([, w]) => w > 0);
-        if (live.length > 0) plans.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!(plan.shape as { rt?: string }).rt)) : live);
+        if (live.length > 0) plans.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!(plan.shape as { rt?: string }).rt, culture.key)) : live);
       }
     } else {
       for (const kind of hyperKindsAt(scale)) {

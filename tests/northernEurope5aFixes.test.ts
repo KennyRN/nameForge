@@ -6,7 +6,7 @@ import "../src/vessels/engine";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { COVERAGE_ADAPTERS } from "../src/coverage";
-import { NORTH, combeFor, isNounPool } from "../src/northData";
+import { NORTH, combeFor, isNounPool, signatureShareFor } from "../src/northData";
 import { fillSlots, followsBareGeneric, type FillContext, type Resolvers } from "../src/fill";
 import { generateWildsNames } from "../src/wilds/engine";
 import { defaultWildsState } from "../src/wilds/sentence";
@@ -69,7 +69,7 @@ test("§11.1: the shared group pools and the group frames are not counted toward
 
 // ── §11.3: the culture shows ───────────────────────────────────────────────────────────────────
 
-test("§11.3: a core culture's signature frames take about 40% of the draws of a kind at home", () => {
+test("§11.3 and brief 6a §1: a core culture's signature frames take about 40% of the draws of a kind at home, 60% where it also reads a legacy table another culture shares", () => {
   for (const [module, culture] of [["mountainNames", "welsh"], ["hillsValleys", "german"], ["forestNames", "scottish"], ["riversInland", "irish"]] as const) {
     const sig = new Set(wildsShapes.filter((s) => s.module === module && own(s, culture) && s.sig).map((s) => s.p));
     for (const kind of module === "mountainNames" ? ["peak"] : module === "hillsValleys" ? ["hill"] : module === "forestNames" ? ["forest"] : ["stream"]) {
@@ -77,7 +77,8 @@ test("§11.3: a core culture's signature frames take about 40% of the draws of a
       const names = Array.from({ length: 120 }, (_x, i) => generateWildsNames({ ...defaultWildsState(module), module, culture, kind, where: "home", count: 4, seed: 100 + i, people: "placeholders" } as never).names).flat();
       const own = names.filter((n) => n.shape !== "source");
       const share = own.filter((n) => sig.has(n.shape)).length / own.length;
-      assert.ok(share > 0.3 && share < 0.55, `${module} ${culture} ${kind} ${share}`);
+      const want = signatureShareFor(culture);
+      assert.ok(share > want - 0.1 && share < want + 0.15, `${module} ${culture} ${kind} ${share} (wanted ${want})`);
     }
   }
 });

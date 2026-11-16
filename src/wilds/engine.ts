@@ -926,7 +926,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
         .filter((s) => kind.key !== "settlement" || sizeOk(s))
         .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, shapeWeight(ctx, s)])
         .filter(([, w]) => w > 0);
-      if (live.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt)) : live);
+      if (live.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt, ctx.culture.key)) : live);
     }
     return planCache;
   };

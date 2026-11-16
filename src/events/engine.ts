@@ -599,3 +599,20 @@ registerResolver("battle", (req) => {
     return undefined;
   }
 });
+
+// Brief 6a Part A §2: the filler's event source: "[event]", a treaty, battle or rebellion of the state's culture and era, bare ("Saltgate": "Saltgate Day").
+registerResolver("event", (req) => {
+  const kinds = ["treaty", "battle", "rebellion"] as const;
+  for (let attempt = 0; attempt < 12; attempt++) {
+    try {
+      const kind = kinds[Math.floor(req.rng() * kinds.length)];
+      // A culture with no events of that kind in the era (Egyptian in the modern world) gives way to General's.
+      const text = generateEventNames({ culture: attempt < 6 ? req.culture : "general", era: req.era, kind, people: "invented", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
+      const bare = text?.replace(/^the /i, "").replace(/^(Battle|Treaty) of /i, "");
+      if (bare && !bare.includes("[") && bare.split(/\s+/).length <= 2) return bare;
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
+});

@@ -41,6 +41,8 @@ export interface FillContext {
   onlyLabels?: ReadonlySet<string>;
   /** Brief 5d §14.1 item 3: a `[place]` is filled from settlement names only, never a person's name (the group, bynames, realms and craft modules). */
   settlementPlaces?: boolean;
+  /** Brief 6a Part A §2: set on the second pass over a fill that holds a bracket of its own. */
+  nested?: boolean;
   /** The sources' resolvers; the registered ones when absent. */
   resolvers?: Resolvers;
 }
@@ -100,6 +102,10 @@ export function labelInfo(label: string): LabelInfo | undefined {
 export function staysBracketed(label: string): boolean {
   return STAYS.has(label.trim().toLowerCase());
 }
+
+const STAY_FOR = (FILL as unknown as { stayBracketedFor: { cultures: Record<string, string>; modules: Record<string, string> } }).stayBracketedFor;
+/** Brief 6a Part A §2: why a bracket may survive in `real` mode for this culture or module, if it may. */
+export const stayBracketedReason = (opts: { culture?: string; module?: string }): string | undefined => (opts.culture ? STAY_FOR.cultures[opts.culture] : undefined) ?? (opts.module ? STAY_FOR.modules[opts.module] : undefined);
 
 /** Every label in a name, in order, without the brackets. */
 export function bracketLabels(name: string): string[] {
@@ -220,9 +226,15 @@ export function fillSlots(name: string, ctx: FillContext): string {
       const placeBefore = place && placeDone > 0;
       for (let attempt = 0; attempt < tries; attempt++) {
         fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...(plain ? { plain } : {}), ...(place ? { rest: rest.replace(/\[[^\]]*\]/g, " ").replace(/\s+/g, " ").trim(), ...(placeBefore ? { placeBefore } : {}), ...(ctx.settlementPlaces ? { settlementPlaces: true } : {}) } : {}), avoid });
-        if (fill === undefined || (!avoid.has(fill) && !(guarded && repeatsGeneric(fill, rest)))) break;
+        if (fill === undefined || (!avoid.has(fill) && !/\[/.test(fill) && !(guarded && repeatsGeneric(fill, rest)))) break;
       }
       if (fill === undefined) return whole;
+      // Brief 6a Part A §2: a fill that is itself a drawn name with a bracket of its own (a realm "of [dynasty]") has that bracket filled once; one that still has a bracket leaves the label as it was.
+      if (/\[/.test(fill)) {
+        if (ctx.nested) return whole;
+        fill = fillSlots(fill, { ...ctx, nested: true, series: undefined, batchSeen: undefined, onlyLabels: undefined });
+        if (/\[/.test(fill)) return whole;
+      }
       if (place) placeDone++;
       ctx.series?.set(key, fill);
       if (ctx.batchSeen && !ctx.series) ctx.batchSeen.set(key, (ctx.batchSeen.get(key) ?? new Set<string>()).add(fill));
