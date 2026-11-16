@@ -37,7 +37,7 @@ export default {
       "Sheep Pen;AN-MD|Fold;AN-MD|Park Dyke;AN-MD|Dyked Park;EM-ST|Drove Stance;EM-ST|Stell;EM-ST|Livestock Pen;ST-MO|Paddock;ST-MO|Fairy Fold;h|Pen",
     ],
     hill: [
-      "Law;AN-MD|Knowe;AN-MD|Dun;AN-MD|Brae;EM-ST|Hillock;EM-ST|Monument Hill;EM-ST|Viewpoint;ST-MO|Country Park Hill;ST-MO|Fairy Knowe;h|Hill",
+      "Law;AN-MD|Knowe;AN-MD|Hill Fort;AN-MD|Brae;EM-ST|Hillock;EM-ST|Monument Hill;EM-ST|Viewpoint;ST-MO|Country Park Hill;ST-MO|Fairy Knowe;h|Hill",
       "Glen;AN-MD|Dean;AN-MD|Clough;AN-MD|Gorge;EM-ST|Mill Glen;EM-ST|Clearance Glen;EM-ST|Hydro Glen;ST-MO|Heritage Glen;ST-MO|Glen of the Fair Folk;h|Valley",
       "Rig;AN-MD|Shoulder;AN-MD|Edge;AN-MD|Cliff;EM-ST|Scaur;EM-ST|Crag Ridge;EM-ST|Skyline;ST-MO|Escarpment;ST-MO|Giant's Back;h|Ridge",
     ],
@@ -61,7 +61,7 @@ export default {
     chart: [
       "Bank;AN-MD|Sandbank;AN-MD|Fishing Bank;AN-MD|Herring Bank;EM-ST|Whaling Bank;EM-ST|Drift Net Bank;EM-ST|Gas Field Bank;ST-MO|Windfarm Bank;ST-MO|Sunken Isle Bank;h|Shoal",
       "Skerry;AN-MD|Reef;AN-MD|Sunken Rock;AN-MD|Lighthouse Rocks;EM-ST|Wreck Rocks;EM-ST|Pilot Rocks;EM-ST|Wreck Marker;ST-MO|Divers' Reef;ST-MO|Blue Men's Reef;h|Rocks",
-      "Race;AN-MD|Roost;AN-MD|Sound;AN-MD|Pilot Channel;EM-ST|Ferry Channel;EM-ST|Steamer Channel;EM-ST|Dredged Channel;ST-MO|Traffic Channel;ST-MO|Whirlpool Channel;h|Channel",
+      "Race;AN-MD|Tidal Race;AN-MD|Sound;AN-MD|Pilot Channel;EM-ST|Ferry Channel;EM-ST|Steamer Channel;EM-ST|Dredged Channel;ST-MO|Traffic Channel;ST-MO|Whirlpool Channel;h|Channel",
     ],
   },
   route: [

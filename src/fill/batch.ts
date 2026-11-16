@@ -22,6 +22,8 @@ export interface FillWhere {
   series?: boolean;
   /** Shared tables brief §13.2 item 6: a place module from the steam age on, or stars and space: [person] reads the founder forms. */
   personAsFounder?: boolean;
+  /** Northern Europe brief 5c §13.1: fill only these labels (a per-slot run). */
+  onlyLabels?: ReadonlySet<string>;
 }
 
 const sexOf = (n: object): "male" | "female" | undefined => {
@@ -37,7 +39,7 @@ export function fillPeopleBatch<T extends { names: { text: string }[]; seed: num
   const batchSeen = series ? undefined : new Map<string, Set<string>>();
   return {
     ...batch,
-    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, biome: where.biome, mode, rng, series, batchSeen, sex: sexOf(n), personAsFounder: where.personAsFounder }) })),
+    names: batch.names.map((n) => ({ ...n, text: fillSlots(n.text, { culture: where.culture ?? "general", era: where.era ?? "MD", region: where.region, biome: where.biome, mode, rng, series, batchSeen, sex: sexOf(n), personAsFounder: where.personAsFounder, onlyLabels: where.onlyLabels }) })),
   };
 }
 

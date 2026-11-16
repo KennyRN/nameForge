@@ -259,6 +259,11 @@ const placeFill = (draw: () => string | undefined, req: FillRequest): string | u
     last = settled(draw(), req);
     if (last !== undefined && !/\[/.test(last) && !isRealPlace(last)) return last;
   }
+  // Northern Europe brief 5c §13.1: no bracket from a fill reaches another module's output in real or generated mode: a drawn name that still holds one gives way to a person's name.
+  if (last !== undefined && /\[/.test(last) && (req.mode === "real" || req.mode === "generated")) {
+    const bare = fillSlots(req.rng() < 0.5 ? "[surname]" : "[name]", { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });
+    return /\[/.test(bare) ? undefined : bare;
+  }
   return last;
 };
 /** Northern Europe brief 5a §11.6: until batch 5b gives German settlement names, a German place is a person and a generic of its own ("Hugo\'s Mill", "Keller Castle"). */

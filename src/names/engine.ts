@@ -346,6 +346,9 @@ function pluralise(word: string): string {
   return [...parts, plural].join(" ");
 }
 /** A placeholder's rendered text for categories that are never split (local generics, §5.1 renames). */
+/** Northern Europe brief 5c §13.1: the bracket labels (lower case, no brackets) a name slot can render as a placeholder. */
+export const placeholderLabelsOf = (categoryId: string): string[] =>
+  SPLIT_LABELS[categoryId] ?? [(RENDER_LABELS[categoryId] ?? categoryLabels.get(categoryId) ?? categoryId).toLowerCase()];
 const placeholderText = (categoryId: string) => `[${RENDER_LABELS[categoryId] ?? categoryLabels.get(categoryId) ?? categoryId}]`;
 
 function pickWeighted<T>(items: [T, number][], rng: () => number): T {

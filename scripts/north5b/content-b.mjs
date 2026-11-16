@@ -88,7 +88,7 @@ export const CELTIC = {
     "Ford Rest|Guest House|Drovers' Rest|Spring Rest|Track Rest|Hearth Stop|Grove Rest|Horse Rest",
   ],
   buildings: [
-    "Hillfort|Roundhouse|Ring Fort|Broch|Dun|Rath|Palisade|Gate Tower",
+    "Hillfort|Roundhouse|Ring Fort|Broch|Hill Camp|Rath|Palisade|Gate Tower",
     "Sacred Grove|Holy Spring|Shrine|Temple Mound|Stone Circle|Sacred Pool|Spring Shrine|Mother Shrine",
     "Meeting Hall|Feast Hall|Forge|Roundhouse|Assembly Mound|Ford House|Hearth Hall|Hall",
   ],

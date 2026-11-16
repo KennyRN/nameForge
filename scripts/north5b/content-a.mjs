@@ -107,23 +107,23 @@ export const IRISH = {
 export const CORNISH = {
   style: "first", adj: ["Old", "Long", "Little"],
   streets: [
-    "Lane|Row|Cove Road|Chapel Street|Fore Street|Quay|Terrace|Hill|Piskie Lane|Street",
+    "Lane|Row|Cove Road|Chapel Street|Fore Street|Quay|Terrace|Hill|Pisky Lane|Street",
     "Square|Fish Market|Cross|Green|Quay Square|Market Place|Station Square|Memorial Green|Giant's Green|Plain",
     "Cove|Fish Cellars|Mining Row|Count House Row|Engine Row|Harbour Quarter|Terraces|Estate|Knocker Row|Quarter",
   ],
   inns: [
-    "Inn|Alehouse|Smugglers' Inn|Coaching Inn|Hotel|Wheal Inn|Miners' Arms|Pub|Piskie Inn|House",
+    "Inn|Alehouse|Smugglers' Inn|Coaching Inn|Hotel|Wheal Inn|Miners' Arms|Pub|Pisky Inn|House",
     "Tavern|Beerhouse|Fishermen's Tavern|Cellar Bar|Chapel Pub|Social Club|Surfers' Bar|Bar|Knocker Tavern|Local",
-    "Drovers' Rest|Pilgrims' Stop|Coach Stage|Harbour Rest|Fish Cellar Rest|Station Rest|Guest House|Hostel|Piskie Rest|Rest",
+    "Drovers' Rest|Pilgrims' Stop|Coach Stage|Harbour Rest|Fish Cellar Rest|Station Rest|Guest House|Hostel|Pisky Rest|Rest",
   ],
   buildings: [
     "Castle|Fort|Round|Tower|Gun Battery|Gatehouse|Pillbox|Barracks|Giant's Tower|Hold",
-    "Chapel|Church|Holy Well House|Priory|Methodist Chapel|Bible Christian Chapel|Wesleyan Chapel|Parish Church|Piskie Shrine|Shrine",
+    "Chapel|Church|Holy Well House|Priory|Methodist Chapel|Bible Christian Chapel|Wesleyan Chapel|Parish Church|Pisky Shrine|Shrine",
     "Market House|Guildhall|Count House|Engine House|Almshouse|Stannary Hall|Town Hall|Institute|Knocker Hall|Hall",
   ],
   monuments: [
     "Standing Stone|Quoit|Cairn|Holed Stone|Inscribed Stone|Milestone|Boundary Stone|Memorial Stone|Giant's Stone|Stone",
-    "Cornish Cross|Wayside Cross|Churchyard Cross|Lantern Cross|Preaching Cross|Market Cross|Pilgrim Cross|Memorial Cross|Piskie Cross|Cross",
+    "Cornish Cross|Wayside Cross|Churchyard Cross|Lantern Cross|Preaching Cross|Market Cross|Pilgrim Cross|Memorial Cross|Pisky Cross|Cross",
     "Miners' Memorial|Engine House Memorial|Lifeboat Memorial|Memorial|War Memorial|Tablet|Statue|Plaque|Knocker Memorial|Monument",
   ],
   x: { streets: [["Wheal {N0}", 5, 0], ["{N0} of the Fishing Fleet", 4, 0]], inns: [["the Miners' {N0}", 7, 0], ["{owner:poss} Arms", 8, 0]], buildings: [["Chapel of {holy}", 8, 1], ["Wheal {N2}", 5, 2]], monuments: [["Cross of {holy}", 8, 1]] },

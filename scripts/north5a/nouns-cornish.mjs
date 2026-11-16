@@ -7,7 +7,7 @@ export default {
       "Granite Downs;AN-MD|Tin Downs;AN-MD|Moor Hills;AN-MD|Mining Downs;EM-ST|Copper Hills;EM-ST|Stannary Downs;EM-ST|Clay Hills;ST-MO|Heritage Downs;ST-MO|Giants' Hills;h|Downs",
     ],
     wood: [
-      "Wooded Combe;AN-MD|Oak Hanger;AN-MD|Hazel Coppice;AN-MD|Valley Wood;EM-ST|Mine Wood;EM-ST|Estate Wood;EM-ST|Conifer Plantation;ST-MO|Heritage Woodland;ST-MO|Piskie Wood;h|Wood",
+      "Wooded Combe;AN-MD|Oak Hanger;AN-MD|Hazel Coppice;AN-MD|Valley Wood;EM-ST|Mine Wood;EM-ST|Estate Wood;EM-ST|Conifer Plantation;ST-MO|Heritage Woodland;ST-MO|Pisky Wood;h|Wood",
       "Saint's Grove;AN-MD|Holy Grove;AN-MD|Sallow Grove;AN-MD|Chapel Grove;EM-ST|Methodist Grove;EM-ST|Gentry's Grove;EM-ST|Memorial Grove;ST-MO|Garden Grove;ST-MO|Treasure Guardian Grove;h|Grove",
       "Clearing;AN-MD|Forest Glade;AN-MD|Round Clearing;AN-MD|Charcoal Clearing;EM-ST|Tinners' Clearing;EM-ST|Mine Glade;EM-ST|Forestry Clearing;ST-MO|Picnic Glade;ST-MO|Knockers' Glade;h|Glade",
     ],
@@ -17,13 +17,13 @@ export default {
       "Moorstone;AN-MD|Standing Stone;AN-MD|Cross Stone;AN-MD|Boundary Stone;EM-ST|Tinners' Stone;EM-ST|Mine Marker;EM-ST|Memorial Stone;ST-MO|Heritage Stone;ST-MO|Giant's Stone;h|Rock",
     ],
     wet: [
-      "Salt Marsh;AN-MD|Marsh Level;AN-MD|Reed Marsh;AN-MD|Streamwork Marsh;EM-ST|Drained Marsh;EM-ST|Withy Bed;EM-ST|Nature Reserve;ST-MO|Reedbed;ST-MO|Piskie's Marsh;h|Marsh",
+      "Salt Marsh;AN-MD|Marsh Level;AN-MD|Reed Marsh;AN-MD|Streamwork Marsh;EM-ST|Drained Marsh;EM-ST|Withy Bed;EM-ST|Nature Reserve;ST-MO|Reedbed;ST-MO|Pisky's Marsh;h|Marsh",
       "Moor Bog;AN-MD|Peat Bog;AN-MD|Turf Bog;AN-MD|Streamworks Bog;EM-ST|Mine Bog;EM-ST|Clay Bog;EM-ST|Bog Reserve;ST-MO|Wetland Trail;ST-MO|Treasure Guardian's Bog;h|Bog",
-      "Pill;AN-MD|Creek Isle;AN-MD|Island Chapel;AN-MD|Heron Isle;EM-ST|Quay Isle;EM-ST|Duck Isle;EM-ST|Bird Isle;ST-MO|Nature Isle;ST-MO|Lyonnesse Isle;h|Isle",
+      "Tidal Creek;AN-MD|Creek Isle;AN-MD|Island Chapel;AN-MD|Heron Isle;EM-ST|Quay Isle;EM-ST|Duck Isle;EM-ST|Bird Isle;ST-MO|Nature Isle;ST-MO|Lyonnesse Isle;h|Isle",
     ],
     grass: [
-      "Cliff Pasture;AN-MD|Downland;AN-MD|Sheep Down;AN-MD|Cliff Ley;EM-ST|Common Ley;EM-ST|Drove Ley;EM-ST|Nature Pasture;ST-MO|Coastal Grassland;ST-MO|Piskie Pasture;h|Ley",
-      "Green Lane;AN-MD|Town Place;AN-MD|Churchtown Green;AN-MD|Fair Green;EM-ST|Wrestling Green;EM-ST|Mine Green;EM-ST|Playing Field;ST-MO|Village Green;ST-MO|Piskie Green;h|Green",
+      "Cliff Pasture;AN-MD|Downland;AN-MD|Sheep Down;AN-MD|Cliff Ley;EM-ST|Common Ley;EM-ST|Drove Ley;EM-ST|Nature Pasture;ST-MO|Coastal Grassland;ST-MO|Pisky Pasture;h|Ley",
+      "Green Lane;AN-MD|Town Place;AN-MD|Churchtown Green;AN-MD|Fair Green;EM-ST|Wrestling Green;EM-ST|Mine Green;EM-ST|Playing Field;ST-MO|Village Green;ST-MO|Pisky Green;h|Green",
       "Combe;AN-MD|Hollow;AN-MD|Cove Valley;AN-MD|Mill Combe;EM-ST|Mine Combe;EM-ST|Estate Combe;EM-ST|Reservoir Combe;ST-MO|Heritage Combe;ST-MO|Hidden Combe;h|Vale",
     ],
     lands: [
@@ -32,9 +32,9 @@ export default {
       "Parish;AN-MD|Saint's Parish;AN-MD|Churchtown;AN-MD|Tithing;EM-ST|Mining Parish;EM-ST|Chapelry;EM-ST|Community Network;ST-MO|Ward;ST-MO|Haunted Parish;h|Hamlet",
     ],
     farm: [
-      "Cornfield;AN-MD|Strip Field;AN-MD|Cliff Field;AN-MD|Cottage Garden;EM-ST|Mine Smallholding;EM-ST|Daffodil Field;EM-ST|Flower Field;ST-MO|Set-aside Field;ST-MO|Piskie Field;h|Field",
+      "Cornfield;AN-MD|Strip Field;AN-MD|Cliff Field;AN-MD|Cottage Garden;EM-ST|Mine Smallholding;EM-ST|Daffodil Field;EM-ST|Flower Field;ST-MO|Set-aside Field;ST-MO|Pisky Field;h|Field",
       "Barton;AN-MD|Churchtown Farm;AN-MD|Fogou Farm;AN-MD|Tin Farm;EM-ST|Mine Farm;EM-ST|Smallholding;EM-ST|Dairy Farm;ST-MO|Farm Shop;ST-MO|Knockers' Farm;h|Farm",
-      "Croft;AN-MD|Fold;AN-MD|Garden;AN-MD|Tinners' Croft;EM-ST|Mine Croft;EM-ST|Cottage Plot;EM-ST|Allotment;ST-MO|Paddock;ST-MO|Piskie Croft;h|Plot",
+      "Croft;AN-MD|Fold;AN-MD|Garden;AN-MD|Tinners' Croft;EM-ST|Mine Croft;EM-ST|Cottage Plot;EM-ST|Allotment;ST-MO|Paddock;ST-MO|Pisky Croft;h|Plot",
     ],
     hill: [
       "Hill Fort;AN-MD|Round;AN-MD|Beacon Hill;AN-MD|Mine Hill;EM-ST|Engine Hill;EM-ST|Beacon;EM-ST|Viewpoint;ST-MO|Country Park Hill;ST-MO|Giant's Hill;h|Hill",
@@ -42,7 +42,7 @@ export default {
       "Rocky Brow;AN-MD|Cliff Edge;AN-MD|Granite Ridge;AN-MD|Mine Ridge;EM-ST|Spoil Ridge;EM-ST|Engine Ridge;EM-ST|Coastal Ridge;ST-MO|Skyline Ridge;ST-MO|Giant's Back;h|Brow",
     ],
     river: [
-      "Combe Stream;AN-MD|Leat;AN-MD|Brook;AN-MD|Mill Leat;EM-ST|Mine Leat;EM-ST|Adit Stream;EM-ST|Culvert;ST-MO|Clay Drain;ST-MO|Piskie's Brook;h|Stream",
+      "Combe Stream;AN-MD|Leat;AN-MD|Brook;AN-MD|Mill Leat;EM-ST|Mine Leat;EM-ST|Adit Stream;EM-ST|Culvert;ST-MO|Clay Drain;ST-MO|Pisky's Brook;h|Stream",
       "Pool;AN-MD|Saint's Well Pool;AN-MD|Moor Pool;AN-MD|Mill Pool;EM-ST|Mine Pool;EM-ST|Flooded Quarry;EM-ST|Reservoir;ST-MO|Clay Pit Lake;ST-MO|Haunted Pool;h|Lake",
       "Cascade;AN-MD|Waterfall;AN-MD|Saint's Fall;AN-MD|Waterwheel Pit;EM-ST|Mill Fall;EM-ST|Weir;EM-ST|Spillway;ST-MO|Hydro Fall;ST-MO|Giant's Leap;h|Falls",
     ],
@@ -50,7 +50,7 @@ export default {
   water: {
     sea: [
       "Roads;AN-MD|Haven;AN-MD|Narrows;AN-MD|Pilchard Bay;EM-ST|Packet Bay;EM-ST|Anchorage;EM-ST|Marina Bay;ST-MO|Holiday Bay;ST-MO|Drowned Land Bay;h|Bay",
-      "River Mouth;AN-MD|Pill;AN-MD|Creek;AN-MD|Tin Creek;EM-ST|Oyster Creek;EM-ST|Mine Creek;EM-ST|Yacht Creek;ST-MO|Fish Farm Creek;ST-MO|Mermaid's Creek;h|Inlet",
+      "River Mouth;AN-MD|Tidal Creek;AN-MD|Creek;AN-MD|Tin Creek;EM-ST|Oyster Creek;EM-ST|Mine Creek;EM-ST|Yacht Creek;ST-MO|Fish Farm Creek;ST-MO|Mermaid's Creek;h|Inlet",
       "Sound;AN-MD|Race;AN-MD|Narrow Sea;AN-MD|Ferry Sound;EM-ST|Packet Sound;EM-ST|Wreck Sound;EM-ST|Shipping Lane;ST-MO|Fairway;ST-MO|Lyonnesse Sound;h|Strait",
     ],
     coast: [
@@ -65,9 +65,9 @@ export default {
     ],
   },
   route: [
-    "Green Lane;AN-MD|Hollow Way;AN-MD|Church Path;AN-MD|Turnpike;EM-ST|Mine Road;EM-ST|Coach Road;EM-ST|Link Road;ST-MO|Bypass;ST-MO|Piskie Path;h|Lane",
+    "Green Lane;AN-MD|Hollow Way;AN-MD|Church Path;AN-MD|Turnpike;EM-ST|Mine Road;EM-ST|Coach Road;EM-ST|Link Road;ST-MO|Bypass;ST-MO|Pisky Path;h|Lane",
     "Tinners' Way;AN-MD|Pack Road;AN-MD|Fish Road;AN-MD|Mineral Tramway;EM-ST|Clay Tramway;EM-ST|Mine Railway;EM-ST|Freight Line;ST-MO|Heritage Railway;ST-MO|Treasure Guardian's Road;h|Tin Road",
-    "Saints' Way;AN-MD|Pilgrim Path;AN-MD|Church Path;AN-MD|Coffin Path;EM-ST|Chapel Road;EM-ST|Methodist Path;EM-ST|Pilgrim Trail;ST-MO|Heritage Path;ST-MO|Piskie-led Path;h|Holy Way",
+    "Saints' Way;AN-MD|Pilgrim Path;AN-MD|Church Path;AN-MD|Coffin Path;EM-ST|Chapel Road;EM-ST|Methodist Path;EM-ST|Pilgrim Trail;ST-MO|Heritage Path;ST-MO|Pisky-led Path;h|Holy Way",
   ],
   sacred: [
     "Holy Well;AN-MD|Saint's Well;AN-MD|Healing Well;AN-MD|Baptism Well;EM-ST|Wishing Well;EM-ST|Well House;EM-ST|Well Garden;ST-MO|Heritage Well;ST-MO|Well of the Piskies;h|Sacred Spring",

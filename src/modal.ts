@@ -197,6 +197,7 @@ import {
 } from "./names/placeRun";
 import {
   chooseNames,
+  fillPlan,
   chooseSlotSource,
   freshSlotSources,
   namesClosing,
@@ -287,7 +288,7 @@ import {
   SWITCHER_ORDER,
 } from "./sections";
 import { SETTLEMENT_SIZES, sizeLabel, type SizeKey } from "./settlement/data";
-import { generateSettlementNames, type SettlementNamesOptions, type SettlementSetting } from "./settlement/names";
+import { fillSettlementNames, generateSettlementNames, type SettlementNamesOptions, type SettlementSetting } from "./settlement/names";
 import { SETTLEMENT_SETTINGS, settingLabel, settlementSentenceText, sizeChoices } from "./settlement/sentence";
 import { ALIEN_CHOICES, biomePhrase, explorersPhrase, incomersPhrase, regionPhrase, SPACE_HEADING_TIP, terrainPhrase, UNKNOWN_COUNTRY, wizardSentenceText } from "./colonialSentence";
 
@@ -803,7 +804,8 @@ export class NameForgeModal extends Modal {
     context: { "2": CONTEXT_PHRASES["2"][0][0], "2a": CONTEXT_PHRASES["2a"][0][0] } as Record<ColonialPart, string | undefined>,
     aliens: { "2": false, "2a": false } as Record<ColonialPart, boolean>,
     /** Wizard retirement brief §3.1: slot sources for its British, new lands and settled lands settings. */
-    slots: { native: freshSlotSources(), "new-lands": freshSlotSources(), "settled-lands": freshSlotSources() } as Record<SettlementSetting, SlotSources>,
+    // Northern Europe brief 5c §13.1: a new settlement names state draws real-world names, as every module's people link does; a stored preset runs as saved.
+    slots: { native: freshSlotSources("real"), "new-lands": freshSlotSources("real"), "settled-lands": freshSlotSources("real") } as Record<SettlementSetting, SlotSources>,
   };
   /** The loaded recipe preset's shape, when it is a settlement names preset (it then opens in settlement names). */
   private settlementPreset: Partial<RecipeSettings["shape"]> | undefined = undefined;
@@ -1819,7 +1821,7 @@ export class NameForgeModal extends Modal {
    * Wizard retirement brief §3.2: the closing "with ‹placeholders› for names" link on the main
    * sentence and, with names chosen per slot, the second sentence under it, one link per slot.
    */
-  private renderSlotChoices(row: HTMLElement, sentence: HTMLElement, part: SlotPart, get: () => SlotSources, set: (next: SlotSources) => void) {
+  private renderSlotChoices(row: HTMLElement, sentence: HTMLElement, part: SlotPart, get: () => SlotSources, set: (next: SlotSources) => void, people = false) {
     const draw = (el: HTMLElement, segments: SlotSegment[], choose: (field: string, id: string | undefined) => void) => {
       for (const segment of segments) {
         if (typeof segment === "string") {
@@ -1829,16 +1831,16 @@ export class NameForgeModal extends Modal {
         const choices =
           segment.field === "names"
             ? () => segment.choices
-            : async () => slotChoiceMenu(part, segment.field, await this.loadSlotFolderOptions());
+            : async () => slotChoiceMenu(part, segment.field, { ...(await this.loadSlotFolderOptions()), people });
         this.sentenceLink(el, segment.text, segment.title, choices, segment.current, (id) => choose(segment.field, id));
       }
     };
-    draw(sentence, namesClosing(get()), (_field, id) => {
+    draw(sentence, namesClosing(get(), people), (_field, id) => {
       set(chooseNames(get(), id));
       if (get().names === "perSlot") void this.loadSlotFolderOptions().then(() => this.renderContextRow());
     });
     if (get().names === "perSlot" && !this.slotFolderLoaded) void this.loadSlotFolderOptions().then(() => this.renderContextRow());
-    const second = slotSentence(part, get(), this.slotFolderOptions);
+    const second = slotSentence(part, get(), { ...this.slotFolderOptions, people });
     if (!second) return;
     const line = row.createDiv({ cls: "nameforge-modal__tribal-sentence" });
     draw(line, second, (field, id) => set(chooseSlotSource(get(), part, field, id)));
@@ -2034,7 +2036,7 @@ export class NameForgeModal extends Modal {
         land: SETTLEMENT_LAND_KEYS,
       });
       // The world cultures don't run through the names engine's slots: British only.
-      if (culture.id === PLACE_BRITAIN) this.renderSlotChoices(row, sentence, "organic", () => s.slots.native, (next) => (s.slots.native = next));
+      if (culture.id === PLACE_BRITAIN) this.renderSlotChoices(row, sentence, "organic", () => s.slots.native, (next) => (s.slots.native = next), true);
       return;
     }
     const part: ColonialPart = s.setting === "new-lands" ? "2" : "2a";
@@ -2047,7 +2049,7 @@ export class NameForgeModal extends Modal {
       setAliens: (on) => (s.aliens[part] = on),
       landKey: `settlement:colonial:${part}`,
     });
-    this.renderSlotChoices(row, sentence, slotPartOf(part), () => s.slots[s.setting], (next) => (s.slots[s.setting] = next));
+    this.renderSlotChoices(row, sentence, slotPartOf(part), () => s.slots[s.setting], (next) => (s.slots[s.setting] = next), true);
   }
 
   /** Whether the settlement names setup can be saved as a preset: British, in new lands or in settled lands (urban brief §8). */
@@ -2102,8 +2104,10 @@ export class NameForgeModal extends Modal {
         landHistorySuffix(land, this.customBiomes, !!custom) +
         (found?.space && s.aliens[part] ? " · alien life" : "");
     }
-    const result = this.tryLand(() => generateSettlementNames(options));
-    if (!result) return;
+    const generated = this.tryLand(() => generateSettlementNames(options));
+    if (!generated) return;
+    // Brief 5c §13.1: the people filler fills the name slots set to real-world or generated names.
+    const result = sourcePart ? fillSettlementNames(generated, options, fillPlan(sourcePart, sources)) : generated;
     this.currentSeed = result.seed;
     this.renderRecipeResults(result.names, "module");
     await this.recordGenerationHistory(result.names.length, `${SETTLEMENT_NAMES_HISTORY_NAME} · ${sizeLabel(result.size)} · ${tail}${sourcePart ? ownNamesSuffix(sourcePart, sources) : ""}`);

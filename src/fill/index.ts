@@ -37,6 +37,8 @@ export interface FillContext {
   series?: Map<string, string>;
   /** Shared tables brief §14.1: the fills already used in this batch, by label. Outside series mode a fill isn't reused while the list has others. Pass the same map for every name in a batch. */
   batchSeen?: Map<string, Set<string>>;
+  /** Northern Europe brief 5c §13.1: when set, only brackets with these labels (lower case) are filled. */
+  onlyLabels?: ReadonlySet<string>;
   /** The sources' resolvers; the registered ones when absent. */
   resolvers?: Resolvers;
 }
@@ -191,6 +193,8 @@ export function fillSlots(name: string, ctx: FillContext): string {
     let info = labelInfo(label);
     if (!info) return whole;
     const key = label.trim().toLowerCase();
+    // Northern Europe brief 5c §13.1: a per-slot run fills only the labels of the slots set to real-world or generated names.
+    if (ctx.onlyLabels && !ctx.onlyLabels.has(key)) return whole;
     // Shared tables brief §14.2: a personal name that an "-ing", "-ington" or "-ingham" ending follows was coined by an early people.
     if (info.source === "person" && key === "personal name" && OLD_ENDING.test(name.slice(offset + whole.length))) info = labelInfo("old personal name") ?? info;
     // Northern Europe brief 5a §11.6: a holy or person fill straight after a bare generic is plain; a folk fill never is (a person takes its place).
@@ -233,7 +237,7 @@ export function fillSlots(name: string, ctx: FillContext): string {
   });
   // A name the filler changed never starts with a lower-case "the"; one it left alone is as the engine made it.
   const out = any ? filled.replace(/^the\b/, "The") : filled;
-  return completeTitles(out, ctx, era, period, resolvers);
+  return ctx.onlyLabels ? out : completeTitles(out, ctx, era, period, resolvers);
 }
 
 /** A title that needs a name and has none ("Sir's Army Road") takes a given name of its sex, or a surname (§13.2 item 5). */

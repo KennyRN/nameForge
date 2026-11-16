@@ -5,7 +5,8 @@
 
 import { generateColonialShapesDetailed } from "../colonialShapes";
 import { generatePlaceShapesDetailed } from "../placeShapes";
-import { hasBuiltInList } from "./engine";
+import { labelInfo, staysBracketed } from "../fill";
+import { hasBuiltInList, placeholderLabelsOf } from "./engine";
 import type { SlotSetting } from "./recipe";
 import { allowsLists, allowsPacks, allowsPlaceholderChoice, allowsTribal, slotCategories, slotChoices, type SlotPart } from "./slotOptions";
 
@@ -16,13 +17,14 @@ export const slotPartOf = (part: "2" | "2a"): SlotPart => (part === "2" ? "new-l
 
 /** §3.5: the slot sources held by each module's sentence state. */
 export interface SlotSources {
-  names: "placeholders" | "perSlot";
+  /** Northern Europe brief 5c §13.1: "real" and "generated" fill every name slot with the people filler in that mode. */
+  names: "placeholders" | "perSlot" | "real" | "generated";
   slots: Record<string, SlotSetting>;
 }
 
 export const DEFAULT_SLOT_SOURCES: SlotSources = { names: "placeholders", slots: {} };
 
-export const freshSlotSources = (): SlotSources => ({ names: "placeholders", slots: {} });
+export const freshSlotSources = (names: SlotSources["names"] = "placeholders"): SlotSources => ({ names, slots: {} });
 
 export interface SlotChoice {
   id: string | undefined;
@@ -39,6 +41,8 @@ export type SlotSegment = string | { field: string; text: string; title: string;
 export interface SlotFolderOptions {
   packs: string[];
   lists: string[];
+  /** Northern Europe brief 5c §13.1: offer real-world and generated names (settlement names only). */
+  people?: boolean;
 }
 
 export const NO_SLOT_OPTIONS: SlotFolderOptions = { packs: [], lists: [] };
@@ -117,6 +121,8 @@ export function slotInventory(part: SlotPart): SlotInfo[] {
 // ── Choices (§3.3) ──────────────────────────────────────────────────────────
 
 const PLACEHOLDER_ID = "placeholder";
+const REAL_ID = "real";
+const GENERATED_ID = "generated";
 const BUILT_IN_ID = "built-in";
 const TRIBAL_ID = "tribal";
 const listId = (name: string) => `list:${name}`;
@@ -127,6 +133,7 @@ export function slotChoiceId(setting: SlotSetting | undefined): string {
   if (!setting || setting.kind === "placeholder") return PLACEHOLDER_ID;
   if (setting.kind === "built-in") return BUILT_IN_ID;
   if (setting.kind === "tribal") return TRIBAL_ID;
+  if (setting.kind === "people") return setting.mode === "real" ? REAL_ID : GENERATED_ID;
   if (setting.kind === "sources") {
     const ref = setting.sources[0];
     if (ref?.list) return listId(ref.list);
@@ -138,6 +145,7 @@ export function slotChoiceId(setting: SlotSetting | undefined): string {
 /** Whether a choice id is one the slot's menu can offer (a pack or list is checked by its name only). */
 export function slotChoiceAllowed(part: SlotPart, categoryId: string, choice: string): boolean {
   if (!slotInventory(part).some((s) => s.id === categoryId) || choice === PLACEHOLDER_ID) return false;
+  if (choice === REAL_ID || choice === GENERATED_ID) return allowsPeopleChoice(part, categoryId);
   const name = choice.includes(":") ? choice.slice(choice.indexOf(":") + 1) : "";
   return slotChoiceMenu(part, categoryId, { packs: name ? [name] : [], lists: name ? [name] : [] }).some((c) => c.id === choice);
 }
@@ -146,6 +154,7 @@ export function slotChoiceAllowed(part: SlotPart, categoryId: string, choice: st
 export function slotSettingOf(part: SlotPart, id: string | undefined): SlotSetting | undefined {
   if (!id || id === PLACEHOLDER_ID) return undefined;
   if (id === BUILT_IN_ID) return { kind: "built-in" };
+  if (id === REAL_ID || id === GENERATED_ID) return { kind: "people", mode: id };
   // The wizard's own default: tribal names follow the culture on the organic folk-group slot.
   if (id === TRIBAL_ID) return { kind: "tribal", tradition: part === "organic" ? "auto" : "general" };
   if (id.startsWith("list:")) return { kind: "sources", sources: [{ list: id.slice(5), weight: 1 }] };
@@ -157,6 +166,8 @@ export function slotSettingOf(part: SlotPart, id: string | undefined): SlotSetti
 export function slotSourceText(setting: SlotSetting | undefined): string {
   const id = slotChoiceId(setting);
   if (id === PLACEHOLDER_ID) return "placeholders";
+  if (id === REAL_ID) return "real-world names";
+  if (id === GENERATED_ID) return "generated names";
   if (id === BUILT_IN_ID) return "the built-in list";
   if (id === TRIBAL_ID) return "tribes and kin groups";
   return id.startsWith("list:") ? `${id.slice(5)} (list)` : `${id.slice(5)} (pack)`;
@@ -169,6 +180,8 @@ export function slotChoiceMenu(part: SlotPart, categoryId: string, options: Slot
     if (choices.length > 0) out.push({ ...choices[0], heading }, ...choices.slice(1));
   };
   if (allowsPlaceholderChoice(part, categoryId)) run("Placeholder", [{ id: PLACEHOLDER_ID, label: "placeholders" }]);
+  // Northern Europe brief 5c §13.1: the people filler's real-world and generated names, for the slots whose brackets it knows.
+  if (options.people && allowsPeopleChoice(part, categoryId)) run("Names", [{ id: REAL_ID, label: "real-world names" }, { id: GENERATED_ID, label: "generated names" }]);
   if (allowsLists(part, categoryId)) {
     run("Lists", [
       ...(hasBuiltInList(categoryId) ? [{ id: BUILT_IN_ID, label: "the built-in list" }] : []),
@@ -186,22 +199,31 @@ export function slotChoiceMenu(part: SlotPart, categoryId: string, options: Slot
 
 // ── The sentences (§3.2) ────────────────────────────────────────────────────
 
+/** Whether the people filler fills a slot's brackets: at least one of its labels has a source. */
+export function allowsPeopleChoice(part: SlotPart, categoryId: string): boolean {
+  return slotCategories(part).some((c) => c.id === categoryId) && placeholderLabelsOf(categoryId).some((l) => {
+    const info = labelInfo(l);
+    return !!info && !staysBracketed(l);
+  });
+}
+
 const NAMES_TITLE = "Names: placeholders show each name slot as a bracket; names chosen per slot lets you pick where each one comes from";
 
 /** The closing link: "…, with ‹placeholders› for names" or "…, with ‹names chosen per slot›". */
-export function namesClosing(state: SlotSources): SlotSegment[] {
+export function namesClosing(state: SlotSources, people = false): SlotSegment[] {
   const perSlot = state.names === "perSlot";
   const link: SlotSegment = {
     field: "names",
-    text: perSlot ? "names chosen per slot" : "placeholders",
+    text: perSlot ? "names chosen per slot" : state.names === "real" ? "real-world names" : state.names === "generated" ? "generated names" : "placeholders",
     title: NAMES_TITLE,
     choices: [
+      ...(people ? [{ id: "real", label: "real-world names" }, { id: "generated", label: "generated names" }] : []),
       { id: "placeholders", label: "placeholders" },
       { id: "perSlot", label: "names chosen per slot" },
     ],
     current: state.names,
   };
-  return perSlot ? [", with ", link] : [", with ", link, " for names"];
+  return perSlot || state.names !== "placeholders" ? [", with ", link] : [", with ", link, " for names"];
 }
 
 /**
@@ -236,7 +258,7 @@ export function slotSegmentsText(segments: SlotSegment[]): string {
 
 /** Chooses the closing link's value. */
 export function chooseNames(state: SlotSources, id: string | undefined): SlotSources {
-  return { ...state, names: id === "perSlot" ? "perSlot" : "placeholders" };
+  return { ...state, names: id === "perSlot" || id === "real" || id === "generated" ? id : "placeholders" };
 }
 
 /** Chooses a slot's source; placeholders remove the entry, so nothing is mapped (§3.5). */
@@ -254,6 +276,7 @@ export function chooseSlotSource(state: SlotSources, part: SlotPart, categoryId:
  * same output as placeholders).
  */
 export function activeSlots(part: SlotPart, state: SlotSources): Record<string, SlotSetting> {
+  if (state.names === "real" || state.names === "generated") return peopleSlotsOf(part, state);
   if (state.names !== "perSlot") return {};
   const out: Record<string, SlotSetting> = {};
   for (const slot of slotInventory(part)) {
@@ -265,7 +288,30 @@ export function activeSlots(part: SlotPart, state: SlotSources): Record<string, 
 
 /** §3.5: whether any slot draws from something other than a placeholder. */
 export function usesOwnNames(part: SlotPart, state: SlotSources): boolean {
-  return Object.keys(activeSlots(part, state)).length > 0;
+  return Object.values(activeSlots(part, state)).some((s) => s.kind !== "people");
+}
+
+/**
+ * Northern Europe brief 5c §13.1: how the people filler runs on a settlement names batch: one mode for
+ * every label, or per-slot modes by the labels of the slots set to real-world or generated names.
+ */
+export function fillPlan(part: SlotPart, state: SlotSources): { mode: "real" | "generated"; labels?: ReadonlySet<string> }[] {
+  if (state.names === "real" || state.names === "generated") return [{ mode: state.names }];
+  if (state.names !== "perSlot") return [];
+  const labels = { real: new Set<string>(), generated: new Set<string>() };
+  for (const slot of slotInventory(part)) {
+    const setting = state.slots[slot.id];
+    if (setting?.kind === "people") for (const l of placeholderLabelsOf(slot.id)) labels[setting.mode].add(l);
+  }
+  return (["real", "generated"] as const).filter((m) => labels[m].size > 0).map((m) => ({ mode: m, labels: labels[m] }));
+}
+
+/** The recipe slots a whole-sentence real or generated run saves: every slot the part offers, set to that mode. */
+export function peopleSlotsOf(part: SlotPart, state: SlotSources): Record<string, SlotSetting> {
+  if (state.names !== "real" && state.names !== "generated") return {};
+  const out: Record<string, SlotSetting> = {};
+  for (const slot of slotInventory(part)) if (allowsPeopleChoice(part, slot.id)) out[slot.id] = { kind: "people", mode: state.names };
+  return out;
 }
 
 /** §3.5: " · own names" for the history label when a slot isn't a placeholder, else nothing. */

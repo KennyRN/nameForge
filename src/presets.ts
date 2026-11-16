@@ -21,7 +21,7 @@ import { PLACE_SHAPE_REGIONS } from "./placeShapes";
 import { COLONIAL_TRADITIONS, colonialContexts, type ColonialPart, isTraditionAvailable } from "./colonialShapes";
 import { CONTEXT_PHRASES } from "./colonialWording";
 import { findEra, WORLD_CULTURES } from "./world/engine";
-import { slotChoiceMenu, slotInventory, type SlotPart } from "./names/slotSentence";
+import { slotChoiceMenu, slotInventory, type SlotPart, type SlotSources } from "./names/slotSentence";
 import { INN_KINDS, INN_SETTINGS, type InnForm, type InnKind, type InnSetting } from "./inns/engine";
 import { BUILDING_KINDS, type BuildingKind } from "./buildings/engine";
 import { MONUMENT_KINDS, type MonumentKind } from "./monuments/engine";
@@ -1968,7 +1968,7 @@ interface PlacePresetBase {
   biome: string;
   terrain: string;
   /** The closing choice: "placeholders" or "names chosen per slot". */
-  placeNames: "placeholders" | "perSlot";
+  placeNames: SlotSources["names"];
   /** Slot id to its choice: "pack:Name", "list:Name", "built-in" or "tribal". Placeholders aren't listed. */
   placeSlots: Record<string, string>;
 }
@@ -2011,8 +2011,8 @@ function readPlaceBase(values: Record<string, string>, body: string, fileName: s
     if (TERRAIN_CHOICES.some((t) => t.id === values.terrain) || /^[a-z0-9-]+$/.test(values.terrain)) terrain = values.terrain;
     else problems.push(`Unknown terrain “${values.terrain}”.`);
   }
-  let placeNames: "placeholders" | "perSlot" = "placeholders";
-  if (values.placeNames === "perSlot") placeNames = "perSlot";
+  let placeNames: SlotSources["names"] = "placeholders";
+  if (values.placeNames === "perSlot" || values.placeNames === "real" || values.placeNames === "generated") placeNames = values.placeNames;
   else if (values.placeNames && values.placeNames !== "placeholders") problems.push(`Unknown placeNames “${values.placeNames}”.`);
   const placeSlots: Record<string, string> = {};
   for (const [key, choice] of Object.entries(values)) {

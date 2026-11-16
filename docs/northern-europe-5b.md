@@ -55,7 +55,7 @@ Mouth of the river, Church of the saint, Field of the tree, Fort Hill, Ford of t
 - **hill:** Hill, Knowe, Law, Rig, Crag, Brae
 - **kirk:** Church, Chapel, Kirk, Cell
 - **farm:** Farm, Steading, Croft, Shieling, Toun
-- **fort:** Fort, Dun, Stronghold, Tower
+- **fort:** Fort, Hill Fort, Stronghold, Tower
 - **fuse:** Ness, Wick, Holm, Dale
 - **harbour:** Harbour, Haven, Landing, Quay
 - **SBL:** `{rA} Border` (6, hvt), `Tower of {name}` (5, hv), `{rA} Ford` (5, hvt); rA: Raiders', Reivers', Drovers', Watch, Peel, Border
@@ -225,23 +225,23 @@ Keys: irish. Names with the generic first. Adjectives of the plain frames: Old, 
 Keys: cornish. Names with the generic first. Adjectives of the plain frames: Old, Long, Little.
 
 - **streets and districts:**
-  - streets (`nbStreetStreet`): Lane, Row, Cove Road, Chapel Street, Fore Street, Quay, Terrace, Hill, Piskie Lane, Street
+  - streets (`nbStreetStreet`): Lane, Row, Cove Road, Chapel Street, Fore Street, Quay, Terrace, Hill, Pisky Lane, Street
   - squares (`nbStreetSquare`): Square, Fish Market, Cross, Green, Quay Square, Market Place, Station Square, Memorial Green, Giant's Green, Plain
   - districts (`nbStreetDistrict`): Cove, Fish Cellars, Mining Row, Count House Row, Engine Row, Harbour Quarter, Terraces, Estate, Knocker Row, Quarter
   - extra frames: `Wheal {N0}` (5), `{N0} of the Fishing Fleet` (4)
 - **inns and taverns:**
-  - inn (`nbInnInn`): Inn, Alehouse, Smugglers' Inn, Coaching Inn, Hotel, Wheal Inn, Miners' Arms, Pub, Piskie Inn, House
+  - inn (`nbInnInn`): Inn, Alehouse, Smugglers' Inn, Coaching Inn, Hotel, Wheal Inn, Miners' Arms, Pub, Pisky Inn, House
   - tavern (`nbInnTavern`): Tavern, Beerhouse, Fishermen's Tavern, Cellar Bar, Chapel Pub, Social Club, Surfers' Bar, Bar, Knocker Tavern, Local
-  - wayhouse (`nbInnWayhouse`): Drovers' Rest, Pilgrims' Stop, Coach Stage, Harbour Rest, Fish Cellar Rest, Station Rest, Guest House, Hostel, Piskie Rest, Rest
+  - wayhouse (`nbInnWayhouse`): Drovers' Rest, Pilgrims' Stop, Coach Stage, Harbour Rest, Fish Cellar Rest, Station Rest, Guest House, Hostel, Pisky Rest, Rest
   - extra frames: `the Miners' {N0}` (7), `{owner:poss} Arms` (8)
 - **buildings and landmarks:**
   - defence (`nbBuildDefence`): Castle, Fort, Round, Tower, Gun Battery, Gatehouse, Pillbox, Barracks, Giant's Tower, Hold
-  - faith (`nbBuildFaith`): Chapel, Church, Holy Well House, Priory, Methodist Chapel, Bible Christian Chapel, Wesleyan Chapel, Parish Church, Piskie Shrine, Shrine
+  - faith (`nbBuildFaith`): Chapel, Church, Holy Well House, Priory, Methodist Chapel, Bible Christian Chapel, Wesleyan Chapel, Parish Church, Pisky Shrine, Shrine
   - civic (`nbBuildCivic`): Market House, Guildhall, Count House, Engine House, Almshouse, Stannary Hall, Town Hall, Institute, Knocker Hall, Hall
   - extra frames: `Chapel of {holy}` (8), `Wheal {N2}` (5)
 - **monuments and statues:**
   - stone (`nbMonStone`): Standing Stone, Quoit, Cairn, Holed Stone, Inscribed Stone, Milestone, Boundary Stone, Memorial Stone, Giant's Stone, Stone
-  - cross (`nbMonCross`): Cornish Cross, Wayside Cross, Churchyard Cross, Lantern Cross, Preaching Cross, Market Cross, Pilgrim Cross, Memorial Cross, Piskie Cross, Cross
+  - cross (`nbMonCross`): Cornish Cross, Wayside Cross, Churchyard Cross, Lantern Cross, Preaching Cross, Market Cross, Pilgrim Cross, Memorial Cross, Pisky Cross, Cross
   - memorial (`nbMonMemorial`): Miners' Memorial, Engine House Memorial, Lifeboat Memorial, Memorial, War Memorial, Tablet, Statue, Plaque, Knocker Memorial, Monument
   - extra frames: `Cross of {holy}` (8)
 
@@ -333,7 +333,7 @@ Keys: celtic. Names with the generic first. Adjectives of the plain frames: Old,
   - tavern (`nbInnTavern`): Ale House, Mead Hall, Feast Hall, Brewhouse, Hearth Tavern, Drinking Hall, Spring Tavern, Boar Tavern
   - wayhouse (`nbInnWayhouse`): Ford Rest, Guest House, Drovers' Rest, Spring Rest, Track Rest, Hearth Stop, Grove Rest, Horse Rest
 - **buildings and landmarks:**
-  - defence (`nbBuildDefence`): Hillfort, Roundhouse, Ring Fort, Broch, Dun, Rath, Palisade, Gate Tower
+  - defence (`nbBuildDefence`): Hillfort, Roundhouse, Ring Fort, Broch, Hill Camp, Rath, Palisade, Gate Tower
   - faith (`nbBuildFaith`): Sacred Grove, Holy Spring, Shrine, Temple Mound, Stone Circle, Sacred Pool, Spring Shrine, Mother Shrine
   - civic (`nbBuildCivic`): Meeting Hall, Feast Hall, Forge, Roundhouse, Assembly Mound, Ford House, Hearth Hall, Hall
 - **monuments and statues:**
@@ -369,23 +369,9 @@ Six per region and module; drawn only for the cultures that read the region. Eac
 
 ## Loanwords (rule 4)
 
-Words in this batch that are dictionary loanwords or regional entries: Tolbooth, Howff, Wynd, Vennel, Gait, Brae, Close, Bothy, Kirk, Strath, Glen, Voe, Haaf, Haa, Broch, Dun, Rath, Quoit, Cromlech, Dolmen, Ogham, Boreen, Shebeen, Torg, Tron, Mercat, Peel, Dyke, Polder, Esker, Fjord, Skerry, Ness, Holm, Wick, Thorp, Hythe, Burg, Gasthof, Calvary, Hunebed, Cairn, Combe, Tor, Wheal, Knocker, Tomte, Piskie, Draugr (replaced by Walking Dead in 5a).
+Words in this batch that are dictionary loanwords or regional entries: Tolbooth, Howff, Wynd, Vennel, Gait, Brae, Close, Bothy, Kirk, Strath, Glen, Voe, Haaf, Broch, Rath, Quoit, Cromlech, Dolmen, Ogham, Boreen, Shebeen, Tron, Mercat, Peel, Dyke, Polder, Esker, Fjord, Skerry, Ness, Holm, Wick, Thorp, Hythe, Burg, Calvary, Cairn, Combe, Tor, Wheal, Knocker, Pisky.
 
-## Dictionary check, online (batch 5b)
+## Dictionary check
 
-Looked up on collinsdictionary.com (only the word was sent). Only these twelve words were checked online; the other loanwords in the 5a table and in this batch have not been looked up, and the check made earlier from memory stands for them until they are.
+Every loanword in this batch and in the 5a table was looked up on collinsdictionary.com; the result of each, and every replacement, is in `docs/loanwords.md`.
 
-| Word | In Collins | Kept or replaced |
-|---|---|---|
-| Leaze | no (only an archaic spelling of lease) | replaced by Lea |
-| Cleugh | no (clough is there) | replaced by Clough |
-| Spriggan | no | replaced by Treasure Guardian |
-| Carse | yes | kept |
-| Tump | yes (British dialect) | kept |
-| Pooka | yes | kept |
-| Gorsedd | yes | kept |
-| Hirsel | yes | kept |
-| Eyot | yes | kept |
-| Fogou | yes | kept |
-| Sidhe | yes | kept |
-| Runrig | yes | kept |

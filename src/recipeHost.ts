@@ -172,6 +172,10 @@ export class RecipeHost {
         out[categoryId] = { kind: "tribal", ...tribalPresetSlot(found.preset, this.catalogue) };
         continue;
       }
+      if (slot.kind === "people") {
+        out[categoryId] = { kind: "placeholder" };
+        continue;
+      }
       if (slot.kind !== "sources") {
         out[categoryId] = { kind: slot.kind };
         continue;

@@ -33,8 +33,8 @@ export const GROUPS = {
 export const PACKS = {
   SEA: { for: E, A: ["Orchard", "Hopfield", "Warren", "Sheepfold"], H: ["Combe", "Hanger", "Dene", "Down"], L: ["Weald", "Downland", "Levels", "Chalkland"], M: ["Beacon", "Downs", "Scarp", "Ridgeway"], R: ["Bourne", "Winterbourne", "Brook", "Weir"], S: ["Haven", "Reach", "Estuary", "Harbour"] },
   WCY: { for: E, A: ["Orchard", "Dairy", "Smallholding", "Warren"], H: ["Combe", "Tor", "Hollow", "Hanger"], K: ["Race", "Roads", "Ledge", "Bank"], L: ["Moorland", "Vale", "Downland", "Peninsula"], R: ["Leat", "Rill", "Brook", "Weir"], S: ["Estuary", "Haven", "Creek", "Roads"] },
-  EAN: { for: E, A: ["Warren", "Grange", "Sheepwalk", "Orchard"], H: ["Knoll", "Rise", "Barrow", "Mound"], L: ["Fenland", "Breckland", "Marshland", "Broads"], S: ["Wash", "Broad", "Haven", "Estuary"] },
-  WMM: { for: E, A: ["Hopyard", "Pasture", "Orchard", "Dairy"], H: ["Edge", "Dingle", "Hollow", "Bank"], L: ["Marches", "Vale", "Heartland", "Border"], M: ["Beacon", "Crag", "Edge", "Knoll"] },
+  EAN: { for: E, A: ["Warren", "Grange", "Sheepwalk", "Orchard"], H: ["Knoll", "Rise", "Barrow", "Mound"], L: ["Fenland", "Heathland", "Marshland", "Broads"], S: ["Wash", "Broad", "Haven", "Estuary"] },
+  WMM: { for: E, A: ["Hop Garden", "Pasture", "Orchard", "Dairy"], H: ["Edge", "Dingle", "Hollow", "Bank"], L: ["Marches", "Vale", "Heartland", "Border"], M: ["Beacon", "Crag", "Edge", "Knoll"] },
   EMD: { for: E, A: ["Grange", "Dairy", "Pasture", "Warren"], H: ["Wold", "Edge", "Dale", "Bank"], L: ["Wolds", "Heartland", "Vale", "Plain"] },
   NTH: { for: E, A: ["Sheepwalk", "Dairy", "Grange", "Pasture"], K: ["Race", "Bank", "Roads", "Skerry"], L: ["Riding", "Moorland", "Dales", "Fellside"] },
   WAL: { for: ["welsh"], A: ["Sheepwalk", "Smallholding", "Dairy", "Pasture"], F: ["Oakwood", "Hazelwood", "Ashwood", "Birchwood"], G: ["Pasture", "Upland", "Meadow", "Hillside"], H: ["Combe", "Dingle", "Hollow", "Cleft"], K: ["Race", "Roads", "Bar", "Bank"], L: ["Upland", "Valley", "Highland", "Moorland"], M: ["Crag", "Cairn", "Tor", "Peak"], R: ["Torrent", "Cascade", "Brook", "Rill"], S: ["Estuary", "Sound", "Haven", "Creek"] },

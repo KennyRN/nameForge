@@ -2,6 +2,7 @@
 // with its `settlement` option. No Obsidian imports; the modal and the settlement kit both call it.
 
 import { type Biome, type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
+import { fillPeopleBatch } from "../fill/batch";
 import { mulberry32 } from "../markov";
 import { type GeneratedName, generatePlaceNames, type NameGenerateResult, type ResolvedSlot } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
@@ -213,4 +214,19 @@ export function generateSettlementNames(options: SettlementNamesOptions): Settle
     }
   }
   throw failure;
+}
+
+/**
+ * Northern Europe brief 5c §13.1: a batch with the people filler run over it, one pass per mode (a per-slot
+ * run fills only the labels of the slots set to that mode). The culture and era are those the setting reads
+ * its people from: Britain's Norman & British, or the tradition's mapped culture and era in new and settled lands.
+ */
+export function fillSettlementNames<T extends NameGenerateResult>(result: T, options: SettlementNamesOptions, plan: { mode: "real" | "generated"; labels?: ReadonlySet<string> }[]): T {
+  if (plan.length === 0) return result;
+  const link = WILDS_DATA.settlementLink;
+  const mapped = options.setting === "native" ? undefined : link.colonialToCulture[options.tradition ?? "general"] ?? link.colonialToCulture.general;
+  const where = { culture: mapped?.culture ?? "norman-british", era: mapped?.era ?? "MD", region: options.setting === "native" ? options.region : undefined };
+  let out = result;
+  for (const step of plan) out = fillPeopleBatch(out, step.mode, { ...where, onlyLabels: step.labels });
+  return out;
 }

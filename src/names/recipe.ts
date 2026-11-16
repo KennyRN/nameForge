@@ -28,6 +28,8 @@ export type SlotSetting =
   | ({ kind: "tribal"; tradition: string; /** Presets brief §10.1: a tribal preset's note name. */ preset?: string } & TribalSlotFields)
   /** Land brief §5.1: "From the biome"; only offered for colonial livestock and crops. */
   | { kind: "biome" }
+  /** Northern Europe brief 5c §13.1: real-world or generated names, filled by the people filler after the run (the engine draws the placeholder). */
+  | { kind: "people"; mode: "real" | "generated" }
   | {
       kind: "sources";
       sources: SourceRef[];
@@ -99,6 +101,7 @@ export function linkTarget(v: unknown): string | undefined {
 
 function readSlot(v: unknown, problems: string[], id: string): SlotSetting | undefined {
   if (v === "built-in" || v === "ignore" || v === "placeholder" || v === "biome") return { kind: v };
+  if (isObject(v) && (v.people === "real" || v.people === "generated")) return { kind: "people", mode: v.people };
   if (!isObject(v)) {
     problems.push(`Slot “${id}” isn't built-in, ignore, placeholder or a list of sources.`);
     return undefined;
@@ -319,6 +322,7 @@ export function recipeToFrontmatter(r: RecipePartial): Record<string, unknown> {
           const own = Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== undefined && value !== "" && value !== "any"));
           return [id, { tribal: tradition, ...own }];
         }
+        if (slot.kind === "people") return [id, { people: slot.mode }];
         if (slot.kind !== "sources") return [id, slot.kind];
         const value: Record<string, unknown> = {
           sources: slot.sources.map((s) => ({

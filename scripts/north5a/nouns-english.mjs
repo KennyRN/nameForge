@@ -50,18 +50,18 @@ export default {
   water: {
     sea: [
       "Reach;AN-MD|Roads;AN-MD|Haven;AN-MD|Wash;EM-ST|Sound;EM-ST|Narrows;EM-ST|Estuary;ST-MO|Firth Water;ST-MO|Mermaid's Reach;h|Bay",
-      "Creek;AN-MD|Pill;AN-MD|Hythe;AN-MD|Lode;EM-ST|Gat;EM-ST|Sluice;EM-ST|Marina;ST-MO|Dock;ST-MO|Drowned Church Creek;h|Inlet",
+      "Creek;AN-MD|Tidal Creek;AN-MD|Hythe;AN-MD|Lode;EM-ST|Gat;EM-ST|Sluice;EM-ST|Marina;ST-MO|Dock;ST-MO|Drowned Church Creek;h|Inlet",
       "Race;AN-MD|Gut;AN-MD|Narrow Sea;AN-MD|Passage;EM-ST|Sound Passage;EM-ST|Channel;EM-ST|Shipping Lane;ST-MO|Fairway;ST-MO|Sea Hag's Strait;h|Strait",
     ],
     coast: [
       "Ness;AN-MD|Naze;AN-MD|Bill;AN-MD|Foreland;EM-ST|Head;EM-ST|Point;EM-ST|Promontory;ST-MO|Nature Reserve Point;ST-MO|Black Shuck Head;h|Headland",
-      "Haven;AN-MD|Hythe;AN-MD|Staithe;AN-MD|Slip;EM-ST|Hard;EM-ST|Landing;EM-ST|Beach Hut Cove;ST-MO|Boat Slip;ST-MO|Smugglers' Ghost Cove;h|Cove",
+      "Haven;AN-MD|Hythe;AN-MD|Staithe;AN-MD|Slip;EM-ST|Landing Place;EM-ST|Landing;EM-ST|Beach Hut Cove;ST-MO|Boat Slip;ST-MO|Smugglers' Ghost Cove;h|Cove",
       "Holm;AN-MD|Eyot;AN-MD|Isle;AN-MD|Sand Island;EM-ST|Mud Island;EM-ST|Rock Isle;EM-ST|Nature Island;ST-MO|Bird Island;ST-MO|Hobman's Isle;h|Island",
     ],
     chart: [
       "Bank;AN-MD|Sand;AN-MD|Flat;AN-MD|Knoll Bank;EM-ST|Middle Ground;EM-ST|Spit Bank;EM-ST|Overfalls;ST-MO|Wind Farm Bank;ST-MO|Sunken Bell Bank;h|Shoal",
       "Scar;AN-MD|Ledge;AN-MD|Skerry;AN-MD|Rocks;EM-ST|Reef;EM-ST|Needles;EM-ST|Wreck Site;ST-MO|Dangerous Rocks;ST-MO|Sea Hag's Reef;h|Ledge Rock",
-      "Gat;AN-MD|Swatch;AN-MD|Deep;AN-MD|Fairway;EM-ST|Channel;EM-ST|Gut;EM-ST|Dredged Channel;ST-MO|Traffic Lane;ST-MO|Drowned Road;h|Narrows",
+      "Gat;AN-MD|Sea Channel;AN-MD|Deep;AN-MD|Fairway;EM-ST|Channel;EM-ST|Gut;EM-ST|Dredged Channel;ST-MO|Traffic Lane;ST-MO|Drowned Road;h|Narrows",
     ],
   },
   route: [

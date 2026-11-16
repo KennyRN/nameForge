@@ -9,7 +9,7 @@ import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe, type RecipeSettings,
 import type { ColonialPart } from "../colonialShapes";
 import { type ColonialPlacePreset, type NativePlacePreset } from "../presets";
 import { generateWorldPlaceNames, type WorldBatchResult } from "../world/engine";
-import { activeSlots, chooseSlotSource, freshSlotSources, slotChoiceAllowed, slotChoiceId, slotInventory, type SlotPart, slotPartOf, type SlotSources, slotSettingOf } from "./slotSentence";
+import { activeSlots, allowsPeopleChoice, chooseSlotSource, freshSlotSources, slotChoiceAllowed, slotChoiceId, slotInventory, type SlotPart, slotPartOf, type SlotSources, slotSettingOf } from "./slotSentence";
 
 /** A module's land choice: a built-in biome id or a pack's path, and a terrain id. */
 export interface PlaceLand {
@@ -76,7 +76,7 @@ export function generateWorldPlace(state: WorldPlaceState, biome: Biome | undefi
 // ── Presets ─────────────────────────────────────────────────────────────────
 
 /** A preset's slot choices as sentence state. */
-export function sourcesOfPreset(placeNames: "placeholders" | "perSlot", placeSlots: Record<string, string>, part: SlotPart): SlotSources {
+export function sourcesOfPreset(placeNames: SlotSources["names"], placeSlots: Record<string, string>, part: SlotPart): SlotSources {
   let sources: SlotSources = { ...freshSlotSources(), names: placeNames };
   for (const [id, choice] of Object.entries(placeSlots)) {
     if (slotSettingOf(part, choice)) sources = chooseSlotSource(sources, part, id, choice);
@@ -188,6 +188,7 @@ export function settlementPresetRecipe(i: SettlementPresetInput): RecipeSettings
 /** A recipe slot the sentence can show: one source, a built-in list, or tribal names at the slot's defaults. */
 function choiceOfRecipeSlot(setting: SlotSetting, part: SlotPart): string | undefined {
   if (setting.kind === "built-in") return "built-in";
+  if (setting.kind === "people") return setting.mode;
   if (setting.kind === "tribal") {
     const { kind: _kind, tradition, preset, ...fields } = setting;
     const plain = !preset && tradition === (part === "organic" ? "auto" : "general") && Object.values(fields).every((v) => v === undefined || v === "" || v === "any");
@@ -215,6 +216,12 @@ export function sourcesOfRecipeSlots(slots: Record<string, SlotSetting> | undefi
     else unsupported.push(id);
   }
   if (Object.keys(sources.slots).length > 0) sources = { ...sources, names: "perSlot" };
+  // Northern Europe brief 5c §13.1: a preset whose every offered slot is real-world (or generated) names reads as that setting of the whole sentence.
+  const modes = new Set(Object.values(sources.slots).map((s) => (s.kind === "people" ? s.mode : undefined)));
+  if (modes.size === 1 && !modes.has(undefined)) {
+    const offered = slotInventory(part).filter((s) => allowsPeopleChoice(part, s.id)).length;
+    if (Object.keys(sources.slots).length === offered) sources = { names: [...modes][0]!, slots: {} };
+  }
   return { sources, unsupported };
 }
 

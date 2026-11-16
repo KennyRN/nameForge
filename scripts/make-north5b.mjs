@@ -52,11 +52,8 @@ md.push("Six per region and module; drawn only for the cultures that read the re
 md.push("| Region | Cultures | Streets | Inns | Buildings | Monuments |\n|---|---|---|---|---|---|");
 for (const [code, r] of Object.entries(REGIONS)) md.push(`| ${code} | ${r.cultures.join(", ")} | ${r.streets.replace(/\|/g, ", ")} | ${r.inns.replace(/\|/g, ", ")} | ${r.buildings.replace(/\|/g, ", ")} | ${r.monuments.replace(/\|/g, ", ")} |`);
 md.push("\n## Loanwords (rule 4)\n");
-md.push("Words in this batch that are dictionary loanwords or regional entries: Tolbooth, Howff, Wynd, Vennel, Gait, Brae, Close, Bothy, Kirk, Strath, Glen, Voe, Haaf, Haa, Broch, Dun, Rath, Quoit, Cromlech, Dolmen, Ogham, Boreen, Shebeen, Torg, Tron, Mercat, Peel, Dyke, Polder, Esker, Fjord, Skerry, Ness, Holm, Wick, Thorp, Hythe, Burg, Gasthof, Calvary, Hunebed, Cairn, Combe, Tor, Wheal, Knocker, Tomte, Piskie, Draugr (replaced by Walking Dead in 5a).\n");
-md.push("## Dictionary check, online (batch 5b)\n");
-md.push("Looked up on collinsdictionary.com (only the word was sent). Only these twelve words were checked online; the other loanwords in the 5a table and in this batch have not been looked up, and the check made earlier from memory stands for them until they are.\n");
-md.push("| Word | In Collins | Kept or replaced |\n|---|---|---|");
-for (const [w, found, what] of [["Leaze", "no (only an archaic spelling of lease)", "replaced by Lea"], ["Cleugh", "no (clough is there)", "replaced by Clough"], ["Spriggan", "no", "replaced by Treasure Guardian"], ["Carse", "yes", "kept"], ["Tump", "yes (British dialect)", "kept"], ["Pooka", "yes", "kept"], ["Gorsedd", "yes", "kept"], ["Hirsel", "yes", "kept"], ["Eyot", "yes", "kept"], ["Fogou", "yes", "kept"], ["Sidhe", "yes", "kept"], ["Runrig", "yes", "kept"]]) md.push(`| ${w} | ${found} | ${what} |`);
+md.push("Words in this batch that are dictionary loanwords or regional entries: Tolbooth, Howff, Wynd, Vennel, Gait, Brae, Close, Bothy, Kirk, Strath, Glen, Voe, Haaf, Broch, Rath, Quoit, Cromlech, Dolmen, Ogham, Boreen, Shebeen, Tron, Mercat, Peel, Dyke, Polder, Esker, Fjord, Skerry, Ness, Holm, Wick, Thorp, Hythe, Burg, Calvary, Cairn, Combe, Tor, Wheal, Knocker, Pisky.\n");
+md.push("## Dictionary check\n\nEvery loanword in this batch and in the 5a table was looked up on collinsdictionary.com; the result of each, and every replacement, is in `docs/loanwords.md`.\n");
 writeFileSync(new URL("../docs/northern-europe-5b.md", import.meta.url), `${md.join("\n")}\n`);
 await import("./north5b/patchPools.mjs");
 console.log("wrote src/data/north5b.json", { cultures: settlement.cultures.length, pools: Object.keys(modules.vocab.pools).length });

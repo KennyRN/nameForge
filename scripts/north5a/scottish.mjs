@@ -6,7 +6,7 @@ export default {
   land: {
     B: "Peat|Heather|Whisky|Salmon|Sheep|Slate|Kelp|Deer|Pine|Birch",
     C: "Kelpie|Brownie|Selkie|Giant|Hag|Washerwoman Ghost",
-    D: "Broch;AN-MD|Dun;AN-MD|Pictish Stone;AN-MD|Cairn;AN-MD|Crannog;AN-MD|Cup-marked Rock;AN-MD|Abbey Land;MD|Castle Hill;MD|Clearance Village;EM-MO|Distillery;EM-MO|Shooting Lodge;EM-MO|Drove Stance;EM-MO|Railway Viaduct;EM-MO|Hydro Dam;EM-MO|Forestry;EM-MO",
+    D: "Broch;AN-MD|Hill Fort;AN-MD|Pictish Stone;AN-MD|Cairn;AN-MD|Crannog;AN-MD|Cup-marked Rock;AN-MD|Abbey Land;MD|Castle Hill;MD|Clearance Village;EM-MO|Distillery;EM-MO|Shooting Lodge;EM-MO|Drove Stance;EM-MO|Railway Viaduct;EM-MO|Hydro Dam;EM-MO|Forestry;EM-MO",
   },
   water: {
     B: "Herring|Salmon|Kelp|Peat|Whale|Seal|Cod|Lobster|Crofter's|Drifter",
