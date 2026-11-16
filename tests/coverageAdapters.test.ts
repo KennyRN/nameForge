@@ -166,7 +166,7 @@ test("realms: hand-counted cells (words/shapes), counted by hand from realms.jso
   assert.equal(cell("realms", "english"), "53/10", "anglo-saxon tribal 1; norman-british forms 2 + tribal 1 + homeland 1, and the batch's own 30 and 10");
   // Entries confined to an era: the weighted forms (era weights above nought), the modifiers and the
   // ideology words; ST has none because the realms have no steam age (5d: the batch's era words are tagged to the eras the module offers).
-  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 59, MD: 131, EM: 101, ST: 0, MO: 78, NF: 34, IS: 42 });
+  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 113, MD: 236, EM: 161, ST: 0, MO: 132, NF: 34, IS: 42 });
 });
 
 test("every module in the lens has an adapter and reports, none left 'not yet reported'", () => {

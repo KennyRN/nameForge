@@ -83,7 +83,7 @@ test("5d §11.3: a core culture's own frames take their share of a batch, and a 
   const names = Array.from({ length: 400 }, (_, i) => ({ text: `plain ${i}` }));
   const replaced = applySignature(names, "moneyNames", "german", 1).filter((n) => !n.text.startsWith("plain")).length / names.length;
   assert.ok(Math.abs(replaced - SIGNATURE_SHARE) < 0.08, `the share is ${replaced}`);
-  assert.deepEqual(applySignature([{ text: "x" }], "moneyNames", "french", 1), [{ text: "x" }]);
+  assert.deepEqual(applySignature([{ text: "x" }], "moneyNames", "japanese", 1), [{ text: "x" }]);
 });
 
 test("5d §14.3: a month's frames are never drawn a festival, nor a constellation's a light", () => {

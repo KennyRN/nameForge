@@ -76,7 +76,7 @@ test("5c §11.3: a core culture's own frames take their share of a batch, and a 
   const replaced = applySignature(names, "tradeGuilds", "german", 1).filter((n) => !n.text.startsWith("plain")).length / names.length;
   assert.ok(Math.abs(replaced - SIGNATURE_SHARE) < 0.04, `the share is ${replaced}`);
   // Another culture, or none: nothing replaced.
-  assert.deepEqual(applySignature([{ text: "x" }], "tradeGuilds", "french", 1), [{ text: "x" }]);
+  assert.deepEqual(applySignature([{ text: "x" }], "tradeGuilds", "japanese", 1), [{ text: "x" }]);
 });
 
 test("5c: Celtic draws its own words and each nation's", () => {
@@ -148,7 +148,7 @@ test("5c B1: tribes and kin groups gain eight traditions of their own; Celtic an
   const keys = TRIBAL_TRADITIONS.map((t) => t.key);
   for (const c of CORE) assert.ok(keys.includes(c), `${c} is a tradition`);
   assert.ok(keys.includes("celtic") && keys.includes("germanic"));
-  assert.equal(keys.length, 25);
+  assert.equal(keys.length, 36); // and (brief 6a) the eleven of the batch
   for (const c of CORE) {
     const names = generateTribalNames({ tradition: c, count: 30, seed: 5 }).names.map((n) => n.name);
     assert.ok(names.length >= 25, `${c} gives names`);

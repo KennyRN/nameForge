@@ -296,7 +296,7 @@ const FORMER_CULTURE_MAP: Record<string, [string, number][]> = {
 
 test("the group engine's tradition draws are the lens's weights, exactly as traditions.cultureMap had them", () => {
   // Brief 5c: the eight traditions of Northern Europe draw from their own culture alone.
-  const NORTHERN = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
+  const NORTHERN = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "french", "spanish", "portuguese", "italian", "roman", "greek", "byzantine", "iberian", "greek-byzantine", "dutch", "slavic"]; // brief 6a: the batch's eleven too
   for (const t of TRIBAL_TRADITIONS.filter((t) => !NORTHERN.includes(t.key))) assert.deepEqual(tribalCultureWeights(t.key), FORMER_CULTURE_MAP[t.key], t.key);
   for (const k of NORTHERN) assert.deepEqual(tribalCultureWeights(k), [[k, 1]], k);
   assert.deepEqual(Object.keys(FORMER_CULTURE_MAP).sort(), TRIBAL_TRADITIONS.map((t) => t.key).filter((k) => !NORTHERN.includes(k) && tribalCultureWeights(k)).sort());

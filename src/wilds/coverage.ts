@@ -25,4 +25,7 @@ function rows(module: WildsModuleKey): CoverageRow[] {
   return out;
 }
 
-export const wildsCoverage: CoverageAdapter[] = MODULES.map((module) => ({ module, kinds: kindsOf(module), roster: NORTH_ROSTER, regions: readsRegions(module), profiles: () => profileKeys(wildsData.cultureMult), rows: () => rows(module) }));
+/** Brief 6a §4: deserts are excluded for the batch's cultures (and mountains for the Dutch): none of them has the landscape. */
+const BATCH_NO_DESERT = ["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic", "iberian", "greek-byzantine"];
+const excludedFor = (module: string): CoverageAdapter["excluded"] => (module === "desertNames" ? [{ cultures: BATCH_NO_DESERT }] : module === "mountainNames" ? [{ cultures: ["dutch"] }] : undefined);
+export const wildsCoverage: CoverageAdapter[] = MODULES.map((module) => ({ module, kinds: kindsOf(module), roster: NORTH_ROSTER, excluded: excludedFor(module), regions: readsRegions(module), profiles: () => profileKeys(wildsData.cultureMult), rows: () => rows(module) }));

@@ -292,3 +292,28 @@ Every non-everyday word batch 5d uses (money and coins, events and eras, calenda
 | Targe | yes (checked in 5c) | kept |
 
 Common words used as they are and not looked up: Hoard, Tally, Clipping, Token, Penny, Groat, Noble, Angel, Crown, Guinea, Farthing, Shilling, Sovereign, Halfpenny, Mark, Ounce, Plough, Harp, Wain, Distaff.
+
+## Batch 6a (second-tier tables): Collins lookups
+
+Each word was looked up on Collins (collinsdictionary.com), sending only the word. A word without an entry was replaced by its English sense.
+
+| Word | Collins | Result |
+| --- | --- | --- |
+| Maravedi | yes: a former Spanish coin | kept |
+| Doubloon | yes: a former Spanish gold coin | kept |
+| Denier | yes: a former European coin (and a textile unit) | kept |
+| Liard | yes: a former French coin | kept |
+| Stuiver | yes: a variant of stiver, a former Dutch coin | kept |
+| Sestertius | yes: an ancient Roman coin | kept |
+| Tetradrachm | yes: an ancient Greek silver coin | kept |
+| Drachma | yes: the former Greek currency, an ancient coin | kept |
+| Obol | yes: an ancient Greek silver coin | kept |
+| Follis | yes: a Roman and Byzantine copper coin | kept |
+| Groschen | yes: a former German and Austrian coin | kept |
+| Zecchino | yes: a former gold coin of Venice | kept |
+| Cruzado | yes: a former Brazilian currency | kept |
+| Hyperpyron | no | replaced by Gold Piece |
+| Nomisma | no (only the root of numismatic) | replaced by Gold Coin |
+| Altyn | no | replaced by Silver Piece |
+
+Still to look up before the batch is closed (recorded as pending, not yet checked): Real, Escudo, Peseta, Franc, Sou, Livre, Ecu, Florin, Ducat, Soldo, Lira, Scudo, Daalder, Duit, Guilder, Denarius, Aureus, Solidus, Stater, Mina, Talent, Kopek, Ruble, Zloty, Thaler, Cortes, Doge, Zouaves, Condottieri, Tercio, Fluyt, Dromon, Caique, Cavalier.
