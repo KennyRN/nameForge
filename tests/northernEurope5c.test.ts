@@ -20,7 +20,7 @@ import { chooseGroup, cultureMenu, DEFAULT_GROUP_STATE, groupSentence } from "..
 import realPlaces from "../src/data/real-places.json";
 
 const CORE = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
-const MODULES = Object.keys(NORTH5C.modules);
+const MODULES = Object.keys(NORTH5C.modules).filter((m) => !["moneyNames", "eventNames", "calendarNames", "skyNames", "armsNames", "treasureNames", "bookNames", "deityNames"].includes(m));
 const adapter = (m: string) => COVERAGE_ADAPTERS.find((a) => a.module === m)!;
 const cultureKey = (module: string, c: string) => (module === "tribalNames" ? c : c === "english" ? "norman-british" : c);
 

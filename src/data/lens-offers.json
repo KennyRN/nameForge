@@ -1349,13 +1349,16 @@
      "fantastic"
     ],
     "MO": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "NF": [
-     "plain"
+     "plain",
+     "fantastic"
     ],
     "IS": [
-     "plain"
+     "plain",
+     "fantastic"
     ]
    }
   },
@@ -1689,8 +1692,12 @@
     [
      "AN",
      "MD",
-     "EM",
-     "ST",
+     "EM"
+    ],
+    [
+     "ST"
+    ],
+    [
      "MO"
     ],
     [

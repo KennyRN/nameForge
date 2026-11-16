@@ -565,6 +565,12 @@ export function routeCapitals(text: string): string {
 /** GN §11.2: content words, a leading "The" and the small words not counted. */
 export const countedWords = (text: string) => text.split(" ").filter((w, i) => w && !(i === 0 && w === "The") && !SMALL.has(w.toLowerCase()));
 
+/** Northern Europe brief 5d: a name within a module's word cap that repeats no content word: the acceptance check a batch's signature names meet. */
+export const withinCap = (text: string, cap: number): boolean => {
+  const counted = countedWords(text);
+  return counted.length > 0 && counted.length <= cap && !repeatsContent(counted);
+};
+
 // ── Safeguards (§12) ────────────────────────────────────────────────────────
 
 /** §12.1: whole names, case-insensitive; "The Ridgeway" and "The Corpse Road" keep their "The". */

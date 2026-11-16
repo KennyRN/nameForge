@@ -32,6 +32,7 @@ import { mulberry32 } from "../markov";
 import { DYNASTY_CULTURES } from "../realms/engine";
 import {
   countedWords,
+  withinCap,
   findRouteCulture,
   personNames,
   ROUTE_ERAS,
@@ -47,7 +48,8 @@ import {
 } from "../routes/engine";
 import { selfPatterns, TownTurn, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
-import { cultureSet } from "../lens";
+import { cultureSet, engineCulture } from "../lens";
+import { applySignature, noBracket } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -101,6 +103,8 @@ export const defaultEventSafeguards = (): GroupSafeguards => ({ block: EVENT_DAT
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface EventOptions {
+  /** Northern Europe brief 5d: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
   catalogue?: BiomeCatalogue;
   culture?: string;
@@ -393,13 +397,29 @@ function plans(ctx: Ctx, kind: EventKind, only?: string): [EventShape, number][]
 
 /** §6: a batch of unique event names; with series on, a chronicle in order (§8). */
 export function generateEventNames(options: EventOptions): EventBatch {
+  const batch = generateEventNamesCore(options);
+  // Northern Europe brief 5d: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
+  // A chosen kind, a history (series), the settlement kit and the tests' shapes keep the module's own draw.
+  if (options.signature === false || fillModeOf(options.people) || options.kind || options.series || options.context || options.shape) return batch;
+  const requested = options.culture && findRouteCulture(options.culture) ? options.culture : "norman-british";
+  const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
+  const block = eventBlockSet(options.safeguards);
+  const ok = (text: string) => !block.has(bare(text)) && !breaksEventWords(text) && withinCap(text, EVENT_DATA.cap) && (options.people !== "invented" || noBracket(text));
+  return {
+    ...batch,
+    names: applySignature(batch.names, "eventNames", requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic }, set: (n, text) => ({ ...n, text: eventCapitals(text), shape: "signature" }) }),
+  };
+}
+
+function generateEventNamesCore(options: EventOptions): EventBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateEventNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
-  const culture = findRouteCulture(options.culture) ?? findRouteCulture("norman-british")!;
+  // Brief 5d: the newer culture keys read the legacy key's tables (`engineAlias`).
+  const culture = findRouteCulture(engineCulture(options.culture ?? "")) ?? findRouteCulture("norman-british")!;
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const fantastic = !!options.fantastic;
   const scale: EventScale = EVENT_SCALES.some((s) => s.key === options.scale) ? options.scale! : "realm";

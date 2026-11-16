@@ -36,6 +36,7 @@ import { pluralOf, type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { REALM_DATA } from "../realms/engine";
 import {
   countedWords,
+  withinCap,
   ROUTE_CULTURES,
   ROUTE_ERAS,
   routeCapitals,
@@ -49,7 +50,8 @@ import {
 } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, VALUE_TIERS, type ValueTier, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { findVesselCulture } from "../vessels/engine";
-import { cultureSet } from "../lens";
+import { cultureSet, engineCulture } from "../lens";
+import { applySignature, NORTH_5C_CULTURES, noBracket } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -181,7 +183,8 @@ function buildCultures(): MoneyCulture[] {
   return out;
 }
 
-export const MONEY_CULTURES: MoneyCulture[] = buildCultures();
+/** Northern Europe brief 5d: the roster of the money menu: those, and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables (`engineAlias`) beneath their own words. */
+export const MONEY_CULTURES: MoneyCulture[] = [...buildCultures(), ...NORTH_5C_CULTURES.map((c) => ({ key: c.key, label: c.label, group: "British Isles and northern Europe" }))];
 export const findMoneyCulture = (key: string | undefined) => MONEY_CULTURES.find((c) => c.key === key);
 const DEFAULT_CULTURE = "norman-british";
 
@@ -194,7 +197,8 @@ export const defaultMoneySafeguards = (): GroupSafeguards => ({ block: MONEY_DAT
 export const findMoneyKind = (key: string | undefined) => MONEY_KINDS.find((k) => k.key === key);
 
 /** §4.2–§4.3: a kind's weight for kind Any: the era weight × the culture's multiplier (paper in the Middle Ages only where it was used). */
-export function moneyKindWeight(kind: MoneyKind, culture: string, era: RouteEra): number {
+export function moneyKindWeight(kind: MoneyKind, requested: string, era: RouteEra): number {
+  const culture = engineCulture(requested);
   const info = findMoneyKind(kind)!;
   let w = info.era[era];
   if (kind === "paper" && era === "MD" && !MONEY_DATA.paperMiddleAges.includes(culture)) return 0;
@@ -216,7 +220,8 @@ const nicknameToneFactor = (tone: GroupToneChoice) =>
 const LOAN_CULTURES = new Map<Vocabulary, Set<string>>();
 
 /** §2.2: whether the culture has at least one loan form (so the words link shows). */
-export function moneyHasLoans(culture: string, vocab: Vocabulary = BUILT_IN_VOCAB): boolean {
+export function moneyHasLoans(requested: string, vocab: Vocabulary = BUILT_IN_VOCAB): boolean {
+  const culture = engineCulture(requested);
   let set = LOAN_CULTURES.get(vocab);
   if (!set) {
     set = new Set();
@@ -244,6 +249,8 @@ export function tiersReaching(tiers: readonly ValueTier[] | undefined, shift: nu
 
 export interface MoneyOptions {
   /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
+  /** Northern Europe brief 5d: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   catalogue?: BiomeCatalogue;
   culture?: string;
   kind?: MoneyKind;
@@ -753,7 +760,8 @@ export const SERIES_KINDS: (MoneyKind | undefined)[] = [undefined, "coin", "earl
 export const kindHasSeries = (kind: MoneyKind | undefined) => SERIES_KINDS.includes(kind);
 
 /** §10.3: the ladders the table offers for a culture, era and kind; none means "with values" is not offered. */
-export function moneyLaddersFor(culture: string, era: RouteEra, kind?: MoneyKind): MoneyLadder[] {
+export function moneyLaddersFor(requested: string, era: RouteEra, kind?: MoneyKind): MoneyLadder[] {
+  const culture = engineCulture(requested);
   if (!kindHasSeries(kind)) return [];
   const serve = kind ?? "any";
   return (MONEY_DATA.ladderCells[culture]?.[era] ?? []).map((k) => LADDER_BY_KEY.get(k)!).filter((l) => l.serves.includes(serve as "any"));
@@ -1042,13 +1050,30 @@ function applyValues(ladder: MoneyLadder, coins: MoneyName[]) {
 
 /** §6: a batch of unique money names; a coinage when the series says so (§9, §10). */
 export function generateMoneyNames(options: MoneyOptions): MoneyBatch {
+  const batch = generateMoneyNamesCore(options);
+  // Northern Europe brief 5d: a core culture's own frames take their share of the separate names (the filler path applies them inside, on the placeholders run).
+  // A chosen kind, a series, the loanword setting and the tests' shapes keep the module's own draw.
+  if (options.signature === false || fillModeOf(options.people) || options.kind || (options.series && options.series !== "separate") || options.words === "loanwords" || options.shape || options.ladder) return batch;
+  const requested = options.culture && findMoneyCulture(options.culture) ? options.culture : "norman-british";
+  const era = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
+  const guards = options.safeguards ?? defaultMoneySafeguards();
+  const block = new Set([...guards.block, ...(guards.flagListBlocks ? guards.flag : [])].map((w) => w.toLowerCase()));
+  const ok = (text: string) => !block.has(text.toLowerCase()) && !breaksMoneyWords(text) && withinCap(text, MONEY_DATA.cap) && (options.people !== "invented" || noBracket(text));
+  return {
+    ...batch,
+    names: applySignature(batch.names, "moneyNames", requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic }, set: (n, text) => ({ ...n, text: moneyCapitals(text), name: moneyCapitals(text), loan: false, shape: "signature" }), keep: (n) => !!n.loan || !!n.real || n.value !== undefined }),
+  };
+}
+
+function generateMoneyNamesCore(options: MoneyOptions): MoneyBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateMoneyNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, series: !!options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
-  const culture = findMoneyCulture(options.culture) ?? findMoneyCulture(DEFAULT_CULTURE)!;
+  // Brief 5d: the newer culture keys read the legacy key's tables (`engineAlias`).
+  const culture = findMoneyCulture(engineCulture(options.culture ?? "")) ?? findMoneyCulture(DEFAULT_CULTURE)!;
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const fantastic = !!options.fantastic;
   const count = Math.max(0, Math.floor(options.count));

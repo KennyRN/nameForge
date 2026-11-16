@@ -152,7 +152,8 @@ function many(o: Omit<MoneyOptions, "count" | "seed">, n: number, size = 5): Mon
 
 test("§3.1: the money menu is route names' cultures bar Polynesian and Andean, with the four new ones in place", () => {
   const keys = MONEY_CULTURES.map((c) => c.key);
-  assert.equal(keys.length, 24);
+  // Brief 5d: and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables.
+  assert.equal(keys.length, 30);
   assert.ok(!keys.includes("polynesian") && !keys.includes("andean"));
   assert.deepEqual(keys.slice(keys.indexOf("greek-byzantine"), keys.indexOf("greek-byzantine") + 4), ["greek-byzantine", "french", "dutch", "iberian"]);
   assert.equal(keys[keys.indexOf("maya") + 1], "american");
@@ -374,7 +375,7 @@ test("§16.5: 10,000 names across options hold no block-list match and no banned
 });
 
 test("§13.4, §3.3: {holy} only in christian cultures (dutch and american at ×0.3), {god} only in roman and greek-byzantine in the ancient world", () => {
-  const christian = new Set(["anglo-saxon", "celtic", "norman-british", "slavic", "french", "iberian", "greek-byzantine", "roman", "dutch", "american"]);
+  const christian = new Set(["anglo-saxon", "celtic", "norman-british", "slavic", "french", "iberian", "greek-byzantine", "roman", "dutch", "american", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"]);
   let holy = 0;
   let gods = 0;
   for (const c of MONEY_CULTURES) {
@@ -735,7 +736,7 @@ test("§10.3: which ladder: the cell table, 50/50 where a cell holds two, and no
 
 test("§16.7: for every culture × era × kind cell marked – in the ladder table, 'with values' is not offered and runs as a coinage", () => {
   let dashes = 0;
-  for (const c of MONEY_CULTURES) {
+  for (const c of MONEY_CULTURES.filter((m) => MONEY_DATA.ladderCells[m.key])) {
     for (const era of ERAS) {
       const cell = MONEY_DATA.ladderCells[c.key][era];
       for (const kind of [undefined, "coin", "early", "goods"] as (MoneyKind | undefined)[]) {
@@ -913,7 +914,7 @@ test("§2.2: the kind link lists the kinds offered for the culture and era", () 
   assert.ok(!labels({ ...DEFAULT_MONEY_STATE, culture: "aztec", era: "MD" }).includes("Coins"));
   assert.equal(field(DEFAULT_MONEY_STATE, "kind")!.choices[1].title, "Struck and cast coins, from gold to copper");
   const culture = field(DEFAULT_MONEY_STATE, "culture")!;
-  assert.equal(culture.choices.length, 24);
+  assert.equal(culture.choices.length, 30);
   assert.equal(culture.choices.find((c) => c.id === "dutch")!.group, undefined);
   assert.ok(culture.choices.some((c) => c.id === "american"));
 });

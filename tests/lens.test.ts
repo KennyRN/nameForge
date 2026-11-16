@@ -47,6 +47,7 @@ import {
   poolExemption,
   STEAMPUNK_NAMES,
   tribalCultureWeights,
+  ENGINE_ALIAS,
   type LensEra,
 } from "../src/lens";
 import { WILDS_SECTIONS, WATERS_SECTIONS, GROUP_NAME_SECTIONS, PLACE_MODULE_SECTIONS } from "../src/sections";
@@ -242,7 +243,7 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
   for (const c of VESSEL_CULTURES) assert.ok(vehicle5c.includes(c.key), c.key);
   for (const c of BYNAME_CULTURES_5C) assert.ok(keysOf("north5c").includes(c.key), c.key);
   // The 22, the 20, the 24 and the 34 are all inside the shared keys or the vehicle extras.
-  for (const keys of [routeKeys, BYNAME_CULTURES.map((c) => c.key), MONEY_CULTURES.map((c) => c.key)]) for (const k of keys) assert.ok(cultureMapping("shared")[k], k);
+  for (const keys of [routeKeys, BYNAME_CULTURES.map((c) => c.key), MONEY_CULTURES.map((c) => c.key)]) for (const k of keys.filter((k) => !ENGINE_ALIAS[k])) assert.ok(cultureMapping("shared")[k], k);
   assert.equal(WORLD_CULTURES.length, 22, "the sixteen world cultures and the six of batch 5b");
   for (const c of WORLD_CULTURES) assert.ok(cultureMapping("world")[c.id], `world ${c.id}`);
 });

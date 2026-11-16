@@ -27,13 +27,14 @@ import {
   wordTones,
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
-import { BYNAME_CULTURES, cultureAnimals, generateBynames, townSource, worldAnimals } from "../bynames/engine";
+import { BYNAME_CULTURES_5C, cultureAnimals, generateBynames, townSource, worldAnimals } from "../bynames/engine";
 import { breaksDeityWords, deityTitle, hasRealDivineName, isChristianCulture } from "../deities/engine";
 import { MONEY_DATA } from "../money/engine";
-import { countedWords, routeCapitals, routeFigure, routeFolk, routeKingdom, routeNorm, routeSetting, ROUTE_ERAS, type RouteEra } from "../routes/engine";
+import { countedWords, withinCap, routeCapitals, routeFigure, routeFolk, routeKingdom, routeNorm, routeSetting, ROUTE_ERAS, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, entryAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import thingsData from "../data/named-things.json";
-import { cultureSet } from "../lens";
+import { cultureSet, engineCulture } from "../lens";
+import { applySignature, noBracket } from "../north5c";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -95,7 +96,8 @@ interface ThingsData {
 export const THINGS_DATA = thingsData as unknown as ThingsData;
 export const THING_MODULES = THINGS_DATA.modules;
 export const THING_KINDS = THINGS_DATA.kinds;
-export const THING_CULTURES = BYNAME_CULTURES;
+/** Northern Europe brief 5d: the roster of the named things modules: the twenty, and Welsh, Scottish, Irish, Cornish, Scandinavian and German (reading the legacy keys' tables). */
+export const THING_CULTURES = BYNAME_CULTURES_5C;
 export const findThingCulture = (key: string | undefined) => THING_CULTURES.find((c) => c.key === key);
 export const findThingKind = (key: string | undefined) => THING_KINDS.find((k) => k.key === key);
 export const thingModuleInfo = (module: ThingModule) => THINGS_DATA.modules.find((m) => m.key === module)!;
@@ -117,7 +119,8 @@ const inEras = (spec: string | undefined, era: RouteEra) => eraSpan(spec).includ
 // ── Kinds (§4) ──────────────────────────────────────────────────────────────
 
 /** §4: a kind's final weight for a culture, era and the fantastic switch. */
-export function thingKindWeight(kind: ThingKindInfo, culture: string, era: RouteEra, fantastic: boolean): number {
+export function thingKindWeight(kind: ThingKindInfo, requested: string, era: RouteEra, fantastic: boolean): number {
+  const culture = engineCulture(requested);
   let w = kind.era[ERA_ORDER.indexOf(era)] ?? 0;
   const christian = isChristianCulture(culture, era);
   for (const r of THINGS_DATA.kindMult) {
@@ -143,6 +146,8 @@ export const thingKindsOffered = (module: ThingModule, culture: string, era: Rou
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface ThingsOptions {
+  /** Northern Europe brief 5d: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   /** Wizard retirement brief §5: the biome lists and lookups, passed on to the pools this draws from (a pack can replace a built-in); the built-ins when absent. */
   catalogue?: BiomeCatalogue;
   module: ThingModule;
@@ -625,13 +630,30 @@ function describe(ctx: Ctx, name: string): string {
 // ── Batches ─────────────────────────────────────────────────────────────────
 
 export function generateThingNames(options: ThingsOptions): ThingsBatch {
+  const batch = generateThingNamesCore(options);
+  // Northern Europe brief 5d: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
+  // A chosen kind, an owner's pack, a description and the tests' patterns keep the module's own draw.
+  if (options.signature === false || fillModeOf(options.people) || options.kind || options.describe || (options.owner && options.owner !== "anyone") || options.draw || options.shape) return batch;
+  const requested = options.culture && findThingCulture(options.culture) ? options.culture : "norman-british";
+  const era: RouteEra = ERA_ORDER.includes(options.era as RouteEra) ? options.era! : "MD";
+  const module = options.module === "arms" ? "armsNames" : options.module === "treasure" ? "treasureNames" : "bookNames";
+  const block = thingBlockSet(options.safeguards);
+  const ok = (text: string) => !block.has(squash(text)) && !breaksThingWords(text) && withinCap(text, THINGS_DATA.cap) && (options.people !== "invented" || noBracket(text));
+  return {
+    ...batch,
+    names: applySignature(batch.names, module, requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic }, set: (n, text) => ({ ...n, text: thingCapitals(text), name: thingCapitals(text), shape: "signature" }) }),
+  };
+}
+
+function generateThingNamesCore(options: ThingsOptions): ThingsBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateThingNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const module = options.module;
-  const culture = findThingCulture(options.culture)?.key ?? "norman-british";
+  // Brief 5d: the newer culture keys read the legacy key's tables (`engineAlias`).
+  const culture = findThingCulture(engineCulture(options.culture ?? ""))?.key ?? "norman-british";
   const era: RouteEra = ERA_ORDER.includes(options.era as RouteEra) ? options.era! : "MD";
   const fantastic = !!options.fantastic;
   const count = Math.max(0, Math.floor(options.count));

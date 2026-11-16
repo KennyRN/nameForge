@@ -199,16 +199,9 @@ test("the lens choices agree with the modules' own choose functions where both e
 // ── Rule 4: a stored value is always shown and kept ────────────────────────
 
 test("rule 4: a stored value the probe wouldn't offer is shown, listed in its menu and kept", () => {
-  // Events in the modern era: the probe finds the switch changes nothing, so only plain is offered.
-  const state = stateOf("eventNames", { era: "MO", fantastic: true });
-  const world = lensClause("eventNames", state).world!;
-  assert.equal(world.current, "fantastic");
-  assert.equal(world.text, "contemporary fantasy");
-  assert.deepEqual(world.choices.map((c) => c.id), ["plain", "fantastic"]);
-  assert.equal(world.fixed, undefined);
-  assert.deepEqual(applyLensChoice("eventNames", state, "world", "fantastic"), state);
+  // 5d §14.1: the fantastic words of every family A module make the switch change something in every era, so no family A module is left with plain only; the near future of a family B module still is.
   // Where only plain is offered and plain is stored, the world is plain text.
-  const fixed = lensClause("eventNames", stateOf("eventNames", { era: "MO" })).world!;
+  const fixed = lensClause("realms", stateOf("realms", { genre: "scifi" })).world!;
   assert.equal(fixed.fixed, true);
   assert.deepEqual(fixed.choices.map((c) => c.id), ["plain"]);
   // A stored culture the module doesn't list.
@@ -298,7 +291,8 @@ test("era: runs, bands and their labels, and how choosing one stores an era", ()
   assert.deepEqual(labels("routeNames"), ["ancient", "medieval", "early modern", "steam age", "modern", "near future", "interstellar"]);
   // 5d §14.1: the era-tagged words of 5c make the peoples' eras differ one by one.
   assert.deepEqual(labels("peoplesTongues"), ["ancient", "medieval", "early modern", "steam age", "modern", "future"]);
-  assert.deepEqual(labels("skyNames"), ["ancient to modern", "future"]);
+  // 5d §14.1: the era-tagged words of 5d make the sky's eras differ band by band.
+  assert.deepEqual(labels("skyNames"), ["pre-industrial", "steam age", "modern", "future"]);
   assert.deepEqual(labels("deityNames"), ["ancient", "medieval to early modern", "steam age", "modern", "future"]);
   assert.deepEqual(labels("mountainNames"), ["ancient", "medieval", "early modern", "steam age", "modern", "future"]);
   assert.deepEqual(labels("powerFactions"), ["pre-industrial", "industrial and modern", "future"]);

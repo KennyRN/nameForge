@@ -246,3 +246,49 @@ The words batch 5c uses that a standard dictionary has as a borrowing or a regio
 | Strath | yes: a wide river valley | kept |
 
 Common dictionary words used as they are and not looked up in this run: Dirk, Plaid, Glen, Loch, Fjord, Skerry, Fell, Wold, Weald, Brogue, Doric, Zeppelin, Burgomaster, Almoner, Franklin, Hooker, Drifter. The native forms (ap, ferch, Mac, Nic, Ó, Ní, Graf, Markgraf, Freiherr, von, zu, Tywysog, Arglwydd, Brenin, Taoiseach, Ollamh, Mormaer, Toiseach, Jarl, Hersir, Lawspeaker) appear only in the bynames modules' native and mixed language settings and are not counted as English output.
+
+## Batch 5d
+
+Every non-everyday word batch 5d uses (money and coins, events and eras, calendars and festivals, sky lore, arms, treasures, books and deities), checked on collinsdictionary.com through web search restricted to that site (only the word was sent). A word counts as found when Collins has an entry for it in the sense the tables use.
+
+- Words checked online: 33
+- Kept (found in Collins): 32
+- Replaced after the online check: 1
+
+| Word | In Collins | Result |
+|---|---|---|
+| Bawbee | yes: a former Scottish silver coin | kept |
+| Merk | yes: a former Scottish coin, two thirds of a pound | kept |
+| Stater | yes: an ancient Greek coin | kept |
+| Torc | yes: a variant of torque, a twisted neck ring | kept |
+| Thaler | yes: a former German, Austrian or Swiss silver coin | kept |
+| Guilder | yes | kept |
+| Heller | yes: a former German and Austrian coin, and a Czech unit | kept |
+| Florin | yes | kept |
+| Ducat | yes | kept |
+| Quaich | yes: a Scottish drinking cup | kept |
+| Dirk | yes: a dagger of the Scottish Highlands | kept |
+| Sabre | yes | kept |
+| Halberd | yes | kept |
+| Crozier | yes: a variant of crosier | kept |
+| Triads | yes (triad) | kept |
+| Cartulary | yes | kept |
+| Bestiary | yes | kept |
+| Mazer | yes: obsolete, a large drinking bowl | kept |
+| Reliquary | yes | kept |
+| Hacksilver | no: no Collins entry | replaced by Cut Silver |
+| Pennyweight | yes | kept |
+| Murrain | yes: archaic, a cattle plague | kept |
+| Lammas | yes | kept |
+| Hocktide | yes: a former English festival | kept |
+| Candlemas | yes | kept |
+| Cheque | yes | kept |
+| Orrery | yes | kept |
+| Chapbook | yes | kept |
+| Almanac | yes | kept |
+| Psalter | yes | kept |
+| Hymnal | yes | kept |
+| Saga | yes: a medieval Icelandic or Norwegian prose narrative | kept |
+| Targe | yes (checked in 5c) | kept |
+
+Common words used as they are and not looked up: Hoard, Tally, Clipping, Token, Penny, Groat, Noble, Angel, Crown, Guinea, Farthing, Shilling, Sovereign, Halfpenny, Mark, Ounce, Plough, Harp, Wain, Distaff.

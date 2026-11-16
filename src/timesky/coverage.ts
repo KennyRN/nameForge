@@ -1,6 +1,7 @@
 // Coverage adapters for calendars and festivals and for sky lore (shared lens brief §6.1).
 import timeData from "../data/time-sky.json";
-import { type CoverageAdapter, type CoverageRow, at, listRows, makeRow, vocabularyRows, SHARED_ROSTER } from "../coverageRows";
+import { type CoverageAdapter, type CoverageRow, at, listRows, makeRow, vocabularyRows, NORTH_ROSTER } from "../coverageRows";
+import { north5cRows } from "../north5cCoverage";
 
 const CALENDAR = "calendarNames";
 const SKY = "skyNames";
@@ -23,6 +24,7 @@ function calendarRows(): CoverageRow[] {
     }
   }
   out.push(...vocabularyRows(CALENDAR));
+  out.push(...north5cRows(CALENDAR));
   return out;
 }
 
@@ -37,8 +39,9 @@ function skyRows(): CoverageRow[] {
     for (let i = 0; i < count; i++) out.push(makeRow({ culture }, { module: SKY, source: `lights/${culture}`, kind: "light", type: "word" }));
   }
   out.push(...vocabularyRows(SKY));
+  out.push(...north5cRows(SKY));
   return out;
 }
 
-export const calendarCoverage: CoverageAdapter = { module: CALENDAR, kinds: kindsOf("calendar"), roster: SHARED_ROSTER, excluded: [{ cultures: SENSITIVE }], rows: calendarRows };
-export const skyCoverage: CoverageAdapter = { module: SKY, kinds: kindsOf("sky"), kindFlags: { sign: "closed" }, roster: SHARED_ROSTER, excluded: [{ cultures: SENSITIVE }], rows: skyRows };
+export const calendarCoverage: CoverageAdapter = { module: CALENDAR, kinds: kindsOf("calendar"), roster: NORTH_ROSTER, excluded: [{ cultures: SENSITIVE }], rows: calendarRows };
+export const skyCoverage: CoverageAdapter = { module: SKY, kinds: kindsOf("sky"), kindFlags: { sign: "closed" }, roster: NORTH_ROSTER, excluded: [{ cultures: SENSITIVE }], rows: skyRows };

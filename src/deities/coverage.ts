@@ -3,10 +3,12 @@ import "../lexiconWiring";
 import deityData from "../data/deity-names.json";
 import bynameData from "../data/bynames.json";
 import { NORTH } from "../northData";
+import { north5cRows } from "../north5cCoverage";
 import { type CoverageAdapter, type CoverageRow, listRows, makeRow, profileKeys, vocabularyRows } from "../coverageRows";
 import { plainWordRows, wordListRows } from "../coverageUse";
 
 const ROSTER = (bynameData.cultures as { key: string }[]).map((c) => c.key);
+const ROSTER_5D = [...ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 /** Northern Europe brief 5a: sacred places also offer Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
 const ROSTER_5A = [...ROSTER, "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 /** §6.3: `unoffered` in deity-names.json (Polynesian and Andean) is excluded, not short. */
@@ -35,6 +37,7 @@ function rows(module: string, kinds: readonly string[]): CoverageRow[] {
     out.push(...wordListRows(deityData.lists as unknown as Record<string, unknown[]>, Object.keys(deityData.lists), { module }));
   }
   out.push(...vocabularyRows(module));
+  if (module === "deityNames") out.push(...north5cRows(module));
   return out;
 }
 
@@ -44,7 +47,7 @@ const kindKeys = (wanted: readonly string[]) => (deityData.kinds as { key: strin
 const profiles = () => profileKeys(Object.fromEntries(Object.entries(deityData.styles as unknown as Record<string, { formX?: unknown; domainX?: unknown; kindX?: unknown }>).map(([k, v]) => [k, { f: v.formX ?? {}, d: v.domainX ?? {}, k: v.kindX ?? {} }])));
 
 export const deityCoverage: CoverageAdapter[] = [
-  { module: "deityNames", kinds: kindKeys(DEITY_KINDS), roster: ROSTER, excluded: EXCLUDED, profiles, rows: () => rows("deityNames", DEITY_KINDS) },
+  { module: "deityNames", kinds: kindKeys(DEITY_KINDS), roster: ROSTER_5D, excluded: EXCLUDED, profiles, rows: () => rows("deityNames", DEITY_KINDS) },
   { module: "sacredPlaces", kinds: kindKeys(PLACE_KINDS), roster: ROSTER_5A, excluded: EXCLUDED, profiles, rows: () => rows("sacredPlaces", PLACE_KINDS) },
 ];
 

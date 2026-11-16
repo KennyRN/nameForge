@@ -7,7 +7,8 @@
 import { drawSeed, registerResolver } from "../fill";
 import type { BiomeCatalogue } from "../biomes";
 import deityData from "../data/deity-names.json";
-import { BYNAME_CULTURES } from "../bynames/engine";
+import { BYNAME_CULTURES_5C } from "../bynames/engine";
+import { applySignature } from "../north5c";
 import {
   type GroupSafeguards,
   type GroupSetting,
@@ -29,7 +30,7 @@ import {
 import { mulberry32 } from "../markov";
 import { ENGINE_ALIAS } from "../lens";
 import { balanceSignature, freshNouns, NORTH, noteNoun } from "../northData";
-import { countedWords, ROUTE_ERAS, routeCapitals, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
+import { countedWords, withinCap, ROUTE_ERAS, routeCapitals, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, inCultureGroup, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { setDeityHooks } from "./hook";
 
@@ -130,13 +131,10 @@ export const DEITY_KINDS = DEITY_DATA.kinds;
 export const DEITY_DOMAINS = DEITY_DATA.domains;
 export const DEITY_ANY = DEITY_DATA.any;
 /** §0: the byname cultures, without the sensitive ones. */
-export const DEITY_CULTURES = BYNAME_CULTURES.filter((c) => !DEITY_DATA.unoffered.includes(c.key));
+export const DEITY_CULTURES = BYNAME_CULTURES_5C.filter((c) => !DEITY_DATA.unoffered.includes(c.key));
 export const deityCultureOffered = (key: string) => DEITY_CULTURES.some((c) => c.key === key) || key in ENGINE_ALIAS;
 /** Northern Europe brief 5a §3: the cultures sacred places offer: the deities' roster, and Welsh, Scottish, Irish, Cornish, Scandinavian and German. */
-export const DEITY5A_CULTURES = [
-  ...DEITY_CULTURES,
-  ...Object.keys(ENGINE_ALIAS).map((key) => ({ key, label: key[0].toUpperCase() + key.slice(1), guide: "" })),
-];
+export const DEITY5A_CULTURES = DEITY_CULTURES;
 
 /** §4.1: the domains offered in an era (steampunk: the steam age with fantastic). */
 export const domainsOffered = (era: RouteEra, fantastic: boolean) => DEITY_DOMAINS.filter((d) => (!d.e || d.e.includes(era)) && (d.h === undefined || d.h === fantastic));
@@ -149,6 +147,8 @@ export const defaultDeitySafeguards = (): GroupSafeguards => ({ block: DEITY_DAT
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface DeityOptions {
+  /** Northern Europe brief 5d: false keeps the module's own draw (the other modules that read this one for their pools). */
+  signature?: boolean;
   /** Wizard retirement brief §5: the biome lookups the town pools draw from; the built-ins when absent. */
   catalogue?: BiomeCatalogue;
   culture?: string;
@@ -465,6 +465,21 @@ export function deityCulture(key: string | undefined): { culture: string; notice
 
 /** §7: a batch of unique deity, pantheon and sacred place names; with series on, one pantheon (§8). */
 export function generateDeityNames(options: DeityOptions): DeityBatch {
+  const batch = generateDeityNamesCore(options);
+  // Northern Europe brief 5d: a core culture's own frames take their share of the deities' names. A chosen kind (a pantheon, a sacred place), a
+  // domain, a gender, a name pack or placeholders, a pantheon (series) and the tests' forms keep the module's own draw.
+  if (options.signature === false || (options.kind && options.kind !== "deity") || (options.kinds && !options.kinds.includes("deity")) || options.domain || (options.gender && options.gender !== "any") || (options.names && options.names !== "titles") || options.series || options.forms || options.shape) return batch;
+  const requested = deityCulture(options.culture).culture;
+  const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
+  const guards = options.safeguards;
+  const ok = (text: string) => !deityTitleBlocked(text, guards) && !hasRealDivineName(text) && withinCap(text, DEITY_DATA.cap);
+  return {
+    ...batch,
+    names: applySignature(batch.names, "deityNames", requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic }, keep: (n) => n.kind !== "deity", set: (n, text) => ({ ...n, text: deityCapitals(text), title: deityCapitals(text), shape: "signature" }) }),
+  };
+}
+
+function generateDeityNamesCore(options: DeityOptions): DeityBatch {
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
@@ -638,7 +653,7 @@ setDeityHooks({
 // The filler's deity source (shared tables brief §5.2): "[deity]", "[god]", "[local deity]".
 registerResolver("deity", (req) => {
   try {
-    return generateDeityNames({ culture: req.culture, era: req.era, kind: "deity", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
+    return generateDeityNames({ signature: false, culture: req.culture, era: req.era, kind: "deity", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
   } catch {
     return undefined;
   }

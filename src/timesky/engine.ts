@@ -31,7 +31,7 @@ import { cultureAnimals, townSource } from "../bynames/engine";
 import { deityTitle, hasRealDivineName, isChristianCulture } from "../deities/engine";
 import { generateEventNames } from "../events/engine";
 import { MONEY_DATA, pluralName } from "../money/engine";
-import { countedWords, routeCapitals, routeFigure, routeKingdom, routeNorm, routeSetting, ROUTE_ERAS, type RouteEra } from "../routes/engine";
+import { countedWords, withinCap, routeCapitals, routeFigure, routeKingdom, routeNorm, routeSetting, ROUTE_ERAS, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, entryAllowed, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { breaksDeityWords } from "../deities/engine";
 import {
@@ -65,13 +65,16 @@ import {
   weekSystems,
   findTimeKind,
 } from "./data";
-import { cultureSet } from "../lens";
+import { cultureSet, engineCulture } from "../lens";
+import { applySignature } from "../north5c";
 
 export * from "./data";
 
 // ── Options and results ─────────────────────────────────────────────────────
 
 export interface TimeSkyOptions {
+  /** Northern Europe brief 5d: false keeps the module's own draw. */
+  signature?: boolean;
   culture?: string;
   kind?: TimeKind;
   era?: RouteEra;
@@ -1345,13 +1348,32 @@ function festivalSeries(S: Series, cycleKey: string): TimeName[] {
 export const timeKindDefault = (module: "calendar" | "sky"): TimeKind => (module === "calendar" ? "month" : "constellation");
 
 export function generateTimeSkyNames(options: TimeSkyOptions): TimeBatch {
+  const batch = generateTimeSkyNamesCore(options);
+  // Northern Europe brief 5d: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
+  // Months, festivals and moons; constellations and lights. A series, days and signs (fixed systems), the neutral sky and the tests' patterns keep the module's own draw.
+  const kind = options.kind;
+  const module = kind === "month" || kind === "festival" || kind === "moon" ? "calendarNames" : kind === "constellation" || kind === "light" ? "skyNames" : undefined;
+  if (!module || options.signature === false || fillModeOf(options.people) || options.series || options.shape || options.neutral || options.words === "loanwords") return batch;
+  const requested = options.culture && findTimeCulture(options.culture) ? options.culture : "norman-british";
+  const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
+  const guards = options.safeguards ?? defaultTimeSafeguards();
+  const block = timeBlockSet(guards, kind);
+  const ok = (text: string) => !block.has(bare(text)) && !breaksTimeWords(text) && withinCap(text, TIME_SKY.cap) && (options.people !== "invented" || !text.includes("["));
+  return {
+    ...batch,
+    names: applySignature(batch.names, module, requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic, kind }, keep: (n) => !!n.real || !!n.loan || !!n.leap || !!n.extra, set: (n, text) => ({ ...n, text: timeCapitals(text), shape: "signature" }) }),
+  };
+}
+
+function generateTimeSkyNamesCore(options: TimeSkyOptions): TimeBatch {
   // Shared tables brief §6: `real` and `generated` run as placeholders, then the filler names people.
   const fillMode = fillModeOf(options.people);
   if (fillMode) return fillPeopleBatch(generateTimeSkyNames({ ...options, people: "placeholders" }), fillMode, { culture: options.culture, era: options.era, series: options.series });
   const seed = options.seed !== undefined && Number.isFinite(options.seed) ? options.seed >>> 0 : (Math.random() * 0xffffffff) >>> 0;
   const rng = mulberry32(seed);
   const notices: string[] = [];
-  const culture = findTimeCulture(options.culture)?.key ?? "norman-british";
+  // Brief 5d: the newer culture keys read the legacy key's tables (`engineAlias`).
+  const culture = findTimeCulture(engineCulture(options.culture ?? ""))?.key ?? "norman-british";
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const sensitive = isSensitive(culture);
   const fantastic = !sensitive && !!options.fantastic;

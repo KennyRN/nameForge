@@ -2438,7 +2438,7 @@
    }
   },
   "eventNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2450,11 +2450,11 @@
      "genre": null,
      "region": null
     },
-    "roster": "route"
+    "roster": "route5a"
    }
   },
   "calendarNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2470,7 +2470,7 @@
    }
   },
   "skyNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2823,7 +2823,7 @@
    }
   },
   "armsNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2839,7 +2839,7 @@
    }
   },
   "treasureNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2855,7 +2855,7 @@
    }
   },
   "bookNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2904,7 +2904,7 @@
    }
   },
   "deityNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {
@@ -2916,7 +2916,7 @@
      "genre": null,
      "region": null
     },
-    "roster": "deity"
+    "roster": "deity5a"
    }
   },
   "sacredPlaces": {
@@ -2936,7 +2936,7 @@
    }
   },
   "moneyNames": {
-   "cultures": "shared",
+   "cultures": "north5c",
    "eras": "codes",
    "land": false,
    "sentence": {

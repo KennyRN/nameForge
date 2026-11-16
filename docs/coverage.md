@@ -17,10 +17,10 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | monuments and statues | 116/18 | 73/18 | 97/18 | 73/18 | 73/18 | 69/8 | 58/15 | 54/14 | 60/14 | not offered | not offered | not offered | **8/10** | **8/7** | **7/8** | **1/3** | **1/3** | **3/7** | **1/4** | **0/2** | **0/3** | **1/5** | **3/6** | **1/3** | **3/3** | **0/2** | **1/3** | **0/0** | **0/0** | not offered |
 | settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | not offered | not offered | not offered | 16/116 | not offered | 22/119 | not offered | **0/105** | **0/85** | 17/60 | 26/51 | **0/58** | **0/86** | **10/97** | 58/86 | 33/38 | **0/77** | **0/53** | not offered | not offered | not offered |
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
-| events and eras | **0/1** | **0/2** | **0/2** | **0/2** | **0/2** | **0/2** | **0/2** | **0/2** | not offered | not offered | not offered | not offered | **0/2** | **0/0** | **0/2** | **0/3** | 16/5 | **11/4** | **11/2** | **0/2** | **11/5** | **1/2** | 34/5 | **35/3** | 34/5 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
-| money and coins | **96/2 + profile** | **15/1 + profile** | **15/1 + profile** | **15/1 + profile** | **15/1 + profile** | **15/1 + profile** | **21/1 + profile** | **21/1 + profile** | not offered | **29/2 + profile** | **17/0 + profile** | **29/2 + profile** | **41/2** | **32/2** | **37/3** | **18/1 + profile** | **31/0** | **15/0 + profile** | **9/0 + profile** | **22/0 + profile** | **23/0 + profile** | **24/1** | **32/1** | **21/1 + profile** | **18/1 + profile** | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
-| calendars and festivals | **43/2** | **20/1** | **20/1** | **20/1** | **20/1** | **20/1** | **29/1** | **29/1** | not offered | not offered | not offered | not offered | **33/3** | **25/1** | **31/0** | **10/1** | **10/0** | **20/0** | **10/0** | **9/2** | **5/2** | **6/0** | **65/1** | **73/1** | **55/1** | **37/3** | **2/3** | excluded | excluded | not offered |
-| sky lore | **18/0** | **3/0** | **3/0** | **3/0** | **3/0** | **3/0** | **5/0** | **5/0** | not offered | not offered | not offered | not offered | **28/0** | **32/0** | **3/0** | **7/0** | **6/0** | **5/0** | **0/0** | **2/0** | **0/0** | **0/0** | **13/0** | **8/0** | **8/0** | **7/0** | **5/0** | excluded | excluded | not offered |
+| events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | not offered | not offered | not offered | **0/2** | **0/0** | **0/2** | **0/3** | 16/5 | **11/4** | **11/2** | **0/2** | **11/5** | **1/2** | 34/5 | **35/3** | 34/5 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
+| money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | **29/2 + profile** | **17/0 + profile** | **29/2 + profile** | **41/2** | **32/2** | **37/3** | **18/1 + profile** | **31/0** | **15/0 + profile** | **9/0 + profile** | **22/0 + profile** | **23/0 + profile** | **24/1** | **32/1** | **21/1 + profile** | **18/1 + profile** | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
+| calendars and festivals | 93/12 | 70/11 | 70/11 | 67/11 | 65/11 | 35/5 | 75/11 | 80/11 | 47/10 | not offered | not offered | not offered | **33/3** | **25/1** | **31/0** | **10/1** | **10/0** | **20/0** | **10/0** | **9/2** | **5/2** | **6/0** | **65/1** | **73/1** | **55/1** | **37/3** | **2/3** | excluded | excluded | not offered |
+| sky lore | 62/10 | 46/10 | 44/10 | 44/10 | 46/10 | 18/4 | 48/10 | 47/10 | 44/10 | not offered | not offered | not offered | **28/0** | **32/0** | **3/0** | **7/0** | **6/0** | **5/0** | **0/0** | **2/0** | **0/0** | **0/0** | **13/0** | **8/0** | **8/0** | **7/0** | **5/0** | excluded | excluded | not offered |
 | mountains | 34/108 + profile | 34/36 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 33/14 + profile | 30/14 | 30/22 | not offered | not offered | not offered | **4/0 + profile** | **6/0 + profile** | **5/0 + profile** | **1/0 + profile** | **1/0 + profile** | **3/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **5/2 + profile** | **6/2 + profile** | **3/2 + profile** | **4/2 + profile** | **5/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | not offered |
 | forests and woods | 34/65 + profile | 34/36 | 34/84 | 34/12 | 34/36 | 17/6 + profile | 31/38 + profile | 30/38 | 30/136 | not offered | not offered | not offered | **5/2 + profile** | **4/2 + profile** | **5/2 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **4/0 + profile** | **5/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **1/0 + profile** | not offered |
 | deserts | **4/0 + profile** | **4/0** | **4/0** | **4/0** | **4/0** | **5/0 + profile** | **12/4 + profile** | **12/4** | **0/0** | not offered | not offered | not offered | **4/0 + profile** | **4/1 + profile** | **4/0 + profile** | **1/1 + profile** | **0/2 + profile** | **1/1 + profile** | **0/1 + profile** | **0/0 + profile** | **1/1 + profile** | **4/1 + profile** | **6/0 + profile** | **3/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **0/0 + profile** | not offered |
@@ -39,12 +39,12 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | epithets and bynames | 70/10 | 54/10 | 53/10 | 49/10 | 50/10 | 19/4 | 56/10 | 51/10 | 49/10 | not offered | not offered | not offered | **6/0** | **11/0** | **3/0** | **13/0** | **8/0** | **6/0** | **3/0** | **5/0** | **4/0** | **5/0** | **4/0** | **4/0** | **3/0** | **3/0** | **4/0** | not offered | not offered | not offered |
 | titles and honourifics | 68/10 | 51/10 | 50/10 | 48/10 | 59/10 | 20/4 | 46/10 | 53/10 | 47/10 | not offered | not offered | not offered | **10/0** | **9/0** | **7/0** | **6/0** | **8/0** | **6/0** | **7/0** | **6/0** | **8/0** | **7/0** | **7/0** | **6/0** | **7/0** | **6/0** | **5/0** | not offered | not offered | not offered |
 | family names | 52/29 | 51/19 | 49/19 | 53/19 | 52/19 | 15/13 | 45/17 | 50/17 | 53/10 | not offered | not offered | not offered | **0/6** | **0/4** | **0/4** | **0/6** | **0/12** | **0/5** | **0/3** | **0/4** | **0/5** | **0/6** | **0/1** | **0/1** | **0/1** | **0/3** | **0/3** | not offered | not offered | not offered |
-| arms and armour | **10/0 + profile** | **9/0 + profile** | **9/0 + profile** | **9/0 + profile** | **9/0 + profile** | **9/0 + profile** | **5/0 + profile** | **5/0 + profile** | not offered | not offered | not offered | not offered | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **5/0 + profile** | **2/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | not offered | not offered | not offered |
-| treasures and regalia | **12/0 + profile** | **12/0 + profile** | **12/0 + profile** | **12/0 + profile** | **12/0 + profile** | **12/0 + profile** | **5/0 + profile** | **5/0 + profile** | not offered | not offered | not offered | not offered | **3/0 + profile** | **3/0 + profile** | **5/0 + profile** | **3/0 + profile** | **2/0 + profile** | **1/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **7/0 + profile** | **1/0 + profile** | **5/0 + profile** | **4/0 + profile** | **3/0 + profile** | not offered | not offered | not offered |
-| books and writings | **10/0 + profile** | **9/0 + profile** | **9/0 + profile** | **9/0 + profile** | **9/0 + profile** | **9/0 + profile** | **5/0 + profile** | **5/0 + profile** | not offered | not offered | not offered | not offered | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **6/0 + profile** | **1/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | not offered | not offered | not offered |
+| arms and armour | 63/10 + profile | 64/10 + profile | 62/10 + profile | 63/10 + profile | 61/10 + profile | 24/4 + profile | 57/10 + profile | 57/10 + profile | 54/10 | not offered | not offered | not offered | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **5/0 + profile** | **2/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | not offered | not offered | not offered |
+| treasures and regalia | 61/10 + profile | 64/10 + profile | 61/10 + profile | 62/10 + profile | 62/10 + profile | 27/4 + profile | 51/10 + profile | 55/10 + profile | 52/10 | not offered | not offered | not offered | **3/0 + profile** | **3/0 + profile** | **5/0 + profile** | **3/0 + profile** | **2/0 + profile** | **1/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **7/0 + profile** | **1/0 + profile** | **5/0 + profile** | **4/0 + profile** | **3/0 + profile** | not offered | not offered | not offered |
+| books and writings | 63/10 + profile | 60/10 + profile | 58/10 + profile | 53/10 + profile | 57/10 + profile | 24/4 + profile | 54/10 + profile | 58/10 + profile | 54/10 | not offered | not offered | not offered | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **6/0 + profile** | **1/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | not offered | not offered | not offered |
 | realms and polities | 53/10 + profile | 52/10 + profile | 50/10 + profile | 47/10 + profile | 50/10 + profile | 18/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | not offered | not offered | not offered | **1/0 + profile** | **4/0 + profile** | **4/0 + profile** | **8/0 + profile** | **7/0 + profile** | **5/0 + profile** | **2/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | not offered | not offered | not offered |
 | peoples and tongues | 47/10 + profile | 45/10 + profile | 49/10 + profile | 49/10 + profile | 45/10 + profile | 15/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | not offered | not offered | not offered | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered | not offered | not offered |
-| deities | **30/1 + profile** | **16/0 + profile** | **16/0 + profile** | **16/0 + profile** | **16/0 + profile** | **16/0 + profile** | **17/1 + profile** | **17/1 + profile** | not offered | not offered | not offered | not offered | **12/0** | **7/0** | **12/0** | **10/2 + profile** | **13/1 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/1 + profile** | **14/1 + profile** | excluded | excluded | not offered |
+| deities | 75/11 + profile | 62/10 + profile | 62/10 + profile | 61/10 + profile | 62/10 + profile | 31/4 + profile | 63/11 + profile | 62/11 + profile | 46/10 | not offered | not offered | not offered | **12/0** | **7/0** | **12/0** | **10/2 + profile** | **13/1 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/1 + profile** | **14/1 + profile** | excluded | excluded | not offered |
 | sacred places | 60/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 28/4 + profile | 47/10 + profile | 30/10 | 30/10 | not offered | not offered | not offered | **12/0** | **7/0** | **12/0** | **10/0 + profile** | **13/0 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/0 + profile** | **14/0 + profile** | excluded | excluded | not offered |
 | tribes and kin groups | 46/10 | 48/10 | 48/10 | 48/10 | 48/10 | **10/0** | 41/10 | 46/10 | 46/10 | not offered | **8/0** | not offered | **8/0** | **8/0** | not offered | **7/0** | **7/0** | not offered | not offered | **4/0** | **5/0** | **6/0** | **8/0** | **8/0** | **8/0** | **7/0** | **7/0** | **6/0** | **10/0** | not offered |
 | faiths and mystic orders | 50/10 | 55/10 | 49/10 | 49/10 | 53/10 | 18/4 | 44/10 | 43/10 | 45/10 | not offered | **0/0** | not offered | **4/0** | **4/0** | not offered | **0/0** | **2/0** | not offered | not offered | **1/0** | **1/0** | **6/0** | **8/2** | **8/2** | **8/2** | **1/0** | **1/0** | **3/0** | **1/0** | not offered |
@@ -92,10 +92,10 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | monuments and statues | 169 | 158 | 127 | 194 | 94 | 25 | 23 |
 | settlement names | 228 | 726 | 336 | 429 | 429 | **0** | 633 |
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| events and eras | **6** | 13 | 13 | 28 | **9** | 28 | 31 |
-| money and coins | 130 | 178 | 208 | 233 | 185 | 165 | 168 |
-| calendars and festivals | 147 | 104 | 83 | 13 | **6** | **4** | **4** |
-| sky lore | **0** | **0** | **0** | **0** | **0** | **2** | **2** |
+| events and eras | 58 | 88 | 87 | 78 | 60 | 28 | 31 |
+| money and coins | 181 | 276 | 305 | 297 | 233 | 165 | 168 |
+| calendars and festivals | 197 | 183 | 159 | 64 | 59 | **4** | **4** |
+| sky lore | 49 | 49 | 49 | 48 | 67 | **2** | **2** |
 | mountains (land) | 82 | 79 | 125 | 125 | 125 | **6** | **6** |
 | forests and woods (land) | 80 | 90 | 145 | 145 | 145 | **4** | **4** |
 | deserts (land) | **10** | **11** | 21 | 21 | 21 | **8** | **8** |
@@ -114,12 +114,12 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | epithets and bynames | 68 | 93 | 52 | 49 | 51 | **0** | **0** |
 | titles and honourifics | 53 | 145 | 106 | 49 | 48 | **0** | **0** |
 | family names | 53 | 109 | 72 | 49 | 48 | **0** | **0** |
-| arms and armour | 15 | 38 | 31 | 18 | **3** | **11** | **11** |
-| treasures and regalia | 19 | 35 | 23 | 12 | **3** | **11** | **11** |
-| books and writings | 15 | 46 | 38 | 12 | **3** | **8** | **8** |
+| arms and armour | 63 | 147 | 177 | 89 | 51 | **11** | **11** |
+| treasures and regalia | 69 | 126 | 96 | 61 | 56 | **11** | **11** |
+| books and writings | 68 | 166 | 140 | 62 | 52 | **8** | **8** |
 | realms and polities | 59 | 131 | 101 | **0** | 78 | 34 | 42 |
 | peoples and tongues | 59 | 64 | 51 | 51 | 68 | **7** | **7** |
-| deities | **0** | **0** | **0** | **3** | **0** | 14 | 14 |
+| deities | 48 | 48 | 48 | 51 | 53 | 14 | 14 |
 | sacred places | 78 | 72 | 72 | 122 | 48 | **9** | **9** |
 | tribes and kin groups | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 | faiths and mystic orders | 63 | 123 | 61 | 51 | 97 | **0** | 23 |
@@ -146,10 +146,10 @@ Style (words/shapes; target 16 and 4). Realistic is the default and isn't counte
 | monuments and statues | **0/0** | 27/9 | 27/9 | **6/3** | **0/0** | **0/0** | **0/0** | 27/9 |
 | settlement names | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 | settlement kit | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
-| events and eras | **0/0** | **0/0** | **0/0** | **3/6** | **0/0** | **0/0** | **0/0** | **0/0** |
-| money and coins | **0/0** | **26/2** | **26/2** | **9/5** | **0/0** | **0/0** | **0/0** | **26/2** |
-| calendars and festivals | **0/0** | **0/4** | **0/4** | **0/2** | **0/0** | **0/0** | **0/0** | **0/4** |
-| sky lore | **0/0** | **0/1** | **0/1** | **0/0** | **0/0** | **0/0** | **0/0** | **0/1** |
+| events and eras | **0/0** | 27/16 | 27/16 | **3/6** | **0/0** | **0/0** | **0/0** | 27/16 |
+| money and coins | **0/0** | 53/18 | 53/18 | **9/5** | **0/0** | **0/0** | **0/0** | 53/18 |
+| calendars and festivals | **0/0** | 27/20 | 27/20 | **0/2** | **0/0** | **0/0** | **0/0** | 27/20 |
+| sky lore | **0/0** | 27/17 | 27/17 | **0/0** | **0/0** | **0/0** | **0/0** | 27/17 |
 | mountains | **0/0** | 43/13 | 43/13 | **0/0** | **0/0** | **0/0** | **0/0** | 43/13 |
 | forests and woods | **0/0** | 43/7 | 43/7 | **0/0** | **0/0** | **0/0** | **0/0** | 43/7 |
 | deserts | **0/0** | 22/5 | 22/5 | **0/0** | **0/0** | **0/0** | **0/0** | 22/5 |
@@ -168,12 +168,12 @@ Style (words/shapes; target 16 and 4). Realistic is the default and isn't counte
 | epithets and bynames | **0/0** | 27/16 | 27/16 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
 | titles and honourifics | **0/0** | 27/16 | 27/16 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
 | family names | **0/0** | 27/16 | 27/16 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
-| arms and armour | **0/0** | **6/0** | **6/0** | **0/0** | **0/0** | **0/0** | **0/0** | **6/0** |
-| treasures and regalia | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
-| books and writings | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
+| arms and armour | **0/0** | 33/16 | 33/16 | **0/0** | **0/0** | **0/0** | **0/0** | 33/16 |
+| treasures and regalia | **0/0** | 27/16 | 27/16 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
+| books and writings | **0/0** | 27/16 | 27/16 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
 | realms and polities | **0/0** | 27/16 | 27/16 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
 | peoples and tongues | **0/0** | 27/16 | 27/16 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
-| deities | **0/0** | **4/0** | **4/0** | **0/3** | **0/0** | **0/0** | **0/0** | **4/0** |
+| deities | **0/0** | 31/16 | 31/16 | **0/3** | **0/0** | **0/0** | **0/0** | 31/16 |
 | sacred places | **0/0** | **31/0** | **31/0** | **0/2** | **0/0** | **0/0** | **0/0** | **31/0** |
 | tribes and kin groups | **0/0** | 24/16 | 24/16 | **0/0** | **0/0** | **0/0** | **0/0** | 24/16 |
 | faiths and mystic orders | **0/14** | 27/53 | 27/53 | **0/0** | **0/0** | **0/0** | **0/0** | 27/16 |
@@ -859,10 +859,10 @@ The live lens cultures each module doesn't offer, and the keys it offers that ar
 - **buildings and landmarks**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **monuments and statues**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **settlement names**: doesn't offer French, Dutch, Iberian, Greek and Byzantine, Turkic and Mongol steppe, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **events and eras**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **money and coins**: doesn't offer German, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **calendars and festivals**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **sky lore**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **events and eras**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **money and coins**: doesn't offer Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **calendars and festivals**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **sky lore**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **mountains**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **forests and woods**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **deserts**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
@@ -880,12 +880,12 @@ The live lens cultures each module doesn't offer, and the keys it offers that ar
 - **epithets and bynames**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **titles and honourifics**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **family names**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **arms and armour**: doesn't offer German, French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **treasures and regalia**: doesn't offer German, French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **books and writings**: doesn't offer German, French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **arms and armour**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **treasures and regalia**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **books and writings**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **realms and polities**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **peoples and tongues**: doesn't offer French, Dutch, Iberian, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **deities**: doesn't offer German, French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **deities**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **sacred places**: doesn't offer French, Dutch, Iberian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **tribes and kin groups**: doesn't offer French, Iberian, Slavic, Egyptian, Ethiopian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: northAmerican, maritimeSEA, northernPacific, sahul.
 - **faiths and mystic orders**: doesn't offer French, Iberian, Slavic, Egyptian, Ethiopian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: northAmerican, maritimeSEA, northernPacific, sahul.
@@ -908,15 +908,15 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | lens culture | words | shapes |
 | --- | --- | --- |
-| English | 2109 | 2255 |
-| Welsh | 1781 | 822 |
-| Scottish | 1929 | 1409 |
-| Irish | 1655 | 607 |
-| Cornish | 1707 | 811 |
-| Celtic | 768 | 401 |
-| Norse | 1694 | 1051 |
-| Scandinavian | 1777 | 1112 |
-| German | 1768 | 1510 |
+| English | 2494 | 2335 |
+| Welsh | 2175 | 902 |
+| Scottish | 2311 | 1489 |
+| Irish | 2031 | 687 |
+| Cornish | 2078 | 891 |
+| Celtic | 888 | 433 |
+| Norse | 2068 | 1131 |
+| Scandinavian | 2159 | 1192 |
+| German | 2159 | 1590 |
 | French | 84 | 30 |
 | Dutch | 32 | 0 |
 | Iberian | 84 | 30 |
@@ -958,24 +958,24 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 3035 |
-| MD medieval | 4355 |
-| EM early modern | 4154 |
-| ST steam age | 4337 |
-| MO modern | 3842 |
+| AN ancient | 3436 |
+| MD medieval | 5024 |
+| EM early modern | 4819 |
+| ST steam age | 4768 |
+| MO modern | 4264 |
 | NF near future | 762 |
 | IS interstellar | 1516 |
 
 | style | words | shapes |
 | --- | --- | --- |
 | historic or low fantasy | 0 | 140 |
-| high or epic fantasy | 1140 | 568 |
-| contemporary fantasy | 1056 | 566 |
+| high or epic fantasy | 1356 | 696 |
+| contemporary fantasy | 1272 | 694 |
 | steampunk | 84 | 57 |
 | dieselpunk | 34 | 8 |
 | cyberpunk | 0 | 0 |
 | post-apocalyptic | 70 | 18 |
-| space opera | 1192 | 399 |
+| space opera | 1408 | 527 |
 
 | tone | entries |
 | --- | --- |

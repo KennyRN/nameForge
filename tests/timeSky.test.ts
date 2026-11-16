@@ -13,6 +13,7 @@ import {
   type TimeKind,
 } from "../src/timesky/data";
 import { breaksDeityWords } from "../src/deities/engine";
+import { ENGINE_ALIAS } from "../src/lens";
 import { hasBannedWord } from "../src/groups/engine";
 import { MONEY_DATA } from "../src/money/engine";
 import { BUILT_IN_VOCAB, SEASON_KEYS } from "../src/settlement/vocab";
@@ -62,7 +63,7 @@ test("§16.1: every cell of the §5.5 tables names a listed system, and shares s
     const parsed = parseCell(cell);
     if (parsed.length > 0) assert.equal(parsed.reduce((n, [, share]) => n + share, 0), 100, cell);
   }
-  for (const c of TIME_CULTURES) {
+  for (const c of TIME_CULTURES.filter((t) => !ENGINE_ALIAS[t.key])) {
     assert.equal(TIME_SKY.cells.months[c.key]?.length, 5, `months ${c.key}`);
     assert.equal(TIME_SKY.cells.days[c.key]?.length, 6, `days ${c.key}`);
     assert.ok(TIME_SKY.cells.festivals[c.key], `festivals ${c.key}`);
@@ -519,7 +520,7 @@ const skyText = (s: TimeSentenceState) => timeSentenceText(skySentence(s, LIMITS
 
 test("§16.7: the default sentences read as the brief gives them", () => {
   assert.equal(calText(DEFAULT_CALENDAR_STATE), "Norman & British months of the medieval era, in a historic or low fantasy world, set in their homeland, of any tone, with real-world names for gods and people, each one separate.");
-  assert.equal(skyText(DEFAULT_SKY_STATE), "Norman & British constellations of the ancient to modern era, in a historic or low fantasy world, seen from their homeland, of any tone, with real-world names for gods and people, each one separate.");
+  assert.equal(skyText(DEFAULT_SKY_STATE), "Norman & British constellations of the pre-industrial era, in a historic or low fantasy world, seen from their homeland, of any tone, with real-world names for gods and people, each one separate.");
   assert.equal(
     calText({ ...DEFAULT_CALENDAR_STATE, culture: "anglo-saxon", series: true }),
     "Anglo-Saxon months of the medieval era, in a historic or low fantasy world, set in their homeland, starting in their own new year, of any tone, with real-world names for gods and people, as one calendar.",
@@ -536,9 +537,9 @@ test("§16.7: the start link shows only with a series of months, festivals or fu
   assert.match(calText({ ...base, start: "spring", biome: "temperate" }), /starting in spring,/);
 });
 
-test("§16.7: the words link shows only for festivals in the eight cultures with a loan form", () => {
+test("§16.7: the words link shows only for festivals in the eight cultures with a loan form (and the four Celtic nations, which read Celtic's)", () => {
   const withLoans = TIME_CULTURES.filter((c) => showsTimeWords({ ...DEFAULT_CALENDAR_STATE, kind: "festival", culture: c.key })).map((c) => c.key);
-  assert.deepEqual(withLoans.sort(), ["arabic-persian", "celtic", "egyptian", "greek-byzantine", "japanese", "korean", "roman", "slavic"].sort());
+  assert.deepEqual(withLoans.sort(), ["arabic-persian", "celtic", "egyptian", "greek-byzantine", "japanese", "korean", "roman", "slavic", "welsh", "scottish", "irish", "cornish"].sort());
   assert.ok(!showsTimeWords({ ...DEFAULT_CALENDAR_STATE, kind: "month", culture: "celtic" }));
   assert.match(calText({ ...DEFAULT_CALENDAR_STATE, kind: "festival", culture: "celtic", words: "loanwords" }), /with familiar loanwords/);
 });

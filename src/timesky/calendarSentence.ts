@@ -3,7 +3,7 @@
 // set in ‹their homeland›, starting in ‹their own new year›, ‹of any tone›, with ‹placeholders for›
 // gods and people, ‹as one calendar›". Built as segments like the money sentence. No Obsidian imports.
 
-import { lensCultureLabel } from "../lens";
+import { engineCulture, lensCultureLabel } from "../lens";
 import { registerRoster } from "../lensRosters";
 import { asSegment, chooseLens, eraWorldSegments } from "../lensSentence";
 import { lensClause, registerLensRules } from "../lensView";
@@ -89,7 +89,7 @@ const WORDS_TEXT: Record<TimeWords, string> = { translated: "in translated names
 
 /** §2.3: whether a culture has at least one loan form (so the words link shows). */
 export function timeHasLoans(culture: string): boolean {
-  return (TIME_SKY.cultureNames[culture]?.festival ?? []).some((r) => !!r.loan);
+  return (TIME_SKY.cultureNames[engineCulture(culture)]?.festival ?? []).some((r) => !!r.loan);
 }
 
 /** The resolved land of a state. */

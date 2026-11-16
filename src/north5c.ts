@@ -4,12 +4,13 @@
 // `SIGNATURE_SHARE` of a batch's names (§11.3); the rest come from the module's own draw. No Obsidian imports.
 
 import north from "./data/north5c.json";
+import north5d from "./data/north5d.json";
 import { mulberry32 } from "./markov";
 import { SIGNATURE_SHARE } from "./northData";
 import { containsRealGroup, isRealGroup } from "./realPlaces";
 
-/** A frame: its pattern, its weight and, for a fantastic one, its tag ("*"). */
-type Frame = [string, number] | [string, number, string];
+/** A frame: its pattern, its weight, its tag (an era span and/or "*" for a fantastic frame; "" for none) and, for a frame of one kind of the module (a month, a festival), that kind (5d §14.3). */
+type Frame = [string, number] | [string, number, string] | [string, number, string, string];
 interface CultureContent {
   /** The three lists of nouns, one per kind of the module. */
   n: string[][];
@@ -30,7 +31,8 @@ interface North5c {
   native: Record<string, Record<string, string[]>>;
 }
 
-export const NORTH5C = north as unknown as North5c;
+// 5d §14.3: the batch's own data sits beside 5c's; one reader serves both.
+export const NORTH5C = { modules: { ...(north as unknown as North5c).modules, ...(north5d as unknown as North5c).modules }, native: (north as unknown as North5c).native } as North5c;
 
 /** The seven core cultures of the batch and Celtic. */
 export const CORE_5C = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"] as const;
@@ -63,6 +65,8 @@ function sources(module: string, key: string): { content: CultureContent; weight
 
 /** What a name is drawn for (5d §14.1): the eras it may sit in, whether the setting is fantastic, and the bearer's sex (for a rank). */
 export interface DrawCtx {
+  /** 5d §14.3: the kind of name drawn (a calendar's month or festival, a sky's constellation): a frame written for one kind is drawn only for it. */
+  kind?: string;
   eras?: readonly string[];
   fantastic?: boolean;
   sex?: "male" | "female";
@@ -133,7 +137,7 @@ export function signatureDrawer(module: string, culture: string | undefined, fra
     for (let attempt = 0; attempt < 12; attempt++) {
       const { content } = pickWeighted(parts.map((p) => [p, p.weight] as [typeof p, number]), rng);
       // 5d §14.1: a fantastic frame only where the setting is fantastic.
-      const frames = content.f.filter((f) => tagOk(f[2], ctx));
+      const frames = content.f.filter((f) => tagOk(f[2], ctx) && (!f[3] || !ctx?.kind || f[3] === ctx.kind));
       if (frames.length === 0) continue;
       const frame = pickWeighted(frames.map((f) => [f[0], f[1]] as [string, number]), rng);
       const chosen: string[] = [];
