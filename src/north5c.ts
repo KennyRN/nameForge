@@ -38,7 +38,7 @@ export const NORTH5C = { modules: { ...(north as unknown as North5c).modules, ..
 /** The seven core cultures of the batch and Celtic. */
 export const CORE_5C = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"] as const;
 /** The traditions whose own group families the groups engine draws (the core cultures and, from brief 6a, the batch's: a stored celtic or germanic tradition keeps its old draw). */
-export const GROUP_OWN_TRADITIONS: readonly string[] = [...CORE_5C, ...TIER6A_KEYS, "anglo-saxon"];
+export const GROUP_OWN_TRADITIONS: readonly string[] = [...CORE_5C, ...TIER6A_KEYS, "anglo-saxon", "norman-british"];
 /** The four Celtic nations, drawn at a quarter weight inside Celtic (§3.2). */
 export const CELTIC_NATIONS = ["welsh", "scottish", "irish", "cornish"] as const;
 export const CELTIC_5C_WEIGHT = 0.25;

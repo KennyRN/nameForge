@@ -11,7 +11,7 @@ export const SPANISH = {
   monuments: ["Standing Stone|Border Stone|Moorish Pillar|Milestone|Boundary Cross|Cairn|Memorial Stone|Roadside Stone|Giant's Stone|Stone", "Roadside Cross|Holy Cross|Calvary|Wayside Cross|Churchyard Cross|Stone Cross|Memorial Cross|Summit Cross|Giant's Cross|Cross", "Memorial|Statue|Fountain|Column|Plaque|Obelisk|War Memorial|Monument|Ghost Memorial|Tablet"],
 };
 export const PORTUGUESE = {
-  style: "first", adj: ["Old", "Royal", "Little"],
+  style: "last", adj: ["Old", "Royal", "Little"],
   streets: ["Street|Lane|Quay Walk|Steps|Passage|Slope|Avenue|Boulevard|Mermaid's Alley|Way", "Square|Market Square|Quay Square|Fountain Square|Tram Square|Cathedral Square|Promenade|Roundabout|Lost Fleet Square|Green", "Quarter|Fishermen's Quarter|Old Town|Port Quarter|Fado Quarter|Tile Quarter|Suburb|Estate|Drowned Quarter|District"],
   inns: ["Inn|Hostelry|Sailors' Inn|Wayside Inn|Pilgrims' Inn|Coaching Inn|Guest House|Hotel|Mermaid's Inn|House", "Tavern|Wine Cellar|Taproom|Port Lodge|Cider House|Fado House|Cafe|Bar|Lost Fleet Tavern|Cellar", "Resting Place|Pilgrims' Hostel|Fishermen's Stop|Wayside Hut|Drovers' Rest|Hospice|Hostel|Service Station|Crossroads Haunt|Rest"],
   buildings: ["Castle|Fortress|Watchtower|Tower|Sea Gate|Citadel|Barracks|Arsenal|Lantern Tower|Keep", "Church|Cathedral|Monastery|Hermitage|Convent|Chapel|Basilica|Shrine|Mermaid Chapel|Hall", "Town Hall|Customs House|Exchange|Hospital|Palace|Tile Works|Library|Council House|Market Hall|House"],
@@ -60,7 +60,7 @@ export const GREEK = {
   monuments: ["Standing Stone|Herm|Hero's Tomb|Milestone|Boundary Stone|Cairn|Memorial Stone|Roadside Stone|Giant's Stone|Stone", "Roadside Shrine|Calvary|Wayside Altar|Churchyard Cross|Stone Cross|Column Cross|Memorial Cross|Summit Chapel|Giant's Altar|Altar", "Memorial|Statue|Fountain|Column|Plaque|Obelisk|War Memorial|Monument|Ghost Memorial|Tablet"],
 };
 export const BYZANTINE = {
-  style: "first", adj: ["Old", "Great", "Little"],
+  style: "last", adj: ["Old", "Great", "Little"],
   streets: ["Street|Lane|Imperial Way|Steps|Procession Way|Passage|Avenue|Boulevard|Phantom's Alley|Way", "Forum|Market Square|Colonnade|Cistern Square|Icon Square|Hippodrome Square|Promenade|Roundabout|Haunted Square|Green", "Quarter|Palace Quarter|Foreigners' Quarter|Monastery Quarter|Hill Quarter|Port Quarter|Suburb|Estate|Ghost Quarter|District"],
   inns: ["Inn|Hostelry|Pilgrims' House|Wayside Inn|Posting House|Pilgrims' Inn|Guest House|Hotel|Phantom's Inn|House", "Tavern|Wine Shop|Taproom|Monks' Cellar|Wine Bar|Cook Shop|Cafe|Bar|Revenant's Tavern|Cellar", "Resting Place|Pilgrims' Hostel|Muleteers' Stop|Wayside Hut|Relay Stage|Hospice|Hostel|Service Station|Crossroads Haunt|Rest"],
   buildings: ["Fortress|Citadel|Watchtower|Sea Wall|Golden Gate|Fort|Barracks|Arsenal|Revenant's Tower|Keep", "Great Church|Monastery|Hermit Colony|Cave Church|Shrine|Chapel|Cathedral|Church|Saint's Shrine|Hall", "Palace|Hippodrome|Exchange|Hospital|Cistern|Guildhall|Academy|Library|Council House|House"],

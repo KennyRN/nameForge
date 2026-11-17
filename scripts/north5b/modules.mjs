@@ -74,6 +74,12 @@ const FRAMES = {
     first: [["{N0} of {owner}", 16, 0], ["{N0} of {town}", 14, 0], ["{N0} of the {creature}", 10, 0], ["{A0} {N0}", 8, 0], ["{N1} of {town}", 16, 1], ["{N1} of {owner}", 12, 1], ["{A1} {N1}", 8, 1], ["{N2} of {town}", 14, 2], ["{N2} of {owner}", 12, 2], ["{A2} {N2}", 8, 2]],
   },
 };
+// Sibling-distinctness brief: the two mixed styles of 5a (`firstB`: generic-first at the even places; `lastB`: generic-last), for the cultures that would name as a sibling does.
+const mixFrames = (a, b) => a.map((x, i) => (i % 2 === 0 ? x : b[i] ?? x));
+for (const m of Object.values(FRAMES)) {
+  m.firstB = mixFrames(m.first, m.last);
+  m.lastB = mixFrames(m.last, m.first);
+}
 const REGION_FRAMES = (person, place) => [["{R}", 8], [`{${place}} {R}`, 6], [`{${person}:poss} {R}`, 5]];
 
 /** Builds the batch's tables. */

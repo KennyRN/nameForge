@@ -80,7 +80,7 @@ export const SCOTTISH = {
 };
 
 export const IRISH = {
-  style: "first", adj: ["Old", "Long", "Little"],
+  style: "firstB", adj: ["Old", "Long", "Little"],
   streets: [
     "Mall|Quay|Parade|Lane|Boreen|Road|Street|Terrace|Banshee Lane|Row",
     "Fair Green|Square|Diamond|Market Square|Cross|Green|Circus|Memorial Green|Fairy Fort Green|Place",
@@ -105,21 +105,21 @@ export const IRISH = {
 };
 
 export const CORNISH = {
-  style: "first", adj: ["Old", "Long", "Little"],
+  style: "lastB", adj: ["Windy", "Tinners'", "Salt"],
   streets: [
     "Lane|Row|Cove Road|Chapel Street|Fore Street|Quay|Terrace|Hill|Pisky Lane|Street",
     "Square|Fish Market|Cross|Green|Quay Square|Market Place|Station Square|Memorial Green|Giant's Green|Plain",
     "Cove|Fish Cellars|Mining Row|Count House Row|Engine Row|Harbour Quarter|Terraces|Estate|Knocker Row|Quarter",
   ],
   inns: [
-    "Inn|Alehouse|Smugglers' Inn|Coaching Inn|Hotel|Wheal Inn|Miners' Arms|Pub|Pisky Inn|House",
-    "Tavern|Beerhouse|Fishermen's Tavern|Cellar Bar|Chapel Pub|Social Club|Surfers' Bar|Bar|Knocker Tavern|Local",
-    "Drovers' Rest|Pilgrims' Stop|Coach Stage|Harbour Rest|Fish Cellar Rest|Station Rest|Guest House|Hostel|Pisky Rest|Rest",
+    "Smugglers' Inn|Alehouse|Inn|Fishermen's Inn|Hotel|Coaching Inn|Wheal Inn|Pub|Pisky Inn|Public House",
+    "Cellar Bar|Tavern|Beerhouse|Chapel Pub|Fishermen's Tavern|Surfers' Bar|Wreckers' Tavern|Local|Knocker Tavern|Taproom",
+    "Harbour Rest|Fish Cellar Rest|Coach Stop|Guest House|Pilgrims' Rest|Station Stop|Sailors' Hostel|Bunkhouse|Pisky Rest|Lodging",
   ],
   buildings: [
-    "Castle|Fort|Round|Tower|Gun Battery|Gatehouse|Pillbox|Barracks|Giant's Tower|Hold",
-    "Chapel|Church|Holy Well House|Priory|Methodist Chapel|Bible Christian Chapel|Wesleyan Chapel|Parish Church|Pisky Shrine|Shrine",
-    "Market House|Guildhall|Count House|Engine House|Almshouse|Stannary Hall|Town Hall|Institute|Knocker Hall|Hall",
+    "Round|Gun Battery|Castle|Fort|Tower|Pillbox|Gatehouse|Barracks|Giant's Tower|Citadel",
+    "Holy Well House|Chapel|Church|Parish Church|Wesleyan Chapel|Bible Christian Chapel|Priory|Methodist Chapel|Pisky Shrine|Hermitage",
+    "Count House|Market House|Stannary Hall|Guildhall|Almshouse|Engine House|Institute|Town Hall|Knocker Hall|Moot Hall",
   ],
   monuments: [
     "Standing Stone|Quoit|Cairn|Holed Stone|Inscribed Stone|Milestone|Boundary Stone|Memorial Stone|Giant's Stone|Stone",

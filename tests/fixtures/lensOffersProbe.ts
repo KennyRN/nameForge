@@ -331,3 +331,4 @@ export function buildOffers(): { _about: string; modules: Record<string, ModuleO
 }
 
 export const probeSpecs = specs;
+export const probeOfferedCultures = offeredCultures;

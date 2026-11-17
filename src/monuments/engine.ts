@@ -59,7 +59,7 @@ import { monumentNeighbours, STREET_DATA, type NeighbourOptions } from "../stree
 /** §9.1: what's named after a monument lives in the streets engine, which streets, inns and the kit share. */
 export { monumentNeighbours };
 import { deityHooks } from "../deities/hook";
-import { balanceRegion, balanceSignature, regionSeed, isOwnSig } from "../northData";
+import { balanceRegion, balanceSignature, regionSeed, isOwnSig, legacyWeightOf } from "../northData";
 import { mapShapes, NORTH5B } from "../northData5b";
 
 /** Deities brief §10.1: the christian cultures' deity weight, with fantastic on. */
@@ -425,7 +425,12 @@ function kindWeight(s: Setup, kind: MonumentKind): number {
   if (d.sensitive.noKindEras[key]?.[kind]?.includes(s.era)) return 0;
   // Settlement kit §7.1: the position's multipliers.
   const w = k.era[s.era] * (d.settingX[s.settingKey][kind] ?? 1) * (s.region ? d.regionX[kind]?.[s.region] ?? 1 : 1) * (s.options.context?.effects?.monumentKindX?.[kind] ?? 1);
-  return w > 0 && plans(newCtx(s, kind)).length + (isFuture(s.era) ? live(newCtx(s, kind), d.scifi.shapes, "scifi").length : 0) > 0 ? w : 0;
+  if (!(w > 0 && plans(newCtx(s, kind)).length + (isFuture(s.era) ? live(newCtx(s, kind), d.scifi.shapes, "scifi").length : 0) > 0)) return 0;
+  // Sibling-distinctness brief: a kind the culture has no shapes of its own in reads the shared table, at its legacy weight.
+  const legacy = legacyWeightOf(key);
+  if (legacy === undefined) return w;
+  const ownIn = (k: MonumentKind) => plans(newCtx(s, k)).some(([p]) => isOwnSig(p.shape, key));
+  return MONUMENT_KINDS.some((k) => ownIn(k.key)) && !ownIn(kind) ? w * legacy : w;
 }
 
 /** §5.1–§5.3: the kinds offered for a culture, era and setting, with their weights. */
