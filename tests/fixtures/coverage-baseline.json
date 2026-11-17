@@ -14815,11 +14815,11 @@
    "t": 12
   },
   "era|titles|MD": {
-   "v": 270,
+   "v": 269,
    "t": 12
   },
   "era|titles|EM": {
-   "v": 196,
+   "v": 195,
    "t": 12
   },
   "era|titles|ST": {
@@ -15573,7 +15573,7 @@
    "v": 0
   },
   "culture|armsNames|byzantine|words": {
-   "v": 53,
+   "v": 54,
    "t": 30
   },
   "culture|armsNames|byzantine|shapes": {
@@ -15769,7 +15769,7 @@
    "t": 12
   },
   "era|armsNames|MD": {
-   "v": 277,
+   "v": 276,
    "t": 12
   },
   "era|armsNames|EM": {
@@ -16072,7 +16072,7 @@
    "v": 0
   },
   "culture|treasureNames|byzantine|words": {
-   "v": 51,
+   "v": 50,
    "t": 30
   },
   "culture|treasureNames|byzantine|shapes": {
@@ -16268,11 +16268,11 @@
    "t": 12
   },
   "era|treasureNames|MD": {
-   "v": 227,
+   "v": 226,
    "t": 12
   },
   "era|treasureNames|EM": {
-   "v": 179,
+   "v": 178,
    "t": 12
   },
   "era|treasureNames|ST": {
@@ -16775,11 +16775,11 @@
    "t": 12
   },
   "era|bookNames|MD": {
-   "v": 325,
+   "v": 326,
    "t": 12
   },
   "era|bookNames|EM": {
-   "v": 285,
+   "v": 286,
    "t": 12
   },
   "era|bookNames|ST": {
@@ -17070,7 +17070,7 @@
    "v": 0
   },
   "culture|realms|byzantine|words": {
-   "v": 49,
+   "v": 47,
    "t": 30
   },
   "culture|realms|byzantine|shapes": {
@@ -19737,11 +19737,11 @@
    "t": 12
   },
   "era|mysticOrders|MD": {
-   "v": 211,
+   "v": 210,
    "t": 12
   },
   "era|mysticOrders|EM": {
-   "v": 130,
+   "v": 129,
    "t": 12
   },
   "era|mysticOrders|ST": {
@@ -19977,7 +19977,7 @@
    "v": 0
   },
   "culture|martialOrders|portuguese|words": {
-   "v": 52,
+   "v": 51,
    "t": 30
   },
   "culture|martialOrders|portuguese|shapes": {
@@ -20032,7 +20032,7 @@
    "v": 0
   },
   "culture|martialOrders|byzantine|words": {
-   "v": 51,
+   "v": 54,
    "t": 30
   },
   "culture|martialOrders|byzantine|shapes": {
@@ -20264,15 +20264,15 @@
    "t": 12
   },
   "era|martialOrders|MD": {
-   "v": 253,
+   "v": 256,
    "t": 12
   },
   "era|martialOrders|EM": {
-   "v": 223,
+   "v": 227,
    "t": 12
   },
   "era|martialOrders|ST": {
-   "v": 136,
+   "v": 137,
    "t": 12
   },
   "era|martialOrders|MO": {
@@ -20508,7 +20508,7 @@
    "v": 0
   },
   "culture|underworldGroups|portuguese|words": {
-   "v": 46,
+   "v": 45,
    "t": 30
   },
   "culture|underworldGroups|portuguese|shapes": {
@@ -20795,19 +20795,19 @@
    "t": 12
   },
   "era|underworldGroups|MD": {
-   "v": 250,
+   "v": 249,
    "t": 12
   },
   "era|underworldGroups|EM": {
-   "v": 297,
+   "v": 296,
    "t": 12
   },
   "era|underworldGroups|ST": {
-   "v": 169,
+   "v": 168,
    "t": 12
   },
   "era|underworldGroups|MO": {
-   "v": 155,
+   "v": 154,
    "t": 12
   },
   "era|underworldGroups|NF": {
@@ -21629,7 +21629,7 @@
    "v": 0
   },
   "culture|adventureCompanies|byzantine|words": {
-   "v": 46,
+   "v": 47,
    "t": 30
   },
   "culture|adventureCompanies|byzantine|shapes": {
@@ -21861,11 +21861,11 @@
    "t": 12
   },
   "era|adventureCompanies|MD": {
-   "v": 241,
+   "v": 243,
    "t": 12
   },
   "era|adventureCompanies|EM": {
-   "v": 239,
+   "v": 241,
    "t": 12
   },
   "era|adventureCompanies|ST": {
@@ -24707,7 +24707,7 @@
    "t": 12
   },
   "era|aircraft|ST": {
-   "v": 201,
+   "v": 200,
    "t": 12
   },
   "era|aircraft|MO": {
@@ -24723,7 +24723,7 @@
    "t": 12
   },
   "style|aircraft|high-fantasy|words": {
-   "v": 126,
+   "v": 127,
    "t": 16
   },
   "style|aircraft|high-fantasy|shapes": {
@@ -24731,7 +24731,7 @@
    "t": 4
   },
   "style|aircraft|contemporary-fantasy|words": {
-   "v": 126,
+   "v": 127,
    "t": 16
   },
   "style|aircraft|contemporary-fantasy|shapes": {
@@ -24763,7 +24763,7 @@
    "t": 4
   },
   "style|aircraft|space-opera|words": {
-   "v": 126,
+   "v": 127,
    "t": 16
   },
   "style|aircraft|space-opera|shapes": {
@@ -24967,7 +24967,7 @@
    "v": 0
   },
   "culture|landVehicles|portuguese|words": {
-   "v": 41,
+   "v": 43,
    "t": 30
   },
   "culture|landVehicles|portuguese|shapes": {
@@ -25301,19 +25301,19 @@
    "v": 1
   },
   "era|landVehicles|AN": {
-   "v": 120,
+   "v": 119,
    "t": 12
   },
   "era|landVehicles|MD": {
-   "v": 141,
+   "v": 142,
    "t": 12
   },
   "era|landVehicles|EM": {
-   "v": 146,
+   "v": 148,
    "t": 12
   },
   "era|landVehicles|ST": {
-   "v": 328,
+   "v": 330,
    "t": 12
   },
   "era|landVehicles|MO": {
@@ -26072,7 +26072,7 @@
    "v": 552
   },
   "total|culture|byzantine|words": {
-   "v": 1955
+   "v": 1957
   },
   "total|culture|byzantine|shapes": {
    "v": 546
@@ -26174,19 +26174,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 6485
+   "v": 6484
   },
   "total|era|MD": {
-   "v": 9175
+   "v": 9177
   },
   "total|era|EM": {
-   "v": 9446
+   "v": 9451
   },
   "total|era|ST": {
-   "v": 9038
+   "v": 9039
   },
   "total|era|MO": {
-   "v": 8024
+   "v": 8023
   },
   "total|era|NF": {
    "v": 762
@@ -26195,19 +26195,19 @@
    "v": 1642
   },
   "total|style|high-fantasy|words": {
-   "v": 2754
+   "v": 2755
   },
   "total|style|high-fantasy|shapes": {
    "v": 1128
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 2670
+   "v": 2671
   },
   "total|style|contemporary-fantasy|shapes": {
    "v": 1126
   },
   "total|style|space-opera|words": {
-   "v": 2806
+   "v": 2807
   },
   "total|style|space-opera|shapes": {
    "v": 959

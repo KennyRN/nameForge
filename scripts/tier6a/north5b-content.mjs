@@ -12,10 +12,10 @@ export const SPANISH = {
 };
 export const PORTUGUESE = {
   style: "first", adj: ["Old", "Royal", "Little"],
-  streets: ["Street|Alley|Lane|Steps|Slope|Passage|Avenue|Boulevard|Moorish Alley|Way", "Square|Market Square|Terrace|Cloister|Fountain Square|Tram Square|Promenade|Roundabout|Haunted Square|Green", "Quarter|Moorish Quarter|Jewish Quarter|Old Town|Fishermen's Quarter|Port Quarter|Suburb|Estate|Ghost Quarter|District"],
-  inns: ["Inn|Hostelry|Pousada|Wayside Inn|Muleteers' Inn|Coaching Inn|Manor Inn|Hotel|Enchanted Inn|House", "Tavern|Wine Cellar|Taproom|Port Lodge|Cider House|Tasca|Cafe|Bar|Moorish Tavern|Cellar", "Resting Place|Pilgrims' Hostel|Muleteers' Stop|Wayside Hut|Drovers' Rest|Hospice|Hostel|Service Station|Crossroads Haunt|Rest"],
-  buildings: ["Castle|Fortress|Watchtower|Tower|Gate|Citadel|Barracks|Arsenal|Moorish Tower|Keep", "Church|Cathedral|Monastery|Hermitage|Convent|Chapel|Basilica|Shrine|Fatima Chapel|Hall", "Town Hall|Market Hall|Customs House|Exchange|Hospital|Palace|University|Library|Council House|House"],
-  monuments: ["Standing Stone|Border Stone|Castro Stone|Milestone|Boundary Cross|Cairn|Memorial Stone|Roadside Stone|Giant's Stone|Stone", "Roadside Cross|Holy Cross|Calvary|Wayside Cross|Churchyard Cross|Stone Cross|Memorial Cross|Summit Cross|Giant's Cross|Cross", "Memorial|Statue|Fountain|Column|Plaque|Obelisk|War Memorial|Monument|Ghost Memorial|Tablet"],
+  streets: ["Street|Lane|Quay Walk|Steps|Passage|Slope|Avenue|Boulevard|Mermaid's Alley|Way", "Square|Market Square|Quay Square|Fountain Square|Tram Square|Cathedral Square|Promenade|Roundabout|Lost Fleet Square|Green", "Quarter|Fishermen's Quarter|Old Town|Port Quarter|Fado Quarter|Tile Quarter|Suburb|Estate|Drowned Quarter|District"],
+  inns: ["Inn|Hostelry|Sailors' Inn|Wayside Inn|Pilgrims' Inn|Coaching Inn|Guest House|Hotel|Mermaid's Inn|House", "Tavern|Wine Cellar|Taproom|Port Lodge|Cider House|Fado House|Cafe|Bar|Lost Fleet Tavern|Cellar", "Resting Place|Pilgrims' Hostel|Fishermen's Stop|Wayside Hut|Drovers' Rest|Hospice|Hostel|Service Station|Crossroads Haunt|Rest"],
+  buildings: ["Castle|Fortress|Watchtower|Tower|Sea Gate|Citadel|Barracks|Arsenal|Lantern Tower|Keep", "Church|Cathedral|Monastery|Hermitage|Convent|Chapel|Basilica|Shrine|Mermaid Chapel|Hall", "Town Hall|Customs House|Exchange|Hospital|Palace|Tile Works|Library|Council House|Market Hall|House"],
+  monuments: ["Standing Stone|Border Stone|Pillar Stone|Milestone|Boundary Cross|Cairn|Memorial Stone|Quay Stone|Navigator's Stone|Stone", "Roadside Cross|Holy Cross|Calvary|Wayside Cross|Mariners' Cross|Stone Cross|Memorial Cross|Summit Cross|Drowned Sailors' Cross|Cross", "Memorial|Statue|Fountain|Column|Plaque|Obelisk|Mariners' Memorial|Monument|Ghost Ship Memorial|Tablet"],
 };
 export const FRENCH = {
   style: "first", adj: ["Old", "Royal", "Little"],
@@ -61,9 +61,9 @@ export const GREEK = {
 };
 export const BYZANTINE = {
   style: "first", adj: ["Old", "Great", "Little"],
-  streets: ["Street|Alley|Lane|Imperial Way|Steps|Passage|Avenue|Boulevard|Neraida's Alley|Way", "Forum|Market Square|Colonnade|Cistern Square|Fountain Square|Hippodrome Square|Promenade|Roundabout|Haunted Square|Green", "Quarter|Palace Quarter|Foreigners' Quarter|Old Town|Hill Quarter|Port Quarter|Suburb|Estate|Ghost Quarter|District"],
-  inns: ["Inn|Hostelry|Xenodocheion|Wayside Inn|Posting House|Pilgrims' Inn|Guest House|Hotel|Neraida's Inn|House", "Tavern|Wine Shop|Taproom|Kapeleion|Wine Bar|Taverna|Cafe|Bar|Revenant's Tavern|Cellar", "Resting Place|Pilgrims' Hostel|Muleteers' Stop|Wayside Hut|Relay Stage|Hospice|Hostel|Service Station|Crossroads Haunt|Rest"],
-  buildings: ["Fortress|Citadel|Watchtower|Tower|Gate|Fort|Barracks|Arsenal|Revenant's Tower|Keep", "Great Church|Monastery|Hermitage|Cave Church|Shrine|Chapel|Cathedral|Church|Neraida's Shrine|Hall", "Palace|Hippodrome|Exchange|Hospital|Cistern|Guildhall|Academy|Library|Council House|House"],
+  streets: ["Street|Lane|Imperial Way|Steps|Procession Way|Passage|Avenue|Boulevard|Phantom's Alley|Way", "Forum|Market Square|Colonnade|Cistern Square|Icon Square|Hippodrome Square|Promenade|Roundabout|Haunted Square|Green", "Quarter|Palace Quarter|Foreigners' Quarter|Monastery Quarter|Hill Quarter|Port Quarter|Suburb|Estate|Ghost Quarter|District"],
+  inns: ["Inn|Hostelry|Pilgrims' House|Wayside Inn|Posting House|Pilgrims' Inn|Guest House|Hotel|Phantom's Inn|House", "Tavern|Wine Shop|Taproom|Monks' Cellar|Wine Bar|Cook Shop|Cafe|Bar|Revenant's Tavern|Cellar", "Resting Place|Pilgrims' Hostel|Muleteers' Stop|Wayside Hut|Relay Stage|Hospice|Hostel|Service Station|Crossroads Haunt|Rest"],
+  buildings: ["Fortress|Citadel|Watchtower|Sea Wall|Golden Gate|Fort|Barracks|Arsenal|Revenant's Tower|Keep", "Great Church|Monastery|Lavra|Cave Church|Shrine|Chapel|Cathedral|Church|Saint's Shrine|Hall", "Palace|Hippodrome|Exchange|Hospital|Cistern|Guildhall|Academy|Library|Council House|House"],
   monuments: ["Standing Stone|Milestone|Saint's Tomb|Boundary Stone|Boundary Cross|Cairn|Memorial Stone|Roadside Stone|Giant's Stone|Stone", "Roadside Shrine|Icon Shrine|Wayside Cross|Churchyard Cross|Stone Cross|Column Cross|Memorial Cross|Summit Chapel|Giant's Cross|Cross", "Memorial|Statue|Fountain|Column|Plaque|Obelisk|War Memorial|Monument|Ghost Memorial|Tablet"],
 };
 // The mixes: 12 words and 4 shapes of their own (their halves' at half weight): the first of each module's lists, four words per kind.

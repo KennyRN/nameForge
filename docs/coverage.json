@@ -12017,8 +12017,8 @@
    },
    "eras": {
     "AN": 107,
-    "MD": 270,
-    "EM": 196,
+    "MD": 269,
+    "EM": 195,
     "ST": 104,
     "MO": 103,
     "NF": 0,
@@ -12510,7 +12510,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1653,
+   "rowCount": 1654,
    "cultures": {
     "general": {
      "words": 0,
@@ -12689,7 +12689,7 @@
      "below": false
     },
     "byzantine": {
-     "words": 53,
+     "words": 54,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -12874,7 +12874,7 @@
    },
    "eras": {
     "AN": 117,
-    "MD": 277,
+    "MD": 276,
     "EM": 341,
     "ST": 154,
     "MO": 105,
@@ -12944,7 +12944,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1572,
+   "rowCount": 1571,
    "cultures": {
     "general": {
      "words": 0,
@@ -13123,7 +13123,7 @@
      "below": false
     },
     "byzantine": {
-     "words": 51,
+     "words": 50,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -13308,8 +13308,8 @@
    },
    "eras": {
     "AN": 123,
-    "MD": 227,
-    "EM": 179,
+    "MD": 226,
+    "EM": 178,
     "ST": 115,
     "MO": 119,
     "NF": 11,
@@ -13744,8 +13744,8 @@
    },
    "eras": {
     "AN": 122,
-    "MD": 325,
-    "EM": 285,
+    "MD": 326,
+    "EM": 286,
     "ST": 118,
     "MO": 108,
     "NF": 8,
@@ -13812,7 +13812,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1423,
+   "rowCount": 1421,
    "cultures": {
     "general": {
      "words": 0,
@@ -13991,7 +13991,7 @@
      "below": false
     },
     "byzantine": {
-     "words": 49,
+     "words": 47,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -16414,8 +16414,8 @@
    },
    "eras": {
     "AN": 117,
-    "MD": 211,
-    "EM": 130,
+    "MD": 210,
+    "EM": 129,
     "ST": 105,
     "MO": 178,
     "NF": 0,
@@ -16489,7 +16489,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1854,
+   "rowCount": 1856,
    "cultures": {
     "general": {
      "words": 0,
@@ -16618,7 +16618,7 @@
      "below": false
     },
     "portuguese": {
-     "words": 52,
+     "words": 51,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -16668,7 +16668,7 @@
      "below": false
     },
     "byzantine": {
-     "words": 51,
+     "words": 54,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -16897,9 +16897,9 @@
    },
    "eras": {
     "AN": 119,
-    "MD": 253,
-    "EM": 223,
-    "ST": 136,
+    "MD": 256,
+    "EM": 227,
+    "ST": 137,
     "MO": 123,
     "NF": 0,
     "IS": 12
@@ -16973,7 +16973,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1699,
+   "rowCount": 1698,
    "cultures": {
     "general": {
      "words": 0,
@@ -17102,7 +17102,7 @@
      "below": false
     },
     "portuguese": {
-     "words": 46,
+     "words": 45,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -17381,10 +17381,10 @@
    },
    "eras": {
     "AN": 102,
-    "MD": 250,
-    "EM": 297,
-    "ST": 169,
-    "MO": 155,
+    "MD": 249,
+    "EM": 296,
+    "ST": 168,
+    "MO": 154,
     "NF": 0,
     "IS": 22
    },
@@ -17940,7 +17940,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1477,
+   "rowCount": 1478,
    "cultures": {
     "general": {
      "words": 0,
@@ -18119,7 +18119,7 @@
      "below": false
     },
     "byzantine": {
-     "words": 46,
+     "words": 47,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -18348,8 +18348,8 @@
    },
    "eras": {
     "AN": 103,
-    "MD": 241,
-    "EM": 239,
+    "MD": 243,
+    "EM": 241,
     "ST": 126,
     "MO": 121,
     "NF": 0,
@@ -20959,18 +20959,18 @@
     "AN": 117,
     "MD": 150,
     "EM": 142,
-    "ST": 201,
+    "ST": 200,
     "MO": 215,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 126,
+     "words": 127,
      "shapes": 39
     },
     "contemporary-fantasy": {
-     "words": 126,
+     "words": 127,
      "shapes": 35
     },
     "steampunk": {
@@ -20986,7 +20986,7 @@
      "shapes": 2
     },
     "space-opera": {
-     "words": 126,
+     "words": 127,
      "shapes": 38
     }
    },
@@ -21045,7 +21045,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1598,
+   "rowCount": 1600,
    "cultures": {
     "general": {
      "words": 0,
@@ -21174,7 +21174,7 @@
      "below": false
     },
     "portuguese": {
-     "words": 41,
+     "words": 43,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -21504,10 +21504,10 @@
     }
    },
    "eras": {
-    "AN": 120,
-    "MD": 141,
-    "EM": 146,
-    "ST": 328,
+    "AN": 119,
+    "MD": 142,
+    "EM": 148,
+    "ST": 330,
     "MO": 299,
     "NF": 11,
     "IS": 11
@@ -22089,7 +22089,7 @@
     "shapes": 552
    },
    "byzantine": {
-    "words": 1955,
+    "words": 1957,
     "shapes": 546
    },
    "japanese": {
@@ -22158,25 +22158,25 @@
    }
   },
   "eras": {
-   "AN": 6485,
-   "MD": 9175,
-   "EM": 9446,
-   "ST": 9038,
-   "MO": 8024,
+   "AN": 6484,
+   "MD": 9177,
+   "EM": 9451,
+   "ST": 9039,
+   "MO": 8023,
    "NF": 762,
    "IS": 1642
   },
   "styles": {
    "high-fantasy": {
-    "words": 2754,
+    "words": 2755,
     "shapes": 1128
    },
    "contemporary-fantasy": {
-    "words": 2670,
+    "words": 2671,
     "shapes": 1126
    },
    "space-opera": {
-    "words": 2806,
+    "words": 2807,
     "shapes": 959
    },
    "steampunk": {
