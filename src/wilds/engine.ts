@@ -7,7 +7,7 @@
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
 import { isRealTownName } from "../realPlaces";
-import { balanceRegion, balanceSignature, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceRegion, balanceSignature, weighLegacyKinds, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf, isOwnSig } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import wildsData from "../data/wilds.json";
 import placesData from "../data/places.json";
@@ -926,7 +926,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
         .filter((s) => kind.key !== "settlement" || sizeOk(s))
         .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, shapeWeight(ctx, s)])
         .filter(([, w]) => w > 0);
-      if (live.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt, ctx.culture.key, ctx.module)) : live);
+      if (live.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => isOwnSig(plan.shape, ctx.culture.key), (plan) => !!plan.shape.rt, ctx.culture.key, ctx.module)) : live);
     }
     return planCache;
   };
@@ -958,7 +958,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
       }
       if (w > 0) base.push([k.key, w]);
     }
-    return base;
+    return weighLegacyKinds(base, (kind) => (plans().get(kind) ?? []).some(([p]) => isOwnSig(p.shape, newCtx().culture.key)), newCtx().culture.key);
   };
 
   /** §7: when no kind is live, the module's untagged shapes. */

@@ -6,7 +6,7 @@
 
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
 import { isRealTownName } from "../realPlaces";
-import { balanceRegion, balanceSignature, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf } from "../northData";
+import { balanceRegion, balanceSignature, weighLegacyKinds, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf, isOwnSig } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import watersData from "../data/waters.json";
 import { type BiomeCatalogue, biomeRoot, biomesRootedIn, BUILT_IN_BIOMES, pluralOf, biomeTitleCase } from "../biomes";
@@ -688,7 +688,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
           .filter((s) => !options.shape || s.p === options.shape)
           .map((s): [Plan, number] => [{ kind: kind.key, shape: s }, earthlyWeight(ctx, s)])
           .filter(([, w]) => w > 0);
-        if (live.length > 0) plans.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => !!(plan.shape as { sig?: boolean }).sig, (plan) => !!(plan.shape as { rt?: string }).rt, culture.key)) : live);
+        if (live.length > 0) plans.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live, (plan) => isOwnSig(plan.shape, culture.key), (plan) => !!(plan.shape as { rt?: string }).rt, culture.key)) : live);
       }
     } else {
       for (const kind of hyperKindsAt(scale)) {
@@ -730,7 +730,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
       }
       base.push([k.key, w]);
     }
-    return base;
+    return weighLegacyKinds(base, (kind) => (plans.get(kind) ?? []).some(([p]) => isOwnSig(p.shape, culture.key)), culture.key);
   };
 
   /** §7: when no kind is live, the module's untagged shapes. */

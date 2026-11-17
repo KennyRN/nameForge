@@ -51,7 +51,7 @@ import { monumentBlockSet, monumentName } from "../monuments/engine";
 import { boostPool, contextLandmark, contextSaint, contextTown, type SettlementContext } from "../settlement/contextShared";
 import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { cultureSet } from "../lens";
-import { balanceRegion, balanceSignature, freshNouns, noteNoun, REGION_SHARE, regionSeed, shapesOf, SIGNATURE_SHARE } from "../northData";
+import { balanceRegion, balanceSignature, freshNouns, noteNoun, REGION_SHARE, regionSeed, shapesOf, SIGNATURE_SHARE, isOwnSig } from "../northData";
 import { mapShapes, NORTH5B } from "../northData5b";
 
 
@@ -642,7 +642,7 @@ const live = (ctx: Ctx, shapes: StreetShape[], only?: string): [StreetShape, num
     .filter(([, w]) => w > 0);
   // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
   const regional = (s: StreetShape) => !!(s as { rg?: boolean }).rg && !!ctx.region;
-  const signed = balanceSignature(plans, (s) => !!(s as { sig?: boolean }).sig, regional, ctx.culture.key, "streetNames");
+  const signed = balanceSignature(plans, (s) => isOwnSig(s, ctx.culture.key), regional, ctx.culture.key, "streetNames");
   return ctx.region ? balanceRegion(signed, regional) : signed;
 };
 

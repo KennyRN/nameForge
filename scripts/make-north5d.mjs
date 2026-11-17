@@ -6,10 +6,12 @@ import { ADJ, CELTIC_FRAMES, CLASS, FRAMES, STYLE } from "./north5d/content-fram
 import { OFFER, POOLS, TAGS } from "./north5d/content-pools.mjs";
 
 import { ADJ6, STYLE6 } from "./tier6a/north5c-build.mjs";
+import { addFrames5d } from "./tier6a/frames-6a.mjs";
 import { MIXES6, NEW6 } from "./tier6a/north5c-words.mjs";
 import { WORDS5D } from "./tier6a/north5d-build.mjs";
 Object.assign(ADJ, ADJ6);
 Object.assign(STYLE, STYLE6);
+addFrames5d(FRAMES);
 for (const [m, byCulture] of Object.entries(WORDS5D)) WORDS[m] = { ...WORDS[m], ...byCulture };
 const isMix = (c) => c === "celtic" || MIXES6.includes(c);
 export const CORE = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];

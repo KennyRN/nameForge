@@ -59,7 +59,7 @@ import { monumentNeighbours, STREET_DATA, type NeighbourOptions } from "../stree
 /** §9.1: what's named after a monument lives in the streets engine, which streets, inns and the kit share. */
 export { monumentNeighbours };
 import { deityHooks } from "../deities/hook";
-import { balanceRegion, balanceSignature, regionSeed } from "../northData";
+import { balanceRegion, balanceSignature, regionSeed, isOwnSig } from "../northData";
 import { mapShapes, NORTH5B } from "../northData5b";
 
 /** Deities brief §10.1: the christian cultures' deity weight, with fantastic on. */
@@ -362,7 +362,7 @@ function plans(ctx: Ctx, only?: string): [Plan, number][] {
   const all = [...live(ctx, d.shared, "shared", only), ...live(ctx, d.kindShapes[k] ?? [], "kind", only), ...live(ctx, culture, "culture", only), ...live(ctx, d.eraShapes, "era", only)];
   // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
   const regional = (p: Plan) => !!(p.shape as { rg?: boolean }).rg && !!ctx.region;
-  const signed = balanceSignature(all, (p) => !!(p.shape as { sig?: boolean }).sig, regional, ctx.culture.key, "monumentNames");
+  const signed = balanceSignature(all, (p) => isOwnSig(p.shape, ctx.culture.key), regional, ctx.culture.key, "monumentNames");
   return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 

@@ -3905,7 +3905,13 @@
    "skyNames": 0.9,
    "mysticOrders": 0.85,
    "underworldGroups": 0.85,
-   "peoplesTongues": { "share": 0.85, "except": ["norman-british", "anglo-saxon"] },
+   "peoplesTongues": {
+    "share": 0.85,
+    "except": [
+     "norman-british",
+     "anglo-saxon"
+    ]
+   },
    "ships": 0.8,
    "grasslandNames": 0.98,
    "armsNames": 0.85,
@@ -3921,10 +3927,10 @@
    "irish": 0.1,
    "cornish": 0.1,
    "scandinavian": 0.1,
-   "spanish": 0.1,
-   "portuguese": 0.1,
-   "greek": 0.1,
-   "byzantine": 0.1,
+   "spanish": 0.02,
+   "portuguese": 0.02,
+   "greek": 0.02,
+   "byzantine": 0.02,
    "anglo-saxon": 0.1
   },
   "signatureMix": 0.4,
@@ -4163,7 +4169,12 @@
    "desertNames"
   ],
   "excludedCells": [],
-  "siblings": [],
+  "siblings": [
+   ["spanish","portuguese"],
+   ["greek","byzantine"],
+   ["welsh","scottish"],
+   ["scottish","irish"]
+  ],
   "general": [
    "norman-british",
    "anglo-saxon",

@@ -20,7 +20,7 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 47/10 | 47/10 | 48/10 | 48/10 | 15/4 | 46/10 | 48/12 | 48/10 | 48/10 | 15/4 | 46/12 | **0/3** | 16/5 | **11/4** | **11/2** | **0/2** | **11/5** | **1/2** | 34/5 | **35/3** | 34/5 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
 | money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 77/12 + profile | 65/10 + profile | 51/11 | 51/11 | 44/6 + profile | 48/10 | 89/12 | 49/11 | 50/11 | 47/6 | 85/13 | **18/1 + profile** | **31/0** | **15/0 + profile** | **9/0 + profile** | **22/0 + profile** | **23/0 + profile** | **24/1** | **32/1** | **21/1 + profile** | **18/1 + profile** | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
 | calendars and festivals | 93/12 | 70/11 | 70/11 | 67/11 | 65/11 | 35/5 | 75/11 | 80/11 | 47/10 | 48/10 | 48/10 | 48/10 | 48/10 | 15/4 | 48/10 | 81/13 | 48/10 | 48/10 | 40/5 | 79/10 | **10/1** | **10/0** | **20/0** | **10/0** | **9/2** | **5/2** | **6/0** | **65/1** | **73/1** | **55/1** | **37/3** | **2/3** | excluded | excluded | not offered |
-| sky lore | 62/10 | 46/10 | 44/10 | 44/10 | 46/10 | 18/4 | 48/10 | 47/10 | 44/10 | 44/10 | 44/10 | 44/10 | 44/10 | 15/4 | 44/10 | 72/10 | 44/10 | 44/10 | 47/4 | 47/10 | **7/0** | **6/0** | **5/0** | **0/0** | **2/0** | **0/0** | **0/0** | **13/0** | **8/0** | **8/0** | **7/0** | **5/0** | excluded | excluded | not offered |
+| sky lore | 62/10 | 46/10 | 46/10 | 48/10 | 46/10 | 18/4 | 48/10 | 48/10 | 44/10 | 44/10 | 44/10 | 44/10 | 40/10 | 15/4 | 44/10 | 72/10 | 44/10 | 44/10 | 47/4 | 47/10 | **7/0** | **6/0** | **5/0** | **0/0** | **2/0** | **0/0** | **0/0** | **13/0** | **8/0** | **8/0** | **7/0** | **5/0** | excluded | excluded | not offered |
 | mountains | 34/108 + profile | 34/36 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 33/14 + profile | 30/14 | 30/22 | 34/10 | excluded | 34/10 | 34/10 | 16/10 | 30/10 | 34/10 + profile | 34/10 | 34/10 | 18/10 + profile | 35/10 + profile | **1/0 + profile** | **1/0 + profile** | **3/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **5/2 + profile** | **6/2 + profile** | **3/2 + profile** | **4/2 + profile** | **5/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | not offered |
 | forests and woods | 34/65 + profile | 34/36 | 34/84 | 34/12 | 34/36 | 17/6 + profile | 31/38 + profile | 30/38 | 30/136 | 34/12 | 30/10 | 34/12 | 34/12 | 16/12 | 30/10 | 35/12 + profile | 34/12 | 34/12 | 16/12 + profile | 35/12 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **4/0 + profile** | **5/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **1/0 + profile** | not offered |
 | deserts | **4/0 + profile** | **4/0** | **4/0** | **4/0** | **4/0** | **5/0 + profile** | **12/4 + profile** | **12/4** | **0/0** | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | **1/1 + profile** | **0/2 + profile** | **1/1 + profile** | **0/1 + profile** | **0/0 + profile** | **1/1 + profile** | **4/1 + profile** | **6/0 + profile** | **3/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **0/0 + profile** | not offered |
@@ -95,7 +95,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | events and eras | 112 | 175 | 165 | 132 | 114 | 28 | 31 |
 | money and coins | 235 | 374 | 394 | 357 | 289 | 165 | 168 |
 | calendars and festivals | 251 | 291 | 267 | 118 | 113 | **4** | **4** |
-| sky lore | 105 | 105 | 105 | 104 | 159 | **2** | **2** |
+| sky lore | 105 | 105 | 105 | 104 | 160 | **2** | **2** |
 | mountains (land) | 169 | 160 | 266 | 266 | 266 | **6** | **6** |
 | forests and woods (land) | 167 | 171 | 286 | 286 | 286 | **4** | **4** |
 | deserts (land) | **10** | **11** | 21 | 21 | 21 | **8** | **8** |
@@ -967,17 +967,17 @@ Distinct entries across the reported modules; a shared pool counts once.
 | --- | --- | --- |
 | English | 2494 | 2335 |
 | Welsh | 2175 | 902 |
-| Scottish | 2311 | 1489 |
-| Irish | 2031 | 687 |
+| Scottish | 2313 | 1489 |
+| Irish | 2035 | 687 |
 | Cornish | 2078 | 891 |
 | Celtic | 888 | 433 |
 | Norse | 2068 | 1131 |
-| Scandinavian | 2159 | 1192 |
+| Scandinavian | 2160 | 1192 |
 | German | 2159 | 1590 |
 | French | 1999 | 566 |
 | Dutch | 1933 | 513 |
 | Spanish | 2027 | 557 |
-| Portuguese | 1991 | 560 |
+| Portuguese | 1987 | 560 |
 | Iberian | 677 | 282 |
 | Italian | 1899 | 531 |
 | Roman | 2062 | 652 |
@@ -1023,7 +1023,7 @@ Distinct entries across the reported modules; a shared pool counts once.
 | MD medieval | 9177 |
 | EM early modern | 9452 |
 | ST steam age | 9039 |
-| MO modern | 8023 |
+| MO modern | 8024 |
 | NF near future | 762 |
 | IS interstellar | 1642 |
 

@@ -29,7 +29,7 @@ import {
 } from "../groups/engine";
 import { mulberry32 } from "../markov";
 import { ENGINE_ALIAS, engineCulture } from "../lens";
-import { balanceSignature, freshNouns, NORTH, noteNoun } from "../northData";
+import { balanceSignature, freshNouns, NORTH, noteNoun, isOwnSig } from "../northData";
 import { countedWords, withinCap, ROUTE_ERAS, routeCapitals, routeNorm, routePlace, routeSetting, type RouteEra } from "../routes/engine";
 import { BUILT_IN_VOCAB, cultureAllowed, inCultureGroup, poolEntries, type VocabEntry, type Vocabulary } from "../settlement/vocab";
 import { setDeityHooks } from "./hook";
@@ -423,7 +423,7 @@ function shapesFor(ctx: Ctx, kind: DeityKind, forms?: string[], only?: string): 
     .map((s): [DeityShape, number] => [s, shapeWeight({ ...ctx, shape: s }, s)])
     .filter(([, w]) => w > 0);
   // Northern Europe brief 5a §11.3: a core culture's signature frames take their share.
-  return balanceSignature(live, (s) => !!(s as { sig?: boolean }).sig, undefined, ctx.culture, "deityNames");
+  return balanceSignature(live, (s) => isOwnSig(s, ctx.culture), undefined, ctx.culture, "deityNames");
 }
 
 /** One deity title with these forms (back-links, sacred places). */

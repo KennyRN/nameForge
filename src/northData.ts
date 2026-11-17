@@ -41,6 +41,22 @@ export const SIGNATURE_SHARE = (lensData as unknown as { shares: { signature: nu
 const SHARES = (lensData as unknown as { shares: { signature: number; signatureMix: number; mixes: string[]; legacy: Record<string, number>; module: Record<string, number | { share: number; except: string[] }> } }).shares;
 /** Sibling-distinctness brief: the weight a culture gives the table it shares with a sibling (lens.json `shares.legacy`); its own entries take the rest. */
 export const legacyWeightOf = (culture: string | undefined): number | undefined => (culture && !culture.startsWith("$") ? SHARES.legacy[culture] : undefined);
+/** Sibling-distinctness brief: a signature shape of the culture's own; one shared with its siblings (the Celtic tables) is the legacy table, not the culture's. */
+export const isOwnSig = (shape: unknown, culture: string | undefined): boolean => {
+  const s = shape as { sig?: boolean; c?: string[]; culture?: string };
+  if (!s.sig) return false;
+  if (legacyWeightOf(culture) === undefined || (s.culture === undefined && s.c === undefined)) return true;
+  return s.culture === culture || (Array.isArray(s.c) && s.c.length === 1 && s.c[0] === culture);
+};
+/**
+ * Sibling-distinctness brief: where a culture has its own shapes in some kinds of a module, the kinds it has none in (they read the shared table) are drawn at its legacy weight
+ * (lens.json `shares.legacy`), so that two cultures reading one table show their own names and not the table's.
+ */
+export function weighLegacyKinds(kinds: [string, number][], hasOwn: (kind: string) => boolean, culture: string | undefined): [string, number][] {
+  const legacy = legacyWeightOf(culture);
+  if (legacy === undefined || !kinds.some(([k]) => hasOwn(k))) return kinds;
+  return kinds.map(([k, w]): [string, number] => [k, hasOwn(k) ? w : w * legacy]);
+}
 export const signatureShareFor = (culture: string | undefined, module?: string): number => {
   if (culture && SHARES.mixes.includes(culture)) return SHARES.signatureMix;
   const legacy = legacyWeightOf(culture);

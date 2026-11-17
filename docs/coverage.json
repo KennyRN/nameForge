@@ -4072,7 +4072,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1274,
+   "rowCount": 1277,
    "cultures": {
     "general": {
      "words": 0,
@@ -4101,7 +4101,7 @@
      "below": false
     },
     "scottish": {
-     "words": 44,
+     "words": 46,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -4111,7 +4111,7 @@
      "below": false
     },
     "irish": {
-     "words": 44,
+     "words": 48,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -4151,7 +4151,7 @@
      "below": false
     },
     "scandinavian": {
-     "words": 47,
+     "words": 48,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -4201,7 +4201,7 @@
      "below": false
     },
     "portuguese": {
-     "words": 44,
+     "words": 40,
      "shapes": 10,
      "target": {
       "words": 30,
@@ -4439,7 +4439,7 @@
     "MD": 105,
     "EM": 105,
     "ST": 104,
-    "MO": 159,
+    "MO": 160,
     "NF": 2,
     "IS": 2
    },
@@ -22013,11 +22013,11 @@
     "shapes": 902
    },
    "scottish": {
-    "words": 2311,
+    "words": 2313,
     "shapes": 1489
    },
    "irish": {
-    "words": 2031,
+    "words": 2035,
     "shapes": 687
    },
    "cornish": {
@@ -22077,7 +22077,7 @@
     "shapes": 557
    },
    "portuguese": {
-    "words": 1991,
+    "words": 1987,
     "shapes": 560
    },
    "greek-byzantine": {
@@ -22121,7 +22121,7 @@
     "shapes": 105
    },
    "scandinavian": {
-    "words": 2159,
+    "words": 2160,
     "shapes": 1192
    },
    "german": {
@@ -22162,7 +22162,7 @@
    "MD": 9177,
    "EM": 9452,
    "ST": 9039,
-   "MO": 8023,
+   "MO": 8024,
    "NF": 762,
    "IS": 1642
   },

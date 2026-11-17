@@ -15,10 +15,12 @@ const KINDS = { ...G.KINDS, ...N.KINDS, ...V.KINDS };
 const WORDS = { ...G.WORDS, ...N.WORDS, ...V.WORDS };
 // Brief 6a: the batch's cultures join the loops; the mixes are held to Celtic's target (four words and four frames).
 import { ADJ6, ALL6, RANKS6, STYLE6, WORDS6 } from "./tier6a/north5c-build.mjs";
+import { addFrames5c } from "./tier6a/frames-6a.mjs";
 import { MIXES6, NEW6 } from "./tier6a/north5c-words.mjs";
 for (const [m, byCulture] of Object.entries(WORDS6)) WORDS[m] = { ...WORDS[m], ...byCulture };
 Object.assign(ADJ, ADJ6);
 Object.assign(STYLE, STYLE6);
+addFrames5c(FRAMES);
 Object.assign(RANKS, RANKS6);
 const isMix = (c) => c === "celtic" || MIXES6.includes(c);
 const ENGLISH_WORD = /^[A-Za-z][A-Za-z' -]*$/;

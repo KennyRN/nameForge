@@ -38,7 +38,7 @@ import {
 import { selfPatterns, type SettlementContext } from "../settlement/contextShared";
 import { type BaseCtx, commonToken, fillBatch, fromPool, pickOne, renderPattern as renderShared, shapeAllowed, town, vocabPool, type Renderer } from "./shared";
 import { deityHooks } from "../deities/hook";
-import { balanceRegion, balanceSignature, regionSeed } from "../northData";
+import { balanceRegion, balanceSignature, regionSeed, isOwnSig } from "../northData";
 import { mapShapes, NORTH5B } from "../northData5b";
 
 /** Deities brief §10.1: the christian cultures' temple weight, with fantastic on. */
@@ -256,7 +256,7 @@ function plans(ctx: Ctx, only?: string): [Plan, number][] {
   ];
   // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
   const regional = (p: Plan) => !!(p.shape as { rg?: boolean }).rg && !!ctx.region;
-  const signed = balanceSignature(all, (p) => !!(p.shape as { sig?: boolean }).sig, regional, ctx.culture.key, "buildingNames");
+  const signed = balanceSignature(all, (p) => isOwnSig(p.shape, ctx.culture.key), regional, ctx.culture.key, "buildingNames");
   return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 

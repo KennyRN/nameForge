@@ -5125,7 +5125,7 @@
    "v": 0
   },
   "culture|skyNames|scottish|words": {
-   "v": 44,
+   "v": 46,
    "t": 30
   },
   "culture|skyNames|scottish|shapes": {
@@ -5136,7 +5136,7 @@
    "v": 0
   },
   "culture|skyNames|irish|words": {
-   "v": 44,
+   "v": 48,
    "t": 30
   },
   "culture|skyNames|irish|shapes": {
@@ -5180,7 +5180,7 @@
    "v": 0
   },
   "culture|skyNames|scandinavian|words": {
-   "v": 47,
+   "v": 48,
    "t": 30
   },
   "culture|skyNames|scandinavian|shapes": {
@@ -5235,7 +5235,7 @@
    "v": 0
   },
   "culture|skyNames|portuguese|words": {
-   "v": 44,
+   "v": 40,
    "t": 30
   },
   "culture|skyNames|portuguese|shapes": {
@@ -5498,7 +5498,7 @@
    "t": 12
   },
   "era|skyNames|MO": {
-   "v": 159,
+   "v": 160,
    "t": 12
   },
   "era|skyNames|NF": {
@@ -25958,13 +25958,13 @@
    "v": 902
   },
   "total|culture|scottish|words": {
-   "v": 2311
+   "v": 2313
   },
   "total|culture|scottish|shapes": {
    "v": 1489
   },
   "total|culture|irish|words": {
-   "v": 2031
+   "v": 2035
   },
   "total|culture|irish|shapes": {
    "v": 687
@@ -26054,7 +26054,7 @@
    "v": 557
   },
   "total|culture|portuguese|words": {
-   "v": 1991
+   "v": 1987
   },
   "total|culture|portuguese|shapes": {
    "v": 560
@@ -26120,7 +26120,7 @@
    "v": 105
   },
   "total|culture|scandinavian|words": {
-   "v": 2159
+   "v": 2160
   },
   "total|culture|scandinavian|shapes": {
    "v": 1192
@@ -26186,7 +26186,7 @@
    "v": 9039
   },
   "total|era|MO": {
-   "v": 8023
+   "v": 8024
   },
   "total|era|NF": {
    "v": 762

@@ -35,7 +35,7 @@ export const ADJ6 = {
   greek: "Old|Grey|Golden|Bright|Fair|Noble|Silent|Wise|Violet|Sacred", byzantine: "Old|Grey|Golden|Bright|Fair|Holy|Silent|Wise|Purple|Imperial",
   slavic: "Old|Grey|Golden|Bright|Fair|Free|Silent|Stout|Green|White", iberian: "Old|Grey|Golden|Noble", "greek-byzantine": "Old|Grey|Golden|Wise",
 };
-export const STYLE6 = { spanish: "of", portuguese: "of", french: "of", italian: "of", dutch: "adj", roman: "of", greek: "of", byzantine: "of", slavic: "adj", iberian: "of", "greek-byzantine": "of" };
+export const STYLE6 = { spanish: "of", portuguese: "pt", french: "of", italian: "of", dutch: "adj", roman: "of", greek: "of", byzantine: "bz", slavic: "adj", iberian: "of", "greek-byzantine": "of" };
 export const RANKS6 = {
   spanish: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise|Hidalgo/Lady|Infante/Infanta", portuguese: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise|Fidalgo/Lady|Infante/Infanta",
   french: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise|Baron/Baroness|Dauphin/Dauphine", italian: "Doge/Dogaressa|Duke/Duchess|Count/Countess|Marquis/Marquise|Prince/Princess|Baron/Baroness",

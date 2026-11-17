@@ -1,6 +1,6 @@
 // Portuguese (brief 6a): the generic first; serras, estuaries and capes, caravel harbours, cork oak and salt pans, holy crosses and quintas, in English.
 export default {
-  key: "portuguese", label: "Portuguese", style: "first",
+  key: "portuguese", label: "Portuguese", style: "last",
   land: {
     B: "Cork Oak|Olive|Vine|Port Wine|Chestnut|Cattle|Eucalyptus|Granite|Rice|Orange",
     C: "Enchanted Maid|Dragon|Werewolf|Wild Man|Ghost Procession|Giant",

@@ -5,6 +5,7 @@
 // every roll comes from the stream the module passes in.
 
 import { isRealPlace } from "../realPlaces";
+import { legacyWeightOf } from "../northData";
 import LENS from "../data/lens.json";
 import { generatePlaceNames, type ResolvedSlot } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
@@ -101,7 +102,8 @@ export function sourceFor(kind: KindSources, ctx: Pick<SourceContext, "where" | 
   return kind.colonial && hasColonialTradition(ctx.culture) ? "colonial" : undefined;
 }
 
-const shareOf = (where: PlaceWhere, kind?: KindSources): number => kind?.share?.[where] ?? SOURCE_SHARES[where].share;
+/** Sibling-distinctness brief: a culture that reads the British native source along with its siblings takes it at its legacy weight (lens.json `shares.legacy`). */
+const shareOf = (where: PlaceWhere, kind?: KindSources, culture?: string): number => (kind?.share?.[where] ?? SOURCE_SHARES[where].share) * (where === "home" ? legacyWeightOf(culture) ?? 1 : 1);
 
 /** One name from a source, or undefined where it can give nothing for this kind and state. */
 export function drawFromSource(kind: KindSources, source: "native" | "colonial", ctx: SourceContext): string | undefined {
@@ -215,7 +217,7 @@ export function drawKind(kind: KindSources, ctx: SourceContext, own: () => strin
   if (kind.delegate) return drawFromDelegate(kind.delegate, ctx) ?? own();
   const source = sourceFor(kind, ctx);
   if (!source) return own();
-  if (ctx.rng() < shareOf(ctx.where, kind)) return drawFromSource(kind, source, ctx) ?? own();
+  if (ctx.rng() < shareOf(ctx.where, kind, ctx.culture)) return drawFromSource(kind, source, ctx) ?? own();
   return own() ?? drawFromSource(kind, source, ctx);
 }
 

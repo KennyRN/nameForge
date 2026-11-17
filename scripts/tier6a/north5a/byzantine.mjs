@@ -1,6 +1,6 @@
 // Byzantine (brief 6a): from late antiquity, the generic first; fortresses, monasteries and hermitages, cave churches, icons, harbours and imperial roads, in English.
 export default {
-  key: "byzantine", label: "Byzantine", style: "first",
+  key: "byzantine", label: "Byzantine", style: "last",
   land: {
     B: "Olive|Silk|Wheat|Vine|Honey|Salt|Iron|Alum|Goat|Lead",
     C: "Water Nymph|Dragon|Christmas Goblin|Revenant|Shades|Giant",
