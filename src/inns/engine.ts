@@ -6,6 +6,7 @@
 // street pools. No Obsidian imports.
 
 import { creaturesFor } from "../creatures";
+import INN_SIGNS from "../data/inn-signs.json";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
@@ -240,6 +241,14 @@ const LIGHT_OR_GRIM = (t: readonly string[] | undefined) => !!t && (t.includes("
 const COLOURS = new Set([...groupListWords("colour", "FL").map(([w]) => w), "Black", "White", "Red", "Blue", "Green", "Golden", "Grey", "Silver", "Pied", "Copper"]);
 const BIRDS = new Set(groupListWords("bird", "FL").map(([w]) => w));
 
+/** Second-tier 6b, Part A: a core-depth culture's own sign lists (src/data/inn-signs.json); the others read the shared lists. */
+interface SignLists { creatures: string[]; objects: string[]; trades: string[]; colours: string[]; persons: string[]; descriptions: string[]; places: string[] }
+const OWN_SIGNS = (INN_SIGNS as unknown as { cultures: Record<string, SignLists> }).cultures;
+const ownSigns = (ctx: Ctx): SignLists | undefined => OWN_SIGNS[ctx.culture.key];
+const ownWords = (words: string[]): [Word, number][] => words.map((w): [Word, number] => [{ w, t: [] }, 1]);
+/** The shared words the setting's themes boost (a port's anchors and nets): they join a culture's own signs where the setting asks for them. */
+const themed = (ctx: Ctx, pool: string): [Word, number][] => vocabItems(ctx, pool).filter(([, w]) => w > 1);
+
 /** A shared pool's words here (region, setting themes, tone; never light or grim for the sensitive cultures). */
 function vocabItems(ctx: Ctx, pool: string, mult = 1): [Word, number][] {
   return boostPool(ctx.options.context, pool, poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, region: ctx.region, themes: ctx.themes }))
@@ -283,23 +292,29 @@ function draw(ctx: Ctx, pool: string, items: [Word, number][], use?: string): st
 function creatureItems(ctx: Ctx): [Word, number][] {
   // Shared tables brief §8: in a fantastic world the culture's mythic creatures join the signs.
   const mythic: [Word, number][] = ctx.fantastic ? creaturesFor(ctx.culture.key).map((c): [Word, number] => [{ w: c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase()), t: c.tones as never }, 1]) : [];
-  const items = merged(ctx, [...INN_DATA.lists.creatureLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innCreature"), mythic]);
+  const own = ownSigns(ctx);
+  const items = own ? merged(ctx, [ownWords(own.creatures), themed(ctx, "innCreature"), mythic]) : merged(ctx, [...INN_DATA.lists.creatureLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innCreature"), mythic]);
   if (ctx.region && INN_DATA.regionRules.dragonDouble.includes(ctx.region)) for (const it of items) if (it[0].w === "Dragon") it[1] *= 2;
   return items;
 }
 
 /** §4.1: items: GN emblem items with innItem. */
-const itemItems = (ctx: Ctx) => merged(ctx, [...INN_DATA.lists.itemLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innItem")]);
+const itemItems = (ctx: Ctx) => {
+  const own = ownSigns(ctx);
+  return own ? merged(ctx, [ownWords(own.objects), themed(ctx, "innItem")]) : merged(ctx, [...INN_DATA.lists.itemLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innItem")]);
+};
 
 /** §4.1: locations, with SD's components at ×0.3. */
 function locationItems(ctx: Ctx): [Word, number][] {
+  const own = ownSigns(ctx);
+  if (own) return merged(ctx, [ownWords(own.places)]);
   const comps = Object.keys(STREET_DATA.components).map((p) => vocabItems(ctx, p, INN_DATA.lists.componentShare));
   return merged(ctx, [vocabItems(ctx, "innLocation"), ...comps]);
 }
 
 const creature = (ctx: Ctx, keep?: (w: string) => boolean) => draw(ctx, "creature", creatureItems(ctx).filter(([w]) => !keep || keep(w.w)), "creature");
 const item = (ctx: Ctx, keep?: (w: string) => boolean) => draw(ctx, "item", itemItems(ctx).filter(([w]) => !keep || keep(w.w)), "item");
-const person = (ctx: Ctx, keep?: (w: string) => boolean) => draw(ctx, "innPerson", merged(ctx, [vocabItems(ctx, "innPerson")]).filter(([w]) => !keep || keep(w.w)), "person");
+const person = (ctx: Ctx, keep?: (w: string) => boolean) => draw(ctx, "innPerson", merged(ctx, [ownSigns(ctx) ? ownWords(ownSigns(ctx)!.persons) : vocabItems(ctx, "innPerson")]).filter(([w]) => !keep || keep(w.w)), "person");
 
 /** §6.2: `{owner}`: invented from the culture's names or GN surnames; undefined where neither exists. */
 function ownerNames(ctx: Ctx): string[] {
@@ -398,7 +413,11 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "innLocation":
       return draw(ctx, "innLocation", locationItems(ctx));
     case "trade":
-      return draw(ctx, "streetTrades", merged(ctx, [vocabItems(ctx, "streetTrades")]));
+      return draw(ctx, "streetTrades", merged(ctx, [ownSigns(ctx) ? ownWords(ownSigns(ctx)!.trades) : vocabItems(ctx, "streetTrades")]));
+    case "innDescription": {
+      const own = ownSigns(ctx);
+      return draw(ctx, name, merged(ctx, [own ? ownWords([...own.descriptions, ...own.colours]) : vocabItems(ctx, name)]));
+    }
     case "owner":
     case "patron":
     case "founder": {
@@ -434,12 +453,15 @@ function token(ctx: Ctx, name: string): string | undefined {
     }
     case "ordinal":
       return draw(ctx, "ordinalWord", gnItems(ctx, "ordinalWord"));
-    case "number":
     case "colour":
+      if (ownSigns(ctx)) return draw(ctx, name, merged(ctx, [ownWords(ownSigns(ctx)!.colours)]));
+    // falls through
+    case "number":
     case "quality":
     case "tech":
     case "brandRoot":
     case "heraldicBeast":
+      if (name === "heraldicBeast" && ownSigns(ctx)) return draw(ctx, name, merged(ctx, [ownWords(ownSigns(ctx)!.creatures)]), "creature");
       return draw(ctx, name, merged(ctx, [gnItems(ctx, name)]), name === "heraldicBeast" ? "creature" : undefined);
     case "star":
       return groupStarIn("any", ctx.mode, rng);

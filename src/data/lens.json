@@ -3945,10 +3945,10 @@
   },
   "legacy": {
    "$comment": "Sibling-distinctness brief (17 November 2026): a culture that reads a table it shares with a sibling (the nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian, Greek and Byzantine read Greek-and-Byzantine, Anglo-Saxon and Norman and British read the English tables) draws that shared table at this weight, the share of its own-shape draws that are not its own entries; its own entries take the rest. Lower it until the pair meets the limits in the distinctness section.",
-   "welsh": 0.02,
+   "welsh": 0.1,
    "scottish": 0.1,
    "irish": 0.1,
-   "cornish": 0.02,
+   "cornish": 0.1,
    "scandinavian": 0.1,
    "spanish": 0.02,
    "portuguese": 0.02,
@@ -4198,6 +4198,7 @@
   "count": 12,
   "siblingLimit": 25,
   "generalLimit": 30,
+  "innLimit": 5,
   "excludedModules": [
    "starsSpace",
    "hyperspaceCharts",

@@ -12,6 +12,8 @@ interface Distinctness {
   seeds: number[];
   siblingLimit: number;
   generalLimit: number;
+  /** The most inn names (percent) two core-depth cultures may share at the same seed: every pair, not only siblings (second-tier 6b Part A). */
+  innLimit: number;
   excludedModules: string[];
   excludedCells: string[];
   siblings: [string, string][];
@@ -80,4 +82,18 @@ test("distinctness: the pairs name cultures the lens knows, and the limits are s
   assert.ok(D.siblingLimit > 0 && D.siblingLimit <= 25 && D.generalLimit > 0 && D.generalLimit <= 30);
   for (const [a, b] of D.siblings) assert.notEqual(a, b);
   assert.ok(D.general.length >= 18);
+});
+
+test("distinctness: no two core-depth cultures share more than the inn limit of their inn names (every pair)", () => {
+  const list = D.general.filter((c) => states().offered.innNames?.includes(c));
+  assert.ok(list.length >= 18, "the core-depth cultures all offer inns");
+  const over: string[] = [];
+  for (let i = 0; i < list.length; i++) {
+    for (let j = i + 1; j < list.length; j++) {
+      const o = overlap(states(), "innNames", list[i], list[j], D.seeds);
+      if (o === undefined) over.push(`${list[i]}/${list[j]} not measured`);
+      else if (o > D.innLimit) over.push(`${list[i]}/${list[j]} ${o}%`);
+    }
+  }
+  assert.deepEqual(over, [], `inn names over ${D.innLimit}%`);
 });
