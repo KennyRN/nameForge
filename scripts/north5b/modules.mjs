@@ -6,7 +6,8 @@ import { REGIONS } from "./regions.mjs";
 import * as C6 from "../tier6a/north5b-content.mjs";
 
 export const CULTURES = [
-  { key: "english", keys: ["anglo-saxon", "norman-british"], label: "English", c: ENGLISH },
+  { key: "english", keys: ["norman-british"], label: "English", c: ENGLISH },
+  { key: "anglo-saxon", keys: ["anglo-saxon"], label: "Anglo-Saxon", c: C6.ANGLO_SAXON },
   { key: "welsh", keys: ["welsh"], label: "Welsh", c: WELSH },
   { key: "scottish", keys: ["scottish"], label: "Scottish", c: SCOTTISH },
   { key: "irish", keys: ["irish"], label: "Irish", c: IRISH },

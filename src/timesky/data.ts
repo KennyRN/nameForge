@@ -185,7 +185,7 @@ export const kindsOfModule = (module: TimeModule) => TIME_KINDS.filter((k) => k.
 /** Northern Europe brief 5d: those, and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables (`engineAlias`) beneath their own words. */
 export const TIME_CULTURES = NORTH_CULTURES;
 export const findTimeCulture = (key: string | undefined) => TIME_CULTURES.find((c) => c.key === key);
-export const isSensitive = (culture: string) => TIME_SKY.sensitive.includes(engineCulture(culture));
+export const isSensitive = (culture: string) => TIME_SKY.sensitive.includes(engineCulture(culture, "time"));
 
 // ── Eras ────────────────────────────────────────────────────────────────────
 
@@ -225,12 +225,12 @@ export const landKind = (biome: Biome | undefined): LandKind => ({ space: isSpac
 /** §5.5: the year systems for a culture and era (and, for the planetary-system biome, the Darian calendar). */
 export function monthSystems(culture: string, era: RouteEra, land: LandKind = { space: false }): [string, number][] {
   if (isFutureEra(era)) return parseCell(land.space && land.scale === "Pl" ? TIME_SKY.cells.monthsPlanetary : TIME_SKY.cells.monthsFuture);
-  return parseCell(TIME_SKY.cells.months[engineCulture(culture)]?.[ERA_COLUMN[era]]);
+  return parseCell(TIME_SKY.cells.months[engineCulture(culture, "time")]?.[ERA_COLUMN[era]]);
 }
 
 /** §5.5: the week systems; none means the kind "days of the week" is not offered. */
 export function weekSystems(requested: string, era: RouteEra): [string, number][] {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "time");
   const row = TIME_SKY.cells.days[culture];
   if (!row) return [];
   return parseCell(isFutureEra(era) ? row[5] : row[ERA_COLUMN[era]]);
@@ -238,14 +238,14 @@ export function weekSystems(requested: string, era: RouteEra): [string, number][
 
 /** §5.5: the festival cycles. */
 export function festivalCycles(requested: string, era: RouteEra, land: LandKind = { space: false }): [string, number][] {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "time");
   if (isFutureEra(era)) return parseCell(land.space ? TIME_SKY.cells.festivalsSpace : TIME_SKY.cells.festivalsFuture);
   return parseCell(TIME_SKY.cells.festivals[culture]);
 }
 
 /** §5.5: the sky systems for star signs; none means the zodiac series is not offered. */
 export function signSystems(requested: string, era: RouteEra): [string, number][] {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "time");
   return parseCell(TIME_SKY.cells.signs[culture]?.[era === "AN" ? 0 : 1]);
 }
 
@@ -267,7 +267,7 @@ export function tableSystems(): string[] {
 
 /** §4: the kinds offered for a culture, era and land. */
 export function kindsOffered(module: TimeModule, requested: string, era: RouteEra, land: LandKind = { space: false }): TimeKindInfo[] {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "time");
   return kindsOfModule(module).filter((k) => {
     if (k.key === "day") return weekSystems(culture, era).length > 0;
     if (k.key === "moon") return !land.space;
@@ -277,7 +277,7 @@ export function kindsOffered(module: TimeModule, requested: string, era: RouteEr
 
 /** §5.5: whether a series is offered for a kind (constellations have none; signs only where a system exists). */
 export function seriesOffered(kind: TimeKind, requested: string, era: RouteEra, land: LandKind = { space: false }): boolean {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "time");
   switch (kind) {
     case "constellation":
       return false;
@@ -308,14 +308,14 @@ export function parseCycle(text: string): Cycle {
 }
 
 /** §3.3: "their homeland" for this module: the overrides, else the realms engine's. */
-export const homelandOf = (culture: string): string => TIME_SKY.homeland[engineCulture(culture)] ?? homelandBiome(engineCulture(culture));
+export const homelandOf = (culture: string): string => TIME_SKY.homeland[engineCulture(culture, "time")] ?? homelandBiome(engineCulture(culture, "time"));
 
 /** A biome pack's own cycle (§6.1): the `seasonCycle` it gives. */
 export type CycleBiome = Biome & { seasonCycle?: Cycle };
 
 /** §6.1: the season cycle of a land; the culture's homeland cycle when the land is the homeland; none in space. */
 export function seasonCycle(biome: CycleBiome | undefined, requested: string, atHome: boolean): Cycle | null {
-  const culture = engineCulture(requested);
+  const culture = engineCulture(requested, "time");
   if (isSpaceBiome(biome)) return null;
   if (atHome && TIME_SKY.homelandCycles[culture]) return parseCycle(TIME_SKY.homelandCycles[culture]);
   const temperate = parseCycle(TIME_SKY.seasonCycles.temperate);

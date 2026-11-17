@@ -89,7 +89,7 @@ const WORDS_TEXT: Record<TimeWords, string> = { translated: "in translated names
 
 /** §2.3: whether a culture has at least one loan form (so the words link shows). */
 export function timeHasLoans(culture: string): boolean {
-  return (TIME_SKY.cultureNames[engineCulture(culture)]?.festival ?? []).some((r) => !!r.loan);
+  return (TIME_SKY.cultureNames[engineCulture(culture, "time")]?.festival ?? []).some((r) => !!r.loan);
 }
 
 /** The resolved land of a state. */

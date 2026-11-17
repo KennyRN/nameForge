@@ -38,7 +38,7 @@ import {
 import { selfPatterns, type SettlementContext } from "../settlement/contextShared";
 import { type BaseCtx, commonToken, fillBatch, fromPool, pickOne, renderPattern as renderShared, shapeAllowed, town, vocabPool, type Renderer } from "./shared";
 import { deityHooks } from "../deities/hook";
-import { balanceRegion, balanceSignature, regionSeed, isOwnSig } from "../northData";
+import { balanceRegion, balanceSignature, regionSeed, isOwnSig, legacyWeightOf } from "../northData";
 import { mapShapes, NORTH5B } from "../northData5b";
 
 /** Deities brief §10.1: the christian cultures' temple weight, with fantastic on. */
@@ -309,7 +309,12 @@ function kindWeight(s: Setup, kind: BuildingKind): number {
   const k = BUILDING_KINDS.find((x) => x.key === kind)!;
   // Settlement kit §7.1: the position's multipliers.
   const w = k.era[s.era] * (BUILDING_DATA.settingX[s.settingKey][kind] ?? 1) * (s.options.context?.effects?.buildingKindX?.[kind] ?? 1);
-  return w > 0 && plans(newCtx(s, kind)).length + (isFuture(s.era) ? 1 : 0) > 0 ? w : 0;
+  if (!(w > 0 && plans(newCtx(s, kind)).length + (isFuture(s.era) ? 1 : 0) > 0)) return 0;
+  // Sibling-distinctness brief: a kind the culture has no shapes of its own in reads the shared table, at its legacy weight.
+  const legacy = legacyWeightOf(s.culture.key);
+  if (legacy === undefined) return w;
+  const ownIn = (k: BuildingKind) => plans(newCtx(s, k)).some(([p]) => isOwnSig(p.shape, s.culture.key));
+  return BUILDING_KINDS.some((k) => ownIn(k.key)) && !ownIn(kind) ? w * legacy : w;
 }
 
 /** §5.1–§5.2: the kinds offered for a culture, era and setting, with their weights. */

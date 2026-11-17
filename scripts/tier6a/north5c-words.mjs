@@ -1,25 +1,25 @@
 // Brief 6a, the group families, tribes, bynames, realms, peoples and tongues, ships, aircraft and land vehicles: ten English words per kind and culture,
 // three lists per module (`;` between the lists, `|` between words), as scripts/north5c/content-*.mjs. Portuguese reads Spanish's with its own words changed,
 // Byzantine Greek's; the mixes (Iberian, Greek and Byzantine) hold four words per list, taken from the first of their halves.
-export const NEW6 = ["spanish", "portuguese", "french", "italian", "dutch", "roman", "greek", "byzantine", "slavic"];
+export const NEW6 = ["spanish", "portuguese", "french", "italian", "dutch", "roman", "greek", "byzantine", "slavic", "anglo-saxon"];
 export const MIXES6 = ["iberian", "greek-byzantine"];
 
 export const W6 = {
   mysticOrders: {
-    spanish: "Brotherhood|Confraternity|Order|Hermits|Beatas|Penitents|Sodality|Chapter|Seers|Mystics;Cross|Rose|Lamb|Dove|Star|Candle|Pelican|Lily|Flame|Shell;Mysteries|Vision|Vigil|Procession|Rosary|Silence|Veil|Grail|Ecstasy|Pilgrimage",
+    spanish: "Brotherhood|Confraternity|Order|Hermits|Lay Sisters|Penitents|Sodality|Chapter|Seers|Mystics;Cross|Rose|Lamb|Dove|Star|Candle|Pelican|Lily|Flame|Shell;Mysteries|Vision|Vigil|Procession|Rosary|Silence|Veil|Grail|Ecstasy|Pilgrimage",
     french: "Brotherhood|Order|Chapter|Hermits|Monks|Beguines|Society|Lodge|Mystics|Circle;Lily|Rose|Cross|Dove|Star|Candle|Pelican|Flame|Shell|Cockerel;Mysteries|Vision|Vigil|Grail|Silence|Veil|Cloister|Light|Ecstasy|Pilgrimage",
     italian: "Brotherhood|Confraternity|Order|Hermits|Tertiaries|Penitents|Chapter|Society|Mystics|Circle;Cross|Lily|Dove|Lamb|Star|Candle|Flame|Rose|Olive|Shell;Mysteries|Vision|Vigil|Procession|Silence|Veil|Cloister|Light|Ecstasy|Pilgrimage",
     dutch: "Brotherhood|Beguines|Order|Chapter|Common Life|Hermits|Society|Chamber|Mystics|Circle;Tulip|Cross|Lamb|Dove|Star|Lantern|Swan|Rose|Windmill|Flame;Mysteries|Vision|Vigil|Silence|Veil|Cloister|Light|Devotion|Beguinage|Pilgrimage",
     roman: "College|Brotherhood|Order|Augurs|Vestals|Mystery Cult|Priests|Chapter|Sodality|Circle;Eagle|Wolf|Flame|Laurel|Dove|Lamp|Serpent|Shield|Star|Rose;Mysteries|Auguries|Vigil|Rites|Silence|Veil|Hearth|Light|Ecstasy|Procession",
     greek: "Mystery Cult|Brotherhood|Oracle Priests|Initiates|Order|Chapter|Sacred Band|Circle|Seers|Thiasos;Owl|Olive|Flame|Laurel|Serpent|Dove|Lamp|Star|Torch|Wheel;Mysteries|Oracles|Vigil|Rites|Silence|Veil|Hearth|Light|Ecstasy|Procession",
-    slavic: "Brotherhood|Monastery|Order|Hermits|Elders|Skoptsy|Chapter|Circle|Mystics|Wise Women;Icon|Cross|Birch|Dove|Star|Candle|Swan|Bell|Flame|Firebird;Mysteries|Vision|Vigil|Silence|Veil|Cloister|Light|Fasting|Pilgrimage|Prayer",
+    slavic: "Brotherhood|Monastery|Order|Hermits|Elders|Skoptsi|Chapter|Circle|Mystics|Wise Women;Icon|Cross|Birch|Dove|Star|Candle|Swan|Bell|Flame|Firebird;Mysteries|Vision|Vigil|Silence|Veil|Cloister|Light|Fasting|Pilgrimage|Prayer",
   },
   martialOrders: {
     spanish: "Tercio|Horsemen|Lancers|Conquistadors|Guards|Free Company|Regiment|Hidalgos|Brotherhood|Legion;Pike|Arquebus|Lance|Sword|Banner|Shield|Rapier|Musket|Crossbow|Cannon;Lion|Eagle|Bull|Wolf|Falcon|Horse|Boar|Hound|Stag|Bear",
     french: "Musketeers|Chevaliers|Lancers|Grenadiers|Guards|Free Company|Regiment|Zouaves|Brotherhood|Legion;Lance|Sword|Banner|Shield|Crossbow|Pike|Musket|Sabre|Cannon|Rapier;Lion|Eagle|Cock|Wolf|Falcon|Horse|Boar|Hound|Stag|Bear",
     italian: "Condottieri|Lancers|Crossbowmen|Guards|Free Company|Regiment|Bersaglieri|Brotherhood|Legion|Militia;Lance|Sword|Banner|Shield|Crossbow|Pike|Musket|Stiletto|Cannon|Halberd;Lion|Eagle|Wolf|She-Wolf|Falcon|Horse|Boar|Hound|Stag|Bull",
     dutch: "Pikemen|Sea Beggars|Guards|Free Company|Regiment|Militia|Brotherhood|Marines|Musketeers|Civic Guard;Pike|Sword|Banner|Shield|Musket|Cannon|Halberd|Crossbow|Cutlass|Drum;Lion|Eagle|Wolf|Falcon|Horse|Boar|Hound|Stag|Bear|Swan",
-    roman: "Legion|Cohort|Century|Guards|Auxiliaries|Praetorians|Vigiles|Brotherhood|Maniple|Cavalry;Gladius|Pilum|Shield|Standard|Spear|Javelin|Helmet|Trumpet|Sling|Ballista;Eagle|Wolf|Bull|Lion|Boar|Horse|Hound|Stag|Bear|Falcon",
+    roman: "Legion|Cohort|Century|Guards|Auxiliaries|Praetorians|Night Watch|Brotherhood|Maniple|Cavalry;Gladius|Pilum|Shield|Standard|Spear|Javelin|Helmet|Trumpet|Sling|Ballista;Eagle|Wolf|Bull|Lion|Boar|Horse|Hound|Stag|Bear|Falcon",
     greek: "Phalanx|Hoplites|Sacred Band|Guards|Peltasts|Companions|Brotherhood|Cavalry|Marines|Archers;Spear|Shield|Sword|Standard|Javelin|Helmet|Trumpet|Sling|Bow|Trireme;Lion|Eagle|Owl|Wolf|Bull|Boar|Horse|Hound|Stag|Falcon",
     slavic: "Druzhina|Cossacks|Hussars|Guards|Free Company|Regiment|Musketeers|Brotherhood|Militia|Partisans;Sabre|Spear|Banner|Shield|Axe|Bow|Pike|Musket|Cannon|Mace;Wolf|Eagle|Bear|Falcon|Horse|Boar|Hound|Stag|Bull|Lynx",
   },

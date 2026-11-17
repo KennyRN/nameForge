@@ -10,31 +10,31 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 
 | module | English | Welsh | Scottish | Irish | Cornish | Celtic | Norse | Scandinavian | German | French | Dutch | Spanish | Portuguese | Iberian | Italian | Roman | Greek | Byzantine | Greek and Byzantine | Slavic | Turkic and Mongol steppe | Arabic and Persian | Egyptian | Ethiopian | Bantu | West African | Indian | Chinese | Japanese | Korean | Aztec | Maya | Andean | Polynesian | American |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| route names | 54/50 | 45/22 | 45/32 | 45/22 | 45/22 | 35/17 | 37/37 | 30/34 | 30/40 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 55/15 | 34/11 | 34/11 | 20/13 | 40/17 | **7/5** | **7/5** | **4/4** | **4/3** | **4/1** | **4/5** | **5/5** | **8/6** | **10/4** | **4/4** | **4/3** | **4/3** | **3/3** | **6/3** | not offered |
-| streets and districts | 116/22 | 64/22 | 88/21 | 64/21 | 64/21 | 63/10 | 60/15 | 54/15 | 60/15 | 45/15 | 30/10 | 45/15 | 45/15 | 27/9 | 30/10 | 49/24 | 45/15 | 45/15 | 32/14 | 52/22 | **6/4** | 15/6 | **5/5** | **4/2** | **4/2** | **4/7** | **8/6** | **11/9** | 12/8 | **9/5** | **11/6** | **9/4** | **3/2** | **2/3** | not offered |
-| inns and taverns | 117/14 | 73/15 | 97/15 | 73/15 | 73/15 | 68/4 | 57/15 | 54/15 | 60/16 | 54/10 | 30/10 | 54/10 | 54/10 | 36/4 | 30/10 | 59/16 | 54/10 | 54/10 | 40/8 | 56/14 | **3/4** | 20/6 | **1/3** | **1/2** | **1/2** | **2/4** | 13/5 | 37/5 | 23/4 | **31/3** | **5/3** | **4/3** | **1/2** | **1/2** | not offered |
-| buildings and landmarks | 115/23 | 71/22 | 95/22 | 71/22 | 71/23 | 66/12 | 57/15 | 54/14 | 60/15 | 57/18 | 30/10 | 57/18 | 57/18 | 39/12 | 30/10 | 79/22 | 57/18 | 57/18 | 41/14 | 57/22 | **2/2** | 29/6 | **1/5** | **1/2** | **2/1** | **1/4** | 24/7 | 44/4 | 39/5 | 41/4 | **8/4** | **6/6** | **0/3** | **1/2** | not offered |
-| monuments and statues | 116/18 | 73/18 | 97/18 | 73/18 | 73/18 | 69/8 | 58/15 | 54/14 | 60/14 | 36/14 | 30/10 | 36/14 | 36/14 | 18/8 | 30/10 | 38/20 | 36/14 | 36/14 | 20/11 | 37/18 | **1/3** | **1/3** | **3/7** | **1/4** | **0/2** | **0/3** | **1/5** | **3/6** | **1/3** | **3/3** | **0/2** | **1/3** | **0/0** | **0/0** | not offered |
+| route names | 84/60 | 45/22 | 45/32 | 45/22 | 45/22 | 35/17 | 37/37 | 30/34 | 30/40 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 55/15 | 34/11 | 34/11 | 20/13 | 40/17 | **7/5** | **7/5** | **4/4** | **4/3** | **4/1** | **4/5** | **5/5** | **8/6** | **10/4** | **4/4** | **4/3** | **4/3** | **3/3** | **6/3** | not offered |
+| streets and districts | 146/35 | 64/22 | 88/21 | 64/21 | 64/21 | 63/10 | 60/15 | 54/15 | 60/15 | 45/15 | 30/10 | 45/15 | 45/15 | 27/9 | 30/10 | 49/24 | 45/15 | 45/15 | 32/14 | 52/22 | **6/4** | 15/6 | **5/5** | **4/2** | **4/2** | **4/7** | **8/6** | **11/9** | 12/8 | **9/5** | **11/6** | **9/4** | **3/2** | **2/3** | not offered |
+| inns and taverns | 147/13 | 73/15 | 97/15 | 73/15 | 73/15 | 68/4 | 57/15 | 54/15 | 60/16 | 54/10 | 30/10 | 54/10 | 54/10 | 36/4 | 30/10 | 59/16 | 54/10 | 54/10 | 40/8 | 56/14 | **3/4** | 20/6 | **1/3** | **1/2** | **1/2** | **2/4** | 13/5 | 37/5 | 23/4 | **31/3** | **5/3** | **4/3** | **1/2** | **1/2** | not offered |
+| buildings and landmarks | 145/22 | 71/22 | 95/22 | 71/22 | 71/23 | 66/12 | 57/15 | 54/14 | 60/15 | 57/18 | 30/10 | 57/18 | 57/18 | 39/12 | 30/10 | 79/22 | 57/18 | 57/18 | 41/14 | 57/22 | **2/2** | 29/6 | **1/5** | **1/2** | **2/1** | **1/4** | 24/7 | 44/4 | 39/5 | 41/4 | **8/4** | **6/6** | **0/3** | **1/2** | not offered |
+| monuments and statues | 146/17 | 73/18 | 97/18 | 73/18 | 73/18 | 69/8 | 58/15 | 54/14 | 60/14 | 36/14 | 30/10 | 36/14 | 36/14 | 18/8 | 30/10 | 38/20 | 36/14 | 36/14 | 20/11 | 37/18 | **1/3** | **1/3** | **3/7** | **1/4** | **0/2** | **0/3** | **1/5** | **3/6** | **1/3** | **3/3** | **0/2** | **1/3** | **0/0** | **0/0** | not offered |
 | settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | 230/116 | 225/93 | 280/108 | 245/111 | not offered | 205/111 | 141/160 | 230/103 | 215/97 | not offered | 112/148 | not offered | **0/105** | **0/85** | 17/60 | 26/51 | **0/58** | **0/86** | **10/97** | 58/86 | 33/38 | **0/77** | **0/53** | not offered | not offered | not offered |
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 47/10 | 47/10 | 48/10 | 48/10 | 15/4 | 46/10 | 48/12 | 48/10 | 48/10 | 15/4 | 46/12 | **0/3** | 16/5 | **11/4** | **11/2** | **0/2** | **11/5** | **1/2** | 34/5 | **35/3** | 34/5 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
 | money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 77/12 + profile | 65/10 + profile | 51/11 | 51/11 | 44/6 + profile | 48/10 | 89/12 | 49/11 | 50/11 | 47/6 | 85/13 | **18/1 + profile** | **31/0** | **15/0 + profile** | **9/0 + profile** | **22/0 + profile** | **23/0 + profile** | **24/1** | **32/1** | **21/1 + profile** | **18/1 + profile** | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
-| calendars and festivals | 93/12 | 70/11 | 70/11 | 67/11 | 65/11 | 35/5 | 75/11 | 80/11 | 47/10 | 48/10 | 48/10 | 48/10 | 48/10 | 15/4 | 48/10 | 81/13 | 48/10 | 48/10 | 40/5 | 79/10 | **10/1** | **10/0** | **20/0** | **10/0** | **9/2** | **5/2** | **6/0** | **65/1** | **73/1** | **55/1** | **37/3** | **2/3** | excluded | excluded | not offered |
-| sky lore | 62/10 | 46/10 | 46/10 | 48/10 | 46/10 | 18/4 | 48/10 | 48/10 | 44/10 | 44/10 | 44/10 | 44/10 | 40/10 | 15/4 | 44/10 | 72/10 | 44/10 | 44/10 | 47/4 | 47/10 | **7/0** | **6/0** | **5/0** | **0/0** | **2/0** | **0/0** | **0/0** | **13/0** | **8/0** | **8/0** | **7/0** | **5/0** | excluded | excluded | not offered |
-| mountains | 34/108 + profile | 34/36 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 33/14 + profile | 30/14 | 30/22 | 34/10 | excluded | 34/10 | 34/10 | 16/10 | 30/10 | 34/10 + profile | 34/10 | 34/10 | 18/10 + profile | 35/10 + profile | **1/0 + profile** | **1/0 + profile** | **3/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **5/2 + profile** | **6/2 + profile** | **3/2 + profile** | **4/2 + profile** | **5/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | not offered |
-| forests and woods | 34/65 + profile | 34/36 | 34/84 | 34/12 | 34/36 | 17/6 + profile | 31/38 + profile | 30/38 | 30/136 | 34/12 | 30/10 | 34/12 | 34/12 | 16/12 | 30/10 | 35/12 + profile | 34/12 | 34/12 | 16/12 + profile | 35/12 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **4/0 + profile** | **5/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **1/0 + profile** | not offered |
+| calendars and festivals | 93/12 | 89/11 | 89/11 | 86/11 | 84/11 | 35/5 | 75/11 | 107/11 | 47/10 | 48/10 | 48/10 | 48/10 | 48/10 | 15/4 | 48/10 | 81/13 | 48/10 | 48/10 | 40/5 | 79/10 | **10/1** | **10/0** | **20/0** | **10/0** | **9/2** | **5/2** | **6/0** | **65/1** | **73/1** | **55/1** | **37/3** | **2/3** | excluded | excluded | not offered |
+| sky lore | 62/10 | 49/10 | 49/10 | 51/10 | 49/10 | 18/4 | 48/10 | 53/10 | 44/10 | 44/10 | 44/10 | 44/10 | 40/10 | 15/4 | 44/10 | 72/10 | 44/10 | 44/10 | 47/4 | 47/10 | **7/0** | **6/0** | **5/0** | **0/0** | **2/0** | **0/0** | **0/0** | **13/0** | **8/0** | **8/0** | **7/0** | **5/0** | excluded | excluded | not offered |
+| mountains | 64/118 + profile | 34/36 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 33/14 + profile | 30/14 | 30/22 | 34/10 | excluded | 34/10 | 34/10 | 16/10 | 30/10 | 34/10 + profile | 34/10 | 34/10 | 18/10 + profile | 35/10 + profile | **1/0 + profile** | **1/0 + profile** | **3/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **5/2 + profile** | **6/2 + profile** | **3/2 + profile** | **4/2 + profile** | **5/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | not offered |
+| forests and woods | 64/75 + profile | 34/36 | 34/84 | 34/12 | 34/36 | 17/6 + profile | 31/38 + profile | 30/38 | 30/136 | 34/12 | 30/10 | 34/12 | 34/12 | 16/12 | 30/10 | 35/12 + profile | 34/12 | 34/12 | 16/12 + profile | 35/12 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **2/0 + profile** | **2/0 + profile** | **4/0 + profile** | **4/0 + profile** | **5/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **1/0 + profile** | not offered |
 | deserts | **4/0 + profile** | **4/0** | **4/0** | **4/0** | **4/0** | **5/0 + profile** | **12/4 + profile** | **12/4** | **0/0** | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | **1/1 + profile** | **0/2 + profile** | **1/1 + profile** | **0/1 + profile** | **0/0 + profile** | **1/1 + profile** | **4/1 + profile** | **6/0 + profile** | **3/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **0/0 + profile** | not offered |
-| moors and heaths | 34/12 + profile | 34/12 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 30/13 + profile | 30/13 | 30/87 | 34/12 | 30/10 | 34/12 | 34/12 | 16/12 | 30/10 | 34/12 + profile | 34/12 | 34/12 | 16/12 + profile | 34/12 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | not offered |
-| wetlands | 35/59 + profile | 34/11 | 34/107 | 34/11 | 34/35 | 17/5 + profile | 30/35 + profile | 30/35 | 30/42 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 34/11 + profile | 34/11 | 34/11 | 16/11 + profile | 34/11 + profile | **0/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **4/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | not offered |
-| grasslands | 34/61 + profile | 34/37 | 34/85 | 34/13 | 34/37 | 17/7 + profile | 31/62 + profile | 30/62 | 30/111 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 34/11 + profile | 34/11 | 34/11 | 16/11 + profile | 35/11 + profile | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **0/0 + profile** | not offered |
-| lands and territories | 31/346 + profile | 31/34 | 31/106 | 31/10 | 31/34 | 13/4 + profile | 30/109 + profile | 30/109 | 30/141 | 31/10 | 30/10 | 31/10 | 31/10 | 13/10 | 30/10 | 31/10 + profile | 31/10 | 31/10 | 13/10 + profile | 31/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
-| rivers and inland waters | 31/171 + profile | 31/51 | 31/123 | 31/27 | 31/51 | 13/21 + profile | 30/14 + profile | 30/14 | 30/133 | 31/10 | 30/10 | 31/10 | 31/10 | 13/10 | 30/10 | 31/10 + profile | 31/10 | 31/10 | 14/10 + profile | 31/10 + profile | **2/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **1/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **1/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | not offered |
-| hills and valleys | 32/263 + profile | 32/47 | 32/95 | 32/23 | 32/47 | 14/17 + profile | 30/112 + profile | 30/112 | 30/141 | 32/10 | 30/10 | 32/10 | 32/10 | 14/10 | 30/10 | 32/10 + profile | 32/10 | 32/10 | 14/10 + profile | 32/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
-| farmland and countryside | 31/349 + profile | 31/37 | 31/109 | 31/13 | 31/37 | 13/7 + profile | 30/110 + profile | 30/110 | 30/138 | 31/10 | 30/10 | 31/10 | 31/10 | 13/10 | 30/10 | 31/10 + profile | 31/10 | 31/10 | 13/10 + profile | 31/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| moors and heaths | 64/22 + profile | 34/12 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 30/13 + profile | 30/13 | 30/87 | 34/12 | 30/10 | 34/12 | 34/12 | 16/12 | 30/10 | 34/12 + profile | 34/12 | 34/12 | 16/12 + profile | 34/12 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | not offered |
+| wetlands | 65/69 + profile | 34/11 | 34/107 | 34/11 | 34/35 | 17/5 + profile | 30/35 + profile | 30/35 | 30/42 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 34/11 + profile | 34/11 | 34/11 | 16/11 + profile | 34/11 + profile | **0/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **4/0 + profile** | **3/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | not offered |
+| grasslands | 64/71 + profile | 34/37 | 34/85 | 34/13 | 34/37 | 17/7 + profile | 31/62 + profile | 30/62 | 30/111 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 34/11 + profile | 34/11 | 34/11 | 16/11 + profile | 35/11 + profile | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **0/0 + profile** | not offered |
+| lands and territories | 61/356 + profile | 31/34 | 31/106 | 31/10 | 31/34 | 13/4 + profile | 30/109 + profile | 30/109 | 30/141 | 31/10 | 30/10 | 31/10 | 31/10 | 13/10 | 30/10 | 31/10 + profile | 31/10 | 31/10 | 13/10 + profile | 31/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| rivers and inland waters | 61/181 + profile | 31/51 | 31/123 | 31/27 | 31/51 | 13/21 + profile | 30/14 + profile | 30/14 | 30/133 | 31/10 | 30/10 | 31/10 | 31/10 | 13/10 | 30/10 | 31/10 + profile | 31/10 | 31/10 | 14/10 + profile | 31/10 + profile | **2/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **1/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | **1/0 + profile** | **0/0 + profile** | **1/0 + profile** | **0/0 + profile** | not offered |
+| hills and valleys | 62/273 + profile | 32/47 | 32/95 | 32/23 | 32/47 | 14/17 + profile | 30/112 + profile | 30/112 | 30/141 | 32/10 | 30/10 | 32/10 | 32/10 | 14/10 | 30/10 | 32/10 + profile | 32/10 | 32/10 | 14/10 + profile | 32/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| farmland and countryside | 61/359 + profile | 31/37 | 31/109 | 31/13 | 31/37 | 13/7 + profile | 30/110 + profile | 30/110 | 30/138 | 31/10 | 30/10 | 31/10 | 31/10 | 13/10 | 30/10 | 31/10 + profile | 31/10 | 31/10 | 13/10 + profile | 31/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
 | stars and space | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered | 1/0 (deferred: styles) | 0/0 (deferred: styles) | 1/0 (deferred: styles) | 1/0 (deferred: styles) | 1/0 (deferred: styles) | 0/0 (deferred: styles) | 1/0 (deferred: styles) | 1/0 (deferred: styles) | 1/0 (deferred: styles) | 1/0 (deferred: styles) | 1/0 (deferred: styles) | **2/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **2/0 + profile** | not offered |
-| seas and bays | 37/175 + profile | 30/51 | 30/27 | 30/27 | 30/51 | 14/21 + profile | 38/19 + profile | 30/16 | 30/68 | 30/11 | 30/10 | 30/11 | 30/11 | 12/11 | 30/10 | 32/11 + profile | 30/11 | 30/11 | 21/11 + profile | 30/11 + profile | **2/0 + profile** | **1/0 + profile** | **2/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **8/1 + profile** | **4/0 + profile** | **3/0 + profile** | **1/0 + profile** | **3/0 + profile** | **1/0 + profile** | **2/0 + profile** | **6/0 + profile** | not offered |
-| coasts and islands | 31/44 + profile | 31/42 | 31/42 | 31/42 | 31/42 | 13/36 + profile | 30/34 + profile | 30/22 | 30/19 | 31/13 | 30/10 | 31/13 | 31/13 | 13/13 | 30/10 | 31/15 + profile | 31/13 | 31/13 | 14/15 + profile | 31/13 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
-| sea charts | 30/171 + profile | 30/51 | 30/99 | 30/27 | 30/51 | 14/21 + profile | 31/110 + profile | 30/107 | 30/16 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 30/10 + profile | 30/10 | 30/10 | 13/10 + profile | 30/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/1 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| seas and bays | 67/185 + profile | 30/51 | 30/27 | 30/27 | 30/51 | 14/21 + profile | 38/19 + profile | 30/16 | 30/68 | 30/11 | 30/10 | 30/11 | 30/11 | 12/11 | 30/10 | 32/11 + profile | 30/11 | 30/11 | 21/11 + profile | 30/11 + profile | **2/0 + profile** | **1/0 + profile** | **2/0 + profile** | **0/0 + profile** | **2/0 + profile** | **1/0 + profile** | **8/1 + profile** | **4/0 + profile** | **3/0 + profile** | **1/0 + profile** | **3/0 + profile** | **1/0 + profile** | **2/0 + profile** | **6/0 + profile** | not offered |
+| coasts and islands | 61/54 + profile | 31/42 | 31/42 | 31/42 | 31/42 | 13/36 + profile | 30/34 + profile | 30/22 | 30/19 | 31/13 | 30/10 | 31/13 | 31/13 | 13/13 | 30/10 | 31/15 + profile | 31/13 | 31/13 | 14/15 + profile | 31/13 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
+| sea charts | 60/181 + profile | 30/51 | 30/99 | 30/27 | 30/51 | 14/21 + profile | 31/110 + profile | 30/107 | 30/16 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 30/10 + profile | 30/10 | 30/10 | 13/10 + profile | 30/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/1 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered |
 | hyperspace charts | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 | epithets and bynames | 70/10 | 54/10 | 53/10 | 49/10 | 50/10 | 19/4 | 56/10 | 51/10 | 49/10 | 51/10 | 51/10 | 51/10 | 50/10 | 15/4 | 51/10 | 57/10 | 51/10 | 51/10 | 26/4 | 54/10 | **13/0** | **8/0** | **6/0** | **3/0** | **5/0** | **4/0** | **5/0** | **4/0** | **4/0** | **3/0** | **3/0** | **4/0** | not offered | not offered | not offered |
 | titles and honourifics | 68/10 | 51/10 | 50/10 | 48/10 | 59/10 | 20/4 | 46/10 | 53/10 | 47/10 | 47/10 | 47/10 | 47/10 | 47/10 | 15/4 | 47/10 | 56/10 | 46/10 | 47/10 | 24/4 | 53/10 | **6/0** | **8/0** | **6/0** | **7/0** | **6/0** | **8/0** | **7/0** | **7/0** | **6/0** | **7/0** | **6/0** | **5/0** | not offered | not offered | not offered |
@@ -45,7 +45,7 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | realms and polities | 53/10 + profile | 52/10 + profile | 50/10 + profile | 47/10 + profile | 50/10 + profile | 18/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | 48/10 | 47/10 | 48/10 | 48/10 | 15/4 | 48/10 | 49/10 + profile | 49/10 | 47/10 | 19/4 + profile | 51/10 + profile | **8/0 + profile** | **7/0 + profile** | **5/0 + profile** | **2/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | not offered | not offered | not offered |
 | peoples and tongues | 47/10 + profile | 45/10 + profile | 49/10 + profile | 49/10 + profile | 45/10 + profile | 15/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | 47/10 | 47/10 | 47/10 | 47/10 | 15/4 | 47/10 | 47/10 + profile | 47/10 | 47/10 | 15/4 + profile | 47/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered | not offered | not offered |
 | deities | 75/11 + profile | 62/10 + profile | 62/10 + profile | 61/10 + profile | 62/10 + profile | 31/4 + profile | 63/11 + profile | 62/11 + profile | 46/10 | 45/10 | 45/10 | 45/10 | 45/10 | 15/4 | 45/10 | 57/10 | 45/10 | 45/10 | 22/4 | 57/10 | **10/2 + profile** | **13/1 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/1 + profile** | **14/1 + profile** | excluded | excluded | not offered |
-| sacred places | 60/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 28/4 + profile | 47/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 42/10 | 30/10 | 30/10 | 19/10 | 42/10 | **10/0 + profile** | **13/0 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/0 + profile** | **14/0 + profile** | excluded | excluded | not offered |
+| sacred places | 90/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 28/4 + profile | 47/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 42/10 | 30/10 | 30/10 | 19/10 | 42/10 | **10/0 + profile** | **13/0 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/0 + profile** | **14/0 + profile** | excluded | excluded | not offered |
 | tribes and kin groups | 46/10 | 48/10 | 48/10 | 48/10 | 48/10 | **10/0** | 41/10 | 46/10 | 46/10 | 41/10 | 46/10 | 41/10 | 41/10 | 23/4 | 46/10 | 46/10 | 41/10 | 41/10 | 28/4 | 41/10 | **7/0** | **7/0** | not offered | not offered | **4/0** | **5/0** | **6/0** | **8/0** | **8/0** | **8/0** | **7/0** | **7/0** | **6/0** | **10/0** | not offered |
 | faiths and mystic orders | 50/10 | 55/10 | 49/10 | 49/10 | 53/10 | 18/4 | 44/10 | 43/10 | 45/10 | 54/10 | 50/10 | 54/10 | 54/10 | 19/4 | 58/10 | 58/10 | 54/10 | 54/10 | 23/4 | 50/10 | **0/0** | **2/0** | not offered | not offered | **1/0** | **1/0** | **6/0** | **8/2** | **8/2** | **8/2** | **1/0** | **1/0** | **3/0** | **1/0** | not offered |
 | armies and martial orders | 56/10 | 47/10 | 49/10 | 43/10 | 46/10 | 17/4 | 53/10 | 54/10 | 56/10 | 52/10 | 59/10 | 52/10 | 51/10 | 18/4 | 54/10 | 55/10 | 51/10 | 53/10 | 21/4 | 53/10 | **6/0** | **1/0** | not offered | not offered | **4/0** | **0/0** | **0/0** | **1/0** | **1/0** | **1/0** | **2/0** | **2/0** | **1/0** | **0/0** | not offered |
@@ -64,20 +64,33 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 
 Cultures only their own module has (§3.1), at the local-tier target.
 
-| module | arctic | hawaiian | malay | maori | maritimeSEA | na-woodlands | northAmerican | northernPacific | nw-coast | ottoman | sahul | swahili-omani | w-polynesian |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| tribes and kin groups | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| faiths and mystic orders | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| armies and martial orders | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| thieves and the underworld | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| guilds, companies, and trade | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| adventurers and explorers | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| powers and factions | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| supernatural courts and hosts | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
-| ships and boats | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
-| spacecraft and stations | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
-| aircraft and airships | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
-| land vehicles | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
+| module | anglo-saxon | arctic | hawaiian | malay | maori | maritimeSEA | na-woodlands | northAmerican | northernPacific | nw-coast | ottoman | sahul | swahili-omani | w-polynesian |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| events and eras | 49/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| money and coins | 45/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| calendars and festivals | 50/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| sky lore | 45/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| epithets and bynames | 51/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| titles and honourifics | 53/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| family names | 53/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| arms and armour | 53/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| treasures and regalia | 48/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| books and writings | 50/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| realms and polities | 48/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| peoples and tongues | 49/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| deities | 46/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| tribes and kin groups | 33/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| faiths and mystic orders | 50/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| armies and martial orders | 50/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| thieves and the underworld | 50/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| guilds, companies, and trade | 53/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| adventurers and explorers | 50/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| powers and factions | 52/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| supernatural courts and hosts | 45/10 | – | – | – | – | not offered | – | not offered | not offered | – | – | not offered | – | – |
+| ships and boats | 41/10 | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
+| spacecraft and stations | – | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
+| aircraft and airships | 39/10 | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
+| land vehicles | 42/10 | not offered | not offered | not offered | not offered | – | not offered | – | – | not offered | not offered | – | not offered | not offered |
 
 ## 2. Module × era and module × style
 
@@ -85,108 +98,108 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 
 | module | AN | MD | EM | ST | MO | NF | IS |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| route names | 205 | 220 | 216 | 313 | 133 | 33 | 51 |
-| streets and districts | 185 | 191 | 180 | 387 | 160 | 70 | 68 |
-| inns and taverns | 184 | 191 | 188 | 354 | 133 | 26 | 26 |
-| buildings and landmarks | 189 | 202 | 194 | 365 | 138 | 35 | 35 |
-| monuments and statues | 268 | 257 | 214 | 335 | 148 | 25 | 23 |
+| route names | 214 | 229 | 225 | 328 | 139 | 33 | 51 |
+| streets and districts | 194 | 200 | 189 | 402 | 166 | 70 | 68 |
+| inns and taverns | 193 | 200 | 197 | 369 | 139 | 26 | 26 |
+| buildings and landmarks | 198 | 211 | 203 | 380 | 144 | 35 | 35 |
+| monuments and statues | 277 | 266 | 223 | 350 | 154 | 25 | 23 |
 | settlement names | 352 | 1019 | 605 | 698 | 698 | **0** | 759 |
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| events and eras | 112 | 175 | 165 | 132 | 114 | 28 | 31 |
-| money and coins | 235 | 374 | 394 | 357 | 289 | 165 | 168 |
-| calendars and festivals | 251 | 291 | 267 | 118 | 113 | **4** | **4** |
-| sky lore | 105 | 105 | 105 | 104 | 160 | **2** | **2** |
-| mountains (land) | 169 | 160 | 266 | 266 | 266 | **6** | **6** |
-| forests and woods (land) | 167 | 171 | 286 | 286 | 286 | **4** | **4** |
+| events and eras | 118 | 186 | 175 | 138 | 121 | 28 | 31 |
+| money and coins | 241 | 385 | 403 | 363 | 295 | 165 | 168 |
+| calendars and festivals | 273 | 320 | 288 | 124 | 119 | **4** | **4** |
+| sky lore | 111 | 111 | 111 | 110 | 169 | **2** | **2** |
+| mountains (land) | 178 | 169 | 281 | 281 | 281 | **6** | **6** |
+| forests and woods (land) | 176 | 180 | 301 | 301 | 301 | **4** | **4** |
 | deserts (land) | **10** | **11** | 21 | 21 | 21 | **8** | **8** |
-| moors and heaths (land) | 166 | 157 | 264 | 264 | 264 | **5** | **5** |
-| wetlands (land) | 169 | 157 | 265 | 265 | 265 | **5** | **5** |
-| grasslands (land) | 166 | 157 | 272 | 272 | 272 | **4** | **4** |
-| lands and territories (land) | 165 | 153 | 266 | 266 | 266 | **0** | **0** |
-| rivers and inland waters (land) | 168 | 158 | 265 | 265 | 265 | **0** | **0** |
-| hills and valleys (land) | 165 | 153 | 261 | 261 | 261 | **0** | **0** |
-| farmland and countryside (land) | 165 | 154 | 263 | 263 | 263 | **0** | **0** |
+| moors and heaths (land) | 175 | 166 | 279 | 279 | 279 | **5** | **5** |
+| wetlands (land) | 178 | 166 | 280 | 280 | 280 | **5** | **5** |
+| grasslands (land) | 175 | 166 | 287 | 287 | 287 | **4** | **4** |
+| lands and territories (land) | 174 | 162 | 281 | 281 | 281 | **0** | **0** |
+| rivers and inland waters (land) | 177 | 167 | 280 | 280 | 280 | **0** | **0** |
+| hills and valleys (land) | 174 | 162 | 276 | 276 | 276 | **0** | **0** |
+| farmland and countryside (land) | 174 | 163 | 278 | 278 | 278 | **0** | **0** |
 | stars and space | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| seas and bays (land) | 175 | 160 | 261 | 261 | 261 | **0** | **1** |
-| coasts and islands (land) | 166 | 153 | 263 | 263 | 263 | **0** | **0** |
-| sea charts (land) | 166 | 156 | 282 | 282 | 282 | **0** | **0** |
+| seas and bays (land) | 184 | 169 | 276 | 276 | 276 | **0** | **1** |
+| coasts and islands (land) | 175 | 162 | 278 | 278 | 278 | **0** | **0** |
+| sea charts (land) | 175 | 165 | 297 | 297 | 297 | **0** | **0** |
 | hyperspace charts | **0** | **0** | **0** | **0** | **0** | 155 | 155 |
-| epithets and bynames | 157 | 200 | 106 | 104 | 105 | **0** | **0** |
-| titles and honourifics | 107 | 269 | 195 | 104 | 103 | **0** | **0** |
-| family names | 107 | 226 | 153 | 103 | 102 | **0** | **0** |
-| arms and armour | 117 | 276 | 341 | 154 | 105 | **11** | **11** |
-| treasures and regalia | 123 | 226 | 178 | 115 | 119 | **11** | **11** |
-| books and writings | 122 | 326 | 287 | 118 | 108 | **8** | **8** |
-| realms and polities | 113 | 236 | 161 | **0** | 132 | 34 | 42 |
-| peoples and tongues | 122 | 127 | 105 | 105 | 131 | **7** | **7** |
-| deities | 102 | 102 | 102 | 105 | 107 | 14 | 14 |
-| sacred places | 165 | 153 | 159 | 257 | 102 | **9** | **9** |
+| epithets and bynames | 167 | 212 | 112 | 110 | 111 | **0** | **0** |
+| titles and honourifics | 113 | 284 | 206 | 110 | 109 | **0** | **0** |
+| family names | 113 | 240 | 163 | 109 | 108 | **0** | **0** |
+| arms and armour | 123 | 288 | 357 | 163 | 111 | **11** | **11** |
+| treasures and regalia | 129 | 237 | 186 | 121 | 125 | **11** | **11** |
+| books and writings | 130 | 339 | 293 | 124 | 114 | **8** | **8** |
+| realms and polities | 119 | 248 | 169 | **0** | 138 | 34 | 42 |
+| peoples and tongues | 129 | 134 | 111 | 111 | 140 | **7** | **7** |
+| deities | 108 | 108 | 108 | 111 | 114 | 14 | 14 |
+| sacred places | 174 | 162 | 168 | 272 | 108 | **9** | **9** |
 | tribes and kin groups | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| faiths and mystic orders | 117 | 210 | 129 | 105 | 178 | **0** | 23 |
-| armies and martial orders | 119 | 256 | 227 | 137 | 123 | **0** | 12 |
-| thieves and the underworld | 102 | 249 | 296 | 168 | 154 | **0** | 22 |
-| guilds, companies, and trade | 107 | 279 | 242 | 109 | 121 | **0** | 15 |
-| adventurers and explorers | 103 | 243 | 241 | 126 | 121 | **0** | 19 |
-| powers and factions | 110 | 275 | 217 | 120 | 111 | **0** | **7** |
-| supernatural courts and hosts | 142 | 218 | 102 | 102 | 181 | **0** | **0** |
-| ships and boats | 133 | 150 | 227 | 207 | 124 | 51 | 51 |
+| faiths and mystic orders | 123 | 218 | 135 | 111 | 187 | **0** | 23 |
+| armies and martial orders | 125 | 268 | 234 | 143 | 131 | **0** | 12 |
+| thieves and the underworld | 108 | 262 | 313 | 176 | 160 | **0** | 22 |
+| guilds, companies, and trade | 113 | 297 | 258 | 115 | 127 | **0** | 15 |
+| adventurers and explorers | 109 | 258 | 255 | 132 | 128 | **0** | 19 |
+| powers and factions | 116 | 288 | 227 | 127 | 117 | **0** | **7** |
+| supernatural courts and hosts | 151 | 227 | 108 | 108 | 187 | **0** | **0** |
+| ships and boats | 139 | 157 | 237 | 217 | 130 | 51 | 51 |
 | spacecraft and stations | **0** | **0** | **0** | **0** | **0** | 67 | 59 |
-| aircraft and airships | 117 | 150 | 142 | 200 | 215 | **11** | **11** |
-| land vehicles | 119 | 142 | 148 | 330 | 299 | **11** | **11** |
+| aircraft and airships | 123 | 158 | 150 | 208 | 224 | **11** | **11** |
+| land vehicles | 125 | 149 | 157 | 347 | 313 | **11** | **11** |
 | river names (land) | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 
 Style (words/shapes; target 16 and 4). Realistic is the default and isn't counted.
 
 | module | historic or low fantasy | high or epic fantasy | contemporary fantasy | steampunk | dieselpunk | cyberpunk | post-apocalyptic | space opera |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| route names | **0/0** | 60/11 | 60/11 | **0/7** | **0/0** | **0/0** | **0/0** | 60/11 |
-| streets and districts | **0/0** | **54/0** | **54/0** | 21/10 | **0/0** | **0/0** | **0/0** | **54/0** |
-| inns and taverns | **0/0** | 63/6 | 63/6 | **9/6** | **0/0** | **0/0** | **0/0** | 63/6 |
-| buildings and landmarks | **0/0** | **56/0** | **56/0** | **18/3** | **0/0** | **0/0** | **0/0** | **56/0** |
-| monuments and statues | **0/0** | 54/9 | 54/9 | **6/3** | **0/0** | **0/0** | **0/0** | 54/9 |
+| route names | **0/0** | 63/11 | 63/11 | **0/7** | **0/0** | **0/0** | **0/0** | 63/11 |
+| streets and districts | **0/0** | **57/0** | **57/0** | 21/10 | **0/0** | **0/0** | **0/0** | **57/0** |
+| inns and taverns | **0/0** | 66/6 | 66/6 | **9/6** | **0/0** | **0/0** | **0/0** | 66/6 |
+| buildings and landmarks | **0/0** | **59/0** | **59/0** | **18/3** | **0/0** | **0/0** | **0/0** | **59/0** |
+| monuments and statues | **0/0** | 57/9 | 57/9 | **6/3** | **0/0** | **0/0** | **0/0** | 57/9 |
 | settlement names | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 | settlement kit | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
-| events and eras | **0/0** | 60/34 | 60/34 | **3/6** | **0/0** | **0/0** | **0/0** | 60/34 |
-| money and coins | **0/0** | 86/36 | 86/36 | **9/5** | **0/0** | **0/0** | **0/0** | 86/36 |
-| calendars and festivals | **0/0** | 60/38 | 60/38 | **0/2** | **0/0** | **0/0** | **0/0** | 60/38 |
-| sky lore | **0/0** | 60/35 | 60/35 | **0/0** | **0/0** | **0/0** | **0/0** | 60/35 |
-| mountains | **0/0** | 76/13 | 76/13 | **0/0** | **0/0** | **0/0** | **0/0** | 76/13 |
-| forests and woods | **0/0** | 76/7 | 76/7 | **0/0** | **0/0** | **0/0** | **0/0** | 76/7 |
+| events and eras | **0/0** | 63/36 | 63/36 | **3/6** | **0/0** | **0/0** | **0/0** | 63/36 |
+| money and coins | **0/0** | 89/38 | 89/38 | **9/5** | **0/0** | **0/0** | **0/0** | 89/38 |
+| calendars and festivals | **0/0** | 63/40 | 63/40 | **0/2** | **0/0** | **0/0** | **0/0** | 63/40 |
+| sky lore | **0/0** | 63/37 | 63/37 | **0/0** | **0/0** | **0/0** | **0/0** | 63/37 |
+| mountains | **0/0** | 79/13 | 79/13 | **0/0** | **0/0** | **0/0** | **0/0** | 79/13 |
+| forests and woods | **0/0** | 79/7 | 79/7 | **0/0** | **0/0** | **0/0** | **0/0** | 79/7 |
 | deserts | **0/0** | 22/5 | 22/5 | **0/0** | **0/0** | **0/0** | **0/0** | 22/5 |
-| moors and heaths | **0/0** | **76/3** | **76/3** | **0/0** | **0/0** | **0/0** | **0/0** | **76/3** |
-| wetlands | **0/0** | **76/2** | **76/2** | **0/0** | **0/0** | **0/0** | **0/0** | **76/2** |
-| grasslands | **0/0** | 76/4 | 76/4 | **0/0** | **0/0** | **0/0** | **0/0** | 76/4 |
-| lands and territories | **0/0** | 69/6 | 69/6 | **0/0** | **0/0** | **0/0** | **0/0** | 69/6 |
-| rivers and inland waters | **0/0** | 69/5 | 69/5 | **0/0** | **0/0** | **0/0** | **0/0** | 69/5 |
-| hills and valleys | **0/0** | 69/6 | 69/6 | **0/0** | **0/0** | **0/0** | **0/0** | 69/6 |
-| farmland and countryside | **0/0** | 69/6 | 69/6 | **0/0** | **0/0** | **0/0** | **0/0** | 69/6 |
+| moors and heaths | **0/0** | **79/3** | **79/3** | **0/0** | **0/0** | **0/0** | **0/0** | **79/3** |
+| wetlands | **0/0** | **79/2** | **79/2** | **0/0** | **0/0** | **0/0** | **0/0** | **79/2** |
+| grasslands | **0/0** | 79/4 | 79/4 | **0/0** | **0/0** | **0/0** | **0/0** | 79/4 |
+| lands and territories | **0/0** | 72/6 | 72/6 | **0/0** | **0/0** | **0/0** | **0/0** | 72/6 |
+| rivers and inland waters | **0/0** | 72/5 | 72/5 | **0/0** | **0/0** | **0/0** | **0/0** | 72/5 |
+| hills and valleys | **0/0** | 72/6 | 72/6 | **0/0** | **0/0** | **0/0** | **0/0** | 72/6 |
+| farmland and countryside | **0/0** | 72/6 | 72/6 | **0/0** | **0/0** | **0/0** | **0/0** | 72/6 |
 | stars and space | **0/0** | **9/5** | **9/5** | **0/0** | **0/0** | **0/0** | **0/0** | **9/5** |
-| seas and bays | **0/0** | **60/2** | **60/2** | **0/0** | **0/0** | **0/0** | **0/0** | **60/2** |
-| coasts and islands | **0/0** | **60/1** | **60/1** | **0/0** | **0/0** | **0/0** | **0/0** | **60/1** |
-| sea charts | **0/0** | **60/2** | **60/2** | **0/0** | **0/0** | **0/0** | **0/0** | **60/2** |
+| seas and bays | **0/0** | **63/2** | **63/2** | **0/0** | **0/0** | **0/0** | **0/0** | **63/2** |
+| coasts and islands | **0/0** | **63/1** | **63/1** | **0/0** | **0/0** | **0/0** | **0/0** | **63/1** |
+| sea charts | **0/0** | **63/2** | **63/2** | **0/0** | **0/0** | **0/0** | **0/0** | **63/2** |
 | hyperspace charts | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
-| epithets and bynames | **0/0** | 60/34 | 60/34 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| titles and honourifics | **0/0** | 60/34 | 60/34 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| family names | **0/0** | 60/34 | 60/34 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| arms and armour | **0/0** | 66/34 | 66/34 | **0/0** | **0/0** | **0/0** | **0/0** | 66/34 |
-| treasures and regalia | **0/0** | 60/34 | 60/34 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| books and writings | **0/0** | 60/34 | 60/34 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| realms and polities | **0/0** | 60/34 | 60/34 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| peoples and tongues | **0/0** | 60/34 | 60/34 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| deities | **0/0** | 64/34 | 64/34 | **0/3** | **0/0** | **0/0** | **0/0** | 64/34 |
-| sacred places | **0/0** | **64/0** | **64/0** | **0/2** | **0/0** | **0/0** | **0/0** | **64/0** |
-| tribes and kin groups | **0/0** | 57/34 | 57/34 | **0/0** | **0/0** | **0/0** | **0/0** | 57/34 |
-| faiths and mystic orders | **0/14** | 60/71 | 60/71 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| armies and martial orders | **0/12** | 60/46 | 60/46 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| thieves and the underworld | **0/25** | 60/59 | 60/70 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| guilds, companies, and trade | **0/0** | 60/34 | 60/49 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| adventurers and explorers | **0/19** | 60/53 | 60/53 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| powers and factions | **0/7** | 60/41 | 60/41 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| supernatural courts and hosts | **0/63** | 60/110 | 60/110 | **0/0** | **0/0** | **0/0** | **0/0** | 60/34 |
-| ships and boats | **0/0** | 165/57 | 81/37 | 19/4 | **17/3** | **0/0** | 35/7 | 149/52 |
+| epithets and bynames | **0/0** | 63/36 | 63/36 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| titles and honourifics | **0/0** | 63/36 | 63/36 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| family names | **0/0** | 63/36 | 63/36 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| arms and armour | **0/0** | 69/36 | 69/36 | **0/0** | **0/0** | **0/0** | **0/0** | 69/36 |
+| treasures and regalia | **0/0** | 63/36 | 63/36 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| books and writings | **0/0** | 63/36 | 63/36 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| realms and polities | **0/0** | 63/36 | 63/36 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| peoples and tongues | **0/0** | 63/36 | 63/36 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| deities | **0/0** | 67/36 | 67/36 | **0/3** | **0/0** | **0/0** | **0/0** | 67/36 |
+| sacred places | **0/0** | **67/0** | **67/0** | **0/2** | **0/0** | **0/0** | **0/0** | **67/0** |
+| tribes and kin groups | **0/0** | 60/36 | 60/36 | **0/0** | **0/0** | **0/0** | **0/0** | 60/36 |
+| faiths and mystic orders | **0/14** | 63/73 | 63/73 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| armies and martial orders | **0/12** | 63/48 | 63/48 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| thieves and the underworld | **0/25** | 63/61 | 63/72 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| guilds, companies, and trade | **0/0** | 63/36 | 63/51 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| adventurers and explorers | **0/19** | 63/55 | 63/55 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| powers and factions | **0/7** | 63/43 | 63/43 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| supernatural courts and hosts | **0/63** | 63/112 | 63/112 | **0/0** | **0/0** | **0/0** | **0/0** | 63/36 |
+| ships and boats | **0/0** | 168/59 | 84/39 | 19/4 | **17/3** | **0/0** | 35/7 | 152/54 |
 | spacecraft and stations | **0/0** | **21/3** | **21/3** | 19/4 | **17/3** | **0/0** | 35/7 | 89/18 |
-| aircraft and airships | **0/0** | 127/39 | 127/35 | **0/1** | **0/1** | **0/0** | **0/2** | 127/38 |
-| land vehicles | **0/0** | 60/39 | 60/35 | **0/1** | **0/1** | **0/0** | **0/2** | 60/37 |
+| aircraft and airships | **0/0** | 136/41 | 136/37 | **0/1** | **0/1** | **0/0** | **0/2** | 136/40 |
+| land vehicles | **0/0** | 63/41 | 63/37 | **0/1** | **0/1** | **0/0** | **0/2** | 63/39 |
 | river names | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 
 ## 3. Module × tone
@@ -344,13 +357,18 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `lights/arabic-persian` | sky lore | 1 |
 | `lights/aztec` | sky lore | 1 |
 | `lights/celtic` | sky lore | 1 |
+| `lights/cornish` | sky lore | 1 |
 | `lights/general` | sky lore | 1 |
+| `lights/irish` | sky lore | 1 |
 | `lights/maya` | sky lore | 1 |
 | `lights/norman-british` | sky lore | 1 |
 | `lights/norse` | sky lore | 1 |
 | `lights/roman` | sky lore | 1 |
+| `lights/scandinavian` | sky lore | 1 |
+| `lights/scottish` | sky lore | 1 |
 | `lights/slavic` | sky lore | 1 |
 | `lights/steppe` | sky lore | 1 |
+| `lights/welsh` | sky lore | 1 |
 | `lists/normanTrade` | family names | 1 |
 | `lists/steppeNoColour` | deities | 1 |
 | `lists/strangeNumber` | deities | 1 |
@@ -429,8 +447,12 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `buildingFixed:defence` | shared | 2 |
 | `constellations/bantu` | sky lore | 2 |
 | `constellations/celtic` | sky lore | 2 |
+| `constellations/cornish` | sky lore | 2 |
+| `constellations/irish` | sky lore | 2 |
 | `constellations/maya` | sky lore | 2 |
+| `constellations/scottish` | sky lore | 2 |
 | `constellations/slavic` | sky lore | 2 |
+| `constellations/welsh` | sky lore | 2 |
 | `cultQualExtra/arabic-persian` | realms and polities | 2 |
 | `cultQualExtra/chinese` | realms and polities | 2 |
 | `cultureNames/ethiopian/festival` | calendars and festivals | 2 |
@@ -577,10 +599,15 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `waterWords/british/WAL` | river names | 3 |
 | `waterWords/established` | river names | 3 |
 | `constellations/norse` | sky lore | 4 |
+| `constellations/scandinavian` | sky lore | 4 |
 | `constellations/steppe` | sky lore | 4 |
 | `cultureNames/arabic-persian/festival` | calendars and festivals | 4 |
 | `cultureNames/celtic/festival` | calendars and festivals | 4 |
+| `cultureNames/cornish/festival` | calendars and festivals | 4 |
+| `cultureNames/irish/festival` | calendars and festivals | 4 |
+| `cultureNames/scottish/festival` | calendars and festivals | 4 |
 | `cultureNames/steppe/festival` | calendars and festivals | 4 |
+| `cultureNames/welsh/festival` | calendars and festivals | 4 |
 | `cultureNames/west-african/festival` | calendars and festivals | 4 |
 | `cultures/arabic-persian/forms` | realms and polities | 4 |
 | `dialectWordsSpace` | peoples and tongues | 4 |
@@ -828,8 +855,13 @@ Pools and lists under 8 entries, apart from those exempt in `lens.json`.
 | `compStorage` | shared | 7 |
 | `cosmoSubstance` | shared | 7 |
 | `cultureAnimals/greek-byzantine` | epithets and bynames | 7 |
+| `cultureNames/cornish/day` | calendars and festivals | 7 |
 | `cultureNames/greek-byzantine/festival` | calendars and festivals | 7 |
+| `cultureNames/irish/day` | calendars and festivals | 7 |
 | `cultureNames/norse/festival` | calendars and festivals | 7 |
+| `cultureNames/scandinavian/festival` | calendars and festivals | 7 |
+| `cultureNames/scottish/day` | calendars and festivals | 7 |
+| `cultureNames/welsh/day` | calendars and festivals | 7 |
 | `depthNumber` | shared | 7 |
 | `dsrStone` | shared | 7 |
 | `dsrStuff` | shared | 7 |
@@ -965,14 +997,14 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | lens culture | words | shapes |
 | --- | --- | --- |
-| English | 2494 | 2335 |
-| Welsh | 2175 | 902 |
-| Scottish | 2313 | 1489 |
-| Irish | 2035 | 687 |
-| Cornish | 2078 | 891 |
+| English | 3034 | 2475 |
+| Welsh | 2197 | 902 |
+| Scottish | 2335 | 1489 |
+| Irish | 2057 | 687 |
+| Cornish | 2100 | 891 |
 | Celtic | 888 | 433 |
 | Norse | 2068 | 1131 |
-| Scandinavian | 2160 | 1192 |
+| Scandinavian | 2192 | 1192 |
 | German | 2159 | 1590 |
 | French | 1999 | 566 |
 | Dutch | 1933 | 513 |
@@ -1019,24 +1051,24 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 6484 |
-| MD medieval | 9177 |
-| EM early modern | 9452 |
-| ST steam age | 9039 |
-| MO modern | 8024 |
+| AN ancient | 6810 |
+| MD medieval | 9608 |
+| EM early modern | 9912 |
+| ST steam age | 9464 |
+| MO modern | 8403 |
 | NF near future | 762 |
 | IS interstellar | 1642 |
 
 | style | words | shapes |
 | --- | --- | --- |
 | historic or low fantasy | 0 | 140 |
-| high or epic fantasy | 2755 | 1128 |
-| contemporary fantasy | 2671 | 1126 |
+| high or epic fantasy | 2887 | 1176 |
+| contemporary fantasy | 2803 | 1174 |
 | steampunk | 84 | 57 |
 | dieselpunk | 34 | 8 |
 | cyberpunk | 0 | 0 |
 | post-apocalyptic | 70 | 18 |
-| space opera | 2807 | 959 |
+| space opera | 2939 | 1007 |
 
 | tone | entries |
 | --- | --- |

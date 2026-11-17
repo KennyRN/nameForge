@@ -38,7 +38,7 @@ export const NORTH = north as unknown as NorthData & { nounPools: string[] };
 /** The share of a kind's draws the signature frames of a core culture (or Celtic) take. */
 export const SIGNATURE_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.signature;
 /** Brief 6a §9.3: the share of own-shape draws that a core-depth culture's own entries take (60%), and the mixes' (Celtic's 40%). */
-const SHARES = (lensData as unknown as { shares: { signature: number; signatureMix: number; mixes: string[]; legacy: Record<string, number>; module: Record<string, number | { share: number; except: string[] }> } }).shares;
+const SHARES = (lensData as unknown as { shares: { signature: number; signatureMix: number; mixes: string[]; legacy: Record<string, number>; module: Record<string, number | { share: number; except?: string[]; only?: string[] }> } }).shares;
 /** Sibling-distinctness brief: the weight a culture gives the table it shares with a sibling (lens.json `shares.legacy`); its own entries take the rest. */
 export const legacyWeightOf = (culture: string | undefined): number | undefined => (culture && !culture.startsWith("$") ? SHARES.legacy[culture] : undefined);
 /** Sibling-distinctness brief: a signature shape of the culture's own; one shared with its siblings (the Celtic tables) is the legacy table, not the culture's. */
@@ -62,7 +62,7 @@ export const signatureShareFor = (culture: string | undefined, module?: string):
   const legacy = legacyWeightOf(culture);
   const base = legacy === undefined ? SHARES.signature : 1 - legacy;
   const entry = module && !module.startsWith("$") ? SHARES.module[module] : undefined;
-  const floor = entry === undefined ? 0 : typeof entry === "number" ? entry : culture && entry.except.includes(culture) ? 0 : entry.share;
+  const floor = entry === undefined ? 0 : typeof entry === "number" ? entry : culture && (entry.except?.includes(culture) || (entry.only && !entry.only.includes(culture))) ? 0 : entry.share;
   return Math.max(base, floor);
 };
 /** Part A §1: a culture that shares a legacy table has its own stream for its replacements, so that the nations don't replace the same positions of the same batch. */

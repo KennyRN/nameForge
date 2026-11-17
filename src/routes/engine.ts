@@ -42,7 +42,7 @@ import { BUILT_IN_VOCAB, cultureAllowed, poolEntries, type SettlementEra, type V
 import { generateTribalNames } from "../tribes/engine";
 import { WORLD_CULTURES } from "../world/engine";
 import { cultureReadsRegion, cultureSet, engineCulture, LENS_CULTURE_GROUPS, readCelticView, REGION_CULTURES } from "../lens";
-import { balanceRegion, balanceSignature, regionSeed, regionWeighted, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf, isOwnSig } from "../northData";
+import { balanceRegion, balanceSignature, regionSeed, regionWeighted, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf, isOwnSig, legacyWeightOf } from "../northData";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -762,9 +762,13 @@ export function generateRouteNames(options: RouteOptions): RouteBatch {
   const ftl: RouteFtl = era === "IS" && ROUTE_FTL.some((f) => f.id === options.ftl) ? options.ftl! : "any";
   const drawNameScale = (): SpaceScale | undefined => (!future ? undefined : fixedScale ?? drawScale(era === "NF" || era === "IS" ? era : undefined, rng));
   /** Stellar brief §6.3: the kinds, weighted for a scale (the era's own row before the future). */
+  /** Sibling-distinctness brief: a kind the culture has no shapes of its own in reads the shared table, at its legacy weight. */
+  const ownIn = (kind: RouteKind) => shapesFor(kind, culture.key).some((s) => isOwnSig(s, culture.key));
+  const anyOwn = legacyWeightOf(culture.key) !== undefined && offered.some((k) => ownIn(k.key));
+  const legacyKindFactor = (kind: RouteKind) => (anyOwn && !ownIn(kind) ? legacyWeightOf(culture.key)! : 1);
   const kindWeightsFor = (scale: SpaceScale | undefined) =>
     offered
-      .map((k): [RouteKindInfo, number] => [k, kindEraWeight(k, era, fantastic, scale) * (culture.kindMult?.[k.key] ?? 1)])
+      .map((k): [RouteKindInfo, number] => [k, kindEraWeight(k, era, fantastic, scale) * (culture.kindMult?.[k.key] ?? 1) * legacyKindFactor(k.key)])
       .filter(([, w]) => w > 0);
   const block = routeBlockSet(options.safeguards);
   const count = Math.max(0, Math.floor(options.count));

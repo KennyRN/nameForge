@@ -69,3 +69,12 @@ export const BYZANTINE = {
 // The mixes: 12 words and 4 shapes of their own (their halves' at half weight): the first of each module's lists, four words per kind.
 export const IBERIAN = { ...SPANISH, mix: true };
 export const GREEK_BYZANTINE = { ...GREEK, mix: true };
+
+// Anglo-Saxon (sibling-distinctness brief): the early English beside Norman and British, with the regions of English (it takes the regional frames).
+export const ANGLO_SAXON = {
+  style: "first", adj: ["Old", "Great", "Little"],
+  streets: ["Way|Lane|Wic Street|Herepath|Steps|Cheap|Street|Terrace|Elf Lane|Road", "Moot Square|Market Place|Cheap|Green|Hythe Square|Church Green|Promenade|Roundabout|Haunted Green|Square", "Burh|Wic|Minster Quarter|Old Town|Mill Quarter|Hythe Quarter|Suburb|Estate|Ghost Quarter|District"],
+  inns: ["Alehouse|Mead-Hall|Hostelry|Wayside Inn|Brewhouse|Coaching Inn|Guest House|Hotel|Wight's Inn|House", "Ale-Stand|Tavern|Taproom|Brewhouse Tap|Cider House|Pub|Cafe|Bar|Elf Tavern|Cellar", "Resting Place|Pilgrims' Hostel|Drovers' Stop|Wayside Hut|Moot Rest|Hospice|Hostel|Service Station|Crossroads Haunt|Rest"],
+  buildings: ["Burh|Fort|Watchtower|Tower|Gate|Stockade|Barracks|Armoury|Wyrm Tower|Keep", "Minster|Church|Hermitage|Anchorite's Cell|Chapel|Monastery|Priory|Shrine|Wight's Shrine|Hall", "Moot Hall|Market Hall|Hundred Court|Exchange|Hospital|Hall|School|Library|Council House|House"],
+  monuments: ["Standing Stone|Boundary Stone|Barrow|Milestone|Moot Stone|Cairn|Memorial Stone|Wayside Stone|Elf Stone|Stone", "Roadside Cross|Preaching Cross|Wayside Cross|Churchyard Cross|Stone Cross|Market Cross|Memorial Cross|Summit Cross|Wight's Cross|Cross", "Memorial|Statue|Pillar|Column|Plaque|Kings' Stone|War Memorial|Monument|Wight's Memorial|Tablet"],
+};

@@ -1,6 +1,7 @@
 // Sibling-distinctness brief (17 November 2026): Portuguese and Byzantine name in patterns of their own, so that the same words do not make the same names as
 // Spanish and Greek. `pt` (the sea, the saints, the quay) and `bz` (the church, the court, the empire). Frames are `pattern*weight` joined by `~`;
 // 5d's calendar and sky frames name the kind they are for (`*3:month`). The two fantastic frames of every set are added by the makers.
+import { AS_FRAMES_5C, AS_FRAMES_5D } from "./anglo-saxon-words.mjs";
 const T5C = (s) => s.split("~").map((x) => { const i = x.lastIndexOf("*"); return [x.slice(0, i), Number(x.slice(i + 1))]; });
 const T5D = (s) => s.split("~").map((x) => {
   const i = x.lastIndexOf("*");
@@ -54,9 +55,11 @@ const SETS5D = {
 };
 /** Adds the styles to 5c's FRAMES (class → style → frames), with the two fantastic frames of the `of` style. */
 export function addFrames5c(FRAMES) {
+  for (const [cls, s] of Object.entries(AS_FRAMES_5C)) FRAMES[cls].as = [...T5C(s), ...FRAMES[cls].of.slice(8)];
   for (const [style, classes] of Object.entries(SETS5C)) for (const [cls, s] of Object.entries(classes)) FRAMES[cls][style] = [...T5C(s), ...FRAMES[cls].of.slice(8)];
 }
 /** Adds the styles to 5d's FRAMES, with the two fantastic frames of the `of` style. */
 export function addFrames5d(FRAMES) {
+  for (const [cls, s] of Object.entries(AS_FRAMES_5D)) FRAMES[cls].as = [...T5D(s), ...FRAMES[cls].of.slice(-2)];
   for (const [style, classes] of Object.entries(SETS5D)) for (const [cls, s] of Object.entries(classes)) FRAMES[cls][style] = [...T5D(s), ...FRAMES[cls].of.slice(-2)];
 }

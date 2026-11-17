@@ -538,6 +538,41 @@
     "julian-12",
     "julian-12",
     "julian-12"
+   ],
+   "scandinavian": [
+    "icelandic-12",
+    "icelandic-12",
+    "icelandic-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "welsh": [
+    "coligny-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "scottish": [
+    "coligny-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "irish": [
+    "coligny-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
+   ],
+   "cornish": [
+    "coligny-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
    ]
   },
   "monthsFuture": "julian-12 70 · fixed-13 30",
@@ -718,6 +753,46 @@
     "week-7",
     "week-7",
     "week-7"
+   ],
+   "scandinavian": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "welsh": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "scottish": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "irish": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
+   ],
+   "cornish": [
+    "-",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
    ]
   },
   "festivals": {
@@ -742,7 +817,12 @@
    "bantu": "seasons",
    "west-african": "seasons",
    "polynesian": "seasons",
-   "andean": "seasons"
+   "andean": "seasons",
+   "scandinavian": "quarters-4",
+   "welsh": "season-starts-4",
+   "scottish": "season-starts-4",
+   "irish": "season-starts-4",
+   "cornish": "season-starts-4"
   },
   "festivalsFuture": "seasons",
   "festivalsSpace": "quarters-4",
@@ -834,6 +914,26 @@
    "andean": [
     "-",
     "-"
+   ],
+   "scandinavian": [
+    "-",
+    "zodiac-12"
+   ],
+   "welsh": [
+    "-",
+    "zodiac-12"
+   ],
+   "scottish": [
+    "-",
+    "zodiac-12"
+   ],
+   "irish": [
+    "-",
+    "zodiac-12"
+   ],
+   "cornish": [
+    "-",
+    "zodiac-12"
    ]
   },
   "lights": "classical-7"
@@ -939,7 +1039,12 @@
   "aztec": "drought 3",
   "maya": "drought 0",
   "polynesian": "rain 0",
-  "andean": "rain 0"
+  "andean": "rain 0",
+  "scandinavian": "summer 0",
+  "welsh": "winter 0",
+  "scottish": "winter 0",
+  "irish": "winter 0",
+  "cornish": "winter 0"
  },
  "janShift": {
   "slavic": {
@@ -4208,6 +4313,794 @@
      ]
     }
    ]
+  },
+  "scandinavian": {
+   "month": [
+    {
+     "n": "Seed Month",
+     "p": 3,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Clover Month",
+     "p": 4,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Barley Month",
+     "p": 5,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Reaping Month",
+     "p": 6,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Fattening Month",
+     "p": 7,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Candle Month",
+     "p": 8,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Frost Month",
+     "p": 9,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Thaw Month",
+     "p": 12,
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    },
+    {
+     "n": "Extra Days",
+     "p": "extra",
+     "e": "AN-EM",
+     "sys": [
+      "icelandic-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Sun's Day",
+     "p": 1,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Tyr's Day",
+     "p": 3,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Odin's Day",
+     "p": 4,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Thor's Day",
+     "p": 5,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Frigg's Day",
+     "p": 6,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Washing Day",
+     "p": 7,
+     "e": "AN-MD",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Third Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Midweek",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fifth Day",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fast Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Harvest Supper",
+     "s": "autumn"
+    },
+    {
+     "n": "Midwinter Feast",
+     "s": "winter"
+    },
+    {
+     "n": "Saint Lucy's Night",
+     "s": "winter"
+    },
+    {
+     "n": "Candle Day",
+     "s": "winter"
+    },
+    {
+     "n": "Summer's Eve",
+     "s": "summer"
+    },
+    {
+     "n": "Midsummer Pole Dance",
+     "s": "summer"
+    },
+    {
+     "n": "Market Days",
+     "s": "summer"
+    }
+   ]
+  },
+  "welsh": {
+   "month": [
+    {
+     "n": "Hawthorn Fire",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Hay-Time Month",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Summer's Close",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Harvest Meeting",
+     "p": 8,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Shearing Month",
+     "p": 9,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Harvest Home",
+     "p": 10,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Blood Month",
+     "p": 11,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Before the Winter Feast",
+     "p": 12,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Lord's Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Mars's Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "First Fast",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Between the Fasts",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fast Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Saturn's Day",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Winter's Eve",
+     "s": "winter",
+     "loan": "Samhain"
+    },
+    {
+     "n": "Lambing Feast",
+     "s": "spring",
+     "loan": "Imbolc"
+    },
+    {
+     "n": "May Fire",
+     "s": "summer",
+     "loan": "Beltane"
+    },
+    {
+     "n": "Harvest Gathering",
+     "s": "autumn",
+     "loan": "Lughnasadh"
+    }
+   ]
+  },
+  "scottish": {
+   "month": [
+    {
+     "n": "Fire of May",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Midsummer Tide",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Summer's Ebb",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Gathering Month",
+     "p": 8,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Shearing Tide",
+     "p": 9,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Last Sheaf",
+     "p": 10,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Slaughter Tide",
+     "p": 11,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Before New Year",
+     "p": 12,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Lord's Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Mars's Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "First Fast",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Between the Fasts",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fast Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Saturn's Day",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Old Summer's End",
+     "s": "winter",
+     "loan": "Samhain"
+    },
+    {
+     "n": "Ewe Milk Day",
+     "s": "spring",
+     "loan": "Imbolc"
+    },
+    {
+     "n": "May Fires",
+     "s": "summer",
+     "loan": "Beltane"
+    },
+    {
+     "n": "Lammas Gathering",
+     "s": "autumn",
+     "loan": "Lughnasadh"
+    }
+   ]
+  },
+  "irish": {
+   "month": [
+    {
+     "n": "Bonfire Month",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Midsummer Eve",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Summer's Waning",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Fair Month",
+     "p": 8,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Reaping Season",
+     "p": 9,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Harvest's End",
+     "p": 10,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Winter Slaughter",
+     "p": 11,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Before Christmas",
+     "p": 12,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Lord's Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Mars's Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "First Fast",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Between the Fasts",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fast Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Saturn's Day",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Winter's Start",
+     "s": "winter",
+     "loan": "Samhain"
+    },
+    {
+     "n": "Spring's Start",
+     "s": "spring",
+     "loan": "Imbolc"
+    },
+    {
+     "n": "Summer's Start",
+     "s": "summer",
+     "loan": "Beltane"
+    },
+    {
+     "n": "Harvest Fair",
+     "s": "autumn",
+     "loan": "Lughnasadh"
+    }
+   ]
+  },
+  "cornish": {
+   "month": [
+    {
+     "n": "Furze Fire",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Midsummer Fires",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Pilchard End",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Feast Month",
+     "p": 8,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Corn Month",
+     "p": 9,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Last Corn",
+     "p": 10,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Pig-Killing",
+     "p": 11,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    },
+    {
+     "n": "Before Christmas Month",
+     "p": 12,
+     "e": "MD+",
+     "sys": [
+      "julian-12"
+     ]
+    }
+   ],
+   "day": [
+    {
+     "n": "Lord's Day",
+     "p": 1,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Moon's Day",
+     "p": 2,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Mars's Day",
+     "p": 3,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "First Fast",
+     "p": 4,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Between the Fasts",
+     "p": 5,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Fast Day",
+     "p": 6,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    },
+    {
+     "n": "Saturn's Day",
+     "p": 7,
+     "e": "MD+",
+     "sys": [
+      "week-7"
+     ]
+    }
+   ],
+   "festival": [
+    {
+     "n": "Apple Night",
+     "s": "winter",
+     "loan": "Samhain"
+    },
+    {
+     "n": "Candle Feast",
+     "s": "spring",
+     "loan": "Imbolc"
+    },
+    {
+     "n": "Midsummer Fire",
+     "s": "summer",
+     "loan": "Beltane"
+    },
+    {
+     "n": "Corn Feast",
+     "s": "autumn",
+     "loan": "Lughnasadh"
+    }
+   ]
   }
  },
  "daySigns": {
@@ -4581,6 +5474,28 @@
    "the Serpent",
    "the Partridge",
    "the Fox"
+  ],
+  "scandinavian": [
+   "the Great Wain",
+   "the Winter Wheel",
+   "the Huntsman's Belt",
+   "the Bright Toe"
+  ],
+  "welsh": [
+   "the Court of the Hills",
+   "the Silver Wheel"
+  ],
+  "scottish": [
+   "the Merry Dancers' Gate",
+   "the Shepherd's Cairn"
+  ],
+  "irish": [
+   "the Hound's Court",
+   "the Silver Chain"
+  ],
+  "cornish": [
+   "the Tinners' Road",
+   "the Chough's Nest"
   ]
  },
  "lights": {
@@ -4713,6 +5628,41 @@
    }
   },
   "slavic": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "scandinavian": {
+   "milky": "the Birds' Way"
+  },
+  "welsh": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "scottish": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "irish": {
+   "planets": {
+    "5": [
+     "the Morning Star",
+     "the Evening Star"
+    ]
+   }
+  },
+  "cornish": {
    "planets": {
     "5": [
      "the Morning Star",

@@ -96,40 +96,40 @@ Agreed with Kenny after a run of batch 6a. Earlier sections stand; this adds to 
 
 ## 10. Amendment, 17 November 2026: sibling distinctness
 
-Related cultures must read as themselves before batch 6b. This section is a dated amendment; earlier sections are as they were.
+Related cultures must read as themselves before batch 6b. This section is a dated amendment; earlier sections are as they were. The overlap table for every pair and module is in docs/sibling-distinctness.md.
 
 1. **A standing test.** tests/distinctness.test.ts runs every module at its default state with only the culture changed, seeds 1 to 5, twelve names each; a pair's overlap is the share of A's names that B also gives at the same seed. Siblings are held to 25% and each core-depth culture against General to 30%. The pairs, limits and exclusions are in lens.json (`distinctness`); every later batch adds its sibling pairs and its cultures there and must pass. Not measured: the deferred-styles modules (stars and space, hyperspace charts, spacecraft, river names), deserts (no landscape of their own in these lands), the settlement kit, and a mix against its own halves.
-2. **How overlap is brought down** (never by changing a random stream): a culture that reads a table shared with a sibling draws it at a weight set in lens.json (`shares.legacy`), and a kind of a land or water module where it has no shapes of its own, and the British native source, are drawn at that weight too; `shares.module` gives a floor for modules whose general draw would leave a culture near General (calendars, sky, arms, events, money, treasures, books, mystic orders, underworld groups, peoples' tongues, ships, grassland); the groups engine now draws the batch's own group families (it only did so for eight named traditions); Portuguese and Byzantine name in patterns of their own and, with the Celtic nations, Norse and Scandinavian, have calendar and sky lists with no shared word at the same place.
+2. **How overlap was brought down** (never by changing a random stream): the groups engine now draws the batch's own group families (it only did so for eight named traditions); a culture that reads a table shared with a sibling draws it at a weight in lens.json (`shares.legacy`: 0.1 the Celtic nations and Scandinavian, 0.02 Spanish, Portuguese, Greek, Byzantine and Anglo-Saxon), including the kinds of a module where it has no shapes of its own (land and water modules, buildings, routes), the British native source, and the real month names of a calendar; `shares.module` gives a floor for modules whose general draw would leave a culture near General; Portuguese and Byzantine name in patterns of their own and Anglo-Saxon in its own; Irish and Cornish take two more frame styles (`firstB`, `lastB`) so no two nations share a frame at any place; Scandinavian and the four nations have calendar tables of their own (`engineOwn` `time`); and the calendar and sky lists of every sibling are written so that no two share a word at the same place. Anglo-Saxon has a content key of its own in every module of 5a to 5d: Old English settlement habits in English (the hundred and the moot, minsters and wics, burhs and folds), thegns and ealdormen, shield-walls and mead-halls, the old gods unnamed, the wyrm.
 3. **Standing rule for later batches.** New words are English, loanwords are looked up on Collins or the OED and recorded in docs/loanwords.md, and no famous real name is used. The words this brief added are in docs/second-tier-6a.md Part E.
-4. **Where it stands.** Spanish/Portuguese, Greek/Byzantine, Welsh/Scottish and Scottish/Irish meet the limit and are in the test; every culture meets 30% against General. Still over 25%, and so not yet in the test: Anglo-Saxon/Norman and British (it needs a content key of its own in 5a to 5d: Old English settlement habits, the hundred and the moot, minsters and wics, thegns and ealdormen, shield-walls and mead-halls, the old gods), Welsh/Irish, Welsh/Cornish, Irish/Cornish and Scottish/Cornish (sacred places, coasts, moors; calendars), and Norse/Scandinavian (calendars: the real month names are Icelandic for both). Overlap before and after, by pair:
+4. **Where it stands.** Every sibling pair and every culture against General is within its limit in every measured module, and all ten pairs are in the test:
 
-| pair | limit | modules over before | modules over after | over after |
-| --- | --- | --- | --- | --- |
-| anglo-saxon/norman-british | 25 | 29 | 12 | routeNames 27, innNames 50, buildingNames 38, moorNames 30, ships 45, armsNames 73, treasureNames 50, bookNames 52, eventNames 48, moneyNames 45, calendarNames 45, skyNames 55 |
-| welsh/scottish | 25 | 11 | 0 | none |
-| welsh/irish | 25 | 11 | 4 | sacredPlaces 50, coastsIslands 30, moorNames 35, wetlandNames 33 |
-| welsh/cornish | 25 | 12 | 5 | sacredPlaces 32, seasLakes 28, coastsIslands 32, moorNames 28, grasslandNames 32 |
-| scottish/irish | 25 | 11 | 0 | none |
-| scottish/cornish | 25 | 10 | 1 | calendarNames 28 |
-| irish/cornish | 25 | 12 | 2 | sacredPlaces 43, coastsIslands 28 |
-| norse/scandinavian | 25 | 11 | 1 | calendarNames 32 |
-| spanish/portuguese | 25 | 29 | 0 | none |
-| greek/byzantine | 25 | 28 | 0 | none |
-| german/general | 30 | 7 | 0 | none |
-| french/general | 30 | 12 | 0 | none |
-| dutch/general | 30 | 11 | 0 | none |
-| italian/general | 30 | 14 | 0 | none |
-| spanish/general | 30 | 12 | 0 | none |
-| portuguese/general | 30 | 12 | 0 | none |
-| roman/general | 30 | 7 | 0 | none |
-| norman-british/general | 30 | 3 | 0 | none |
-| anglo-saxon/general | 30 | 1 | 0 | none |
-| norse/general | 30 | 1 | 0 | none |
-| slavic/general | 30 | 7 | 0 | none |
-| welsh/general | 30 | 3 | 0 | none |
-| scottish/general | 30 | 0 | 0 | none |
-| irish/general | 30 | 1 | 0 | none |
-| cornish/general | 30 | 1 | 0 | none |
-| scandinavian/general | 30 | 3 | 0 | none |
-| greek/general | 30 | 7 | 0 | none |
-| byzantine/general | 30 | 7 | 0 | none |
+| pair | limit | modules over before | modules over after |
+| --- | --- | --- | --- |
+| anglo-saxon/norman-british | 25 | 29 | 0 |
+| welsh/scottish | 25 | 11 | 0 |
+| welsh/irish | 25 | 11 | 0 |
+| welsh/cornish | 25 | 12 | 0 |
+| scottish/irish | 25 | 11 | 0 |
+| scottish/cornish | 25 | 10 | 0 |
+| irish/cornish | 25 | 12 | 0 |
+| norse/scandinavian | 25 | 11 | 0 |
+| spanish/portuguese | 25 | 29 | 0 |
+| greek/byzantine | 25 | 28 | 0 |
+| german/general | 30 | 7 | 0 |
+| french/general | 30 | 12 | 0 |
+| dutch/general | 30 | 11 | 0 |
+| italian/general | 30 | 14 | 0 |
+| spanish/general | 30 | 12 | 0 |
+| portuguese/general | 30 | 12 | 0 |
+| roman/general | 30 | 7 | 0 |
+| norman-british/general | 30 | 3 | 0 |
+| anglo-saxon/general | 30 | 1 | 0 |
+| norse/general | 30 | 1 | 0 |
+| slavic/general | 30 | 7 | 0 |
+| welsh/general | 30 | 3 | 0 |
+| scottish/general | 30 | 0 | 0 |
+| irish/general | 30 | 1 | 0 |
+| cornish/general | 30 | 1 | 0 |
+| scandinavian/general | 30 | 3 | 0 |
+| greek/general | 30 | 7 | 0 |
+| byzantine/general | 30 | 7 | 0 |

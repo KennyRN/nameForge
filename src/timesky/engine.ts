@@ -4,6 +4,7 @@
 // groups, routes and events engines; lands from biomes. One seeded stream a batch. No Obsidian imports.
 
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
+import { legacyWeightOf } from "../northData";
 import { hasSpaceBlock } from "../space/safeguards";
 import { type Biome, type BiomeCatalogue, BRITAIN, biomeTitleCase, biomeWords, BUILT_IN_BIOMES } from "../biomes";
 import {
@@ -1373,7 +1374,7 @@ function generateTimeSkyNamesCore(options: TimeSkyOptions): TimeBatch {
   const rng = mulberry32(seed);
   const notices: string[] = [];
   // Brief 5d: the newer culture keys read the legacy key's tables (`engineAlias`).
-  const culture = findTimeCulture(engineCulture(options.culture ?? ""))?.key ?? "norman-british";
+  const culture = findTimeCulture(engineCulture(options.culture ?? "", "time"))?.key ?? "norman-british";
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const sensitive = isSensitive(culture);
   const fantastic = !sensitive && !!options.fantastic;
@@ -1416,7 +1417,7 @@ function generateTimeSkyNamesCore(options: TimeSkyOptions): TimeBatch {
   };
   const series = !!options.series && seriesOffered(kind, culture, era, land);
   if (series) {
-    const S: Series = { seed, ctx, options, seen: new Set(), notices, realShare: options.realShare ?? TIME_SKY.realShare };
+    const S: Series = { seed, ctx, options, seen: new Set(), notices, realShare: (options.realShare ?? TIME_SKY.realShare) * (legacyWeightOf(options.culture) ?? 1) };
     const batch = runSeries(S, kind, seed);
     return batch;
   }

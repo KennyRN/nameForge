@@ -33,7 +33,7 @@ function fillFromPools(module, culture, lists, nt) {
   const pools = POOLS[module];
   if (!pools) return;
   const offer = isMix(culture) ? [] : OFFER[module] ?? OFFER._default;
-  const start = Math.max(0, CORE.indexOf(culture)) * 3;
+  const start = (culture === "anglo-saxon" ? 5 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
   const take = (pool, enough) => {
     for (let n = 0; n < pool.length && !enough(); n++) {
       const item = pool[(start + n) % pool.length];

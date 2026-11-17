@@ -10,6 +10,7 @@ import roman from "./roman.mjs";
 import slavic from "./slavic.mjs";
 import greek from "./greek.mjs";
 import byzantine from "./byzantine.mjs";
+import angloSaxon from "./anglo-saxon.mjs";
 
 /** The fixed tag order of a ten-word list: three AN-MD, three EM-ST, two ST-MO, one fantastic, one general. */
 const TAGS = ["AN-MD", "AN-MD", "AN-MD", "EM-ST", "EM-ST", "EM-ST", "ST-MO", "ST-MO", "h", ""];
@@ -24,7 +25,7 @@ const tagAll = (nouns) => ({
   route: nouns.route.map(tag),
   sacred: nouns.sacred.map(tag),
 });
-const full = [spanish, portuguese, french, italian, dutch, roman, slavic, greek, byzantine];
+const full = [spanish, portuguese, french, italian, dutch, roman, slavic, greek, byzantine, angloSaxon];
 export const CULTURES_6A = full.map((c) => ({ key: c.key, keys: [c.key], label: c.label, land: c.land, water: c.water, route: c.route, sacred: c.sacred, frames: framesOf(c.style) }));
 export const NOUNS_6A = Object.fromEntries(full.map((c) => [c.key, tagAll(c.nouns)]));
 export const STYLE_6A = Object.fromEntries(full.map((c) => [c.key, c.style]));

@@ -3913,6 +3913,24 @@
     ]
    },
    "ships": 0.8,
+   "moorNames": {
+    "share": 0.98,
+    "only": [
+     "welsh",
+     "scottish",
+     "irish",
+     "cornish"
+    ]
+   },
+   "deityNames": {
+    "share": 0.97,
+    "only": [
+     "welsh",
+     "scottish",
+     "irish",
+     "cornish"
+    ]
+   },
    "grasslandNames": 0.98,
    "armsNames": 0.85,
    "eventNames": 0.8,
@@ -3931,7 +3949,7 @@
    "portuguese": 0.02,
    "greek": 0.02,
    "byzantine": 0.02,
-   "anglo-saxon": 0.1
+   "anglo-saxon": 0.02
   },
   "signatureMix": 0.4,
   "mixes": [
@@ -4122,6 +4140,21 @@
   "iberian": [
    "money",
    "vessels"
+  ],
+  "scandinavian": [
+   "time"
+  ],
+  "welsh": [
+   "time"
+  ],
+  "scottish": [
+   "time"
+  ],
+  "irish": [
+   "time"
+  ],
+  "cornish": [
+   "time"
   ]
  },
  "deferred": {
@@ -4170,10 +4203,46 @@
   ],
   "excludedCells": [],
   "siblings": [
-   ["spanish","portuguese"],
-   ["greek","byzantine"],
-   ["welsh","scottish"],
-   ["scottish","irish"]
+   [
+    "spanish",
+    "portuguese"
+   ],
+   [
+    "greek",
+    "byzantine"
+   ],
+   [
+    "welsh",
+    "scottish"
+   ],
+   [
+    "scottish",
+    "irish"
+   ],
+   [
+    "welsh",
+    "irish"
+   ],
+   [
+    "welsh",
+    "cornish"
+   ],
+   [
+    "scottish",
+    "cornish"
+   ],
+   [
+    "irish",
+    "cornish"
+   ],
+   [
+    "norse",
+    "scandinavian"
+   ],
+   [
+    "anglo-saxon",
+    "norman-british"
+   ]
   ],
   "general": [
    "norman-british",

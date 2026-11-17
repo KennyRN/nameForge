@@ -439,3 +439,8 @@ Each word was looked up on collinsdictionary.com or oed.com by a search restrict
 ## Sibling-distinctness brief (17 November 2026): the words the brief adds
 
 Looked up on collinsdictionary.com or oed.com, sending only the word: shieling (found), haar (found, OED and Collins), mizzle (found), whin (found), furze (found), lingonberry (found), spate (found). Cruisie (a Scots lamp) has no entry and is replaced by Rush Lamp. The other new words are plain English (Pruning, Cork-Stripping, Salt-Raking, Reaping, Lenten, Paschal, Furrow, Primrose, Bog-Cotton, Squall, Tin-Streaming, Thrift, Mackerel, Sea-Fret, Westerly, Midwinter, Slaughter, Meltwater, Rime, Hail, Aurora and the rest).
+
+
+### Rank titles and other 6a words not looked up before (17 November 2026)
+
+Looked up on collinsdictionary.com or oed.com, sending only the word. **Found:** strategos (OED), logothete, exarch, eparch, voivode, tsarina, infanta, fidalgo (OED), dogaressa, stadtholder (stadholder), burgomaster, aedile, quaestor, prytanis (OED), areopagus, peltast, thiasos (OED), sotnik (OED), starosta, Skoptsi (OED), maniple, hidalgo, dauphine, archon, satrap, ephor; the plain English or already recorded ones (consul, prefect, regent, marquis, pontiff, cossacks, hussars, boyar, hetman, hermandad) were not repeated. **Not found, replaced:** Despina by Lady, Boyarina by Lady, Beatas by Lay Sisters (Spanish-English entries only), Vigiles by Night Watch (only vigil).

@@ -3,12 +3,15 @@ import { MIXES6, NEW6 } from "./north5c-words.mjs";
 import * as A from "./north5c-words.mjs";
 import { W2 } from "./north5c-words2.mjs";
 import { PT5C, BZ5C } from "./pt-bz-words.mjs";
+import { AS5C, ADJ_AS, RANKS_AS } from "./anglo-saxon-words.mjs";
 
 const W = { ...A.W6, ...W2 };
 for (const m of Object.keys(W)) {
   if (!PT5C[m] || !BZ5C[m]) throw new Error(`no own Portuguese or Byzantine words for ${m}`);
   W[m].portuguese = PT5C[m];
   W[m].byzantine = BZ5C[m];
+  if (!AS5C[m]) throw new Error(`no Anglo-Saxon words for ${m}`);
+  W[m]["anglo-saxon"] = AS5C[m];
 }
 // A word is never twice in a list after the substitutions.
 const dedupe = (s) => s.split(";").map((l) => { const seen = new Set(); return l.split("|").filter((w) => (seen.has(w.toLowerCase()) ? false : (seen.add(w.toLowerCase()), true))).join("|"); }).join(";");
@@ -40,7 +43,10 @@ export const RANKS6 = {
   spanish: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise|Hidalgo/Lady|Infante/Infanta", portuguese: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise|Fidalgo/Lady|Infante/Infanta",
   french: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise|Baron/Baroness|Dauphin/Dauphine", italian: "Doge/Dogaressa|Duke/Duchess|Count/Countess|Marquis/Marquise|Prince/Princess|Baron/Baroness",
   dutch: "Stadtholder/Lady|Duke/Duchess|Count/Countess|Baron/Baroness|Prince/Princess|Burgomaster/Lady", roman: "Emperor/Empress|Consul/Lady|Senator/Lady|Prefect/Lady|Tribune/Lady|Legate/Lady",
-  greek: "King/Queen|Archon/Lady|Strategos/Lady|Tyrant/Lady|Satrap/Lady|Ephor/Lady", byzantine: "Emperor/Empress|Despot/Despina|Logothete/Lady|Exarch/Lady|Eparch/Lady|Domestic/Lady",
-  slavic: "Tsar/Tsarina|Prince/Princess|Boyar/Boyarina|Voivode/Lady|Hetman/Lady|Grand Duke/Grand Duchess", iberian: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise", "greek-byzantine": "Emperor/Empress|King/Queen|Archon/Lady|Despot/Despina",
+  greek: "King/Queen|Archon/Lady|Strategos/Lady|Tyrant/Lady|Satrap/Lady|Ephor/Lady", byzantine: "Emperor/Empress|Despot/Lady|Logothete/Lady|Exarch/Lady|Eparch/Lady|Domestic/Lady",
+  slavic: "Tsar/Tsarina|Prince/Princess|Boyar/Lady|Voivode/Lady|Hetman/Lady|Grand Duke/Grand Duchess", iberian: "King/Queen|Duke/Duchess|Count/Countess|Marquis/Marquise", "greek-byzantine": "Emperor/Empress|King/Queen|Archon/Lady|Despot/Lady",
 };
+ADJ6["anglo-saxon"] = ADJ_AS;
+STYLE6["anglo-saxon"] = "as";
+RANKS6["anglo-saxon"] = RANKS_AS;
 export const ALL6 = [...NEW6, ...MIXES6];

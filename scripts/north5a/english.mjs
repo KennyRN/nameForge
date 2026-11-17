@@ -1,7 +1,7 @@
 import { framesOf } from "./lib.mjs";
 // English (§7): the Anglo-Saxon and Norman & British keys together; the generic last ("Oakdale"): fold, ley, wick, toft in English words.
 export default {
-  key: "english", keys: ["anglo-saxon", "norman-british"], label: "English",
+  key: "english", keys: ["norman-british"], label: "English",
   frames: framesOf("last", { land: [["{N} of the {tree}", 2, "flora"]], water: [["{N} of the {seaCreature}", 2, "crt"]] }),
   land: {
     B: "Oak|Ash|Wool|Barley|Hop|Clay|Chalk|Flint|Thorn|Honey",

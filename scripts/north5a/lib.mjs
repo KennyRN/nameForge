@@ -81,6 +81,13 @@ export const STYLE_FRAMES = {
     sacred: [["{deityRef} {N}", 3], ["{B} {N}", 5], ["{N} of the {number}", 3], ["{C} {N}", 3], ["{place:poss} {N}", 4], ["{holy:poss} {N}", 4], ["{D} of {place}", 3], ["the {sacredQuality} {N}", 3], ["{N} of the {B}", 3], ["{D} of {deityRef}", 3]],
   },
 };
+// Sibling-distinctness brief: two more styles for the nations that would otherwise name exactly as another does. `firstB` takes the generic-first frames at the even places and the generic-last at the odd;
+// `lastB` the other way about. Irish is `firstB` and Cornish `lastB`, so that Welsh (`first`), Scottish (`last`), Irish and Cornish share no frame at any place.
+const mixed = (a, b, startA) => a.map((x, i) => ((i % 2 === 0) === startA ? x : b[i] ?? x));
+export const pickStyle = (style, first, last) => (style === "first" ? first : style === "last" ? last : style === "firstB" ? mixed(first, last, true) : mixed(last, first, true));
+for (const [name, a, b] of [["firstB", "first", "last"], ["lastB", "last", "first"]]) {
+  STYLE_FRAMES[name] = Object.fromEntries(Object.keys(STYLE_FRAMES.first).map((k) => [k, mixed(STYLE_FRAMES[a][k], STYLE_FRAMES[b][k], true)]));
+}
 const LATE = { e: ["ST", "MO", "NF", "IS"] };
 /** §11.4: era words read on their own terms; the older ones get "Old" from the steam age on. */
 const ERA_FRAMES = {
@@ -110,7 +117,7 @@ export function ownFrames(style, m) {
     [0, "{N} of {person}", 4, "per"], [1, "{N} of the {tree}", 4, "flora"], [2, "{N} of the {creature}", 4, "crt"], [0, "{N} {R0} {town}", 4, "twn"], [1, "{N} of {town}", 4, "twn"],
     [2, "{N} of the {A0} {tree}", 3, "flora"], [0, "{N} of the {A1} {creature}", 3, "crt"], [1, "{N} of {holy}", 3, "sai"], [2, "{N} {R1} {town}", 3, "twn"], [1, "{colour} {N}", 2, "col"],
   ];
-  return (style === "first" ? first : last).map(([k, p, w, fam]) => [k, sub(p), w, fam]);
+  return pickStyle(style, first, last).map(([k, p, w, fam]) => [k, sub(p), w, fam]);
 }
 /** Route names: ten frames, by kind. */
 export function ownRouteFrames(style, m) {
@@ -125,7 +132,7 @@ export function ownRouteFrames(style, m) {
     ["pilgrim", "{N} to {holy}", 4], ["pilgrim", "{holy:poss} {N}", 4], ["pilgrim", "{A2} {N}", 2],
   ];
   const kinds = m.kinds;
-  return (style === "first" ? first : last).map(([k, p, w]) => [kinds.indexOf(k), p.replace(/\{A(\d)\}/g, (_x, i) => m.adj[+i]), w]);
+  return pickStyle(style, first, last).map(([k, p, w]) => [kinds.indexOf(k), p.replace(/\{A(\d)\}/g, (_x, i) => m.adj[+i]), w]);
 }
 /** Sacred places: ten frames; `{N}` is the pool of the frame's site (water, stone, built). The deities engine's tokens: `{place}`, `{holy}`, `{deityRef}`, `{number}`, `{sacredQuality}`. */
 export function ownSacredFrames(style, m) {
@@ -138,5 +145,5 @@ export function ownSacredFrames(style, m) {
     [0, "{N} of {holy}", 4], [1, "{N} of {place}", 4], [2, "{N} of the {number}", 3], [0, "{N} {R0} {place}", 3], [1, "{N} of {deityRef}", 4],
     [2, "{N} {R1} {place}", 3], [0, "{A0} {N}", 3], [1, "the {sacredQuality} {N}", 3], [2, "{A1} {N}", 3], [0, "{place:poss} {N}", 3],
   ];
-  return (style === "first" ? first : last).map(([k, p, w]) => [k, sub(p), w]);
+  return pickStyle(style, first, last).map(([k, p, w]) => [k, sub(p), w]);
 }
