@@ -2,6 +2,7 @@
 // scripts/make-north5a.mjs) and the merges the engines and coverage adapters share. No Obsidian imports.
 
 import lensData from "./data/lens.json";
+import { MIX_HALF_WEIGHT, MIX_HALVES } from "./tier6a";
 import north from "./data/north5a.json";
 import north5b from "./data/north5b.json";
 
@@ -36,16 +37,17 @@ export const NORTH = north as unknown as NorthData & { nounPools: string[] };
 
 /** The share of a kind's draws the signature frames of a core culture (or Celtic) take. */
 export const SIGNATURE_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.signature;
-/** Brief 6a Part A §1: the share where a culture also reads a legacy table it shares with another (the four nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian…). */
-const SHARES = (lensData as unknown as { shares: { signatureShared: number; sharedLegacy: string[] } }).shares;
-/** Brief 6a Part A §1: a culture that shares a legacy table has its own stream for its replacements, so that the nations don't replace the same positions of the same batch. */
+/** Brief 6a §9.3: the share of own-shape draws that a core-depth culture's own entries take (60%), and the mixes' (Celtic's 40%). */
+const SHARES = (lensData as unknown as { shares: { signature: number; signatureMix: number; mixes: string[] } }).shares;
+export const signatureShareFor = (culture: string | undefined): number => (culture && SHARES.mixes.includes(culture) ? SHARES.signatureMix : SHARES.signature);
+/** Part A §1: a culture that shares a legacy table has its own stream for its replacements, so that the nations don't replace the same positions of the same batch. */
+const SALTED = ["welsh", "scottish", "irish", "cornish", "scandinavian"];
 export function cultureSalt(culture: string | undefined): number {
-  if (!culture || !SHARES.sharedLegacy.includes(culture)) return 0;
+  if (!culture || !SALTED.includes(culture)) return 0;
   let h = 2166136261;
   for (const ch of culture) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
   return h >>> 0;
 }
-export const signatureShareFor = (culture: string | undefined): number => (culture && SHARES.sharedLegacy.includes(culture) ? SHARES.signatureShared : SIGNATURE_SHARE);
 /** Brief 5b §12.1: the share of a module's own-shape draws that region-weighted shapes take when a region is chosen. */
 export const REGION_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.region;
 
@@ -149,6 +151,8 @@ export function shapesOf<T extends { culture?: string; c?: string[]; w: number }
   for (const s of list) {
     if (s.culture === key || (!s.culture && s.c?.includes(key))) out.push(s);
     else if (key === "celtic" && s.culture && CELTIC_MIX.includes(s.culture)) out.push({ ...s, w: s.w * CELTIC_MIX_WEIGHT });
+    // Brief 6a §2: a mix also draws both halves' shapes at half weight.
+    else if (MIX_HALVES[key] && s.culture && MIX_HALVES[key].includes(s.culture)) out.push({ ...s, w: s.w * MIX_HALF_WEIGHT });
   }
   return out;
 }

@@ -6901,9 +6901,9 @@
    "template": "{animal} Hill"
   },
   {
-   "text": "Yuri's",
-   "etymology": "[prince: Yuri]'s",
-   "template": "{prince:pos}"
+   "text": "Yuri's Town",
+   "etymology": "[prince: Yuri]'s town",
+   "template": "{prince:pos} Town"
   },
   {
    "text": "Town on the Pripya",
@@ -6926,9 +6926,9 @@
    "template": "{material} Town"
   },
   {
-   "text": "Gleb's",
-   "etymology": "[prince: Gleb]'s",
-   "template": "{prince:pos}"
+   "text": "Gleb's Town",
+   "etymology": "[prince: Gleb]'s town",
+   "template": "{prince:pos} Town"
   },
   {
    "text": "New Town",
@@ -6941,9 +6941,9 @@
    "template": "Mouth of the {#river}"
   },
   {
-   "text": "Yaroslav's",
-   "etymology": "[prince: Yaroslav]'s",
-   "template": "{prince:pos}"
+   "text": "Yaroslav's Town",
+   "etymology": "[prince: Yaroslav]'s town",
+   "template": "{prince:pos} Town"
   },
   {
    "text": "Oak Town",
@@ -6956,9 +6956,9 @@
    "template": "Mouth of the {#river}"
   },
   {
-   "text": "Oleg's",
-   "etymology": "[prince: Oleg]'s",
-   "template": "{prince:pos}"
+   "text": "Oleg's Town",
+   "etymology": "[prince: Oleg]'s town",
+   "template": "{prince:pos} Town"
   },
   {
    "text": "Holy Town",
@@ -6966,9 +6966,9 @@
    "template": "{adj} Town"
   },
   {
-   "text": "Igor's",
-   "etymology": "[prince: Igor]'s",
-   "template": "{prince:pos}"
+   "text": "Igor's Town",
+   "etymology": "[prince: Igor]'s town",
+   "template": "{prince:pos} Town"
   },
   {
    "text": "Stone Town",

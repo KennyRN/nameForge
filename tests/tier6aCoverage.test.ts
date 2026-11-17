@@ -10,12 +10,12 @@ test("6a: the batch's cultures meet their cells in the modules the batch has con
   const MODULES_DONE = new Set(["mountainNames", "forestNames", "moorNames", "wetlandNames", "grasslandNames", "lands", "riversInland", "hillsValleys", "farmland", "seasLakes", "coastsIslands", "seaCharts", "routeNames", "sacredPlaces", "streetNames", "innNames", "buildingNames", "monumentNames", "mysticOrders", "martialOrders", "underworldGroups", "tradeGuilds", "adventureCompanies", "powerFactions", "supernaturalCourts", "tribalNames", "epithets", "titles", "familyNames", "realms", "peoplesTongues", "ships", "aircraft", "landVehicles", "moneyNames", "eventNames", "calendarNames", "skyNames", "armsNames", "treasureNames", "bookNames", "deityNames"]);
   const short: string[] = [];
   for (const m of report.modules) {
-    if (!MODULES_DONE.has(m.module)) continue;
+    
     for (const c of [...TIER6A_CULTURES, ...TIER6A_MIXES]) {
       const cell = m.cultures[c] as { below?: boolean; excluded?: boolean; notOffered?: boolean; words: number; shapes: number } | undefined;
       if (cell?.below) short.push(`${m.module} ${c} ${cell.words}/${cell.shapes}`);
     }
   }
-  // The count is the gap this test tracks: it may fall, never rise (38 at the end of the batch: the stars and space, hyperspace, spacecraft and river modules, which the style tables brief owns, and the two mixes of tribes).
-  assert.ok(short.length <= 38, `${short.length} cells below target: ${short.slice(0, 30).join("; ")}`);
+  // Brief 6a §9.6: no cell of the batch stays below target; the styles brief's four modules are marked `deferred: styles` and not counted.
+  assert.ok(short.length === 0, `${short.length} cells below target: ${short.slice(0, 30).join("; ")}`);
 });

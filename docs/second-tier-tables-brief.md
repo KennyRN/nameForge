@@ -81,3 +81,14 @@ As brief 5 §9, per batch: core cells met or exempt, a test reading the coverage
 ## 8. Out of scope
 
 Regions for second-tier cultures; local cultures beyond their mappings; styles (brief 7); the core brief.
+
+## 9. Amendment, 17 November 2026: batch 6a fixes
+
+Agreed with Kenny after a run of batch 6a. Earlier sections stand; this adds to §2, §3, §4 and §6.
+
+1. **Portuguese and Byzantine are written fresh in every module**, to the core targets and with habits of their own, not derived from Spanish and Greek. Portuguese is Atlantic and maritime (quays, salt pans, cork oak, tile works, caravels and carracks, the saints of Lisbon and Porto, Brazilian and African trading ports from the early modern era, fado houses and tram lines from the steam age), not Castilian castles and counts. Byzantine is the Christian Roman east (themes and strategoi, monasteries and lavras, cisterns and hippodromes, icons and relics, dromons and chelandia, court titles such as sebastos and protospatharios in English), not classical temples, oracles and agoras. `docs/second-tier-6a.md` lists what each shares with Spanish and Greek: only genuinely common words.
+2. **The mixes draw both halves.** Iberian and Greek and Byzantine draw their own entries and both halves' signature entries at half weight each, in every module (as Celtic does), including land and sea and urban. The mixes' tribe cells reach 12 words and 4 shapes.
+3. **Own-shape share.** Every culture with core-depth tables (the core cultures and every second-tier culture whose batch is done) takes 60% of own-shape draws from its own entries: one value in `lens.json`. This changes core cultures' output; the changed states are listed.
+4. **Famous people.** The people tables flag famous figures (writers, philosophers, generals, artists) like royals, and hold flagged names to a fifth of a list's weight (rule 8). Greek leads with ordinary attested names, Roman with ordinary praenomina and cognomina, Italian with common medieval names. Possessive settlement names read "Vsevolod's Town", "Vladimir's Town".
+5. **Loanwords.** Every loanword in `docs/loanwords.md` under "still to look up", and every 6a loanword, is looked up on collinsdictionary.com or oed.com, sending only the word; replaced by its English sense where not found.
+6. **Deferred cells.** The stars and space, hyperspace charts, spacecraft and river names cells of the 6a cultures are marked `deferred: styles` in `lens.json` (the styles brief owns them), so the report shows why they are short. No other 6a cell stays below target.

@@ -806,7 +806,6 @@
    "eras": {
     "rus": {
      "New {town}": "vtcg",
-     "{prince:pos}": "vtc",
      "{prince:pos} Town": "vtcg",
      "{material} Town": "hvt",
      "{adj} Town": "hvtc",

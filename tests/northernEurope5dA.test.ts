@@ -149,7 +149,7 @@ test("5d §14.1 item 5: tribes show their culture: a quota of the batch is the t
   const rng = mulberry32(2);
   const names = Array.from({ length: 10 }, (_, i) => ({ text: `plain ${i}` }));
   const shown = applySignature(names, "tribalNames", "norse", 7, { quota: true, ctx: { fantastic: true } }).filter((n) => !n.text.startsWith("plain")).length;
-  assert.equal(shown, 4);
+  assert.equal(shown, 6); // 60% for a core-depth culture (second-tier 6a fixes §3)
   void rng;
 });
 

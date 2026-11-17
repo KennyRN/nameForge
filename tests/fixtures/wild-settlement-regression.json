@@ -1307,28 +1307,28 @@
   ],
   "sections": [
    [
-    "Cloth Trade Road",
-    "Cloth Packhorse Way",
-    "Cloth Wool Road"
+    "Pilgrims' Road to the Sacred Spring",
+    "Pilgrims' Road to the Sacred Grove",
+    "Downs Way"
    ],
    [
     "Old Town",
-    "Tannery Side",
-    "East River Borough"
+    "Wheat Valley Ward",
+    "Shrine Side"
    ],
    [
     "High Street",
-    "West Street",
-    "Tanners' Close",
-    "Vintners' Way",
-    "Spring Street",
-    "Brewer Street",
-    "Cloth Trade Road",
-    "Salt Lane"
+    "East Church Road",
+    "Wharf Hill",
+    "Old Way",
+    "Back Way",
+    "Downs Way",
+    "[founder]'s Gate",
+    "[monarch]'s Arch Road"
    ],
    [
     "Market Place",
-    "Inn Square"
+    "[founder]'s Common"
    ],
    [
     "the Sailor's Head",
@@ -1337,14 +1337,14 @@
    ],
    [
     "King's Fountain",
-    "Old Court Guildhall",
-    "Old Court Tower",
-    "Old Court Shrine",
-    "Saint Elfrida's Hospice",
-    "Hollow Manor"
+    "East River Guildhall",
+    "Red Castle",
+    "Old Court Hall",
+    "Lord's School",
+    "Saint Elfrida's Monastery"
    ],
    [
-    "Long Memorial",
+    "[owner]'s Chalk Figure Stone",
     "[monarch]'s Arch"
    ],
    [
@@ -1379,17 +1379,17 @@
    [
     "Old Town",
     "Golden Tomb",
-    "New Plot Quarter"
+    "Long Cheap"
    ],
    [
     "High Street",
-    "Golden Tomb Lane",
+    "Cattle Lane",
+    "[founder]'s Street",
     "Salt Way",
-    "Oak Stream Gate",
-    "Tailors' Road",
+    "Old Street",
     "Marcher Lane",
-    "Wool Row",
-    "Barbican Street"
+    "Corn Close",
+    "Wool Row"
    ],
    [
     "Market Place",
@@ -1404,9 +1404,9 @@
     "Saint Mildred's Bridge",
     "the Golden Lantern",
     "Bridge Homestead Manor",
-    "Old Tower",
-    "Shrine of [founder]",
-    "Round Customs House"
+    "Dales Chapel",
+    "Church of Oak Stream",
+    "Customs House of [founder]"
    ],
    [
     "Statue of [founder]",
@@ -1437,28 +1437,28 @@
   ],
   "sections": [
    [
-    "Marsh Way",
-    "Fell Way",
-    "Downs Way"
+    "Causeway from Broom Field",
+    "Way from Broom Field",
+    "Ridgeway from Broom Field"
    ],
    [
     "Old Town",
-    "Foundry Ward",
-    "Ropemakers' Ward"
+    "Kiln End",
+    "Pilgrims' Side"
    ],
    [
     "Long Street",
     "Tweed Street",
-    "Old Middle Fort Road",
-    "Ford Road",
+    "Love Lane",
+    "Causeway from Broom Field",
     "Abbey Row",
-    "Marsh Way",
-    "Hall Hill",
-    "Red Pillar Street"
+    "[founder]'s Way",
+    "Hunter Minster Street",
+    "Old Close"
    ],
    [
     "Market Place",
-    "Tin Exchange"
+    "Saturday Market"
    ],
    [
     "Golden Brewhouse",
@@ -1467,15 +1467,15 @@
    ],
    [
     "Swift Gatehouse",
-    "the Burnt Court House",
+    "Earl's Court House",
     "Palace of [dynasty]",
     "Saint Osyth's Sanctuary",
     "the Yellow Lantern",
     "Big Farmstead Kiln"
    ],
    [
-    "Broom Field Preaching Cross",
-    "the Red Pillar"
+    "[owner]'s Preaching Cross",
+    "Big Farmstead Arch"
    ],
    [
     "Sisters of the Blessed Lantern",
@@ -1502,14 +1502,14 @@
   ],
   "sections": [
    [
-    "Cloth Trade Road",
-    "Cloth Packhorse Way"
+    "Pilgrims' Road to the Sacred Spring",
+    "Downs Way"
    ],
    [
     "High Street",
-    "West Street",
-    "Tanners' Close",
-    "Vintners' Way"
+    "West Church Road",
+    "Wharf Hill",
+    "Old Way"
    ],
    [
     "Market Place"
@@ -1519,8 +1519,8 @@
    ],
    [
     "King's Fountain",
-    "Saint Elfrida's Shrine",
-    "the Red Castle"
+    "Minster of Temple",
+    "Red Castle"
    ],
    [
     "the Giant"
@@ -1551,9 +1551,9 @@
    ],
    [
     "High Street",
-    "Eastgate",
-    "Southgate",
-    "Vintners' Road"
+    "Cattle Lane",
+    "[founder]'s Street",
+    "Weavers' Street"
    ],
    [
     "Market Place"
@@ -1590,13 +1590,13 @@
   ],
   "sections": [
    [
-    "Marsh Way",
-    "Fell Way"
+    "Causeway from Nun Manor",
+    "Way from Nun Manor"
    ],
    [
     "Long Street",
     "Tweed Street",
-    "Flintbeck Fort Road",
+    "Love Lane",
     "Ford Road"
    ],
    [
@@ -1607,7 +1607,7 @@
    ],
    [
     "Swift Gatehouse",
-    "the Burnt Church",
+    "Burnt Church",
     "Palace of [dynasty]"
    ],
    [

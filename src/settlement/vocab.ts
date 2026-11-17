@@ -6,6 +6,7 @@
 import vocabData from "../data/settlement-vocab.json";
 import { CELTIC_MIX, CELTIC_MIX_WEIGHT, NORTH } from "../northData";
 import { NORTH5B } from "../northData5b";
+import { MIX_HALF_WEIGHT, MIX_HALVES } from "../tier6a";
 import { creaturesFor, type Habitat } from "../creatures";
 import { inCultureGroup, LENS_REGIONS, regionsOfCulture } from "../lens";
 import { GROUP_TONES, type GroupTone, hasBannedWord } from "../groups/engine";
@@ -217,6 +218,15 @@ export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere):
     for (const e of pool.entries) {
       if (!e.c || !e.c.some((k) => CELTIC_MIX.includes(k)) || at.has(e.w)) continue;
       if (entryAllowed(e, { ...where, culture: e.c.find((k) => CELTIC_MIX.includes(k))! })) add(e, (e.x ?? 1) * CELTIC_MIX_WEIGHT);
+    }
+  }
+  // Brief 6a §2: the mixes draw both halves' signature words at half weight each.
+  const halves = MIX_HALVES[where.culture];
+  if (halves) {
+    for (const e of pool.entries) {
+      const half = e.c?.find((k) => halves.includes(k));
+      if (!half || at.has(e.w)) continue;
+      if (entryAllowed(e, { ...where, culture: half })) add(e, (e.x ?? 1) * MIX_HALF_WEIGHT);
     }
   }
   for (const e of pool.cultureExtra?.[where.culture] ?? []) {

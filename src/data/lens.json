@@ -3896,17 +3896,15 @@
   }
  ],
  "shares": {
-  "$comment": "Northern Europe brief 5a §11.3 and 5b §12.1: the share of a module's own-shape draws that a core culture's signature frames take (signature), and that region-weighted shapes take when a region is chosen (region; not 'across all of…'). Brief 6a §1: `signatureShared` replaces `signature` for the cultures in `sharedLegacy`, which also read a legacy table another culture shares (the four nations read Celtic, Scandinavian reads Norse).",
-  "signature": 0.4,
-  "signatureShared": 0.6,
-  "sharedLegacy": [
-   "welsh",
-   "scottish",
-   "irish",
-   "cornish",
-   "scandinavian"
-  ],
-  "region": 0.3
+  "$comment": "Northern Europe brief 5a §11.3, 5b §12.1 and brief 6a §9.3: `signature` is the share of a module's own-shape draws that a core-depth culture's signature entries take (every core culture and every second-tier culture whose batch is done); `signatureMix` is the Celtic-style share the mixes (Celtic, Iberian, Greek and Byzantine) take; `region` is what region-weighted shapes take when a region is chosen.",
+  "signature": 0.6,
+  "region": 0.3,
+  "signatureMix": 0.4,
+  "mixes": [
+   "celtic",
+   "iberian",
+   "greek-byzantine"
+  ]
  },
  "regionExempt": {
   "$comment": "Northern Europe brief 5b §12.2: regions that do not have a module's landscape. Their cells are exempt from the six-entry region depth, and a chosen region there falls back to the culture's own draws.",
@@ -4091,5 +4089,29 @@
    "money",
    "vessels"
   ]
+ },
+ "deferred": {
+  "$comment": "Brief 6a §9.6: cells the styles brief owns. A culture of the batch in one of these modules is reported as deferred, not below target.",
+  "styles": {
+   "modules": [
+    "starsSpace",
+    "hyperspaceCharts",
+    "spacecraft",
+    "riverNames"
+   ],
+   "cultures": [
+    "french",
+    "dutch",
+    "italian",
+    "spanish",
+    "portuguese",
+    "roman",
+    "greek",
+    "byzantine",
+    "slavic",
+    "iberian",
+    "greek-byzantine"
+   ]
+  }
  }
 }

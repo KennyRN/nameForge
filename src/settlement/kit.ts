@@ -19,6 +19,10 @@ import { generateVesselNames, VESSEL_CULTURES, type VesselModule } from "../vess
 import { buildContext, groupGenreFor, type ContextEffects, type SettlementContext } from "./context";
 import type { Vocabulary } from "./vocab";
 import { LENS_CULTURE_GROUPS } from "../lens";
+import { TIER6A_CULTURES } from "../tier6a";
+
+// Second-tier 6a fixes: the batch's cultures keep a section name from repeating a neighbour; every other culture is as recorded.
+const T6A: readonly string[] = TIER6A_CULTURES;
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -262,7 +266,7 @@ export function generateKit(options: KitOptions): Kit {
 
   // §8.1: no name twice across sections (the road through town and the landmark back-links are
   // the same places by design, §8.2).
-  const used = new Set<string>([norm(context.town)]);
+  const used = new Set<string>([norm(context.town), ...(T6A.includes(o.culture) ? context.neighbours.map(norm) : [])]);
   const sharedOk = (text: string) => {
     const n = norm(text);
     return (!!context.throughRoute && n === norm(context.throughRoute)) || context.landmarks.some((l) => norm(l) === n || norm(`${l} Inn`) === n);

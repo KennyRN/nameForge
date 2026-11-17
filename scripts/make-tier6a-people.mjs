@@ -3,6 +3,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { BYZANTINE, GREEK, PORTUGUESE, SPANISH } from "./tier6a/people-data.mjs";
 import { serialisePeople } from "./tier6a/peopleJson.mjs";
+import { FLAG, list as famousList, REWRITE } from "./tier6a/people-famous.mjs";
 
 const FILE = new URL("../src/data/people.json", import.meta.url);
 const DOC = new URL("../docs/people-tables.md", import.meta.url);
@@ -73,6 +74,20 @@ if (problems.length) {
   process.exit(1);
 }
 
+// Brief 6a §9.4: famous figures flagged and held to a fifth; Greek and Roman rewritten to lead with ordinary names.
+for (const [path, text] of Object.entries(REWRITE)) {
+  const [c, period, sex] = path.split(".");
+  const table = built[c]?.[period] ?? people.cultures[c][period];
+  table[sex] = famousList(text);
+}
+for (const [path, names] of Object.entries(FLAG)) {
+  const [c, period, sex] = path.split(".");
+  const table = built[c]?.[period] ?? people.cultures[c][period];
+  const keep = table[sex].map((e) => [...e]);
+  const mark = new Set(names);
+  const ordered = [...keep.filter((e) => !mark.has(e[0])), ...keep.filter((e) => mark.has(e[0])).map((e) => [e[0], e[1], "r", ...(e[3] ? [e[3]] : [])])];
+  table[sex] = ordered.map((e, i) => { const w = i < 5 ? 10 : i < 10 ? 7 : i < 16 ? 5 : i < 24 ? 3 : 2; return e[3] !== undefined ? [e[0], w, e[2] ?? "", e[3]] : e[2] ? [e[0], w, e[2]] : [e[0], w]; });
+}
 // Insert the new cultures after their legacy mixes, in the file's order.
 const out = {};
 for (const [k, v] of Object.entries(people.cultures)) {

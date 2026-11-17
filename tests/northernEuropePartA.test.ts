@@ -34,8 +34,8 @@ const REGIONS: Record<string, [string, string[]]> = {
   norse: ["norse", ["DEN", "NOR", "SWE", "ICE"]], scandinavian: ["scandinavian", ["DEN", "NOR", "SWE", "ICE"]], german: ["german", ["NDT", "RHN", "MIT", "ALP", "OST"]],
 };
 
-test("§12.1: the shares are in lens.json beside each other: signature 40%, region 30%", () => {
-  assert.equal(SIGNATURE_SHARE, 0.4);
+test("§12.1: the shares are in lens.json beside each other: signature 60% (core-depth cultures), region 30%", () => {
+  assert.equal(SIGNATURE_SHARE, 0.6);
   assert.equal(REGION_SHARE, 0.3);
   assert.deepEqual((lens as unknown as { shares: Record<string, number> }).shares.region, 0.3);
 });
@@ -77,11 +77,11 @@ test("§12.2: exempt cells name only regions of the batch, and the exempt module
   }
 });
 
-test("§12.1: choosing a region changes the names: German hills in different regions differ over five seeds", () => {
+test("§12.1: choosing a region changes the names: German hills in different regions differ over fifteen seeds", () => {
   const sets = new Map<string, Set<string>>();
   for (const region of ["RHN", "MIT", "ALP"]) {
     const s = new Set<string>();
-    for (let seed = 1; seed <= 5; seed++) for (const n of generateWildsNames({ ...defaultWildsState("hillsValleys"), module: "hillsValleys", culture: "german", region, era: "MD", count: 12, seed } as never).names) s.add(n.text);
+    for (let seed = 1; seed <= 15; seed++) for (const n of generateWildsNames({ ...defaultWildsState("hillsValleys"), module: "hillsValleys", culture: "german", region, era: "MD", count: 12, seed } as never).names) s.add(n.text);
     sets.set(region, s);
   }
   const regional = (r: string, re: RegExp) => [...sets.get(r)!].filter((t) => re.test(t)).length;

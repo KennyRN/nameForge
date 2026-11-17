@@ -2,6 +2,7 @@
 // counted into the cells of the report and the ratchet test. Pure: it reads the adapters' rows and the
 // lens; it never runs a generator. `COVERAGE_ADAPTERS` is a plain array a module registry can absorb later.
 
+import lensDeferred from "./data/lens.json";
 import { buildingCoverage } from "./buildings/coverage";
 import { bynameCoverage } from "./bynames/coverage";
 import { deityCoverage } from "./deities/coverage";
@@ -85,6 +86,8 @@ export interface CultureCell extends WordShape {
   notOffered?: boolean;
   /** The module deliberately excludes it (§6.3). */
   excluded?: boolean;
+  /** Brief 6a §9.6: the cell belongs to another brief (`styles`) and is not counted as short. */
+  deferred?: "styles";
   /** The culture has its own non-empty row in a per-culture weight table (§11.2): a profile is not a substitute for words. */
   profile: boolean;
   /** Below target, and neither excluded nor unoffered. */
@@ -196,13 +199,15 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
     // Excluded cultures are matched by key or by the lens culture a module's own key feeds.
     const excluded = excludedCultures.has(culture) || [...excludedCultures].some((x) => (offeredLensCulturesFor(module, [x]) as string[]).includes(culture));
     const notOffered = !!offered && !offered.has(culture) && lensCulture(culture) !== undefined && isLive && !excluded;
+    const deferred = DEFERRED.modules.includes(module) && DEFERRED.cultures.includes(culture);
     const cell: CultureCell = {
       ...counted,
       ...(target ? { target: { ...target } } : {}),
       ...(notOffered ? { notOffered: true } : {}),
       ...(excluded ? { excluded: true } : {}),
+      ...(deferred ? { deferred: "styles" as const } : {}),
       profile: profiled.has(culture),
-      below: !!target && !excluded && !notOffered && (counted.words < target.words || counted.shapes < target.shapes),
+      below: !!target && !excluded && !notOffered && !deferred && (counted.words < target.words || counted.shapes < target.shapes),
     };
     cultures[culture] = cell;
   }
@@ -285,3 +290,5 @@ export function buildCoverage(adapters: readonly CoverageAdapter[] = COVERAGE_AD
   const have = new Set(adapters.map((x) => x.module));
   return { modules, totals, thinPools, withoutAdapter: COVERAGE_MODULES.filter((m) => !have.has(m)) };
 }
+
+const DEFERRED = (lensDeferred as unknown as { deferred: { styles: { modules: string[]; cultures: string[] } } }).deferred.styles;

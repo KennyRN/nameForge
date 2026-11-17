@@ -3,6 +3,7 @@
 
 import north from "./data/north5b.json";
 import { CELTIC_MIX, CELTIC_MIX_WEIGHT } from "./northData";
+import { MIX_HALF_WEIGHT, MIX_HALVES } from "./tier6a";
 
 export interface RegionTemplates {
   templates: [string, number][];
@@ -50,6 +51,7 @@ export const NORTH5B = north as unknown as North5b;
 export function mapShapes<T extends { w: number }>(map: Record<string, T[]> | undefined, key: string): T[] {
   if (!map) return [];
   const own = map[key] ?? [];
+  if (MIX_HALVES[key]) return [...own, ...MIX_HALVES[key].flatMap((k) => (map[k] ?? []).map((s) => ({ ...s, w: s.w * MIX_HALF_WEIGHT })))];
   if (key !== "celtic") return own;
   return [...own, ...CELTIC_MIX.flatMap((k) => (map[k] ?? []).map((s) => ({ ...s, w: s.w * CELTIC_MIX_WEIGHT })))];
 }

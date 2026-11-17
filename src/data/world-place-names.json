@@ -856,8 +856,7 @@
           },
           "templates": [
             ["New {town}", 4],
-            ["{prince:pos}", 4],
-            ["{prince:pos} Town", 3],
+            ["{prince:pos} Town", 7],
             ["{material} Town", 3],
             ["{adj} Town", 3],
             ["{prince:pos} beyond the {beyond}", 2],

@@ -3250,7 +3250,7 @@
    "t": 30
   },
   "culture|settlementNames|slavic|shapes": {
-   "v": 151,
+   "v": 148,
    "t": 10
   },
   "culture|settlementNames|slavic|profile": {
@@ -3418,7 +3418,7 @@
    "t": 12
   },
   "era|settlementNames|MD": {
-   "v": 1022,
+   "v": 1019,
    "t": 12
   },
   "era|settlementNames|EM": {
@@ -18922,11 +18922,11 @@
    "v": 0
   },
   "culture|tribalNames|iberian|words": {
-   "v": 8,
+   "v": 23,
    "t": 12
   },
   "culture|tribalNames|iberian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|tribalNames|iberian|profile": {
@@ -18977,11 +18977,11 @@
    "v": 0
   },
   "culture|tribalNames|greek-byzantine|words": {
-   "v": 13,
+   "v": 28,
    "t": 12
   },
   "culture|tribalNames|greek-byzantine|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|tribalNames|greek-byzantine|profile": {
@@ -19222,7 +19222,7 @@
    "t": 12
   },
   "style|tribalNames|high-fantasy|words": {
-   "v": 51,
+   "v": 57,
    "t": 16
   },
   "style|tribalNames|high-fantasy|shapes": {
@@ -19230,7 +19230,7 @@
    "t": 4
   },
   "style|tribalNames|contemporary-fantasy|words": {
-   "v": 51,
+   "v": 57,
    "t": 16
   },
   "style|tribalNames|contemporary-fantasy|shapes": {
@@ -19238,7 +19238,7 @@
    "t": 4
   },
   "style|tribalNames|space-opera|words": {
-   "v": 51,
+   "v": 57,
    "t": 16
   },
   "style|tribalNames|space-opera|shapes": {
@@ -26033,7 +26033,7 @@
    "v": 1957
   },
   "total|culture|slavic|shapes": {
-   "v": 633
+   "v": 630
   },
   "total|culture|french|words": {
    "v": 1999
@@ -26042,10 +26042,10 @@
    "v": 566
   },
   "total|culture|iberian|words": {
-   "v": 662
+   "v": 677
   },
   "total|culture|iberian|shapes": {
-   "v": 278
+   "v": 282
   },
   "total|culture|spanish|words": {
    "v": 2027
@@ -26060,10 +26060,10 @@
    "v": 560
   },
   "total|culture|greek-byzantine|words": {
-   "v": 791
+   "v": 806
   },
   "total|culture|greek-byzantine|shapes": {
-   "v": 302
+   "v": 306
   },
   "total|culture|greek|words": {
    "v": 1968
@@ -26177,7 +26177,7 @@
    "v": 6485
   },
   "total|era|MD": {
-   "v": 9178
+   "v": 9175
   },
   "total|era|EM": {
    "v": 9446
@@ -26195,19 +26195,19 @@
    "v": 1642
   },
   "total|style|high-fantasy|words": {
-   "v": 2748
+   "v": 2754
   },
   "total|style|high-fantasy|shapes": {
    "v": 1128
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 2664
+   "v": 2670
   },
   "total|style|contemporary-fantasy|shapes": {
    "v": 1126
   },
   "total|style|space-opera|words": {
-   "v": 2800
+   "v": 2806
   },
   "total|style|space-opera|shapes": {
    "v": 959

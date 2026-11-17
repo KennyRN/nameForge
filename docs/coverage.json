@@ -2306,7 +2306,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 7352,
+   "rowCount": 7349,
    "cultures": {
     "english": {
      "words": 102,
@@ -2502,7 +2502,7 @@
     },
     "slavic": {
      "words": 112,
-     "shapes": 151,
+     "shapes": 148,
      "target": {
       "words": 30,
       "shapes": 10
@@ -2667,7 +2667,7 @@
    },
    "eras": {
     "AN": 352,
-    "MD": 1022,
+    "MD": 1019,
     "EM": 605,
     "ST": 698,
     "MO": 698,
@@ -9124,6 +9124,7 @@
       "shapes": 10
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9135,6 +9136,7 @@
       "shapes": 10
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9146,6 +9148,7 @@
       "shapes": 10
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9157,6 +9160,7 @@
       "shapes": 10
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9168,6 +9172,7 @@
       "shapes": 4
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9179,6 +9184,7 @@
       "shapes": 10
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9189,8 +9195,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": true,
-     "below": true
+     "below": false
     },
     "greek": {
      "words": 1,
@@ -9200,6 +9207,7 @@
       "shapes": 10
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9211,6 +9219,7 @@
       "shapes": 10
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     },
@@ -9221,8 +9230,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": true,
-     "below": true
+     "below": false
     },
     "slavic": {
      "words": 1,
@@ -9231,8 +9241,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": true,
-     "below": true
+     "below": false
     },
     "steppe": {
      "words": 2,
@@ -10910,8 +10921,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "dutch": {
      "words": 0,
@@ -10920,8 +10932,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "spanish": {
      "words": 0,
@@ -10930,8 +10943,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "portuguese": {
      "words": 0,
@@ -10940,8 +10954,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -10950,8 +10965,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "italian": {
      "words": 0,
@@ -10960,8 +10976,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 0,
@@ -10970,8 +10987,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "greek": {
      "words": 0,
@@ -10980,8 +10998,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "byzantine": {
      "words": 0,
@@ -10990,8 +11009,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -11000,8 +11020,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "slavic": {
      "words": 0,
@@ -11010,8 +11031,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
      "words": 0,
@@ -15500,7 +15522,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1308,
+   "rowCount": 1346,
    "cultures": {
     "general": {
      "words": 0,
@@ -15639,14 +15661,14 @@
      "below": false
     },
     "iberian": {
-     "words": 8,
-     "shapes": 0,
+     "words": 23,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "italian": {
      "words": 46,
@@ -15689,14 +15711,14 @@
      "below": false
     },
     "greek-byzantine": {
-     "words": 13,
-     "shapes": 0,
+     "words": 28,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "slavic": {
      "words": 41,
@@ -15917,15 +15939,15 @@
    },
    "styles": {
     "high-fantasy": {
-     "words": 51,
+     "words": 57,
      "shapes": 34
     },
     "contemporary-fantasy": {
-     "words": 51,
+     "words": 57,
      "shapes": 34
     },
     "space-opera": {
-     "words": 51,
+     "words": 57,
      "shapes": 34
     }
    },
@@ -20019,8 +20041,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "dutch": {
      "words": 0,
@@ -20029,8 +20052,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "spanish": {
      "words": 0,
@@ -20039,8 +20063,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "portuguese": {
      "words": 0,
@@ -20049,8 +20074,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -20059,8 +20085,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "italian": {
      "words": 0,
@@ -20069,8 +20096,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 0,
@@ -20079,8 +20107,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "greek": {
      "words": 0,
@@ -20089,8 +20118,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "byzantine": {
      "words": 0,
@@ -20099,8 +20129,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -20109,8 +20140,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "slavic": {
      "words": 0,
@@ -20119,8 +20151,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
      "words": 0,
@@ -21657,8 +21690,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "dutch": {
      "words": 0,
@@ -21667,8 +21701,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "spanish": {
      "words": 0,
@@ -21677,8 +21712,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "portuguese": {
      "words": 0,
@@ -21687,8 +21723,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "iberian": {
      "words": 0,
@@ -21697,8 +21734,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "italian": {
      "words": 0,
@@ -21707,8 +21745,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "roman": {
      "words": 0,
@@ -21717,8 +21756,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "greek": {
      "words": 0,
@@ -21727,8 +21767,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "byzantine": {
      "words": 0,
@@ -21737,8 +21778,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "greek-byzantine": {
      "words": 0,
@@ -21747,8 +21789,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "slavic": {
      "words": 0,
@@ -21757,8 +21800,9 @@
       "words": 30,
       "shapes": 10
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
      "words": 0,
@@ -22018,15 +22062,15 @@
    },
    "slavic": {
     "words": 1957,
-    "shapes": 633
+    "shapes": 630
    },
    "french": {
     "words": 1999,
     "shapes": 566
    },
    "iberian": {
-    "words": 662,
-    "shapes": 278
+    "words": 677,
+    "shapes": 282
    },
    "spanish": {
     "words": 2027,
@@ -22037,8 +22081,8 @@
     "shapes": 560
    },
    "greek-byzantine": {
-    "words": 791,
-    "shapes": 302
+    "words": 806,
+    "shapes": 306
    },
    "greek": {
     "words": 1968,
@@ -22115,7 +22159,7 @@
   },
   "eras": {
    "AN": 6485,
-   "MD": 9178,
+   "MD": 9175,
    "EM": 9446,
    "ST": 9038,
    "MO": 8024,
@@ -22124,15 +22168,15 @@
   },
   "styles": {
    "high-fantasy": {
-    "words": 2748,
+    "words": 2754,
     "shapes": 1128
    },
    "contemporary-fantasy": {
-    "words": 2664,
+    "words": 2670,
     "shapes": 1126
    },
    "space-opera": {
-    "words": 2800,
+    "words": 2806,
     "shapes": 959
    },
    "steampunk": {
