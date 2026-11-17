@@ -18,7 +18,9 @@ test("the lexicon holds de-duplicated lists of the eleven kinds", () => {
 
 test("creatures: 12 per core culture, 8 per second-tier culture, 30 General, habitats from the list", () => {
   const core = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
+  const t6 = new Set(["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african"]);
   const second = (LENS.cultures as { key: string; tier: string }[]).filter((c) => c.tier === "second").map((c) => c.key);
+  for (const c of t6) assert.ok(creaturesFor(c).length >= 12, c);
   assert.equal(creaturesFor("general").length, 30);
   for (const c of core) assert.ok(creaturesFor(c).length >= 12, c);
   for (const c of second) assert.ok(creaturesFor(c).length >= 8, c);

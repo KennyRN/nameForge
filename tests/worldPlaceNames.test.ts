@@ -22,11 +22,11 @@ test("world: first and second releases plus the expansion pool: sixteen cultures
       "slavic", "arabic-persian", "indian", "japanese",
       "west-african", "maya", "korean", "ethiopian",
       "welsh", "cornish", "scottish", "irish", "scandinavian", "german",
-      "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine",
+      "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian",
     ],
   );
   // Stellar brief §12: every culture gained an Interstellar era.
-  assert.equal(ERAS.length, 43 + 6 * 3 + 7 * 3 + 2, "batches 5b and 6a: two eras each and the Interstellar era; Roman and Slavic one new era each");
+  assert.equal(ERAS.length, 43 + 6 * 3 + 7 * 3 + 2 + 14 + 8, "batches 5b, 6a and 6b: their own eras and the Interstellar era; Roman and Slavic, and Egyptian, Ethiopian, Bantu and West African, gain eras");
 });
 
 test("world: every slot in every template and list entry resolves for its era", () => {
@@ -118,6 +118,6 @@ test("world: plurals and possessives follow the house rules", () => {
 test("world: history labels name the culture, and the era only where there is a choice", () => {
   assert.equal(worldHistoryLabel("world place names", "egyptian", "pharaonic"), "world place names · Egyptian · Pharaonic");
   assert.equal(worldHistoryLabel("world place names", "norse"), "world place names · Norse");
-  assert.equal(worldHistoryLabel("world place names", "bantu", "kingdoms"), "world place names · Bantu");
+  assert.equal(worldHistoryLabel("world place names", "bantu", "kingdoms"), "world place names · Bantu · Kingdoms");
   assert.equal(worldHistoryLabel("world place names", "slavic", "soviet"), "world place names · Slavic · Soviet");
 });

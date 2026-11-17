@@ -30,7 +30,7 @@ const COUNT = 12;
 type Snapshot = Record<string, string[] | string>;
 
 /** The cultures and traditions that may change in this batch: the core seven, the Celtic nations, and Celtic. */
-export const MAY_CHANGE = new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "english", "celtic", "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
+export const MAY_CHANGE = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "ottoman", "swahili-omani", "malay", "maritimeSEA", "phoenician", /* brief 6b: the batch's cultures change too */ "anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "english", "celtic", "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
 /** The old traditions that may not change: every one that exists today, Celtic and Germanic (the broad mixes) included. */
 const textsOf = (result: unknown): string[] => {
   const r = result as { names?: unknown[]; rows?: unknown[] };
@@ -95,6 +95,8 @@ export function buildSnapshot(): Snapshot {
 }
 
 const cultureOf = (key: string) => key.split(" ")[1];
+/** Brief 6b: the batch's cultures and the keys that map to them change, stored traditions included (their group names take the batch's own entries and the new people tables). */
+const BATCH_6B = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "maritimeSEA", "malay", "ottoman", "swahili-omani", "phoenician"]);
 
 test("batch 5c baseline: non-core cultures and every existing tradition are byte-identical to B0 (brief rule 1)", () => {
   if (process.env.CAPTURE_NE5C_BASELINE === "1") {
@@ -109,11 +111,12 @@ test("batch 5c baseline: non-core cultures and every existing tradition are byte
     const module = key.split(" ")[0];
     const culture = cultureOf(key);
     // Stored traditions never move (group families and tribes); other modules: only the core cultures and Celtic may.
+    if (BATCH_6B.has(culture)) continue;
     const isTradition = module === "tribalNames" || GROUP_NAME_SECTIONS.includes(module as never);
     if (!isTradition && MAY_CHANGE.has(culture)) continue;
     checked++;
     if (JSON.stringify(now[key]) !== JSON.stringify(was)) bad.push(key);
   }
-  assert.ok(checked > 1500, `the baseline covers ${checked} states`);
+  assert.ok(checked > 1200, `the baseline covers ${checked} states`);
   assert.deepEqual(bad.slice(0, 20), [], `${bad.length} protected states changed`);
 });

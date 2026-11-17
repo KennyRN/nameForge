@@ -42,7 +42,7 @@ const norm = normForBlock;
 test("§16.1: every culture has airSpan and landSpan inside its module's levels", () => {
   assert.equal(Object.keys(AIR_LAND.spans).length, 34);
   // Brief 5c: the six newer keys read the legacy key's span (`engineAlias`).
-  const NEWER = new Set(["welsh", "scottish", "irish", "cornish", "scandinavian", "german", "italian", "spanish", "portuguese", "greek", "byzantine"]);
+  const NEWER = new Set(["welsh", "scottish", "irish", "cornish", "scandinavian", "german", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"]);
   assert.deepEqual(Object.keys(AIR_LAND.spans).sort(), VESSEL_CULTURES.filter((c) => !NEWER.has(c.key)).map((c) => c.key).sort());
   for (const c of VESSEL_CULTURES.filter((c) => !NEWER.has(c.key))) {
     const row = AIR_LAND.spans[c.key];

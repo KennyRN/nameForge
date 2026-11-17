@@ -98,7 +98,7 @@ const withExtra = (table: PeopleTable, extra: ExtraSet): PeopleTable => ({
   surnames: table.surnames ? [...table.surnames, ...(extra.surnames ?? [])] : table.surnames,
 });
 
-const SPLIT_TABLES = ["spanish", "portuguese", "greek", "byzantine"];
+const SPLIT_TABLES = ["spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"];
 /** In the future eras a share of names come from other cultures' modern lists, weighted towards the same family. */
 export function otherCulture(own: string, rng: () => number): string | undefined {
   const family = FAMILIES[own];

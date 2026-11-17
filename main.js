@@ -326,24 +326,24 @@ function mulberry32(seed) {
   };
 }
 function withinEditDistance(a, b, maxD) {
-  const A = Array.from(a);
-  const B = Array.from(b);
-  if (Math.abs(A.length - B.length) > maxD) return false;
-  let prev = new Array(B.length + 1);
-  let cur = new Array(B.length + 1);
-  for (let j = 0; j <= B.length; j++) prev[j] = j;
-  for (let i = 1; i <= A.length; i++) {
+  const A2 = Array.from(a);
+  const B2 = Array.from(b);
+  if (Math.abs(A2.length - B2.length) > maxD) return false;
+  let prev = new Array(B2.length + 1);
+  let cur = new Array(B2.length + 1);
+  for (let j = 0; j <= B2.length; j++) prev[j] = j;
+  for (let i = 1; i <= A2.length; i++) {
     cur[0] = i;
     let rowMin = cur[0];
-    for (let j = 1; j <= B.length; j++) {
-      const cost = A[i - 1] === B[j - 1] ? 0 : 1;
+    for (let j = 1; j <= B2.length; j++) {
+      const cost = A2[i - 1] === B2[j - 1] ? 0 : 1;
       cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
       if (cur[j] < rowMin) rowMin = cur[j];
     }
     if (rowMin > maxD) return false;
     [prev, cur] = [cur, prev];
   }
-  return prev[B.length] <= maxD;
+  return prev[B2.length] <= maxD;
 }
 function tooCloseToAny(w, wLen, buckets, maxD) {
   for (let len = wLen - maxD; len <= wLen + maxD; len++) {
@@ -21337,6 +21337,26 @@ var lens_default = {
       ]
     },
     {
+      key: "turkic",
+      label: "Turkic",
+      tier: "core",
+      family: "steppe",
+      status: "live",
+      keys: [
+        "turkic"
+      ]
+    },
+    {
+      key: "mongol",
+      label: "Mongol",
+      tier: "core",
+      family: "steppe",
+      status: "live",
+      keys: [
+        "mongol"
+      ]
+    },
+    {
       key: "steppe",
       label: "Turkic and Mongol steppe",
       tier: "second",
@@ -21344,6 +21364,26 @@ var lens_default = {
       status: "live",
       keys: [
         "steppe"
+      ]
+    },
+    {
+      key: "arabic",
+      label: "Arabic",
+      tier: "core",
+      family: "near-east",
+      status: "live",
+      keys: [
+        "arabic"
+      ]
+    },
+    {
+      key: "persian",
+      label: "Persian",
+      tier: "core",
+      family: "near-east",
+      status: "live",
+      keys: [
+        "persian"
       ]
     },
     {
@@ -21359,7 +21399,7 @@ var lens_default = {
     {
       key: "egyptian",
       label: "Egyptian",
-      tier: "second",
+      tier: "core",
       family: "near-east",
       status: "live",
       keys: [
@@ -21369,7 +21409,7 @@ var lens_default = {
     {
       key: "ethiopian",
       label: "Ethiopian",
-      tier: "second",
+      tier: "core",
       family: "africa",
       status: "live",
       keys: [
@@ -21379,7 +21419,7 @@ var lens_default = {
     {
       key: "bantu",
       label: "Bantu",
-      tier: "second",
+      tier: "core",
       family: "africa",
       status: "live",
       keys: [
@@ -21389,7 +21429,7 @@ var lens_default = {
     {
       key: "west-african",
       label: "West African",
-      tier: "second",
+      tier: "core",
       family: "africa",
       status: "live",
       keys: [
@@ -22174,7 +22214,9 @@ var lens_default = {
     noPlaceNames: {
       cultures: [
         "greek-byzantine",
-        "steppe"
+        "steppe",
+        "turkic",
+        "mongol"
       ],
       note: "Peoples and tongues, bynames: cultures with no place-name form."
     },
@@ -22236,7 +22278,9 @@ var lens_default = {
         "chinese",
         "japanese",
         "korean",
-        "steppe"
+        "steppe",
+        "turkic",
+        "mongol"
       ],
       note: "Time and sky: cultures whose week-7 system reads the five elements."
     },
@@ -22261,7 +22305,11 @@ var lens_default = {
         "bantu",
         "west-african",
         "aztec",
-        "maya"
+        "maya",
+        "turkic",
+        "mongol",
+        "arabic",
+        "persian"
       ],
       note: "Vessels: the cultures a realm short form can be drawn for (the realms roster); others read general."
     }
@@ -22427,6 +22475,26 @@ var lens_default = {
         italian: {
           lens: [
             "italian"
+          ]
+        },
+        turkic: {
+          lens: [
+            "turkic"
+          ]
+        },
+        mongol: {
+          lens: [
+            "mongol"
+          ]
+        },
+        arabic: {
+          lens: [
+            "arabic"
+          ]
+        },
+        persian: {
+          lens: [
+            "persian"
           ]
         }
       },
@@ -23414,6 +23482,84 @@ var lens_default = {
         ],
         "slavic:tribal": [
           "AN"
+        ],
+        "turkic:medieval": [
+          "MD"
+        ],
+        "turkic:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "mongol:steppe": [
+          "AN",
+          "MD"
+        ],
+        "mongol:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "arabic:ancient": [
+          "AN"
+        ],
+        "arabic:medieval": [
+          "MD"
+        ],
+        "arabic:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "persian:ancient": [
+          "AN"
+        ],
+        "persian:medieval": [
+          "MD"
+        ],
+        "persian:modern": [
+          "EM",
+          "ST",
+          "MO"
+        ],
+        "egyptian:coptic-and-mamluk": [
+          "MD"
+        ],
+        "egyptian:ottoman-and-khedival": [
+          "EM",
+          "ST"
+        ],
+        "egyptian:modern-egypt": [
+          "MO"
+        ],
+        "ethiopian:modern-ethiopia": [
+          "ST",
+          "MO"
+        ],
+        "bantu:mission-and-colony": [
+          "ST"
+        ],
+        "bantu:modern-bantu": [
+          "MO"
+        ],
+        "west-african:colony-and-coast": [
+          "EM",
+          "ST"
+        ],
+        "west-african:modern-west-africa": [
+          "MO"
+        ],
+        "turkic:interstellar": [
+          "IS"
+        ],
+        "mongol:interstellar": [
+          "IS"
+        ],
+        "arabic:interstellar": [
+          "IS"
+        ],
+        "persian:interstellar": [
+          "IS"
         ]
       },
       ships: {
@@ -24895,6 +25041,14 @@ var lens_default = {
           label: "Slavic"
         },
         {
+          key: "turkic",
+          label: "Turkic"
+        },
+        {
+          key: "mongol",
+          label: "Mongol"
+        },
+        {
           key: "steppe",
           label: "Turkic and Mongol steppe"
         },
@@ -24907,6 +25061,14 @@ var lens_default = {
     {
       heading: "Middle East and Africa",
       entries: [
+        {
+          key: "arabic",
+          label: "Arabic"
+        },
+        {
+          key: "persian",
+          label: "Persian"
+        },
         {
           key: "arabic-persian",
           label: "Arabic and Persian"
@@ -25036,11 +25198,36 @@ var lens_default = {
         ]
       },
       ships: 0.8,
-      martialOrders: { share: 0.85, only: ["norman-british"] },
-      tradeGuilds: { share: 0.85, only: ["norman-british"] },
-      adventureCompanies: { share: 0.85, only: ["norman-british"] },
-      supernaturalCourts: { share: 0.85, only: ["norman-british"] },
-      powerFactions: { share: 0.85, only: ["norman-british"] },
+      martialOrders: {
+        share: 0.85,
+        only: [
+          "norman-british"
+        ]
+      },
+      tradeGuilds: {
+        share: 0.85,
+        only: [
+          "norman-british"
+        ]
+      },
+      adventureCompanies: {
+        share: 0.85,
+        only: [
+          "norman-british"
+        ]
+      },
+      supernaturalCourts: {
+        share: 0.85,
+        only: [
+          "norman-british"
+        ]
+      },
+      powerFactions: {
+        share: 0.85,
+        only: [
+          "norman-british"
+        ]
+      },
       moorNames: {
         share: 0.98,
         only: [
@@ -25077,13 +25264,19 @@ var lens_default = {
       portuguese: 0.02,
       greek: 0.02,
       byzantine: 0.02,
-      "anglo-saxon": 0.02
+      "anglo-saxon": 0.02,
+      turkic: 0.02,
+      mongol: 0.02,
+      arabic: 0.02,
+      persian: 0.02
     },
     signatureMix: 0.4,
     mixes: [
       "celtic",
       "iberian",
-      "greek-byzantine"
+      "greek-byzantine",
+      "steppe",
+      "arabic-persian"
     ]
   },
   regionExempt: {
@@ -25254,7 +25447,11 @@ var lens_default = {
     french: "general",
     dutch: "general",
     iberian: "general",
-    $ownTablesComment: "Brief 6a: a key that has tables of its own in some modules (French, Dutch and Iberian money, vessels and the settlement vocabulary) reads them there and its alias elsewhere; `engineOwn` lists those modules."
+    $ownTablesComment: "Brief 6a: a key that has tables of its own in some modules (French, Dutch and Iberian money, vessels and the settlement vocabulary) reads them there and its alias elsewhere; `engineOwn` lists those modules.",
+    turkic: "steppe",
+    mongol: "steppe",
+    arabic: "arabic-persian",
+    persian: "arabic-persian"
   },
   engineOwn: {
     french: [
@@ -25305,7 +25502,17 @@ var lens_default = {
         "byzantine",
         "slavic",
         "iberian",
-        "greek-byzantine"
+        "greek-byzantine",
+        "turkic",
+        "mongol",
+        "arabic",
+        "persian",
+        "egyptian",
+        "ethiopian",
+        "bantu",
+        "west-african",
+        "steppe",
+        "arabic-persian"
       ]
     }
   },
@@ -25397,11 +25604,12 @@ var lens_default = {
 };
 
 // src/tier6a.ts
-var TIER6A_CULTURES = ["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic"];
-var TIER6A_MIXES = ["iberian", "greek-byzantine"];
-var MIX_HALVES = { iberian: ["spanish", "portuguese"], "greek-byzantine": ["greek", "byzantine"] };
+var TIER6A_CULTURES = ["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian"];
+var TIER6B_OWN = ["egyptian", "ethiopian", "bantu", "west-african"];
+var TIER6A_MIXES = ["iberian", "greek-byzantine", "steppe", "arabic-persian"];
+var MIX_HALVES = { iberian: ["spanish", "portuguese"], "greek-byzantine": ["greek", "byzantine"], steppe: ["turkic", "mongol"], "arabic-persian": ["arabic", "persian"] };
 var MIX_HALF_WEIGHT = 0.5;
-var TIER6A_KEYS = [...TIER6A_CULTURES, ...TIER6A_MIXES];
+var TIER6A_KEYS = [...TIER6A_CULTURES, ...TIER6B_OWN, ...TIER6A_MIXES];
 var TIER6A_LABELS = {
   french: "French",
   dutch: "Dutch",
@@ -25412,8 +25620,18 @@ var TIER6A_LABELS = {
   greek: "Greek",
   byzantine: "Byzantine",
   slavic: "Slavic",
+  turkic: "Turkic",
+  mongol: "Mongol",
+  arabic: "Arabic",
+  persian: "Persian",
+  egyptian: "Egyptian",
+  ethiopian: "Ethiopian",
+  bantu: "Bantu",
+  "west-african": "West African",
   iberian: "Iberian",
-  "greek-byzantine": "Greek and Byzantine"
+  "greek-byzantine": "Greek and Byzantine",
+  steppe: "Turkic and Mongol steppe",
+  "arabic-persian": "Arabic and Persian"
 };
 var TIER6A_GROUPS = {
   french: "Western and southern Europe",
@@ -25426,7 +25644,17 @@ var TIER6A_GROUPS = {
   byzantine: "Western and southern Europe",
   slavic: "Eastern Europe and the steppe",
   iberian: "Western and southern Europe",
-  "greek-byzantine": "Western and southern Europe"
+  "greek-byzantine": "Western and southern Europe",
+  turkic: "Eastern Europe and the steppe",
+  mongol: "Eastern Europe and the steppe",
+  steppe: "Eastern Europe and the steppe",
+  arabic: "Middle East and Africa",
+  persian: "Middle East and Africa",
+  "arabic-persian": "Middle East and Africa",
+  egyptian: "Middle East and Africa",
+  ethiopian: "Middle East and Africa",
+  bantu: "Middle East and Africa",
+  "west-african": "Middle East and Africa"
 };
 function withTier6a(roster, make) {
   return [...roster, ...TIER6A_KEYS.filter((k) => !roster.some((r) => r.key === k)).map(make)];
@@ -25568,8 +25796,34 @@ function mapShapes(map, key2) {
 // src/data/tier6a.json
 var tier6a_default = { _about: "Second-tier tables brief, batch 6a (docs/second-tier-tables-brief.md): generated by scripts/make-tier6a.mjs from the content in scripts/tier6a/. Do not edit by hand.", settlement: { cultures: [{ id: "french", homelandBiome: "temperate", label: "French", guide: "Saint towns, castles, bastides and new towns; abbeys and priories; mills and forges from the steam age.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], hill: ["Mount", "Hill", "Height", "Rock", "Crag", "Peak", "Ridge"], water: ["Spring", "Brook", "Stream", "River Bend", "Ford", "Weir", "Rapids"], field: ["Field", "Meadow", "Vineyard", "Orchard", "Pasture", "Clearing", "Garden"], castle: ["Castle", "Fort", "Tower", "Keep", "Stronghold", "Citadel"], church: ["Abbey", "Priory", "Chapel", "Minster", "Convent", "Hospice"], craft: ["Mill", "Forge", "Tannery", "Saltworks", "Quarry", "Kiln", "Glassworks"], town: ["Town", "Borough", "Bastide", "Village", "Hamlet", "Grange"], name: ["Jean", "Pierre", "Guillaume", "Jacques", "Henri", "Philippe", "Robert", "Raoul", "Thibaut", "Renaud", "Hugues", "Geoffroy", "Gautier", "Baudouin", "Etienne", "Bertrand", "Aymeric", "Eudes", "Foulques", "Gilles", "Lambert", "Olivier", "Roland", "Amaury", "Arnaud", "Bernard", "Gaston", "Guy"], saint: ["Martin", "Denis", "Hilaire", "Genevieve", "Radegonde", "Louis", "Remi", "Germain", "Bernard", "Francis", "Vincent", "Benedict"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Saint {saint}", 8], ["{church} of Saint {saint}", 5], ["{castle} of {name}", 6], ["New Town", 4], ["Bastide of {name}", 4], ["{adj} {hill}", 4], ["{field} of the {animal}", 3], ["Bridge of {name}", 4], ["Ford of the {tree}", 3], ["{name:pos} {field}", 4], ["Market of {name}", 3], ["Mount Saint {saint}", 3], ["Wood of the {animal}", 2], ["{hill} of {name}", 4], ["Royal Borough", 2], ["Walled Town of {name}", 3], ["Spring of Saint {saint}", 3], ["Crossroads of {name}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["Port of {name}", 5], ["{craft} of {name}", 5], ["New {town}", 3], ["Station of {name}", 3], ["Spa of Saint {saint}", 3], ["Harbour of {name}", 4], ["Bridge of {name}", 3], ["Mount Saint {saint}", 2], ["Market of {name}", 3], ["{adj} {hill}", 3], ["{castle} of {name}", 3], ["Royal {town}", 2], ["{name:pos} {craft}", 4]] }, { id: "interstellar", label: "Interstellar", guide: "French steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "dutch", homelandBiome: "temperate", label: "Dutch", guide: "Dikes, dams, polders and fens; havens and free towns; windmills and canals.", fuseChance: 0.2, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], dike: ["Dike", "Dam", "Sluice", "Lock", "Embankment", "Weir", "Levee"], fen: ["Fen", "Mere", "Marsh", "Peat Bog", "Polder", "Meadow", "Reclaimed Land"], haven: ["Haven", "Harbour", "Quay", "Landing", "Wharf", "Port"], ridge: ["Dune", "Sand Ridge", "Mound", "Hummock", "Dwelling Mound", "Rise", "Hook"], church: ["Church", "Chapel", "Abbey", "Cloister", "Hospital"], mill: ["Windmill", "Watermill", "Brewery", "Ropewalk", "Dyeworks", "Brickworks", "Cheese Market"], town: ["Town", "Borough", "City", "Village", "Hamlet", "Farm"], name: ["Jan", "Willem", "Dirk", "Pieter", "Hendrik", "Cornelis", "Gerrit", "Jacob", "Adriaan", "Floris", "Albrecht", "Reinier", "Claes", "Lambert", "Evert", "Joost", "Gijsbrecht", "Wouter", "Arnoud", "Hugo", "Simon", "Maarten", "Roelof", "Frederik", "Maurits", "Aert", "Bartholomeus", "Thomas"], saint: ["Willibrord", "Servatius", "Lebuin", "Ludger", "Bavo", "Lambert", "Liduina", "Gertrude", "Ursula", "Amand", "Remaclus", "Odulf"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["{name:pos} {dike}", 6], ["{animal} {dike}", 5], ["{dike} of {name}", 4], ["{adj} Polder", 4], ["{name:pos} {haven}", 5], ["{tree} Wood", 3], ["{church} {town}", 3], ["{fen} of {name}", 4], ["Mouth of the {animal}", 3], ["New {town}", 3], ["Free Town of {name}", 3], ["{name:pos} {ridge}", 4], ["{adj} {ridge}", 3], ["Bridge of {name}", 3], ["Cloth Market of {name}", 2]] }, { id: "modern", label: "Modern", templates: [["{name:pos} {dike}", 4], ["{animal} {dike}", 4], ["{name:pos} {haven}", 5], ["{mill} of {name}", 4], ["{adj} Polder", 3], ["New {town}", 3], ["{church} {town}", 3], ["Canal {town}", 3], ["{name:pos} {ridge}", 3], ["Station {town}", 3], ["Garden {town}", 3], ["Bridge of {name}", 3]] }, { id: "interstellar", label: "Interstellar", guide: "Dutch steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "italian", homelandBiome: "mediterranean", label: "Italian", guide: "Fortresses, free communes, saints, squares and palaces; ports and hill towns; new towns.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], tower: ["Tower", "Fortress", "Castle", "Keep", "Gate", "Rampart"], commune: ["Commune", "Free Town", "Republic", "League", "Borough", "Seigniory"], hill: ["Hill", "Hilltop", "Crag", "Peak", "Ridge", "Height"], square: ["Square", "Market Square", "Loggia", "Cloister", "Fountain", "Arcade"], harbour: ["Port", "Harbour", "Haven", "Landing", "Quay", "Mole"], church: ["Cathedral", "Abbey", "Basilica", "Chapel", "Hermitage", "Monastery"], town: ["Town", "Borough", "Village", "Hamlet", "Hill Town"], name: ["Giovanni", "Francesco", "Antonio", "Giuseppe", "Pietro", "Marco", "Lorenzo", "Giacomo", "Niccolo", "Matteo", "Bartolomeo", "Guido", "Ugo", "Ruggero", "Ludovico", "Alessandro", "Filippo", "Paolo", "Luca", "Tommaso", "Galeazzo", "Cesare", "Piero", "Bernardo", "Girolamo", "Ottaviano"], saint: ["Francis", "Benedict", "Anthony", "Catherine", "Clare", "Bernard", "Dominic", "Bonaventure", "Thomas", "Ambrose", "Rita", "Lucy"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Fortress of {name}", 6], ["Free Commune", 4], ["Saint {saint}", 7], ["{name:pos} {tower}", 5], ["Port of {name}", 4], ["{hill} of {name}", 4], ["Bridge of {name}", 3], ["Square of {name}", 3], ["Palace of {name}", 3], ["Fountain of Saint {saint}", 3], ["New Town", 3], ["Great {tower}", 2], ["Fair {hill}", 3], ["{commune} of {name}", 3], ["{church} of Saint {saint}", 4], ["Cross of {name}", 2]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["Port of {name}", 5], ["{name:pos} {square}", 3], ["{hill} of {name}", 3], ["New Town", 3], ["Station of {name}", 3], ["Fortress of {name}", 3], ["Spa of Saint {saint}", 2], ["Palace of {name}", 3], ["{harbour} of {name}", 4], ["Quarter of {name}", 3]] }, { id: "interstellar", label: "Interstellar", guide: "Italian steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "spanish", homelandBiome: "mediterranean", label: "Spanish", guide: "Saints of the sea and the bridge, castles of counts, new towns, royal towns, holy crosses and fair views.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], castle: ["Castle", "Fortress", "Tower", "Keep", "Watchtower", "Citadel", "Stronghold"], rank: ["Count", "Duke", "Marquis", "Lord", "Knight", "King", "Queen", "Bishop", "Abbot"], where: ["Sea", "Bridge", "Fields", "Hills", "Orchard", "Vineyard", "Spring", "Cross"], hill: ["Hill", "Mount", "Rock", "Peak", "Ridge", "Height", "Crag"], water: ["Spring", "Fountain", "Stream", "River Bend", "Ford", "Weir", "Well"], land: ["View", "Pasture", "Valley", "Hill", "Spring", "Harbour", "Wind"], good: ["Good", "Fair", "Fine", "Pleasant", "Rich", "Green"], town: ["Town", "Borough", "Village", "Hamlet", "Farm"], name: ["Juan", "Pedro", "Diego", "Fernando", "Alonso", "Garcia", "Gonzalo", "Rodrigo", "Alvaro", "Sancho", "Ramiro", "Hernando", "Martin", "Lope", "Pelayo", "Bermudo", "Ordono", "Fruela", "Hernan", "Francisco", "Gil", "Mendo", "Suero", "Inigo", "Fortun", "Jaime", "Enrique", "Munio"], saint: ["Isidore", "Ildefonsus", "Dominic", "Teresa", "Vincent", "Ignatius", "Eulalia", "Leander", "Fructuosus", "Millan", "Ferdinand", "James"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Saint {saint}", 7], ["Saint Mary of the {where}", 5], ["Castle of the {rank}", 6], ["New Town", 4], ["Royal Town", 3], ["Holy Cross", 3], ["{good} {land}", 5], ["{castle} of {name}", 5], ["Bridge of {name}", 3], ["{name:pos} {town}", 4], ["Fountain of Saint {saint}", 3], ["Valley of the {animal}", 3], ["Watchtower of {name}", 3], ["Hill of the {tree}", 3], ["{adj} {hill}", 3], ["Market of {name}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["Port of {name}", 5], ["New Town", 4], ["{good} {land}", 4], ["Station of {name}", 3], ["Mine of {name}", 4], ["Saint Mary of the {where}", 3], ["Castle of the {rank}", 3], ["Colony of {name}", 3], ["{name:pos} {town}", 3], ["Bridge of {name}", 3], ["Royal Town", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Spanish steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "portuguese", homelandBiome: "mediterranean", label: "Portuguese", guide: "Holy crosses, good havens, saints, forts, quays, vineyards and salt pans; fishing villages and capes.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], harbour: ["Port", "Haven", "Harbour", "Landing", "Quay", "Bay", "Cove"], cape: ["Cape", "Point", "Headland", "Cliff", "Rock", "Beach"], vine: ["Vineyard", "Orchard", "Olive Grove", "Cork Wood", "Farm", "Estate"], fort: ["Fort", "Castle", "Tower", "Keep", "Wall", "Gate"], fishing: ["Fishing Village", "Salt Pans", "Fishery", "Net Quay", "Cannery", "Whale Station"], good: ["Good", "Fair", "Holy", "Great", "Blessed", "Pleasant"], land: ["Haven", "Hope", "Spring", "Valley", "Hill", "Harbour", "View"], town: ["Town", "Borough", "Village", "Hamlet", "Farm"], name: ["Joao", "Pedro", "Duarte", "Manuel", "Nuno", "Diogo", "Goncalo", "Rodrigo", "Fernando", "Henrique", "Dinis", "Sancho", "Vasco", "Bartolomeu", "Martim", "Egas", "Paio", "Mendo", "Lourenco", "Francisco", "Antonio", "Jorge", "Tomas", "Luis", "Miguel", "Gil", "Estevao", "Alvaro"], saint: ["Anthony", "Vincent", "Isabel", "Teotonius", "Gonzalo", "Nuno", "John of God", "Fructuosus", "Martin", "Rudesind", "Beatriz", "Mamede"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["Holy Cross", 4], ["{good} {land}", 6], ["Saint {saint}", 7], ["{fort} of {name}", 5], ["Bridge of {name}", 3], ["Port of {name}", 4], ["{name:pos} Quay", 4], ["Cape of Saint {saint}", 3], ["{vine} of {name}", 4], ["Cork Oak Wood", 3], ["Salt Pans of {name}", 3], ["New Town", 3], ["{fishing} of {name}", 3], ["{adj} {cape}", 3], ["Market of {name}", 3], ["Royal Town", 2]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 5], ["{good} {land}", 5], ["Port of {name}", 5], ["{fishing} of {name}", 4], ["{name:pos} Quay", 4], ["Station of {name}", 3], ["Holy Cross", 3], ["New Town", 3], ["Colony of {name}", 3], ["{fort} of {name}", 3], ["Cape of Saint {saint}", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Portuguese steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "greek", homelandBiome: "mediterranean", label: "Greek", guide: "Cities and harbours of the gods, colonies, citadels, sacred groves and isles; saints' villages and ports in the modern world.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], god: ["Zeus", "Hera", "Athena", "Apollo", "Artemis", "Poseidon", "Demeter", "Hermes", "Dionysus", "Hephaestus"], city: ["City", "Town", "Colony", "Citadel", "Fortress", "Settlement"], harbour: ["Harbour", "Port", "Haven", "Landing", "Quay", "Anchorage"], hill: ["Hill", "Peak", "Crag", "Height", "Ridge", "Hillfort"], sacred: ["Temple", "Shrine", "Sacred Grove", "Oracle", "Altar", "Sanctuary"], island: ["Isle", "Island", "Cape", "Headland", "Strait", "Bay"], plain: ["Plain", "Vale", "Valley", "Meadow", "Olive Grove", "Vineyard"], name: ["Nikias", "Kallias", "Philon", "Lysias", "Demetrios", "Theodoros", "Dion", "Kleon", "Hermon", "Aristion", "Xenon", "Euphron", "Timon", "Menon", "Agathon", "Diodoros", "Glaukon", "Hegesias", "Lykon", "Polykles", "Chairephon", "Antiphon", "Aischines", "Kephalos"], saint: ["Nicholas", "Basil", "Gregory", "Athanasius", "Demetrius", "George", "Spyridon", "Helena", "Catherine", "Barbara", "Photini", "Chrysostom"] }, eras: [{ id: "classical", label: "Classical", templates: [["City of {god}", 5], ["Harbour of {god}", 4], ["Sacred Grove of {god}", 3], ["City of {name}", 5], ["New City", 3], ["Colony of {name}", 4], ["High City", 3], ["{hill} of {god}", 3], ["Spring of {god}", 3], ["{island} of the {animal}", 3], ["Market of {name}", 3], ["Gate of the {animal}", 2], ["{sacred} of {god}", 4], ["Olive Grove of {name}", 3], ["{name:pos} {harbour}", 3], ["White {hill}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 6], ["New {city}", 4], ["{name:pos} Port", 4], ["Chapel of Saint {saint}", 4], ["Olive Grove of {name}", 3], ["White Village", 3], ["Harbour Town", 3], ["Mountain Village", 3], ["Monastery of Saint {saint}", 3], ["{island} of {name}", 3], ["Upper {city}", 3], ["Station Town", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Greek steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "byzantine", homelandBiome: "mediterranean", label: "Byzantine", guide: "Saints and holy places, fortresses and citadels, monasteries and great churches; ports and imperial towns.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Oak", "Ash", "Elm", "Chestnut", "Alder", "Willow", "Walnut", "Cypress", "Olive", "Poplar"], animal: ["Wolf", "Stag", "Hawk", "Fox", "Heron", "Eagle", "Boar", "Hare", "Bull", "Swan"], fortress: ["Fortress", "Citadel", "Fort", "Stronghold", "Tower", "Kastron", "Watchtower"], monastery: ["Monastery", "Hermitage", "Convent", "Cloister", "Hermit Colony", "Cell"], church: ["Great Church", "Chapel", "Basilica", "Cathedral", "Shrine", "Holy Church"], harbour: ["Harbour", "Port", "Haven", "Landing", "Quay", "Anchorage"], hill: ["Hill", "Peak", "Crag", "Height", "Ridge", "Mount"], imperial: ["Imperial", "Royal", "Holy", "Great", "Fortified", "Golden"], town: ["Town", "City", "Borough", "Village", "Hamlet", "Farm"], name: ["Basil", "Michael", "Leo", "John", "Alexius", "Manuel", "Nicephorus", "Theodore", "Andronicus", "Isaac", "Romanus", "Stephen", "George", "Photius", "Heraclius", "Maurice", "Phocas", "Anastasius", "Zeno", "Marcian", "Bardas", "Theophilus", "Sergius", "Eustathius", "Leontius", "Symeon", "Niketas", "Kosmas"], saint: ["Nicholas", "Basil", "Gregory", "Athanasius", "Demetrius", "George", "Spyridon", "Helena", "Catherine", "Barbara", "Photini", "Chrysostom"] }, eras: [{ id: "byzantine", label: "Byzantine", templates: [["Saint {saint}", 7], ["{fortress} of {name}", 6], ["Monastery of Saint {saint}", 5], ["{church} of Saint {saint}", 4], ["Port of {name}", 4], ["{imperial} {town}", 4], ["{name:pos} {harbour}", 3], ["{hill} of Saint {saint}", 3], ["Bridge of {name}", 3], ["{name:pos} {town}", 4], ["Market of {name}", 3], ["Holy Spring of {saint}", 3], ["{adj} {hill}", 3], ["Citadel of {name}", 3]] }, { id: "modern", label: "Modern", templates: [["Saint {saint}", 6], ["{name:pos} Port", 4], ["Monastery of Saint {saint}", 4], ["New {town}", 3], ["{fortress} of {name}", 3], ["Harbour Town", 3], ["Mountain Village", 3], ["{church} of Saint {saint}", 3], ["Station Town", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Byzantine steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }], sizes: { french: { eras: { medieval: { "Saint {saint}": "hvtcg", "{church} of Saint {saint}": "vtcg", "{castle} of {name}": "hvtcg", "New Town": "vtcg", "Bastide of {name}": "vt", "{adj} {hill}": "hvt", "{field} of the {animal}": "hv", "Bridge of {name}": "vt", "Ford of the {tree}": "hv", "{name:pos} {field}": "hv", "Market of {name}": "tcg", "Mount Saint {saint}": "hvt", "Wood of the {animal}": "hv", "{hill} of {name}": "hvt", "Royal Borough": "tcg", "Walled Town of {name}": "tcg", "Spring of Saint {saint}": "hv", "Crossroads of {name}": "hvt" }, modern: { "Saint {saint}": "hvtcg", "Port of {name}": "vtcg", "{craft} of {name}": "hvt", "New {town}": "vtcg", "Station of {name}": "vt", "Spa of Saint {saint}": "tcg", "Harbour of {name}": "vtcg", "Bridge of {name}": "vt", "Mount Saint {saint}": "hvt", "Market of {name}": "tcg", "{adj} {hill}": "hvt", "{castle} of {name}": "tcg", "Royal {town}": "tcg", "{name:pos} {craft}": "hvt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { hill: { Mount: "hvtcg", Hill: "hvtcg", Height: "hvtcg", Rock: "hvtcg", Crag: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg" }, water: { Spring: "hvtcg", Brook: "hvtcg", Stream: "hvtcg", "River Bend": "hvtcg", Ford: "hvtcg", Weir: "hvtcg", Rapids: "hvtcg" }, field: { Field: "hvtcg", Meadow: "hvtcg", Vineyard: "hvtcg", Orchard: "hvtcg", Pasture: "hvtcg", Clearing: "hvtcg", Garden: "hvtcg" }, castle: { Castle: "hvtcg", Fort: "hvtcg", Tower: "hvtcg", Keep: "hvtcg", Stronghold: "hvtcg", Citadel: "hvtcg" }, church: { Abbey: "hvtcg", Priory: "hvtcg", Chapel: "hvtcg", Minster: "hvtcg", Convent: "hvtcg", Hospice: "hvtcg" }, craft: { Mill: "hvtcg", Forge: "hvtcg", Tannery: "hvtcg", Saltworks: "hvtcg", Quarry: "hvtcg", Kiln: "hvtcg", Glassworks: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Bastide: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Grange: "hvtcg" } } }, dutch: { eras: { medieval: { "{name:pos} {dike}": "hv", "{animal} {dike}": "vtcg", "{dike} of {name}": "hvt", "{adj} Polder": "hv", "{name:pos} {haven}": "vtcg", "{tree} Wood": "hv", "{church} {town}": "vt", "{fen} of {name}": "hv", "Mouth of the {animal}": "vtcg", "New {town}": "tcg", "Free Town of {name}": "tcg", "{name:pos} {ridge}": "hv", "{adj} {ridge}": "hv", "Bridge of {name}": "vt", "Cloth Market of {name}": "tcg" }, modern: { "{name:pos} {dike}": "hv", "{animal} {dike}": "vtcg", "{name:pos} {haven}": "vtcg", "{mill} of {name}": "hvt", "{adj} Polder": "hv", "New {town}": "tcg", "{church} {town}": "vt", "Canal {town}": "vtcg", "{name:pos} {ridge}": "hv", "Station {town}": "vtcg", "Garden {town}": "tcg", "Bridge of {name}": "vt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { dike: { Dike: "hvtcg", Dam: "hvtcg", Sluice: "hvtcg", Lock: "hvtcg", Embankment: "hvtcg", Weir: "hvtcg", Levee: "hvtcg" }, fen: { Fen: "hvtcg", Mere: "hvtcg", Marsh: "hvtcg", "Peat Bog": "hvtcg", Polder: "hvtcg", Meadow: "hvtcg", "Reclaimed Land": "hvtcg" }, haven: { Haven: "hvtcg", Harbour: "hvtcg", Quay: "hvtcg", Landing: "hvtcg", Wharf: "hvtcg", Port: "hvtcg" }, ridge: { Dune: "hvtcg", "Sand Ridge": "hvtcg", Mound: "hvtcg", Hummock: "hvtcg", "Dwelling Mound": "hvtcg", Rise: "hvtcg", Hook: "hvtcg" }, church: { Church: "hvtcg", Chapel: "hvtcg", Abbey: "hvtcg", Cloister: "hvtcg", Hospital: "hvtcg" }, mill: { Windmill: "hvtcg", Watermill: "hvtcg", Brewery: "hvtcg", Ropewalk: "hvtcg", Dyeworks: "hvtcg", Brickworks: "hvtcg", "Cheese Market": "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", City: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } }, italian: { eras: { medieval: { "Fortress of {name}": "hvtcg", "Free Commune": "tcg", "Saint {saint}": "hvtcg", "{name:pos} {tower}": "hvt", "Port of {name}": "vtcg", "{hill} of {name}": "hvt", "Bridge of {name}": "vt", "Square of {name}": "tcg", "Palace of {name}": "vtcg", "Fountain of Saint {saint}": "hv", "New Town": "vtcg", "Great {tower}": "tcg", "Fair {hill}": "hvt", "{commune} of {name}": "tcg", "{church} of Saint {saint}": "vtcg", "Cross of {name}": "hv" }, modern: { "Saint {saint}": "hvtcg", "Port of {name}": "vtcg", "{name:pos} {square}": "vtcg", "{hill} of {name}": "hvt", "New Town": "vtcg", "Station of {name}": "vt", "Fortress of {name}": "hvtcg", "Spa of Saint {saint}": "tcg", "Palace of {name}": "tcg", "{harbour} of {name}": "vtcg", "Quarter of {name}": "tcg" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { tower: { Tower: "hvtcg", Fortress: "hvtcg", Castle: "hvtcg", Keep: "hvtcg", Gate: "hvtcg", Rampart: "hvtcg" }, commune: { Commune: "hvtcg", "Free Town": "hvtcg", Republic: "hvtcg", League: "hvtcg", Borough: "hvtcg", Seigniory: "hvtcg" }, hill: { Hill: "hvtcg", Hilltop: "hvtcg", Crag: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg", Height: "hvtcg" }, square: { Square: "hvtcg", "Market Square": "hvtcg", Loggia: "hvtcg", Cloister: "hvtcg", Fountain: "hvtcg", Arcade: "hvtcg" }, harbour: { Port: "hvtcg", Harbour: "hvtcg", Haven: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Mole: "hvtcg" }, church: { Cathedral: "hvtcg", Abbey: "hvtcg", Basilica: "hvtcg", Chapel: "hvtcg", Hermitage: "hvtcg", Monastery: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", "Hill Town": "hvtcg" } } }, spanish: { eras: { medieval: { "Saint {saint}": "hvtcg", "Saint Mary of the {where}": "vtcg", "Castle of the {rank}": "hvtcg", "New Town": "vtcg", "Royal Town": "tcg", "Holy Cross": "hvt", "{good} {land}": "hvt", "{castle} of {name}": "hvtcg", "Bridge of {name}": "vt", "{name:pos} {town}": "hv", "Fountain of Saint {saint}": "hv", "Valley of the {animal}": "hv", "Watchtower of {name}": "hv", "Hill of the {tree}": "hvt", "{adj} {hill}": "hvt", "Market of {name}": "tcg" }, modern: { "Saint {saint}": "hvtcg", "Port of {name}": "vtcg", "New Town": "vtcg", "{good} {land}": "hvt", "Station of {name}": "vt", "Mine of {name}": "hvt", "Saint Mary of the {where}": "vtcg", "Castle of the {rank}": "hvtcg", "Colony of {name}": "vt", "{name:pos} {town}": "hv", "Bridge of {name}": "vt", "Royal Town": "tcg" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { castle: { Castle: "hvtcg", Fortress: "hvtcg", Tower: "hvtcg", Keep: "hvtcg", Watchtower: "hvtcg", Citadel: "hvtcg", Stronghold: "hvtcg" }, rank: { Count: "hvtcg", Duke: "hvtcg", Marquis: "hvtcg", Lord: "hvtcg", Knight: "hvtcg", King: "hvtcg", Queen: "hvtcg", Bishop: "hvtcg", Abbot: "hvtcg" }, where: { Sea: "hvtcg", Bridge: "hvtcg", Fields: "hvtcg", Hills: "hvtcg", Orchard: "hvtcg", Vineyard: "hvtcg", Spring: "hvtcg", Cross: "hvtcg" }, hill: { Hill: "hvtcg", Mount: "hvtcg", Rock: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg", Height: "hvtcg", Crag: "hvtcg" }, water: { Spring: "hvtcg", Fountain: "hvtcg", Stream: "hvtcg", "River Bend": "hvtcg", Ford: "hvtcg", Weir: "hvtcg", Well: "hvtcg" }, land: { View: "hvtcg", Pasture: "hvtcg", Valley: "hvtcg", Hill: "hvtcg", Spring: "hvtcg", Harbour: "hvtcg", Wind: "hvtcg" }, good: { Good: "hvtcg", Fair: "hvtcg", Fine: "hvtcg", Pleasant: "hvtcg", Rich: "hvtcg", Green: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } }, portuguese: { eras: { medieval: { "Holy Cross": "hvt", "{good} {land}": "hvtcg", "Saint {saint}": "hvtcg", "{fort} of {name}": "hvtcg", "Bridge of {name}": "vt", "Port of {name}": "vtcg", "{name:pos} Quay": "vtcg", "Cape of Saint {saint}": "hvt", "{vine} of {name}": "hv", "Cork Oak Wood": "hv", "Salt Pans of {name}": "hv", "New Town": "vtcg", "{fishing} of {name}": "hvt", "{adj} {cape}": "hvt", "Market of {name}": "tcg", "Royal Town": "tcg" }, modern: { "Saint {saint}": "hvtcg", "{good} {land}": "hvtcg", "Port of {name}": "vtcg", "{fishing} of {name}": "hvt", "{name:pos} Quay": "vtcg", "Station of {name}": "vt", "Holy Cross": "hvt", "New Town": "vtcg", "Colony of {name}": "vt", "{fort} of {name}": "hvtcg", "Cape of Saint {saint}": "hvt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { harbour: { Port: "hvtcg", Haven: "hvtcg", Harbour: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Bay: "hvtcg", Cove: "hvtcg" }, cape: { Cape: "hvtcg", Point: "hvtcg", Headland: "hvtcg", Cliff: "hvtcg", Rock: "hvtcg", Beach: "hvtcg" }, vine: { Vineyard: "hvtcg", Orchard: "hvtcg", "Olive Grove": "hvtcg", "Cork Wood": "hvtcg", Farm: "hvtcg", Estate: "hvtcg" }, fort: { Fort: "hvtcg", Castle: "hvtcg", Tower: "hvtcg", Keep: "hvtcg", Wall: "hvtcg", Gate: "hvtcg" }, fishing: { "Fishing Village": "hvtcg", "Salt Pans": "hvtcg", Fishery: "hvtcg", "Net Quay": "hvtcg", Cannery: "hvtcg", "Whale Station": "hvtcg" }, good: { Good: "hvtcg", Fair: "hvtcg", Holy: "hvtcg", Great: "hvtcg", Blessed: "hvtcg", Pleasant: "hvtcg" }, land: { Haven: "hvtcg", Hope: "hvtcg", Spring: "hvtcg", Valley: "hvtcg", Hill: "hvtcg", Harbour: "hvtcg", View: "hvtcg" }, town: { Town: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } }, greek: { eras: { classical: { "City of {god}": "tcg", "Harbour of {god}": "vtcg", "Sacred Grove of {god}": "hv", "City of {name}": "tcg", "New City": "tcg", "Colony of {name}": "vtcg", "High City": "tcg", "{hill} of {god}": "hvt", "Spring of {god}": "hv", "{island} of the {animal}": "hvt", "Market of {name}": "vtcg", "Gate of the {animal}": "vt", "{sacred} of {god}": "hvt", "Olive Grove of {name}": "hv", "{name:pos} {harbour}": "vtcg", "White {hill}": "hvt" }, modern: { "Saint {saint}": "hvtcg", "New {city}": "vtcg", "{name:pos} Port": "vtcg", "Chapel of Saint {saint}": "hvt", "Olive Grove of {name}": "hv", "White Village": "hv", "Harbour Town": "vtcg", "Mountain Village": "hv", "Monastery of Saint {saint}": "vt", "{island} of {name}": "hvt", "Upper {city}": "vtcg", "Station Town": "vt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { god: { Zeus: "hvtcg", Hera: "hvtcg", Athena: "hvtcg", Apollo: "hvtcg", Artemis: "hvtcg", Poseidon: "hvtcg", Demeter: "hvtcg", Hermes: "hvtcg", Dionysus: "hvtcg", Hephaestus: "hvtcg" }, city: { City: "hvtcg", Town: "hvtcg", Colony: "hvtcg", Citadel: "hvtcg", Fortress: "hvtcg", Settlement: "hvtcg" }, harbour: { Harbour: "hvtcg", Port: "hvtcg", Haven: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Anchorage: "hvtcg" }, hill: { Hill: "hvtcg", Peak: "hvtcg", Crag: "hvtcg", Height: "hvtcg", Ridge: "hvtcg", Hillfort: "hvtcg" }, sacred: { Temple: "hvtcg", Shrine: "hvtcg", "Sacred Grove": "hvtcg", Oracle: "hvtcg", Altar: "hvtcg", Sanctuary: "hvtcg" }, island: { Isle: "hvtcg", Island: "hvtcg", Cape: "hvtcg", Headland: "hvtcg", Strait: "hvtcg", Bay: "hvtcg" }, plain: { Plain: "hvtcg", Vale: "hvtcg", Valley: "hvtcg", Meadow: "hvtcg", "Olive Grove": "hvtcg", Vineyard: "hvtcg" } } }, byzantine: { eras: { byzantine: { "Saint {saint}": "hvtcg", "{fortress} of {name}": "hvtcg", "Monastery of Saint {saint}": "hvt", "{church} of Saint {saint}": "vtcg", "Port of {name}": "vtcg", "{imperial} {town}": "tcg", "{name:pos} {harbour}": "vtcg", "{hill} of Saint {saint}": "hvt", "Bridge of {name}": "vt", "{name:pos} {town}": "hv", "Market of {name}": "tcg", "Holy Spring of {saint}": "hv", "{adj} {hill}": "hvt", "Citadel of {name}": "tcg" }, modern: { "Saint {saint}": "hvtcg", "{name:pos} Port": "vtcg", "Monastery of Saint {saint}": "hvt", "New {town}": "vtcg", "{fortress} of {name}": "hvtcg", "Harbour Town": "vtcg", "Mountain Village": "hv", "{church} of Saint {saint}": "vtcg", "Station Town": "vt" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { fortress: { Fortress: "hvtcg", Citadel: "hvtcg", Fort: "hvtcg", Stronghold: "hvtcg", Tower: "hvtcg", Kastron: "hvtcg", Watchtower: "hvtcg" }, monastery: { Monastery: "hvtcg", Hermitage: "hvtcg", Convent: "hvtcg", Cloister: "hvtcg", "Hermit Colony": "hvtcg", Cell: "hvtcg" }, church: { "Great Church": "hvtcg", Chapel: "hvtcg", Basilica: "hvtcg", Cathedral: "hvtcg", Shrine: "hvtcg", "Holy Church": "hvtcg" }, harbour: { Harbour: "hvtcg", Port: "hvtcg", Haven: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", Anchorage: "hvtcg" }, hill: { Hill: "hvtcg", Peak: "hvtcg", Crag: "hvtcg", Height: "hvtcg", Ridge: "hvtcg", Mount: "hvtcg" }, imperial: { Imperial: "hvtcg", Royal: "hvtcg", Holy: "hvtcg", Great: "hvtcg", Fortified: "hvtcg", Golden: "hvtcg" }, town: { Town: "hvtcg", City: "hvtcg", Borough: "hvtcg", Village: "hvtcg", Hamlet: "hvtcg", Farm: "hvtcg" } } } }, newEras: { roman: [{ id: "republic", label: "Republic", guide: "Camps, forums, colonies and posting stations of the Republic; roads, baths and villas.", lists: { road: ["Road", "Milestone", "Crossing", "Posting Station", "Paved Way", "Ford", "Causeway"], craft: ["Baths", "Brickworks", "Quarry", "Mill", "Smithy", "Pottery"], rank: ["Legate", "Prefect", "Consul", "Tribune", "Governor", "Senator"], city: ["City", "Town", "Colony", "Camp", "Fort", "Settlement"], name: ["Marcus", "Lucius", "Gaius", "Publius", "Quintus", "Titus", "Aulus", "Gnaeus", "Sextus", "Decimus", "Tiberius", "Servius", "Appius", "Manius", "Spurius", "Marcellus", "Maximus", "Felix", "Rufus", "Crispus", "Severus", "Priscus", "Verus", "Longinus", "Flaccus", "Lepidus", "Celer", "Fronto"] }, templates: [["Camp of {name}", 5], ["Forum of {name}", 4], ["Colony of {name}", 4], ["{road} of {name}", 4], ["Fort of the {rank}", 3], ["Veterans' Colony", 2], ["Posting Station of {name}", 3], ["{craft} of {name}", 4], ["Market of {name}", 3], ["Villa of {name}", 4], ["Bridge of {name}", 3], ["Harbour of {name}", 3], ["Walls of {name}", 3], ["New {city}", 3]] }], slavic: [{ id: "tribal", label: "Tribal", guide: "Stockades, hillforts and woodland clearings of the tribes; salt, iron and bees.", lists: { wood: ["Birch Wood", "Pine Wood", "Oak Grove", "Clearing", "Forest Edge", "Swamp"], fort: ["Stockade", "Palisade", "Hillfort", "Watchtower", "Refuge", "Enclosure"], craft: ["Pitch Works", "Salt Works", "Iron Works", "Beehives", "Smithy", "Mill"], name: ["Yaroslav", "Svyatoslav", "Oleg", "Igor", "Mstislav", "Vsevolod", "Dmitri", "Ivan", "Mikhail", "Andrei", "Stepan", "Bogdan", "Vyacheslav", "Boleslaw", "Mieszko", "Casimir", "Wladyslaw", "Milan", "Stefan", "Dusan", "Lazar", "Tvrtko", "Radoslav", "Bohumil", "Sviatopolk", "Rostislav", "Yuri", "Kiril"] }, templates: [["{name:pos} Stockade", 5], ["{fort} of {name}", 4], ["{wood} of the {animal}", 3], ["{craft} of {name}", 3], ["Clan of {name}", 3], ["Hillfort of the {animal}", 3], ["{adj} {fort}", 3], ["Ford of {name}", 3], ["Market of {name}", 3], ["Holy Grove of {name}", 2], ["{name:pos} Clearing", 4], ["Beehive Village", 2]] }] }, augmentSizes: { roman: { eras: { republic: { "Camp of {name}": "hvt", "Forum of {name}": "vtcg", "Colony of {name}": "tcg", "{road} of {name}": "hv", "Fort of the {rank}": "hvt", "Veterans' Colony": "tcg", "Posting Station of {name}": "hvt", "{craft} of {name}": "hvt", "Market of {name}": "vtcg", "Villa of {name}": "hv", "Bridge of {name}": "vt", "Harbour of {name}": "vtcg", "Walls of {name}": "hvtcg", "New {city}": "tcg" } }, lists: { road: { Road: "hvtcg", Milestone: "hvtcg", Crossing: "hvtcg", "Posting Station": "hvtcg", "Paved Way": "hvtcg", Ford: "hvtcg", Causeway: "hvtcg" }, craft: { Baths: "hvtcg", Brickworks: "hvtcg", Quarry: "hvtcg", Mill: "hvtcg", Smithy: "hvtcg", Pottery: "hvtcg" }, rank: { Legate: "hvtcg", Prefect: "hvtcg", Consul: "hvtcg", Tribune: "hvtcg", Governor: "hvtcg", Senator: "hvtcg" }, city: { City: "hvtcg", Town: "hvtcg", Colony: "hvtcg", Camp: "hvtcg", Fort: "hvtcg", Settlement: "hvtcg" } } }, slavic: { eras: { tribal: { "{name:pos} Stockade": "hvt", "{fort} of {name}": "hvtcg", "{wood} of the {animal}": "hv", "{craft} of {name}": "hvt", "Clan of {name}": "hvt", "Hillfort of the {animal}": "hvt", "{adj} {fort}": "hvt", "Ford of {name}": "hv", "Market of {name}": "vt", "Holy Grove of {name}": "hv", "{name:pos} Clearing": "hv", "Beehive Village": "hv" } }, lists: { wood: { "Birch Wood": "hvtcg", "Pine Wood": "hvtcg", "Oak Grove": "hvtcg", Clearing: "hvtcg", "Forest Edge": "hvtcg", Swamp: "hvtcg" }, fort: { Stockade: "hvtcg", Palisade: "hvtcg", Hillfort: "hvtcg", Watchtower: "hvtcg", Refuge: "hvtcg", Enclosure: "hvtcg" }, craft: { "Pitch Works": "hvtcg", "Salt Works": "hvtcg", "Iron Works": "hvtcg", Beehives: "hvtcg", Smithy: "hvtcg", Mill: "hvtcg" } } } }, labels: { castle: "fort word", craft: "works word", dike: "dike word", fen: "wet ground word", haven: "harbour word", ridge: "ridge word", mill: "works word", tower: "fort word", commune: "town word", square: "square word", rank: "status", cape: "cape word", vine: "farm word", fishing: "fishing word", island: "island word", plain: "plain word", fortress: "fort word", monastery: "monastery word", imperial: "status", road: "road word" }, eraMap: { french: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, dutch: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, italian: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, spanish: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, portuguese: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, greek: { classical: ["AN"], modern: ["EM", "ST", "MO"] }, byzantine: { byzantine: ["MD"], modern: ["EM", "ST", "MO"] }, roman: { republic: ["AN"] }, slavic: { tribal: ["AN"] } } } };
 
+// src/data/tier6b.json
+var tier6b_default = { _about: "Second-tier tables brief, batch 6b (docs/second-tier-tables-brief.md): generated by scripts/make-tier6b.mjs from the content in scripts/tier6b/. Do not edit by hand.", settlement: { cultures: [{ id: "turkic", homelandBiome: "temperate", label: "Turkic", guide: "Beys' fortresses, khans and caravanserais, covered markets and baths, mosque complexes; Anatolian villages and passes; steamers' harbours and republic squares.", fuseChance: 0.1, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Poplar", "Plane", "Walnut", "Juniper", "Apricot", "Willow", "Elm", "Oak", "Pine", "Mulberry"], animal: ["Wolf", "Horse", "Falcon", "Eagle", "Stag", "Camel", "Bear", "Ram", "Hawk", "Fox"], hill: ["Mountain", "Hill", "Pass", "Peak", "Ridge", "Crag", "Heights"], water: ["Spring", "Stream", "River", "Lake", "Ford", "Fountain", "Well"], steppe: ["Steppe", "Plain", "Pasture", "Meadow", "Highland Pasture", "Summer Pasture"], fort: ["Fortress", "Castle", "Tower", "Citadel", "Frontier Fort", "Keep"], han: ["Inn", "Caravanserai", "Han", "Khan", "Rest House", "Halt"], bazaar: ["Bazaar", "Market", "Covered Market", "Exchange", "Cloth Market"], mosque: ["Mosque", "Lodge", "Shrine", "Dervish Lodge", "School", "Fountain"], baths: ["Baths", "Bathhouse", "Hot Spring", "Spa"], town: ["Town", "City", "Borough", "Settlement"], craft: ["Factory", "Mill", "Station", "Dam", "Mine", "Harbour", "Shipyard", "Power Station"], pasture: ["Camp", "Pasture", "Fold", "Summer Camp", "Winter Quarters"], name: ["Alp", "Arslan", "Bilge", "Kutlug", "Tegin", "Tarkan", "Bogra", "Kara", "Yigit", "Tuman", "Toghan", "Ozan", "Tekin", "Saruhan", "Karaman", "Aydin", "Menteshe", "Germiyan", "Hamid", "Eretna", "Sungur", "Kaan", "Orhan", "Murad", "Ertugrul"], saint: ["Yunus", "Bektash", "Yasawi", "Mevlana", "Bayram", "Akshemsettin", "Hizir", "Ilyas", "Sari Saltik", "Ahi Evran", "Abdal Musa", "Seyyid Gazi"] }, eras: [{ id: "medieval", label: "Medieval", templates: [["{name:pos} {fort}", 6], ["{name:pos} {han}", 5], ["{adj} {hill}", 4], ["{hill} of {name}", 4], ["{bazaar} of {name}", 4], ["{water} of {name}", 4], ["{steppe} of {name}", 3], ["{mosque} of {name}", 4], ["{pasture} of {name}", 3], ["{baths} of {name}", 3], ["{tree} Village", 3], ["Beylik of {name}", 3], ["{animal} {hill}", 3], ["Frontier of {name}", 3]] }, { id: "modern", label: "Modern", templates: [["{name:pos} {han}", 3], ["{craft} of {name}", 5], ["Port of {name}", 4], ["Station of {name}", 3], ["New {town}", 3], ["{bazaar} of {name}", 3], ["Republic Square", 2], ["{water} of {name}", 3], ["{hill} Village", 3], ["{mosque} of {name}", 3], ["{tree} Village", 3], ["Harbour of {name}", 3], ["{baths} of {name}", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Turkic steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "mongol", homelandBiome: "steppe", label: "Mongol", guide: "Camps and ordos, cairns on passes, relay stations, sacred mountains, monasteries; herders' wintering places; collective farms, railway towns and modern Mongolia.", fuseChance: 0.1, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Larch", "Birch", "Pine", "Poplar", "Willow", "Elm", "Saxaul", "Juniper", "Aspen", "Cedar"], animal: ["Wolf", "Horse", "Eagle", "Stag", "Camel", "Ram", "Falcon", "Yak", "Marmot", "Argali"], hill: ["Mountain", "Hill", "Pass", "Peak", "Ridge", "Crag", "Heights"], water: ["Spring", "River", "Lake", "Stream", "Ford", "Well", "Salt Lake"], steppe: ["Steppe", "Plain", "Pasture", "Valley", "Grassland", "Desert Edge"], camp: ["Camp", "Ger Camp", "Ordo", "Winter Quarters", "Summer Pasture", "Herding Camp"], cairn: ["Cairn", "Shrine Cairn", "Mound", "Standing Stone", "Memorial Stone"], relay: ["Relay Station", "Post Station", "Waystation", "Rest Stop", "Courier Post"], monastery: ["Monastery", "Temple", "Lamasery", "Shrine", "Stupa", "Prayer Wall"], town: ["Town", "City", "Settlement", "Camp", "Market"], craft: ["Collective Farm", "Mine", "Railway Station", "Factory", "Power Station", "Dairy", "Mill", "Airfield"], mount: ["Sacred Mountain", "Holy Peak", "Mountain", "Blue Peak"], name: ["Bayan", "Bold", "Baatar", "Tsogt", "Altan", "Naran", "Dorj", "Ochir", "Sukh", "Tseren", "Nergui", "Erdene", "Tumur", "Munkh", "Chuluun", "Gan", "Dalai", "Sodnom", "Jargal", "Lkhagva", "Khorloo", "Tserendorj", "Damdin", "Namjil"], saint: ["Zanabazar", "Tsongkhapa", "Sakya", "Phagpa", "Ochirvani", "Jebtsundamba", "Gombo", "Danzan", "Dorjiev", "Zaya", "Tsedenbal", "Natsagdorj"] }, eras: [{ id: "steppe", label: "Steppe", templates: [["{name:pos} {camp}", 6], ["{cairn} of {name}", 4], ["{relay} of {name}", 4], ["{adj} {hill}", 4], ["{hill} of {name}", 4], ["{water} of {name}", 4], ["{animal} {steppe}", 3], ["{mount} of {name}", 3], ["{monastery} of {name}", 4], ["Ordo of {name}", 3], ["Great Assembly of {name}", 2], ["{steppe} of {name}", 3], ["{name:pos} Winter Quarters", 3]] }, { id: "modern", label: "Modern", templates: [["{craft} of {name}", 5], ["{name:pos} {camp}", 3], ["Railway Station of {name}", 3], ["New {town}", 3], ["{monastery} of {name}", 3], ["{water} of {name}", 3], ["{hill} of {name}", 3], ["{animal} {steppe}", 3], ["{relay} of {name}", 2], ["Border Post of {name}", 2], ["People's Square", 2], ["{steppe} of {name}", 3]] }, { id: "interstellar", label: "Interstellar", guide: "Mongol steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "arabic", homelandBiome: "desert", label: "Arabic", guide: "Wells and wadis, oases and palm groves, markets and mosques, forts and frontier forts, caravan stops; dhow harbours; garden quarters and round cities.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Palm", "Date Palm", "Acacia", "Tamarisk", "Olive", "Fig", "Sidr", "Cedar", "Pomegranate", "Carob"], animal: ["Camel", "Falcon", "Gazelle", "Oryx", "Horse", "Lion", "Eagle", "Ibex", "Hare", "Jackal"], well: ["Well", "Spring", "Cistern", "Water Hole", "Fountain", "Oasis Spring"], wadi: ["Wadi", "Dry Valley", "Gorge", "Ravine", "Riverbed", "Pass"], oasis: ["Oasis", "Palm Grove", "Garden", "Orchard", "Date Grove", "Fields"], souk: ["Market", "Souk", "Bazaar", "Exchange", "Cloth Market", "Spice Market"], mosque: ["Mosque", "School", "Shrine", "Tomb", "Minaret", "Fountain"], fort: ["Fort", "Fortress", "Castle", "Citadel", "Frontier Fort", "Watchtower", "Gate"], stop: ["Caravan Stop", "Rest House", "Inn", "Halt", "Camel Stop", "Waystation"], harbour: ["Port", "Harbour", "Landing", "Pearl Bank", "Anchorage", "Creek"], dune: ["Dune", "Sand Sea", "Rocky Hill", "Salt Flat", "Plateau", "Mount"], town: ["Town", "City", "Quarter", "Settlement", "Camp"], craft: ["Refinery", "Port", "Factory", "Station", "Dam", "Airport", "Pipeline", "Salt Works"], name: ["Muhammad", "Ali", "Hasan", "Husayn", "Khalid", "Ahmad", "Hamza", "Salim", "Idris", "Ibrahim", "Ismail", "Yusuf", "Mahmud", "Jafar", "Tariq", "Musa", "Isa", "Yahya", "Zayd", "Abdullah", "Amr", "Sulayman", "Hisham", "Walid"], saint: ["Abdul Qadir", "Rabia", "Junayd", "Hallaj", "Ghazali", "Ahmad Rifai", "Bishr", "Shibli", "Dhul-Nun", "Hasan al-Basri", "Ibn Arabi", "Jalal"] }, eras: [{ id: "ancient", label: "Ancient", templates: [["Well of {name}", 5], ["{oasis} of {name}", 5], ["{stop} of {name}", 4], ["{adj} {wadi}", 3], ["{wadi} of {name}", 3], ["{souk} of {name}", 3], ["{name:pos} {fort}", 4], ["{dune} of {name}", 3], ["Incense Stop of {name}", 3], ["{well} of the {animal}", 3]] }, { id: "medieval", label: "Medieval", templates: [["{fort} of {name}", 6], ["{souk} of {name}", 5], ["{well} of {name}", 5], ["{oasis} of {name}", 4], ["{mosque} of {name}", 4], ["{wadi} of {name}", 3], ["{stop} of {name}", 3], ["Garden of {name}", 3], ["{name:pos} Round City", 2], ["{harbour} of {name}", 3], ["{adj} {well}", 3], ["{animal} {wadi}", 2]] }, { id: "modern", label: "Modern", templates: [["{souk} of {name}", 4], ["{harbour} of {name}", 5], ["{craft} of {name}", 4], ["{well} of {name}", 4], ["New {town}", 3], ["{oasis} of {name}", 3], ["{mosque} of {name}", 3], ["{fort} of {name}", 3], ["Corniche of {name}", 2], ["{wadi} of {name}", 2], ["{dune} of {name}", 2]] }, { id: "interstellar", label: "Interstellar", guide: "Arabic steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }, { id: "persian", homelandBiome: "temperate", label: "Persian", guide: "Walled gardens and underground channels, caravanserais, fire temples of antiquity, the king's cities, bazaars and tiled domes; passes and salt deserts.", fuseChance: 0, lists: { adj: ["Old", "New", "High", "Low", "Great", "Little", "Upper", "Lower", "East", "West", "North", "South", "Long", "Broad"], tree: ["Plane", "Cypress", "Poplar", "Pomegranate", "Almond", "Walnut", "Mulberry", "Rose", "Pistachio", "Apricot"], animal: ["Lion", "Falcon", "Horse", "Gazelle", "Wild Ass", "Leopard", "Eagle", "Ram", "Nightingale", "Peacock"], garden: ["Garden", "Orchard", "Rose Garden", "Walled Garden", "Pavilion", "Fountain Garden"], channel: ["Channel", "Spring", "Underground Channel", "Stream", "Well", "Pool"], caravanserai: ["Caravanserai", "Inn", "Rest House", "Waystation", "Halt", "Bridge"], fire: ["Fire Temple", "Temple", "Shrine", "Hall", "Sanctuary", "Dome"], bazaar: ["Bazaar", "Market", "Covered Bazaar", "Exchange", "Carpet Market"], pass: ["Pass", "Gate", "Mountain", "Hill", "Ridge", "Heights"], salt: ["Salt Desert", "Salt Flat", "Dry Lake", "Desert Edge", "Plateau", "Oasis"], city: ["City", "Town", "Royal City", "Capital", "Fortress Town"], craft: ["Refinery", "Factory", "Station", "Dam", "Mine", "Pipeline", "Kiln", "Tile Works"], polo: ["Polo Ground", "Square", "Racecourse", "Meadow", "Field"], name: ["Arash", "Babak", "Behzad", "Farhad", "Kaveh", "Mehrdad", "Bijan", "Piruz", "Shahin", "Tahmasp", "Hormoz", "Vahid", "Parviz", "Bizhan", "Farrokh", "Sohrab", "Rostam", "Zal", "Siavash", "Jamshid", "Manuchehr", "Kayvan", "Navid", "Hushang"], saint: ["Rumi", "Hafez", "Saadi", "Attar", "Shams", "Khayyam", "Bayazid", "Sanai", "Jami", "Nezami", "Ferdowsi", "Sohravardi"] }, eras: [{ id: "ancient", label: "Ancient", templates: [["City of {name}", 5], ["{fire} of {name}", 4], ["{garden} of {name}", 4], ["{caravanserai} of {name}", 4], ["{channel} of {name}", 4], ["Satrap's {city}", 3], ["{pass} of {name}", 3], ["Royal Road Halt", 3], ["{name:pos} Fortress", 4], ["{adj} {pass}", 3]] }, { id: "medieval", label: "Medieval", templates: [["{garden} of {name}", 5], ["{caravanserai} of {name}", 5], ["{bazaar} of {name}", 4], ["City of {name}", 4], ["{channel} of {name}", 4], ["{polo} of {name}", 3], ["{pass} of {name}", 3], ["{fire} of {name}", 2], ["{name:pos} Fortress", 4], ["{animal} {pass}", 3], ["{tree} Garden", 3]] }, { id: "modern", label: "Modern", templates: [["{bazaar} of {name}", 4], ["{garden} of {name}", 4], ["{craft} of {name}", 4], ["New {city}", 3], ["{caravanserai} of {name}", 3], ["{channel} of {name}", 3], ["{pass} of {name}", 3], ["Station of {name}", 3], ["{tree} Garden", 3], ["{salt} of {name}", 2], ["Port of {name}", 3]] }, { id: "interstellar", label: "Interstellar", guide: "Persian steadings and space words.", lists: { farm2: ["Steading", "Homestead", "Hold", "Habitat", "Station"] }, templates: [["{name:pos} {farm2}", 7], ["{adj} {@land}", 5], ["{animal} {@land}", 4], ["{animal}+{@land}", 2], ["The {@land:pl}", 1], ["{name:pos} {@region}", 1]] }] }], sizes: { turkic: { eras: { medieval: { "{name:pos} {fort}": "hvtcg", "{name:pos} {han}": "vtcg", "{adj} {hill}": "hvt", "{hill} of {name}": "hvt", "{bazaar} of {name}": "vtcg", "{water} of {name}": "hvt", "{steppe} of {name}": "hv", "{mosque} of {name}": "vtcg", "{pasture} of {name}": "hv", "{baths} of {name}": "vtcg", "{tree} Village": "hv", "Beylik of {name}": "tcg", "{animal} {hill}": "hvt", "Frontier of {name}": "vt" }, modern: { "{name:pos} {han}": "vt", "{craft} of {name}": "hvt", "Port of {name}": "vtcg", "Station of {name}": "vt", "New {town}": "tcg", "{bazaar} of {name}": "vtcg", "Republic Square": "tcg", "{water} of {name}": "hvt", "{hill} Village": "hv", "{mosque} of {name}": "vtcg", "{tree} Village": "hv", "Harbour of {name}": "vtcg", "{baths} of {name}": "vtcg" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { hill: { Mountain: "hvtcg", Hill: "hvtcg", Pass: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg", Crag: "hvtcg", Heights: "hvtcg" }, water: { Spring: "hvtcg", Stream: "hvtcg", River: "hvtcg", Lake: "hvtcg", Ford: "hvtcg", Fountain: "hvtcg", Well: "hvtcg" }, steppe: { Steppe: "hvtcg", Plain: "hvtcg", Pasture: "hvtcg", Meadow: "hvtcg", "Highland Pasture": "hvtcg", "Summer Pasture": "hvtcg" }, fort: { Fortress: "hvtcg", Castle: "hvtcg", Tower: "hvtcg", Citadel: "hvtcg", "Frontier Fort": "hvtcg", Keep: "hvtcg" }, han: { Inn: "hvtcg", Caravanserai: "hvtcg", Han: "hvtcg", Khan: "hvtcg", "Rest House": "hvtcg", Halt: "hvtcg" }, bazaar: { Bazaar: "hvtcg", Market: "hvtcg", "Covered Market": "hvtcg", Exchange: "hvtcg", "Cloth Market": "hvtcg" }, mosque: { Mosque: "hvtcg", Lodge: "hvtcg", Shrine: "hvtcg", "Dervish Lodge": "hvtcg", School: "hvtcg", Fountain: "hvtcg" }, baths: { Baths: "hvtcg", Bathhouse: "hvtcg", "Hot Spring": "hvtcg", Spa: "hvtcg" }, town: { Town: "hvtcg", City: "hvtcg", Borough: "hvtcg", Settlement: "hvtcg" }, craft: { Factory: "hvtcg", Mill: "hvtcg", Station: "hvtcg", Dam: "hvtcg", Mine: "hvtcg", Harbour: "hvtcg", Shipyard: "hvtcg", "Power Station": "hvtcg" }, pasture: { Camp: "hvtcg", Pasture: "hvtcg", Fold: "hvtcg", "Summer Camp": "hvtcg", "Winter Quarters": "hvtcg" } } }, mongol: { eras: { steppe: { "{name:pos} {camp}": "hvt", "{cairn} of {name}": "hv", "{relay} of {name}": "vtcg", "{adj} {hill}": "hvt", "{hill} of {name}": "hvt", "{water} of {name}": "hvt", "{animal} {steppe}": "hv", "{mount} of {name}": "hvt", "{monastery} of {name}": "vtcg", "Ordo of {name}": "tcg", "Great Assembly of {name}": "tcg", "{steppe} of {name}": "hv", "{name:pos} Winter Quarters": "hv" }, modern: { "{craft} of {name}": "hvt", "{name:pos} {camp}": "hv", "Railway Station of {name}": "vt", "New {town}": "tcg", "{monastery} of {name}": "vtcg", "{water} of {name}": "hvt", "{hill} of {name}": "hvt", "{animal} {steppe}": "hv", "{relay} of {name}": "vt", "Border Post of {name}": "vt", "People's Square": "tcg", "{steppe} of {name}": "hv" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { hill: { Mountain: "hvtcg", Hill: "hvtcg", Pass: "hvtcg", Peak: "hvtcg", Ridge: "hvtcg", Crag: "hvtcg", Heights: "hvtcg" }, water: { Spring: "hvtcg", River: "hvtcg", Lake: "hvtcg", Stream: "hvtcg", Ford: "hvtcg", Well: "hvtcg", "Salt Lake": "hvtcg" }, steppe: { Steppe: "hvtcg", Plain: "hvtcg", Pasture: "hvtcg", Valley: "hvtcg", Grassland: "hvtcg", "Desert Edge": "hvtcg" }, camp: { Camp: "hvtcg", "Ger Camp": "hvtcg", Ordo: "hvtcg", "Winter Quarters": "hvtcg", "Summer Pasture": "hvtcg", "Herding Camp": "hvtcg" }, cairn: { Cairn: "hvtcg", "Shrine Cairn": "hvtcg", Mound: "hvtcg", "Standing Stone": "hvtcg", "Memorial Stone": "hvtcg" }, relay: { "Relay Station": "hvtcg", "Post Station": "hvtcg", Waystation: "hvtcg", "Rest Stop": "hvtcg", "Courier Post": "hvtcg" }, monastery: { Monastery: "hvtcg", Temple: "hvtcg", Lamasery: "hvtcg", Shrine: "hvtcg", Stupa: "hvtcg", "Prayer Wall": "hvtcg" }, town: { Town: "hvtcg", City: "hvtcg", Settlement: "hvtcg", Camp: "hvtcg", Market: "hvtcg" }, craft: { "Collective Farm": "hvtcg", Mine: "hvtcg", "Railway Station": "hvtcg", Factory: "hvtcg", "Power Station": "hvtcg", Dairy: "hvtcg", Mill: "hvtcg", Airfield: "hvtcg" }, mount: { "Sacred Mountain": "hvtcg", "Holy Peak": "hvtcg", Mountain: "hvtcg", "Blue Peak": "hvtcg" } } }, arabic: { eras: { ancient: { "Well of {name}": "hvt", "{oasis} of {name}": "hvt", "{stop} of {name}": "hvt", "{adj} {wadi}": "hv", "{wadi} of {name}": "hv", "{souk} of {name}": "vtcg", "{name:pos} {fort}": "hvtcg", "{dune} of {name}": "hv", "Incense Stop of {name}": "vt", "{well} of the {animal}": "hv" }, medieval: { "{fort} of {name}": "hvtcg", "{souk} of {name}": "vtcg", "{well} of {name}": "hvt", "{oasis} of {name}": "hvt", "{mosque} of {name}": "vtcg", "{wadi} of {name}": "hv", "{stop} of {name}": "vt", "Garden of {name}": "vtcg", "{name:pos} Round City": "tcg", "{harbour} of {name}": "vtcg", "{adj} {well}": "hv", "{animal} {wadi}": "hv" }, modern: { "{souk} of {name}": "vtcg", "{harbour} of {name}": "vtcg", "{craft} of {name}": "hvt", "{well} of {name}": "hvt", "New {town}": "tcg", "{oasis} of {name}": "hvt", "{mosque} of {name}": "vtcg", "{fort} of {name}": "hvtcg", "Corniche of {name}": "tcg", "{wadi} of {name}": "hv", "{dune} of {name}": "hv" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { well: { Well: "hvtcg", Spring: "hvtcg", Cistern: "hvtcg", "Water Hole": "hvtcg", Fountain: "hvtcg", "Oasis Spring": "hvtcg" }, wadi: { Wadi: "hvtcg", "Dry Valley": "hvtcg", Gorge: "hvtcg", Ravine: "hvtcg", Riverbed: "hvtcg", Pass: "hvtcg" }, oasis: { Oasis: "hvtcg", "Palm Grove": "hvtcg", Garden: "hvtcg", Orchard: "hvtcg", "Date Grove": "hvtcg", Fields: "hvtcg" }, souk: { Market: "hvtcg", Souk: "hvtcg", Bazaar: "hvtcg", Exchange: "hvtcg", "Cloth Market": "hvtcg", "Spice Market": "hvtcg" }, mosque: { Mosque: "hvtcg", School: "hvtcg", Shrine: "hvtcg", Tomb: "hvtcg", Minaret: "hvtcg", Fountain: "hvtcg" }, fort: { Fort: "hvtcg", Fortress: "hvtcg", Castle: "hvtcg", Citadel: "hvtcg", "Frontier Fort": "hvtcg", Watchtower: "hvtcg", Gate: "hvtcg" }, stop: { "Caravan Stop": "hvtcg", "Rest House": "hvtcg", Inn: "hvtcg", Halt: "hvtcg", "Camel Stop": "hvtcg", Waystation: "hvtcg" }, harbour: { Port: "hvtcg", Harbour: "hvtcg", Landing: "hvtcg", "Pearl Bank": "hvtcg", Anchorage: "hvtcg", Creek: "hvtcg" }, dune: { Dune: "hvtcg", "Sand Sea": "hvtcg", "Rocky Hill": "hvtcg", "Salt Flat": "hvtcg", Plateau: "hvtcg", Mount: "hvtcg" }, town: { Town: "hvtcg", City: "hvtcg", Quarter: "hvtcg", Settlement: "hvtcg", Camp: "hvtcg" }, craft: { Refinery: "hvtcg", Port: "hvtcg", Factory: "hvtcg", Station: "hvtcg", Dam: "hvtcg", Airport: "hvtcg", Pipeline: "hvtcg", "Salt Works": "hvtcg" } } }, persian: { eras: { ancient: { "City of {name}": "tcg", "{fire} of {name}": "vtcg", "{garden} of {name}": "hvt", "{caravanserai} of {name}": "vtcg", "{channel} of {name}": "hvt", "Satrap's {city}": "tcg", "{pass} of {name}": "hvt", "Royal Road Halt": "vt", "{name:pos} Fortress": "hvtcg", "{adj} {pass}": "hv" }, medieval: { "{garden} of {name}": "hvtcg", "{caravanserai} of {name}": "vtcg", "{bazaar} of {name}": "vtcg", "City of {name}": "tcg", "{channel} of {name}": "hvt", "{polo} of {name}": "vtcg", "{pass} of {name}": "hvt", "{fire} of {name}": "vt", "{name:pos} Fortress": "hvtcg", "{animal} {pass}": "hvt", "{tree} Garden": "hv" }, modern: { "{bazaar} of {name}": "vtcg", "{garden} of {name}": "hvtcg", "{craft} of {name}": "hvt", "New {city}": "tcg", "{caravanserai} of {name}": "vt", "{channel} of {name}": "hvt", "{pass} of {name}": "hvt", "Station of {name}": "vt", "{tree} Garden": "hv", "{salt} of {name}": "hv", "Port of {name}": "vtcg" }, interstellar: { "{name:pos} {farm2}": "hvtcg", "{adj} {@land}": "hvtcg", "{animal} {@land}": "hv", "{animal}+{@land}": "hv", "The {@land:pl}": "vt", "{name:pos} {@region}": "vt" } }, lists: { garden: { Garden: "hvtcg", Orchard: "hvtcg", "Rose Garden": "hvtcg", "Walled Garden": "hvtcg", Pavilion: "hvtcg", "Fountain Garden": "hvtcg" }, channel: { Channel: "hvtcg", Spring: "hvtcg", "Underground Channel": "hvtcg", Stream: "hvtcg", Well: "hvtcg", Pool: "hvtcg" }, caravanserai: { Caravanserai: "hvtcg", Inn: "hvtcg", "Rest House": "hvtcg", Waystation: "hvtcg", Halt: "hvtcg", Bridge: "hvtcg" }, fire: { "Fire Temple": "hvtcg", Temple: "hvtcg", Shrine: "hvtcg", Hall: "hvtcg", Sanctuary: "hvtcg", Dome: "hvtcg" }, bazaar: { Bazaar: "hvtcg", Market: "hvtcg", "Covered Bazaar": "hvtcg", Exchange: "hvtcg", "Carpet Market": "hvtcg" }, pass: { Pass: "hvtcg", Gate: "hvtcg", Mountain: "hvtcg", Hill: "hvtcg", Ridge: "hvtcg", Heights: "hvtcg" }, salt: { "Salt Desert": "hvtcg", "Salt Flat": "hvtcg", "Dry Lake": "hvtcg", "Desert Edge": "hvtcg", Plateau: "hvtcg", Oasis: "hvtcg" }, city: { City: "hvtcg", Town: "hvtcg", "Royal City": "hvtcg", Capital: "hvtcg", "Fortress Town": "hvtcg" }, craft: { Refinery: "hvtcg", Factory: "hvtcg", Station: "hvtcg", Dam: "hvtcg", Mine: "hvtcg", Pipeline: "hvtcg", Kiln: "hvtcg", "Tile Works": "hvtcg" }, polo: { "Polo Ground": "hvtcg", Square: "hvtcg", Racecourse: "hvtcg", Meadow: "hvtcg", Field: "hvtcg" } } } }, newEras: { egyptian: [{ id: "coptic-and-mamluk", label: "Coptic and Mamluk", guide: "Monasteries and churches of the Copts, the quarters and gates of Mamluk Cairo, nilometers, canals and river towns.", lists: { river: ["River Town", "Landing", "Ferry", "Canal Head", "Dyke", "Harbour"], monastery: ["Monastery", "Hermitage", "Church", "Desert Monastery", "Cell", "Shrine"], gate: ["Gate", "Quarter", "Citadel", "Market", "Mosque", "Fountain"], village: ["Village", "Hamlet", "Settlement", "Estate", "Farm"], name: ["Pachomius", "Shenouda", "Antony", "Seti", "Athanasius", "Cyril", "Khafre", "Macarius", "Menkaure", "Mina", "Djoser", "Dioscorus", "Senusret", "Amenemhat", "Ahmose", "Merneptah", "Psamtik", "Necho", "Taharqa", "Piye", "Horemheb", "Imhotep", "Hori", "Nakht", "Sennedjem", "Khaemwaset", "Ptahhotep", "Kagemni"] }, templates: [["Monastery of {name}", 5], ["{river} of {name}", 5], ["{gate} of {name}", 5], ["Church of {name}", 3], ["Canal of {name}", 3], ["{name:pos} Landing", 4], ["Citadel of {name}", 3], ["{village} of the Delta", 3], ["Market of {name}", 4], ["Nilometer of {name}", 2]] }, { id: "ottoman-and-khedival", label: "Ottoman and khedival", guide: "Ottoman governors' towns, cotton ports, the khedive's boulevards and canals, railway halts.", lists: { port: ["Port", "Landing", "Quay", "Cotton Port", "Harbour", "Customs House"], canal: ["Canal", "Barrage", "Dyke", "Lock", "Pumping Station", "Weir"], boulevard: ["Boulevard", "Quarter", "Square", "Palace", "Garden", "Mosque"], station: ["Station", "Halt", "Junction", "Siding", "Depot", "Terminus"], name: ["Pachomius", "Shenouda", "Antony", "Seti", "Athanasius", "Cyril", "Khafre", "Macarius", "Menkaure", "Mina", "Djoser", "Dioscorus", "Senusret", "Amenemhat", "Ahmose", "Merneptah", "Psamtik", "Necho", "Taharqa", "Piye", "Horemheb", "Imhotep", "Hori", "Nakht", "Sennedjem", "Khaemwaset", "Ptahhotep", "Kagemni"] }, templates: [["{port} of {name}", 5], ["{canal} of {name}", 4], ["{boulevard} of {name}", 4], ["Station of {name}", 4], ["{name:pos} Estate", 3], ["Cotton Ginnery of {name}", 3], ["Governor's Town", 3], ["New {port}", 3], ["Market of {name}", 3], ["{name:pos} Landing", 3]] }, { id: "modern-egypt", label: "Modern Egypt", guide: "River cities, new towns in the desert, canal towns, delta villages and the Red Sea coast.", lists: { delta: ["Delta Village", "Canal Town", "Pump House", "Reclaimed Land", "Farm", "Rice Field"], city: ["City", "New City", "Town", "Suburb", "District", "Settlement"], coast: ["Resort", "Port", "Dive Camp", "Fishing Harbour", "Bay", "Marina"], dam: ["Dam", "Barrage", "Power Station", "Lock", "Bridge", "Canal Head"], name: ["Pachomius", "Shenouda", "Antony", "Seti", "Athanasius", "Cyril", "Khafre", "Macarius", "Menkaure", "Mina", "Djoser", "Dioscorus", "Senusret", "Amenemhat", "Ahmose", "Merneptah", "Psamtik", "Necho", "Taharqa", "Piye", "Horemheb", "Imhotep", "Hori", "Nakht", "Sennedjem", "Khaemwaset", "Ptahhotep", "Kagemni"] }, templates: [["{delta} of {name}", 4], ["New {city}", 4], ["{coast} of {name}", 4], ["{dam} of {name}", 3], ["{name:pos} Quarter", 4], ["Market of {name}", 3], ["Station of {name}", 3], ["Corniche of {name}", 3], ["Oasis of {name}", 3], ["{city} of the Delta", 3]] }], ethiopian: [{ id: "modern-ethiopia", label: "Modern Ethiopia", guide: "Highland market towns, church villages, railway halts, lake towns and the new capital's districts.", lists: { amba: ["Amba", "Flat Mountain", "Rock", "Highland", "Escarpment", "Crag"], church: ["Church", "Rock Church", "Monastery", "Shrine", "Cross", "Baptismal Pool"], trade: ["Market", "Market Town", "Coffee Market", "Trading Post", "Fair", "Bazaar"], lake: ["Lake", "Hot Spring", "River", "Falls", "Gorge", "Wetland"], station: ["Station", "Halt", "Junction", "Depot", "Terminus", "Dam"], name: ["Dawit", "Yeshaq", "Yohannes", "Susenyos", "Fasilides", "Iyasu", "Naod", "Eskender", "Lebna Dengel", "Amda Seyon", "Yekuno Amlak", "Sarsa Dengel", "Baeda Maryam", "Gebre Mesqel", "Tekle Haymanot", "Haile", "Gebre", "Kidane", "Tesfaye", "Mulugeta", "Getachew", "Girma", "Bekele", "Tadesse", "Desta", "Wolde"] }, templates: [["{church} of {name}", 5], ["{amba} of {name}", 4], ["{trade} of {name}", 5], ["{lake} of {name}", 3], ["Station of {name}", 3], ["{name:pos} {trade}", 3], ["New {trade}", 3], ["{amba} {church}", 3], ["Coffee Village of {name}", 3], ["{name:pos} Quarter", 3]] }], bantu: [{ id: "mission-and-colony", label: "Mission and colony", guide: "Mission stations, trading posts, compounds and the colonial town laid out on a grid.", lists: { mission: ["Mission", "Mission Station", "Church", "School", "Hospital", "Chapel"], post: ["Trading Post", "Store", "Depot", "Boma", "Compound", "Fort"], kraal: ["Kraal", "Homestead", "Village", "Cattle Post", "Enclosure", "Place"], river: ["River", "Drift", "Ford", "Falls", "Spring", "Pool"], name: ["Mpande", "Dinuzulu", "Sekhukhune", "Khama", "Sobhuza", "Lobengula", "Mswati", "Mwanga", "Kamanya", "Chwa", "Kimera", "Hintsa", "Sandile", "Maqoma", "Ngqika", "Phalo", "Mohlomi", "Lerotholi", "Letsie", "Makaba", "Sechele", "Soshangane", "Zwangendaba", "Mzila", "Mutota"] }, templates: [["{mission} of {name}", 5], ["{post} of {name}", 5], ["{kraal} of {name}", 4], ["{river} of {name}", 3], ["New Town of {name}", 3], ["Compound of {name}", 3], ["{name:pos} Drift", 3], ["Railway Siding of {name}", 3], ["Mine of {name}", 3]] }, { id: "modern-bantu", label: "Modern", guide: "Townships, mining towns, new cities, lake and river towns, and rural villages.", lists: { township: ["Township", "Location", "Suburb", "Settlement", "Ward", "District"], mine: ["Mine", "Shaft", "Plant", "Smelter", "Quarry", "Compound"], city: ["City", "Town", "Metropolis", "Harbour", "Market", "Junction"], lake: ["Lake", "River", "Falls", "Dam", "Spring", "Gorge"], name: ["Mpande", "Dinuzulu", "Sekhukhune", "Khama", "Sobhuza", "Lobengula", "Mswati", "Mwanga", "Kamanya", "Chwa", "Kimera", "Hintsa", "Sandile", "Maqoma", "Ngqika", "Phalo", "Mohlomi", "Lerotholi", "Letsie", "Makaba", "Sechele", "Soshangane", "Zwangendaba", "Mzila", "Mutota"] }, templates: [["{township} of {name}", 4], ["{mine} of {name}", 4], ["New {city}", 4], ["{lake} of {name}", 3], ["{name:pos} Place", 3], ["Market of {name}", 3], ["Junction of {name}", 3], ["{city} of {name}", 3], ["Harbour of {name}", 3]] }], "west-african": [{ id: "colony-and-coast", label: "Colony and coast", guide: "Coastal forts and castles, trading factories, colonial towns, railway and river ports.", lists: { fort: ["Fort", "Castle", "Factory", "Lodge", "Stockade", "Landing"], port: ["Port", "Harbour", "Roadstead", "Landing", "Beach", "Quay"], rail: ["Railway Station", "Halt", "Siding", "Junction", "Terminus", "Depot"], river: ["River Port", "Ford", "Creek", "Landing", "Falls", "Lagoon"], name: ["Musa", "Agaja", "Ghezo", "Glele", "Behanzin", "Ewuare", "Esigie", "Orhogbua", "Kwame", "Kofi", "Kwabena", "Kwasi", "Yaw", "Kojo", "Kwaku", "Kwadwo", "Prempeh", "Ahmadu", "Mamadou", "Ousmane", "Sekou", "Amadou", "Abdoulaye", "Ibrahim", "Moussa"] }, templates: [["{fort} of {name}", 5], ["{port} of {name}", 5], ["{rail} of {name}", 3], ["{river} of {name}", 3], ["{name:pos} Market", 4], ["Colonial Town of {name}", 3], ["Plantation of {name}", 3], ["{name:pos} Beach", 3], ["Kola Market of {name}", 3]] }, { id: "modern-west-africa", label: "Modern", guide: "Great market cities, lagoon and river towns, oil and port towns, mud-brick mosque towns and farming villages.", lists: { trade: ["Market", "Market City", "Trading Post", "Fair", "Bazaar", "Junction"], lagoon: ["Lagoon", "Creek", "River", "Falls", "Dam", "Spring"], mosque: ["Mosque", "Mud Mosque", "School", "Shrine", "Fountain", "Compound"], port: ["Port", "Harbour", "Oil Terminal", "Beach", "Quay", "Landing"], name: ["Musa", "Agaja", "Ghezo", "Glele", "Behanzin", "Ewuare", "Esigie", "Orhogbua", "Kwame", "Kofi", "Kwabena", "Kwasi", "Yaw", "Kojo", "Kwaku", "Kwadwo", "Prempeh", "Ahmadu", "Mamadou", "Ousmane", "Sekou", "Amadou", "Abdoulaye", "Ibrahim", "Moussa"] }, templates: [["{trade} of {name}", 5], ["{port} of {name}", 4], ["{mosque} of {name}", 4], ["{lagoon} of {name}", 3], ["New {trade}", 3], ["{name:pos} Quarter", 4], ["Farming Village of {name}", 3], ["Station of {name}", 3], ["{name:pos} Compound", 3]] }] }, augmentSizes: { egyptian: { eras: { "coptic-and-mamluk": { "Monastery of {name}": "hvt", "{river} of {name}": "hvtcg", "{gate} of {name}": "vtcg", "Church of {name}": "hvt", "Canal of {name}": "hv", "{name:pos} Landing": "hvt", "Citadel of {name}": "tcg", "{village} of the Delta": "hv", "Market of {name}": "vtcg", "Nilometer of {name}": "vt" }, "ottoman-and-khedival": { "{port} of {name}": "vtcg", "{canal} of {name}": "hvt", "{boulevard} of {name}": "vtcg", "Station of {name}": "vt", "{name:pos} Estate": "hv", "Cotton Ginnery of {name}": "hvt", "Governor's Town": "tcg", "New {port}": "tcg", "Market of {name}": "vtcg", "{name:pos} Landing": "hvt" }, "modern-egypt": { "{delta} of {name}": "hvt", "New {city}": "tcg", "{coast} of {name}": "vtcg", "{dam} of {name}": "vt", "{name:pos} Quarter": "tcg", "Market of {name}": "vtcg", "Station of {name}": "vt", "Corniche of {name}": "tcg", "Oasis of {name}": "hv", "{city} of the Delta": "tcg" } }, lists: { river: { "River Town": "hvtcg", Landing: "hvtcg", Ferry: "hvtcg", "Canal Head": "hvtcg", Dyke: "hvtcg", Harbour: "hvtcg" }, monastery: { Monastery: "hvtcg", Hermitage: "hvtcg", Church: "hvtcg", "Desert Monastery": "hvtcg", Cell: "hvtcg", Shrine: "hvtcg" }, gate: { Gate: "hvtcg", Quarter: "hvtcg", Citadel: "hvtcg", Market: "hvtcg", Mosque: "hvtcg", Fountain: "hvtcg" }, village: { Village: "hvtcg", Hamlet: "hvtcg", Settlement: "hvtcg", Estate: "hvtcg", Farm: "hvtcg" }, port: { Port: "hvtcg", Landing: "hvtcg", Quay: "hvtcg", "Cotton Port": "hvtcg", Harbour: "hvtcg", "Customs House": "hvtcg" }, canal: { Canal: "hvtcg", Barrage: "hvtcg", Dyke: "hvtcg", Lock: "hvtcg", "Pumping Station": "hvtcg", Weir: "hvtcg" }, boulevard: { Boulevard: "hvtcg", Quarter: "hvtcg", Square: "hvtcg", Palace: "hvtcg", Garden: "hvtcg", Mosque: "hvtcg" }, station: { Station: "hvtcg", Halt: "hvtcg", Junction: "hvtcg", Siding: "hvtcg", Depot: "hvtcg", Terminus: "hvtcg" }, delta: { "Delta Village": "hvtcg", "Canal Town": "hvtcg", "Pump House": "hvtcg", "Reclaimed Land": "hvtcg", Farm: "hvtcg", "Rice Field": "hvtcg" }, city: { City: "hvtcg", "New City": "hvtcg", Town: "hvtcg", Suburb: "hvtcg", District: "hvtcg", Settlement: "hvtcg" }, coast: { Resort: "hvtcg", Port: "hvtcg", "Dive Camp": "hvtcg", "Fishing Harbour": "hvtcg", Bay: "hvtcg", Marina: "hvtcg" }, dam: { Dam: "hvtcg", Barrage: "hvtcg", "Power Station": "hvtcg", Lock: "hvtcg", Bridge: "hvtcg", "Canal Head": "hvtcg" } } }, ethiopian: { eras: { "modern-ethiopia": { "{church} of {name}": "hvt", "{amba} of {name}": "hvt", "{trade} of {name}": "vtcg", "{lake} of {name}": "hvt", "Station of {name}": "vt", "{name:pos} {trade}": "vtcg", "New {trade}": "tcg", "{amba} {church}": "hv", "Coffee Village of {name}": "hv", "{name:pos} Quarter": "tcg" } }, lists: { amba: { Amba: "hvtcg", "Flat Mountain": "hvtcg", Rock: "hvtcg", Highland: "hvtcg", Escarpment: "hvtcg", Crag: "hvtcg" }, church: { Church: "hvtcg", "Rock Church": "hvtcg", Monastery: "hvtcg", Shrine: "hvtcg", Cross: "hvtcg", "Baptismal Pool": "hvtcg" }, trade: { Market: "hvtcg", "Market Town": "hvtcg", "Coffee Market": "hvtcg", "Trading Post": "hvtcg", Fair: "hvtcg", Bazaar: "hvtcg" }, lake: { Lake: "hvtcg", "Hot Spring": "hvtcg", River: "hvtcg", Falls: "hvtcg", Gorge: "hvtcg", Wetland: "hvtcg" }, station: { Station: "hvtcg", Halt: "hvtcg", Junction: "hvtcg", Depot: "hvtcg", Terminus: "hvtcg", Dam: "hvtcg" } } }, bantu: { eras: { "mission-and-colony": { "{mission} of {name}": "hvt", "{post} of {name}": "vtcg", "{kraal} of {name}": "hv", "{river} of {name}": "hvt", "New Town of {name}": "tcg", "Compound of {name}": "vt", "{name:pos} Drift": "hv", "Railway Siding of {name}": "vt", "Mine of {name}": "vtcg" }, "modern-bantu": { "{township} of {name}": "hvtcg", "{mine} of {name}": "hvt", "New {city}": "tcg", "{lake} of {name}": "hvt", "{name:pos} Place": "hv", "Market of {name}": "vtcg", "Junction of {name}": "vt", "{city} of {name}": "tcg", "Harbour of {name}": "vtcg" } }, lists: { mission: { Mission: "hvtcg", "Mission Station": "hvtcg", Church: "hvtcg", School: "hvtcg", Hospital: "hvtcg", Chapel: "hvtcg" }, post: { "Trading Post": "hvtcg", Store: "hvtcg", Depot: "hvtcg", Boma: "hvtcg", Compound: "hvtcg", Fort: "hvtcg" }, kraal: { Kraal: "hvtcg", Homestead: "hvtcg", Village: "hvtcg", "Cattle Post": "hvtcg", Enclosure: "hvtcg", Place: "hvtcg" }, river: { River: "hvtcg", Drift: "hvtcg", Ford: "hvtcg", Falls: "hvtcg", Spring: "hvtcg", Pool: "hvtcg" }, township: { Township: "hvtcg", Location: "hvtcg", Suburb: "hvtcg", Settlement: "hvtcg", Ward: "hvtcg", District: "hvtcg" }, mine: { Mine: "hvtcg", Shaft: "hvtcg", Plant: "hvtcg", Smelter: "hvtcg", Quarry: "hvtcg", Compound: "hvtcg" }, city: { City: "hvtcg", Town: "hvtcg", Metropolis: "hvtcg", Harbour: "hvtcg", Market: "hvtcg", Junction: "hvtcg" }, lake: { Lake: "hvtcg", River: "hvtcg", Falls: "hvtcg", Dam: "hvtcg", Spring: "hvtcg", Gorge: "hvtcg" } } }, "west-african": { eras: { "colony-and-coast": { "{fort} of {name}": "hvtcg", "{port} of {name}": "vtcg", "{rail} of {name}": "vt", "{river} of {name}": "hvt", "{name:pos} Market": "vtcg", "Colonial Town of {name}": "tcg", "Plantation of {name}": "hv", "{name:pos} Beach": "hvt", "Kola Market of {name}": "vt" }, "modern-west-africa": { "{trade} of {name}": "vtcg", "{port} of {name}": "vtcg", "{mosque} of {name}": "vtcg", "{lagoon} of {name}": "hvt", "New {trade}": "tcg", "{name:pos} Quarter": "tcg", "Farming Village of {name}": "hv", "Station of {name}": "vt", "{name:pos} Compound": "hvt" } }, lists: { fort: { Fort: "hvtcg", Castle: "hvtcg", Factory: "hvtcg", Lodge: "hvtcg", Stockade: "hvtcg", Landing: "hvtcg" }, port: { Port: "hvtcg", Harbour: "hvtcg", Roadstead: "hvtcg", Landing: "hvtcg", Beach: "hvtcg", Quay: "hvtcg", "Oil Terminal": "hvtcg" }, rail: { "Railway Station": "hvtcg", Halt: "hvtcg", Siding: "hvtcg", Junction: "hvtcg", Terminus: "hvtcg", Depot: "hvtcg" }, river: { "River Port": "hvtcg", Ford: "hvtcg", Creek: "hvtcg", Landing: "hvtcg", Falls: "hvtcg", Lagoon: "hvtcg" }, trade: { Market: "hvtcg", "Market City": "hvtcg", "Trading Post": "hvtcg", Fair: "hvtcg", Bazaar: "hvtcg", Junction: "hvtcg" }, lagoon: { Lagoon: "hvtcg", Creek: "hvtcg", River: "hvtcg", Falls: "hvtcg", Dam: "hvtcg", Spring: "hvtcg" }, mosque: { Mosque: "hvtcg", "Mud Mosque": "hvtcg", School: "hvtcg", Shrine: "hvtcg", Fountain: "hvtcg", Compound: "hvtcg" } } } }, labels: { steppe: "steppe word", han: "inn word", bazaar: "market word", mosque: "mosque word", baths: "bath word", pasture: "camp word", camp: "camp word", cairn: "cairn word", relay: "relay word", mount: "mountain word", well: "well word", wadi: "wadi word", oasis: "oasis word", souk: "market word", stop: "caravan stop word", dune: "desert word", garden: "garden word", channel: "channel word", caravanserai: "inn word", fire: "temple word", pass: "pass word", salt: "salt word", polo: "square word", village: "village word", port: "harbour word", canal: "canal word", boulevard: "street word", station: "station word", delta: "farmland word", coast: "coast word", dam: "works word", amba: "amba word", trade: "trade word", mission: "mission word", post: "trading post word", kraal: "homestead word", township: "township word", rail: "railway word", lagoon: "lagoon word" }, eraMap: { turkic: { medieval: ["MD"], modern: ["EM", "ST", "MO"] }, mongol: { steppe: ["AN", "MD"], modern: ["EM", "ST", "MO"] }, arabic: { ancient: ["AN"], medieval: ["MD"], modern: ["EM", "ST", "MO"] }, persian: { ancient: ["AN"], medieval: ["MD"], modern: ["EM", "ST", "MO"] } } } };
+
 // src/tier6aData.ts
-var TIER6A_DATA = tier6a_default;
+var A = tier6a_default;
+var B = tier6b_default;
+var mergeAugment = (a, b) => {
+  var _a8, _b4, _c4, _d3;
+  const out = { ...a };
+  for (const [id, add2] of Object.entries(b)) out[id] = { eras: { ...(_b4 = (_a8 = out[id]) == null ? void 0 : _a8.eras) != null ? _b4 : {}, ...add2.eras }, lists: { ...(_d3 = (_c4 = out[id]) == null ? void 0 : _c4.lists) != null ? _d3 : {}, ...add2.lists } };
+  return out;
+};
+var mergeEras = (a, b) => {
+  var _a8;
+  const out = { ...a };
+  for (const [id, eras] of Object.entries(b)) out[id] = [...(_a8 = out[id]) != null ? _a8 : [], ...eras];
+  return out;
+};
+var TIER6A_DATA = {
+  settlement: {
+    cultures: [...A.settlement.cultures, ...B.settlement.cultures],
+    sizes: { ...A.settlement.sizes, ...B.settlement.sizes },
+    newEras: mergeEras(A.settlement.newEras, B.settlement.newEras),
+    augmentSizes: mergeAugment(A.settlement.augmentSizes, B.settlement.augmentSizes),
+    labels: { ...A.settlement.labels, ...B.settlement.labels },
+    eraMap: { ...A.settlement.eraMap, ...B.settlement.eraMap }
+  }
+};
 
 // src/settlement/data.ts
 var SETTLEMENT_BASE = settlement_names_default;
@@ -92861,6 +93115,52 @@ var people_default = {
         rulerForms: { male: [["Khan {m}", 50], ["Sultan {m}", 30], ["Emperor {m}", 20]], female: [["Khatun {f}", 50], ["Queen {f}", 30], ["Empress {f}", 20]] }
       }
     },
+    turkic: {
+      historic: {
+        male: [["Alp", 10], ["Arslan", 10], ["Bilge", 10], ["Kutlug", 10], ["Tegin", 10], ["Tarkan", 7], ["Bogra", 7], ["Kara", 7], ["Yigit", 7], ["Tuman", 7], ["Toghan", 5], ["Ozan", 5], ["Tekin", 5], ["Saruhan", 5], ["Karaman", 5], ["Aydin", 5], ["Menteshe", 3], ["Germiyan", 3], ["Hamid", 3], ["Eretna", 3], ["Sungur", 3], ["Kaan", 3], ["Orhan", 3], ["Murad", 3], ["Ertugrul", 2], ["Tughril", 2, "r"], ["Alp Arslan", 2, "r"], ["Mehmed", 2, "r"], ["Suleiman", 2, "r"], ["Bayezid", 2, "r"]],
+        female: [["Altun", 10], ["Sevinch", 10], ["Gulbahar", 10], ["Nigar", 10], ["Halime", 10], ["Hatice", 7], ["Fatma", 7], ["Ayse", 7], ["Aytolun", 7], ["Dilber", 7], ["Nergis", 5], ["Gulnar", 5], ["Turkan", 5], ["Mahperi", 5], ["Gevher", 5], ["Saray", 5], ["Kutlu", 3], ["Ulker", 3], ["Yildiz", 3], ["Gul", 3], ["Nur", 3], ["Sultan", 3], ["Hunat", 3], ["Arzu", 3], ["Hurrem", 2, "r"], ["Kosem", 2, "r"], ["Nurbanu", 2, "r"], ["Safiye", 2, "r"], ["Turhan", 2, "r"], ["Terken", 2, "r"]],
+        regnalMale: [["Mehmed", 10], ["Murad", 10], ["Bayezid", 10], ["Suleiman", 10], ["Osman", 10], ["Orhan", 7], ["Selim", 7], ["Ahmed", 7]],
+        regnalFemale: [["Hurrem", 10], ["Kosem", 10], ["Nurbanu", 10], ["Safiye", 10], ["Turhan", 10], ["Gevher", 7], ["Mahperi", 7], ["Terken", 7]],
+        holy: [["Yunus", 10], ["Bektash", 10], ["Yasawi", 10], ["Mevlana", 10], ["Bayram", 10], ["Akshemsettin", 7], ["Hizir", 7], ["Ilyas", 7], ["Sari Saltik", 7], ["Ahi Evran", 7], ["Abdal Musa", 5], ["Seyyid Gazi", 5]],
+        holyForms: [["Dede {n}", 50], ["Baba {n}", 30], ["Sheikh {n}", 20]],
+        rulerForms: { male: [["Sultan {m}", 40], ["Khan {m}", 30], ["Bey {m}", 30]], female: [["Sultana {f}", 50], ["Khatun {f}", 30], ["Princess {f}", 20]] }
+      },
+      modern: {
+        male: [["Murat", 10, "", "ST MO"], ["Hakan", 10, "", "ST MO"], ["Serkan", 10, "", "ST MO"], ["Emre", 10, "", "ST MO"], ["Cem", 10, "", "ST MO"], ["Mehmet", 7, "", "ST"], ["Emir", 7, "", "MO"], ["Mustafa", 7, "", "ST"], ["Eymen", 7, "", "MO"], ["Ahmet", 7, "", "ST"], ["Yigit", 5, "", "MO"], ["Ali", 5, "", "ST"], ["Kerem", 5, "", "MO"], ["Huseyin", 5, "", "ST"], ["Berat", 5, "", "MO"], ["Hasan", 5, "", "ST"], ["Alp", 3, "", "MO"], ["Ibrahim", 3, "", "ST"], ["Arda", 3, "", "MO"], ["Ismail", 3, "", "ST"], ["Emirhan", 3, "", "MO"], ["Osman", 3, "", "ST"], ["Ege", 3, "", "MO"], ["Yusuf", 3, "", "ST"], ["Mert", 2, "", "MO"], ["Hamza", 2, "", "ST"], ["Burak", 2, "", "MO"], ["Omer", 2, "", "ST"], ["Baran", 2, "", "MO"], ["Kemal", 2, "", "ST"], ["Kaan", 2, "", "MO"], ["Ismet", 2, "", "ST"], ["Efe", 2, "", "MO"], ["Recep", 2, "", "ST"], ["Batuhan", 2, "", "MO"]],
+        female: [["Elif", 10, "", "ST MO"], ["Seda", 10, "", "ST MO"], ["Esra", 10, "", "ST MO"], ["Merve", 10, "", "ST MO"], ["Burcu", 10, "", "ST MO"], ["Fatma", 7, "", "ST"], ["Defne", 7, "", "MO"], ["Ayse", 7, "", "ST"], ["Asya", 7, "", "MO"], ["Hatice", 7, "", "ST"], ["Nehir", 5, "", "MO"], ["Emine", 5, "", "ST"], ["Ecrin", 5, "", "MO"], ["Zeynep", 5, "", "ST"], ["Ela", 5, "", "MO"], ["Hanife", 5, "", "ST"], ["Nisa", 3, "", "MO"], ["Meryem", 3, "", "ST"], ["Azra", 3, "", "MO"], ["Zehra", 3, "", "ST"], ["Melisa", 3, "", "MO"], ["Sultan", 3, "", "ST"], ["Irem", 3, "", "MO"], ["Hacer", 3, "", "ST"], ["Duru", 2, "", "MO"], ["Hava", 2, "", "ST"], ["Ceylin", 2, "", "MO"], ["Gulsum", 2, "", "ST"], ["Eylul", 2, "", "MO"], ["Halime", 2, "", "ST"], ["Nil", 2, "", "MO"], ["Safiye", 2, "", "ST"], ["Ada", 2, "", "MO"], ["Rabia", 2, "", "ST"], ["Mira", 2, "", "MO"]],
+        surnames: [["Yilmaz", 10], ["Kaya", 10], ["Demir", 10], ["Sahin", 10], ["Celik", 10], ["Yildiz", 7], ["Yildirim", 7], ["Ozturk", 7], ["Aydin", 7], ["Ozdemir", 7], ["Arslan", 5], ["Dogan", 5], ["Kilic", 5], ["Aslan", 5], ["Cetin", 5], ["Kara", 5], ["Koc", 3], ["Kurt", 3], ["Ozkan", 3], ["Simsek", 3], ["Polat", 3], ["Korkmaz", 3], ["Ozcan", 3], ["Cakir", 3], ["Erdogan", 2], ["Yavuz", 2], ["Can", 2], ["Acar", 2], ["Sen", 2], ["Aksoy", 2]],
+        regnalMale: [["Mehmed", 10], ["Murad", 10], ["Bayezid", 10], ["Suleiman", 10], ["Osman", 10], ["Orhan", 7], ["Selim", 7], ["Ahmed", 7]],
+        regnalFemale: [["Hurrem", 10], ["Kosem", 10], ["Nurbanu", 10], ["Safiye", 10], ["Turhan", 10], ["Gevher", 7], ["Mahperi", 7], ["Terken", 7]],
+        holy: [["Yunus", 10], ["Bektash", 10], ["Yasawi", 10], ["Mevlana", 10], ["Bayram", 10], ["Akshemsettin", 7], ["Hizir", 7], ["Ilyas", 7], ["Sari Saltik", 7], ["Ahi Evran", 7], ["Abdal Musa", 5], ["Seyyid Gazi", 5]],
+        recentMale: ["Yigit", "Eymen", "Kerem", "Berat", "Alp", "Arda", "Emirhan", "Ege", "Mert", "Burak", "Baran", "Kaan", "Efe", "Batuhan", "Emir"],
+        recentFemale: ["Defne", "Asya", "Nehir", "Ecrin", "Ela", "Nisa", "Azra", "Melisa", "Irem", "Duru", "Ceylin", "Eylul", "Nil", "Ada", "Mira"],
+        holyForms: [["Dede {n}", 50], ["Baba {n}", 30], ["Sheikh {n}", 20]],
+        rulerForms: { male: [["Sultan {m}", 40], ["Khan {m}", 30], ["Bey {m}", 30]], female: [["Sultana {f}", 50], ["Khatun {f}", 30], ["Princess {f}", 20]] }
+      }
+    },
+    mongol: {
+      historic: {
+        male: [["Bayan", 10], ["Bold", 10], ["Baatar", 10], ["Tsogt", 10], ["Altan", 10], ["Naran", 7], ["Dorj", 7], ["Ochir", 7], ["Sukh", 7], ["Tseren", 7], ["Nergui", 5], ["Erdene", 5], ["Tumur", 5], ["Munkh", 5], ["Chuluun", 5], ["Gan", 5], ["Dalai", 3], ["Sodnom", 3], ["Jargal", 3], ["Lkhagva", 3], ["Khorloo", 3], ["Tserendorj", 3], ["Damdin", 3], ["Namjil", 3], ["Temujin", 2, "r"], ["Ogedei", 2, "r"], ["Kublai", 2, "r"], ["Hulagu", 2, "r"], ["Subutai", 2, "r"], ["Jebe", 2, "r"]],
+        female: [["Narantuya", 10], ["Oyun", 10], ["Sarnai", 10], ["Bolormaa", 10], ["Gerel", 10], ["Khulan", 7], ["Saran", 7], ["Tsetseg", 7], ["Enkhtuya", 7], ["Munkhtsetseg", 7], ["Uyanga", 5], ["Dolgor", 5], ["Ariunaa", 5], ["Odval", 5], ["Sukhee", 5], ["Chimeg", 5], ["Nandin", 3], ["Baigal", 3], ["Doljin", 3], ["Yesui", 3], ["Tuya", 3], ["Zaya", 3], ["Sarantuya", 3], ["Oyuntsetseg", 3], ["Borte", 2, "r"], ["Hoelun", 2, "r"], ["Sorghaghtani", 2, "r"], ["Toregene", 2, "r"], ["Khutulun", 2, "r"], ["Mandukhai", 2, "r"]],
+        regnalMale: [["Temujin", 10], ["Ogedei", 10], ["Kublai", 10], ["Mongke", 10], ["Hulagu", 10], ["Batu", 7], ["Berke", 7], ["Guyuk", 7]],
+        regnalFemale: [["Borte", 10], ["Hoelun", 10], ["Toregene", 10], ["Doquz", 10], ["Sorghaghtani", 10], ["Chabi", 7], ["Mandukhai", 7], ["Khutulun", 7]],
+        holy: [["Zanabazar", 10], ["Tsongkhapa", 10], ["Sakya", 10], ["Phagpa", 10], ["Ochirvani", 10], ["Jebtsundamba", 7], ["Gombo", 7], ["Danzan", 7], ["Dorjiev", 7], ["Zaya", 7], ["Tsedenbal", 5], ["Natsagdorj", 5]],
+        holyForms: [["Lama {n}", 60], ["Holy {n}", 20], ["Wise {n}", 20]],
+        rulerForms: { male: [["Khan {m}", 60], ["Prince {m}", 40]], female: [["Khatun {f}", 50], ["Queen {f}", 30], ["Princess {f}", 20]] }
+      },
+      modern: {
+        male: [["Bat", 10, "", "ST MO"], ["Enkhbat", 10, "", "ST MO"], ["Munkh", 10, "", "ST MO"], ["Tuvshin", 10, "", "ST MO"], ["Ganbold", 10, "", "ST MO"], ["Batbayar", 7, "", "MO"], ["Amarsanaa", 7, "", "MO"], ["Erdene", 7, "", "ST"], ["Tumurbaatar", 7, "", "ST"], ["Otgonbayar", 7, "", "ST"], ["Bayarsaikhan", 5, "", "ST"], ["Ganzorig", 5, "", "ST"], ["Dorj", 5, "", "ST"], ["Battulga", 5, "", "ST"], ["Nyamdorj", 5, "", "ST"], ["Sukhbaatar", 5, "", "ST"], ["Tsogtbaatar", 3, "", "ST"], ["Ulziibayar", 3, "", "ST"], ["Altankhuyag", 3, "", "ST"], ["Enkhbayar", 3, "", "ST"], ["Davaa", 3, "", "ST"], ["Bold", 3, "", "ST"], ["Batsaikhan", 3, "", "ST"], ["Lkhagvasuren", 3, "", "ST"], ["Munkhbat", 2, "", "ST"], ["Odkhuu", 2, "", "ST"], ["Tserendorj", 2, "", "ST"], ["Gantulga", 2, "", "ST"], ["Nomin", 2, "", "MO"], ["Choijil", 2, "", "ST"], ["Sarangerel", 2, "", "ST"], ["Khuderchuluun", 2, "", "ST"], ["Baatar", 2, "", "ST"], ["Naran", 2, "", "ST"], ["Temuulen", 2, "", "MO"], ["Anand", 2, "", "MO"], ["Ariunbold", 2, "", "MO"], ["Tuguldur", 2, "", "MO"], ["Munkh-Erdene", 2, "", "MO"], ["Enkh-Amgalan", 2, "", "MO"], ["Bilguun", 2, "", "MO"], ["Dulguun", 2, "", "MO"], ["Zolboo", 2, "", "MO"], ["Gan-Erdene", 2, "", "MO"], ["Tamir", 2, "", "MO"], ["Erkhes", 2, "", "MO"]],
+        female: [["Oyun", 10, "", "ST MO"], ["Sarnai", 10, "", "ST MO"], ["Bolormaa", 10, "", "ST MO"], ["Enkhtuya", 10, "", "ST MO"], ["Narantuya", 10, "", "ST MO"], ["Uyanga", 7, "", "MO"], ["Munkhtsetseg", 7, "", "MO"], ["Tsetseg", 7, "", "ST"], ["Altantsetseg", 7, "", "ST"], ["Ariunaa", 7, "", "ST"], ["Odval", 5, "", "ST"], ["Saruul", 5, "", "MO"], ["Tuul", 5, "", "MO"], ["Anu", 5, "", "MO"], ["Misheel", 5, "", "MO"], ["Khulan", 5, "", "MO"], ["Tungalag", 3, "", "ST"], ["Batjargal", 3, "", "ST"], ["Gerel", 3, "", "ST"], ["Zaya", 3, "", "MO"], ["Enkhjargal", 3, "", "ST"], ["Dolgor", 3, "", "ST"], ["Undraa", 3, "", "ST"], ["Sukhee", 3, "", "ST"], ["Chimeg", 2, "", "ST"], ["Nandin", 2, "", "ST"], ["Baigal", 2, "", "ST"], ["Narmandakh", 2, "", "ST"], ["Oyuntuya", 2, "", "ST"], ["Bayarmaa", 2, "", "ST"], ["Ganchimeg", 2, "", "ST"], ["Tsolmon", 2, "", "ST"], ["Handaa", 2, "", "ST"], ["Nomuun", 2, "", "MO"], ["Narantsetseg", 2, "", "MO"], ["Enkhtsetseg", 2, "", "MO"], ["Ariunzaya", 2, "", "MO"], ["Tselmeg", 2, "", "MO"], ["Soyol", 2, "", "MO"], ["Munkhzul", 2, "", "MO"]],
+        surnames: [["Borjigin", 10], ["Khalkha", 10], ["Dorj", 10], ["Bat", 10], ["Tsogt", 10], ["Bold", 7], ["Naran", 7], ["Ochir", 7], ["Sukh", 7], ["Tseren", 7], ["Erdene", 5], ["Tumur", 5], ["Gan", 5], ["Dalai", 5], ["Jargal", 5], ["Batbayar", 5], ["Munkh", 3], ["Chuluun", 3], ["Baatar", 3], ["Altan", 3], ["Nergui", 3], ["Damdin", 3], ["Sodnom", 3], ["Lkhagva", 3], ["Namjil", 2], ["Bayan", 2], ["Davaa", 2], ["Odkhuu", 2], ["Enkh", 2], ["Ganbat", 2]],
+        regnalMale: [["Temujin", 10], ["Ogedei", 10], ["Kublai", 10], ["Mongke", 10], ["Hulagu", 10], ["Batu", 7], ["Berke", 7], ["Guyuk", 7]],
+        regnalFemale: [["Borte", 10], ["Hoelun", 10], ["Toregene", 10], ["Doquz", 10], ["Sorghaghtani", 10], ["Chabi", 7], ["Mandukhai", 7], ["Khutulun", 7]],
+        holy: [["Zanabazar", 10], ["Tsongkhapa", 10], ["Sakya", 10], ["Phagpa", 10], ["Ochirvani", 10], ["Jebtsundamba", 7], ["Gombo", 7], ["Danzan", 7], ["Dorjiev", 7], ["Zaya", 7], ["Tsedenbal", 5], ["Natsagdorj", 5]],
+        recentMale: ["Temuulen", "Nomin", "Anand", "Ariunbold", "Tuguldur", "Munkh-Erdene", "Enkh-Amgalan", "Bilguun", "Dulguun", "Zolboo", "Gan-Erdene", "Tamir", "Erkhes", "Batbayar", "Amarsanaa"],
+        recentFemale: ["Misheel", "Anu", "Saruul", "Nomuun", "Khulan", "Narantsetseg", "Enkhtsetseg", "Ariunzaya", "Tselmeg", "Soyol", "Munkhzul", "Zaya", "Tuul", "Uyanga", "Munkhtsetseg"],
+        holyForms: [["Lama {n}", 60], ["Holy {n}", 20], ["Wise {n}", 20]],
+        rulerForms: { male: [["Khan {m}", 60], ["Prince {m}", 40]], female: [["Khatun {f}", 50], ["Queen {f}", 30], ["Princess {f}", 20]] }
+      }
+    },
     "arabic-persian": {
       historic: {
         male: [["Muhammad", 10], ["Ali", 10], ["Umar", 10], ["Abu Bakr", 10], ["Uthman", 10], ["Hasan", 7], ["Husayn", 7], ["Khalid", 7], ["Harun", 7], ["Mansur", 7], ["Mahmud", 5], ["Yusuf", 5], ["Ibrahim", 5], ["Ismail", 5], ["Ahmad", 5], ["Hamza", 5], ["Salim", 5], ["Idris", 5], ["Jafar", 3], ["Tariq", 3], ["Musa", 3], ["Isa", 3], ["Yahya", 3], ["Zayd", 3], ["Cyrus", 3], ["Darius", 3], ["Xerxes", 2], ["Ardashir", 2], ["Shapur", 2], ["Bahram", 2], ["Khosrow", 2], ["Kavad", 2], ["Saladin", 2]],
@@ -92884,10 +93184,56 @@ var people_default = {
         rulerForms: { male: [["Caliph {m}", 30], ["Sultan {m}", 30], ["Emir {m}", 20], ["Shah {m}", 20]], female: [["Queen {f}", 50], ["Sultana {f}", 30], ["Princess {f}", 20]] }
       }
     },
+    arabic: {
+      historic: {
+        male: [["Muhammad", 10], ["Ali", 10], ["Hasan", 10], ["Husayn", 10], ["Khalid", 10], ["Ahmad", 7], ["Hamza", 7], ["Salim", 7], ["Idris", 7], ["Ibrahim", 7], ["Ismail", 5], ["Yusuf", 5], ["Mahmud", 5], ["Jafar", 5], ["Tariq", 5], ["Musa", 5], ["Isa", 3], ["Yahya", 3], ["Zayd", 3], ["Abdullah", 3], ["Amr", 3], ["Sulayman", 3], ["Hisham", 3], ["Walid", 3], ["Umar", 2, "r"], ["Uthman", 2, "r"], ["Abu Bakr", 2, "r"], ["Harun", 2, "r"], ["Mansur", 2, "r"], ["Saladin", 2, "r"]],
+        female: [["Fatima", 10], ["Aisha", 10], ["Khadija", 10], ["Zaynab", 10], ["Maryam", 10], ["Hafsa", 7], ["Ruqayya", 7], ["Umm Kulthum", 7], ["Sumayya", 7], ["Asma", 7], ["Layla", 5], ["Safiya", 5], ["Hind", 5], ["Sakina", 5], ["Rabia", 5], ["Atika", 5], ["Amina", 3], ["Halima", 3], ["Salma", 3], ["Nadia", 3], ["Samira", 3], ["Hala", 3], ["Najwa", 3], ["Sabah", 3], ["Zubayda", 2, "r"], ["Shajar al-Durr", 2, "r"], ["Khayzuran", 2, "r"], ["Buran", 2, "r"], ["Arwa", 2, "r"], ["Zenobia", 2, "r"]],
+        regnalMale: [["Harun", 10], ["Mansur", 10], ["Mahmud", 10], ["Saladin", 10], ["Umar", 10], ["Hisham", 7], ["Walid", 7], ["Sulayman", 7]],
+        regnalFemale: [["Zubayda", 10], ["Shajar al-Durr", 10], ["Khayzuran", 10], ["Buran", 10], ["Arwa", 10], ["Zenobia", 7], ["Sitt al-Mulk", 7], ["Asma", 7]],
+        holy: [["Abdul Qadir", 10], ["Rabia", 10], ["Junayd", 10], ["Hallaj", 10], ["Ghazali", 10], ["Ahmad Rifai", 7], ["Bishr", 7], ["Shibli", 7], ["Dhul-Nun", 7], ["Hasan al-Basri", 7], ["Ibn Arabi", 5], ["Jalal", 5]],
+        holyForms: [["Sheikh {n}", 60], ["Imam {n}", 25], ["Sufi {n}", 15]],
+        rulerForms: { male: [["Caliph {m}", 35], ["Sultan {m}", 35], ["Emir {m}", 30]], female: [["Queen {f}", 50], ["Sultana {f}", 30], ["Princess {f}", 20]] }
+      },
+      modern: {
+        male: [["Ali", 10, "", "ST MO"], ["Hassan", 10, "", "ST MO"], ["Khaled", 10, "", "ST MO"], ["Hamad", 10, "", "ST MO"], ["Muhammad", 10, "", "ST MO"], ["Yazan", 7, "", "MO"], ["Ahmad", 7, "", "ST"], ["Ayman", 7, "", "MO"], ["Mahmoud", 7, "", "ST"], ["Hadi", 7, "", "MO"], ["Mustafa", 5, "", "ST"], ["Majid", 5, "", "MO"], ["Abdullah", 5, "", "ST"], ["Tariq", 5, "", "MO"], ["Ibrahim", 5, "", "ST"], ["Ziad", 5, "", "MO"], ["Khalil", 3, "", "ST"], ["Karim", 3, "", "MO"], ["Hamid", 3, "", "ST"], ["Nabil", 3, "", "ST"], ["Hussein", 3, "", "ST"], ["Samir", 3, "", "ST"], ["Salim", 3, "", "ST"], ["Rami", 3, "", "MO"], ["Fouad", 2, "", "ST"], ["Sami", 2, "", "ST"], ["Nasser", 2, "", "ST"], ["Fadi", 2, "", "ST"], ["Farouk", 2, "", "ST"], ["Walid", 2, "", "ST"], ["Abbas", 2, "", "ST"], ["Bilal", 2, "", "MO"], ["Rashid", 2, "", "ST"], ["Adam", 2, "", "MO"], ["Zayd", 2, "", "MO"], ["Amir", 2, "", "MO"], ["Hamza", 2, "", "MO"], ["Omar", 2, "", "MO"], ["Yusuf", 2, "", "MO"]],
+        female: [["Huda", 10, "", "ST MO"], ["Dalia", 10, "", "ST MO"], ["Leila", 10, "", "ST MO"], ["Aya", 10, "", "ST MO"], ["Fatima", 10, "", "ST MO"], ["Lina", 7, "", "MO"], ["Khadija", 7, "", "ST"], ["Sara", 7, "", "MO"], ["Aisha", 7, "", "ST"], ["Rania", 7, "", "MO"], ["Zaynab", 5, "", "ST"], ["Yasmin", 5, "", "MO"], ["Maryam", 5, "", "ST"], ["Noor", 5, "", "MO"], ["Amina", 5, "", "ST"], ["Dana", 5, "", "MO"], ["Halima", 3, "", "ST"], ["Maya", 3, "", "MO"], ["Hafsa", 3, "", "ST"], ["Jana", 3, "", "MO"], ["Layla", 3, "", "ST"], ["Hala", 3, "", "MO"], ["Zubayda", 3, "", "ST"], ["Lara", 3, "", "MO"], ["Safiya", 2, "", "ST"], ["Layan", 2, "", "MO"], ["Nadia", 2, "", "ST"], ["Rama", 2, "", "MO"], ["Samira", 2, "", "ST"], ["Tala", 2, "", "MO"], ["Salma", 2, "", "ST"], ["Ayla", 2, "", "MO"], ["Hind", 2, "", "ST"], ["Mira", 2, "", "MO"], ["Reem", 2, "", "ST"]],
+        surnames: [["Haddad", 10], ["Khoury", 10], ["Nasser", 10], ["Mansour", 10], ["Saleh", 10], ["Hamdan", 7], ["Khalil", 7], ["Sabbagh", 7], ["Najjar", 7], ["Said", 7], ["Yousef", 5], ["Awad", 5], ["Darwish", 5], ["Jaber", 5], ["Salem", 5], ["Rahman", 5], ["Hijazi", 3], ["Barakat", 3], ["Amin", 3], ["Farah", 3], ["Habib", 3], ["Issa", 3], ["Kassab", 3], ["Masri", 3], ["Naim", 2], ["Qasim", 2], ["Shami", 2], ["Tamimi", 2], ["Zahran", 2], ["Zaid", 2]],
+        regnalMale: [["Harun", 10], ["Mansur", 10], ["Mahmud", 10], ["Saladin", 10], ["Umar", 10], ["Hisham", 7], ["Walid", 7], ["Sulayman", 7]],
+        regnalFemale: [["Zubayda", 10], ["Shajar al-Durr", 10], ["Khayzuran", 10], ["Buran", 10], ["Arwa", 10], ["Zenobia", 7], ["Sitt al-Mulk", 7], ["Asma", 7]],
+        holy: [["Abdul Qadir", 10], ["Rabia", 10], ["Junayd", 10], ["Hallaj", 10], ["Ghazali", 10], ["Ahmad Rifai", 7], ["Bishr", 7], ["Shibli", 7], ["Dhul-Nun", 7], ["Hasan al-Basri", 7], ["Ibn Arabi", 5], ["Jalal", 5]],
+        recentMale: ["Yazan", "Adam", "Zayd", "Amir", "Hamza", "Omar", "Yusuf", "Ayman", "Hadi", "Majid", "Bilal", "Tariq", "Ziad", "Rami", "Karim"],
+        recentFemale: ["Lina", "Sara", "Rania", "Yasmin", "Noor", "Dana", "Maya", "Jana", "Hala", "Lara", "Layan", "Rama", "Tala", "Ayla", "Mira"],
+        holyForms: [["Sheikh {n}", 60], ["Imam {n}", 25], ["Sufi {n}", 15]],
+        rulerForms: { male: [["Caliph {m}", 35], ["Sultan {m}", 35], ["Emir {m}", 30]], female: [["Queen {f}", 50], ["Sultana {f}", 30], ["Princess {f}", 20]] }
+      }
+    },
+    persian: {
+      historic: {
+        male: [["Arash", 10], ["Babak", 10], ["Behzad", 10], ["Farhad", 10], ["Kaveh", 10], ["Mehrdad", 7], ["Bijan", 7], ["Piruz", 7], ["Shahin", 7], ["Tahmasp", 7], ["Hormoz", 5], ["Vahid", 5], ["Parviz", 5], ["Bizhan", 5], ["Farrokh", 5], ["Sohrab", 5], ["Rostam", 3], ["Zal", 3], ["Siavash", 3], ["Jamshid", 3], ["Manuchehr", 3], ["Kayvan", 3], ["Navid", 3], ["Hushang", 3], ["Cyrus", 2, "r"], ["Darius", 2, "r"], ["Xerxes", 2, "r"], ["Ardashir", 2, "r"], ["Shapur", 2, "r"], ["Khosrow", 2, "r"]],
+        female: [["Shirin", 10], ["Farah", 10], ["Roxana", 10], ["Parisa", 10], ["Mahin", 10], ["Azadeh", 7], ["Banu", 7], ["Dilara", 7], ["Gulnar", 7], ["Shahrbanu", 7], ["Laleh", 5], ["Nahid", 5], ["Soraya", 5], ["Mahtab", 5], ["Golnar", 5], ["Yasamin", 5], ["Roya", 3], ["Simin", 3], ["Zarrin", 3], ["Mina", 3], ["Pari", 3], ["Nasrin", 3], ["Fereshteh", 3], ["Mehri", 3], ["Pourandokht", 2, "r"], ["Azarmidokht", 2, "r"], ["Atossa", 2, "r"], ["Amestris", 2, "r"], ["Parysatis", 2, "r"], ["Stateira", 2, "r"]],
+        regnalMale: [["Cyrus", 10], ["Darius", 10], ["Xerxes", 10], ["Ardashir", 10], ["Shapur", 10], ["Khosrow", 7], ["Bahram", 7], ["Kavad", 7]],
+        regnalFemale: [["Pourandokht", 10], ["Azarmidokht", 10], ["Atossa", 10], ["Amestris", 10], ["Parysatis", 10], ["Stateira", 7], ["Shirin", 7], ["Roxana", 7]],
+        holy: [["Rumi", 10], ["Hafez", 10], ["Saadi", 10], ["Attar", 10], ["Shams", 10], ["Khayyam", 7], ["Bayazid", 7], ["Sanai", 7], ["Jami", 7], ["Nezami", 7], ["Ferdowsi", 5], ["Sohravardi", 5]],
+        holyForms: [["Sheikh {n}", 50], ["Sufi {n}", 30], ["Dervish {n}", 20]],
+        rulerForms: { male: [["Shah {m}", 50], ["Satrap {m}", 30], ["Prince {m}", 20]], female: [["Queen {f}", 70], ["Princess {f}", 30]] }
+      },
+      modern: {
+        male: [["Reza", 10, "", "ST MO"], ["Hossein", 10, "", "ST MO"], ["Mohammad", 10, "", "ST MO"], ["Ali", 10, "", "ST MO"], ["Mehdi", 10, "", "ST MO"], ["Amir", 7, "", "ST"], ["Hamid", 7, "", "ST"], ["Saeed", 7, "", "ST"], ["Majid", 7, "", "ST"], ["Davoud", 7, "", "ST"], ["Ebrahim", 5, "", "ST"], ["Kamran", 5, "", "ST"], ["Farhad", 5, "", "ST"], ["Babak", 5, "", "ST"], ["Behnam", 5, "", "ST"], ["Arash", 5, "", "ST"], ["Payam", 3, "", "ST"], ["Mojtaba", 3, "", "ST"], ["Sina", 3, "", "MO"], ["Pouya", 3, "", "MO"], ["Parsa", 3, "", "MO"], ["Arman", 3, "", "MO"], ["Ehsan", 3, "", "ST"], ["Navid", 3, "", "MO"], ["Shahram", 2, "", "ST"], ["Mostafa", 2, "", "ST"], ["Kian", 2, "", "MO"], ["Omid", 2, "", "ST"], ["Nima", 2, "", "ST"], ["Kaveh", 2, "", "ST"], ["Hadi", 2, "", "ST"], ["Morteza", 2, "", "ST"], ["Bahman", 2, "", "ST"], ["Farzad", 2, "", "ST"], ["Siamak", 2, "", "ST"], ["Arad", 2, "", "MO"], ["Radin", 2, "", "MO"], ["Ariya", 2, "", "MO"], ["Amir-Ali", 2, "", "MO"], ["Armin", 2, "", "MO"], ["Bardia", 2, "", "MO"], ["Dariush", 2, "", "MO"], ["Kasra", 2, "", "MO"], ["Shayan", 2, "", "MO"]],
+        female: [["Maryam", 10, "", "ST MO"], ["Zahra", 10, "", "ST MO"], ["Fatemeh", 10, "", "ST MO"], ["Narges", 10, "", "ST MO"], ["Sara", 10, "", "ST MO"], ["Leila", 7, "", "ST"], ["Mina", 7, "", "MO"], ["Parisa", 7, "", "ST"], ["Shirin", 7, "", "ST"], ["Nasrin", 7, "", "ST"], ["Mahsa", 5, "", "ST"], ["Neda", 5, "", "ST"], ["Elham", 5, "", "ST"], ["Samira", 5, "", "ST"], ["Azadeh", 5, "", "ST"], ["Golnaz", 5, "", "ST"], ["Shabnam", 3, "", "ST"], ["Yasaman", 3, "", "ST"], ["Niloufar", 3, "", "ST"], ["Atefeh", 3, "", "ST"], ["Roya", 3, "", "ST"], ["Setareh", 3, "", "ST"], ["Negar", 3, "", "ST"], ["Pegah", 3, "", "ST"], ["Sepideh", 2, "", "ST"], ["Tannaz", 2, "", "ST"], ["Ladan", 2, "", "ST"], ["Mitra", 2, "", "ST"], ["Farzaneh", 2, "", "ST"], ["Homa", 2, "", "ST"], ["Haniyeh", 2, "", "ST"], ["Raha", 2, "", "MO"], ["Baran", 2, "", "MO"], ["Dorsa", 2, "", "MO"], ["Hasti", 2, "", "MO"], ["Yasna", 2, "", "MO"], ["Avina", 2, "", "MO"], ["Elnaz", 2, "", "MO"], ["Ghazal", 2, "", "MO"], ["Diana", 2, "", "MO"], ["Kiana", 2, "", "MO"], ["Melika", 2, "", "MO"], ["Nika", 2, "", "MO"], ["Romina", 2, "", "MO"], ["Tara", 2, "", "MO"]],
+        surnames: [["Hosseini", 10], ["Mohammadi", 10], ["Ahmadi", 10], ["Karimi", 10], ["Rezaei", 10], ["Moradi", 7], ["Hashemi", 7], ["Jafari", 7], ["Ebrahimi", 7], ["Rahimi", 7], ["Sadeghi", 5], ["Mousavi", 5], ["Kazemi", 5], ["Ghorbani", 5], ["Rostami", 5], ["Abbasi", 5], ["Tehrani", 3], ["Esfahani", 3], ["Shirazi", 3], ["Tabrizi", 3], ["Mashhadi", 3], ["Kermani", 3], ["Yazdi", 3], ["Gilani", 3], ["Khorasani", 2], ["Mazandarani", 2], ["Zand", 2], ["Farahani", 2], ["Bakhtiari", 2], ["Qashqai", 2]],
+        regnalMale: [["Cyrus", 10], ["Darius", 10], ["Xerxes", 10], ["Ardashir", 10], ["Shapur", 10], ["Khosrow", 7], ["Bahram", 7], ["Kavad", 7]],
+        regnalFemale: [["Pourandokht", 10], ["Azarmidokht", 10], ["Atossa", 10], ["Amestris", 10], ["Parysatis", 10], ["Stateira", 7], ["Shirin", 7], ["Roxana", 7]],
+        holy: [["Rumi", 10], ["Hafez", 10], ["Saadi", 10], ["Attar", 10], ["Shams", 10], ["Khayyam", 7], ["Bayazid", 7], ["Sanai", 7], ["Jami", 7], ["Nezami", 7], ["Ferdowsi", 5], ["Sohravardi", 5]],
+        recentMale: ["Parsa", "Arman", "Kian", "Sina", "Pouya", "Arad", "Radin", "Ariya", "Amir-Ali", "Armin", "Bardia", "Dariush", "Kasra", "Shayan", "Navid"],
+        recentFemale: ["Dorsa", "Hasti", "Baran", "Raha", "Yasna", "Avina", "Elnaz", "Ghazal", "Diana", "Kiana", "Melika", "Nika", "Romina", "Tara", "Mina"],
+        holyForms: [["Sheikh {n}", 50], ["Sufi {n}", 30], ["Dervish {n}", 20]],
+        rulerForms: { male: [["Shah {m}", 50], ["Satrap {m}", 30], ["Prince {m}", 20]], female: [["Queen {f}", 70], ["Princess {f}", 30]] }
+      }
+    },
     egyptian: {
       historic: {
-        male: [["Ramesses", 10, "", "AN"], ["Pachomius", 10, "", "MD"], ["Thutmose", 10, "", "AN"], ["Shenouda", 10, "", "MD"], ["Amenhotep", 10, "", "AN"], ["Antony", 7, "", "MD"], ["Seti", 7, "", "AN"], ["Athanasius", 7, "", "MD"], ["Khufu", 7, "", "AN"], ["Cyril", 7, "", "MD"], ["Khafre", 5, "", "AN"], ["Macarius", 5, "", "MD"], ["Menkaure", 5, "", "AN"], ["Mina", 5, "", "MD"], ["Djoser", 5, "", "AN"], ["Dioscorus", 5, "", "MD"], ["Senusret", 5, "", "AN"], ["Amenemhat", 5, "", "AN"], ["Ahmose", 3, "", "AN"], ["Merneptah", 3, "", "AN"], ["Psamtik", 3, "", "AN"], ["Necho", 3, "", "AN"], ["Taharqa", 3, "", "AN"], ["Piye", 3, "", "AN"], ["Tutankhamun", 3, "", "AN"], ["Akhenaten", 3, "", "AN"], ["Horemheb", 2, "", "AN"], ["Imhotep", 2, "", "AN"], ["Hori", 2, "", "AN"], ["Nakht", 2, "", "AN"], ["Sennedjem", 2, "", "AN"], ["Ptolemy", 2, "", "AN"], ["Khaemwaset", 2, "", "AN"], ["Ptahhotep", 2, "", "AN"], ["Kagemni", 2, "", "AN"], ["Ankhsheshonq", 2, "", "AN"], ["Petosiris", 2, "", "AN"]],
-        female: [["Nefertiti", 10, "", "AN"], ["Demiana", 10, "", "MD"], ["Hatshepsut", 10, "", "AN"], ["Marina", 10, "", "MD"], ["Cleopatra", 10, "", "AN"], ["Verena", 7, "", "MD"], ["Nefertari", 7, "", "AN"], ["Irene", 7, "", "MD"], ["Tiye", 7, "", "AN"], ["Dorothea", 7, "", "MD"], ["Ankhesenamun", 5, "", "AN"], ["Eudoxia", 5, "", "MD"], ["Meritaten", 5, "", "AN"], ["Hypatia", 5, "", "MD"], ["Sobekneferu", 5, "", "AN"], ["Mary", 5, "", "MD"], ["Nitocris", 5, "", "AN"], ["Merneith", 5, "", "AN"], ["Khentkaus", 3, "", "AN"], ["Ahhotep", 3, "", "AN"], ["Mutnodjmet", 3, "", "AN"], ["Henutmire", 3, "", "AN"], ["Tuya", 3, "", "AN"], ["Iset", 3, "", "AN"], ["Bintanath", 3, "", "AN"], ["Arsinoe", 3, "", "AN"], ["Berenice", 2, "", "AN"], ["Tausret", 2, "", "AN"], ["Meresankh", 2, "", "AN"], ["Hetepheres", 2, "", "AN"], ["Nofret", 2, "", "AN"], ["Neferura", 2, "", "AN"], ["Satiah", 2, "", "AN"], ["Kiya", 2, "", "AN"], ["Henutsen", 2, "", "AN"]],
+        male: [["Pachomius", 10, "", "MD"], ["Shenouda", 10, "", "MD"], ["Antony", 10, "", "MD"], ["Seti", 10, "", "AN"], ["Athanasius", 10, "", "MD"], ["Cyril", 7, "", "MD"], ["Khafre", 7, "", "AN"], ["Macarius", 7, "", "MD"], ["Menkaure", 7, "", "AN"], ["Mina", 7, "", "MD"], ["Djoser", 5, "", "AN"], ["Dioscorus", 5, "", "MD"], ["Senusret", 5, "", "AN"], ["Amenemhat", 5, "", "AN"], ["Ahmose", 5, "", "AN"], ["Merneptah", 5, "", "AN"], ["Psamtik", 3, "", "AN"], ["Necho", 3, "", "AN"], ["Taharqa", 3, "", "AN"], ["Piye", 3, "", "AN"], ["Horemheb", 3, "", "AN"], ["Imhotep", 3, "", "AN"], ["Hori", 3, "", "AN"], ["Nakht", 3, "", "AN"], ["Sennedjem", 2, "", "AN"], ["Khaemwaset", 2, "", "AN"], ["Ptahhotep", 2, "", "AN"], ["Kagemni", 2, "", "AN"], ["Ankhsheshonq", 2, "", "AN"], ["Petosiris", 2, "", "AN"], ["Ramesses", 2, "r", "AN"], ["Thutmose", 2, "r", "AN"], ["Amenhotep", 2, "r", "AN"], ["Khufu", 2, "r", "AN"], ["Tutankhamun", 2, "r", "AN"], ["Akhenaten", 2, "r", "AN"], ["Ptolemy", 2, "r", "AN"]],
+        female: [["Demiana", 10, "", "MD"], ["Marina", 10, "", "MD"], ["Verena", 10, "", "MD"], ["Irene", 10, "", "MD"], ["Dorothea", 10, "", "MD"], ["Eudoxia", 7, "", "MD"], ["Meritaten", 7, "", "AN"], ["Sobekneferu", 7, "", "AN"], ["Mary", 7, "", "MD"], ["Nitocris", 7, "", "AN"], ["Merneith", 5, "", "AN"], ["Khentkaus", 5, "", "AN"], ["Ahhotep", 5, "", "AN"], ["Mutnodjmet", 5, "", "AN"], ["Henutmire", 5, "", "AN"], ["Tuya", 5, "", "AN"], ["Iset", 3, "", "AN"], ["Bintanath", 3, "", "AN"], ["Arsinoe", 3, "", "AN"], ["Berenice", 3, "", "AN"], ["Tausret", 3, "", "AN"], ["Meresankh", 3, "", "AN"], ["Hetepheres", 3, "", "AN"], ["Nofret", 3, "", "AN"], ["Neferura", 2, "", "AN"], ["Satiah", 2, "", "AN"], ["Kiya", 2, "", "AN"], ["Henutsen", 2, "", "AN"], ["Nefertiti", 2, "r", "AN"], ["Hatshepsut", 2, "r", "AN"], ["Cleopatra", 2, "r", "AN"], ["Nefertari", 2, "r", "AN"], ["Tiye", 2, "r", "AN"], ["Ankhesenamun", 2, "r", "AN"], ["Hypatia", 2, "r", "MD"]],
         regnalMale: [["Ramesses", 10], ["Thutmose", 10], ["Amenhotep", 10], ["Seti", 10], ["Ptolemy", 10], ["Psamtik", 7], ["Senusret", 7], ["Ahmose", 7]],
         regnalFemale: [["Hatshepsut", 10], ["Cleopatra", 10], ["Nefertiti", 10], ["Tausret", 10], ["Sobekneferu", 10], ["Nitocris", 7], ["Arsinoe", 7], ["Berenice", 7]],
         holy: [["Imhotep", 10], ["Ptahhotep", 10], ["Kagemni", 10], ["Hardjedef", 10], ["Khaemwaset", 10], ["Ankhsheshonq", 7], ["Petosiris", 7], ["Pachomius", 7], ["Shenouda", 7], ["Antony", 7], ["Macarius", 5], ["Athanasius", 5]],
@@ -92897,8 +93243,8 @@ var people_default = {
     },
     ethiopian: {
       historic: {
-        male: [["Ezana", 10], ["Kaleb", 10], ["Lalibela", 10], ["Dawit", 10], ["Yeshaq", 10], ["Menelik", 7], ["Tewodros", 7], ["Yohannes", 7], ["Susenyos", 7], ["Fasilides", 7], ["Iyasu", 5], ["Naod", 5], ["Eskender", 5], ["Zara Yaqob", 5], ["Lebna Dengel", 5], ["Amda Seyon", 5], ["Yekuno Amlak", 5], ["Sarsa Dengel", 5], ["Baeda Maryam", 3], ["Gebre Mesqel", 3], ["Tekle Haymanot", 3], ["Haile", 3], ["Gebre", 3], ["Kidane", 3], ["Tesfaye", 3], ["Mulugeta", 3], ["Getachew", 2], ["Girma", 2], ["Bekele", 2], ["Tadesse", 2], ["Desta", 2], ["Wolde", 2]],
-        female: [["Eleni", 10], ["Mentewab", 10], ["Zewditu", 10], ["Taytu", 10], ["Menen", 10], ["Sabla Wengel", 7], ["Romane Work", 7], ["Judith", 7], ["Almaz", 7], ["Berhane", 7], ["Tigist", 5], ["Aster", 5], ["Hirut", 5], ["Selam", 5], ["Mekdes", 5], ["Meseret", 5], ["Tsehay", 5], ["Genet", 5], ["Etenesh", 3], ["Birtukan", 3], ["Yeshi", 3], ["Marta", 3], ["Worknesh", 3], ["Aberash", 3], ["Mulu", 3], ["Alem", 3], ["Ababa", 2], ["Tirunesh", 2], ["Senait", 2], ["Hiwot", 2], ["Rahel", 2]],
+        male: [["Dawit", 10], ["Yeshaq", 10], ["Yohannes", 10], ["Susenyos", 10], ["Fasilides", 10], ["Iyasu", 7], ["Naod", 7], ["Eskender", 7], ["Lebna Dengel", 7], ["Amda Seyon", 7], ["Yekuno Amlak", 5], ["Sarsa Dengel", 5], ["Baeda Maryam", 5], ["Gebre Mesqel", 5], ["Tekle Haymanot", 5], ["Haile", 5], ["Gebre", 3], ["Kidane", 3], ["Tesfaye", 3], ["Mulugeta", 3], ["Getachew", 3], ["Girma", 3], ["Bekele", 3], ["Tadesse", 3], ["Desta", 2], ["Wolde", 2], ["Ezana", 2, "r"], ["Kaleb", 2, "r"], ["Lalibela", 2, "r"], ["Menelik", 2, "r"], ["Tewodros", 2, "r"], ["Zara Yaqob", 2, "r"]],
+        female: [["Eleni", 10], ["Romane Work", 10], ["Almaz", 10], ["Berhane", 10], ["Tigist", 10], ["Aster", 7], ["Hirut", 7], ["Selam", 7], ["Mekdes", 7], ["Meseret", 7], ["Tsehay", 5], ["Genet", 5], ["Etenesh", 5], ["Birtukan", 5], ["Yeshi", 5], ["Marta", 5], ["Worknesh", 3], ["Aberash", 3], ["Mulu", 3], ["Alem", 3], ["Ababa", 3], ["Tirunesh", 3], ["Senait", 3], ["Hiwot", 3], ["Rahel", 2], ["Mentewab", 2, "r"], ["Zewditu", 2, "r"], ["Taytu", 2, "r"], ["Menen", 2, "r"], ["Sabla Wengel", 2, "r"], ["Judith", 2, "r"]],
         regnalMale: [["Ezana", 10], ["Kaleb", 10], ["Lalibela", 10], ["Zara Yaqob", 10], ["Lebna Dengel", 10], ["Fasilides", 7], ["Tewodros", 7], ["Yohannes", 7]],
         regnalFemale: [["Eleni", 10], ["Mentewab", 10], ["Sabla Wengel", 10], ["Zewditu", 10], ["Taytu", 10], ["Menen", 7], ["Judith", 7], ["Romane Work", 7]],
         holy: [["Tekle Haymanot", 10], ["Yared", 10], ["Lalibela", 10], ["Aregawi", 10], ["Frumentius", 10], ["Gebre Menfes Kidus", 7], ["Zara Yaqob", 7], ["Estifanos", 7], ["Ewostatewos", 7], ["Mikael", 7], ["Gabriel", 5], ["Hanna", 5]],
@@ -92906,8 +93252,8 @@ var people_default = {
         rulerForms: { male: [["Emperor {m}", 60], ["King {m}", 30], ["Negus {m}", 10]], female: [["Empress {f}", 60], ["Queen {f}", 40]] }
       },
       modern: {
-        male: [["Solomon", 10, "", "ST MO"], ["Daniel", 10, "", "ST MO"], ["Michael", 10, "", "ST MO"], ["Tsegaye", 10, "", "ST MO"], ["Haile", 10, "", "ST"], ["Abel", 7, "", "MO"], ["Tewodros", 7, "", "ST"], ["Dawit", 7, "", "MO"], ["Menelik", 7, "", "ST"], ["Yonas", 7, "", "MO"], ["Tekle", 5, "", "ST"], ["Samuel", 5, "", "MO"], ["Gebre", 5, "", "ST"], ["Nahom", 5, "", "MO"], ["Wolde", 5, "", "ST"], ["Kaleb", 5, "", "MO"], ["Kidane", 5, "", "ST"], ["Natnael", 5, "", "MO"], ["Tesfaye", 3, "", "ST"], ["Henok", 3, "", "MO"], ["Mulugeta", 3, "", "ST"], ["Biruk", 3, "", "MO"], ["Getachew", 3, "", "ST"], ["Yared", 3, "", "MO"], ["Girma", 3, "", "ST"], ["Eyob", 3, "", "MO"], ["Bekele", 2, "", "ST"], ["Robel", 2, "", "MO"], ["Tadesse", 2, "", "ST"], ["Amanuel", 2, "", "MO"], ["Desta", 2, "", "ST"], ["Ephrem", 2, "", "MO"], ["Mengistu", 2, "", "ST"], ["Kirubel", 2, "", "MO"]],
-        female: [["Marta", 10, "", "ST MO"], ["Hiwot", 10, "", "ST MO"], ["Rahel", 10, "", "ST MO"], ["Senait", 10, "", "ST MO"], ["Zewditu", 10, "", "ST"], ["Hanna", 7, "", "MO"], ["Taytu", 7, "", "ST"], ["Bethlehem", 7, "", "MO"], ["Menen", 7, "", "ST"], ["Selam", 7, "", "MO"], ["Mulu", 5, "", "ST"], ["Meron", 5, "", "MO"], ["Alem", 5, "", "ST"], ["Rediet", 5, "", "MO"], ["Aster", 5, "", "ST"], ["Liya", 5, "", "MO"], ["Tsehay", 5, "", "ST"], ["Saron", 5, "", "MO"], ["Almaz", 3, "", "ST"], ["Eden", 3, "", "MO"], ["Tigist", 3, "", "ST"], ["Mahlet", 3, "", "MO"], ["Berhane", 3, "", "ST"], ["Meklit", 3, "", "MO"], ["Ababa", 3, "", "ST"], ["Tsion", 3, "", "MO"], ["Aberash", 2, "", "ST"], ["Blen", 2, "", "MO"], ["Etenesh", 2, "", "ST"], ["Heran", 2, "", "MO"], ["Yeshi", 2, "", "ST"], ["Kidist", 2, "", "MO"], ["Worknesh", 2, "", "ST"], ["Lidya", 2, "", "MO"]],
+        male: [["Solomon", 10, "", "ST MO"], ["Daniel", 10, "", "ST MO"], ["Michael", 10, "", "ST MO"], ["Tsegaye", 10, "", "ST MO"], ["Haile", 10, "", "ST"], ["Abel", 7, "", "MO"], ["Dawit", 7, "", "MO"], ["Yonas", 7, "", "MO"], ["Tekle", 7, "", "ST"], ["Samuel", 7, "", "MO"], ["Gebre", 5, "", "ST"], ["Nahom", 5, "", "MO"], ["Wolde", 5, "", "ST"], ["Kaleb", 5, "", "MO"], ["Kidane", 5, "", "ST"], ["Natnael", 5, "", "MO"], ["Tesfaye", 3, "", "ST"], ["Henok", 3, "", "MO"], ["Mulugeta", 3, "", "ST"], ["Biruk", 3, "", "MO"], ["Getachew", 3, "", "ST"], ["Yared", 3, "", "MO"], ["Girma", 3, "", "ST"], ["Eyob", 3, "", "MO"], ["Bekele", 2, "", "ST"], ["Robel", 2, "", "MO"], ["Tadesse", 2, "", "ST"], ["Amanuel", 2, "", "MO"], ["Desta", 2, "", "ST"], ["Ephrem", 2, "", "MO"], ["Mengistu", 2, "", "ST"], ["Kirubel", 2, "", "MO"], ["Tewodros", 2, "r", "ST"], ["Menelik", 2, "r", "ST"]],
+        female: [["Marta", 10, "", "ST MO"], ["Hiwot", 10, "", "ST MO"], ["Rahel", 10, "", "ST MO"], ["Senait", 10, "", "ST MO"], ["Hanna", 10, "", "MO"], ["Bethlehem", 7, "", "MO"], ["Selam", 7, "", "MO"], ["Mulu", 7, "", "ST"], ["Meron", 7, "", "MO"], ["Alem", 7, "", "ST"], ["Rediet", 5, "", "MO"], ["Aster", 5, "", "ST"], ["Liya", 5, "", "MO"], ["Tsehay", 5, "", "ST"], ["Saron", 5, "", "MO"], ["Almaz", 5, "", "ST"], ["Eden", 3, "", "MO"], ["Tigist", 3, "", "ST"], ["Mahlet", 3, "", "MO"], ["Berhane", 3, "", "ST"], ["Meklit", 3, "", "MO"], ["Ababa", 3, "", "ST"], ["Tsion", 3, "", "MO"], ["Aberash", 3, "", "ST"], ["Blen", 2, "", "MO"], ["Etenesh", 2, "", "ST"], ["Heran", 2, "", "MO"], ["Yeshi", 2, "", "ST"], ["Kidist", 2, "", "MO"], ["Worknesh", 2, "", "ST"], ["Lidya", 2, "", "MO"], ["Zewditu", 2, "r", "ST"], ["Taytu", 2, "r", "ST"], ["Menen", 2, "r", "ST"]],
         regnalMale: [["Menelik", 10], ["Haile Selassie", 10], ["Tewodros", 10], ["Yohannes", 10], ["Iyasu", 10], ["Sahle Selassie", 7], ["Zara Yaqob", 7], ["Sarsa Dengel", 7]],
         regnalFemale: [["Zewditu", 10], ["Taytu", 10], ["Menen", 10], ["Eleni", 10], ["Mentewab", 10], ["Sabla Wengel", 7], ["Judith", 7], ["Romane Work", 7]],
         holy: [["Tekle Haymanot", 10], ["Yared", 10], ["Lalibela", 10], ["Aregawi", 10], ["Frumentius", 10], ["Gebre Menfes Kidus", 7], ["Takla Haymanot", 7], ["Abune Basilios", 7], ["Estifanos", 7], ["Mikael", 7], ["Gabriel", 5], ["Hanna", 5]],
@@ -92919,8 +93265,8 @@ var people_default = {
     },
     bantu: {
       historic: {
-        male: [["Shaka", 10], ["Dingane", 10], ["Mpande", 10], ["Cetshwayo", 10], ["Dinuzulu", 10], ["Moshoeshoe", 7], ["Sekhukhune", 7], ["Khama", 7], ["Sobhuza", 7], ["Mzilikazi", 7], ["Lobengula", 5], ["Mswati", 5], ["Mutesa", 5], ["Mwanga", 5], ["Kamanya", 5], ["Chwa", 5], ["Kimera", 5], ["Hintsa", 5], ["Sandile", 3], ["Maqoma", 3], ["Ngqika", 3], ["Phalo", 3], ["Mohlomi", 3], ["Lerotholi", 3], ["Letsie", 3], ["Makaba", 3], ["Sechele", 2], ["Soshangane", 2], ["Zwangendaba", 2], ["Mzila", 2], ["Mutota", 2]],
-        female: [["Nandi", 10], ["Mnkabayi", 10], ["Manthatisi", 10], ["Nzinga", 10], ["Kimpa Vita", 10], ["Nehanda", 7], ["Mawa", 7], ["Nomusa", 7], ["Nomvula", 7], ["Thandi", 7], ["Zandile", 5], ["Nokuzola", 5], ["Thembeka", 5], ["Ntombi", 5], ["Nosipho", 5], ["Nonhlanhla", 5], ["Lindiwe", 5], ["Zodwa", 5], ["Busisiwe", 3], ["Zanele", 3], ["Nobuhle", 3], ["Mbali", 3], ["Thandiwe", 3], ["Nokuthula", 3], ["Thembi", 3], ["Sibongile", 3], ["Dudu", 2], ["Ayanda", 2], ["Phindile", 2], ["Nomsa", 2], ["Lungile", 2], ["Zinhle", 2]],
+        male: [["Mpande", 10], ["Dinuzulu", 10], ["Sekhukhune", 10], ["Khama", 10], ["Sobhuza", 10], ["Lobengula", 7], ["Mswati", 7], ["Mwanga", 7], ["Kamanya", 7], ["Chwa", 7], ["Kimera", 5], ["Hintsa", 5], ["Sandile", 5], ["Maqoma", 5], ["Ngqika", 5], ["Phalo", 5], ["Mohlomi", 3], ["Lerotholi", 3], ["Letsie", 3], ["Makaba", 3], ["Sechele", 3], ["Soshangane", 3], ["Zwangendaba", 3], ["Mzila", 3], ["Mutota", 2], ["Shaka", 2, "r"], ["Dingane", 2, "r"], ["Cetshwayo", 2, "r"], ["Moshoeshoe", 2, "r"], ["Mzilikazi", 2, "r"], ["Mutesa", 2, "r"]],
+        female: [["Mawa", 10], ["Nomusa", 10], ["Nomvula", 10], ["Thandi", 10], ["Zandile", 10], ["Nokuzola", 7], ["Thembeka", 7], ["Ntombi", 7], ["Nosipho", 7], ["Nonhlanhla", 7], ["Lindiwe", 5], ["Zodwa", 5], ["Busisiwe", 5], ["Zanele", 5], ["Nobuhle", 5], ["Mbali", 5], ["Thandiwe", 3], ["Nokuthula", 3], ["Thembi", 3], ["Sibongile", 3], ["Dudu", 3], ["Ayanda", 3], ["Phindile", 3], ["Nomsa", 3], ["Lungile", 2], ["Zinhle", 2], ["Nandi", 2, "r"], ["Mnkabayi", 2, "r"], ["Manthatisi", 2, "r"], ["Nzinga", 2, "r"], ["Kimpa Vita", 2, "r"], ["Nehanda", 2, "r"]],
         regnalMale: [["Shaka", 10], ["Dingane", 10], ["Cetshwayo", 10], ["Moshoeshoe", 10], ["Mutesa", 10], ["Mwanga", 7], ["Sobhuza", 7], ["Lobengula", 7]],
         regnalFemale: [["Nzinga", 10], ["Nandi", 10], ["Manthatisi", 10], ["Labotsibeni", 10], ["Mnkabayi", 10], ["Mawa", 7], ["Dzeliwe", 7], ["Lojiba", 7]],
         holy: [["Ntsikana", 10], ["Nongqawuse", 10], ["Mlanjeni", 10], ["Kinjikitile", 10], ["Nehanda", 10], ["Kimpa Vita", 7], ["Simon Kimbangu", 7], ["Isaiah Shembe", 7], ["Mugo wa Kibiru", 7], ["John Chilembwe", 7], ["Mbuya Nehanda", 5], ["Mkabayi", 5]],
@@ -92942,8 +93288,8 @@ var people_default = {
     },
     "west-african": {
       historic: {
-        male: [["Sundiata", 10], ["Musa", 10], ["Sunni Ali", 10], ["Askia", 10], ["Osei Tutu", 10], ["Opoku Ware", 7], ["Agaja", 7], ["Ghezo", 7], ["Glele", 7], ["Behanzin", 7], ["Ewuare", 5], ["Esigie", 5], ["Orhogbua", 5], ["Kwame", 5], ["Kofi", 5], ["Kwabena", 5], ["Kwasi", 5], ["Yaw", 5], ["Kojo", 3], ["Kwaku", 3], ["Kwadwo", 3], ["Prempeh", 3], ["Ahmadu", 3], ["Samori", 3], ["Mamadou", 3], ["Ousmane", 3], ["Sekou", 2], ["Amadou", 2], ["Abdoulaye", 2], ["Ibrahim", 2], ["Moussa", 2]],
-        female: [["Akosua", 10], ["Adwoa", 10], ["Abenaa", 10], ["Akua", 10], ["Yaa", 10], ["Afua", 7], ["Ama", 7], ["Efua", 7], ["Esi", 7], ["Amina", 7], ["Idia", 5], ["Yaa Asantewaa", 5], ["Nana Asma'u", 5], ["Aminata", 5], ["Mariama", 5], ["Kadiatou", 5], ["Hawa", 5], ["Awa", 5], ["Fatoumata", 3], ["Bintou", 3], ["Khady", 3], ["Rokia", 3], ["Fatima", 3], ["Ndate Yalla", 3], ["Afua Kobi", 3], ["Yaa Akyaa", 3], ["Ahebi Ugbabe", 2], ["Sarraounia", 2], ["Aissata", 2], ["Safiatou", 2], ["Maimouna", 2]],
+        male: [["Musa", 10], ["Agaja", 10], ["Ghezo", 10], ["Glele", 10], ["Behanzin", 10], ["Ewuare", 7], ["Esigie", 7], ["Orhogbua", 7], ["Kwame", 7], ["Kofi", 7], ["Kwabena", 5], ["Kwasi", 5], ["Yaw", 5], ["Kojo", 5], ["Kwaku", 5], ["Kwadwo", 5], ["Prempeh", 3], ["Ahmadu", 3], ["Mamadou", 3], ["Ousmane", 3], ["Sekou", 3], ["Amadou", 3], ["Abdoulaye", 3], ["Ibrahim", 3], ["Moussa", 2], ["Sundiata", 2, "r"], ["Sunni Ali", 2, "r"], ["Askia", 2, "r"], ["Osei Tutu", 2, "r"], ["Opoku Ware", 2, "r"], ["Samori", 2, "r"]],
+        female: [["Akosua", 10], ["Adwoa", 10], ["Abenaa", 10], ["Akua", 10], ["Yaa", 10], ["Afua", 7], ["Ama", 7], ["Efua", 7], ["Esi", 7], ["Amina", 7], ["Aminata", 5], ["Mariama", 5], ["Kadiatou", 5], ["Hawa", 5], ["Awa", 5], ["Fatoumata", 5], ["Bintou", 3], ["Khady", 3], ["Rokia", 3], ["Fatima", 3], ["Afua Kobi", 3], ["Yaa Akyaa", 3], ["Aissata", 3], ["Safiatou", 3], ["Maimouna", 2], ["Idia", 2, "r"], ["Yaa Asantewaa", 2, "r"], ["Nana Asma'u", 2, "r"], ["Ndate Yalla", 2, "r"], ["Ahebi Ugbabe", 2, "r"], ["Sarraounia", 2, "r"]],
         regnalMale: [["Sundiata", 10], ["Osei Tutu", 10], ["Opoku Ware", 10], ["Agaja", 10], ["Ghezo", 10], ["Behanzin", 7], ["Ewuare", 7], ["Askia", 7]],
         regnalFemale: [["Idia", 10], ["Amina", 10], ["Yaa Asantewaa", 10], ["Ndate Yalla", 10], ["Afua Kobi", 10], ["Yaa Akyaa", 7], ["Ahebi Ugbabe", 7], ["Sarraounia", 7]],
         holy: [["Ahmadu Bamba", 10], ["Usman dan Fodio", 10], ["Umar Tall", 10], ["Nana Asma'u", 10], ["Muhammad Bello", 10], ["Ibrahim Niasse", 7], ["Samuel Crowther", 7], ["Joseph Babalola", 7], ["Garrick Braide", 7], ["William Harris", 7], ["Mame Diarra", 5], ["Cheikh Hamallah", 5]],
@@ -93176,13 +93522,13 @@ var people_default = {
       }
     }
   },
-  families: { "anglo-saxon": "british", "norman-british": "british", welsh: "british", scottish: "british", irish: "british", cornish: "british", scandinavian: "germanic", german: "germanic", french: "romance", dutch: "germanic", iberian: "romance", italian: "romance", roman: "classical", "greek-byzantine": "classical", slavic: "slavic", steppe: "steppe", "arabic-persian": "near-east", egyptian: "near-east", ethiopian: "africa", bantu: "africa", "west-african": "africa", indian: "south-asia", chinese: "east-asia", japanese: "east-asia", korean: "east-asia", aztec: "americas", maya: "americas", andean: "americas", polynesian: "pacific", american: "settler", spanish: "romance", portuguese: "romance", greek: "classical", byzantine: "classical" },
-  resolve: { general: "norman-british", norse: "scandinavian", celtic: { even: ["welsh", "scottish", "irish", "cornish"], regions: { WAL: "welsh", COR: "cornish", SBL: "scottish", SLO: "scottish", SHH: "scottish", NSI: "scottish" } }, "anglo-saxon": { historic: "anglo-saxon", modern: "norman-british" }, maori: "polynesian", hawaiian: "polynesian", "w-polynesian": "polynesian", ottoman: { as: "arabic-persian", extra: "turkish" }, "swahili-omani": "arabic-persian", malay: { historic: "indian", modern: "arabic-persian" }, maritimeSEA: { historic: "indian", modern: "arabic-persian" }, phoenician: "arabic-persian", hellenistic: "greek-byzantine", belgian: "dutch", roman: { historic: "roman", modern: "italian" }, egyptian: { historic: "egyptian", modern: "arabic-persian" }, greek: { historic: "greek", modern: "byzantine" } },
+  families: { "anglo-saxon": "british", "norman-british": "british", welsh: "british", scottish: "british", irish: "british", cornish: "british", scandinavian: "germanic", german: "germanic", french: "romance", dutch: "germanic", iberian: "romance", italian: "romance", roman: "classical", "greek-byzantine": "classical", slavic: "slavic", steppe: "steppe", "arabic-persian": "near-east", egyptian: "near-east", ethiopian: "africa", bantu: "africa", "west-african": "africa", indian: "south-asia", chinese: "east-asia", japanese: "east-asia", korean: "east-asia", aztec: "americas", maya: "americas", andean: "americas", polynesian: "pacific", american: "settler", spanish: "romance", portuguese: "romance", greek: "classical", byzantine: "classical", turkic: "steppe", mongol: "steppe", arabic: "near-east", persian: "near-east" },
+  resolve: { general: "norman-british", norse: "scandinavian", celtic: { even: ["welsh", "scottish", "irish", "cornish"], regions: { WAL: "welsh", COR: "cornish", SBL: "scottish", SLO: "scottish", SHH: "scottish", NSI: "scottish" } }, "anglo-saxon": { historic: "anglo-saxon", modern: "norman-british" }, maori: "polynesian", hawaiian: "polynesian", "w-polynesian": "polynesian", ottoman: "turkic", "swahili-omani": "arabic", malay: { historic: "indian", modern: "arabic" }, maritimeSEA: { historic: "indian", modern: "arabic" }, phoenician: "arabic", hellenistic: "greek-byzantine", belgian: "dutch", roman: { historic: "roman", modern: "italian" }, egyptian: { historic: "egyptian", modern: "arabic" }, greek: { historic: "greek", modern: "byzantine" } },
   nearFuture: { otherShare: 0.25, sameFamilyWeight: 3, otherFamilyWeight: 1, _about: "NF and IS draw from the culture's own `modern` list, with this share of names from the other cultures' `modern` lists, each weighted by family." },
   tokens: { g: "a given name (male or female by the slot's sexShare)", gm: "a male given name", gf: "a female given name", s: "a surname; where a period has none, the slot falls back to {g}", t: "an official's title", r: "a ruler form filled with a regnal name", rm: "a male regnal name alone", rf: "a female regnal name alone", h: "a holy form filled with a holy name" },
   slotForms: { founder: { withSurnames: [["{s}", 60], ["{g} {s}", 15], ["{g}", 25]], withoutSurnames: [["{g}", 100]], sexShare: { male: 90, female: 10 } }, official: { withSurnames: [["{s}", 50], ["{t} {s}", 30], ["{g} {s}", 20]], withoutSurnames: [["{t} {g}", 50], ["{g}", 50]], sexShare: { male: 90, female: 10 } }, person: { withSurnames: [["{g}", 85], ["{s}", 15]], withoutSurnames: [["{g}", 100]], sexShare: { male: 70, female: 30 } }, monarch: { forms: [["{r}", 50], ["{rm}", 50]], sexShare: { male: 100, female: 0 } }, royalWoman: { forms: [["{rf}", 70], ["Queen {rf}", 30]] }, dynasty: { withSurnames: [["{s}", 100]], withoutSurnames: [["{g}", 100]] }, house: { withSurnames: [["{s}", 70], ["House of {s}", 30]], withoutSurnames: [["House of {g}", 100]] }, holy: { forms: [["{h}", 100]] }, givenMale: { forms: [["{gm}", 100]] }, givenFemale: { forms: [["{gf}", 100]] }, given: { forms: [["{g}", 100]], sexShare: { male: 50, female: 50 } } },
-  officialTitles: { from: "the titles module's office kind, in the culture's bynames culture (src/data/bynames.json: `officeWord` and `ranks`)", bynamesCulture: { "anglo-saxon": "anglo-saxon", "norman-british": "norman-british", welsh: "celtic", scottish: "celtic", irish: "celtic", cornish: "celtic", scandinavian: "norse", german: "general", french: "general", dutch: "general", iberian: "general", italian: "general", roman: "roman", "greek-byzantine": "greek-byzantine", slavic: "slavic", steppe: "steppe", "arabic-persian": "arabic-persian", egyptian: "egyptian", ethiopian: "ethiopian", bantu: "bantu", "west-african": "west-african", indian: "indian", chinese: "chinese", japanese: "japanese", korean: "korean", aztec: "aztec", maya: "maya", andean: "general", polynesian: "general", american: "general", spanish: "general", portuguese: "general", greek: "greek-byzantine", byzantine: "greek-byzantine" } },
-  extras: { _about: "A short set added to a culture's lists when a local culture reads it (the Ottoman, Turkish names beside the Arabic and Persian). Weight 5 each; no surnames (Turkish surnames date from 1934).", turkish: { male: [["Orhan", 5, "", "ST MO"], ["Osman", 5, "", "ST MO"], ["Ertugrul", 5, "", "ST MO"], ["Murad", 5, "", "ST MO"], ["Bayezid", 5, "", "ST MO"], ["Mehmed", 5, "", "ST MO"], ["Selim", 5, "", "ST MO"], ["Suleyman", 5, "", "ST MO"], ["Kemal", 5, "", "ST MO"], ["Cem", 5, "", "ST MO"]], female: [["Hurrem", 5, "", "ST MO"], ["Nurbanu", 5, "", "ST MO"], ["Kosem", 5, "", "ST MO"], ["Safiye", 5, "", "ST MO"], ["Turhan", 5, "", "ST MO"], ["Mihrimah", 5, "", "ST MO"], ["Nilufer", 5, "", "ST MO"], ["Gulbahar", 5, "", "ST MO"], ["Gulnihal", 5, "", "ST MO"], ["Esma", 5, "", "ST MO"]] } },
+  officialTitles: { from: "the titles module's office kind, in the culture's bynames culture (src/data/bynames.json: `officeWord` and `ranks`)", bynamesCulture: { "anglo-saxon": "anglo-saxon", "norman-british": "norman-british", welsh: "celtic", scottish: "celtic", irish: "celtic", cornish: "celtic", scandinavian: "norse", german: "general", french: "general", dutch: "general", iberian: "general", italian: "general", roman: "roman", "greek-byzantine": "greek-byzantine", slavic: "slavic", steppe: "steppe", "arabic-persian": "arabic-persian", egyptian: "egyptian", ethiopian: "ethiopian", bantu: "bantu", "west-african": "west-african", indian: "indian", chinese: "chinese", japanese: "japanese", korean: "korean", aztec: "aztec", maya: "maya", andean: "general", polynesian: "general", american: "general", spanish: "general", portuguese: "general", greek: "greek-byzantine", byzantine: "greek-byzantine", turkic: "steppe", mongol: "steppe", arabic: "arabic-persian", persian: "arabic-persian" } },
+  extras: { _about: "A short set added to a culture's lists when a local culture reads it (the Ottoman, Turkish names beside the Arabic and Persian). Weight 5 each; no surnames (Turkish surnames date from 1934)." },
   blocked: ["James Cook", "Francis Drake", "Walter Raleigh", "John Cabot", "Henry Hudson", "Martin Frobisher", "John Franklin", "Robert Scott", "Ernest Shackleton", "Richard Burton", "David Livingstone", "Mungo Park", "Matthew Flinders", "William Dampier", "John Davis", "Humphrey Gilbert", "George Vancouver", "William Bligh", "Abel Tasman", "Ferdinand Magellan", "Christopher Columbus", "Vasco Gama", "Amerigo Vespucci", "Hernan Cortes", "Francisco Pizarro", "Marco Polo", "Leif Erikson", "Roald Amundsen", "Fridtjof Nansen", "Vitus Bering", "Jacques Cartier", "Samuel Champlain", "Henry Stanley", "Meriwether Lewis", "William Clark", "Daniel Boone", "Juan Cabrillo", "Pedro Cabral", "Bartolomeu Dias", "Henry Morgan", "John Smith", "Thomas Cavendish", "John Hawkins", "Richard Grenville", "Martin Behaim", "Willem Barents", "Willem Janszoon", "Jan Riebeeck", "Louis Bougainville", "Jean Perouse", "Alexander Mackenzie", "Simon Fraser", "David Thompson", "John Rae", "James Ross", "George Bass", "Charles Sturt", "John Oxley", "Burke Wills", "Edmund Hillary", "Tenzing Norgay", "George Mallory", "Robert Peary", "Matthew Henson", "Thor Heyerdahl", "Jacques Cousteau", "Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "John Glenn", "Alan Shepard", "Valentina Tereshkova", "Oliver Cromwell", "William Wallace", "Robert Bruce", "Owain Glyndwr", "Henry Tudor", "Elizabeth Windsor", "Charles Windsor", "Mary Stuart", "Thomas More", "Thomas Becket", "Thomas Aquinas", "John Fisher", "Edmund Campion", "Francis Xavier", "Ignatius Loyola", "John Knox", "Martin Luther", "Thomas Cromwell", "William Pitt", "Horatio Nelson", "Arthur Wellesley", "Winston Churchill", "Margaret Thatcher", "Clement Attlee", "Tony Blair", "David Cameron", "Boris Johnson", "Isaac Newton", "Charles Darwin", "Albert Einstein", "Marie Curie", "Stephen Hawking", "Michael Faraday", "James Watt", "Alexander Fleming", "Alan Turing", "Ada Lovelace", "Charles Babbage", "Humphry Davy", "Richard Trevithick", "William Shakespeare", "Charles Dickens", "Jane Austen", "Virginia Woolf", "George Orwell", "Thomas Hardy", "Oscar Wilde", "James Joyce", "Samuel Beckett", "Bram Stoker", "Dylan Thomas", "Robert Burns", "Walter Scott", "Daphne Maurier", "Agatha Christie", "John Milton", "Geoffrey Chaucer", "Lord Byron", "Percy Shelley", "John Keats", "Mary Shelley", "Emily Bronte", "Charlotte Bronte", "Arthur Conan", "Sherlock Holmes", "James Bond", "Harry Potter", "Abraham Lincoln", "George Washington", "Thomas Jefferson", "Benjamin Franklin", "John Adams", "Andrew Jackson", "Theodore Roosevelt", "Franklin Roosevelt", "Ronald Reagan", "John Kennedy", "Richard Nixon", "Barack Obama", "Donald Trump", "Joe Biden", "Bill Clinton", "George Bush", "Jimmy Carter", "Martin King", "Malcolm Little", "Rosa Parks", "Muhammad Ali", "Elvis Presley", "John Lennon", "Paul McCartney", "George Harrison", "Ringo Starr", "Mick Jagger", "David Bowie", "Michael Jackson", "Bob Dylan", "Taylor Swift", "Tom Cruise", "Brad Pitt", "Tom Hanks", "Marilyn Monroe", "Audrey Hepburn", "Charlie Chaplin", "Walt Disney", "Steve Jobs", "Bill Gates", "Elon Musk", "Mark Zuckerberg", "Jeff Bezos", "Henry Ford", "Thomas Edison", "Alexander Bell", "Napoleon Bonaparte", "Victor Hugo", "Louis Pasteur", "Claude Monet", "Edith Piaf", "Joan Arc", "Charles Gaulle", "Louis Napoleon", "Pablo Picasso", "Salvador Dali", "Francisco Franco", "Miguel Cervantes", "Simon Bolivar", "Che Guevara", "Fidel Castro", "Hugo Chavez", "Eva Peron", "Diego Maradona", "Leonardo Vinci", "Galileo Galilei", "Michelangelo Buonarroti", "Giuseppe Garibaldi", "Benito Mussolini", "Dante Alighieri", "Enrico Fermi", "Johann Bach", "Ludwig Beethoven", "Wolfgang Mozart", "Johann Goethe", "Karl Marx", "Adolf Hitler", "Otto Bismarck", "Angela Merkel", "Friedrich Nietzsche", "Wilhelm Roentgen", "Vladimir Lenin", "Joseph Stalin", "Leo Tolstoy", "Fyodor Dostoevsky", "Vladimir Putin", "Mikhail Gorbachev", "Mao Zedong", "Deng Xiaoping", "Xi Jinping", "Bruce Lee", "Jackie Chan", "Jack Ma", "Hayao Miyazaki", "Akira Kurosawa", "Shinzo Abe", "Mohandas Gandhi", "Jawaharlal Nehru", "Indira Gandhi", "Rabindranath Tagore", "Narendra Modi", "Sachin Tendulkar", "Gamal Nasser", "Anwar Sadat", "Saddam Hussein", "Muammar Gaddafi", "Hosni Mubarak", "Mustafa Ataturk", "Recep Erdogan", "Nelson Mandela", "Kofi Annan", "Haile Selassie", "Jomo Kenyatta", "Kwame Nkrumah", "Desmond Tutu", "Patrice Lumumba", "Thomas Sankara", "Idi Amin", "Robert Mugabe", "Julius Nyerere", "Chinua Achebe", "Kim Jong", "Michael Collins", "Eamon Valera", "Adam Smith", "David Hume", "Andrew Carnegie", "Hans Andersen", "Alfred Nobel", "Edvard Munch", "Ingmar Bergman", "Greta Thunberg", "Soren Kierkegaard", "Carl Linnaeus", "Vincent Gogh", "Anne Frank", "Rembrandt Rijn", "Duke Kahanamoku", "Howard Carter", "Kamehameha Great"]
 };
 
@@ -93240,7 +93586,7 @@ var withExtra = (table, extra) => {
     surnames: table.surnames ? [...table.surnames, ...(_c4 = extra.surnames) != null ? _c4 : []] : table.surnames
   };
 };
-var SPLIT_TABLES = ["spanish", "portuguese", "greek", "byzantine"];
+var SPLIT_TABLES = ["spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"];
 function otherCulture(own, rng) {
   const family = FAMILIES[own];
   const choices = PEOPLE_CULTURES.filter((c) => c !== own && CULTURES[c].modern && !SPLIT_TABLES.includes(c)).map((c) => ({ c, w: FAMILIES[c] === family ? people_default.nearFuture.sameFamilyWeight : people_default.nearFuture.otherFamilyWeight }));
@@ -99191,6 +99537,420 @@ var builtin_templates_default = [
     ]
   },
   {
+    name: "Turkic (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Alp",
+          "Arslan",
+          "Bilge",
+          "Kutlug",
+          "Tegin",
+          "Tarkan",
+          "Bogra",
+          "Kara",
+          "Yigit",
+          "Tuman",
+          "Toghan",
+          "Ozan",
+          "Tekin",
+          "Saruhan",
+          "Karaman",
+          "Aydin",
+          "Menteshe",
+          "Germiyan",
+          "Hamid",
+          "Eretna",
+          "Sungur",
+          "Kaan",
+          "Orhan",
+          "Murad",
+          "Ertugrul",
+          "Tughril",
+          "Alp Arslan",
+          "Mehmed",
+          "Suleiman",
+          "Bayezid"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Altun",
+          "Sevinch",
+          "Gulbahar",
+          "Nigar",
+          "Halime",
+          "Hatice",
+          "Fatma",
+          "Ayse",
+          "Aytolun",
+          "Dilber",
+          "Nergis",
+          "Gulnar",
+          "Turkan",
+          "Mahperi",
+          "Gevher",
+          "Saray",
+          "Kutlu",
+          "Ulker",
+          "Yildiz",
+          "Gul",
+          "Nur",
+          "Sultan",
+          "Hunat",
+          "Arzu",
+          "Hurrem",
+          "Kosem",
+          "Nurbanu",
+          "Safiye",
+          "Turhan",
+          "Terken"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Turkic (modern)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Murat",
+          "Hakan",
+          "Serkan",
+          "Emre",
+          "Cem",
+          "Mehmet",
+          "Emir",
+          "Mustafa",
+          "Eymen",
+          "Ahmet",
+          "Yigit",
+          "Ali",
+          "Kerem",
+          "Huseyin",
+          "Berat",
+          "Hasan",
+          "Alp",
+          "Ibrahim",
+          "Arda",
+          "Ismail",
+          "Emirhan",
+          "Osman",
+          "Ege",
+          "Yusuf",
+          "Mert",
+          "Hamza",
+          "Burak",
+          "Omer",
+          "Baran",
+          "Kemal",
+          "Kaan",
+          "Ismet",
+          "Efe",
+          "Recep",
+          "Batuhan"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Elif",
+          "Seda",
+          "Esra",
+          "Merve",
+          "Burcu",
+          "Fatma",
+          "Defne",
+          "Ayse",
+          "Asya",
+          "Hatice",
+          "Nehir",
+          "Emine",
+          "Ecrin",
+          "Zeynep",
+          "Ela",
+          "Hanife",
+          "Nisa",
+          "Meryem",
+          "Azra",
+          "Zehra",
+          "Melisa",
+          "Sultan",
+          "Irem",
+          "Hacer",
+          "Duru",
+          "Hava",
+          "Ceylin",
+          "Gulsum",
+          "Eylul",
+          "Halime",
+          "Nil",
+          "Safiye",
+          "Ada",
+          "Rabia",
+          "Mira"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Yilmaz",
+          "Kaya",
+          "Demir",
+          "Sahin",
+          "Celik",
+          "Yildiz",
+          "Yildirim",
+          "Ozturk",
+          "Aydin",
+          "Ozdemir",
+          "Arslan",
+          "Dogan",
+          "Kilic",
+          "Aslan",
+          "Cetin",
+          "Kara",
+          "Koc",
+          "Kurt",
+          "Ozkan",
+          "Simsek",
+          "Polat",
+          "Korkmaz",
+          "Ozcan",
+          "Cakir",
+          "Erdogan",
+          "Yavuz",
+          "Can",
+          "Acar",
+          "Sen",
+          "Aksoy"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Mongol (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Bayan",
+          "Bold",
+          "Baatar",
+          "Tsogt",
+          "Altan",
+          "Naran",
+          "Dorj",
+          "Ochir",
+          "Sukh",
+          "Tseren",
+          "Nergui",
+          "Erdene",
+          "Tumur",
+          "Munkh",
+          "Chuluun",
+          "Gan",
+          "Dalai",
+          "Sodnom",
+          "Jargal",
+          "Lkhagva",
+          "Khorloo",
+          "Tserendorj",
+          "Damdin",
+          "Namjil",
+          "Temujin",
+          "Ogedei",
+          "Kublai",
+          "Hulagu",
+          "Subutai",
+          "Jebe"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Narantuya",
+          "Oyun",
+          "Sarnai",
+          "Bolormaa",
+          "Gerel",
+          "Khulan",
+          "Saran",
+          "Tsetseg",
+          "Enkhtuya",
+          "Munkhtsetseg",
+          "Uyanga",
+          "Dolgor",
+          "Ariunaa",
+          "Odval",
+          "Sukhee",
+          "Chimeg",
+          "Nandin",
+          "Baigal",
+          "Doljin",
+          "Yesui",
+          "Tuya",
+          "Zaya",
+          "Sarantuya",
+          "Oyuntsetseg",
+          "Borte",
+          "Hoelun",
+          "Sorghaghtani",
+          "Toregene",
+          "Khutulun",
+          "Mandukhai"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Mongol (modern)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Bat",
+          "Enkhbat",
+          "Munkh",
+          "Tuvshin",
+          "Ganbold",
+          "Batbayar",
+          "Amarsanaa",
+          "Erdene",
+          "Tumurbaatar",
+          "Otgonbayar",
+          "Bayarsaikhan",
+          "Ganzorig",
+          "Dorj",
+          "Battulga",
+          "Nyamdorj",
+          "Sukhbaatar",
+          "Tsogtbaatar",
+          "Ulziibayar",
+          "Altankhuyag",
+          "Enkhbayar",
+          "Davaa",
+          "Bold",
+          "Batsaikhan",
+          "Lkhagvasuren",
+          "Munkhbat",
+          "Odkhuu",
+          "Tserendorj",
+          "Gantulga",
+          "Nomin",
+          "Choijil",
+          "Sarangerel",
+          "Khuderchuluun",
+          "Baatar",
+          "Naran",
+          "Temuulen",
+          "Anand",
+          "Ariunbold",
+          "Tuguldur",
+          "Munkh-Erdene",
+          "Enkh-Amgalan",
+          "Bilguun",
+          "Dulguun",
+          "Zolboo",
+          "Gan-Erdene",
+          "Tamir",
+          "Erkhes"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Oyun",
+          "Sarnai",
+          "Bolormaa",
+          "Enkhtuya",
+          "Narantuya",
+          "Uyanga",
+          "Munkhtsetseg",
+          "Tsetseg",
+          "Altantsetseg",
+          "Ariunaa",
+          "Odval",
+          "Saruul",
+          "Tuul",
+          "Anu",
+          "Misheel",
+          "Khulan",
+          "Tungalag",
+          "Batjargal",
+          "Gerel",
+          "Zaya",
+          "Enkhjargal",
+          "Dolgor",
+          "Undraa",
+          "Sukhee",
+          "Chimeg",
+          "Nandin",
+          "Baigal",
+          "Narmandakh",
+          "Oyuntuya",
+          "Bayarmaa",
+          "Ganchimeg",
+          "Tsolmon",
+          "Handaa",
+          "Nomuun",
+          "Narantsetseg",
+          "Enkhtsetseg",
+          "Ariunzaya",
+          "Tselmeg",
+          "Soyol",
+          "Munkhzul"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Borjigin",
+          "Khalkha",
+          "Dorj",
+          "Bat",
+          "Tsogt",
+          "Bold",
+          "Naran",
+          "Ochir",
+          "Sukh",
+          "Tseren",
+          "Erdene",
+          "Tumur",
+          "Gan",
+          "Dalai",
+          "Jargal",
+          "Batbayar",
+          "Munkh",
+          "Chuluun",
+          "Baatar",
+          "Altan",
+          "Nergui",
+          "Damdin",
+          "Sodnom",
+          "Lkhagva",
+          "Namjil",
+          "Bayan",
+          "Davaa",
+          "Odkhuu",
+          "Enkh",
+          "Ganbat"
+        ]
+      }
+    ]
+  },
+  {
     name: "Arabic and Persian (historic)",
     type: "people",
     fromTable: true,
@@ -99396,6 +100156,427 @@ var builtin_templates_default = [
     ]
   },
   {
+    name: "Arabic (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Muhammad",
+          "Ali",
+          "Hasan",
+          "Husayn",
+          "Khalid",
+          "Ahmad",
+          "Hamza",
+          "Salim",
+          "Idris",
+          "Ibrahim",
+          "Ismail",
+          "Yusuf",
+          "Mahmud",
+          "Jafar",
+          "Tariq",
+          "Musa",
+          "Isa",
+          "Yahya",
+          "Zayd",
+          "Abdullah",
+          "Amr",
+          "Sulayman",
+          "Hisham",
+          "Walid",
+          "Umar",
+          "Uthman",
+          "Abu Bakr",
+          "Harun",
+          "Mansur",
+          "Saladin"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Fatima",
+          "Aisha",
+          "Khadija",
+          "Zaynab",
+          "Maryam",
+          "Hafsa",
+          "Ruqayya",
+          "Umm Kulthum",
+          "Sumayya",
+          "Asma",
+          "Layla",
+          "Safiya",
+          "Hind",
+          "Sakina",
+          "Rabia",
+          "Atika",
+          "Amina",
+          "Halima",
+          "Salma",
+          "Nadia",
+          "Samira",
+          "Hala",
+          "Najwa",
+          "Sabah",
+          "Zubayda",
+          "Shajar al-Durr",
+          "Khayzuran",
+          "Buran",
+          "Arwa",
+          "Zenobia"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Arabic (modern)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Ali",
+          "Hassan",
+          "Khaled",
+          "Hamad",
+          "Muhammad",
+          "Yazan",
+          "Ahmad",
+          "Ayman",
+          "Mahmoud",
+          "Hadi",
+          "Mustafa",
+          "Majid",
+          "Abdullah",
+          "Tariq",
+          "Ibrahim",
+          "Ziad",
+          "Khalil",
+          "Karim",
+          "Hamid",
+          "Nabil",
+          "Hussein",
+          "Samir",
+          "Salim",
+          "Rami",
+          "Fouad",
+          "Sami",
+          "Nasser",
+          "Fadi",
+          "Farouk",
+          "Walid",
+          "Abbas",
+          "Bilal",
+          "Rashid",
+          "Adam",
+          "Zayd",
+          "Amir",
+          "Hamza",
+          "Omar",
+          "Yusuf"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Huda",
+          "Dalia",
+          "Leila",
+          "Aya",
+          "Fatima",
+          "Lina",
+          "Khadija",
+          "Sara",
+          "Aisha",
+          "Rania",
+          "Zaynab",
+          "Yasmin",
+          "Maryam",
+          "Noor",
+          "Amina",
+          "Dana",
+          "Halima",
+          "Maya",
+          "Hafsa",
+          "Jana",
+          "Layla",
+          "Hala",
+          "Zubayda",
+          "Lara",
+          "Safiya",
+          "Layan",
+          "Nadia",
+          "Rama",
+          "Samira",
+          "Tala",
+          "Salma",
+          "Ayla",
+          "Hind",
+          "Mira",
+          "Reem"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Haddad",
+          "Khoury",
+          "Nasser",
+          "Mansour",
+          "Saleh",
+          "Hamdan",
+          "Khalil",
+          "Sabbagh",
+          "Najjar",
+          "Said",
+          "Yousef",
+          "Awad",
+          "Darwish",
+          "Jaber",
+          "Salem",
+          "Rahman",
+          "Hijazi",
+          "Barakat",
+          "Amin",
+          "Farah",
+          "Habib",
+          "Issa",
+          "Kassab",
+          "Masri",
+          "Naim",
+          "Qasim",
+          "Shami",
+          "Tamimi",
+          "Zahran",
+          "Zaid"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Persian (historic)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Arash",
+          "Babak",
+          "Behzad",
+          "Farhad",
+          "Kaveh",
+          "Mehrdad",
+          "Bijan",
+          "Piruz",
+          "Shahin",
+          "Tahmasp",
+          "Hormoz",
+          "Vahid",
+          "Parviz",
+          "Bizhan",
+          "Farrokh",
+          "Sohrab",
+          "Rostam",
+          "Zal",
+          "Siavash",
+          "Jamshid",
+          "Manuchehr",
+          "Kayvan",
+          "Navid",
+          "Hushang",
+          "Cyrus",
+          "Darius",
+          "Xerxes",
+          "Ardashir",
+          "Shapur",
+          "Khosrow"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Shirin",
+          "Farah",
+          "Roxana",
+          "Parisa",
+          "Mahin",
+          "Azadeh",
+          "Banu",
+          "Dilara",
+          "Gulnar",
+          "Shahrbanu",
+          "Laleh",
+          "Nahid",
+          "Soraya",
+          "Mahtab",
+          "Golnar",
+          "Yasamin",
+          "Roya",
+          "Simin",
+          "Zarrin",
+          "Mina",
+          "Pari",
+          "Nasrin",
+          "Fereshteh",
+          "Mehri",
+          "Pourandokht",
+          "Azarmidokht",
+          "Atossa",
+          "Amestris",
+          "Parysatis",
+          "Stateira"
+        ]
+      }
+    ]
+  },
+  {
+    name: "Persian (modern)",
+    type: "people",
+    fromTable: true,
+    sections: [
+      {
+        name: "Male",
+        items: [
+          "Reza",
+          "Hossein",
+          "Mohammad",
+          "Ali",
+          "Mehdi",
+          "Amir",
+          "Hamid",
+          "Saeed",
+          "Majid",
+          "Davoud",
+          "Ebrahim",
+          "Kamran",
+          "Farhad",
+          "Babak",
+          "Behnam",
+          "Arash",
+          "Payam",
+          "Mojtaba",
+          "Sina",
+          "Pouya",
+          "Parsa",
+          "Arman",
+          "Ehsan",
+          "Navid",
+          "Shahram",
+          "Mostafa",
+          "Kian",
+          "Omid",
+          "Nima",
+          "Kaveh",
+          "Hadi",
+          "Morteza",
+          "Bahman",
+          "Farzad",
+          "Siamak",
+          "Arad",
+          "Radin",
+          "Ariya",
+          "Amir-Ali",
+          "Armin",
+          "Bardia",
+          "Dariush",
+          "Kasra",
+          "Shayan"
+        ]
+      },
+      {
+        name: "Female",
+        items: [
+          "Maryam",
+          "Zahra",
+          "Fatemeh",
+          "Narges",
+          "Sara",
+          "Leila",
+          "Mina",
+          "Parisa",
+          "Shirin",
+          "Nasrin",
+          "Mahsa",
+          "Neda",
+          "Elham",
+          "Samira",
+          "Azadeh",
+          "Golnaz",
+          "Shabnam",
+          "Yasaman",
+          "Niloufar",
+          "Atefeh",
+          "Roya",
+          "Setareh",
+          "Negar",
+          "Pegah",
+          "Sepideh",
+          "Tannaz",
+          "Ladan",
+          "Mitra",
+          "Farzaneh",
+          "Homa",
+          "Haniyeh",
+          "Raha",
+          "Baran",
+          "Dorsa",
+          "Hasti",
+          "Yasna",
+          "Avina",
+          "Elnaz",
+          "Ghazal",
+          "Diana",
+          "Kiana",
+          "Melika",
+          "Nika",
+          "Romina",
+          "Tara"
+        ]
+      },
+      {
+        name: "Surnames",
+        items: [
+          "Hosseini",
+          "Mohammadi",
+          "Ahmadi",
+          "Karimi",
+          "Rezaei",
+          "Moradi",
+          "Hashemi",
+          "Jafari",
+          "Ebrahimi",
+          "Rahimi",
+          "Sadeghi",
+          "Mousavi",
+          "Kazemi",
+          "Ghorbani",
+          "Rostami",
+          "Abbasi",
+          "Tehrani",
+          "Esfahani",
+          "Shirazi",
+          "Tabrizi",
+          "Mashhadi",
+          "Kermani",
+          "Yazdi",
+          "Gilani",
+          "Khorasani",
+          "Mazandarani",
+          "Zand",
+          "Farahani",
+          "Bakhtiari",
+          "Qashqai"
+        ]
+      }
+    ]
+  },
+  {
     name: "Egyptian (historic)",
     type: "people",
     fromTable: true,
@@ -99403,15 +100584,11 @@ var builtin_templates_default = [
       {
         name: "Male",
         items: [
-          "Ramesses",
           "Pachomius",
-          "Thutmose",
           "Shenouda",
-          "Amenhotep",
           "Antony",
           "Seti",
           "Athanasius",
-          "Khufu",
           "Cyril",
           "Khafre",
           "Macarius",
@@ -99427,38 +100604,35 @@ var builtin_templates_default = [
           "Necho",
           "Taharqa",
           "Piye",
-          "Tutankhamun",
-          "Akhenaten",
           "Horemheb",
           "Imhotep",
           "Hori",
           "Nakht",
           "Sennedjem",
-          "Ptolemy",
           "Khaemwaset",
           "Ptahhotep",
           "Kagemni",
           "Ankhsheshonq",
-          "Petosiris"
+          "Petosiris",
+          "Ramesses",
+          "Thutmose",
+          "Amenhotep",
+          "Khufu",
+          "Tutankhamun",
+          "Akhenaten",
+          "Ptolemy"
         ]
       },
       {
         name: "Female",
         items: [
-          "Nefertiti",
           "Demiana",
-          "Hatshepsut",
           "Marina",
-          "Cleopatra",
           "Verena",
-          "Nefertari",
           "Irene",
-          "Tiye",
           "Dorothea",
-          "Ankhesenamun",
           "Eudoxia",
           "Meritaten",
-          "Hypatia",
           "Sobekneferu",
           "Mary",
           "Nitocris",
@@ -99479,7 +100653,14 @@ var builtin_templates_default = [
           "Neferura",
           "Satiah",
           "Kiya",
-          "Henutsen"
+          "Henutsen",
+          "Nefertiti",
+          "Hatshepsut",
+          "Cleopatra",
+          "Nefertari",
+          "Tiye",
+          "Ankhesenamun",
+          "Hypatia"
         ]
       }
     ]
@@ -99492,20 +100673,14 @@ var builtin_templates_default = [
       {
         name: "Male",
         items: [
-          "Ezana",
-          "Kaleb",
-          "Lalibela",
           "Dawit",
           "Yeshaq",
-          "Menelik",
-          "Tewodros",
           "Yohannes",
           "Susenyos",
           "Fasilides",
           "Iyasu",
           "Naod",
           "Eskender",
-          "Zara Yaqob",
           "Lebna Dengel",
           "Amda Seyon",
           "Yekuno Amlak",
@@ -99523,20 +100698,20 @@ var builtin_templates_default = [
           "Bekele",
           "Tadesse",
           "Desta",
-          "Wolde"
+          "Wolde",
+          "Ezana",
+          "Kaleb",
+          "Lalibela",
+          "Menelik",
+          "Tewodros",
+          "Zara Yaqob"
         ]
       },
       {
         name: "Female",
         items: [
           "Eleni",
-          "Mentewab",
-          "Zewditu",
-          "Taytu",
-          "Menen",
-          "Sabla Wengel",
           "Romane Work",
-          "Judith",
           "Almaz",
           "Berhane",
           "Tigist",
@@ -99559,7 +100734,13 @@ var builtin_templates_default = [
           "Tirunesh",
           "Senait",
           "Hiwot",
-          "Rahel"
+          "Rahel",
+          "Mentewab",
+          "Zewditu",
+          "Taytu",
+          "Menen",
+          "Sabla Wengel",
+          "Judith"
         ]
       }
     ]
@@ -99578,9 +100759,7 @@ var builtin_templates_default = [
           "Tsegaye",
           "Haile",
           "Abel",
-          "Tewodros",
           "Dawit",
-          "Menelik",
           "Yonas",
           "Tekle",
           "Samuel",
@@ -99605,7 +100784,9 @@ var builtin_templates_default = [
           "Desta",
           "Ephrem",
           "Mengistu",
-          "Kirubel"
+          "Kirubel",
+          "Tewodros",
+          "Menelik"
         ]
       },
       {
@@ -99615,11 +100796,8 @@ var builtin_templates_default = [
           "Hiwot",
           "Rahel",
           "Senait",
-          "Zewditu",
           "Hanna",
-          "Taytu",
           "Bethlehem",
-          "Menen",
           "Selam",
           "Mulu",
           "Meron",
@@ -99644,7 +100822,10 @@ var builtin_templates_default = [
           "Yeshi",
           "Kidist",
           "Worknesh",
-          "Lidya"
+          "Lidya",
+          "Zewditu",
+          "Taytu",
+          "Menen"
         ]
       }
     ]
@@ -99657,19 +100838,13 @@ var builtin_templates_default = [
       {
         name: "Male",
         items: [
-          "Shaka",
-          "Dingane",
           "Mpande",
-          "Cetshwayo",
           "Dinuzulu",
-          "Moshoeshoe",
           "Sekhukhune",
           "Khama",
           "Sobhuza",
-          "Mzilikazi",
           "Lobengula",
           "Mswati",
-          "Mutesa",
           "Mwanga",
           "Kamanya",
           "Chwa",
@@ -99687,18 +100862,18 @@ var builtin_templates_default = [
           "Soshangane",
           "Zwangendaba",
           "Mzila",
-          "Mutota"
+          "Mutota",
+          "Shaka",
+          "Dingane",
+          "Cetshwayo",
+          "Moshoeshoe",
+          "Mzilikazi",
+          "Mutesa"
         ]
       },
       {
         name: "Female",
         items: [
-          "Nandi",
-          "Mnkabayi",
-          "Manthatisi",
-          "Nzinga",
-          "Kimpa Vita",
-          "Nehanda",
           "Mawa",
           "Nomusa",
           "Nomvula",
@@ -99724,7 +100899,13 @@ var builtin_templates_default = [
           "Phindile",
           "Nomsa",
           "Lungile",
-          "Zinhle"
+          "Zinhle",
+          "Nandi",
+          "Mnkabayi",
+          "Manthatisi",
+          "Nzinga",
+          "Kimpa Vita",
+          "Nehanda"
         ]
       }
     ]
@@ -99864,12 +101045,7 @@ var builtin_templates_default = [
       {
         name: "Male",
         items: [
-          "Sundiata",
           "Musa",
-          "Sunni Ali",
-          "Askia",
-          "Osei Tutu",
-          "Opoku Ware",
           "Agaja",
           "Ghezo",
           "Glele",
@@ -99887,14 +101063,19 @@ var builtin_templates_default = [
           "Kwadwo",
           "Prempeh",
           "Ahmadu",
-          "Samori",
           "Mamadou",
           "Ousmane",
           "Sekou",
           "Amadou",
           "Abdoulaye",
           "Ibrahim",
-          "Moussa"
+          "Moussa",
+          "Sundiata",
+          "Sunni Ali",
+          "Askia",
+          "Osei Tutu",
+          "Opoku Ware",
+          "Samori"
         ]
       },
       {
@@ -99910,9 +101091,6 @@ var builtin_templates_default = [
           "Efua",
           "Esi",
           "Amina",
-          "Idia",
-          "Yaa Asantewaa",
-          "Nana Asma'u",
           "Aminata",
           "Mariama",
           "Kadiatou",
@@ -99923,14 +101101,17 @@ var builtin_templates_default = [
           "Khady",
           "Rokia",
           "Fatima",
-          "Ndate Yalla",
           "Afua Kobi",
           "Yaa Akyaa",
-          "Ahebi Ugbabe",
-          "Sarraounia",
           "Aissata",
           "Safiatou",
-          "Maimouna"
+          "Maimouna",
+          "Idia",
+          "Yaa Asantewaa",
+          "Nana Asma'u",
+          "Ndate Yalla",
+          "Ahebi Ugbabe",
+          "Sarraounia"
         ]
       }
     ]
@@ -114695,6 +115876,42 @@ var creatures_default = {
         tones: [
           "strange"
         ]
+      },
+      {
+        name: "sha",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "medjed",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "nile serpent",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "phoenix of heliopolis",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
       }
     ],
     ethiopian: [
@@ -114768,6 +115985,42 @@ var creatures_default = {
         ],
         tones: [
           "grim"
+        ]
+      },
+      {
+        name: "ark guardian",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "debtera's spirit",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "serpent of the lake",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "abyssinian ibis",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "light"
         ]
       }
     ],
@@ -114843,6 +116096,42 @@ var creatures_default = {
         tones: [
           "light"
         ]
+      },
+      {
+        name: "nyami nyami",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "popobawa",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "chipfalamfula",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "mngwa",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grim"
+        ]
       }
     ],
     "west-african": [
@@ -114916,6 +116205,42 @@ var creatures_default = {
         ],
         tones: [
           "light"
+        ]
+      },
+      {
+        name: "obayifo",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "abada",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "mmuo",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "iroko spirit",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grand"
         ]
       }
     ],
@@ -115586,6 +116911,446 @@ var creatures_default = {
         ],
         tones: [
           "light"
+        ]
+      }
+    ],
+    turkic: [
+      {
+        name: "bozkurt",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "tepegoz",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "shahmaran",
+        habitats: [
+          "underground"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "dev",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "tulpar",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "su anasi",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "karakoncolos",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "peri",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "ejderha",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "hortlak",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "zumrud anka",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "cin",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "strange"
+        ]
+      }
+    ],
+    mongol: [
+      {
+        name: "blue wolf",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "khangarid",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "lus",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "mangus",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "albin",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "chotgor",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "almas",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "ongon",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "khiimori",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "olgoi khorkhoi",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "tsagaan ebugen",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "shulmus",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      }
+    ],
+    arabic: [
+      {
+        name: "ghul",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "marid",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "silat",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "nasnas",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "anqa",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "hamah",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "bahamut",
+        habitats: [
+          "sea"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "rukh",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "qutrub",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "shiqq",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "jinniyah",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "afrit",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grim"
+        ]
+      }
+    ],
+    persian: [
+      {
+        name: "azhdaha",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "karkadann",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "huma",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "nasu",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "gandarewa",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "pairika",
+        habitats: [
+          "forest"
+        ],
+        tones: [
+          "light"
+        ]
+      },
+      {
+        name: "shirdal",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grand"
+        ]
+      },
+      {
+        name: "div-e sefid",
+        habitats: [
+          "mountain"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "nahang",
+        habitats: [
+          "water"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "mardkhora",
+        habitats: [
+          "desert"
+        ],
+        tones: [
+          "grim"
+        ]
+      },
+      {
+        name: "karshipta",
+        habitats: [
+          "sky"
+        ],
+        tones: [
+          "strange"
+        ]
+      },
+      {
+        name: "druj",
+        habitats: [
+          "home"
+        ],
+        tones: [
+          "grim"
         ]
       }
     ]
@@ -117811,8 +119576,8 @@ var settlement_vocab_default = {
   $comment: "Shared settlement vocabulary (docs/route-names-brief.md \xA73, \xA76). Read through src/settlement/vocab.ts; vocabulary packs add to these pools. Every pool is listed in docs/vocabulary-pools.md.",
   version: 1,
   eras: ["AN", "MD", "EM", "ST", "MO", "NF", "IS"],
-  cultures: ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean", "french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"],
-  moneyOnly: ["french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"],
+  cultures: ["general", "anglo-saxon", "norse", "celtic", "norman-british", "roman", "greek-byzantine", "slavic", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "polynesian", "andean", "french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"],
+  moneyOnly: ["french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"],
   cultureGroups: {
     british: {
       cultures: ["anglo-saxon", "celtic", "norman-british", "welsh", "scottish", "irish", "cornish"]

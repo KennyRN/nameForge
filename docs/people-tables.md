@@ -1587,3 +1587,135 @@ Spanish and Portuguese are cut from the Iberian tables (which stay, as the mix);
 **Given in the last thirty years:** Alexandros, Orestis, Marios, Odysseas, Lefteris, Petros, Fotis, Andreas, Giannis, Nikos, Dimitris, Manolis; Marina, Ioanna, Dimitra, Natalia, Eirini, Christina, Kalliopi, Zoi, Fotini, Artemis, Afroditi, Myrto
 
 <!-- tier6a-people:end -->
+
+<!-- tier6b-people:start -->
+
+## Second-tier splits (brief 6b §B4)
+
+Turkic and Mongol are written for each culture (the steppe table stays, as the mix); Arabic and Persian likewise (arabic-persian stays, as the mix). Written by `scripts/make-tier6b-people.mjs` from `scripts/tier6b/people-data.mjs`. Famous figures (rulers, conquerors, poets, philosophers, scholars) are flagged ʳ, listed last and held to a fifth of a list's weight; ordinary attested names lead. The famous figures of Egyptian, Ethiopian, Bantu and West African are flagged the same way.
+
+### Turkic
+
+#### historic
+
+**Male given names** (30): Alp (10), Arslan (10), Bilge (10), Kutlug (10), Tegin (10), Tarkan (7), Bogra (7), Kara (7), Yigit (7), Tuman (7), Toghan (5), Ozan (5), Tekin (5), Saruhan (5), Karaman (5), Aydin (5), Menteshe (3), Germiyan (3), Hamid (3), Eretna (3), Sungur (3), Kaan (3), Orhan (3), Murad (3), Ertugrul (2), Tughril (2)ʳ, Alp Arslan (2)ʳ, Mehmed (2)ʳ, Suleiman (2)ʳ, Bayezid (2)ʳ
+
+**Female given names** (30): Altun (10), Sevinch (10), Gulbahar (10), Nigar (10), Halime (10), Hatice (7), Fatma (7), Ayse (7), Aytolun (7), Dilber (7), Nergis (5), Gulnar (5), Turkan (5), Mahperi (5), Gevher (5), Saray (5), Kutlu (3), Ulker (3), Yildiz (3), Gul (3), Nur (3), Sultan (3), Hunat (3), Arzu (3), Hurrem (2)ʳ, Kosem (2)ʳ, Nurbanu (2)ʳ, Safiye (2)ʳ, Turhan (2)ʳ, Terken (2)ʳ
+
+**Regnal names, male** (8): Mehmed (10), Murad (10), Bayezid (10), Suleiman (10), Osman (10), Orhan (7), Selim (7), Ahmed (7)
+
+**Regnal names, female** (8): Hurrem (10), Kosem (10), Nurbanu (10), Safiye (10), Turhan (10), Gevher (7), Mahperi (7), Terken (7)
+
+**Holy names** (12): Yunus (10), Bektash (10), Yasawi (10), Mevlana (10), Bayram (10), Akshemsettin (7), Hizir (7), Ilyas (7), Sari Saltik (7), Ahi Evran (7), Abdal Musa (5), Seyyid Gazi (5)
+
+#### modern
+
+**Male given names** (35): Murat (10, ST MO), Hakan (10, ST MO), Serkan (10, ST MO), Emre (10, ST MO), Cem (10, ST MO), Mehmet (7, ST), Emir (7, MO), Mustafa (7, ST), Eymen (7, MO), Ahmet (7, ST), Yigit (5, MO), Ali (5, ST), Kerem (5, MO), Huseyin (5, ST), Berat (5, MO), Hasan (5, ST), Alp (3, MO), Ibrahim (3, ST), Arda (3, MO), Ismail (3, ST), Emirhan (3, MO), Osman (3, ST), Ege (3, MO), Yusuf (3, ST), Mert (2, MO), Hamza (2, ST), Burak (2, MO), Omer (2, ST), Baran (2, MO), Kemal (2, ST), Kaan (2, MO), Ismet (2, ST), Efe (2, MO), Recep (2, ST), Batuhan (2, MO)
+
+**Female given names** (35): Elif (10, ST MO), Seda (10, ST MO), Esra (10, ST MO), Merve (10, ST MO), Burcu (10, ST MO), Fatma (7, ST), Defne (7, MO), Ayse (7, ST), Asya (7, MO), Hatice (7, ST), Nehir (5, MO), Emine (5, ST), Ecrin (5, MO), Zeynep (5, ST), Ela (5, MO), Hanife (5, ST), Nisa (3, MO), Meryem (3, ST), Azra (3, MO), Zehra (3, ST), Melisa (3, MO), Sultan (3, ST), Irem (3, MO), Hacer (3, ST), Duru (2, MO), Hava (2, ST), Ceylin (2, MO), Gulsum (2, ST), Eylul (2, MO), Halime (2, ST), Nil (2, MO), Safiye (2, ST), Ada (2, MO), Rabia (2, ST), Mira (2, MO)
+
+**Surnames** (30): Yilmaz (10), Kaya (10), Demir (10), Sahin (10), Celik (10), Yildiz (7), Yildirim (7), Ozturk (7), Aydin (7), Ozdemir (7), Arslan (5), Dogan (5), Kilic (5), Aslan (5), Cetin (5), Kara (5), Koc (3), Kurt (3), Ozkan (3), Simsek (3), Polat (3), Korkmaz (3), Ozcan (3), Cakir (3), Erdogan (2), Yavuz (2), Can (2), Acar (2), Sen (2), Aksoy (2)
+
+**Regnal names, male** (8): Mehmed (10), Murad (10), Bayezid (10), Suleiman (10), Osman (10), Orhan (7), Selim (7), Ahmed (7)
+
+**Regnal names, female** (8): Hurrem (10), Kosem (10), Nurbanu (10), Safiye (10), Turhan (10), Gevher (7), Mahperi (7), Terken (7)
+
+**Holy names** (12): Yunus (10), Bektash (10), Yasawi (10), Mevlana (10), Bayram (10), Akshemsettin (7), Hizir (7), Ilyas (7), Sari Saltik (7), Ahi Evran (7), Abdal Musa (5), Seyyid Gazi (5)
+
+**Given in the last thirty years:** Yigit, Eymen, Kerem, Berat, Alp, Arda, Emirhan, Ege, Mert, Burak, Baran, Kaan, Efe, Batuhan, Emir; Defne, Asya, Nehir, Ecrin, Ela, Nisa, Azra, Melisa, Irem, Duru, Ceylin, Eylul, Nil, Ada, Mira
+
+### Mongol
+
+#### historic
+
+**Male given names** (30): Bayan (10), Bold (10), Baatar (10), Tsogt (10), Altan (10), Naran (7), Dorj (7), Ochir (7), Sukh (7), Tseren (7), Nergui (5), Erdene (5), Tumur (5), Munkh (5), Chuluun (5), Gan (5), Dalai (3), Sodnom (3), Jargal (3), Lkhagva (3), Khorloo (3), Tserendorj (3), Damdin (3), Namjil (3), Temujin (2)ʳ, Ogedei (2)ʳ, Kublai (2)ʳ, Hulagu (2)ʳ, Subutai (2)ʳ, Jebe (2)ʳ
+
+**Female given names** (30): Narantuya (10), Oyun (10), Sarnai (10), Bolormaa (10), Gerel (10), Khulan (7), Saran (7), Tsetseg (7), Enkhtuya (7), Munkhtsetseg (7), Uyanga (5), Dolgor (5), Ariunaa (5), Odval (5), Sukhee (5), Chimeg (5), Nandin (3), Baigal (3), Doljin (3), Yesui (3), Tuya (3), Zaya (3), Sarantuya (3), Oyuntsetseg (3), Borte (2)ʳ, Hoelun (2)ʳ, Sorghaghtani (2)ʳ, Toregene (2)ʳ, Khutulun (2)ʳ, Mandukhai (2)ʳ
+
+**Regnal names, male** (8): Temujin (10), Ogedei (10), Kublai (10), Mongke (10), Hulagu (10), Batu (7), Berke (7), Guyuk (7)
+
+**Regnal names, female** (8): Borte (10), Hoelun (10), Toregene (10), Doquz (10), Sorghaghtani (10), Chabi (7), Mandukhai (7), Khutulun (7)
+
+**Holy names** (12): Zanabazar (10), Tsongkhapa (10), Sakya (10), Phagpa (10), Ochirvani (10), Jebtsundamba (7), Gombo (7), Danzan (7), Dorjiev (7), Zaya (7), Tsedenbal (5), Natsagdorj (5)
+
+#### modern
+
+**Male given names** (46): Bat (10, ST MO), Enkhbat (10, ST MO), Munkh (10, ST MO), Tuvshin (10, ST MO), Ganbold (10, ST MO), Batbayar (7, MO), Amarsanaa (7, MO), Erdene (7, ST), Tumurbaatar (7, ST), Otgonbayar (7, ST), Bayarsaikhan (5, ST), Ganzorig (5, ST), Dorj (5, ST), Battulga (5, ST), Nyamdorj (5, ST), Sukhbaatar (5, ST), Tsogtbaatar (3, ST), Ulziibayar (3, ST), Altankhuyag (3, ST), Enkhbayar (3, ST), Davaa (3, ST), Bold (3, ST), Batsaikhan (3, ST), Lkhagvasuren (3, ST), Munkhbat (2, ST), Odkhuu (2, ST), Tserendorj (2, ST), Gantulga (2, ST), Nomin (2, MO), Choijil (2, ST), Sarangerel (2, ST), Khuderchuluun (2, ST), Baatar (2, ST), Naran (2, ST), Temuulen (2, MO), Anand (2, MO), Ariunbold (2, MO), Tuguldur (2, MO), Munkh-Erdene (2, MO), Enkh-Amgalan (2, MO), Bilguun (2, MO), Dulguun (2, MO), Zolboo (2, MO), Gan-Erdene (2, MO), Tamir (2, MO), Erkhes (2, MO)
+
+**Female given names** (40): Oyun (10, ST MO), Sarnai (10, ST MO), Bolormaa (10, ST MO), Enkhtuya (10, ST MO), Narantuya (10, ST MO), Uyanga (7, MO), Munkhtsetseg (7, MO), Tsetseg (7, ST), Altantsetseg (7, ST), Ariunaa (7, ST), Odval (5, ST), Saruul (5, MO), Tuul (5, MO), Anu (5, MO), Misheel (5, MO), Khulan (5, MO), Tungalag (3, ST), Batjargal (3, ST), Gerel (3, ST), Zaya (3, MO), Enkhjargal (3, ST), Dolgor (3, ST), Undraa (3, ST), Sukhee (3, ST), Chimeg (2, ST), Nandin (2, ST), Baigal (2, ST), Narmandakh (2, ST), Oyuntuya (2, ST), Bayarmaa (2, ST), Ganchimeg (2, ST), Tsolmon (2, ST), Handaa (2, ST), Nomuun (2, MO), Narantsetseg (2, MO), Enkhtsetseg (2, MO), Ariunzaya (2, MO), Tselmeg (2, MO), Soyol (2, MO), Munkhzul (2, MO)
+
+**Surnames** (30): Borjigin (10), Khalkha (10), Dorj (10), Bat (10), Tsogt (10), Bold (7), Naran (7), Ochir (7), Sukh (7), Tseren (7), Erdene (5), Tumur (5), Gan (5), Dalai (5), Jargal (5), Batbayar (5), Munkh (3), Chuluun (3), Baatar (3), Altan (3), Nergui (3), Damdin (3), Sodnom (3), Lkhagva (3), Namjil (2), Bayan (2), Davaa (2), Odkhuu (2), Enkh (2), Ganbat (2)
+
+**Regnal names, male** (8): Temujin (10), Ogedei (10), Kublai (10), Mongke (10), Hulagu (10), Batu (7), Berke (7), Guyuk (7)
+
+**Regnal names, female** (8): Borte (10), Hoelun (10), Toregene (10), Doquz (10), Sorghaghtani (10), Chabi (7), Mandukhai (7), Khutulun (7)
+
+**Holy names** (12): Zanabazar (10), Tsongkhapa (10), Sakya (10), Phagpa (10), Ochirvani (10), Jebtsundamba (7), Gombo (7), Danzan (7), Dorjiev (7), Zaya (7), Tsedenbal (5), Natsagdorj (5)
+
+**Given in the last thirty years:** Temuulen, Nomin, Anand, Ariunbold, Tuguldur, Munkh-Erdene, Enkh-Amgalan, Bilguun, Dulguun, Zolboo, Gan-Erdene, Tamir, Erkhes, Batbayar, Amarsanaa; Misheel, Anu, Saruul, Nomuun, Khulan, Narantsetseg, Enkhtsetseg, Ariunzaya, Tselmeg, Soyol, Munkhzul, Zaya, Tuul, Uyanga, Munkhtsetseg
+
+### Arabic
+
+#### historic
+
+**Male given names** (30): Muhammad (10), Ali (10), Hasan (10), Husayn (10), Khalid (10), Ahmad (7), Hamza (7), Salim (7), Idris (7), Ibrahim (7), Ismail (5), Yusuf (5), Mahmud (5), Jafar (5), Tariq (5), Musa (5), Isa (3), Yahya (3), Zayd (3), Abdullah (3), Amr (3), Sulayman (3), Hisham (3), Walid (3), Umar (2)ʳ, Uthman (2)ʳ, Abu Bakr (2)ʳ, Harun (2)ʳ, Mansur (2)ʳ, Saladin (2)ʳ
+
+**Female given names** (30): Fatima (10), Aisha (10), Khadija (10), Zaynab (10), Maryam (10), Hafsa (7), Ruqayya (7), Umm Kulthum (7), Sumayya (7), Asma (7), Layla (5), Safiya (5), Hind (5), Sakina (5), Rabia (5), Atika (5), Amina (3), Halima (3), Salma (3), Nadia (3), Samira (3), Hala (3), Najwa (3), Sabah (3), Zubayda (2)ʳ, Shajar al-Durr (2)ʳ, Khayzuran (2)ʳ, Buran (2)ʳ, Arwa (2)ʳ, Zenobia (2)ʳ
+
+**Regnal names, male** (8): Harun (10), Mansur (10), Mahmud (10), Saladin (10), Umar (10), Hisham (7), Walid (7), Sulayman (7)
+
+**Regnal names, female** (8): Zubayda (10), Shajar al-Durr (10), Khayzuran (10), Buran (10), Arwa (10), Zenobia (7), Sitt al-Mulk (7), Asma (7)
+
+**Holy names** (12): Abdul Qadir (10), Rabia (10), Junayd (10), Hallaj (10), Ghazali (10), Ahmad Rifai (7), Bishr (7), Shibli (7), Dhul-Nun (7), Hasan al-Basri (7), Ibn Arabi (5), Jalal (5)
+
+#### modern
+
+**Male given names** (39): Ali (10, ST MO), Hassan (10, ST MO), Khaled (10, ST MO), Hamad (10, ST MO), Muhammad (10, ST MO), Yazan (7, MO), Ahmad (7, ST), Ayman (7, MO), Mahmoud (7, ST), Hadi (7, MO), Mustafa (5, ST), Majid (5, MO), Abdullah (5, ST), Tariq (5, MO), Ibrahim (5, ST), Ziad (5, MO), Khalil (3, ST), Karim (3, MO), Hamid (3, ST), Nabil (3, ST), Hussein (3, ST), Samir (3, ST), Salim (3, ST), Rami (3, MO), Fouad (2, ST), Sami (2, ST), Nasser (2, ST), Fadi (2, ST), Farouk (2, ST), Walid (2, ST), Abbas (2, ST), Bilal (2, MO), Rashid (2, ST), Adam (2, MO), Zayd (2, MO), Amir (2, MO), Hamza (2, MO), Omar (2, MO), Yusuf (2, MO)
+
+**Female given names** (35): Huda (10, ST MO), Dalia (10, ST MO), Leila (10, ST MO), Aya (10, ST MO), Fatima (10, ST MO), Lina (7, MO), Khadija (7, ST), Sara (7, MO), Aisha (7, ST), Rania (7, MO), Zaynab (5, ST), Yasmin (5, MO), Maryam (5, ST), Noor (5, MO), Amina (5, ST), Dana (5, MO), Halima (3, ST), Maya (3, MO), Hafsa (3, ST), Jana (3, MO), Layla (3, ST), Hala (3, MO), Zubayda (3, ST), Lara (3, MO), Safiya (2, ST), Layan (2, MO), Nadia (2, ST), Rama (2, MO), Samira (2, ST), Tala (2, MO), Salma (2, ST), Ayla (2, MO), Hind (2, ST), Mira (2, MO), Reem (2, ST)
+
+**Surnames** (30): Haddad (10), Khoury (10), Nasser (10), Mansour (10), Saleh (10), Hamdan (7), Khalil (7), Sabbagh (7), Najjar (7), Said (7), Yousef (5), Awad (5), Darwish (5), Jaber (5), Salem (5), Rahman (5), Hijazi (3), Barakat (3), Amin (3), Farah (3), Habib (3), Issa (3), Kassab (3), Masri (3), Naim (2), Qasim (2), Shami (2), Tamimi (2), Zahran (2), Zaid (2)
+
+**Regnal names, male** (8): Harun (10), Mansur (10), Mahmud (10), Saladin (10), Umar (10), Hisham (7), Walid (7), Sulayman (7)
+
+**Regnal names, female** (8): Zubayda (10), Shajar al-Durr (10), Khayzuran (10), Buran (10), Arwa (10), Zenobia (7), Sitt al-Mulk (7), Asma (7)
+
+**Holy names** (12): Abdul Qadir (10), Rabia (10), Junayd (10), Hallaj (10), Ghazali (10), Ahmad Rifai (7), Bishr (7), Shibli (7), Dhul-Nun (7), Hasan al-Basri (7), Ibn Arabi (5), Jalal (5)
+
+**Given in the last thirty years:** Yazan, Adam, Zayd, Amir, Hamza, Omar, Yusuf, Ayman, Hadi, Majid, Bilal, Tariq, Ziad, Rami, Karim; Lina, Sara, Rania, Yasmin, Noor, Dana, Maya, Jana, Hala, Lara, Layan, Rama, Tala, Ayla, Mira
+
+### Persian
+
+#### historic
+
+**Male given names** (30): Arash (10), Babak (10), Behzad (10), Farhad (10), Kaveh (10), Mehrdad (7), Bijan (7), Piruz (7), Shahin (7), Tahmasp (7), Hormoz (5), Vahid (5), Parviz (5), Bizhan (5), Farrokh (5), Sohrab (5), Rostam (3), Zal (3), Siavash (3), Jamshid (3), Manuchehr (3), Kayvan (3), Navid (3), Hushang (3), Cyrus (2)ʳ, Darius (2)ʳ, Xerxes (2)ʳ, Ardashir (2)ʳ, Shapur (2)ʳ, Khosrow (2)ʳ
+
+**Female given names** (30): Shirin (10), Farah (10), Roxana (10), Parisa (10), Mahin (10), Azadeh (7), Banu (7), Dilara (7), Gulnar (7), Shahrbanu (7), Laleh (5), Nahid (5), Soraya (5), Mahtab (5), Golnar (5), Yasamin (5), Roya (3), Simin (3), Zarrin (3), Mina (3), Pari (3), Nasrin (3), Fereshteh (3), Mehri (3), Pourandokht (2)ʳ, Azarmidokht (2)ʳ, Atossa (2)ʳ, Amestris (2)ʳ, Parysatis (2)ʳ, Stateira (2)ʳ
+
+**Regnal names, male** (8): Cyrus (10), Darius (10), Xerxes (10), Ardashir (10), Shapur (10), Khosrow (7), Bahram (7), Kavad (7)
+
+**Regnal names, female** (8): Pourandokht (10), Azarmidokht (10), Atossa (10), Amestris (10), Parysatis (10), Stateira (7), Shirin (7), Roxana (7)
+
+**Holy names** (12): Rumi (10), Hafez (10), Saadi (10), Attar (10), Shams (10), Khayyam (7), Bayazid (7), Sanai (7), Jami (7), Nezami (7), Ferdowsi (5), Sohravardi (5)
+
+#### modern
+
+**Male given names** (44): Reza (10, ST MO), Hossein (10, ST MO), Mohammad (10, ST MO), Ali (10, ST MO), Mehdi (10, ST MO), Amir (7, ST), Hamid (7, ST), Saeed (7, ST), Majid (7, ST), Davoud (7, ST), Ebrahim (5, ST), Kamran (5, ST), Farhad (5, ST), Babak (5, ST), Behnam (5, ST), Arash (5, ST), Payam (3, ST), Mojtaba (3, ST), Sina (3, MO), Pouya (3, MO), Parsa (3, MO), Arman (3, MO), Ehsan (3, ST), Navid (3, MO), Shahram (2, ST), Mostafa (2, ST), Kian (2, MO), Omid (2, ST), Nima (2, ST), Kaveh (2, ST), Hadi (2, ST), Morteza (2, ST), Bahman (2, ST), Farzad (2, ST), Siamak (2, ST), Arad (2, MO), Radin (2, MO), Ariya (2, MO), Amir-Ali (2, MO), Armin (2, MO), Bardia (2, MO), Dariush (2, MO), Kasra (2, MO), Shayan (2, MO)
+
+**Female given names** (45): Maryam (10, ST MO), Zahra (10, ST MO), Fatemeh (10, ST MO), Narges (10, ST MO), Sara (10, ST MO), Leila (7, ST), Mina (7, MO), Parisa (7, ST), Shirin (7, ST), Nasrin (7, ST), Mahsa (5, ST), Neda (5, ST), Elham (5, ST), Samira (5, ST), Azadeh (5, ST), Golnaz (5, ST), Shabnam (3, ST), Yasaman (3, ST), Niloufar (3, ST), Atefeh (3, ST), Roya (3, ST), Setareh (3, ST), Negar (3, ST), Pegah (3, ST), Sepideh (2, ST), Tannaz (2, ST), Ladan (2, ST), Mitra (2, ST), Farzaneh (2, ST), Homa (2, ST), Haniyeh (2, ST), Raha (2, MO), Baran (2, MO), Dorsa (2, MO), Hasti (2, MO), Yasna (2, MO), Avina (2, MO), Elnaz (2, MO), Ghazal (2, MO), Diana (2, MO), Kiana (2, MO), Melika (2, MO), Nika (2, MO), Romina (2, MO), Tara (2, MO)
+
+**Surnames** (30): Hosseini (10), Mohammadi (10), Ahmadi (10), Karimi (10), Rezaei (10), Moradi (7), Hashemi (7), Jafari (7), Ebrahimi (7), Rahimi (7), Sadeghi (5), Mousavi (5), Kazemi (5), Ghorbani (5), Rostami (5), Abbasi (5), Tehrani (3), Esfahani (3), Shirazi (3), Tabrizi (3), Mashhadi (3), Kermani (3), Yazdi (3), Gilani (3), Khorasani (2), Mazandarani (2), Zand (2), Farahani (2), Bakhtiari (2), Qashqai (2)
+
+**Regnal names, male** (8): Cyrus (10), Darius (10), Xerxes (10), Ardashir (10), Shapur (10), Khosrow (7), Bahram (7), Kavad (7)
+
+**Regnal names, female** (8): Pourandokht (10), Azarmidokht (10), Atossa (10), Amestris (10), Parysatis (10), Stateira (7), Shirin (7), Roxana (7)
+
+**Holy names** (12): Rumi (10), Hafez (10), Saadi (10), Attar (10), Shams (10), Khayyam (7), Bayazid (7), Sanai (7), Jami (7), Nezami (7), Ferdowsi (5), Sohravardi (5)
+
+**Given in the last thirty years:** Parsa, Arman, Kian, Sina, Pouya, Arad, Radin, Ariya, Amir-Ali, Armin, Bardia, Dariush, Kasra, Shayan, Navid; Dorsa, Hasti, Baran, Raha, Yasna, Avina, Elnaz, Ghazal, Diana, Kiana, Melika, Nika, Romina, Tara, Mina
+
+### Mappings
+
+`ottoman` reads Turkic; `swahili-omani` and `phoenician` read Arabic; `malay` and `maritimeSEA` read Indian historic and Arabic modern; `egyptian` reads Egyptian historic and Arabic modern.
+
+<!-- tier6b-people:end -->

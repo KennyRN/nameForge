@@ -2534,6 +2534,42 @@
     "tones": [
      "strange"
     ]
+   },
+   {
+    "name": "sha",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "medjed",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "nile serpent",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "phoenix of heliopolis",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
    }
   ],
   "ethiopian": [
@@ -2607,6 +2643,42 @@
     ],
     "tones": [
      "grim"
+    ]
+   },
+   {
+    "name": "ark guardian",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "debtera's spirit",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "serpent of the lake",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "abyssinian ibis",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "light"
     ]
    }
   ],
@@ -2682,6 +2754,42 @@
     "tones": [
      "light"
     ]
+   },
+   {
+    "name": "nyami nyami",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "popobawa",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "chipfalamfula",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "mngwa",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grim"
+    ]
    }
   ],
   "west-african": [
@@ -2755,6 +2863,42 @@
     ],
     "tones": [
      "light"
+    ]
+   },
+   {
+    "name": "obayifo",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "abada",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "mmuo",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "iroko spirit",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
     ]
    }
   ],
@@ -3425,6 +3569,446 @@
     ],
     "tones": [
      "light"
+    ]
+   }
+  ],
+  "turkic": [
+   {
+    "name": "bozkurt",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "tepegoz",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "shahmaran",
+    "habitats": [
+     "underground"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "dev",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "tulpar",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "su anasi",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "karakoncolos",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "peri",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "ejderha",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "hortlak",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "zumrud anka",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "cin",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   }
+  ],
+  "mongol": [
+   {
+    "name": "blue wolf",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "khangarid",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "lus",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "mangus",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "albin",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "chotgor",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "almas",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "ongon",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "khiimori",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "olgoi khorkhoi",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "tsagaan ebugen",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "shulmus",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "arabic": [
+   {
+    "name": "ghul",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "marid",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "silat",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "nasnas",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "anqa",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "hamah",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "bahamut",
+    "habitats": [
+     "sea"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "rukh",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "qutrub",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "shiqq",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "jinniyah",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "afrit",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   }
+  ],
+  "persian": [
+   {
+    "name": "azhdaha",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "karkadann",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "huma",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "nasu",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "gandarewa",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "pairika",
+    "habitats": [
+     "forest"
+    ],
+    "tones": [
+     "light"
+    ]
+   },
+   {
+    "name": "shirdal",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grand"
+    ]
+   },
+   {
+    "name": "div-e sefid",
+    "habitats": [
+     "mountain"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "nahang",
+    "habitats": [
+     "water"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "mardkhora",
+    "habitats": [
+     "desert"
+    ],
+    "tones": [
+     "grim"
+    ]
+   },
+   {
+    "name": "karshipta",
+    "habitats": [
+     "sky"
+    ],
+    "tones": [
+     "strange"
+    ]
+   },
+   {
+    "name": "druj",
+    "habitats": [
+     "home"
+    ],
+    "tones": [
+     "grim"
     ]
    }
   ]

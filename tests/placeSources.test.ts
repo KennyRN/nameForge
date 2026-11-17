@@ -34,7 +34,7 @@ test("the culture-to-tradition map: §3.2's additions are merged into the one ma
   assert.equal(link.cultureToColonialAdded, undefined, "the separate key is gone");
   // Northern Europe brief 5a: the newer culture keys read their legacy key's row (Welsh, Scottish, Irish and Cornish: Celtic's; Scandinavian: Norse's).
   assert.deepEqual(Object.keys(link.cultureToColonial).sort(), [
-    "american", "anglo-saxon", "arabic-persian", "belgian", "byzantine", "celtic", "chinese", "cornish", "dutch", "french", "general", "german", "greek", "greek-byzantine", "hellenistic", "iberian", "irish", "italian", "japanese", "norman-british", "norse", "ottoman", "phoenician", "portuguese", "roman", "scandinavian", "scottish", "slavic", "spanish", "welsh",
+    "american", "anglo-saxon", "arabic", "arabic-persian", "belgian", "byzantine", "celtic", "chinese", "cornish", "dutch", "french", "general", "german", "greek", "greek-byzantine", "hellenistic", "iberian", "irish", "italian", "japanese", "norman-british", "norse", "ottoman", "persian", "phoenician", "portuguese", "roman", "scandinavian", "scottish", "slavic", "spanish", "welsh",
   ]);
   for (const k of ["welsh", "scottish", "irish", "cornish"]) assert.equal(link.cultureToColonial[k], "british-imperial", k);
   assert.deepEqual(link.cultureToColonial.scandinavian, link.cultureToColonial.norse);

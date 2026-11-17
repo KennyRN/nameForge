@@ -3,7 +3,8 @@ import "../src/lensRosterSources";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { buildCoverage } from "../src/coverage";
-import { TIER6A_CULTURES, TIER6A_MIXES } from "../src/tier6a";
+const TIER6A_CULTURES = ["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic"];
+const TIER6A_MIXES = ["iberian", "greek-byzantine"];
 
 test("6a: the batch's cultures meet their cells in the modules the batch has content for, or are excluded; gaps are listed", () => {
   const report = buildCoverage();

@@ -13,7 +13,7 @@ import "../src/fill/batch";
 
 const CORE = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 /** Celtic (Northern Europe brief §3.2) is a mix of the four nations and has no people table of its own: it reads theirs. */
-const TIER6A = new Set(["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic"]);
+const TIER6A = new Set(["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african"]);
 /** Brief 6a: the second-tier cultures promoted to core depth (and the four the splits add) keep the second-tier table sizes of the people tables. */
 const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => (c.tier === "second" || TIER6A.has(c.key)) && c.key !== "celtic").map((c) => c.key);
 /** Ancient peoples with only a historic table: later they read another culture. */
@@ -22,7 +22,7 @@ const PERIODS: PeoplePeriod[] = ["historic", "modern"];
 /** Periods where the culture named people by patronymic or had no inherited surnames, so it has no surname list. */
 const NO_SURNAMES = new Set([
   "anglo-saxon/historic", "welsh/historic", "scandinavian/historic",
-  "greek-byzantine/historic", "greek/historic", "steppe/historic", "arabic-persian/historic", "egyptian/historic", "ethiopian/historic", "ethiopian/modern", "bantu/historic", "west-african/historic", "indian/historic",
+  "greek-byzantine/historic", "greek/historic", "steppe/historic", "turkic/historic", "mongol/historic", "arabic-persian/historic", "arabic/historic", "persian/historic", "egyptian/historic", "ethiopian/historic", "ethiopian/modern", "bantu/historic", "west-african/historic", "indian/historic",
   "aztec/historic", "andean/historic", "polynesian/historic", "polynesian/modern",
 ]);
 const SECOND_SIZES = { male: 30, female: 30, surnames: 30, regnalMale: 8, regnalFemale: 8, holy: 12 } as const;
@@ -31,7 +31,7 @@ const SIZES = { male: 60, female: 60, surnames: 60, regnalMale: 15, regnalFemale
 
 test("every core culture has the periods the brief names: Anglo-Saxon historic only, the rest both", () => {
   assert.deepEqual([...PEOPLE_CULTURES].sort(), [...CORE, ...SECOND].sort());
-  assert.equal(SECOND.length, 26);
+  assert.equal(SECOND.length, 30);
   for (const c of [...CORE, ...SECOND]) {
     for (const p of PERIODS) {
       const expected = !(HISTORIC_ONLY.has(c) && p === "modern");
@@ -470,16 +470,17 @@ test("local cultures read the nearest second-tier culture; historic-only peoples
   const rng = mulberry32(4);
   const near = (c: string, period: PeoplePeriod = "historic") => peopleCultureFor(c, undefined, rng, period);
   for (const c of ["maori", "hawaiian", "w-polynesian"]) assert.equal(near(c), "polynesian", c);
-  assert.equal(near("ottoman"), "arabic-persian");
-  assert.equal(near("swahili-omani"), "arabic-persian");
-  assert.equal(near("phoenician"), "arabic-persian");
+  // Brief 6b B4: the Ottoman reads Turkic; Swahili and Omani, the Phoenician and modern Malay read Arabic.
+  assert.equal(near("ottoman"), "turkic");
+  assert.equal(near("swahili-omani"), "arabic");
+  assert.equal(near("phoenician"), "arabic");
   assert.equal(near("hellenistic"), "greek-byzantine");
   assert.equal(near("belgian"), "dutch");
   assert.equal(near("malay", "historic"), "indian");
-  assert.equal(near("malay", "modern"), "arabic-persian");
+  assert.equal(near("malay", "modern"), "arabic");
   assert.equal(near("roman", "historic"), "roman");
   assert.equal(near("roman", "modern"), "italian");
-  assert.equal(near("egyptian", "modern"), "arabic-persian");
+  assert.equal(near("egyptian", "modern"), "arabic");
   // Shared tables brief §13.4: Aztec, Maya and Andean have a modern table of their own (Spanish given names, their own surnames).
   for (const c of ["aztec", "maya", "andean"]) {
     assert.equal(near(c, "historic"), c);
@@ -490,23 +491,13 @@ test("local cultures read the nearest second-tier culture; historic-only peoples
   assert.equal(peopleSourceFor("roman", undefined, "AN", mulberry32(1))!.culture, "roman");
 });
 
-test("the Ottoman reads Arabic and Persian with a ten-name Turkish extra for each sex, and only the Ottoman", () => {
-  const extras = (PEOPLE as unknown as { extras: { turkish: { male: PeopleEntry[]; female: PeopleEntry[] } } }).extras.turkish;
-  assert.equal(extras.male.length, 10);
-  assert.equal(extras.female.length, 10);
-  const base = peopleTable("arabic-persian", "historic")!;
+test("the Ottoman reads the Turkic table as it stands (brief 6b B4: the Turkish extra is dropped), and only the Ottoman", () => {
+  const base = peopleTable("turkic", "historic")!;
   const ottoman = peopleSourceFor("ottoman", undefined, "MD", mulberry32(1))!;
-  assert.equal(ottoman.culture, "arabic-persian");
-  assert.equal(ottoman.table.male.length, base.male.length + 10);
-  assert.equal(ottoman.table.female.length, base.female.length + 10);
-  for (const e of extras.male) assert.ok(ottoman.table.male.some((x) => x[0] === e[0]));
-  // The extra duplicates nothing in either arabic-persian table, and the plain culture has no extra.
-  for (const period of PERIODS) {
-    const t = peopleTable("arabic-persian", period)!;
-    for (const e of extras.male) assert.ok(!t.male.some((x) => x[0] === e[0]), `${period} male ${e[0]}`);
-    for (const e of extras.female) assert.ok(!t.female.some((x) => x[0] === e[0]), `${period} female ${e[0]}`);
-  }
-  assert.equal(peopleSourceFor("arabic-persian", undefined, "MD", mulberry32(1))!.table.male.length, base.male.length);
+  assert.equal(ottoman.culture, "turkic");
+  assert.equal(ottoman.table.male.length, base.male.length);
+  assert.equal(ottoman.table.female.length, base.female.length);
+  assert.equal(peopleSourceFor("turkic", undefined, "MD", mulberry32(1))!.table.male.length, base.male.length);
 });
 
 test("every table's families come from the lens, so the near future weighs the same family 3 to 1", () => {
@@ -632,7 +623,7 @@ test("§13.4: Roman and Egyptian have no modern period: later eras read Italian 
   assert.equal(peopleTable("roman", "modern"), undefined);
   assert.equal(peopleTable("egyptian", "modern"), undefined);
   assert.equal(peopleSourceFor("roman", undefined, "MO", mulberry32(1))!.culture, "italian");
-  assert.equal(peopleSourceFor("egyptian", undefined, "MO", mulberry32(1))!.culture, "arabic-persian");
+  assert.equal(peopleSourceFor("egyptian", undefined, "MO", mulberry32(1))!.culture, "arabic");
 });
 
 test("§13.4: Kenny's template names stay in Anglo-Saxon at the lowest weight", () => {

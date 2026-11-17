@@ -62,9 +62,10 @@ const lensJsonAny = lensJson as unknown as Record<string, unknown>;
 test("§3.1: the cultures, tiers and statuses are the brief's", () => {
   const tier = (t: string) => LENS_CULTURES.filter((c) => c.tier === t).map((c) => c.key);
   // Brief 6a: French, Dutch, Spanish, Portuguese, Italian, Roman, Greek, Byzantine and Slavic reach core depth.
-  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "french", "dutch", "spanish", "portuguese", "italian", "roman", "greek", "byzantine", "slavic"]);
+  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "french", "dutch", "spanish", "portuguese", "italian", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african"]);
+  // Brief 6b: Turkic, Mongol, Arabic, Persian, Egyptian, Ethiopian, Bantu and West African reach core depth; the two mixes stay second-tier.
   assert.deepEqual(tier("second"), [
-    "celtic", "iberian", "greek-byzantine", "steppe", "arabic-persian", "egyptian", "ethiopian", "bantu", "west-african",
+    "celtic", "iberian", "greek-byzantine", "steppe", "arabic-persian",
     "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american",
   ]);
   assert.deepEqual(tier("local").sort(), [
@@ -238,14 +239,14 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
   // The vehicle mapping is the shared roster plus the local extras; the vessel roster has no `polynesian` key of its own (it has hawaiian, maori and w-polynesian).
   const vehicleKeys = keysOf("vehicle");
   for (const c of VESSEL_BASE_CULTURES) assert.ok(vehicleKeys.includes(c.key), c.key);
-  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_BASE_CULTURES.some((c) => c.key === k)), ["byzantine", "greek", "italian", "polynesian", "portuguese", "spanish"]);
+  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_BASE_CULTURES.some((c) => c.key === k)), ["arabic", "byzantine", "greek", "italian", "mongol", "persian", "polynesian", "portuguese", "spanish", "turkic"]);
   // Brief 5c: ships, aircraft and land vehicles read `vehicle5c` (the vehicle roster and the six newer cultures); the bynames, realms and peoples read `north5c`.
   const vehicle5c = keysOf("vehicle5c");
   for (const c of VESSEL_CULTURES) assert.ok(vehicle5c.includes(c.key), c.key);
   for (const c of BYNAME_CULTURES_5C) assert.ok(keysOf("north5c").includes(c.key), c.key);
   // The 22, the 20, the 24 and the 34 are all inside the shared keys or the vehicle extras.
   for (const keys of [routeKeys, BYNAME_CULTURES.map((c) => c.key), MONEY_CULTURES.map((c) => c.key)]) for (const k of keys.filter((k) => !ENGINE_ALIAS[k])) assert.ok(cultureMapping("shared")[k], k);
-  assert.equal(WORLD_CULTURES.length, 29, "the sixteen world cultures, the six of batch 5b and the seven of batch 6a");
+  assert.equal(WORLD_CULTURES.length, 33, "the sixteen world cultures, the six of batch 5b, the seven of batch 6a and the four of batch 6b");
   for (const c of WORLD_CULTURES) assert.ok(cultureMapping("world")[c.id], `world ${c.id}`);
 });
 

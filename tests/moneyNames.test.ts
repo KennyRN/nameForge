@@ -2,6 +2,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
+import { engineCulture } from "../src/lens";
 import {
   breaksMoneyWords,
   findMoneyCulture,
@@ -39,7 +40,7 @@ const NEW_POOLS = [
   "coinMetal", "coinWord", "coinEmblem", "coinFraction", "coinShapeWord", "earlyMoney", "goodsMoney", "paperWord", "tokenWord", "unitWord", "moneyNickname", "sfMoney",
   ...["coin", "early", "goods", "paper", "scrip", "currency", "nickname"].map((k) => `moneyFixed:${k}`),
 ];
-const NEW_CULTURES = ["french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine"];
+const NEW_CULTURES = ["french", "dutch", "iberian", "american", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"];
 
 // ── §16.1 Vocabulary and cultures ───────────────────────────────────────────
 
@@ -154,7 +155,7 @@ test("§3.1: the money menu is route names' cultures bar Polynesian and Andean, 
   const keys = MONEY_CULTURES.map((c) => c.key);
   // Brief 5d: and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables.
   // Brief 6a: and Italian, Spanish, Portuguese, Greek and Byzantine.
-  assert.equal(keys.length, 35);
+  assert.equal(keys.length, 39);
   assert.ok(!keys.includes("polynesian") && !keys.includes("andean"));
   assert.deepEqual(keys.slice(keys.indexOf("greek-byzantine"), keys.indexOf("greek-byzantine") + 4), ["greek-byzantine", "french", "dutch", "iberian"]);
   assert.equal(keys[keys.indexOf("maya") + 1], "american");
@@ -224,7 +225,7 @@ test("§16.3: no paper in the ancient world, no early money from the steam age o
 });
 
 test("§4.2: paper in the Middle Ages only for chinese, arabic-persian, indian, roman and norman-british", () => {
-  for (const c of MONEY_CULTURES) assert.equal(moneyKindsOffered(c.key, "MD").some((k) => k.key === "paper"), MONEY_DATA.paperMiddleAges.includes(c.key), c.key);
+  for (const c of MONEY_CULTURES) assert.equal(moneyKindsOffered(c.key, "MD").some((k) => k.key === "paper"), MONEY_DATA.paperMiddleAges.includes(engineCulture(c.key, "money")), c.key);
 });
 
 test("§16.3: french, dutch, iberian: only currencies and nicknames in the ancient world; american until the early modern era", () => {
@@ -915,7 +916,7 @@ test("§2.2: the kind link lists the kinds offered for the culture and era", () 
   assert.ok(!labels({ ...DEFAULT_MONEY_STATE, culture: "aztec", era: "MD" }).includes("Coins"));
   assert.equal(field(DEFAULT_MONEY_STATE, "kind")!.choices[1].title, "Struck and cast coins, from gold to copper");
   const culture = field(DEFAULT_MONEY_STATE, "culture")!;
-  assert.equal(culture.choices.length, 35);
+  assert.equal(culture.choices.length, 39);
   assert.equal(culture.choices.find((c) => c.id === "dutch")!.group, undefined);
   assert.ok(culture.choices.some((c) => c.id === "american"));
 });

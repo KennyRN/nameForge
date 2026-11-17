@@ -539,7 +539,7 @@ test("§16.7: the start link shows only with a series of months, festivals or fu
 
 test("§16.7: the words link shows only for festivals in the eight cultures with a loan form (and the four Celtic nations, which read Celtic's)", () => {
   const withLoans = TIME_CULTURES.filter((c) => showsTimeWords({ ...DEFAULT_CALENDAR_STATE, kind: "festival", culture: c.key })).map((c) => c.key);
-  assert.deepEqual(withLoans.sort(), ["arabic-persian", "byzantine", "celtic", "egyptian", "greek", "greek-byzantine", "japanese", "korean", "roman", "slavic", "welsh", "scottish", "irish", "cornish"].sort());
+  assert.deepEqual(withLoans.sort(), ["arabic", "arabic-persian", "byzantine", "celtic", "egyptian", "greek", "persian", "greek-byzantine", "japanese", "korean", "roman", "slavic", "welsh", "scottish", "irish", "cornish"].sort());
   assert.ok(!showsTimeWords({ ...DEFAULT_CALENDAR_STATE, kind: "month", culture: "celtic" }));
   assert.match(calText({ ...DEFAULT_CALENDAR_STATE, kind: "festival", culture: "celtic", words: "loanwords" }), /with familiar loanwords/);
 });

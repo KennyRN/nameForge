@@ -16,7 +16,7 @@ const FIRST_ERAS: Record<string, string> = {
   "anglo-saxon": "old-english", norse: "viking", celtic: "pagan", roman: "imperial", chinese: "imperial", egyptian: "pharaonic", aztec: "mexica", bantu: "kingdoms",
   slavic: "rus", "arabic-persian": "arabic", indian: "ancient", japanese: "samurai", "west-african": "sahel-and-forest", maya: "classic", korean: "joseon", ethiopian: "aksum-and-abyssinia",
   welsh: "medieval", cornish: "medieval", scottish: "medieval", irish: "medieval", scandinavian: "early-modern", german: "medieval",
-  french: "medieval", dutch: "medieval", italian: "medieval", spanish: "medieval", portuguese: "medieval", greek: "classical", byzantine: "byzantine",
+  french: "medieval", dutch: "medieval", italian: "medieval", spanish: "medieval", portuguese: "medieval", greek: "classical", byzantine: "byzantine", turkic: "medieval", mongol: "steppe", arabic: "ancient", persian: "ancient",
 };
 
 test("§12.2: every culture's last era is Interstellar, and its default era is unchanged", () => {
