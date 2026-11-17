@@ -38,7 +38,7 @@ export const AS5D = {
 // The `as` frames (5c: eight of ten and two fantastic from the `of` style; 5d: eight, the two fantastic added): owners, kennings and the hundred.
 export const AS_FRAMES_5C = {
   group: "[founder]'s {N0}*3~The {N1} {N0}*3~{N0} of the {N2}*2~{N1}-{N0}*2~{N0} of [place]*2~The {A} {N0}*1~{N2} {N0}*2~{N0} of the {N1}*1",
-  tribe: "The {N1} {N0}*3~{N0} of {N1}*3~{N1}-{N0}*2~{N2} {N0}*2~The {A} {N0}*1~[founder]'s {N0}*1~{N0} of the {N2}*2~The {N0} of [place]*2",
+  tribe: "The {N1} {N0}*3~{N0} of {N1}*3~{N1}-{N0}*2~{N2} {N0}*2~The {A} {N0}*1~{N1}'s {N0}*1~{N0} of the {N2}*2~The {N0} of {N1}*2",
   vessel: "{N1}*3~The {N2}*3~[founder]'s {N1}*2~{N1} of [place]*2~{A} {N2}*2~{N2} of the {N1}*1~The {A} {N1}*2~{N2}*3",
   epithet: "the {N0}*3~the {N1}*3~the {N2}*3~{N1}-{N0}*2~the {A} {N0}*1~{N0} the {N1}*1~the {N1} and {N2}*1~the {A} {N2}*1",
   title: "{N0} of [place]*3~{N1} of [place]*3~{R} [name]*3~{N0}*2~{N1}*2~{A} {N0}*1~{N1} to the {N0}*1~{R} of [place]*2",

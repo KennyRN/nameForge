@@ -12,7 +12,7 @@ const T5D = (s) => s.split("~").map((x) => {
 const SETS5C = {
   pt: {
     group: "{N0} of [holy person]*3~{N2} {N0}*3~{N0} of the {N1}*2~The {A} {N0}*2~{N1} {N0}*2~[place] {N0}*1~{N0} of {N2}*2~The {N0} of the {N2}*1",
-    tribe: "The {N1} {N0}*3~{N2} {N0}*3~{N0} of {N1}*2~{A} {N0}*2~The {N0} of [place]*2~{N0} of the {N2}*2~{N1}-{N0}*1~The {A} {N2}*1",
+    tribe: "The {N1} {N0}*3~{N2} {N0}*3~{N0} of {N1}*2~{A} {N0}*2~The {N0} of {N2}*2~{N0} of the {N2}*2~{N1}-{N0}*1~The {A} {N2}*1",
     vessel: "{N2} of [place]*3~{N1}*3~The {N2}*2~{N1} of [holy person]*2~{A} {N2}*2~[holy person]*2~{N2}*2~The {A} {N1}*1",
     epithet: "the {N1}*3~the {N0}*3~the {A} {N2}*2~{N0} of the {N1}*1~the {N2}*3~the {N1} {N0}*1~{N2}-{N0}*1~the {A} {N0}*1",
     title: "{N1} of [place]*3~{N0} of [place]*2~{R} [name]*3~{N1}*2~{N0}*2~{A} {N1}*1~{N1} to the {N0}*1~{R} of [place]*3",
@@ -22,7 +22,7 @@ const SETS5C = {
   },
   bz: {
     group: "The Holy {N0}*3~{N0} of [holy person]*3~{N0} of the {N2}*3~{N1} {N0}*2~The {N0} of {N1}*2~{A} {N2} {N0}*1~[founder]'s {N0}*1~The {N2} {N0}*1",
-    tribe: "{N0} of the {N2}*3~The {N0} of {N1}*3~{N1} {N0}*2~The Holy {N0}*1~{A} {N2} {N0}*1~{N2}-{N0}*1~The {A} {N1}*2~{N0} of [place]*2",
+    tribe: "{N0} of the {N2}*3~The {N0} of {N1}*3~{N1} {N0}*2~The Holy {N0}*1~{A} {N2} {N0}*1~{N2}-{N0}*1~The {A} {N1}*2~{N0} of {N1}*2",
     vessel: "The {N1}*3~{N1} of {N2}*2~[holy person]*3~The {A} {N2}*2~{N2}*3~{A} {N1}*2~{N1} of [place]*1~The Holy {N1}*1",
     epithet: "the {N2}*3~the {A} {N1}*2~the {N1}*3~{N0}-{N1}*1~the {N0}*3~the {A} {N0}*2~{N1} and {N2}*1~the {N0} of the {N2}*1",
     title: "{R} of [place]*3~{N0} of [place]*3~{N1}*2~{R} [name]*2~{N0}*2~{N1} to the {N2}*1~{A} {N0}*1~Most {A} {N0}*1",
