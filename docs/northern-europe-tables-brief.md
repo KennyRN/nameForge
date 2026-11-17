@@ -263,3 +263,6 @@ Every loanword is checked against a standard English dictionary; those that are 
 - **Share and cells:** each core culture has three lists of ten words and ten frames per module (Celtic four of each), six words restricted to each of the five eras and three fantastic; the signature share is 40%. A chosen kind, a series, the loanword setting and the module's other options keep the module's own draw.
 - **Real names:** the real-name list gains 113 well-known real events and objects (`src/data/real-places.json`, `groups`).
 - **Loanwords:** 33 looked up on collinsdictionary.com (`docs/loanwords.md`); Hacksilver is not in Collins and became Cut Silver.
+
+
+> **Note, 17 November 2026.** The sibling-distinctness amendment (docs/second-tier-tables-brief.md §10) applies to the core cultures of this brief as well: the nations, Norse and Scandinavian, Anglo-Saxon and Norman and British, and each core culture against General, are held to its limits by tests/distinctness.test.ts.

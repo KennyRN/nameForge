@@ -51,7 +51,7 @@ export const WORDS = {
   skyNames: {
     english: "Plough|Harp|Ship|Hunter|Swan|Cup|Crown|Wagon|Bridge|Scales;Hound|Fox|Hare|Hawk|Crow|Stag|Bear|Wren|Bull|Goose;Lamp|Beacon|Wanderer|Pole Star|Evening Star|Morning Star|Lantern|Torch|Spark|Candle",
     welsh: "Wain|Harp|Court|Ship|Hunter|Chair|Road|Circle|Cauldron|Silver Wheel;Red Kite|Badger|Otter|Hare|Salmon|Raven|Dragon|Wren|Wolf|Goat;Corpse Candle|Lamp|Wanderer|Pole Star|Dusk Star|Dawn Star|Lantern|Torch|Spark|Candle",
-    scottish: "Plough|Harp|Ship|Hunter|Swan|Cup|Dancers|Wagon|Cairn|Stones;Wildcat|Eagle|Stag|Grouse|Seal|Hound|Capercaillie|Heron|Bull|Hare;Merry Dancers|Beacon|Wanderer|Pole Star|Gloaming Star|Daybreak Star|Cruisie|Torch|Spark|Candle",
+    scottish: "Plough|Harp|Ship|Hunter|Swan|Cup|Dancers|Wagon|Cairn|Stones;Wildcat|Eagle|Stag|Grouse|Seal|Hound|Capercaillie|Heron|Bull|Hare;Merry Dancers|Beacon|Wanderer|Pole Star|Gloaming Star|Daybreak Star|Rush Lamp|Torch|Spark|Candle",
     irish: "Chain|Harp|Ship|Hunter|Swan|Cup|Plough|Cauldron|Bridge|Wagon;Hound|Salmon|Hawk|Crow|Stag|Hare|Crane|Bull|Boar|Wren;Lamp|Bonfire|Wanderer|Pole Star|Evening Star|Morning Star|Rushlight|Torch|Spark|Candle",
     cornish: "Cross|Harp|Anchor|Hunter|Swan|Cup|Plough|Wagon|Bridge|Net;Gull|Seal|Chough|Pilchard|Crow|Bear|Wren|Hare|Hound|Fox;Wrecker's Lamp|Beacon|Wanderer|Pole Star|Evening Star|Morning Star|Lantern|Torch|Spark|Candle",
     norse: "Distaff|Wain|Ship|Hunter|Swan|Cup|Eyes|Toe|Wheel|Bridge;Wolf|Boar|Hare|Hawk|Raven|Stag|Bear|Goat|Bull|Eagle;Lamp|Beacon|Wanderer|Pole Star|Evening Star|Morning Star|Lantern|Torch|Spark|Aurora",

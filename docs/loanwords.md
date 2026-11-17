@@ -435,3 +435,7 @@ Each word was looked up on collinsdictionary.com or oed.com by a search restrict
 | Voyageur | Collins |
 | Yaga | OED, in Baba Yaga |
 | Druzhina | OED |
+
+## Sibling-distinctness brief (17 November 2026): the words the brief adds
+
+Looked up on collinsdictionary.com or oed.com, sending only the word: shieling (found), haar (found, OED and Collins), mizzle (found), whin (found), furze (found), lingonberry (found), spate (found). Cruisie (a Scots lamp) has no entry and is replaced by Rush Lamp. The other new words are plain English (Pruning, Cork-Stripping, Salt-Raking, Reaping, Lenten, Paschal, Furrow, Primrose, Bog-Cotton, Squall, Tin-Streaming, Thrift, Mackerel, Sea-Fret, Westerly, Midwinter, Slaughter, Meltwater, Rime, Hail, Aurora and the rest).
