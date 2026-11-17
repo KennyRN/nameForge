@@ -6,7 +6,7 @@ export const MIXES6 = ["iberian", "greek-byzantine"];
 
 export const W6 = {
   mysticOrders: {
-    spanish: "Brotherhood|Confraternity|Order|Hermits|Beatas|Penitents|Cofradia|Chapter|Seers|Mystics;Cross|Rose|Lamb|Dove|Star|Candle|Pelican|Lily|Flame|Shell;Mysteries|Vision|Vigil|Procession|Rosary|Silence|Veil|Grail|Ecstasy|Pilgrimage",
+    spanish: "Brotherhood|Confraternity|Order|Hermits|Beatas|Penitents|Sodality|Chapter|Seers|Mystics;Cross|Rose|Lamb|Dove|Star|Candle|Pelican|Lily|Flame|Shell;Mysteries|Vision|Vigil|Procession|Rosary|Silence|Veil|Grail|Ecstasy|Pilgrimage",
     french: "Brotherhood|Order|Chapter|Hermits|Monks|Beguines|Society|Lodge|Mystics|Circle;Lily|Rose|Cross|Dove|Star|Candle|Pelican|Flame|Shell|Cockerel;Mysteries|Vision|Vigil|Grail|Silence|Veil|Cloister|Light|Ecstasy|Pilgrimage",
     italian: "Brotherhood|Confraternity|Order|Hermits|Tertiaries|Penitents|Chapter|Society|Mystics|Circle;Cross|Lily|Dove|Lamb|Star|Candle|Flame|Rose|Olive|Shell;Mysteries|Vision|Vigil|Procession|Silence|Veil|Cloister|Light|Ecstasy|Pilgrimage",
     dutch: "Brotherhood|Beguines|Order|Chapter|Common Life|Hermits|Society|Chamber|Mystics|Circle;Tulip|Cross|Lamb|Dove|Star|Lantern|Swan|Rose|Windmill|Flame;Mysteries|Vision|Vigil|Silence|Veil|Cloister|Light|Devotion|Beguinage|Pilgrimage",
@@ -21,7 +21,7 @@ export const W6 = {
     dutch: "Pikemen|Sea Beggars|Guards|Free Company|Regiment|Militia|Brotherhood|Marines|Musketeers|Civic Guard;Pike|Sword|Banner|Shield|Musket|Cannon|Halberd|Crossbow|Cutlass|Drum;Lion|Eagle|Wolf|Falcon|Horse|Boar|Hound|Stag|Bear|Swan",
     roman: "Legion|Cohort|Century|Guards|Auxiliaries|Praetorians|Vigiles|Brotherhood|Maniple|Cavalry;Gladius|Pilum|Shield|Standard|Spear|Javelin|Helmet|Trumpet|Sling|Ballista;Eagle|Wolf|Bull|Lion|Boar|Horse|Hound|Stag|Bear|Falcon",
     greek: "Phalanx|Hoplites|Sacred Band|Guards|Peltasts|Companions|Brotherhood|Cavalry|Marines|Archers;Spear|Shield|Sword|Standard|Javelin|Helmet|Trumpet|Sling|Bow|Trireme;Lion|Eagle|Owl|Wolf|Bull|Boar|Horse|Hound|Stag|Falcon",
-    slavic: "Druzhina|Cossacks|Hussars|Guards|Free Company|Regiment|Streltsy|Brotherhood|Militia|Partisans;Sabre|Spear|Banner|Shield|Axe|Bow|Pike|Musket|Cannon|Mace;Wolf|Eagle|Bear|Falcon|Horse|Boar|Hound|Stag|Bull|Lynx",
+    slavic: "Druzhina|Cossacks|Hussars|Guards|Free Company|Regiment|Musketeers|Brotherhood|Militia|Partisans;Sabre|Spear|Banner|Shield|Axe|Bow|Pike|Musket|Cannon|Mace;Wolf|Eagle|Bear|Falcon|Horse|Boar|Hound|Stag|Bull|Lynx",
   },
   underworldGroups: {
     spanish: "Bandits|Gang|Crew|Brotherhood|Syndicate|Smugglers|Outfit|Ring|Mob|Pack;Highwaymen|Smugglers|Rustlers|Pickpockets|Forgers|Cutpurses|Racketeers|Fences|Poachers|Bootleggers;Mountain Pass|Back Street|Dockside|Cellar|Crossroads|Tavern|Market|Wharf|Bullring|Alley",
@@ -57,16 +57,16 @@ export const W6 = {
     dutch: "States General|Council|Regents|Estates|Faction|Patriots|League|Assembly|Court|Chancery;Crown|Faith|Republic|Union|Law|Trade|Liberty|Order|Peace|Dike;Stadhouse|Palace|Cathedral|Town Hall|Castle|Council Chamber|Exchange|Binnenhof|Weigh House|Assembly Hall",
     roman: "Senate|Council|Optimates|Populares|Faction|Triumvirate|League|Assembly|Court|Chancery;Republic|Faith|Empire|Law|Trade|Union|Liberty|Order|Peace|Crown;Curia|Palace|Temple|Forum|Camp|Council Chamber|Exchange|Capitol|Basilica|Senate House",
     greek: "Assembly|Council|Oligarchs|Democrats|Faction|Tyranny|League|Areopagus|Court|Chancery;Democracy|Faith|Empire|Law|Trade|Union|Liberty|Order|Peace|Crown;Agora|Palace|Temple|Acropolis|Camp|Council Chamber|Exchange|Pnyx|Stoa|Assembly Hall",
-    slavic: "Duma|Council|Boyars|Veche|Faction|Zemstvo|League|Assembly|Court|Chancery;Crown|Faith|Empire|Law|Trade|Union|Liberty|Order|Peace|Land;Kremlin|Palace|Cathedral|Town Hall|Hillfort|Council Chamber|Exchange|Veche Square|Monastery|Assembly Hall",
+    slavic: "Duma|Council|Boyars|Town Assembly|Faction|Zemstvo|League|Assembly|Court|Chancery;Crown|Faith|Empire|Law|Trade|Union|Liberty|Order|Peace|Land;Kremlin|Palace|Cathedral|Town Hall|Hillfort|Council Chamber|Exchange|Town Assembly Square|Monastery|Assembly Hall",
   },
   supernaturalCourts: {
-    spanish: "Santa Compana|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Duende|Xana|Trasgu|Moorish Spirit|Giant|Goblin|Sprite|Witch|Forest Spirit|Water Spirit;Sierra|Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake",
-    french: "Wild Hunt|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Fairy|Lutin|Melusine|Werewolf|Giant|Goblin|Sprite|Witch|Forest Spirit|Water Spirit;Broceliande|Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake",
-    italian: "Wild Hunt|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Fairy|Folletto|Strega|Werewolf|Giant|Goblin|Sprite|Witch|Forest Spirit|Water Spirit;Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake|Crater",
+    spanish: "Procession of Souls|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Duende|Spring Maiden|Hearth Goblin|Moorish Spirit|Giant|Goblin|Sprite|Witch|Forest Spirit|Water Spirit;Sierra|Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake",
+    french: "Wild Hunt|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Fairy|Imp|Melusine|Werewolf|Giant|Goblin|Sprite|Witch|Forest Spirit|Water Spirit;Broceliande|Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake",
+    italian: "Wild Hunt|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Fairy|Elf|Strega|Werewolf|Giant|Goblin|Sprite|Witch|Forest Spirit|Water Spirit;Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake|Crater",
     dutch: "Wild Hunt|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Elf|Kabouter|White Lady|Werewolf|Giant|Goblin|Sprite|Witch|Water Spirit|Hellhound;Fen|Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake",
     roman: "Shades|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Faun|Lamia|Harpy|Werewolf|Giant|Goblin|Sprite|Witch|Forest Spirit|Water Spirit;Underworld|Enchanted Cave|Mist|Dark Hall|Elysian Fields|Mere|Enchanted Wood|Cairn|Tartarus|Frozen Lake",
     greek: "Maenads|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Nymph|Satyr|Centaur|Harpy|Giant|Siren|Sprite|Witch|Forest Spirit|Water Spirit;Underworld|Enchanted Cave|Mist|Dark Hall|Elysian Fields|Mere|Enchanted Wood|Cairn|Tartarus|Frozen Lake",
-    slavic: "Wild Hunt|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Leshy|Domovoi|Rusalka|Werewolf|Giant|Goblin|Sprite|Baba Yaga|Forest Spirit|Water Spirit;Birch Wood|Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake",
+    slavic: "Wild Hunt|Fair Court|Dark Court|Host|Court|Conclave|Circle|Assembly|Throne|Brood;Wood Spirit|House Spirit|Rusalka|Werewolf|Giant|Goblin|Sprite|Baba Yaga|Forest Spirit|Water Spirit;Birch Wood|Enchanted Cave|Mist|Dark Hall|Moonlit Fields|Mere|Enchanted Wood|Cairn|Underhill|Frozen Lake",
   },
   tribalNames: {
     spanish: "Kin|Folk|House|Family|Clan|Brethren|Households|Line|Neighbours|Hosts;Mountain|Plain|Marsh|Heath|River|Valley|Coast|Hill|Sierra|Meseta;Eagle|Wolf|Bull|Stag|Horse|Boar|Lion|Hound|Oak|Falcon",

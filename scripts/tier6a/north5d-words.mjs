@@ -2,13 +2,13 @@
 // Portuguese reads Spanish's with its own words changed, Byzantine Greek's; the mixes hold four words per list. Month and day names are never real ones; gods are invented.
 export const W5D = {
   moneyNames: {
-    spanish: "Real|Maravedi|Doubloon|Peso|Escudo|Ducat|Piece of Eight|Blanca|Cuarto|Peseta;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Castle|Lion|Cross|Pillars|Crown|Eagle|Anchor|Shield|Star|Pomegranate",
+    spanish: "Real|Maravedi|Doubloon|Peso|Escudo|Ducat|Piece of Eight|Blanca|Quarter Piece|Peseta;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Castle|Lion|Cross|Pillars|Crown|Eagle|Anchor|Shield|Star|Pomegranate",
     french: "Denier|Livre|Sou|Ecu|Franc|Louis|Liard|Obol|Noble|Centime;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Lily|Cross|Rooster|Crown|Sun|Shield|Star|Castle|Lion|Rose",
     italian: "Florin|Ducat|Soldo|Lira|Grosso|Scudo|Zecchino|Denaro|Testone|Quattrino;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Lion|Cross|Eagle|Crown|Lily|Shield|Star|Tower|Wolf|Saint",
-    dutch: "Guilder|Stuiver|Daalder|Duit|Penning|Rider|Ducat|Groat|Florin|Cent;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Lion|Cross|Rider|Crown|Windmill|Shield|Star|Ship|Swan|Tulip",
+    dutch: "Guilder|Stuiver|Silver Dollar|Duit|Penning|Rider|Ducat|Groat|Florin|Cent;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Lion|Cross|Rider|Crown|Windmill|Shield|Star|Ship|Swan|Tulip",
     roman: "Denarius|Sestertius|As|Aureus|Solidus|Quadrans|Dupondius|Follis|Siliqua|Semis;Silver|Gold|Copper|Bronze|Brass|Lead|Pewter|Tin|Iron|Nickel;Eagle|Wolf|Laurel|Crown|Shield|Star|Wreath|Lion|Temple|Bull",
-    greek: "Drachma|Obol|Stater|Tetradrachm|Talent|Mina|Hemiobol|Didrachm|Oboloi|Lepton;Silver|Gold|Copper|Bronze|Electrum|Lead|Pewter|Tin|Iron|Nickel;Owl|Wreath|Dolphin|Horse|Star|Helmet|Shield|Lion|Wheel|Bull",
-    slavic: "Grivna|Kopek|Ruble|Denga|Thaler|Zloty|Groschen|Ducat|Silver Piece|Poltina;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Eagle|Cross|Horseman|Crown|Sun|Shield|Star|Bear|Wolf|Birch",
+    greek: "Drachma|Obol|Stater|Tetradrachm|Talent|Mina|Hemiobol|Didrachm|Oboli|Lepton;Silver|Gold|Copper|Bronze|Electrum|Lead|Pewter|Tin|Iron|Nickel;Owl|Wreath|Dolphin|Horse|Star|Helmet|Shield|Lion|Wheel|Bull",
+    slavic: "Grivna|Kopek|Ruble|Small Silver|Thaler|Zloty|Groschen|Ducat|Silver Piece|Poltina;Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel;Eagle|Cross|Horseman|Crown|Sun|Shield|Star|Bear|Wolf|Birch",
   },
   eventNames: {
     spanish: "War|Revolt|Siege|Reconquest|Campaign|Rising|Truce|Peace|Conquest|Reign;Famine|Plague|Flood|Drought|Fire|Storm|Sickness|Great Hunger|Failed Harvest|Earthquake;Crown|Faith|Empire|Cortes|Town|Peasants|Guild|Wool|Navarre|Inquisition",
@@ -17,7 +17,7 @@ export const W5D = {
     dutch: "War|Revolt|Siege|Beggars' War|Campaign|Rising|Truce|Peace|Revolution|Reign;Famine|Plague|Flood|Frost|Fire|Drought|Storm|Sickness|Great Hunger|Dike Burst;Crown|Faith|Union|States|Town|Peasants|Guild|Herring|Spice|Tulip",
     roman: "War|Revolt|Siege|Civil War|Campaign|Rising|Truce|Peace|Conquest|Reign;Famine|Plague|Flood|Eruption|Fire|Drought|Storm|Sickness|Great Hunger|Earthquake;Empire|Republic|Senate|Legions|Town|Slaves|Guild|Grain|Faith|Tribes",
     greek: "War|Revolt|Siege|League War|Campaign|Rising|Truce|Peace|Conquest|Reign;Famine|Plague|Flood|Eruption|Fire|Drought|Storm|Sickness|Great Hunger|Earthquake;Empire|League|City|Tyrants|Town|Slaves|Guild|Grain|Faith|Persians",
-    slavic: "War|Revolt|Siege|Feud|Campaign|Rising|Truce|Peace|Conquest|Reign;Famine|Plague|Flood|Frost|Fire|Drought|Storm|Sickness|Great Hunger|Failed Harvest;Crown|Faith|Empire|Veche|Town|Peasants|Guild|Horde|Cossacks|Tsar",
+    slavic: "War|Revolt|Siege|Feud|Campaign|Rising|Truce|Peace|Conquest|Reign;Famine|Plague|Flood|Frost|Fire|Drought|Storm|Sickness|Great Hunger|Failed Harvest;Crown|Faith|Empire|Town Assembly|Town|Peasants|Guild|Horde|Cossacks|Tsar",
   },
   calendarNames: {
     spanish: "Frost|Thaw|Sowing|Blossom|Hay|Harvest|Vintage|Fog|Mist|Gale;Fair Night|Procession|Carnival|Saint's Feast|Harvest Thanks|Bull Run|Pilgrimage Feast|Midsummer|Lantern Night|Market Fair;Harvest|Hunter's|Wolf|Frost|Corn|Hay|Fox|Barley|Oak|Vintage",
@@ -58,7 +58,7 @@ export const W5D = {
   bookNames: {
     spanish: "Book|Chronicle|Roll|Charter|Psalter|Register|Ledger|Gospel|Almanac|Romance;Kings|Kin|Tides|Stars|Law|Herbs|Saints|Wars|Towns|Pilgrims;Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden",
     french: "Book|Chronicle|Roll|Charter|Psalter|Register|Ledger|Gospel|Almanac|Romance;Kings|Kin|Tides|Stars|Law|Herbs|Saints|Wars|Towns|Troubadours;Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden",
-    italian: "Book|Chronicle|Roll|Charter|Psalter|Register|Ledger|Gospel|Almanac|Canzoniere;Popes|Kin|Tides|Stars|Law|Herbs|Saints|Wars|Towns|Merchants;Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden",
+    italian: "Book|Chronicle|Roll|Charter|Psalter|Register|Ledger|Gospel|Almanac|Songbook;Popes|Kin|Tides|Stars|Law|Herbs|Saints|Wars|Towns|Merchants;Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden",
     dutch: "Book|Chronicle|Roll|Charter|Psalter|Register|Ledger|Gospel|Almanac|Atlas;Kings|Kin|Tides|Stars|Law|Herbs|Saints|Wars|Towns|Voyages;Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden",
     roman: "Book|Chronicle|Roll|Charter|Scroll|Register|Ledger|Gospel|Almanac|Annals;Emperors|Kin|Tides|Stars|Law|Herbs|Saints|Wars|Towns|Legions;Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden",
     greek: "Book|Chronicle|Roll|Charter|Scroll|Register|Ledger|Gospel|Almanac|Histories;Kings|Kin|Tides|Stars|Law|Herbs|Heroes|Wars|Cities|Voyages;Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden",

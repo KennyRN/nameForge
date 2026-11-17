@@ -24,8 +24,8 @@ export const PT5C = {
 };
 
 export const BZ5C = {
-  mysticOrders: "Brotherhood|Monks|Order|Hermits|Stylites|Holy Fools|Lavra|Chapter|Seers|Mystics;Icon|Cross|Lamb|Dove|Star|Candle|Pelican|Lily|Flame|Lamp;Mysteries|Vision|Vigil|Liturgy|Fasting|Silence|Veil|Light|Ecstasy|Pilgrimage",
-  martialOrders: "Varangians|Cataphracts|Tagma|Imperial Guard|Border Guard|Marines|Brotherhood|Cavalry|Archers|Legion;Spear|Shield|Sword|Standard|Lance|Helmet|Trumpet|Bow|Mace|Dromon;Lion|Eagle|Bear|Wolf|Bull|Boar|Horse|Hound|Stag|Falcon",
+  mysticOrders: "Brotherhood|Monks|Order|Hermits|Stylites|Holy Fools|Hermit Colony|Chapter|Seers|Mystics;Icon|Cross|Lamb|Dove|Star|Candle|Pelican|Lily|Flame|Lamp;Mysteries|Vision|Vigil|Liturgy|Fasting|Silence|Veil|Light|Ecstasy|Pilgrimage",
+  martialOrders: "Varangians|Cataphracts|Battalion|Imperial Guard|Border Guard|Marines|Brotherhood|Cavalry|Archers|Legion;Spear|Shield|Sword|Standard|Lance|Helmet|Trumpet|Bow|Mace|Dromon;Lion|Eagle|Bear|Wolf|Bull|Boar|Horse|Hound|Stag|Falcon",
   underworldGroups: "Brigands|Gang|Crew|Brotherhood|Syndicate|Smugglers|Outfit|Ring|Mob|Pack;Pirates|Smugglers|Brigands|Pickpockets|Forgers|Cutpurses|Racketeers|Fences|Footpads|Relic Thieves;Harbour|Back Street|Dockside|Cistern|Crossroads|Tavern|Market|Wharf|Hippodrome|Alley",
   tradeGuilds: "Silk Merchants|Weavers|Goldsmiths|Spice Merchants|Bakers|Smiths|Shipowners|Tanners|Perfumers|Money Changers;Silk|Wine|Icons|Silver|Spice|Grain|Gold|Leather|Purple Dye|Incense;Guildhall|Forum|Market Place|Warehouse|Counting House|Customs House|Granary|Harbour|Bazaar|Exchange",
   adventureCompanies: "Varangians|Fellowship|Band|Company|Wanderers|Pilgrims|Adventurers|Seekers|Guild|Crew;Quest|Pilgrimage|Hunt|Journey|Campaign|Rescue|Raid|Venture|Errand|Search;Eagle|Cross|Lion|Wolf|Star|Compass|Laurel|Sun|Dolphin|Dove",
@@ -35,7 +35,7 @@ export const BZ5C = {
   epithets: "Great|Bold|Victorious|Pious|Orthodox|Fortunate|Wise|Peacemaker|Lion|Defender;Tall|Fair|Red|Dark|Stout|Lame|Hardy|Grey|Broad|Bald;Wise|Just|Holy|Faithful|Steadfast|Careful|Kind|Noble|Proud|Purple",
   titles: `Magistrate|Master|Elder|Captain|Registrar|First Swordbearer|Judge|Steward|Archivist|Venerable;Chamberlain|Treasurer|Abbot|Bailiff|Auditor|Steward of the Court|Clerk|Courier|Sergeant|Notary;${HON}`,
   familyNames: "Smith|Miller|Weaver|Monk|Fisher|Farmer|Carter|Mason|Tailor|Baker;Hill|Brook|Wood|Field|Lake|Ford|Valley|Marsh|Castle|Mount;Son of the Wolf|Son of the Hill|Kinsman|Heir|Descendant|Kindred|Cousin|Son of the Forest|Son of the Priest|Son of the Mill",
-  realms: "Empire|Theme|Exarchate|Despotate|Patriarchate|Duchy|Principality|Kingdom|Commonwealth|Province;Themes|Marches|Uplands|Plains|Rivers|Heartland|Islands|Coast|Lowlands|Straits;Romans|Citizens|Islanders|Mountain-Folk|Marchers|Townsfolk|Plainsmen|Kinsmen|Sea-Folk|Free Men",
+  realms: "Empire|Theme|Exarchate|Despotat|Patriarchate|Duchy|Principality|Kingdom|Commonwealth|Province;Themes|Marches|Uplands|Plains|Rivers|Heartland|Islands|Coast|Lowlands|Straits;Romans|Citizens|Islanders|Mountain-Folk|Marchers|Townsfolk|Plainsmen|Kinsmen|Sea-Folk|Free Men",
   peoplesTongues: "Romans|Highlanders|Lowlanders|Monks|Mountain-Folk|River-Folk|Citizens|Marchers|Townsfolk|Coast-Folk;Speech|Tongue|Dialect|Cant|Liturgy|Talk|Chant|Jargon|Burr|Drawl;Mountain|Plain|Marsh|Theme|River|Valley|Coast|Hill|Lake|Sea",
   ships: "Dromon|Fire-Ship|Galley|Merchantman|Schooner|Barque|Steamer|Skiff|Gunboat|Liner;Lion|Eagle|Dolphin|Dove|Stag|Falcon|Hawk|Horse|Seahorse|Swan;Providence|Concord|Hope|Triumph|Faith|Unity|Prosperity|Peace|Glory|Mercy",
   aircraft: "Airship|Biplane|Monoplane|Glider|Balloon|Mailplane|Fighter|Bomber|Airliner|Helicopter;West Wind|North Wind|South Wind|East Wind|Gale|Breeze|Bosphorus Wind|Squall|Mist|Storm;Eagle|Falcon|Hawk|Dove|Raven|Kestrel|Phoenix|Swallow|Kite|Buzzard",

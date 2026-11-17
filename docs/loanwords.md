@@ -293,27 +293,145 @@ Every non-everyday word batch 5d uses (money and coins, events and eras, calenda
 
 Common words used as they are and not looked up: Hoard, Tally, Clipping, Token, Penny, Groat, Noble, Angel, Crown, Guinea, Farthing, Shilling, Sovereign, Halfpenny, Mark, Ounce, Plough, Harp, Wain, Distaff.
 
-## Batch 6a (second-tier tables): Collins lookups
+## Batch 6a (second-tier tables): Collins and Oxford lookups
 
-Each word was looked up on Collins (collinsdictionary.com), sending only the word. A word without an entry was replaced by its English sense.
+Each word was looked up on collinsdictionary.com or oed.com by a search restricted to those two sites, sending only the word, in the second-tier 6a fixes (17 November 2026). A word counts as found when an English entry exists (Collins English or the OED); a word that appears only in the Collins translation dictionaries, only as a user submission, or only in another sense (tagma in zoology) counts as not found and is replaced by its English sense. Proper names of places and peoples (Subura, Navarre, Pripet, Bosphorus, Broceliande, Binnenhof, Lourdes, Bandon) are not loanwords and were not looked up. Both dictionary sites answered every search.
 
-| Word | Collins | Result |
+- Words checked: 125
+- Kept (found): 86
+- Replaced (not found): 39
+
+### Replaced
+
+| Word | Replaced by | Why |
 | --- | --- | --- |
-| Maravedi | yes: a former Spanish coin | kept |
-| Doubloon | yes: a former Spanish gold coin | kept |
-| Denier | yes: a former European coin (and a textile unit) | kept |
-| Liard | yes: a former French coin | kept |
-| Stuiver | yes: a variant of stiver, a former Dutch coin | kept |
-| Sestertius | yes: an ancient Roman coin | kept |
-| Tetradrachm | yes: an ancient Greek silver coin | kept |
-| Drachma | yes: the former Greek currency, an ancient coin | kept |
-| Obol | yes: an ancient Greek silver coin | kept |
-| Follis | yes: a Roman and Byzantine copper coin | kept |
-| Groschen | yes: a former German and Austrian coin | kept |
-| Zecchino | yes: a former gold coin of Venice | kept |
-| Cruzado | yes: a former Brazilian currency | kept |
-| Hyperpyron | no | replaced by Gold Piece |
-| Nomisma | no (only the root of numismatic) | replaced by Gold Coin |
-| Altyn | no | replaced by Silver Piece |
+| Hyperpyron | Gold Piece | no entry |
+| Nomisma | Gold Coin | no entry |
+| Altyn | Silver Piece | no entry |
+| Daalder | Silver Dollar | no entry (only rijksdaalder) |
+| Camino Real | King's Road | Collins has camino in the Spanish-English entries only |
+| Castro | Hill Fort | hill-fort sense only in the Spanish-English entry |
+| Catepanate | Governorate | no entry (catapan is there) |
+| Caupona | Roman Tavern | no entry (OED has only the verb cauponate) |
+| Cofradia | Sodality | Spanish-English entries only |
+| Cortijo | Farmhouse | Spanish-English entries only |
+| Dehesa | Oak Pasture | Spanish-English entries only |
+| Despotate | Despotat | Collins spells it despotat |
+| Domovoi | House Spirit | no entry |
+| Enoteca | Wine Shop | Italian-English entries only |
+| Folletto | Elf | Italian-English entries only |
+| Herberg | Hostel | no English entry (German and Dutch translations only) |
+| Herdade | Large Farm | Portuguese-English entry only |
+| Kallikantzaros | Christmas Goblin | no entry |
+| Kapeleion | Dram Shop | no entry |
+| Katagogion | Guest Lodge | no entry |
+| Lavra | Hermit Colony | Portuguese-English entry only (the sense is a mine or ploughing) |
+| Leshy | Wood Spirit | no entry |
+| Liburnian | Light Galley | no entry (only in a Collins example sentence) |
+| Lutin | Imp | French-English entry only |
+| Mansio | Posting Station | no entry (mansion is there) |
+| Neraida | Water Nymph | no entry (nereid is there) |
+| Oboloi | Oboli | Collins has oboli, the plural of obolus |
+| Prytaneion | Prytaneum | Collins and the OED spell it prytaneum |
+| Streltsy | Musketeers | no entry (Collins has strelitz) |
+| Tagma | Battalion | Collins and the OED have only the zoology sense |
+| Trasgu | Hearth Goblin | no entry (trasgo in Spanish-English) |
+| Veche | Town Assembly | only a user-submitted entry |
+| Wadden | Tidal Flat | no entry (only Waddenzee) |
+| Xana | Spring Maiden | no entry |
+| Canzoniere | Songbook | Italian-English entry only |
+| Cuarto | Quarter Piece | Spanish-English entries only |
+| Denga | Small Silver | only a user-submitted entry |
+| Santa Compana | Procession of Souls | no entry |
+| Hunebed | Giants' Grave | no entry (replaced in 5a and used again; now replaced here too) |
 
-Still to look up before the batch is closed (recorded as pending, not yet checked): Real, Escudo, Peseta, Franc, Sou, Livre, Ecu, Florin, Ducat, Soldo, Lira, Scudo, Daalder, Duit, Guilder, Denarius, Aureus, Solidus, Stater, Mina, Talent, Kopek, Ruble, Zloty, Thaler, Cortes, Doge, Zouaves, Condottieri, Tercio, Fluyt, Dromon, Caique, Cavalier.
+### Kept
+
+| Word | Note |
+| --- | --- |
+| Maravedi | Collins (first lookup) |
+| Doubloon | Collins (first lookup) |
+| Denier | Collins (first lookup) |
+| Liard | Collins (first lookup) |
+| Stuiver | Collins (first lookup) |
+| Sestertius | Collins (first lookup) |
+| Tetradrachm | Collins (first lookup) |
+| Drachma | Collins (first lookup) |
+| Obol | Collins (first lookup) |
+| Follis | Collins (first lookup) |
+| Groschen | Collins (first lookup) |
+| Zecchino | Collins (first lookup) |
+| Cruzado | Collins (first lookup) |
+| Real | Collins: the Brazilian monetary unit (the Spanish and Portuguese coin sense is in the translation entries only) |
+| Escudo | Collins |
+| Peseta | Collins |
+| Franc | Collins |
+| Sou | Collins: a former French coin |
+| Livre | Collins |
+| Ecu | Collins |
+| Florin | Collins |
+| Ducat | Collins |
+| Soldo | Collins |
+| Lira | Collins |
+| Scudo | Collins |
+| Duit | Collins |
+| Guilder | Collins |
+| Denarius | Collins |
+| Aureus | Collins |
+| Solidus | Collins |
+| Stater | Collins |
+| Mina | Collins: an ancient unit of weight and money |
+| Talent | Collins: the ancient unit, in the etymology and sense list |
+| Kopek | Collins: variant of kopeck |
+| Ruble | Collins |
+| Zloty | Collins |
+| Thaler | Collins |
+| Cortes | Collins |
+| Doge | Collins |
+| Zouave | the plural Zouaves is used |
+| Condottieri | Collins |
+| Tercio | Collins |
+| Fluyt | Collins |
+| Dromon | Collins: dromond or dromon |
+| Caique | Collins |
+| Cavalier | Collins |
+| Boyar | Collins |
+| Hetman | Collins |
+| Arquebus | Collins |
+| Arrondissement | Collins |
+| Auberge | Collins |
+| Autostrada | Collins |
+| Beguinage | Collins |
+| Bersaglieri | Collins |
+| Bullring | Collins |
+| Curia | Collins |
+| Dacha | Collins |
+| Didrachm | Collins |
+| Duende | Collins |
+| Fado | Collins |
+| Herm | Collins |
+| Hermandad | OED |
+| Kabouter | OED |
+| Melusine | OED |
+| Meseta | Collins |
+| Osteria | OED |
+| Palazzo | Collins |
+| Parador | Collins |
+| Parlement | Collins: an old spelling of parliament and the French high court |
+| Pnyx | OED |
+| Posada | Collins |
+| Pronoia | OED, the Byzantine grant of revenue |
+| Quattrino | OED |
+| Quinta | Collins |
+| Rusalka | Collins |
+| Scirocco | Collins |
+| Signore | Collins |
+| Signoria | Collins |
+| Strega | Collins |
+| Taverna | Collins |
+| Thermopolium | OED |
+| Trattoria | Collins |
+| Trekschuit | Collins |
+| Voyageur | Collins |
+| Yaga | OED, in Baba Yaga |
+| Druzhina | OED |

@@ -41,14 +41,14 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | family names | 52/29 | 51/19 | 49/19 | 53/19 | 52/19 | 15/13 | 45/17 | 50/17 | 53/10 | 52/10 | 52/10 | 52/10 | 52/10 | 15/4 | 52/10 | 52/16 | 52/10 | 52/10 | 15/8 | 52/14 | **0/6** | **0/12** | **0/5** | **0/3** | **0/4** | **0/5** | **0/6** | **0/1** | **0/1** | **0/1** | **0/3** | **0/3** | not offered | not offered | not offered |
 | arms and armour | 63/10 + profile | 64/10 + profile | 62/10 + profile | 63/10 + profile | 61/10 + profile | 24/4 + profile | 57/10 + profile | 57/10 + profile | 54/10 | 54/10 | 52/10 | 54/10 | 54/10 | 16/4 | 53/10 | 54/10 + profile | 53/10 | 54/10 | 17/4 + profile | 57/10 + profile | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **5/0 + profile** | **2/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | not offered | not offered | not offered |
 | treasures and regalia | 61/10 + profile | 64/10 + profile | 61/10 + profile | 62/10 + profile | 62/10 + profile | 27/4 + profile | 51/10 + profile | 55/10 + profile | 52/10 | 51/10 | 49/10 | 51/10 | 51/10 | 17/4 | 49/10 | 52/10 + profile | 51/10 | 50/10 | 18/4 + profile | 54/10 + profile | **3/0 + profile** | **2/0 + profile** | **1/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **7/0 + profile** | **1/0 + profile** | **5/0 + profile** | **4/0 + profile** | **3/0 + profile** | not offered | not offered | not offered |
-| books and writings | 63/10 + profile | 60/10 + profile | 58/10 + profile | 53/10 + profile | 57/10 + profile | 24/4 + profile | 54/10 + profile | 58/10 + profile | 54/10 | 55/10 | 53/10 | 55/10 | 55/10 | 16/4 | 54/10 | 55/10 + profile | 55/10 | 55/10 | 17/4 + profile | 58/10 + profile | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **6/0 + profile** | **1/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | not offered | not offered | not offered |
+| books and writings | 63/10 + profile | 60/10 + profile | 58/10 + profile | 53/10 + profile | 57/10 + profile | 24/4 + profile | 54/10 + profile | 58/10 + profile | 54/10 | 55/10 | 53/10 | 55/10 | 55/10 | 16/4 | 53/10 | 55/10 + profile | 55/10 | 55/10 | 17/4 + profile | 58/10 + profile | **3/0 + profile** | **2/0 + profile** | **0/0 + profile** | **0/0 + profile** | **3/0 + profile** | **3/0 + profile** | **1/0 + profile** | **6/0 + profile** | **1/0 + profile** | **4/0 + profile** | **3/0 + profile** | **2/0 + profile** | not offered | not offered | not offered |
 | realms and polities | 53/10 + profile | 52/10 + profile | 50/10 + profile | 47/10 + profile | 50/10 + profile | 18/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | 48/10 | 47/10 | 48/10 | 48/10 | 15/4 | 48/10 | 49/10 + profile | 49/10 | 47/10 | 19/4 + profile | 51/10 + profile | **8/0 + profile** | **7/0 + profile** | **5/0 + profile** | **2/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **3/0 + profile** | **4/0 + profile** | **1/0 + profile** | **1/0 + profile** | **1/0 + profile** | not offered | not offered | not offered |
 | peoples and tongues | 47/10 + profile | 45/10 + profile | 49/10 + profile | 49/10 + profile | 45/10 + profile | 15/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | 47/10 | 47/10 | 47/10 | 47/10 | 15/4 | 47/10 | 47/10 + profile | 47/10 | 47/10 | 15/4 + profile | 47/10 + profile | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | **0/0 + profile** | not offered | not offered | not offered |
 | deities | 75/11 + profile | 62/10 + profile | 62/10 + profile | 61/10 + profile | 62/10 + profile | 31/4 + profile | 63/11 + profile | 62/11 + profile | 46/10 | 45/10 | 45/10 | 45/10 | 45/10 | 15/4 | 45/10 | 57/10 | 45/10 | 45/10 | 22/4 | 57/10 | **10/2 + profile** | **13/1 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/1 + profile** | **14/1 + profile** | excluded | excluded | not offered |
 | sacred places | 60/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 28/4 + profile | 47/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 42/10 | 30/10 | 30/10 | 19/10 | 42/10 | **10/0 + profile** | **13/0 + profile** | **11/0 + profile** | **10/0** | **18/0 + profile** | **15/0 + profile** | **13/0 + profile** | **12/0 + profile** | **14/0 + profile** | **11/0 + profile** | **19/0 + profile** | **14/0 + profile** | excluded | excluded | not offered |
 | tribes and kin groups | 46/10 | 48/10 | 48/10 | 48/10 | 48/10 | **10/0** | 41/10 | 46/10 | 46/10 | 41/10 | 46/10 | 41/10 | 41/10 | 23/4 | 46/10 | 46/10 | 41/10 | 41/10 | 28/4 | 41/10 | **7/0** | **7/0** | not offered | not offered | **4/0** | **5/0** | **6/0** | **8/0** | **8/0** | **8/0** | **7/0** | **7/0** | **6/0** | **10/0** | not offered |
 | faiths and mystic orders | 50/10 | 55/10 | 49/10 | 49/10 | 53/10 | 18/4 | 44/10 | 43/10 | 45/10 | 54/10 | 50/10 | 54/10 | 54/10 | 19/4 | 58/10 | 58/10 | 54/10 | 54/10 | 23/4 | 50/10 | **0/0** | **2/0** | not offered | not offered | **1/0** | **1/0** | **6/0** | **8/2** | **8/2** | **8/2** | **1/0** | **1/0** | **3/0** | **1/0** | not offered |
-| armies and martial orders | 56/10 | 47/10 | 49/10 | 43/10 | 46/10 | 17/4 | 53/10 | 54/10 | 56/10 | 52/10 | 59/10 | 52/10 | 51/10 | 18/4 | 54/10 | 55/10 | 51/10 | 54/10 | 21/4 | 53/10 | **6/0** | **1/0** | not offered | not offered | **4/0** | **0/0** | **0/0** | **1/0** | **1/0** | **1/0** | **2/0** | **2/0** | **1/0** | **0/0** | not offered |
+| armies and martial orders | 56/10 | 47/10 | 49/10 | 43/10 | 46/10 | 17/4 | 53/10 | 54/10 | 56/10 | 52/10 | 59/10 | 52/10 | 51/10 | 18/4 | 54/10 | 55/10 | 51/10 | 53/10 | 21/4 | 53/10 | **6/0** | **1/0** | not offered | not offered | **4/0** | **0/0** | **0/0** | **1/0** | **1/0** | **1/0** | **2/0** | **2/0** | **1/0** | **0/0** | not offered |
 | thieves and the underworld | 45/10 | 44/10 | 45/10 | 45/10 | 48/10 | 15/4 | 48/10 | 45/10 | 44/10 | 45/10 | 45/10 | 46/10 | 45/10 | 15/4 | 45/10 | 46/10 | 44/10 | 44/10 | 15/4 | 45/10 | **0/0** | **0/0** | not offered | not offered | **0/0** | **0/0** | **0/0** | **6/1** | **6/1** | **6/1** | **0/0** | **0/0** | **0/0** | **0/0** | not offered |
 | guilds, companies, and trade | 53/10 | 44/10 | 46/10 | 44/10 | 43/10 | 15/4 | 45/10 | 51/10 | 52/10 | 52/10 | 52/10 | 52/10 | 52/10 | 15/4 | 52/10 | 53/10 | 52/10 | 52/10 | 15/4 | 51/10 | **0/0** | **0/0** | not offered | not offered | **0/0** | **2/0** | **0/0** | **0/0** | **0/0** | **0/0** | **1/0** | **1/0** | **0/0** | **2/0** | not offered |
 | adventurers and explorers | 51/10 | 52/10 | 54/10 | 52/10 | 49/10 | 17/4 | 43/10 | 48/10 | 50/10 | 47/10 | 48/10 | 47/10 | 47/10 | 15/4 | 46/10 | 45/10 | 46/10 | 47/10 | 15/4 | 47/10 | **0/0** | **1/0** | not offered | not offered | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **2/0** | not offered |
@@ -116,7 +116,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | family names | 107 | 226 | 153 | 103 | 102 | **0** | **0** |
 | arms and armour | 117 | 276 | 341 | 154 | 105 | **11** | **11** |
 | treasures and regalia | 123 | 226 | 178 | 115 | 119 | **11** | **11** |
-| books and writings | 122 | 326 | 286 | 118 | 108 | **8** | **8** |
+| books and writings | 122 | 326 | 287 | 118 | 108 | **8** | **8** |
 | realms and polities | 113 | 236 | 161 | **0** | 132 | 34 | 42 |
 | peoples and tongues | 122 | 127 | 105 | 105 | 131 | **7** | **7** |
 | deities | 102 | 102 | 102 | 105 | 107 | 14 | 14 |
@@ -979,10 +979,10 @@ Distinct entries across the reported modules; a shared pool counts once.
 | Spanish | 2027 | 557 |
 | Portuguese | 1991 | 560 |
 | Iberian | 677 | 282 |
-| Italian | 1900 | 531 |
+| Italian | 1899 | 531 |
 | Roman | 2062 | 652 |
 | Greek | 1968 | 552 |
-| Byzantine | 1957 | 546 |
+| Byzantine | 1956 | 546 |
 | Greek and Byzantine | 806 | 306 |
 | Slavic | 1957 | 630 |
 | Turkic and Mongol steppe | 110 | 32 |
@@ -1021,7 +1021,7 @@ Distinct entries across the reported modules; a shared pool counts once.
 | --- | --- |
 | AN ancient | 6484 |
 | MD medieval | 9177 |
-| EM early modern | 9451 |
+| EM early modern | 9452 |
 | ST steam age | 9039 |
 | MO modern | 8023 |
 | NF near future | 762 |

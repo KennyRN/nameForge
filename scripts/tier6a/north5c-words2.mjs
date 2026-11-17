@@ -50,7 +50,7 @@ export const W2 = {
     french: "Caravel|Galleon|Carrack|Frigate|Schooner|Barque|Steamer|Corvette|Gunboat|Liner;Lion|Eagle|Cock|Dolphin|Swan|Stag|Falcon|Hawk|Horse|Seahorse;Fortune|Providence|Concord|Hope|Endeavour|Faith|Unity|Prosperity|Good Hope|Glory",
     italian: "Galley|Galleon|Carrack|Frigate|Schooner|Barque|Steamer|Gondola|Gunboat|Liner;Lion|Eagle|Dolphin|Swan|Stag|Falcon|Hawk|Horse|Seahorse|She-Wolf;Fortune|Providence|Concord|Hope|Endeavour|Faith|Unity|Prosperity|Good Hope|Glory",
     dutch: "Cog|Fluyt|Carrack|Frigate|Schooner|Barque|Steamer|Ketch|Gunboat|Liner;Lion|Eagle|Dolphin|Swan|Stag|Falcon|Hawk|Horse|Seahorse|Stork;Fortune|Providence|Concord|Hope|Endeavour|Faith|Unity|Prosperity|Good Hope|Diligence",
-    roman: "Trireme|Quinquereme|Galley|Merchantman|Schooner|Barque|Steamer|Liburnian|Gunboat|Liner;Lion|Eagle|Dolphin|Swan|Stag|Falcon|Hawk|Horse|Seahorse|She-Wolf;Fortune|Providence|Concord|Hope|Triumph|Faith|Unity|Prosperity|Peace|Glory",
+    roman: "Trireme|Quinquereme|Galley|Merchantman|Schooner|Barque|Steamer|Light Galley|Gunboat|Liner;Lion|Eagle|Dolphin|Swan|Stag|Falcon|Hawk|Horse|Seahorse|She-Wolf;Fortune|Providence|Concord|Hope|Triumph|Faith|Unity|Prosperity|Peace|Glory",
     greek: "Trireme|Penteconter|Galley|Merchantman|Schooner|Barque|Steamer|Caique|Gunboat|Liner;Lion|Eagle|Dolphin|Owl|Stag|Falcon|Hawk|Horse|Seahorse|Swan;Fortune|Providence|Concord|Hope|Triumph|Faith|Unity|Prosperity|Peace|Glory",
     slavic: "Longboat|Barge|Carrack|Frigate|Schooner|Barque|Steamer|Ketch|Gunboat|Liner;Wolf|Eagle|Bear|Swan|Stag|Falcon|Hawk|Horse|Seal|Sturgeon;Fortune|Providence|Concord|Hope|Endeavour|Faith|Unity|Prosperity|Good Hope|Glory",
   },
