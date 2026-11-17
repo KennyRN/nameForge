@@ -37,6 +37,8 @@ export const NORTH5C = { modules: { ...(north as unknown as North5c).modules, ..
 
 /** The seven core cultures of the batch and Celtic. */
 export const CORE_5C = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"] as const;
+/** The traditions whose own group families the groups engine draws (the core cultures and, from brief 6a, the batch's: a stored celtic or germanic tradition keeps its old draw). */
+export const GROUP_OWN_TRADITIONS: readonly string[] = [...CORE_5C, ...TIER6A_KEYS];
 /** The four Celtic nations, drawn at a quarter weight inside Celtic (§3.2). */
 export const CELTIC_NATIONS = ["welsh", "scottish", "irish", "cornish"] as const;
 export const CELTIC_5C_WEIGHT = 0.25;
@@ -217,7 +219,7 @@ export function applySignature<T extends { text: string }>(
   };
   const allowed = (text: string) => !isRealGroup(text) && !containsRealGroup(text) && !(module === "realms" && repeats(text)) && extra(text);
   const set = opts.set ?? ((n: T, text: string): T => ({ ...n, text }));
-  const share = signatureShareFor(culture);
+  const share = signatureShareFor(culture, module);
   const rng = mulberry32((seed ^ 0x5c5c5c5c ^ cultureSalt(culture)) >>> 0);
   const seen = new Set(names.map((n) => n.text.toLowerCase()));
   // Tribes: exactly ceil(share × batch) names, at positions the stream picks (a batch of five shows two, not "about two").

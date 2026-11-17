@@ -38,8 +38,17 @@ export const NORTH = north as unknown as NorthData & { nounPools: string[] };
 /** The share of a kind's draws the signature frames of a core culture (or Celtic) take. */
 export const SIGNATURE_SHARE = (lensData as unknown as { shares: { signature: number; region: number } }).shares.signature;
 /** Brief 6a §9.3: the share of own-shape draws that a core-depth culture's own entries take (60%), and the mixes' (Celtic's 40%). */
-const SHARES = (lensData as unknown as { shares: { signature: number; signatureMix: number; mixes: string[] } }).shares;
-export const signatureShareFor = (culture: string | undefined): number => (culture && SHARES.mixes.includes(culture) ? SHARES.signatureMix : SHARES.signature);
+const SHARES = (lensData as unknown as { shares: { signature: number; signatureMix: number; mixes: string[]; legacy: Record<string, number>; module: Record<string, number | { share: number; except: string[] }> } }).shares;
+/** Sibling-distinctness brief: the weight a culture gives the table it shares with a sibling (lens.json `shares.legacy`); its own entries take the rest. */
+export const legacyWeightOf = (culture: string | undefined): number | undefined => (culture && !culture.startsWith("$") ? SHARES.legacy[culture] : undefined);
+export const signatureShareFor = (culture: string | undefined, module?: string): number => {
+  if (culture && SHARES.mixes.includes(culture)) return SHARES.signatureMix;
+  const legacy = legacyWeightOf(culture);
+  const base = legacy === undefined ? SHARES.signature : 1 - legacy;
+  const entry = module && !module.startsWith("$") ? SHARES.module[module] : undefined;
+  const floor = entry === undefined ? 0 : typeof entry === "number" ? entry : culture && entry.except.includes(culture) ? 0 : entry.share;
+  return Math.max(base, floor);
+};
 /** Part A §1: a culture that shares a legacy table has its own stream for its replacements, so that the nations don't replace the same positions of the same batch. */
 const SALTED = ["welsh", "scottish", "irish", "cornish", "scandinavian"];
 export function cultureSalt(culture: string | undefined): number {
@@ -55,13 +64,13 @@ export const REGION_SHARE = (lensData as unknown as { shares: { signature: numbe
  * §11.3: scale the signature plans (the batch's own, `sig`) so they hold `SIGNATURE_SHARE` of the total weight, as the weights stand
  * once era, fantastic, region and tone are applied, against the plain (non-regional) shapes. Nothing changes when a culture has none or when only they are left.
  */
-export function balanceSignature<T>(plans: [T, number][], isSig: (p: T) => boolean, isRegional: (p: T) => boolean = () => false, culture?: string): [T, number][] {
+export function balanceSignature<T>(plans: [T, number][], isSig: (p: T) => boolean, isRegional: (p: T) => boolean = () => false, culture?: string, module?: string): [T, number][] {
   let sig = 0;
   let rest = 0;
   // A shape that belongs to a region (fell and dale words, the Corpse Road) keeps its own weight on top: the share is of the plain shapes.
   for (const [p, w] of plans) if (isSig(p)) sig += w; else if (!isRegional(p)) rest += w;
   if (sig <= 0 || rest <= 0) return plans;
-  const share = signatureShareFor(culture);
+  const share = signatureShareFor(culture, module);
   const k = (share / (1 - share)) * (rest / sig);
   return plans.map(([p, w]): [T, number] => [p, isSig(p) ? w * k : w]);
 }

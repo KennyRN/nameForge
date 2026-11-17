@@ -682,7 +682,7 @@ export function generatePeopleRows(options: PeopleOptions): PeopleBatch {
   const giving = options.giving ?? "both";
   return {
     rows: rows.map((row) => {
-      if (rng() >= signatureShareFor(options.culture)) return row;
+      if (rng() >= signatureShareFor(options.culture, "peoplesTongues")) return row;
       const ctx = { eras: options.era ? [options.era] : undefined, fantastic: true };
       const people = peopleOf(rng, ctx);
       const language = tongueOf(rng, ctx);

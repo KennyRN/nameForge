@@ -25022,6 +25022,34 @@ var lens_default = {
     $comment: "Northern Europe brief 5a \xA711.3, 5b \xA712.1 and brief 6a \xA79.3: `signature` is the share of a module's own-shape draws that a core-depth culture's signature entries take (every core culture and every second-tier culture whose batch is done); `signatureMix` is the Celtic-style share the mixes (Celtic, Iberian, Greek and Byzantine) take; `region` is what region-weighted shapes take when a region is chosen.",
     signature: 0.6,
     region: 0.3,
+    module: {
+      $comment: "Sibling-distinctness brief: a floor under the share of a module's draws that a core-depth culture's own entries take, for modules whose general draw would otherwise leave a culture within reach of General (a calendar, the sky, arms: names that carry no people).",
+      calendarNames: 0.85,
+      skyNames: 0.9,
+      mysticOrders: 0.85,
+      underworldGroups: 0.85,
+      peoplesTongues: { share: 0.85, except: ["norman-british", "anglo-saxon"] },
+      ships: 0.8,
+      grasslandNames: 0.98,
+      armsNames: 0.85,
+      eventNames: 0.8,
+      moneyNames: 0.8,
+      treasureNames: 0.8,
+      bookNames: 0.8
+    },
+    legacy: {
+      $comment: "Sibling-distinctness brief (17 November 2026): a culture that reads a table it shares with a sibling (the nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian, Greek and Byzantine read Greek-and-Byzantine, Anglo-Saxon and Norman and British read the English tables) draws that shared table at this weight, the share of its own-shape draws that are not its own entries; its own entries take the rest. Lower it until the pair meets the limits in the distinctness section.",
+      welsh: 0.1,
+      scottish: 0.1,
+      irish: 0.1,
+      cornish: 0.1,
+      scandinavian: 0.1,
+      spanish: 0.1,
+      portuguese: 0.1,
+      greek: 0.1,
+      byzantine: 0.1,
+      "anglo-saxon": 0.1
+    },
     signatureMix: 0.4,
     mixes: [
       "celtic",
@@ -25236,6 +25264,49 @@ var lens_default = {
         "greek-byzantine"
       ]
     }
+  },
+  distinctness: {
+    $comment: "Sibling-distinctness brief (17 November 2026), docs/second-tier-tables-brief.md section 10. tests/distinctness.test.ts runs every module at its default state, only the culture changed, over `seeds`, `count` names each; a pair's overlap is the share of A's names that B also gives at the same seed. `siblings` are held to `siblingLimit` percent, each of `general` against General to `generalLimit`. Not measured: `excludedModules` (deferred styles, and deserts, which have no landscape of their own in these lands), `excludedCells` (module and culture), the settlement kit, and a mix against its own halves. A later batch adds its sibling pairs and its cultures to `general` here, and must pass.",
+    seeds: [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    count: 12,
+    siblingLimit: 25,
+    generalLimit: 30,
+    excludedModules: [
+      "starsSpace",
+      "hyperspaceCharts",
+      "spacecraft",
+      "riverNames",
+      "settlementKit",
+      "desertNames"
+    ],
+    excludedCells: [],
+    siblings: [],
+    general: [
+      "norman-british",
+      "anglo-saxon",
+      "welsh",
+      "scottish",
+      "irish",
+      "cornish",
+      "norse",
+      "scandinavian",
+      "german",
+      "french",
+      "dutch",
+      "italian",
+      "spanish",
+      "portuguese",
+      "roman",
+      "greek",
+      "byzantine",
+      "slavic"
+    ]
   }
 };
 
@@ -25282,7 +25353,15 @@ var north5a_default = { _about: "Northern Europe tables brief, batch 5a (docs/no
 var NORTH = north5a_default;
 var SIGNATURE_SHARE = lens_default.shares.signature;
 var SHARES = lens_default.shares;
-var signatureShareFor = (culture) => culture && SHARES.mixes.includes(culture) ? SHARES.signatureMix : SHARES.signature;
+var legacyWeightOf = (culture) => culture && !culture.startsWith("$") ? SHARES.legacy[culture] : void 0;
+var signatureShareFor = (culture, module2) => {
+  if (culture && SHARES.mixes.includes(culture)) return SHARES.signatureMix;
+  const legacy = legacyWeightOf(culture);
+  const base = legacy === void 0 ? SHARES.signature : 1 - legacy;
+  const entry = module2 && !module2.startsWith("$") ? SHARES.module[module2] : void 0;
+  const floor = entry === void 0 ? 0 : typeof entry === "number" ? entry : culture && entry.except.includes(culture) ? 0 : entry.share;
+  return Math.max(base, floor);
+};
 var SALTED = ["welsh", "scottish", "irish", "cornish", "scandinavian"];
 function cultureSalt(culture) {
   if (!culture || !SALTED.includes(culture)) return 0;
@@ -25291,13 +25370,13 @@ function cultureSalt(culture) {
   return h >>> 0;
 }
 var REGION_SHARE = lens_default.shares.region;
-function balanceSignature(plans5, isSig, isRegional = () => false, culture) {
+function balanceSignature(plans5, isSig, isRegional = () => false, culture, module2) {
   let sig = 0;
   let rest = 0;
   for (const [p, w] of plans5) if (isSig(p)) sig += w;
   else if (!isRegional(p)) rest += w;
   if (sig <= 0 || rest <= 0) return plans5;
-  const share2 = signatureShareFor(culture);
+  const share2 = signatureShareFor(culture, module2);
   const k = share2 / (1 - share2) * (rest / sig);
   return plans5.map(([p, w]) => [p, isSig(p) ? w * k : w]);
 }
@@ -89361,6 +89440,7 @@ var isRealGroup = (name) => GROUPS.has(name.trim().toLowerCase().replace(/^the\s
 // src/north5c.ts
 var NORTH5C = { modules: { ...north5c_default.modules, ...north5d_default.modules }, native: north5c_default.native };
 var CORE_5C = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
+var GROUP_OWN_TRADITIONS = [...CORE_5C, ...TIER6A_KEYS];
 var CELTIC_NATIONS = ["welsh", "scottish", "irish", "cornish"];
 var CELTIC_5C_WEIGHT = 0.25;
 function contentKey(culture) {
@@ -89488,7 +89568,7 @@ function applySignature(names, module2, culture, seed, opts = {}) {
   };
   const allowed = (text) => !isRealGroup(text) && !containsRealGroup(text) && !(module2 === "realms" && repeats(text)) && extra(text);
   const set = (_b4 = opts.set) != null ? _b4 : (n, text) => ({ ...n, text });
-  const share2 = signatureShareFor(culture);
+  const share2 = signatureShareFor(culture, module2);
   const rng = mulberry32((seed ^ 1549556828 ^ cultureSalt(culture)) >>> 0);
   const seen = new Set(names.map((n) => n.text.toLowerCase()));
   let chosen;
@@ -104945,7 +105025,7 @@ function generateSeries(ctx, type, frontChoice, count, toneChoice) {
 function generateGroupNames(options) {
   var _a8;
   const batch = generateGroupNamesInner(options);
-  const culture = (_a8 = options.culture) != null ? _a8 : options.tradition && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(options.tradition) ? options.tradition : void 0;
+  const culture = (_a8 = options.culture) != null ? _a8 : options.tradition && GROUP_OWN_TRADITIONS.includes(options.tradition) ? options.tradition : void 0;
   if (!culture || culture === "general" || !contentKey(culture)) return batch;
   const asKey = culture === "norman-british" || culture === "anglo-saxon" ? "english" : culture;
   const seen = new Set(batch.names.map((n) => n.text.toLowerCase()));
@@ -104963,7 +105043,7 @@ function generateGroupNamesInner(options) {
   var _a8, _b4, _c4;
   const batch = generateGroupNamesCore(options);
   if (options.signature === false || fillModeOf(options.people) || options.series || options.context || options.type) return batch;
-  const culture = (_a8 = options.culture) != null ? _a8 : options.tradition && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(options.tradition) ? options.tradition : void 0;
+  const culture = (_a8 = options.culture) != null ? _a8 : options.tradition && GROUP_OWN_TRADITIONS.includes(options.tradition) ? options.tradition : void 0;
   const family = findFamily(options.family);
   if (!culture || !family || !contentKey(culture)) return batch;
   const guards = (_b4 = options.safeguards) != null ? _b4 : { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };
@@ -124269,7 +124349,7 @@ function shapeWeight2(ctx, kind, s, anyEra = false) {
 }
 function kindPlans(ctx, kind, only) {
   const live5 = shapesFor(kind, ctx.culture.key).filter((s) => !only || s.p === only).map((s) => [{ kind, shape: s, borrowed: false, scale: ctx.scale }, shapeWeight2(ctx, kind, s)]).filter(([, w]) => w > 0);
-  const signed = balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.r, ctx.culture.key);
+  const signed = balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.r, ctx.culture.key, "routeNames");
   return ctx.region ? balanceRegion(signed, (plan) => regionWeighted(ROUTE_DATA.regions, plan.shape.r, ctx.region)) : signed;
 }
 function borrowedPlans(ctx) {
@@ -125752,7 +125832,7 @@ function generatePeopleRows(options) {
   const giving = (_a8 = options.giving) != null ? _a8 : "both";
   return {
     rows: rows.map((row) => {
-      if (rng() >= signatureShareFor(options.culture)) return row;
+      if (rng() >= signatureShareFor(options.culture, "peoplesTongues")) return row;
       const ctx = { eras: options.era ? [options.era] : void 0, fantastic: true };
       const people2 = peopleOf(rng, ctx);
       const language = tongueOf(rng, ctx);
@@ -126352,7 +126432,7 @@ function shapesFor2(ctx, kind, forms, only) {
     var _a9;
     return s.kind === kind && (!forms || forms.includes((_a9 = s.form) != null ? _a9 : "")) && (!only || s.p === only);
   }).map((s) => [s, shapeWeight4({ ...ctx, shape: s }, s)]).filter(([, w]) => w > 0);
-  return balanceSignature(live5, (s) => !!s.sig, void 0, ctx.culture);
+  return balanceSignature(live5, (s) => !!s.sig, void 0, ctx.culture, "deityNames");
 }
 function deityTitleIn(ctx, forms) {
   var _a8;
@@ -146635,7 +146715,7 @@ function generateWildsNames(options) {
     const ctx = newCtx4();
     for (const kind of data.kinds) {
       const live5 = kindShapes(ctx, kind.key).filter((s) => !options.shape || s.p === options.shape).filter((s) => kind.key !== "settlement" || sizeOk(s)).map((s) => [{ kind: kind.key, shape: s }, shapeWeight5(ctx, s)]).filter(([, w]) => w > 0);
-      if (live5.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt, ctx.culture.key)) : live5);
+      if (live5.length > 0) planCache.set(kind.key, ctx.where === "home" ? balanceByRegion(ctx, balanceSignature(live5, (plan) => !!plan.shape.sig, (plan) => !!plan.shape.rt, ctx.culture.key, ctx.module)) : live5);
     }
     return planCache;
   };
@@ -150234,7 +150314,7 @@ function plans2(ctx, only) {
   const culture = [...(_a8 = d.cultureShapes[ctx.culture.key]) != null ? _a8 : [], ...mapShapes(NORTH5B.monuments.cultureShapes, ctx.culture.key)].filter((s) => s.kind === k);
   const all = [...live(ctx, d.shared, "shared", only), ...live(ctx, (_b4 = d.kindShapes[k]) != null ? _b4 : [], "kind", only), ...live(ctx, culture, "culture", only), ...live(ctx, d.eraShapes, "era", only)];
   const regional = (p) => !!p.shape.rg && !!ctx.region;
-  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional, ctx.culture.key);
+  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional, ctx.culture.key, "monumentNames");
   return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 function choosePlan(ctx, only) {
@@ -150782,7 +150862,7 @@ function shapeWeight7(ctx, s) {
 var live2 = (ctx, shapes, only) => {
   const plans5 = shapes.filter((s) => !only || s.p === only).map((s) => [s, shapeWeight7(ctx, s)]).filter(([, w]) => w > 0);
   const regional = (s) => !!s.rg && !!ctx.region;
-  const signed = balanceSignature(plans5, (s) => !!s.sig, regional, ctx.culture.key);
+  const signed = balanceSignature(plans5, (s) => !!s.sig, regional, ctx.culture.key, "streetNames");
   return ctx.region ? balanceRegion(signed, regional) : signed;
 };
 function streetShapes(ctx, only) {
@@ -151359,7 +151439,7 @@ function plans3(ctx, only) {
     ...live3(ctx, d.eraShapes, "era", only)
   ];
   const regional = (p) => !!p.shape.rg && !!ctx.region;
-  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional, ctx.culture.key);
+  const signed = balanceSignature(all, (p) => !!p.shape.sig, regional, ctx.culture.key, "buildingNames");
   return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 function choosePlan2(ctx, only) {

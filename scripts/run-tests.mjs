@@ -7,7 +7,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const entryPoints = readdirSync("tests")
-  .filter((file) => file.endsWith(".test.ts"))
+  .filter((file) => file.endsWith(".test.ts") && (!process.env.ONLY || file.includes(process.env.ONLY)))
   .map((file) => join("tests", file));
 const outdir = mkdtempSync(join(tmpdir(), "nameforge-tests-"));
 

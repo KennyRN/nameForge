@@ -7,7 +7,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { COVERAGE_ADAPTERS, moduleCoverage } from "../src/coverage";
 import { applySignature, NORTH5C, readTag, signatureDrawer } from "../src/north5c";
-import { SIGNATURE_SHARE } from "../src/northData";
+import { SIGNATURE_SHARE , signatureShareFor } from "../src/northData";
 import { mulberry32 } from "../src/markov";
 import { isRealGroup } from "../src/realPlaces";
 import realPlaces from "../src/data/real-places.json";
@@ -82,7 +82,7 @@ test("5d §11.3: a core culture's own frames take their share of a batch, and a 
   }
   const names = Array.from({ length: 400 }, (_, i) => ({ text: `plain ${i}` }));
   const replaced = applySignature(names, "moneyNames", "german", 1).filter((n) => !n.text.startsWith("plain")).length / names.length;
-  assert.ok(Math.abs(replaced - SIGNATURE_SHARE) < 0.08, `the share is ${replaced}`);
+  assert.ok(Math.abs(replaced - signatureShareFor("german", "moneyNames")) < 0.08, `the share is ${replaced}`); // money takes the module floor of lens.json (sibling-distinctness brief)
   assert.deepEqual(applySignature([{ text: "x" }], "moneyNames", "japanese", 1), [{ text: "x" }]);
 });
 

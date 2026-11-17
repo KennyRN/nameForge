@@ -3899,6 +3899,34 @@
   "$comment": "Northern Europe brief 5a §11.3, 5b §12.1 and brief 6a §9.3: `signature` is the share of a module's own-shape draws that a core-depth culture's signature entries take (every core culture and every second-tier culture whose batch is done); `signatureMix` is the Celtic-style share the mixes (Celtic, Iberian, Greek and Byzantine) take; `region` is what region-weighted shapes take when a region is chosen.",
   "signature": 0.6,
   "region": 0.3,
+  "module": {
+   "$comment": "Sibling-distinctness brief: a floor under the share of a module's draws that a core-depth culture's own entries take, for modules whose general draw would otherwise leave a culture within reach of General (a calendar, the sky, arms: names that carry no people).",
+   "calendarNames": 0.85,
+   "skyNames": 0.9,
+   "mysticOrders": 0.85,
+   "underworldGroups": 0.85,
+   "peoplesTongues": { "share": 0.85, "except": ["norman-british", "anglo-saxon"] },
+   "ships": 0.8,
+   "grasslandNames": 0.98,
+   "armsNames": 0.85,
+   "eventNames": 0.8,
+   "moneyNames": 0.8,
+   "treasureNames": 0.8,
+   "bookNames": 0.8
+  },
+  "legacy": {
+   "$comment": "Sibling-distinctness brief (17 November 2026): a culture that reads a table it shares with a sibling (the nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian, Greek and Byzantine read Greek-and-Byzantine, Anglo-Saxon and Norman and British read the English tables) draws that shared table at this weight, the share of its own-shape draws that are not its own entries; its own entries take the rest. Lower it until the pair meets the limits in the distinctness section.",
+   "welsh": 0.1,
+   "scottish": 0.1,
+   "irish": 0.1,
+   "cornish": 0.1,
+   "scandinavian": 0.1,
+   "spanish": 0.1,
+   "portuguese": 0.1,
+   "greek": 0.1,
+   "byzantine": 0.1,
+   "anglo-saxon": 0.1
+  },
   "signatureMix": 0.4,
   "mixes": [
    "celtic",
@@ -4113,5 +4141,48 @@
     "greek-byzantine"
    ]
   }
+ },
+ "distinctness": {
+  "$comment": "Sibling-distinctness brief (17 November 2026), docs/second-tier-tables-brief.md section 10. tests/distinctness.test.ts runs every module at its default state, only the culture changed, over `seeds`, `count` names each; a pair's overlap is the share of A's names that B also gives at the same seed. `siblings` are held to `siblingLimit` percent, each of `general` against General to `generalLimit`. Not measured: `excludedModules` (deferred styles, and deserts, which have no landscape of their own in these lands), `excludedCells` (module and culture), the settlement kit, and a mix against its own halves. A later batch adds its sibling pairs and its cultures to `general` here, and must pass.",
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "count": 12,
+  "siblingLimit": 25,
+  "generalLimit": 30,
+  "excludedModules": [
+   "starsSpace",
+   "hyperspaceCharts",
+   "spacecraft",
+   "riverNames",
+   "settlementKit",
+   "desertNames"
+  ],
+  "excludedCells": [],
+  "siblings": [],
+  "general": [
+   "norman-british",
+   "anglo-saxon",
+   "welsh",
+   "scottish",
+   "irish",
+   "cornish",
+   "norse",
+   "scandinavian",
+   "german",
+   "french",
+   "dutch",
+   "italian",
+   "spanish",
+   "portuguese",
+   "roman",
+   "greek",
+   "byzantine",
+   "slavic"
+  ]
  }
 }

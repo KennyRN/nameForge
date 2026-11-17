@@ -14,7 +14,7 @@ import { boostContext, contextSaint, selfPatterns, TownTurn, type SettlementCont
 import { generatePlaceNames } from "../names/engine";
 import { britishPlaceNamesRecipe } from "../names/recipe";
 import { findTradition, TRIBAL_DATA, traditionForCulture, type TribalTradition } from "../tribes/engine";
-import { applySignature, contentKey, GENRE_ERAS, noBracket } from "../north5c";
+import { applySignature, contentKey, GENRE_ERAS, GROUP_OWN_TRADITIONS, noBracket } from "../north5c";
 import { guildForm } from "../guildForms";
 import { generateWorldPlaceNames } from "../world/engine";
 import { scaleAllows, scaleLabel, type ScaleChoice, type SpaceScale } from "../space/scale";
@@ -1273,7 +1273,7 @@ function generateSeries(
 export function generateGroupNames(options: GroupOptions): GroupBatch {
   const batch = generateGroupNamesInner(options);
   // 5d §14.1 item 6: a core culture's guilds take their own form in English; English livery forms are for English only, and none is all but a real company's name.
-  const culture = options.culture ?? (options.tradition && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(options.tradition) ? options.tradition : undefined);
+  const culture = options.culture ?? (options.tradition && GROUP_OWN_TRADITIONS.includes(options.tradition) ? options.tradition : undefined);
   if (!culture || culture === "general" || !contentKey(culture)) return batch;
   const asKey = culture === "norman-british" || culture === "anglo-saxon" ? "english" : culture;
   const seen = new Set(batch.names.map((n) => n.text.toLowerCase()));
@@ -1293,7 +1293,7 @@ function generateGroupNamesInner(options: GroupOptions): GroupBatch {
   // Northern Europe brief 5c: a core culture's own frames take their share of the names (the filler path applies them inside, on the placeholders run).
   // A stored `celtic` or `germanic` tradition keeps its old draw; the eight new traditions, and a culture picked in the sentence, add the frames.
   if (options.signature === false || fillModeOf(options.people) || options.series || options.context || options.type) return batch;
-  const culture = options.culture ?? (options.tradition && ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"].includes(options.tradition) ? options.tradition : undefined);
+  const culture = options.culture ?? (options.tradition && GROUP_OWN_TRADITIONS.includes(options.tradition) ? options.tradition : undefined);
   const family = findFamily(options.family);
   if (!culture || !family || !contentKey(culture)) return batch;
   const guards = options.safeguards ?? { block: GROUP_DATA.safeguards.block, flag: GROUP_DATA.safeguards.flag, flagListBlocks: GROUP_DATA.safeguards.flagListBlocks };

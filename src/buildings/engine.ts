@@ -256,7 +256,7 @@ function plans(ctx: Ctx, only?: string): [Plan, number][] {
   ];
   // Brief 5b §12.1: a core culture's own shapes hold the signature share, and a chosen region's the region share.
   const regional = (p: Plan) => !!(p.shape as { rg?: boolean }).rg && !!ctx.region;
-  const signed = balanceSignature(all, (p) => !!(p.shape as { sig?: boolean }).sig, regional, ctx.culture.key);
+  const signed = balanceSignature(all, (p) => !!(p.shape as { sig?: boolean }).sig, regional, ctx.culture.key, "buildingNames");
   return ctx.region ? balanceRegion(signed, regional) : signed;
 }
 
