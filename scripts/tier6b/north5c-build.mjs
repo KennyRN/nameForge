@@ -27,6 +27,18 @@ for (const module of Object.keys(WORDS6B)) {
   TAGS6B[module].steppe = TAGS6B[module].turkic;
   TAGS6B[module]["arabic-persian"] = TAGS6B[module].arabic;
 }
+// Words of timeless sense tagged to the three eras before the modern ones, so that each era holds six words of the culture's own without the shared pools' English ones (a bishopric, a hundred moot).
+const TIMELESS = {
+  realms: ["Realm", "Domain", "Province", "Heartland", "Plains", "Rivers", "Marches", "Uplands", "Lowlands", "Highlands", "Coast", "Kinsmen", "Free Men", "Shepherds", "Marchers", "Savannas", "Lakes", "Deserts", "Steppes", "Gardens", "Oases", "Delta", "Escarpment", "Mountains", "Lagoons", "Cataracts", "Nile Valley", "Sahel", "Rift", "Lakelands", "Peninsula", "Plateau"],
+  powerFactions: ["Council", "Assembly", "Court", "Estates", "League", "Faction"],
+  familyNames: ["Kinsman", "Heir", "Descendant", "Kindred", "Cousin"],
+};
+for (const [module, words] of Object.entries(TIMELESS)) {
+  for (const culture of Object.keys(TAGS6B[module] ?? {})) {
+    const lists = WORDS6B[module][culture].split(";").map((l) => l.split("|"));
+    for (const w of lists.flat()) if (words.includes(w) && !TAGS6B[module][culture][w]) TAGS6B[module][culture][w] = "AN-EM";
+  }
+}
 export const ADJ6B = {
   turkic: "Old|Grey|Golden|Bright|Fair|Noble|Silent|Swift|Blue|Great", mongol: "Old|Grey|Golden|Bright|Fair|Eternal|Silent|Swift|Blue|Wide",
   arabic: "Old|Grey|Golden|Bright|Fair|Noble|Silent|Blessed|Green|Great", persian: "Old|Grey|Golden|Bright|Fair|Royal|Silent|Fragrant|Turquoise|Great",

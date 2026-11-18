@@ -4100,7 +4100,7 @@
    "v": 0
   },
   "culture|eventNames|turkic|words": {
-   "v": 46,
+   "v": 45,
    "t": 30
   },
   "culture|eventNames|turkic|shapes": {
@@ -4111,7 +4111,7 @@
    "v": 0
   },
   "culture|eventNames|mongol|words": {
-   "v": 53,
+   "v": 51,
    "t": 30
   },
   "culture|eventNames|mongol|shapes": {
@@ -4133,7 +4133,7 @@
    "v": 0
   },
   "culture|eventNames|arabic|words": {
-   "v": 47,
+   "v": 46,
    "t": 30
   },
   "culture|eventNames|arabic|shapes": {
@@ -4144,7 +4144,7 @@
    "v": 0
   },
   "culture|eventNames|persian|words": {
-   "v": 51,
+   "v": 50,
    "t": 30
   },
   "culture|eventNames|persian|shapes": {
@@ -4322,11 +4322,11 @@
    "t": 12
   },
   "era|eventNames|MD": {
-   "v": 253,
+   "v": 248,
    "t": 12
   },
   "era|eventNames|EM": {
-   "v": 244,
+   "v": 239,
    "t": 12
   },
   "era|eventNames|ST": {
@@ -4662,7 +4662,7 @@
    "v": 0
   },
   "culture|moneyNames|turkic|words": {
-   "v": 51,
+   "v": 50,
    "t": 30
   },
   "culture|moneyNames|turkic|shapes": {
@@ -4673,7 +4673,7 @@
    "v": 0
   },
   "culture|moneyNames|mongol|words": {
-   "v": 49,
+   "v": 48,
    "t": 30
   },
   "culture|moneyNames|mongol|shapes": {
@@ -4695,7 +4695,7 @@
    "v": 1
   },
   "culture|moneyNames|arabic|words": {
-   "v": 50,
+   "v": 49,
    "t": 30
   },
   "culture|moneyNames|arabic|shapes": {
@@ -4706,7 +4706,7 @@
    "v": 0
   },
   "culture|moneyNames|persian|words": {
-   "v": 48,
+   "v": 47,
    "t": 30
   },
   "culture|moneyNames|persian|shapes": {
@@ -4882,11 +4882,11 @@
    "t": 12
   },
   "era|moneyNames|MD": {
-   "v": 467,
+   "v": 463,
    "t": 12
   },
   "era|moneyNames|EM": {
-   "v": 479,
+   "v": 475,
    "t": 12
   },
   "era|moneyNames|ST": {
@@ -5225,7 +5225,7 @@
    "v": 0
   },
   "culture|calendarNames|mongol|words": {
-   "v": 51,
+   "v": 50,
    "t": 30
   },
   "culture|calendarNames|mongol|shapes": {
@@ -5247,7 +5247,7 @@
    "v": 0
   },
   "culture|calendarNames|arabic|words": {
-   "v": 49,
+   "v": 48,
    "t": 30
   },
   "culture|calendarNames|arabic|shapes": {
@@ -5432,11 +5432,11 @@
    "t": 12
   },
   "era|calendarNames|MD": {
-   "v": 391,
+   "v": 389,
    "t": 12
   },
   "era|calendarNames|EM": {
-   "v": 357,
+   "v": 355,
    "t": 12
   },
   "era|calendarNames|ST": {
@@ -16369,7 +16369,7 @@
    "v": 0
   },
   "culture|familyNames|turkic|words": {
-   "v": 52,
+   "v": 42,
    "t": 30
   },
   "culture|familyNames|turkic|shapes": {
@@ -16380,7 +16380,7 @@
    "v": 0
   },
   "culture|familyNames|mongol|words": {
-   "v": 52,
+   "v": 44,
    "t": 30
   },
   "culture|familyNames|mongol|shapes": {
@@ -16402,7 +16402,7 @@
    "v": 0
   },
   "culture|familyNames|arabic|words": {
-   "v": 52,
+   "v": 40,
    "t": 30
   },
   "culture|familyNames|arabic|shapes": {
@@ -16413,7 +16413,7 @@
    "v": 0
   },
   "culture|familyNames|persian|words": {
-   "v": 52,
+   "v": 41,
    "t": 30
   },
   "culture|familyNames|persian|shapes": {
@@ -16435,7 +16435,7 @@
    "v": 0
   },
   "culture|familyNames|egyptian|words": {
-   "v": 49,
+   "v": 40,
    "t": 30
   },
   "culture|familyNames|egyptian|shapes": {
@@ -16446,7 +16446,7 @@
    "v": 0
   },
   "culture|familyNames|ethiopian|words": {
-   "v": 53,
+   "v": 41,
    "t": 30
   },
   "culture|familyNames|ethiopian|shapes": {
@@ -16457,7 +16457,7 @@
    "v": 0
   },
   "culture|familyNames|bantu|words": {
-   "v": 50,
+   "v": 42,
    "t": 30
   },
   "culture|familyNames|bantu|shapes": {
@@ -16468,7 +16468,7 @@
    "v": 0
   },
   "culture|familyNames|west-african|words": {
-   "v": 52,
+   "v": 42,
    "t": 30
   },
   "culture|familyNames|west-african|shapes": {
@@ -16583,15 +16583,15 @@
    "v": 0
   },
   "era|familyNames|AN": {
-   "v": 161,
+   "v": 169,
    "t": 12
   },
   "era|familyNames|MD": {
-   "v": 340,
+   "v": 306,
    "t": 12
   },
   "era|familyNames|EM": {
-   "v": 231,
+   "v": 223,
    "t": 12
   },
   "era|familyNames|ST": {
@@ -17461,7 +17461,7 @@
    "v": 1
   },
   "culture|treasureNames|turkic|words": {
-   "v": 51,
+   "v": 50,
    "t": 30
   },
   "culture|treasureNames|turkic|shapes": {
@@ -17472,7 +17472,7 @@
    "v": 0
   },
   "culture|treasureNames|mongol|words": {
-   "v": 52,
+   "v": 51,
    "t": 30
   },
   "culture|treasureNames|mongol|shapes": {
@@ -17494,7 +17494,7 @@
    "v": 1
   },
   "culture|treasureNames|arabic|words": {
-   "v": 50,
+   "v": 49,
    "t": 30
   },
   "culture|treasureNames|arabic|shapes": {
@@ -17505,7 +17505,7 @@
    "v": 0
   },
   "culture|treasureNames|persian|words": {
-   "v": 52,
+   "v": 51,
    "t": 30
   },
   "culture|treasureNames|persian|shapes": {
@@ -17679,11 +17679,11 @@
    "t": 12
   },
   "era|treasureNames|MD": {
-   "v": 332,
+   "v": 328,
    "t": 12
   },
   "era|treasureNames|EM": {
-   "v": 261,
+   "v": 257,
    "t": 12
   },
   "era|treasureNames|ST": {
@@ -18023,7 +18023,7 @@
    "v": 1
   },
   "culture|bookNames|turkic|words": {
-   "v": 53,
+   "v": 52,
    "t": 30
   },
   "culture|bookNames|turkic|shapes": {
@@ -18056,7 +18056,7 @@
    "v": 1
   },
   "culture|bookNames|arabic|words": {
-   "v": 50,
+   "v": 49,
    "t": 30
   },
   "culture|bookNames|arabic|shapes": {
@@ -18067,7 +18067,7 @@
    "v": 0
   },
   "culture|bookNames|persian|words": {
-   "v": 55,
+   "v": 54,
    "t": 30
   },
   "culture|bookNames|persian|shapes": {
@@ -18237,15 +18237,15 @@
    "v": 0
   },
   "era|bookNames|AN": {
-   "v": 185,
+   "v": 184,
    "t": 12
   },
   "era|bookNames|MD": {
-   "v": 453,
+   "v": 450,
    "t": 12
   },
   "era|bookNames|EM": {
-   "v": 375,
+   "v": 373,
    "t": 12
   },
   "era|bookNames|ST": {
@@ -18569,7 +18569,7 @@
    "v": 1
   },
   "culture|realms|turkic|words": {
-   "v": 46,
+   "v": 37,
    "t": 30
   },
   "culture|realms|turkic|shapes": {
@@ -18580,7 +18580,7 @@
    "v": 0
   },
   "culture|realms|mongol|words": {
-   "v": 48,
+   "v": 38,
    "t": 30
   },
   "culture|realms|mongol|shapes": {
@@ -18602,7 +18602,7 @@
    "v": 1
   },
   "culture|realms|arabic|words": {
-   "v": 47,
+   "v": 37,
    "t": 30
   },
   "culture|realms|arabic|shapes": {
@@ -18613,7 +18613,7 @@
    "v": 0
   },
   "culture|realms|persian|words": {
-   "v": 48,
+   "v": 37,
    "t": 30
   },
   "culture|realms|persian|shapes": {
@@ -18635,7 +18635,7 @@
    "v": 1
   },
   "culture|realms|egyptian|words": {
-   "v": 51,
+   "v": 41,
    "t": 30
   },
   "culture|realms|egyptian|shapes": {
@@ -18646,7 +18646,7 @@
    "v": 1
   },
   "culture|realms|ethiopian|words": {
-   "v": 50,
+   "v": 39,
    "t": 30
   },
   "culture|realms|ethiopian|shapes": {
@@ -18657,7 +18657,7 @@
    "v": 1
   },
   "culture|realms|bantu|words": {
-   "v": 50,
+   "v": 39,
    "t": 30
   },
   "culture|realms|bantu|shapes": {
@@ -18668,7 +18668,7 @@
    "v": 1
   },
   "culture|realms|west-african|words": {
-   "v": 50,
+   "v": 39,
    "t": 30
   },
   "culture|realms|west-african|shapes": {
@@ -18783,15 +18783,15 @@
    "v": 0
   },
   "era|realms|AN": {
-   "v": 170,
+   "v": 273,
    "t": 12
   },
   "era|realms|MD": {
-   "v": 335,
+   "v": 403,
    "t": 12
   },
   "era|realms|EM": {
-   "v": 223,
+   "v": 323,
    "t": 12
   },
   "era|realms|ST": {
@@ -19115,7 +19115,7 @@
    "v": 1
   },
   "culture|peoplesTongues|turkic|words": {
-   "v": 49,
+   "v": 48,
    "t": 30
   },
   "culture|peoplesTongues|turkic|shapes": {
@@ -19148,7 +19148,7 @@
    "v": 1
   },
   "culture|peoplesTongues|arabic|words": {
-   "v": 49,
+   "v": 48,
    "t": 30
   },
   "culture|peoplesTongues|arabic|shapes": {
@@ -19329,15 +19329,15 @@
    "v": 0
   },
   "era|peoplesTongues|AN": {
-   "v": 183,
+   "v": 181,
    "t": 12
   },
   "era|peoplesTongues|MD": {
-   "v": 192,
+   "v": 190,
    "t": 12
   },
   "era|peoplesTongues|EM": {
-   "v": 160,
+   "v": 161,
    "t": 12
   },
   "era|peoplesTongues|ST": {
@@ -21305,7 +21305,7 @@
    "v": 0
   },
   "culture|mysticOrders|arabic|words": {
-   "v": 48,
+   "v": 51,
    "t": 30
   },
   "culture|mysticOrders|arabic|shapes": {
@@ -21316,7 +21316,7 @@
    "v": 0
   },
   "culture|mysticOrders|persian|words": {
-   "v": 51,
+   "v": 50,
    "t": 30
   },
   "culture|mysticOrders|persian|shapes": {
@@ -21526,15 +21526,15 @@
    "v": 0
   },
   "era|mysticOrders|AN": {
-   "v": 182,
+   "v": 184,
    "t": 12
   },
   "era|mysticOrders|MD": {
-   "v": 287,
+   "v": 286,
    "t": 12
   },
   "era|mysticOrders|EM": {
-   "v": 189,
+   "v": 185,
    "t": 12
   },
   "era|mysticOrders|ST": {
@@ -21542,7 +21542,7 @@
    "t": 12
   },
   "era|mysticOrders|MO": {
-   "v": 249,
+   "v": 252,
    "t": 12
   },
   "era|mysticOrders|NF": {
@@ -23632,7 +23632,7 @@
    "v": 0
   },
   "culture|adventureCompanies|turkic|words": {
-   "v": 46,
+   "v": 45,
    "t": 30
   },
   "culture|adventureCompanies|turkic|shapes": {
@@ -23665,7 +23665,7 @@
    "v": 0
   },
   "culture|adventureCompanies|arabic|words": {
-   "v": 50,
+   "v": 49,
    "t": 30
   },
   "culture|adventureCompanies|arabic|shapes": {
@@ -23676,7 +23676,7 @@
    "v": 0
   },
   "culture|adventureCompanies|persian|words": {
-   "v": 48,
+   "v": 47,
    "t": 30
   },
   "culture|adventureCompanies|persian|shapes": {
@@ -23890,11 +23890,11 @@
    "t": 12
   },
   "era|adventureCompanies|MD": {
-   "v": 377,
+   "v": 374,
    "t": 12
   },
   "era|adventureCompanies|EM": {
-   "v": 379,
+   "v": 376,
    "t": 12
   },
   "era|adventureCompanies|ST": {
@@ -24206,7 +24206,7 @@
    "v": 0
   },
   "culture|powerFactions|turkic|words": {
-   "v": 50,
+   "v": 38,
    "t": 30
   },
   "culture|powerFactions|turkic|shapes": {
@@ -24217,7 +24217,7 @@
    "v": 0
   },
   "culture|powerFactions|mongol|words": {
-   "v": 48,
+   "v": 40,
    "t": 30
   },
   "culture|powerFactions|mongol|shapes": {
@@ -24239,7 +24239,7 @@
    "v": 0
   },
   "culture|powerFactions|arabic|words": {
-   "v": 50,
+   "v": 37,
    "t": 30
   },
   "culture|powerFactions|arabic|shapes": {
@@ -24250,7 +24250,7 @@
    "v": 0
   },
   "culture|powerFactions|persian|words": {
-   "v": 49,
+   "v": 38,
    "t": 30
   },
   "culture|powerFactions|persian|shapes": {
@@ -24272,7 +24272,7 @@
    "v": 0
   },
   "culture|powerFactions|egyptian|words": {
-   "v": 40,
+   "v": 35,
    "t": 30
   },
   "culture|powerFactions|egyptian|shapes": {
@@ -24283,7 +24283,7 @@
    "v": 0
   },
   "culture|powerFactions|ethiopian|words": {
-   "v": 50,
+   "v": 38,
    "t": 30
   },
   "culture|powerFactions|ethiopian|shapes": {
@@ -24294,7 +24294,7 @@
    "v": 0
   },
   "culture|powerFactions|bantu|words": {
-   "v": 52,
+   "v": 40,
    "t": 30
   },
   "culture|powerFactions|bantu|shapes": {
@@ -24305,7 +24305,7 @@
    "v": 0
   },
   "culture|powerFactions|west-african|words": {
-   "v": 52,
+   "v": 39,
    "t": 30
   },
   "culture|powerFactions|west-african|shapes": {
@@ -24460,15 +24460,15 @@
    "v": 0
   },
   "era|powerFactions|AN": {
-   "v": 164,
+   "v": 172,
    "t": 12
   },
   "era|powerFactions|MD": {
-   "v": 403,
+   "v": 353,
    "t": 12
   },
   "era|powerFactions|EM": {
-   "v": 318,
+   "v": 290,
    "t": 12
   },
   "era|powerFactions|ST": {
@@ -24796,7 +24796,7 @@
    "v": 0
   },
   "culture|supernaturalCourts|turkic|words": {
-   "v": 45,
+   "v": 44,
    "t": 30
   },
   "culture|supernaturalCourts|turkic|shapes": {
@@ -24829,7 +24829,7 @@
    "v": 0
   },
   "culture|supernaturalCourts|arabic|words": {
-   "v": 45,
+   "v": 44,
    "t": 30
   },
   "culture|supernaturalCourts|arabic|shapes": {
@@ -24862,7 +24862,7 @@
    "v": 0
   },
   "culture|supernaturalCourts|egyptian|words": {
-   "v": 46,
+   "v": 45,
    "t": 30
   },
   "culture|supernaturalCourts|egyptian|shapes": {
@@ -24873,7 +24873,7 @@
    "v": 0
   },
   "culture|supernaturalCourts|ethiopian|words": {
-   "v": 45,
+   "v": 44,
    "t": 30
   },
   "culture|supernaturalCourts|ethiopian|shapes": {
@@ -24895,7 +24895,7 @@
    "v": 0
   },
   "culture|supernaturalCourts|west-african|words": {
-   "v": 44,
+   "v": 43,
    "t": 30
   },
   "culture|supernaturalCourts|west-african|shapes": {
@@ -25050,11 +25050,11 @@
    "v": 0
   },
   "era|supernaturalCourts|AN": {
-   "v": 215,
+   "v": 210,
    "t": 12
   },
   "era|supernaturalCourts|MD": {
-   "v": 291,
+   "v": 286,
    "t": 12
   },
   "era|supernaturalCourts|EM": {
@@ -25397,7 +25397,7 @@
    "v": 0
   },
   "culture|ships|mongol|words": {
-   "v": 46,
+   "v": 45,
    "t": 30
   },
   "culture|ships|mongol|shapes": {
@@ -25691,11 +25691,11 @@
    "t": 12
   },
   "era|ships|MD": {
-   "v": 216,
+   "v": 215,
    "t": 12
   },
   "era|ships|EM": {
-   "v": 324,
+   "v": 323,
    "t": 12
   },
   "era|ships|ST": {
@@ -27367,7 +27367,7 @@
    "v": 0
   },
   "culture|landVehicles|mongol|words": {
-   "v": 42,
+   "v": 41,
    "t": 30
   },
   "culture|landVehicles|mongol|shapes": {
@@ -27400,7 +27400,7 @@
    "v": 0
   },
   "culture|landVehicles|persian|words": {
-   "v": 41,
+   "v": 40,
    "t": 30
   },
   "culture|landVehicles|persian|shapes": {
@@ -27661,11 +27661,11 @@
    "t": 12
   },
   "era|landVehicles|MD": {
-   "v": 206,
+   "v": 204,
    "t": 12
   },
   "era|landVehicles|EM": {
-   "v": 216,
+   "v": 214,
    "t": 12
   },
   "era|landVehicles|ST": {
@@ -28394,19 +28394,19 @@
    "v": 407
   },
   "total|culture|egyptian|words": {
-   "v": 2090
+   "v": 2065
   },
   "total|culture|egyptian|shapes": {
    "v": 640
   },
   "total|culture|west-african|words": {
-   "v": 1995
+   "v": 1960
   },
   "total|culture|west-african|shapes": {
    "v": 580
   },
   "total|culture|ethiopian|words": {
-   "v": 1918
+   "v": 1882
   },
   "total|culture|ethiopian|shapes": {
    "v": 538
@@ -28508,7 +28508,7 @@
    "v": 11
   },
   "total|culture|bantu|words": {
-   "v": 2065
+   "v": 2034
   },
   "total|culture|bantu|shapes": {
    "v": 551
@@ -28544,25 +28544,25 @@
    "v": 513
   },
   "total|culture|turkic|words": {
-   "v": 1996
+   "v": 1958
   },
   "total|culture|turkic|shapes": {
    "v": 532
   },
   "total|culture|mongol|words": {
-   "v": 2021
+   "v": 1988
   },
   "total|culture|mongol|shapes": {
    "v": 516
   },
   "total|culture|arabic|words": {
-   "v": 2042
+   "v": 2002
   },
   "total|culture|arabic|shapes": {
    "v": 550
   },
   "total|culture|persian|words": {
-   "v": 2006
+   "v": 1966
   },
   "total|culture|persian|shapes": {
    "v": 551
@@ -28604,19 +28604,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 9560
+   "v": 9673
   },
   "total|era|MD": {
-   "v": 13129
+   "v": 13081
   },
   "total|era|EM": {
-   "v": 13962
+   "v": 14000
   },
   "total|era|ST": {
    "v": 13337
   },
   "total|era|MO": {
-   "v": 11903
+   "v": 11906
   },
   "total|era|NF": {
    "v": 762

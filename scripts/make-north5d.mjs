@@ -47,12 +47,18 @@ function fillFromPools(module, culture, lists, nt) {
   const offer = OFFER;
   // Brief 6b: each of the batch's cultures takes its era words from a place of its own in each pool (so two siblings do not append the same words at the same positions).
   const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
+  // Brief 6b: the shared pools hold English and Christian words (a bishopric, a hundred moot, an abbey); the batch's cultures do not draw them (a Muslim or steppe culture no Christian ones, nor any a feudal English realm).
+  const FOREIGN = /Bishopric|Dukedom|Hundred Moot|Fiefdom|Earldom|Barony|Shire|Palatinate|Dukes?\b|Earl|Baron|Lordship|Chiefdom|Tribal Kingdom|Kingdom of the Plains|Yeomanry|Hanse|Landsknecht|Kirk|Parish|Sunday|Mission Hall|Rosicrucian|Druid|Ovates|Bardic|Pietist|Methodist|Quaker|Puritan|Covenanter|Highlanders|Tinners|Thing Assembly|Longship|Viking|Rune|Wergild|Seer?ess Band|Moot|Witan|Thane|Thegn/;
+  const CHRISTIAN = /Abbey|Priory|Chantry|Cloister|Convent|Chapel|Cathedral|Monastery|Hermit Cell|Nuns|Monks|Friar|Pilgrim|Saint|Holy|Church|Bishop|Crusade|Inquisition/;
+  const own = NEW6B.includes(culture) || MIXES6B.includes(culture);
+  const keepsChurch = ["egyptian", "ethiopian", "bantu", "west-african"].includes(culture);
   const take = (pool, enough) => {
     for (let n = 0; n < pool.length && !enough(); n++) {
       const item = pool[(start + n) % pool.length];
       const m = item.match(/^([012]):([^@]+)@(\S+)$/);
       if (!m) throw new Error(`bad pool word ${item}`);
       const [, k, word, tag] = m;
+      if (own && (FOREIGN.test(word) || (!keepsChurch && CHRISTIAN.test(word)))) continue;
       if (lists.some((l) => l.some((w) => w.toLowerCase() === word.toLowerCase()))) continue;
       lists[Number(k)].push(word);
       nt[Number(k)].push(tag);
