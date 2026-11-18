@@ -33,7 +33,7 @@ const COUNT = 12;
 type Snapshot = Record<string, string[] | string>;
 
 /** The cultures that may change in this batch. */
-export const MAY_CHANGE_6A = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "ottoman", "swahili-omani", "malay", "maritimeSEA", "phoenician", /* brief 6b: the batch's cultures change too */ "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine", "belgian", "hellenistic",
+export const MAY_CHANGE_6A = new Set(["arabian", "westAfrican", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "ottoman", "swahili-omani", "malay", "maritimeSEA", "phoenician", /* brief 6b: the batch's cultures change too */ "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine", "belgian", "hellenistic",
   // Brief 6a §9.3: the core cultures and Celtic take 60% of own-shape draws from their own entries, so their output changes too.
   "anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "celtic", "english"]);
 const PEOPLE_INPUT = ["Aldwin", "Brenna of the Vale", "Cassius", "Dagmar", "Eskil Thorne", "Fenwick", "Gaela", "Hrolf", "Isolde", "Jorund", "Kestrel", "Lysander"];

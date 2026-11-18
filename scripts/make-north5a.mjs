@@ -27,10 +27,11 @@ import nScottish from "./north5a/nouns-scottish.mjs";
 import nWelsh from "./north5a/nouns-welsh.mjs";
 
 import { CULTURES_6A, NOUNS_6A, STYLE_6A } from "./tier6a/north5a/index.mjs";
-const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic, ...CULTURES_6A];
+import { CULTURES_6B, NOUNS_6B, STYLE_6B } from "./tier6b/north5a/index.mjs";
+const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic, ...CULTURES_6A, ...CULTURES_6B];
 // §11.2: the module's own nouns, three lists per module (one per main kind), and the order each culture names in (§7).
-const NOUNS = { english: nEnglish, welsh: nWelsh, scottish: nScottish, irish: nIrish, cornish: nCornish, norse: nNorse, scandinavian: nScandinavian, german: nGerman, celtic: nCeltic, ...NOUNS_6A };
-const STYLE = { english: "last", welsh: "first", scottish: "last", irish: "firstB", cornish: "lastB", norse: "last", scandinavian: "last", german: "last", celtic: "first", ...STYLE_6A };
+const NOUNS = { english: nEnglish, welsh: nWelsh, scottish: nScottish, irish: nIrish, cornish: nCornish, norse: nNorse, scandinavian: nScandinavian, german: nGerman, celtic: nCeltic, ...NOUNS_6A, ...NOUNS_6B };
+const STYLE = { english: "last", welsh: "first", scottish: "last", irish: "firstB", cornish: "lastB", norse: "last", scandinavian: "last", german: "last", celtic: "first", ...STYLE_6A, ...STYLE_6B };
 for (const c of CULTURES) { c.nouns = NOUNS[c.key]; c.style = STYLE[c.key]; }
 const ALL_CODES = ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI", "DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"];
 const read = (f) => JSON.parse(readFileSync(new URL(`../src/data/${f}.json`, import.meta.url), "utf8"));
@@ -88,13 +89,15 @@ const GROUP_WEIGHT = 0.2;
 const OWN_WEIGHT = 0.4;
 const gw = (w) => +(w * GROUP_WEIGHT).toFixed(2);
 const ow = (w) => +(w * OWN_WEIGHT).toFixed(2);
+/** Brief 6b: deserts are not exempt for these cultures (the others keep 12 words and 4 shapes of their own): group frames and every own frame. */
+const FULL_DESERT = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african"]);
 const own4 = (c, list) => (c.key === "celtic" ? list.slice(0, 4) : list);
 
 for (const c of CULTURES) {
   const own = ownership(c);
   for (const [module, m] of Object.entries(LAND_MODULES)) {
     if (!c.nouns.land[m.terrain]) continue;
-    const desert = m.terrain === "desert";
+    const desert = m.terrain === "desert" && !FULL_DESERT.has(c.key);
     if (!desert) c.frames.land.forEach(([p, w, f, flags], i) => {
       const map = { N: m.pools[i % 3], B: SHARED.land.B, C: SHARED.land.C, D: SHARED.land.D, Dold: SHARED.land.Dold };
       out.wilds.cultureShapes.push({ p: tokens(p, map), w: gw(w), f, ...own, module, kind: m.kinds[i % 3], grp: true, sig: true, ...(p.includes("{C}") ? { h: true } : {}), ...(flags ?? {}) });

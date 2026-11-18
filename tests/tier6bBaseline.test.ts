@@ -33,7 +33,7 @@ const COUNT = 12;
 type Snapshot = Record<string, string[] | string>;
 
 /** The cultures that may change in this batch. */
-export const MAY_CHANGE_6B = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian",
+export const MAY_CHANGE_6B = new Set(["arabian", "westAfrican", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian",
   // The keys that map to a batch culture (§B4): their people and fills change with the mapping.
   "ottoman", "turkish", "swahili-omani", "malay", "maritimeSEA", "phoenician", "mamluk", "persianate", "mongolian", "african", "ethiopic", "coptic"]);
 const PEOPLE_INPUT = ["Aldwin", "Brenna of the Vale", "Cassius", "Dagmar", "Eskil Thorne", "Fenwick", "Gaela", "Hrolf", "Isolde", "Jorund", "Kestrel", "Lysander"];

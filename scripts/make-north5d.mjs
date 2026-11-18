@@ -9,11 +9,17 @@ import { ADJ6, STYLE6 } from "./tier6a/north5c-build.mjs";
 import { addFrames5d } from "./tier6a/frames-6a.mjs";
 import { MIXES6, NEW6 } from "./tier6a/north5c-words.mjs";
 import { WORDS5D } from "./tier6a/north5d-build.mjs";
-Object.assign(ADJ, ADJ6);
-Object.assign(STYLE, STYLE6);
+// Brief 6b.
+import { ADJ6B, STYLE6B } from "./tier6b/north5c-build.mjs";
+import { MIXES6B, NEW6B } from "./tier6b/north5c-words.mjs";
+import { TAGS5D6B, WORDS5D6B } from "./tier6b/north5d-build.mjs";
+Object.assign(ADJ, ADJ6, ADJ6B);
+Object.assign(STYLE, STYLE6, STYLE6B);
 addFrames5d(FRAMES);
 for (const [m, byCulture] of Object.entries(WORDS5D)) WORDS[m] = { ...WORDS[m], ...byCulture };
-const isMix = (c) => c === "celtic" || MIXES6.includes(c);
+for (const [m, byCulture] of Object.entries(WORDS5D6B)) WORDS[m] = { ...WORDS[m], ...byCulture };
+for (const [m, byCulture] of Object.entries(TAGS5D6B)) { TAGS[m] ??= {}; for (const [c, tags] of Object.entries(byCulture)) TAGS[m][c] = { ...(TAGS[m][c] ?? {}), ...tags }; }
+const isMix = (c) => c === "celtic" || MIXES6.includes(c) || MIXES6B.includes(c);
 export const CORE = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
 const ENGLISH_WORD = /^[A-Za-z][A-Za-z' -]*$/;
 const TAG = /^(?:(?:AN|MD|EM|ST|MO|NF|IS)(?:-(?:AN|MD|EM|ST|MO|NF|IS))?)?\*?$/;
@@ -39,7 +45,8 @@ const shortfalls = [];
 function fillFromPools(module, culture, lists, nt) {
   const pools = POOLS[module];
   const offer = OFFER;
-  const start = (culture === "anglo-saxon" ? 5 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
+  // Brief 6b: each of the batch's cultures takes its era words from a place of its own in each pool (so two siblings do not append the same words at the same positions).
+  const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
   const take = (pool, enough) => {
     for (let n = 0; n < pool.length && !enough(); n++) {
       const item = pool[(start + n) % pool.length];
@@ -61,7 +68,7 @@ function fillFromPools(module, culture, lists, nt) {
 for (const [module, byCulture] of Object.entries(WORDS)) {
   const cls = CLASS[module];
   modules[module] = { kinds: KINDS[module], cultures: {} };
-  for (const culture of [...CORE, ...NEW6, "celtic", ...MIXES6]) {
+  for (const culture of [...CORE, ...NEW6, ...NEW6B, "celtic", ...MIXES6, ...MIXES6B]) {
     const lists = byCulture[culture].split(";").map((l) => l.split("|"));
     const want = isMix(culture) ? 4 : 10;
     if (lists.length !== 3) problems.push(`${module} ${culture}: ${lists.length} lists`);

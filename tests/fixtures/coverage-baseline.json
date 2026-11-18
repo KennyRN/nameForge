@@ -231,110 +231,110 @@
    "v": 0
   },
   "culture|routeNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|routeNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|routeNames|turkic|profile": {
    "v": 0
   },
   "culture|routeNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|routeNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|routeNames|mongol|profile": {
    "v": 0
   },
   "culture|routeNames|steppe|words": {
-   "v": 7,
+   "v": 19,
    "t": 12
   },
   "culture|routeNames|steppe|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 4
   },
   "culture|routeNames|steppe|profile": {
    "v": 0
   },
   "culture|routeNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|routeNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|routeNames|arabic|profile": {
    "v": 0
   },
   "culture|routeNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|routeNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|routeNames|persian|profile": {
    "v": 0
   },
   "culture|routeNames|arabic-persian|words": {
-   "v": 7,
+   "v": 19,
    "t": 12
   },
   "culture|routeNames|arabic-persian|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 4
   },
   "culture|routeNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|routeNames|egyptian|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|routeNames|egyptian|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|routeNames|egyptian|profile": {
    "v": 0
   },
   "culture|routeNames|ethiopian|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|routeNames|ethiopian|shapes": {
-   "v": 3,
+   "v": 13,
    "t": 10
   },
   "culture|routeNames|ethiopian|profile": {
    "v": 0
   },
   "culture|routeNames|bantu|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|routeNames|bantu|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|routeNames|bantu|profile": {
    "v": 0
   },
   "culture|routeNames|west-african|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|routeNames|west-african|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|routeNames|west-african|profile": {
@@ -438,23 +438,23 @@
    "v": 0
   },
   "era|routeNames|AN": {
-   "v": 214,
+   "v": 289,
    "t": 12
   },
   "era|routeNames|MD": {
-   "v": 229,
+   "v": 301,
    "t": 12
   },
   "era|routeNames|EM": {
-   "v": 225,
+   "v": 303,
    "t": 12
   },
   "era|routeNames|ST": {
-   "v": 328,
+   "v": 442,
    "t": 12
   },
   "era|routeNames|MO": {
-   "v": 139,
+   "v": 193,
    "t": 12
   },
   "era|routeNames|NF": {
@@ -466,7 +466,7 @@
    "t": 12
   },
   "style|routeNames|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|routeNames|high-fantasy|shapes": {
@@ -474,7 +474,7 @@
    "t": 4
   },
   "style|routeNames|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|routeNames|contemporary-fantasy|shapes": {
@@ -482,7 +482,7 @@
    "t": 4
   },
   "style|routeNames|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|routeNames|space-opera|shapes": {
@@ -974,110 +974,110 @@
    "v": 0
   },
   "culture|streetNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|streetNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|streetNames|turkic|profile": {
    "v": 0
   },
   "culture|streetNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|streetNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|streetNames|mongol|profile": {
    "v": 0
   },
   "culture|streetNames|steppe|words": {
-   "v": 6,
+   "v": 18,
    "t": 12
   },
   "culture|streetNames|steppe|shapes": {
-   "v": 4,
+   "v": 8,
    "t": 4
   },
   "culture|streetNames|steppe|profile": {
    "v": 0
   },
   "culture|streetNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|streetNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|streetNames|arabic|profile": {
    "v": 0
   },
   "culture|streetNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|streetNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|streetNames|persian|profile": {
    "v": 0
   },
   "culture|streetNames|arabic-persian|words": {
-   "v": 15,
+   "v": 27,
    "t": 12
   },
   "culture|streetNames|arabic-persian|shapes": {
-   "v": 6,
+   "v": 10,
    "t": 4
   },
   "culture|streetNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|streetNames|egyptian|words": {
-   "v": 5,
+   "v": 35,
    "t": 30
   },
   "culture|streetNames|egyptian|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|streetNames|egyptian|profile": {
    "v": 0
   },
   "culture|streetNames|ethiopian|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|streetNames|ethiopian|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|streetNames|ethiopian|profile": {
    "v": 0
   },
   "culture|streetNames|bantu|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|streetNames|bantu|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|streetNames|bantu|profile": {
    "v": 0
   },
   "culture|streetNames|west-african|words": {
-   "v": 4,
+   "v": 34,
    "t": 30
   },
   "culture|streetNames|west-african|shapes": {
-   "v": 7,
+   "v": 17,
    "t": 10
   },
   "culture|streetNames|west-african|profile": {
@@ -1181,23 +1181,23 @@
    "v": 0
   },
   "era|streetNames|AN": {
-   "v": 194,
+   "v": 281,
    "t": 12
   },
   "era|streetNames|MD": {
-   "v": 200,
+   "v": 290,
    "t": 12
   },
   "era|streetNames|EM": {
-   "v": 189,
+   "v": 267,
    "t": 12
   },
   "era|streetNames|ST": {
-   "v": 402,
+   "v": 522,
    "t": 12
   },
   "era|streetNames|MO": {
-   "v": 166,
+   "v": 214,
    "t": 12
   },
   "era|streetNames|NF": {
@@ -1217,7 +1217,7 @@
    "t": 4
   },
   "style|streetNames|high-fantasy|words": {
-   "v": 57,
+   "v": 81,
    "t": 16
   },
   "style|streetNames|high-fantasy|shapes": {
@@ -1225,7 +1225,7 @@
    "t": 4
   },
   "style|streetNames|contemporary-fantasy|words": {
-   "v": 57,
+   "v": 81,
    "t": 16
   },
   "style|streetNames|contemporary-fantasy|shapes": {
@@ -1233,7 +1233,7 @@
    "t": 4
   },
   "style|streetNames|space-opera|words": {
-   "v": 57,
+   "v": 81,
    "t": 16
   },
   "style|streetNames|space-opera|shapes": {
@@ -1585,110 +1585,110 @@
    "v": 0
   },
   "culture|innNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|innNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|innNames|turkic|profile": {
    "v": 0
   },
   "culture|innNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|innNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|innNames|mongol|profile": {
    "v": 0
   },
   "culture|innNames|steppe|words": {
-   "v": 3,
+   "v": 15,
    "t": 12
   },
   "culture|innNames|steppe|shapes": {
-   "v": 4,
+   "v": 8,
    "t": 4
   },
   "culture|innNames|steppe|profile": {
    "v": 0
   },
   "culture|innNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|innNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|innNames|arabic|profile": {
    "v": 0
   },
   "culture|innNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|innNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|innNames|persian|profile": {
    "v": 0
   },
   "culture|innNames|arabic-persian|words": {
-   "v": 20,
+   "v": 32,
    "t": 12
   },
   "culture|innNames|arabic-persian|shapes": {
-   "v": 6,
+   "v": 10,
    "t": 4
   },
   "culture|innNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|innNames|egyptian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|innNames|egyptian|shapes": {
-   "v": 3,
+   "v": 13,
    "t": 10
   },
   "culture|innNames|egyptian|profile": {
    "v": 0
   },
   "culture|innNames|ethiopian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|innNames|ethiopian|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|innNames|ethiopian|profile": {
    "v": 0
   },
   "culture|innNames|bantu|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|innNames|bantu|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|innNames|bantu|profile": {
    "v": 0
   },
   "culture|innNames|west-african|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|innNames|west-african|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|innNames|west-african|profile": {
@@ -1792,23 +1792,23 @@
    "v": 0
   },
   "era|innNames|AN": {
-   "v": 193,
+   "v": 280,
    "t": 12
   },
   "era|innNames|MD": {
-   "v": 200,
+   "v": 290,
    "t": 12
   },
   "era|innNames|EM": {
-   "v": 197,
+   "v": 275,
    "t": 12
   },
   "era|innNames|ST": {
-   "v": 369,
+   "v": 489,
    "t": 12
   },
   "era|innNames|MO": {
-   "v": 139,
+   "v": 187,
    "t": 12
   },
   "era|innNames|NF": {
@@ -1828,7 +1828,7 @@
    "t": 4
   },
   "style|innNames|high-fantasy|words": {
-   "v": 66,
+   "v": 90,
    "t": 16
   },
   "style|innNames|high-fantasy|shapes": {
@@ -1836,7 +1836,7 @@
    "t": 4
   },
   "style|innNames|contemporary-fantasy|words": {
-   "v": 66,
+   "v": 90,
    "t": 16
   },
   "style|innNames|contemporary-fantasy|shapes": {
@@ -1844,7 +1844,7 @@
    "t": 4
   },
   "style|innNames|space-opera|words": {
-   "v": 66,
+   "v": 90,
    "t": 16
   },
   "style|innNames|space-opera|shapes": {
@@ -2212,110 +2212,110 @@
    "v": 0
   },
   "culture|buildingNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|buildingNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|buildingNames|turkic|profile": {
    "v": 0
   },
   "culture|buildingNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|buildingNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|buildingNames|mongol|profile": {
    "v": 0
   },
   "culture|buildingNames|steppe|words": {
-   "v": 2,
+   "v": 14,
    "t": 12
   },
   "culture|buildingNames|steppe|shapes": {
-   "v": 2,
+   "v": 6,
    "t": 4
   },
   "culture|buildingNames|steppe|profile": {
    "v": 0
   },
   "culture|buildingNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|buildingNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|buildingNames|arabic|profile": {
    "v": 0
   },
   "culture|buildingNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|buildingNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|buildingNames|persian|profile": {
    "v": 0
   },
   "culture|buildingNames|arabic-persian|words": {
-   "v": 29,
+   "v": 41,
    "t": 12
   },
   "culture|buildingNames|arabic-persian|shapes": {
-   "v": 6,
+   "v": 10,
    "t": 4
   },
   "culture|buildingNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|buildingNames|egyptian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|buildingNames|egyptian|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|buildingNames|egyptian|profile": {
    "v": 0
   },
   "culture|buildingNames|ethiopian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|buildingNames|ethiopian|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|buildingNames|ethiopian|profile": {
    "v": 0
   },
   "culture|buildingNames|bantu|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|buildingNames|bantu|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|buildingNames|bantu|profile": {
    "v": 0
   },
   "culture|buildingNames|west-african|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|buildingNames|west-african|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|buildingNames|west-african|profile": {
@@ -2419,23 +2419,23 @@
    "v": 0
   },
   "era|buildingNames|AN": {
-   "v": 198,
+   "v": 285,
    "t": 12
   },
   "era|buildingNames|MD": {
-   "v": 211,
+   "v": 301,
    "t": 12
   },
   "era|buildingNames|EM": {
-   "v": 203,
+   "v": 281,
    "t": 12
   },
   "era|buildingNames|ST": {
-   "v": 380,
+   "v": 500,
    "t": 12
   },
   "era|buildingNames|MO": {
-   "v": 144,
+   "v": 192,
    "t": 12
   },
   "era|buildingNames|NF": {
@@ -2455,7 +2455,7 @@
    "t": 4
   },
   "style|buildingNames|high-fantasy|words": {
-   "v": 59,
+   "v": 83,
    "t": 16
   },
   "style|buildingNames|high-fantasy|shapes": {
@@ -2463,7 +2463,7 @@
    "t": 4
   },
   "style|buildingNames|contemporary-fantasy|words": {
-   "v": 59,
+   "v": 83,
    "t": 16
   },
   "style|buildingNames|contemporary-fantasy|shapes": {
@@ -2471,7 +2471,7 @@
    "t": 4
   },
   "style|buildingNames|space-opera|words": {
-   "v": 59,
+   "v": 83,
    "t": 16
   },
   "style|buildingNames|space-opera|shapes": {
@@ -2851,110 +2851,110 @@
    "v": 0
   },
   "culture|monumentNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|monumentNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|monumentNames|turkic|profile": {
    "v": 0
   },
   "culture|monumentNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|monumentNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|monumentNames|mongol|profile": {
    "v": 0
   },
   "culture|monumentNames|steppe|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|monumentNames|steppe|shapes": {
-   "v": 3,
+   "v": 7,
    "t": 4
   },
   "culture|monumentNames|steppe|profile": {
    "v": 0
   },
   "culture|monumentNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|monumentNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|monumentNames|arabic|profile": {
    "v": 0
   },
   "culture|monumentNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|monumentNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|monumentNames|persian|profile": {
    "v": 0
   },
   "culture|monumentNames|arabic-persian|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|monumentNames|arabic-persian|shapes": {
-   "v": 3,
+   "v": 7,
    "t": 4
   },
   "culture|monumentNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|monumentNames|egyptian|words": {
-   "v": 3,
+   "v": 33,
    "t": 30
   },
   "culture|monumentNames|egyptian|shapes": {
-   "v": 7,
+   "v": 17,
    "t": 10
   },
   "culture|monumentNames|egyptian|profile": {
    "v": 0
   },
   "culture|monumentNames|ethiopian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|monumentNames|ethiopian|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|monumentNames|ethiopian|profile": {
    "v": 0
   },
   "culture|monumentNames|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|monumentNames|bantu|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|monumentNames|bantu|profile": {
    "v": 0
   },
   "culture|monumentNames|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|monumentNames|west-african|shapes": {
-   "v": 3,
+   "v": 13,
    "t": 10
   },
   "culture|monumentNames|west-african|profile": {
@@ -3058,23 +3058,23 @@
    "v": 0
   },
   "era|monumentNames|AN": {
-   "v": 277,
+   "v": 364,
    "t": 12
   },
   "era|monumentNames|MD": {
-   "v": 266,
+   "v": 356,
    "t": 12
   },
   "era|monumentNames|EM": {
-   "v": 223,
+   "v": 301,
    "t": 12
   },
   "era|monumentNames|ST": {
-   "v": 350,
+   "v": 470,
    "t": 12
   },
   "era|monumentNames|MO": {
-   "v": 154,
+   "v": 202,
    "t": 12
   },
   "era|monumentNames|NF": {
@@ -3094,7 +3094,7 @@
    "t": 4
   },
   "style|monumentNames|high-fantasy|words": {
-   "v": 57,
+   "v": 81,
    "t": 16
   },
   "style|monumentNames|high-fantasy|shapes": {
@@ -3102,7 +3102,7 @@
    "t": 4
   },
   "style|monumentNames|contemporary-fantasy|words": {
-   "v": 57,
+   "v": 81,
    "t": 16
   },
   "style|monumentNames|contemporary-fantasy|shapes": {
@@ -3110,7 +3110,7 @@
    "t": 4
   },
   "style|monumentNames|space-opera|words": {
-   "v": 57,
+   "v": 81,
    "t": 16
   },
   "style|monumentNames|space-opera|shapes": {
@@ -3477,7 +3477,7 @@
    "v": 0
   },
   "culture|settlementNames|turkic|words": {
-   "v": 320,
+   "v": 315,
    "t": 30
   },
   "culture|settlementNames|turkic|shapes": {
@@ -4100,110 +4100,110 @@
    "v": 0
   },
   "culture|eventNames|turkic|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|eventNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|eventNames|turkic|profile": {
    "v": 0
   },
   "culture|eventNames|mongol|words": {
-   "v": 0,
+   "v": 53,
    "t": 30
   },
   "culture|eventNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|eventNames|mongol|profile": {
    "v": 0
   },
   "culture|eventNames|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|eventNames|steppe|shapes": {
-   "v": 3,
+   "v": 7,
    "t": 4
   },
   "culture|eventNames|steppe|profile": {
    "v": 0
   },
   "culture|eventNames|arabic|words": {
-   "v": 0,
+   "v": 47,
    "t": 30
   },
   "culture|eventNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|eventNames|arabic|profile": {
    "v": 0
   },
   "culture|eventNames|persian|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|eventNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|eventNames|persian|profile": {
    "v": 0
   },
   "culture|eventNames|arabic-persian|words": {
-   "v": 16,
+   "v": 31,
    "t": 12
   },
   "culture|eventNames|arabic-persian|shapes": {
-   "v": 5,
+   "v": 9,
    "t": 4
   },
   "culture|eventNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|eventNames|egyptian|words": {
-   "v": 11,
+   "v": 57,
    "t": 30
   },
   "culture|eventNames|egyptian|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|eventNames|egyptian|profile": {
    "v": 0
   },
   "culture|eventNames|ethiopian|words": {
-   "v": 11,
+   "v": 60,
    "t": 30
   },
   "culture|eventNames|ethiopian|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|eventNames|ethiopian|profile": {
    "v": 0
   },
   "culture|eventNames|bantu|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|eventNames|bantu|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|eventNames|bantu|profile": {
    "v": 0
   },
   "culture|eventNames|west-african|words": {
-   "v": 11,
+   "v": 57,
    "t": 30
   },
   "culture|eventNames|west-african|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|eventNames|west-african|profile": {
@@ -4318,23 +4318,23 @@
    "v": 0
   },
   "era|eventNames|AN": {
-   "v": 118,
+   "v": 166,
    "t": 12
   },
   "era|eventNames|MD": {
-   "v": 186,
+   "v": 253,
    "t": 12
   },
   "era|eventNames|EM": {
-   "v": 175,
+   "v": 244,
    "t": 12
   },
   "era|eventNames|ST": {
-   "v": 138,
+   "v": 186,
    "t": 12
   },
   "era|eventNames|MO": {
-   "v": 121,
+   "v": 177,
    "t": 12
   },
   "era|eventNames|NF": {
@@ -4354,27 +4354,27 @@
    "t": 4
   },
   "style|eventNames|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|eventNames|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|eventNames|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|eventNames|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|eventNames|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|eventNames|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|eventNames|grand": {
@@ -4662,110 +4662,110 @@
    "v": 0
   },
   "culture|moneyNames|turkic|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|moneyNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|turkic|profile": {
    "v": 0
   },
   "culture|moneyNames|mongol|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|moneyNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|mongol|profile": {
    "v": 0
   },
   "culture|moneyNames|steppe|words": {
-   "v": 18,
+   "v": 33,
    "t": 12
   },
   "culture|moneyNames|steppe|shapes": {
-   "v": 1,
+   "v": 5,
    "t": 4
   },
   "culture|moneyNames|steppe|profile": {
    "v": 1
   },
   "culture|moneyNames|arabic|words": {
-   "v": 0,
+   "v": 50,
    "t": 30
   },
   "culture|moneyNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|arabic|profile": {
    "v": 0
   },
   "culture|moneyNames|persian|words": {
-   "v": 0,
+   "v": 48,
    "t": 30
   },
   "culture|moneyNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|persian|profile": {
    "v": 0
   },
   "culture|moneyNames|arabic-persian|words": {
-   "v": 31,
+   "v": 46,
    "t": 12
   },
   "culture|moneyNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|moneyNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|moneyNames|egyptian|words": {
-   "v": 15,
+   "v": 52,
    "t": 30
   },
   "culture|moneyNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|egyptian|profile": {
    "v": 1
   },
   "culture|moneyNames|ethiopian|words": {
-   "v": 9,
+   "v": 57,
    "t": 30
   },
   "culture|moneyNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|ethiopian|profile": {
    "v": 1
   },
   "culture|moneyNames|bantu|words": {
-   "v": 22,
+   "v": 69,
    "t": 30
   },
   "culture|moneyNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|bantu|profile": {
    "v": 1
   },
   "culture|moneyNames|west-african|words": {
-   "v": 23,
+   "v": 74,
    "t": 30
   },
   "culture|moneyNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moneyNames|west-african|profile": {
@@ -4878,23 +4878,23 @@
    "v": 0
   },
   "era|moneyNames|AN": {
-   "v": 241,
+   "v": 294,
    "t": 12
   },
   "era|moneyNames|MD": {
-   "v": 385,
+   "v": 467,
    "t": 12
   },
   "era|moneyNames|EM": {
-   "v": 403,
+   "v": 479,
    "t": 12
   },
   "era|moneyNames|ST": {
-   "v": 363,
+   "v": 413,
    "t": 12
   },
   "era|moneyNames|MO": {
-   "v": 295,
+   "v": 346,
    "t": 12
   },
   "era|moneyNames|NF": {
@@ -4906,27 +4906,27 @@
    "t": 12
   },
   "style|moneyNames|high-fantasy|words": {
-   "v": 89,
+   "v": 119,
    "t": 16
   },
   "style|moneyNames|high-fantasy|shapes": {
-   "v": 38,
+   "v": 54,
    "t": 4
   },
   "style|moneyNames|contemporary-fantasy|words": {
-   "v": 89,
+   "v": 119,
    "t": 16
   },
   "style|moneyNames|contemporary-fantasy|shapes": {
-   "v": 38,
+   "v": 54,
    "t": 4
   },
   "style|moneyNames|space-opera|words": {
-   "v": 89,
+   "v": 119,
    "t": 16
   },
   "style|moneyNames|space-opera|shapes": {
-   "v": 38,
+   "v": 54,
    "t": 4
   },
   "style|moneyNames|steampunk|words": {
@@ -5214,110 +5214,110 @@
    "v": 0
   },
   "culture|calendarNames|turkic|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|calendarNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|calendarNames|turkic|profile": {
    "v": 0
   },
   "culture|calendarNames|mongol|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|calendarNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|calendarNames|mongol|profile": {
    "v": 0
   },
   "culture|calendarNames|steppe|words": {
-   "v": 10,
+   "v": 25,
    "t": 12
   },
   "culture|calendarNames|steppe|shapes": {
-   "v": 1,
+   "v": 5,
    "t": 4
   },
   "culture|calendarNames|steppe|profile": {
    "v": 0
   },
   "culture|calendarNames|arabic|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|calendarNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|calendarNames|arabic|profile": {
    "v": 0
   },
   "culture|calendarNames|persian|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|calendarNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|calendarNames|persian|profile": {
    "v": 0
   },
   "culture|calendarNames|arabic-persian|words": {
-   "v": 10,
+   "v": 25,
    "t": 12
   },
   "culture|calendarNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|calendarNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|calendarNames|egyptian|words": {
-   "v": 20,
+   "v": 65,
    "t": 30
   },
   "culture|calendarNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|calendarNames|egyptian|profile": {
    "v": 0
   },
   "culture|calendarNames|ethiopian|words": {
-   "v": 10,
+   "v": 57,
    "t": 30
   },
   "culture|calendarNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|calendarNames|ethiopian|profile": {
    "v": 0
   },
   "culture|calendarNames|bantu|words": {
-   "v": 9,
+   "v": 59,
    "t": 30
   },
   "culture|calendarNames|bantu|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|calendarNames|bantu|profile": {
    "v": 0
   },
   "culture|calendarNames|west-african|words": {
-   "v": 5,
+   "v": 55,
    "t": 30
   },
   "culture|calendarNames|west-african|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 10
   },
   "culture|calendarNames|west-african|profile": {
@@ -5428,23 +5428,23 @@
    "v": 0
   },
   "era|calendarNames|AN": {
-   "v": 273,
+   "v": 321,
    "t": 12
   },
   "era|calendarNames|MD": {
-   "v": 320,
+   "v": 391,
    "t": 12
   },
   "era|calendarNames|EM": {
-   "v": 288,
+   "v": 357,
    "t": 12
   },
   "era|calendarNames|ST": {
-   "v": 124,
+   "v": 172,
    "t": 12
   },
   "era|calendarNames|MO": {
-   "v": 119,
+   "v": 171,
    "t": 12
   },
   "era|calendarNames|NF": {
@@ -5456,27 +5456,27 @@
    "t": 12
   },
   "style|calendarNames|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|calendarNames|high-fantasy|shapes": {
-   "v": 40,
+   "v": 56,
    "t": 4
   },
   "style|calendarNames|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|calendarNames|contemporary-fantasy|shapes": {
-   "v": 40,
+   "v": 56,
    "t": 4
   },
   "style|calendarNames|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|calendarNames|space-opera|shapes": {
-   "v": 40,
+   "v": 56,
    "t": 4
   },
   "style|calendarNames|steampunk|words": {
@@ -5752,110 +5752,110 @@
    "v": 0
   },
   "culture|skyNames|turkic|words": {
-   "v": 0,
+   "v": 43,
    "t": 30
   },
   "culture|skyNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|turkic|profile": {
    "v": 0
   },
   "culture|skyNames|mongol|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|skyNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|mongol|profile": {
    "v": 0
   },
   "culture|skyNames|steppe|words": {
-   "v": 7,
+   "v": 22,
    "t": 12
   },
   "culture|skyNames|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|skyNames|steppe|profile": {
    "v": 0
   },
   "culture|skyNames|arabic|words": {
-   "v": 0,
+   "v": 41,
    "t": 30
   },
   "culture|skyNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|arabic|profile": {
    "v": 0
   },
   "culture|skyNames|persian|words": {
-   "v": 0,
+   "v": 43,
    "t": 30
   },
   "culture|skyNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|persian|profile": {
    "v": 0
   },
   "culture|skyNames|arabic-persian|words": {
-   "v": 6,
+   "v": 21,
    "t": 12
   },
   "culture|skyNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|skyNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|skyNames|egyptian|words": {
-   "v": 5,
+   "v": 46,
    "t": 30
   },
   "culture|skyNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|egyptian|profile": {
    "v": 0
   },
   "culture|skyNames|ethiopian|words": {
-   "v": 0,
+   "v": 43,
    "t": 30
   },
   "culture|skyNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|ethiopian|profile": {
    "v": 0
   },
   "culture|skyNames|bantu|words": {
-   "v": 2,
+   "v": 46,
    "t": 30
   },
   "culture|skyNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|bantu|profile": {
    "v": 0
   },
   "culture|skyNames|west-african|words": {
-   "v": 0,
+   "v": 41,
    "t": 30
   },
   "culture|skyNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|skyNames|west-african|profile": {
@@ -5966,23 +5966,23 @@
    "v": 0
   },
   "era|skyNames|AN": {
-   "v": 111,
+   "v": 165,
    "t": 12
   },
   "era|skyNames|MD": {
-   "v": 111,
+   "v": 165,
    "t": 12
   },
   "era|skyNames|EM": {
-   "v": 111,
+   "v": 165,
    "t": 12
   },
   "era|skyNames|ST": {
-   "v": 110,
+   "v": 158,
    "t": 12
   },
   "era|skyNames|MO": {
-   "v": 169,
+   "v": 237,
    "t": 12
   },
   "era|skyNames|NF": {
@@ -5994,27 +5994,27 @@
    "t": 12
   },
   "style|skyNames|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|skyNames|high-fantasy|shapes": {
-   "v": 37,
+   "v": 53,
    "t": 4
   },
   "style|skyNames|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|skyNames|contemporary-fantasy|shapes": {
-   "v": 37,
+   "v": 53,
    "t": 4
   },
   "style|skyNames|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|skyNames|space-opera|shapes": {
-   "v": 37,
+   "v": 53,
    "t": 4
   },
   "tone|skyNames|grand": {
@@ -6275,110 +6275,110 @@
    "v": 1
   },
   "culture|mountainNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mountainNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|turkic|profile": {
    "v": 0
   },
   "culture|mountainNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mountainNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|mongol|profile": {
    "v": 0
   },
   "culture|mountainNames|steppe|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|mountainNames|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|mountainNames|steppe|profile": {
    "v": 1
   },
   "culture|mountainNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mountainNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|arabic|profile": {
    "v": 0
   },
   "culture|mountainNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mountainNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|persian|profile": {
    "v": 0
   },
   "culture|mountainNames|arabic-persian|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|mountainNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|mountainNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|mountainNames|egyptian|words": {
-   "v": 3,
+   "v": 33,
    "t": 30
   },
   "culture|mountainNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|egyptian|profile": {
    "v": 1
   },
   "culture|mountainNames|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|mountainNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|ethiopian|profile": {
    "v": 1
   },
   "culture|mountainNames|bantu|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|mountainNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|bantu|profile": {
    "v": 1
   },
   "culture|mountainNames|west-african|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|mountainNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mountainNames|west-african|profile": {
@@ -6482,23 +6482,23 @@
    "v": 0
   },
   "era|mountainNames|AN": {
-   "v": 178,
+   "v": 253,
    "t": 12
   },
   "era|mountainNames|MD": {
-   "v": 169,
+   "v": 241,
    "t": 12
   },
   "era|mountainNames|EM": {
-   "v": 281,
+   "v": 407,
    "t": 12
   },
   "era|mountainNames|ST": {
-   "v": 281,
+   "v": 407,
    "t": 12
   },
   "era|mountainNames|MO": {
-   "v": 281,
+   "v": 407,
    "t": 12
   },
   "era|mountainNames|NF": {
@@ -6510,7 +6510,7 @@
    "t": 12
   },
   "style|mountainNames|high-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|mountainNames|high-fantasy|shapes": {
@@ -6518,7 +6518,7 @@
    "t": 4
   },
   "style|mountainNames|contemporary-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|mountainNames|contemporary-fantasy|shapes": {
@@ -6526,7 +6526,7 @@
    "t": 4
   },
   "style|mountainNames|space-opera|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|mountainNames|space-opera|shapes": {
@@ -6914,110 +6914,110 @@
    "v": 1
   },
   "culture|forestNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|turkic|profile": {
    "v": 0
   },
   "culture|forestNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|mongol|profile": {
    "v": 0
   },
   "culture|forestNames|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|forestNames|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|forestNames|steppe|profile": {
    "v": 1
   },
   "culture|forestNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|arabic|profile": {
    "v": 0
   },
   "culture|forestNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|persian|profile": {
    "v": 0
   },
   "culture|forestNames|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|forestNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|forestNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|forestNames|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|egyptian|profile": {
    "v": 1
   },
   "culture|forestNames|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|forestNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|ethiopian|profile": {
    "v": 1
   },
   "culture|forestNames|bantu|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|forestNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|bantu|profile": {
    "v": 1
   },
   "culture|forestNames|west-african|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|forestNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|forestNames|west-african|profile": {
@@ -7121,23 +7121,23 @@
    "v": 0
   },
   "era|forestNames|AN": {
-   "v": 176,
+   "v": 251,
    "t": 12
   },
   "era|forestNames|MD": {
-   "v": 180,
+   "v": 252,
    "t": 12
   },
   "era|forestNames|EM": {
-   "v": 301,
+   "v": 427,
    "t": 12
   },
   "era|forestNames|ST": {
-   "v": 301,
+   "v": 427,
    "t": 12
   },
   "era|forestNames|MO": {
-   "v": 301,
+   "v": 427,
    "t": 12
   },
   "era|forestNames|NF": {
@@ -7149,7 +7149,7 @@
    "t": 12
   },
   "style|forestNames|high-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|forestNames|high-fantasy|shapes": {
@@ -7157,7 +7157,7 @@
    "t": 4
   },
   "style|forestNames|contemporary-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|forestNames|contemporary-fantasy|shapes": {
@@ -7165,7 +7165,7 @@
    "t": 4
   },
   "style|forestNames|space-opera|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|forestNames|space-opera|shapes": {
@@ -7523,110 +7523,110 @@
    "v": 1
   },
   "culture|desertNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|desertNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|desertNames|turkic|profile": {
    "v": 0
   },
   "culture|desertNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|desertNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|desertNames|mongol|profile": {
    "v": 0
   },
   "culture|desertNames|steppe|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|desertNames|steppe|shapes": {
-   "v": 1,
+   "v": 5,
    "t": 4
   },
   "culture|desertNames|steppe|profile": {
    "v": 1
   },
   "culture|desertNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|desertNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|desertNames|arabic|profile": {
    "v": 0
   },
   "culture|desertNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|desertNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|desertNames|persian|profile": {
    "v": 0
   },
   "culture|desertNames|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|desertNames|arabic-persian|shapes": {
-   "v": 2,
+   "v": 6,
    "t": 4
   },
   "culture|desertNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|desertNames|egyptian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|desertNames|egyptian|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|desertNames|egyptian|profile": {
    "v": 1
   },
   "culture|desertNames|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|desertNames|ethiopian|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|desertNames|ethiopian|profile": {
    "v": 1
   },
   "culture|desertNames|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|desertNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|desertNames|bantu|profile": {
    "v": 1
   },
   "culture|desertNames|west-african|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|desertNames|west-african|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 10
   },
   "culture|desertNames|west-african|profile": {
@@ -7730,23 +7730,23 @@
    "v": 0
   },
   "era|desertNames|AN": {
-   "v": 10,
+   "v": 85,
    "t": 12
   },
   "era|desertNames|MD": {
-   "v": 11,
+   "v": 83,
    "t": 12
   },
   "era|desertNames|EM": {
-   "v": 21,
+   "v": 147,
    "t": 12
   },
   "era|desertNames|ST": {
-   "v": 21,
+   "v": 147,
    "t": 12
   },
   "era|desertNames|MO": {
-   "v": 21,
+   "v": 147,
    "t": 12
   },
   "era|desertNames|NF": {
@@ -7758,7 +7758,7 @@
    "t": 12
   },
   "style|desertNames|high-fantasy|words": {
-   "v": 22,
+   "v": 52,
    "t": 16
   },
   "style|desertNames|high-fantasy|shapes": {
@@ -7766,7 +7766,7 @@
    "t": 4
   },
   "style|desertNames|contemporary-fantasy|words": {
-   "v": 22,
+   "v": 52,
    "t": 16
   },
   "style|desertNames|contemporary-fantasy|shapes": {
@@ -7774,7 +7774,7 @@
    "t": 4
   },
   "style|desertNames|space-opera|words": {
-   "v": 22,
+   "v": 52,
    "t": 16
   },
   "style|desertNames|space-opera|shapes": {
@@ -8070,110 +8070,110 @@
    "v": 1
   },
   "culture|moorNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|turkic|profile": {
    "v": 0
   },
   "culture|moorNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|mongol|profile": {
    "v": 0
   },
   "culture|moorNames|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|moorNames|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|moorNames|steppe|profile": {
    "v": 1
   },
   "culture|moorNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|arabic|profile": {
    "v": 0
   },
   "culture|moorNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|persian|profile": {
    "v": 0
   },
   "culture|moorNames|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|moorNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|moorNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|moorNames|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|egyptian|profile": {
    "v": 1
   },
   "culture|moorNames|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|ethiopian|profile": {
    "v": 1
   },
   "culture|moorNames|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|bantu|profile": {
    "v": 1
   },
   "culture|moorNames|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|moorNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|moorNames|west-african|profile": {
@@ -8277,23 +8277,23 @@
    "v": 0
   },
   "era|moorNames|AN": {
-   "v": 175,
+   "v": 250,
    "t": 12
   },
   "era|moorNames|MD": {
-   "v": 166,
+   "v": 238,
    "t": 12
   },
   "era|moorNames|EM": {
-   "v": 279,
+   "v": 405,
    "t": 12
   },
   "era|moorNames|ST": {
-   "v": 279,
+   "v": 405,
    "t": 12
   },
   "era|moorNames|MO": {
-   "v": 279,
+   "v": 405,
    "t": 12
   },
   "era|moorNames|NF": {
@@ -8305,7 +8305,7 @@
    "t": 12
   },
   "style|moorNames|high-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|moorNames|high-fantasy|shapes": {
@@ -8313,7 +8313,7 @@
    "t": 4
   },
   "style|moorNames|contemporary-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|moorNames|contemporary-fantasy|shapes": {
@@ -8321,7 +8321,7 @@
    "t": 4
   },
   "style|moorNames|space-opera|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|moorNames|space-opera|shapes": {
@@ -8697,110 +8697,110 @@
    "v": 1
   },
   "culture|wetlandNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|turkic|profile": {
    "v": 0
   },
   "culture|wetlandNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|mongol|profile": {
    "v": 0
   },
   "culture|wetlandNames|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|wetlandNames|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|wetlandNames|steppe|profile": {
    "v": 1
   },
   "culture|wetlandNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|arabic|profile": {
    "v": 0
   },
   "culture|wetlandNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|persian|profile": {
    "v": 0
   },
   "culture|wetlandNames|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|wetlandNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|wetlandNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|wetlandNames|egyptian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|wetlandNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|egyptian|profile": {
    "v": 1
   },
   "culture|wetlandNames|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|ethiopian|profile": {
    "v": 1
   },
   "culture|wetlandNames|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|bantu|profile": {
    "v": 1
   },
   "culture|wetlandNames|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|wetlandNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|wetlandNames|west-african|profile": {
@@ -8904,23 +8904,23 @@
    "v": 0
   },
   "era|wetlandNames|AN": {
-   "v": 178,
+   "v": 253,
    "t": 12
   },
   "era|wetlandNames|MD": {
-   "v": 166,
+   "v": 238,
    "t": 12
   },
   "era|wetlandNames|EM": {
-   "v": 280,
+   "v": 406,
    "t": 12
   },
   "era|wetlandNames|ST": {
-   "v": 280,
+   "v": 406,
    "t": 12
   },
   "era|wetlandNames|MO": {
-   "v": 280,
+   "v": 406,
    "t": 12
   },
   "era|wetlandNames|NF": {
@@ -8932,7 +8932,7 @@
    "t": 12
   },
   "style|wetlandNames|high-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|wetlandNames|high-fantasy|shapes": {
@@ -8940,7 +8940,7 @@
    "t": 4
   },
   "style|wetlandNames|contemporary-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|wetlandNames|contemporary-fantasy|shapes": {
@@ -8948,7 +8948,7 @@
    "t": 4
   },
   "style|wetlandNames|space-opera|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|wetlandNames|space-opera|shapes": {
@@ -9328,110 +9328,110 @@
    "v": 1
   },
   "culture|grasslandNames|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|turkic|profile": {
    "v": 0
   },
   "culture|grasslandNames|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|mongol|profile": {
    "v": 0
   },
   "culture|grasslandNames|steppe|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|grasslandNames|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|grasslandNames|steppe|profile": {
    "v": 1
   },
   "culture|grasslandNames|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|arabic|profile": {
    "v": 0
   },
   "culture|grasslandNames|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|persian|profile": {
    "v": 0
   },
   "culture|grasslandNames|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|grasslandNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|grasslandNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|grasslandNames|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|egyptian|profile": {
    "v": 1
   },
   "culture|grasslandNames|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|ethiopian|profile": {
    "v": 1
   },
   "culture|grasslandNames|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|bantu|profile": {
    "v": 1
   },
   "culture|grasslandNames|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|grasslandNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|grasslandNames|west-african|profile": {
@@ -9535,23 +9535,23 @@
    "v": 0
   },
   "era|grasslandNames|AN": {
-   "v": 175,
+   "v": 250,
    "t": 12
   },
   "era|grasslandNames|MD": {
-   "v": 166,
+   "v": 238,
    "t": 12
   },
   "era|grasslandNames|EM": {
-   "v": 287,
+   "v": 413,
    "t": 12
   },
   "era|grasslandNames|ST": {
-   "v": 287,
+   "v": 413,
    "t": 12
   },
   "era|grasslandNames|MO": {
-   "v": 287,
+   "v": 413,
    "t": 12
   },
   "era|grasslandNames|NF": {
@@ -9563,7 +9563,7 @@
    "t": 12
   },
   "style|grasslandNames|high-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|grasslandNames|high-fantasy|shapes": {
@@ -9571,7 +9571,7 @@
    "t": 4
   },
   "style|grasslandNames|contemporary-fantasy|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|grasslandNames|contemporary-fantasy|shapes": {
@@ -9579,7 +9579,7 @@
    "t": 4
   },
   "style|grasslandNames|space-opera|words": {
-   "v": 79,
+   "v": 109,
    "t": 16
   },
   "style|grasslandNames|space-opera|shapes": {
@@ -9959,110 +9959,110 @@
    "v": 1
   },
   "culture|lands|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|turkic|profile": {
    "v": 0
   },
   "culture|lands|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|mongol|profile": {
    "v": 0
   },
   "culture|lands|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|lands|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|lands|steppe|profile": {
    "v": 1
   },
   "culture|lands|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|arabic|profile": {
    "v": 0
   },
   "culture|lands|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|persian|profile": {
    "v": 0
   },
   "culture|lands|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|lands|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|lands|arabic-persian|profile": {
    "v": 1
   },
   "culture|lands|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|egyptian|profile": {
    "v": 1
   },
   "culture|lands|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|ethiopian|profile": {
    "v": 1
   },
   "culture|lands|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|bantu|profile": {
    "v": 1
   },
   "culture|lands|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|lands|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|lands|west-african|profile": {
@@ -10166,23 +10166,23 @@
    "v": 0
   },
   "era|lands|AN": {
-   "v": 174,
+   "v": 249,
    "t": 12
   },
   "era|lands|MD": {
-   "v": 162,
+   "v": 234,
    "t": 12
   },
   "era|lands|EM": {
-   "v": 281,
+   "v": 407,
    "t": 12
   },
   "era|lands|ST": {
-   "v": 281,
+   "v": 407,
    "t": 12
   },
   "era|lands|MO": {
-   "v": 281,
+   "v": 407,
    "t": 12
   },
   "era|lands|NF": {
@@ -10194,7 +10194,7 @@
    "t": 12
   },
   "style|lands|high-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|lands|high-fantasy|shapes": {
@@ -10202,7 +10202,7 @@
    "t": 4
   },
   "style|lands|contemporary-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|lands|contemporary-fantasy|shapes": {
@@ -10210,7 +10210,7 @@
    "t": 4
   },
   "style|lands|space-opera|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|lands|space-opera|shapes": {
@@ -10574,110 +10574,110 @@
    "v": 1
   },
   "culture|riversInland|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|turkic|profile": {
    "v": 0
   },
   "culture|riversInland|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|mongol|profile": {
    "v": 0
   },
   "culture|riversInland|steppe|words": {
-   "v": 2,
+   "v": 14,
    "t": 12
   },
   "culture|riversInland|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|riversInland|steppe|profile": {
    "v": 1
   },
   "culture|riversInland|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|arabic|profile": {
    "v": 0
   },
   "culture|riversInland|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|persian|profile": {
    "v": 0
   },
   "culture|riversInland|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|riversInland|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|riversInland|arabic-persian|profile": {
    "v": 1
   },
   "culture|riversInland|egyptian|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|egyptian|profile": {
    "v": 1
   },
   "culture|riversInland|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|riversInland|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|ethiopian|profile": {
    "v": 1
   },
   "culture|riversInland|bantu|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|riversInland|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|bantu|profile": {
    "v": 1
   },
   "culture|riversInland|west-african|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|riversInland|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|riversInland|west-african|profile": {
@@ -10781,23 +10781,23 @@
    "v": 0
   },
   "era|riversInland|AN": {
-   "v": 177,
+   "v": 252,
    "t": 12
   },
   "era|riversInland|MD": {
-   "v": 167,
+   "v": 239,
    "t": 12
   },
   "era|riversInland|EM": {
-   "v": 280,
+   "v": 406,
    "t": 12
   },
   "era|riversInland|ST": {
-   "v": 280,
+   "v": 406,
    "t": 12
   },
   "era|riversInland|MO": {
-   "v": 280,
+   "v": 406,
    "t": 12
   },
   "era|riversInland|NF": {
@@ -10809,7 +10809,7 @@
    "t": 12
   },
   "style|riversInland|high-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|riversInland|high-fantasy|shapes": {
@@ -10817,7 +10817,7 @@
    "t": 4
   },
   "style|riversInland|contemporary-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|riversInland|contemporary-fantasy|shapes": {
@@ -10825,7 +10825,7 @@
    "t": 4
   },
   "style|riversInland|space-opera|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|riversInland|space-opera|shapes": {
@@ -11196,110 +11196,110 @@
    "v": 1
   },
   "culture|hillsValleys|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|turkic|profile": {
    "v": 0
   },
   "culture|hillsValleys|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|mongol|profile": {
    "v": 0
   },
   "culture|hillsValleys|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|hillsValleys|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|hillsValleys|steppe|profile": {
    "v": 1
   },
   "culture|hillsValleys|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|arabic|profile": {
    "v": 0
   },
   "culture|hillsValleys|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|persian|profile": {
    "v": 0
   },
   "culture|hillsValleys|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|hillsValleys|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|hillsValleys|arabic-persian|profile": {
    "v": 1
   },
   "culture|hillsValleys|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|egyptian|profile": {
    "v": 1
   },
   "culture|hillsValleys|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|ethiopian|profile": {
    "v": 1
   },
   "culture|hillsValleys|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|bantu|profile": {
    "v": 1
   },
   "culture|hillsValleys|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|hillsValleys|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|hillsValleys|west-african|profile": {
@@ -11403,23 +11403,23 @@
    "v": 0
   },
   "era|hillsValleys|AN": {
-   "v": 174,
+   "v": 249,
    "t": 12
   },
   "era|hillsValleys|MD": {
-   "v": 162,
+   "v": 234,
    "t": 12
   },
   "era|hillsValleys|EM": {
-   "v": 276,
+   "v": 402,
    "t": 12
   },
   "era|hillsValleys|ST": {
-   "v": 276,
+   "v": 402,
    "t": 12
   },
   "era|hillsValleys|MO": {
-   "v": 276,
+   "v": 402,
    "t": 12
   },
   "era|hillsValleys|NF": {
@@ -11431,7 +11431,7 @@
    "t": 12
   },
   "style|hillsValleys|high-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|hillsValleys|high-fantasy|shapes": {
@@ -11439,7 +11439,7 @@
    "t": 4
   },
   "style|hillsValleys|contemporary-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|hillsValleys|contemporary-fantasy|shapes": {
@@ -11447,7 +11447,7 @@
    "t": 4
   },
   "style|hillsValleys|space-opera|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|hillsValleys|space-opera|shapes": {
@@ -11814,110 +11814,110 @@
    "v": 1
   },
   "culture|farmland|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|turkic|profile": {
    "v": 0
   },
   "culture|farmland|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|mongol|profile": {
    "v": 0
   },
   "culture|farmland|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|farmland|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|farmland|steppe|profile": {
    "v": 1
   },
   "culture|farmland|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|arabic|profile": {
    "v": 0
   },
   "culture|farmland|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|persian|profile": {
    "v": 0
   },
   "culture|farmland|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|farmland|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|farmland|arabic-persian|profile": {
    "v": 1
   },
   "culture|farmland|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|egyptian|profile": {
    "v": 1
   },
   "culture|farmland|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|ethiopian|profile": {
    "v": 1
   },
   "culture|farmland|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|bantu|profile": {
    "v": 1
   },
   "culture|farmland|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|farmland|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|farmland|west-african|profile": {
@@ -12021,23 +12021,23 @@
    "v": 0
   },
   "era|farmland|AN": {
-   "v": 174,
+   "v": 249,
    "t": 12
   },
   "era|farmland|MD": {
-   "v": 163,
+   "v": 235,
    "t": 12
   },
   "era|farmland|EM": {
-   "v": 278,
+   "v": 404,
    "t": 12
   },
   "era|farmland|ST": {
-   "v": 278,
+   "v": 404,
    "t": 12
   },
   "era|farmland|MO": {
-   "v": 278,
+   "v": 404,
    "t": 12
   },
   "era|farmland|NF": {
@@ -12049,7 +12049,7 @@
    "t": 12
   },
   "style|farmland|high-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|farmland|high-fantasy|shapes": {
@@ -12057,7 +12057,7 @@
    "t": 4
   },
   "style|farmland|contemporary-fantasy|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|farmland|contemporary-fantasy|shapes": {
@@ -12065,7 +12065,7 @@
    "t": 4
   },
   "style|farmland|space-opera|words": {
-   "v": 72,
+   "v": 102,
    "t": 16
   },
   "style|farmland|space-opera|shapes": {
@@ -12936,110 +12936,110 @@
    "v": 1
   },
   "culture|seasLakes|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|turkic|profile": {
    "v": 0
   },
   "culture|seasLakes|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|mongol|profile": {
    "v": 0
   },
   "culture|seasLakes|steppe|words": {
-   "v": 2,
+   "v": 14,
    "t": 12
   },
   "culture|seasLakes|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|seasLakes|steppe|profile": {
    "v": 1
   },
   "culture|seasLakes|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|arabic|profile": {
    "v": 0
   },
   "culture|seasLakes|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|persian|profile": {
    "v": 0
   },
   "culture|seasLakes|arabic-persian|words": {
-   "v": 1,
+   "v": 13,
    "t": 12
   },
   "culture|seasLakes|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|seasLakes|arabic-persian|profile": {
    "v": 1
   },
   "culture|seasLakes|egyptian|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|seasLakes|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|egyptian|profile": {
    "v": 1
   },
   "culture|seasLakes|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seasLakes|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|ethiopian|profile": {
    "v": 1
   },
   "culture|seasLakes|bantu|words": {
-   "v": 2,
+   "v": 32,
    "t": 30
   },
   "culture|seasLakes|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|bantu|profile": {
    "v": 1
   },
   "culture|seasLakes|west-african|words": {
-   "v": 1,
+   "v": 31,
    "t": 30
   },
   "culture|seasLakes|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seasLakes|west-african|profile": {
@@ -13143,23 +13143,23 @@
    "v": 0
   },
   "era|seasLakes|AN": {
-   "v": 184,
+   "v": 259,
    "t": 12
   },
   "era|seasLakes|MD": {
-   "v": 169,
+   "v": 241,
    "t": 12
   },
   "era|seasLakes|EM": {
-   "v": 276,
+   "v": 402,
    "t": 12
   },
   "era|seasLakes|ST": {
-   "v": 276,
+   "v": 402,
    "t": 12
   },
   "era|seasLakes|MO": {
-   "v": 276,
+   "v": 402,
    "t": 12
   },
   "era|seasLakes|NF": {
@@ -13171,7 +13171,7 @@
    "t": 12
   },
   "style|seasLakes|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|seasLakes|high-fantasy|shapes": {
@@ -13179,7 +13179,7 @@
    "t": 4
   },
   "style|seasLakes|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|seasLakes|contemporary-fantasy|shapes": {
@@ -13187,7 +13187,7 @@
    "t": 4
   },
   "style|seasLakes|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|seasLakes|space-opera|shapes": {
@@ -13551,110 +13551,110 @@
    "v": 1
   },
   "culture|coastsIslands|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|turkic|profile": {
    "v": 0
   },
   "culture|coastsIslands|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|mongol|profile": {
    "v": 0
   },
   "culture|coastsIslands|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|coastsIslands|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|coastsIslands|steppe|profile": {
    "v": 1
   },
   "culture|coastsIslands|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|arabic|profile": {
    "v": 0
   },
   "culture|coastsIslands|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|persian|profile": {
    "v": 0
   },
   "culture|coastsIslands|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|coastsIslands|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|coastsIslands|arabic-persian|profile": {
    "v": 1
   },
   "culture|coastsIslands|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|egyptian|profile": {
    "v": 1
   },
   "culture|coastsIslands|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|ethiopian|profile": {
    "v": 1
   },
   "culture|coastsIslands|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|bantu|profile": {
    "v": 1
   },
   "culture|coastsIslands|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|coastsIslands|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|coastsIslands|west-african|profile": {
@@ -13758,23 +13758,23 @@
    "v": 0
   },
   "era|coastsIslands|AN": {
-   "v": 175,
+   "v": 250,
    "t": 12
   },
   "era|coastsIslands|MD": {
-   "v": 162,
+   "v": 234,
    "t": 12
   },
   "era|coastsIslands|EM": {
-   "v": 278,
+   "v": 404,
    "t": 12
   },
   "era|coastsIslands|ST": {
-   "v": 278,
+   "v": 404,
    "t": 12
   },
   "era|coastsIslands|MO": {
-   "v": 278,
+   "v": 404,
    "t": 12
   },
   "era|coastsIslands|NF": {
@@ -13786,7 +13786,7 @@
    "t": 12
   },
   "style|coastsIslands|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|coastsIslands|high-fantasy|shapes": {
@@ -13794,7 +13794,7 @@
    "t": 4
   },
   "style|coastsIslands|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|coastsIslands|contemporary-fantasy|shapes": {
@@ -13802,7 +13802,7 @@
    "t": 4
   },
   "style|coastsIslands|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|coastsIslands|space-opera|shapes": {
@@ -14166,110 +14166,110 @@
    "v": 1
   },
   "culture|seaCharts|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|turkic|profile": {
    "v": 0
   },
   "culture|seaCharts|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|mongol|profile": {
    "v": 0
   },
   "culture|seaCharts|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|seaCharts|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|seaCharts|steppe|profile": {
    "v": 1
   },
   "culture|seaCharts|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|arabic|profile": {
    "v": 0
   },
   "culture|seaCharts|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|persian|profile": {
    "v": 0
   },
   "culture|seaCharts|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|seaCharts|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|seaCharts|arabic-persian|profile": {
    "v": 1
   },
   "culture|seaCharts|egyptian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|egyptian|profile": {
    "v": 1
   },
   "culture|seaCharts|ethiopian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|ethiopian|profile": {
    "v": 1
   },
   "culture|seaCharts|bantu|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|bantu|profile": {
    "v": 1
   },
   "culture|seaCharts|west-african|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|seaCharts|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|seaCharts|west-african|profile": {
@@ -14373,23 +14373,23 @@
    "v": 0
   },
   "era|seaCharts|AN": {
-   "v": 175,
+   "v": 250,
    "t": 12
   },
   "era|seaCharts|MD": {
-   "v": 165,
+   "v": 237,
    "t": 12
   },
   "era|seaCharts|EM": {
-   "v": 297,
+   "v": 423,
    "t": 12
   },
   "era|seaCharts|ST": {
-   "v": 297,
+   "v": 423,
    "t": 12
   },
   "era|seaCharts|MO": {
-   "v": 297,
+   "v": 423,
    "t": 12
   },
   "era|seaCharts|NF": {
@@ -14401,7 +14401,7 @@
    "t": 12
   },
   "style|seaCharts|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|seaCharts|high-fantasy|shapes": {
@@ -14409,7 +14409,7 @@
    "t": 4
   },
   "style|seaCharts|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|seaCharts|contemporary-fantasy|shapes": {
@@ -14417,7 +14417,7 @@
    "t": 4
   },
   "style|seaCharts|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|seaCharts|space-opera|shapes": {
@@ -15293,110 +15293,110 @@
    "v": 0
   },
   "culture|epithets|turkic|words": {
-   "v": 0,
+   "v": 47,
    "t": 30
   },
   "culture|epithets|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|turkic|profile": {
    "v": 0
   },
   "culture|epithets|mongol|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|epithets|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|mongol|profile": {
    "v": 0
   },
   "culture|epithets|steppe|words": {
-   "v": 13,
+   "v": 28,
    "t": 12
   },
   "culture|epithets|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|epithets|steppe|profile": {
    "v": 0
   },
   "culture|epithets|arabic|words": {
-   "v": 0,
+   "v": 48,
    "t": 30
   },
   "culture|epithets|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|arabic|profile": {
    "v": 0
   },
   "culture|epithets|persian|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|epithets|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|persian|profile": {
    "v": 0
   },
   "culture|epithets|arabic-persian|words": {
-   "v": 8,
+   "v": 23,
    "t": 12
   },
   "culture|epithets|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|epithets|arabic-persian|profile": {
    "v": 0
   },
   "culture|epithets|egyptian|words": {
-   "v": 6,
+   "v": 56,
    "t": 30
   },
   "culture|epithets|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|egyptian|profile": {
    "v": 0
   },
   "culture|epithets|ethiopian|words": {
-   "v": 3,
+   "v": 50,
    "t": 30
   },
   "culture|epithets|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|ethiopian|profile": {
    "v": 0
   },
   "culture|epithets|bantu|words": {
-   "v": 5,
+   "v": 57,
    "t": 30
   },
   "culture|epithets|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|bantu|profile": {
    "v": 0
   },
   "culture|epithets|west-african|words": {
-   "v": 4,
+   "v": 52,
    "t": 30
   },
   "culture|epithets|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|epithets|west-african|profile": {
@@ -15507,23 +15507,23 @@
    "v": 0
   },
   "era|epithets|AN": {
-   "v": 167,
+   "v": 228,
    "t": 12
   },
   "era|epithets|MD": {
-   "v": 212,
+   "v": 292,
    "t": 12
   },
   "era|epithets|EM": {
-   "v": 112,
+   "v": 164,
    "t": 12
   },
   "era|epithets|ST": {
-   "v": 110,
+   "v": 158,
    "t": 12
   },
   "era|epithets|MO": {
-   "v": 111,
+   "v": 162,
    "t": 12
   },
   "era|epithets|NF": {
@@ -15535,27 +15535,27 @@
    "t": 12
   },
   "style|epithets|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|epithets|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|epithets|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|epithets|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|epithets|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|epithets|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|epithets|grand": {
@@ -15843,110 +15843,110 @@
    "v": 0
   },
   "culture|titles|turkic|words": {
-   "v": 0,
+   "v": 45,
    "t": 30
   },
   "culture|titles|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|turkic|profile": {
    "v": 0
   },
   "culture|titles|mongol|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|titles|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|mongol|profile": {
    "v": 0
   },
   "culture|titles|steppe|words": {
-   "v": 6,
+   "v": 21,
    "t": 12
   },
   "culture|titles|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|titles|steppe|profile": {
    "v": 0
   },
   "culture|titles|arabic|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|titles|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|arabic|profile": {
    "v": 0
   },
   "culture|titles|persian|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|titles|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|persian|profile": {
    "v": 0
   },
   "culture|titles|arabic-persian|words": {
-   "v": 8,
+   "v": 23,
    "t": 12
   },
   "culture|titles|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|titles|arabic-persian|profile": {
    "v": 0
   },
   "culture|titles|egyptian|words": {
-   "v": 6,
+   "v": 55,
    "t": 30
   },
   "culture|titles|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|egyptian|profile": {
    "v": 0
   },
   "culture|titles|ethiopian|words": {
-   "v": 7,
+   "v": 58,
    "t": 30
   },
   "culture|titles|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|ethiopian|profile": {
    "v": 0
   },
   "culture|titles|bantu|words": {
-   "v": 6,
+   "v": 52,
    "t": 30
   },
   "culture|titles|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|bantu|profile": {
    "v": 0
   },
   "culture|titles|west-african|words": {
-   "v": 8,
+   "v": 53,
    "t": 30
   },
   "culture|titles|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|titles|west-african|profile": {
@@ -16057,23 +16057,23 @@
    "v": 0
   },
   "era|titles|AN": {
-   "v": 113,
+   "v": 162,
    "t": 12
   },
   "era|titles|MD": {
-   "v": 284,
+   "v": 378,
    "t": 12
   },
   "era|titles|EM": {
-   "v": 206,
+   "v": 278,
    "t": 12
   },
   "era|titles|ST": {
-   "v": 110,
+   "v": 161,
    "t": 12
   },
   "era|titles|MO": {
-   "v": 109,
+   "v": 160,
    "t": 12
   },
   "era|titles|NF": {
@@ -16085,27 +16085,27 @@
    "t": 12
   },
   "style|titles|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|titles|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|titles|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|titles|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|titles|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|titles|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|titles|grand": {
@@ -16369,110 +16369,110 @@
    "v": 0
   },
   "culture|familyNames|turkic|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|familyNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|familyNames|turkic|profile": {
    "v": 0
   },
   "culture|familyNames|mongol|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|familyNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|familyNames|mongol|profile": {
    "v": 0
   },
   "culture|familyNames|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|familyNames|steppe|shapes": {
-   "v": 6,
+   "v": 10,
    "t": 4
   },
   "culture|familyNames|steppe|profile": {
    "v": 0
   },
   "culture|familyNames|arabic|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|familyNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|familyNames|arabic|profile": {
    "v": 0
   },
   "culture|familyNames|persian|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|familyNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|familyNames|persian|profile": {
    "v": 0
   },
   "culture|familyNames|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|familyNames|arabic-persian|shapes": {
-   "v": 12,
+   "v": 16,
    "t": 4
   },
   "culture|familyNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|familyNames|egyptian|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|familyNames|egyptian|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|familyNames|egyptian|profile": {
    "v": 0
   },
   "culture|familyNames|ethiopian|words": {
-   "v": 0,
+   "v": 53,
    "t": 30
   },
   "culture|familyNames|ethiopian|shapes": {
-   "v": 3,
+   "v": 13,
    "t": 10
   },
   "culture|familyNames|ethiopian|profile": {
    "v": 0
   },
   "culture|familyNames|bantu|words": {
-   "v": 0,
+   "v": 50,
    "t": 30
   },
   "culture|familyNames|bantu|shapes": {
-   "v": 4,
+   "v": 14,
    "t": 10
   },
   "culture|familyNames|bantu|profile": {
    "v": 0
   },
   "culture|familyNames|west-african|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|familyNames|west-african|shapes": {
-   "v": 5,
+   "v": 15,
    "t": 10
   },
   "culture|familyNames|west-african|profile": {
@@ -16583,23 +16583,23 @@
    "v": 0
   },
   "era|familyNames|AN": {
-   "v": 113,
+   "v": 161,
    "t": 12
   },
   "era|familyNames|MD": {
-   "v": 240,
+   "v": 340,
    "t": 12
   },
   "era|familyNames|EM": {
-   "v": 163,
+   "v": 231,
    "t": 12
   },
   "era|familyNames|ST": {
-   "v": 109,
+   "v": 157,
    "t": 12
   },
   "era|familyNames|MO": {
-   "v": 108,
+   "v": 156,
    "t": 12
   },
   "era|familyNames|NF": {
@@ -16611,27 +16611,27 @@
    "t": 12
   },
   "style|familyNames|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|familyNames|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|familyNames|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|familyNames|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|familyNames|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|familyNames|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|familyNames|grand": {
@@ -16907,110 +16907,110 @@
    "v": 1
   },
   "culture|armsNames|turkic|words": {
-   "v": 0,
+   "v": 54,
    "t": 30
   },
   "culture|armsNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|turkic|profile": {
    "v": 0
   },
   "culture|armsNames|mongol|words": {
-   "v": 0,
+   "v": 54,
    "t": 30
   },
   "culture|armsNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|mongol|profile": {
    "v": 0
   },
   "culture|armsNames|steppe|words": {
-   "v": 3,
+   "v": 18,
    "t": 12
   },
   "culture|armsNames|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|armsNames|steppe|profile": {
    "v": 1
   },
   "culture|armsNames|arabic|words": {
-   "v": 0,
+   "v": 54,
    "t": 30
   },
   "culture|armsNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|arabic|profile": {
    "v": 0
   },
   "culture|armsNames|persian|words": {
-   "v": 0,
+   "v": 55,
    "t": 30
   },
   "culture|armsNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|persian|profile": {
    "v": 0
   },
   "culture|armsNames|arabic-persian|words": {
-   "v": 2,
+   "v": 17,
    "t": 12
   },
   "culture|armsNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|armsNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|armsNames|egyptian|words": {
-   "v": 0,
+   "v": 55,
    "t": 30
   },
   "culture|armsNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|egyptian|profile": {
    "v": 1
   },
   "culture|armsNames|ethiopian|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|armsNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|ethiopian|profile": {
    "v": 1
   },
   "culture|armsNames|bantu|words": {
-   "v": 3,
+   "v": 54,
    "t": 30
   },
   "culture|armsNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|bantu|profile": {
    "v": 1
   },
   "culture|armsNames|west-african|words": {
-   "v": 3,
+   "v": 54,
    "t": 30
   },
   "culture|armsNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|armsNames|west-african|profile": {
@@ -17121,23 +17121,23 @@
    "v": 0
   },
   "era|armsNames|AN": {
-   "v": 123,
+   "v": 172,
    "t": 12
   },
   "era|armsNames|MD": {
-   "v": 288,
+   "v": 391,
    "t": 12
   },
   "era|armsNames|EM": {
-   "v": 357,
+   "v": 498,
    "t": 12
   },
   "era|armsNames|ST": {
-   "v": 163,
+   "v": 237,
    "t": 12
   },
   "era|armsNames|MO": {
-   "v": 111,
+   "v": 159,
    "t": 12
   },
   "era|armsNames|NF": {
@@ -17149,27 +17149,27 @@
    "t": 12
   },
   "style|armsNames|high-fantasy|words": {
-   "v": 69,
+   "v": 99,
    "t": 16
   },
   "style|armsNames|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|armsNames|contemporary-fantasy|words": {
-   "v": 69,
+   "v": 99,
    "t": 16
   },
   "style|armsNames|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|armsNames|space-opera|words": {
-   "v": 69,
+   "v": 99,
    "t": 16
   },
   "style|armsNames|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|armsNames|grand": {
@@ -17461,110 +17461,110 @@
    "v": 1
   },
   "culture|treasureNames|turkic|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|treasureNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|turkic|profile": {
    "v": 0
   },
   "culture|treasureNames|mongol|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|treasureNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|mongol|profile": {
    "v": 0
   },
   "culture|treasureNames|steppe|words": {
-   "v": 3,
+   "v": 18,
    "t": 12
   },
   "culture|treasureNames|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|treasureNames|steppe|profile": {
    "v": 1
   },
   "culture|treasureNames|arabic|words": {
-   "v": 0,
+   "v": 50,
    "t": 30
   },
   "culture|treasureNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|arabic|profile": {
    "v": 0
   },
   "culture|treasureNames|persian|words": {
-   "v": 0,
+   "v": 52,
    "t": 30
   },
   "culture|treasureNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|persian|profile": {
    "v": 0
   },
   "culture|treasureNames|arabic-persian|words": {
-   "v": 2,
+   "v": 17,
    "t": 12
   },
   "culture|treasureNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|treasureNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|treasureNames|egyptian|words": {
-   "v": 1,
+   "v": 52,
    "t": 30
   },
   "culture|treasureNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|egyptian|profile": {
    "v": 1
   },
   "culture|treasureNames|ethiopian|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|treasureNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|ethiopian|profile": {
    "v": 1
   },
   "culture|treasureNames|bantu|words": {
-   "v": 3,
+   "v": 55,
    "t": 30
   },
   "culture|treasureNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|bantu|profile": {
    "v": 1
   },
   "culture|treasureNames|west-african|words": {
-   "v": 3,
+   "v": 50,
    "t": 30
   },
   "culture|treasureNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|treasureNames|west-african|profile": {
@@ -17675,23 +17675,23 @@
    "v": 0
   },
   "era|treasureNames|AN": {
-   "v": 129,
+   "v": 177,
    "t": 12
   },
   "era|treasureNames|MD": {
-   "v": 237,
+   "v": 332,
    "t": 12
   },
   "era|treasureNames|EM": {
-   "v": 186,
+   "v": 261,
    "t": 12
   },
   "era|treasureNames|ST": {
-   "v": 121,
+   "v": 169,
    "t": 12
   },
   "era|treasureNames|MO": {
-   "v": 125,
+   "v": 178,
    "t": 12
   },
   "era|treasureNames|NF": {
@@ -17703,27 +17703,27 @@
    "t": 12
   },
   "style|treasureNames|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|treasureNames|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|treasureNames|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|treasureNames|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|treasureNames|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|treasureNames|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|treasureNames|grand": {
@@ -18023,110 +18023,110 @@
    "v": 1
   },
   "culture|bookNames|turkic|words": {
-   "v": 0,
+   "v": 53,
    "t": 30
   },
   "culture|bookNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|turkic|profile": {
    "v": 0
   },
   "culture|bookNames|mongol|words": {
-   "v": 0,
+   "v": 51,
    "t": 30
   },
   "culture|bookNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|mongol|profile": {
    "v": 0
   },
   "culture|bookNames|steppe|words": {
-   "v": 3,
+   "v": 18,
    "t": 12
   },
   "culture|bookNames|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|bookNames|steppe|profile": {
    "v": 1
   },
   "culture|bookNames|arabic|words": {
-   "v": 0,
+   "v": 50,
    "t": 30
   },
   "culture|bookNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|arabic|profile": {
    "v": 0
   },
   "culture|bookNames|persian|words": {
-   "v": 0,
+   "v": 55,
    "t": 30
   },
   "culture|bookNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|persian|profile": {
    "v": 0
   },
   "culture|bookNames|arabic-persian|words": {
-   "v": 2,
+   "v": 17,
    "t": 12
   },
   "culture|bookNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|bookNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|bookNames|egyptian|words": {
-   "v": 0,
+   "v": 50,
    "t": 30
   },
   "culture|bookNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|egyptian|profile": {
    "v": 1
   },
   "culture|bookNames|ethiopian|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|bookNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|ethiopian|profile": {
    "v": 1
   },
   "culture|bookNames|bantu|words": {
-   "v": 3,
+   "v": 58,
    "t": 30
   },
   "culture|bookNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|bantu|profile": {
    "v": 1
   },
   "culture|bookNames|west-african|words": {
-   "v": 3,
+   "v": 56,
    "t": 30
   },
   "culture|bookNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|bookNames|west-african|profile": {
@@ -18237,23 +18237,23 @@
    "v": 0
   },
   "era|bookNames|AN": {
-   "v": 130,
+   "v": 185,
    "t": 12
   },
   "era|bookNames|MD": {
-   "v": 339,
+   "v": 453,
    "t": 12
   },
   "era|bookNames|EM": {
-   "v": 293,
+   "v": 375,
    "t": 12
   },
   "era|bookNames|ST": {
-   "v": 124,
+   "v": 172,
    "t": 12
   },
   "era|bookNames|MO": {
-   "v": 114,
+   "v": 162,
    "t": 12
   },
   "era|bookNames|NF": {
@@ -18265,27 +18265,27 @@
    "t": 12
   },
   "style|bookNames|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|bookNames|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|bookNames|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|bookNames|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|bookNames|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|bookNames|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|bookNames|grand": {
@@ -18569,110 +18569,110 @@
    "v": 1
   },
   "culture|realms|turkic|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|realms|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|turkic|profile": {
    "v": 0
   },
   "culture|realms|mongol|words": {
-   "v": 0,
+   "v": 48,
    "t": 30
   },
   "culture|realms|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|mongol|profile": {
    "v": 0
   },
   "culture|realms|steppe|words": {
-   "v": 8,
+   "v": 23,
    "t": 12
   },
   "culture|realms|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|realms|steppe|profile": {
    "v": 1
   },
   "culture|realms|arabic|words": {
-   "v": 0,
+   "v": 47,
    "t": 30
   },
   "culture|realms|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|arabic|profile": {
    "v": 0
   },
   "culture|realms|persian|words": {
-   "v": 0,
+   "v": 48,
    "t": 30
   },
   "culture|realms|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|persian|profile": {
    "v": 0
   },
   "culture|realms|arabic-persian|words": {
-   "v": 7,
+   "v": 22,
    "t": 12
   },
   "culture|realms|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|realms|arabic-persian|profile": {
    "v": 1
   },
   "culture|realms|egyptian|words": {
-   "v": 5,
+   "v": 51,
    "t": 30
   },
   "culture|realms|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|egyptian|profile": {
    "v": 1
   },
   "culture|realms|ethiopian|words": {
-   "v": 2,
+   "v": 50,
    "t": 30
   },
   "culture|realms|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|ethiopian|profile": {
    "v": 1
   },
   "culture|realms|bantu|words": {
-   "v": 2,
+   "v": 50,
    "t": 30
   },
   "culture|realms|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|bantu|profile": {
    "v": 1
   },
   "culture|realms|west-african|words": {
-   "v": 2,
+   "v": 50,
    "t": 30
   },
   "culture|realms|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|realms|west-african|profile": {
@@ -18783,15 +18783,15 @@
    "v": 0
   },
   "era|realms|AN": {
-   "v": 119,
+   "v": 170,
    "t": 12
   },
   "era|realms|MD": {
-   "v": 248,
+   "v": 335,
    "t": 12
   },
   "era|realms|EM": {
-   "v": 169,
+   "v": 223,
    "t": 12
   },
   "era|realms|ST": {
@@ -18799,7 +18799,7 @@
    "t": 12
   },
   "era|realms|MO": {
-   "v": 138,
+   "v": 188,
    "t": 12
   },
   "era|realms|NF": {
@@ -18811,27 +18811,27 @@
    "t": 12
   },
   "style|realms|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|realms|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|realms|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|realms|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|realms|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|realms|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|realms|grand": {
@@ -19115,110 +19115,110 @@
    "v": 1
   },
   "culture|peoplesTongues|turkic|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|peoplesTongues|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|turkic|profile": {
    "v": 0
   },
   "culture|peoplesTongues|mongol|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|peoplesTongues|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|mongol|profile": {
    "v": 0
   },
   "culture|peoplesTongues|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|peoplesTongues|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|peoplesTongues|steppe|profile": {
    "v": 1
   },
   "culture|peoplesTongues|arabic|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|peoplesTongues|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|arabic|profile": {
    "v": 0
   },
   "culture|peoplesTongues|persian|words": {
-   "v": 0,
+   "v": 48,
    "t": 30
   },
   "culture|peoplesTongues|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|persian|profile": {
    "v": 0
   },
   "culture|peoplesTongues|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|peoplesTongues|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|peoplesTongues|arabic-persian|profile": {
    "v": 1
   },
   "culture|peoplesTongues|egyptian|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|peoplesTongues|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|egyptian|profile": {
    "v": 1
   },
   "culture|peoplesTongues|ethiopian|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|peoplesTongues|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|ethiopian|profile": {
    "v": 1
   },
   "culture|peoplesTongues|bantu|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|peoplesTongues|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|bantu|profile": {
    "v": 1
   },
   "culture|peoplesTongues|west-african|words": {
-   "v": 0,
+   "v": 48,
    "t": 30
   },
   "culture|peoplesTongues|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|peoplesTongues|west-african|profile": {
@@ -19329,23 +19329,23 @@
    "v": 0
   },
   "era|peoplesTongues|AN": {
-   "v": 129,
+   "v": 183,
    "t": 12
   },
   "era|peoplesTongues|MD": {
-   "v": 134,
+   "v": 192,
    "t": 12
   },
   "era|peoplesTongues|EM": {
-   "v": 111,
+   "v": 160,
    "t": 12
   },
   "era|peoplesTongues|ST": {
-   "v": 111,
+   "v": 159,
    "t": 12
   },
   "era|peoplesTongues|MO": {
-   "v": 140,
+   "v": 208,
    "t": 12
   },
   "era|peoplesTongues|NF": {
@@ -19357,27 +19357,27 @@
    "t": 12
   },
   "style|peoplesTongues|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|peoplesTongues|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|peoplesTongues|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|peoplesTongues|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|peoplesTongues|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|peoplesTongues|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|peoplesTongues|grand": {
@@ -19629,110 +19629,110 @@
    "v": 0
   },
   "culture|deityNames|turkic|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|deityNames|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|turkic|profile": {
    "v": 0
   },
   "culture|deityNames|mongol|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|deityNames|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|mongol|profile": {
    "v": 0
   },
   "culture|deityNames|steppe|words": {
-   "v": 10,
+   "v": 25,
    "t": 12
   },
   "culture|deityNames|steppe|shapes": {
-   "v": 2,
+   "v": 6,
    "t": 4
   },
   "culture|deityNames|steppe|profile": {
    "v": 1
   },
   "culture|deityNames|arabic|words": {
-   "v": 0,
+   "v": 45,
    "t": 30
   },
   "culture|deityNames|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|arabic|profile": {
    "v": 0
   },
   "culture|deityNames|persian|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|deityNames|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|persian|profile": {
    "v": 0
   },
   "culture|deityNames|arabic-persian|words": {
-   "v": 13,
+   "v": 28,
    "t": 12
   },
   "culture|deityNames|arabic-persian|shapes": {
-   "v": 1,
+   "v": 5,
    "t": 4
   },
   "culture|deityNames|arabic-persian|profile": {
    "v": 1
   },
   "culture|deityNames|egyptian|words": {
-   "v": 11,
+   "v": 57,
    "t": 30
   },
   "culture|deityNames|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|egyptian|profile": {
    "v": 1
   },
   "culture|deityNames|ethiopian|words": {
-   "v": 10,
+   "v": 55,
    "t": 30
   },
   "culture|deityNames|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|ethiopian|profile": {
    "v": 0
   },
   "culture|deityNames|bantu|words": {
-   "v": 18,
+   "v": 64,
    "t": 30
   },
   "culture|deityNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|bantu|profile": {
    "v": 1
   },
   "culture|deityNames|west-african|words": {
-   "v": 15,
+   "v": 61,
    "t": 30
   },
   "culture|deityNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|deityNames|west-african|profile": {
@@ -19843,23 +19843,23 @@
    "v": 0
   },
   "era|deityNames|AN": {
-   "v": 108,
+   "v": 156,
    "t": 12
   },
   "era|deityNames|MD": {
-   "v": 108,
+   "v": 156,
    "t": 12
   },
   "era|deityNames|EM": {
-   "v": 108,
+   "v": 156,
    "t": 12
   },
   "era|deityNames|ST": {
-   "v": 111,
+   "v": 159,
    "t": 12
   },
   "era|deityNames|MO": {
-   "v": 114,
+   "v": 168,
    "t": 12
   },
   "era|deityNames|NF": {
@@ -19879,27 +19879,27 @@
    "t": 4
   },
   "style|deityNames|high-fantasy|words": {
-   "v": 67,
+   "v": 97,
    "t": 16
   },
   "style|deityNames|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|deityNames|contemporary-fantasy|words": {
-   "v": 67,
+   "v": 97,
    "t": 16
   },
   "style|deityNames|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|deityNames|space-opera|words": {
-   "v": 67,
+   "v": 97,
    "t": 16
   },
   "style|deityNames|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|deityNames|grand": {
@@ -20159,110 +20159,110 @@
    "v": 0
   },
   "culture|sacredPlaces|turkic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|turkic|profile": {
    "v": 0
   },
   "culture|sacredPlaces|mongol|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|mongol|profile": {
    "v": 0
   },
   "culture|sacredPlaces|steppe|words": {
-   "v": 10,
+   "v": 22,
    "t": 12
   },
   "culture|sacredPlaces|steppe|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|sacredPlaces|steppe|profile": {
    "v": 1
   },
   "culture|sacredPlaces|arabic|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|arabic|profile": {
    "v": 0
   },
   "culture|sacredPlaces|persian|words": {
-   "v": 0,
+   "v": 30,
    "t": 30
   },
   "culture|sacredPlaces|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|persian|profile": {
    "v": 0
   },
   "culture|sacredPlaces|arabic-persian|words": {
-   "v": 13,
+   "v": 25,
    "t": 12
   },
   "culture|sacredPlaces|arabic-persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|sacredPlaces|arabic-persian|profile": {
    "v": 1
   },
   "culture|sacredPlaces|egyptian|words": {
-   "v": 11,
+   "v": 41,
    "t": 30
   },
   "culture|sacredPlaces|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|egyptian|profile": {
    "v": 1
   },
   "culture|sacredPlaces|ethiopian|words": {
-   "v": 10,
+   "v": 40,
    "t": 30
   },
   "culture|sacredPlaces|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|ethiopian|profile": {
    "v": 0
   },
   "culture|sacredPlaces|bantu|words": {
-   "v": 18,
+   "v": 48,
    "t": 30
   },
   "culture|sacredPlaces|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|bantu|profile": {
    "v": 1
   },
   "culture|sacredPlaces|west-african|words": {
-   "v": 15,
+   "v": 45,
    "t": 30
   },
   "culture|sacredPlaces|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|sacredPlaces|west-african|profile": {
@@ -20362,23 +20362,23 @@
    "v": 0
   },
   "era|sacredPlaces|AN": {
-   "v": 174,
+   "v": 249,
    "t": 12
   },
   "era|sacredPlaces|MD": {
-   "v": 162,
+   "v": 234,
    "t": 12
   },
   "era|sacredPlaces|EM": {
-   "v": 168,
+   "v": 246,
    "t": 12
   },
   "era|sacredPlaces|ST": {
-   "v": 272,
+   "v": 386,
    "t": 12
   },
   "era|sacredPlaces|MO": {
-   "v": 108,
+   "v": 156,
    "t": 12
   },
   "era|sacredPlaces|NF": {
@@ -20398,7 +20398,7 @@
    "t": 4
   },
   "style|sacredPlaces|high-fantasy|words": {
-   "v": 67,
+   "v": 97,
    "t": 16
   },
   "style|sacredPlaces|high-fantasy|shapes": {
@@ -20406,7 +20406,7 @@
    "t": 4
   },
   "style|sacredPlaces|contemporary-fantasy|words": {
-   "v": 67,
+   "v": 97,
    "t": 16
   },
   "style|sacredPlaces|contemporary-fantasy|shapes": {
@@ -20414,7 +20414,7 @@
    "t": 4
   },
   "style|sacredPlaces|space-opera|words": {
-   "v": 67,
+   "v": 97,
    "t": 16
   },
   "style|sacredPlaces|space-opera|shapes": {
@@ -20674,98 +20674,110 @@
    "v": 0
   },
   "culture|tribalNames|turkic|words": {
-   "v": 0
+   "v": 40,
+   "t": 30
   },
   "culture|tribalNames|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tribalNames|turkic|profile": {
    "v": 0
   },
   "culture|tribalNames|mongol|words": {
-   "v": 0
+   "v": 40,
+   "t": 30
   },
   "culture|tribalNames|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tribalNames|mongol|profile": {
    "v": 0
   },
   "culture|tribalNames|steppe|words": {
-   "v": 7,
+   "v": 22,
    "t": 12
   },
   "culture|tribalNames|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|tribalNames|steppe|profile": {
    "v": 0
   },
   "culture|tribalNames|arabic|words": {
-   "v": 0
+   "v": 39,
+   "t": 30
   },
   "culture|tribalNames|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tribalNames|arabic|profile": {
    "v": 0
   },
   "culture|tribalNames|persian|words": {
-   "v": 0
+   "v": 39,
+   "t": 30
   },
   "culture|tribalNames|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tribalNames|persian|profile": {
    "v": 0
   },
   "culture|tribalNames|arabic-persian|words": {
-   "v": 7,
+   "v": 22,
    "t": 12
   },
   "culture|tribalNames|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|tribalNames|arabic-persian|profile": {
    "v": 0
   },
   "culture|tribalNames|egyptian|words": {
-   "v": 0
+   "v": 39,
+   "t": 30
   },
   "culture|tribalNames|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tribalNames|egyptian|profile": {
    "v": 0
   },
   "culture|tribalNames|ethiopian|words": {
-   "v": 0
+   "v": 39,
+   "t": 30
   },
   "culture|tribalNames|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tribalNames|ethiopian|profile": {
    "v": 0
   },
   "culture|tribalNames|bantu|words": {
-   "v": 4,
+   "v": 37,
    "t": 30
   },
   "culture|tribalNames|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|bantu|profile": {
    "v": 0
   },
   "culture|tribalNames|west-african|words": {
-   "v": 5,
+   "v": 38,
    "t": 30
   },
   "culture|tribalNames|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tribalNames|west-african|profile": {
@@ -20944,27 +20956,27 @@
    "t": 12
   },
   "style|tribalNames|high-fantasy|words": {
-   "v": 60,
+   "v": 90,
    "t": 16
   },
   "style|tribalNames|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|tribalNames|contemporary-fantasy|words": {
-   "v": 60,
+   "v": 90,
    "t": 16
   },
   "style|tribalNames|contemporary-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|tribalNames|space-opera|words": {
-   "v": 60,
+   "v": 90,
    "t": 16
   },
   "style|tribalNames|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|tribalNames|grand": {
@@ -21260,98 +21272,110 @@
    "v": 0
   },
   "culture|mysticOrders|turkic|words": {
-   "v": 0
+   "v": 47,
+   "t": 30
   },
   "culture|mysticOrders|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|mysticOrders|turkic|profile": {
    "v": 0
   },
   "culture|mysticOrders|mongol|words": {
-   "v": 0
+   "v": 46,
+   "t": 30
   },
   "culture|mysticOrders|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|mysticOrders|mongol|profile": {
    "v": 0
   },
   "culture|mysticOrders|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|mysticOrders|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|mysticOrders|steppe|profile": {
    "v": 0
   },
   "culture|mysticOrders|arabic|words": {
-   "v": 0
+   "v": 48,
+   "t": 30
   },
   "culture|mysticOrders|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|mysticOrders|arabic|profile": {
    "v": 0
   },
   "culture|mysticOrders|persian|words": {
-   "v": 0
+   "v": 51,
+   "t": 30
   },
   "culture|mysticOrders|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|mysticOrders|persian|profile": {
    "v": 0
   },
   "culture|mysticOrders|arabic-persian|words": {
-   "v": 2,
+   "v": 17,
    "t": 12
   },
   "culture|mysticOrders|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|mysticOrders|arabic-persian|profile": {
    "v": 0
   },
   "culture|mysticOrders|egyptian|words": {
-   "v": 0
+   "v": 41,
+   "t": 30
   },
   "culture|mysticOrders|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|mysticOrders|egyptian|profile": {
    "v": 0
   },
   "culture|mysticOrders|ethiopian|words": {
-   "v": 0
+   "v": 52,
+   "t": 30
   },
   "culture|mysticOrders|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|mysticOrders|ethiopian|profile": {
    "v": 0
   },
   "culture|mysticOrders|bantu|words": {
-   "v": 1,
+   "v": 45,
    "t": 30
   },
   "culture|mysticOrders|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mysticOrders|bantu|profile": {
    "v": 0
   },
   "culture|mysticOrders|west-african|words": {
-   "v": 1,
+   "v": 51,
    "t": 30
   },
   "culture|mysticOrders|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|mysticOrders|west-african|profile": {
@@ -21502,23 +21526,23 @@
    "v": 0
   },
   "era|mysticOrders|AN": {
-   "v": 123,
+   "v": 182,
    "t": 12
   },
   "era|mysticOrders|MD": {
-   "v": 218,
+   "v": 287,
    "t": 12
   },
   "era|mysticOrders|EM": {
-   "v": 135,
+   "v": 189,
    "t": 12
   },
   "era|mysticOrders|ST": {
-   "v": 111,
+   "v": 159,
    "t": 12
   },
   "era|mysticOrders|MO": {
-   "v": 187,
+   "v": 249,
    "t": 12
   },
   "era|mysticOrders|NF": {
@@ -21530,19 +21554,19 @@
    "t": 12
   },
   "style|mysticOrders|high-fantasy|words": {
-   "v": 63,
+   "v": 94,
    "t": 16
   },
   "style|mysticOrders|high-fantasy|shapes": {
-   "v": 73,
+   "v": 89,
    "t": 4
   },
   "style|mysticOrders|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 94,
    "t": 16
   },
   "style|mysticOrders|contemporary-fantasy|shapes": {
-   "v": 73,
+   "v": 89,
    "t": 4
   },
   "style|mysticOrders|low-fantasy|words": {
@@ -21554,11 +21578,11 @@
    "t": 4
   },
   "style|mysticOrders|space-opera|words": {
-   "v": 63,
+   "v": 94,
    "t": 16
   },
   "style|mysticOrders|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|mysticOrders|grand": {
@@ -21834,98 +21858,110 @@
    "v": 0
   },
   "culture|martialOrders|turkic|words": {
-   "v": 0
+   "v": 50,
+   "t": 30
   },
   "culture|martialOrders|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|martialOrders|turkic|profile": {
    "v": 0
   },
   "culture|martialOrders|mongol|words": {
-   "v": 0
+   "v": 56,
+   "t": 30
   },
   "culture|martialOrders|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|martialOrders|mongol|profile": {
    "v": 0
   },
   "culture|martialOrders|steppe|words": {
-   "v": 6,
+   "v": 21,
    "t": 12
   },
   "culture|martialOrders|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|martialOrders|steppe|profile": {
    "v": 0
   },
   "culture|martialOrders|arabic|words": {
-   "v": 0
+   "v": 46,
+   "t": 30
   },
   "culture|martialOrders|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|martialOrders|arabic|profile": {
    "v": 0
   },
   "culture|martialOrders|persian|words": {
-   "v": 0
+   "v": 47,
+   "t": 30
   },
   "culture|martialOrders|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|martialOrders|persian|profile": {
    "v": 0
   },
   "culture|martialOrders|arabic-persian|words": {
-   "v": 1,
+   "v": 16,
    "t": 12
   },
   "culture|martialOrders|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|martialOrders|arabic-persian|profile": {
    "v": 0
   },
   "culture|martialOrders|egyptian|words": {
-   "v": 0
+   "v": 42,
+   "t": 30
   },
   "culture|martialOrders|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|martialOrders|egyptian|profile": {
    "v": 0
   },
   "culture|martialOrders|ethiopian|words": {
-   "v": 0
+   "v": 42,
+   "t": 30
   },
   "culture|martialOrders|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|martialOrders|ethiopian|profile": {
    "v": 0
   },
   "culture|martialOrders|bantu|words": {
-   "v": 4,
+   "v": 51,
    "t": 30
   },
   "culture|martialOrders|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|martialOrders|bantu|profile": {
    "v": 0
   },
   "culture|martialOrders|west-african|words": {
-   "v": 0,
+   "v": 43,
    "t": 30
   },
   "culture|martialOrders|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|martialOrders|west-african|profile": {
@@ -22076,23 +22112,23 @@
    "v": 0
   },
   "era|martialOrders|AN": {
-   "v": 125,
+   "v": 174,
    "t": 12
   },
   "era|martialOrders|MD": {
-   "v": 268,
+   "v": 360,
    "t": 12
   },
   "era|martialOrders|EM": {
-   "v": 234,
+   "v": 321,
    "t": 12
   },
   "era|martialOrders|ST": {
-   "v": 143,
+   "v": 201,
    "t": 12
   },
   "era|martialOrders|MO": {
-   "v": 131,
+   "v": 181,
    "t": 12
   },
   "era|martialOrders|NF": {
@@ -22112,27 +22148,27 @@
    "t": 4
   },
   "style|martialOrders|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|martialOrders|high-fantasy|shapes": {
-   "v": 48,
+   "v": 64,
    "t": 4
   },
   "style|martialOrders|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|martialOrders|contemporary-fantasy|shapes": {
-   "v": 48,
+   "v": 64,
    "t": 4
   },
   "style|martialOrders|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|martialOrders|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|martialOrders|grand": {
@@ -22412,98 +22448,110 @@
    "v": 0
   },
   "culture|underworldGroups|turkic|words": {
-   "v": 0
+   "v": 37,
+   "t": 30
   },
   "culture|underworldGroups|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|underworldGroups|turkic|profile": {
    "v": 0
   },
   "culture|underworldGroups|mongol|words": {
-   "v": 0
+   "v": 49,
+   "t": 30
   },
   "culture|underworldGroups|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|underworldGroups|mongol|profile": {
    "v": 0
   },
   "culture|underworldGroups|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|underworldGroups|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|underworldGroups|steppe|profile": {
    "v": 0
   },
   "culture|underworldGroups|arabic|words": {
-   "v": 0
+   "v": 49,
+   "t": 30
   },
   "culture|underworldGroups|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|underworldGroups|arabic|profile": {
    "v": 0
   },
   "culture|underworldGroups|persian|words": {
-   "v": 0
+   "v": 49,
+   "t": 30
   },
   "culture|underworldGroups|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|underworldGroups|persian|profile": {
    "v": 0
   },
   "culture|underworldGroups|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|underworldGroups|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|underworldGroups|arabic-persian|profile": {
    "v": 0
   },
   "culture|underworldGroups|egyptian|words": {
-   "v": 0
+   "v": 43,
+   "t": 30
   },
   "culture|underworldGroups|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|underworldGroups|egyptian|profile": {
    "v": 0
   },
   "culture|underworldGroups|ethiopian|words": {
-   "v": 0
+   "v": 50,
+   "t": 30
   },
   "culture|underworldGroups|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|underworldGroups|ethiopian|profile": {
    "v": 0
   },
   "culture|underworldGroups|bantu|words": {
-   "v": 0,
+   "v": 50,
    "t": 30
   },
   "culture|underworldGroups|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|underworldGroups|bantu|profile": {
    "v": 0
   },
   "culture|underworldGroups|west-african|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|underworldGroups|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|underworldGroups|west-african|profile": {
@@ -22654,23 +22702,23 @@
    "v": 0
   },
   "era|underworldGroups|AN": {
-   "v": 108,
+   "v": 159,
    "t": 12
   },
   "era|underworldGroups|MD": {
-   "v": 262,
+   "v": 366,
    "t": 12
   },
   "era|underworldGroups|EM": {
-   "v": 313,
+   "v": 445,
    "t": 12
   },
   "era|underworldGroups|ST": {
-   "v": 176,
+   "v": 247,
    "t": 12
   },
   "era|underworldGroups|MO": {
-   "v": 160,
+   "v": 214,
    "t": 12
   },
   "era|underworldGroups|NF": {
@@ -22690,27 +22738,27 @@
    "t": 4
   },
   "style|underworldGroups|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|underworldGroups|high-fantasy|shapes": {
-   "v": 61,
+   "v": 77,
    "t": 4
   },
   "style|underworldGroups|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|underworldGroups|contemporary-fantasy|shapes": {
-   "v": 72,
+   "v": 88,
    "t": 4
   },
   "style|underworldGroups|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|underworldGroups|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|underworldGroups|grand": {
@@ -22986,98 +23034,110 @@
    "v": 0
   },
   "culture|tradeGuilds|turkic|words": {
-   "v": 0
+   "v": 49,
+   "t": 30
   },
   "culture|tradeGuilds|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tradeGuilds|turkic|profile": {
    "v": 0
   },
   "culture|tradeGuilds|mongol|words": {
-   "v": 0
+   "v": 47,
+   "t": 30
   },
   "culture|tradeGuilds|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tradeGuilds|mongol|profile": {
    "v": 0
   },
   "culture|tradeGuilds|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|tradeGuilds|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|tradeGuilds|steppe|profile": {
    "v": 0
   },
   "culture|tradeGuilds|arabic|words": {
-   "v": 0
+   "v": 55,
+   "t": 30
   },
   "culture|tradeGuilds|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tradeGuilds|arabic|profile": {
    "v": 0
   },
   "culture|tradeGuilds|persian|words": {
-   "v": 0
+   "v": 52,
+   "t": 30
   },
   "culture|tradeGuilds|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tradeGuilds|persian|profile": {
    "v": 0
   },
   "culture|tradeGuilds|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|tradeGuilds|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|tradeGuilds|arabic-persian|profile": {
    "v": 0
   },
   "culture|tradeGuilds|egyptian|words": {
-   "v": 0
+   "v": 36,
+   "t": 30
   },
   "culture|tradeGuilds|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tradeGuilds|egyptian|profile": {
    "v": 0
   },
   "culture|tradeGuilds|ethiopian|words": {
-   "v": 0
+   "v": 43,
+   "t": 30
   },
   "culture|tradeGuilds|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|tradeGuilds|ethiopian|profile": {
    "v": 0
   },
   "culture|tradeGuilds|bantu|words": {
-   "v": 0,
+   "v": 54,
    "t": 30
   },
   "culture|tradeGuilds|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tradeGuilds|bantu|profile": {
    "v": 0
   },
   "culture|tradeGuilds|west-african|words": {
-   "v": 2,
+   "v": 52,
    "t": 30
   },
   "culture|tradeGuilds|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|tradeGuilds|west-african|profile": {
@@ -23228,23 +23288,23 @@
    "v": 0
   },
   "era|tradeGuilds|AN": {
-   "v": 113,
+   "v": 163,
    "t": 12
   },
   "era|tradeGuilds|MD": {
-   "v": 297,
+   "v": 401,
    "t": 12
   },
   "era|tradeGuilds|EM": {
-   "v": 258,
+   "v": 352,
    "t": 12
   },
   "era|tradeGuilds|ST": {
-   "v": 115,
+   "v": 164,
    "t": 12
   },
   "era|tradeGuilds|MO": {
-   "v": 127,
+   "v": 177,
    "t": 12
   },
   "era|tradeGuilds|NF": {
@@ -23256,27 +23316,27 @@
    "t": 12
   },
   "style|tradeGuilds|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|tradeGuilds|contemporary-fantasy|shapes": {
-   "v": 51,
+   "v": 67,
    "t": 4
   },
   "style|tradeGuilds|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|tradeGuilds|high-fantasy|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "style|tradeGuilds|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|tradeGuilds|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|tradeGuilds|grand": {
@@ -23572,98 +23632,110 @@
    "v": 0
   },
   "culture|adventureCompanies|turkic|words": {
-   "v": 0
+   "v": 46,
+   "t": 30
   },
   "culture|adventureCompanies|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|adventureCompanies|turkic|profile": {
    "v": 0
   },
   "culture|adventureCompanies|mongol|words": {
-   "v": 0
+   "v": 47,
+   "t": 30
   },
   "culture|adventureCompanies|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|adventureCompanies|mongol|profile": {
    "v": 0
   },
   "culture|adventureCompanies|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|adventureCompanies|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|adventureCompanies|steppe|profile": {
    "v": 0
   },
   "culture|adventureCompanies|arabic|words": {
-   "v": 0
+   "v": 50,
+   "t": 30
   },
   "culture|adventureCompanies|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|adventureCompanies|arabic|profile": {
    "v": 0
   },
   "culture|adventureCompanies|persian|words": {
-   "v": 0
+   "v": 48,
+   "t": 30
   },
   "culture|adventureCompanies|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|adventureCompanies|persian|profile": {
    "v": 0
   },
   "culture|adventureCompanies|arabic-persian|words": {
-   "v": 1,
+   "v": 16,
    "t": 12
   },
   "culture|adventureCompanies|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|adventureCompanies|arabic-persian|profile": {
    "v": 0
   },
   "culture|adventureCompanies|egyptian|words": {
-   "v": 0
+   "v": 47,
+   "t": 30
   },
   "culture|adventureCompanies|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|adventureCompanies|egyptian|profile": {
    "v": 0
   },
   "culture|adventureCompanies|ethiopian|words": {
-   "v": 0
+   "v": 49,
+   "t": 30
   },
   "culture|adventureCompanies|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|adventureCompanies|ethiopian|profile": {
    "v": 0
   },
   "culture|adventureCompanies|bantu|words": {
-   "v": 0,
+   "v": 49,
    "t": 30
   },
   "culture|adventureCompanies|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|adventureCompanies|bantu|profile": {
    "v": 0
   },
   "culture|adventureCompanies|west-african|words": {
-   "v": 0,
+   "v": 50,
    "t": 30
   },
   "culture|adventureCompanies|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|adventureCompanies|west-african|profile": {
@@ -23814,23 +23886,23 @@
    "v": 0
   },
   "era|adventureCompanies|AN": {
-   "v": 109,
+   "v": 157,
    "t": 12
   },
   "era|adventureCompanies|MD": {
-   "v": 258,
+   "v": 377,
    "t": 12
   },
   "era|adventureCompanies|EM": {
-   "v": 255,
+   "v": 379,
    "t": 12
   },
   "era|adventureCompanies|ST": {
-   "v": 132,
+   "v": 189,
    "t": 12
   },
   "era|adventureCompanies|MO": {
-   "v": 128,
+   "v": 179,
    "t": 12
   },
   "era|adventureCompanies|NF": {
@@ -23850,27 +23922,27 @@
    "t": 4
   },
   "style|adventureCompanies|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|adventureCompanies|high-fantasy|shapes": {
-   "v": 55,
+   "v": 71,
    "t": 4
   },
   "style|adventureCompanies|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|adventureCompanies|contemporary-fantasy|shapes": {
-   "v": 55,
+   "v": 71,
    "t": 4
   },
   "style|adventureCompanies|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|adventureCompanies|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|adventureCompanies|grand": {
@@ -24134,98 +24206,110 @@
    "v": 0
   },
   "culture|powerFactions|turkic|words": {
-   "v": 0
+   "v": 50,
+   "t": 30
   },
   "culture|powerFactions|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|powerFactions|turkic|profile": {
    "v": 0
   },
   "culture|powerFactions|mongol|words": {
-   "v": 0
+   "v": 48,
+   "t": 30
   },
   "culture|powerFactions|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|powerFactions|mongol|profile": {
    "v": 0
   },
   "culture|powerFactions|steppe|words": {
-   "v": 1,
+   "v": 16,
    "t": 12
   },
   "culture|powerFactions|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|powerFactions|steppe|profile": {
    "v": 0
   },
   "culture|powerFactions|arabic|words": {
-   "v": 0
+   "v": 50,
+   "t": 30
   },
   "culture|powerFactions|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|powerFactions|arabic|profile": {
    "v": 0
   },
   "culture|powerFactions|persian|words": {
-   "v": 0
+   "v": 49,
+   "t": 30
   },
   "culture|powerFactions|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|powerFactions|persian|profile": {
    "v": 0
   },
   "culture|powerFactions|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|powerFactions|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|powerFactions|arabic-persian|profile": {
    "v": 0
   },
   "culture|powerFactions|egyptian|words": {
-   "v": 0
+   "v": 40,
+   "t": 30
   },
   "culture|powerFactions|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|powerFactions|egyptian|profile": {
    "v": 0
   },
   "culture|powerFactions|ethiopian|words": {
-   "v": 0
+   "v": 50,
+   "t": 30
   },
   "culture|powerFactions|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|powerFactions|ethiopian|profile": {
    "v": 0
   },
   "culture|powerFactions|bantu|words": {
-   "v": 2,
+   "v": 52,
    "t": 30
   },
   "culture|powerFactions|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|powerFactions|bantu|profile": {
    "v": 0
   },
   "culture|powerFactions|west-african|words": {
-   "v": 1,
+   "v": 52,
    "t": 30
   },
   "culture|powerFactions|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|powerFactions|west-african|profile": {
@@ -24376,23 +24460,23 @@
    "v": 0
   },
   "era|powerFactions|AN": {
-   "v": 116,
+   "v": 164,
    "t": 12
   },
   "era|powerFactions|MD": {
-   "v": 288,
+   "v": 403,
    "t": 12
   },
   "era|powerFactions|EM": {
-   "v": 227,
+   "v": 318,
    "t": 12
   },
   "era|powerFactions|ST": {
-   "v": 127,
+   "v": 180,
    "t": 12
   },
   "era|powerFactions|MO": {
-   "v": 117,
+   "v": 169,
    "t": 12
   },
   "era|powerFactions|NF": {
@@ -24412,27 +24496,27 @@
    "t": 4
   },
   "style|powerFactions|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|powerFactions|high-fantasy|shapes": {
-   "v": 43,
+   "v": 59,
    "t": 4
   },
   "style|powerFactions|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|powerFactions|contemporary-fantasy|shapes": {
-   "v": 43,
+   "v": 59,
    "t": 4
   },
   "style|powerFactions|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|powerFactions|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|powerFactions|grand": {
@@ -24712,98 +24796,110 @@
    "v": 0
   },
   "culture|supernaturalCourts|turkic|words": {
-   "v": 0
+   "v": 45,
+   "t": 30
   },
   "culture|supernaturalCourts|turkic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|supernaturalCourts|turkic|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|mongol|words": {
-   "v": 0
+   "v": 43,
+   "t": 30
   },
   "culture|supernaturalCourts|mongol|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|supernaturalCourts|mongol|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|steppe|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|supernaturalCourts|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|supernaturalCourts|steppe|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|arabic|words": {
-   "v": 0
+   "v": 45,
+   "t": 30
   },
   "culture|supernaturalCourts|arabic|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|supernaturalCourts|arabic|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|persian|words": {
-   "v": 0
+   "v": 44,
+   "t": 30
   },
   "culture|supernaturalCourts|persian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|supernaturalCourts|persian|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|arabic-persian|words": {
-   "v": 0,
+   "v": 12,
    "t": 12
   },
   "culture|supernaturalCourts|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|supernaturalCourts|arabic-persian|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|egyptian|words": {
-   "v": 0
+   "v": 46,
+   "t": 30
   },
   "culture|supernaturalCourts|egyptian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|supernaturalCourts|egyptian|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|ethiopian|words": {
-   "v": 0
+   "v": 45,
+   "t": 30
   },
   "culture|supernaturalCourts|ethiopian|shapes": {
-   "v": 0
+   "v": 10,
+   "t": 10
   },
   "culture|supernaturalCourts|ethiopian|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|bantu|words": {
-   "v": 0,
+   "v": 44,
    "t": 30
   },
   "culture|supernaturalCourts|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|supernaturalCourts|bantu|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|west-african|words": {
-   "v": 0,
+   "v": 44,
    "t": 30
   },
   "culture|supernaturalCourts|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|supernaturalCourts|west-african|profile": {
@@ -24954,23 +25050,23 @@
    "v": 0
   },
   "era|supernaturalCourts|AN": {
-   "v": 151,
+   "v": 215,
    "t": 12
   },
   "era|supernaturalCourts|MD": {
-   "v": 227,
+   "v": 291,
    "t": 12
   },
   "era|supernaturalCourts|EM": {
-   "v": 108,
+   "v": 156,
    "t": 12
   },
   "era|supernaturalCourts|ST": {
-   "v": 108,
+   "v": 156,
    "t": 12
   },
   "era|supernaturalCourts|MO": {
-   "v": 187,
+   "v": 239,
    "t": 12
   },
   "era|supernaturalCourts|NF": {
@@ -24990,27 +25086,27 @@
    "t": 4
   },
   "style|supernaturalCourts|high-fantasy|words": {
-   "v": 63,
+   "v": 161,
    "t": 16
   },
   "style|supernaturalCourts|high-fantasy|shapes": {
-   "v": 112,
+   "v": 128,
    "t": 4
   },
   "style|supernaturalCourts|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 161,
    "t": 16
   },
   "style|supernaturalCourts|contemporary-fantasy|shapes": {
-   "v": 112,
+   "v": 128,
    "t": 4
   },
   "style|supernaturalCourts|space-opera|words": {
-   "v": 63,
+   "v": 161,
    "t": 16
   },
   "style|supernaturalCourts|space-opera|shapes": {
-   "v": 36,
+   "v": 52,
    "t": 4
   },
   "tone|supernaturalCourts|grand": {
@@ -25290,110 +25386,110 @@
    "v": 1
   },
   "culture|ships|turkic|words": {
-   "v": 0,
+   "v": 41,
    "t": 30
   },
   "culture|ships|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|turkic|profile": {
    "v": 0
   },
   "culture|ships|mongol|words": {
-   "v": 0,
+   "v": 46,
    "t": 30
   },
   "culture|ships|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|mongol|profile": {
    "v": 0
   },
   "culture|ships|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|ships|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|ships|steppe|profile": {
    "v": 1
   },
   "culture|ships|arabic|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|arabic|profile": {
    "v": 0
   },
   "culture|ships|persian|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|persian|profile": {
    "v": 0
   },
   "culture|ships|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|ships|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|ships|arabic-persian|profile": {
    "v": 1
   },
   "culture|ships|egyptian|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|egyptian|profile": {
    "v": 1
   },
   "culture|ships|ethiopian|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|ethiopian|profile": {
    "v": 1
   },
   "culture|ships|bantu|words": {
-   "v": 0,
+   "v": 45,
    "t": 30
   },
   "culture|ships|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|bantu|profile": {
    "v": 1
   },
   "culture|ships|west-african|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|ships|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|ships|west-african|profile": {
@@ -25591,23 +25687,23 @@
    "v": 0
   },
   "era|ships|AN": {
-   "v": 139,
+   "v": 188,
    "t": 12
   },
   "era|ships|MD": {
-   "v": 157,
+   "v": 216,
    "t": 12
   },
   "era|ships|EM": {
-   "v": 237,
+   "v": 324,
    "t": 12
   },
   "era|ships|ST": {
-   "v": 217,
+   "v": 296,
    "t": 12
   },
   "era|ships|MO": {
-   "v": 130,
+   "v": 182,
    "t": 12
   },
   "era|ships|NF": {
@@ -25619,19 +25715,19 @@
    "t": 12
   },
   "style|ships|high-fantasy|words": {
-   "v": 168,
+   "v": 198,
    "t": 16
   },
   "style|ships|high-fantasy|shapes": {
-   "v": 59,
+   "v": 75,
    "t": 4
   },
   "style|ships|contemporary-fantasy|words": {
-   "v": 84,
+   "v": 114,
    "t": 16
   },
   "style|ships|contemporary-fantasy|shapes": {
-   "v": 39,
+   "v": 55,
    "t": 4
   },
   "style|ships|steampunk|words": {
@@ -25659,11 +25755,11 @@
    "t": 4
   },
   "style|ships|space-opera|words": {
-   "v": 152,
+   "v": 182,
    "t": 16
   },
   "style|ships|space-opera|shapes": {
-   "v": 54,
+   "v": 70,
    "t": 4
   },
   "tone|ships|grand": {
@@ -26599,110 +26695,110 @@
    "v": 1
   },
   "culture|aircraft|turkic|words": {
-   "v": 0,
+   "v": 37,
    "t": 30
   },
   "culture|aircraft|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|turkic|profile": {
    "v": 0
   },
   "culture|aircraft|mongol|words": {
-   "v": 0,
+   "v": 38,
    "t": 30
   },
   "culture|aircraft|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|mongol|profile": {
    "v": 0
   },
   "culture|aircraft|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|aircraft|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|aircraft|steppe|profile": {
    "v": 1
   },
   "culture|aircraft|arabic|words": {
-   "v": 0,
+   "v": 37,
    "t": 30
   },
   "culture|aircraft|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|arabic|profile": {
    "v": 0
   },
   "culture|aircraft|persian|words": {
-   "v": 0,
+   "v": 38,
    "t": 30
   },
   "culture|aircraft|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|persian|profile": {
    "v": 0
   },
   "culture|aircraft|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|aircraft|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|aircraft|arabic-persian|profile": {
    "v": 1
   },
   "culture|aircraft|egyptian|words": {
-   "v": 0,
+   "v": 37,
    "t": 30
   },
   "culture|aircraft|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|egyptian|profile": {
    "v": 1
   },
   "culture|aircraft|ethiopian|words": {
-   "v": 0,
+   "v": 39,
    "t": 30
   },
   "culture|aircraft|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|ethiopian|profile": {
    "v": 1
   },
   "culture|aircraft|bantu|words": {
-   "v": 0,
+   "v": 36,
    "t": 30
   },
   "culture|aircraft|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|bantu|profile": {
    "v": 0
   },
   "culture|aircraft|west-african|words": {
-   "v": 0,
+   "v": 39,
    "t": 30
   },
   "culture|aircraft|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|aircraft|west-african|profile": {
@@ -26900,23 +26996,23 @@
    "v": 0
   },
   "era|aircraft|AN": {
-   "v": 123,
+   "v": 171,
    "t": 12
   },
   "era|aircraft|MD": {
-   "v": 158,
+   "v": 215,
    "t": 12
   },
   "era|aircraft|EM": {
-   "v": 150,
+   "v": 210,
    "t": 12
   },
   "era|aircraft|ST": {
-   "v": 208,
+   "v": 283,
    "t": 12
   },
   "era|aircraft|MO": {
-   "v": 224,
+   "v": 301,
    "t": 12
   },
   "era|aircraft|NF": {
@@ -26928,19 +27024,19 @@
    "t": 12
   },
   "style|aircraft|high-fantasy|words": {
-   "v": 136,
+   "v": 195,
    "t": 16
   },
   "style|aircraft|high-fantasy|shapes": {
-   "v": 41,
+   "v": 57,
    "t": 4
   },
   "style|aircraft|contemporary-fantasy|words": {
-   "v": 136,
+   "v": 195,
    "t": 16
   },
   "style|aircraft|contemporary-fantasy|shapes": {
-   "v": 37,
+   "v": 53,
    "t": 4
   },
   "style|aircraft|steampunk|words": {
@@ -26968,11 +27064,11 @@
    "t": 4
   },
   "style|aircraft|space-opera|words": {
-   "v": 136,
+   "v": 195,
    "t": 16
   },
   "style|aircraft|space-opera|shapes": {
-   "v": 40,
+   "v": 56,
    "t": 4
   },
   "tone|aircraft|grand": {
@@ -27260,110 +27356,110 @@
    "v": 1
   },
   "culture|landVehicles|turkic|words": {
-   "v": 0,
+   "v": 40,
    "t": 30
   },
   "culture|landVehicles|turkic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|turkic|profile": {
    "v": 0
   },
   "culture|landVehicles|mongol|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|landVehicles|mongol|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|mongol|profile": {
    "v": 0
   },
   "culture|landVehicles|steppe|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|landVehicles|steppe|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|landVehicles|steppe|profile": {
    "v": 1
   },
   "culture|landVehicles|arabic|words": {
-   "v": 0,
+   "v": 40,
    "t": 30
   },
   "culture|landVehicles|arabic|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|arabic|profile": {
    "v": 0
   },
   "culture|landVehicles|persian|words": {
-   "v": 0,
+   "v": 41,
    "t": 30
   },
   "culture|landVehicles|persian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|persian|profile": {
    "v": 0
   },
   "culture|landVehicles|arabic-persian|words": {
-   "v": 0,
+   "v": 15,
    "t": 12
   },
   "culture|landVehicles|arabic-persian|shapes": {
-   "v": 0,
+   "v": 4,
    "t": 4
   },
   "culture|landVehicles|arabic-persian|profile": {
    "v": 1
   },
   "culture|landVehicles|egyptian|words": {
-   "v": 0,
+   "v": 39,
    "t": 30
   },
   "culture|landVehicles|egyptian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|egyptian|profile": {
    "v": 1
   },
   "culture|landVehicles|ethiopian|words": {
-   "v": 0,
+   "v": 41,
    "t": 30
   },
   "culture|landVehicles|ethiopian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|ethiopian|profile": {
    "v": 1
   },
   "culture|landVehicles|bantu|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|landVehicles|bantu|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|bantu|profile": {
    "v": 1
   },
   "culture|landVehicles|west-african|words": {
-   "v": 0,
+   "v": 42,
    "t": 30
   },
   "culture|landVehicles|west-african|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 10
   },
   "culture|landVehicles|west-african|profile": {
@@ -27561,23 +27657,23 @@
    "v": 0
   },
   "era|landVehicles|AN": {
-   "v": 125,
+   "v": 173,
    "t": 12
   },
   "era|landVehicles|MD": {
-   "v": 149,
+   "v": 206,
    "t": 12
   },
   "era|landVehicles|EM": {
-   "v": 157,
+   "v": 216,
    "t": 12
   },
   "era|landVehicles|ST": {
-   "v": 347,
+   "v": 476,
    "t": 12
   },
   "era|landVehicles|MO": {
-   "v": 313,
+   "v": 428,
    "t": 12
   },
   "era|landVehicles|NF": {
@@ -27589,19 +27685,19 @@
    "t": 12
   },
   "style|landVehicles|high-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|landVehicles|high-fantasy|shapes": {
-   "v": 41,
+   "v": 57,
    "t": 4
   },
   "style|landVehicles|contemporary-fantasy|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|landVehicles|contemporary-fantasy|shapes": {
-   "v": 37,
+   "v": 53,
    "t": 4
   },
   "style|landVehicles|steampunk|words": {
@@ -27629,11 +27725,11 @@
    "t": 4
   },
   "style|landVehicles|space-opera|words": {
-   "v": 63,
+   "v": 93,
    "t": 16
   },
   "style|landVehicles|space-opera|shapes": {
-   "v": 39,
+   "v": 55,
    "t": 4
   },
   "tone|landVehicles|grand": {
@@ -28292,34 +28388,34 @@
    "v": 1131
   },
   "total|culture|arabic-persian|words": {
-   "v": 151
+   "v": 736
   },
   "total|culture|arabic-persian|shapes": {
-   "v": 151
+   "v": 407
   },
   "total|culture|egyptian|words": {
-   "v": 454
+   "v": 2090
   },
   "total|culture|egyptian|shapes": {
-   "v": 210
+   "v": 640
   },
   "total|culture|west-african|words": {
-   "v": 309
+   "v": 1995
   },
   "total|culture|west-african|shapes": {
-   "v": 150
+   "v": 580
   },
   "total|culture|ethiopian|words": {
-   "v": 227
+   "v": 1918
   },
   "total|culture|ethiopian|shapes": {
-   "v": 108
+   "v": 538
   },
   "total|culture|steppe|words": {
-   "v": 110
+   "v": 695
   },
   "total|culture|steppe|shapes": {
-   "v": 32
+   "v": 288
   },
   "total|culture|indian|words": {
    "v": 124
@@ -28412,10 +28508,10 @@
    "v": 11
   },
   "total|culture|bantu|words": {
-   "v": 360
+   "v": 2065
   },
   "total|culture|bantu|shapes": {
-   "v": 121
+   "v": 551
   },
   "total|culture|aztec|words": {
    "v": 139
@@ -28448,28 +28544,28 @@
    "v": 513
   },
   "total|culture|turkic|words": {
-   "v": 320
+   "v": 1996
   },
   "total|culture|turkic|shapes": {
-   "v": 102
+   "v": 532
   },
   "total|culture|mongol|words": {
-   "v": 295
+   "v": 2021
   },
   "total|culture|mongol|shapes": {
-   "v": 86
+   "v": 516
   },
   "total|culture|arabic|words": {
-   "v": 340
+   "v": 2042
   },
   "total|culture|arabic|shapes": {
-   "v": 120
+   "v": 550
   },
   "total|culture|persian|words": {
-   "v": 295
+   "v": 2006
   },
   "total|culture|persian|shapes": {
-   "v": 121
+   "v": 551
   },
   "total|culture|anglo-saxon|words": {
    "v": 1145
@@ -28508,19 +28604,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 6907
+   "v": 9560
   },
   "total|era|MD": {
-   "v": 9796
+   "v": 13129
   },
   "total|era|EM": {
-   "v": 10111
+   "v": 13962
   },
   "total|era|ST": {
-   "v": 9717
+   "v": 13337
   },
   "total|era|MO": {
-   "v": 8658
+   "v": 11903
   },
   "total|era|NF": {
    "v": 762
@@ -28529,22 +28625,22 @@
    "v": 1714
   },
   "total|style|high-fantasy|words": {
-   "v": 2887
+   "v": 4251
   },
   "total|style|high-fantasy|shapes": {
-   "v": 1176
+   "v": 1560
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 2803
+   "v": 4167
   },
   "total|style|contemporary-fantasy|shapes": {
-   "v": 1174
+   "v": 1558
   },
   "total|style|space-opera|words": {
-   "v": 2939
+   "v": 4303
   },
   "total|style|space-opera|shapes": {
-   "v": 1007
+   "v": 1391
   },
   "total|style|steampunk|words": {
    "v": 84
@@ -28587,7 +28683,7 @@
   }
  },
  "thinPools": {
-  "count": 596,
+  "count": 620,
   "entries": {
    "skyNames|constellations/anglo-saxon": 1,
    "realms|cultQualExtra/ethiopian": 1,
@@ -28632,6 +28728,8 @@
    "martialOrders|signatures/andean/soldiers": 1,
    "adventureCompanies|signatures/arabian/companyGroup": 1,
    "martialOrders|signatures/arabian/soldiers": 1,
+   "adventureCompanies|signatures/arabic/companyGroup": 1,
+   "martialOrders|signatures/arabic/soldiers": 1,
    "mysticOrders|signatures/bantu/group": 1,
    "adventureCompanies|signatures/celtic/companyGroup": 1,
    "mysticOrders|signatures/celtic/covenGroup": 1,
@@ -28647,9 +28745,13 @@
    "adventureCompanies|signatures/dutch/companyGroup": 1,
    "martialOrders|signatures/dutch/raiders": 1,
    "martialOrders|signatures/eastAsian/unitGroup": 1,
+   "adventureCompanies|signatures/egyptian/companyGroup": 1,
+   "martialOrders|signatures/egyptian/soldiers": 1,
    "powerFactions|signatures/english/assemblyWord": 1,
    "adventureCompanies|signatures/english/companyGroup": 1,
    "martialOrders|signatures/english/raiders": 1,
+   "adventureCompanies|signatures/ethiopian/companyGroup": 1,
+   "martialOrders|signatures/ethiopian/soldiers": 1,
    "powerFactions|signatures/german/assemblyWord": 1,
    "adventureCompanies|signatures/german/companyGroup": 1,
    "martialOrders|signatures/german/raiders": 1,
@@ -28666,11 +28768,14 @@
    "martialOrders|signatures/maritimeSEA/raiders": 1,
    "mysticOrders|signatures/mesoamerican/group": 1,
    "tradeGuilds|signatures/mesoamerican/tradesmen": 1,
+   "powerFactions|signatures/mongol/assemblyWord": 1,
    "powerFactions|signatures/norse/assemblyWord": 1,
    "adventureCompanies|signatures/norse/companyGroup": 1,
    "martialOrders|signatures/norse/raiders": 1,
    "powerFactions|signatures/northAmerican/assemblyWord": 1,
    "mysticOrders|signatures/northernPacific/members": 1,
+   "adventureCompanies|signatures/persian/companyGroup": 1,
+   "martialOrders|signatures/persian/soldiers": 1,
    "mysticOrders|signatures/polynesian/members": 1,
    "powerFactions|signatures/scandinavian/assemblyWord": 1,
    "adventureCompanies|signatures/scandinavian/companyGroup": 1,
@@ -28685,6 +28790,7 @@
    "martialOrders|signatures/slavic/raiders": 1,
    "powerFactions|signatures/southAsian/assemblyWord": 1,
    "powerFactions|signatures/steppe/assemblyWord": 1,
+   "powerFactions|signatures/turkic/assemblyWord": 1,
    "adventureCompanies|signatures/welsh/companyGroup": 1,
    "mysticOrders|signatures/welsh/covenGroup": 1,
    "mysticOrders|signatures/welsh/group": 1,
@@ -28725,6 +28831,7 @@
    "wetlandNames|shapes/wetlandNames/causeway": 2,
    "mysticOrders|signatures/andean/group": 2,
    "mysticOrders|signatures/arabian/group": 2,
+   "mysticOrders|signatures/arabic/group": 2,
    "powerFactions|signatures/bantu/assemblyWord": 2,
    "martialOrders|signatures/bantu/soldiers": 2,
    "martialOrders|signatures/bantu/unitGroup": 2,
@@ -28736,8 +28843,10 @@
    "martialOrders|signatures/dutch/soldiers": 2,
    "martialOrders|signatures/dutch/unitGroup": 2,
    "mysticOrders|signatures/eastAsian/members": 2,
+   "mysticOrders|signatures/egyptian/group": 2,
    "martialOrders|signatures/english/soldiers": 2,
    "martialOrders|signatures/english/unitGroup": 2,
+   "mysticOrders|signatures/ethiopian/group": 2,
    "powerFactions|signatures/french/assemblyWord": 2,
    "mysticOrders|signatures/french/group": 2,
    "mysticOrders|signatures/french/schoolGroup": 2,
@@ -28762,12 +28871,14 @@
    "mysticOrders|signatures/mediterranean/group": 2,
    "mysticOrders|signatures/mediterranean/schoolGroup": 2,
    "martialOrders|signatures/mesoamerican/soldiers": 2,
+   "martialOrders|signatures/mongol/soldiers": 2,
    "martialOrders|signatures/norse/soldiers": 2,
    "martialOrders|signatures/norse/unitGroup": 2,
    "mysticOrders|signatures/northAmerican/group": 2,
    "martialOrders|signatures/northAmerican/soldiers": 2,
    "mysticOrders|signatures/northernPacific/group": 2,
    "tradeGuilds|signatures/northernPacific/tradesmen": 2,
+   "mysticOrders|signatures/persian/group": 2,
    "adventureCompanies|signatures/polynesian/companyGroup": 2,
    "tradeGuilds|signatures/polynesian/tradesmen": 2,
    "powerFactions|signatures/portuguese/assemblyWord": 2,
@@ -28788,6 +28899,7 @@
    "mysticOrders|signatures/spanish/group": 2,
    "mysticOrders|signatures/spanish/schoolGroup": 2,
    "martialOrders|signatures/steppe/soldiers": 2,
+   "martialOrders|signatures/turkic/soldiers": 2,
    "martialOrders|signatures/welsh/soldiers": 2,
    "tradeGuilds|signatures/westAfrican/tradesmen": 2,
    "adventureCompanies|composites/creature": 3,
@@ -28889,7 +29001,9 @@
    "shared|routeFixed:pilgrim": 4,
    "shared|sfMonumentWord": 4,
    "shared|sfRelic": 4,
+   "martialOrders|signatures/mongol/unitGroup": 4,
    "martialOrders|signatures/steppe/unitGroup": 4,
+   "martialOrders|signatures/turkic/unitGroup": 4,
    "shared|skyPath": 4,
    "epithets|styles/celtic": 4,
    "epithets|styles/chinese": 4,
@@ -28975,11 +29089,14 @@
    "epithets|styles/norse": 5,
    "epithets|styles/steppe": 5,
    "tribalNames|traditions/andean/signatureCollectives": 5,
+   "tribalNames|traditions/arabic/signatureCollectives": 5,
    "tribalNames|traditions/byzantine/signatureCollectives": 5,
    "tribalNames|traditions/cornish/signatureCollectives": 5,
    "tribalNames|traditions/dutch/signatureCollectives": 5,
    "tribalNames|traditions/eastAsian/signatureCollectives": 5,
+   "tribalNames|traditions/egyptian/signatureCollectives": 5,
    "tribalNames|traditions/english/signatureCollectives": 5,
+   "tribalNames|traditions/ethiopian/signatureCollectives": 5,
    "tribalNames|traditions/french/signatureCollectives": 5,
    "tribalNames|traditions/german/signatureCollectives": 5,
    "tribalNames|traditions/germanic/signatureCollectives": 5,
@@ -28992,6 +29109,7 @@
    "tribalNames|traditions/mesoamerican/signatureCollectives": 5,
    "tribalNames|traditions/norse/signatureCollectives": 5,
    "tribalNames|traditions/northAmerican/signatureCollectives": 5,
+   "tribalNames|traditions/persian/signatureCollectives": 5,
    "tribalNames|traditions/polynesian/signatureCollectives": 5,
    "tribalNames|traditions/portuguese/signatureCollectives": 5,
    "tribalNames|traditions/roman/signatureCollectives": 5,
@@ -29089,7 +29207,9 @@
    "shared|thingPlenty": 6,
    "shared|tokenWord": 6,
    "tribalNames|traditions/arabian/signatureCollectives": 6,
+   "tribalNames|traditions/mongol/signatureCollectives": 6,
    "tribalNames|traditions/steppe/signatureCollectives": 6,
+   "tribalNames|traditions/turkic/signatureCollectives": 6,
    "tribalNames|vocabulary/interpretiveQualities": 6,
    "tribalNames|vocabulary/warfareObjects": 6,
    "riverNames|waterWords/british/EAN": 6,

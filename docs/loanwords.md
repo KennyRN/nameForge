@@ -444,3 +444,26 @@ Looked up on collinsdictionary.com or oed.com, sending only the word: shieling (
 ### Rank titles and other 6a words not looked up before (17 November 2026)
 
 Looked up on collinsdictionary.com or oed.com, sending only the word. **Found:** strategos (OED), logothete, exarch, eparch, voivode, tsarina, infanta, fidalgo (OED), dogaressa, stadtholder (stadholder), burgomaster, aedile, quaestor, prytanis (OED), areopagus, peltast, thiasos (OED), sotnik (OED), starosta, Skoptsi (OED), maniple, hidalgo, dauphine, archon, satrap, ephor; the plain English or already recorded ones (consul, prefect, regent, marquis, pontiff, cossacks, hussars, boyar, hetman, hermandad) were not repeated. **Not found, replaced:** Despina by Lady, Boyarina by Lady, Beatas by Lay Sisters (Spanish-English entries only), Vigiles by Night Watch (only vigil).
+
+## Batch 6b (second-tier tables brief, 17 November 2026)
+
+Every non-English word the 6b content (land and sea, urban, groups, bynames, realms, vessels, money, events, calendars, sky lore, arms, treasures, books, deities, settlement names, inn signs and the holy and ruler forms of the people tables) uses was checked on collinsdictionary.com and oed.com, sending only the word. A word counts as found when Collins or the OED has an entry for it in the sense used (a variant spelling counts only if the table uses that spelling). A word not found was replaced by its English sense, or by the spelling the dictionaries do hold. Where a word was not looked up, it is replaced by English, never kept.
+
+- Words looked up online: 72
+- Kept (found): 60 (and Khatun and Khanum, whose OED entries came up beside the Khedive and Khamsin results)
+- Replaced after the online check (12; not found, or found only as a user submission or in another sense): Akce (Czech word, no match), Beshlik (only "bashlik", a hood), Mangir (OED has "manghir"), Keshig, Soyombo (a Collins user submission, not an entry), Dzud, Khopesh, Askia, Mansa (only Hindi and Portuguese words), Ifrit (Collins has "afrit", used now), Khagan (the dictionaries hold "khakan" and "chagan"; "Great Khan" is used), Baba (a cake; the holy form is "Father").
+- Replaced without a lookup, by English senses: Beylerbey, Tumen, Arban, Ulus, Naadam, Airag, Sycee, Jiao, Mongo, Kurus, Para, Altin, Dirhem, Sultani, Noyan, Bagatur, Taiji, Funduq, Qirsh, Mithqal, Baghlah, Sambuk, Shahbanu, Shahdom, Satrapy, Mirza, Medjay, Debtera, Matonya, Mahalaki, Gersh, Santim, Amole, Dejazmach, Fitawrari, Abba, Meyhane, Boza, Saz, Pairika, Silat, Nasnas, Qutrub, Shiqq, Marid, Jinniyah, Div, Ordo, Nilometer, Oba, Ashrafi, Fals, Fils, Kran, Abbasi, Siglos, Sanar, Shahi, Rial, Riyal, Mbira, Poro, Sofa, Manilla, Maquis, Kente, Fonio, Tej, Dede. "Han" for an inn is now "Khan" (Collins has the inn sense), and "Beylik" is now "Beylic" (Collins).
+
+Kept, with what was found:
+
+| Word | Where found |
+|---|---|
+| Tughra, Tugrik, Daric, Toman, Qanat, Dahabiya, Felucca, Khedive, Induna, Naira | Collins (Toman and Daric also the OED) |
+| Dinar, Dirham, Janissary, Caravanserai, Wadi, Simoom, Khamsin, Simurgh, Harmattan, Marabout, Assegai, Impi | Collins (Dirham also the OED) |
+| Mamluk, Madrasa | the OED (Collins has Mameluke and madrassa) |
+| Sultan, Caliph, Emir, Pasha, Vizier, Sheikh, Dervish, Minaret, Souk, Dhow, Djinn, Ghoul, Griot, Negus, Kraal | Collins |
+| Peri, Ankh, Fellah, Cedi, Birr, Cowrie, Teff, Hajj, Stupa, Lama, Piastre, Injera, Divan, Hookah, Bey, Imam, Sufi, Shah, Khan, Sultana | Collins |
+| Zar | the OED |
+| Khatun, Khanum | the OED |
+
+Words the 6a list already holds (Satrap, Thaler, Lira, Ger and the like) are not repeated.

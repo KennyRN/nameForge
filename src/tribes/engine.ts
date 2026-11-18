@@ -1396,11 +1396,11 @@ export function generateTribalNames(options: TribalOptions & { count: number; se
   if (options.signature === false || options.constraints || (options.biome && options.biome !== "homeland") || options.biomeData) return batch;
   const tradition = findTradition(options.tradition)?.key;
   if (!tradition || tradition === "germanic" || !contentKey(tradition)) return batch;
-  return { ...batch, names: applySignature(batch.names.map((n) => ({ ...n, text: n.name })), "tribalNames", tradition, batch.seed, { quota: true, ctx: { fantastic: true } }).map((n) => (n.text === n.name ? (({ text: _t, ...rest }) => rest)(n) as TribalName : ({ ...(({ text: _t, ...rest }) => rest)(n), name: n.text, inText: inTextOf(n.text) } as TribalName))) };
+  return { ...batch, names: applySignature(batch.names.map((n) => ({ ...n, text: n.name })), "tribalNames", tradition, batch.seed, { quota: true, ctx: { fantastic: true }, allowed: OWN_STREAM.slice(8).concat(["arabian", "westAfrican", "steppe", "bantu"]).includes(tradition) ? (text: string) => text.split(" ").length <= TRIBAL_DATA.lengthCaps[options.register ?? "plain"] : undefined }).map((n) => (n.text === n.name ? (({ text: _t, ...rest }) => rest)(n) as TribalName : ({ ...(({ text: _t, ...rest }) => rest)(n), name: n.text, inText: inTextOf(n.text) } as TribalName))) };
 }
 
 /** 5d §14.1 item 5: the eight traditions 5c added read their parent's tables, so each draws on a stream of its own (the same seed no longer gives "Spear Folk" in all of them). */
-const OWN_STREAM = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
+const OWN_STREAM = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian"];
 const streamOf = (tradition: string): number => (OWN_STREAM.includes(tradition) ? Math.imul(OWN_STREAM.indexOf(tradition) + 1, 0x9e3779b1) >>> 0 : 0);
 
 function generateTribalNamesCore(options: TribalOptions & { count: number; seed?: number }): TribalBatchResult {

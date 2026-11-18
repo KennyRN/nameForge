@@ -25,7 +25,7 @@ const NEW6 = ["welsh", "scottish", "irish", "cornish", "scandinavian", "german"]
 type Snapshot = Record<string, string[] | string>;
 
 /** The cultures that may change in this batch. */
-export const MAY_CHANGE_5D = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "ottoman", "swahili-omani", "malay", "maritimeSEA", "phoenician", /* brief 6b: the batch's cultures change too */ "anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "english", "celtic", "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
+export const MAY_CHANGE_5D = new Set(["arabian", "westAfrican", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "ottoman", "swahili-omani", "malay", "maritimeSEA", "phoenician", /* brief 6b: the batch's cultures change too */ "anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "english", "celtic", "french", "dutch", "italian", "roman", "slavic", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
 
 const textsOf = (result: unknown): string[] => ((result as { names: { text: string }[] }).names ?? []).map((n) => n.text);
 function record(out: Snapshot, key: string, run: (seed: number) => string[]) {

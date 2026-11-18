@@ -78,6 +78,54 @@ function patch6a() {
   write("src/data/lens.json", lens, 1);
 }
 
+
+// Brief 6b: Turkic, Mongol, Arabic, Persian, Egyptian and Ethiopian as tribal traditions (the old steppe, arabian, bantu and westAfrican keep their own).
+// Each new tradition starts from the tables of the one it grew from, with homelands, flavour and signature collectives of its own.
+export const TRIBAL6B = {
+  turkic: { base: "steppe", label: "Turkic", group: "Eastern Europe and the steppe", drawsOn: "Oghuz, Seljuk and Ottoman Turkic tribes, beyliks and khanates", homeland: { steppe: 35, highland: 35, temperate: 30 }, terrainMultipliers: { rivers: 1.2, coast: 0.8, islands: 0.3 },
+    flavour: { animals: ["Grey Wolf", "Horse", "Falcon", "Eagle", "Ram", "Camel", "Stag", "Nightingale"], plants: ["Feather Grass", "Walnut", "Plane"], land: ["Highland Pasture", "Pass", "Plateau"], water: ["Springs", "Salt Lakes"], lifeways: ["Horse Herders", "Carpet Weavers", "Felt Makers"] }, signatureCollectives: ["Tribe", "Host", "Banners", "Tents", "Riders", "Beylik"] },
+  mongol: { base: "steppe", label: "Mongol", group: "Eastern Europe and the steppe", drawsOn: "Mongol clans, ordos and banners of the steppe", homeland: { steppe: 70, desert: 15, highland: 15 }, terrainMultipliers: { rivers: 1.1, coast: 0, islands: 0 },
+    flavour: { animals: ["Blue Wolf", "Horse", "Golden Eagle", "Camel", "Yak", "Marmot", "Red Deer", "Falcon"], plants: ["Feather Grass", "Wild Onion", "Larch"], land: ["Gobi", "Pass", "Cairn"], water: ["Salt Lakes", "Springs"], lifeways: ["Horse Herders", "Archers", "Felt Makers"] }, signatureCollectives: ["Ordo", "Horde", "Arrows", "Banners", "Tents", "Riders"] },
+  arabic: { base: "arabian", label: "Arabic", group: "Middle East and Africa", drawsOn: "Arabian tribes, caravan towns and oasis communities", homeland: { desert: 60, temperate: 25, highland: 15 }, terrainMultipliers: { coast: 1.1, rivers: 0.6 },
+    flavour: { animals: ["Camel", "Falcon", "Gazelle", "Oryx", "Horse", "Ibex", "Hawk"], plants: ["Date Palm", "Acacia", "Tamarisk"], land: ["Wadi", "Oasis", "Dunes"], water: ["Wells", "Springs"], lifeways: ["Camel Herders", "Traders", "Pearl Divers"] }, signatureCollectives: ["Tribe", "Clan", "Caravan", "Tents", "House"] },
+  persian: { base: "arabian", label: "Persian", group: "Middle East and Africa", drawsOn: "Persian tribes, garden cities and the satrapies of the plateau", homeland: { highland: 40, desert: 25, temperate: 35 }, terrainMultipliers: { mountains: 1.2, coast: 0.8 },
+    flavour: { animals: ["Lion", "Falcon", "Horse", "Gazelle", "Leopard", "Nightingale", "Ram"], plants: ["Rose", "Cypress", "Pomegranate"], land: ["Plateau", "Garden", "Salt Desert"], water: ["Qanats", "Springs"], lifeways: ["Gardeners", "Carpet Weavers", "Horse Herders"] }, signatureCollectives: ["Tribe", "House", "Satrapy", "Gardens", "Riders"] },
+  egyptian: { base: "arabian", label: "Egyptian", group: "Middle East and Africa", drawsOn: "Nile valley kin, nome communities and river towns", homeland: { temperate: 55, desert: 45 }, terrainMultipliers: { rivers: 2, coast: 1.1, mountains: 0.3 },
+    flavour: { animals: ["Falcon", "Ibis", "Jackal", "Crocodile", "Hippo", "Cobra", "Bull"], plants: ["Papyrus", "Lotus", "Date Palm"], land: ["Delta", "Cataract", "Oasis"], water: ["Nile", "Canals"], lifeways: ["Boatmen", "Farmers", "Scribes"] }, signatureCollectives: ["Nome", "House", "Households", "Boats", "Temple"] },
+  ethiopian: { base: "arabian", label: "Ethiopian", group: "Middle East and Africa", drawsOn: "Highland kin, church communities and the lowland peoples of the Rift", homeland: { highland: 60, temperate: 25, desert: 15 }, terrainMultipliers: { mountains: 1.4, coast: 0.4, rivers: 1.1 },
+    flavour: { animals: ["Lion", "Ibis", "Mule", "Ibex", "Leopard", "Hornbill", "Baboon"], plants: ["Coffee", "Teff", "Juniper"], land: ["Amba", "Highland", "Rift"], water: ["Lakes", "Springs"], lifeways: ["Farmers", "Herders", "Coffee Growers"] }, signatureCollectives: ["Kin", "Church", "Households", "Clan", "Village"] },
+};
+const TRIBAL6B_KEYS = Object.keys(TRIBAL6B);
+function patch6b() {
+  const tribal = read("src/data/tribal-names.json");
+  if (!tribal.traditions.some((t) => t.key === "turkic")) {
+    for (const [key, spec] of Object.entries(TRIBAL6B)) {
+      const { base, ...own } = spec;
+      const from = tribal.traditions.find((t) => t.key === base);
+      tribal.traditions.push({ ...clone(from), key, ...own, flavour: { ...clone(from.flavour), ...own.flavour } });
+    }
+  }
+  const spread6b = (node) => {
+    if (Array.isArray(node)) {
+      for (const item of node) spread6b(item);
+      if (node.every((x) => typeof x === "string")) for (const [k, spec] of Object.entries(TRIBAL6B)) if (node.includes(spec.base) && !node.includes(k)) node.push(k);
+      return;
+    }
+    if (node && typeof node === "object") {
+      for (const [k, v] of Object.entries(node)) if (k !== "homeland") spread6b(v);
+      for (const [k, spec] of Object.entries(TRIBAL6B)) if (spec.base in node && !("temperate" in node) && !(k in node)) node[k] = clone(node[spec.base]);
+    }
+  };
+  spread6b(tribal);
+  write("src/data/tribal-names.json", tribal, 1);
+  const group = read("src/data/group-names.json");
+  spread6b(group);
+  write("src/data/group-names.json", group, 1);
+  const lens = read("src/data/lens.json");
+  for (const key of TRIBAL6B_KEYS) if (!lens.mappings.cultures.tribal[key]) lens.mappings.cultures.tribal[key] = { lens: [key], weights: [[key, 1]] };
+  write("src/data/lens.json", lens, 1);
+}
+
 export function patchData() {
   // ── tribal-names.json
   const tribal = read("src/data/tribal-names.json");
@@ -110,6 +158,7 @@ export function patchData() {
   lens.modules.spacecraft.sentence.roster = "vesselSpace";
   write("src/data/lens.json", lens, 1);
   patch6a();
+  patch6b();
 }
 
 if (process.argv[1] && process.argv[1].endsWith("patchData.mjs")) patchData();

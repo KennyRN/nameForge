@@ -1,4481 +1,4586 @@
 {
-  "$comment": "The shared lens (docs/shared-lens-and-coverage-brief.md §3, §4): cultures, regions, eras, styles and tones defined once; `mappings` says how each module's own rosters read in lens terms. Planned cultures are declared and never offered.",
-  "version": 1,
-  "cultures": [
-    {
-      "key": "general",
-      "label": "General",
-      "tier": "baseline",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "general"
-      ]
-    },
-    {
-      "key": "english",
-      "label": "English",
-      "tier": "core",
-      "family": "british",
-      "status": "live",
-      "keys": [
-        "anglo-saxon",
-        "norman-british"
-      ]
-    },
-    {
-      "key": "welsh",
-      "label": "Welsh",
-      "tier": "core",
-      "family": "british",
-      "status": "live",
-      "keys": [
-        "welsh"
-      ]
-    },
-    {
-      "key": "scottish",
-      "label": "Scottish",
-      "tier": "core",
-      "family": "british",
-      "status": "live",
-      "keys": [
-        "scottish"
-      ]
-    },
-    {
-      "key": "irish",
-      "label": "Irish",
-      "tier": "core",
-      "family": "british",
-      "status": "live",
-      "keys": [
-        "irish"
-      ]
-    },
-    {
-      "key": "cornish",
-      "label": "Cornish",
-      "tier": "core",
-      "family": "british",
-      "status": "live",
-      "keys": [
-        "cornish"
-      ]
-    },
-    {
-      "key": "celtic",
-      "label": "Celtic",
-      "tier": "second",
-      "family": "british",
-      "status": "live",
-      "keys": [
-        "celtic"
-      ]
-    },
-    {
-      "key": "norse",
-      "label": "Norse",
-      "tier": "core",
-      "family": "germanic",
-      "status": "live",
-      "keys": [
-        "norse"
-      ]
-    },
-    {
-      "key": "scandinavian",
-      "label": "Scandinavian",
-      "tier": "core",
-      "family": "germanic",
-      "status": "live",
-      "keys": [
-        "scandinavian"
-      ]
-    },
-    {
-      "key": "german",
-      "label": "German",
-      "tier": "core",
-      "family": "germanic",
-      "status": "live",
-      "keys": [
-        "german"
-      ]
-    },
-    {
-      "key": "french",
-      "label": "French",
-      "tier": "core",
-      "family": "romance",
-      "status": "live",
-      "keys": [
-        "french"
-      ]
-    },
-    {
-      "key": "dutch",
-      "label": "Dutch",
-      "tier": "core",
-      "family": "germanic",
-      "status": "live",
-      "keys": [
-        "dutch"
-      ]
-    },
-    {
-      "key": "spanish",
-      "label": "Spanish",
-      "tier": "core",
-      "family": "romance",
-      "status": "live",
-      "keys": [
-        "spanish"
-      ]
-    },
-    {
-      "key": "portuguese",
-      "label": "Portuguese",
-      "tier": "core",
-      "family": "romance",
-      "status": "live",
-      "keys": [
-        "portuguese"
-      ]
-    },
-    {
-      "key": "iberian",
-      "label": "Iberian",
-      "tier": "second",
-      "family": "romance",
-      "status": "live",
-      "keys": [
-        "iberian"
-      ]
-    },
-    {
-      "key": "italian",
-      "label": "Italian",
-      "tier": "core",
-      "family": "romance",
-      "status": "live",
-      "keys": [
-        "italian"
-      ]
-    },
-    {
-      "key": "roman",
-      "label": "Roman",
-      "tier": "core",
-      "family": "classical",
-      "status": "live",
-      "keys": [
-        "roman"
-      ]
-    },
-    {
-      "key": "greek",
-      "label": "Greek",
-      "tier": "core",
-      "family": "classical",
-      "status": "live",
-      "keys": [
-        "greek"
-      ]
-    },
-    {
-      "key": "byzantine",
-      "label": "Byzantine",
-      "tier": "core",
-      "family": "classical",
-      "status": "live",
-      "keys": [
-        "byzantine"
-      ]
-    },
-    {
-      "key": "greek-byzantine",
-      "label": "Greek and Byzantine",
-      "tier": "second",
-      "family": "classical",
-      "status": "live",
-      "keys": [
-        "greek-byzantine"
-      ]
-    },
-    {
-      "key": "slavic",
-      "label": "Slavic",
-      "tier": "core",
-      "family": "slavic",
-      "status": "live",
-      "keys": [
-        "slavic"
-      ]
-    },
-    {
-      "key": "turkic",
-      "label": "Turkic",
-      "tier": "core",
-      "family": "steppe",
-      "status": "live",
-      "keys": [
-        "turkic"
-      ]
-    },
-    {
-      "key": "mongol",
-      "label": "Mongol",
-      "tier": "core",
-      "family": "steppe",
-      "status": "live",
-      "keys": [
-        "mongol"
-      ]
-    },
-    {
-      "key": "steppe",
-      "label": "Turkic and Mongol steppe",
-      "tier": "second",
-      "family": "steppe",
-      "status": "live",
-      "keys": [
-        "steppe"
-      ]
-    },
-    {
-      "key": "arabic",
-      "label": "Arabic",
-      "tier": "core",
-      "family": "near-east",
-      "status": "live",
-      "keys": [
-        "arabic"
-      ]
-    },
-    {
-      "key": "persian",
-      "label": "Persian",
-      "tier": "core",
-      "family": "near-east",
-      "status": "live",
-      "keys": [
-        "persian"
-      ]
-    },
-    {
-      "key": "arabic-persian",
-      "label": "Arabic and Persian",
-      "tier": "second",
-      "family": "near-east",
-      "status": "live",
-      "keys": [
-        "arabic-persian"
-      ]
-    },
-    {
-      "key": "egyptian",
-      "label": "Egyptian",
-      "tier": "core",
-      "family": "near-east",
-      "status": "live",
-      "keys": [
-        "egyptian"
-      ]
-    },
-    {
-      "key": "ethiopian",
-      "label": "Ethiopian",
-      "tier": "core",
-      "family": "africa",
-      "status": "live",
-      "keys": [
-        "ethiopian"
-      ]
-    },
-    {
-      "key": "bantu",
-      "label": "Bantu",
-      "tier": "core",
-      "family": "africa",
-      "status": "live",
-      "keys": [
-        "bantu"
-      ]
-    },
-    {
-      "key": "west-african",
-      "label": "West African",
-      "tier": "core",
-      "family": "africa",
-      "status": "live",
-      "keys": [
-        "west-african"
-      ]
-    },
-    {
-      "key": "indian",
-      "label": "Indian",
-      "tier": "second",
-      "family": "south-asia",
-      "status": "live",
-      "keys": [
-        "indian"
-      ]
-    },
-    {
-      "key": "chinese",
-      "label": "Chinese",
-      "tier": "second",
-      "family": "east-asia",
-      "status": "live",
-      "keys": [
-        "chinese"
-      ]
-    },
-    {
-      "key": "japanese",
-      "label": "Japanese",
-      "tier": "second",
-      "family": "east-asia",
-      "status": "live",
-      "keys": [
-        "japanese"
-      ]
-    },
-    {
-      "key": "korean",
-      "label": "Korean",
-      "tier": "second",
-      "family": "east-asia",
-      "status": "live",
-      "keys": [
-        "korean"
-      ]
-    },
-    {
-      "key": "aztec",
-      "label": "Aztec",
-      "tier": "second",
-      "family": "americas",
-      "status": "live",
-      "keys": [
-        "aztec"
-      ]
-    },
-    {
-      "key": "maya",
-      "label": "Maya",
-      "tier": "second",
-      "family": "americas",
-      "status": "live",
-      "keys": [
-        "maya"
-      ]
-    },
-    {
-      "key": "andean",
-      "label": "Andean",
-      "tier": "second",
-      "family": "americas",
-      "status": "live",
-      "keys": [
-        "andean"
-      ]
-    },
-    {
-      "key": "polynesian",
-      "label": "Polynesian",
-      "tier": "second",
-      "family": "pacific",
-      "status": "live",
-      "keys": [
-        "polynesian"
-      ]
-    },
-    {
-      "key": "american",
-      "label": "American",
-      "tier": "second",
-      "family": "settler",
-      "status": "live",
-      "keys": [
-        "american"
-      ]
-    },
-    {
-      "key": "ottoman",
-      "label": "Ottoman & Barbary",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "ottoman"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "swahili-omani",
-      "label": "Swahili & Omani",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "swahili-omani"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "malay",
-      "label": "Malay & Indonesian",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "malay"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "hawaiian",
-      "label": "Hawaiian",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "hawaiian"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "maori",
-      "label": "Māori",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "maori"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "w-polynesian",
-      "label": "Western Polynesian",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "w-polynesian"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "nw-coast",
-      "label": "Pacific Northwest Coast",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "nw-coast"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "arctic",
-      "label": "Arctic",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "arctic"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "na-woodlands",
-      "label": "North American Woodlands & Rivers",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "na-woodlands"
-      ],
-      "module": "vessels"
-    },
-    {
-      "key": "phoenician",
-      "label": "Phoenician (and Carthaginian)",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "phoenician"
-      ],
-      "module": "colonial"
-    },
-    {
-      "key": "hellenistic",
-      "label": "Hellenistic (Greek and Macedonian)",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "hellenistic"
-      ],
-      "module": "colonial"
-    },
-    {
-      "key": "belgian",
-      "label": "Belgian",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "belgian"
-      ],
-      "module": "colonial"
-    },
-    {
-      "key": "northAmerican",
-      "label": "North American Woodlands & Plains",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "northAmerican"
-      ],
-      "module": "tribal"
-    },
-    {
-      "key": "maritimeSEA",
-      "label": "Maritime South-East Asian",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "maritimeSEA"
-      ],
-      "module": "tribal"
-    },
-    {
-      "key": "northernPacific",
-      "label": "Pacific Northwest & Arctic",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "northernPacific"
-      ],
-      "module": "tribal"
-    },
-    {
-      "key": "sahul",
-      "label": "Australia & New Guinea",
-      "tier": "local",
-      "family": null,
-      "status": "live",
-      "keys": [
-        "sahul"
-      ],
-      "module": "tribal"
-    }
+ "$comment": "The shared lens (docs/shared-lens-and-coverage-brief.md §3, §4): cultures, regions, eras, styles and tones defined once; `mappings` says how each module's own rosters read in lens terms. Planned cultures are declared and never offered.",
+ "version": 1,
+ "cultures": [
+  {
+   "key": "general",
+   "label": "General",
+   "tier": "baseline",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "general"
+   ]
+  },
+  {
+   "key": "english",
+   "label": "English",
+   "tier": "core",
+   "family": "british",
+   "status": "live",
+   "keys": [
+    "anglo-saxon",
+    "norman-british"
+   ]
+  },
+  {
+   "key": "welsh",
+   "label": "Welsh",
+   "tier": "core",
+   "family": "british",
+   "status": "live",
+   "keys": [
+    "welsh"
+   ]
+  },
+  {
+   "key": "scottish",
+   "label": "Scottish",
+   "tier": "core",
+   "family": "british",
+   "status": "live",
+   "keys": [
+    "scottish"
+   ]
+  },
+  {
+   "key": "irish",
+   "label": "Irish",
+   "tier": "core",
+   "family": "british",
+   "status": "live",
+   "keys": [
+    "irish"
+   ]
+  },
+  {
+   "key": "cornish",
+   "label": "Cornish",
+   "tier": "core",
+   "family": "british",
+   "status": "live",
+   "keys": [
+    "cornish"
+   ]
+  },
+  {
+   "key": "celtic",
+   "label": "Celtic",
+   "tier": "second",
+   "family": "british",
+   "status": "live",
+   "keys": [
+    "celtic"
+   ]
+  },
+  {
+   "key": "norse",
+   "label": "Norse",
+   "tier": "core",
+   "family": "germanic",
+   "status": "live",
+   "keys": [
+    "norse"
+   ]
+  },
+  {
+   "key": "scandinavian",
+   "label": "Scandinavian",
+   "tier": "core",
+   "family": "germanic",
+   "status": "live",
+   "keys": [
+    "scandinavian"
+   ]
+  },
+  {
+   "key": "german",
+   "label": "German",
+   "tier": "core",
+   "family": "germanic",
+   "status": "live",
+   "keys": [
+    "german"
+   ]
+  },
+  {
+   "key": "french",
+   "label": "French",
+   "tier": "core",
+   "family": "romance",
+   "status": "live",
+   "keys": [
+    "french"
+   ]
+  },
+  {
+   "key": "dutch",
+   "label": "Dutch",
+   "tier": "core",
+   "family": "germanic",
+   "status": "live",
+   "keys": [
+    "dutch"
+   ]
+  },
+  {
+   "key": "spanish",
+   "label": "Spanish",
+   "tier": "core",
+   "family": "romance",
+   "status": "live",
+   "keys": [
+    "spanish"
+   ]
+  },
+  {
+   "key": "portuguese",
+   "label": "Portuguese",
+   "tier": "core",
+   "family": "romance",
+   "status": "live",
+   "keys": [
+    "portuguese"
+   ]
+  },
+  {
+   "key": "iberian",
+   "label": "Iberian",
+   "tier": "second",
+   "family": "romance",
+   "status": "live",
+   "keys": [
+    "iberian"
+   ]
+  },
+  {
+   "key": "italian",
+   "label": "Italian",
+   "tier": "core",
+   "family": "romance",
+   "status": "live",
+   "keys": [
+    "italian"
+   ]
+  },
+  {
+   "key": "roman",
+   "label": "Roman",
+   "tier": "core",
+   "family": "classical",
+   "status": "live",
+   "keys": [
+    "roman"
+   ]
+  },
+  {
+   "key": "greek",
+   "label": "Greek",
+   "tier": "core",
+   "family": "classical",
+   "status": "live",
+   "keys": [
+    "greek"
+   ]
+  },
+  {
+   "key": "byzantine",
+   "label": "Byzantine",
+   "tier": "core",
+   "family": "classical",
+   "status": "live",
+   "keys": [
+    "byzantine"
+   ]
+  },
+  {
+   "key": "greek-byzantine",
+   "label": "Greek and Byzantine",
+   "tier": "second",
+   "family": "classical",
+   "status": "live",
+   "keys": [
+    "greek-byzantine"
+   ]
+  },
+  {
+   "key": "slavic",
+   "label": "Slavic",
+   "tier": "core",
+   "family": "slavic",
+   "status": "live",
+   "keys": [
+    "slavic"
+   ]
+  },
+  {
+   "key": "turkic",
+   "label": "Turkic",
+   "tier": "core",
+   "family": "steppe",
+   "status": "live",
+   "keys": [
+    "turkic"
+   ]
+  },
+  {
+   "key": "mongol",
+   "label": "Mongol",
+   "tier": "core",
+   "family": "steppe",
+   "status": "live",
+   "keys": [
+    "mongol"
+   ]
+  },
+  {
+   "key": "steppe",
+   "label": "Turkic and Mongol steppe",
+   "tier": "second",
+   "family": "steppe",
+   "status": "live",
+   "keys": [
+    "steppe"
+   ]
+  },
+  {
+   "key": "arabic",
+   "label": "Arabic",
+   "tier": "core",
+   "family": "near-east",
+   "status": "live",
+   "keys": [
+    "arabic"
+   ]
+  },
+  {
+   "key": "persian",
+   "label": "Persian",
+   "tier": "core",
+   "family": "near-east",
+   "status": "live",
+   "keys": [
+    "persian"
+   ]
+  },
+  {
+   "key": "arabic-persian",
+   "label": "Arabic and Persian",
+   "tier": "second",
+   "family": "near-east",
+   "status": "live",
+   "keys": [
+    "arabic-persian"
+   ]
+  },
+  {
+   "key": "egyptian",
+   "label": "Egyptian",
+   "tier": "core",
+   "family": "near-east",
+   "status": "live",
+   "keys": [
+    "egyptian"
+   ]
+  },
+  {
+   "key": "ethiopian",
+   "label": "Ethiopian",
+   "tier": "core",
+   "family": "africa",
+   "status": "live",
+   "keys": [
+    "ethiopian"
+   ]
+  },
+  {
+   "key": "bantu",
+   "label": "Bantu",
+   "tier": "core",
+   "family": "africa",
+   "status": "live",
+   "keys": [
+    "bantu"
+   ]
+  },
+  {
+   "key": "west-african",
+   "label": "West African",
+   "tier": "core",
+   "family": "africa",
+   "status": "live",
+   "keys": [
+    "west-african"
+   ]
+  },
+  {
+   "key": "indian",
+   "label": "Indian",
+   "tier": "second",
+   "family": "south-asia",
+   "status": "live",
+   "keys": [
+    "indian"
+   ]
+  },
+  {
+   "key": "chinese",
+   "label": "Chinese",
+   "tier": "second",
+   "family": "east-asia",
+   "status": "live",
+   "keys": [
+    "chinese"
+   ]
+  },
+  {
+   "key": "japanese",
+   "label": "Japanese",
+   "tier": "second",
+   "family": "east-asia",
+   "status": "live",
+   "keys": [
+    "japanese"
+   ]
+  },
+  {
+   "key": "korean",
+   "label": "Korean",
+   "tier": "second",
+   "family": "east-asia",
+   "status": "live",
+   "keys": [
+    "korean"
+   ]
+  },
+  {
+   "key": "aztec",
+   "label": "Aztec",
+   "tier": "second",
+   "family": "americas",
+   "status": "live",
+   "keys": [
+    "aztec"
+   ]
+  },
+  {
+   "key": "maya",
+   "label": "Maya",
+   "tier": "second",
+   "family": "americas",
+   "status": "live",
+   "keys": [
+    "maya"
+   ]
+  },
+  {
+   "key": "andean",
+   "label": "Andean",
+   "tier": "second",
+   "family": "americas",
+   "status": "live",
+   "keys": [
+    "andean"
+   ]
+  },
+  {
+   "key": "polynesian",
+   "label": "Polynesian",
+   "tier": "second",
+   "family": "pacific",
+   "status": "live",
+   "keys": [
+    "polynesian"
+   ]
+  },
+  {
+   "key": "american",
+   "label": "American",
+   "tier": "second",
+   "family": "settler",
+   "status": "live",
+   "keys": [
+    "american"
+   ]
+  },
+  {
+   "key": "ottoman",
+   "label": "Ottoman & Barbary",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "ottoman"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "swahili-omani",
+   "label": "Swahili & Omani",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "swahili-omani"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "malay",
+   "label": "Malay & Indonesian",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "malay"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "hawaiian",
+   "label": "Hawaiian",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "hawaiian"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "maori",
+   "label": "Māori",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "maori"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "w-polynesian",
+   "label": "Western Polynesian",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "w-polynesian"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "nw-coast",
+   "label": "Pacific Northwest Coast",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "nw-coast"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "arctic",
+   "label": "Arctic",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "arctic"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "na-woodlands",
+   "label": "North American Woodlands & Rivers",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "na-woodlands"
+   ],
+   "module": "vessels"
+  },
+  {
+   "key": "phoenician",
+   "label": "Phoenician (and Carthaginian)",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "phoenician"
+   ],
+   "module": "colonial"
+  },
+  {
+   "key": "hellenistic",
+   "label": "Hellenistic (Greek and Macedonian)",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "hellenistic"
+   ],
+   "module": "colonial"
+  },
+  {
+   "key": "belgian",
+   "label": "Belgian",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "belgian"
+   ],
+   "module": "colonial"
+  },
+  {
+   "key": "northAmerican",
+   "label": "North American Woodlands & Plains",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "northAmerican"
+   ],
+   "module": "tribal"
+  },
+  {
+   "key": "maritimeSEA",
+   "label": "Maritime South-East Asian",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "maritimeSEA"
+   ],
+   "module": "tribal"
+  },
+  {
+   "key": "northernPacific",
+   "label": "Pacific Northwest & Arctic",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "northernPacific"
+   ],
+   "module": "tribal"
+  },
+  {
+   "key": "sahul",
+   "label": "Australia & New Guinea",
+   "tier": "local",
+   "family": null,
+   "status": "live",
+   "keys": [
+    "sahul"
+   ],
+   "module": "tribal"
+  }
+ ],
+ "legacy": {
+  "anglo-saxon": [
+   "english"
   ],
-  "legacy": {
-    "anglo-saxon": [
+  "norman-british": [
+   "english"
+  ],
+  "celtic": [
+   "welsh",
+   "scottish",
+   "irish",
+   "cornish",
+   "celtic"
+  ],
+  "norse": [
+   "norse",
+   "scandinavian"
+  ]
+ },
+ "cultureGroups": {
+  "british": {
+   "cultures": [
+    "anglo-saxon",
+    "celtic",
+    "norman-british",
+    "welsh",
+    "scottish",
+    "irish",
+    "cornish"
+   ]
+  },
+  "christian": {
+   "cultures": [
+    "anglo-saxon",
+    "celtic",
+    "norman-british",
+    "welsh",
+    "scottish",
+    "irish",
+    "cornish",
+    "slavic",
+    "french",
+    "iberian",
+    "spanish",
+    "portuguese"
+   ],
+   "from": {
+    "greek-byzantine": "MD",
+    "roman": "MD",
+    "greek": "MD",
+    "byzantine": "MD"
+   }
+  },
+  "nordic": {
+   "cultures": [
+    "norse",
+    "scandinavian"
+   ]
+  }
+ },
+ "regions": [
+  {
+   "code": "COR",
+   "label": "Cornwall",
+   "cultures": [
+    "cornish"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "WCY",
+   "label": "West Country",
+   "cultures": [
+    "english"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "SEA",
+   "label": "South East",
+   "cultures": [
+    "english"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "EAN",
+   "label": "East Anglia",
+   "cultures": [
+    "english"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "WMM",
+   "label": "West Midlands and Marches",
+   "cultures": [
+    "english"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "EMD",
+   "label": "East Midlands",
+   "cultures": [
+    "english"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "NTH",
+   "label": "North",
+   "cultures": [
+    "english"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "SBL",
+   "label": "Borderlands",
+   "cultures": [
+    "english",
+    "scottish"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "WAL",
+   "label": "Wales",
+   "cultures": [
+    "welsh"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "SLO",
+   "label": "Lowlands",
+   "cultures": [
+    "scottish"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "SHH",
+   "label": "Highlands and Hebrides",
+   "cultures": [
+    "scottish"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "NSI",
+   "label": "Northern Isles",
+   "cultures": [
+    "scottish"
+   ],
+   "status": "live"
+  },
+  {
+   "code": "DEN",
+   "label": "Denmark",
+   "cultures": [
+    "scandinavian"
+   ],
+   "status": "live",
+   "landscape": "Low islands, heath, beech wood, sounds, dunes and bogs",
+   "phrase": "Denmark"
+  },
+  {
+   "code": "NOR",
+   "label": "Norway",
+   "cultures": [
+    "scandinavian"
+   ],
+   "status": "live",
+   "landscape": "Fjords, fells, high moor, glaciers, waterfalls and steep farms",
+   "phrase": "Norway"
+  },
+  {
+   "code": "SWE",
+   "label": "Sweden",
+   "cultures": [
+    "scandinavian"
+   ],
+   "status": "live",
+   "landscape": "Lakes, forest, rock, skerries, eskers and mines",
+   "phrase": "Sweden"
+  },
+  {
+   "code": "ICE",
+   "label": "Iceland and the Atlantic isles",
+   "cultures": [
+    "scandinavian"
+   ],
+   "status": "live",
+   "landscape": "Lava, black sand, hot springs, ice caps, bare fell and bird cliffs",
+   "phrase": "Iceland and the Atlantic isles"
+  },
+  {
+   "code": "NDT",
+   "label": "North German plain and coast",
+   "cultures": [
+    "german"
+   ],
+   "status": "live",
+   "landscape": "Marsh, heath, moor, dykes, mudflats, islands and brick towns",
+   "phrase": "the North German plain and coast"
+  },
+  {
+   "code": "RHN",
+   "label": "Rhineland",
+   "cultures": [
+    "german"
+   ],
+   "status": "live",
+   "landscape": "River gorge, vineyards, crags, castles and old roman towns",
+   "phrase": "the Rhineland"
+  },
+  {
+   "code": "MIT",
+   "label": "Central uplands",
+   "cultures": [
+    "german"
+   ],
+   "status": "live",
+   "landscape": "Forested hills, mining, springs, ridges and clearings",
+   "phrase": "the Central uplands"
+  },
+  {
+   "code": "ALP",
+   "label": "Alpine south",
+   "cultures": [
+    "german"
+   ],
+   "status": "live",
+   "landscape": "Alps, high pasture, passes, lakes, avalanches and gorges",
+   "phrase": "the Alpine south"
+  },
+  {
+   "code": "OST",
+   "label": "Eastern marches",
+   "cultures": [
+    "german"
+   ],
+   "status": "live",
+   "landscape": "Lakes, pine, sand, marsh and slavic-borrowed settlements",
+   "phrase": "the Eastern marches"
+  }
+ ],
+ "eras": [
+  {
+   "code": "AN",
+   "label": "ancient",
+   "span": "to c. 500"
+  },
+  {
+   "code": "MD",
+   "label": "medieval",
+   "span": "c. 500–1500"
+  },
+  {
+   "code": "EM",
+   "label": "early modern",
+   "span": "c. 1500–1750"
+  },
+  {
+   "code": "ST",
+   "label": "steam age",
+   "span": "c. 1750–1914"
+  },
+  {
+   "code": "MO",
+   "label": "modern",
+   "span": "c. 1914–now"
+  },
+  {
+   "code": "NF",
+   "label": "near future",
+   "span": null
+  },
+  {
+   "code": "IS",
+   "label": "interstellar",
+   "span": null
+  }
+ ],
+ "landBand": [
+  "EM",
+  "ST",
+  "MO"
+ ],
+ "styles": [
+  {
+   "key": "realistic",
+   "label": "realistic",
+   "eras": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ]
+  },
+  {
+   "key": "low-fantasy",
+   "label": "historic or low fantasy",
+   "eras": [
+    "AN",
+    "MD",
+    "EM"
+   ]
+  },
+  {
+   "key": "high-fantasy",
+   "label": "high or epic fantasy",
+   "eras": [
+    "AN",
+    "MD",
+    "EM"
+   ]
+  },
+  {
+   "key": "contemporary-fantasy",
+   "label": "contemporary fantasy",
+   "eras": [
+    "ST",
+    "MO"
+   ]
+  },
+  {
+   "key": "steampunk",
+   "label": "steampunk",
+   "eras": [
+    "ST"
+   ]
+  },
+  {
+   "key": "dieselpunk",
+   "label": "dieselpunk",
+   "eras": [
+    "MO"
+   ]
+  },
+  {
+   "key": "cyberpunk",
+   "label": "cyberpunk",
+   "eras": [
+    "NF"
+   ]
+  },
+  {
+   "key": "post-apocalyptic",
+   "label": "post-apocalyptic",
+   "eras": [
+    "MO",
+    "NF",
+    "IS"
+   ]
+  },
+  {
+   "key": "space-opera",
+   "label": "space opera",
+   "eras": [
+    "NF",
+    "IS"
+   ]
+  }
+ ],
+ "tones": [
+  {
+   "key": "grand"
+  },
+  {
+   "key": "plain"
+  },
+  {
+   "key": "grim"
+  },
+  {
+   "key": "light"
+  },
+  {
+   "key": "strange"
+  }
+ ],
+ "targets": {
+  "cultures": {
+   "core": {
+    "words": 30,
+    "shapes": 10
+   },
+   "second": {
+    "words": 12,
+    "shapes": 4
+   },
+   "local": {
+    "words": 4,
+    "shapes": 1
+   }
+  },
+  "era": 12,
+  "style": {
+   "words": 16,
+   "shapes": 4
+  },
+  "tone": 8,
+  "region": 6,
+  "kindOpenShapes": 6,
+  "pool": 8,
+  "toneKeys": [
+   "grand",
+   "grim",
+   "light",
+   "strange"
+  ]
+ },
+ "poolExemptions": {
+  "forPacks": [
+   "buildingFixed:faith",
+   "buildingFixed:works",
+   "buildingFixed:learning",
+   "buildingFixed:confinement",
+   "buildingFixed:maritime",
+   "eventFixed:battle",
+   "eventFixed:rebellion",
+   "eventFixed:treaty",
+   "eventFixed:crisis",
+   "deityFixed:deity",
+   "deityFixed:place",
+   "watersFixed:seas",
+   "watersFixed:coasts",
+   "watersFixed:charts",
+   "watersFixed:hyperspace",
+   "routeFixed:rail",
+   "routeFixed:motor",
+   "buildingFixed:civic",
+   "buildingFixed:crossing",
+   "buildingFixed:residence",
+   "buildingFixed:water",
+   "eventFixed:disaster",
+   "eventFixed:era"
+  ],
+  "closed": [
+   "cycleElement",
+   "cycleAnimal",
+   "direction",
+   "directionAdj",
+   "dayElement",
+   "cultureNames/anglo-saxon/day",
+   "cultureNames/celtic/day",
+   "cultureNames/chinese/day",
+   "cultureNames/ethiopian/day",
+   "cultureNames/greek-byzantine/day",
+   "cultureNames/korean/day",
+   "coinFraction",
+   "dayNumber",
+   "world/korean/lists/direction",
+   "world/chinese/lists/side"
+  ]
+ },
+ "retiredModules": [
+  "placeShapes",
+  "explorationPlaceShapes",
+  "empireExpansionPlaceShapes"
+ ],
+ "landModules": [
+  "mountainNames",
+  "forestNames",
+  "desertNames",
+  "moorNames",
+  "wetlandNames",
+  "grasslandNames",
+  "seasLakes",
+  "coastsIslands",
+  "seaCharts",
+  "riverNames",
+  "placeShapes",
+  "riversInland",
+  "hillsValleys",
+  "farmland",
+  "lands"
+ ],
+ "cultureSets": {
+  "caste": {
+   "cultures": [
+    "indian",
+    "west-african"
+   ],
+   "note": "Cultures whose names carry caste or trade-guild forms: buildings, events, inns, money, settlement context and streets each kept this pair."
+  },
+  "dutchAmerican": {
+   "cultures": [
+    "dutch",
+    "american"
+   ],
+   "note": "Money: the cultures whose coin names read the Dutch and American shapes."
+  },
+  "britainSource": {
+   "cultures": [
+    "general",
+    "anglo-saxon",
+    "celtic",
+    "norman-british"
+   ],
+   "note": "Bynames: cultures that draw their forenames from the British source. Differs from the `british` group: it includes general."
+  },
+  "noPlaceNames": {
+   "cultures": [
+    "greek-byzantine",
+    "steppe",
+    "turkic",
+    "mongol"
+   ],
+   "note": "Peoples and tongues, bynames: cultures with no place-name form."
+  },
+  "realmsChristian": {
+   "cultures": [
+    "general",
+    "anglo-saxon",
+    "celtic",
+    "norman-british",
+    "roman",
+    "greek-byzantine",
+    "slavic",
+    "ethiopian"
+   ],
+   "note": "Realms' own Christian set. Differs from the vocabulary's `christian` group (it includes general and ethiopian): kept as it is."
+  },
+  "plainNicknames": {
+   "cultures": [
+    "general",
+    "norman-british",
+    "anglo-saxon"
+   ],
+   "note": "Named things: cultures whose nickname forms aren't reduced."
+  },
+  "routesGods": {
+   "cultures": [
+    "egyptian",
+    "norse",
+    "anglo-saxon",
+    "aztec",
+    "maya"
+   ],
+   "note": "Route names: cultures with god-named routes."
+  },
+  "festivalsAncient": {
+   "cultures": [
+    "greek-byzantine",
+    "roman"
+   ],
+   "note": "Time and sky: cultures whose ancient calendars carry festivals."
+  },
+  "seasonPairNorth": {
+   "cultures": [
+    "anglo-saxon",
+    "celtic",
+    "norse"
+   ],
+   "note": "Time and sky: cultures reading a two-season pair from the ancient era to the medieval."
+  },
+  "seasonPairMeso": {
+   "cultures": [
+    "aztec",
+    "maya"
+   ],
+   "note": "Time and sky: cultures reading a season pair from the ancient era to the early modern; also the Mesoamerican calendar round."
+  },
+  "elementsEastAsian": {
+   "cultures": [
+    "chinese",
+    "japanese",
+    "korean",
+    "steppe",
+    "turkic",
+    "mongol"
+   ],
+   "note": "Time and sky: cultures whose week-7 system reads the five elements."
+  },
+  "vesselRealmCultures": {
+   "cultures": [
+    "general",
+    "anglo-saxon",
+    "norse",
+    "celtic",
+    "norman-british",
+    "roman",
+    "greek-byzantine",
+    "slavic",
+    "steppe",
+    "arabic-persian",
+    "indian",
+    "chinese",
+    "japanese",
+    "korean",
+    "egyptian",
+    "ethiopian",
+    "bantu",
+    "west-african",
+    "aztec",
+    "maya",
+    "turkic",
+    "mongol",
+    "arabic",
+    "persian"
+   ],
+   "note": "Vessels: the cultures a realm short form can be drawn for (the realms roster); others read general."
+  }
+ },
+ "mappings": {
+  "cultures": {
+   "shared": {
+    "general": {
+     "lens": [
+      "general"
+     ]
+    },
+    "anglo-saxon": {
+     "lens": [
       "english"
-    ],
-    "norman-british": [
+     ]
+    },
+    "norman-british": {
+     "lens": [
       "english"
-    ],
-    "celtic": [
+     ]
+    },
+    "celtic": {
+     "lens": [
       "welsh",
       "scottish",
       "irish",
       "cornish",
       "celtic"
-    ],
-    "norse": [
-      "norse",
-      "scandinavian"
-    ]
-  },
-  "cultureGroups": {
-    "british": {
-      "cultures": [
-        "anglo-saxon",
-        "celtic",
-        "norman-british",
-        "welsh",
-        "scottish",
-        "irish",
-        "cornish"
-      ]
-    },
-    "christian": {
-      "cultures": [
-        "anglo-saxon",
-        "celtic",
-        "norman-british",
-        "welsh",
-        "scottish",
-        "irish",
-        "cornish",
-        "slavic",
-        "french",
-        "iberian",
-        "spanish",
-        "portuguese"
-      ],
-      "from": {
-        "greek-byzantine": "MD",
-        "roman": "MD",
-        "greek": "MD",
-        "byzantine": "MD"
-      }
-    },
-    "nordic": {
-      "cultures": [
-        "norse",
-        "scandinavian"
-      ]
-    }
-  },
-  "regions": [
-    {
-      "code": "COR",
-      "label": "Cornwall",
-      "cultures": [
-        "cornish"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "WCY",
-      "label": "West Country",
-      "cultures": [
-        "english"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "SEA",
-      "label": "South East",
-      "cultures": [
-        "english"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "EAN",
-      "label": "East Anglia",
-      "cultures": [
-        "english"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "WMM",
-      "label": "West Midlands and Marches",
-      "cultures": [
-        "english"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "EMD",
-      "label": "East Midlands",
-      "cultures": [
-        "english"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "NTH",
-      "label": "North",
-      "cultures": [
-        "english"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "SBL",
-      "label": "Borderlands",
-      "cultures": [
-        "english",
-        "scottish"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "WAL",
-      "label": "Wales",
-      "cultures": [
-        "welsh"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "SLO",
-      "label": "Lowlands",
-      "cultures": [
-        "scottish"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "SHH",
-      "label": "Highlands and Hebrides",
-      "cultures": [
-        "scottish"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "NSI",
-      "label": "Northern Isles",
-      "cultures": [
-        "scottish"
-      ],
-      "status": "live"
-    },
-    {
-      "code": "DEN",
-      "label": "Denmark",
-      "cultures": [
-        "scandinavian"
-      ],
-      "status": "live",
-      "landscape": "Low islands, heath, beech wood, sounds, dunes and bogs",
-      "phrase": "Denmark"
-    },
-    {
-      "code": "NOR",
-      "label": "Norway",
-      "cultures": [
-        "scandinavian"
-      ],
-      "status": "live",
-      "landscape": "Fjords, fells, high moor, glaciers, waterfalls and steep farms",
-      "phrase": "Norway"
-    },
-    {
-      "code": "SWE",
-      "label": "Sweden",
-      "cultures": [
-        "scandinavian"
-      ],
-      "status": "live",
-      "landscape": "Lakes, forest, rock, skerries, eskers and mines",
-      "phrase": "Sweden"
-    },
-    {
-      "code": "ICE",
-      "label": "Iceland and the Atlantic isles",
-      "cultures": [
-        "scandinavian"
-      ],
-      "status": "live",
-      "landscape": "Lava, black sand, hot springs, ice caps, bare fell and bird cliffs",
-      "phrase": "Iceland and the Atlantic isles"
-    },
-    {
-      "code": "NDT",
-      "label": "North German plain and coast",
-      "cultures": [
-        "german"
-      ],
-      "status": "live",
-      "landscape": "Marsh, heath, moor, dykes, mudflats, islands and brick towns",
-      "phrase": "the North German plain and coast"
-    },
-    {
-      "code": "RHN",
-      "label": "Rhineland",
-      "cultures": [
-        "german"
-      ],
-      "status": "live",
-      "landscape": "River gorge, vineyards, crags, castles and old roman towns",
-      "phrase": "the Rhineland"
-    },
-    {
-      "code": "MIT",
-      "label": "Central uplands",
-      "cultures": [
-        "german"
-      ],
-      "status": "live",
-      "landscape": "Forested hills, mining, springs, ridges and clearings",
-      "phrase": "the Central uplands"
-    },
-    {
-      "code": "ALP",
-      "label": "Alpine south",
-      "cultures": [
-        "german"
-      ],
-      "status": "live",
-      "landscape": "Alps, high pasture, passes, lakes, avalanches and gorges",
-      "phrase": "the Alpine south"
-    },
-    {
-      "code": "OST",
-      "label": "Eastern marches",
-      "cultures": [
-        "german"
-      ],
-      "status": "live",
-      "landscape": "Lakes, pine, sand, marsh and slavic-borrowed settlements",
-      "phrase": "the Eastern marches"
-    }
-  ],
-  "eras": [
-    {
-      "code": "AN",
-      "label": "ancient",
-      "span": "to c. 500"
-    },
-    {
-      "code": "MD",
-      "label": "medieval",
-      "span": "c. 500–1500"
-    },
-    {
-      "code": "EM",
-      "label": "early modern",
-      "span": "c. 1500–1750"
-    },
-    {
-      "code": "ST",
-      "label": "steam age",
-      "span": "c. 1750–1914"
-    },
-    {
-      "code": "MO",
-      "label": "modern",
-      "span": "c. 1914–now"
-    },
-    {
-      "code": "NF",
-      "label": "near future",
-      "span": null
-    },
-    {
-      "code": "IS",
-      "label": "interstellar",
-      "span": null
-    }
-  ],
-  "landBand": [
-    "EM",
-    "ST",
-    "MO"
-  ],
-  "styles": [
-    {
-      "key": "realistic",
-      "label": "realistic",
-      "eras": [
-        "AN",
-        "MD",
-        "EM",
-        "ST",
-        "MO",
-        "NF",
-        "IS"
-      ]
-    },
-    {
-      "key": "low-fantasy",
-      "label": "historic or low fantasy",
-      "eras": [
-        "AN",
-        "MD",
-        "EM"
-      ]
-    },
-    {
-      "key": "high-fantasy",
-      "label": "high or epic fantasy",
-      "eras": [
-        "AN",
-        "MD",
-        "EM"
-      ]
-    },
-    {
-      "key": "contemporary-fantasy",
-      "label": "contemporary fantasy",
-      "eras": [
-        "ST",
-        "MO"
-      ]
-    },
-    {
-      "key": "steampunk",
-      "label": "steampunk",
-      "eras": [
-        "ST"
-      ]
-    },
-    {
-      "key": "dieselpunk",
-      "label": "dieselpunk",
-      "eras": [
-        "MO"
-      ]
-    },
-    {
-      "key": "cyberpunk",
-      "label": "cyberpunk",
-      "eras": [
-        "NF"
-      ]
-    },
-    {
-      "key": "post-apocalyptic",
-      "label": "post-apocalyptic",
-      "eras": [
-        "MO",
-        "NF",
-        "IS"
-      ]
-    },
-    {
-      "key": "space-opera",
-      "label": "space opera",
-      "eras": [
-        "NF",
-        "IS"
-      ]
-    }
-  ],
-  "tones": [
-    {
-      "key": "grand"
-    },
-    {
-      "key": "plain"
-    },
-    {
-      "key": "grim"
-    },
-    {
-      "key": "light"
-    },
-    {
-      "key": "strange"
-    }
-  ],
-  "targets": {
-    "cultures": {
-      "core": {
-        "words": 30,
-        "shapes": 10
-      },
-      "second": {
-        "words": 12,
-        "shapes": 4
-      },
-      "local": {
-        "words": 4,
-        "shapes": 1
-      }
-    },
-    "era": 12,
-    "style": {
-      "words": 16,
-      "shapes": 4
-    },
-    "tone": 8,
-    "region": 6,
-    "kindOpenShapes": 6,
-    "pool": 8,
-    "toneKeys": [
-      "grand",
-      "grim",
-      "light",
-      "strange"
-    ]
-  },
-  "poolExemptions": {
-    "forPacks": [
-      "buildingFixed:faith",
-      "buildingFixed:works",
-      "buildingFixed:learning",
-      "buildingFixed:confinement",
-      "buildingFixed:maritime",
-      "eventFixed:battle",
-      "eventFixed:rebellion",
-      "eventFixed:treaty",
-      "eventFixed:crisis",
-      "deityFixed:deity",
-      "deityFixed:place",
-      "watersFixed:seas",
-      "watersFixed:coasts",
-      "watersFixed:charts",
-      "watersFixed:hyperspace",
-      "routeFixed:rail",
-      "routeFixed:motor",
-      "buildingFixed:civic",
-      "buildingFixed:crossing",
-      "buildingFixed:residence",
-      "buildingFixed:water",
-      "eventFixed:disaster",
-      "eventFixed:era"
-    ],
-    "closed": [
-      "cycleElement",
-      "cycleAnimal",
-      "direction",
-      "directionAdj",
-      "dayElement",
-      "cultureNames/anglo-saxon/day",
-      "cultureNames/celtic/day",
-      "cultureNames/chinese/day",
-      "cultureNames/ethiopian/day",
-      "cultureNames/greek-byzantine/day",
-      "cultureNames/korean/day",
-      "coinFraction",
-      "dayNumber",
-      "world/korean/lists/direction",
-      "world/chinese/lists/side"
-    ]
-  },
-  "retiredModules": [
-    "placeShapes",
-    "explorationPlaceShapes",
-    "empireExpansionPlaceShapes"
-  ],
-  "landModules": [
-    "mountainNames",
-    "forestNames",
-    "desertNames",
-    "moorNames",
-    "wetlandNames",
-    "grasslandNames",
-    "seasLakes",
-    "coastsIslands",
-    "seaCharts",
-    "riverNames",
-    "placeShapes",
-    "riversInland",
-    "hillsValleys",
-    "farmland",
-    "lands"
-  ],
-  "cultureSets": {
-    "caste": {
-      "cultures": [
-        "indian",
-        "west-african"
-      ],
-      "note": "Cultures whose names carry caste or trade-guild forms: buildings, events, inns, money, settlement context and streets each kept this pair."
-    },
-    "dutchAmerican": {
-      "cultures": [
-        "dutch",
-        "american"
-      ],
-      "note": "Money: the cultures whose coin names read the Dutch and American shapes."
-    },
-    "britainSource": {
-      "cultures": [
-        "general",
-        "anglo-saxon",
-        "celtic",
-        "norman-british"
-      ],
-      "note": "Bynames: cultures that draw their forenames from the British source. Differs from the `british` group: it includes general."
-    },
-    "noPlaceNames": {
-      "cultures": [
-        "greek-byzantine",
-        "steppe",
-        "turkic",
-        "mongol"
-      ],
-      "note": "Peoples and tongues, bynames: cultures with no place-name form."
-    },
-    "realmsChristian": {
-      "cultures": [
-        "general",
-        "anglo-saxon",
-        "celtic",
-        "norman-british",
-        "roman",
-        "greek-byzantine",
-        "slavic",
-        "ethiopian"
-      ],
-      "note": "Realms' own Christian set. Differs from the vocabulary's `christian` group (it includes general and ethiopian): kept as it is."
-    },
-    "plainNicknames": {
-      "cultures": [
-        "general",
-        "norman-british",
-        "anglo-saxon"
-      ],
-      "note": "Named things: cultures whose nickname forms aren't reduced."
-    },
-    "routesGods": {
-      "cultures": [
-        "egyptian",
-        "norse",
-        "anglo-saxon",
-        "aztec",
-        "maya"
-      ],
-      "note": "Route names: cultures with god-named routes."
-    },
-    "festivalsAncient": {
-      "cultures": [
-        "greek-byzantine",
-        "roman"
-      ],
-      "note": "Time and sky: cultures whose ancient calendars carry festivals."
-    },
-    "seasonPairNorth": {
-      "cultures": [
-        "anglo-saxon",
-        "celtic",
-        "norse"
-      ],
-      "note": "Time and sky: cultures reading a two-season pair from the ancient era to the medieval."
-    },
-    "seasonPairMeso": {
-      "cultures": [
-        "aztec",
-        "maya"
-      ],
-      "note": "Time and sky: cultures reading a season pair from the ancient era to the early modern; also the Mesoamerican calendar round."
-    },
-    "elementsEastAsian": {
-      "cultures": [
-        "chinese",
-        "japanese",
-        "korean",
-        "steppe",
-        "turkic",
-        "mongol"
-      ],
-      "note": "Time and sky: cultures whose week-7 system reads the five elements."
-    },
-    "vesselRealmCultures": {
-      "cultures": [
-        "general",
-        "anglo-saxon",
-        "norse",
-        "celtic",
-        "norman-british",
-        "roman",
-        "greek-byzantine",
-        "slavic",
-        "steppe",
-        "arabic-persian",
-        "indian",
-        "chinese",
-        "japanese",
-        "korean",
-        "egyptian",
-        "ethiopian",
-        "bantu",
-        "west-african",
-        "aztec",
-        "maya",
-        "turkic",
-        "mongol",
-        "arabic",
-        "persian"
-      ],
-      "note": "Vessels: the cultures a realm short form can be drawn for (the realms roster); others read general."
-    }
-  },
-  "mappings": {
-    "cultures": {
-      "shared": {
-        "general": {
-          "lens": [
-            "general"
-          ]
-        },
-        "anglo-saxon": {
-          "lens": [
-            "english"
-          ]
-        },
-        "norman-british": {
-          "lens": [
-            "english"
-          ]
-        },
-        "celtic": {
-          "lens": [
-            "welsh",
-            "scottish",
-            "irish",
-            "cornish",
-            "celtic"
-          ]
-        },
-        "norse": {
-          "lens": [
-            "norse",
-            "scandinavian"
-          ]
-        },
-        "roman": {
-          "lens": [
-            "roman"
-          ]
-        },
-        "greek-byzantine": {
-          "lens": [
-            "greek-byzantine"
-          ]
-        },
-        "slavic": {
-          "lens": [
-            "slavic"
-          ]
-        },
-        "steppe": {
-          "lens": [
-            "steppe"
-          ]
-        },
-        "arabic-persian": {
-          "lens": [
-            "arabic-persian"
-          ]
-        },
-        "indian": {
-          "lens": [
-            "indian"
-          ]
-        },
-        "chinese": {
-          "lens": [
-            "chinese"
-          ]
-        },
-        "japanese": {
-          "lens": [
-            "japanese"
-          ]
-        },
-        "korean": {
-          "lens": [
-            "korean"
-          ]
-        },
-        "egyptian": {
-          "lens": [
-            "egyptian"
-          ]
-        },
-        "ethiopian": {
-          "lens": [
-            "ethiopian"
-          ]
-        },
-        "bantu": {
-          "lens": [
-            "bantu"
-          ]
-        },
-        "west-african": {
-          "lens": [
-            "west-african"
-          ]
-        },
-        "aztec": {
-          "lens": [
-            "aztec"
-          ]
-        },
-        "maya": {
-          "lens": [
-            "maya"
-          ]
-        },
-        "polynesian": {
-          "lens": [
-            "polynesian"
-          ]
-        },
-        "andean": {
-          "lens": [
-            "andean"
-          ]
-        },
-        "french": {
-          "lens": [
-            "french"
-          ]
-        },
-        "dutch": {
-          "lens": [
-            "dutch"
-          ]
-        },
-        "iberian": {
-          "lens": [
-            "iberian"
-          ]
-        },
-        "american": {
-          "lens": [
-            "american"
-          ]
-        },
-        "spanish": {
-          "lens": [
-            "spanish"
-          ]
-        },
-        "portuguese": {
-          "lens": [
-            "portuguese"
-          ]
-        },
-        "greek": {
-          "lens": [
-            "greek"
-          ]
-        },
-        "byzantine": {
-          "lens": [
-            "byzantine"
-          ]
-        },
-        "italian": {
-          "lens": [
-            "italian"
-          ]
-        },
-        "turkic": {
-          "lens": [
-            "turkic"
-          ]
-        },
-        "mongol": {
-          "lens": [
-            "mongol"
-          ]
-        },
-        "arabic": {
-          "lens": [
-            "arabic"
-          ]
-        },
-        "persian": {
-          "lens": [
-            "persian"
-          ]
-        }
-      },
-      "tribal": {
-        "general": {
-          "lens": [
-            "general"
-          ]
-        },
-        "celtic": {
-          "lens": [
-            "welsh",
-            "scottish",
-            "irish",
-            "cornish",
-            "celtic"
-          ]
-        },
-        "germanic": {
-          "lens": [
-            "english",
-            "scandinavian",
-            "german",
-            "dutch"
-          ]
-        },
-        "mediterranean": {
-          "lens": [
-            "roman",
-            "greek-byzantine",
-            "italian"
-          ],
-          "weights": [
-            [
-              "roman",
-              1
-            ]
-          ]
-        },
-        "steppe": {
-          "lens": [
-            "steppe"
-          ]
-        },
-        "arabian": {
-          "lens": [
-            "arabic-persian"
-          ],
-          "weights": [
-            [
-              "arabic-persian",
-              1
-            ]
-          ]
-        },
-        "bantu": {
-          "lens": [
-            "bantu"
-          ],
-          "weights": [
-            [
-              "bantu",
-              1
-            ]
-          ]
-        },
-        "westAfrican": {
-          "lens": [
-            "west-african"
-          ],
-          "weights": [
-            [
-              "west-african",
-              1
-            ]
-          ]
-        },
-        "southAsian": {
-          "lens": [
-            "indian"
-          ],
-          "weights": [
-            [
-              "indian",
-              1
-            ]
-          ]
-        },
-        "eastAsian": {
-          "lens": [
-            "chinese",
-            "japanese",
-            "korean"
-          ],
-          "weights": [
-            [
-              "chinese",
-              50
-            ],
-            [
-              "japanese",
-              25
-            ],
-            [
-              "korean",
-              25
-            ]
-          ]
-        },
-        "mesoamerican": {
-          "lens": [
-            "aztec",
-            "maya"
-          ],
-          "weights": [
-            [
-              "aztec",
-              60
-            ],
-            [
-              "maya",
-              40
-            ]
-          ]
-        },
-        "andean": {
-          "lens": [
-            "andean"
-          ]
-        },
-        "polynesian": {
-          "lens": [
-            "polynesian"
-          ]
-        },
-        "northAmerican": {
-          "lens": [],
-          "local": true
-        },
-        "maritimeSEA": {
-          "lens": [],
-          "local": true
-        },
-        "northernPacific": {
-          "lens": [],
-          "local": true
-        },
-        "sahul": {
-          "lens": [],
-          "local": true
-        },
-        "welsh": {
-          "lens": [
-            "welsh"
-          ],
-          "weights": [
-            [
-              "welsh",
-              1
-            ]
-          ]
-        },
-        "scottish": {
-          "lens": [
-            "scottish"
-          ],
-          "weights": [
-            [
-              "scottish",
-              1
-            ]
-          ]
-        },
-        "irish": {
-          "lens": [
-            "irish"
-          ],
-          "weights": [
-            [
-              "irish",
-              1
-            ]
-          ]
-        },
-        "cornish": {
-          "lens": [
-            "cornish"
-          ],
-          "weights": [
-            [
-              "cornish",
-              1
-            ]
-          ]
-        },
-        "norse": {
-          "lens": [
-            "norse"
-          ],
-          "weights": [
-            [
-              "norse",
-              1
-            ]
-          ]
-        },
-        "scandinavian": {
-          "lens": [
-            "scandinavian"
-          ],
-          "weights": [
-            [
-              "scandinavian",
-              1
-            ]
-          ]
-        },
-        "german": {
-          "lens": [
-            "german"
-          ],
-          "weights": [
-            [
-              "german",
-              1
-            ]
-          ]
-        },
-        "english": {
-          "lens": [
-            "english"
-          ],
-          "weights": [
-            [
-              "english",
-              1
-            ]
-          ]
-        },
-        "french": {
-          "lens": [
-            "french"
-          ],
-          "weights": [
-            [
-              "french",
-              1
-            ]
-          ]
-        },
-        "spanish": {
-          "lens": [
-            "spanish"
-          ],
-          "weights": [
-            [
-              "spanish",
-              1
-            ]
-          ]
-        },
-        "portuguese": {
-          "lens": [
-            "portuguese"
-          ],
-          "weights": [
-            [
-              "portuguese",
-              1
-            ]
-          ]
-        },
-        "italian": {
-          "lens": [
-            "italian"
-          ],
-          "weights": [
-            [
-              "italian",
-              1
-            ]
-          ]
-        },
-        "roman": {
-          "lens": [
-            "roman"
-          ],
-          "weights": [
-            [
-              "roman",
-              1
-            ]
-          ]
-        },
-        "greek": {
-          "lens": [
-            "greek"
-          ],
-          "weights": [
-            [
-              "greek",
-              1
-            ]
-          ]
-        },
-        "byzantine": {
-          "lens": [
-            "byzantine"
-          ],
-          "weights": [
-            [
-              "byzantine",
-              1
-            ]
-          ]
-        },
-        "iberian": {
-          "lens": [
-            "iberian"
-          ],
-          "weights": [
-            [
-              "iberian",
-              1
-            ]
-          ]
-        },
-        "greek-byzantine": {
-          "lens": [
-            "greek-byzantine"
-          ],
-          "weights": [
-            [
-              "greek-byzantine",
-              1
-            ]
-          ]
-        },
-        "dutch": {
-          "lens": [
-            "dutch"
-          ],
-          "weights": [
-            [
-              "dutch",
-              1
-            ]
-          ]
-        },
-        "slavic": {
-          "lens": [
-            "slavic"
-          ],
-          "weights": [
-            [
-              "slavic",
-              1
-            ]
-          ]
-        }
-      },
-      "colonial": {
-        "general": {
-          "lens": [
-            "general"
-          ]
-        },
-        "british-imperial": {
-          "lens": [
-            "english"
-          ]
-        },
-        "english-speaking-settler": {
-          "lens": [
-            "american"
-          ]
-        },
-        "german": {
-          "lens": [
-            "german"
-          ]
-        },
-        "danish": {
-          "lens": [
-            "scandinavian"
-          ]
-        },
-        "swedish": {
-          "lens": [
-            "scandinavian"
-          ]
-        },
-        "dutch": {
-          "lens": [
-            "dutch"
-          ]
-        },
-        "french": {
-          "lens": [
-            "french"
-          ]
-        },
-        "spanish": {
-          "lens": [
-            "spanish"
-          ]
-        },
-        "portuguese": {
-          "lens": [
-            "portuguese"
-          ]
-        },
-        "italian": {
-          "lens": [
-            "italian"
-          ]
-        },
-        "roman": {
-          "lens": [
-            "roman"
-          ]
-        },
-        "russian": {
-          "lens": [
-            "slavic"
-          ]
-        },
-        "arab": {
-          "lens": [
-            "arabic-persian"
-          ]
-        },
-        "ottoman": {
-          "lens": [
-            "arabic-persian"
-          ]
-        },
-        "chinese": {
-          "lens": [
-            "chinese"
-          ]
-        },
-        "japanese": {
-          "lens": [
-            "japanese"
-          ]
-        },
-        "hellenistic": {
-          "lens": [],
-          "local": true
-        },
-        "phoenician": {
-          "lens": [],
-          "local": true
-        },
-        "belgian": {
-          "lens": [],
-          "local": true
-        }
-      },
-      "vehicle": {
-        "extends": "shared",
-        "entries": {
-          "hawaiian": {
-            "lens": [
-              "polynesian"
-            ],
-            "local": true
-          },
-          "maori": {
-            "lens": [
-              "polynesian"
-            ],
-            "local": true
-          },
-          "w-polynesian": {
-            "lens": [
-              "polynesian"
-            ],
-            "local": true
-          },
-          "ottoman": {
-            "lens": [
-              "arabic-persian"
-            ],
-            "local": true
-          },
-          "swahili-omani": {
-            "lens": [
-              "arabic-persian"
-            ],
-            "local": true
-          },
-          "malay": {
-            "lens": [],
-            "local": true
-          },
-          "nw-coast": {
-            "lens": [],
-            "local": true
-          },
-          "arctic": {
-            "lens": [],
-            "local": true
-          },
-          "na-woodlands": {
-            "lens": [],
-            "local": true
-          }
-        }
-      },
-      "world": {
-        "extends": "shared",
-        "entries": {
-          "celtic": {
-            "lens": [
-              "celtic"
-            ]
-          },
-          "norse": {
-            "lens": [
-              "norse"
-            ]
-          },
-          "welsh": {
-            "lens": [
-              "welsh"
-            ]
-          },
-          "scottish": {
-            "lens": [
-              "scottish"
-            ]
-          },
-          "irish": {
-            "lens": [
-              "irish"
-            ]
-          },
-          "cornish": {
-            "lens": [
-              "cornish"
-            ]
-          },
-          "scandinavian": {
-            "lens": [
-              "scandinavian"
-            ]
-          },
-          "german": {
-            "lens": [
-              "german"
-            ]
-          }
-        }
-      },
-      "north": {
-        "extends": "shared",
-        "entries": {
-          "celtic": {
-            "lens": [
-              "celtic"
-            ]
-          },
-          "norse": {
-            "lens": [
-              "norse"
-            ]
-          },
-          "welsh": {
-            "lens": [
-              "welsh"
-            ]
-          },
-          "scottish": {
-            "lens": [
-              "scottish"
-            ]
-          },
-          "irish": {
-            "lens": [
-              "irish"
-            ]
-          },
-          "cornish": {
-            "lens": [
-              "cornish"
-            ]
-          },
-          "scandinavian": {
-            "lens": [
-              "scandinavian"
-            ]
-          },
-          "german": {
-            "lens": [
-              "german"
-            ]
-          }
-        }
-      },
-      "north5c": {
-        "extends": "shared",
-        "entries": {
-          "welsh": {
-            "lens": [
-              "welsh"
-            ]
-          },
-          "scottish": {
-            "lens": [
-              "scottish"
-            ]
-          },
-          "irish": {
-            "lens": [
-              "irish"
-            ]
-          },
-          "cornish": {
-            "lens": [
-              "cornish"
-            ]
-          },
-          "scandinavian": {
-            "lens": [
-              "scandinavian"
-            ]
-          },
-          "german": {
-            "lens": [
-              "german"
-            ]
-          }
-        }
-      },
-      "vehicle5c": {
-        "extends": "vehicle",
-        "entries": {
-          "welsh": {
-            "lens": [
-              "welsh"
-            ]
-          },
-          "scottish": {
-            "lens": [
-              "scottish"
-            ]
-          },
-          "irish": {
-            "lens": [
-              "irish"
-            ]
-          },
-          "cornish": {
-            "lens": [
-              "cornish"
-            ]
-          },
-          "scandinavian": {
-            "lens": [
-              "scandinavian"
-            ]
-          },
-          "german": {
-            "lens": [
-              "german"
-            ]
-          }
-        }
-      }
-    },
-    "eras": {
-      "codes": [
-        "AN",
-        "MD",
-        "EM",
-        "ST",
-        "MO",
-        "NF",
-        "IS"
-      ],
-      "realms": {
-        "ancient": [
-          "AN"
-        ],
-        "medieval": [
-          "MD"
-        ],
-        "earlyModern": [
-          "EM"
-        ],
-        "modern": [
-          "MO"
-        ],
-        "nearFuture": [
-          "NF"
-        ],
-        "interstellar": [
-          "IS"
-        ]
-      },
-      "world": {
-        "anglo-saxon:old-english": [
-          "MD"
-        ],
-        "anglo-saxon:modern": [
-          "ST",
-          "MO"
-        ],
-        "anglo-saxon:interstellar": [
-          "IS"
-        ],
-        "norse:viking": [
-          "MD"
-        ],
-        "norse:interstellar": [
-          "IS"
-        ],
-        "celtic:pagan": [
-          "AN"
-        ],
-        "celtic:saints": [
-          "MD"
-        ],
-        "celtic:interstellar": [
-          "IS"
-        ],
-        "roman:imperial": [
-          "AN"
-        ],
-        "roman:medieval": [
-          "MD"
-        ],
-        "roman:interstellar": [
-          "IS"
-        ],
-        "chinese:imperial": [
-          "MD",
-          "EM"
-        ],
-        "chinese:modern": [
-          "ST",
-          "MO"
-        ],
-        "chinese:interstellar": [
-          "IS"
-        ],
-        "egyptian:pharaonic": [
-          "AN"
-        ],
-        "egyptian:graeco-roman": [
-          "AN"
-        ],
-        "egyptian:interstellar": [
-          "IS"
-        ],
-        "aztec:mexica": [
-          "MD"
-        ],
-        "aztec:colonial": [
-          "EM"
-        ],
-        "aztec:interstellar": [
-          "IS"
-        ],
-        "bantu:kingdoms": [
-          "MD",
-          "EM"
-        ],
-        "bantu:interstellar": [
-          "IS"
-        ],
-        "slavic:rus": [
-          "MD"
-        ],
-        "slavic:imperial": [
-          "EM",
-          "ST"
-        ],
-        "slavic:soviet": [
-          "MO"
-        ],
-        "slavic:interstellar": [
-          "IS"
-        ],
-        "arabic-persian:arabic": [
-          "MD"
-        ],
-        "arabic-persian:persian": [
-          "AN",
-          "MD"
-        ],
-        "arabic-persian:interstellar": [
-          "IS"
-        ],
-        "indian:ancient": [
-          "AN"
-        ],
-        "indian:modern": [
-          "ST",
-          "MO"
-        ],
-        "indian:interstellar": [
-          "IS"
-        ],
-        "japanese:samurai": [
-          "MD",
-          "EM"
-        ],
-        "japanese:modern": [
-          "ST",
-          "MO"
-        ],
-        "japanese:interstellar": [
-          "IS"
-        ],
-        "west-african:sahel-and-forest": [
-          "MD",
-          "EM"
-        ],
-        "west-african:interstellar": [
-          "IS"
-        ],
-        "maya:classic": [
-          "AN"
-        ],
-        "maya:interstellar": [
-          "IS"
-        ],
-        "korean:joseon": [
-          "MD",
-          "EM"
-        ],
-        "korean:interstellar": [
-          "IS"
-        ],
-        "ethiopian:aksum-and-abyssinia": [
-          "MD",
-          "EM"
-        ],
-        "ethiopian:interstellar": [
-          "IS"
-        ],
-        "welsh:medieval": [
-          "MD"
-        ],
-        "welsh:modern": [
-          "ST",
-          "MO"
-        ],
-        "welsh:interstellar": [
-          "IS"
-        ],
-        "cornish:medieval": [
-          "MD"
-        ],
-        "cornish:modern": [
-          "ST",
-          "MO"
-        ],
-        "cornish:interstellar": [
-          "IS"
-        ],
-        "scottish:medieval": [
-          "MD"
-        ],
-        "scottish:modern": [
-          "ST",
-          "MO"
-        ],
-        "scottish:interstellar": [
-          "IS"
-        ],
-        "irish:medieval": [
-          "MD"
-        ],
-        "irish:modern": [
-          "ST",
-          "MO"
-        ],
-        "irish:interstellar": [
-          "IS"
-        ],
-        "scandinavian:early-modern": [
-          "EM"
-        ],
-        "scandinavian:modern": [
-          "ST",
-          "MO"
-        ],
-        "scandinavian:interstellar": [
-          "IS"
-        ],
-        "german:medieval": [
-          "MD"
-        ],
-        "german:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "german:interstellar": [
-          "IS"
-        ],
-        "french:medieval": [
-          "MD"
-        ],
-        "french:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "french:interstellar": [
-          "IS"
-        ],
-        "dutch:medieval": [
-          "MD"
-        ],
-        "dutch:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "dutch:interstellar": [
-          "IS"
-        ],
-        "italian:medieval": [
-          "MD"
-        ],
-        "italian:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "italian:interstellar": [
-          "IS"
-        ],
-        "spanish:medieval": [
-          "MD"
-        ],
-        "spanish:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "spanish:interstellar": [
-          "IS"
-        ],
-        "portuguese:medieval": [
-          "MD"
-        ],
-        "portuguese:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "portuguese:interstellar": [
-          "IS"
-        ],
-        "greek:classical": [
-          "AN"
-        ],
-        "greek:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "greek:interstellar": [
-          "IS"
-        ],
-        "byzantine:byzantine": [
-          "MD"
-        ],
-        "byzantine:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "byzantine:interstellar": [
-          "IS"
-        ],
-        "roman:republic": [
-          "AN"
-        ],
-        "slavic:tribal": [
-          "AN"
-        ],
-        "turkic:medieval": [
-          "MD"
-        ],
-        "turkic:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "mongol:steppe": [
-          "AN",
-          "MD"
-        ],
-        "mongol:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "arabic:ancient": [
-          "AN"
-        ],
-        "arabic:medieval": [
-          "MD"
-        ],
-        "arabic:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "persian:ancient": [
-          "AN"
-        ],
-        "persian:medieval": [
-          "MD"
-        ],
-        "persian:modern": [
-          "EM",
-          "ST",
-          "MO"
-        ],
-        "egyptian:coptic-and-mamluk": [
-          "MD"
-        ],
-        "egyptian:ottoman-and-khedival": [
-          "EM",
-          "ST"
-        ],
-        "egyptian:modern-egypt": [
-          "MO"
-        ],
-        "ethiopian:modern-ethiopia": [
-          "ST",
-          "MO"
-        ],
-        "bantu:mission-and-colony": [
-          "ST"
-        ],
-        "bantu:modern-bantu": [
-          "MO"
-        ],
-        "west-african:colony-and-coast": [
-          "EM",
-          "ST"
-        ],
-        "west-african:modern-west-africa": [
-          "MO"
-        ],
-        "turkic:interstellar": [
-          "IS"
-        ],
-        "mongol:interstellar": [
-          "IS"
-        ],
-        "arabic:interstellar": [
-          "IS"
-        ],
-        "persian:interstellar": [
-          "IS"
-        ]
-      },
-      "ships": {
-        "T1": [
-          "AN"
-        ],
-        "T2": [
-          "AN"
-        ],
-        "T3": [
-          "MD"
-        ],
-        "T4": [
-          "EM"
-        ],
-        "T5": [
-          "ST"
-        ],
-        "T6": [
-          "MO"
-        ],
-        "T7": [
-          "MO"
-        ]
-      },
-      "spacecraft": {
-        "S1": [
-          "NF"
-        ],
-        "S2": [
-          "NF"
-        ],
-        "S3": [
-          "IS"
-        ]
-      },
-      "aircraft": {
-        "A1": [
-          "AN",
-          "MD",
-          "EM",
-          "ST"
-        ],
-        "A2": [
-          "ST",
-          "MO"
-        ],
-        "A3": [
-          "ST",
-          "MO"
-        ],
-        "A4": [
-          "MO"
-        ],
-        "A5": [
-          "MO"
-        ],
-        "A6": [
-          "MO"
-        ],
-        "A7": [
-          "NF",
-          "IS"
-        ],
-        "AF": [
-          "MD",
-          "MO"
-        ]
-      },
-      "landVehicles": {
-        "L1": [
-          "AN",
-          "MD",
-          "EM",
-          "ST"
-        ],
-        "L2": [
-          "ST"
-        ],
-        "L3": [
-          "ST",
-          "MO"
-        ],
-        "L4": [
-          "MO"
-        ],
-        "L5": [
-          "MO"
-        ],
-        "L6": [
-          "NF",
-          "IS"
-        ],
-        "LF": [
-          "MD",
-          "MO"
-        ]
-      },
-      "notes": {
-        "aircraft": "Read from docs/aircraft-and-land-vehicles-brief.md §4.1 (the data's `technology` carries labels, not dates): A1 balloons and kites (kites from antiquity, balloons from 1783) AN–ST; A2 airships (1852 to the 1930s) ST, MO; A3 pioneer and biplane (1903 to the 1920s) ST, MO; A4 piston age, A5 jet age and A6 modern and drones MO; A7 future NF, IS; AF sky ships, fantastic only: the eras of the settings that offer it (FH is MD, MF is MO, §4.3).",
-        "landVehicles": "Read from docs/aircraft-and-land-vehicles-brief.md §4.2: L1 animal-drawn (chariots to coaches, in use throughout) AN–ST; L2 steam ST; L3 early motor (cars from the 1880s, the first tanks, electric trams) ST, MO; L4 mid-century and L5 modern MO; L6 future NF, IS; LF war engines and wonders, fantastic only: MD (FH) and MO (MF)."
-      }
-    },
-    "styles": {
-      "genreSettings": {
-        "FL": {
-          "eras": [
-            "MD"
-          ],
-          "style": "low-fantasy"
-        },
-        "FH": {
-          "eras": [
-            "MD"
-          ],
-          "style": "high-fantasy"
-        },
-        "MR": {
-          "eras": [
-            "MO"
-          ],
-          "style": "realistic"
-        },
-        "MF": {
-          "eras": [
-            "MO"
-          ],
-          "style": "contemporary-fantasy"
-        },
-        "SF": {
-          "eras": [
-            "IS"
-          ],
-          "style": "realistic"
-        }
-      },
-      "vessel": {
-        "heroic": [
-          {
-            "style": "high-fantasy"
-          }
-        ],
-        "elven": [
-          {
-            "style": "high-fantasy"
-          }
-        ],
-        "dwarven": [
-          {
-            "style": "high-fantasy"
-          }
-        ],
-        "oceanic": [
-          {
-            "style": "high-fantasy"
-          }
-        ],
-        "fpirate": [
-          {
-            "style": "high-fantasy"
-          }
-        ],
-        "dark": [
-          {
-            "style": "high-fantasy"
-          },
-          {
-            "style": "contemporary-fantasy"
-          }
-        ],
-        "steampunk": [
-          {
-            "style": "steampunk"
-          }
-        ],
-        "dieselpunk": [
-          {
-            "style": "dieselpunk"
-          }
-        ],
-        "postapoc": [
-          {
-            "style": "post-apocalyptic"
-          }
-        ],
-        "wasteland": [
-          {
-            "style": "post-apocalyptic"
-          }
-        ],
-        "sfmilitary": [
-          {
-            "style": "space-opera"
-          }
-        ],
-        "sfexplore": [
-          {
-            "style": "space-opera"
-          }
-        ],
-        "ai": [
-          {
-            "style": "space-opera"
-          }
-        ],
-        "alien": [
-          {
-            "style": "space-opera"
-          }
-        ],
-        "corporate": [
-          {
-            "style": "realistic",
-            "eras": [
-              "NF",
-              "IS"
-            ]
-          }
-        ],
-        "colony": [
-          {
-            "style": "realistic",
-            "eras": [
-              "NF",
-              "IS"
-            ]
-          }
-        ],
-        "outlaw": [
-          {
-            "style": "realistic",
-            "eras": [
-              "NF",
-              "IS"
-            ]
-          }
-        ]
-      },
-      "vocabulary": {
-        "fantastic": {
-          "steampunkWhenEras": [
-            "ST"
-          ],
-          "otherwise": [
-            {
-              "style": "high-fantasy",
-              "eras": [
-                "AN",
-                "MD",
-                "EM"
-              ]
-            },
-            {
-              "style": "contemporary-fantasy",
-              "eras": [
-                "MO"
-              ]
-            },
-            {
-              "style": "space-opera",
-              "eras": [
-                "NF",
-                "IS"
-              ]
-            }
-          ]
-        },
-        "notFantastic": [
-          {
-            "style": "realistic"
-          }
-        ]
-      },
-      "steampunkNames": {
-        "pools": [
-          "compSteampunk",
-          "streetSteampunk",
-          "steampunkLandmark",
-          "steampunkMonument"
-        ],
-        "shapeLists": [
-          "steampunk",
-          "steampunkComponents",
-          "steampunkDistricts"
-        ]
-      },
-      "default": [
-        {
-          "style": "realistic"
-        }
-      ]
-    }
-  },
-  "modules": {
-    "routeNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "route5a",
-        "region": {
-          "group": "regions",
-          "requires": null,
-          "keepWhenHidden": false
-        }
-      }
-    },
-    "streetNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "route5a",
-        "region": {
-          "group": "regions",
-          "requires": null,
-          "keepWhenHidden": false
-        }
-      }
-    },
-    "innNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "route5a",
-        "region": {
-          "group": "regions",
-          "requires": null,
-          "keepWhenHidden": false
-        }
-      }
-    },
-    "buildingNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "route5a",
-        "region": {
-          "group": "regions",
-          "requires": null,
-          "keepWhenHidden": false
-        }
-      }
-    },
-    "monumentNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "route5a",
-        "region": {
-          "group": "regions",
-          "requires": null,
-          "keepWhenHidden": false
-        }
-      }
-    },
-    "settlementKit": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "route5a",
-        "region": {
-          "group": "regions",
-          "requires": null,
-          "keepWhenHidden": false
-        }
-      }
-    },
-    "eventNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "route5a"
-      }
-    },
-    "calendarNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "time"
-      }
-    },
-    "skyNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "time"
-      }
-    },
-    "mountainNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "forestNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "desertNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "wilds5a"
-      }
-    },
-    "moorNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "wetlandNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "grasslandNames": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "riversInland": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "hillsValleys": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "farmland": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "seasLakes": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "waters5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "coastsIslands": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "waters5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "seaCharts": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "waters5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "hyperspaceCharts": {
-      "cultures": "shared",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "none"
-      }
-    },
-    "epithets": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "byname"
-      }
-    },
-    "titles": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "byname"
-      }
-    },
-    "familyNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "byname"
-      }
-    },
-    "armsNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "thing"
-      }
-    },
-    "treasureNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "thing"
-      }
-    },
-    "bookNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "thing"
-      }
-    },
-    "realms": {
-      "cultures": "north5c",
-      "eras": "realms",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "realm",
-        "ownEras": true
-      }
-    },
-    "peoplesTongues": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": null,
-          "genre": null,
-          "region": null
-        },
-        "roster": "people"
-      }
-    },
-    "deityNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "deity5a"
-      }
-    },
-    "sacredPlaces": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "deity5a"
-      }
-    },
-    "moneyNames": {
-      "cultures": "north5c",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "money"
-      }
-    },
-    "tribalNames": {
-      "cultures": "tribal",
-      "eras": "none",
-      "land": false,
-      "sentence": {
-        "family": "none"
-      }
-    },
-    "mysticOrders": {
-      "cultures": "tribal",
-      "eras": "none",
-      "settings": "genreSettings",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": null,
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": null
-      }
-    },
-    "martialOrders": {
-      "cultures": "tribal",
-      "eras": "none",
-      "settings": "genreSettings",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": null,
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": null
-      }
-    },
-    "underworldGroups": {
-      "cultures": "tribal",
-      "eras": "none",
-      "settings": "genreSettings",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": null,
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": null
-      }
-    },
-    "tradeGuilds": {
-      "cultures": "tribal",
-      "eras": "none",
-      "settings": "genreSettings",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": null,
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": null
-      }
-    },
-    "adventureCompanies": {
-      "cultures": "tribal",
-      "eras": "none",
-      "settings": "genreSettings",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": null,
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": null
-      }
-    },
-    "powerFactions": {
-      "cultures": "tribal",
-      "eras": "none",
-      "settings": "genreSettings",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": null,
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": null
-      }
-    },
-    "supernaturalCourts": {
-      "cultures": "tribal",
-      "eras": "none",
-      "settings": "genreSettings",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": null,
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": null
-      }
-    },
-    "ships": {
-      "cultures": "vehicle5c",
-      "eras": "ships",
-      "settings": "genreSettings",
-      "styles": "vessel",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "vessel"
-      }
-    },
-    "spacecraft": {
-      "cultures": "vehicle",
-      "eras": "spacecraft",
-      "settings": "genreSettings",
-      "styles": "vessel",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "vesselSpace"
-      }
-    },
-    "aircraft": {
-      "cultures": "vehicle5c",
-      "eras": "aircraft",
-      "settings": "genreSettings",
-      "styles": "vessel",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "vessel"
-      }
-    },
-    "landVehicles": {
-      "cultures": "vehicle5c",
-      "eras": "landVehicles",
-      "settings": "genreSettings",
-      "styles": "vessel",
-      "land": false,
-      "sentence": {
-        "family": "B",
-        "fields": {
-          "culture": "culture",
-          "era": null,
-          "fantastic": "fantastic",
-          "genre": "genre",
-          "region": null
-        },
-        "roster": "vessel"
-      }
-    },
-    "explorationPlaceShapes": {
-      "cultures": "colonial",
-      "eras": "none",
-      "land": false,
-      "sentence": {
-        "family": "none"
-      }
-    },
-    "empireExpansionPlaceShapes": {
-      "cultures": "colonial",
-      "eras": "none",
-      "land": false,
-      "sentence": {
-        "family": "none"
-      }
-    },
-    "placeShapes": {
-      "cultures": "world",
-      "eras": "world",
-      "britishEras": "all",
-      "land": true,
-      "sentence": {
-        "family": "none"
-      }
-    },
-    "settlementNames": {
-      "cultures": "world",
-      "eras": "world",
-      "colonialCultures": "colonial",
-      "britishEras": "all",
-      "land": false,
-      "sentence": {
-        "family": "none"
-      }
-    },
-    "riverNames": {
-      "cultures": "none",
-      "eras": "none",
-      "britishEras": "all",
-      "land": true,
-      "sentence": {
-        "family": "none"
-      }
-    },
-    "lands": {
-      "cultures": "north",
-      "eras": "codes",
-      "land": true,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": "region"
-        },
-        "roster": "wilds5a",
-        "region": {
-          "group": "regions",
-          "requires": {
-            "where": "home"
-          },
-          "keepWhenHidden": true
-        }
-      }
-    },
-    "starsSpace": {
-      "cultures": "shared",
-      "eras": "codes",
-      "land": false,
-      "sentence": {
-        "family": "A",
-        "fields": {
-          "where": "where",
-          "culture": "culture",
-          "era": "era",
-          "fantastic": "fantastic",
-          "genre": null,
-          "region": null
-        },
-        "roster": "wilds"
-      }
-    }
-  },
-  "bands": [
-    {
-      "key": "pre-industrial",
-      "label": "pre-industrial",
-      "eras": [
-        "AN",
-        "MD",
-        "EM"
-      ],
-      "genre": "fantasy"
-    },
-    {
-      "key": "industrial and modern",
-      "label": "industrial and modern",
-      "eras": [
-        "ST",
-        "MO"
-      ],
-      "genre": "modern"
-    },
-    {
-      "key": "future",
-      "label": "future",
-      "eras": [
-        "NF",
-        "IS"
-      ],
-      "genre": "scifi"
-    }
-  ],
-  "worlds": {
-    "rows": [
-      {
-        "key": "pre-industrial",
-        "eras": [
-          "AN",
-          "MD",
-          "EM"
-        ],
-        "plain": {
-          "label": "historic or low fantasy",
-          "style": "low-fantasy"
-        },
-        "fantastic": {
-          "label": "high or epic fantasy",
-          "style": "high-fantasy"
-        }
-      },
-      {
-        "key": "ST",
-        "eras": [
-          "ST"
-        ],
-        "plain": {
-          "label": "realistic",
-          "style": "realistic"
-        },
-        "fantastic": {
-          "label": "steampunk",
-          "style": "steampunk"
-        }
-      },
-      {
-        "key": "MO",
-        "eras": [
-          "MO"
-        ],
-        "plain": {
-          "label": "realistic",
-          "style": "realistic"
-        },
-        "fantastic": {
-          "label": "contemporary fantasy",
-          "style": "contemporary-fantasy"
-        }
-      },
-      {
-        "key": "future",
-        "eras": [
-          "NF",
-          "IS"
-        ],
-        "plain": {
-          "label": "science fiction",
-          "style": "realistic"
-        },
-        "fantastic": {
-          "label": "space opera",
-          "style": "space-opera"
-        }
-      }
-    ],
-    "bandRows": {
-      "pre-industrial": "pre-industrial",
-      "industrial and modern": "MO",
-      "future": "future"
-    },
-    "title": "How real the world is: open magic and monsters, steam and brass, or as it really was"
-  },
-  "tooltips": {
-    "era": "The age: decides what exists and how it is named",
-    "world": "How real the world is: open magic and monsters, steam and brass, or as it really was"
-  },
-  "views": {
-    "welsh": {
-      "label": "Welsh",
-      "culture": "celtic",
-      "regions": [
-        "WAL"
-      ],
-      "default": "WAL",
-      "fixedText": "in Wales"
-    },
-    "cornish": {
-      "label": "Cornish",
-      "culture": "celtic",
-      "regions": [
-        "COR"
-      ],
-      "default": "COR",
-      "fixedText": "in Cornwall"
-    },
-    "scottish": {
-      "label": "Scottish",
-      "culture": "celtic",
-      "regions": [
-        "SBL",
-        "SLO",
-        "SHH",
-        "NSI"
-      ],
-      "default": "SLO"
-    }
-  },
-  "menu": [
-    {
-      "heading": null,
-      "entries": [
-        {
-          "key": "general",
-          "label": "General"
-        }
-      ]
-    },
-    {
-      "heading": "British Isles",
-      "entries": [
-        {
-          "key": "norman-british",
-          "label": "Norman & British"
-        },
-        {
-          "key": "anglo-saxon",
-          "label": "Anglo-Saxon"
-        },
-        {
-          "key": "welsh",
-          "label": "Welsh",
-          "view": "welsh"
-        },
-        {
-          "key": "scottish",
-          "label": "Scottish",
-          "view": "scottish"
-        },
-        {
-          "key": "irish",
-          "label": "Irish"
-        },
-        {
-          "key": "cornish",
-          "label": "Cornish",
-          "view": "cornish"
-        },
-        {
-          "key": "celtic",
-          "label": "Celtic"
-        }
-      ]
-    },
-    {
-      "heading": "Northern Europe",
-      "entries": [
-        {
-          "key": "norse",
-          "label": "Norse"
-        },
-        {
-          "key": "scandinavian",
-          "label": "Scandinavian"
-        },
-        {
-          "key": "dutch",
-          "label": "Dutch"
-        },
-        {
-          "key": "german",
-          "label": "German",
-          "scope": "colonial"
-        },
-        {
-          "key": "belgian",
-          "label": "Belgian",
-          "scope": "colonial"
-        }
-      ]
-    },
-    {
-      "heading": "Western and southern Europe",
-      "entries": [
-        {
-          "key": "french",
-          "label": "French"
-        },
-        {
-          "key": "spanish",
-          "label": "Spanish"
-        },
-        {
-          "key": "portuguese",
-          "label": "Portuguese"
-        },
-        {
-          "key": "iberian",
-          "label": "Iberian"
-        },
-        {
-          "key": "roman",
-          "label": "Roman"
-        },
-        {
-          "key": "italian",
-          "label": "Italian",
-          "scope": "colonial"
-        },
-        {
-          "key": "greek",
-          "label": "Greek"
-        },
-        {
-          "key": "byzantine",
-          "label": "Byzantine"
-        },
-        {
-          "key": "greek-byzantine",
-          "label": "Greek and Byzantine"
-        },
-        {
-          "key": "hellenistic",
-          "label": "Hellenistic",
-          "scope": "colonial"
-        }
-      ]
-    },
-    {
-      "heading": "Eastern Europe and the steppe",
-      "entries": [
-        {
-          "key": "slavic",
-          "label": "Slavic"
-        },
-        {
-          "key": "turkic",
-          "label": "Turkic"
-        },
-        {
-          "key": "mongol",
-          "label": "Mongol"
-        },
-        {
-          "key": "steppe",
-          "label": "Turkic and Mongol steppe"
-        },
-        {
-          "key": "ottoman",
-          "label": "Ottoman"
-        }
-      ]
-    },
-    {
-      "heading": "Middle East and Africa",
-      "entries": [
-        {
-          "key": "arabic",
-          "label": "Arabic"
-        },
-        {
-          "key": "persian",
-          "label": "Persian"
-        },
-        {
-          "key": "arabic-persian",
-          "label": "Arabic and Persian"
-        },
-        {
-          "key": "egyptian",
-          "label": "Egyptian"
-        },
-        {
-          "key": "ethiopian",
-          "label": "Ethiopian"
-        },
-        {
-          "key": "swahili-omani",
-          "label": "Swahili and Omani"
-        },
-        {
-          "key": "bantu",
-          "label": "Bantu"
-        },
-        {
-          "key": "west-african",
-          "label": "West African"
-        },
-        {
-          "key": "phoenician",
-          "label": "Phoenician",
-          "scope": "colonial"
-        }
-      ]
-    },
-    {
-      "heading": "South and East Asia",
-      "entries": [
-        {
-          "key": "indian",
-          "label": "Indian"
-        },
-        {
-          "key": "malay",
-          "label": "Malay"
-        },
-        {
-          "key": "chinese",
-          "label": "Chinese"
-        },
-        {
-          "key": "japanese",
-          "label": "Japanese"
-        },
-        {
-          "key": "korean",
-          "label": "Korean"
-        }
-      ]
-    },
-    {
-      "heading": "The Americas",
-      "entries": [
-        {
-          "key": "american",
-          "label": "American"
-        },
-        {
-          "key": "arctic",
-          "label": null
-        },
-        {
-          "key": "na-woodlands",
-          "label": null
-        },
-        {
-          "key": "nw-coast",
-          "label": null
-        },
-        {
-          "key": "aztec",
-          "label": "Aztec"
-        },
-        {
-          "key": "maya",
-          "label": "Maya"
-        },
-        {
-          "key": "andean",
-          "label": "Andean"
-        }
-      ]
-    },
-    {
-      "heading": "The Pacific",
-      "entries": [
-        {
-          "key": "polynesian",
-          "label": "Polynesian"
-        },
-        {
-          "key": "hawaiian",
-          "label": null
-        },
-        {
-          "key": "maori",
-          "label": null
-        },
-        {
-          "key": "w-polynesian",
-          "label": null
-        }
-      ]
-    }
-  ],
-  "shares": {
-    "$comment": "Northern Europe brief 5a §11.3, 5b §12.1 and brief 6a §9.3: `signature` is the share of a module's own-shape draws that a core-depth culture's signature entries take (every core culture and every second-tier culture whose batch is done); `signatureMix` is the Celtic-style share the mixes (Celtic, Iberian, Greek and Byzantine) take; `region` is what region-weighted shapes take when a region is chosen.",
-    "signature": 0.6,
-    "region": 0.3,
-    "module": {
-      "$comment": "Sibling-distinctness brief: a floor under the share of a module's draws that a core-depth culture's own entries take, for modules whose general draw would otherwise leave a culture within reach of General (a calendar, the sky, arms: names that carry no people).",
-      "calendarNames": 0.85,
-      "skyNames": 0.9,
-      "mysticOrders": 0.85,
-      "underworldGroups": 0.85,
-      "peoplesTongues": {
-        "share": 0.85,
-        "except": [
-          "norman-british",
-          "anglo-saxon"
-        ]
-      },
-      "ships": 0.8,
-      "martialOrders": {
-        "share": 0.85,
-        "only": [
-          "norman-british"
-        ]
-      },
-      "tradeGuilds": {
-        "share": 0.85,
-        "only": [
-          "norman-british"
-        ]
-      },
-      "adventureCompanies": {
-        "share": 0.85,
-        "only": [
-          "norman-british"
-        ]
-      },
-      "supernaturalCourts": {
-        "share": 0.85,
-        "only": [
-          "norman-british"
-        ]
-      },
-      "powerFactions": {
-        "share": 0.85,
-        "only": [
-          "norman-british"
-        ]
-      },
-      "moorNames": {
-        "share": 0.98,
-        "only": [
-          "welsh",
-          "scottish",
-          "irish",
-          "cornish"
-        ]
-      },
-      "deityNames": {
-        "share": 0.97,
-        "only": [
-          "welsh",
-          "scottish",
-          "irish",
-          "cornish"
-        ]
-      },
-      "grasslandNames": 0.98,
-      "armsNames": 0.85,
-      "eventNames": 0.8,
-      "moneyNames": 0.8,
-      "treasureNames": 0.8,
-      "bookNames": 0.8
-    },
-    "legacy": {
-      "$comment": "Sibling-distinctness brief (17 November 2026): a culture that reads a table it shares with a sibling (the nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian, Greek and Byzantine read Greek-and-Byzantine, Anglo-Saxon and Norman and British read the English tables) draws that shared table at this weight, the share of its own-shape draws that are not its own entries; its own entries take the rest. Lower it until the pair meets the limits in the distinctness section.",
-      "welsh": 0.1,
-      "scottish": 0.1,
-      "irish": 0.1,
-      "cornish": 0.1,
-      "scandinavian": 0.1,
-      "spanish": 0.02,
-      "portuguese": 0.02,
-      "greek": 0.02,
-      "byzantine": 0.02,
-      "anglo-saxon": 0.02,
-      "turkic": 0.02,
-      "mongol": 0.02,
-      "arabic": 0.02,
-      "persian": 0.02
-    },
-    "signatureMix": 0.4,
-    "mixes": [
-      "celtic",
-      "iberian",
-      "greek-byzantine",
-      "steppe",
-      "arabic-persian"
-    ]
-  },
-  "regionExempt": {
-    "$comment": "Northern Europe brief 5b §12.2: regions that do not have a module's landscape. Their cells are exempt from the six-entry region depth, and a chosen region there falls back to the culture's own draws.",
-    "mountainNames": [
-      "NDT",
-      "DEN",
-      "OST",
-      "EAN"
-    ],
-    "forestNames": [
-      "ICE",
-      "NSI"
-    ],
-    "moorNames": [
-      "RHN",
-      "ALP"
-    ],
-    "wetlandNames": [
-      "RHN",
-      "MIT",
-      "ALP"
-    ],
-    "grasslandNames": [
-      "RHN"
-    ],
-    "seasLakes": [
-      "ALP",
-      "WMM",
-      "EMD"
-    ],
-    "coastsIslands": [
-      "WMM",
-      "EMD"
-    ],
-    "seaCharts": [
-      "RHN",
-      "MIT",
-      "ALP",
-      "OST",
-      "WMM",
-      "EMD"
-    ]
-  },
-  "sourceShares": {
-    "$comment": "Place modules split brief §4.1: where a focused place module's draw comes from, before it falls back to its own shapes. A kind may list sources; the share is the chance a draw tries the source first.",
-    "home": {
-      "source": "native",
-      "share": 0.4,
-      "cultures": [
-        "norman-british",
-        "anglo-saxon",
-        "celtic",
-        "welsh",
-        "scottish",
-        "irish",
-        "cornish"
-      ]
-    },
-    "new": {
-      "source": "colonial",
-      "part": "2",
-      "share": 0.5
-    },
-    "settled": {
-      "source": "colonial",
-      "part": "2a",
-      "share": 0.6
-    }
-  },
-  "cultureRegions": {
-    "$comment": "Northern Europe brief §3.1, §4: the regions each module culture key reads, where the region link shows, its default and how it reads. `fixed`: one region, drawn as plain text; `all`: the link also offers the whole culture. Modules in a batch use the `regions` group; the rest keep `british`.",
-    "anglo-saxon": {
-      "regions": [
-        "WCY",
-        "SEA",
-        "EAN",
-        "WMM",
-        "EMD",
-        "NTH",
-        "SBL"
-      ],
-      "all": "Britain"
-    },
-    "norman-british": {
-      "regions": [
-        "WCY",
-        "SEA",
-        "EAN",
-        "WMM",
-        "EMD",
-        "NTH",
-        "SBL"
-      ],
-      "all": "Britain"
-    },
-    "welsh": {
-      "regions": [
-        "WAL"
-      ],
-      "fixed": true,
-      "default": "WAL",
-      "text": "in Wales"
-    },
-    "cornish": {
-      "regions": [
-        "COR"
-      ],
-      "fixed": true,
-      "default": "COR",
-      "text": "in Cornwall"
-    },
-    "scottish": {
-      "regions": [
-        "SBL",
-        "SLO",
-        "SHH",
-        "NSI"
-      ],
-      "default": "SLO"
-    },
-    "celtic": {
-      "regions": [],
-      "all": "Britain"
+     ]
     },
     "norse": {
-      "regions": [
-        "DEN",
-        "NOR",
-        "SWE",
-        "ICE"
-      ],
-      "all": "Scandinavia"
+     "lens": [
+      "norse",
+      "scandinavian"
+     ]
     },
-    "scandinavian": {
-      "regions": [
-        "DEN",
-        "NOR",
-        "SWE",
-        "ICE"
-      ],
-      "all": "Scandinavia"
+    "roman": {
+     "lens": [
+      "roman"
+     ]
     },
-    "german": {
-      "regions": [
-        "NDT",
-        "RHN",
-        "MIT",
-        "ALP",
-        "OST"
-      ],
-      "all": "Germany"
+    "greek-byzantine": {
+     "lens": [
+      "greek-byzantine"
+     ]
+    },
+    "slavic": {
+     "lens": [
+      "slavic"
+     ]
+    },
+    "steppe": {
+     "lens": [
+      "steppe"
+     ]
+    },
+    "arabic-persian": {
+     "lens": [
+      "arabic-persian"
+     ]
+    },
+    "indian": {
+     "lens": [
+      "indian"
+     ]
+    },
+    "chinese": {
+     "lens": [
+      "chinese"
+     ]
+    },
+    "japanese": {
+     "lens": [
+      "japanese"
+     ]
+    },
+    "korean": {
+     "lens": [
+      "korean"
+     ]
+    },
+    "egyptian": {
+     "lens": [
+      "egyptian"
+     ]
+    },
+    "ethiopian": {
+     "lens": [
+      "ethiopian"
+     ]
+    },
+    "bantu": {
+     "lens": [
+      "bantu"
+     ]
+    },
+    "west-african": {
+     "lens": [
+      "west-african"
+     ]
+    },
+    "aztec": {
+     "lens": [
+      "aztec"
+     ]
+    },
+    "maya": {
+     "lens": [
+      "maya"
+     ]
+    },
+    "polynesian": {
+     "lens": [
+      "polynesian"
+     ]
+    },
+    "andean": {
+     "lens": [
+      "andean"
+     ]
+    },
+    "french": {
+     "lens": [
+      "french"
+     ]
+    },
+    "dutch": {
+     "lens": [
+      "dutch"
+     ]
+    },
+    "iberian": {
+     "lens": [
+      "iberian"
+     ]
+    },
+    "american": {
+     "lens": [
+      "american"
+     ]
+    },
+    "spanish": {
+     "lens": [
+      "spanish"
+     ]
+    },
+    "portuguese": {
+     "lens": [
+      "portuguese"
+     ]
+    },
+    "greek": {
+     "lens": [
+      "greek"
+     ]
+    },
+    "byzantine": {
+     "lens": [
+      "byzantine"
+     ]
+    },
+    "italian": {
+     "lens": [
+      "italian"
+     ]
+    },
+    "turkic": {
+     "lens": [
+      "turkic"
+     ]
+    },
+    "mongol": {
+     "lens": [
+      "mongol"
+     ]
+    },
+    "arabic": {
+     "lens": [
+      "arabic"
+     ]
+    },
+    "persian": {
+     "lens": [
+      "persian"
+     ]
     }
-  },
-  "engineAlias": {
-    "$comment": "Northern Europe brief §3: the module culture keys that came after the legacy ones read the legacy key's plumbing (settlement names, people lists, realms, gods, the colonial link and the weight tables) wherever a table has no row of their own.",
-    "welsh": "celtic",
-    "scottish": "celtic",
-    "irish": "celtic",
-    "cornish": "celtic",
-    "scandinavian": "norse",
-    "german": "general",
-    "spanish": "iberian",
-    "portuguese": "iberian",
-    "greek": "greek-byzantine",
-    "byzantine": "greek-byzantine",
-    "italian": "general",
-    "french": "general",
-    "dutch": "general",
-    "iberian": "general",
-    "$ownTablesComment": "Brief 6a: a key that has tables of its own in some modules (French, Dutch and Iberian money, vessels and the settlement vocabulary) reads them there and its alias elsewhere; `engineOwn` lists those modules.",
-    "turkic": "steppe",
-    "mongol": "steppe",
-    "arabic": "arabic-persian",
-    "persian": "arabic-persian"
-  },
-  "engineOwn": {
-    "french": [
-      "money",
-      "vessels"
-    ],
-    "dutch": [
-      "money",
-      "vessels"
-    ],
-    "iberian": [
-      "money",
-      "vessels"
-    ],
-    "scandinavian": [
-      "time"
-    ],
-    "welsh": [
-      "time"
-    ],
-    "scottish": [
-      "time"
-    ],
-    "irish": [
-      "time"
-    ],
-    "cornish": [
-      "time"
-    ]
-  },
-  "deferred": {
-    "$comment": "Brief 6a §9.6: cells the styles brief owns. A culture of the batch in one of these modules is reported as deferred, not below target.",
-    "styles": {
-      "modules": [
-        "starsSpace",
-        "hyperspaceCharts",
-        "spacecraft",
-        "riverNames"
-      ],
-      "cultures": [
-        "french",
-        "dutch",
-        "italian",
-        "spanish",
-        "portuguese",
-        "roman",
-        "greek",
-        "byzantine",
-        "slavic",
-        "iberian",
-        "greek-byzantine",
-        "turkic",
-        "mongol",
-        "arabic",
-        "persian",
-        "egyptian",
-        "ethiopian",
-        "bantu",
-        "west-african",
-        "steppe",
-        "arabic-persian"
-      ]
-    }
-  },
-  "distinctness": {
-    "$comment": "Sibling-distinctness brief (17 November 2026), docs/second-tier-tables-brief.md section 10. tests/distinctness.test.ts runs every module at its default state, only the culture changed, over `seeds`, `count` names each; a pair's overlap is the share of A's names that B also gives at the same seed. `siblings` are held to `siblingLimit` percent, each of `general` against General to `generalLimit`. Not measured: `excludedModules` (deferred styles, and deserts, which have no landscape of their own in these lands), `excludedCells` (module and culture), the settlement kit, and a mix against its own halves. A later batch adds its sibling pairs and its cultures to `general` here, and must pass.",
-    "seeds": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
-    "count": 12,
-    "siblingLimit": 25,
-    "generalLimit": 30,
-    "innLimit": 5,
-    "excludedModules": [
-      "starsSpace",
-      "hyperspaceCharts",
-      "spacecraft",
-      "riverNames",
-      "settlementKit",
-      "desertNames"
-    ],
-    "excludedCells": [],
-    "siblings": [
-      [
-        "spanish",
-        "portuguese"
-      ],
-      [
-        "greek",
-        "byzantine"
-      ],
-      [
-        "welsh",
-        "scottish"
-      ],
-      [
-        "scottish",
-        "irish"
-      ],
-      [
-        "welsh",
-        "irish"
-      ],
-      [
-        "welsh",
-        "cornish"
-      ],
-      [
-        "scottish",
-        "cornish"
-      ],
-      [
-        "irish",
-        "cornish"
-      ],
-      [
-        "norse",
-        "scandinavian"
-      ],
-      [
-        "anglo-saxon",
-        "norman-british"
-      ]
-    ],
-    "general": [
-      "norman-british",
-      "anglo-saxon",
+   },
+   "tribal": {
+    "general": {
+     "lens": [
+      "general"
+     ]
+    },
+    "celtic": {
+     "lens": [
       "welsh",
       "scottish",
       "irish",
       "cornish",
-      "norse",
+      "celtic"
+     ]
+    },
+    "germanic": {
+     "lens": [
+      "english",
       "scandinavian",
       "german",
-      "french",
-      "dutch",
-      "italian",
-      "spanish",
-      "portuguese",
+      "dutch"
+     ]
+    },
+    "mediterranean": {
+     "lens": [
       "roman",
-      "greek",
-      "byzantine",
+      "greek-byzantine",
+      "italian"
+     ],
+     "weights": [
+      [
+       "roman",
+       1
+      ]
+     ]
+    },
+    "steppe": {
+     "lens": [
+      "steppe"
+     ]
+    },
+    "arabian": {
+     "lens": [
+      "arabic-persian"
+     ],
+     "weights": [
+      [
+       "arabic-persian",
+       1
+      ]
+     ]
+    },
+    "bantu": {
+     "lens": [
+      "bantu"
+     ],
+     "weights": [
+      [
+       "bantu",
+       1
+      ]
+     ]
+    },
+    "westAfrican": {
+     "lens": [
+      "west-african"
+     ],
+     "weights": [
+      [
+       "west-african",
+       1
+      ]
+     ]
+    },
+    "southAsian": {
+     "lens": [
+      "indian"
+     ],
+     "weights": [
+      [
+       "indian",
+       1
+      ]
+     ]
+    },
+    "eastAsian": {
+     "lens": [
+      "chinese",
+      "japanese",
+      "korean"
+     ],
+     "weights": [
+      [
+       "chinese",
+       50
+      ],
+      [
+       "japanese",
+       25
+      ],
+      [
+       "korean",
+       25
+      ]
+     ]
+    },
+    "mesoamerican": {
+     "lens": [
+      "aztec",
+      "maya"
+     ],
+     "weights": [
+      [
+       "aztec",
+       60
+      ],
+      [
+       "maya",
+       40
+      ]
+     ]
+    },
+    "andean": {
+     "lens": [
+      "andean"
+     ]
+    },
+    "polynesian": {
+     "lens": [
+      "polynesian"
+     ]
+    },
+    "northAmerican": {
+     "lens": [],
+     "local": true
+    },
+    "maritimeSEA": {
+     "lens": [],
+     "local": true
+    },
+    "northernPacific": {
+     "lens": [],
+     "local": true
+    },
+    "sahul": {
+     "lens": [],
+     "local": true
+    },
+    "welsh": {
+     "lens": [
+      "welsh"
+     ],
+     "weights": [
+      [
+       "welsh",
+       1
+      ]
+     ]
+    },
+    "scottish": {
+     "lens": [
+      "scottish"
+     ],
+     "weights": [
+      [
+       "scottish",
+       1
+      ]
+     ]
+    },
+    "irish": {
+     "lens": [
+      "irish"
+     ],
+     "weights": [
+      [
+       "irish",
+       1
+      ]
+     ]
+    },
+    "cornish": {
+     "lens": [
+      "cornish"
+     ],
+     "weights": [
+      [
+       "cornish",
+       1
+      ]
+     ]
+    },
+    "norse": {
+     "lens": [
+      "norse"
+     ],
+     "weights": [
+      [
+       "norse",
+       1
+      ]
+     ]
+    },
+    "scandinavian": {
+     "lens": [
+      "scandinavian"
+     ],
+     "weights": [
+      [
+       "scandinavian",
+       1
+      ]
+     ]
+    },
+    "german": {
+     "lens": [
+      "german"
+     ],
+     "weights": [
+      [
+       "german",
+       1
+      ]
+     ]
+    },
+    "english": {
+     "lens": [
+      "english"
+     ],
+     "weights": [
+      [
+       "english",
+       1
+      ]
+     ]
+    },
+    "french": {
+     "lens": [
+      "french"
+     ],
+     "weights": [
+      [
+       "french",
+       1
+      ]
+     ]
+    },
+    "spanish": {
+     "lens": [
+      "spanish"
+     ],
+     "weights": [
+      [
+       "spanish",
+       1
+      ]
+     ]
+    },
+    "portuguese": {
+     "lens": [
+      "portuguese"
+     ],
+     "weights": [
+      [
+       "portuguese",
+       1
+      ]
+     ]
+    },
+    "italian": {
+     "lens": [
+      "italian"
+     ],
+     "weights": [
+      [
+       "italian",
+       1
+      ]
+     ]
+    },
+    "roman": {
+     "lens": [
+      "roman"
+     ],
+     "weights": [
+      [
+       "roman",
+       1
+      ]
+     ]
+    },
+    "greek": {
+     "lens": [
+      "greek"
+     ],
+     "weights": [
+      [
+       "greek",
+       1
+      ]
+     ]
+    },
+    "byzantine": {
+     "lens": [
+      "byzantine"
+     ],
+     "weights": [
+      [
+       "byzantine",
+       1
+      ]
+     ]
+    },
+    "iberian": {
+     "lens": [
+      "iberian"
+     ],
+     "weights": [
+      [
+       "iberian",
+       1
+      ]
+     ]
+    },
+    "greek-byzantine": {
+     "lens": [
+      "greek-byzantine"
+     ],
+     "weights": [
+      [
+       "greek-byzantine",
+       1
+      ]
+     ]
+    },
+    "dutch": {
+     "lens": [
+      "dutch"
+     ],
+     "weights": [
+      [
+       "dutch",
+       1
+      ]
+     ]
+    },
+    "slavic": {
+     "lens": [
       "slavic"
+     ],
+     "weights": [
+      [
+       "slavic",
+       1
+      ]
+     ]
+    },
+    "turkic": {
+     "lens": [
+      "turkic"
+     ],
+     "weights": [
+      [
+       "turkic",
+       1
+      ]
+     ]
+    },
+    "mongol": {
+     "lens": [
+      "mongol"
+     ],
+     "weights": [
+      [
+       "mongol",
+       1
+      ]
+     ]
+    },
+    "arabic": {
+     "lens": [
+      "arabic"
+     ],
+     "weights": [
+      [
+       "arabic",
+       1
+      ]
+     ]
+    },
+    "persian": {
+     "lens": [
+      "persian"
+     ],
+     "weights": [
+      [
+       "persian",
+       1
+      ]
+     ]
+    },
+    "egyptian": {
+     "lens": [
+      "egyptian"
+     ],
+     "weights": [
+      [
+       "egyptian",
+       1
+      ]
+     ]
+    },
+    "ethiopian": {
+     "lens": [
+      "ethiopian"
+     ],
+     "weights": [
+      [
+       "ethiopian",
+       1
+      ]
+     ]
+    }
+   },
+   "colonial": {
+    "general": {
+     "lens": [
+      "general"
+     ]
+    },
+    "british-imperial": {
+     "lens": [
+      "english"
+     ]
+    },
+    "english-speaking-settler": {
+     "lens": [
+      "american"
+     ]
+    },
+    "german": {
+     "lens": [
+      "german"
+     ]
+    },
+    "danish": {
+     "lens": [
+      "scandinavian"
+     ]
+    },
+    "swedish": {
+     "lens": [
+      "scandinavian"
+     ]
+    },
+    "dutch": {
+     "lens": [
+      "dutch"
+     ]
+    },
+    "french": {
+     "lens": [
+      "french"
+     ]
+    },
+    "spanish": {
+     "lens": [
+      "spanish"
+     ]
+    },
+    "portuguese": {
+     "lens": [
+      "portuguese"
+     ]
+    },
+    "italian": {
+     "lens": [
+      "italian"
+     ]
+    },
+    "roman": {
+     "lens": [
+      "roman"
+     ]
+    },
+    "russian": {
+     "lens": [
+      "slavic"
+     ]
+    },
+    "arab": {
+     "lens": [
+      "arabic-persian"
+     ]
+    },
+    "ottoman": {
+     "lens": [
+      "arabic-persian"
+     ]
+    },
+    "chinese": {
+     "lens": [
+      "chinese"
+     ]
+    },
+    "japanese": {
+     "lens": [
+      "japanese"
+     ]
+    },
+    "hellenistic": {
+     "lens": [],
+     "local": true
+    },
+    "phoenician": {
+     "lens": [],
+     "local": true
+    },
+    "belgian": {
+     "lens": [],
+     "local": true
+    }
+   },
+   "vehicle": {
+    "extends": "shared",
+    "entries": {
+     "hawaiian": {
+      "lens": [
+       "polynesian"
+      ],
+      "local": true
+     },
+     "maori": {
+      "lens": [
+       "polynesian"
+      ],
+      "local": true
+     },
+     "w-polynesian": {
+      "lens": [
+       "polynesian"
+      ],
+      "local": true
+     },
+     "ottoman": {
+      "lens": [
+       "arabic-persian"
+      ],
+      "local": true
+     },
+     "swahili-omani": {
+      "lens": [
+       "arabic-persian"
+      ],
+      "local": true
+     },
+     "malay": {
+      "lens": [],
+      "local": true
+     },
+     "nw-coast": {
+      "lens": [],
+      "local": true
+     },
+     "arctic": {
+      "lens": [],
+      "local": true
+     },
+     "na-woodlands": {
+      "lens": [],
+      "local": true
+     }
+    }
+   },
+   "world": {
+    "extends": "shared",
+    "entries": {
+     "celtic": {
+      "lens": [
+       "celtic"
+      ]
+     },
+     "norse": {
+      "lens": [
+       "norse"
+      ]
+     },
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
+   },
+   "north": {
+    "extends": "shared",
+    "entries": {
+     "celtic": {
+      "lens": [
+       "celtic"
+      ]
+     },
+     "norse": {
+      "lens": [
+       "norse"
+      ]
+     },
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
+   },
+   "north5c": {
+    "extends": "shared",
+    "entries": {
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
+   },
+   "vehicle5c": {
+    "extends": "vehicle",
+    "entries": {
+     "welsh": {
+      "lens": [
+       "welsh"
+      ]
+     },
+     "scottish": {
+      "lens": [
+       "scottish"
+      ]
+     },
+     "irish": {
+      "lens": [
+       "irish"
+      ]
+     },
+     "cornish": {
+      "lens": [
+       "cornish"
+      ]
+     },
+     "scandinavian": {
+      "lens": [
+       "scandinavian"
+      ]
+     },
+     "german": {
+      "lens": [
+       "german"
+      ]
+     }
+    }
+   }
+  },
+  "eras": {
+   "codes": [
+    "AN",
+    "MD",
+    "EM",
+    "ST",
+    "MO",
+    "NF",
+    "IS"
+   ],
+   "realms": {
+    "ancient": [
+     "AN"
+    ],
+    "medieval": [
+     "MD"
+    ],
+    "earlyModern": [
+     "EM"
+    ],
+    "modern": [
+     "MO"
+    ],
+    "nearFuture": [
+     "NF"
+    ],
+    "interstellar": [
+     "IS"
     ]
+   },
+   "world": {
+    "anglo-saxon:old-english": [
+     "MD"
+    ],
+    "anglo-saxon:modern": [
+     "ST",
+     "MO"
+    ],
+    "anglo-saxon:interstellar": [
+     "IS"
+    ],
+    "norse:viking": [
+     "MD"
+    ],
+    "norse:interstellar": [
+     "IS"
+    ],
+    "celtic:pagan": [
+     "AN"
+    ],
+    "celtic:saints": [
+     "MD"
+    ],
+    "celtic:interstellar": [
+     "IS"
+    ],
+    "roman:imperial": [
+     "AN"
+    ],
+    "roman:medieval": [
+     "MD"
+    ],
+    "roman:interstellar": [
+     "IS"
+    ],
+    "chinese:imperial": [
+     "MD",
+     "EM"
+    ],
+    "chinese:modern": [
+     "ST",
+     "MO"
+    ],
+    "chinese:interstellar": [
+     "IS"
+    ],
+    "egyptian:pharaonic": [
+     "AN"
+    ],
+    "egyptian:graeco-roman": [
+     "AN"
+    ],
+    "egyptian:interstellar": [
+     "IS"
+    ],
+    "aztec:mexica": [
+     "MD"
+    ],
+    "aztec:colonial": [
+     "EM"
+    ],
+    "aztec:interstellar": [
+     "IS"
+    ],
+    "bantu:kingdoms": [
+     "MD",
+     "EM"
+    ],
+    "bantu:interstellar": [
+     "IS"
+    ],
+    "slavic:rus": [
+     "MD"
+    ],
+    "slavic:imperial": [
+     "EM",
+     "ST"
+    ],
+    "slavic:soviet": [
+     "MO"
+    ],
+    "slavic:interstellar": [
+     "IS"
+    ],
+    "arabic-persian:arabic": [
+     "MD"
+    ],
+    "arabic-persian:persian": [
+     "AN",
+     "MD"
+    ],
+    "arabic-persian:interstellar": [
+     "IS"
+    ],
+    "indian:ancient": [
+     "AN"
+    ],
+    "indian:modern": [
+     "ST",
+     "MO"
+    ],
+    "indian:interstellar": [
+     "IS"
+    ],
+    "japanese:samurai": [
+     "MD",
+     "EM"
+    ],
+    "japanese:modern": [
+     "ST",
+     "MO"
+    ],
+    "japanese:interstellar": [
+     "IS"
+    ],
+    "west-african:sahel-and-forest": [
+     "MD",
+     "EM"
+    ],
+    "west-african:interstellar": [
+     "IS"
+    ],
+    "maya:classic": [
+     "AN"
+    ],
+    "maya:interstellar": [
+     "IS"
+    ],
+    "korean:joseon": [
+     "MD",
+     "EM"
+    ],
+    "korean:interstellar": [
+     "IS"
+    ],
+    "ethiopian:aksum-and-abyssinia": [
+     "MD",
+     "EM"
+    ],
+    "ethiopian:interstellar": [
+     "IS"
+    ],
+    "welsh:medieval": [
+     "MD"
+    ],
+    "welsh:modern": [
+     "ST",
+     "MO"
+    ],
+    "welsh:interstellar": [
+     "IS"
+    ],
+    "cornish:medieval": [
+     "MD"
+    ],
+    "cornish:modern": [
+     "ST",
+     "MO"
+    ],
+    "cornish:interstellar": [
+     "IS"
+    ],
+    "scottish:medieval": [
+     "MD"
+    ],
+    "scottish:modern": [
+     "ST",
+     "MO"
+    ],
+    "scottish:interstellar": [
+     "IS"
+    ],
+    "irish:medieval": [
+     "MD"
+    ],
+    "irish:modern": [
+     "ST",
+     "MO"
+    ],
+    "irish:interstellar": [
+     "IS"
+    ],
+    "scandinavian:early-modern": [
+     "EM"
+    ],
+    "scandinavian:modern": [
+     "ST",
+     "MO"
+    ],
+    "scandinavian:interstellar": [
+     "IS"
+    ],
+    "german:medieval": [
+     "MD"
+    ],
+    "german:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "german:interstellar": [
+     "IS"
+    ],
+    "french:medieval": [
+     "MD"
+    ],
+    "french:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "french:interstellar": [
+     "IS"
+    ],
+    "dutch:medieval": [
+     "MD"
+    ],
+    "dutch:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "dutch:interstellar": [
+     "IS"
+    ],
+    "italian:medieval": [
+     "MD"
+    ],
+    "italian:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "italian:interstellar": [
+     "IS"
+    ],
+    "spanish:medieval": [
+     "MD"
+    ],
+    "spanish:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "spanish:interstellar": [
+     "IS"
+    ],
+    "portuguese:medieval": [
+     "MD"
+    ],
+    "portuguese:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "portuguese:interstellar": [
+     "IS"
+    ],
+    "greek:classical": [
+     "AN"
+    ],
+    "greek:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "greek:interstellar": [
+     "IS"
+    ],
+    "byzantine:byzantine": [
+     "MD"
+    ],
+    "byzantine:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "byzantine:interstellar": [
+     "IS"
+    ],
+    "roman:republic": [
+     "AN"
+    ],
+    "slavic:tribal": [
+     "AN"
+    ],
+    "turkic:medieval": [
+     "MD"
+    ],
+    "turkic:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "mongol:steppe": [
+     "AN",
+     "MD"
+    ],
+    "mongol:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "arabic:ancient": [
+     "AN"
+    ],
+    "arabic:medieval": [
+     "MD"
+    ],
+    "arabic:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "persian:ancient": [
+     "AN"
+    ],
+    "persian:medieval": [
+     "MD"
+    ],
+    "persian:modern": [
+     "EM",
+     "ST",
+     "MO"
+    ],
+    "egyptian:coptic-and-mamluk": [
+     "MD"
+    ],
+    "egyptian:ottoman-and-khedival": [
+     "EM",
+     "ST"
+    ],
+    "egyptian:modern-egypt": [
+     "MO"
+    ],
+    "ethiopian:modern-ethiopia": [
+     "ST",
+     "MO"
+    ],
+    "bantu:mission-and-colony": [
+     "ST"
+    ],
+    "bantu:modern-bantu": [
+     "MO"
+    ],
+    "west-african:colony-and-coast": [
+     "EM",
+     "ST"
+    ],
+    "west-african:modern-west-africa": [
+     "MO"
+    ],
+    "turkic:interstellar": [
+     "IS"
+    ],
+    "mongol:interstellar": [
+     "IS"
+    ],
+    "arabic:interstellar": [
+     "IS"
+    ],
+    "persian:interstellar": [
+     "IS"
+    ]
+   },
+   "ships": {
+    "T1": [
+     "AN"
+    ],
+    "T2": [
+     "AN"
+    ],
+    "T3": [
+     "MD"
+    ],
+    "T4": [
+     "EM"
+    ],
+    "T5": [
+     "ST"
+    ],
+    "T6": [
+     "MO"
+    ],
+    "T7": [
+     "MO"
+    ]
+   },
+   "spacecraft": {
+    "S1": [
+     "NF"
+    ],
+    "S2": [
+     "NF"
+    ],
+    "S3": [
+     "IS"
+    ]
+   },
+   "aircraft": {
+    "A1": [
+     "AN",
+     "MD",
+     "EM",
+     "ST"
+    ],
+    "A2": [
+     "ST",
+     "MO"
+    ],
+    "A3": [
+     "ST",
+     "MO"
+    ],
+    "A4": [
+     "MO"
+    ],
+    "A5": [
+     "MO"
+    ],
+    "A6": [
+     "MO"
+    ],
+    "A7": [
+     "NF",
+     "IS"
+    ],
+    "AF": [
+     "MD",
+     "MO"
+    ]
+   },
+   "landVehicles": {
+    "L1": [
+     "AN",
+     "MD",
+     "EM",
+     "ST"
+    ],
+    "L2": [
+     "ST"
+    ],
+    "L3": [
+     "ST",
+     "MO"
+    ],
+    "L4": [
+     "MO"
+    ],
+    "L5": [
+     "MO"
+    ],
+    "L6": [
+     "NF",
+     "IS"
+    ],
+    "LF": [
+     "MD",
+     "MO"
+    ]
+   },
+   "notes": {
+    "aircraft": "Read from docs/aircraft-and-land-vehicles-brief.md §4.1 (the data's `technology` carries labels, not dates): A1 balloons and kites (kites from antiquity, balloons from 1783) AN–ST; A2 airships (1852 to the 1930s) ST, MO; A3 pioneer and biplane (1903 to the 1920s) ST, MO; A4 piston age, A5 jet age and A6 modern and drones MO; A7 future NF, IS; AF sky ships, fantastic only: the eras of the settings that offer it (FH is MD, MF is MO, §4.3).",
+    "landVehicles": "Read from docs/aircraft-and-land-vehicles-brief.md §4.2: L1 animal-drawn (chariots to coaches, in use throughout) AN–ST; L2 steam ST; L3 early motor (cars from the 1880s, the first tanks, electric trams) ST, MO; L4 mid-century and L5 modern MO; L6 future NF, IS; LF war engines and wonders, fantastic only: MD (FH) and MO (MF)."
+   }
+  },
+  "styles": {
+   "genreSettings": {
+    "FL": {
+     "eras": [
+      "MD"
+     ],
+     "style": "low-fantasy"
+    },
+    "FH": {
+     "eras": [
+      "MD"
+     ],
+     "style": "high-fantasy"
+    },
+    "MR": {
+     "eras": [
+      "MO"
+     ],
+     "style": "realistic"
+    },
+    "MF": {
+     "eras": [
+      "MO"
+     ],
+     "style": "contemporary-fantasy"
+    },
+    "SF": {
+     "eras": [
+      "IS"
+     ],
+     "style": "realistic"
+    }
+   },
+   "vessel": {
+    "heroic": [
+     {
+      "style": "high-fantasy"
+     }
+    ],
+    "elven": [
+     {
+      "style": "high-fantasy"
+     }
+    ],
+    "dwarven": [
+     {
+      "style": "high-fantasy"
+     }
+    ],
+    "oceanic": [
+     {
+      "style": "high-fantasy"
+     }
+    ],
+    "fpirate": [
+     {
+      "style": "high-fantasy"
+     }
+    ],
+    "dark": [
+     {
+      "style": "high-fantasy"
+     },
+     {
+      "style": "contemporary-fantasy"
+     }
+    ],
+    "steampunk": [
+     {
+      "style": "steampunk"
+     }
+    ],
+    "dieselpunk": [
+     {
+      "style": "dieselpunk"
+     }
+    ],
+    "postapoc": [
+     {
+      "style": "post-apocalyptic"
+     }
+    ],
+    "wasteland": [
+     {
+      "style": "post-apocalyptic"
+     }
+    ],
+    "sfmilitary": [
+     {
+      "style": "space-opera"
+     }
+    ],
+    "sfexplore": [
+     {
+      "style": "space-opera"
+     }
+    ],
+    "ai": [
+     {
+      "style": "space-opera"
+     }
+    ],
+    "alien": [
+     {
+      "style": "space-opera"
+     }
+    ],
+    "corporate": [
+     {
+      "style": "realistic",
+      "eras": [
+       "NF",
+       "IS"
+      ]
+     }
+    ],
+    "colony": [
+     {
+      "style": "realistic",
+      "eras": [
+       "NF",
+       "IS"
+      ]
+     }
+    ],
+    "outlaw": [
+     {
+      "style": "realistic",
+      "eras": [
+       "NF",
+       "IS"
+      ]
+     }
+    ]
+   },
+   "vocabulary": {
+    "fantastic": {
+     "steampunkWhenEras": [
+      "ST"
+     ],
+     "otherwise": [
+      {
+       "style": "high-fantasy",
+       "eras": [
+        "AN",
+        "MD",
+        "EM"
+       ]
+      },
+      {
+       "style": "contemporary-fantasy",
+       "eras": [
+        "MO"
+       ]
+      },
+      {
+       "style": "space-opera",
+       "eras": [
+        "NF",
+        "IS"
+       ]
+      }
+     ]
+    },
+    "notFantastic": [
+     {
+      "style": "realistic"
+     }
+    ]
+   },
+   "steampunkNames": {
+    "pools": [
+     "compSteampunk",
+     "streetSteampunk",
+     "steampunkLandmark",
+     "steampunkMonument"
+    ],
+    "shapeLists": [
+     "steampunk",
+     "steampunkComponents",
+     "steampunkDistricts"
+    ]
+   },
+   "default": [
+    {
+     "style": "realistic"
+    }
+   ]
   }
+ },
+ "modules": {
+  "routeNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "route5a",
+    "region": {
+     "group": "regions",
+     "requires": null,
+     "keepWhenHidden": false
+    }
+   }
+  },
+  "streetNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "route5a",
+    "region": {
+     "group": "regions",
+     "requires": null,
+     "keepWhenHidden": false
+    }
+   }
+  },
+  "innNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "route5a",
+    "region": {
+     "group": "regions",
+     "requires": null,
+     "keepWhenHidden": false
+    }
+   }
+  },
+  "buildingNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "route5a",
+    "region": {
+     "group": "regions",
+     "requires": null,
+     "keepWhenHidden": false
+    }
+   }
+  },
+  "monumentNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "route5a",
+    "region": {
+     "group": "regions",
+     "requires": null,
+     "keepWhenHidden": false
+    }
+   }
+  },
+  "settlementKit": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "route5a",
+    "region": {
+     "group": "regions",
+     "requires": null,
+     "keepWhenHidden": false
+    }
+   }
+  },
+  "eventNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "route5a"
+   }
+  },
+  "calendarNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "time"
+   }
+  },
+  "skyNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "time"
+   }
+  },
+  "mountainNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "forestNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "desertNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "wilds5a"
+   }
+  },
+  "moorNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "wetlandNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "grasslandNames": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "riversInland": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "hillsValleys": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "farmland": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "seasLakes": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "waters5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "coastsIslands": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "waters5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "seaCharts": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "waters5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "hyperspaceCharts": {
+   "cultures": "shared",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "none"
+   }
+  },
+  "epithets": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "byname"
+   }
+  },
+  "titles": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "byname"
+   }
+  },
+  "familyNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "byname"
+   }
+  },
+  "armsNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "thing"
+   }
+  },
+  "treasureNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "thing"
+   }
+  },
+  "bookNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "thing"
+   }
+  },
+  "realms": {
+   "cultures": "north5c",
+   "eras": "realms",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "realm",
+    "ownEras": true
+   }
+  },
+  "peoplesTongues": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": null,
+     "genre": null,
+     "region": null
+    },
+    "roster": "people"
+   }
+  },
+  "deityNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "deity5a"
+   }
+  },
+  "sacredPlaces": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "deity5a"
+   }
+  },
+  "moneyNames": {
+   "cultures": "north5c",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "money"
+   }
+  },
+  "tribalNames": {
+   "cultures": "tribal",
+   "eras": "none",
+   "land": false,
+   "sentence": {
+    "family": "none"
+   }
+  },
+  "mysticOrders": {
+   "cultures": "tribal",
+   "eras": "none",
+   "settings": "genreSettings",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": null,
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": null
+   }
+  },
+  "martialOrders": {
+   "cultures": "tribal",
+   "eras": "none",
+   "settings": "genreSettings",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": null,
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": null
+   }
+  },
+  "underworldGroups": {
+   "cultures": "tribal",
+   "eras": "none",
+   "settings": "genreSettings",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": null,
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": null
+   }
+  },
+  "tradeGuilds": {
+   "cultures": "tribal",
+   "eras": "none",
+   "settings": "genreSettings",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": null,
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": null
+   }
+  },
+  "adventureCompanies": {
+   "cultures": "tribal",
+   "eras": "none",
+   "settings": "genreSettings",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": null,
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": null
+   }
+  },
+  "powerFactions": {
+   "cultures": "tribal",
+   "eras": "none",
+   "settings": "genreSettings",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": null,
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": null
+   }
+  },
+  "supernaturalCourts": {
+   "cultures": "tribal",
+   "eras": "none",
+   "settings": "genreSettings",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": null,
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": null
+   }
+  },
+  "ships": {
+   "cultures": "vehicle5c",
+   "eras": "ships",
+   "settings": "genreSettings",
+   "styles": "vessel",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "vessel"
+   }
+  },
+  "spacecraft": {
+   "cultures": "vehicle",
+   "eras": "spacecraft",
+   "settings": "genreSettings",
+   "styles": "vessel",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "vesselSpace"
+   }
+  },
+  "aircraft": {
+   "cultures": "vehicle5c",
+   "eras": "aircraft",
+   "settings": "genreSettings",
+   "styles": "vessel",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "vessel"
+   }
+  },
+  "landVehicles": {
+   "cultures": "vehicle5c",
+   "eras": "landVehicles",
+   "settings": "genreSettings",
+   "styles": "vessel",
+   "land": false,
+   "sentence": {
+    "family": "B",
+    "fields": {
+     "culture": "culture",
+     "era": null,
+     "fantastic": "fantastic",
+     "genre": "genre",
+     "region": null
+    },
+    "roster": "vessel"
+   }
+  },
+  "explorationPlaceShapes": {
+   "cultures": "colonial",
+   "eras": "none",
+   "land": false,
+   "sentence": {
+    "family": "none"
+   }
+  },
+  "empireExpansionPlaceShapes": {
+   "cultures": "colonial",
+   "eras": "none",
+   "land": false,
+   "sentence": {
+    "family": "none"
+   }
+  },
+  "placeShapes": {
+   "cultures": "world",
+   "eras": "world",
+   "britishEras": "all",
+   "land": true,
+   "sentence": {
+    "family": "none"
+   }
+  },
+  "settlementNames": {
+   "cultures": "world",
+   "eras": "world",
+   "colonialCultures": "colonial",
+   "britishEras": "all",
+   "land": false,
+   "sentence": {
+    "family": "none"
+   }
+  },
+  "riverNames": {
+   "cultures": "none",
+   "eras": "none",
+   "britishEras": "all",
+   "land": true,
+   "sentence": {
+    "family": "none"
+   }
+  },
+  "lands": {
+   "cultures": "north",
+   "eras": "codes",
+   "land": true,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": "region"
+    },
+    "roster": "wilds5a",
+    "region": {
+     "group": "regions",
+     "requires": {
+      "where": "home"
+     },
+     "keepWhenHidden": true
+    }
+   }
+  },
+  "starsSpace": {
+   "cultures": "shared",
+   "eras": "codes",
+   "land": false,
+   "sentence": {
+    "family": "A",
+    "fields": {
+     "where": "where",
+     "culture": "culture",
+     "era": "era",
+     "fantastic": "fantastic",
+     "genre": null,
+     "region": null
+    },
+    "roster": "wilds"
+   }
+  }
+ },
+ "bands": [
+  {
+   "key": "pre-industrial",
+   "label": "pre-industrial",
+   "eras": [
+    "AN",
+    "MD",
+    "EM"
+   ],
+   "genre": "fantasy"
+  },
+  {
+   "key": "industrial and modern",
+   "label": "industrial and modern",
+   "eras": [
+    "ST",
+    "MO"
+   ],
+   "genre": "modern"
+  },
+  {
+   "key": "future",
+   "label": "future",
+   "eras": [
+    "NF",
+    "IS"
+   ],
+   "genre": "scifi"
+  }
+ ],
+ "worlds": {
+  "rows": [
+   {
+    "key": "pre-industrial",
+    "eras": [
+     "AN",
+     "MD",
+     "EM"
+    ],
+    "plain": {
+     "label": "historic or low fantasy",
+     "style": "low-fantasy"
+    },
+    "fantastic": {
+     "label": "high or epic fantasy",
+     "style": "high-fantasy"
+    }
+   },
+   {
+    "key": "ST",
+    "eras": [
+     "ST"
+    ],
+    "plain": {
+     "label": "realistic",
+     "style": "realistic"
+    },
+    "fantastic": {
+     "label": "steampunk",
+     "style": "steampunk"
+    }
+   },
+   {
+    "key": "MO",
+    "eras": [
+     "MO"
+    ],
+    "plain": {
+     "label": "realistic",
+     "style": "realistic"
+    },
+    "fantastic": {
+     "label": "contemporary fantasy",
+     "style": "contemporary-fantasy"
+    }
+   },
+   {
+    "key": "future",
+    "eras": [
+     "NF",
+     "IS"
+    ],
+    "plain": {
+     "label": "science fiction",
+     "style": "realistic"
+    },
+    "fantastic": {
+     "label": "space opera",
+     "style": "space-opera"
+    }
+   }
+  ],
+  "bandRows": {
+   "pre-industrial": "pre-industrial",
+   "industrial and modern": "MO",
+   "future": "future"
+  },
+  "title": "How real the world is: open magic and monsters, steam and brass, or as it really was"
+ },
+ "tooltips": {
+  "era": "The age: decides what exists and how it is named",
+  "world": "How real the world is: open magic and monsters, steam and brass, or as it really was"
+ },
+ "views": {
+  "welsh": {
+   "label": "Welsh",
+   "culture": "celtic",
+   "regions": [
+    "WAL"
+   ],
+   "default": "WAL",
+   "fixedText": "in Wales"
+  },
+  "cornish": {
+   "label": "Cornish",
+   "culture": "celtic",
+   "regions": [
+    "COR"
+   ],
+   "default": "COR",
+   "fixedText": "in Cornwall"
+  },
+  "scottish": {
+   "label": "Scottish",
+   "culture": "celtic",
+   "regions": [
+    "SBL",
+    "SLO",
+    "SHH",
+    "NSI"
+   ],
+   "default": "SLO"
+  }
+ },
+ "menu": [
+  {
+   "heading": null,
+   "entries": [
+    {
+     "key": "general",
+     "label": "General"
+    }
+   ]
+  },
+  {
+   "heading": "British Isles",
+   "entries": [
+    {
+     "key": "norman-british",
+     "label": "Norman & British"
+    },
+    {
+     "key": "anglo-saxon",
+     "label": "Anglo-Saxon"
+    },
+    {
+     "key": "welsh",
+     "label": "Welsh",
+     "view": "welsh"
+    },
+    {
+     "key": "scottish",
+     "label": "Scottish",
+     "view": "scottish"
+    },
+    {
+     "key": "irish",
+     "label": "Irish"
+    },
+    {
+     "key": "cornish",
+     "label": "Cornish",
+     "view": "cornish"
+    },
+    {
+     "key": "celtic",
+     "label": "Celtic"
+    }
+   ]
+  },
+  {
+   "heading": "Northern Europe",
+   "entries": [
+    {
+     "key": "norse",
+     "label": "Norse"
+    },
+    {
+     "key": "scandinavian",
+     "label": "Scandinavian"
+    },
+    {
+     "key": "dutch",
+     "label": "Dutch"
+    },
+    {
+     "key": "german",
+     "label": "German",
+     "scope": "colonial"
+    },
+    {
+     "key": "belgian",
+     "label": "Belgian",
+     "scope": "colonial"
+    }
+   ]
+  },
+  {
+   "heading": "Western and southern Europe",
+   "entries": [
+    {
+     "key": "french",
+     "label": "French"
+    },
+    {
+     "key": "spanish",
+     "label": "Spanish"
+    },
+    {
+     "key": "portuguese",
+     "label": "Portuguese"
+    },
+    {
+     "key": "iberian",
+     "label": "Iberian"
+    },
+    {
+     "key": "roman",
+     "label": "Roman"
+    },
+    {
+     "key": "italian",
+     "label": "Italian",
+     "scope": "colonial"
+    },
+    {
+     "key": "greek",
+     "label": "Greek"
+    },
+    {
+     "key": "byzantine",
+     "label": "Byzantine"
+    },
+    {
+     "key": "greek-byzantine",
+     "label": "Greek and Byzantine"
+    },
+    {
+     "key": "hellenistic",
+     "label": "Hellenistic",
+     "scope": "colonial"
+    }
+   ]
+  },
+  {
+   "heading": "Eastern Europe and the steppe",
+   "entries": [
+    {
+     "key": "slavic",
+     "label": "Slavic"
+    },
+    {
+     "key": "turkic",
+     "label": "Turkic"
+    },
+    {
+     "key": "mongol",
+     "label": "Mongol"
+    },
+    {
+     "key": "steppe",
+     "label": "Turkic and Mongol steppe"
+    },
+    {
+     "key": "ottoman",
+     "label": "Ottoman"
+    }
+   ]
+  },
+  {
+   "heading": "Middle East and Africa",
+   "entries": [
+    {
+     "key": "arabic",
+     "label": "Arabic"
+    },
+    {
+     "key": "persian",
+     "label": "Persian"
+    },
+    {
+     "key": "arabic-persian",
+     "label": "Arabic and Persian"
+    },
+    {
+     "key": "egyptian",
+     "label": "Egyptian"
+    },
+    {
+     "key": "ethiopian",
+     "label": "Ethiopian"
+    },
+    {
+     "key": "swahili-omani",
+     "label": "Swahili and Omani"
+    },
+    {
+     "key": "bantu",
+     "label": "Bantu"
+    },
+    {
+     "key": "west-african",
+     "label": "West African"
+    },
+    {
+     "key": "phoenician",
+     "label": "Phoenician",
+     "scope": "colonial"
+    }
+   ]
+  },
+  {
+   "heading": "South and East Asia",
+   "entries": [
+    {
+     "key": "indian",
+     "label": "Indian"
+    },
+    {
+     "key": "malay",
+     "label": "Malay"
+    },
+    {
+     "key": "chinese",
+     "label": "Chinese"
+    },
+    {
+     "key": "japanese",
+     "label": "Japanese"
+    },
+    {
+     "key": "korean",
+     "label": "Korean"
+    }
+   ]
+  },
+  {
+   "heading": "The Americas",
+   "entries": [
+    {
+     "key": "american",
+     "label": "American"
+    },
+    {
+     "key": "arctic",
+     "label": null
+    },
+    {
+     "key": "na-woodlands",
+     "label": null
+    },
+    {
+     "key": "nw-coast",
+     "label": null
+    },
+    {
+     "key": "aztec",
+     "label": "Aztec"
+    },
+    {
+     "key": "maya",
+     "label": "Maya"
+    },
+    {
+     "key": "andean",
+     "label": "Andean"
+    }
+   ]
+  },
+  {
+   "heading": "The Pacific",
+   "entries": [
+    {
+     "key": "polynesian",
+     "label": "Polynesian"
+    },
+    {
+     "key": "hawaiian",
+     "label": null
+    },
+    {
+     "key": "maori",
+     "label": null
+    },
+    {
+     "key": "w-polynesian",
+     "label": null
+    }
+   ]
+  }
+ ],
+ "shares": {
+  "$comment": "Northern Europe brief 5a §11.3, 5b §12.1 and brief 6a §9.3: `signature` is the share of a module's own-shape draws that a core-depth culture's signature entries take (every core culture and every second-tier culture whose batch is done); `signatureMix` is the Celtic-style share the mixes (Celtic, Iberian, Greek and Byzantine) take; `region` is what region-weighted shapes take when a region is chosen.",
+  "signature": 0.6,
+  "region": 0.3,
+  "module": {
+   "$comment": "Sibling-distinctness brief: a floor under the share of a module's draws that a core-depth culture's own entries take, for modules whose general draw would otherwise leave a culture within reach of General (a calendar, the sky, arms: names that carry no people).",
+   "calendarNames": 0.85,
+   "skyNames": 0.9,
+   "mysticOrders": 0.85,
+   "underworldGroups": 0.85,
+   "peoplesTongues": {
+    "share": 0.85,
+    "except": [
+     "norman-british",
+     "anglo-saxon"
+    ]
+   },
+   "ships": 0.8,
+   "martialOrders": {
+    "share": 0.85,
+    "only": [
+     "norman-british"
+    ]
+   },
+   "tradeGuilds": {
+    "share": 0.85,
+    "only": [
+     "norman-british"
+    ]
+   },
+   "adventureCompanies": {
+    "share": 0.85,
+    "only": [
+     "norman-british"
+    ]
+   },
+   "supernaturalCourts": {
+    "share": 0.85,
+    "only": [
+     "norman-british"
+    ]
+   },
+   "powerFactions": {
+    "share": 0.85,
+    "only": [
+     "norman-british"
+    ]
+   },
+   "moorNames": {
+    "share": 0.98,
+    "only": [
+     "welsh",
+     "scottish",
+     "irish",
+     "cornish"
+    ]
+   },
+   "deityNames": {
+    "share": 0.97,
+    "only": [
+     "welsh",
+     "scottish",
+     "irish",
+     "cornish"
+    ]
+   },
+   "grasslandNames": 0.98,
+   "armsNames": 0.85,
+   "eventNames": 0.8,
+   "moneyNames": 0.8,
+   "treasureNames": 0.8,
+   "bookNames": 0.8
+  },
+  "legacy": {
+   "$comment": "Sibling-distinctness brief (17 November 2026): a culture that reads a table it shares with a sibling (the nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian, Greek and Byzantine read Greek-and-Byzantine, Anglo-Saxon and Norman and British read the English tables) draws that shared table at this weight, the share of its own-shape draws that are not its own entries; its own entries take the rest. Lower it until the pair meets the limits in the distinctness section.",
+   "welsh": 0.1,
+   "scottish": 0.1,
+   "irish": 0.1,
+   "cornish": 0.1,
+   "scandinavian": 0.1,
+   "spanish": 0.02,
+   "portuguese": 0.02,
+   "greek": 0.02,
+   "byzantine": 0.02,
+   "anglo-saxon": 0.02,
+   "turkic": 0.02,
+   "mongol": 0.02,
+   "arabic": 0.02,
+   "persian": 0.02,
+   "ethiopian": 0.03,
+   "bantu": 0.03,
+   "west-african": 0.08
+  },
+  "signatureMix": 0.4,
+  "mixes": [
+   "celtic",
+   "iberian",
+   "greek-byzantine",
+   "steppe",
+   "arabic-persian"
+  ]
+ },
+ "regionExempt": {
+  "$comment": "Northern Europe brief 5b §12.2: regions that do not have a module's landscape. Their cells are exempt from the six-entry region depth, and a chosen region there falls back to the culture's own draws.",
+  "mountainNames": [
+   "NDT",
+   "DEN",
+   "OST",
+   "EAN"
+  ],
+  "forestNames": [
+   "ICE",
+   "NSI"
+  ],
+  "moorNames": [
+   "RHN",
+   "ALP"
+  ],
+  "wetlandNames": [
+   "RHN",
+   "MIT",
+   "ALP"
+  ],
+  "grasslandNames": [
+   "RHN"
+  ],
+  "seasLakes": [
+   "ALP",
+   "WMM",
+   "EMD"
+  ],
+  "coastsIslands": [
+   "WMM",
+   "EMD"
+  ],
+  "seaCharts": [
+   "RHN",
+   "MIT",
+   "ALP",
+   "OST",
+   "WMM",
+   "EMD"
+  ]
+ },
+ "sourceShares": {
+  "$comment": "Place modules split brief §4.1: where a focused place module's draw comes from, before it falls back to its own shapes. A kind may list sources; the share is the chance a draw tries the source first.",
+  "home": {
+   "source": "native",
+   "share": 0.4,
+   "cultures": [
+    "norman-british",
+    "anglo-saxon",
+    "celtic",
+    "welsh",
+    "scottish",
+    "irish",
+    "cornish"
+   ]
+  },
+  "new": {
+   "source": "colonial",
+   "part": "2",
+   "share": 0.5
+  },
+  "settled": {
+   "source": "colonial",
+   "part": "2a",
+   "share": 0.6
+  }
+ },
+ "cultureRegions": {
+  "$comment": "Northern Europe brief §3.1, §4: the regions each module culture key reads, where the region link shows, its default and how it reads. `fixed`: one region, drawn as plain text; `all`: the link also offers the whole culture. Modules in a batch use the `regions` group; the rest keep `british`.",
+  "anglo-saxon": {
+   "regions": [
+    "WCY",
+    "SEA",
+    "EAN",
+    "WMM",
+    "EMD",
+    "NTH",
+    "SBL"
+   ],
+   "all": "Britain"
+  },
+  "norman-british": {
+   "regions": [
+    "WCY",
+    "SEA",
+    "EAN",
+    "WMM",
+    "EMD",
+    "NTH",
+    "SBL"
+   ],
+   "all": "Britain"
+  },
+  "welsh": {
+   "regions": [
+    "WAL"
+   ],
+   "fixed": true,
+   "default": "WAL",
+   "text": "in Wales"
+  },
+  "cornish": {
+   "regions": [
+    "COR"
+   ],
+   "fixed": true,
+   "default": "COR",
+   "text": "in Cornwall"
+  },
+  "scottish": {
+   "regions": [
+    "SBL",
+    "SLO",
+    "SHH",
+    "NSI"
+   ],
+   "default": "SLO"
+  },
+  "celtic": {
+   "regions": [],
+   "all": "Britain"
+  },
+  "norse": {
+   "regions": [
+    "DEN",
+    "NOR",
+    "SWE",
+    "ICE"
+   ],
+   "all": "Scandinavia"
+  },
+  "scandinavian": {
+   "regions": [
+    "DEN",
+    "NOR",
+    "SWE",
+    "ICE"
+   ],
+   "all": "Scandinavia"
+  },
+  "german": {
+   "regions": [
+    "NDT",
+    "RHN",
+    "MIT",
+    "ALP",
+    "OST"
+   ],
+   "all": "Germany"
+  }
+ },
+ "engineAlias": {
+  "$comment": "Northern Europe brief §3: the module culture keys that came after the legacy ones read the legacy key's plumbing (settlement names, people lists, realms, gods, the colonial link and the weight tables) wherever a table has no row of their own.",
+  "welsh": "celtic",
+  "scottish": "celtic",
+  "irish": "celtic",
+  "cornish": "celtic",
+  "scandinavian": "norse",
+  "german": "general",
+  "spanish": "iberian",
+  "portuguese": "iberian",
+  "greek": "greek-byzantine",
+  "byzantine": "greek-byzantine",
+  "italian": "general",
+  "french": "general",
+  "dutch": "general",
+  "iberian": "general",
+  "$ownTablesComment": "Brief 6a: a key that has tables of its own in some modules (French, Dutch and Iberian money, vessels and the settlement vocabulary) reads them there and its alias elsewhere; `engineOwn` lists those modules.",
+  "turkic": "steppe",
+  "mongol": "steppe",
+  "arabic": "arabic-persian",
+  "persian": "arabic-persian"
+ },
+ "engineOwn": {
+  "french": [
+   "money",
+   "vessels"
+  ],
+  "dutch": [
+   "money",
+   "vessels"
+  ],
+  "iberian": [
+   "money",
+   "vessels"
+  ],
+  "scandinavian": [
+   "time"
+  ],
+  "welsh": [
+   "time"
+  ],
+  "scottish": [
+   "time"
+  ],
+  "irish": [
+   "time"
+  ],
+  "cornish": [
+   "time"
+  ]
+ },
+ "deferred": {
+  "$comment": "Brief 6a §9.6: cells the styles brief owns. A culture of the batch in one of these modules is reported as deferred, not below target.",
+  "styles": {
+   "modules": [
+    "starsSpace",
+    "hyperspaceCharts",
+    "spacecraft",
+    "riverNames"
+   ],
+   "cultures": [
+    "french",
+    "dutch",
+    "italian",
+    "spanish",
+    "portuguese",
+    "roman",
+    "greek",
+    "byzantine",
+    "slavic",
+    "iberian",
+    "greek-byzantine",
+    "turkic",
+    "mongol",
+    "arabic",
+    "persian",
+    "egyptian",
+    "ethiopian",
+    "bantu",
+    "west-african",
+    "steppe",
+    "arabic-persian"
+   ]
+  }
+ },
+ "distinctness": {
+  "$comment": "Sibling-distinctness brief (17 November 2026), docs/second-tier-tables-brief.md section 10. tests/distinctness.test.ts runs every module at its default state, only the culture changed, over `seeds`, `count` names each; a pair's overlap is the share of A's names that B also gives at the same seed. `siblings` are held to `siblingLimit` percent, each of `general` against General to `generalLimit`. Not measured: `excludedModules` (deferred styles, and deserts, which have no landscape of their own in these lands), `excludedCells` (module and culture), the settlement kit, and a mix against its own halves. A later batch adds its sibling pairs and its cultures to `general` here, and must pass.",
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "count": 12,
+  "siblingLimit": 25,
+  "generalLimit": 30,
+  "innLimit": 5,
+  "excludedModules": [
+   "starsSpace",
+   "hyperspaceCharts",
+   "spacecraft",
+   "riverNames",
+   "settlementKit",
+   "desertNames"
+  ],
+  "excludedCells": [],
+  "siblings": [
+   [
+    "spanish",
+    "portuguese"
+   ],
+   [
+    "greek",
+    "byzantine"
+   ],
+   [
+    "welsh",
+    "scottish"
+   ],
+   [
+    "scottish",
+    "irish"
+   ],
+   [
+    "welsh",
+    "irish"
+   ],
+   [
+    "welsh",
+    "cornish"
+   ],
+   [
+    "scottish",
+    "cornish"
+   ],
+   [
+    "irish",
+    "cornish"
+   ],
+   [
+    "norse",
+    "scandinavian"
+   ],
+   [
+    "anglo-saxon",
+    "norman-british"
+   ],
+   [
+    "turkic",
+    "mongol"
+   ],
+   [
+    "arabic",
+    "persian"
+   ],
+   [
+    "arabic",
+    "egyptian"
+   ],
+   [
+    "persian",
+    "egyptian"
+   ],
+   [
+    "ethiopian",
+    "bantu"
+   ],
+   [
+    "ethiopian",
+    "west-african"
+   ],
+   [
+    "bantu",
+    "west-african"
+   ]
+  ],
+  "general": [
+   "norman-british",
+   "anglo-saxon",
+   "welsh",
+   "scottish",
+   "irish",
+   "cornish",
+   "norse",
+   "scandinavian",
+   "german",
+   "french",
+   "dutch",
+   "italian",
+   "spanish",
+   "portuguese",
+   "roman",
+   "greek",
+   "byzantine",
+   "slavic",
+   "turkic",
+   "mongol",
+   "arabic",
+   "persian",
+   "egyptian",
+   "ethiopian",
+   "bantu",
+   "west-african"
+  ]
+ }
 }

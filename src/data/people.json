@@ -447,7 +447,7 @@
     "regnalMale": [["Mehmed",10],["Murad",10],["Bayezid",10],["Suleiman",10],["Osman",10],["Orhan",7],["Selim",7],["Ahmed",7]],
     "regnalFemale": [["Hurrem",10],["Kosem",10],["Nurbanu",10],["Safiye",10],["Turhan",10],["Gevher",7],["Mahperi",7],["Terken",7]],
     "holy": [["Yunus",10],["Bektash",10],["Yasawi",10],["Mevlana",10],["Bayram",10],["Akshemsettin",7],["Hizir",7],["Ilyas",7],["Sari Saltik",7],["Ahi Evran",7],["Abdal Musa",5],["Seyyid Gazi",5]],
-    "holyForms": [["Dede {n}",50],["Baba {n}",30],["Sheikh {n}",20]],
+    "holyForms": [["Elder {n}",50],["Father {n}",30],["Sheikh {n}",20]],
     "rulerForms": {"male":[["Sultan {m}",40],["Khan {m}",30],["Bey {m}",30]],"female":[["Sultana {f}",50],["Khatun {f}",30],["Princess {f}",20]]}
    },
    "modern": {
@@ -459,7 +459,7 @@
     "holy": [["Yunus",10],["Bektash",10],["Yasawi",10],["Mevlana",10],["Bayram",10],["Akshemsettin",7],["Hizir",7],["Ilyas",7],["Sari Saltik",7],["Ahi Evran",7],["Abdal Musa",5],["Seyyid Gazi",5]],
     "recentMale": ["Yigit","Eymen","Kerem","Berat","Alp","Arda","Emirhan","Ege","Mert","Burak","Baran","Kaan","Efe","Batuhan","Emir"],
     "recentFemale": ["Defne","Asya","Nehir","Ecrin","Ela","Nisa","Azra","Melisa","Irem","Duru","Ceylin","Eylul","Nil","Ada","Mira"],
-    "holyForms": [["Dede {n}",50],["Baba {n}",30],["Sheikh {n}",20]],
+    "holyForms": [["Elder {n}",50],["Father {n}",30],["Sheikh {n}",20]],
     "rulerForms": {"male":[["Sultan {m}",40],["Khan {m}",30],["Bey {m}",30]],"female":[["Sultana {f}",50],["Khatun {f}",30],["Princess {f}",20]]}
    }
   },

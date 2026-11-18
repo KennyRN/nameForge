@@ -21944,10 +21944,100 @@
     "companyGroup": [
      "Fellowship"
     ]
+   },
+   "turkic": {
+    "unitGroup": [
+     "Horde",
+     "Hundred",
+     "Thousand",
+     "Banner"
+    ],
+    "soldiers": [
+     "Riders",
+     "Archers"
+    ],
+    "assemblyWord": [
+     "Great Council"
+    ]
+   },
+   "mongol": {
+    "unitGroup": [
+     "Horde",
+     "Hundred",
+     "Thousand",
+     "Banner"
+    ],
+    "soldiers": [
+     "Riders",
+     "Archers"
+    ],
+    "assemblyWord": [
+     "Great Council"
+    ]
+   },
+   "arabic": {
+    "group": [
+     "Path",
+     "Lodge"
+    ],
+    "companyGroup": [
+     "Caravan"
+    ],
+    "soldiers": [
+     "Riders"
+    ]
+   },
+   "persian": {
+    "group": [
+     "Path",
+     "Lodge"
+    ],
+    "companyGroup": [
+     "Caravan"
+    ],
+    "soldiers": [
+     "Riders"
+    ]
+   },
+   "egyptian": {
+    "group": [
+     "Path",
+     "Lodge"
+    ],
+    "companyGroup": [
+     "Caravan"
+    ],
+    "soldiers": [
+     "Riders"
+    ]
+   },
+   "ethiopian": {
+    "group": [
+     "Path",
+     "Lodge"
+    ],
+    "companyGroup": [
+     "Caravan"
+    ],
+    "soldiers": [
+     "Riders"
+    ]
    }
   },
   "typeMultipliers": {
    "arabian": {
+    "caravan": 3
+   },
+   "arabic": {
+    "caravan": 3
+   },
+   "persian": {
+    "caravan": 3
+   },
+   "egyptian": {
+    "caravan": 3
+   },
+   "ethiopian": {
     "caravan": 3
    }
   },

@@ -148,7 +148,7 @@ test("5c B1: tribes and kin groups gain eight traditions of their own; Celtic an
   const keys = TRIBAL_TRADITIONS.map((t) => t.key);
   for (const c of CORE) assert.ok(keys.includes(c), `${c} is a tradition`);
   assert.ok(keys.includes("celtic") && keys.includes("germanic"));
-  assert.equal(keys.length, 36); // and (brief 6a) the eleven of the batch
+  assert.equal(keys.length, 42); // and (brief 6a) the eleven of the batch, and (6b) the six
   for (const c of CORE) {
     const names = generateTribalNames({ tradition: c, count: 30, seed: 5 }).names.map((n) => n.name);
     assert.ok(names.length >= 25, `${c} gives names`);

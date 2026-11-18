@@ -4,6 +4,7 @@ import { ENGLISH, WELSH, SCOTTISH, IRISH, CORNISH } from "./content-a.mjs";
 import { NORSE, SCANDINAVIAN, GERMAN, CELTIC } from "./content-b.mjs";
 import { REGIONS } from "./regions.mjs";
 import * as C6 from "../tier6a/north5b-content.mjs";
+import * as C6B from "../tier6b/north5b-content.mjs";
 
 export const CULTURES = [
   { key: "english", keys: ["norman-british"], label: "English", c: ENGLISH },
@@ -21,6 +22,10 @@ export const CULTURES = [
 const four = (t) => t.split("|").filter((_w, i) => [0, 3, 8, 9].includes(i)).join("|");
 const mixOf = (c) => ({ ...c, streets: c.streets.map(four), inns: c.inns.map(four), buildings: c.buildings.map(four), monuments: c.monuments.map(four) });
 for (const [key, label, c] of [["spanish", "Spanish", C6.SPANISH], ["portuguese", "Portuguese", C6.PORTUGUESE], ["french", "French", C6.FRENCH], ["dutch", "Dutch", C6.DUTCH], ["italian", "Italian", C6.ITALIAN], ["roman", "Roman", C6.ROMAN], ["slavic", "Slavic", C6.SLAVIC], ["greek", "Greek", C6.GREEK], ["byzantine", "Byzantine", C6.BYZANTINE]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
+// Brief 6b: Turkic, Mongol, Arabic, Persian, Egyptian, Ethiopian, Bantu and West African, and the two mixes (steppe and arabic-persian).
+for (const [key, label, c] of [["turkic", "Turkic", C6B.TURKIC], ["mongol", "Mongol", C6B.MONGOL], ["arabic", "Arabic", C6B.ARABIC], ["persian", "Persian", C6B.PERSIAN], ["egyptian", "Egyptian", C6B.EGYPTIAN], ["ethiopian", "Ethiopian", C6B.ETHIOPIAN], ["bantu", "Bantu", C6B.BANTU], ["west-african", "West African", C6B.WEST_AFRICAN]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
+CULTURES.push({ key: "steppe", keys: ["steppe"], label: "Turkic and Mongol steppe", c: mixOf(C6B.TURKIC), tier6a: true, mix: true });
+CULTURES.push({ key: "arabic-persian", keys: ["arabic-persian"], label: "Arabic and Persian", c: mixOf(C6B.ARABIC), tier6a: true, mix: true });
 CULTURES.push({ key: "iberian", keys: ["iberian"], label: "Iberian", c: mixOf(C6.SPANISH), tier6a: true, mix: true });
 CULTURES.push({ key: "greek-byzantine", keys: ["greek-byzantine"], label: "Greek and Byzantine", c: mixOf(C6.GREEK), tier6a: true, mix: true });
 
@@ -37,13 +42,18 @@ const ERA_BY_INDEX = (i, n) => {
   return i < 3 ? ["AN", "MD"] : i < 6 ? ["EM", "ST"] : i < 8 ? ["ST", "MO"] : i === 8 ? "h" : undefined;
 };
 
+const ERAS7 = ["AN", "MD", "EM", "ST", "MO", "NF", "IS"];
+const eraRange = (span) => { const [a, b] = span.split("-"); return ERAS7.slice(ERAS7.indexOf(a), ERAS7.indexOf(b) + 1); };
 const words = (text, base) => {
   const list = text.split("|").map((s) => s.trim()).filter(Boolean);
   return list.map((w, i) => {
     const e = { w, ...base };
-    const tag = base.noEra ? undefined : ERA_BY_INDEX(i, list.length);
+    const custom = base.tags?.[i];
+    delete e.tags;
+    const tag = base.noEra ? undefined : custom !== undefined ? (custom === "" ? undefined : custom === "h" ? "h" : custom.split("-").length === 2 ? eraRange(custom) : [custom]) : ERA_BY_INDEX(i, list.length);
     delete e.noEra;
     if (tag === "h") e.h = true;
+    else if (custom !== undefined && tag) e.e = tag;
     else if (tag) e.e = tag.length === 2 && tag[0] === "AN" ? ["AN", "MD"] : tag[0] === "EM" ? ["EM", "ST"] : ["ST", "MO"];
     return e;
   });
@@ -89,7 +99,7 @@ export function buildModules() {
   const listing = [];
   for (const [module, m] of Object.entries(MODULES)) {
     for (const c of CULTURES) {
-      const base = { c: c.keys };
+      const base = { c: c.keys, ...(c.c.tags ? { tags: c.c.tags } : {}) };
       const lists = c.c[m.id];
       lists.forEach((text, i) => add(m.pools[i], words(text, base)));
       listing.push({ module, culture: c.label, lists, x: c.c.x?.[m.id] ?? [] });

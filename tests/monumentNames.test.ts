@@ -192,7 +192,7 @@ test("§15.4: no cross for a non-christian culture; no statue for Arabic & Persi
 
 test("§7.3: the Chinese Memorial Gate and Ethiopian Stele moved here from buildings", () => {
   assert.ok(many({ culture: "chinese", kind: "arch" }, 100).some((n) => n.shape === "Memorial Gate of {founder}"));
-  assert.ok(many({ culture: "ethiopian", era: "AN", kind: "stone" }, 100).some((n) => n.shape === "{founder:poss} Stele"));
+  assert.ok(many({ culture: "ethiopian", era: "AN", kind: "stone" }, 2000).some((n) => n.shape === "{founder:poss} Stele"));
   assert.ok(many({ culture: "roman", era: "AN", kind: "tomb" }, 100).some((n) => n.shape === "Mausoleum of {monarch}"));
 });
 

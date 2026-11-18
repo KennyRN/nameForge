@@ -4,7 +4,7 @@
 // most in the last thirty years. Format as scripts/tier6a/people-data.mjs.
 const L = (s) => s;
 const forms = {
-  turkic: { holyForms: [["Dede {n}", 50], ["Baba {n}", 30], ["Sheikh {n}", 20]], rulerForms: { male: [["Sultan {m}", 40], ["Khan {m}", 30], ["Bey {m}", 30]], female: [["Sultana {f}", 50], ["Khatun {f}", 30], ["Princess {f}", 20]] } },
+  turkic: { holyForms: [["Elder {n}", 50], ["Father {n}", 30], ["Sheikh {n}", 20]], rulerForms: { male: [["Sultan {m}", 40], ["Khan {m}", 30], ["Bey {m}", 30]], female: [["Sultana {f}", 50], ["Khatun {f}", 30], ["Princess {f}", 20]] } },
   mongol: { holyForms: [["Lama {n}", 60], ["Holy {n}", 20], ["Wise {n}", 20]], rulerForms: { male: [["Khan {m}", 60], ["Prince {m}", 40]], female: [["Khatun {f}", 50], ["Queen {f}", 30], ["Princess {f}", 20]] } },
   arabic: { holyForms: [["Sheikh {n}", 60], ["Imam {n}", 25], ["Sufi {n}", 15]], rulerForms: { male: [["Caliph {m}", 35], ["Sultan {m}", 35], ["Emir {m}", 30]], female: [["Queen {f}", 50], ["Sultana {f}", 30], ["Princess {f}", 20]] } },
   persian: { holyForms: [["Sheikh {n}", 50], ["Sufi {n}", 30], ["Dervish {n}", 20]], rulerForms: { male: [["Shah {m}", 50], ["Satrap {m}", 30], ["Prince {m}", 20]], female: [["Queen {f}", 70], ["Princess {f}", 30]] } },

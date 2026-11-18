@@ -5,7 +5,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1405,
+   "rowCount": 1769,
    "cultures": {
     "general": {
      "words": 0,
@@ -214,104 +214,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 7,
-     "shapes": 5,
+     "words": 19,
+     "shapes": 15,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 7,
-     "shapes": 5,
+     "words": 19,
+     "shapes": 15,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 4,
-     "shapes": 4,
+     "words": 34,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 4,
-     "shapes": 3,
+     "words": 34,
+     "shapes": 13,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 4,
-     "shapes": 1,
+     "words": 34,
+     "shapes": 11,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 4,
-     "shapes": 5,
+     "words": 34,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 5,
@@ -406,25 +406,25 @@
     }
    },
    "eras": {
-    "AN": 214,
-    "MD": 229,
-    "EM": 225,
-    "ST": 328,
-    "MO": 139,
+    "AN": 289,
+    "MD": 301,
+    "EM": 303,
+    "ST": 442,
+    "MO": 193,
     "NF": 33,
     "IS": 51
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 11
     },
     "contemporary-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 11
     },
     "space-opera": {
-     "words": 63,
+     "words": 93,
      "shapes": 11
     },
     "steampunk": {
@@ -528,7 +528,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1608,
+   "rowCount": 1960,
    "cultures": {
     "general": {
      "words": 0,
@@ -737,58 +737,58 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 6,
-     "shapes": 4,
+     "words": 18,
+     "shapes": 8,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 15,
-     "shapes": 6,
+     "words": 27,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -797,44 +797,44 @@
      "below": false
     },
     "egyptian": {
-     "words": 5,
-     "shapes": 5,
+     "words": 35,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 4,
-     "shapes": 2,
+     "words": 34,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 4,
-     "shapes": 2,
+     "words": 34,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 4,
-     "shapes": 7,
+     "words": 34,
+     "shapes": 17,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 8,
@@ -929,11 +929,11 @@
     }
    },
    "eras": {
-    "AN": 194,
-    "MD": 200,
-    "EM": 189,
-    "ST": 402,
-    "MO": 166,
+    "AN": 281,
+    "MD": 290,
+    "EM": 267,
+    "ST": 522,
+    "MO": 214,
     "NF": 70,
     "IS": 68
    },
@@ -943,15 +943,15 @@
      "shapes": 10
     },
     "high-fantasy": {
-     "words": 57,
+     "words": 81,
      "shapes": 0
     },
     "contemporary-fantasy": {
-     "words": 57,
+     "words": 81,
      "shapes": 0
     },
     "space-opera": {
-     "words": 57,
+     "words": 81,
      "shapes": 0
     }
    },
@@ -1018,7 +1018,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1693,
+   "rowCount": 2045,
    "cultures": {
     "general": {
      "words": 0,
@@ -1227,58 +1227,58 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 3,
-     "shapes": 4,
+     "words": 15,
+     "shapes": 8,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 20,
-     "shapes": 6,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -1287,44 +1287,44 @@
      "below": false
     },
     "egyptian": {
-     "words": 1,
-     "shapes": 3,
+     "words": 31,
+     "shapes": 13,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 1,
-     "shapes": 2,
+     "words": 31,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 1,
-     "shapes": 2,
+     "words": 31,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 2,
-     "shapes": 4,
+     "words": 32,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 13,
@@ -1419,11 +1419,11 @@
     }
    },
    "eras": {
-    "AN": 193,
-    "MD": 200,
-    "EM": 197,
-    "ST": 369,
-    "MO": 139,
+    "AN": 280,
+    "MD": 290,
+    "EM": 275,
+    "ST": 489,
+    "MO": 187,
     "NF": 26,
     "IS": 26
    },
@@ -1433,15 +1433,15 @@
      "shapes": 6
     },
     "high-fantasy": {
-     "words": 66,
+     "words": 90,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 66,
+     "words": 90,
      "shapes": 6
     },
     "space-opera": {
-     "words": 66,
+     "words": 90,
      "shapes": 6
     }
    },
@@ -1512,7 +1512,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1584,
+   "rowCount": 1936,
    "cultures": {
     "general": {
      "words": 0,
@@ -1721,57 +1721,27 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 2,
-     "shapes": 2,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "arabic": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "persian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "arabic-persian": {
-     "words": 29,
+     "words": 14,
      "shapes": 6,
      "target": {
       "words": 12,
@@ -1780,45 +1750,75 @@
      "profile": false,
      "below": false
     },
-    "egyptian": {
-     "words": 1,
-     "shapes": 5,
+    "arabic": {
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
+    },
+    "persian": {
+     "words": 30,
+     "shapes": 10,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": false
+    },
+    "arabic-persian": {
+     "words": 41,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": false
+    },
+    "egyptian": {
+     "words": 31,
+     "shapes": 15,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": false
     },
     "ethiopian": {
-     "words": 1,
-     "shapes": 2,
+     "words": 31,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 1,
+     "words": 32,
+     "shapes": 11,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 1,
-     "shapes": 4,
+     "words": 31,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 24,
@@ -1913,11 +1913,11 @@
     }
    },
    "eras": {
-    "AN": 198,
-    "MD": 211,
-    "EM": 203,
-    "ST": 380,
-    "MO": 144,
+    "AN": 285,
+    "MD": 301,
+    "EM": 281,
+    "ST": 500,
+    "MO": 192,
     "NF": 35,
     "IS": 35
    },
@@ -1927,15 +1927,15 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 59,
+     "words": 83,
      "shapes": 0
     },
     "contemporary-fantasy": {
-     "words": 59,
+     "words": 83,
      "shapes": 0
     },
     "space-opera": {
-     "words": 59,
+     "words": 83,
      "shapes": 0
     }
    },
@@ -2009,7 +2009,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1347,
+   "rowCount": 1699,
    "cultures": {
     "general": {
      "words": 0,
@@ -2218,104 +2218,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 1,
-     "shapes": 3,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "arabic": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "persian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 30,
-      "shapes": 10
-     },
-     "profile": false,
-     "below": true
-    },
-    "arabic-persian": {
-     "words": 1,
-     "shapes": 3,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "egyptian": {
-     "words": 3,
+     "words": 13,
      "shapes": 7,
      "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": false
+    },
+    "arabic": {
+     "words": 30,
+     "shapes": 10,
+     "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
+    },
+    "persian": {
+     "words": 30,
+     "shapes": 10,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": false
+    },
+    "arabic-persian": {
+     "words": 13,
+     "shapes": 7,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": false,
+     "below": false
+    },
+    "egyptian": {
+     "words": 33,
+     "shapes": 17,
+     "target": {
+      "words": 30,
+      "shapes": 10
+     },
+     "profile": false,
+     "below": false
     },
     "ethiopian": {
-     "words": 1,
-     "shapes": 4,
+     "words": 31,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 2,
+     "words": 30,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 3,
+     "words": 30,
+     "shapes": 13,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 1,
@@ -2410,11 +2410,11 @@
     }
    },
    "eras": {
-    "AN": 277,
-    "MD": 266,
-    "EM": 223,
-    "ST": 350,
-    "MO": 154,
+    "AN": 364,
+    "MD": 356,
+    "EM": 301,
+    "ST": 470,
+    "MO": 202,
     "NF": 25,
     "IS": 23
    },
@@ -2424,15 +2424,15 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 57,
+     "words": 81,
      "shapes": 9
     },
     "contemporary-fantasy": {
-     "words": 57,
+     "words": 81,
      "shapes": 9
     },
     "space-opera": {
-     "words": 57,
+     "words": 81,
      "shapes": 9
     }
    },
@@ -2506,7 +2506,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 10218,
+   "rowCount": 10213,
    "cultures": {
     "english": {
      "words": 102,
@@ -2711,7 +2711,7 @@
      "below": false
     },
     "turkic": {
-     "words": 320,
+     "words": 315,
      "shapes": 102,
      "target": {
       "words": 30,
@@ -3018,7 +3018,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1475,
+   "rowCount": 1982,
    "cultures": {
     "general": {
      "words": 0,
@@ -3227,58 +3227,58 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 53,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 3,
+     "words": 15,
+     "shapes": 7,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 16,
-     "shapes": 5,
+     "words": 31,
+     "shapes": 9,
      "target": {
       "words": 12,
       "shapes": 4
@@ -3287,44 +3287,44 @@
      "below": false
     },
     "egyptian": {
-     "words": 11,
-     "shapes": 4,
+     "words": 57,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 11,
-     "shapes": 2,
+     "words": 60,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 2,
+     "words": 51,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 11,
-     "shapes": 5,
+     "words": 57,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 1,
@@ -3429,11 +3429,11 @@
     }
    },
    "eras": {
-    "AN": 118,
-    "MD": 186,
-    "EM": 175,
-    "ST": 138,
-    "MO": 121,
+    "AN": 166,
+    "MD": 253,
+    "EM": 244,
+    "ST": 186,
+    "MO": 177,
     "NF": 28,
     "IS": 31
    },
@@ -3443,16 +3443,16 @@
      "shapes": 6
     },
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -3501,7 +3501,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1877,
+   "rowCount": 2376,
    "cultures": {
     "general": {
      "words": 0,
@@ -3710,104 +3710,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 18,
-     "shapes": 1,
+     "words": 33,
+     "shapes": 5,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 31,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 15,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 9,
-     "shapes": 0,
+     "words": 57,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 22,
-     "shapes": 0,
+     "words": 69,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 23,
-     "shapes": 0,
+     "words": 74,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 24,
@@ -3913,26 +3913,26 @@
     }
    },
    "eras": {
-    "AN": 241,
-    "MD": 385,
-    "EM": 403,
-    "ST": 363,
-    "MO": 295,
+    "AN": 294,
+    "MD": 467,
+    "EM": 479,
+    "ST": 413,
+    "MO": 346,
     "NF": 165,
     "IS": 168
    },
    "styles": {
     "high-fantasy": {
-     "words": 89,
-     "shapes": 38
+     "words": 119,
+     "shapes": 54
     },
     "contemporary-fantasy": {
-     "words": 89,
-     "shapes": 38
+     "words": 119,
+     "shapes": 54
     },
     "space-opera": {
-     "words": 89,
-     "shapes": 38
+     "words": 119,
+     "shapes": 54
     },
     "steampunk": {
      "words": 9,
@@ -3982,7 +3982,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1929,
+   "rowCount": 2431,
    "cultures": {
     "general": {
      "words": 0,
@@ -4191,104 +4191,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 10,
-     "shapes": 1,
+     "words": 25,
+     "shapes": 5,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 10,
-     "shapes": 0,
+     "words": 25,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 20,
-     "shapes": 0,
+     "words": 65,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 10,
-     "shapes": 0,
+     "words": 57,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 9,
-     "shapes": 2,
+     "words": 59,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 5,
-     "shapes": 2,
+     "words": 55,
+     "shapes": 12,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 6,
@@ -4395,26 +4395,26 @@
     }
    },
    "eras": {
-    "AN": 273,
-    "MD": 320,
-    "EM": 288,
-    "ST": 124,
-    "MO": 119,
+    "AN": 321,
+    "MD": 391,
+    "EM": 357,
+    "ST": 172,
+    "MO": 171,
     "NF": 4,
     "IS": 4
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 40
+     "words": 93,
+     "shapes": 56
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 40
+     "words": 93,
+     "shapes": 56
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 40
+     "words": 93,
+     "shapes": 56
     },
     "steampunk": {
      "words": 0,
@@ -4462,7 +4462,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1349,
+   "rowCount": 1809,
    "cultures": {
     "general": {
      "words": 0,
@@ -4671,104 +4671,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 7,
-     "shapes": 0,
+     "words": 22,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 6,
-     "shapes": 0,
+     "words": 21,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 5,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -4875,26 +4875,26 @@
     }
    },
    "eras": {
-    "AN": 111,
-    "MD": 111,
-    "EM": 111,
-    "ST": 110,
-    "MO": 169,
+    "AN": 165,
+    "MD": 165,
+    "EM": 165,
+    "ST": 158,
+    "MO": 237,
     "NF": 2,
     "IS": 2
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 37
+     "words": 93,
+     "shapes": 53
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 37
+     "words": 93,
+     "shapes": 53
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 37
+     "words": 93,
+     "shapes": 53
     }
    },
    "tones": {
@@ -4940,7 +4940,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2375,
+   "rowCount": 2739,
    "cultures": {
     "general": {
      "words": 0,
@@ -5150,104 +5150,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 1,
-     "shapes": 0,
+     "words": 13,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 13,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 3,
-     "shapes": 0,
+     "words": 33,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 5,
@@ -5342,25 +5342,25 @@
     }
    },
    "eras": {
-    "AN": 178,
-    "MD": 169,
-    "EM": 281,
-    "ST": 281,
-    "MO": 281,
+    "AN": 253,
+    "MD": 241,
+    "EM": 407,
+    "ST": 407,
+    "MO": 407,
     "NF": 6,
     "IS": 6
    },
    "styles": {
     "high-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 13
     },
     "contemporary-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 13
     },
     "space-opera": {
-     "words": 79,
+     "words": 109,
      "shapes": 13
     }
    },
@@ -5436,7 +5436,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2506,
+   "rowCount": 2870,
    "cultures": {
     "general": {
      "words": 0,
@@ -5645,104 +5645,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 4,
@@ -5837,25 +5837,25 @@
     }
    },
    "eras": {
-    "AN": 176,
-    "MD": 180,
-    "EM": 301,
-    "ST": 301,
-    "MO": 301,
+    "AN": 251,
+    "MD": 252,
+    "EM": 427,
+    "ST": 427,
+    "MO": 427,
     "NF": 4,
     "IS": 4
    },
    "styles": {
     "high-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 7
     },
     "contemporary-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 7
     },
     "space-opera": {
-     "words": 79,
+     "words": 109,
      "shapes": 7
     }
    },
@@ -5929,7 +5929,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 859,
+   "rowCount": 1211,
    "cultures": {
     "general": {
      "words": 0,
@@ -6149,104 +6149,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 1,
-     "shapes": 1,
+     "words": 13,
+     "shapes": 5,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 2,
+     "words": 12,
+     "shapes": 6,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 1,
-     "shapes": 1,
+     "words": 31,
+     "shapes": 11,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 1,
+     "words": 30,
+     "shapes": 11,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 1,
-     "shapes": 1,
+     "words": 31,
+     "shapes": 11,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 4,
@@ -6341,25 +6341,25 @@
     }
    },
    "eras": {
-    "AN": 10,
-    "MD": 11,
-    "EM": 21,
-    "ST": 21,
-    "MO": 21,
+    "AN": 85,
+    "MD": 83,
+    "EM": 147,
+    "ST": 147,
+    "MO": 147,
     "NF": 8,
     "IS": 8
    },
    "styles": {
     "high-fantasy": {
-     "words": 22,
+     "words": 52,
      "shapes": 5
     },
     "contemporary-fantasy": {
-     "words": 22,
+     "words": 52,
      "shapes": 5
     },
     "space-opera": {
-     "words": 22,
+     "words": 52,
      "shapes": 5
     }
    },
@@ -6410,7 +6410,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2191,
+   "rowCount": 2555,
    "cultures": {
     "general": {
      "words": 0,
@@ -6619,104 +6619,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 3,
@@ -6811,25 +6811,25 @@
     }
    },
    "eras": {
-    "AN": 175,
-    "MD": 166,
-    "EM": 279,
-    "ST": 279,
-    "MO": 279,
+    "AN": 250,
+    "MD": 238,
+    "EM": 405,
+    "ST": 405,
+    "MO": 405,
     "NF": 5,
     "IS": 5
    },
    "styles": {
     "high-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 3
     },
     "contemporary-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 3
     },
     "space-opera": {
-     "words": 79,
+     "words": 109,
      "shapes": 3
     }
    },
@@ -6902,7 +6902,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2361,
+   "rowCount": 2725,
    "cultures": {
     "general": {
      "words": 0,
@@ -7111,104 +7111,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 4,
@@ -7303,25 +7303,25 @@
     }
    },
    "eras": {
-    "AN": 178,
-    "MD": 166,
-    "EM": 280,
-    "ST": 280,
-    "MO": 280,
+    "AN": 253,
+    "MD": 238,
+    "EM": 406,
+    "ST": 406,
+    "MO": 406,
     "NF": 5,
     "IS": 5
    },
    "styles": {
     "high-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 2
     },
     "contemporary-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 2
     },
     "space-opera": {
-     "words": 79,
+     "words": 109,
      "shapes": 2
     }
    },
@@ -7395,7 +7395,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2490,
+   "rowCount": 2854,
    "cultures": {
     "general": {
      "words": 0,
@@ -7604,104 +7604,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 1,
-     "shapes": 0,
+     "words": 13,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 3,
@@ -7796,25 +7796,25 @@
     }
    },
    "eras": {
-    "AN": 175,
-    "MD": 166,
-    "EM": 287,
-    "ST": 287,
-    "MO": 287,
+    "AN": 250,
+    "MD": 238,
+    "EM": 413,
+    "ST": 413,
+    "MO": 413,
     "NF": 4,
     "IS": 4
    },
    "styles": {
     "high-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 4
     },
     "contemporary-fantasy": {
-     "words": 79,
+     "words": 109,
      "shapes": 4
     },
     "space-opera": {
-     "words": 79,
+     "words": 109,
      "shapes": 4
     }
    },
@@ -7888,7 +7888,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2293,
+   "rowCount": 2657,
    "cultures": {
     "general": {
      "words": 0,
@@ -8097,104 +8097,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -8289,25 +8289,25 @@
     }
    },
    "eras": {
-    "AN": 174,
-    "MD": 162,
-    "EM": 281,
-    "ST": 281,
-    "MO": 281,
+    "AN": 249,
+    "MD": 234,
+    "EM": 407,
+    "ST": 407,
+    "MO": 407,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     },
     "space-opera": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     }
    },
@@ -8377,7 +8377,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2159,
+   "rowCount": 2523,
    "cultures": {
     "general": {
      "words": 0,
@@ -8586,104 +8586,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 2,
-     "shapes": 0,
+     "words": 14,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 1,
@@ -8778,25 +8778,25 @@
     }
    },
    "eras": {
-    "AN": 177,
-    "MD": 167,
-    "EM": 280,
-    "ST": 280,
-    "MO": 280,
+    "AN": 252,
+    "MD": 239,
+    "EM": 406,
+    "ST": 406,
+    "MO": 406,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 5
     },
     "contemporary-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 5
     },
     "space-opera": {
-     "words": 72,
+     "words": 102,
      "shapes": 5
     }
    },
@@ -8871,7 +8871,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2347,
+   "rowCount": 2711,
    "cultures": {
     "general": {
      "words": 0,
@@ -9080,104 +9080,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -9272,25 +9272,25 @@
     }
    },
    "eras": {
-    "AN": 174,
-    "MD": 162,
-    "EM": 276,
-    "ST": 276,
-    "MO": 276,
+    "AN": 249,
+    "MD": 234,
+    "EM": 402,
+    "ST": 402,
+    "MO": 402,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     },
     "space-opera": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     }
    },
@@ -9364,7 +9364,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2398,
+   "rowCount": 2762,
    "cultures": {
     "general": {
      "words": 0,
@@ -9573,104 +9573,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -9765,25 +9765,25 @@
     }
    },
    "eras": {
-    "AN": 174,
-    "MD": 163,
-    "EM": 278,
-    "ST": 278,
-    "MO": 278,
+    "AN": 249,
+    "MD": 235,
+    "EM": 404,
+    "ST": 404,
+    "MO": 404,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     },
     "space-opera": {
-     "words": 72,
+     "words": 102,
      "shapes": 6
     }
    },
@@ -10373,7 +10373,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1595,
+   "rowCount": 1959,
    "cultures": {
     "general": {
      "words": 0,
@@ -10582,104 +10582,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 2,
-     "shapes": 0,
+     "words": 14,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 13,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 8,
@@ -10774,25 +10774,25 @@
     }
    },
    "eras": {
-    "AN": 184,
-    "MD": 169,
-    "EM": 276,
-    "ST": 276,
-    "MO": 276,
+    "AN": 259,
+    "MD": 241,
+    "EM": 402,
+    "ST": 402,
+    "MO": 402,
     "NF": 0,
     "IS": 1
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 2
     },
     "contemporary-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 2
     },
     "space-opera": {
-     "words": 63,
+     "words": 93,
      "shapes": 2
     }
    },
@@ -10862,7 +10862,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1282,
+   "rowCount": 1646,
    "cultures": {
     "general": {
      "words": 0,
@@ -11071,104 +11071,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -11263,25 +11263,25 @@
     }
    },
    "eras": {
-    "AN": 175,
-    "MD": 162,
-    "EM": 278,
-    "ST": 278,
-    "MO": 278,
+    "AN": 250,
+    "MD": 234,
+    "EM": 404,
+    "ST": 404,
+    "MO": 404,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 1
     },
     "contemporary-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 1
     },
     "space-opera": {
-     "words": 63,
+     "words": 93,
      "shapes": 1
     }
    },
@@ -11351,7 +11351,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1627,
+   "rowCount": 1991,
    "cultures": {
     "general": {
      "words": 0,
@@ -11560,104 +11560,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -11752,25 +11752,25 @@
     }
    },
    "eras": {
-    "AN": 175,
-    "MD": 165,
-    "EM": 297,
-    "ST": 297,
-    "MO": 297,
+    "AN": 250,
+    "MD": 237,
+    "EM": 423,
+    "ST": 423,
+    "MO": 423,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 2
     },
     "contemporary-fantasy": {
-     "words": 63,
+     "words": 93,
      "shapes": 2
     },
     "space-opera": {
-     "words": 63,
+     "words": 93,
      "shapes": 2
     }
    },
@@ -12288,7 +12288,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1648,
+   "rowCount": 2161,
    "cultures": {
     "general": {
      "words": 0,
@@ -12497,104 +12497,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 13,
-     "shapes": 0,
+     "words": 28,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 8,
-     "shapes": 0,
+     "words": 23,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 6,
-     "shapes": 0,
+     "words": 56,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 3,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 5,
-     "shapes": 0,
+     "words": 57,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 4,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 5,
@@ -12701,26 +12701,26 @@
     }
    },
    "eras": {
-    "AN": 167,
-    "MD": 212,
-    "EM": 112,
-    "ST": 110,
-    "MO": 111,
+    "AN": 228,
+    "MD": 292,
+    "EM": 164,
+    "ST": 158,
+    "MO": 162,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -12771,7 +12771,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1294,
+   "rowCount": 1794,
    "cultures": {
     "general": {
      "words": 0,
@@ -12980,104 +12980,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 6,
-     "shapes": 0,
+     "words": 21,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 8,
-     "shapes": 0,
+     "words": 23,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 6,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 7,
-     "shapes": 0,
+     "words": 58,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 6,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 8,
-     "shapes": 0,
+     "words": 53,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 7,
@@ -13184,26 +13184,26 @@
     }
    },
    "eras": {
-    "AN": 113,
-    "MD": 284,
-    "EM": 206,
-    "ST": 110,
-    "MO": 109,
+    "AN": 162,
+    "MD": 378,
+    "EM": 278,
+    "ST": 161,
+    "MO": 160,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -13248,7 +13248,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1649,
+   "rowCount": 2179,
    "cultures": {
     "general": {
      "words": 0,
@@ -13457,104 +13457,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 6,
+     "words": 15,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 12,
+     "words": 15,
+     "shapes": 16,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 5,
+     "words": 49,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 3,
+     "words": 53,
+     "shapes": 13,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 4,
+     "words": 50,
+     "shapes": 14,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 5,
+     "words": 52,
+     "shapes": 15,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -13661,26 +13661,26 @@
     }
    },
    "eras": {
-    "AN": 113,
-    "MD": 240,
-    "EM": 163,
-    "ST": 109,
-    "MO": 108,
+    "AN": 161,
+    "MD": 340,
+    "EM": 231,
+    "ST": 157,
+    "MO": 156,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -13728,7 +13728,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1717,
+   "rowCount": 2260,
    "cultures": {
     "general": {
      "words": 0,
@@ -13937,104 +13937,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 3,
-     "shapes": 0,
+     "words": 18,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 17,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 3,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 3,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 1,
@@ -14141,26 +14141,26 @@
     }
    },
    "eras": {
-    "AN": 123,
-    "MD": 288,
-    "EM": 357,
-    "ST": 163,
-    "MO": 111,
+    "AN": 172,
+    "MD": 391,
+    "EM": 498,
+    "ST": 237,
+    "MO": 159,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 69,
-     "shapes": 36
+     "words": 99,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 69,
-     "shapes": 36
+     "words": 99,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 69,
-     "shapes": 36
+     "words": 99,
+     "shapes": 52
     }
    },
    "tones": {
@@ -14212,7 +14212,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1629,
+   "rowCount": 2151,
    "cultures": {
     "general": {
      "words": 0,
@@ -14421,104 +14421,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 3,
-     "shapes": 0,
+     "words": 18,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 17,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 3,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 3,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 1,
@@ -14625,26 +14625,26 @@
     }
    },
    "eras": {
-    "AN": 129,
-    "MD": 237,
-    "EM": 186,
-    "ST": 121,
-    "MO": 125,
+    "AN": 177,
+    "MD": 332,
+    "EM": 261,
+    "ST": 169,
+    "MO": 178,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -14698,7 +14698,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1598,
+   "rowCount": 2132,
    "cultures": {
     "general": {
      "words": 0,
@@ -14907,104 +14907,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 53,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 3,
-     "shapes": 0,
+     "words": 18,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 17,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 3,
-     "shapes": 0,
+     "words": 58,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 3,
-     "shapes": 0,
+     "words": 56,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 1,
@@ -15111,26 +15111,26 @@
     }
    },
    "eras": {
-    "AN": 130,
-    "MD": 339,
-    "EM": 293,
-    "ST": 124,
-    "MO": 114,
+    "AN": 185,
+    "MD": 453,
+    "EM": 375,
+    "ST": 172,
+    "MO": 162,
     "NF": 8,
     "IS": 8
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -15180,7 +15180,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1479,
+   "rowCount": 1976,
    "cultures": {
     "general": {
      "words": 0,
@@ -15389,104 +15389,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 8,
-     "shapes": 0,
+     "words": 23,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 7,
-     "shapes": 0,
+     "words": 22,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 5,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 2,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 3,
@@ -15593,26 +15593,26 @@
     }
    },
    "eras": {
-    "AN": 119,
-    "MD": 248,
-    "EM": 169,
+    "AN": 170,
+    "MD": 335,
+    "EM": 223,
     "ST": 0,
-    "MO": 138,
+    "MO": 188,
     "NF": 34,
     "IS": 42
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -15662,7 +15662,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1256,
+   "rowCount": 1764,
    "cultures": {
     "general": {
      "words": 0,
@@ -15871,104 +15871,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -16075,26 +16075,26 @@
     }
    },
    "eras": {
-    "AN": 129,
-    "MD": 134,
-    "EM": 111,
-    "ST": 111,
-    "MO": 140,
+    "AN": 183,
+    "MD": 192,
+    "EM": 160,
+    "ST": 159,
+    "MO": 208,
     "NF": 7,
     "IS": 7
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -16135,7 +16135,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1549,
+   "rowCount": 2033,
    "cultures": {
     "general": {
      "words": 0,
@@ -16344,104 +16344,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 10,
-     "shapes": 2,
+     "words": 25,
+     "shapes": 6,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 13,
-     "shapes": 1,
+     "words": 28,
+     "shapes": 5,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 11,
-     "shapes": 0,
+     "words": 57,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 10,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 18,
-     "shapes": 0,
+     "words": 64,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 15,
-     "shapes": 0,
+     "words": 61,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 13,
@@ -16548,11 +16548,11 @@
     }
    },
    "eras": {
-    "AN": 108,
-    "MD": 108,
-    "EM": 108,
-    "ST": 111,
-    "MO": 114,
+    "AN": 156,
+    "MD": 156,
+    "EM": 156,
+    "ST": 159,
+    "MO": 168,
     "NF": 14,
     "IS": 14
    },
@@ -16562,16 +16562,16 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 67,
-     "shapes": 36
+     "words": 97,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 67,
-     "shapes": 36
+     "words": 97,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 67,
-     "shapes": 36
+     "words": 97,
+     "shapes": 52
     }
    },
    "tones": {
@@ -16613,7 +16613,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1073,
+   "rowCount": 1437,
    "cultures": {
     "general": {
      "words": 0,
@@ -16822,104 +16822,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 10,
-     "shapes": 0,
+     "words": 22,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 13,
-     "shapes": 0,
+     "words": 25,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 11,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 10,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 18,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 15,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 13,
@@ -17016,11 +17016,11 @@
     }
    },
    "eras": {
-    "AN": 174,
-    "MD": 162,
-    "EM": 168,
-    "ST": 272,
-    "MO": 108,
+    "AN": 249,
+    "MD": 234,
+    "EM": 246,
+    "ST": 386,
+    "MO": 156,
     "NF": 9,
     "IS": 9
    },
@@ -17030,15 +17030,15 @@
      "shapes": 2
     },
     "high-fantasy": {
-     "words": 67,
+     "words": 97,
      "shapes": 0
     },
     "contemporary-fantasy": {
-     "words": 67,
+     "words": 97,
      "shapes": 0
     },
     "space-opera": {
-     "words": 67,
+     "words": 97,
      "shapes": 0
     }
    },
@@ -17080,7 +17080,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1389,
+   "rowCount": 1803,
    "cultures": {
     "general": {
      "words": 0,
@@ -17289,110 +17289,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 7,
-     "shapes": 0,
+     "words": 22,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 7,
-     "shapes": 0,
+     "words": 22,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 4,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 5,
-     "shapes": 0,
+     "words": 38,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 6,
@@ -17551,16 +17545,16 @@
    },
    "styles": {
     "high-fantasy": {
-     "words": 60,
-     "shapes": 36
+     "words": 90,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 60,
-     "shapes": 36
+     "words": 90,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 60,
-     "shapes": 36
+     "words": 90,
+     "shapes": 52
     }
    },
    "tones": {
@@ -17591,12 +17585,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -17622,7 +17610,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1955,
+   "rowCount": 2452,
    "cultures": {
     "general": {
      "words": 0,
@@ -17831,110 +17819,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 17,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 1,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 1,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 6,
@@ -18083,30 +18065,30 @@
     }
    },
    "eras": {
-    "AN": 123,
-    "MD": 218,
-    "EM": 135,
-    "ST": 111,
-    "MO": 187,
+    "AN": 182,
+    "MD": 287,
+    "EM": 189,
+    "ST": 159,
+    "MO": 249,
     "NF": 0,
     "IS": 23
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 73
+     "words": 94,
+     "shapes": 89
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 73
+     "words": 94,
+     "shapes": 89
     },
     "low-fantasy": {
      "words": 0,
      "shapes": 14
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 94,
+     "shapes": 52
     }
    },
    "tones": {
@@ -18132,12 +18114,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -18163,7 +18139,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1915,
+   "rowCount": 2406,
    "cultures": {
     "general": {
      "words": 0,
@@ -18372,110 +18348,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 56,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 6,
-     "shapes": 0,
+     "words": 21,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 16,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 4,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -18624,11 +18594,11 @@
     }
    },
    "eras": {
-    "AN": 125,
-    "MD": 268,
-    "EM": 234,
-    "ST": 143,
-    "MO": 131,
+    "AN": 174,
+    "MD": 360,
+    "EM": 321,
+    "ST": 201,
+    "MO": 181,
     "NF": 0,
     "IS": 12
    },
@@ -18638,16 +18608,16 @@
      "shapes": 12
     },
     "high-fantasy": {
-     "words": 63,
-     "shapes": 48
+     "words": 93,
+     "shapes": 64
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 48
+     "words": 93,
+     "shapes": 64
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -18674,12 +18644,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -18705,7 +18669,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1758,
+   "rowCount": 2249,
    "cultures": {
     "general": {
      "words": 0,
@@ -18914,110 +18878,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -19166,11 +19124,11 @@
     }
    },
    "eras": {
-    "AN": 108,
-    "MD": 262,
-    "EM": 313,
-    "ST": 176,
-    "MO": 160,
+    "AN": 159,
+    "MD": 366,
+    "EM": 445,
+    "ST": 247,
+    "MO": 214,
     "NF": 0,
     "IS": 22
    },
@@ -19180,16 +19138,16 @@
      "shapes": 25
     },
     "high-fantasy": {
-     "words": 63,
-     "shapes": 61
+     "words": 93,
+     "shapes": 77
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 72
+     "words": 93,
+     "shapes": 88
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -19215,12 +19173,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -19246,7 +19198,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2222,
+   "rowCount": 2726,
    "cultures": {
     "general": {
      "words": 0,
@@ -19455,110 +19407,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 36,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 2,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -19707,26 +19653,26 @@
     }
    },
    "eras": {
-    "AN": 113,
-    "MD": 297,
-    "EM": 258,
-    "ST": 115,
-    "MO": 127,
+    "AN": 163,
+    "MD": 401,
+    "EM": 352,
+    "ST": 164,
+    "MO": 177,
     "NF": 0,
     "IS": 15
    },
    "styles": {
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 51
+     "words": 93,
+     "shapes": 67
     },
     "high-fantasy": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -19757,12 +19703,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -19788,7 +19728,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1538,
+   "rowCount": 2042,
    "cultures": {
     "general": {
      "words": 0,
@@ -19997,110 +19937,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 16,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -20249,11 +20183,11 @@
     }
    },
    "eras": {
-    "AN": 109,
-    "MD": 258,
-    "EM": 255,
-    "ST": 132,
-    "MO": 128,
+    "AN": 157,
+    "MD": 377,
+    "EM": 379,
+    "ST": 189,
+    "MO": 179,
     "NF": 0,
     "IS": 19
    },
@@ -20263,16 +20197,16 @@
      "shapes": 19
     },
     "high-fantasy": {
-     "words": 63,
-     "shapes": 55
+     "words": 93,
+     "shapes": 71
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 55
+     "words": 93,
+     "shapes": 71
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -20295,12 +20229,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -20326,7 +20254,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1931,
+   "rowCount": 2437,
    "cultures": {
     "general": {
      "words": 0,
@@ -20535,110 +20463,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 1,
-     "shapes": 0,
+     "words": 16,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 2,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 1,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 1,
@@ -20787,11 +20709,11 @@
     }
    },
    "eras": {
-    "AN": 116,
-    "MD": 288,
-    "EM": 227,
-    "ST": 127,
-    "MO": 117,
+    "AN": 164,
+    "MD": 403,
+    "EM": 318,
+    "ST": 180,
+    "MO": 169,
     "NF": 0,
     "IS": 7
    },
@@ -20801,16 +20723,16 @@
      "shapes": 7
     },
     "high-fantasy": {
-     "words": 63,
-     "shapes": 43
+     "words": 93,
+     "shapes": 59
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 43
+     "words": 93,
+     "shapes": 59
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -20837,12 +20759,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -20868,7 +20784,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1704,
+   "rowCount": 2172,
    "cultures": {
     "general": {
      "words": 0,
@@ -21077,110 +20993,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 12,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -21329,11 +21239,11 @@
     }
    },
    "eras": {
-    "AN": 151,
-    "MD": 227,
-    "EM": 108,
-    "ST": 108,
-    "MO": 187,
+    "AN": 215,
+    "MD": 291,
+    "EM": 156,
+    "ST": 156,
+    "MO": 239,
     "NF": 0,
     "IS": 0
    },
@@ -21343,16 +21253,16 @@
      "shapes": 63
     },
     "high-fantasy": {
-     "words": 63,
-     "shapes": 112
+     "words": 161,
+     "shapes": 128
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 112
+     "words": 161,
+     "shapes": 128
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 36
+     "words": 161,
+     "shapes": 52
     }
    },
    "tones": {
@@ -21379,12 +21289,6 @@
      "sahul"
     ],
     "notOffered": [
-     "turkic",
-     "mongol",
-     "arabic",
-     "persian",
-     "egyptian",
-     "ethiopian",
      "american",
      "ottoman",
      "swahili-omani",
@@ -21410,7 +21314,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1796,
+   "rowCount": 2256,
    "cultures": {
     "general": {
      "words": 0,
@@ -21619,104 +21523,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -21919,22 +21823,22 @@
     }
    },
    "eras": {
-    "AN": 139,
-    "MD": 157,
-    "EM": 237,
-    "ST": 217,
-    "MO": 130,
+    "AN": 188,
+    "MD": 216,
+    "EM": 324,
+    "ST": 296,
+    "MO": 182,
     "NF": 51,
     "IS": 51
    },
    "styles": {
     "high-fantasy": {
-     "words": 168,
-     "shapes": 59
+     "words": 198,
+     "shapes": 75
     },
     "contemporary-fantasy": {
-     "words": 84,
-     "shapes": 39
+     "words": 114,
+     "shapes": 55
     },
     "steampunk": {
      "words": 19,
@@ -21949,8 +21853,8 @@
      "shapes": 7
     },
     "space-opera": {
-     "words": 152,
-     "shapes": 54
+     "words": 182,
+     "shapes": 70
     }
    },
    "tones": {
@@ -22619,7 +22523,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1541,
+   "rowCount": 1960,
    "cultures": {
     "general": {
      "words": 0,
@@ -22828,104 +22732,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 38,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 38,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 36,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -23128,22 +23032,22 @@
     }
    },
    "eras": {
-    "AN": 123,
-    "MD": 158,
-    "EM": 150,
-    "ST": 208,
-    "MO": 224,
+    "AN": 171,
+    "MD": 215,
+    "EM": 210,
+    "ST": 283,
+    "MO": 301,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 136,
-     "shapes": 41
+     "words": 195,
+     "shapes": 57
     },
     "contemporary-fantasy": {
-     "words": 136,
-     "shapes": 37
+     "words": 195,
+     "shapes": 53
     },
     "steampunk": {
      "words": 0,
@@ -23158,8 +23062,8 @@
      "shapes": 2
     },
     "space-opera": {
-     "words": 136,
-     "shapes": 40
+     "words": 195,
+     "shapes": 56
     }
    },
    "tones": {
@@ -23217,7 +23121,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1652,
+   "rowCount": 2097,
    "cultures": {
     "general": {
      "words": 0,
@@ -23426,104 +23330,104 @@
      "below": false
     },
     "turkic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "mongol": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "steppe": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "arabic": {
-     "words": 0,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "arabic-persian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 15,
+     "shapes": 4,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "egyptian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ethiopian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "bantu": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "west-african": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 30,
       "shapes": 10
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "indian": {
      "words": 0,
@@ -23726,22 +23630,22 @@
     }
    },
    "eras": {
-    "AN": 125,
-    "MD": 149,
-    "EM": 157,
-    "ST": 347,
-    "MO": 313,
+    "AN": 173,
+    "MD": 206,
+    "EM": 216,
+    "ST": 476,
+    "MO": 428,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 63,
-     "shapes": 41
+     "words": 93,
+     "shapes": 57
     },
     "contemporary-fantasy": {
-     "words": 63,
-     "shapes": 37
+     "words": 93,
+     "shapes": 53
     },
     "steampunk": {
      "words": 0,
@@ -23756,8 +23660,8 @@
      "shapes": 2
     },
     "space-opera": {
-     "words": 63,
-     "shapes": 39
+     "words": 93,
+     "shapes": 55
     }
    },
    "tones": {
@@ -24305,24 +24209,24 @@
     "shapes": 1131
    },
    "arabic-persian": {
-    "words": 151,
-    "shapes": 151
+    "words": 736,
+    "shapes": 407
    },
    "egyptian": {
-    "words": 454,
-    "shapes": 210
+    "words": 2090,
+    "shapes": 640
    },
    "west-african": {
-    "words": 309,
-    "shapes": 150
+    "words": 1995,
+    "shapes": 580
    },
    "ethiopian": {
-    "words": 227,
-    "shapes": 108
+    "words": 1918,
+    "shapes": 538
    },
    "steppe": {
-    "words": 110,
-    "shapes": 32
+    "words": 695,
+    "shapes": 288
    },
    "indian": {
     "words": 124,
@@ -24385,8 +24289,8 @@
     "shapes": 11
    },
    "bantu": {
-    "words": 360,
-    "shapes": 121
+    "words": 2065,
+    "shapes": 551
    },
    "aztec": {
     "words": 139,
@@ -24409,20 +24313,20 @@
     "shapes": 513
    },
    "turkic": {
-    "words": 320,
-    "shapes": 102
+    "words": 1996,
+    "shapes": 532
    },
    "mongol": {
-    "words": 295,
-    "shapes": 86
+    "words": 2021,
+    "shapes": 516
    },
    "arabic": {
-    "words": 340,
-    "shapes": 120
+    "words": 2042,
+    "shapes": 550
    },
    "persian": {
-    "words": 295,
-    "shapes": 121
+    "words": 2006,
+    "shapes": 551
    },
    "anglo-saxon": {
     "words": 1145,
@@ -24450,26 +24354,26 @@
    }
   },
   "eras": {
-   "AN": 6907,
-   "MD": 9796,
-   "EM": 10111,
-   "ST": 9717,
-   "MO": 8658,
+   "AN": 9560,
+   "MD": 13129,
+   "EM": 13962,
+   "ST": 13337,
+   "MO": 11903,
    "NF": 762,
    "IS": 1714
   },
   "styles": {
    "high-fantasy": {
-    "words": 2887,
-    "shapes": 1176
+    "words": 4251,
+    "shapes": 1560
    },
    "contemporary-fantasy": {
-    "words": 2803,
-    "shapes": 1174
+    "words": 4167,
+    "shapes": 1558
    },
    "space-opera": {
-    "words": 2939,
-    "shapes": 1007
+    "words": 4303,
+    "shapes": 1391
    },
    "steampunk": {
     "words": 84,
@@ -24756,6 +24660,18 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/arabic/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/arabic/soldiers",
+   "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/bantu/group",
    "module": "mysticOrders",
    "entries": 1,
@@ -24846,6 +24762,18 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/egyptian/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/egyptian/soldiers",
+   "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/english/assemblyWord",
    "module": "powerFactions",
    "entries": 1,
@@ -24859,6 +24787,18 @@
   },
   {
    "pool": "signatures/english/raiders",
+   "module": "martialOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/ethiopian/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/ethiopian/soldiers",
    "module": "martialOrders",
    "entries": 1,
    "minimum": 8
@@ -24960,6 +24900,12 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/mongol/assemblyWord",
+   "module": "powerFactions",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/norse/assemblyWord",
    "module": "powerFactions",
    "entries": 1,
@@ -24986,6 +24932,18 @@
   {
    "pool": "signatures/northernPacific/members",
    "module": "mysticOrders",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/persian/companyGroup",
+   "module": "adventureCompanies",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/persian/soldiers",
+   "module": "martialOrders",
    "entries": 1,
    "minimum": 8
   },
@@ -25069,6 +25027,12 @@
   },
   {
    "pool": "signatures/steppe/assemblyWord",
+   "module": "powerFactions",
+   "entries": 1,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/turkic/assemblyWord",
    "module": "powerFactions",
    "entries": 1,
    "minimum": 8
@@ -25311,6 +25275,12 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/arabic/group",
+   "module": "mysticOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/bantu/assemblyWord",
    "module": "powerFactions",
    "entries": 2,
@@ -25377,6 +25347,12 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/egyptian/group",
+   "module": "mysticOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/english/soldiers",
    "module": "martialOrders",
    "entries": 2,
@@ -25385,6 +25361,12 @@
   {
    "pool": "signatures/english/unitGroup",
    "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/ethiopian/group",
+   "module": "mysticOrders",
    "entries": 2,
    "minimum": 8
   },
@@ -25533,6 +25515,12 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/mongol/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/norse/soldiers",
    "module": "martialOrders",
    "entries": 2,
@@ -25565,6 +25553,12 @@
   {
    "pool": "signatures/northernPacific/tradesmen",
    "module": "tradeGuilds",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/persian/group",
+   "module": "mysticOrders",
    "entries": 2,
    "minimum": 8
   },
@@ -25684,6 +25678,12 @@
   },
   {
    "pool": "signatures/steppe/soldiers",
+   "module": "martialOrders",
+   "entries": 2,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/turkic/soldiers",
    "module": "martialOrders",
    "entries": 2,
    "minimum": 8
@@ -26284,7 +26284,19 @@
    "minimum": 8
   },
   {
+   "pool": "signatures/mongol/unitGroup",
+   "module": "martialOrders",
+   "entries": 4,
+   "minimum": 8
+  },
+  {
    "pool": "signatures/steppe/unitGroup",
+   "module": "martialOrders",
+   "entries": 4,
+   "minimum": 8
+  },
+  {
+   "pool": "signatures/turkic/unitGroup",
    "module": "martialOrders",
    "entries": 4,
    "minimum": 8
@@ -26787,6 +26799,12 @@
    "minimum": 8
   },
   {
+   "pool": "traditions/arabic/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
    "pool": "traditions/byzantine/signatureCollectives",
    "module": "tribalNames",
    "entries": 5,
@@ -26811,7 +26829,19 @@
    "minimum": 8
   },
   {
+   "pool": "traditions/egyptian/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
    "pool": "traditions/english/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/ethiopian/signatureCollectives",
    "module": "tribalNames",
    "entries": 5,
    "minimum": 8
@@ -26884,6 +26914,12 @@
   },
   {
    "pool": "traditions/northAmerican/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 5,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/persian/signatureCollectives",
    "module": "tribalNames",
    "entries": 5,
    "minimum": 8
@@ -27442,7 +27478,19 @@
    "minimum": 8
   },
   {
+   "pool": "traditions/mongol/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 6,
+   "minimum": 8
+  },
+  {
    "pool": "traditions/steppe/signatureCollectives",
+   "module": "tribalNames",
+   "entries": 6,
+   "minimum": 8
+  },
+  {
+   "pool": "traditions/turkic/signatureCollectives",
    "module": "tribalNames",
    "entries": 6,
    "minimum": 8
