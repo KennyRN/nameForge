@@ -93,3 +93,32 @@ Measured by tests/distinctness.test.ts as fixed on 18 November 2026: every modul
 | aircraft | 7→7 | 0→0 | 2→2 | 3→3 | 0→0 | 3→0 | 8→8 | 2→2 | 27→27 | 13→13 | 8→8 | 30→30 | 0→0 | 0→0 | 12→12 | 0→0 | 0→0 | 7→7 |
 | landVehicles | 12→12 | 0→0 | 2→0 | 0→0 | 0→0 | 2→0 | 5→5 | 0→0 | 28→28 | 7→7 | 13→13 | 27→27 | 0→0 | 2→2 | 5→5 | 0→0 | 0→0 | 10→10 |
 | realms | 13→13 | 0→0 | 5→2 | 5→5 | 3→3 | 0→0 | 8→8 | 2→2 | 17→17 | 22→22 | 27→27 | 22→22 | 0→0 | 0→0 | 10→10 | 0→0 | 0→0 | 12→12 |
+
+## Batch 6b (18 November 2026)
+
+The seven new sibling pairs and the eight new core-depth cultures, measured as the rest of this document is: every offered module at the plugin's own default state, seeds 1 to 5, twelve names each, the share of A's names that B also gives at the same seed. The largest overlap over every module the pair is offered in:
+
+| Pair | Limit % | Largest % | Module | Modules measured |
+|---|---|---|---|---|
+| turkic/mongol | 25 | 23 | skyNames | 34 |
+| arabic/persian | 25 | 20 | skyNames | 34 |
+| arabic/egyptian | 25 | 8 | ships | 34 |
+| persian/egyptian | 25 | 7 | aircraft | 34 |
+| ethiopian/bantu | 25 | 13 | monumentNames | 34 |
+| ethiopian/west-african | 25 | 20 | epithets | 34 |
+| bantu/west-african | 25 | 22 | coastsIslands | 41 |
+
+| Culture against General | Limit % | Largest % | Module |
+|---|---|---|---|
+| turkic | 30 | 8 | deityNames |
+| mongol | 30 | 8 | deityNames |
+| arabic | 30 | 3 | deityNames |
+| persian | 30 | 3 | deityNames |
+| egyptian | 30 | 22 | forestNames |
+| ethiopian | 30 | 8 | deityNames |
+| bantu | 30 | 10 | deityNames |
+| west-african | 30 | 10 | deityNames |
+
+Every pair of core-depth cultures, the new ones included, is at or under the inn limit of 5% in the inns module (tests/distinctness.test.ts).
+
+What brought the first pass under the limits: each sibling names in a frame style of its own (the Turkic by adjective, the Mongol by compound; Arabic generic first, Persian by owner, Egyptian by compound; Ethiopian generic first, Bantu by owner, West African by adjective); each culture of a sibling group turns its 5c and 5d word lists by a step of its own (the order of a list means nothing there, and two siblings drawing the same position of the same list gave the same word); each culture draws its era words from a place of its own in the shared pools; the Bantu and West African tables read their shared legacy table at 3% and 8% (`shares.legacy`); and the word lists of the pairs that shared too much were written again.
