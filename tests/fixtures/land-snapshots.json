@@ -7834,8 +7834,8 @@
    "template": "Town of the {#people}"
   },
   {
-   "text": "Grove of Yemoja",
-   "etymology": "grove of [spirit: Yemoja]",
+   "text": "Grove of Forge Keeper",
+   "etymology": "grove of [spirit: Forge Keeper]",
    "template": "Grove of {spirit}"
   },
   {
@@ -7884,8 +7884,8 @@
    "template": "Beside the {feature}"
   },
   {
-   "text": "Grove of Nyame",
-   "etymology": "grove of [spirit: Nyame]",
+   "text": "Grove of Lagoon Keeper",
+   "etymology": "grove of [spirit: Lagoon Keeper]",
    "template": "Grove of {spirit}"
   },
   {
@@ -8200,6 +8200,11 @@
    "template": "Mount of {saint}"
   },
   {
+   "text": "Mount of Grace",
+   "etymology": "mount of [holy place: Grace]",
+   "template": "Mount of {holy}"
+  },
+  {
    "text": "Mount of Zion",
    "etymology": "mount of [holy place: Zion]",
    "template": "Mount of {holy}"
@@ -8208,11 +8213,6 @@
    "text": "Cold Rock",
    "etymology": "[quality: Cold] [feature: Rock]",
    "template": "{adj} {feature}"
-  },
-  {
-   "text": "Mount of Tabor",
-   "etymology": "mount of [holy place: Tabor]",
-   "template": "Mount of {holy}"
   }
  ]
 }

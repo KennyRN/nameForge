@@ -1256,13 +1256,13 @@
       "id": "west-african",
       "homelandBiome": "savannah",
       "label": "West African",
-      "guide": "Under the Kum Tree, Crocodile River, Buktu's Well, Grove of Osun; towns of invented peoples, a batch at a time.",
+      "guide": "Under the Kum Tree, Crocodile River, Buktu's Well, Grove of the Rain Keeper; towns of invented peoples, a batch at a time.",
       "fuseChance": 0,
       "lists": {
         "tree": ["Kum", "Baobab", "Kapok", "Shea", "Kola", "Tamarind", "Silk-cotton", "Iroko", "Palm", "Fig", "Ebony", "Mahogany"],
         "animal": ["Crocodile", "Python", "Hippopotamus|Hippopotamuses", "Lion", "Elephant", "Leopard", "Antelope", "Buffalo|Buffalo", "Hyena", "Vulture", "Monitor Lizard", "Catfish|Catfish", "Hornbill", "Ant"],
         "person": ["Buktu", "Sundiata", "Sumanguru", "Osei", "Tutu", "Askia", "Sonni", "Oduduwa", "Bayajidda", "Daura", "Amina", "Yaa", "Ofori", "Tenkamenin", "Kankan", "Moussa", "Nana", "Kwaku", "Oranmiyan", "Agaja"],
-        "spirit": ["Osun", "Ogun", "Shango", "Yemoja", "Faro", "Nyame", "Asase Yaa", "Tano", "Bia", "Mami Wata", "Olokun", "Oya", "Sakpata", "Dan"],
+        "spirit": ["Rain Keeper", "River Keeper", "Forest Keeper", "Forge Keeper", "Sky Keeper", "Lagoon Keeper", "Storm Keeper", "Well Keeper", "Harvest Keeper", "Mist Keeper", "Hill Keeper", "Salt Keeper", "Old Mother", "Old Father"],
         "feature": ["River", "Hill", "Rock", "Pool", "Lake", "Ford", "Spring", "Marsh", "Crossing", "Dune", "Cliff", "Waterfall"],
         "bend": ["Bends", "Widens", "Divides", "Meets the Sea", "Runs Shallow", "Floods"],
         "market": ["Salt", "Gold", "Kola", "Cloth", "Horse", "Night", "Women's", "Thursday", "Great"],
@@ -1296,7 +1296,7 @@
         {
           "id": "interstellar",
           "label": "Interstellar",
-          "guide": "Under the kapok tree, where the ring divides, Buktu's well, grove of Osun; towns of invented peoples, a batch at a time.",
+          "guide": "Under the kapok tree, where the ring divides, Buktu's well, grove of the Rain Keeper; towns of invented peoples, a batch at a time.",
           "lists": {
             "bend": ["Bends", "Widens", "Divides", "Narrows", "Ends", "Turns"],
             "market": ["Salt", "Gold", "Ice", "Ore", "Night", "Cloth"]
@@ -1438,7 +1438,7 @@
       "fuseChance": 0,
       "lists": {
         "saint": ["Mark", "Libanos", "Michael", "George", "Gabriel", "Mary", "Yared", "Tekle Haymanot", "Gebre Menfes Kidus", "Aregawi", "Pantelewon", "Garima", "Aftse", "Guba", "Alef", "Yemata", "Liqanos", "Sehma", "Abuna Salama"],
-        "holy": ["Light", "Olives", "Grace", "Peace", "Mercy", "Wisdom", "Tabor", "Zion", "the Cross", "Salvation"],
+        "holy": ["Light", "Olives", "Grace", "Peace", "Mercy", "Wisdom", "Zion", "the Cross", "Salvation"],
         "king": ["Dawit", "Yeshaq", "Alemayehu", "Ayele", "Bereket", "Berhanu", "Fikre", "Gashaw", "Habtamu", "Kebede", "Lemma", "Melaku", "Negash", "Sisay", "Ezana", "Lalibela", "Tewodros"],
         "animal": ["Lion", "Hyena", "Eagle", "Ibex|Ibex", "Gelada|Geladas", "Leopard", "Elephant", "Crane", "Ox|Oxen", "Wolf|Wolves"],
         "adj": ["Hot", "Cold", "Sweet", "Bitter", "Red", "White", "Black", "High", "New", "Old"],

@@ -6,7 +6,9 @@ import { INTERSTELLAR_LIST_FARM2, INTERSTELLAR_TEMPLATES } from "../north5b/sett
 const people = JSON.parse(readFileSync(new URL("../../src/data/people.json", import.meta.url), "utf8")).cultures;
 const labels = { ...JSON.parse(readFileSync(new URL("../../src/data/world-place-names.json", import.meta.url), "utf8")).labels, ...JSON.parse(readFileSync(new URL("../../src/data/tier6a.json", import.meta.url), "utf8")).settlement.labels };
 const north5bLabels = JSON.parse(readFileSync(new URL("../../src/data/north5b.json", import.meta.url), "utf8")).settlement.labels;
-const pick = (culture, key, n) => people[culture].historic[key].filter((e) => !e[2]).slice(0, n).map((e) => e[0]);
+/** Second pass (6c Part A §3): famous figures and foundations never name a place (a saint of a famous monastery, a vizier, a king). */
+const FAMOUS = new Set(["Antony", "Pachomius", "Shenouda", "Athanasius", "Cyril", "Macarius", "Dioscorus", "Ptahhotep", "Kagemni", "Imhotep", "Cyrus", "Darius", "Xerxes", "Hypatia", "Yared", "Lalibela", "Tekle Haymanot", "Gebre Menfes Kidus", "Aregawi", "Garima", "Abuna Salama"]);
+const pick = (culture, key, n) => people[culture].historic[key].filter((e) => !e[2] && !FAMOUS.has(e[0])).slice(0, n).map((e) => e[0]);
 const saints = (culture) => {
   const free = pick(culture, "holy", 14);
   return free.length >= 8 ? free : people[culture].historic.holy.slice(0, 14).map((e) => e[0]);
