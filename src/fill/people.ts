@@ -52,7 +52,7 @@ function draw(list: readonly PeopleEntry[], era: string, rng: () => number, avoi
   const from = free.length > 0 ? free : list;
   return pickWeighted(from, eraWeights(from, era), rng)[0];
 }
-const CAPPED = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian"]);
+const CAPPED = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean"]);
 
 /** Titles for officials: the bynames module's ranks in the culture's bynames culture, without the royal ones. */
 const ROYAL = /king|queen|prince|emperor|empress|pharaoh|khan|sultan|shah|caliph|tsar|inca|sovereign|chief$/i;

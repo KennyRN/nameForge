@@ -15,7 +15,7 @@ export const MIX_HALF_WEIGHT = 0.5;
 export const TIER6A_KEYS: readonly string[] = [...TIER6A_CULTURES, ...TIER6B_OWN, ...TIER6A_MIXES];
 
 /** Second pass (brief §12 §3): the cultures whose plant, tree, bird and beast fills come from their own lists alone (the pools below hold entries for them). */
-export const OWN_FILL_CULTURES: readonly string[] = ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian"];
+export const OWN_FILL_CULTURES: readonly string[] = ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean"];
 /** The kind of fill each shared pool holds, for the 6b cultures' own lists. */
 export const FILL_KIND: Readonly<Record<string, string>> = { wildTree: "trees", streetTree: "trees", wildFuse: "trees", lakeFuse: "trees", wetFlora: "plants", thingFlower: "plants", castleBird: "birds", mtBeast: "beasts", dsrBeast: "beasts", mrBeast: "beasts", wetBeast: "beasts", grsBeast: "beasts", fordBeast: "beasts", figureBeast: "beasts", warAnimal: "beasts", mythBeast: "beasts", fstBeast: "beasts", cultureDivineAnimal: "beasts", seaCreature: "water", lakeCreature: "water" };
 export const FILL_POOLS: readonly string[] = ["wildTree", "streetTree", "wildFuse", "lakeFuse", "wetFlora", "thingFlower", "castleBird", "mtBeast", "dsrBeast", "mrBeast", "wetBeast", "grsBeast", "fordBeast", "figureBeast", "warAnimal", "mythBeast", "fstBeast", "cultureDivineAnimal", "seaCreature", "lakeCreature"];

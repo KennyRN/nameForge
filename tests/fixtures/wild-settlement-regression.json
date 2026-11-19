@@ -1649,16 +1649,16 @@
    [
     "Long Street",
     "South of the Ru Road",
-    "Wharf Row",
-    "Merchants' Way",
+    "Pine Lane",
+    "Plum Lane",
+    "Lychee Lane",
+    "Tanners' Way",
     "North Gate Street",
     "Spring Street",
     "Drapers' Lane",
     "Smiths Street",
-    "West Road",
-    "Silk Lane",
-    "South Gate Street",
-    "Queen's Street"
+    "Merchants' Way",
+    "Silk Lane"
    ],
    [
     "Market Square",
@@ -1734,14 +1734,14 @@
     "Queen's Row",
     "Broken Well Row",
     "Bridge Row",
-    "Gardens Alley",
+    "Salt Way",
     "Staithe Lane",
     "Barbican Street",
     "10th Lane",
     "Market Close",
     "Smiths Street",
-    "Well Street",
-    "Salt Way"
+    "Pine Lane",
+    "Holy Well Entry"
    ],
    [
     "Market Square",
@@ -1814,17 +1814,17 @@
    ],
    [
     "Long Street",
-    "98th Lane",
-    "9th Lane",
-    "Ford Lane",
-    "Monastery Road",
-    "King's Road",
-    "Hall Way",
-    "Statue of [founder] Street",
-    "Bakers Street",
     "Hold the East Road",
-    "Vintners Street",
-    "Well Lane"
+    "9th Lane",
+    "Bamboo Lane",
+    "Spring Yard",
+    "Shoemakers' Alley",
+    "Butchers Street",
+    "Strand Alley",
+    "5th Lane",
+    "Bakers Street",
+    "North Lane",
+    "Vintners Street"
    ],
    [
     "Market Square",
@@ -1934,7 +1934,7 @@
    [
     "the Old Fountain",
     "Red Hall",
-    "Kite Castle",
+    "Egret Castle",
     "Shrine of the Heavenly Prince of Kinship",
     "Duke's Manor",
     "[founder]'s Quarry",
@@ -2036,7 +2036,7 @@
     "Lord's Bridge",
     "the Golden Lantern",
     "Capital of Virtue and Prosperity House",
-    "Jade Crane Castle",
+    "Jade Cormorant Castle",
     "Capital of Virtue and Prosperity Hall",
     "the Upper Temple",
     "the Broken Well",
@@ -2134,7 +2134,7 @@
     "Spring Rain Inn"
    ],
    [
-    "Kite Castle",
+    "Kingfisher Castle",
     "the Great Mint",
     "Small Slope Stepping Stones",
     "the Ruined Hermitage",

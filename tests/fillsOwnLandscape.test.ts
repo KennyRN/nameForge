@@ -3,15 +3,18 @@
 import "../src/lensRosterSources";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { FILLS } from "../scripts/tier6b/fills.mjs";
+import { FILLS as FILLS_6B } from "../scripts/tier6b/fills.mjs";
+import { FILLS as FILLS_6C } from "../scripts/tier6c/fills.mjs";
 import { hasEnglishRank, OWN_FILL_CULTURES } from "../src/tier6a";
 import { measureStates } from "./helpers/probeStates";
 
-const CULTURES = Object.keys(FILLS);
+const FILLS = { ...FILLS_6B, ...FILLS_6C };
+/** The cultures whose land and water modules are written (6b); the 6c cultures join this list with their land and sea group. */
+const CULTURES = Object.keys(FILLS_6B);
 const MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames", "seasLakes", "coastsIslands", "seaCharts", "riversInland", "hillsValleys", "farmland", "lands"];
 
 test("fills: every 6b culture has at least twelve own words in each list of plants, trees, birds, beasts and water creatures", () => {
-  for (const c of CULTURES) for (const [kind, text] of Object.entries(FILLS[c as keyof typeof FILLS])) assert.ok((text as string).split("|").length >= 12, `${c} ${kind}`);
+  for (const c of Object.keys(FILLS)) for (const [kind, text] of Object.entries(FILLS[c as keyof typeof FILLS])) assert.ok((text as string).split("|").length >= 12, `${c} ${kind}`);
   for (const c of OWN_FILL_CULTURES) assert.ok(c in FILLS || ["steppe", "arabic-persian"].includes(c), c);
 });
 
