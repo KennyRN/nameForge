@@ -7406,8 +7406,8 @@
    "template": "Place of Sacrifice"
   },
   {
-   "text": "Agni's Plain",
-   "etymology": "[deity: Agni]'s plain",
+   "text": "Springtime's Plain",
+   "etymology": "[deity: Springtime]'s plain",
    "template": "{god:pos} Plain"
   },
   {
@@ -7451,8 +7451,8 @@
    "template": "{sage:pos} Hermitage"
   },
   {
-   "text": "Indra's City",
-   "etymology": "[deity: Indra]'s city",
+   "text": "Sunrise's City",
+   "etymology": "[deity: Sunrise]'s city",
    "template": "{god:pos} City"
   },
   {
@@ -7461,8 +7461,8 @@
    "template": "The {epithet}"
   },
   {
-   "text": "Hanuman's City",
-   "etymology": "[deity: Hanuman]'s city",
+   "text": "Saffron's City",
+   "etymology": "[deity: Saffron]'s city",
    "template": "{god:pos} City"
   },
   {
@@ -7471,8 +7471,8 @@
    "template": "Confluence of the {#river}"
   },
   {
-   "text": "Saraswati's City",
-   "etymology": "[deity: Saraswati]'s city",
+   "text": "Sandalwood's City",
+   "etymology": "[deity: Sandalwood]'s city",
    "template": "{god:pos} City"
   },
   {
@@ -7523,13 +7523,13 @@
    "template": "{surname:pos} Market"
   },
   {
-   "text": "Fort of Mumba",
-   "etymology": "fort of [deity: Mumba]",
+   "text": "Fort of Turmeric",
+   "etymology": "fort of [deity: Turmeric]",
    "template": "Fort of {god}"
   },
   {
-   "text": "Fort of Surya",
-   "etymology": "fort of [deity: Surya]",
+   "text": "Fort of Rainbow",
+   "etymology": "fort of [deity: Rainbow]",
    "template": "Fort of {god}"
   },
   {
@@ -7548,8 +7548,8 @@
    "template": "{raja:pos} Fort"
   },
   {
-   "text": "Fort of Kartikeya",
-   "etymology": "fort of [deity: Kartikeya]",
+   "text": "Fort of Marigold",
+   "etymology": "fort of [deity: Marigold]",
    "template": "Fort of {god}"
   },
   {
@@ -7588,8 +7588,8 @@
    "template": "New {place}"
   },
   {
-   "text": "Fort of Krishna",
-   "etymology": "fort of [deity: Krishna]",
+   "text": "Fort of Banyan",
+   "etymology": "fort of [deity: Banyan]",
    "template": "Fort of {god}"
   },
   {
@@ -7655,8 +7655,8 @@
    "template": "{adj} {feature}"
   },
   {
-   "text": "Before Amaterasu's Gate",
-   "etymology": "before [kami: Amaterasu]'s gate",
+   "text": "Before Bamboo's Gate",
+   "etymology": "before [kami: Bamboo]'s gate",
    "template": "Before {kami:pos} Gate"
   },
   {

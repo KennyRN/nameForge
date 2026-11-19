@@ -6,10 +6,10 @@ import { generateSettlementNames } from "../src/settlement/names";
 import { WORLD_CULTURES } from "../src/world/engine";
 import { isRealGroup, isRealPlace } from "../src/realPlaces";
 
-const GODS = ["Osun", "Ogun", "Shango", "Yemoja", "Faro", "Nyame", "Olokun", "Oya", "Sakpata", "Anubis", "Sekhmet", "Ptah", "Sobek", "Antony", "Ptahhotep", "Kagemni", "Tabor", "Cyrus", "Darius", "Xerxes"];
-test("6b settlement names: no real foundation, famous figure or god of the culture's lore", () => {
+const GODS = ["Osun", "Ogun", "Shango", "Yemoja", "Faro", "Nyame", "Olokun", "Oya", "Sakpata", "Anubis", "Sekhmet", "Ptah", "Sobek", "Antony", "Ptahhotep", "Kagemni", "Tabor", "Cyrus", "Darius", "Xerxes", "Shiva", "Vishnu", "Rama", "Krishna", "Durga", "Lakshmi", "Parvati", "Ganesha", "Surya", "Agni", "Varuna", "Kali", "Hanuman", "Hachiman", "Inari", "Tenjin", "Amaterasu", "Susanoo", "Kompira", "Ebisu", "Benten", "Kannon", "Daikoku"];
+test("6b and 6c settlement names: no real foundation, famous figure or god of the culture's lore", () => {
   const bad: string[] = [];
-  for (const c of ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african"]) {
+  for (const c of ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "indian", "chinese", "japanese", "korean"]) {
     const world = WORLD_CULTURES.find((w) => w.id === c);
     if (!world) continue;
     for (const era of world.eras) for (let seed = 1; seed <= 60; seed++) {

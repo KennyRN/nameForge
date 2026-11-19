@@ -1072,7 +1072,7 @@
       "guide": "Ancient: gods' cities and plains, sacred confluences, the Unconquerable. Modern: founders' abodes and cities, forts, markets, cantonments.",
       "fuseChance": 0,
       "lists": {
-        "god": ["Indra", "Shiva", "Vishnu", "Rama", "Krishna", "Durga", "Lakshmi", "Parvati", "Ganesha", "Surya", "Agni", "Varuna", "Kali", "Hanuman", "Saraswati", "Kartikeya", "Chandra", "Kubera", "Chandi", "Mumba"],
+        "god": ["Sunrise", "Moonrise", "Monsoon", "Lotus", "Banyan", "Cardamom", "Dawn", "Twilight", "Harvest", "Rainbow", "Springtime", "Lamplight", "Jasmine", "Saffron", "Sandalwood", "Marigold", "Mango", "Tamarind", "Jaggery", "Turmeric"],
         "animal": ["Elephant", "Tiger", "Peacock", "Snake", "Cobra", "Monkey", "Lion", "Deer|Deer", "Parrot", "Swan", "Bull", "Crocodile", "Boar"]
       },
       "markov": {
@@ -1082,7 +1082,7 @@
         {
           "id": "ancient",
           "label": "Ancient",
-          "guide": "Indra's Plain, City of Elephants, Between the Varuna and the Asi, the Many-Gated.",
+          "guide": "Lotus Plain, City of Elephants, Between the Ganga and the Asi, the Many-Gated.",
           "lists": {
             "epithet": ["Unconquerable", "Victorious", "Fortunate", "Radiant", "Unshakable", "Many-Gated", "Luminous", "Eternal"],
             "city": ["Victory", "Elephants", "Flowers", "Lotuses", "Kings", "Gold", "Peacocks", "Learning", "Joy"],
@@ -1173,7 +1173,7 @@
         "animal": ["Crane", "Deer|Deer", "Fox", "Bear", "Hawk", "Monkey", "Carp|Carp", "Heron", "Horse", "Boar", "Pheasant", "Cormorant", "Dragon", "Tortoise"],
         "feature": ["Hill", "Island", "Field", "Cape", "River", "Bridge", "Mountain", "Valley", "Moor", "Shore", "Bay", "Pass", "Slope", "Pond", "Well", "Marsh", "Bank", "Peak", "Ford", "Paddy"],
         "adj": ["Long", "Broad", "High", "Shallow", "Deep", "Great", "Small", "Upper", "Lower", "Middle", "New", "Old", "Wide", "Narrow", "Bright", "Clear", "Pine", "Bamboo", "Willow", "Cherry", "Plum", "Rice", "Stone", "Sand", "Red", "Black", "White", "Blue"],
-        "kami": ["Hachiman", "Inari", "Tenjin", "Amaterasu", "Susanoo", "Kompira", "Ebisu", "Benten", "Kannon", "Daikoku", "Sumiyoshi", "Kasuga"],
+        "kami": ["Pine", "Plum", "Cedar", "Bamboo", "Mist", "Spring Water", "Moon", "Cherry", "Wisteria", "Maple", "Rice Ear", "Camphor"],
         "mouth": ["River", "Mountain", "Valley", "Shore", "Bay", "Field", "Marsh", "Paddy", "Hill"]
       },
       "eras": [
