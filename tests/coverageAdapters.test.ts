@@ -103,8 +103,8 @@ test("inns and taverns: Scandinavian reaches the batch target (30 signature word
   const [w, sh] = cell("innNames", "scandinavian").split("/").map(Number);
   assert.ok(w >= 30 && sh >= 10, cell("innNames", "scandinavian"));
 });
-// 6c: Japanese gains its own thirty words and ten shapes (and the legacy ones stay: 53 words, 14 shapes).
-test("inns and taverns: Japanese 53 words and 14 shapes", () => assert.equal(cell("innNames", "japanese"), "53/14"));
+// 6c: Japanese gains its own thirty words and ten shapes (its older shapes are retired: 53 words, 10 shapes).
+test("inns and taverns: Japanese 53 words and 10 shapes", () => assert.equal(cell("innNames", "japanese"), "53/10"));
 test("inns and taverns: Polynesian 1 word and 2 shapes", () => assert.equal(cell("innNames", "polynesian"), "1/2"));
 
 // ── Adapters and the reader table ──────────────────────────────────────────

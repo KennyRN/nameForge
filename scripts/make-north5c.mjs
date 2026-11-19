@@ -100,7 +100,7 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
   const cls = CLASS[module];
   modules[module] = { kinds: KINDS[module], cultures: {} };
   // Tribes and kin groups keep Celtic as the broad mix it is (brief 5c B1): no Celtic content of its own there.
-  for (const culture of [...CORE, ...NEW6, ...NEW6B, ...NEW6C, ...(module === "tribalNames" ? [...MIXES6, ...MIXES6B] : ["celtic", ...MIXES6, ...MIXES6B])]) {
+  for (const culture of [...CORE, ...NEW6, ...NEW6B, ...(module === "familyNames" ? [] : NEW6C), ...(module === "tribalNames" ? [...MIXES6, ...MIXES6B] : ["celtic", ...MIXES6, ...MIXES6B])]) {
     const lists = byCulture[culture].split(";").map((l) => l.split("|"));
     const want = isMix(culture) ? 4 : 10;
     if (lists.length !== 3) problems.push(`${module} ${culture}: ${lists.length} lists`);

@@ -77,7 +77,7 @@ test("5c §11.3: a core culture's own frames take their share of a batch, and a 
   // Second pass (brief §12 §1): German keeps a tenth of its legacy table, so its own frames take the rest (0.9, less the few draws a safeguard refuses).
   assert.ok(Math.abs(replaced - signatureShareFor("german", "tradeGuilds")) < 0.06, `the share is ${replaced}`);
   // Another culture, or none: nothing replaced.
-  assert.deepEqual(applySignature([{ text: "x" }], "tradeGuilds", "japanese", 1), [{ text: "x" }]);
+  assert.deepEqual(applySignature([{ text: "x" }], "tradeGuilds", "polynesian", 1), [{ text: "x" }]);
 });
 
 test("5c: Celtic draws its own words and each nation's", () => {

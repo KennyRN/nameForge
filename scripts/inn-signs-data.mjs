@@ -241,6 +241,43 @@ export const SIGNS = {
     "Festive|Dusty|Drumming|Shea-Scented|Lagoon-Side|Market-Day",
     "Market Square|River Ford|Mosque Gate|Fort Gate|Crossroads|Lagoon Shore|Baobab|Caravan Well",
   ),
+  // Second-tier 6c: the four cultures of the batch, each in its own habits.
+  indian: C(
+    "Elephant|Tiger|Peacock|Cobra|Parrot|Monkey|Camel|Bull|Swan|Deer|Lion|Horse",
+    "Lamp|Lotus|Brass Bell|Tea Kettle|Sitar|Drum|Stepwell|Palanquin|Bangle|Umbrella|Spice Pot|Sword",
+    "Weavers|Brass Smiths|Spice Merchants|Potters|Goldsmiths|Dyers|Boatmen|Bakers",
+    "Saffron|Turmeric|Indigo|Vermilion|Marigold|Peacock-Blue",
+    "Raja|Nawab|Pilgrim|Merchant|Weaver|Hermit|Fiddler|Drummer",
+    "Merry|Shaded|Spiced|Monsoon|Royal|Hidden",
+    "Bazaar Gate|River Steps|Banyan Tree|Stepwell|Temple Steps|Crossroads|River Ford",
+  ),
+  chinese: C(
+    "Dragon|Phoenix|Carp|Tortoise|Mandarin Duck|Ox|Goose|Fox|Panda|Swallow|Cricket|Monkey",
+    "Lantern|Teapot|Jade Disc|Gong|Abacus|Wine Jar|Pagoda|Scroll|Brush|Jade Bridge|Bell|Ingot",
+    "Silk Weavers|Tea Merchants|Jade Carvers|Salt Merchants|Paper Makers|Noodle Makers|Lacquer Makers|Junk Builders",
+    "Vermilion|Jade-Green|Imperial Yellow|Ink-Black|Plum|Sky-Blue",
+    "Scholar|Mandarin|Boatman|Tea Seller|Abbot|Poet|Storyteller|Gong-Beater",
+    "Lucky|Willow-Shaded|Tea-Scented|Lotus|Jade-Lit|Plum-Blossom",
+    "City Gate|Stone Bridge|Canal Landing|Drum Tower|Willow Ford|Moon Gate|Pagoda Hill",
+  ),
+  japanese: C(
+    "Crane|Heron|Cormorant|Turtle|Deer|Boar|Monkey|Hawk|Badger|Koi|Pheasant|Sparrow",
+    "Lamp Stand|Sake Barrel|Torii|Paper Screen|Rice Straw Hat|Fan|Bell Tower|Umbrella|Kettle|Mask|Wind Chime|Stone Garden",
+    "Rice Merchants|Sake Brewers|Potters|Fishermen|Ferrymen|Indigo Dyers|Lamp Makers|Soba Cooks",
+    "Vermilion-Red|Indigo|Cherry-Pink|Pine-Green|Moon-White|Charcoal",
+    "Samurai|Pilgrim|Ferryman|Merchant|Priest|Haiku Poet|Puppeteer|Drummer",
+    "Cherry-Shaded|Snowy|Misty|Moonlit|Fortunate|Quiet",
+    "Castle Gate|Wooden Bridge|Ferry Landing|Shrine Steps|Mountain Pass|Rice Paddy|Cedar Avenue",
+  ),
+  korean: C(
+    "Tiger|Magpie|Haetae|Swallow|Bear|Goose|Hawk|Pheasant|Rooster|Squirrel|Ox|Mountain Goat",
+    "Rice Wine Jar|Drum|Paper Fan|Brazier|Stone Pillar|Hearth|Pine Torch|Gourd|Pavilion|Earthen Pot|Wooden Bucket|Millstone",
+    "Rice Merchants|Brewers|Potters|Charcoal Burners|Ginseng Merchants|Basket Weavers|Ironmongers|Noodle Cooks",
+    "Celadon|Indigo|Ink-Black|Pine-Green|Persimmon-Orange|Clay-Brown",
+    "Scholar|Governor|Pilgrim|Merchant|Monk|Pansori Singer|Mask Dancer|Gong Player",
+    "Pine-Shaded|Hearth-Warm|Windy|Humble|Hospitable|Hilltop",
+    "Fortress Gate|Stone Steps|Ferry Landing|Temple Steps|Mountain Pass|Pine Hill|Village Well",
+  ),
 };
 
 // Colours, metals and descriptions chosen apart from every other culture's, so that no two cultures give the same "Red Tavern" or "the Old Inn" (Part A's 5% limit).

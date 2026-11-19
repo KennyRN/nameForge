@@ -1018,7 +1018,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2205,
+   "rowCount": 2193,
    "cultures": {
     "general": {
      "words": 0,
@@ -1338,7 +1338,7 @@
     },
     "chinese": {
      "words": 67,
-     "shapes": 15,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -1348,7 +1348,7 @@
     },
     "japanese": {
      "words": 53,
-     "shapes": 14,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -1358,7 +1358,7 @@
     },
     "korean": {
      "words": 61,
-     "shapes": 13,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -1421,7 +1421,7 @@
    "eras": {
     "AN": 316,
     "MD": 326,
-    "EM": 311,
+    "EM": 310,
     "ST": 549,
     "MO": 211,
     "NF": 26,
@@ -13248,7 +13248,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2295,
+   "rowCount": 2093,
    "cultures": {
     "general": {
      "words": 0,
@@ -13557,44 +13557,44 @@
      "below": false
     },
     "indian": {
-     "words": 40,
-     "shapes": 16,
+     "words": 0,
+     "shapes": 6,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": false
+     "below": true
     },
     "chinese": {
-     "words": 41,
-     "shapes": 11,
+     "words": 0,
+     "shapes": 1,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": false
+     "below": true
     },
     "japanese": {
-     "words": 40,
-     "shapes": 11,
+     "words": 0,
+     "shapes": 1,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": false
+     "below": true
     },
     "korean": {
-     "words": 41,
-     "shapes": 11,
+     "words": 0,
+     "shapes": 1,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": false
+     "below": true
     },
     "aztec": {
      "words": 0,
@@ -13661,26 +13661,26 @@
     }
    },
    "eras": {
-    "AN": 193,
-    "MD": 326,
-    "EM": 241,
-    "ST": 181,
-    "MO": 180,
+    "AN": 169,
+    "MD": 300,
+    "EM": 217,
+    "ST": 157,
+    "MO": 156,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 93,
+     "shapes": 52
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 93,
+     "shapes": 52
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 93,
+     "shapes": 52
     }
    },
    "tones": {
@@ -24229,12 +24229,12 @@
     "shapes": 288
    },
    "indian": {
-    "words": 2143,
-    "shapes": 610
+    "words": 2103,
+    "shapes": 600
    },
    "chinese": {
-    "words": 2165,
-    "shapes": 615
+    "words": 2124,
+    "shapes": 600
    },
    "slavic": {
     "words": 1946,
@@ -24269,12 +24269,12 @@
     "shapes": 546
    },
    "japanese": {
-    "words": 2189,
-    "shapes": 590
+    "words": 2149,
+    "shapes": 576
    },
    "korean": {
-    "words": 2144,
-    "shapes": 559
+    "words": 2103,
+    "shapes": 546
    },
    "maya": {
     "words": 82,
@@ -24354,26 +24354,26 @@
    }
   },
   "eras": {
-   "AN": 11041,
-   "MD": 14484,
-   "EM": 15748,
-   "ST": 15122,
-   "MO": 13528,
+   "AN": 11017,
+   "MD": 14458,
+   "EM": 15723,
+   "ST": 15098,
+   "MO": 13504,
    "NF": 771,
    "IS": 1723
   },
   "styles": {
    "high-fantasy": {
-    "words": 4808,
-    "shapes": 1752
+    "words": 4796,
+    "shapes": 1744
    },
    "contemporary-fantasy": {
-    "words": 4724,
-    "shapes": 1750
+    "words": 4712,
+    "shapes": 1742
    },
    "space-opera": {
-    "words": 4860,
-    "shapes": 1583
+    "words": 4848,
+    "shapes": 1575
    },
    "steampunk": {
     "words": 84,

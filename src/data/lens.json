@@ -4606,6 +4606,18 @@
    [
     "bantu",
     "west-african"
+   ],
+   [
+    "chinese",
+    "japanese"
+   ],
+   [
+    "chinese",
+    "korean"
+   ],
+   [
+    "japanese",
+    "korean"
    ]
   ],
   "general": [
@@ -4634,7 +4646,11 @@
    "egyptian",
    "ethiopian",
    "bantu",
-   "west-african"
+   "west-african",
+   "indian",
+   "chinese",
+   "japanese",
+   "korean"
   ],
   "pairLimit": 30,
   "$pairComment": "Second pass (18 November 2026, §12 of the second-tier brief): every pair of distinct cultures in `general`, siblings or not, shares at most `pairLimit` percent in every measured module; listed siblings keep `siblingLimit`."

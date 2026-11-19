@@ -728,7 +728,8 @@ export function generateBynames(options: BynameOptions): BynameBatch {
   const tidy = (text: string): string => withArticles(text.replace(/(\S) The /g, "$1 the "));
   const batch = { ...inner, names: inner.names.map((n) => (tidy(n.text) !== n.text ? { ...n, text: tidy(n.text) } : n)) };
   // 5d §14.2: the core cultures' titles carry the rank pair of the bearer's sex.
-  if (options.module !== "titles" || !contentKey(options.culture)) return batch;
+  // 6c: the four East and South Asian cultures keep the rank tables they had ("Princess" is the woman's rank there; a man has none of that name).
+  if (options.module !== "titles" || !contentKey(options.culture) || ["indian", "chinese", "japanese", "korean"].includes(options.culture ?? "")) return batch;
   return { ...batch, names: batch.names.map((n) => ({ ...n, text: sexedRanks(n.text, n.gender) })) };
 }
 

@@ -108,24 +108,9 @@
       {"p": "{indianAnchor} Inn", "w": 20},
       {"p": "{town} Caravan Court", "w": 10, "kinds": ["wayhouse"], "self": true}
     ],
-    "chinese": [
-      {"p": "Inn of {auspicious}", "w": 30},
-      {"p": "{welcomePhrase} Inn", "w": 20},
-      {"p": "{eastNature} Tea House", "w": 25, "kinds": ["eating"]},
-      {"p": "{eastNature} Wine House", "w": 15, "kinds": ["tavern"]},
-      {"p": "{town} Post Station", "w": 10, "kinds": ["wayhouse"], "self": true}
-    ],
-    "japanese": [
-      {"p": "{eastNature} Inn", "w": 35},
-      {"p": "{eastNature} Tea House", "w": 30, "kinds": ["eating"]},
-      {"p": "Lords' Inn of {town}", "w": 15, "e": ["EM"], "self": true},
-      {"p": "{town} Inn", "w": 20, "self": true}
-    ],
-    "korean": [
-      {"p": "{eastNature} Tavern", "w": 40},
-      {"p": "{town} Station Inn", "w": 30, "kinds": ["wayhouse"], "self": true},
-      {"p": "Inn of {auspicious}", "w": 30}
-    ],
+    "chinese": [],
+    "japanese": [],
+    "korean": [],
     "egyptian": [
       {"p": "Beer House of {town}", "w": 35, "self": true},
       {"p": "{owner:poss} Beer House", "w": 35},

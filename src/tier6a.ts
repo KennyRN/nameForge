@@ -12,7 +12,9 @@ export const TIER6A_MIXES = ["iberian", "greek-byzantine", "steppe", "arabic-per
 export const MIX_HALVES: Readonly<Record<string, readonly string[]>> = { iberian: ["spanish", "portuguese"], "greek-byzantine": ["greek", "byzantine"], steppe: ["turkic", "mongol"], "arabic-persian": ["arabic", "persian"] };
 export const MIX_HALF_WEIGHT = 0.5;
 /** Every module culture key the batch adds to a roster (the ones a roster already has are kept as they are). */
-export const TIER6A_KEYS: readonly string[] = [...TIER6A_CULTURES, ...TIER6B_OWN, ...TIER6A_MIXES];
+/** Batch 6c: the four East and South Asian cultures (Indian, Chinese, Japanese, Korean), whose group modules read their own content like any other batch culture. */
+export const TIER6C_OWN = ["indian", "chinese", "japanese", "korean"] as const;
+export const TIER6A_KEYS: readonly string[] = [...TIER6A_CULTURES, ...TIER6B_OWN, ...TIER6C_OWN, ...TIER6A_MIXES];
 
 /** Second pass (brief §12 §3): the cultures whose plant, tree, bird and beast fills come from their own lists alone (the pools below hold entries for them). */
 export const OWN_FILL_CULTURES: readonly string[] = ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean"];
@@ -27,7 +29,7 @@ export const hasEnglishRank = (text: string): boolean => ENGLISH_RANKS.test(text
 /** Labels as the rosters read them. */
 export const TIER6A_LABELS: Readonly<Record<string, string>> = {
   french: "French", dutch: "Dutch", italian: "Italian", spanish: "Spanish", portuguese: "Portuguese", roman: "Roman", greek: "Greek", byzantine: "Byzantine", slavic: "Slavic",
-  turkic: "Turkic", mongol: "Mongol", arabic: "Arabic", persian: "Persian", egyptian: "Egyptian", ethiopian: "Ethiopian", bantu: "Bantu", "west-african": "West African",
+  turkic: "Turkic", mongol: "Mongol", arabic: "Arabic", persian: "Persian", egyptian: "Egyptian", ethiopian: "Ethiopian", bantu: "Bantu", "west-african": "West African", indian: "Indian", chinese: "Chinese", japanese: "Japanese", korean: "Korean",
   iberian: "Iberian", "greek-byzantine": "Greek and Byzantine", steppe: "Turkic and Mongol steppe", "arabic-persian": "Arabic and Persian",
 };
 /** The roster group each is filed under in the modules that still group (the culture menu itself reads the lens). */
