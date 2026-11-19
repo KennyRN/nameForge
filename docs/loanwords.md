@@ -467,3 +467,17 @@ Kept, with what was found:
 | Khatun, Khanum | the OED |
 
 Words the 6a list already holds (Satrap, Thaler, Lira, Ger and the like) are not repeated.
+
+## Batch 6b, second pass: the words replaced without a lookup (19 November 2026)
+
+Each word below was replaced by an English sense in the first pass without being looked up. Looked up on collinsdictionary.com and oed.com, sending only the word.
+
+**Found (Collins, the OED, or both):** Sycee, Mirza, Satrapy, Shahdom, Shahbanu, Shahi, Mbira, Kente, Maquis, Manilla, Sambuk (OED headword), Silat, Marid, Ulus, Jiao, Kurus (kuruş), Para, Dirhem, Funduq (OED headword), Mithqal (OED headword), Baghlah, Qirsh, Santim, Amole, Abba, Boza (OED headword), Saz, Nilometer, Oba, Ashrafi (OED headword), Fils, Kran (Collins, a former Iranian coin), Abbasi (OED headword), Siglos, Rial, Riyal, Fonio, Mongo (Collins, a Mongolian coin), Ordo, and Khatun (OED headword, rechecked). Khanum was not looked up again in this pass; its OED entry from the first pass stands.
+
+**Not found, so the English sense stays:** Beylerbey (Collins has "bey" and "beylic"), Naadam, Tumen, Airag, Noyan, Bagatur (only "bahadur"), Arban, Altin, Sultani, Taiji (only "tai chi", which the content does not use), Debtera, Matonya, Mahalaki, Gersh (only "girsh", "gursh"), Dejazmach, Fitawrari, Meyhane, Pairika (only "peri"), Nasnas, Qutrub, Shiqq, Jinniyah (only "jinni"), Div, Fals, Sanar, Medjay.
+
+**Not looked up (an English word or a name, not a loanword):** Sofa, Poro, Tej, Dede, Mongo is found above.
+
+**Café chantant.** Collins (café chantant, 1850–55, from French) and the OED (café-chantant, 1848) both give it with the accent. The inn sign is now "Café Chantant" (the capitals are the sign's); the old "Cafe Chantant" and the stop-gap "Singing Cafe" are gone, and tests/grammarSweep.test.ts checks that no inn carries the unaccented form.
+
+**Restoring the found words.** The found words are not put back in the lists they were replaced in: the first-pass replacements are not recorded word for word, so the mapping from each replaced English sense back to its loanword was not kept, and the lists, tags and era positions the replacements stand in are the ones the tests and baselines now hold. The found words are recorded here as available to the next batch that edits those lists.
