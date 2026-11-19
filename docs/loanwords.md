@@ -485,3 +485,55 @@ Each word below was replaced by an English sense in the first pass without being
 ### The five words still to look up (19 November 2026)
 
 Looked up on collinsdictionary.com and oed.com, sending only the word. **Found:** Khanum (OED, 1824), Poro (OED, 1788, a West African borrowing; Poro is a real society, so it may be a word but never a group's name, and is still to be added to the real-names list), Tej (OED, 1853; Collins, honey wine), Sofa (Collins, from Arabic). **Not found:** Dede (only the Turkish word for grandfather in a translation table, and the old spelling of "deed"); the English sense stays. None of these is yet put into a list.
+
+## Batch 6c: Indian, Chinese, Japanese and Korean (19 November 2026)
+
+Every loanword new in the 6c lists, looked up on collinsdictionary.com and oed.com, sending only the word.
+
+### Indian, first group
+
+**Found:** Dharamshala (Collins "dharmshala", OED "dharmsala"), Chowk (Collins; OED 1832), Dhaba (Collins; OED 1961), Sepoy (Collins; OED), Tulwar (Collins), Durbar (Collins; OED 1625), Panchayat (Collins; OED 1778), Munshi (Collins; OED 1622), Tonga (Collins, the carriage), Zamindar (Collins; OED 1683), Katar (Collins, the push dagger), Rakshasa (Collins; OED 1785), Yaksha (OED 1785), Naga (Collins; OED), Apsara (Collins "apsaras"; OED 1865), Mohalla (OED 1825).
+
+**Not found, so the English sense stands:** Vetala. The supernatural courts list now reads "Corpse Spirit" in its place (`scripts/tier6c/north5c-words.mjs`).
+
+### Indian, second group
+
+**Found:** Ghat (Collins), Gali (Collins Hindi-English, galī), Mandi (Collins), Serai (Collins; OED 1609 and 1672), Caravanserai (Collins), Sitar (Collins; OED 1777), Palanquin (Collins), Nawab (Collins; OED "nabob"), Sadhu (Collins), Sangha (Collins; OED 1814), Dacoit (Collins; OED 1788), Diwan (Collins), Rupee (Collins), Paisa (Collins; OED 1884), Anna (Collins, the coin; OED), Mohur (Collins; OED 1614), Fanam (OED 1555), Pagoda (Collins), Cowrie (Collins), Begum (Collins), Raja (Collins "rajah"), Maharaja (Collins), Rani (Collins), Thug (Collins).
+
+**Replaced, as the coin sense is not recorded:** Pie (an English word, "pie" the food; no coin sense) became "Small Copper", and "Copper Dam" (Collins has "dam" only as a barrier or a mother animal) became "Copper Piece".
+
+### Chinese
+
+**Found:** Tael (Collins), Yuan (Collins), Fen (Collins, the subunit of the yuan), Bund (Collins; OED, the embankment sense), Sampan (Collins; OED 1620), Rickshaw (Collins; OED 1879), Mandarin (Collins), Kylin (Collins, the headword for the mythical animal).
+
+**Replaced:** Qilin (only a user-submitted entry; Collins headwords are "kylin" and "chi-lin") became "Kylin".
+
+### Japanese
+
+**Found:** Oni (Collins), Tanuki (Collins), Katana (Collins; OED 1613), Naginata (OED 1822), Shogun (Collins), Daimyo (Collins; OED "daimio"), Samurai (Collins), Ryo (OED 1862), Koban (Collins), Sen (Collins, the former Japanese coin), Yen (Collins), Rin (Collins, the money of account), Izakaya (OED 1987), Ryokan (Collins; OED 1914), Soba (Collins; OED 1896), Torii (Collins; OED 1727), Haiku (Collins; OED 1876), Sake (Collins), Zen (Collins).
+
+**Not found, so the English sense stands:**
+- Kitsune (only a Collins Japanese-English entry and a user submission) became "Fox Spirit".
+- Tengu (only a sentence that uses it) became "Mountain Goblin".
+- Kappa (only the Greek letter) became "River Imp".
+- Tanto (the Italian and Spanish word, and a lost obsolete English noun) became "Short Blade".
+- Mon (Collins has the Mon people, not the Japanese coin) became "Copper Coin".
+- Bu (no Japanese coin sense) became "Silver Piece".
+- Kissaten (nothing found) became "Coffee House".
+- Jizo (nothing found) became "Roadside Guardian".
+- Danchi (only inside a compound) became "Housing Estate".
+
+### Korean
+
+**Found:** Won (Collins), Jeon (Collins), Hwan (Collins), Pansori (OED 1958), Yangban (OED 1888).
+
+**Not found, so the English sense stands:**
+- Dokkaebi became "Trickster Goblin".
+- Haetae became "Stone Guardian".
+- Gumiho became "Nine-Tailed Fox".
+- Makgeolli (only a user submission) became "Rice Wine", and "Makgeolli Brewers" became "Rice Wine Brewers".
+- Seon (Collins has only the Korean word for "line" and "good") became "Zen" in "Zen Order"; Zen is found above.
+
+### Totals for batch 6c
+
+Found: 16 + 24 + 8 + 19 + 5 = 72 words (Chinese counts Kylin found). Not found and replaced by an English sense: 1 (Vetala) + 2 (Pie, Dam) + 1 (Qilin) + 9 + 5 = 18 words, each swap listed above. Not looked up: none; the number of lookups is 90 words.

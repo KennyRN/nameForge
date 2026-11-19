@@ -2,10 +2,10 @@
 import { buildCulture } from "./build.mjs";
 export default buildCulture({
   key: "chinese", label: "Chinese", style: "first",
-  mods: { A: ["Jade", "Willow", "Pagoda", "Imperial", "Granary", "Tiger"], B: ["Tea", "Silk", "Canal", "Treaty", "Junk", "Scholars'"], C: ["Railway", "Dam", "Factory", "Tourist"], F: ["Immortal", "Fox", "Dragon King's", "Qilin"] },
+  mods: { A: ["Jade", "Willow", "Pagoda", "Imperial", "Granary", "Tiger"], B: ["Tea", "Silk", "Canal", "Treaty", "Junk", "Scholars'"], C: ["Railway", "Dam", "Factory", "Tourist"], F: ["Immortal", "Fox", "Dragon King's", "Kylin"] },
   land: {
     B: "Tea|Silk|Jade|Porcelain|Rice|Bamboo|Lacquer|Salt|Paper|Ink",
-    C: "Dragon King|Immortal|Fox Spirit|Qilin|Jade Maiden|Sleeping Scholar",
+    C: "Dragon King|Immortal|Fox Spirit|Kylin|Jade Maiden|Sleeping Scholar",
     D: "Walled Town;AN-MD|Granary;AN-MD|Watchtower;AN-MD|Mulberry Grove;AN-MD|Terraced Field;AN-MD|Pagoda;MD|Examination Hall;MD|Tea Garden;EM-ST|Treaty Port;EM-ST|Silk Mill;ST-MO|Reservoir;ST-MO|Special Zone;MO|Wind Farm;MO|Ski Resort;MO",
   },
   water: {

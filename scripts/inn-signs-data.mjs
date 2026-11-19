@@ -270,7 +270,7 @@ export const SIGNS = {
     "Castle Gate|Wooden Bridge|Ferry Landing|Shrine Steps|Mountain Pass|Rice Paddy|Cedar Avenue",
   ),
   korean: C(
-    "Tiger|Magpie|Haetae|Swallow|Bear|Goose|Hawk|Pheasant|Rooster|Squirrel|Ox|Mountain Goat",
+    "Tiger|Magpie|Stone Guardian|Swallow|Bear|Goose|Hawk|Pheasant|Rooster|Squirrel|Ox|Mountain Goat",
     "Rice Wine Jar|Drum|Paper Fan|Brazier|Stone Pillar|Hearth|Pine Torch|Gourd|Pavilion|Earthen Pot|Wooden Bucket|Millstone",
     "Rice Merchants|Brewers|Potters|Charcoal Burners|Ginseng Merchants|Basket Weavers|Ironmongers|Noodle Cooks",
     "Celadon|Indigo|Ink-Black|Pine-Green|Persimmon-Orange|Clay-Brown",

@@ -5,7 +5,7 @@ const BOOK_Q = "Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden";
 const METALS = "Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel";
 export const CW5D = {
   indian: {
-    moneyNames: `Silver Rupee@AN-EM|Paisa@AN-EM|Anna@AN-EM|Gold Mohur@AN-EM|Pagoda@AN-EM|Fanam|Pie|Rupee|Copper Dam|Cowrie;${METALS};Elephant|Lotus|Tiger|Peacock|Star|Sun|Temple|Fort|Crescent|Sword`,
+    moneyNames: `Silver Rupee@AN-EM|Paisa@AN-EM|Anna@AN-EM|Gold Mohur@AN-EM|Pagoda@AN-EM|Fanam|Small Copper|Rupee|Copper Piece|Cowrie;${METALS};Elephant|Lotus|Tiger|Peacock|Star|Sun|Temple|Fort|Crescent|Sword`,
     eventNames: "War|Revolt|Siege|Campaign|Conquest|Rising|Truce|Peace|Raid|Reign;Famine|Plague|Flood|Drought|Fire|Cyclone|Sickness|Failed Monsoon|Failed Harvest|Earthquake;Faith|Empire|Raj|Frontier|Town|Peasants|Weavers|Cotton|Throne|Reform",
     calendarNames: "Monsoon|Dry Heat|Sowing|Blossom|Harvest|Cool Dew|Fog|Mist|Gale|Rain;Lamp Night|Procession|Spring Festival|Colour Festival|Harvest Thanks|Kite Feast|Pilgrimage Feast|Midsummer|Lantern Night|Market Fair;Harvest|Hunter's|Monsoon|Mango|Rice|Lotus|Jasmine|Cotton|Spice|Banyan",
     skyNames: "Seven Sages|Water Pot|Great Elephant|Archer|Swan|Lotus|Crown|Plough|Wheel|Bridge;Tiger|Elephant|Peacock|Stag|Serpent|Bear|Camel|Lion|Parrot|Bull;Lamp|Beacon|Caravan Star|Pole Star|Candle|Morning Star|Lantern|Torch|Spark|Banner",
@@ -25,11 +25,11 @@ export const CW5D = {
     deityNames: `Heaven Father|Earth Mother|Dragon Lord|Crane Mother|Mountain Smith|River Keeper|Hearth Lady|Wind Rider|Sun Warden|Jade Lord;River|Wind|Heaven|Hearth|Dragon|Rain|Mountain|Sun|Harvest|Jade;${ADJ_D}`,
   },
   japanese: {
-    moneyNames: `Mon@AN-EM|Ryo@AN-EM|Koban@AN-EM|Bu@AN-EM|Silver Bar@AN-EM|Sen|Yen|Rin|Paper Note|Ingot;${METALS};Crane|Dragon|Cherry|Chrysanthemum|Star|Sun|Castle|Wave|Fan|Paulownia`,
+    moneyNames: `Copper Coin@AN-EM|Ryo@AN-EM|Koban@AN-EM|Silver Piece@AN-EM|Silver Bar@AN-EM|Sen|Yen|Rin|Paper Note|Ingot;${METALS};Crane|Dragon|Cherry|Chrysanthemum|Star|Sun|Castle|Wave|Fan|Paulownia`,
     eventNames: "War|Revolt|Siege|Campaign|Conquest|Uprising|Truce|Peace|Raid|Reign;Famine|Plague|Flood|Drought|Fire|Typhoon|Sickness|Hard Winter|Failed Harvest|Earthquake;Faith|Shogunate|Clans|Frontier|Town|Peasants|Rice|Tea|Throne|Restoration",
     calendarNames: "Frost|Thaw|Rice Planting|Blossom|Rain|Harvest|Cold Dew|Mist|Gale|Snow;Lantern Night|Procession|Spring Festival|Cherry Viewing|Harvest Thanks|Star Feast|Pilgrimage Feast|Midsummer|Moon Viewing|Market Fair;Harvest|Hunter's|Crane|Cherry|Rice|Plum|Maple|Silk|Tea|Bamboo",
     skyNames: "Great Ladle|Water Jar|Great Crane|Archer|Swan|Lotus|Crown|Plough|Wheel|Bridge;Fox|Crane|Tiger|Stag|Tortoise|Bear|Dragon|Boar|Heron|Ox;Lamp|Beacon|Ferry Star|Pole Star|Candle|Morning Star|Lantern|Torch|Spark|Banner",
-    armsNames: "Katana|Tanto|Spear|Naginata|Bow|Mace|Dagger|Axe|Shield|Helm;Bright|Swift|Grim|Faithful|Keen|Honourable|Steadfast|Mighty|Bitter|True;Oni|Giant|Traitor|Tyrant|Serpent|Raider|Usurper|Beast|Witch|Ogre",
+    armsNames: "Katana|Short Blade|Spear|Naginata|Bow|Mace|Dagger|Axe|Shield|Helm;Bright|Swift|Grim|Faithful|Keen|Honourable|Steadfast|Mighty|Bitter|True;Oni|Giant|Traitor|Tyrant|Serpent|Raider|Usurper|Beast|Witch|Ogre",
     treasureNames: "Sword|Cup|Ring|Bell|Lamp|Brooch|Fan|Banner|Mirror|Throne;Jade|Gold|Pearl|Ivory|Silver|Bronze|Crystal|Cedar|Lacquer|Bone;Shoguns|Sages|Heroes|Foxes|Elders|Ancestors|Mothers|Seers|Smiths|Poets",
     bookNames: `Book|Chronicle|Scroll|Charter|Register|Ledger|Tale|Almanac|Romance|Diary;Shoguns|Kin|Tides|Stars|Law|Herbs|Monks|Wars|Towns|Pilgrims;${BOOK_Q}`,
     deityNames: `Sky Father|Earth Mother|Fox Lord|Crane Mother|Mountain Smith|River Keeper|Hearth Lady|Wind Rider|Sun Warden|Rice Lord;River|Wind|Sky|Hearth|Fox|Rain|Mountain|Sun|Rice|Sea;${ADJ_D}`,
@@ -39,7 +39,7 @@ export const CW5D = {
     eventNames: "War|Revolt|Siege|Campaign|Conquest|Uprising|Truce|Peace|Raid|Reign;Famine|Plague|Flood|Drought|Fire|Typhoon|Sickness|Hard Winter|Failed Harvest|Earthquake;Faith|Dynasty|Scholars|Frontier|Town|Peasants|Rice|Ginseng|Throne|Reform",
     calendarNames: "Frost|Thaw|Rice Planting|Blossom|Rain|Harvest|Cold Dew|Mist|Gale|Snow;Lantern Night|Procession|Spring Festival|Ancestors' Feast|Harvest Thanks|Swing Feast|Pilgrimage Feast|Midsummer|Full Moon Night|Market Fair;Harvest|Hunter's|Tiger|Azalea|Rice|Plum|Maple|Pine|Tea|Bamboo",
     skyNames: "Great Ladle|Water Jar|Great Tiger|Archer|Swan|Lotus|Crown|Plough|Wheel|Bridge;Tiger|Magpie|Crane|Stag|Tortoise|Bear|Dragon|Boar|Heron|Ox;Lamp|Beacon|Fortress Star|Pole Star|Candle|Morning Star|Lantern|Torch|Spark|Banner",
-    armsNames: "Sword|Sabre|Spear|Glaive|Bow|Mace|Dagger|Axe|Shield|Helm;Bright|Swift|Grim|Faithful|Keen|Righteous|Steadfast|Mighty|Bitter|True;Dokkaebi|Giant|Traitor|Tyrant|Serpent|Raider|Usurper|Beast|Witch|Ogre",
+    armsNames: "Sword|Sabre|Spear|Glaive|Bow|Mace|Dagger|Axe|Shield|Helm;Bright|Swift|Grim|Faithful|Keen|Righteous|Steadfast|Mighty|Bitter|True;Trickster Goblin|Giant|Traitor|Tyrant|Serpent|Raider|Usurper|Beast|Witch|Ogre",
     treasureNames: "Seal|Cup|Ring|Bell|Lamp|Brooch|Sceptre|Banner|Mirror|Crown;Jade|Gold|Pearl|Ivory|Silver|Bronze|Celadon|Cedar|Lacquer|Bone;Kings|Sages|Heroes|Tigers|Elders|Ancestors|Mothers|Seers|Smiths|Poets",
     bookNames: `Book|Chronicle|Scroll|Charter|Register|Ledger|Tale|Almanac|Romance|Annals;Kings|Kin|Tides|Stars|Law|Herbs|Monks|Wars|Towns|Pilgrims;${BOOK_Q}`,
     deityNames: `Sky Father|Earth Mother|Tiger Lord|Magpie Mother|Mountain Smith|River Keeper|Hearth Lady|Wind Rider|Sun Warden|Pine Lord;River|Wind|Sky|Hearth|Tiger|Rain|Mountain|Sun|Rice|Sea;${ADJ_D}`,
