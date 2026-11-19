@@ -481,3 +481,7 @@ Each word below was replaced by an English sense in the first pass without being
 **Café chantant.** Collins (café chantant, 1850–55, from French) and the OED (café-chantant, 1848) both give it with the accent. The inn sign is now "Café Chantant" (the capitals are the sign's); the old "Cafe Chantant" and the stop-gap "Singing Cafe" are gone, and tests/grammarSweep.test.ts checks that no inn carries the unaccented form.
 
 **Restoring the found words.** The found words are not put back in the lists they were replaced in: the first-pass replacements are not recorded word for word, so the mapping from each replaced English sense back to its loanword was not kept, and the lists, tags and era positions the replacements stand in are the ones the tests and baselines now hold. The found words are recorded here as available to the next batch that edits those lists.
+
+### The five words still to look up (19 November 2026)
+
+Looked up on collinsdictionary.com and oed.com, sending only the word. **Found:** Khanum (OED, 1824), Poro (OED, 1788, a West African borrowing; Poro is a real society, so it may be a word but never a group's name, and is still to be added to the real-names list), Tej (OED, 1853; Collins, honey wine), Sofa (Collins, from Arabic). **Not found:** Dede (only the Turkish word for grandfather in a translation table, and the old spelling of "deed"); the English sense stays. None of these is yet put into a list.
