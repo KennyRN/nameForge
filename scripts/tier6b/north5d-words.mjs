@@ -34,7 +34,7 @@ export const CW5D = {
     deityNames: "Sky Father|Earth Mother|Sand Lord|Well Mother|Mountain Smith|Spring Keeper|Hearth Lady|Wind Rider|Sun Warden|Falcon Lord;Desert|Wind|Sky|Hearth|Camel|Well|Mountain|Sun|Frost|Falcon;Kind|Silent|Wise|Old|Strong|Dark|Merciful|Fierce|Fair|Faithful",
   },
   persian: {
-    moneyNames: "Daric@AN-EM|Dirham@AN-EM|Toman@AN-EM|Siglos@AN-EM|Silver Crown@AN-EM|Silver Kran|Ashrafi|Dinar|Silver Shekel|Rial;Silver|Gold|Copper|Bronze|Brass|Lead|Pewter|Tin|Iron|Nickel;Lion|Sun|Sword|Star|Falcon|Winged Disc|Peacock|Crown|Tulip|Lamp",
+    moneyNames: "Daric@AN-EM|Dirham@AN-EM|Toman@AN-EM|Siglos@AN-EM|Abbasi@AN-EM|Silver Kran|Ashrafi|Dinar|Shahi|Rial;Silver|Gold|Copper|Bronze|Brass|Lead|Pewter|Tin|Iron|Nickel;Lion|Sun|Sword|Star|Falcon|Winged Disc|Peacock|Crown|Tulip|Lamp",
     eventNames: "War|Revolt|Siege|Conquest|Campaign|Rising|Truce|Peace|Raid|Reign;Famine|Plague|Flood|Drought|Fire|Storm|Sickness|Hard Winter|Failed Harvest|Earthquake;Faith|Empire|Governorate|Frontier|Town|Peasants|Guild|Silk|Throne|Reform",
     calendarNames: "Frost|Thaw|Sowing|Blossom|Rose Gathering|Harvest|Vintage|Haze|Mist|Gale;Fair Night|Procession|Spring Festival|Saint's Feast|Harvest Thanks|Fire Feast|Pilgrimage Feast|Midsummer|Lantern Night|Market Fair;Harvest|Hunter's|Lion|Frost|Rose|Saffron|Fox|Barley|Cypress|Pomegranate",
     skyNames: "Great Wagon|Harp|Ship|Hunter|Swan|Cup|Crown|Plough|Wheel|Bridge;Lion|Horse|Hawk|Gazelle|Ram|Leopard|Peacock|Eagle|Dove|Nightingale;Lamp|Beacon|Caravan Star|Pole Star|Candle|Morning Star|Lantern|Torch|Spark|Banner",

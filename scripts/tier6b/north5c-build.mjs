@@ -49,10 +49,10 @@ export const ADJ6B = {
 // Frame styles: each sibling takes a style of its own (the shapes of a name differ, so the same words do not make the same names).
 export const STYLE6B = { turkic: "adj", mongol: "cp", arabic: "of", persian: "poss", egyptian: "cp", ethiopian: "of", bantu: "poss", "west-african": "adj", steppe: "of", "arabic-persian": "of" };
 export const RANKS6B = {
-  turkic: "Sultan/Sultana|Khan/Khatun|Bey/Lady|Pasha/Lady|Emir/Emira|Marcher Lord/Lady", mongol: "Khan/Khatun|Great Khan/Khatun|Prince/Princess|Lord/Lady|Hero/Lady|Chieftain/Lady",
-  arabic: "Caliph/Lady|Sultan/Sultana|Emir/Emira|Sheikh/Sheikha|Vizier/Lady|Imam/Lady", persian: "Shah/Empress|Satrap/Lady|Prince/Princess|Khan/Khanum|Vizier/Lady|Mirza/Lady",
-  egyptian: "Pharaoh/Queen|Vizier/Lady|Sultan/Sultana|Khedive/Lady|Pasha/Lady|Bey/Lady", ethiopian: "Emperor/Empress|Ras/Lady|Negus/Queen|Commander of the Gate/Lady|Vanguard Leader/Lady|Father/Lady",
-  bantu: "King/Queen|Chief/Lady|Paramount Chief/Lady|Headman/Lady|Elder/Lady|Induna/Lady", "west-african": "Emperor/Lady|Paramount King/Lady|Emir/Emira|King/Queen Mother|Warlord/Lady|Chief/Lady",
+  turkic: "Sultan/Sultana|Khan/Khatun|Bey/Khanum|Pasha/Lady|Emir/Emira|Marcher Lord/Lady", mongol: "Khan/Khatun|Great Khan/Khatun|Prince/Princess|Lord/Lady|Hero/Lady|Chieftain/Lady",
+  arabic: "Caliph/Lady|Sultan/Sultana|Emir/Emira|Sheikh/Sheikha|Vizier/Lady|Imam/Lady", persian: "Shah/Shahbanu|Satrap/Lady|Prince/Princess|Khan/Khanum|Vizier/Lady|Mirza/Lady",
+  egyptian: "Pharaoh/Queen|Vizier/Lady|Sultan/Sultana|Khedive/Lady|Pasha/Lady|Bey/Lady", ethiopian: "Emperor/Empress|Ras/Lady|Negus/Queen|Commander of the Gate/Lady|Vanguard Leader/Lady|Abba/Lady",
+  bantu: "King/Queen|Chief/Lady|Paramount Chief/Lady|Headman/Lady|Elder/Lady|Induna/Lady", "west-african": "Emperor/Lady|Paramount King/Lady|Emir/Emira|King/Queen Mother|Warlord/Lady|Oba/Lady",
   steppe: "Sultan/Sultana|Khan/Khatun|Bey/Lady|Pasha/Lady", "arabic-persian": "Caliph/Lady|Sultan/Sultana|Emir/Emira|Sheikh/Sheikha",
 };
 export { MIXES6B, NEW6B };

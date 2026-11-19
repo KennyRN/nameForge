@@ -271,7 +271,7 @@ Each noun list is ten words in a fixed order: three of the ancient to medieval e
 #### Turkic
 
 - **streets:** Alley, Stairway, Bazaar Lane, Caravan Street, Stone Passage, Plane Tree Avenue, Station Road, Boulevard, Peri's Alley, Street / Market Square, Fountain Square, Mosque Square, Caravanserai Court, Covered Bazaar Square, Clock Tower Square, Republic Square, Ferry Square, Wolf Square, Square / Quarter, Citadel Quarter, Tanners' Quarter, Dervish Quarter, Bath Quarter, Harbour Quarter, Suburb, Housing Estate, Wolf Quarter, District
-- **inns:** Khan, Caravanserai, Rest House, Wayside Khan, Pilgrims' Khan, Post Khan, Hotel, Pension, Peri's Khan, Inn / Coffee House, Tea Garden, Wine House, Kebab House, Sherbet House, Boza Shop, Cafe, Rooftop Bar, Wolf's Wine House, Tavern / Halt, Pass Lodge, Dervish Lodge, Drovers' Rest, Khan Stage, Post Station, Hostel, Service Station, Giant's Halt, Wayhouse
+- **inns:** Khan, Caravanserai, Rest House, Wayside Khan, Pilgrims' Khan, Post Khan, Hotel, Pension, Peri's Khan, Inn / Coffee House, Tea Garden, Wine House, Kebab House, Sherbet House, Boza Shop, Cafe, Saz House, Wolf's Wine House, Tavern / Halt, Pass Lodge, Dervish Lodge, Drovers' Rest, Khan Stage, Post Station, Hostel, Service Station, Giant's Halt, Wayhouse
 - **buildings:** Fortress, Citadel, Watchtower, Castle, Gate, Border Fort, Barracks, Arsenal, Wolf Tower, Tower / Mosque, Madrasa, Dervish Lodge, Tomb Chapel, Hospital Mosque, Shrine, Great Mosque, Library Mosque, Peri Shrine, Hall / Bathhouse, Covered Bazaar, Caravanserai Hall, Fountain House, Clock Tower, Customs House, Town Hall, Library, Governor's Mansion, House
 - **monuments:** Horse Stone, Tumulus, Milestone, Boundary Stone, Ancestor Stone, Grave Stone, Memorial Stone, Roadside Stone, Giant's Stone, Stone / Fountain Marker, Dervish Marker, Tombstone, Wayside Fountain, Horsetail Standard, Standard Pole, Memorial Pillar, Summit Flag, Giant's Pillar, Marker / Memorial, Statue, Fountain, Column, Plaque, Obelisk, War Memorial, Republic Monument, Wolf Statue, Monument
 
@@ -313,14 +313,14 @@ Each noun list is ten words in a fixed order: three of the ancient to medieval e
 #### Bantu
 
 - **streets:** Path, Cattle Track, Kraal Lane, Mission Road, Compound Street, Mine Road, Avenue, Highway, Spirit Path, Street / Council Ground, Market Ground, Kraal Square, Mission Square, Stadium Square, Station Square, Freedom Square, Taxi Rank, Haunted Square, Square / Homestead, Chief's Quarter, Royal Enclosure, Mission Quarter, Compound, Township, Suburb, Location, Ancestor Quarter, District
-- **inns:** Guest Homestead, Traders' Shelter, Porters' Rest, Mission Rest House, Trading Store, Compound Hostel, Hotel, Lodge, Spirit's Rest, Inn / Beer Hall, Millet Beer Hut, Banana Beer House, Shebeen, Palm Wine Stall, Beer Garden, Bar, Tavern Lounge, Rainmaker's Hut, Tavern / Halt, Drift Rest, Caravan Shelter, Porters' Stage, Railway Siding Rest, Mission Stage, Hostel, Truck Stop, Lightning Halt, Wayhouse
+- **inns:** Guest Homestead, Traders' Shelter, Porters' Rest, Mission Rest House, Trading Store, Compound Hostel, Hotel, Lodge, Spirit's Rest, Inn / Beer Hall, Millet Beer Hut, Mbira Bar, Shebeen, Palm Wine Stall, Beer Garden, Bar, Tavern Lounge, Rainmaker's Hut, Tavern / Halt, Drift Rest, Caravan Shelter, Porters' Stage, Railway Siding Rest, Mission Stage, Hostel, Truck Stop, Lightning Halt, Wayhouse
 - **buildings:** Stone Enclosure, Palisade, Fort, Gate, Watchtower, Barracks, Garrison, Arsenal, Serpent Tower, Tower / Shrine, Rain Shrine, Mission Church, Chapel, Cathedral, Parish Church, Great Church, Memorial Church, Ancestor Shrine, Hall / Council Hall, Chief's Court, Trading Post, Magistrate's Court, Railway Station, Post Office, Town Hall, Library, Mine Offices, House
 - **monuments:** Rain Stone, Boundary Stone, Burial Cairn, Council Stone, Milestone, Grave Stone, Memorial Stone, Roadside Stone, Serpent Stone, Stone / Ancestor Pole, Boundary Pole, Sacred Tree, Wayside Tree, Mission Cross, Standard Pole, Memorial Pole, Summit Marker, Spirit Pole, Marker / Memorial, Statue, Fountain, Column, Plaque, Obelisk, War Memorial, Freedom Monument, Lightning Bird Statue, Monument
 
 #### West African
 
 - **streets:** Market Lane, Griot's Street, Weavers' Lane, Gold Street, Caravan Street, Colonial Avenue, Boulevard, Highway, Trickster's Alley, Street / Market Square, Mosque Square, Drum Square, Festival Ground, Fort Square, Independence Square, Roundabout, Station Square, Haunted Square, Square / Quarter, Smiths' Quarter, Weavers' Quarter, Royal Quarter, Strangers' Quarter, Fort Quarter, Suburb, Estate, Spirit Quarter, District
-- **inns:** Caravan Compound, Traders' Compound, Strangers' House, Merchants' Lodge, Factory House, Fort Rest, Hotel, Guest House, Trickster's Rest, Inn / Palm Wine Bar, Kola House, Millet Beer Hut, Drinking Spot, Dance Bar, Beer Garden, Bar, Maquis, Spider's Tavern, Tavern / Halt, River Landing Rest, Market Stage, Caravan Well Stop, Railway Rest, Post Stage, Hostel, Lorry Park, Spirit's Halt, Wayhouse
+- **inns:** Caravan Compound, Traders' Compound, Strangers' House, Merchants' Lodge, Factory House, Fort Rest, Hotel, Guest House, Trickster's Rest, Inn / Palm Wine Bar, Kola House, Millet Beer Hut, Drinking Spot, Oba's Bar, Beer Garden, Bar, Maquis, Spider's Tavern, Tavern / Halt, River Landing Rest, Market Stage, Caravan Well Stop, Railway Rest, Post Stage, Hostel, Lorry Park, Spirit's Halt, Wayhouse
 - **buildings:** Fort, Walled Compound, Gate, Watchtower, Slave Fort, Barracks, Garrison, Arsenal, Iron Tower, Tower / Mud Mosque, Shrine, Sacred Grove House, Castle Chapel, Mission Church, Mosque, Great Mosque, Memorial Chapel, Water Mother's Shrine, Hall / Palace Compound, Market Hall, Manuscript Library, Customs House, Trading Factory, Railway Station, Town Hall, Library, Cocoa Board House, House
 - **monuments:** Altar Stone, Boundary Stone, Burial Mound, Market Stone, Milestone, Grave Stone, Memorial Stone, Roadside Stone, Trickster Stone, Stone / Ancestor Pole, Fetish Post, Sacred Tree, Wayside Tree, Mission Cross, Standard Pole, Memorial Pole, Summit Marker, Spider Pole, Marker / Memorial, Statue, Fountain, Column, Plaque, Arch, War Memorial, Independence Arch, Water Mother Statue, Monument
 
@@ -517,7 +517,7 @@ Three lists of ten words per module and culture, in the module's kind order (`;`
 
 #### persian
 
-- **moneyNames:** Daric@AN-EM, Dirham@AN-EM, Toman@AN-EM, Siglos@AN-EM, Silver Crown@AN-EM, Silver Kran, Ashrafi, Dinar, Silver Shekel, Rial / Silver, Gold, Copper, Bronze, Brass, Lead, Pewter, Tin, Iron, Nickel / Lion, Sun, Sword, Star, Falcon, Winged Disc, Peacock, Crown, Tulip, Lamp
+- **moneyNames:** Daric@AN-EM, Dirham@AN-EM, Toman@AN-EM, Siglos@AN-EM, Abbasi@AN-EM, Silver Kran, Ashrafi, Dinar, Shahi, Rial / Silver, Gold, Copper, Bronze, Brass, Lead, Pewter, Tin, Iron, Nickel / Lion, Sun, Sword, Star, Falcon, Winged Disc, Peacock, Crown, Tulip, Lamp
 - **eventNames:** War, Revolt, Siege, Conquest, Campaign, Rising, Truce, Peace, Raid, Reign / Famine, Plague, Flood, Drought, Fire, Storm, Sickness, Hard Winter, Failed Harvest, Earthquake / Faith, Empire, Governorate, Frontier, Town, Peasants, Guild, Silk, Throne, Reform
 - **calendarNames:** Rose Opening, Saffron Picking, Pomegranate, Fire, Almond Blossom, Silk Spinning, Wine Pressing, Mist, Snow, Long Night / Fire Feast, Garden Day, Spring Table, Poets' Night, Bazaar Fair, Saints' Eve, Rose Water Feast, Polo Day, Lantern Night, Wedding Night / Lion, Rose, Saffron, Cypress, Pomegranate, Nightingale, Peacock, Turquoise, Silk, Falcon
 - **skyNames:** Great Wagon, Harp, Ship, Hunter, Swan, Cup, Crown, Plough, Wheel, Bridge / Lion, Horse, Hawk, Gazelle, Ram, Leopard, Peacock, Eagle, Dove, Nightingale / Lamp, Beacon, Garden Star, Pole Star, Candle, Morning Star, Lantern, Torch, Spark, Banner
@@ -622,7 +622,7 @@ The words two siblings both hold in the same module's lists (land and sea nouns,
 - groups:ships: Gulf Trader, Frigate, Barque, Steamer, Gunboat, Liner, Falcon, Gazelle, Horse, Dolphin, Hawk, Lion, Dove, Conqueror, Fortune, Providence, Concord, Hope, Triumph, Faith, Unity, Prosperity, Good Hope
 - groups:aircraft: Airship, Biplane, Monoplane, Glider, Balloon, Mailplane, Fighter, Bomber, Airliner, Helicopter, South Wind, East Wind, Gale, Breeze, Squall, Haze, Storm, Falcon, Eagle, Hawk, Crane, Kestrel, Owl, Vulture
 - groups:landVehicles: Coach, Wagon, Omnibus, Tram, Lorry, Motorcar, Tractor, Cart, Falcon, Horse, Lion, Gazelle, Mule, Hound, Hawk, Donkey, Station, Junction, Crossing, Terminus, Halt, Depot, Viaduct, Cutting, Siding, Tunnel
-- 5d:moneyNames: Dinar, Dirham, Silver Crown, Silver, Gold, Copper, Bronze, Brass, Lead, Pewter, Tin, Iron, Nickel, Sword, Star, Falcon, Lion, Lamp
+- 5d:moneyNames: Dinar, Dirham, Silver, Gold, Copper, Bronze, Brass, Lead, Pewter, Tin, Iron, Nickel, Sword, Star, Falcon, Lion, Lamp
 - 5d:eventNames: War, Revolt, Siege, Conquest, Campaign, Rising, Truce, Peace, Raid, Reign, Famine, Plague, Flood, Drought, Fire, Sickness, Failed Harvest, Earthquake, Faith, Empire, Frontier, Town, Guild, Throne, Reform
 - 5d:calendarNames: Lantern Night, Wedding Night, Falcon
 - 5d:skyNames: Harp, Ship, Hunter, Swan, Cup, Crown, Wheel, Bridge, Gazelle, Ram, Lion, Eagle, Dove, Lamp, Beacon, Pole Star, Candle, Morning Star, Lantern, Torch, Spark, Banner
@@ -777,28 +777,3 @@ The words two siblings both hold in the same module's lists (land and sea nouns,
 - 5d:deityNames: Sky Father, Earth Mother, Mountain Smith, Spring Keeper, Hearth Lady, Rain Rider, Sun Warden, Savanna, Wind, Sky, Hearth, Rain, Mountain, Sun, Thunder, Kind, Silent, Wise, Old, Strong, Dark, Merciful, Fierce, Fair, Faithful
 
 <!-- tier6b-generated:end -->
-
-### Loanwords reinstated (6c prompt, Part A §1; first part)
-
-Found words put back where an English stand-in sat, or added to the list their sense fits (module, culture, kind):
-
-| Word | Module | Culture | Kind (replaced) |
-|---|---|---|---|
-| Baghlah | ships | Arabic | vessel type (Schooner) |
-| Sambuk | ships | Arabic | vessel type (Ketch) |
-| Satrapy | realms | Persian | realm form (Governorate) |
-| Kurus | money | Turkic | coin (Small Coin) |
-| Mongo | money | Mongol | coin (Hundredth) |
-| Fils | money | Arabic | coin (Hundredth) |
-| Mithqal | money | Arabic | weight (Gold Weight) |
-| Qirsh | money | Arabic | coin (Small Silver) |
-| Riyal | money | Arabic | coin (Gilt Piece) |
-| Siglos | money | Persian | coin (Royal Piece) |
-| Ashrafi | money | Persian | coin (Royal Silver) |
-| Rial | money | Persian | coin (Small Gold) |
-| Santim | money | Ethiopian | coin (Small Coin) |
-| Manilla | money | West African | goods money (Gold Weight) |
-| Tej | inns | Ethiopian | tavern (Honey Wine House) |
-| Funduq | inns | Arabic | inn (Guest House) |
-
-Already present in the lists before this pass (so nothing to put back): Sycee, Mirza, Satrapy elsewhere, Shahdom, Ulus, Marid, Dirhem, Baghlah elsewhere, Maquis, Kente (inn signs). **Still to place** (found, no stand-in located yet; the next pass of this item): Shahbanu, Shahi, Mbira, Silat, Jiao, Amole, Abba, Saz, Nilometer, Oba, Ordo, Sofa, Poro (Poro never as a group name), Khanum, Boza, Abbasi.
