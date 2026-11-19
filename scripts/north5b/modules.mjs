@@ -5,6 +5,7 @@ import { NORSE, SCANDINAVIAN, GERMAN, CELTIC } from "./content-b.mjs";
 import { REGIONS } from "./regions.mjs";
 import * as C6 from "../tier6a/north5b-content.mjs";
 import * as C6B from "../tier6b/north5b-content.mjs";
+import * as C6C from "../tier6c/north5b-content.mjs";
 
 export const CULTURES = [
   { key: "english", keys: ["norman-british"], label: "English", c: ENGLISH },
@@ -24,6 +25,8 @@ const mixOf = (c) => ({ ...c, streets: c.streets.map(four), inns: c.inns.map(fou
 for (const [key, label, c] of [["spanish", "Spanish", C6.SPANISH], ["portuguese", "Portuguese", C6.PORTUGUESE], ["french", "French", C6.FRENCH], ["dutch", "Dutch", C6.DUTCH], ["italian", "Italian", C6.ITALIAN], ["roman", "Roman", C6.ROMAN], ["slavic", "Slavic", C6.SLAVIC], ["greek", "Greek", C6.GREEK], ["byzantine", "Byzantine", C6.BYZANTINE]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
 // Brief 6b: Turkic, Mongol, Arabic, Persian, Egyptian, Ethiopian, Bantu and West African, and the two mixes (steppe and arabic-persian).
 for (const [key, label, c] of [["turkic", "Turkic", C6B.TURKIC], ["mongol", "Mongol", C6B.MONGOL], ["arabic", "Arabic", C6B.ARABIC], ["persian", "Persian", C6B.PERSIAN], ["egyptian", "Egyptian", C6B.EGYPTIAN], ["ethiopian", "Ethiopian", C6B.ETHIOPIAN], ["bantu", "Bantu", C6B.BANTU], ["west-african", "West African", C6B.WEST_AFRICAN]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
+// Brief 6c: Indian, Chinese, Japanese and Korean.
+for (const [key, label, c] of [["indian", "Indian", C6C.INDIAN], ["chinese", "Chinese", C6C.CHINESE], ["japanese", "Japanese", C6C.JAPANESE], ["korean", "Korean", C6C.KOREAN]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
 CULTURES.push({ key: "steppe", keys: ["steppe"], label: "Turkic and Mongol steppe", c: mixOf(C6B.TURKIC), tier6a: true, mix: true });
 CULTURES.push({ key: "arabic-persian", keys: ["arabic-persian"], label: "Arabic and Persian", c: mixOf(C6B.ARABIC), tier6a: true, mix: true });
 CULTURES.push({ key: "iberian", keys: ["iberian"], label: "Iberian", c: mixOf(C6.SPANISH), tier6a: true, mix: true });

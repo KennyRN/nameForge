@@ -1641,51 +1641,51 @@
    ],
    [
     "Inner City",
-    "Outer City",
-    "Pilgrims' District",
-    "Southern Ward",
-    "Western Ward"
+    "Eternal Walled Quarter",
+    "Ward of the Smiths",
+    "Scholars' Quarter of the Chandlers",
+    "District of Calm the Steppe"
    ],
    [
     "Long Street",
-    "South of the Ru Road",
-    "Pine Lane",
-    "Plum Lane",
-    "Lychee Lane",
-    "Tanners' Way",
-    "North Gate Street",
-    "Spring Street",
-    "Drapers' Lane",
-    "Smiths Street",
+    "Stone Steps to Central Capital",
+    "29th Lane",
+    "Street of [founder]",
+    "Lane of the Tanners",
     "Merchants' Way",
-    "Silk Lane"
+    "Lane of [founder]",
+    "Stone Steps of [founder]",
+    "Market Lane of [founder]",
+    "Market Lane of the Shoemakers",
+    "Stone Steps to Long Prosperity",
+    "Stone Steps of the Smiths"
    ],
    [
     "Market Square",
-    "Prince's Square",
-    "[monarch] Green"
+    "Drum Tower Square of [founder]",
+    "Temple Square of South of the Ru"
    ],
    [
     "Inn of Peace and Plenty",
     "Spring Rain Tea House",
-    "Order Prefecture Post Station",
-    "Inn of Lasting Peace",
-    "Golden Crane Wine House"
+    "Halt of South of the Ru",
+    "Noodle Shop of [owner]",
+    "Wayhouse of the Gull"
    ],
    [
-    "the Old Fountain",
-    "Red Hall",
-    "Bell Tower",
-    "Shrine of the Heavenly Prince of Kinship",
-    "Duke's Manor",
-    "[founder]'s Quarry",
-    "Order Prefecture Library",
-    "Yellow Bridge",
-    "Osprey Light"
+    "Granary of Long Prosperity",
+    "Temple of South of the Ru",
+    "Walled Fortress of [owner]",
+    "[founder]'s Library",
+    "Order Prefecture Light",
+    "the Red Mine",
+    "Wolf Ferry",
+    "Pavilion of Mountain Mist",
+    "the Old Well"
    ],
    [
-    "[monarch]'s Memorial",
-    "Stone Leopards",
+    "Eternal Memorial",
+    "Old Barrow",
     "the Leaning Column"
    ],
    [
@@ -1725,51 +1725,51 @@
    [
     "Inner City",
     "[people] Quarter",
-    "Outer City",
-    "Lower Town",
-    "Court Ward"
+    "Walled Quarter of the Masons",
+    "Lasting Order Mound",
+    "Scholars' Quarter of the Smiths"
    ],
    [
     "Long Street",
-    "Queen's Row",
-    "Broken Well Row",
-    "Bridge Row",
     "Salt Way",
-    "Staithe Lane",
-    "Barbican Street",
-    "10th Lane",
-    "Market Close",
-    "Smiths Street",
-    "Pine Lane",
-    "Holy Well Entry"
+    "Stone Steps of [founder]",
+    "Lane of the Smiths",
+    "Street of [founder]",
+    "Street to North of the Zhang",
+    "Lane of [founder]",
+    "Market Lane of the Chandlers",
+    "Market Lane of [founder]",
+    "Lane to North of the Yuan",
+    "Old Lane",
+    "Old Stone Steps"
    ],
    [
     "Market Square",
-    "Wool Market",
-    "Porcelain Court"
+    "Gate Square of [founder]",
+    "Drum Tower Square of [founder]"
    ],
    [
-    "Joyful Arrival Inn",
-    "Welcome Guests Inn",
-    "Willow Bank Wine House",
-    "Gathered Friends Inn",
-    "Plum Blossom Tea House"
+    "Inn of Harmony",
+    "Amber Tea House",
+    "Tea House of the Lacquerers",
+    "Jade River Tea House",
+    "the Old Traveller's Inn"
    ],
    [
-    "Marquis's Bridge",
-    "the Golden Lantern",
-    "Lasting Order House",
-    "Autumn Moon Tower",
-    "New Temple",
-    "the Upper Hall",
-    "the Broken Well",
-    "[founder]'s Gaol",
-    "the Burnt Forge"
+    "Eternal House",
+    "the Golden Causeway",
+    "Golden Crane Tower",
+    "Great Hall",
+    "King's Hall",
+    "the Upper Well",
+    "the Broken Mill",
+    "[founder]'s Light",
+    "the Burnt Academy"
    ],
    [
-    "[owner]'s Stone",
-    "Lasting Order Memorial",
-    "Statue of [monarch]"
+    "Eternal Monument",
+    "Stone of North of the Yuan",
+    "Lasting Order Mound"
    ],
    [
     "the Gate Order",
@@ -1807,52 +1807,52 @@
    ],
    [
     "Inner City",
-    "4th Ward",
-    "Citadel End",
-    "Red Column",
-    "Outer City"
+    "Eternal Ward",
+    "Scholars' Quarter of Hold the East",
+    "Eternal Scholars' Quarter",
+    "Ward of the Saddlers"
    ],
    [
     "Long Street",
+    "Old Street",
+    "Old Stone Steps",
+    "Lane of the Fishers",
     "Hold the East Road",
-    "9th Lane",
-    "Bamboo Lane",
-    "Spring Yard",
-    "Shoemakers' Alley",
-    "Butchers Street",
-    "Strand Alley",
-    "5th Lane",
-    "Bakers Street",
-    "North Lane",
-    "Vintners Street"
+    "Street to Hold the East",
+    "Market Lane of [founder]",
+    "Stone Steps of the Glovers",
+    "Old Lane",
+    "Lane of the Chandlers",
+    "Queen's Row",
+    "Lane of the Butchers"
    ],
    [
     "Market Square",
-    "Causeway Place",
-    "Bath House Square"
+    "Drum Tower Square of Western Capital",
+    "Great Temple Square"
    ],
    [
-    "Inn of Eternal Spring",
-    "Joyful Arrival Inn",
-    "Magpie Wine House",
-    "Gathered Friends Inn",
-    "Jade River Tea House"
+    "Golden Noodle Shop",
+    "Tavern of the Swordsmiths",
+    "Spring Rain Tea House",
+    "the Eternal Halt",
+    "Courier Inn of the Eagle"
    ],
    [
-    "West Gate",
-    "the Great Mint",
-    "Subdue the South Stepping Stones",
-    "the Ruined Hermitage",
-    "the Yellow Lantern",
-    "Subdue the South Kiln",
-    "Dragon Spring",
-    "Queen's Lock-Up",
-    "Subdue the South School"
+    "Tower of the Falcon",
+    "Hall of Hold the East",
+    "Eternal Examination Hall",
+    "Subdue the South Bridge",
+    "Unicorn House of Learning",
+    "Subdue the South Spring",
+    "Subdue the South Tannery",
+    "Queen's Watch Tower",
+    "the Old Pavilion"
    ],
    [
-    "Red Column",
-    "Mound of King",
-    "Statue of [founder]"
+    "Barrow of the Bat",
+    "Statue of Western Capital",
+    "Stone Wolves"
    ],
    [
     "Sisters of the Blessed Lantern",
@@ -1891,65 +1891,65 @@
    ],
    [
     "Castle Town",
-    "Below the Wall",
-    "Library Ward",
-    "Temple Town",
-    "Court End",
-    "Kiln End",
-    "Mercers' Ward"
+    "Castle Town Quarter of the Masons",
+    "Lower Castle Town Quarter",
+    "Ward of Capital of Peace and Brightness",
+    "Samurai Quarter of the Fishers",
+    "District of the Weavers",
+    "Lower Ward"
    ],
    [
     "Long Street",
-    "Stone Lamb Way",
-    "Wharf Row",
-    "Third Block",
-    "Warehouse Street",
-    "Spring Street",
-    "Mercers' Lane",
-    "Back Lane",
-    "West Road",
-    "Leather Lane",
-    "Fifth Block",
-    "Spice and Horse Road",
-    "Dyers' Court",
-    "Shrine Lane",
-    "East Row",
-    "Shrine Street"
+    "Stone Steps to Deep Island",
+    "Sacred Grove Street",
+    "[founder]'s Street",
+    "Weavers' Lane",
+    "Old Street",
+    "[founder]'s Lane",
+    "[founder]'s Stone Steps",
+    "[founder]'s Market Lane",
+    "Masons' Market Lane",
+    "Stone Steps to Capital of Virtue and Tranquillity",
+    "Glovers' Stone Steps",
+    "Street to Capital of Prosperity and Peace",
+    "Market Lane to Capital of Tranquillity and Peace",
+    "Dyers' Market Lane",
+    "Spice and Horse Road"
    ],
    [
     "Market Square",
-    "Prince's Square",
-    "[monarch] Green",
-    "Eighth-Day Market"
+    "[founder]'s Shrine Square",
+    "Capital of Virtue and Tranquillity Gate Square",
+    "[founder]'s Gate Square"
    ],
    [
     "Golden Crane Inn",
     "Spring Rain Tea House",
-    "[owner]'s Way Station",
-    "Moon Pavilion Inn",
-    "Snow Country Inn",
-    "Post House of Capital of Brightness and Tranquillity",
-    "Capital of Brightness and Tranquillity Inn"
+    "Capital of Tranquillity and Peace Halt",
+    "[owner]'s Noodle Shop",
+    "Wayhouse of the Gull",
+    "Snow Country Tea House",
+    "Plum Blossom Inn"
    ],
    [
-    "the Old Fountain",
-    "Red Hall",
-    "Egret Castle",
-    "Shrine of the Heavenly Prince of Kinship",
-    "Duke's Manor",
-    "[founder]'s Quarry",
-    "Capital of Brightness and Tranquillity Library",
-    "Yellow Bridge",
-    "Osprey Light",
-    "Capital of Brightness and Tranquillity Gaol",
-    "Capital of Brightness and Tranquillity Bastion",
-    "Capital of Brightness and Tranquillity Toll House"
+    "Granary of Capital of Virtue and Tranquillity",
+    "Temple of [owner]",
+    "[owner]'s Castle",
+    "Capital of Brightness and Tranquillity Bridge",
+    "[founder]'s Library",
+    "Capital of Brightness and Tranquillity Light",
+    "the Red Mine",
+    "[founder]'s Well",
+    "Capital of Brightness and Tranquillity Pavilion",
+    "Queen's Gaol",
+    "Great Temple",
+    "[owner]'s Keep"
    ],
    [
-    "[monarch]'s Memorial",
-    "the Stone Lamb",
-    "Obelisk of [founder]",
-    "Column of [founder]"
+    "Lower Memorial",
+    "Old Mound",
+    "the Leaning Column",
+    "Arch of [founder]"
    ],
    [
     "Poor Friars of the Lamb",
@@ -1993,64 +1993,64 @@
    [
     "Castle Town",
     "[people] Quarter",
-    "Temple Town",
-    "Barracks District",
-    "Ruined End",
-    "Foundry Quarter",
-    "Fishers' Side"
+    "Castle Town Quarter of the Masons",
+    "Lower Monument",
+    "Samurai Quarter of the Chandlers",
+    "District of Black Island",
+    "Ward of Capital of Longevity and Tranquillity"
    ],
    [
     "Long Street",
-    "Salt Row",
-    "Broken Well Row",
-    "Bridge Row",
-    "Lord's Lane",
-    "Oracle Street",
-    "Salt Way",
-    "Barbican Street",
-    "Market Close",
-    "Fishers' Yard",
-    "Well Street",
-    "Millers' Road",
-    "Holy Isle Street",
-    "Bright Slope Road",
-    "Back Lane",
-    "Water Lane"
+    "Stone Steps to Bright Slope",
+    "[founder]'s Stone Steps",
+    "Tanners' Lane",
+    "[founder]'s Street",
+    "Street to Capital of Peace and Tranquillity",
+    "[founder]'s Lane",
+    "Swordsmiths' Market Lane",
+    "[founder]'s Market Lane",
+    "Lane to Capital of Brightness and Prosperity",
+    "Old Lane",
+    "Old Stone Steps",
+    "Fan Makers' Street",
+    "Silversmiths' Stone Steps",
+    "Goldsmiths' Stone Steps",
+    "Salt Way"
    ],
    [
     "Market Square",
-    "Wool Market",
-    "Rice Court",
-    "[owner]'s Stone Green"
+    "[founder]'s Gate Square",
+    "[founder]'s Shrine Square",
+    "Capital of Longevity and Tranquillity Gate Square"
    ],
    [
-    "Capital of Virtue and Prosperity Inn",
-    "Cherry Blossom Inn",
-    "Magpie Inn",
-    "Bamboo Grove Inn",
-    "Spring Rain Inn",
+    "Snow Country Inn",
+    "Amber Tea House",
+    "Butchers' Tavern",
     "Jade River Tea House",
-    "Autumn Moon Inn"
+    "the Old Roadside Inn",
+    "the Old Post Inn",
+    "Potters' Tavern"
    ],
    [
-    "Lord's Bridge",
-    "the Golden Lantern",
-    "Capital of Virtue and Prosperity House",
-    "Jade Cormorant Castle",
-    "Capital of Virtue and Prosperity Hall",
-    "the Upper Temple",
+    "Lower House",
+    "the Golden Causeway",
+    "Great Shrine",
+    "[owner]'s Castle",
+    "the Upper Hall",
     "the Broken Well",
-    "[founder]'s Gaol",
+    "[founder]'s Light",
     "the Burnt Forge",
-    "Capital of Virtue and Prosperity School",
-    "[founder]'s Customs House",
-    "King's Hermitage"
+    "Capital of Virtue and Prosperity Gaol",
+    "Silver Library",
+    "Hall of Capital of Brightness and Prosperity",
+    "Old Watchtower"
    ],
    [
-    "[owner]'s Stone",
-    "Capital of Virtue and Prosperity Memorial",
-    "Statue of [monarch]",
-    "Capital of Virtue and Prosperity Mound"
+    "Lower Monument",
+    "Stone of Capital of Brightness and Prosperity",
+    "Capital of Virtue and Prosperity Mound",
+    "Statue of [monarch]"
    ],
    [
     "the Gate Order",
@@ -2093,65 +2093,65 @@
    ],
    [
     "Castle Town",
-    "Kiln End",
-    "Coopers' End",
-    "King's Arch",
-    "Post Town",
-    "Temple Town",
-    "[monarch] Ward"
+    "Lower Ward",
+    "Samurai Quarter of Narrow Island",
+    "Lower Samurai Quarter",
+    "Ward of the Shoemakers",
+    "District of Blue Island",
+    "District of Broad Slope"
    ],
    [
     "Long Street",
-    "Holy Isle Street",
-    "Oracle Street",
-    "Bakers' Ward Street",
-    "Shoemakers' Lane",
-    "Monastery Road",
-    "Corn Road",
-    "Hall Way",
-    "Long Obelisk Street",
-    "Back Lane",
-    "Cattle Row",
-    "Well Lane",
-    "Glovers' Ward Street",
+    "Old Street",
+    "Old Stone Steps",
     "Marsh Way",
-    "Ford Street",
-    "Granary Row"
+    "Market Lane to Capital of Prosperity and Virtue",
+    "Street to Narrow Island",
+    "[founder]'s Market Lane",
+    "Silk Reelers' Lane",
+    "Old Lane",
+    "Milk Row",
+    "Butchers' Lane",
+    "[founder]'s Stone Steps",
+    "Shoemakers' Market Lane",
+    "[founder]'s Street",
+    "Weavers' Lane",
+    "Millers' Street"
    ],
    [
     "Market Square",
-    "Third-Day Market",
-    "Monastery Court",
-    "King's Arch Green"
+    "Capital of Peace and Harmony Square",
+    "Great Castle Square",
+    "Cherry Island Gate Square"
    ],
    [
-    "Maple Inn",
-    "Small Slope Inn",
-    "Way Station of Small Slope",
-    "Cherry Blossom Inn",
-    "Pine Wind Inn",
-    "Magpie Inn",
-    "Spring Rain Inn"
+    "Golden Noodle Shop",
+    "Silk Reelers' Tavern",
+    "Spring Rain Tea House",
+    "the Lower Halt",
+    "Travellers' Inn of the Eagle",
+    "the Lower Pass Rest",
+    "[owner]'s Sake Shop"
    ],
    [
-    "Kingfisher Castle",
-    "the Great Mint",
-    "Small Slope Stepping Stones",
-    "the Ruined Hermitage",
-    "the Yellow Lantern",
-    "Small Slope Kiln",
-    "Dragon Spring",
-    "Queen's Lock-Up",
-    "Small Slope School",
-    "Palace of [dynasty]",
-    "the Drowned Toll House",
-    "Little Shrine"
+    "Swift Watchtower",
+    "Hall of Narrow Island",
+    "Lower Bathhouse",
+    "Small Slope Bridge",
+    "Unicorn House of Learning",
+    "Small Slope Spring",
+    "Small Slope Tannery",
+    "Queen's Watch Tower",
+    "the Old Great House",
+    "Adder Lock-Up",
+    "[owner]'s Merchant House",
+    "Keep of Broad Slope"
    ],
    [
-    "Red Column",
-    "Tomb of [monarch]",
-    "King's Arch",
-    "the Long Obelisk"
+    "Cock Mound",
+    "Statue of Cherry Island",
+    "the Drover",
+    "[founder]'s Obelisk"
    ],
    [
     "Sisters of the Blessed Lantern",

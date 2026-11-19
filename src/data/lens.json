@@ -4264,7 +4264,11 @@
    "roman": 0.1,
    "slavic": 0.1,
    "german": 0.2,
-   "egyptian": 0.02
+   "egyptian": 0.02,
+   "indian": 0.02,
+   "chinese": 0.02,
+   "japanese": 0.02,
+   "korean": 0.02
   },
   "signatureMix": 0.4,
   "mixes": [
