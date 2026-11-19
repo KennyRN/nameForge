@@ -167,6 +167,8 @@ interface FormChoice {
   culture: boolean;
 }
 
+/** 6c Part A §6: a colonial authority is a form for the cultures that colonised or were colonised (the Mongol, Persian, Egyptian and Bantu realms are not named for one by default). */
+const COLONIAL_CULTURES = new Set(["norman-british", "english", "french", "dutch", "spanish", "portuguese", "italian", "german", "scandinavian", "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american", "west-african", "general", "iberian"]);
 /** Every form a culture can draw in an era, with its weight before the character (§3.2–§3.4). */
 const FORM_CACHE = new Map<string, [FormChoice, number][]>();
 function cultureForms(culture: string, era: EraCode): [FormChoice, number][] {
@@ -177,6 +179,7 @@ function cultureForms(culture: string, era: EraCode): [FormChoice, number][] {
   const out: [FormChoice, number][] = [];
   for (const f of REALM_DATA.forms) {
     let w = f.era[era] * (c?.mult[f.w] ?? 1) * (c?.eraMult?.[era]?.[f.w] ?? 1);
+    if (f.w === "Colonial Authority" && !COLONIAL_CULTURES.has(culture)) w = 0;
     out.push([{ w: f.w, pl: f.pl, g: f.g, t: f.t ?? [], compound: !!f.compound, peoplesOnly: !!f.peoplesOnly, culture: false }, w]);
   }
   // §3.3–§3.4: culture forms at 15 × their multiplier, ×0.3 outside their eras.
@@ -675,7 +678,7 @@ function generateRealmNamesCore(options: RealmOptions): RealmBatch {
   const chooseShape = (character: string, nf: RealmNamedFor): { shape: RealmShape; kind: ShapeKind; nf: string; t: GroupTone[] } | undefined => {
     const weigh = (shapes: RealmShape[], extra: GroupTone[] = []) =>
       shapes
-        .filter((s) => (!s.eras || s.eras.includes(era)) && (!s.ceremonialOnly || length === "ceremonial"))
+        .filter((s) => (!s.eras || s.eras.includes(era)) && (!s.ceremonialOnly || length === "ceremonial") && (!/Colonial/.test(s.p) || COLONIAL_CULTURES.has(culture.key)))
         .map((s): [RealmShape, number] => [s, s.w * toneFactor([...extra, ...(s.t ?? [])], tone)])
         .filter(([, w]) => w > 0);
     const own = REALM_DATA.characterShapes[character];

@@ -82,6 +82,9 @@ function fillFromPools(module, culture, lists, nt) {
       if (!m) throw new Error(`bad pool word ${item}`);
       const [, k, word, tag] = m;
       if (own && (FOREIGN.test(word) || (module === "moneyNames" && FOREIGN_MONEY.test(word)) || (!keepsChurch && CHRISTIAN.test(word)))) continue;
+      // Second pass (6c Part A §5): peat is cut only where it is (the four nations, English, Dutch, German, Scandinavian, Norse); a month is not a "Time" or a "Fair".
+      if (/Peat/i.test(word) && !["welsh", "scottish", "irish", "cornish", "norman-british", "anglo-saxon", "dutch", "german", "scandinavian", "norse", "celtic", "english"].includes(culture)) continue;
+      if (module === "calendarNames" && / (Time|Fair)$/.test(word)) continue;
       if (lists.some((l) => l.some((w) => w.toLowerCase() === word.toLowerCase()))) continue;
       lists[Number(k)].push(word);
       nt[Number(k)].push(tag);

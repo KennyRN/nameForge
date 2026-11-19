@@ -297,7 +297,7 @@
    "v": 0
   },
   "culture|routeNames|egyptian|words": {
-   "v": 34,
+   "v": 59,
    "t": 30
   },
   "culture|routeNames|egyptian|shapes": {
@@ -438,35 +438,35 @@
    "v": 0
   },
   "era|routeNames|AN": {
-   "v": 286,
+   "v": 294,
    "t": 12
   },
   "era|routeNames|MD": {
-   "v": 303,
+   "v": 310,
    "t": 12
   },
   "era|routeNames|EM": {
-   "v": 305,
+   "v": 313,
    "t": 12
   },
   "era|routeNames|ST": {
-   "v": 445,
+   "v": 450,
    "t": 12
   },
   "era|routeNames|MO": {
-   "v": 199,
+   "v": 201,
    "t": 12
   },
   "era|routeNames|NF": {
-   "v": 35,
+   "v": 42,
    "t": 12
   },
   "era|routeNames|IS": {
-   "v": 53,
+   "v": 60,
    "t": 12
   },
   "style|routeNames|high-fantasy|words": {
-   "v": 92,
+   "v": 94,
    "t": 16
   },
   "style|routeNames|high-fantasy|shapes": {
@@ -474,7 +474,7 @@
    "t": 4
   },
   "style|routeNames|contemporary-fantasy|words": {
-   "v": 92,
+   "v": 94,
    "t": 16
   },
   "style|routeNames|contemporary-fantasy|shapes": {
@@ -482,7 +482,7 @@
    "t": 4
   },
   "style|routeNames|space-opera|words": {
-   "v": 92,
+   "v": 94,
    "t": 16
   },
   "style|routeNames|space-opera|shapes": {
@@ -4994,7 +4994,7 @@
    "v": 0
   },
   "culture|calendarNames|english|words": {
-   "v": 99,
+   "v": 98,
    "t": 30
   },
   "culture|calendarNames|english|shapes": {
@@ -5005,7 +5005,7 @@
    "v": 0
   },
   "culture|calendarNames|welsh|words": {
-   "v": 89,
+   "v": 88,
    "t": 30
   },
   "culture|calendarNames|welsh|shapes": {
@@ -5016,7 +5016,7 @@
    "v": 0
   },
   "culture|calendarNames|scottish|words": {
-   "v": 89,
+   "v": 88,
    "t": 30
   },
   "culture|calendarNames|scottish|shapes": {
@@ -5027,7 +5027,7 @@
    "v": 0
   },
   "culture|calendarNames|irish|words": {
-   "v": 86,
+   "v": 85,
    "t": 30
   },
   "culture|calendarNames|irish|shapes": {
@@ -5071,7 +5071,7 @@
    "v": 0
   },
   "culture|calendarNames|scandinavian|words": {
-   "v": 107,
+   "v": 106,
    "t": 30
   },
   "culture|calendarNames|scandinavian|shapes": {
@@ -5082,7 +5082,7 @@
    "v": 0
   },
   "culture|calendarNames|german|words": {
-   "v": 56,
+   "v": 55,
    "t": 30
   },
   "culture|calendarNames|german|shapes": {
@@ -5104,7 +5104,7 @@
    "v": 0
   },
   "culture|calendarNames|dutch|words": {
-   "v": 53,
+   "v": 52,
    "t": 30
   },
   "culture|calendarNames|dutch|shapes": {
@@ -5115,7 +5115,7 @@
    "v": 0
   },
   "culture|calendarNames|spanish|words": {
-   "v": 57,
+   "v": 56,
    "t": 30
   },
   "culture|calendarNames|spanish|shapes": {
@@ -5126,7 +5126,7 @@
    "v": 0
   },
   "culture|calendarNames|portuguese|words": {
-   "v": 47,
+   "v": 46,
    "t": 30
   },
   "culture|calendarNames|portuguese|shapes": {
@@ -5148,7 +5148,7 @@
    "v": 0
   },
   "culture|calendarNames|italian|words": {
-   "v": 56,
+   "v": 55,
    "t": 30
   },
   "culture|calendarNames|italian|shapes": {
@@ -5159,7 +5159,7 @@
    "v": 0
   },
   "culture|calendarNames|roman|words": {
-   "v": 89,
+   "v": 88,
    "t": 30
   },
   "culture|calendarNames|roman|shapes": {
@@ -5170,7 +5170,7 @@
    "v": 0
   },
   "culture|calendarNames|greek|words": {
-   "v": 56,
+   "v": 55,
    "t": 30
   },
   "culture|calendarNames|greek|shapes": {
@@ -5203,7 +5203,7 @@
    "v": 0
   },
   "culture|calendarNames|slavic|words": {
-   "v": 88,
+   "v": 87,
    "t": 30
   },
   "culture|calendarNames|slavic|shapes": {
@@ -5214,7 +5214,7 @@
    "v": 0
   },
   "culture|calendarNames|turkic|words": {
-   "v": 46,
+   "v": 45,
    "t": 30
   },
   "culture|calendarNames|turkic|shapes": {
@@ -5225,7 +5225,7 @@
    "v": 0
   },
   "culture|calendarNames|mongol|words": {
-   "v": 50,
+   "v": 49,
    "t": 30
   },
   "culture|calendarNames|mongol|shapes": {
@@ -5247,7 +5247,7 @@
    "v": 0
   },
   "culture|calendarNames|arabic|words": {
-   "v": 48,
+   "v": 47,
    "t": 30
   },
   "culture|calendarNames|arabic|shapes": {
@@ -5280,7 +5280,7 @@
    "v": 0
   },
   "culture|calendarNames|egyptian|words": {
-   "v": 65,
+   "v": 64,
    "t": 30
   },
   "culture|calendarNames|egyptian|shapes": {
@@ -5291,7 +5291,7 @@
    "v": 0
   },
   "culture|calendarNames|ethiopian|words": {
-   "v": 57,
+   "v": 56,
    "t": 30
   },
   "culture|calendarNames|ethiopian|shapes": {
@@ -5302,7 +5302,7 @@
    "v": 0
   },
   "culture|calendarNames|bantu|words": {
-   "v": 59,
+   "v": 58,
    "t": 30
   },
   "culture|calendarNames|bantu|shapes": {
@@ -5313,7 +5313,7 @@
    "v": 0
   },
   "culture|calendarNames|west-african|words": {
-   "v": 55,
+   "v": 54,
    "t": 30
   },
   "culture|calendarNames|west-african|shapes": {
@@ -5417,7 +5417,7 @@
    "v": 0
   },
   "culture|calendarNames|anglo-saxon|words": {
-   "v": 50,
+   "v": 49,
    "t": 4
   },
   "culture|calendarNames|anglo-saxon|shapes": {
@@ -5432,11 +5432,11 @@
    "t": 12
   },
   "era|calendarNames|MD": {
-   "v": 363,
+   "v": 342,
    "t": 12
   },
   "era|calendarNames|EM": {
-   "v": 324,
+   "v": 303,
    "t": 12
   },
   "era|calendarNames|ST": {
@@ -28340,7 +28340,7 @@
    "t": 6
   },
   "total|culture|english|words": {
-   "v": 3040
+   "v": 3039
   },
   "total|culture|english|shapes": {
    "v": 2475
@@ -28352,19 +28352,19 @@
    "v": 433
   },
   "total|culture|welsh|words": {
-   "v": 2197
+   "v": 2196
   },
   "total|culture|welsh|shapes": {
    "v": 902
   },
   "total|culture|scottish|words": {
-   "v": 2335
+   "v": 2334
   },
   "total|culture|scottish|shapes": {
    "v": 1489
   },
   "total|culture|irish|words": {
-   "v": 2057
+   "v": 2056
   },
   "total|culture|irish|shapes": {
    "v": 687
@@ -28376,7 +28376,7 @@
    "v": 891
   },
   "total|culture|roman|words": {
-   "v": 2069
+   "v": 2068
   },
   "total|culture|roman|shapes": {
    "v": 652
@@ -28394,19 +28394,19 @@
    "v": 407
   },
   "total|culture|egyptian|words": {
-   "v": 2054
+   "v": 2078
   },
   "total|culture|egyptian|shapes": {
    "v": 640
   },
   "total|culture|west-african|words": {
-   "v": 1948
+   "v": 1947
   },
   "total|culture|west-african|shapes": {
    "v": 580
   },
   "total|culture|ethiopian|words": {
-   "v": 1876
+   "v": 1875
   },
   "total|culture|ethiopian|shapes": {
    "v": 538
@@ -28430,7 +28430,7 @@
    "v": 140
   },
   "total|culture|slavic|words": {
-   "v": 1947
+   "v": 1946
   },
   "total|culture|slavic|shapes": {
    "v": 630
@@ -28448,13 +28448,13 @@
    "v": 282
   },
   "total|culture|spanish|words": {
-   "v": 2025
+   "v": 2024
   },
   "total|culture|spanish|shapes": {
    "v": 557
   },
   "total|culture|portuguese|words": {
-   "v": 1970
+   "v": 1969
   },
   "total|culture|portuguese|shapes": {
    "v": 560
@@ -28466,7 +28466,7 @@
    "v": 306
   },
   "total|culture|greek|words": {
-   "v": 1975
+   "v": 1974
   },
   "total|culture|greek|shapes": {
    "v": 552
@@ -28508,7 +28508,7 @@
    "v": 11
   },
   "total|culture|bantu|words": {
-   "v": 2025
+   "v": 2024
   },
   "total|culture|bantu|shapes": {
    "v": 551
@@ -28520,43 +28520,43 @@
    "v": 105
   },
   "total|culture|scandinavian|words": {
-   "v": 2192
+   "v": 2191
   },
   "total|culture|scandinavian|shapes": {
    "v": 1192
   },
   "total|culture|german|words": {
-   "v": 2155
+   "v": 2154
   },
   "total|culture|german|shapes": {
    "v": 1590
   },
   "total|culture|italian|words": {
-   "v": 1896
+   "v": 1895
   },
   "total|culture|italian|shapes": {
    "v": 531
   },
   "total|culture|dutch|words": {
-   "v": 1921
+   "v": 1920
   },
   "total|culture|dutch|shapes": {
    "v": 513
   },
   "total|culture|turkic|words": {
-   "v": 1952
+   "v": 1951
   },
   "total|culture|turkic|shapes": {
    "v": 532
   },
   "total|culture|mongol|words": {
-   "v": 1981
+   "v": 1980
   },
   "total|culture|mongol|shapes": {
    "v": 516
   },
   "total|culture|arabic|words": {
-   "v": 1993
+   "v": 1992
   },
   "total|culture|arabic|shapes": {
    "v": 550
@@ -28568,7 +28568,7 @@
    "v": 551
   },
   "total|culture|anglo-saxon|words": {
-   "v": 1145
+   "v": 1144
   },
   "total|culture|anglo-saxon|shapes": {
    "v": 240
@@ -28604,40 +28604,40 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 9663
+   "v": 9671
   },
   "total|era|MD": {
-   "v": 12914
+   "v": 12900
   },
   "total|era|EM": {
-   "v": 13894
+   "v": 13881
   },
   "total|era|ST": {
-   "v": 13334
+   "v": 13339
   },
   "total|era|MO": {
-   "v": 11932
+   "v": 11934
   },
   "total|era|NF": {
-   "v": 764
+   "v": 771
   },
   "total|era|IS": {
-   "v": 1716
+   "v": 1723
   },
   "total|style|high-fantasy|words": {
-   "v": 4242
+   "v": 4244
   },
   "total|style|high-fantasy|shapes": {
    "v": 1560
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 4158
+   "v": 4160
   },
   "total|style|contemporary-fantasy|shapes": {
    "v": 1558
   },
   "total|style|space-opera|words": {
-   "v": 4294
+   "v": 4296
   },
   "total|style|space-opera|shapes": {
    "v": 1391

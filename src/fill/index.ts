@@ -167,7 +167,7 @@ const STOP_WORDS = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", 
 /** Second pass (brief §12 §6): a place that is itself "X of Y" takes its article after a preposition ("Nawab of the Mountain of Rashid"). */
 const PLACE_NOUN = "Mountain|Valley|Temple|Lake|River|Hill|Spring|Well|Isle|Island|Plain|Garden|Tower|Fort|Castle|Gate|Cape|Bay|Cave|Forest|Wood|Sea|City|Town|Camp|Citadel|Fortress|Landing|Harbour|Bridge|Pass|Peak|Ridge|Field|Stone|Dam|Mine|Quarry|Oasis|Desert|Dune|Steppe|Marsh|Mound|Pool|Fountain|Canal|Port|Village|Waters|Fields|Hills|Mountains";
 const NESTED_PLACE = new RegExp(`\\b(of|to|from|over|above|beyond|beside|behind|near|in|at|by|off) (?=(?:${PLACE_NOUN}) of )`, "g");
-export const withArticles = (text: string): string => text.replace(NESTED_PLACE, "$1 the ");
+export const withArticles = (text: string): string => text.replace(NESTED_PLACE, "$1 the ").replace(/\b(of|to|from|in) At the /g, "$1 the ");
 const REALM_FORM = /(^|[^A-Za-z])(Kingdom|Empire|Province|Sultanate|Emirate|Caliphate|Khanate|Khaganate|Duchy|Dukedom|Principality|Realm|Domain|Federation|Republic|Confederation|Confederacy|County|Lordship|Imamate|Commonwealth|Protectorate|Dominion|Shahdom|Satrapy)([^A-Za-z]|$)/;
 export function repeatsGeneric(fill: string, rest: string): boolean {
   // Second pass (brief §12 §6): a realm is not a realm of a realm ("Khanate of Republic Square").

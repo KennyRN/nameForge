@@ -1261,7 +1261,7 @@
       "lists": {
         "tree": ["Kum", "Baobab", "Kapok", "Shea", "Kola", "Tamarind", "Silk-cotton", "Iroko", "Palm", "Fig", "Ebony", "Mahogany"],
         "animal": ["Crocodile", "Python", "Hippopotamus|Hippopotamuses", "Lion", "Elephant", "Leopard", "Antelope", "Buffalo|Buffalo", "Hyena", "Vulture", "Monitor Lizard", "Catfish|Catfish", "Hornbill", "Ant"],
-        "person": ["Buktu", "Sundiata", "Sumanguru", "Osei", "Tutu", "Askia", "Sonni", "Oduduwa", "Bayajidda", "Daura", "Amina", "Yaa", "Ofori", "Tenkamenin", "Kankan", "Moussa", "Nana", "Kwaku", "Oranmiyan", "Agaja"],
+        "person": ["Buktu", "Kojo", "Kwame", "Esi", "Adwoa", "Babatunde", "Olumide", "Chukwuemeka", "Seydou", "Amadou", "Ifeanyi", "Okonkwo", "Nwankwo", "Obiora", "Adebayo", "Kofi", "Ama", "Yaw", "Abena", "Sundiata", "Osei", "Askia"],
         "spirit": ["Rain Keeper", "River Keeper", "Forest Keeper", "Forge Keeper", "Sky Keeper", "Lagoon Keeper", "Storm Keeper", "Well Keeper", "Harvest Keeper", "Mist Keeper", "Hill Keeper", "Salt Keeper", "Old Mother", "Old Father"],
         "feature": ["River", "Hill", "Rock", "Pool", "Lake", "Ford", "Spring", "Marsh", "Crossing", "Dune", "Cliff", "Waterfall"],
         "bend": ["Bends", "Widens", "Divides", "Meets the Sea", "Runs Shallow", "Floods"],

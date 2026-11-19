@@ -10,7 +10,7 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 
 | module | English | Welsh | Scottish | Irish | Cornish | Celtic | Norse | Scandinavian | German | French | Dutch | Spanish | Portuguese | Iberian | Italian | Roman | Greek | Byzantine | Greek and Byzantine | Slavic | Turkic | Mongol | Turkic and Mongol steppe | Arabic | Persian | Arabic and Persian | Egyptian | Ethiopian | Bantu | West African | Indian | Chinese | Japanese | Korean | Aztec | Maya | Andean | Polynesian | American |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| route names | 84/60 | 45/22 | 45/32 | 45/22 | 45/22 | 35/17 | 37/37 | 30/34 | 30/40 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 55/15 | 34/11 | 34/11 | 20/13 | 40/17 | 30/10 | 30/10 | 19/15 | 30/10 | 30/10 | 19/15 | 34/14 | 34/13 | 34/11 | 34/15 | **5/5** | **8/6** | **10/4** | **4/4** | **4/3** | **4/3** | **3/3** | **6/3** | not offered |
+| route names | 84/60 | 45/22 | 45/32 | 45/22 | 45/22 | 35/17 | 37/37 | 30/34 | 30/40 | 34/11 | 30/10 | 34/11 | 34/11 | 16/11 | 30/10 | 55/15 | 34/11 | 34/11 | 20/13 | 40/17 | 30/10 | 30/10 | 19/15 | 30/10 | 30/10 | 19/15 | 59/14 | 34/13 | 34/11 | 34/15 | **5/5** | **8/6** | **10/4** | **4/4** | **4/3** | **4/3** | **3/3** | **6/3** | not offered |
 | streets and districts | 146/35 | 64/22 | 88/21 | 64/21 | 64/21 | 63/10 | 60/15 | 54/15 | 60/15 | 45/15 | 30/10 | 45/15 | 45/15 | 27/9 | 30/10 | 49/24 | 45/15 | 45/15 | 32/14 | 52/22 | 30/10 | 30/10 | 18/8 | 30/10 | 30/10 | 27/10 | 35/15 | 34/12 | 34/12 | 34/17 | **8/6** | **11/9** | 12/8 | **9/5** | **11/6** | **9/4** | **3/2** | **2/3** | not offered |
 | inns and taverns | 147/13 | 73/15 | 97/15 | 73/15 | 73/15 | 68/4 | 57/15 | 54/15 | 60/16 | 54/10 | 30/10 | 54/10 | 54/10 | 36/4 | 30/10 | 59/16 | 54/10 | 54/10 | 40/8 | 56/14 | 30/10 | 30/10 | 15/8 | 30/10 | 30/10 | 32/10 | 31/13 | 31/12 | 31/12 | 32/14 | 13/5 | 37/5 | 23/4 | **31/3** | **5/3** | **4/3** | **1/2** | **1/2** | not offered |
 | buildings and landmarks | 145/22 | 71/22 | 95/22 | 71/22 | 71/23 | 66/12 | 57/15 | 54/14 | 60/15 | 57/18 | 30/10 | 57/18 | 57/18 | 39/12 | 30/10 | 79/22 | 57/18 | 57/18 | 41/14 | 57/22 | 30/10 | 30/10 | 14/6 | 30/10 | 30/10 | 41/10 | 33/15 | 31/12 | 32/11 | 31/14 | 24/7 | 44/4 | 39/5 | 41/4 | **8/4** | **6/6** | **0/3** | **1/2** | not offered |
@@ -19,7 +19,7 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 49/10 | 50/10 | 47/10 | 50/10 | 15/4 | 47/10 | 48/12 | 49/10 | 49/10 | 15/4 | 45/12 | 45/10 | 51/10 | 15/7 | 46/10 | 50/10 | 31/9 | 57/14 | 60/12 | 51/12 | 57/15 | **1/2** | 34/5 | **35/3** | 34/5 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
 | money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 76/12 + profile | 66/10 + profile | 49/11 | 52/11 | 44/6 + profile | 50/10 | 90/12 | 50/11 | 48/11 | 47/6 | 85/13 | 44/10 | 41/10 | 33/5 + profile | 40/10 | 41/10 | 46/4 | 52/10 + profile | 51/10 + profile | 60/10 + profile | 62/10 + profile | **24/1** | **32/1** | **21/1 + profile** | **18/1 + profile** | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
-| calendars and festivals | 99/12 | 89/11 | 89/11 | 86/11 | 84/11 | 35/5 | 75/11 | 107/11 | 56/10 | 52/10 | 53/10 | 57/10 | 47/10 | 15/4 | 56/10 | 89/13 | 56/10 | 43/10 | 40/5 | 88/10 | 46/10 | 50/10 | 25/5 | 48/10 | 46/10 | 25/4 | 65/10 | 57/10 | 59/12 | 55/12 | **6/0** | **65/1** | **73/1** | **55/1** | **37/3** | **2/3** | excluded | excluded | not offered |
+| calendars and festivals | 98/12 | 88/11 | 88/11 | 85/11 | 84/11 | 35/5 | 75/11 | 106/11 | 55/10 | 52/10 | 52/10 | 56/10 | 46/10 | 15/4 | 55/10 | 88/13 | 55/10 | 43/10 | 40/5 | 87/10 | 45/10 | 49/10 | 25/5 | 47/10 | 46/10 | 25/4 | 64/10 | 56/10 | 58/12 | 54/12 | **6/0** | **65/1** | **73/1** | **55/1** | **37/3** | **2/3** | excluded | excluded | not offered |
 | sky lore | 62/10 | 49/10 | 49/10 | 51/10 | 49/10 | 18/4 | 48/10 | 53/10 | 44/10 | 43/10 | 43/10 | 44/10 | 40/10 | 15/4 | 41/10 | 72/10 | 41/10 | 43/10 | 47/4 | 44/10 | 43/10 | 46/10 | 22/4 | 41/10 | 43/10 | 21/4 | 46/10 | 43/10 | 46/10 | 41/10 | **0/0** | **13/0** | **8/0** | **8/0** | **7/0** | **5/0** | excluded | excluded | not offered |
 | mountains | 64/118 + profile | 34/36 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 33/14 + profile | 30/14 | 30/22 | 34/10 | excluded | 34/10 | 34/10 | 16/10 | 30/10 | 34/10 + profile | 34/10 | 34/10 | 18/10 + profile | 35/10 + profile | 30/10 | 30/10 | 13/10 + profile | 30/10 | 30/10 | 13/10 + profile | 33/10 + profile | 30/10 + profile | 32/10 + profile | 31/10 + profile | **5/2 + profile** | **6/2 + profile** | **3/2 + profile** | **4/2 + profile** | **5/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | not offered |
 | forests and woods | 64/75 + profile | 34/36 | 34/84 | 34/12 | 34/36 | 17/6 + profile | 31/38 + profile | 30/38 | 30/136 | 34/12 | 30/10 | 34/12 | 34/12 | 16/12 | 30/10 | 35/12 + profile | 34/12 | 34/12 | 16/12 + profile | 35/12 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 + profile | 30/10 + profile | 32/10 + profile | 32/10 + profile | **4/0 + profile** | **4/0 + profile** | **5/0 + profile** | **4/0 + profile** | **2/0 + profile** | **2/0 + profile** | **3/0 + profile** | **1/0 + profile** | not offered |
@@ -68,7 +68,7 @@ Cultures only their own module has (§3.1), at the local-tier target.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | events and eras | 49/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | money and coins | 45/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
-| calendars and festivals | 50/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
+| calendars and festivals | 49/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | sky lore | 45/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | epithets and bynames | 51/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | titles and honourifics | 53/10 | – | – | – | – | – | – | – | – | – | – | – | – | – |
@@ -98,7 +98,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 
 | module | AN | MD | EM | ST | MO | NF | IS |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| route names | 286 | 303 | 305 | 445 | 199 | 35 | 53 |
+| route names | 294 | 310 | 313 | 450 | 201 | 42 | 60 |
 | streets and districts | 281 | 290 | 267 | 522 | 214 | 70 | 68 |
 | inns and taverns | 280 | 290 | 275 | 489 | 187 | 26 | 26 |
 | buildings and landmarks | 285 | 301 | 281 | 500 | 192 | 35 | 35 |
@@ -107,7 +107,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 | events and eras | 166 | 236 | 236 | 186 | 188 | 28 | 31 |
 | money and coins | 299 | 449 | 468 | 411 | 349 | 165 | 168 |
-| calendars and festivals | 321 | 363 | 324 | 172 | 177 | **4** | **4** |
+| calendars and festivals | 321 | 342 | 303 | 172 | 177 | **4** | **4** |
 | sky lore | 164 | 164 | 164 | 159 | 226 | **2** | **2** |
 | mountains (land) | 253 | 241 | 407 | 407 | 407 | **6** | **6** |
 | forests and woods (land) | 251 | 252 | 427 | 427 | 427 | **4** | **4** |
@@ -152,7 +152,7 @@ Style (words/shapes; target 16 and 4). Realistic is the default and isn't counte
 
 | module | historic or low fantasy | high or epic fantasy | contemporary fantasy | steampunk | dieselpunk | cyberpunk | post-apocalyptic | space opera |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| route names | **0/0** | 92/11 | 92/11 | **0/7** | **0/0** | **0/0** | **0/0** | 92/11 |
+| route names | **0/0** | 94/11 | 94/11 | **0/7** | **0/0** | **0/0** | **0/0** | 94/11 |
 | streets and districts | **0/0** | **81/0** | **81/0** | 21/10 | **0/0** | **0/0** | **0/0** | **81/0** |
 | inns and taverns | **0/0** | 90/6 | 90/6 | **9/6** | **0/0** | **0/0** | **0/0** | 90/6 |
 | buildings and landmarks | **0/0** | **83/0** | **83/0** | **18/3** | **0/0** | **0/0** | **0/0** | **83/0** |
@@ -1021,36 +1021,36 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | lens culture | words | shapes |
 | --- | --- | --- |
-| English | 3040 | 2475 |
-| Welsh | 2197 | 902 |
-| Scottish | 2335 | 1489 |
-| Irish | 2057 | 687 |
+| English | 3039 | 2475 |
+| Welsh | 2196 | 902 |
+| Scottish | 2334 | 1489 |
+| Irish | 2056 | 687 |
 | Cornish | 2100 | 891 |
 | Celtic | 888 | 433 |
 | Norse | 2068 | 1131 |
-| Scandinavian | 2192 | 1192 |
-| German | 2155 | 1590 |
+| Scandinavian | 2191 | 1192 |
+| German | 2154 | 1590 |
 | French | 2001 | 566 |
-| Dutch | 1921 | 513 |
-| Spanish | 2025 | 557 |
-| Portuguese | 1970 | 560 |
+| Dutch | 1920 | 513 |
+| Spanish | 2024 | 557 |
+| Portuguese | 1969 | 560 |
 | Iberian | 677 | 282 |
-| Italian | 1896 | 531 |
-| Roman | 2069 | 652 |
-| Greek | 1975 | 552 |
+| Italian | 1895 | 531 |
+| Roman | 2068 | 652 |
+| Greek | 1974 | 552 |
 | Byzantine | 1944 | 546 |
 | Greek and Byzantine | 806 | 306 |
-| Slavic | 1947 | 630 |
-| Turkic | 1952 | 532 |
-| Mongol | 1981 | 516 |
+| Slavic | 1946 | 630 |
+| Turkic | 1951 | 532 |
+| Mongol | 1980 | 516 |
 | Turkic and Mongol steppe | 695 | 288 |
-| Arabic | 1993 | 550 |
+| Arabic | 1992 | 550 |
 | Persian | 1960 | 551 |
 | Arabic and Persian | 736 | 407 |
-| Egyptian | 2054 | 640 |
-| Ethiopian | 1876 | 538 |
-| Bantu | 2025 | 551 |
-| West African | 1948 | 580 |
+| Egyptian | 2078 | 640 |
+| Ethiopian | 1875 | 538 |
+| Bantu | 2024 | 551 |
+| West African | 1947 | 580 |
 | Indian | 124 | 127 |
 | Chinese | 286 | 140 |
 | Japanese | 309 | 122 |
@@ -1079,24 +1079,24 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 9663 |
-| MD medieval | 12914 |
-| EM early modern | 13894 |
-| ST steam age | 13334 |
-| MO modern | 11932 |
-| NF near future | 764 |
-| IS interstellar | 1716 |
+| AN ancient | 9671 |
+| MD medieval | 12900 |
+| EM early modern | 13881 |
+| ST steam age | 13339 |
+| MO modern | 11934 |
+| NF near future | 771 |
+| IS interstellar | 1723 |
 
 | style | words | shapes |
 | --- | --- | --- |
 | historic or low fantasy | 0 | 140 |
-| high or epic fantasy | 4242 | 1560 |
-| contemporary fantasy | 4158 | 1558 |
+| high or epic fantasy | 4244 | 1560 |
+| contemporary fantasy | 4160 | 1558 |
 | steampunk | 84 | 57 |
 | dieselpunk | 34 | 8 |
 | cyberpunk | 0 | 0 |
 | post-apocalyptic | 70 | 18 |
-| space opera | 4294 | 1391 |
+| space opera | 4296 | 1391 |
 
 | tone | entries |
 | --- | --- |

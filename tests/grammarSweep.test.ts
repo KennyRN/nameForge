@@ -33,6 +33,14 @@ const PATTERNS = {
   money: { modules: ["money"], re: /Piece (?:Bright|Dark|Red|Blue|Grey|White|Black|Green)$|^(?:Sword|Spear|Axe|Bow|Arrow|Shield|Hammer|Mace|Dagger|Lance|Knife|Club)$/ },
   // "Pennyweight" in Arabic, "Ruble" in Mongol: an English weight or a Russian coin among the batch's own cultures.
   coin: { modules: ["money"], re: /\b(?:Pennyweight|Ruble|Rouble)\b/, only: BATCH_CULTURES },
+  // "Chiefdom of At the Forest": a place that starts like a sentence, after "of".
+  atthe: { modules: null, re: /\b(?:of|to|from|in) (?:At the|Where) /, only: new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "french", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "iberian", "greek-byzantine", "slavic", "dutch", "indian", "chinese", "japanese", "korean"]) },
+  // "Proud Month of Mushroom Fair", "Free Dike Mending Time Month": a festival or a season's work where a month stem belongs.
+  calendar: { modules: ["calendars", "sky"], re: /(?:Month|Moon) of [A-Za-z' -]*(?:Fair|Time)$|(?:Time|Fair) (?:Month|Moon)\b/, only: new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "french", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "iberian", "greek-byzantine", "slavic", "dutch", "indian", "chinese", "japanese", "korean"]) },
+  // Peat cut where there is none (the four nations, English, Dutch, German, Scandinavian and Norse cut it).
+  peat: { modules: ["calendars", "sky"], re: /Peat/, only: new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "french", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "iberian", "greek-byzantine", "slavic", "indian", "chinese", "japanese", "korean"]) },
+  // 6c Part A §6: no colonial authority for a culture that neither colonised nor was colonised in the batch's sense.
+  colonial: { modules: ["realms"], re: /Colonial Authority/, only: new Set(["mongol", "persian", "egyptian", "bantu", "turkic", "arabic", "ethiopian", "steppe", "arabic-persian", "slavic", "roman", "greek", "byzantine"]) },
   // "Cafe Chantant".
   cafe: { modules: ["inns"], re: /Cafe Chantant/ },
 } as const;
@@ -43,7 +51,7 @@ const sweep = (): Map<Key, Hit[]> => {
   if (found) return found;
   found = new Map();
   for (const people of ["placeholders", "real"] as const) {
-    visitStates({ count: 12, kinds: false, eras: ["AN", "MD", "MO"], people }, (where, make) => {
+    visitStates({ count: 12, kinds: false, eras: ["AN", "MD", "MO", "NF", "IS"], people }, (where, make) => {
       const [moduleWord, culture] = where.split(" ");
       const module = moduleWord.split(".")[0];
       for (let seed = 1; seed <= 5; seed++) {
@@ -92,6 +100,18 @@ test("grammar: no broken money names (a colour after the piece, a bare weapon)",
 });
 test("grammar: no Pennyweight, Ruble or Rouble in the batch's own cultures' money", () => {
   assert.equal(sweep().get("coin")?.length ?? 0, 0, report("coin"));
+});
+test("grammar: no place starting At the or Where after of", () => {
+  assert.equal(sweep().get("atthe")?.length ?? 0, 0, report("atthe"));
+});
+test("grammar: no month named for a fair or a time", () => {
+  assert.equal(sweep().get("calendar")?.length ?? 0, 0, report("calendar"));
+});
+test("grammar: no peat cutting outside the cultures that cut peat", () => {
+  assert.equal(sweep().get("peat")?.length ?? 0, 0, report("peat"));
+});
+test("grammar: no colonial authority outside the cultures that colonised or were colonised", () => {
+  assert.equal(sweep().get("colonial")?.length ?? 0, 0, report("colonial"));
 });
 test("grammar: no Cafe Chantant in any inn", () => {
   assert.equal(sweep().get("cafe")?.length ?? 0, 0, report("cafe"));

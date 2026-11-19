@@ -17,13 +17,13 @@ export const ARMS = { german: "Greatsword|Halberd|Pike|Crossbow|Flail|Mace|Dagge
 
 /** Six more months each (a batch of twelve month names needs more than ten words to stay in the culture's own). */
 export const MONTHS_EXTRA = {
-  english: "Lent Fast|Rogation Days|Hay Time|Gleaning Time|Pig Killing|Wassail Tide",
-  german: "Ice Breaking|Asparagus Month|Cherry Month|Mushroom Month|Pumpkin Month|Stove Month",
-  dutch: "Dike Mending Time|Bulb Planting|Herring Catching|Cheese Making|Skate Month|Peat Cutting",
-  french: "Fig Month|Walnut Month|Sheep Drive|Hearth Month|Mist Month|Haystack",
-  italian: "Almond Month|Cherry Fair|Orange Month|Silk Spinning|Mushroom Fair|Chestnut Roasting",
-  spanish: "Saffron Picking|Cork Month|Sheep Drive Month|Wine Treading|Fig Drying|Chestnut Roasting Month",
-  roman: "Grain Reaping|Olive Picking|Aqueduct Month|Legion Muster|Market Month|Oath Month",
-  greek: "Honey Gathering|Sponge Diving|Fig Month|Sea Opening|Oil Pressing|Lamp Month",
-  slavic: "Birch Bark|Honey Month|Cabbage Month|Beet Month|Fur Month|Hearth Fire",
+  english: "Lent Fast|Rogation Days|Haymaking|Gleaning|Pig Killing|Wassail Tide",
+  german: "Ice Breaking|Asparagus|Cherry|Mushroom|Pumpkin|Stove",
+  dutch: "Polder Draining|Bulb Planting|Herring Catching|Cheese Making|Ice Skating|Flax Scutching",
+  french: "Fig|Walnut|Sheep Drive|Hearth|Mist|Haystack",
+  italian: "Almond|Cherry Picking|Orange|Silk Spinning|Mushroom Picking|Chestnut Roasting",
+  spanish: "Saffron Picking|Cork|Sheep Drive|Wine Treading|Fig Drying|Chestnut Roasting",
+  roman: "Grain Reaping|Olive Picking|Aqueduct|Legion Muster|Market|Oath",
+  greek: "Honey Gathering|Sponge Diving|Fig|Sea Opening|Oil Pressing|Lamp",
+  slavic: "Birch Bark|Honey|Cabbage|Beet|Fur|Hearth Fire",
 };

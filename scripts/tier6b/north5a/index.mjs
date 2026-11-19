@@ -14,8 +14,10 @@ import westAfrican from "./west-african.mjs";
 const TAGS = ["AN-MD", "AN-MD", "AN-MD", "EM-ST", "EM-ST", "EM-ST", "ST-MO", "ST-MO", "h", ""];
 const tag = (list, tags) => {
   const words = list.split("|");
-  if (words.length !== 10) throw new Error(`a noun list needs ten words: ${list}`);
-  return words.map((w, i) => (tags[i] && !w.includes(";") ? `${w};${tags[i]}` : w)).join("|");
+  if (words.length < 10) throw new Error(`a noun list needs ten words: ${list}`);
+  // Ten words take the fixed tags; any word after the tenth carries a tag of its own (an era-true extra).
+  if (words.slice(10).some((w) => !w.includes(";"))) throw new Error(`a word after the tenth needs its own tag: ${list}`);
+  return words.map((w, i) => (i < 10 && tags[i] && !w.includes(";") ? `${w};${tags[i]}` : w)).join("|");
 };
 const tagAll = (nouns, tags, routeTags = tags) => ({
   land: Object.fromEntries(Object.entries(nouns.land).map(([k, lists]) => [k, lists.map((l) => tag(l, tags))])),

@@ -248,6 +248,8 @@ function fillPlace(culture: string, region: string | undefined, rng: () => numbe
         if (name === undefined) break; // this culture has no settlement names
         // Brief 5b §12.3: a well-known real place ("Bath") is drawn again.
         if (name.split(/\s+/).length > limit || isRealPlace(name)) continue;
+        // A name that starts "At the" or "Where" is a sentence, not a place to put in another name ("Chiefdom of At the Forest").
+        if (own && /^(At the|Where|Under the|Beside the|Near the)\b/.test(name)) continue;
         if (nests && / of /.test(name) && attempt < tries - 2) continue;
         return nests && /^[A-Z][A-Za-z'-]+ of /.test(name) ? `the ${name}` : name;
       }

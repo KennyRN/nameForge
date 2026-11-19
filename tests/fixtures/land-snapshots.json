@@ -7824,8 +7824,8 @@
    "template": "{market} Market"
   },
   {
-   "text": "Mosque of Daura",
-   "etymology": "mosque of [personal name: Daura]",
+   "text": "Mosque of Ifeanyi",
+   "etymology": "mosque of [personal name: Ifeanyi]",
    "template": "Mosque of {person}"
   },
   {
@@ -7874,8 +7874,8 @@
    "template": "{animal} River"
   },
   {
-   "text": "Mosque of Tutu",
-   "etymology": "mosque of [personal name: Tutu]",
+   "text": "Mosque of Babatunde",
+   "etymology": "mosque of [personal name: Babatunde]",
    "template": "Mosque of {person}"
   },
   {
@@ -7889,8 +7889,8 @@
    "template": "Grove of {spirit}"
   },
   {
-   "text": "Osei's Well",
-   "etymology": "[personal name: Osei]'s well",
+   "text": "Esi's Well",
+   "etymology": "[personal name: Esi]'s well",
    "template": "{person:pos} Well"
   },
   {
