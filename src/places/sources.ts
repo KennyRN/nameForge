@@ -6,6 +6,8 @@
 
 import { isRealPlace } from "../realPlaces";
 import { legacyWeightOf } from "../northData";
+import { MIX_HALVES } from "../tier6a";
+import { lensErasFor } from "../lens";
 import LENS from "../data/lens.json";
 import { generatePlaceNames, type ResolvedSlot } from "../names/engine";
 import { britishPlaceNamesRecipe, colonialPlaceNamesRecipe } from "../names/recipe";
@@ -51,6 +53,8 @@ export const SOURCE_SHARES = (lens as unknown as { sourceShares: SourceShares })
 /** What a draw needs to know about the batch it belongs to. */
 export interface SourceContext {
   where: PlaceWhere;
+  /** Second pass (brief §12): the state's era code, so a culture's place fills read the settlement era that covers it (Egyptian modern fills are not pharaonic). */
+  eraCode?: string;
   /** The module's culture key (a legacy key such as `norman-british`, `celtic`, `norse`). */
   culture: string;
   /** Home only: a place-shape region code for the British shapes. */
@@ -103,7 +107,7 @@ export function sourceFor(kind: KindSources, ctx: Pick<SourceContext, "where" | 
 }
 
 /** Sibling-distinctness brief: a culture that reads the British native source along with its siblings takes it at its legacy weight (lens.json `shares.legacy`). */
-const shareOf = (where: PlaceWhere, kind?: KindSources, culture?: string): number => (kind?.share?.[where] ?? SOURCE_SHARES[where].share) * (where === "home" ? legacyWeightOf(culture) ?? 1 : 1);
+const shareOf = (where: PlaceWhere, kind?: KindSources, culture?: string): number => (kind?.share?.[where] ?? SOURCE_SHARES[where].share) * (where === "home" && !(culture && OWN_SETTLEMENT_ONLY.has(culture)) ? legacyWeightOf(culture) ?? 1 : 1);
 
 /** One name from a source, or undefined where it can give nothing for this kind and state. */
 export function drawFromSource(kind: KindSources, source: "native" | "colonial", ctx: SourceContext): string | undefined {
@@ -174,7 +178,9 @@ export function settlementDelegateOptions(delegate: Extract<KindDelegate, { engi
   if (!world || (ctx.legacySettlement && NEW_WORLD_CULTURES.includes(world.id))) return undefined;
   // Brief 6a: the batch's settlement names are read by the batch's cultures only (no other culture's places move).
   if (ctx.noBatchSettlement && TIER6A_NEW_WORLD.includes(world.id)) return undefined;
-  return { ...base, setting: "native", culture: world.id, era: world.eras.find((e) => e.id !== INTERSTELLAR_ERA)?.id };
+  // Second pass (brief §12): the world era that covers the state's era, else the first.
+  const covering = ctx.eraCode && OWN_SETTLEMENT_ONLY.has(ctx.culture) ? world.eras.find((e) => e.id !== INTERSTELLAR_ERA && lensErasFor("placeShapes", e.id, world.id).includes(ctx.eraCode!)) : undefined;
+  return { ...base, setting: "native", culture: world.id, era: (covering ?? world.eras.find((e) => e.id !== INTERSTELLAR_ERA))?.id };
 }
 
 /** The river engine's setting for the module's where (§5.4): British at home for a British culture, else new-land or established. */
@@ -224,17 +230,27 @@ export function drawKind(kind: KindSources, ctx: SourceContext, own: () => strin
 // ── The filler's place and river sources (shared tables brief §5.2) ──────────────────────────────
 
 /** Brief 5b: the cultures whose place fills read the new settlement names: the core seven and Celtic. */
-const CORE_FILL = new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "celtic", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"]);
+const CORE_FILL = new Set(["anglo-saxon", "norman-british", "norse", "german", "welsh", "scottish", "irish", "cornish", "scandinavian", "celtic", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
 
 /** "[place]", "[town]", "[homeland place name]": a settlement name of the state's culture at home, one word or two. */
-function fillPlace(culture: string, region: string | undefined, rng: () => number, oneWord = false): string | undefined {
+function fillPlace(culture: string, region: string | undefined, rng: () => number, oneWord = false, eraCode?: string, after?: string): string | undefined {
+  // Second pass (brief §12 §6): after "of", "to", "over" a place that is itself "X of Y" takes its article ("Inn of the Mountain of Rashid") or is drawn again.
+  const nests = (OWN_SETTLEMENT_ONLY.has(culture) || !!MIX_HALVES[culture]) && !!after && /\b(?:of|to|from|over|above|beyond|off|beside|behind|in|at|near|by|beneath|under|for)\b/i.test(after);
   // Shared tables brief §13.2 item 2: the culture's settlement names, else those of the nearest lens-family culture that has some, else General.
-  for (const candidate of placeCultures(culture)) {
-    for (let attempt = 0; attempt < 6; attempt++) {
-      const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng, legacySettlement: !CORE_FILL.has(culture), noBatchSettlement: !TIER6A_NEW_WORLD.includes(culture) });
-      if (name === undefined) break; // this culture has no settlement names
-      // Brief 5b §12.3: a well-known real place ("Bath") is drawn again; a second place fill in one name is a single word.
-      if (name.split(/\s+/).length <= (oneWord ? 1 : 2) && !isRealPlace(name)) return name;
+  // A second place in one name wants a single word; a culture whose settlement names are all compounds takes a two-word one rather than leave the bracket.
+  // A culture outside the batch draws as it always did (one limit, six attempts).
+  const own = OWN_SETTLEMENT_ONLY.has(culture) || !!MIX_HALVES[culture];
+  for (const limit of oneWord ? (own ? [1, 2] : [1]) : [OWN_SETTLEMENT_ONLY.has(culture) ? 3 : 2]) {
+    for (const candidate of placeCultures(culture)) {
+      const tries = oneWord && own ? 12 : 6;
+      for (let attempt = 0; attempt < tries; attempt++) {
+        const name = drawFromDelegate({ engine: "settlement", sizes: ["any"] }, { where: "home", culture: candidate, region, rng, eraCode, legacySettlement: !CORE_FILL.has(culture), noBatchSettlement: !TIER6A_NEW_WORLD.includes(culture) && !MIX_HALVES[culture] });
+        if (name === undefined) break; // this culture has no settlement names
+        // Brief 5b §12.3: a well-known real place ("Bath") is drawn again.
+        if (name.split(/\s+/).length > limit || isRealPlace(name)) continue;
+        if (nests && / of /.test(name) && attempt < tries - 2) continue;
+        return nests && /^[A-Z][A-Za-z'-]+ of /.test(name) ? `the ${name}` : name;
+      }
     }
   }
   return undefined;
@@ -243,8 +259,13 @@ function fillPlace(culture: string, region: string | undefined, rng: () => numbe
 const LENS_CULTURES = LENS.cultures as { key: string; keys: string[]; family: string | null }[];
 /** Northern Europe brief 5a: the Norse and Celtic lens cultures read through Scandinavian and the Celtic nations here, so another culture's nearest-family order is what it was. */
 const FOLDED = new Set(["norse", "celtic"]);
+/** The world cultures whose places come from their own settlement names alone (every one that has them, bar the Celtic nations and the British engine's). */
+const OWN_SETTLEMENT_ONLY = new Set(["roman", "slavic", "egyptian", "bantu", "ethiopian", "west-african", "arabic-persian", "turkic", "mongol", "arabic", "persian", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine", "iberian", "greek-byzantine"]);
 /** The cultures whose settlement names fill a place, nearest first: the culture, its lens keys, its family, then General. */
 export function placeCultures(culture: string): string[] {
+  // Second pass (brief §12): a culture that has settlement names of its own fills its places from them only, and a mix from its own halves'; the family's names are another culture's.
+  if (MIX_HALVES[culture]) return [...(WORLD_CULTURES.some((c) => c.id === culture) ? [culture] : []), ...MIX_HALVES[culture]];
+  if (OWN_SETTLEMENT_ONLY.has(culture) && WORLD_CULTURES.some((c) => c.id === culture)) return [culture];
   // Northern Europe brief 5a: German places are not Norse ones ("Ox Fjord"): its own, then the general ones, until German settlement names (batch 5b).
   if (culture === "german") return ["german", "general"];
   const keysOf = (c: { key: string; keys: string[] }) => [c.key, ...c.keys, ...(c.key === "scandinavian" ? ["norse"] : [])];
@@ -297,6 +318,6 @@ function germanPlace(req: FillRequest): string | undefined {
   // Brief 5b: otherwise the German settlement names (the world culture) fill the place.
   return undefined;
 }
-registerResolver("place", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(req.culture, req.region, req.rng, !!req.placeBefore), req));
+registerResolver("place", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(req.culture, req.region, req.rng, !!req.placeBefore, req.era, req.rest), req));
 registerResolver("earlierPlace", (req) => (req.culture === "german" ? germanPlace(req) : undefined) ?? placeFill(() => fillPlace(EARLIER[req.culture] ?? req.culture, req.region, req.rng, !!req.placeBefore) ?? fillPlace(req.culture, req.region, req.rng, !!req.placeBefore), req));
 registerResolver("river", (req) => settled(drawFromDelegate({ engine: "rivers" }, { where: "home", culture: req.culture, region: req.region, rng: req.rng }), req));

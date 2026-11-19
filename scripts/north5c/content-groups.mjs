@@ -21,7 +21,7 @@ export const WORDS = {
     irish: "Druid Circle|Brotherhood|Bardic School|Holy Order|Seers|Wise Women|Sodality|Hermits|Pilgrims|Society;Shamrock|Harp|Salmon|Hazel|Crane|Swan|Ash|Cross|Hound|Bell;Holy Well|Wisdom|Vision|Fire|Cairn|Island|Mist|Vigil|Spring|Dream",
     cornish: "Cunning Folk|Wise Women|Brotherhood|Chapel Society|Hermits|Seers|Circle|Order|Pilgrims|Fellowship;Chough|Tin|Gull|Cross|Pisky|Hare|Well|Rose|Lantern|Stone;Holy Well|Mine|Cove|Moor|Mist|Vision|Cairn|Spring|Vigil|Hallows",
     norse: "Witch Circle|Seeress Band|Brotherhood|Rune-Masters|Seers|Temple Guild|Sworn Band|Priests' Circle|Wise Women|Fellowship;Raven|Wolf|Serpent|Tree|Hammer|Ash|Eagle|Horn|Bear|Boar;Runes|Fate|Well|Sacrifice|Hall|Mist|Mound|Vision|Oath|Grove",
-    scandinavian: "Rune Society|Brotherhood|Lodge|Pietist Circle|Order|Seekers|Lantern Society|Fellowship|Circle|Sisterhood;Elk|Swan|Raven|Ash|Torch|Wolf|Lantern|Bear|Pine|Star;Midnight Sun|Mist|Vigil|Runes|Fjord|Aurora|Covenant|Well|Light|Dream",
+    scandinavian: "Rune Society|Brotherhood|Lodge|Pietist Circle|Order|Seekers|Lantern Society|Fellowship|Circle|Sisterhood;Elk|Swan|Raven|Ash|Torch|Wolf|Lantern|Bear|Pine|Star;Midnight Sun|Mist|Vigil|Runes|Fjord|Dawn|Covenant|Well|Light|Dream",
     german: "Rosicrucian Brotherhood|Cloister|Lodge|Secret Society|Order|Chapter|Illuminated Circle|Fraternity|Brotherhood|Hermitage;Rose|Eagle|Cross|Oak|Raven|Star|Wheel|Linden|Lantern|Hart;Mysteries|Vision|Vigil|Grail|Shadow|Forest|Well|Veil|Covenant|Light",
     celtic: "Druids|Seers|Brotherhood|Wise Ones;Oak|Mistletoe|Boar|Cauldron;Sacred Grove|Spring|Mound|Mist",
   },

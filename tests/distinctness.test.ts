@@ -14,6 +14,8 @@ interface Distinctness {
   generalLimit: number;
   /** The most inn names (percent) two core-depth cultures may share at the same seed: every pair, not only siblings (second-tier 6b Part A). */
   innLimit: number;
+  /** Every pair of distinct cultures in `general`, siblings or not (second pass, brief §12). */
+  pairLimit: number;
   excludedModules: string[];
   excludedCells: string[];
   siblings: [string, string][];
@@ -96,4 +98,24 @@ test("distinctness: no two core-depth cultures share more than the inn limit of 
     }
   }
   assert.deepEqual(over, [], `inn names over ${D.innLimit}%`);
+});
+
+test("distinctness: no two cultures share more than the pair limit in any module (every pair, not only listed siblings)", () => {
+  const over: string[] = [];
+  const cs = [...new Set(D.general)];
+  for (const module of modules()) {
+    const offered = states().offered[module];
+    for (let i = 0; i < cs.length; i++) {
+      for (let j = i + 1; j < cs.length; j++) {
+        const a = cs[i];
+        const b = cs[j];
+        if (!offered.includes(a) || !offered.includes(b) || excluded(module, a) || excluded(module, b)) continue;
+        const ab = overlap(states(), module, a, b, D.seeds);
+        const ba = overlap(states(), module, b, a, D.seeds);
+        if (ab === undefined || ba === undefined) over.push(`${a}/${b} ${module} not measured`);
+        else if (Math.max(ab, ba) > D.pairLimit) over.push(`${a}/${b} ${module} ${Math.max(ab, ba)}%`);
+      }
+    }
+  }
+  assert.deepEqual(over, [], `over ${D.pairLimit}% or not measured`);
 });

@@ -4129,7 +4129,7 @@
   "region": 0.3,
   "module": {
    "$comment": "Sibling-distinctness brief: a floor under the share of a module's draws that a core-depth culture's own entries take, for modules whose general draw would otherwise leave a culture within reach of General (a calendar, the sky, arms: names that carry no people).",
-   "calendarNames": 0.85,
+   "calendarNames": 0.95,
    "skyNames": 0.9,
    "mysticOrders": 0.85,
    "underworldGroups": 0.85,
@@ -4180,15 +4180,33 @@
      "cornish"
     ]
    },
-   "deityNames": {
-    "share": 0.97,
-    "only": [
-     "welsh",
-     "scottish",
-     "irish",
-     "cornish"
-    ]
-   },
+   "deityNames": [
+    {
+     "share": 0.97,
+     "only": [
+      "welsh",
+      "scottish",
+      "irish",
+      "cornish"
+     ]
+    },
+    {
+     "share": 0.9,
+     "except": [
+      "norse",
+      "scandinavian",
+      "anglo-saxon",
+      "norman-british",
+      "german",
+      "welsh",
+      "scottish",
+      "irish",
+      "cornish",
+      "celtic",
+      "general"
+     ]
+    }
+   ],
    "grasslandNames": 0.98,
    "armsNames": 0.85,
    "eventNames": 0.8,
@@ -4214,7 +4232,14 @@
    "persian": 0.02,
    "ethiopian": 0.03,
    "bantu": 0.03,
-   "west-african": 0.08
+   "west-african": 0.08,
+   "french": 0.1,
+   "dutch": 0.1,
+   "italian": 0.1,
+   "roman": 0.1,
+   "slavic": 0.1,
+   "german": 0.2,
+   "egyptian": 0.02
   },
   "signatureMix": 0.4,
   "mixes": [
@@ -4581,6 +4606,8 @@
    "ethiopian",
    "bantu",
    "west-african"
-  ]
+  ],
+  "pairLimit": 30,
+  "$pairComment": "Second pass (18 November 2026, §12 of the second-tier brief): every pair of distinct cultures in `general`, siblings or not, shares at most `pairLimit` percent in every measured module; listed siblings keep `siblingLimit`."
  }
 }

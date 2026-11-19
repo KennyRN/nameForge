@@ -597,7 +597,7 @@
       "guide": "Animal gods and theology: houses, horizons and seats of the gods; under the Greeks, cities of gods and beasts.",
       "fuseChance": 0,
       "lists": {
-        "god": ["Ra", "Ptah", "Amun", "Bastet", "Sobek", "Thoth", "Osiris", "Isis", "Horus", "Hathor", "Anubis", "Khnum", "Neith", "Min", "Montu", "Sekhmet", "Wadjet", "Nekhbet", "Set", "Atum", "Khonsu", "Aten", "Mut", "Wepwawet"]
+        "god": ["the Sun", "the Moon", "the River", "the Sky", "the Horizon", "the Flood", "the Desert", "the Reeds", "the Falcon", "the Cat", "the Ibis", "the Scarab", "the Jackal", "the Lotus", "the Two Lands", "the Beyond", "the West", "the Inundation", "the Cobra", "the Vulture", "the Western Mountain", "the Sacred Lake", "the Hidden Land", "the Morning Star"]
       },
       "eras": [
         {
@@ -1439,7 +1439,7 @@
       "lists": {
         "saint": ["Mark", "Libanos", "Michael", "George", "Gabriel", "Mary", "Yared", "Tekle Haymanot", "Gebre Menfes Kidus", "Aregawi", "Pantelewon", "Garima", "Aftse", "Guba", "Alef", "Yemata", "Liqanos", "Sehma", "Abuna Salama"],
         "holy": ["Light", "Olives", "Grace", "Peace", "Mercy", "Wisdom", "Tabor", "Zion", "the Cross", "Salvation"],
-        "king": ["Ezana", "Kaleb", "Gebre Meskel", "Lalibela", "Zara Yaqob", "Fasilides", "Tewodros", "Menelik", "Iyasu", "Yekuno Amlak", "Amda Seyon", "Dawit", "Sarsa Dengel", "Susenyos"],
+        "king": ["Dawit", "Yeshaq", "Alemayehu", "Ayele", "Bereket", "Berhanu", "Fikre", "Gashaw", "Habtamu", "Kebede", "Lemma", "Melaku", "Negash", "Sisay", "Ezana", "Lalibela", "Tewodros"],
         "animal": ["Lion", "Hyena", "Eagle", "Ibex|Ibex", "Gelada|Geladas", "Leopard", "Elephant", "Crane", "Ox|Oxen", "Wolf|Wolves"],
         "adj": ["Hot", "Cold", "Sweet", "Bitter", "Red", "White", "Black", "High", "New", "Old"],
         "feature": ["Spring", "Water", "Rock", "Mountain", "Plateau", "Lake", "Gorge", "Pass", "Field", "Market"],

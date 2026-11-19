@@ -9,6 +9,7 @@ import type { BiomeCatalogue } from "../biomes";
 import deityData from "../data/deity-names.json";
 import { BYNAME_CULTURES_5C } from "../bynames/engine";
 import { applySignature } from "../north5c";
+import { fillSlots } from "../fill";
 import {
   type GroupSafeguards,
   type GroupSetting,
@@ -473,10 +474,22 @@ export function generateDeityNames(options: DeityOptions): DeityBatch {
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const guards = options.safeguards;
   const ok = (text: string) => !deityTitleBlocked(text, guards) && !hasRealDivineName(text) && withinCap(text, DEITY_DATA.cap);
-  return {
+  // Second pass (brief §12 §5): a deity's place ("Sun Lord of [place]") is a settlement of its own culture in the default output too.
+  const placed = (text: string, i: number): string => {
+    if (!/\[(place|holy person)\]/.test(text)) return text;
+    let out = text;
+    // A settlement name that carries a real god's name or a blocked word ("Shrine of Mars") is drawn again.
+    for (let k = 0; k < 12; k++) {
+      out = fillSlots(text.replace(/\[place\]/g, "[town]"), { culture: requested, era, mode: "real", rng: mulberry32((batch.seed ^ ((i + 1) * 2654435761) ^ (k * 40503)) >>> 0), settlementPlaces: true } as never);
+      if (ok(deityCapitals(out))) return out;
+    }
+    return out;
+  };
+  const signed = {
     ...batch,
     names: applySignature(batch.names, "deityNames", requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic }, keep: (n) => n.kind !== "deity", set: (n, text) => ({ ...n, text: deityCapitals(text), title: deityCapitals(text), shape: "signature" }) }),
   };
+  return { ...signed, names: signed.names.map((n, i) => (/\[(place|holy person)\]/.test(n.text) ? { ...n, text: deityCapitals(placed(n.text, i)), title: deityCapitals(placed(n.title ?? n.text, i)) } : n)) };
 }
 
 function generateDeityNamesCore(options: DeityOptions): DeityBatch {

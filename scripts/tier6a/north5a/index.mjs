@@ -1,5 +1,6 @@
 // Brief 6a, the land and sea modules: adapts the compact culture files of scripts/tier6a/north5a/ to the 5a generator's format (scripts/make-north5a.mjs).
 import { framesOf } from "../../north5a/lib.mjs";
+import { permuteList, turnPlain } from "../permute.mjs";
 import celtic from "../../north5a/celtic.mjs";
 import spanish from "./spanish.mjs";
 import portuguese from "./portuguese.mjs";
@@ -14,20 +15,22 @@ import angloSaxon from "./anglo-saxon.mjs";
 
 /** The fixed tag order of a ten-word list: three AN-MD, three EM-ST, two ST-MO, one fantastic, one general. */
 const TAGS = ["AN-MD", "AN-MD", "AN-MD", "EM-ST", "EM-ST", "EM-ST", "ST-MO", "ST-MO", "h", ""];
-const tag = (list) => {
+const tag = (list0, key) => {
+  const list = permuteList(key, list0);
   const words = list.split("|");
   if (words.length !== 10) throw new Error(`a noun list needs ten words: ${list}`);
   return words.map((w, i) => (TAGS[i] ? `${w};${TAGS[i]}` : w)).join("|");
 };
-const tagAll = (nouns) => ({
-  land: Object.fromEntries(Object.entries(nouns.land).map(([k, lists]) => [k, lists.map(tag)])),
-  water: Object.fromEntries(Object.entries(nouns.water).map(([k, lists]) => [k, lists.map(tag)])),
-  route: nouns.route.map(tag),
-  sacred: nouns.sacred.map(tag),
+const tagAll = (nouns, key) => ({
+  land: Object.fromEntries(Object.entries(nouns.land).map(([k, lists]) => [k, lists.map((l) => tag(l, key))])),
+  water: Object.fromEntries(Object.entries(nouns.water).map(([k, lists]) => [k, lists.map((l) => tag(l, key))])),
+  route: nouns.route.map((l) => tag(l, key)),
+  sacred: nouns.sacred.map((l) => tag(l, key)),
 });
 const full = [spanish, portuguese, french, italian, dutch, roman, slavic, greek, byzantine, angloSaxon];
-export const CULTURES_6A = full.map((c) => ({ key: c.key, keys: [c.key], label: c.label, land: c.land, water: c.water, route: c.route, sacred: c.sacred, frames: framesOf(c.style) }));
-export const NOUNS_6A = Object.fromEntries(full.map((c) => [c.key, tagAll(c.nouns)]));
+const plainTurn = (key, g) => Object.fromEntries(Object.entries(g).map(([k, v]) => [k, k === "D" ? v : turnPlain(key, v)]));
+export const CULTURES_6A = full.map((c) => ({ key: c.key, keys: [c.key], label: c.label, land: plainTurn(c.key, c.land), water: plainTurn(c.key, c.water), route: plainTurn(c.key, c.route), sacred: plainTurn(c.key, c.sacred), frames: framesOf(c.style) }));
+export const NOUNS_6A = Object.fromEntries(full.map((c) => [c.key, tagAll(c.nouns, c.key)]));
 export const STYLE_6A = Object.fromEntries(full.map((c) => [c.key, c.style]));
 
 // The mixes (Iberian, Greek and Byzantine): 12 words and 4 shapes of their own, the halves' signature entries at half weight (the engine's `MIX_HALVES`).

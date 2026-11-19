@@ -15,7 +15,7 @@ const TAGS = ["AN-MD", "AN-MD", "AN-MD", "EM-ST", "EM-ST", "EM-ST", "ST-MO", "ST
 const tag = (list, tags) => {
   const words = list.split("|");
   if (words.length !== 10) throw new Error(`a noun list needs ten words: ${list}`);
-  return words.map((w, i) => (tags[i] ? `${w};${tags[i]}` : w)).join("|");
+  return words.map((w, i) => (tags[i] && !w.includes(";") ? `${w};${tags[i]}` : w)).join("|");
 };
 const tagAll = (nouns, tags, routeTags = tags) => ({
   land: Object.fromEntries(Object.entries(nouns.land).map(([k, lists]) => [k, lists.map((l) => tag(l, tags))])),
@@ -24,7 +24,7 @@ const tagAll = (nouns, tags, routeTags = tags) => ({
   sacred: nouns.sacred.map((l) => tag(l, tags)),
 });
 const full = [turkic, mongol, arabic, persian, egyptian, ethiopian, bantu, westAfrican];
-export const CULTURES_6B = full.map((c) => ({ key: c.key, keys: [c.key], label: c.label, land: c.land, water: c.water, route: c.route, sacred: c.sacred, frames: framesOf(c.style) }));
+export const CULTURES_6B = full.map((c) => ({ key: c.key, keys: [c.key], label: c.label, land: c.land, water: c.water, route: c.route, sacred: c.sacred, frames: framesOf(c.style, c.key === "egyptian" ? { route: [["drove", "{goods} Track", 4]] } : {}) }));
 export const NOUNS_6B = Object.fromEntries(full.map((c) => [c.key, tagAll(c.nouns, c.tags ?? TAGS, c.routeTags ?? c.tags ?? TAGS)]));
 export const STYLE_6B = Object.fromEntries(full.map((c) => [c.key, c.style]));
 

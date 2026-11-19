@@ -6,7 +6,8 @@
 import vocabData from "../data/settlement-vocab.json";
 import { CELTIC_MIX, CELTIC_MIX_WEIGHT, NORTH } from "../northData";
 import { NORTH5B } from "../northData5b";
-import { MIX_HALF_WEIGHT, MIX_HALVES } from "../tier6a";
+import { FILL_KIND, FILL_POOLS, MIX_HALF_WEIGHT, MIX_HALVES, OWN_FILL_CULTURES } from "../tier6a";
+import { TIER6B_FILLS } from "../tier6aData";
 import { creaturesFor, type Habitat } from "../creatures";
 import { inCultureGroup, LENS_REGIONS, regionsOfCulture } from "../lens";
 import { GROUP_TONES, type GroupTone, hasBannedWord } from "../groups/engine";
@@ -212,7 +213,12 @@ export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere):
       out.push([e, w]);
     }
   };
-  for (const e of pool.entries) if (entryAllowed(e, where)) add(e, (e.x ?? 1) * regionX(e, where) * themeX(e, where));
+  // Second pass (brief §12 §3): a 6b culture's plant, tree, bird and beast fills are its own lists' words (a mix's, its halves'), never the shared English ones; the fantastic pools stay as they are.
+  const kind = FILL_KIND[name];
+  const halvesOf = MIX_HALVES[where.culture];
+  const ownWords = OWN_FILL_CULTURES.includes(where.culture) && FILL_POOLS.includes(name) && !pool.entries.some((e) => e.h === true) ? (halvesOf ? halvesOf.flatMap((h) => TIER6B_FILLS[h]?.[kind] ?? []) : TIER6B_FILLS[where.culture]?.[kind] ?? []) : [];
+  if (ownWords.length > 0) for (const w of ownWords) add({ w }, 1);
+  else for (const e of pool.entries) if (entryAllowed(e, where)) add(e, (e.x ?? 1) * regionX(e, where) * themeX(e, where));
   // Northern Europe brief 5a §3.2: Celtic also draws each nation's signature words at a quarter weight.
   if (where.culture === "celtic") {
     for (const e of pool.entries) {

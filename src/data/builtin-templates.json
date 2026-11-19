@@ -1878,7 +1878,6 @@
      "Amy",
      "Ella",
      "Chloe",
-     "Freya",
      "Lucy",
      "Olivia",
      "Skye",
@@ -2028,7 +2027,6 @@
    {
     "name": "Female",
     "items": [
-     "Brigid",
      "Maeve",
      "Grainne",
      "Una",
@@ -2087,7 +2085,8 @@
      "Bronach",
      "Cainer",
      "Cumman",
-     "Aoibheann"
+     "Aoibheann",
+     "Mairenn"
     ]
    },
    {
@@ -2517,7 +2516,6 @@
      "Poppy",
      "Mia",
      "Ella",
-     "Freya",
      "Lily"
     ]
    },
@@ -2748,7 +2746,6 @@
      "Axel",
      "Magnus",
      "Bjorn",
-     "Thor",
      "Henrik",
      "Ole",
      "Peter",
@@ -4527,14 +4524,14 @@
      "Carla",
      "Claudia",
      "Leonor",
-     "Matilde",
      "Madalena",
      "Francisca",
      "Benedita",
      "Alice",
      "Laura",
-     "Diana",
-     "Eva"
+     "Eva",
+     "Matilde",
+     "Rafaela"
     ]
    },
    {
@@ -4747,7 +4744,6 @@
      "Anna",
      "Giulia",
      "Giuseppina",
-     "Aurora",
      "Rosa",
      "Alice",
      "Angela",
@@ -4771,7 +4767,8 @@
      "Caterina",
      "Alessia",
      "Assunta",
-     "Sara"
+     "Sara",
+     "Elisa"
     ]
    },
    {
@@ -5117,7 +5114,6 @@
      "Chrysoula",
      "Fotini",
      "Anastasia",
-     "Artemis",
      "Evangelia",
      "Afroditi",
      "Paraskevi",
@@ -5127,7 +5123,8 @@
      "Stavroula",
      "Penelope",
      "Panagiota",
-     "Ariadni"
+     "Ariadni",
+     "Danae"
     ]
    },
    {
@@ -5429,7 +5426,6 @@
      "Chrysoula",
      "Fotini",
      "Anastasia",
-     "Artemis",
      "Evangelia",
      "Afroditi",
      "Paraskevi",
@@ -5439,7 +5435,8 @@
      "Stavroula",
      "Penelope",
      "Panagiota",
-     "Ariadni"
+     "Ariadni",
+     "Danae"
     ]
    },
    {
@@ -6270,7 +6267,6 @@
      "Odval",
      "Saruul",
      "Tuul",
-     "Anu",
      "Misheel",
      "Khulan",
      "Tungalag",
@@ -6296,7 +6292,8 @@
      "Ariunzaya",
      "Tselmeg",
      "Soyol",
-     "Munkhzul"
+     "Munkhzul",
+     "Soyolmaa"
     ]
    },
    {
@@ -6495,13 +6492,13 @@
      "Safiya",
      "Layan",
      "Nadia",
-     "Rama",
      "Samira",
      "Tala",
      "Salma",
      "Ayla",
      "Hind",
-     "Mira"
+     "Mira",
+     "Ghazal"
     ]
    },
    {
@@ -6549,10 +6546,8 @@
    {
     "name": "Male",
     "items": [
-     "Muhammad",
      "Ali",
      "Hasan",
-     "Husayn",
      "Khalid",
      "Ahmad",
      "Hamza",
@@ -6576,9 +6571,11 @@
      "Umar",
      "Uthman",
      "Abu Bakr",
-     "Harun",
-     "Mansur",
-     "Saladin"
+     "Rashid",
+     "Nasser",
+     "Saladin",
+     "Muhammad",
+     "Husayn"
     ]
    },
    {
@@ -6697,14 +6694,14 @@
      "Safiya",
      "Layan",
      "Nadia",
-     "Rama",
      "Samira",
      "Tala",
      "Salma",
      "Ayla",
      "Hind",
      "Mira",
-     "Reem"
+     "Reem",
+     "Hana"
     ]
    },
    {
@@ -6771,7 +6768,6 @@
      "Rostam",
      "Zal",
      "Siavash",
-     "Jamshid",
      "Manuchehr",
      "Kayvan",
      "Navid",
@@ -6781,7 +6777,8 @@
      "Xerxes",
      "Ardashir",
      "Shapur",
-     "Khosrow"
+     "Kamran",
+     "Jamshid"
     ]
    },
    {
@@ -6917,12 +6914,12 @@
      "Avina",
      "Elnaz",
      "Ghazal",
-     "Diana",
      "Kiana",
      "Melika",
      "Nika",
      "Romina",
-     "Tara"
+     "Tara",
+     "Sanaz"
     ]
    },
    {
@@ -6973,25 +6970,25 @@
      "Pachomius",
      "Shenouda",
      "Antony",
-     "Seti",
+     "Amenemope",
      "Athanasius",
      "Cyril",
-     "Khafre",
+     "Paneb",
      "Macarius",
-     "Menkaure",
+     "Kha",
      "Mina",
-     "Djoser",
+     "Userhat",
      "Dioscorus",
-     "Senusret",
-     "Amenemhat",
-     "Ahmose",
-     "Merneptah",
-     "Psamtik",
-     "Necho",
-     "Taharqa",
-     "Piye",
-     "Horemheb",
-     "Imhotep",
+     "Nebamun",
+     "Ipuy",
+     "Rekhmire",
+     "Ramose",
+     "Pay",
+     "Amenemhab",
+     "Meryre",
+     "Neferhotep",
+     "Tjay",
+     "Pahery",
      "Hori",
      "Nakht",
      "Sennedjem",
@@ -7018,28 +7015,28 @@
      "Irene",
      "Dorothea",
      "Eudoxia",
-     "Meritaten",
-     "Sobekneferu",
+     "Nebet",
+     "Henut",
      "Mary",
-     "Nitocris",
-     "Merneith",
-     "Khentkaus",
-     "Ahhotep",
-     "Mutnodjmet",
-     "Henutmire",
-     "Tuya",
+     "Tabes",
+     "Takhat",
+     "Meryt",
+     "Tentamun",
+     "Nubkhas",
+     "Webkhet",
+     "Taimhotep",
      "Iset",
-     "Bintanath",
-     "Arsinoe",
-     "Berenice",
-     "Tausret",
-     "Meresankh",
-     "Hetepheres",
-     "Nofret",
-     "Neferura",
-     "Satiah",
-     "Kiya",
-     "Henutsen",
+     "Isetweret",
+     "Wabet",
+     "Senebhenas",
+     "Tamit",
+     "Shepset",
+     "Nubemhat",
+     "Tanefret",
+     "Meret",
+     "Rennefer",
+     "Amenemipet",
+     "Ankhet",
      "Nefertiti",
      "Hatshepsut",
      "Cleopatra",
@@ -7061,19 +7058,19 @@
     "items": [
      "Dawit",
      "Yeshaq",
-     "Yohannes",
-     "Susenyos",
-     "Fasilides",
-     "Iyasu",
-     "Naod",
-     "Eskender",
-     "Lebna Dengel",
-     "Amda Seyon",
-     "Yekuno Amlak",
-     "Sarsa Dengel",
-     "Baeda Maryam",
-     "Gebre Mesqel",
-     "Tekle Haymanot",
+     "Alemayehu",
+     "Ayele",
+     "Bereket",
+     "Berhanu",
+     "Fikre",
+     "Gashaw",
+     "Habtamu",
+     "Kebede",
+     "Lemma",
+     "Melaku",
+     "Negash",
+     "Sisay",
+     "Teshome",
      "Haile",
      "Gebre",
      "Kidane",
@@ -7224,31 +7221,31 @@
    {
     "name": "Male",
     "items": [
-     "Mpande",
-     "Dinuzulu",
-     "Sekhukhune",
-     "Khama",
-     "Sobhuza",
-     "Lobengula",
-     "Mswati",
-     "Mwanga",
-     "Kamanya",
-     "Chwa",
-     "Kimera",
-     "Hintsa",
-     "Sandile",
-     "Maqoma",
-     "Ngqika",
-     "Phalo",
-     "Mohlomi",
-     "Lerotholi",
-     "Letsie",
-     "Makaba",
-     "Sechele",
-     "Soshangane",
-     "Zwangendaba",
-     "Mzila",
-     "Mutota",
+     "Themba",
+     "Mandla",
+     "Bheki",
+     "Mduduzi",
+     "Sifiso",
+     "Zolani",
+     "Thabo",
+     "Tshepo",
+     "Kabelo",
+     "Kato",
+     "Wasswa",
+     "Mukasa",
+     "Nsubuga",
+     "Mulenga",
+     "Chanda",
+     "Kasonde",
+     "Banda",
+     "Phiri",
+     "Tendai",
+     "Farai",
+     "Kudzai",
+     "Tafara",
+     "Nhamo",
+     "Simba",
+     "Chengetai",
      "Shaka",
      "Dingane",
      "Cetshwayo",
@@ -7432,13 +7429,13 @@
     "name": "Male",
     "items": [
      "Musa",
-     "Agaja",
-     "Ghezo",
-     "Glele",
-     "Behanzin",
-     "Ewuare",
-     "Esigie",
-     "Orhogbua",
+     "Adebayo",
+     "Babatunde",
+     "Olumide",
+     "Chukwuemeka",
+     "Ifeanyi",
+     "Nwankwo",
+     "Okonkwo",
      "Kwame",
      "Kofi",
      "Kwabena",
@@ -7447,8 +7444,8 @@
      "Kojo",
      "Kwaku",
      "Kwadwo",
-     "Prempeh",
-     "Ahmadu",
+     "Obiora",
+     "Seydou",
      "Mamadou",
      "Ousmane",
      "Sekou",
@@ -7658,7 +7655,6 @@
      "Ravi",
      "Mohan",
      "Ram",
-     "Krishna",
      "Govind",
      "Hari",
      "Gopal",
@@ -7670,7 +7666,6 @@
    {
     "name": "Female",
     "items": [
-     "Lakshmi",
      "Parvati",
      "Saraswati",
      "Ahilyabai",
@@ -7693,7 +7688,6 @@
      "Savitri",
      "Radha",
      "Uma",
-     "Durga",
      "Gauri",
      "Sita",
      "Tara",
@@ -7740,14 +7734,14 @@
      "Atharv",
      "Dinesh",
      "Shaurya",
-     "Ganesh",
      "Rudra",
      "Ram",
      "Dhruv",
-     "Krishna",
      "Veer",
      "Gopal",
-     "Yash"
+     "Yash",
+     "Anil",
+     "Rajesh"
     ]
    },
    {
@@ -7757,7 +7751,6 @@
      "Neha",
      "Pooja",
      "Anjali",
-     "Lakshmi",
      "Aadhya",
      "Parvati",
      "Anaya",
@@ -7785,8 +7778,9 @@
      "Ira",
      "Uma",
      "Siya",
-     "Durga",
-     "Avni"
+     "Avni",
+     "Sunita",
+     "Anita"
     ]
    },
    {
@@ -9270,7 +9264,6 @@
      "Hinewai",
      "Aroha",
      "Mere",
-     "Hera",
      "Rangi",
      "Huia",
      "Moana"
@@ -9297,7 +9290,6 @@
      "Wiremu",
      "Nikau",
      "Hemi",
-     "Tane",
      "Eruera",
      "Manaia",
      "Pita",
@@ -9319,7 +9311,8 @@
      "Hori",
      "Noa",
      "Tipene",
-     "Ikaika"
+     "Ikaika",
+     "Nainoa"
     ]
    },
    {
@@ -9331,7 +9324,6 @@
      "Lea",
      "Mere",
      "Aroha",
-     "Hera",
      "Moana",
      "Rangi",
      "Leilani",
@@ -9358,7 +9350,8 @@
      "Erihapeti",
      "Mahina",
      "Rahera",
-     "Nikau Ana"
+     "Nikau Ana",
+     "Hina"
     ]
    }
   ]

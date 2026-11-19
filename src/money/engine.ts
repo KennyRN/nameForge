@@ -1123,6 +1123,8 @@ function generateMoneyNamesCore(options: MoneyOptions): MoneyBatch {
     if (counted.length === 0 || counted.length > MONEY_DATA.cap) return false;
     if (repeatsContent(counted)) return false;
     if (block.has(bare(text))) return false;
+    // Second pass (brief §12 §6): a weapon on its own is not a coin ("Sword").
+    if (counted.length === 1 && /^(Sword|Spear|Axe|Bow|Arrow|Shield|Hammer|Mace|Dagger|Lance|Knife|Club)s?$/i.test(text)) return false;
     if (breaksMoneyWords(text, kind === "goods")) return false;
     if ((era === "NF" || era === "IS") && hasSpaceBlock(text)) return false;
     return true;

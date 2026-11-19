@@ -70,8 +70,8 @@ export default {
     "Pilgrim Way;AN-MD|Church Path;AN-MD|Emperor's Road;AN-MD|Wayside Shrine Path;EM-ST|Baroque Chapel Path;EM-ST|Funeral Path;EM-ST|Pilgrim Trail;ST-MO|Heritage Path;ST-MO|Kobold's Path;h|Holy Way",
   ],
   sacred: [
-    "Holy Spring;AN-MD|Sacred Well;AN-MD|Healing Spring;AN-MD|Spa Chapel Well;EM-ST|Wishing Well;EM-ST|Pilgrim Well;EM-ST|Well House;ST-MO|Heritage Well;ST-MO|Well of the Water Sprites;h|Sacred Spring",
-    "Sacred Grove;AN-MD|Thing Place;AN-MD|Standing Stone;AN-MD|Calvary Hill;EM-ST|Wayside Shrine;EM-ST|Memorial Stone;EM-ST|War Memorial;ST-MO|Memorial Garden;ST-MO|Giant's Seat;h|Holy Hill",
-    "Cathedral;AN-MD|Monastery;AN-MD|Pilgrim Chapel;AN-MD|Baroque Chapel;EM-ST|Mining Chapel;EM-ST|Parish Church;EM-ST|Memorial Church;ST-MO|Cemetery Chapel;ST-MO|Kobold Chapel;h|Shrine",
+    "Holy Spring;AN-MD|Sacred Well;AN-MD|Baptismal Spring;AN-MD|Spa Pump Room;EM-ST|Wishing Fountain;EM-ST|Pilgrim Fountain;EM-ST|Fountain House;ST-MO|Heritage Spring;ST-MO|Well of the Water Sprites;h|Sacred Spring",
+    "Sacred Grove;AN-MD|Thing Place;AN-MD|Menhir;AN-MD|Calvary Hill;EM-ST|Wayside Shrine;EM-ST|Fallen Soldiers' Stone;EM-ST|Heroes' Memorial;ST-MO|Garden of Remembrance;ST-MO|Giant's Seat;h|Holy Hill",
+    "Cathedral;AN-MD|Monastery;AN-MD|Pilgrimage Church;AN-MD|Baroque Chapel;EM-ST|Mining Chapel;EM-ST|Village Church;EM-ST|Peace Church;ST-MO|Graveyard Chapel;ST-MO|Kobold Chapel;h|Wayside Altar",
   ],
 };

@@ -150,7 +150,9 @@ export function signatureDrawer(module: string, culture: string | undefined, fra
       const frame = pickWeighted(frames.map((f) => [f[0], f[1]] as [string, number]), rng);
       const chosen: string[] = [];
       let failed = false;
-      const text = frame.replace(/\{(N[012]|A|R)\}/g, (_m, slot: string) => {
+      // Second pass (brief §12 §6): a compound frame ("{N1}{N0}") joins its words as one ("Stormwarden"); a second word of its own ("Sky Father") stands apart.
+      const joined = (word: string, at: number): string => (at > 0 && frame[at - 1] === "}" ? (word.includes(" ") ? ` ${word}` : word.charAt(0).toLowerCase() + word.slice(1)) : word);
+      const text = frame.replace(/\{(N[012]|A|R)\}/g, (_m, slot: string, at: number) => {
         if (slot === "R") {
           const pairs = content.r ?? [];
           if (pairs.length === 0) {
@@ -162,7 +164,7 @@ export function signatureDrawer(module: string, culture: string | undefined, fra
         if (slot === "A") {
           const word = pick(content.a, rng);
           chosen.push(word);
-          return word;
+          return joined(word, at);
         }
         const i = Number(slot[1]);
         const list = content.n[i];
@@ -176,7 +178,7 @@ export function signatureDrawer(module: string, culture: string | undefined, fra
         }
         const word = pick(pool, rng);
         chosen.push(word);
-        return word;
+        return joined(word, at);
       });
       if (failed || text.length > 60) continue;
       for (const w of chosen) used.set(w, (used.get(w) ?? 0) + 1);
@@ -220,7 +222,10 @@ export function applySignature<T extends { text: string }>(
     const content = text.split(" ").filter((w) => !/^(of|the|and|for|in|at|by|on|to|from)$/i.test(w) && !w.startsWith("[")).map((w) => w.toLowerCase().replace(/'s?$/, "").replace(/s$/, ""));
     return new Set(content).size !== content.length;
   };
-  const allowed = (text: string) => !isRealGroup(text) && !containsRealGroup(text) && !(module === "realms" && repeats(text)) && extra(text);
+  // Second pass (brief §12 §6): a realm is not a realm of a realm ("Province of Sultanate of the Lowlands").
+  const FORM = /(^|[^A-Za-z])(Kingdom|Empire|Province|Sultanate|Emirate|Caliphate|Khanate|Khaganate|Duchy|Dukedom|Principality|Realm|Domain|Federation|Republic|Confederation|County|Lordship|Imamate|Chiefdom|Colony|Protectorate|Union|League|Horde|Beylic|Satrapy|Governorate|Khedivate|Commonwealth|Viceroyalty|Captaincy|Marquisate|Banner)(?=$|[^A-Za-z])/g;
+  const nested = (text: string): boolean => module === "realms" && (text.match(FORM)?.length ?? 0) > 1;
+  const allowed = (text: string) => !nested(text) && !isRealGroup(text) && !containsRealGroup(text) && !(module === "realms" && repeats(text)) && extra(text);
   const set = opts.set ?? ((n: T, text: string): T => ({ ...n, text }));
   const share = signatureShareFor(culture, module);
   const rng = mulberry32((seed ^ 0x5c5c5c5c ^ cultureSalt(culture)) >>> 0);
@@ -249,7 +254,7 @@ export function applySignature<T extends { text: string }>(
       const text = native ? resolveSexed(pick(opts.native!.forms, rng), sex) : draw(rng, ctx);
       if (!text || seen.has(text.toLowerCase()) || !allowed(text)) continue;
       seen.add(text.toLowerCase());
-      return set(n, text);
+      return set(n, text.replace(/(\S) The /g, "$1 the "));
     }
     return n;
   });

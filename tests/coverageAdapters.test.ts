@@ -166,7 +166,7 @@ test("realms: hand-counted cells (words/shapes), counted by hand from realms.jso
   assert.equal(cell("realms", "english"), "53/10", "anglo-saxon tribal 1; norman-british forms 2 + tribal 1 + homeland 1, and the batch's own 30 and 10");
   // Entries confined to an era: the weighted forms (era weights above nought), the modifiers and the
   // ideology words; ST has none because the realms have no steam age (5d: the batch's era words are tagged to the eras the module offers).
-  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 273, MD: 403, EM: 323, ST: 0, MO: 188, NF: 34, IS: 42 }); // Anglo-Saxon adds its own realms words (sibling-distinctness brief); batch 6b adds its eight cultures' and the mixes' era words
+  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 272, MD: 402, EM: 328, ST: 0, MO: 189, NF: 34, IS: 42 }); // Second pass (brief §12): the 6b cultures' timeless words are tagged to the eras they stand in, and Aurora left the Scandinavian orders;  Anglo-Saxon adds its own realms words (sibling-distinctness brief); batch 6b adds its eight cultures' and the mixes' era words
 });
 
 test("every module in the lens has an adapter and reports, none left 'not yet reported'", () => {

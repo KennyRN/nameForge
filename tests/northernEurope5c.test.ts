@@ -7,7 +7,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { COVERAGE_ADAPTERS, moduleCoverage } from "../src/coverage";
 import { applySignature, NORTH5C, signatureDrawer } from "../src/north5c";
-import { SIGNATURE_SHARE } from "../src/northData";
+import { signatureShareFor } from "../src/northData";
 import { mulberry32 } from "../src/markov";
 import { isRealGroup } from "../src/realPlaces";
 import { generateGroupNames, GROUP_FAMILIES } from "../src/groups/engine";
@@ -74,7 +74,8 @@ test("5c §11.3: a core culture's own frames take their share of a batch, and a 
   }
   const names = Array.from({ length: 4000 }, (_, i) => ({ text: `plain ${i}` }));
   const replaced = applySignature(names, "tradeGuilds", "german", 1).filter((n) => !n.text.startsWith("plain")).length / names.length;
-  assert.ok(Math.abs(replaced - SIGNATURE_SHARE) < 0.04, `the share is ${replaced}`);
+  // Second pass (brief §12 §1): German keeps a tenth of its legacy table, so its own frames take the rest (0.9, less the few draws a safeguard refuses).
+  assert.ok(Math.abs(replaced - signatureShareFor("german", "tradeGuilds")) < 0.06, `the share is ${replaced}`);
   // Another culture, or none: nothing replaced.
   assert.deepEqual(applySignature([{ text: "x" }], "tradeGuilds", "japanese", 1), [{ text: "x" }]);
 });

@@ -17,7 +17,7 @@ export default {
     N: "Nile Road|Caravan Road|Desert Track|Processional Way|Canal Path|Pilgrim Road",
     B: "Cotton|Gold|Grain|Papyrus|Natron|Incense|Camel|Obelisk",
     C: "Ghost|Mummy's|Phantom|Scarab|Jackal's|Cursed",
-    D: "Processional Way;AN|Quarry Road;AN|Delta Road;AN|Desert Track;AN|Monastery Road;MD|Pilgrim Way;MD|Caravan Road;MD|Dyke Road;MD|Mail Road;EM-ST|Canal Towpath;EM-ST|Railway Line;ST-MO|Corniche Road;ST-MO|Desert Highway;MO|Bridge Road;MO|Metro Line;MO",
+    D: "Processional Way;AN|Quarry Road;AN|Delta Road;AN|Desert Track;AN|Monastery Road;MD|Pilgrim Way;MD|Caravan Road;MD|Dyke Road;MD|Mail Road;MD-ST|Canal Towpath;MD-ST|Railway Line;ST-MO|Corniche Road;ST-MO|Desert Highway;MO|Bridge Road;MO|Metro Line;MO",
   },
   sacred: {
     N: "Temple|Obelisk|Monastery|Holy Well|Church|Shrine",
@@ -44,9 +44,9 @@ export default {
       chart: ["Bank|Fishing Bank|Sponge Bank|Wreck Bank|Coral Bank|Convoy Bank|Trawl Bank|Sandbank|Siren Bank|Shoal", "Reef|Coral Reef|Wreck Reef|Felucca Reef|Pirate Reef|Steamer Reef|Dive Reef|Artificial Reef|Drowned Reef|Rock", "Channel|Delta Channel|Felucca Channel|Pilot Channel|Customs Channel|Convoy Channel|Ferry Channel|Shipping Channel|Phantom Channel|Passage"],
     },
     route: [
-      "Processional Way|Nile Causeway|Post Road|King's Highway|Pilgrim Highway|Camel Road|Main Road|Desert Highway|Ghost Road|Highway",
+      "Processional Way;AN-MO|Nile Causeway;MD-MO|Post Road;MD-MO|King's Highway;MD-MO|Pilgrim Highway;MD-MO|Camel Road;MD-MO|Main Road;MD-MO|Desert Highway;MD-MO|Sand Road;MD-MO|Highway",
       "Gold Road|Natron Road|Grain Road|Papyrus Road|Cotton Road|Caravan Track|Rail Freight Line|Pipeline Corridor|Smugglers' Track|Trade Road",
-      "Pilgrim Way|Monastery Path|Saint's Path|Moulid Road|Holy Road|Hermit's Track|Walking Route|Trekking Trail|Enchanted Way|Pilgrim Road",
+      "Pilgrim Way|Monastery Path;AN-IS|Saint's Path;MD-IS|Moulid Road;MD-IS|Holy Road;MD-IS|Hermit's Track;MD-IS|Walking Route;ST-IS|Trekking Trail;MO-IS|Enchanted Way|Pilgrim Road",
     ],
     sacred: [
       "Sacred Lake|Healing Spring|Saint's Well|Baptismal Pool|Hot Spring|Flood Gauge Well|Fountain Shrine|Spa Pool|Nile Spirit Spring|Spring",

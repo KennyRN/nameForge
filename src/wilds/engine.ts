@@ -6,6 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
+import { hasEnglishRank, OWN_FILL_CULTURES } from "../tier6a";
 import { isRealTownName } from "../realPlaces";
 import { balanceRegion, balanceSignature, weighLegacyKinds, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf, isOwnSig } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
@@ -627,7 +628,8 @@ function biomeWord(ctx: Ctx, lists: Record<string, number>): VocabEntry | undefi
   return e;
 }
 
-const biomeHas = (ctx: Ctx, lists: Record<string, number>) => Object.keys(lists).some((l) => biomeWords(ctx.biome, l as BiomeList).length > 0);
+/** Second pass (brief §12 §3): a 6b culture's creature and tree fills are its own pools' entries; the biome's English lists are not read for it. */
+const biomeHas = (ctx: Ctx, lists: Record<string, number>) => !OWN_FILL_CULTURES.includes(ctx.culture.key) && Object.keys(lists).some((l) => biomeWords(ctx.biome, l as BiomeList).length > 0);
 
 /** §4: `{beast}` 60% from the module's creature pool, 40% from the biome; `{tree}` 50/50; `{stock}` the biome's livestock. */
 function creature(ctx: Ctx, name: "beast" | "tree" | "stock"): VocabEntry | undefined {
@@ -988,6 +990,7 @@ export function generateWildsNames(options: WildsOptions): WildsBatch {
     if (breaksRouteWords(text) || hasBannedWord(text) || hasWildsBanned(text)) return false;
     // Brief 5b §12.3: a name that is a real town ("South Bath") is drawn again.
     if (isRealTownName(text)) return false;
+    if (OWN_FILL_CULTURES.includes(newCtx().culture.key) && hasEnglishRank(text)) return false;
     return true;
   };
 

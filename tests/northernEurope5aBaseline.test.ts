@@ -92,5 +92,7 @@ test("batch 5a baseline: non-core cultures are byte-identical to M0 (brief rule 
     if (JSON.stringify(now[key]) !== JSON.stringify(was)) bad.push(key);
   }
   assert.ok(checked > 1000, `the baseline covers ${checked} non-core states`);
-  assert.deepEqual(bad.slice(0, 20), [], `${bad.length} non-core states changed`);
+  const by = new Map<string, number>();
+  for (const k of bad) { const [m, c] = k.split("|"); by.set(`${m}|${c}`, (by.get(`${m}|${c}`) ?? 0) + 1); }
+  assert.deepEqual(bad.slice(0, 20), [], `${bad.length} non-core states changed: ${JSON.stringify([...by])}`);
 });

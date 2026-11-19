@@ -40,6 +40,8 @@ const mergeEras = (a: Record<string, NewEra[]>, b: Record<string, NewEra[]>): Re
   return out;
 };
 /** Batches 6a and 6b together: the settlement names of both. */
+/** Second pass (brief §12 §3): the 6b cultures' own fills, by culture and kind (trees, plants, birds, beasts, water). */
+export const TIER6B_FILLS = (tier6b as unknown as { fills: Record<string, Record<string, string[]>> }).fills;
 export const TIER6A_DATA: Tier6a = {
   settlement: {
     cultures: [...A.settlement.cultures, ...B.settlement.cultures],

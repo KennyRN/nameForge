@@ -1642,7 +1642,7 @@ Turkic and Mongol are written for each culture (the steppe table stays, as the m
 
 **Male given names** (46): Bat (10, ST MO), Enkhbat (10, ST MO), Munkh (10, ST MO), Tuvshin (10, ST MO), Ganbold (10, ST MO), Batbayar (7, MO), Amarsanaa (7, MO), Erdene (7, ST), Tumurbaatar (7, ST), Otgonbayar (7, ST), Bayarsaikhan (5, ST), Ganzorig (5, ST), Dorj (5, ST), Battulga (5, ST), Nyamdorj (5, ST), Sukhbaatar (5, ST), Tsogtbaatar (3, ST), Ulziibayar (3, ST), Altankhuyag (3, ST), Enkhbayar (3, ST), Davaa (3, ST), Bold (3, ST), Batsaikhan (3, ST), Lkhagvasuren (3, ST), Munkhbat (2, ST), Odkhuu (2, ST), Tserendorj (2, ST), Gantulga (2, ST), Nomin (2, MO), Choijil (2, ST), Sarangerel (2, ST), Khuderchuluun (2, ST), Baatar (2, ST), Naran (2, ST), Temuulen (2, MO), Anand (2, MO), Ariunbold (2, MO), Tuguldur (2, MO), Munkh-Erdene (2, MO), Enkh-Amgalan (2, MO), Bilguun (2, MO), Dulguun (2, MO), Zolboo (2, MO), Gan-Erdene (2, MO), Tamir (2, MO), Erkhes (2, MO)
 
-**Female given names** (40): Oyun (10, ST MO), Sarnai (10, ST MO), Bolormaa (10, ST MO), Enkhtuya (10, ST MO), Narantuya (10, ST MO), Uyanga (7, MO), Munkhtsetseg (7, MO), Tsetseg (7, ST), Altantsetseg (7, ST), Ariunaa (7, ST), Odval (5, ST), Saruul (5, MO), Tuul (5, MO), Anu (5, MO), Misheel (5, MO), Khulan (5, MO), Tungalag (3, ST), Batjargal (3, ST), Gerel (3, ST), Zaya (3, MO), Enkhjargal (3, ST), Dolgor (3, ST), Undraa (3, ST), Sukhee (3, ST), Chimeg (2, ST), Nandin (2, ST), Baigal (2, ST), Narmandakh (2, ST), Oyuntuya (2, ST), Bayarmaa (2, ST), Ganchimeg (2, ST), Tsolmon (2, ST), Handaa (2, ST), Nomuun (2, MO), Narantsetseg (2, MO), Enkhtsetseg (2, MO), Ariunzaya (2, MO), Tselmeg (2, MO), Soyol (2, MO), Munkhzul (2, MO)
+**Female given names** (40): Oyun (10, ST MO), Sarnai (10, ST MO), Bolormaa (10, ST MO), Enkhtuya (10, ST MO), Narantuya (10, ST MO), Uyanga (7, MO), Munkhtsetseg (7, MO), Tsetseg (7, ST), Altantsetseg (7, ST), Ariunaa (7, ST), Odval (5, ST), Saruul (5, MO), Tuul (5, MO), Misheel (5, MO), Khulan (5, MO), Tungalag (5, ST), Batjargal (3, ST), Gerel (3, ST), Zaya (3, MO), Enkhjargal (3, ST), Dolgor (3, ST), Undraa (3, ST), Sukhee (3, ST), Chimeg (3, ST), Nandin (2, ST), Baigal (2, ST), Narmandakh (2, ST), Oyuntuya (2, ST), Bayarmaa (2, ST), Ganchimeg (2, ST), Tsolmon (2, ST), Handaa (2, ST), Nomuun (2, MO), Narantsetseg (2, MO), Enkhtsetseg (2, MO), Ariunzaya (2, MO), Tselmeg (2, MO), Soyol (2, MO), Munkhzul (2, MO), Soyolmaa (2, MO)
 
 **Surnames** (30): Borjigin (10), Khalkha (10), Dorj (10), Bat (10), Tsogt (10), Bold (7), Naran (7), Ochir (7), Sukh (7), Tseren (7), Erdene (5), Tumur (5), Gan (5), Dalai (5), Jargal (5), Batbayar (5), Munkh (3), Chuluun (3), Baatar (3), Altan (3), Nergui (3), Damdin (3), Sodnom (3), Lkhagva (3), Namjil (2), Bayan (2), Davaa (2), Odkhuu (2), Enkh (2), Ganbat (2)
 
@@ -1652,7 +1652,7 @@ Turkic and Mongol are written for each culture (the steppe table stays, as the m
 
 **Holy names** (12): Zanabazar (10), Tsongkhapa (10), Sakya (10), Phagpa (10), Ochirvani (10), Jebtsundamba (7), Gombo (7), Danzan (7), Dorjiev (7), Zaya (7), Tsedenbal (5), Natsagdorj (5)
 
-**Given in the last thirty years:** Temuulen, Nomin, Anand, Ariunbold, Tuguldur, Munkh-Erdene, Enkh-Amgalan, Bilguun, Dulguun, Zolboo, Gan-Erdene, Tamir, Erkhes, Batbayar, Amarsanaa; Misheel, Anu, Saruul, Nomuun, Khulan, Narantsetseg, Enkhtsetseg, Ariunzaya, Tselmeg, Soyol, Munkhzul, Zaya, Tuul, Uyanga, Munkhtsetseg
+**Given in the last thirty years:** Temuulen, Nomin, Anand, Ariunbold, Tuguldur, Munkh-Erdene, Enkh-Amgalan, Bilguun, Dulguun, Zolboo, Gan-Erdene, Tamir, Erkhes, Batbayar, Amarsanaa; Misheel, Saruul, Nomuun, Khulan, Narantsetseg, Enkhtsetseg, Ariunzaya, Tselmeg, Soyol, Munkhzul, Zaya, Tuul, Uyanga, Munkhtsetseg, Soyolmaa
 
 ### Arabic
 
@@ -1672,7 +1672,7 @@ Turkic and Mongol are written for each culture (the steppe table stays, as the m
 
 **Male given names** (39): Ali (10, ST MO), Hassan (10, ST MO), Khaled (10, ST MO), Hamad (10, ST MO), Muhammad (10, ST MO), Yazan (7, MO), Ahmad (7, ST), Ayman (7, MO), Mahmoud (7, ST), Hadi (7, MO), Mustafa (5, ST), Majid (5, MO), Abdullah (5, ST), Tariq (5, MO), Ibrahim (5, ST), Ziad (5, MO), Khalil (3, ST), Karim (3, MO), Hamid (3, ST), Nabil (3, ST), Hussein (3, ST), Samir (3, ST), Salim (3, ST), Rami (3, MO), Fouad (2, ST), Sami (2, ST), Nasser (2, ST), Fadi (2, ST), Farouk (2, ST), Walid (2, ST), Abbas (2, ST), Bilal (2, MO), Rashid (2, ST), Adam (2, MO), Zayd (2, MO), Amir (2, MO), Hamza (2, MO), Omar (2, MO), Yusuf (2, MO)
 
-**Female given names** (35): Huda (10, ST MO), Dalia (10, ST MO), Leila (10, ST MO), Aya (10, ST MO), Fatima (10, ST MO), Lina (7, MO), Khadija (7, ST), Sara (7, MO), Aisha (7, ST), Rania (7, MO), Zaynab (5, ST), Yasmin (5, MO), Maryam (5, ST), Noor (5, MO), Amina (5, ST), Dana (5, MO), Halima (3, ST), Maya (3, MO), Hafsa (3, ST), Jana (3, MO), Layla (3, ST), Hala (3, MO), Zubayda (3, ST), Lara (3, MO), Safiya (2, ST), Layan (2, MO), Nadia (2, ST), Rama (2, MO), Samira (2, ST), Tala (2, MO), Salma (2, ST), Ayla (2, MO), Hind (2, ST), Mira (2, MO), Reem (2, ST)
+**Female given names** (35): Huda (10, ST MO), Dalia (10, ST MO), Leila (10, ST MO), Aya (10, ST MO), Fatima (10, ST MO), Lina (7, MO), Khadija (7, ST), Sara (7, MO), Aisha (7, ST), Rania (7, MO), Zaynab (5, ST), Yasmin (5, MO), Maryam (5, ST), Noor (5, MO), Amina (5, ST), Dana (5, MO), Halima (3, ST), Maya (3, MO), Hafsa (3, ST), Jana (3, MO), Layla (3, ST), Hala (3, MO), Zubayda (3, ST), Lara (3, MO), Safiya (2, ST), Layan (2, MO), Nadia (2, ST), Samira (2, ST), Tala (2, MO), Salma (2, ST), Ayla (2, MO), Hind (2, ST), Mira (2, MO), Reem (2, ST), Hana (2, MO)
 
 **Surnames** (30): Haddad (10), Khoury (10), Nasser (10), Mansour (10), Saleh (10), Hamdan (7), Khalil (7), Sabbagh (7), Najjar (7), Said (7), Yousef (5), Awad (5), Darwish (5), Jaber (5), Salem (5), Rahman (5), Hijazi (3), Barakat (3), Amin (3), Farah (3), Habib (3), Issa (3), Kassab (3), Masri (3), Naim (2), Qasim (2), Shami (2), Tamimi (2), Zahran (2), Zaid (2)
 
@@ -1682,7 +1682,7 @@ Turkic and Mongol are written for each culture (the steppe table stays, as the m
 
 **Holy names** (12): Abdul Qadir (10), Rabia (10), Junayd (10), Hallaj (10), Ghazali (10), Ahmad Rifai (7), Bishr (7), Shibli (7), Dhul-Nun (7), Hasan al-Basri (7), Ibn Arabi (5), Jalal (5)
 
-**Given in the last thirty years:** Yazan, Adam, Zayd, Amir, Hamza, Omar, Yusuf, Ayman, Hadi, Majid, Bilal, Tariq, Ziad, Rami, Karim; Lina, Sara, Rania, Yasmin, Noor, Dana, Maya, Jana, Hala, Lara, Layan, Rama, Tala, Ayla, Mira
+**Given in the last thirty years:** Yazan, Adam, Zayd, Amir, Hamza, Omar, Yusuf, Ayman, Hadi, Majid, Bilal, Tariq, Ziad, Rami, Karim; Lina, Sara, Rania, Yasmin, Noor, Dana, Maya, Jana, Hala, Lara, Layan, Tala, Ayla, Mira, Hana
 
 ### Persian
 
@@ -1702,7 +1702,7 @@ Turkic and Mongol are written for each culture (the steppe table stays, as the m
 
 **Male given names** (44): Reza (10, ST MO), Hossein (10, ST MO), Mohammad (10, ST MO), Ali (10, ST MO), Mehdi (10, ST MO), Amir (7, ST), Hamid (7, ST), Saeed (7, ST), Majid (7, ST), Davoud (7, ST), Ebrahim (5, ST), Kamran (5, ST), Farhad (5, ST), Babak (5, ST), Behnam (5, ST), Arash (5, ST), Payam (3, ST), Mojtaba (3, ST), Sina (3, MO), Pouya (3, MO), Parsa (3, MO), Arman (3, MO), Ehsan (3, ST), Navid (3, MO), Shahram (2, ST), Mostafa (2, ST), Kian (2, MO), Omid (2, ST), Nima (2, ST), Kaveh (2, ST), Hadi (2, ST), Morteza (2, ST), Bahman (2, ST), Farzad (2, ST), Siamak (2, ST), Arad (2, MO), Radin (2, MO), Ariya (2, MO), Amir-Ali (2, MO), Armin (2, MO), Bardia (2, MO), Dariush (2, MO), Kasra (2, MO), Shayan (2, MO)
 
-**Female given names** (45): Maryam (10, ST MO), Zahra (10, ST MO), Fatemeh (10, ST MO), Narges (10, ST MO), Sara (10, ST MO), Leila (7, ST), Mina (7, MO), Parisa (7, ST), Shirin (7, ST), Nasrin (7, ST), Mahsa (5, ST), Neda (5, ST), Elham (5, ST), Samira (5, ST), Azadeh (5, ST), Golnaz (5, ST), Shabnam (3, ST), Yasaman (3, ST), Niloufar (3, ST), Atefeh (3, ST), Roya (3, ST), Setareh (3, ST), Negar (3, ST), Pegah (3, ST), Sepideh (2, ST), Tannaz (2, ST), Ladan (2, ST), Mitra (2, ST), Farzaneh (2, ST), Homa (2, ST), Haniyeh (2, ST), Raha (2, MO), Baran (2, MO), Dorsa (2, MO), Hasti (2, MO), Yasna (2, MO), Avina (2, MO), Elnaz (2, MO), Ghazal (2, MO), Diana (2, MO), Kiana (2, MO), Melika (2, MO), Nika (2, MO), Romina (2, MO), Tara (2, MO)
+**Female given names** (45): Maryam (10, ST MO), Zahra (10, ST MO), Fatemeh (10, ST MO), Narges (10, ST MO), Sara (10, ST MO), Leila (7, ST), Mina (7, MO), Parisa (7, ST), Shirin (7, ST), Nasrin (7, ST), Mahsa (5, ST), Neda (5, ST), Elham (5, ST), Samira (5, ST), Azadeh (5, ST), Golnaz (5, ST), Shabnam (3, ST), Yasaman (3, ST), Niloufar (3, ST), Atefeh (3, ST), Roya (3, ST), Setareh (3, ST), Negar (3, ST), Pegah (3, ST), Sepideh (2, ST), Tannaz (2, ST), Ladan (2, ST), Mitra (2, ST), Farzaneh (2, ST), Homa (2, ST), Haniyeh (2, ST), Raha (2, MO), Baran (2, MO), Dorsa (2, MO), Hasti (2, MO), Yasna (2, MO), Avina (2, MO), Elnaz (2, MO), Ghazal (2, MO), Kiana (2, MO), Melika (2, MO), Nika (2, MO), Romina (2, MO), Tara (2, MO), Sanaz (2, MO)
 
 **Surnames** (30): Hosseini (10), Mohammadi (10), Ahmadi (10), Karimi (10), Rezaei (10), Moradi (7), Hashemi (7), Jafari (7), Ebrahimi (7), Rahimi (7), Sadeghi (5), Mousavi (5), Kazemi (5), Ghorbani (5), Rostami (5), Abbasi (5), Tehrani (3), Esfahani (3), Shirazi (3), Tabrizi (3), Mashhadi (3), Kermani (3), Yazdi (3), Gilani (3), Khorasani (2), Mazandarani (2), Zand (2), Farahani (2), Bakhtiari (2), Qashqai (2)
 
@@ -1712,7 +1712,7 @@ Turkic and Mongol are written for each culture (the steppe table stays, as the m
 
 **Holy names** (12): Rumi (10), Hafez (10), Saadi (10), Attar (10), Shams (10), Khayyam (7), Bayazid (7), Sanai (7), Jami (7), Nezami (7), Ferdowsi (5), Sohravardi (5)
 
-**Given in the last thirty years:** Parsa, Arman, Kian, Sina, Pouya, Arad, Radin, Ariya, Amir-Ali, Armin, Bardia, Dariush, Kasra, Shayan, Navid; Dorsa, Hasti, Baran, Raha, Yasna, Avina, Elnaz, Ghazal, Diana, Kiana, Melika, Nika, Romina, Tara, Mina
+**Given in the last thirty years:** Parsa, Arman, Kian, Sina, Pouya, Arad, Radin, Ariya, Amir-Ali, Armin, Bardia, Dariush, Kasra, Shayan, Navid; Dorsa, Hasti, Baran, Raha, Yasna, Avina, Elnaz, Ghazal, Kiana, Melika, Nika, Romina, Tara, Mina, Sanaz
 
 ### Mappings
 

@@ -6381,13 +6381,13 @@
  ],
  "world egyptian pharaonic": [
   {
-   "text": "Ra's City",
-   "etymology": "[deity: Ra]'s city",
+   "text": "The Sun's City",
+   "etymology": "[deity: the Sun]'s city",
    "template": "{god:pos} City"
   },
   {
-   "text": "Island of Wepwawet",
-   "etymology": "island of [deity: Wepwawet]",
+   "text": "Island of the Morning Star",
+   "etymology": "island of [deity: the Morning Star]",
    "template": "Island of {god}"
   },
   {
@@ -6396,43 +6396,43 @@
    "template": "Field of the {sacred:pl}"
   },
   {
-   "text": "Nekhbet's City",
-   "etymology": "[deity: Nekhbet]'s city",
+   "text": "The Inundation's City",
+   "etymology": "[deity: the Inundation]'s city",
    "template": "{god:pos} City"
   },
   {
-   "text": "Mound of Wepwawet",
-   "etymology": "mound of [deity: Wepwawet]",
+   "text": "Mound of the Morning Star",
+   "etymology": "mound of [deity: the Morning Star]",
    "template": "Mound of {god}"
   },
   {
-   "text": "Seat of Khnum",
-   "etymology": "seat of [deity: Khnum]",
+   "text": "Seat of the Scarab",
+   "etymology": "seat of [deity: the Scarab]",
    "template": "Seat of {god}"
   },
   {
-   "text": "House of Thoth",
-   "etymology": "house of [deity: Thoth]",
+   "text": "House of the Flood",
+   "etymology": "house of [deity: the Flood]",
    "template": "House of {lord}"
   },
   {
-   "text": "House of Ptah",
-   "etymology": "house of [deity: Ptah]",
+   "text": "House of the Moon",
+   "etymology": "house of [deity: the Moon]",
    "template": "House of {lord}"
   },
   {
-   "text": "Horizon of Set",
-   "etymology": "horizon of [deity: Set]",
+   "text": "Horizon of the Cobra",
+   "etymology": "horizon of [deity: the Cobra]",
    "template": "Horizon of {god}"
   },
   {
-   "text": "Temple of the Spirit of Sobek",
-   "etymology": "temple of the spirit of [deity: Sobek]",
+   "text": "Temple of the Spirit of the Horizon",
+   "etymology": "temple of the spirit of [deity: the Horizon]",
    "template": "Temple of the Spirit of {god}"
   },
   {
-   "text": "House of Montu",
-   "etymology": "house of [deity: Montu]",
+   "text": "House of the Two Lands",
+   "etymology": "house of [deity: the Two Lands]",
    "template": "House of {lord}"
   },
   {
@@ -6441,18 +6441,18 @@
    "template": "Nome of the {sacred}"
   },
   {
-   "text": "Estate of Sekhmet",
-   "etymology": "estate of [deity: Sekhmet]",
+   "text": "Estate of the Beyond",
+   "etymology": "estate of [deity: the Beyond]",
    "template": "Estate of {god}"
   },
   {
-   "text": "Island of Set",
-   "etymology": "island of [deity: Set]",
+   "text": "Island of the Cobra",
+   "etymology": "island of [deity: the Cobra]",
    "template": "Island of {god}"
   },
   {
-   "text": "House of Anubis",
-   "etymology": "house of [deity: Anubis]",
+   "text": "House of the Ibis",
+   "etymology": "house of [deity: the Ibis]",
    "template": "House of {lord}"
   },
   {
@@ -6461,18 +6461,18 @@
    "template": "Nome of the {sacred}"
   },
   {
-   "text": "Estate of Set",
-   "etymology": "estate of [deity: Set]",
+   "text": "Estate of the Cobra",
+   "etymology": "estate of [deity: the Cobra]",
    "template": "Estate of {god}"
   },
   {
-   "text": "House of Hathor",
-   "etymology": "house of [deity: Hathor]",
+   "text": "House of the Cat",
+   "etymology": "house of [deity: the Cat]",
    "template": "House of {lord}"
   },
   {
-   "text": "Estate of Bastet",
-   "etymology": "estate of [deity: Bastet]",
+   "text": "Estate of the Sky",
+   "etymology": "estate of [deity: the Sky]",
    "template": "Estate of {god}"
   },
   {
@@ -8130,8 +8130,8 @@
    "template": "Mount of {saint}"
   },
   {
-   "text": "Royal Camp of Fasilides",
-   "etymology": "royal camp of [king: Fasilides]",
+   "text": "Royal Camp of Gashaw",
+   "etymology": "royal camp of [king: Gashaw]",
    "template": "Royal Camp of {king}"
   },
   {
@@ -8160,8 +8160,8 @@
    "template": "Mount of {holy}"
   },
   {
-   "text": "Zara Yaqob's Town",
-   "etymology": "[king: Zara Yaqob]'s town",
+   "text": "Bereket's Town",
+   "etymology": "[king: Bereket]'s town",
    "template": "{king:pos} Town"
   },
   {
@@ -8175,6 +8175,11 @@
    "template": "Church of {saint} in the Rock"
   },
   {
+   "text": "Berhanu's Town",
+   "etymology": "[king: Berhanu]'s town",
+   "template": "{king:pos} Town"
+  },
+  {
    "text": "Mount of Aftse",
    "etymology": "mount of [holy person: Aftse]",
    "template": "Mount of {saint}"
@@ -8185,13 +8190,8 @@
    "template": "{adj} {feature}"
   },
   {
-   "text": "Royal Camp of Tewodros",
-   "etymology": "royal camp of [king: Tewodros]",
-   "template": "Royal Camp of {king}"
-  },
-  {
-   "text": "Susenyos's Town",
-   "etymology": "[king: Susenyos]'s town",
+   "text": "Tewodros's Town",
+   "etymology": "[king: Tewodros]'s town",
    "template": "{king:pos} Town"
   },
   {

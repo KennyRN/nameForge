@@ -2,7 +2,7 @@
 import { CW5D } from "./north5d-words.mjs";
 import { NEW6B } from "./north5c-words.mjs";
 // The order of a list means nothing here, and two siblings drawing the same position of the same list would give the same word: each culture of a sibling group turns its lists by a step of its own.
-const TURN = { turkic: 0, mongol: 3, arabic: 0, persian: 3, egyptian: 6, ethiopian: 0, bantu: 3, "west-african": 6 };
+const TURN = { turkic: 0, mongol: 3, arabic: 1, persian: 4, egyptian: 6, ethiopian: 8, bantu: 2, "west-african": 5 };
 const turn = (culture, text) => text.split(";").map((l, i) => { const w = l.split("|"); const k = (TURN[culture] + 2 * i) % w.length; return [...w.slice(k), ...w.slice(0, k)].join("|"); }).join(";");
 const four = (s) => s.split(";").map((l) => { const w = l.split("|"); return [w[0], w[3], w[8], w[9]].join("|"); }).join(";");
 export const WORDS5D6B = {};

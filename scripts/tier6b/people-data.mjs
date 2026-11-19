@@ -35,8 +35,8 @@ export const MONGOL = {
   },
   modern: {
     male: "Bat|Enkhbat|Munkh|Tuvshin|Ganbold|Batbayar|Amarsanaa|Erdene|Tumurbaatar|Otgonbayar|Bayarsaikhan|Ganzorig|Dorj|Battulga|Nyamdorj|Sukhbaatar|Tsogtbaatar|Ulziibayar|Altankhuyag|Enkhbayar|Davaa|Bold|Batsaikhan|Lkhagvasuren|Munkhbat|Odkhuu|Tserendorj|Gantulga|Nomin|Choijil|Sarangerel|Khuderchuluun|Baatar|Naran|Temuulen",
-    female: "Oyun|Sarnai|Bolormaa|Enkhtuya|Narantuya|Uyanga|Munkhtsetseg|Tsetseg|Altantsetseg|Ariunaa|Odval|Saruul|Tuul|Anu|Misheel|Khulan|Tungalag|Batjargal|Gerel|Zaya|Enkhjargal|Dolgor|Undraa|Sukhee|Chimeg|Nandin|Baigal|Narmandakh|Oyuntuya|Bayarmaa|Ganchimeg|Tsolmon|Handaa",
-    recentMale: "Temuulen|Nomin|Anand|Ariunbold|Tuguldur|Munkh-Erdene|Enkh-Amgalan|Bilguun|Dulguun|Zolboo|Gan-Erdene|Tamir|Erkhes|Batbayar|Amarsanaa", recentFemale: "Misheel|Anu|Saruul|Nomuun|Khulan|Narantsetseg|Enkhtsetseg|Ariunzaya|Tselmeg|Soyol|Munkhzul|Zaya|Tuul|Uyanga|Munkhtsetseg",
+    female: "Oyun|Sarnai|Bolormaa|Enkhtuya|Narantuya|Uyanga|Munkhtsetseg|Tsetseg|Altantsetseg|Ariunaa|Odval|Saruul|Tuul|Misheel|Khulan|Tungalag|Batjargal|Gerel|Zaya|Enkhjargal|Dolgor|Undraa|Sukhee|Chimeg|Nandin|Baigal|Narmandakh|Oyuntuya|Bayarmaa|Ganchimeg|Tsolmon|Handaa",
+    recentMale: "Temuulen|Nomin|Anand|Ariunbold|Tuguldur|Munkh-Erdene|Enkh-Amgalan|Bilguun|Dulguun|Zolboo|Gan-Erdene|Tamir|Erkhes|Batbayar|Amarsanaa", recentFemale: "Misheel|Saruul|Nomuun|Khulan|Narantsetseg|Enkhtsetseg|Ariunzaya|Tselmeg|Soyol|Munkhzul|Zaya|Tuul|Uyanga|Munkhtsetseg|Soyolmaa",
     surnames: "Borjigin|Khalkha|Dorj|Bat|Tsogt|Bold|Naran|Ochir|Sukh|Tseren|Erdene|Tumur|Gan|Dalai|Jargal|Batbayar|Munkh|Chuluun|Baatar|Altan|Nergui|Damdin|Sodnom|Lkhagva|Namjil|Bayan|Davaa|Odkhuu|Enkh|Ganbat",
     regnalMale: "Temujin|Ogedei|Kublai|Mongke|Hulagu|Batu|Berke|Guyuk", regnalFemale: "Borte|Hoelun|Toregene|Doquz|Sorghaghtani|Chabi|Mandukhai|Khutulun",
     holy: "Zanabazar|Tsongkhapa|Sakya|Phagpa|Ochirvani|Jebtsundamba|Gombo|Danzan|Dorjiev|Zaya|Tsedenbal|Natsagdorj", ...forms.mongol,
@@ -51,8 +51,8 @@ export const ARABIC = {
   },
   modern: {
     male: "Ali|Hassan|Khaled|Hamad|Muhammad|Yazan|Ahmad|Ayman|Mahmoud|Hadi|Mustafa|Majid|Abdullah|Tariq|Ibrahim|Ziad|Khalil|Karim|Hamid|Nabil|Hussein|Samir|Salim|Rami|Fouad|Sami|Nasser|Fadi|Farouk|Walid|Abbas|Bilal|Rashid|Adam|Zayd|Amir|Hamza|Omar|Yusuf",
-    female: "Huda|Dalia|Leila|Aya|Fatima|Lina|Khadija|Sara|Aisha|Rania|Zaynab|Yasmin|Maryam|Noor|Amina|Dana|Halima|Maya|Hafsa|Jana|Layla|Hala|Zubayda|Lara|Safiya|Layan|Nadia|Rama|Samira|Tala|Salma|Ayla|Hind|Mira|Reem",
-    recentMale: "Yazan|Adam|Zayd|Amir|Hamza|Omar|Yusuf|Ayman|Hadi|Majid|Bilal|Tariq|Ziad|Rami|Karim", recentFemale: "Lina|Sara|Rania|Yasmin|Noor|Dana|Maya|Jana|Hala|Lara|Layan|Rama|Tala|Ayla|Mira",
+    female: "Huda|Dalia|Leila|Aya|Fatima|Lina|Khadija|Sara|Aisha|Rania|Zaynab|Yasmin|Maryam|Noor|Amina|Dana|Halima|Maya|Hafsa|Jana|Layla|Hala|Zubayda|Lara|Safiya|Layan|Nadia|Samira|Tala|Salma|Ayla|Hind|Mira|Reem",
+    recentMale: "Yazan|Adam|Zayd|Amir|Hamza|Omar|Yusuf|Ayman|Hadi|Majid|Bilal|Tariq|Ziad|Rami|Karim", recentFemale: "Lina|Sara|Rania|Yasmin|Noor|Dana|Maya|Jana|Hala|Lara|Layan|Tala|Ayla|Mira|Hana",
     surnames: "Haddad|Khoury|Nasser|Mansour|Saleh|Hamdan|Khalil|Sabbagh|Najjar|Said|Yousef|Awad|Darwish|Jaber|Salem|Rahman|Hijazi|Barakat|Amin|Farah|Habib|Issa|Kassab|Masri|Naim|Qasim|Shami|Tamimi|Zahran|Zaid",
     regnalMale: "Harun|Mansur|Mahmud|Saladin|Umar|Hisham|Walid|Sulayman", regnalFemale: "Zubayda|Shajar al-Durr|Khayzuran|Buran|Arwa|Zenobia|Sitt al-Mulk|Asma",
     holy: "Abdul Qadir|Rabia|Junayd|Hallaj|Ghazali|Ahmad Rifai|Bishr|Shibli|Dhul-Nun|Hasan al-Basri|Ibn Arabi|Jalal", ...forms.arabic,
@@ -68,7 +68,7 @@ export const PERSIAN = {
   modern: {
     male: "Reza|Hossein|Mohammad|Ali|Mehdi|Amir|Hamid|Saeed|Majid|Davoud|Ebrahim|Kamran|Farhad|Babak|Behnam|Arash|Payam|Mojtaba|Sina|Pouya|Parsa|Arman|Ehsan|Navid|Shahram|Mostafa|Kian|Omid|Nima|Kaveh|Hadi|Morteza|Bahman|Farzad|Siamak",
     female: "Maryam|Zahra|Fatemeh|Narges|Sara|Leila|Mina|Parisa|Shirin|Nasrin|Mahsa|Neda|Elham|Samira|Azadeh|Golnaz|Shabnam|Yasaman|Niloufar|Atefeh|Roya|Setareh|Negar|Pegah|Sepideh|Tannaz|Ladan|Mitra|Farzaneh|Homa|Haniyeh|Raha|Baran|Dorsa|Hasti",
-    recentMale: "Parsa|Arman|Kian|Sina|Pouya|Arad|Radin|Ariya|Amir-Ali|Armin|Bardia|Dariush|Kasra|Shayan|Navid", recentFemale: "Dorsa|Hasti|Baran|Raha|Yasna|Avina|Elnaz|Ghazal|Diana|Kiana|Melika|Nika|Romina|Tara|Mina",
+    recentMale: "Parsa|Arman|Kian|Sina|Pouya|Arad|Radin|Ariya|Amir-Ali|Armin|Bardia|Dariush|Kasra|Shayan|Navid", recentFemale: "Dorsa|Hasti|Baran|Raha|Yasna|Avina|Elnaz|Ghazal|Kiana|Melika|Nika|Romina|Tara|Mina|Sanaz",
     surnames: "Hosseini|Mohammadi|Ahmadi|Karimi|Rezaei|Moradi|Hashemi|Jafari|Ebrahimi|Rahimi|Sadeghi|Mousavi|Kazemi|Ghorbani|Rostami|Abbasi|Tehrani|Esfahani|Shirazi|Tabrizi|Mashhadi|Kermani|Yazdi|Gilani|Khorasani|Mazandarani|Zand|Farahani|Bakhtiari|Qashqai",
     regnalMale: "Cyrus|Darius|Xerxes|Ardashir|Shapur|Khosrow|Bahram|Kavad", regnalFemale: "Pourandokht|Azarmidokht|Atossa|Amestris|Parysatis|Stateira|Shirin|Roxana",
     holy: "Rumi|Hafez|Saadi|Attar|Shams|Khayyam|Bayazid|Sanai|Jami|Nezami|Ferdowsi|Sohravardi", ...forms.persian,

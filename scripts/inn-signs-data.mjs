@@ -115,11 +115,11 @@ export const SIGNS = {
     "Piazza|Loggia|Bell Tower|Fountain Court|Old Bridge|Vineyard Gate",
   ),
   spanish: C(
-    "Bull|Eagle|Mule|Falcon|Hawk|Lamb|Stork|Boar|Lynx|Ox|Donkey|Hound",
-    "Pomegranate|Cross|Castle|Pillar|Sword|Bell|Wine Skin|Guitar|Key|Shell|Lantern|Tower",
-    "Muleteers|Wine Growers|Shepherds|Olive Pressers|Tanners|Silversmiths|Wool Merchants|Saddlers",
+    "Bull|Eagle|Mule|Vulture|Hawk|Goat|Stork|Boar|Lynx|Mastiff|Donkey|Hound",
+    "Pomegranate|Cross|Castle|Pillar|Rapier|Church Bell|Wine Skin|Guitar|Iron Key|Shell|Oil Lamp|Tower",
+    "Muleteers|Wine Growers|Shepherds|Olive Pressers|Leather Dressers|Silversmiths|Wool Merchants|Saddlers",
     "Red|Gold|White|Black|Green|Silver",
-    "Knight|Muleteer|Pilgrim|Shepherd|Bullfighter|Captain|Friar|Hidalgo",
+    "Knight|Muleteer|Palmer|Shepherd|Bullfighter|Captain|Friar|Hidalgo",
     "Royal|Old|Little|Proud|Faithful|Good",
     "Plaza|Pilgrim Gate|Old Fountain|Bridge|Hilltop|Courtyard",
   ),
@@ -171,7 +171,7 @@ export const SIGNS = {
   // Second-tier 6b: the eight cultures of the batch, each in its own habits.
   turkic: C(
     "Grey Wolf|Falcon|Horse|Eagle|Stork|Ram|Camel|Nightingale|Bear|Stag|Hawk|Goat",
-    "Horsetail Standard|Lantern|Cauldron|Coffee Pot|Sherbet Cup|Drum|Samovar|Bell|Tulip|Minaret|Prayer Rug|Long-Necked Lute",
+    "Horsetail Standard|Lantern|Cauldron|Coffee Pot|Sherbet Cup|Drum|Samovar|Bell|Tulip|Minaret|Prayer Rug|Saz",
     "Coppersmiths|Carpet Weavers|Saddlers|Tanners|Bakers|Felt Makers|Muleteers|Grocers",
     "Turquoise|Tulip-Red|Saffron-Gold|Walnut|Slate|Indigo",
     "Bey|Pasha|Dervish|Miller|Shepherd|Merchant|Horseman|Bard",
@@ -236,7 +236,7 @@ export const SIGNS = {
     "Spider|Crocodile|River Hippo|Python|Heron|Antelope|Lion|Hornbill|Savanna Elephant|Monkey|Egret|Hyena",
     "Talking Drum|Kola Nut|Gold Weight|Calabash|Loom|Stool|Mask|Cowrie|Mud Tower|Anvil|Canoe|Umbrella",
     "Smiths|Weavers|Dyers|Griots|Fishermen|Traders|Potters|Leatherworkers",
-    "Indigo-Dyed|Gold-Dust|Laterite|Woven Cloth-Red|Palm-Green|Harmattan-Grey",
+    "Indigo-Dyed|Gold-Dust|Laterite|Kente-Red|Palm-Green|Harmattan-Grey",
     "Emperor|Griot|Trader|Elder|Smith|Queen Mother|Hunter|Marabout",
     "Festive|Dusty|Drumming|Shea-Scented|Lagoon-Side|Market-Day",
     "Market Square|River Ford|Mosque Gate|Fort Gate|Crossroads|Lagoon Shore|Baobab|Caravan Well",

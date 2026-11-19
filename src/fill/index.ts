@@ -164,7 +164,14 @@ const STOP_WORDS = new Set(["of", "the", "and", "on", "in", "at", "by", "upon", 
  * Whether a place fill repeats the generic of the feature it names: "Valley of [place]" with "Alder Valley",
  * "[place] Hill" with "Ashhill". The fill's last word equals a word of the rest of the name, or ends with it.
  */
+/** Second pass (brief §12 §6): a place that is itself "X of Y" takes its article after a preposition ("Nawab of the Mountain of Rashid"). */
+const PLACE_NOUN = "Mountain|Valley|Temple|Lake|River|Hill|Spring|Well|Isle|Island|Plain|Garden|Tower|Fort|Castle|Gate|Cape|Bay|Cave|Forest|Wood|Sea|City|Town|Camp|Citadel|Fortress|Landing|Harbour|Bridge|Pass|Peak|Ridge|Field|Stone|Dam|Mine|Quarry|Oasis|Desert|Dune|Steppe|Marsh|Mound|Pool|Fountain|Canal|Port|Village|Waters|Fields|Hills|Mountains";
+const NESTED_PLACE = new RegExp(`\\b(of|to|from|over|above|beyond|beside|behind|near|in|at|by|off) (?=(?:${PLACE_NOUN}) of )`, "g");
+export const withArticles = (text: string): string => text.replace(NESTED_PLACE, "$1 the ");
+const REALM_FORM = /(^|[^A-Za-z])(Kingdom|Empire|Province|Sultanate|Emirate|Caliphate|Khanate|Khaganate|Duchy|Dukedom|Principality|Realm|Domain|Federation|Republic|Confederation|Confederacy|County|Lordship|Imamate|Commonwealth|Protectorate|Dominion|Shahdom|Satrapy)([^A-Za-z]|$)/;
 export function repeatsGeneric(fill: string, rest: string): boolean {
+  // Second pass (brief §12 §6): a realm is not a realm of a realm ("Khanate of Republic Square").
+  if (REALM_FORM.test(fill) && REALM_FORM.test(rest.replace(/\[[^\]]*\]/g, " "))) return true;
   const words = fill.trim().split(/\s+/);
   const clean = (w: string | undefined) => w?.toLowerCase().replace(/[^a-z]/g, "") ?? "";
   const last = clean(words[words.length - 1]);
@@ -247,12 +254,14 @@ export function fillSlots(name: string, ctx: FillContext): string {
     else if (info.source === "folk" && /\bof\s$/i.test(before) && !/^the\s/i.test(fill)) fill = `the ${fill}`;
     // Brief 5b §12.3: a deity fill is an epithet ("Keeper of Masks"): after "of" it takes "the" ("Valley of the Keeper of Masks").
     else if (info.source === "deity" && /\bof\s$/i.test(before) && !/^(the|she|he|they|one)\s/i.test(fill)) fill = `the ${fill}`;
+    // Second pass (brief §12 §6): a fill that starts with "The" is "the" in the middle of a name ("Inn of the Three Taverns").
+    if (/\S\s$/.test(before) && /^The\s/.test(fill)) fill = `the${fill.slice(3)}`;
     if (/^['’]s\b/.test(after)) fill = fill.replace(/['’]s$/, "");
     any = true;
     return fill;
   });
   // A name the filler changed never starts with a lower-case "the"; one it left alone is as the engine made it.
-  const out = any ? filled.replace(/^the\b/, "The") : filled;
+  const out = any ? withArticles(filled.replace(/^the\b/, "The")) : filled;
   return ctx.onlyLabels ? out : completeTitles(out, ctx, era, period, resolvers);
 }
 

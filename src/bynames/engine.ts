@@ -4,6 +4,7 @@
 
 import "../lexiconWiring";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
+import { withArticles } from "../fill";
 import type { BiomeCatalogue } from "../biomes";
 import { hasSpaceBlock } from "../space/safeguards";
 import bynamesData from "../data/bynames.json";
@@ -722,7 +723,10 @@ export function sexedRanks(text: string, sex: Sex): string {
 }
 
 export function generateBynames(options: BynameOptions): BynameBatch {
-  const batch = generateBynamesInner(options);
+  const inner = generateBynamesInner(options);
+  // Second pass (brief §12 §6): a place's "The" is lower case in the middle of a name ("Sultana of the Red Island").
+  const tidy = (text: string): string => withArticles(text.replace(/(\S) The /g, "$1 the "));
+  const batch = { ...inner, names: inner.names.map((n) => (tidy(n.text) !== n.text ? { ...n, text: tidy(n.text) } : n)) };
   // 5d §14.2: the core cultures' titles carry the rank pair of the bearer's sex.
   if (options.module !== "titles" || !contentKey(options.culture)) return batch;
   return { ...batch, names: batch.names.map((n) => ({ ...n, text: sexedRanks(n.text, n.gender) })) };

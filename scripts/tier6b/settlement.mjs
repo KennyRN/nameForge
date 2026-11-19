@@ -4,6 +4,7 @@
 // markets and frontier forts; Persian gardens, caravanserais and the king's cities; Egyptian the river's nome towns, monasteries and Cairo's quarters; Ethiopian ambas and rock-hewn churches;
 // Bantu kraals, great enclosures and mission stations; West African market towns, mud-brick mosques and forts.
 
+import { FILLS } from "./fills.mjs";
 const T = (p, w, s) => [p, w, s];
 const adj = "Old|New|High|Low|Great|Little|Upper|Lower|East|West|North|South|Long|Broad";
 
@@ -43,6 +44,8 @@ export const CULTURES = {
     ],
   },
 };
+
+for (const [id, c] of Object.entries(CULTURES)) { c.lists.tree = FILLS[id].trees; c.lists.animal = FILLS[id].beasts; }
 
 /** Era ids and the lens eras each reads (lens.json `mappings.eras.world`, keyed "culture:era"). */
 export const ERA_MAP = {

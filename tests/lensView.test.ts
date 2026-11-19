@@ -293,7 +293,7 @@ test("era: runs, bands and their labels, and how choosing one stores an era", ()
   assert.deepEqual(labels("peoplesTongues"), ["ancient", "medieval", "early modern", "steam age", "modern", "future"]);
   // 5d §14.1: the era-tagged words of 5d make the sky's eras differ band by band.
   assert.deepEqual(labels("skyNames"), ["pre-industrial", "steam age", "modern", "future"]);
-  assert.deepEqual(labels("deityNames"), ["ancient", "medieval to early modern", "steam age", "modern", "future"]);
+  assert.deepEqual(labels("deityNames"), ["ancient", "medieval", "early modern", "steam age", "modern", "future"]);
   assert.deepEqual(labels("mountainNames"), ["ancient", "medieval", "early modern", "steam age", "modern", "future"]);
   assert.deepEqual(labels("powerFactions"), ["pre-industrial", "industrial and modern", "future"]);
   assert.deepEqual(labels("realms"), ["ancient", "medieval", "early modern", "modern", "near future", "interstellar"]);

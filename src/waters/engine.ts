@@ -5,6 +5,7 @@
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
+import { hasEnglishRank, OWN_FILL_CULTURES } from "../tier6a";
 import { isRealTownName } from "../realPlaces";
 import { balanceRegion, balanceSignature, weighLegacyKinds, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf, isOwnSig } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
@@ -771,6 +772,7 @@ export function generateWatersNames(options: WatersOptions): WatersBatch {
     if (hyper && hasSpaceBlock(text)) return false;
     // Brief 5b §12.3: a name that is a real town ("South Bath") is drawn again.
     if (!hyper && isRealTownName(text)) return false;
+    if (OWN_FILL_CULTURES.includes(culture.key) && hasEnglishRank(text)) return false;
     return true;
   };
 

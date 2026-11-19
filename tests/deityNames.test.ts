@@ -189,7 +189,7 @@ import { GROUP_LABELS, historySection, SECTION_GROUPS, SECTION_LABELS, SWITCHER_
 test("§14.6: the default sentence's plain text", () => {
   assert.equal(
     deitySentenceText(deitySentence(DEFAULT_DEITY_STATE)),
-    "General-themed deities of any kind of any domain, of any gender, of the medieval to early modern era, in a historic or low fantasy world, of any tone, as titles only, each one separate.",
+    "General-themed deities of any kind of any domain, of any gender, of the medieval era, in a historic or low fantasy world, of any tone, as titles only, each one separate.",
   );
 });
 
@@ -216,7 +216,7 @@ test("§14.6: presets round-trip; Polynesian reports and runs as General", () =>
   const preset: DeityPreset = {
     packName: "Storm pantheon",
     setting: "",
-    description: "Norse-themed deities of any kind of any domain, of any gender, of the medieval to early modern era, in a high or epic fantasy world, of any tone, with placeholder names, as one pantheon.",
+    description: "Norse-themed deities of any kind of any domain, of any gender, of the medieval era, in a high or epic fantasy world, of any tone, with placeholder names, as one pantheon.",
     culture: "norse",
     deityKind: "any",
     domain: "any",

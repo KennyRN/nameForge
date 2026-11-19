@@ -141,3 +141,14 @@ Related cultures must read as themselves before batch 6b. This section is a date
 This section is a dated amendment; earlier sections are as they were. The review document is docs/second-tier-6b.md. Decisions: inn signs come from each core-depth culture's own lists (Part A, with `innLimit` 5 in lens.json `distinctness`); Egyptian covers the Nile valley in every era; the new sibling pairs are Turkic/Mongol, Arabic/Persian, Arabic/Egyptian, Persian/Egyptian, Ethiopian/Bantu, Ethiopian/West African and Bantu/West African; `phoenician` maps to Arabic.
 
 **Done, 18 November 2026.** Batch 6b is in: the eight cultures at core depth in every module (Egyptian in each era's voice, the two mixes drawing both halves), the people tables and mappings, the real names (269 added) and the loanword checks (docs/loanwords.md), and the seven sibling pairs in the distinctness test (docs/sibling-distinctness.md). The entries are listed in docs/second-tier-6b.md. Where the brief and the code differ: Mongol's sea modules have content and meet their targets, so no sea exemption is marked; Ethiopian, Bantu and West African have desert content too.
+
+## 12. Amendment, 18 November 2026: second pass on batch 6b
+
+This section is a dated amendment; earlier sections are as they were. It records the second pass on 6b (the fixes prompt of 18 November 2026) and two judgement calls.
+
+**Judgement calls.**
+
+1. *Mongol water.* The lake, shore and shoal content of the Mongol tables stays. The Mongol culture has no sea, but its lakes (Khövsgöl, Baikal) are real and its rivers and shores are named in them; its water cells count towards the batch's cells.
+2. *Deserts.* The desert content of all eight 6b cultures stays. No desert exemption is marked for any of them: each has a desert in its homeland or its history (the Gobi, the Karakum, the Rub' al-Khali, the Dasht-e Kavir, the Sahara and Nubia, the Danakil, the Kalahari and Namib, the Sahel).
+
+**What the pass changed** (the report in the commit messages lists the fixtures and counts): an all-pairs distinctness limit of 30% in every measured module (`pairLimit` in `lens.json`), with the listed siblings still at 25%; a culture's `[place]` fills come from its own settlement names (a mix's from its own and both halves'); the 6b cultures read their own plant, tree, bird and beast lists and no English administrative shape; no god or mythical being in any people table, and famous figures held to two in a ten-name list; every module's default state swept for brackets; the grammar faults of §6 fixed with a seed 1 to 5 sweep test for each pattern; every loanword replaced without a lookup looked up (docs/loanwords.md).

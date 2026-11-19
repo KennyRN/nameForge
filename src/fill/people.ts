@@ -37,11 +37,22 @@ const pickForm = (forms: readonly Form[], rng: () => number): string => pickWeig
  * A name from a list, weighted by the list's order and (where it carries them) the state's era. Names in
  * `avoid` are skipped while the list has others (shared tables brief §14.1); when it has none left a repeat is allowed.
  */
-function draw(list: readonly PeopleEntry[], era: string, rng: () => number, avoid: ReadonlySet<string>): string {
-  const free = avoid.size > 0 ? list.filter((e) => !avoid.has(e[0])) : list;
+function draw(list: readonly PeopleEntry[], era: string, rng: () => number, avoid: ReadonlySet<string>, capFamous = false): string {
+  let free = avoid.size > 0 ? list.filter((e) => !avoid.has(e[0])) : list;
+  // Second pass (brief §12 §4): a batch culture's list holds its famous figures (flagged `r`) to two in the names already drawn, so a ten-name list has no more.
+  if (capFamous && avoid.size > 0) {
+    const famous = new Set(list.filter((e) => typeof e[2] === "string" && e[2].includes("r")).map((e) => e[0]));
+    let used = 0;
+    for (const a of avoid) if (famous.has(a)) used++;
+    if (used >= 2) {
+      const plain = free.filter((e) => !famous.has(e[0]));
+      if (plain.length > 0) free = plain;
+    }
+  }
   const from = free.length > 0 ? free : list;
   return pickWeighted(from, eraWeights(from, era), rng)[0];
 }
+const CAPPED = new Set(["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian"]);
 
 /** Titles for officials: the bynames module's ranks in the culture's bynames culture, without the royal ones. */
 const ROYAL = /king|queen|prince|emperor|empress|pharaoh|khan|sultan|shah|caliph|tsar|inca|sovereign|chief$/i;
@@ -81,7 +92,7 @@ function given(c: Ctx, sex: "male" | "female"): string {
     const g = generatedName(c.culture, c.period, sex, c.req.rng, c.req.avoid);
     if (g) return g;
   }
-  return draw(c.table[sex], c.req.era, c.req.rng, c.req.avoid);
+  return draw(c.table[sex], c.req.era, c.req.rng, c.req.avoid, CAPPED.has(c.culture));
 }
 
 function surname(c: Ctx, sex: "male" | "female"): string {
@@ -90,10 +101,10 @@ function surname(c: Ctx, sex: "male" | "female"): string {
     const g = generatedName(c.culture, c.period, "surnames" satisfies GeneratedList, c.req.rng, c.req.avoid);
     if (g) return g;
   }
-  return draw(c.table.surnames, c.req.era, c.req.rng, c.req.avoid);
+  return draw(c.table.surnames, c.req.era, c.req.rng, c.req.avoid, CAPPED.has(c.culture));
 }
 
-const regnal = (c: Ctx, sex: "male" | "female"): string => draw(sex === "male" ? c.table.regnalMale : c.table.regnalFemale, c.req.era, c.req.rng, c.req.avoid);
+const regnal = (c: Ctx, sex: "male" | "female"): string => draw(sex === "male" ? c.table.regnalMale : c.table.regnalFemale, c.req.era, c.req.rng, c.req.avoid, CAPPED.has(c.culture));
 
 /** Says one person slot in its form. */
 function person(c: Ctx, slot: string, known?: "male" | "female", plain = false): string | undefined {

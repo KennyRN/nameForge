@@ -39,7 +39,7 @@ export default {
     },
     water: {
       sea: ["Bay|Lake Bay|Papyrus Bay|Harbour Bay|Pirate Bay|Roadstead|Naval Bay|Tilapia Bay|Siren Bay|Great Bay", "Inlet|Creek|Salt Inlet|Reed Inlet|Harbour Inlet|Shipyard Inlet|Marina Inlet|Beach Inlet|Drowned Inlet|Gulf", "Strait|Narrow Strait|Customs Strait|Convoy Strait|Pirate Strait|Steamer Strait|Ferry Strait|Shipping Strait|Phantom Strait|Sound"],
-      coast: ["Headland|Cape|Watch Cape|Fisher's Cape|Pirate Cape|Lighthouse Cape|Quarantine Cape|Lakeside Walk|Siren Cape|Point", "Cove|Smugglers' Cove|Fishermen's Cove|Reed Boat Cove|Salt Cove|Fisher Cove|Beach Cove|Resort Cove|Siren Cove|Beach", "Island|Monastery Island|Prison Island|Hermit Island|Pilgrim Island|Quarantine Island|Resort Island|Ferry Island|Phantom Island|Isle"],
+      coast: ["Headland|Lake Point|Reed Point|Ibex Point|Monastery Point|Fortress Point|Quarantine Point|Shoreline Walk|Hippo Point|Lakeshore", "Cove|Papyrus Cove|Boatmen's Cove|Reed Boat Cove|Pilgrim Cove|Fisher Cove|Camp Cove|Lodge Cove|Spirit Cove|Strand", "Island|Monastery Island|Hermit Rock Isle|Church Island|Pilgrim Island|Prison Isle|Lodge Island|Ferry Isle|Zar Island|Holm"],
       chart: ["Bank|Fishing Bank|Tilapia Bank|Wreck Bank|Reed Bank|Convoy Bank|Trawl Bank|Sandbank|Siren Bank|Shoal", "Reef|Rock Reef|Wreck Reef|Boat Reef|Pirate Reef|Steamer Reef|Dive Reef|Artificial Reef|Drowned Reef|Rock", "Channel|Reed Channel|Boat Channel|Pilot Channel|Customs Channel|Convoy Channel|Ferry Channel|Shipping Channel|Phantom Channel|Passage"],
     },
     route: [
