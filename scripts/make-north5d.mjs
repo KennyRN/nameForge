@@ -13,9 +13,13 @@ import { WORDS5D } from "./tier6a/north5d-build.mjs";
 import { ADJ6B, STYLE6B } from "./tier6b/north5c-build.mjs";
 import { MIXES6B, NEW6B } from "./tier6b/north5c-words.mjs";
 import { TAGS5D6B, WORDS5D6B } from "./tier6b/north5d-build.mjs";
+// Brief 6c.
+import { ADJ6C, STYLE6C } from "./tier6c/north5c-build.mjs";
+import { NEW6C } from "./tier6c/north5c-words.mjs";
+import { TAGS5D6C, WORDS5D6C } from "./tier6c/north5d-build.mjs";
 import { ARMS, CAL, MONTHS_EXTRA } from "./tier6b/calendar-overrides.mjs";
-Object.assign(ADJ, ADJ6, ADJ6B);
-Object.assign(STYLE, STYLE6, STYLE6B);
+Object.assign(ADJ, ADJ6, ADJ6B, ADJ6C);
+Object.assign(STYLE, STYLE6, STYLE6B, STYLE6C);
 addFrames5d(FRAMES);
 // Second pass (brief §12 §6): a common noun after "of" takes its article ("Spring Keeper of the Lake", not "of Lake"), and the compound style written for the 6b cultures keeps its words apart ("Sun Mare Lady", not "SunMare Lady").
 for (const cls of ["deity"]) for (const frames of Object.values(FRAMES[cls] ?? {})) {
@@ -31,6 +35,7 @@ for (const [cls, styles] of Object.entries(FRAMES)) if (styles.comp) styles.cp =
 
 for (const [m, byCulture] of Object.entries(WORDS5D)) WORDS[m] = { ...WORDS[m], ...byCulture };
 for (const [m, byCulture] of Object.entries(WORDS5D6B)) WORDS[m] = { ...WORDS[m], ...byCulture };
+for (const [m, byCulture] of Object.entries(WORDS5D6C)) WORDS[m] = { ...WORDS[m], ...byCulture };
 for (const [c, text] of Object.entries(CAL)) WORDS.calendarNames[c === "norman-british" ? "english" : c] = text;
 for (const [c, text] of Object.entries(ARMS)) WORDS.armsNames[c] = text;
 TAGS.armsNames ??= {};
@@ -40,7 +45,7 @@ TAGS.armsNames.german = { ...(TAGS.armsNames.german ?? {}), Pike: "AN-EM", Dagge
 const TURN6A = { french: 1, dutch: 4, italian: 7, spanish: 2, portuguese: 5, roman: 8, greek: 3, byzantine: 6, slavic: 9, "anglo-saxon": 0 };
 const turn6a = (culture, text) => { const t = TURN6A[culture]; if (!t) return text; return text.split(";").map((l, i) => { const w = l.split("|"); if (w.length !== 10) return l; const k = (t + 2 * i) % 10; return [...w.slice(k), ...w.slice(0, k)].join("|"); }).join(";"); };
 for (const byCulture of Object.values(WORDS)) for (const c of Object.keys(TURN6A)) if (byCulture[c]) byCulture[c] = turn6a(c, byCulture[c]);
-for (const [m, byCulture] of Object.entries(TAGS5D6B)) { TAGS[m] ??= {}; for (const [c, tags] of Object.entries(byCulture)) TAGS[m][c] = { ...(TAGS[m][c] ?? {}), ...tags }; }
+for (const [m, byCulture] of [...Object.entries(TAGS5D6B), ...Object.entries(TAGS5D6C)]) { TAGS[m] ??= {}; for (const [c, tags] of Object.entries(byCulture)) TAGS[m][c] = { ...(TAGS[m][c] ?? {}), ...tags }; }
 const isMix = (c) => c === "celtic" || MIXES6.includes(c) || MIXES6B.includes(c);
 export const CORE = ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german"];
 const ENGLISH_WORD = /^[A-Za-z][A-Za-z' -]*$/;
@@ -68,12 +73,12 @@ function fillFromPools(module, culture, lists, nt) {
   const pools = POOLS[module];
   const offer = OFFER;
   // Brief 6b: each of the batch's cultures takes its era words from a place of its own in each pool (so two siblings do not append the same words at the same positions).
-  const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : NEW6.includes(culture) && culture !== "anglo-saxon" ? 30 + NEW6.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
+  const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : NEW6C.includes(culture) ? 40 + NEW6C.indexOf(culture) * 2 : NEW6.includes(culture) && culture !== "anglo-saxon" ? 30 + NEW6.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
   // Brief 6b: the shared pools hold English and Christian words (a bishopric, a hundred moot, an abbey); the batch's cultures do not draw them (a Muslim or steppe culture no Christian ones, nor any a feudal English realm).
   const FOREIGN_MONEY = /Pennyweight|Pilgrim Badge|Hoard Piece|Cross-Marked|Pelleted|Hammered|Wrought|Tally/;
   const FOREIGN = /Bishopric|Dukedom|Hundred Moot|Fiefdom|Earldom|Barony|Shire|Palatinate|Dukes?\b|Earl|Baron|Lordship|Chiefdom|Tribal Kingdom|Kingdom of the Plains|Yeomanry|Hanse|Landsknecht|Kirk|Parish|Sunday|Mission Hall|Rosicrucian|Druid|Ovates|Bardic|Pietist|Methodist|Quaker|Puritan|Covenanter|Highlanders|Tinners|Thing Assembly|Longship|Viking|Rune|Wergild|Seer?ess Band|Moot|Witan|Thane|Thegn/;
   const CHRISTIAN = /Abbey|Priory|Chantry|Cloister|Convent|Chapel|Cathedral|Monastery|Hermit Cell|Nuns|Monks|Friar|Pilgrim|Saint|Holy|Church|Bishop|Crusade|Inquisition/;
-  const own = NEW6B.includes(culture) || MIXES6B.includes(culture);
+  const own = NEW6B.includes(culture) || NEW6C.includes(culture) || MIXES6B.includes(culture);
   const keepsChurch = ["egyptian", "ethiopian", "bantu", "west-african"].includes(culture);
   const take = (pool, enough) => {
     for (let n = 0; n < pool.length && !enough(); n++) {
@@ -100,7 +105,7 @@ function fillFromPools(module, culture, lists, nt) {
 for (const [module, byCulture] of Object.entries(WORDS)) {
   const cls = CLASS[module];
   modules[module] = { kinds: KINDS[module], cultures: {} };
-  for (const culture of [...CORE, ...NEW6, ...NEW6B, "celtic", ...MIXES6, ...MIXES6B]) {
+  for (const culture of [...CORE, ...NEW6, ...NEW6B, ...NEW6C, "celtic", ...MIXES6, ...MIXES6B]) {
     const lists = byCulture[culture].split(";").map((l) => l.split("|"));
     const want = isMix(culture) ? 4 : 10;
     if (lists.length !== 3) problems.push(`${module} ${culture}: ${lists.length} lists`);
