@@ -142,7 +142,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | adventurers and explorers | 158 | 372 | 373 | 188 | 178 | **0** | 19 |
 | powers and factions | 172 | 336 | 274 | 173 | 171 | **0** | **7** |
 | supernatural courts and hosts | 206 | 282 | 156 | 156 | 244 | **0** | **0** |
-| ships and boats | 188 | 228 | 335 | 291 | 181 | 51 | 51 |
+| ships and boats | 188 | 228 | 332 | 288 | 181 | 51 | 51 |
 | spacecraft and stations | **0** | **0** | **0** | **0** | **0** | 67 | 59 |
 | aircraft and airships | 171 | 205 | 204 | 276 | 301 | **11** | **11** |
 | land vehicles | 172 | 205 | 219 | 475 | 429 | **11** | **11** |
@@ -1081,8 +1081,8 @@ Distinct entries across the reported modules; a shared pool counts once.
 | --- | --- |
 | AN ancient | 9671 |
 | MD medieval | 12900 |
-| EM early modern | 13881 |
-| ST steam age | 13339 |
+| EM early modern | 13878 |
+| ST steam age | 13336 |
 | MO modern | 11934 |
 | NF near future | 771 |
 | IS interstellar | 1723 |
