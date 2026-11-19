@@ -15403,44 +15403,44 @@
    "v": 0
   },
   "culture|epithets|indian|words": {
-   "v": 5,
+   "v": 56,
    "t": 12
   },
   "culture|epithets|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|epithets|indian|profile": {
    "v": 0
   },
   "culture|epithets|chinese|words": {
-   "v": 4,
+   "v": 52,
    "t": 12
   },
   "culture|epithets|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|epithets|chinese|profile": {
    "v": 0
   },
   "culture|epithets|japanese|words": {
-   "v": 4,
+   "v": 56,
    "t": 12
   },
   "culture|epithets|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|epithets|japanese|profile": {
    "v": 0
   },
   "culture|epithets|korean|words": {
-   "v": 3,
+   "v": 52,
    "t": 12
   },
   "culture|epithets|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|epithets|korean|profile": {
@@ -15507,23 +15507,23 @@
    "v": 0
   },
   "era|epithets|AN": {
-   "v": 211,
+   "v": 244,
    "t": 12
   },
   "era|epithets|MD": {
-   "v": 279,
+   "v": 322,
    "t": 12
   },
   "era|epithets|EM": {
-   "v": 168,
+   "v": 193,
    "t": 12
   },
   "era|epithets|ST": {
-   "v": 158,
+   "v": 182,
    "t": 12
   },
   "era|epithets|MO": {
-   "v": 166,
+   "v": 191,
    "t": 12
   },
   "era|epithets|NF": {
@@ -15535,27 +15535,27 @@
    "t": 12
   },
   "style|epithets|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|epithets|high-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|epithets|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|epithets|contemporary-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|epithets|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|epithets|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|epithets|grand": {
@@ -15953,44 +15953,44 @@
    "v": 0
   },
   "culture|titles|indian|words": {
-   "v": 7,
+   "v": 55,
    "t": 12
   },
   "culture|titles|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|titles|indian|profile": {
    "v": 0
   },
   "culture|titles|chinese|words": {
-   "v": 7,
+   "v": 52,
    "t": 12
   },
   "culture|titles|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|titles|chinese|profile": {
    "v": 0
   },
   "culture|titles|japanese|words": {
-   "v": 6,
+   "v": 57,
    "t": 12
   },
   "culture|titles|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|titles|japanese|profile": {
    "v": 0
   },
   "culture|titles|korean|words": {
-   "v": 7,
+   "v": 54,
    "t": 12
   },
   "culture|titles|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|titles|korean|profile": {
@@ -16057,23 +16057,23 @@
    "v": 0
   },
   "era|titles|AN": {
-   "v": 163,
+   "v": 188,
    "t": 12
   },
   "era|titles|MD": {
-   "v": 395,
+   "v": 441,
    "t": 12
   },
   "era|titles|EM": {
-   "v": 306,
+   "v": 338,
    "t": 12
   },
   "era|titles|ST": {
-   "v": 162,
+   "v": 186,
    "t": 12
   },
   "era|titles|MO": {
-   "v": 161,
+   "v": 185,
    "t": 12
   },
   "era|titles|NF": {
@@ -16085,27 +16085,27 @@
    "t": 12
   },
   "style|titles|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|titles|high-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|titles|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|titles|contemporary-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|titles|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|titles|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|titles|grand": {
@@ -16479,44 +16479,44 @@
    "v": 0
   },
   "culture|familyNames|indian|words": {
-   "v": 0,
+   "v": 40,
    "t": 12
   },
   "culture|familyNames|indian|shapes": {
-   "v": 6,
+   "v": 16,
    "t": 4
   },
   "culture|familyNames|indian|profile": {
    "v": 0
   },
   "culture|familyNames|chinese|words": {
-   "v": 0,
+   "v": 41,
    "t": 12
   },
   "culture|familyNames|chinese|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|familyNames|chinese|profile": {
    "v": 0
   },
   "culture|familyNames|japanese|words": {
-   "v": 0,
+   "v": 40,
    "t": 12
   },
   "culture|familyNames|japanese|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|familyNames|japanese|profile": {
    "v": 0
   },
   "culture|familyNames|korean|words": {
-   "v": 0,
+   "v": 41,
    "t": 12
   },
   "culture|familyNames|korean|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|familyNames|korean|profile": {
@@ -16583,23 +16583,23 @@
    "v": 0
   },
   "era|familyNames|AN": {
-   "v": 169,
+   "v": 193,
    "t": 12
   },
   "era|familyNames|MD": {
-   "v": 300,
+   "v": 326,
    "t": 12
   },
   "era|familyNames|EM": {
-   "v": 217,
+   "v": 241,
    "t": 12
   },
   "era|familyNames|ST": {
-   "v": 157,
+   "v": 181,
    "t": 12
   },
   "era|familyNames|MO": {
-   "v": 156,
+   "v": 180,
    "t": 12
   },
   "era|familyNames|NF": {
@@ -16611,27 +16611,27 @@
    "t": 12
   },
   "style|familyNames|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|familyNames|high-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|familyNames|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|familyNames|contemporary-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|familyNames|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|familyNames|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|familyNames|grand": {
@@ -18679,44 +18679,44 @@
    "v": 1
   },
   "culture|realms|indian|words": {
-   "v": 3,
+   "v": 40,
    "t": 12
   },
   "culture|realms|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|realms|indian|profile": {
    "v": 1
   },
   "culture|realms|chinese|words": {
-   "v": 3,
+   "v": 39,
    "t": 12
   },
   "culture|realms|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|realms|chinese|profile": {
    "v": 1
   },
   "culture|realms|japanese|words": {
-   "v": 4,
+   "v": 41,
    "t": 12
   },
   "culture|realms|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|realms|japanese|profile": {
    "v": 1
   },
   "culture|realms|korean|words": {
-   "v": 1,
+   "v": 38,
    "t": 12
   },
   "culture|realms|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|realms|korean|profile": {
@@ -18783,15 +18783,15 @@
    "v": 0
   },
   "era|realms|AN": {
-   "v": 272,
+   "v": 336,
    "t": 12
   },
   "era|realms|MD": {
-   "v": 402,
+   "v": 470,
    "t": 12
   },
   "era|realms|EM": {
-   "v": 328,
+   "v": 396,
    "t": 12
   },
   "era|realms|ST": {
@@ -18799,7 +18799,7 @@
    "t": 12
   },
   "era|realms|MO": {
-   "v": 189,
+   "v": 213,
    "t": 12
   },
   "era|realms|NF": {
@@ -18811,27 +18811,27 @@
    "t": 12
   },
   "style|realms|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|realms|high-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|realms|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|realms|contemporary-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|realms|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|realms|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|realms|grand": {
@@ -19225,44 +19225,44 @@
    "v": 1
   },
   "culture|peoplesTongues|indian|words": {
-   "v": 0,
+   "v": 48,
    "t": 12
   },
   "culture|peoplesTongues|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|peoplesTongues|indian|profile": {
    "v": 1
   },
   "culture|peoplesTongues|chinese|words": {
-   "v": 0,
+   "v": 49,
    "t": 12
   },
   "culture|peoplesTongues|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|peoplesTongues|chinese|profile": {
    "v": 1
   },
   "culture|peoplesTongues|japanese|words": {
-   "v": 0,
+   "v": 49,
    "t": 12
   },
   "culture|peoplesTongues|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|peoplesTongues|japanese|profile": {
    "v": 1
   },
   "culture|peoplesTongues|korean|words": {
-   "v": 0,
+   "v": 49,
    "t": 12
   },
   "culture|peoplesTongues|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|peoplesTongues|korean|profile": {
@@ -19329,23 +19329,23 @@
    "v": 0
   },
   "era|peoplesTongues|AN": {
-   "v": 178,
+   "v": 203,
    "t": 12
   },
   "era|peoplesTongues|MD": {
-   "v": 192,
+   "v": 220,
    "t": 12
   },
   "era|peoplesTongues|EM": {
-   "v": 162,
+   "v": 187,
    "t": 12
   },
   "era|peoplesTongues|ST": {
-   "v": 159,
+   "v": 183,
    "t": 12
   },
   "era|peoplesTongues|MO": {
-   "v": 221,
+   "v": 256,
    "t": 12
   },
   "era|peoplesTongues|NF": {
@@ -19357,27 +19357,27 @@
    "t": 12
   },
   "style|peoplesTongues|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|peoplesTongues|high-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|peoplesTongues|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|peoplesTongues|contemporary-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|peoplesTongues|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|peoplesTongues|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|peoplesTongues|grand": {
@@ -20784,44 +20784,44 @@
    "v": 0
   },
   "culture|tribalNames|indian|words": {
-   "v": 6,
+   "v": 39,
    "t": 12
   },
   "culture|tribalNames|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tribalNames|indian|profile": {
    "v": 0
   },
   "culture|tribalNames|chinese|words": {
-   "v": 8,
+   "v": 41,
    "t": 12
   },
   "culture|tribalNames|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tribalNames|chinese|profile": {
    "v": 0
   },
   "culture|tribalNames|japanese|words": {
-   "v": 8,
+   "v": 41,
    "t": 12
   },
   "culture|tribalNames|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tribalNames|japanese|profile": {
    "v": 0
   },
   "culture|tribalNames|korean|words": {
-   "v": 8,
+   "v": 41,
    "t": 12
   },
   "culture|tribalNames|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tribalNames|korean|profile": {
@@ -20956,27 +20956,27 @@
    "t": 12
   },
   "style|tribalNames|high-fantasy|words": {
-   "v": 90,
+   "v": 102,
    "t": 16
   },
   "style|tribalNames|high-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|tribalNames|contemporary-fantasy|words": {
-   "v": 90,
+   "v": 102,
    "t": 16
   },
   "style|tribalNames|contemporary-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|tribalNames|space-opera|words": {
-   "v": 90,
+   "v": 102,
    "t": 16
   },
   "style|tribalNames|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|tribalNames|grand": {
@@ -21382,44 +21382,44 @@
    "v": 0
   },
   "culture|mysticOrders|indian|words": {
-   "v": 6,
+   "v": 53,
    "t": 12
   },
   "culture|mysticOrders|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|mysticOrders|indian|profile": {
    "v": 0
   },
   "culture|mysticOrders|chinese|words": {
-   "v": 8,
+   "v": 53,
    "t": 12
   },
   "culture|mysticOrders|chinese|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 4
   },
   "culture|mysticOrders|chinese|profile": {
    "v": 0
   },
   "culture|mysticOrders|japanese|words": {
-   "v": 8,
+   "v": 55,
    "t": 12
   },
   "culture|mysticOrders|japanese|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 4
   },
   "culture|mysticOrders|japanese|profile": {
    "v": 0
   },
   "culture|mysticOrders|korean|words": {
-   "v": 8,
+   "v": 52,
    "t": 12
   },
   "culture|mysticOrders|korean|shapes": {
-   "v": 2,
+   "v": 12,
    "t": 4
   },
   "culture|mysticOrders|korean|profile": {
@@ -21526,23 +21526,23 @@
    "v": 0
   },
   "era|mysticOrders|AN": {
-   "v": 185,
+   "v": 212,
    "t": 12
   },
   "era|mysticOrders|MD": {
-   "v": 281,
+   "v": 315,
    "t": 12
   },
   "era|mysticOrders|EM": {
-   "v": 186,
+   "v": 212,
    "t": 12
   },
   "era|mysticOrders|ST": {
-   "v": 159,
+   "v": 183,
    "t": 12
   },
   "era|mysticOrders|MO": {
-   "v": 240,
+   "v": 270,
    "t": 12
   },
   "era|mysticOrders|NF": {
@@ -21554,19 +21554,19 @@
    "t": 12
   },
   "style|mysticOrders|high-fantasy|words": {
-   "v": 94,
+   "v": 106,
    "t": 16
   },
   "style|mysticOrders|high-fantasy|shapes": {
-   "v": 89,
+   "v": 97,
    "t": 4
   },
   "style|mysticOrders|contemporary-fantasy|words": {
-   "v": 94,
+   "v": 106,
    "t": 16
   },
   "style|mysticOrders|contemporary-fantasy|shapes": {
-   "v": 89,
+   "v": 97,
    "t": 4
   },
   "style|mysticOrders|low-fantasy|words": {
@@ -21578,11 +21578,11 @@
    "t": 4
   },
   "style|mysticOrders|space-opera|words": {
-   "v": 94,
+   "v": 106,
    "t": 16
   },
   "style|mysticOrders|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|mysticOrders|grand": {
@@ -21968,44 +21968,44 @@
    "v": 0
   },
   "culture|martialOrders|indian|words": {
-   "v": 0,
+   "v": 49,
    "t": 12
   },
   "culture|martialOrders|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|martialOrders|indian|profile": {
    "v": 0
   },
   "culture|martialOrders|chinese|words": {
-   "v": 1,
+   "v": 47,
    "t": 12
   },
   "culture|martialOrders|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|martialOrders|chinese|profile": {
    "v": 0
   },
   "culture|martialOrders|japanese|words": {
-   "v": 1,
+   "v": 48,
    "t": 12
   },
   "culture|martialOrders|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|martialOrders|japanese|profile": {
    "v": 0
   },
   "culture|martialOrders|korean|words": {
-   "v": 1,
+   "v": 49,
    "t": 12
   },
   "culture|martialOrders|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|martialOrders|korean|profile": {
@@ -22112,23 +22112,23 @@
    "v": 0
   },
   "era|martialOrders|AN": {
-   "v": 175,
-   "t": 12
-  },
-  "era|martialOrders|MD": {
-   "v": 342,
-   "t": 12
-  },
-  "era|martialOrders|EM": {
-   "v": 308,
-   "t": 12
-  },
-  "era|martialOrders|ST": {
    "v": 199,
    "t": 12
   },
+  "era|martialOrders|MD": {
+   "v": 390,
+   "t": 12
+  },
+  "era|martialOrders|EM": {
+   "v": 356,
+   "t": 12
+  },
+  "era|martialOrders|ST": {
+   "v": 232,
+   "t": 12
+  },
   "era|martialOrders|MO": {
-   "v": 178,
+   "v": 202,
    "t": 12
   },
   "era|martialOrders|NF": {
@@ -22148,27 +22148,27 @@
    "t": 4
   },
   "style|martialOrders|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|martialOrders|high-fantasy|shapes": {
-   "v": 64,
+   "v": 72,
    "t": 4
   },
   "style|martialOrders|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|martialOrders|contemporary-fantasy|shapes": {
-   "v": 64,
+   "v": 72,
    "t": 4
   },
   "style|martialOrders|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|martialOrders|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|martialOrders|grand": {
@@ -22558,44 +22558,44 @@
    "v": 0
   },
   "culture|underworldGroups|indian|words": {
-   "v": 0,
+   "v": 39,
    "t": 12
   },
   "culture|underworldGroups|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|underworldGroups|indian|profile": {
    "v": 0
   },
   "culture|underworldGroups|chinese|words": {
-   "v": 6,
+   "v": 46,
    "t": 12
   },
   "culture|underworldGroups|chinese|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|underworldGroups|chinese|profile": {
    "v": 0
   },
   "culture|underworldGroups|japanese|words": {
-   "v": 6,
+   "v": 46,
    "t": 12
   },
   "culture|underworldGroups|japanese|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|underworldGroups|japanese|profile": {
    "v": 0
   },
   "culture|underworldGroups|korean|words": {
-   "v": 6,
+   "v": 46,
    "t": 12
   },
   "culture|underworldGroups|korean|shapes": {
-   "v": 1,
+   "v": 11,
    "t": 4
   },
   "culture|underworldGroups|korean|profile": {
@@ -22702,23 +22702,23 @@
    "v": 0
   },
   "era|underworldGroups|AN": {
-   "v": 159,
+   "v": 183,
    "t": 12
   },
   "era|underworldGroups|MD": {
-   "v": 365,
+   "v": 404,
    "t": 12
   },
   "era|underworldGroups|EM": {
-   "v": 445,
+   "v": 488,
    "t": 12
   },
   "era|underworldGroups|ST": {
-   "v": 246,
+   "v": 273,
    "t": 12
   },
   "era|underworldGroups|MO": {
-   "v": 211,
+   "v": 235,
    "t": 12
   },
   "era|underworldGroups|NF": {
@@ -22738,27 +22738,27 @@
    "t": 4
   },
   "style|underworldGroups|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|underworldGroups|high-fantasy|shapes": {
-   "v": 77,
+   "v": 85,
    "t": 4
   },
   "style|underworldGroups|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|underworldGroups|contemporary-fantasy|shapes": {
-   "v": 88,
+   "v": 96,
    "t": 4
   },
   "style|underworldGroups|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|underworldGroups|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|underworldGroups|grand": {
@@ -23144,44 +23144,44 @@
    "v": 0
   },
   "culture|tradeGuilds|indian|words": {
-   "v": 0,
+   "v": 54,
    "t": 12
   },
   "culture|tradeGuilds|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tradeGuilds|indian|profile": {
    "v": 0
   },
   "culture|tradeGuilds|chinese|words": {
-   "v": 0,
+   "v": 53,
    "t": 12
   },
   "culture|tradeGuilds|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tradeGuilds|chinese|profile": {
    "v": 0
   },
   "culture|tradeGuilds|japanese|words": {
-   "v": 0,
+   "v": 46,
    "t": 12
   },
   "culture|tradeGuilds|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tradeGuilds|japanese|profile": {
    "v": 0
   },
   "culture|tradeGuilds|korean|words": {
-   "v": 0,
+   "v": 43,
    "t": 12
   },
   "culture|tradeGuilds|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|tradeGuilds|korean|profile": {
@@ -23288,23 +23288,23 @@
    "v": 0
   },
   "era|tradeGuilds|AN": {
-   "v": 164,
+   "v": 188,
    "t": 12
   },
   "era|tradeGuilds|MD": {
-   "v": 363,
+   "v": 419,
    "t": 12
   },
   "era|tradeGuilds|EM": {
-   "v": 320,
+   "v": 371,
    "t": 12
   },
   "era|tradeGuilds|ST": {
-   "v": 164,
+   "v": 188,
    "t": 12
   },
   "era|tradeGuilds|MO": {
-   "v": 179,
+   "v": 204,
    "t": 12
   },
   "era|tradeGuilds|NF": {
@@ -23316,27 +23316,27 @@
    "t": 12
   },
   "style|tradeGuilds|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|tradeGuilds|contemporary-fantasy|shapes": {
-   "v": 67,
+   "v": 75,
    "t": 4
   },
   "style|tradeGuilds|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|tradeGuilds|high-fantasy|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "style|tradeGuilds|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|tradeGuilds|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|tradeGuilds|grand": {
@@ -23742,44 +23742,44 @@
    "v": 0
   },
   "culture|adventureCompanies|indian|words": {
-   "v": 0,
+   "v": 46,
    "t": 12
   },
   "culture|adventureCompanies|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|adventureCompanies|indian|profile": {
    "v": 0
   },
   "culture|adventureCompanies|chinese|words": {
-   "v": 0,
+   "v": 46,
    "t": 12
   },
   "culture|adventureCompanies|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|adventureCompanies|chinese|profile": {
    "v": 0
   },
   "culture|adventureCompanies|japanese|words": {
-   "v": 0,
+   "v": 47,
    "t": 12
   },
   "culture|adventureCompanies|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|adventureCompanies|japanese|profile": {
    "v": 0
   },
   "culture|adventureCompanies|korean|words": {
-   "v": 0,
+   "v": 47,
    "t": 12
   },
   "culture|adventureCompanies|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|adventureCompanies|korean|profile": {
@@ -23886,23 +23886,23 @@
    "v": 0
   },
   "era|adventureCompanies|AN": {
-   "v": 158,
+   "v": 182,
    "t": 12
   },
   "era|adventureCompanies|MD": {
-   "v": 372,
+   "v": 426,
    "t": 12
   },
   "era|adventureCompanies|EM": {
-   "v": 373,
+   "v": 431,
    "t": 12
   },
   "era|adventureCompanies|ST": {
-   "v": 188,
+   "v": 216,
    "t": 12
   },
   "era|adventureCompanies|MO": {
-   "v": 178,
+   "v": 202,
    "t": 12
   },
   "era|adventureCompanies|NF": {
@@ -23922,27 +23922,27 @@
    "t": 4
   },
   "style|adventureCompanies|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|adventureCompanies|high-fantasy|shapes": {
-   "v": 71,
+   "v": 79,
    "t": 4
   },
   "style|adventureCompanies|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|adventureCompanies|contemporary-fantasy|shapes": {
-   "v": 71,
+   "v": 79,
    "t": 4
   },
   "style|adventureCompanies|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|adventureCompanies|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|adventureCompanies|grand": {
@@ -24316,44 +24316,44 @@
    "v": 0
   },
   "culture|powerFactions|indian|words": {
-   "v": 1,
+   "v": 39,
    "t": 12
   },
   "culture|powerFactions|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|powerFactions|indian|profile": {
    "v": 0
   },
   "culture|powerFactions|chinese|words": {
-   "v": 0,
+   "v": 38,
    "t": 12
   },
   "culture|powerFactions|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|powerFactions|chinese|profile": {
    "v": 0
   },
   "culture|powerFactions|japanese|words": {
-   "v": 0,
+   "v": 38,
    "t": 12
   },
   "culture|powerFactions|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|powerFactions|japanese|profile": {
    "v": 0
   },
   "culture|powerFactions|korean|words": {
-   "v": 0,
+   "v": 37,
    "t": 12
   },
   "culture|powerFactions|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|powerFactions|korean|profile": {
@@ -24460,23 +24460,23 @@
    "v": 0
   },
   "era|powerFactions|AN": {
-   "v": 172,
+   "v": 196,
    "t": 12
   },
   "era|powerFactions|MD": {
-   "v": 336,
+   "v": 364,
    "t": 12
   },
   "era|powerFactions|EM": {
-   "v": 274,
+   "v": 302,
    "t": 12
   },
   "era|powerFactions|ST": {
-   "v": 173,
+   "v": 199,
    "t": 12
   },
   "era|powerFactions|MO": {
-   "v": 171,
+   "v": 197,
    "t": 12
   },
   "era|powerFactions|NF": {
@@ -24496,27 +24496,27 @@
    "t": 4
   },
   "style|powerFactions|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|powerFactions|high-fantasy|shapes": {
-   "v": 59,
+   "v": 67,
    "t": 4
   },
   "style|powerFactions|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|powerFactions|contemporary-fantasy|shapes": {
-   "v": 59,
+   "v": 67,
    "t": 4
   },
   "style|powerFactions|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|powerFactions|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|powerFactions|grand": {
@@ -24906,44 +24906,44 @@
    "v": 0
   },
   "culture|supernaturalCourts|indian|words": {
-   "v": 0,
+   "v": 44,
    "t": 12
   },
   "culture|supernaturalCourts|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|supernaturalCourts|indian|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|chinese|words": {
-   "v": 0,
+   "v": 45,
    "t": 12
   },
   "culture|supernaturalCourts|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|supernaturalCourts|chinese|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|japanese|words": {
-   "v": 0,
+   "v": 44,
    "t": 12
   },
   "culture|supernaturalCourts|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|supernaturalCourts|japanese|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|korean|words": {
-   "v": 0,
+   "v": 45,
    "t": 12
   },
   "culture|supernaturalCourts|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|supernaturalCourts|korean|profile": {
@@ -25050,23 +25050,23 @@
    "v": 0
   },
   "era|supernaturalCourts|AN": {
-   "v": 206,
+   "v": 238,
    "t": 12
   },
   "era|supernaturalCourts|MD": {
-   "v": 282,
+   "v": 314,
    "t": 12
   },
   "era|supernaturalCourts|EM": {
-   "v": 156,
+   "v": 180,
    "t": 12
   },
   "era|supernaturalCourts|ST": {
-   "v": 156,
+   "v": 180,
    "t": 12
   },
   "era|supernaturalCourts|MO": {
-   "v": 244,
+   "v": 270,
    "t": 12
   },
   "era|supernaturalCourts|NF": {
@@ -25086,27 +25086,27 @@
    "t": 4
   },
   "style|supernaturalCourts|high-fantasy|words": {
-   "v": 160,
+   "v": 204,
    "t": 16
   },
   "style|supernaturalCourts|high-fantasy|shapes": {
-   "v": 128,
+   "v": 136,
    "t": 4
   },
   "style|supernaturalCourts|contemporary-fantasy|words": {
-   "v": 160,
+   "v": 204,
    "t": 16
   },
   "style|supernaturalCourts|contemporary-fantasy|shapes": {
-   "v": 128,
+   "v": 136,
    "t": 4
   },
   "style|supernaturalCourts|space-opera|words": {
-   "v": 160,
+   "v": 204,
    "t": 16
   },
   "style|supernaturalCourts|space-opera|shapes": {
-   "v": 52,
+   "v": 60,
    "t": 4
   },
   "tone|supernaturalCourts|grand": {
@@ -25496,44 +25496,44 @@
    "v": 1
   },
   "culture|ships|indian|words": {
-   "v": 0,
+   "v": 43,
    "t": 12
   },
   "culture|ships|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|ships|indian|profile": {
    "v": 1
   },
   "culture|ships|chinese|words": {
-   "v": 0,
+   "v": 42,
    "t": 12
   },
   "culture|ships|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|ships|chinese|profile": {
    "v": 1
   },
   "culture|ships|japanese|words": {
-   "v": 0,
+   "v": 44,
    "t": 12
   },
   "culture|ships|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|ships|japanese|profile": {
    "v": 1
   },
   "culture|ships|korean|words": {
-   "v": 0,
+   "v": 42,
    "t": 12
   },
   "culture|ships|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|ships|korean|profile": {
@@ -25687,23 +25687,23 @@
    "v": 0
   },
   "era|ships|AN": {
-   "v": 188,
+   "v": 212,
    "t": 12
   },
   "era|ships|MD": {
-   "v": 228,
+   "v": 255,
    "t": 12
   },
   "era|ships|EM": {
-   "v": 332,
+   "v": 379,
    "t": 12
   },
   "era|ships|ST": {
-   "v": 288,
+   "v": 331,
    "t": 12
   },
   "era|ships|MO": {
-   "v": 181,
+   "v": 205,
    "t": 12
   },
   "era|ships|NF": {
@@ -25715,19 +25715,19 @@
    "t": 12
   },
   "style|ships|high-fantasy|words": {
-   "v": 198,
+   "v": 210,
    "t": 16
   },
   "style|ships|high-fantasy|shapes": {
-   "v": 75,
+   "v": 83,
    "t": 4
   },
   "style|ships|contemporary-fantasy|words": {
-   "v": 114,
+   "v": 126,
    "t": 16
   },
   "style|ships|contemporary-fantasy|shapes": {
-   "v": 55,
+   "v": 63,
    "t": 4
   },
   "style|ships|steampunk|words": {
@@ -25755,11 +25755,11 @@
    "t": 4
   },
   "style|ships|space-opera|words": {
-   "v": 182,
+   "v": 194,
    "t": 16
   },
   "style|ships|space-opera|shapes": {
-   "v": 70,
+   "v": 78,
    "t": 4
   },
   "tone|ships|grand": {
@@ -26805,44 +26805,44 @@
    "v": 0
   },
   "culture|aircraft|indian|words": {
-   "v": 0,
+   "v": 38,
    "t": 12
   },
   "culture|aircraft|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|aircraft|indian|profile": {
    "v": 1
   },
   "culture|aircraft|chinese|words": {
-   "v": 0,
+   "v": 37,
    "t": 12
   },
   "culture|aircraft|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|aircraft|chinese|profile": {
    "v": 1
   },
   "culture|aircraft|japanese|words": {
-   "v": 0,
+   "v": 39,
    "t": 12
   },
   "culture|aircraft|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|aircraft|japanese|profile": {
    "v": 1
   },
   "culture|aircraft|korean|words": {
-   "v": 0,
+   "v": 36,
    "t": 12
   },
   "culture|aircraft|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|aircraft|korean|profile": {
@@ -26996,23 +26996,23 @@
    "v": 0
   },
   "era|aircraft|AN": {
-   "v": 171,
+   "v": 195,
    "t": 12
   },
   "era|aircraft|MD": {
-   "v": 205,
+   "v": 233,
    "t": 12
   },
   "era|aircraft|EM": {
-   "v": 204,
+   "v": 233,
    "t": 12
   },
   "era|aircraft|ST": {
-   "v": 276,
+   "v": 310,
    "t": 12
   },
   "era|aircraft|MO": {
-   "v": 301,
+   "v": 337,
    "t": 12
   },
   "era|aircraft|NF": {
@@ -27024,19 +27024,19 @@
    "t": 12
   },
   "style|aircraft|high-fantasy|words": {
-   "v": 188,
+   "v": 216,
    "t": 16
   },
   "style|aircraft|high-fantasy|shapes": {
-   "v": 57,
+   "v": 65,
    "t": 4
   },
   "style|aircraft|contemporary-fantasy|words": {
-   "v": 188,
+   "v": 216,
    "t": 16
   },
   "style|aircraft|contemporary-fantasy|shapes": {
-   "v": 53,
+   "v": 61,
    "t": 4
   },
   "style|aircraft|steampunk|words": {
@@ -27064,11 +27064,11 @@
    "t": 4
   },
   "style|aircraft|space-opera|words": {
-   "v": 188,
+   "v": 216,
    "t": 16
   },
   "style|aircraft|space-opera|shapes": {
-   "v": 56,
+   "v": 64,
    "t": 4
   },
   "tone|aircraft|grand": {
@@ -27466,44 +27466,44 @@
    "v": 1
   },
   "culture|landVehicles|indian|words": {
-   "v": 0,
+   "v": 41,
    "t": 12
   },
   "culture|landVehicles|indian|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|landVehicles|indian|profile": {
    "v": 1
   },
   "culture|landVehicles|chinese|words": {
-   "v": 0,
+   "v": 41,
    "t": 12
   },
   "culture|landVehicles|chinese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|landVehicles|chinese|profile": {
    "v": 1
   },
   "culture|landVehicles|japanese|words": {
-   "v": 0,
+   "v": 41,
    "t": 12
   },
   "culture|landVehicles|japanese|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|landVehicles|japanese|profile": {
    "v": 1
   },
   "culture|landVehicles|korean|words": {
-   "v": 0,
+   "v": 41,
    "t": 12
   },
   "culture|landVehicles|korean|shapes": {
-   "v": 0,
+   "v": 10,
    "t": 4
   },
   "culture|landVehicles|korean|profile": {
@@ -27657,23 +27657,23 @@
    "v": 0
   },
   "era|landVehicles|AN": {
-   "v": 172,
+   "v": 196,
    "t": 12
   },
   "era|landVehicles|MD": {
-   "v": 205,
+   "v": 231,
    "t": 12
   },
   "era|landVehicles|EM": {
-   "v": 219,
+   "v": 247,
    "t": 12
   },
   "era|landVehicles|ST": {
-   "v": 475,
+   "v": 547,
    "t": 12
   },
   "era|landVehicles|MO": {
-   "v": 429,
+   "v": 493,
    "t": 12
   },
   "era|landVehicles|NF": {
@@ -27685,19 +27685,19 @@
    "t": 12
   },
   "style|landVehicles|high-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|landVehicles|high-fantasy|shapes": {
-   "v": 57,
+   "v": 65,
    "t": 4
   },
   "style|landVehicles|contemporary-fantasy|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|landVehicles|contemporary-fantasy|shapes": {
-   "v": 53,
+   "v": 61,
    "t": 4
   },
   "style|landVehicles|steampunk|words": {
@@ -27725,11 +27725,11 @@
    "t": 4
   },
   "style|landVehicles|space-opera|words": {
-   "v": 93,
+   "v": 105,
    "t": 16
   },
   "style|landVehicles|space-opera|shapes": {
-   "v": 55,
+   "v": 63,
    "t": 4
   },
   "tone|landVehicles|grand": {
@@ -28418,16 +28418,16 @@
    "v": 288
   },
   "total|culture|indian|words": {
-   "v": 1070
+   "v": 1766
   },
   "total|culture|indian|shapes": {
-   "v": 370
+   "v": 530
   },
   "total|culture|chinese|words": {
-   "v": 1097
+   "v": 1782
   },
   "total|culture|chinese|shapes": {
-   "v": 375
+   "v": 535
   },
   "total|culture|slavic|words": {
    "v": 1946
@@ -28478,16 +28478,16 @@
    "v": 546
   },
   "total|culture|japanese|words": {
-   "v": 1125
+   "v": 1820
   },
   "total|culture|japanese|shapes": {
-   "v": 350
+   "v": 510
   },
   "total|culture|korean|words": {
-   "v": 1086
+   "v": 1765
   },
   "total|culture|korean|shapes": {
-   "v": 319
+   "v": 479
   },
   "total|culture|maya|words": {
    "v": 82
@@ -28604,19 +28604,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 10425
+   "v": 10847
   },
   "total|era|MD": {
-   "v": 13616
+   "v": 14199
   },
   "total|era|EM": {
-   "v": 14906
+   "v": 15462
   },
   "total|era|ST": {
-   "v": 14485
+   "v": 14916
   },
   "total|era|MO": {
-   "v": 12879
+   "v": 13314
   },
   "total|era|NF": {
    "v": 771
@@ -28625,22 +28625,22 @@
    "v": 1723
   },
   "total|style|high-fantasy|words": {
-   "v": 4472
+   "v": 4712
   },
   "total|style|high-fantasy|shapes": {
-   "v": 1560
+   "v": 1688
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 4388
+   "v": 4628
   },
   "total|style|contemporary-fantasy|shapes": {
-   "v": 1558
+   "v": 1686
   },
   "total|style|space-opera|words": {
-   "v": 4524
+   "v": 4764
   },
   "total|style|space-opera|shapes": {
-   "v": 1391
+   "v": 1519
   },
   "total|style|steampunk|words": {
    "v": 84

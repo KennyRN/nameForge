@@ -161,14 +161,14 @@ test("adapters are pure: running them twice gives the same rows", () => {
 
 test("realms: hand-counted cells (words/shapes), counted by hand from realms.json", () => {
   // A culture's own forms, its qualifying words (cultQualExtra), its tribal noun and its homeland word.
-  assert.equal(cell("realms", "chinese"), "3/0", "cultQualExtra 2 + tribal 1");
+  assert.equal(cell("realms", "chinese"), "39/10", "cultQualExtra 2 + tribal 1, and (6c) the culture's own thirty words and ten shapes");
   // Brief 5c adds each core culture's own thirty words and ten frames (Scandinavian also reads Norse's four).
   assert.equal(cell("realms", "scandinavian"), "49/10", "norse: forms 2 + cultQualExtra 1 + tribal 1, and Scandinavian's own words and 10 shapes (5d: no longer Norse's as well)");
   assert.equal(cell("realms", "egyptian"), "41/10", "forms 1 + cultQualExtra 3 + tribal 1, and (brief 6b) the culture's own thirty words and ten shapes");
   assert.equal(cell("realms", "english"), "53/10", "anglo-saxon tribal 1; norman-british forms 2 + tribal 1 + homeland 1, and the batch's own 30 and 10");
   // Entries confined to an era: the weighted forms (era weights above nought), the modifiers and the
   // ideology words; ST has none because the realms have no steam age (5d: the batch's era words are tagged to the eras the module offers).
-  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 272, MD: 402, EM: 328, ST: 0, MO: 189, NF: 34, IS: 42 }); // Second pass (brief §12): the 6b cultures' timeless words are tagged to the eras they stand in, and Aurora left the Scandinavian orders;  Anglo-Saxon adds its own realms words (sibling-distinctness brief); batch 6b adds its eight cultures' and the mixes' era words
+  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 336, MD: 470, EM: 396, ST: 0, MO: 213, NF: 34, IS: 42 }); // Second pass (brief §12): the 6b cultures' timeless words are tagged to the eras they stand in, and Aurora left the Scandinavian orders;  Anglo-Saxon adds its own realms words (sibling-distinctness brief); batch 6b adds its eight cultures' and the mixes' era words
 });
 
 test("every module in the lens has an adapter and reports, none left 'not yet reported'", () => {
