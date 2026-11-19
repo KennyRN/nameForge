@@ -2506,7 +2506,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 10213,
+   "rowCount": 11457,
    "cultures": {
     "english": {
      "words": 102,
@@ -2812,28 +2812,28 @@
      "below": false
     },
     "indian": {
-     "words": 0,
-     "shapes": 86,
+     "words": 350,
+     "shapes": 145,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "chinese": {
-     "words": 10,
-     "shapes": 97,
+     "words": 225,
+     "shapes": 148,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "japanese": {
-     "words": 58,
-     "shapes": 86,
+     "words": 278,
+     "shapes": 130,
      "target": {
       "words": 12,
       "shapes": 4
@@ -2842,8 +2842,8 @@
      "below": false
     },
     "korean": {
-     "words": 33,
-     "shapes": 38,
+     "words": 273,
+     "shapes": 103,
      "target": {
       "words": 12,
       "shapes": 4
@@ -2906,11 +2906,11 @@
     }
    },
    "eras": {
-    "AN": 449,
-    "MD": 1207,
-    "EM": 804,
-    "ST": 951,
-    "MO": 953,
+    "AN": 519,
+    "MD": 1239,
+    "EM": 836,
+    "ST": 960,
+    "MO": 974,
     "NF": 0,
     "IS": 831
    },
@@ -24229,12 +24229,12 @@
     "shapes": 288
    },
    "indian": {
-    "words": 124,
-    "shapes": 127
+    "words": 474,
+    "shapes": 186
    },
    "chinese": {
-    "words": 286,
-    "shapes": 140
+    "words": 501,
+    "shapes": 191
    },
    "slavic": {
     "words": 1946,
@@ -24269,12 +24269,12 @@
     "shapes": 546
    },
    "japanese": {
-    "words": 309,
-    "shapes": 122
+    "words": 529,
+    "shapes": 166
    },
    "korean": {
-    "words": 250,
-    "shapes": 70
+    "words": 490,
+    "shapes": 135
    },
    "maya": {
     "words": 82,
@@ -24354,11 +24354,11 @@
    }
   },
   "eras": {
-   "AN": 9671,
-   "MD": 12900,
-   "EM": 13878,
-   "ST": 13336,
-   "MO": 11934,
+   "AN": 9741,
+   "MD": 12932,
+   "EM": 13910,
+   "ST": 13345,
+   "MO": 11955,
    "NF": 771,
    "IS": 1723
   },

@@ -3585,44 +3585,44 @@
    "v": 0
   },
   "culture|settlementNames|indian|words": {
-   "v": 0,
+   "v": 350,
    "t": 12
   },
   "culture|settlementNames|indian|shapes": {
-   "v": 86,
+   "v": 145,
    "t": 4
   },
   "culture|settlementNames|indian|profile": {
    "v": 0
   },
   "culture|settlementNames|chinese|words": {
-   "v": 10,
+   "v": 225,
    "t": 12
   },
   "culture|settlementNames|chinese|shapes": {
-   "v": 97,
+   "v": 148,
    "t": 4
   },
   "culture|settlementNames|chinese|profile": {
    "v": 0
   },
   "culture|settlementNames|japanese|words": {
-   "v": 58,
+   "v": 278,
    "t": 12
   },
   "culture|settlementNames|japanese|shapes": {
-   "v": 86,
+   "v": 130,
    "t": 4
   },
   "culture|settlementNames|japanese|profile": {
    "v": 0
   },
   "culture|settlementNames|korean|words": {
-   "v": 33,
+   "v": 273,
    "t": 12
   },
   "culture|settlementNames|korean|shapes": {
-   "v": 38,
+   "v": 103,
    "t": 4
   },
   "culture|settlementNames|korean|profile": {
@@ -3678,23 +3678,23 @@
    "v": 0
   },
   "era|settlementNames|AN": {
-   "v": 449,
+   "v": 519,
    "t": 12
   },
   "era|settlementNames|MD": {
-   "v": 1207,
+   "v": 1239,
    "t": 12
   },
   "era|settlementNames|EM": {
-   "v": 804,
+   "v": 836,
    "t": 12
   },
   "era|settlementNames|ST": {
-   "v": 951,
+   "v": 960,
    "t": 12
   },
   "era|settlementNames|MO": {
-   "v": 953,
+   "v": 974,
    "t": 12
   },
   "era|settlementNames|NF": {
@@ -28418,16 +28418,16 @@
    "v": 288
   },
   "total|culture|indian|words": {
-   "v": 124
+   "v": 474
   },
   "total|culture|indian|shapes": {
-   "v": 127
+   "v": 186
   },
   "total|culture|chinese|words": {
-   "v": 286
+   "v": 501
   },
   "total|culture|chinese|shapes": {
-   "v": 140
+   "v": 191
   },
   "total|culture|slavic|words": {
    "v": 1946
@@ -28478,16 +28478,16 @@
    "v": 546
   },
   "total|culture|japanese|words": {
-   "v": 309
+   "v": 529
   },
   "total|culture|japanese|shapes": {
-   "v": 122
+   "v": 166
   },
   "total|culture|korean|words": {
-   "v": 250
+   "v": 490
   },
   "total|culture|korean|shapes": {
-   "v": 70
+   "v": 135
   },
   "total|culture|maya|words": {
    "v": 82
@@ -28604,19 +28604,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 9671
+   "v": 9741
   },
   "total|era|MD": {
-   "v": 12900
+   "v": 12932
   },
   "total|era|EM": {
-   "v": 13878
+   "v": 13910
   },
   "total|era|ST": {
-   "v": 13336
+   "v": 13345
   },
   "total|era|MO": {
-   "v": 11934
+   "v": 11955
   },
   "total|era|NF": {
    "v": 771

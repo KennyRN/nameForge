@@ -15,7 +15,7 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | inns and taverns | 147/13 | 73/15 | 97/15 | 73/15 | 73/15 | 68/4 | 57/15 | 54/15 | 60/16 | 54/10 | 30/10 | 54/10 | 54/10 | 36/4 | 30/10 | 59/16 | 54/10 | 54/10 | 40/8 | 56/14 | 30/10 | 30/10 | 15/8 | 30/10 | 30/10 | 32/10 | 31/13 | 31/12 | 31/12 | 32/14 | 13/5 | 37/5 | 23/4 | **31/3** | **5/3** | **4/3** | **1/2** | **1/2** | not offered |
 | buildings and landmarks | 145/22 | 71/22 | 95/22 | 71/22 | 71/23 | 66/12 | 57/15 | 54/14 | 60/15 | 57/18 | 30/10 | 57/18 | 57/18 | 39/12 | 30/10 | 79/22 | 57/18 | 57/18 | 41/14 | 57/22 | 30/10 | 30/10 | 14/6 | 30/10 | 30/10 | 41/10 | 33/15 | 31/12 | 32/11 | 31/14 | 24/7 | 44/4 | 39/5 | 41/4 | **8/4** | **6/6** | **0/3** | **1/2** | not offered |
 | monuments and statues | 146/17 | 73/18 | 97/18 | 73/18 | 73/18 | 69/8 | 58/15 | 54/14 | 60/14 | 36/14 | 30/10 | 36/14 | 36/14 | 18/8 | 30/10 | 38/20 | 36/14 | 36/14 | 20/11 | 37/18 | 30/10 | 30/10 | 13/7 | 30/10 | 30/10 | 13/7 | 33/17 | 31/14 | 30/12 | 30/13 | **1/5** | **3/6** | **1/3** | **3/3** | **0/2** | **1/3** | **0/0** | **0/0** | not offered |
-| settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | 230/116 | 225/93 | 280/108 | 245/111 | not offered | 205/111 | 141/160 | 230/103 | 215/97 | not offered | 112/148 | 315/102 | 295/86 | not offered | 340/120 | 295/121 | **0/105** | 355/176 | 167/89 | 266/105 | 215/114 | **0/86** | **10/97** | 58/86 | 33/38 | **0/77** | **0/53** | not offered | not offered | not offered |
+| settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | 230/116 | 225/93 | 280/108 | 245/111 | not offered | 205/111 | 141/160 | 230/103 | 215/97 | not offered | 112/148 | 315/102 | 295/86 | not offered | 340/120 | 295/121 | **0/105** | 355/176 | 167/89 | 266/105 | 215/114 | 350/145 | 225/148 | 278/130 | 273/103 | **0/77** | **0/53** | not offered | not offered | not offered |
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 49/10 | 50/10 | 47/10 | 50/10 | 15/4 | 47/10 | 48/12 | 49/10 | 49/10 | 15/4 | 45/12 | 45/10 | 51/10 | 15/7 | 46/10 | 50/10 | 31/9 | 57/14 | 60/12 | 51/12 | 57/15 | **1/2** | 34/5 | **35/3** | 34/5 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
 | money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 76/12 + profile | 66/10 + profile | 49/11 | 52/11 | 44/6 + profile | 50/10 | 90/12 | 50/11 | 48/11 | 47/6 | 85/13 | 44/10 | 41/10 | 33/5 + profile | 40/10 | 41/10 | 46/4 | 52/10 + profile | 51/10 + profile | 60/10 + profile | 62/10 + profile | **24/1** | **32/1** | **21/1 + profile** | **18/1 + profile** | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
@@ -103,7 +103,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | inns and taverns | 280 | 290 | 275 | 489 | 187 | 26 | 26 |
 | buildings and landmarks | 285 | 301 | 281 | 500 | 192 | 35 | 35 |
 | monuments and statues | 364 | 356 | 301 | 470 | 202 | 25 | 23 |
-| settlement names | 449 | 1207 | 804 | 951 | 953 | **0** | 831 |
+| settlement names | 519 | 1239 | 836 | 960 | 974 | **0** | 831 |
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 | events and eras | 166 | 236 | 236 | 186 | 188 | 28 | 31 |
 | money and coins | 299 | 449 | 468 | 411 | 349 | 165 | 168 |
@@ -1051,10 +1051,10 @@ Distinct entries across the reported modules; a shared pool counts once.
 | Ethiopian | 1875 | 538 |
 | Bantu | 2024 | 551 |
 | West African | 1947 | 580 |
-| Indian | 124 | 127 |
-| Chinese | 286 | 140 |
-| Japanese | 309 | 122 |
-| Korean | 250 | 70 |
+| Indian | 474 | 186 |
+| Chinese | 501 | 191 |
+| Japanese | 529 | 166 |
+| Korean | 490 | 135 |
 | Aztec | 139 | 105 |
 | Maya | 82 | 82 |
 | Andean | 36 | 10 |
@@ -1079,11 +1079,11 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 9671 |
-| MD medieval | 12900 |
-| EM early modern | 13878 |
-| ST steam age | 13336 |
-| MO modern | 11934 |
+| AN ancient | 9741 |
+| MD medieval | 12932 |
+| EM early modern | 13910 |
+| ST steam age | 13345 |
+| MO modern | 11955 |
 | NF near future | 771 |
 | IS interstellar | 1723 |
 

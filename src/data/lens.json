@@ -2180,7 +2180,6 @@
      "EM"
     ],
     "chinese:modern": [
-     "ST",
      "MO"
     ],
     "chinese:interstellar": [
@@ -2238,7 +2237,6 @@
      "AN"
     ],
     "indian:modern": [
-     "ST",
      "MO"
     ],
     "indian:interstellar": [
@@ -2249,7 +2247,6 @@
      "EM"
     ],
     "japanese:modern": [
-     "ST",
      "MO"
     ],
     "japanese:interstellar": [
@@ -2463,6 +2460,34 @@
     "persian:modern": [
      "EM",
      "ST",
+     "MO"
+    ],
+    "indian:sultanate-and-mughal": [
+     "MD",
+     "EM"
+    ],
+    "indian:raj": [
+     "ST"
+    ],
+    "chinese:ancient-china": [
+     "AN"
+    ],
+    "chinese:treaty-ports": [
+     "ST"
+    ],
+    "japanese:yamato-and-heian": [
+     "AN"
+    ],
+    "japanese:meiji": [
+     "ST"
+    ],
+    "korean:three-kingdoms": [
+     "AN"
+    ],
+    "korean:open-ports": [
+     "ST"
+    ],
+    "korean:modern-korea": [
      "MO"
     ],
     "egyptian:coptic-and-mamluk": [

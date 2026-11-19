@@ -10,7 +10,7 @@ import { WORLD_CULTURES } from "../src/world/engine";
 import { placeCultures } from "../src/places/sources";
 import { MIX_HALVES } from "../src/tier6a";
 
-const CHECKED = ["roman", "slavic", "egyptian", "bantu", "ethiopian", "west-african", "turkic", "mongol", "arabic", "persian", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine"];
+const CHECKED = ["roman", "slavic", "egyptian", "bantu", "ethiopian", "west-african", "turkic", "mongol", "arabic", "persian", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine", "indian", "chinese", "japanese", "korean"];
 const textsOf = (r: { names: ({ text?: string; name?: string } | string)[] }): string[] => r.names.map((n) => (typeof n === "string" ? n : n.text ?? n.name ?? ""));
 
 test("place fills: a culture reads its own settlement names only, and a mix its halves'", () => {

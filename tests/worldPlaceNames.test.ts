@@ -26,7 +26,7 @@ test("world: first and second releases plus the expansion pool: sixteen cultures
     ],
   );
   // Stellar brief §12: every culture gained an Interstellar era.
-  assert.equal(ERAS.length, 43 + 6 * 3 + 7 * 3 + 2 + 14 + 8, "batches 5b, 6a and 6b: their own eras and the Interstellar era; Roman and Slavic, and Egyptian, Ethiopian, Bantu and West African, gain eras");
+  assert.equal(ERAS.length, 43 + 6 * 3 + 7 * 3 + 2 + 14 + 8 + 9, "batches 5b, 6a, 6b and 6c (nine eras for Indian, Chinese, Japanese and Korean): their own eras and the Interstellar era; Roman and Slavic, and Egyptian, Ethiopian, Bantu and West African, gain eras");
 });
 
 test("world: every slot in every template and list entry resolves for its era", () => {

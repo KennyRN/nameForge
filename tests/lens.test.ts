@@ -347,7 +347,7 @@ test("every era value in the data maps to lens eras", () => {
   assert.deepEqual(lensErasFor("placeShapes", "imperial", "roman"), ["AN"]);
   assert.deepEqual(lensErasFor("placeShapes", "imperial", "chinese"), ["MD", "EM"]);
   assert.deepEqual(lensErasFor("placeShapes", "imperial", "slavic"), ["EM", "ST"]);
-  assert.deepEqual(lensErasFor("placeShapes", "modern", "japanese"), ["ST", "MO"]);
+  assert.deepEqual(lensErasFor("placeShapes", "modern", "japanese"), ["MO"]); // 6c: the steam age has its own Japanese era (Meiji)
   assert.deepEqual(lensErasFor("placeShapes", "persian", "arabic-persian"), ["AN", "MD"]);
   assert.deepEqual(lensErasFor("settlementNames", "viking", "norse"), ["MD"]);
   assert.equal(Object.keys(eraTable("world")).length, WORLD_CULTURES.reduce((n, c) => n + c.eras.length, 0), "no extra world eras");
