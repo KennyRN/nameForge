@@ -28,10 +28,11 @@ import nWelsh from "./north5a/nouns-welsh.mjs";
 
 import { CULTURES_6A, NOUNS_6A, STYLE_6A } from "./tier6a/north5a/index.mjs";
 import { CULTURES_6B, NOUNS_6B, STYLE_6B } from "./tier6b/north5a/index.mjs";
-const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic, ...CULTURES_6A, ...CULTURES_6B];
+import { CULTURES_6C, NOUNS_6C, STYLE_6C } from "./tier6c/north5a/index.mjs";
+const CULTURES = [english, welsh, scottish, irish, cornish, norse, scandinavian, german, celtic, ...CULTURES_6A, ...CULTURES_6B, ...CULTURES_6C];
 // §11.2: the module's own nouns, three lists per module (one per main kind), and the order each culture names in (§7).
-const NOUNS = { english: nEnglish, welsh: nWelsh, scottish: nScottish, irish: nIrish, cornish: nCornish, norse: nNorse, scandinavian: nScandinavian, german: nGerman, celtic: nCeltic, ...NOUNS_6A, ...NOUNS_6B };
-const STYLE = { english: "last", welsh: "first", scottish: "last", irish: "firstB", cornish: "lastB", norse: "last", scandinavian: "last", german: "last", celtic: "first", ...STYLE_6A, ...STYLE_6B };
+const NOUNS = { english: nEnglish, welsh: nWelsh, scottish: nScottish, irish: nIrish, cornish: nCornish, norse: nNorse, scandinavian: nScandinavian, german: nGerman, celtic: nCeltic, ...NOUNS_6A, ...NOUNS_6B, ...NOUNS_6C };
+const STYLE = { english: "last", welsh: "first", scottish: "last", irish: "firstB", cornish: "lastB", norse: "last", scandinavian: "last", german: "last", celtic: "first", ...STYLE_6A, ...STYLE_6B, ...STYLE_6C };
 for (const c of CULTURES) { c.nouns = NOUNS[c.key]; c.style = STYLE[c.key]; }
 const ALL_CODES = ["COR", "WCY", "SEA", "EAN", "WMM", "WAL", "EMD", "NTH", "SBL", "SLO", "SHH", "NSI", "DEN", "NOR", "SWE", "ICE", "NDT", "RHN", "MIT", "ALP", "OST"];
 const read = (f) => JSON.parse(readFileSync(new URL(`../src/data/${f}.json`, import.meta.url), "utf8"));

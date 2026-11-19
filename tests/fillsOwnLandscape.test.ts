@@ -10,7 +10,7 @@ import { measureStates } from "./helpers/probeStates";
 
 const FILLS = { ...FILLS_6B, ...FILLS_6C };
 /** The cultures whose land and water modules are written (6b); the 6c cultures join this list with their land and sea group. */
-const CULTURES = Object.keys(FILLS_6B);
+const CULTURES = Object.keys({ ...FILLS_6B, ...FILLS_6C });
 const MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames", "seasLakes", "coastsIslands", "seaCharts", "riversInland", "hillsValleys", "farmland", "lands"];
 
 test("fills: every 6b culture has at least twelve own words in each list of plants, trees, birds, beasts and water creatures", () => {

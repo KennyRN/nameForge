@@ -21,7 +21,7 @@ export const FILL_KIND: Readonly<Record<string, string>> = { wildTree: "trees", 
 export const FILL_POOLS: readonly string[] = ["wildTree", "streetTree", "wildFuse", "lakeFuse", "wetFlora", "thingFlower", "castleBird", "mtBeast", "dsrBeast", "mrBeast", "wetBeast", "grsBeast", "fordBeast", "figureBeast", "warAnimal", "mythBeast", "fstBeast", "cultureDivineAnimal", "seaCreature", "lakeCreature"];
 
 /** Second pass (brief §12 §3): a 6b culture's names take no English rank or administrative word (a duke, a bishop, a shire, a hundred, a parish). */
-const ENGLISH_RANKS = /(^|[^A-Za-z])(Duke|Duchess|Dukes|Bishop|Abbot|Abbess|Earl|Baron|Knight|Shire|[A-Za-z]*shire|Hundred|Parish|Manor|Abbey|Priory|Vicar|Squire|Reeve|Thane|Rector|Dean|Prince|Princess|Duchy|Dukedom|County|Barony|Wapentake)('s|s)?($|[^A-Za-z])/;
+const ENGLISH_RANKS = /(^|[^A-Za-z])(Duke|Duchess|Dukes|Bishop|Abbot|Abbess|Earl|Baron|Knight|Shire|[A-Za-z]*shire|Hundred(?! [A-Z])|Parish|Manor|Abbey|Priory|Vicar|Squire|Reeve|Thane|Rector|Dean|Prince|Princess|Duchy|Dukedom|County|Barony|Wapentake)('s|s)?($|[^A-Za-z])/;
 export const hasEnglishRank = (text: string): boolean => ENGLISH_RANKS.test(text);
 
 /** Labels as the rosters read them. */

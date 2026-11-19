@@ -89,8 +89,9 @@ test("a module's cells: culture targets by tier, excluded and unoffered cultures
 // Counted by hand from the data. Mountains: a culture's own wild lands shapes (`f: "fixed"` ones are words),
 // the `{wildWeather} Monastery` and `Temple` settlement shapes tagged for Chinese and Indian, and the words
 // of the shared pools "wild lands" reads that are tagged for the culture (Chinese 3, Indian 3, Norse 0).
-test("mountains: Chinese 3 fixed names and 3 pool words, 2 settlement shapes", () => assert.equal(cell("mountainNames", "chinese"), "6/2"));
-test("mountains: Indian 2 fixed names and 3 pool words, 2 settlement shapes", () => assert.equal(cell("mountainNames", "indian"), "5/2"));
+// 6c: each of the four cultures has its own thirty mountain words and ten shapes besides its older fixed names and shapes.
+test("mountains: Chinese 3 fixed names and 3 pool words, 2 settlement shapes, and (6c) its own thirty words and ten shapes", () => assert.equal(cell("mountainNames", "chinese"), "36/12"));
+test("mountains: Indian 2 fixed names and 3 pool words, 2 settlement shapes, and (6c) its own thirty words and ten shapes", () => assert.equal(cell("mountainNames", "indian"), "35/12"));
 test("mountains: Norse reaches the batch target (30 signature words, 10 shapes)", () => {
   const [w, s] = cell("mountainNames", "norse").split("/").map(Number);
   assert.ok(w >= 30 && s >= 10, cell("mountainNames", "norse"));
@@ -207,8 +208,8 @@ test("§11.2: a culture with its own row in a per-culture weight table has a pro
   assert.equal(cultureCell("mountainNames", "english").profile, true);
   assert.equal(cultureCell("mountainNames", "chinese").profile, true);
   assert.equal(cultureCell("mountainNames", "general")?.profile ?? false, false);
-  // A profile is not words: the targets and the counts are unchanged ("6/2" for Chinese mountains above).
-  assert.equal(cultureCell("mountainNames", "chinese").below, true);
+  // A profile is not words: the targets and the counts are unchanged ("6/2" for Chinese mountains before 6c; Polynesian here).
+  assert.equal(cultureCell("mountainNames", "polynesian").below, true);
   // waters.json `cultureMult`, peoples-tongues.json `weights`, money-names.json `cultureMult`.
   assert.equal(cultureCell("seasLakes", "roman").profile, true);
   assert.equal(cultureCell("peoplesTongues", "scandinavian").profile, true);

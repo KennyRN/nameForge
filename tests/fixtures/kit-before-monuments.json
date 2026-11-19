@@ -94,10 +94,10 @@
  },
  "kit chinese city 1": {
   "roads": [
-   "Merchants' Way",
-   "Saltmen's Way",
-   "Packmen's Way",
-   "Pedlars' Way"
+   "Tea Railway Track",
+   "Tea Imperial Track",
+   "Tea Granary Track",
+   "Tea Tiger Track"
   ],
   "groups": [
    "Poor Friars of the Lamb",
@@ -117,10 +117,10 @@
  },
  "kit chinese city 2": {
   "roads": [
-   "Salt Way",
-   "Lead Way",
-   "Milk Way",
-   "Silk Way"
+   "Salt Road",
+   "Lead Road",
+   "Milk Road",
+   "Silk Road"
   ],
   "groups": [
    "the Gate Order",
@@ -140,10 +140,10 @@
  },
  "kit chinese city 3": {
   "roads": [
-   "Sacred Way to the Holy Well",
-   "Sacred Way to the Standing Stones",
-   "Sacred Way to the Oracle",
-   "Hold the East Road"
+   "Silk Track",
+   "Wool Track",
+   "Tea Track",
+   "Cloth Track"
   ],
   "groups": [
    "Sisters of the Blessed Lantern",
@@ -163,11 +163,11 @@
  },
  "kit japanese great 1": {
   "roads": [
-   "Spice and Horse Road",
-   "Spice and Cloth Road",
-   "Spice and Silk Road",
-   "Spice and Salt Road",
-   "Spice and Gold Road"
+   "Spice Railway Track",
+   "Spice Crane Track",
+   "Spice Daimyo's Track",
+   "Spice Samurai Track",
+   "Spice Bamboo Track"
   ],
   "groups": [
    "Poor Friars of the Lamb",
@@ -191,11 +191,11 @@
  },
  "kit japanese great 2": {
   "roads": [
-   "Salt Way",
-   "Wool Way",
-   "Rice Way",
-   "Cloth Way",
-   "Amber Way"
+   "Salt Road",
+   "Wool Road",
+   "Rice Road",
+   "Cloth Road",
+   "Amber Road"
   ],
   "groups": [
    "the Gate Order",
@@ -219,11 +219,11 @@
  },
  "kit japanese great 3": {
   "roads": [
-   "Marsh Way",
-   "Fell Way",
-   "Downs Way",
-   "Hill Way",
-   "Fen Way"
+   "Fish Track",
+   "Salt Track",
+   "Furs Track",
+   "Silver Track",
+   "Corn Track"
   ],
   "groups": [
    "Sisters of the Blessed Lantern",
