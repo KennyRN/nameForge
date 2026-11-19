@@ -1142,10 +1142,10 @@ People lists against brief §3.1 (core 60/60/60/15/15/24, second tier 30/30/30/8
 | ethiopian | historic, modern | 32/31 | – | 8/8 | 12 | 12/12 |
 | bantu | historic, modern | 31/32 | 32 | 8/8 | 12 | 12/12 |
 | west-african | historic, modern | 31/31 | 31 | 8/8 | 12 | 12/12 |
-| indian | historic, modern | 33/30 | 31 | 8/8 | 12 | 8/8 |
-| chinese | historic, modern | 37/30 | 30 | 8/8 | 12 | 8/8 |
-| japanese | historic, modern | 33/30 | 31 | 8/8 | 12 | 8/8 |
-| korean | historic, modern | 31/30 | 30 | 8/8 | 12 | 8/8 |
+| indian | historic, modern | 30/30 | 31 | 8/8 | 12 | 8/8 |
+| chinese | historic, modern | 30/30 | 30 | 8/8 | 12 | 8/8 |
+| japanese | historic, modern | 30/30 | 31 | 8/8 | 12 | 8/8 |
+| korean | historic, modern | 30/30 | 30 | 8/8 | 12 | 8/8 |
 | aztec | historic, modern | 36/33 | 36 | 8/8 | 12 | 8/8 |
 | maya | historic, modern | 38/32 | 32 | 8/8 | 13 | 8/8 |
 | andean | historic, modern | 32/31 | 35 | 8/8 | 14 | 8/8 |

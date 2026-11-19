@@ -1719,3 +1719,181 @@ Turkic and Mongol are written for each culture (the steppe table stays, as the m
 `ottoman` reads Turkic; `swahili-omani` and `phoenician` read Arabic; `malay` and `maritimeSEA` read Indian historic and Arabic modern; `egyptian` reads Egyptian historic and Arabic modern.
 
 <!-- tier6b-people:end -->
+
+<!-- tier6c-people:start -->
+
+## Second-tier people tables, batch 6c (brief 6c §B1)
+
+Indian, Chinese, Japanese and Korean, rewritten: ordinary attested names lead each list; rulers, generals, sages, poets and founders are flagged (ʳ) and held last, at a fifth or less; no god's name. Chinese, Japanese and Korean full names are family name first. Romanisation: pinyin; Hepburn without macrons; Revised Romanisation. Written by `scripts/make-tier6c-people.mjs` from `scripts/tier6c/people-data.mjs`.
+
+### Indian
+
+#### historic
+
+**Before, first ten male:** Ramdas:10, Gopal:10, Mohan:10, Shyam:10, Raghunath:10, Venkat:7, Subramanian:7, Anand:7, Bhaskar:7, Dinanath:7
+
+**After, first ten male:** Ramdas:10, Gopal:10, Mohan:10, Shyam:10, Raghunath:10, Venkat:7, Subramanian:7, Anand:7, Bhaskar:7, Dinanath:7
+
+**Before, first ten female:** Kamala:10, Meena:10, Shanta:10, Leela:10, Sundari:10, Manjari:7, Padma:7, Revati:7, Chandni:7, Malati:7
+
+**After, first ten female:** Kamala:10, Meena:10, Shanta:10, Leela:10, Sundari:10, Manjari:7, Padma:7, Revati:7, Chandni:7, Malati:7
+
+**Male given names** (30): Ramdas (10), Gopal (10), Mohan (10), Shyam (10), Raghunath (10), Venkat (7), Subramanian (7), Anand (7), Bhaskar (7), Dinanath (7), Tukaram (5), Yashwant (5), Bhimsen (5), Gangadhar (5), Vishwanath (5), Ranjit (5), Sundar (3), Murali (3), Sitaram (3), Devendra (3), Harish (3), Kishore (3), Prakash (3), Ravindra (3), Ashoka (2)ʳ, Chandragupta (2)ʳ, Akbar (2)ʳ, Shivaji (2)ʳ, Harsha (2)ʳ, Vikramaditya (2)ʳ
+
+**Female given names** (30): Kamala (10), Meena (10), Shanta (10), Leela (10), Sundari (10), Manjari (7), Padma (7), Revati (7), Chandni (7), Malati (7), Indira (5), Kaveri (5), Anjana (5), Bimala (5), Champa (5), Gayatri (5), Hema (3), Indumati (3), Jamuna (3), Kusum (3), Mallika (3), Nalini (3), Sarla (3), Tara (3), Mirabai (2)ʳ, Razia (2)ʳ, Ahilyabai (2)ʳ, Lakshmibai (2)ʳ, Noor Jahan (2)ʳ, Mumtaz (2)ʳ
+
+**Regnal names, male:** Ashoka (10), Chandragupta (10), Akbar (10), Shivaji (10), Harsha (10), Rajaraja (7), Krishnadevaraya (7), Vikramaditya (7)
+
+**Regnal names, female:** Razia (10), Ahilyabai (10), Lakshmibai (10), Didda (10), Rudrama (10), Chennamma (7), Mumtaz (7), Mirabai (7)
+
+**Holy and wise:** Kabir (10), Nanak (10), Tukaram (10), Ramanuja (10), Shankara (10), Basava (7), Tulsidas (7), Chaitanya (7), Namdev (7), Ravidas (7), Eknath (5), Dadu (5)
+
+#### modern
+
+**Before, first ten male:** Rahul:10, Amit:10, Vijay:10, Sanjay:10, Rajesh:10, Suresh:7, Ramesh:7, Anil:7, Sunil:7, Manoj:7
+
+**After, first ten male:** Rahul:10, Amit:10, Vijay:10, Sanjay:10, Rajesh:10, Suresh:7, Ramesh:7, Anil:7, Sunil:7, Manoj:7
+
+**Before, first ten female:** Priya:10, Neha:10, Pooja:10, Anjali:10, Sunita:10, Kavita:7, Anita:7, Meena:7, Rekha:7, Sapna:7
+
+**After, first ten female:** Priya:10, Neha:10, Pooja:10, Anjali:10, Sunita:10, Kavita:7, Anita:7, Meena:7, Rekha:7, Sapna:7
+
+**Male given names** (47): Rahul (10, ST MO), Amit (10, ST MO), Vijay (10, ST MO), Sanjay (10, ST MO), Rajesh (10, ST MO), Suresh (7, ST), Ramesh (7, ST), Anil (7, ST), Sunil (7, ST), Manoj (7, ST), Deepak (5, ST), Rohit (5, ST), Ankit (5, ST), Nikhil (5, ST), Karan (5, ST), Varun (5, ST), Aman (3, ST), Vikram (3, ST), Siddharth (3, ST), Abhishek (3, ST), Pranav (3, ST), Yash (3, ST), Harsh (3, ST), Kunal (3, ST), Mayank (2, ST), Ritesh (2, ST), Sandeep (2, ST), Naveen (2, ST), Gaurav (2, ST), Tarun (2, ST), Akash (2, ST), Aarav (2, MO), Vihaan (2, MO), Reyansh (2, MO), Ayaan (2, MO), Advait (2, MO), Kabir (2, MO), Shaurya (2, MO), Ishaan (2, MO), Atharv (2, MO), Krish (2, MO), Vivaan (2, MO), Arnav (2, MO), Aryan (2, MO), Dhruv (2, MO), Neel (2, MO), Veer (2, MO)
+
+**Female given names** (46): Priya (10, ST MO), Neha (10, ST MO), Pooja (10, ST MO), Anjali (10, ST MO), Sunita (10, ST MO), Kavita (7, ST), Anita (7, ST), Meena (7, ST), Rekha (7, ST), Sapna (7, ST), Divya (5, ST), Swati (5, ST), Nisha (5, ST), Shweta (5, ST), Deepika (5, ST), Ritu (5, ST), Preeti (3, ST), Komal (3, ST), Shalini (3, ST), Pallavi (3, ST), Sneha (3, ST), Ankita (3, ST), Kriti (3, ST), Tanvi (3, ST), Isha (2, ST), Manisha (2, ST), Aditi (2, ST), Bhavna (2, ST), Jyoti (2, ST), Shruti (2, ST), Aadhya (2, MO), Anaya (2, MO), Diya (2, MO), Myra (2, MO), Saanvi (2, MO), Kiara (2, MO), Aarohi (2, MO), Anika (2, MO), Navya (2, MO), Pari (2, MO), Ira (2, MO), Avni (2, MO), Riya (2, MO), Tara (2, MO), Mahi (2, MO), Zara (2, MO)
+
+**Regnal names, male:** Ashoka (10), Chandragupta (10), Akbar (10), Shivaji (10), Harsha (10), Rajaraja (7), Krishnadevaraya (7), Vikramaditya (7)
+
+**Regnal names, female:** Razia (10), Ahilyabai (10), Lakshmibai (10), Didda (10), Rudrama (10), Chennamma (7), Mumtaz (7), Mirabai (7)
+
+**Holy and wise:** Kabir (10), Nanak (10), Tukaram (10), Ramanuja (10), Shankara (10), Basava (7), Tulsidas (7), Chaitanya (7), Namdev (7), Ravidas (7), Eknath (5), Dadu (5)
+
+### Chinese
+
+#### historic
+
+**Before, first ten male:** Yong:10, Ming:10, Guang:10, Wen:10, Bo:10, Zhi:7, Heng:7, Qiang:7, Zhong:7, Rong:7
+
+**After, first ten male:** Yong:10, Ming:10, Guang:10, Wen:10, Bo:10, Zhi:7, Heng:7, Qiang:7, Zhong:7, Zhan:7
+
+**Before, first ten female:** Mei:10, Lan:10, Xiu:10, Ying:10, Fang:10, Juan:7, Ping:7, Qing:7, Jing:7, Yun:7
+
+**After, first ten female:** Mei:10, Lan:10, Xiu:10, Ying:10, Fang:10, Juan:7, Ping:7, Qing:7, Jing:7, Yun:7
+
+**Male given names** (30): Yong (10), Ming (10), Guang (10), Wen (10), Bo (10), Zhi (7), Heng (7), Qiang (7), Zhong (7), Zhan (7), Yuan (5), Kai (5), Hang (5), Cheng (5), Jian (5), Tao (5), Lei (3), Hui (3), Feng (3), Gang (3), Long (3), Xin (3), Chang (3), Jin (3), Mengde (2)ʳ, Xuande (2)ʳ, Kongming (2)ʳ, Taibai (2)ʳ, Dufu (2)ʳ, Zhongni (2)ʳ
+
+**Female given names** (30): Mei (10), Lan (10), Xiu (10), Ying (10), Fang (10), Juan (7), Ping (7), Qing (7), Jing (7), Yun (7), Hua (5), Zhen (5), Li (5), Yan (5), Xia (5), Lian (5), Ling (3), Fen (3), Shu (3), Ru (3), Rong (3), Chun (3), Hong (3), Zhu (3), Zhaojun (2)ʳ, Xishi (2)ʳ, Yuhuan (2)ʳ, Qingzhao (2)ʳ, Wenji (2)ʳ, Wuzhao (2)ʳ
+
+**Regnal names, male:** Taizong (10), Gaozu (10), Wudi (10), Hongwu (10), Yongle (10), Kangxi (7), Qianlong (7), Guangxu (7)
+
+**Regnal names, female:** Wuzetian (10), Cixi (10), Lu (10), Feng (10), Deng (10), Liang (7), Xiaozhuang (7), Ciji (7)
+
+**Holy and wise:** Kongzi (10), Laozi (10), Zhuangzi (10), Mengzi (10), Mozi (10), Xunzi (7), Bodhidharma (7), Huineng (7), Xuanzang (7), Zhuxi (7), Wangyangming (5), Zhangdaoling (5)
+
+#### modern
+
+**Before, first ten male:** Wei:10, Jun:10, Hao:10, Qiang:10, Lei:10, Tao:7, Gang:7, Jie:7, Bo:7, Peng:7
+
+**After, first ten male:** Wei:10, Jun:10, Hao:10, Qiang:10, Lei:10, Tao:7, Gang:7, Jie:7, Bo:7, Peng:7
+
+**Before, first ten female:** Li:10, Na:10, Min:10, Jing:10, Yan:10, Fang:7, Juan:7, Ying:7, Hui:7, Xia:7
+
+**After, first ten female:** Li:10, Na:10, Min:10, Jing:10, Yan:10, Fang:7, Juan:7, Ying:7, Hui:7, Xia:7
+
+**Male given names** (37): Wei (10, ST MO), Jun (10, ST MO), Hao (10, ST MO), Qiang (10, ST MO), Lei (10, ST MO), Tao (7, ST), Gang (7, ST), Jie (7, ST), Bo (7, ST), Peng (7, ST), Yang (5, ST), Chao (5, ST), Kai (5, ST), Bin (5, ST), Xin (5, ST), Cheng (5, ST), Dong (3, ST), Long (3, ST), Yu (3, ST), Ming (3, ST), Haoran (3, MO), Yuchen (3, MO), Zihan (3, MO), Yuxuan (3, MO), Zixuan (2, MO), Ziyang (2, MO), Jiahao (2, MO), Junjie (2, MO), Haoyu (2, MO), Zhiyuan (2, ST), Boyang (2, MO), Zimo (2, MO), Yichen (2, MO), Yifan (2, MO), Zekai (2, MO), Chenxi (2, MO), Ruize (2, MO)
+
+**Female given names** (36): Li (10, ST MO), Na (10, ST MO), Min (10, ST MO), Jing (10, ST MO), Yan (10, ST MO), Fang (7, ST), Juan (7, ST), Ying (7, ST), Hui (7, ST), Xia (7, ST), Xiu (5, ST), Lan (5, ST), Mei (5, ST), Ping (5, ST), Qing (5, ST), Yun (5, ST), Hua (3, ST), Ling (3, ST), Xinyi (3, MO), Yiran (3, MO), Zixin (3, MO), Yuxin (3, MO), Meixi (3, MO), Ziyi (3, MO), Xinyue (2, MO), Ruoxi (2, MO), Yutong (2, MO), Jiaqi (2, MO), Shuhui (2, ST), Wenjing (2, ST), Shuxin (2, MO), Yihan (2, MO), Yanxi (2, MO), Yuxi (2, MO), Siyu (2, MO), Xinran (2, MO)
+
+**Regnal names, male:** Taizong (10), Gaozu (10), Wudi (10), Hongwu (10), Yongle (10), Kangxi (7), Qianlong (7), Guangxu (7)
+
+**Regnal names, female:** Wuzetian (10), Cixi (10), Lu (10), Feng (10), Deng (10), Liang (7), Xiaozhuang (7), Ciji (7)
+
+**Holy and wise:** Kongzi (10), Laozi (10), Zhuangzi (10), Mengzi (10), Mozi (10), Xunzi (7), Bodhidharma (7), Huineng (7), Xuanzang (7), Zhuxi (7), Wangyangming (5), Zhangdaoling (5)
+
+### Japanese
+
+#### historic
+
+**Before, first ten male:** Taro:10, Jiro:10, Saburo:10, Shiro:10, Goro:10, Kenji:7, Shigeru:7, Hiroshi:7, Isamu:7, Kiyoshi:7
+
+**After, first ten male:** Taro:10, Jiro:10, Saburo:10, Shiro:10, Goro:10, Kenji:7, Shigeru:7, Hiroshi:7, Isamu:7, Kiyoshi:7
+
+**Before, first ten female:** Hana:10, Ine:10, Haru:10, Kiku:10, Matsu:10, Sumi:7, Tsuru:7, Yoshi:7, Fuji:7, Kane:7
+
+**After, first ten female:** Hana:10, Ine:10, Haru:10, Kiku:10, Matsu:10, Sumi:7, Tsuru:7, Yoshi:7, Fuji:7, Kane:7
+
+**Male given names** (30): Taro (10), Jiro (10), Saburo (10), Shiro (10), Goro (10), Kenji (7), Shigeru (7), Hiroshi (7), Isamu (7), Kiyoshi (7), Masao (5), Noboru (5), Tadashi (5), Takeshi (5), Yoshio (5), Akira (5), Haruo (3), Isao (3), Kazuo (3), Minoru (3), Osamu (3), Satoshi (3), Tetsuo (3), Fumio (3), Yoshitsune (2)ʳ, Yoritomo (2)ʳ, Nobunaga (2)ʳ, Hideyoshi (2)ʳ, Ieyasu (2)ʳ, Shingen (2)ʳ
+
+**Female given names** (30): Hana (10), Ine (10), Haru (10), Kiku (10), Matsu (10), Sumi (7), Tsuru (7), Yoshi (7), Fuji (7), Kane (7), Ume (5), Shige (5), Toki (5), Chiyo (5), Shizu (5), Natsu (5), Aki (3), Fuyu (3), Mitsu (3), Take (3), Yuki (3), Tama (3), Miyo (3), Kikuno (3), Murasaki (2)ʳ, Sei (2)ʳ, Tomoe (2)ʳ, Masako (2)ʳ, Himiko (2)ʳ, Shizuka (2)ʳ
+
+**Regnal names, male:** Tenmu (10), Shomu (10), Kammu (10), Daigo (10), Gotoba (10), Gosaga (7), Meiji (7), Taisho (7)
+
+**Regnal names, female:** Suiko (10), Jito (10), Koken (10), Genmei (10), Gensho (10), Kogyoku (7), Saimei (7), Shotoku (7)
+
+**Holy and wise:** Kukai (10), Saicho (10), Honen (10), Shinran (10), Nichiren (10), Dogen (7), Eisai (7), Ikkyu (7), Basho (7), Ryokan (7), Hakuin (5), Rennyo (5)
+
+#### modern
+
+**Before, first ten male:** Kenta:10, Takumi:10, Daisuke:10, Shota:10, Haruto:10, Yuto:7, Sota:7, Ren:7, Hayato:7, Riku:7
+
+**After, first ten male:** Kenta:10, Takumi:10, Daisuke:10, Shota:10, Haruto:10, Yuto:7, Sota:7, Ren:7, Hayato:7, Riku:7
+
+**Before, first ten female:** Ayumi:10, Emi:10, Yumi:10, Mari:10, Yui:10, Hina:7, Sakura:7, Aoi:7, Rin:7, Mio:7
+
+**After, first ten female:** Ayumi:10, Emi:10, Yumi:10, Mari:10, Yui:10, Hina:7, Sakura:7, Aoi:7, Rin:7, Mio:7
+
+**Male given names** (38): Kenta (10, ST MO), Takumi (10, ST MO), Daisuke (10, ST MO), Shota (10, ST MO), Haruto (10, ST MO), Yuto (7, MO), Sota (7, MO), Ren (7, MO), Hayato (7, MO), Riku (7, MO), Kaito (5, MO), Yuki (5, ST), Ryo (5, ST), Naoki (5, ST), Kenji (5, ST), Hiroki (5, ST), Tomoya (3, ST), Yusuke (3, ST), Masato (3, ST), Shun (3, ST), Taiga (3, ST), Koki (3, ST), Daiki (3, ST), Sho (3, ST), Kazuki (2, ST), Ryota (2, ST), Takuya (2, ST), Tsubasa (2, ST), Yuma (2, MO), Haruki (2, ST), Minato (2, MO), Asahi (2, MO), Itsuki (2, MO), Souta (2, MO), Hinata (2, MO), Aoto (2, MO), Eita (2, MO), Haru (2, MO)
+
+**Female given names** (37): Ayumi (10, ST MO), Emi (10, ST MO), Yumi (10, ST MO), Mari (10, ST MO), Yui (10, ST MO), Hina (7, MO), Sakura (7, MO), Aoi (7, MO), Rin (7, MO), Mio (7, MO), Mei (5, MO), Yuna (5, MO), Koharu (5, MO), Riko (5, ST), Nanami (5, ST), Misaki (5, ST), Haruka (3, ST), Ayaka (3, ST), Mika (3, ST), Saki (3, ST), Nana (3, ST), Kana (3, ST), Miyu (3, ST), Risa (3, ST), Natsuki (2, ST), Airi (2, ST), Honoka (2, ST), Momoka (2, ST), Himari (2, MO), Yuzuki (2, ST), Yua (2, MO), Akari (2, MO), Ichika (2, MO), Tsumugi (2, MO), Mitsuki (2, MO), Nagisa (2, MO), Hinano (2, MO)
+
+**Regnal names, male:** Tenmu (10), Shomu (10), Kammu (10), Daigo (10), Gotoba (10), Gosaga (7), Meiji (7), Taisho (7)
+
+**Regnal names, female:** Suiko (10), Jito (10), Koken (10), Genmei (10), Gensho (10), Kogyoku (7), Saimei (7), Shotoku (7)
+
+**Holy and wise:** Kukai (10), Saicho (10), Honen (10), Shinran (10), Nichiren (10), Dogen (7), Eisai (7), Ikkyu (7), Basho (7), Ryokan (7), Hakuin (5), Rennyo (5)
+
+### Korean
+
+#### historic
+
+**Before, first ten male:** Min-su:10, Dong-su:10, Jung-ho:10, Sang-gu:10, Chul-su:10, Young-gil:7, Bong-su:7, Gil-dong:7, Man-su:7, Dae-su:7
+
+**After, first ten male:** Min-su:10, Dong-su:10, Jung-ho:10, Sang-gu:10, Chul-su:10, Young-gil:7, Bong-su:7, Gil-dong:7, Man-su:7, Dae-su:7
+
+**Before, first ten female:** Soon-ae:10, Mal-sun:10, Bok-sun:10, Ok-sun:10, Chun-ja:10, Boon-ja:7, Jung-sook:7, Ae-ja:7, Myung-ja:7, Gap-sun:7
+
+**After, first ten female:** Soon-ae:10, Mal-sun:10, Bok-sun:10, Ok-sun:10, Chun-ja:10, Boon-ja:7, Jung-sook:7, Ae-ja:7, Myung-ja:7, Gap-sun:7
+
+**Male given names** (30): Min-su (10), Dong-su (10), Jung-ho (10), Sang-gu (10), Chul-su (10), Young-gil (7), Bong-su (7), Gil-dong (7), Man-su (7), Dae-su (7), Seok (5), Tae-su (5), Jae-sik (5), Ki-chul (5), Won-sik (5), Ho-dong (5), Kyu-hyun (3), Hee-chul (3), Du-sik (3), Han-su (3), Byung-ho (3), Chang-ho (3), Yong-sik (3), Gwi-nam (3), Sejong (2)ʳ, Taejo (2)ʳ, Jumong (2)ʳ, Gwanggaeto (2)ʳ, Sunsin (2)ʳ, Jeongjo (2)ʳ
+
+**Female given names** (30): Soon-ae (10), Mal-sun (10), Bok-sun (10), Ok-sun (10), Chun-ja (10), Boon-ja (7), Jung-sook (7), Ae-ja (7), Myung-ja (7), Gap-sun (7), Mal-ja (5), Bong-sun (5), Yeong-ja (5), Sun-hee (5), Geum-ja (5), Eun-ja (5), Hae-ja (3), Nam-sun (3), Dal-rae (3), Mi-sook (3), Gi-ja (3), Jeom-sun (3), Chae-ryeong (3), Wol-hyang (3), Seondeok (2)ʳ, Jindeok (2)ʳ, Saimdang (2)ʳ, Nongae (2)ʳ, Hwang-jini (2)ʳ, Nanseolheon (2)ʳ
+
+**Regnal names, male:** Sejong (10), Taejo (10), Gwanggaeto (10), Jeongjo (10), Taejong (10), Seongjong (7), Yeongjo (7), Sukjong (7)
+
+**Regnal names, female:** Seondeok (10), Jindeok (10), Jinseong (10), Munjeong (10), Wonseong (10), Insu (7), Jeonghui (7), Sohyeon (7)
+
+**Holy and wise:** Wonhyo (10), Uisang (10), Jinul (10), Uicheon (10), Toegye (10), Yulgok (7), Seosan (7), Gyunyeo (7), Muhak (7), Chiwon (7), Daegak (5), Hyecho (5)
+
+#### modern
+
+**Before, first ten male:** Min-jun:10, Seo-jun:10, Do-yun:10, Ye-jun:10, Si-woo:10, Ha-jun:7, Joo-won:7, Ji-ho:7, Jun-seo:7, Ji-hoon:7
+
+**After, first ten male:** Min-jun:10, Seo-jun:10, Do-yun:10, Ye-jun:10, Si-woo:10, Ha-jun:7, Joo-won:7, Ji-ho:7, Jun-seo:7, Ji-hoon:7
+
+**Before, first ten female:** Seo-yeon:10, Ha-yoon:10, Ji-woo:10, Seo-ah:10, Ha-eun:10, Ji-yoo:7, Su-bin:7, Min-seo:7, Chae-won:7, Ye-jin:7
+
+**After, first ten female:** Seo-yeon:10, Ha-yoon:10, Ji-woo:10, Seo-ah:10, Ha-eun:10, Ji-yoo:7, Su-bin:7, Min-seo:7, Chae-won:7, Ye-jin:7
+
+**Male given names** (41): Min-jun (10, ST MO), Seo-jun (10, ST MO), Do-yun (10, ST MO), Ye-jun (10, ST MO), Si-woo (10, ST MO), Ha-jun (7, MO), Joo-won (7, MO), Ji-ho (7, MO), Jun-seo (7, MO), Ji-hoon (7, ST), Hyun-woo (5, ST), Woo-jin (5, MO), Sung-min (5, ST), Jae-hyun (5, ST), Dong-hyun (5, ST), Tae-yang (5, ST), Jun-ho (3, ST), Seung-hyun (3, ST), Young-ho (3, ST), Sung-ho (3, ST), Jong-su (3, ST), Kyung-su (3, ST), Min-ho (3, ST), Jin-woo (3, ST), Hyun-su (2, ST), Ji-sung (2, ST), Dae-hyun (2, ST), Sang-woo (2, ST), Yu-jin (2, ST), Ki-tae (2, ST), Eun-woo (2, MO), Yu-jun (2, MO), Ji-seong (2, MO), Seo-won (2, MO), Do-hyun (2, MO), Yun-ho (2, MO), Ha-neul (2, MO), Tae-oh (2, MO), Ju-an (2, MO), Seon-woo (2, MO), Yeon-jun (2, MO)
+
+**Female given names** (44): Seo-yeon (10, ST MO), Ha-yoon (10, ST MO), Ji-woo (10, ST MO), Seo-ah (10, ST MO), Ha-eun (10, ST MO), Ji-yoo (7, MO), Su-bin (7, ST), Min-seo (7, MO), Chae-won (7, ST), Ye-jin (7, ST), So-yeon (5, ST), Da-eun (5, ST), Yu-na (5, ST), Ji-min (5, ST), Eun-seo (5, ST), Soo-jin (5, ST), Hye-jin (3, ST), Mi-young (3, ST), Eun-ji (3, ST), Hyo-jin (3, ST), Na-young (3, ST), Yeon-woo (3, ST), Ji-hye (3, ST), Seul-gi (3, ST), Bo-ra (2, ST), Da-hye (2, ST), Ga-eun (2, ST), Hee-jin (2, ST), Jung-ah (2, ST), Ye-eun (2, ST), Yun-seo (2, MO), Ji-an (2, MO), Ha-rin (2, MO), Seo-yun (2, MO), Ji-yu (2, MO), Ye-rin (2, MO), Ha-na (2, MO), Soo-ah (2, MO), Ye-seo (2, MO), Da-yeon (2, MO), Ah-rin (2, MO), Se-ah (2, MO), Yeo-reum (2, MO), Bom (2, MO)
+
+**Regnal names, male:** Sejong (10), Taejo (10), Gwanggaeto (10), Jeongjo (10), Taejong (10), Seongjong (7), Yeongjo (7), Sukjong (7)
+
+**Regnal names, female:** Seondeok (10), Jindeok (10), Jinseong (10), Munjeong (10), Wonseong (10), Insu (7), Jeonghui (7), Sohyeon (7)
+
+**Holy and wise:** Wonhyo (10), Uisang (10), Jinul (10), Uicheon (10), Toegye (10), Yulgok (7), Seosan (7), Gyunyeo (7), Muhak (7), Chiwon (7), Daegak (5), Hyecho (5)
+
+<!-- tier6c-people:end -->
+
+**Stored states changed by the 6c people rewrite (19 November 2026), against the previous fixtures:** lens {"chinese":67,"japanese":77,"indian":87,"korean":81,"maritimeSEA":19,"malay":6}; tier-6a {"indian":96,"chinese":65,"japanese":86,"korean":77,"malay":8,"maritimeSEA":12}; tier-6b {"indian":96,"chinese":65,"japanese":86,"korean":77,"malay":8,"maritimeSEA":12}; northern-europe-5a {"japanese":120,"indian":118,"chinese":68,"korean":52}; northern-europe-5c {"maritimeSEA":19,"indian":42,"chinese":33,"japanese":42,"korean":45,"malay":6}; northern-europe-5d {"indian":19,"chinese":17,"japanese":18,"korean":18}. The `malay` and `maritimeSEA` keys read the Indian historic table, so their historic names moved with it; stored legacy keys still run as saved.
