@@ -1146,11 +1146,11 @@ People lists against brief §3.1 (core 60/60/60/15/15/24, second tier 30/30/30/8
 | chinese | historic, modern | 30/30 | 30 | 8/8 | 12 | 8/8 |
 | japanese | historic, modern | 30/30 | 31 | 8/8 | 12 | 8/8 |
 | korean | historic, modern | 30/30 | 30 | 8/8 | 12 | 8/8 |
-| aztec | historic, modern | 36/33 | 36 | 8/8 | 12 | 8/8 |
-| maya | historic, modern | 38/32 | 32 | 8/8 | 13 | 8/8 |
-| andean | historic, modern | 32/31 | 35 | 8/8 | 14 | 8/8 |
-| polynesian | historic, modern | 32/30 | – | 8/8 | 12 | 8/8 |
-| american | historic, modern | 32/30 | 30 | 8/8 | 12 | 8/8 |
+| aztec | historic, modern | 41/42 | 36 | 8/8 | 12 | 8/8 |
+| maya | historic, modern | 38/37 | 32 | 8/8 | 13 | 8/8 |
+| andean | historic, modern | 33/33 | 35 | 8/8 | 14 | 8/8 |
+| polynesian | historic, modern | 34/34 | – | 8/8 | 12 | 8/8 |
+| american | historic, modern | 32/30 | 42 | 8/8 | 12 | 8/8 |
 | general | – | – | – | – | – | 30/30 |
 
 Creature lists: 39 cultures.

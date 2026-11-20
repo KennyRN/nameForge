@@ -1897,3 +1897,223 @@ Indian, Chinese, Japanese and Korean, rewritten: ordinary attested names lead ea
 <!-- tier6c-people:end -->
 
 **Stored states changed by the 6c people rewrite (19 November 2026), against the previous fixtures:** lens {"chinese":67,"japanese":77,"indian":87,"korean":81,"maritimeSEA":19,"malay":6}; tier-6a {"indian":96,"chinese":65,"japanese":86,"korean":77,"malay":8,"maritimeSEA":12}; tier-6b {"indian":96,"chinese":65,"japanese":86,"korean":77,"malay":8,"maritimeSEA":12}; northern-europe-5a {"japanese":120,"indian":118,"chinese":68,"korean":52}; northern-europe-5c {"maritimeSEA":19,"indian":42,"chinese":33,"japanese":42,"korean":45,"malay":6}; northern-europe-5d {"indian":19,"chinese":17,"japanese":18,"korean":18}. The `malay` and `maritimeSEA` keys read the Indian historic table, so their historic names moved with it; stored legacy keys still run as saved.
+
+<!-- tier6d-people:start -->
+
+## Second-tier people tables, batch 6d (brief 6d §B1)
+
+Polynesian, Aztec, Maya, Andean and American, rewritten: ordinary attested names lead each list; rulers, generals and founders are flagged (ʳ) and held last, at a fifth or less; no god's name. Polynesian names keep each language's standard marks (Māori macrons, Hawaiian kahakō and the ʻokina), so the marked form is the one spelling. Spanish given names are written as the existing Spanish tables write them, without accents. The Aztec, Maya and Andean historic lists hold the native names with Spanish baptismal names tagged to the colonial eras (EM, ST). The American table covers the United States and Canada together (French-Canadian and other common Canadian given names and surnames added). **Needs a specialist's review:** the Polynesian lists (five languages), and the Aztec, Maya and Andean historic lists, especially the Nahuatl and Yucatec numeral-and-day-sign forms (the 260-day count, built from attested parts) and the Yucatec and Quechua given names; written from names I could stand behind, with no name invented to fill a gap. Written by `scripts/make-tier6d-people.mjs` from `scripts/tier6d/people-data.mjs`.
+
+### Polynesian
+
+#### historic
+
+**Before, first ten male:** Kamehameha:10, Liholiho:10, Kauikeaouli:10, Lunalilo:10, Kalakaua:10, Umi:7, Pomare:7, Tupou:7, Mataafa:7, Malietoa:7
+
+**After, first ten male:** Kekoa:10, Hōne:10, Sione:10, Iosefa:10, Teiva:10, Makoa:7, Wiremu:7, Siaosi:7, Ioane:7, Teva:7
+
+**Before, first ten female:** Kaahumanu:10, Liliuokalani:10, Emma:10, Kapiolani:10, Keopuolani:10, Kekauluohi:7, Kinau:7, Pauahi:7, Keelikolani:7, Kaiulani:7
+
+**After, first ten female:** Leilani:10, Mere:10, Seini:10, Sina:10, Tiare:10, Nalani:7, Aroha:7, Lupe:7, Losa:7, Hinano:7
+
+**Male given names** (34): Kekoa (10), Hōne (10), Sione (10), Iosefa (10), Teiva (10), Makoa (7), Wiremu (7), Siaosi (7), Ioane (7), Teva (7), Kamaka (5), Rāwiri (5), Tevita (5), Filipo (5), Manuarii (5), Kalani (5), Hēmi (3), Viliami (3), Tavita (3), Heimana (3), Kawika (3), Eruera (3), Sāmiuela (3), Teiki (3), ʻIkaika (2), Pita (2), Mosese (2), Hoani (2), Keoni (2), Tāmati (2), Kamehameha (2)ʳ, Pōmare (2)ʳ, Hongi Hika (2)ʳ, Taufaʻāhau (2)ʳ
+
+**Female given names** (34): Leilani (10), Mere (10), Seini (10), Sina (10), Tiare (10), Nalani (7), Aroha (7), Lupe (7), Losa (7), Hinano (7), Malia (5), Huia (5), ʻEmeli (5), Tala (5), Moeata (5), Pua (5), Kiri (3), Sela (3), Ioana (3), Vaiana (3), Keala (3), Rina (3), Kalolaine (3), Heiata (3), Noelani (2), Ruiha (2), Sisilia (2), Tehani (2), ʻAna (2), Ngaio (2), Kaʻahumanu (2)ʳ, Liliʻuokalani (2)ʳ, Kapiʻolani (2)ʳ, Sālote (2)ʳ
+
+**Regnal names, male:** Kamehameha (10), Liholiho (10), Kauikeaouli (10), Lunalilo (10), Kalākaua (10), Pōmare (7), Tāwhiao (7), Taufaʻāhau (7)
+
+**Regnal names, female:** Liliʻuokalani (10), Kapiʻolani (10), Emma (10), Sālote (10), Kaʻahumanu (10), Kīnaʻu (7), Kaʻiulani (7), Pauahi (7)
+
+**Holy and wise:** Te Kooti (10), Te Whiti (10), Tohu (10), Rua Kenana (10), Wiremu Rātana (10), Papahurihia (7), Titokowaru (7), Damien (7), Marianne (7), Kapihe (7), Kamakau (5), Haumata (5)
+
+#### modern
+
+**Before, first ten male:** Kekoa:10, Makoa:10, Kalani:10, Palani:10, Hone:10, Kai:7, Rawiri:7, Koa:7, Wiremu:7, Nikau:7
+
+**After, first ten male:** Kekoa:10, Hōne:10, Sione:10, Iosefa:10, Teiva:10, Makoa:7, Wiremu:7, Siaosi:7, Ioane:7, Teva:7
+
+**Before, first ten female:** Salote:10, Sina:10, Tui:10, Lea:10, Mere:10, Aroha:7, Moana:7, Rangi:7, Leilani:7, Ngaire:5
+
+**After, first ten female:** Leilani:10, Mere:10, Seini:10, Sina:10, Tiare:10, Nalani:7, Aroha:7, Lupe:7, Losa:7, Hinano:7
+
+**Male given names** (46): Kekoa (10, ST MO), Hōne (10, ST MO), Sione (10, ST MO), Iosefa (10, ST MO), Teiva (10, ST MO), Makoa (7, ST), Wiremu (7, ST), Siaosi (7, ST), Ioane (7, ST), Teva (7, ST), Kamaka (5, ST), Rāwiri (5, ST), Tevita (5, ST), Filipo (5, ST), Manuarii (5, ST), Kalani (5, ST), Hēmi (3, ST), Viliami (3, ST), Tavita (3, ST), Heimana (3, ST), Kawika (3, ST), Eruera (3, ST), Sāmiuela (3, ST), Teiki (3, ST), ʻIkaika (2, ST), Pita (2, ST), Mosese (2, ST), Hoani (2, ST), Keoni (2, ST), Tāmati (2, ST), Kai (2, MO), Nikau (2, MO), Koa (2, MO), Manaia (2, MO), Kaimana (2, MO), Keanu (2, MO), Ariki (2, MO), Mahaki (2, MO), Isaia (2, MO), Sefa (2, MO), Ihaka (2, MO), Tui (2, MO), Tama (2, MO), Kahu (2, MO), Tipene (2, MO), Taika (2, MO)
+
+**Female given names** (46): Leilani (10, ST MO), Mere (10, ST MO), Seini (10, ST MO), Sina (10, ST MO), Tiare (10, ST MO), Nalani (7, ST), Aroha (7, ST), Lupe (7, ST), Losa (7, ST), Hinano (7, ST), Malia (5, ST), Huia (5, ST), ʻEmeli (5, ST), Tala (5, ST), Moeata (5, ST), Pua (5, ST), Kiri (3, ST), Sela (3, ST), Ioana (3, ST), Vaiana (3, ST), Keala (3, ST), Rina (3, ST), Kalolaine (3, ST), Heiata (3, ST), Noelani (2, ST), Ruiha (2, ST), Sisilia (2, ST), Tehani (2, ST), ʻAna (2, ST), Ngaio (2, ST), Moana (2, MO), Mahina (2, MO), Kalea (2, MO), Anahera (2, MO), Kahurangi (2, MO), Mereana (2, MO), Maia (2, MO), Ailani (2, MO), Hinewai (2, MO), Kiele (2, MO), Alana (2, MO), Hana (2, MO), Marama (2, MO), Kaia (2, MO), Pania (2, MO), Awhina (2, MO)
+
+**Regnal names, male:** Kamehameha (10), Liholiho (10), Kauikeaouli (10), Lunalilo (10), Kalākaua (10), Pōmare (7), Tāwhiao (7), Taufaʻāhau (7)
+
+**Regnal names, female:** Liliʻuokalani (10), Kapiʻolani (10), Emma (10), Sālote (10), Kaʻahumanu (10), Kīnaʻu (7), Kaʻiulani (7), Pauahi (7)
+
+**Holy and wise:** Te Kooti (10), Te Whiti (10), Tohu (10), Rua Kenana (10), Wiremu Rātana (10), Papahurihia (7), Titokowaru (7), Damien (7), Marianne (7), Kapihe (7), Kamakau (5), Haumata (5)
+
+### Aztec
+
+#### historic
+
+**Before, first ten male:** Moctezuma:4, Cuauhtemoc:4, Itzcoatl:3, Nezahualcoyotl:3, Ahuitzotl:2, Axayacatl:2, Tlacaelel:7, Yaotl:7, Tochtli:7, Cuauhtli:7
+
+**After, first ten male:** Yaotl:10, Tochtli:10, Cuauhtli:10, Ocelotl:10, Cipactli:10, Mazatl:7, Itzcuin:7, Tecpatl:7, Quiahuitl:7, Ollin:7
+
+**Before, first ten female:** Tecuichpo:3, Atotoztli:3, Chimalxochitl:2, Azcalxochitl:2, Chalchiuhnenetzin:2, Papantzin:2, Malinalli:7, Xochitl:7, Citlali:7, Quetzalli:7
+
+**After, first ten female:** Xochitl:10, Citlalli:10, Quetzalli:10, Ameyalli:10, Nenetl:10, Cuicatl:7, Yolotl:7, Mixtli:7, Tlalli:7, Eloxochitl:7
+
+**Male given names** (41): Yaotl (10), Tochtli (10), Cuauhtli (10), Ocelotl (10), Cipactli (10), Mazatl (7), Itzcuin (7), Tecpatl (7), Quiahuitl (7), Ollin (7), Ce Acatl (5), Ome Tochtli (5), Chicome Xochitl (5), Yei Calli (5), Nahui Ollin (5), Macuilli Coatl (5), Chicuace Tecpatl (3), Chicuei Mazatl (3), Chiucnahui Cuauhtli (3), Matlactli Ocelotl (3), Moctezuma (3)ʳ, Cuauhtemoc (3)ʳ, Nezahualcoyotl (3)ʳ, Juan (3, EM ST), Diego (2, EM ST), Pedro (2, EM ST), Francisco (2, EM ST), Miguel (2, EM ST), Martin (2, EM ST), Antonio (2, EM ST), Lucas (2, EM ST), Mateo (2, EM ST), Gaspar (2, EM ST), Baltasar (2, EM ST), Melchor (2, EM ST), Cristobal (2, EM ST), Felipe (2, EM ST), Andres (2, EM ST), Lorenzo (2, EM ST), Marcos (2, EM ST), Domingo (2, EM ST)
+
+**Female given names** (42): Xochitl (10), Citlalli (10), Quetzalli (10), Ameyalli (10), Nenetl (10), Cuicatl (7), Yolotl (7), Mixtli (7), Tlalli (7), Eloxochitl (7), Ome Xochitl (5), Yei Malinalli (5), Nahui Xochitl (5), Macuilli Malinalli (5), Chicuace Xochitl (5), Chicuei Malinalli (5), Tecuichpo (3)ʳ, Chimalxochitl (3)ʳ, Atotoztli (3)ʳ, Maria (3, EM ST), Isabel (3, EM ST), Ana (3, EM ST), Juana (3, EM ST), Catalina (3, EM ST), Francisca (2, EM ST), Beatriz (2, EM ST), Magdalena (2, EM ST), Lucia (2, EM ST), Marta (2, EM ST), Luisa (2, EM ST), Ines (2, EM ST), Leonor (2, EM ST), Dominga (2, EM ST), Petrona (2, EM ST), Rosa (2, EM ST), Josefa (2, EM ST), Ursula (2, EM ST), Paula (2, EM ST), Teresa (2, EM ST), Rosario (2, EM ST), Clara (2, EM ST), Antonia (2, EM ST)
+
+**Regnal names, male:** Acamapichtli (10), Huitzilihuitl (10), Chimalpopoca (10), Itzcoatl (10), Moctezuma (10), Axayacatl (7), Tizoc (7), Ahuitzotl (7)
+
+**Regnal names, female:** Atotoztli (10), Chimalxochitl (10), Azcalxochitl (10), Miahuaxihuitl (10), Ilancueitl (10), Tecuichpo (7), Papantzin (7), Chalchiuhnenetzin (7)
+
+**Holy and wise:** Tlacaelel (10), Nezahualcoyotl (10), Tecayehuatzin (10), Ayocuan (10), Tochihuitzin (10), Tlaltecatzin (7), Cuauhtencoztli (7), Aquiauhtzin (7), Xayacamach (7), Juan Diego (7), Chimalpahin (5), Ixtlilxochitl (5)
+
+#### modern
+
+**Before, first ten male:** Javier:10, David:10, Alberto:10, Jorge:10, Marcos:10, Jose:7, Hugo:7, Juan:7, Martin:7, Antonio:7
+
+**After, first ten male:** Jose:10, Juan:10, Miguel:10, Angel:10, Luis:10, Pedro:7, Jesus:7, Francisco:7, Carlos:7, Antonio:7
+
+**Before, first ten female:** Elena:10, Marta:10, Cristina:10, Silvia:10, Raquel:10, Maria:7, Lucia:7, Carmen:7, Sofia:7, Dolores:7
+
+**After, first ten female:** Maria:10, Guadalupe:10, Juana:10, Rosa:10, Margarita:10, Francisca:7, Teresa:7, Ana:7, Luz:7, Carmen:7
+
+**Male given names** (46): Jose (10, ST MO), Juan (10, ST MO), Miguel (10, ST MO), Angel (10, ST MO), Luis (10, ST MO), Pedro (7, ST), Jesus (7, ST), Francisco (7, ST), Carlos (7, ST), Antonio (7, ST), Manuel (5, ST), Martin (5, ST), Mateo (5, ST), Alejandro (5, ST), Rafael (5, ST), Fernando (5, ST), Ricardo (3, ST), Eduardo (3, ST), Raul (3, ST), Sergio (3, ST), Javier (3, ST), Marcos (3, ST), Hugo (3, ST), Lucas (3, ST), David (2, ST), Jorge (2, ST), Alberto (2, ST), Roberto (2, ST), Daniel (2, ST), Gabriel (2, ST), Santiago (2, MO), Sebastian (2, MO), Emiliano (2, MO), Leonardo (2, MO), Diego (2, MO), Dylan (2, MO), Ollin (2, MO), Yolotl (2, MO), Mixtli (2, MO), Axel (2, MO), Iker (2, MO), Ian (2, MO), Matias (2, MO), Thiago (2, MO), Gael (2, MO), Bruno (2, MO)
+
+**Female given names** (46): Maria (10, ST MO), Guadalupe (10, ST MO), Juana (10, ST MO), Rosa (10, ST MO), Margarita (10, ST MO), Francisca (7, ST), Teresa (7, ST), Ana (7, ST), Luz (7, ST), Carmen (7, ST), Josefa (5, ST), Gloria (5, ST), Patricia (5, ST), Leticia (5, ST), Elena (5, ST), Marta (5, ST), Cristina (3, ST), Silvia (3, ST), Raquel (3, ST), Lucia (3, ST), Isabel (3, ST), Catalina (3, ST), Veronica (3, ST), Dolores (3, ST), Rocio (2, ST), Alicia (2, ST), Beatriz (2, ST), Laura (2, ST), Sofia (2, ST), Claudia (2, ST), Valentina (2, MO), Camila (2, MO), Ximena (2, MO), Regina (2, MO), Fernanda (2, MO), Renata (2, MO), Citlali (2, MO), Itzel (2, MO), Xochitl (2, MO), Yaretzi (2, MO), Ameyalli (2, MO), Frida (2, MO), Mariana (2, MO), Victoria (2, MO), Natalia (2, MO), Luciana (2, MO)
+
+**Regnal names, male:** Alfonso (10), Carlos (10), Juan (10), Felipe (10), Fernando (10), Luis (7), Pedro (7), Joao (7)
+
+**Regnal names, female:** Isabel (10), Maria (10), Victoria (10), Eugenia (10), Amelia (10), Carlota (7), Mercedes (7), Cristina (7)
+
+**Holy and wise:** Teresa (10), Ignatius (10), John (10), Francis (10), Vincent (10), Rita (7), Joseph (7), Isidore (7), Josemaria (7), Dominic (7), Rose (5), Anthony (5)
+
+### Maya
+
+#### historic
+
+**Before, first ten male:** Pakal:3, Yax Pasaj:3, Yuknoom:3, Kikab:2, Tecun:2, Tutul:2, Kinich:6, Bahlam:6, Itzamnaaj:6, Yik'in:6
+
+**After, first ten male:** Balam:10, Kinich:10, Yaxun:10, Chan Balam:10, Kan Balam:10, Ek Balam:7, Jun Ben:7, Ka Chuwen:7, Ox Men:7, Kan Kib:7
+
+**Before, first ten female:** Sak K'uk':3, Yohl Ik'nal:3, K'abel:3, Tz'akbu Ajaw:3, Xoc:7, Sak Biyaan:7, Ix Chan:7, Ix Kuk:7, Ix Ek:7, Ix Pol:7
+
+**After, first ten female:** Nicte:10, Zazil:10, Itzel:10, Ox Imix:10, Kan Akbal:10, Ho Chikchan:7, Wak Manik:7, Wuk Etznab:7, Waxak Ix:7, Bolon Kimi:7
+
+**Male given names** (38): Balam (10), Kinich (10), Yaxun (10), Chan Balam (10), Kan Balam (10), Ek Balam (7), Jun Ben (7), Ka Chuwen (7), Ox Men (7), Kan Kib (7), Ho Eb (5), Wak Ik (5), Wuk Lamat (5), Waxak Muluk (5), Bolon Ok (5), Lajun Kawak (5), Pakal (3)ʳ, Yax Pasaj (3)ʳ, Tecun Uman (3)ʳ, Kikab (3)ʳ, Juan (3, EM ST), Diego (3, EM ST), Pedro (3, EM ST), Francisco (3, EM ST), Miguel (2, EM ST), Martin (2, EM ST), Antonio (2, EM ST), Lucas (2, EM ST), Mateo (2, EM ST), Gaspar (2, EM ST), Baltasar (2, EM ST), Melchor (2, EM ST), Cristobal (2, EM ST), Felipe (2, EM ST), Andres (2, EM ST), Lorenzo (2, EM ST), Marcos (2, EM ST), Domingo (2, EM ST)
+
+**Female given names** (37): Nicte (10), Zazil (10), Itzel (10), Ox Imix (10), Kan Akbal (10), Ho Chikchan (7), Wak Manik (7), Wuk Etznab (7), Waxak Ix (7), Bolon Kimi (7), Lajun Kaban (5), Sak K'uk' (5)ʳ, Yohl Ik'nal (5)ʳ, K'abel (5)ʳ, Maria (5, EM ST), Isabel (5, EM ST), Ana (3, EM ST), Juana (3, EM ST), Catalina (3, EM ST), Francisca (3, EM ST), Beatriz (3, EM ST), Magdalena (3, EM ST), Lucia (3, EM ST), Marta (3, EM ST), Luisa (2, EM ST), Ines (2, EM ST), Leonor (2, EM ST), Dominga (2, EM ST), Petrona (2, EM ST), Rosa (2, EM ST), Josefa (2, EM ST), Ursula (2, EM ST), Paula (2, EM ST), Teresa (2, EM ST), Rosario (2, EM ST), Clara (2, EM ST), Antonia (2, EM ST)
+
+**Regnal names, male:** Pakal (10), Yax Pasaj (10), Jasaw Chan K'awiil (10), Kan Bahlam (10), Yuknoom Ch'een (10), Tecun Uman (7), Kikab (7), Tepepul (7)
+
+**Regnal names, female:** Sak K'uk' (10), Yohl Ik'nal (10), K'abel (10), Xoc (10), Tz'akbu Ajaw (10), Sak Biyaan (7), Ix Mutal Ajaw (7), Ix Chan (7)
+
+**Holy and wise:** Chilam Balam (10), Napuc Tun (10), Nakuk Pech (10), Gaspar Chi (10), Chi (10), Chel (7), Xiu (7), Pech (7), Cocom (7), Canul (7), Cupul (5), May (5), Couoh (5)
+
+#### modern
+
+**Before, first ten male:** Javier:10, David:10, Alberto:10, Jorge:10, Marcos:10, Jose:7, Hugo:7, Juan:7, Martin:7, Antonio:7
+
+**After, first ten male:** Juan:10, Pedro:10, Diego:10, Manuel:10, Miguel:10, Francisco:7, Mateo:7, Domingo:7, Marcos:7, Sebastian:7
+
+**Before, first ten female:** Elena:10, Marta:10, Cristina:10, Silvia:10, Raquel:10, Maria:7, Lucia:7, Carmen:7, Sofia:7, Dolores:7
+
+**After, first ten female:** Maria:10, Juana:10, Rosa:10, Catarina:10, Ana:10, Margarita:7, Petrona:7, Magdalena:7, Rosario:7, Lucia:7
+
+**Male given names** (42): Juan (10, ST MO), Pedro (10, ST MO), Diego (10, ST MO), Manuel (10, ST MO), Miguel (10, ST MO), Francisco (7, ST), Mateo (7, MO), Domingo (7, ST), Marcos (7, ST), Sebastian (7, MO), Lucas (5, ST), Jose (5, ST), Antonio (5, ST), Santiago (5, MO), Andres (5, ST), Tomas (5, ST), Felipe (3, ST), Gaspar (3, ST), Baltasar (3, ST), Cristobal (3, ST), Lorenzo (3, ST), Nicolas (3, ST), Jorge (3, ST), Carlos (3, ST), Luis (2, ST), Pablo (2, ST), Alonso (2, ST), Rafael (2, ST), Esteban (2, ST), Gregorio (2, ST), Emiliano (2, MO), Leonardo (2, MO), Daniel (2, MO), Balam (2, MO), Kinich (2, MO), Angel (2, MO), Dylan (2, MO), Ian (2, MO), Thiago (2, MO), Gael (2, MO), Matias (2, MO), Bruno (2, MO)
+
+**Female given names** (45): Maria (10, ST MO), Juana (10, ST MO), Rosa (10, ST MO), Catarina (10, ST MO), Ana (10, ST MO), Margarita (7, ST), Petrona (7, ST), Magdalena (7, ST), Rosario (7, ST), Lucia (7, ST), Dominga (5, ST), Manuela (5, ST), Isabel (5, ST), Francisca (5, ST), Teresa (5, ST), Marta (5, ST), Elena (3, ST), Josefa (3, ST), Carmen (3, ST), Luisa (3, ST), Agustina (3, ST), Candelaria (3, ST), Concepcion (3, ST), Dolores (3, ST), Angelina (2, ST), Silvia (2, ST), Patricia (2, ST), Sofia (2, MO), Guadalupe (2, ST), Veronica (2, ST), Valentina (2, MO), Camila (2, MO), Ximena (2, MO), Itzel (2, MO), Nicte (2, MO), Zazil (2, MO), Regina (2, MO), Renata (2, MO), Fernanda (2, MO), Frida (2, MO), Alejandra (2, MO), Mariana (2, MO), Natalia (2, MO), Victoria (2, MO), Luciana (2, MO)
+
+**Regnal names, male:** Alfonso (10), Carlos (10), Juan (10), Felipe (10), Fernando (10), Luis (7), Pedro (7), Joao (7)
+
+**Regnal names, female:** Isabel (10), Maria (10), Victoria (10), Eugenia (10), Amelia (10), Carlota (7), Mercedes (7), Cristina (7)
+
+**Holy and wise:** Teresa (10), Ignatius (10), John (10), Francis (10), Vincent (10), Rita (7), Joseph (7), Isidore (7), Josemaria (7), Dominic (7), Rose (5), Anthony (5)
+
+### Andean
+
+#### historic
+
+**Before, first ten male:** Atahualpa:3, Huascar:3, Pachacuti:3, Tupac Yupanqui:2, Huayna Capac:2, Manco Inca:2, Waman:7, Amaru:7, Puma:7, Titu:7
+
+**After, first ten male:** Waman:10, Amaru:10, Puma:10, Titu:10, Illari:10, Atoq:7, Kuntur:7, Rumi:7, Sinchi:7, Sami:7
+
+**Before, first ten female:** Quispe Sisa:3, Cura Ocllo:3, Contarhuacho:2, Chimpu Ocllo:2, Sisa:7, Chaska:7, Wayra:7, Sumaq:7, Tika:7, Cori:7
+
+**After, first ten female:** Sisa:10, Chaska:10, Wayra:10, Sumaq:10, Mayu:10, Yana:7, Chimpu:7, Cura Ocllo:7, Contarhuacho:7, Chimpu Ocllo:7
+
+**Male given names** (33): Waman (10), Amaru (10), Puma (10), Titu (10), Illari (10), Atoq (7), Kuntur (7), Rumi (7), Sinchi (7), Sami (7), Mayta (5), Yupanki (5), Atahualpa (5)ʳ, Pachacuti (5)ʳ, Huayna Capac (5)ʳ, Juan (5, EM ST), Diego (3, EM ST), Pedro (3, EM ST), Francisco (3, EM ST), Miguel (3, EM ST), Martin (3, EM ST), Antonio (3, EM ST), Lucas (3, EM ST), Mateo (3, EM ST), Gaspar (2, EM ST), Baltasar (2, EM ST), Melchor (2, EM ST), Cristobal (2, EM ST), Felipe (2, EM ST), Andres (2, EM ST), Lorenzo (2, EM ST), Marcos (2, EM ST), Domingo (2, EM ST)
+
+**Female given names** (33): Sisa (10), Chaska (10), Wayra (10), Sumaq (10), Mayu (10), Yana (7), Chimpu (7), Cura Ocllo (7)ʳ, Contarhuacho (7)ʳ, Chimpu Ocllo (7)ʳ, Maria (5, EM ST), Isabel (5, EM ST), Ana (5, EM ST), Juana (5, EM ST), Catalina (5, EM ST), Francisca (5, EM ST), Beatriz (3, EM ST), Magdalena (3, EM ST), Lucia (3, EM ST), Marta (3, EM ST), Luisa (3, EM ST), Ines (3, EM ST), Leonor (3, EM ST), Dominga (3, EM ST), Petrona (2, EM ST), Rosa (2, EM ST), Josefa (2, EM ST), Ursula (2, EM ST), Paula (2, EM ST), Teresa (2, EM ST), Rosario (2, EM ST), Clara (2, EM ST), Antonia (2, EM ST)
+
+**Regnal names, male:** Pachacuti (10), Tupac Yupanqui (10), Huayna Capac (10), Huascar (10), Atahualpa (10), Manco Inca (7), Viracocha Inca (7), Inca Roca (7)
+
+**Regnal names, female:** Anahuarque (10), Chuqui Llanto (10), Rahua Ocllo (10), Cusi Rimay (10), Contarhuacho (10), Chimpu Ocllo (7), Cura Ocllo (7), Pillcu Huaco (7)
+
+**Holy and wise:** Guaman Poma (10), Santacruz Pachacuti (10), Rose (10), Martin de Porres (10), Toribius (10), Francis Solano (7), Juan Macias (7), Titu Atauchi (7), Wari Kuri (7), Juan Santos (7), Calixto (5), Santiago (5), Miguel (5), Anthony (5)
+
+#### modern
+
+**Before, first ten male:** Javier:10, David:10, Alberto:10, Jorge:10, Marcos:10, Jose:7, Hugo:7, Juan:7, Martin:7, Antonio:7
+
+**After, first ten male:** Juan:10, Jose:10, Luis:10, Carlos:10, Pedro:10, Mario:7, Victor:7, Julio:7, Jorge:7, Miguel:7
+
+**Before, first ten female:** Elena:10, Marta:10, Cristina:10, Silvia:10, Raquel:10, Maria:7, Lucia:7, Carmen:7, Sofia:7, Dolores:7
+
+**After, first ten female:** Maria:10, Rosa:10, Juana:10, Ana:10, Carmen:10, Julia:7, Gladys:7, Elena:7, Teresa:7, Luz:7
+
+**Male given names** (46): Juan (10, ST MO), Jose (10, ST MO), Luis (10, ST MO), Carlos (10, ST MO), Pedro (10, ST MO), Mario (7, ST), Victor (7, ST), Julio (7, ST), Jorge (7, ST), Miguel (7, ST), Cesar (5, ST), Edgar (5, ST), Wilfredo (5, ST), Hugo (5, ST), Marcos (5, ST), Alberto (5, ST), Javier (3, ST), Walter (3, ST), Roberto (3, ST), Ruben (3, ST), Fernando (3, ST), Oscar (3, ST), Rodolfo (3, ST), Raul (3, ST), Eduardo (2, ST), Felix (2, ST), Tomas (2, ST), Nicolas (2, ST), Percy (2, ST), Elmer (2, ST), Mateo (2, MO), Santiago (2, MO), Sebastian (2, MO), Thiago (2, MO), Liam (2, MO), Gael (2, MO), Anthony (2, MO), Joaquin (2, MO), Diego (2, MO), Illari (2, MO), Amaru (2, MO), Waman (2, MO), Bruno (2, MO), Matias (2, MO), Lucas (2, MO), Dylan (2, MO)
+
+**Female given names** (46): Maria (10, ST MO), Rosa (10, ST MO), Juana (10, ST MO), Ana (10, ST MO), Carmen (10, ST MO), Julia (7, ST), Gladys (7, ST), Elena (7, ST), Teresa (7, ST), Luz (7, ST), Marleni (5, ST), Sonia (5, ST), Norma (5, ST), Flor (5, ST), Marta (5, ST), Lucia (5, ST), Isabel (3, ST), Victoria (3, ST), Silvia (3, ST), Paulina (3, ST), Dina (3, ST), Nancy (3, ST), Yolanda (3, ST), Edith (3, ST), Margarita (2, ST), Beatriz (2, ST), Gloria (2, ST), Felicitas (2, ST), Justina (2, ST), Eulalia (2, ST), Valentina (2, MO), Camila (2, MO), Luciana (2, MO), Mia (2, MO), Sofia (2, MO), Isabella (2, MO), Ximena (2, MO), Sumaq (2, MO), Chaska (2, MO), Wayra (2, MO), Kiara (2, MO), Nayeli (2, MO), Mariana (2, MO), Natalia (2, MO), Luna (2, MO), Alessia (2, MO)
+
+**Regnal names, male:** Alfonso (10), Carlos (10), Juan (10), Felipe (10), Fernando (10), Luis (7), Pedro (7), Joao (7)
+
+**Regnal names, female:** Isabel (10), Maria (10), Victoria (10), Eugenia (10), Amelia (10), Carlota (7), Mercedes (7), Cristina (7)
+
+**Holy and wise:** Teresa (10), Ignatius (10), John (10), Francis (10), Vincent (10), Rita (7), Joseph (7), Isidore (7), Josemaria (7), Dominic (7), Rose (5), Anthony (5)
+
+### American
+
+#### historic
+
+**Before, first ten male:** John:10, William:10, Thomas:10, James:10, Richard:10, Robert:7, George:7, Samuel:7, Joseph:7, Benjamin:7
+
+**After, first ten male:** John:10, William:10, Thomas:10, James:10, Richard:10, Robert:7, George:7, Samuel:7, Joseph:7, Benjamin:7
+
+**Before, first ten female:** Mary:10, Elizabeth:10, Sarah:10, Anne:10, Hannah:10, Abigail:7, Mercy:7, Prudence:7, Patience:7, Priscilla:7
+
+**After, first ten female:** Mary:10, Elizabeth:10, Sarah:10, Anne:10, Hannah:10, Abigail:7, Mercy:7, Prudence:7, Patience:7, Priscilla:7
+
+**Male given names** (32): John (10), William (10), Thomas (10), James (10), Richard (10), Robert (7), George (7), Samuel (7), Joseph (7), Benjamin (7), Nathaniel (5), Ebenezer (5), Josiah (5), Increase (5), Jonathan (5), Elijah (5), Isaac (3), Jacob (3), Abraham (3), Daniel (3), Peter (3), Stephen (3), Edward (3), Henry (3), Ezekiel (2), Obadiah (2), Zachariah (2), Eliphalet (2), Timothy (2), Seth (2), Silas (2), Jeremiah (2)
+
+**Female given names** (30): Mary (10), Elizabeth (10), Sarah (10), Anne (10), Hannah (10), Abigail (7), Mercy (7), Prudence (7), Patience (7), Priscilla (7), Experience (5), Temperance (5), Deborah (5), Rebecca (5), Rachel (5), Martha (5), Margaret (3), Susanna (3), Lydia (3), Ruth (3), Jane (3), Dorothy (3), Hope (3), Charity (3), Submit (2), Thankful (2), Remember (2), Content (2), Silence (2), Comfort (2)
+
+**Regnal names, male:** George (10), John (10), Thomas (10), James (10), Andrew (10), Abraham (7), Benjamin (7), William (7)
+
+**Regnal names, female:** Martha (10), Abigail (10), Dolley (10), Elizabeth (10), Mary (10), Louisa (7), Rachel (7), Anne (7)
+
+**Holy and wise:** Roger Williams (10), Anne Hutchinson (10), Jonathan Edwards (10), Cotton Mather (10), Increase Mather (10), John Eliot (7), Thomas Hooker (7), George Whitefield (7), Isaac Backus (7), Jemima Wilkinson (7), Ann Lee (5), Mary Dyer (5)
+
+#### modern
+
+**Before, first ten male:** Michael:10, David:10, Richard:10, Kevin:10, Brian:10, John:7, Liam:7, William:7, Noah:7, James:7
+
+**After, first ten male:** Michael:10, David:10, Richard:10, Kevin:10, Brian:10, John:7, Liam:7, William:7, Noah:7, James:7
+
+**Before, first ten female:** Linda:10, Barbara:10, Susan:10, Karen:10, Nancy:10, Mary:7, Olivia:7, Anna:7, Amelia:7, Margaret:7
+
+**After, first ten female:** Linda:10, Barbara:10, Susan:10, Karen:10, Nancy:10, Mary:7, Olivia:7, Anna:7, Amelia:7, Margaret:7
+
+**Male given names** (46): Michael (10, ST MO), David (10, ST MO), Richard (10, ST MO), Kevin (10, ST MO), Brian (10, ST MO), John (7, ST), Liam (7, MO), William (7, ST), Noah (7, MO), James (7, ST), Oliver (5, MO), George (5, ST), Elijah (5, MO), Charles (5, ST), Mason (5, MO), Joseph (5, ST), Lucas (3, MO), Robert (3, ST), Logan (3, MO), Henry (3, ST), Ethan (3, MO), Frank (3, ST), Jacob (3, ST), Edward (3, ST), Jackson (2, MO), Thomas (2, ST), Aiden (2, MO), Walter (2, ST), Mateo (2, MO), Harry (2, ST), Jayden (2, MO), Fred (2, ST), Caleb (2, ST), Arthur (2, ST), Levi (2, ST), Pierre (2, ST), Jean (2, ST), Luc (2, ST), Marc (2, ST), Andre (2, ST), Jacques (2, ST), Hudson (2, MO), Carter (2, MO), Wyatt (2, MO), Grayson (2, MO), Easton (2, MO)
+
+**Female given names** (45): Linda (10, ST MO), Barbara (10, ST MO), Susan (10, ST MO), Karen (10, ST MO), Nancy (10, ST MO), Mary (7, ST), Olivia (7, MO), Anna (7, ST), Amelia (7, MO), Margaret (7, ST), Ava (5, MO), Helen (5, ST), Sophia (5, MO), Elizabeth (5, ST), Isabella (5, MO), Ruth (5, ST), Mia (3, MO), Florence (3, ST), Harper (3, MO), Ethel (3, ST), Evelyn (3, MO), Emma (3, ST), Abigail (3, MO), Marie (3, ST), Emily (2, MO), Minnie (2, ST), Ella (2, MO), Bertha (2, ST), Scarlett (2, MO), Clara (2, ST), Aria (2, ST), Alice (2, ST), Chloe (2, ST), Edna (2, ST), Luna (2, ST), Nathalie (2, ST), Julie (2, ST), Chantal (2, ST), Sylvie (2, ST), Josee (2, ST), Avery (2, MO), Aubrey (2, MO), Penelope (2, MO), Hazel (2, MO), Nora (2, MO)
+
+**Regnal names, male:** George (10), Abraham (10), Theodore (10), Franklin (10), Harry (10), Dwight (7), Ulysses (7), Woodrow (7)
+
+**Regnal names, female:** Eleanor (10), Edith (10), Mamie (10), Jacqueline (10), Dolley (10), Martha (7), Abigail (7), Betty (7)
+
+**Holy and wise:** Elizabeth Seton (10), Katharine Drexel (10), Frances Cabrini (10), John Neumann (10), Joseph Smith (10), Mary Baker Eddy (7), Ellen White (7), Brigham Young (7), Dwight Moody (7), Billy Sunday (7), Martin Luther King (5), Aimee McPherson (5)
+
+<!-- tier6d-people:end -->
+
+**Stored states changed by the 6d people rewrite (20 November 2026), against the 6d M0 fixtures, by culture key:** aztec 82, maya 74, andean 78, polynesian 61, american 10, and the keys that read them: hawaiian 23, maori 20, w-polynesian 20 (the Polynesian lens keys resolve to the Polynesian table). Six states outside the batch moved because the interstellar era draws a quarter of its names from other cultures' modern lists, which now include the new tables: the spacecraft of chinese and swahili-omani at seed 42 (default, heroic and grim: 3 each). By module, 374 states: spacecraft 46, aircraft 52, land vehicles 40, ships 20, inns 16, monuments 16, buildings 15, mountains 17, riverNames 13, seas and lakes 13, and the rest in 20 other modules. Stored legacy keys outside these run as saved.

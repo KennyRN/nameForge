@@ -1,0 +1,272 @@
+{
+ "polynesian": {
+  "historic": {
+   "male": [
+    "Kamehameha:10",
+    "Liholiho:10",
+    "Kauikeaouli:10",
+    "Lunalilo:10",
+    "Kalakaua:10",
+    "Umi:7",
+    "Pomare:7",
+    "Tupou:7",
+    "Mataafa:7",
+    "Malietoa:7"
+   ],
+   "female": [
+    "Kaahumanu:10",
+    "Liliuokalani:10",
+    "Emma:10",
+    "Kapiolani:10",
+    "Keopuolani:10",
+    "Kekauluohi:7",
+    "Kinau:7",
+    "Pauahi:7",
+    "Keelikolani:7",
+    "Kaiulani:7"
+   ]
+  },
+  "modern": {
+   "male": [
+    "Kekoa:10",
+    "Makoa:10",
+    "Kalani:10",
+    "Palani:10",
+    "Hone:10",
+    "Kai:7",
+    "Rawiri:7",
+    "Koa:7",
+    "Wiremu:7",
+    "Nikau:7"
+   ],
+   "female": [
+    "Salote:10",
+    "Sina:10",
+    "Tui:10",
+    "Lea:10",
+    "Mere:10",
+    "Aroha:7",
+    "Moana:7",
+    "Rangi:7",
+    "Leilani:7",
+    "Ngaire:5"
+   ]
+  }
+ },
+ "aztec": {
+  "historic": {
+   "male": [
+    "Moctezuma:4",
+    "Cuauhtemoc:4",
+    "Itzcoatl:3",
+    "Nezahualcoyotl:3",
+    "Ahuitzotl:2",
+    "Axayacatl:2",
+    "Tlacaelel:7",
+    "Yaotl:7",
+    "Tochtli:7",
+    "Cuauhtli:7"
+   ],
+   "female": [
+    "Tecuichpo:3",
+    "Atotoztli:3",
+    "Chimalxochitl:2",
+    "Azcalxochitl:2",
+    "Chalchiuhnenetzin:2",
+    "Papantzin:2",
+    "Malinalli:7",
+    "Xochitl:7",
+    "Citlali:7",
+    "Quetzalli:7"
+   ]
+  },
+  "modern": {
+   "male": [
+    "Javier:10",
+    "David:10",
+    "Alberto:10",
+    "Jorge:10",
+    "Marcos:10",
+    "Jose:7",
+    "Hugo:7",
+    "Juan:7",
+    "Martin:7",
+    "Antonio:7"
+   ],
+   "female": [
+    "Elena:10",
+    "Marta:10",
+    "Cristina:10",
+    "Silvia:10",
+    "Raquel:10",
+    "Maria:7",
+    "Lucia:7",
+    "Carmen:7",
+    "Sofia:7",
+    "Dolores:7"
+   ]
+  }
+ },
+ "maya": {
+  "historic": {
+   "male": [
+    "Pakal:3",
+    "Yax Pasaj:3",
+    "Yuknoom:3",
+    "Kikab:2",
+    "Tecun:2",
+    "Tutul:2",
+    "Kinich:6",
+    "Bahlam:6",
+    "Itzamnaaj:6",
+    "Yik'in:6"
+   ],
+   "female": [
+    "Sak K'uk':3",
+    "Yohl Ik'nal:3",
+    "K'abel:3",
+    "Tz'akbu Ajaw:3",
+    "Xoc:7",
+    "Sak Biyaan:7",
+    "Ix Chan:7",
+    "Ix Kuk:7",
+    "Ix Ek:7",
+    "Ix Pol:7"
+   ]
+  },
+  "modern": {
+   "male": [
+    "Javier:10",
+    "David:10",
+    "Alberto:10",
+    "Jorge:10",
+    "Marcos:10",
+    "Jose:7",
+    "Hugo:7",
+    "Juan:7",
+    "Martin:7",
+    "Antonio:7"
+   ],
+   "female": [
+    "Elena:10",
+    "Marta:10",
+    "Cristina:10",
+    "Silvia:10",
+    "Raquel:10",
+    "Maria:7",
+    "Lucia:7",
+    "Carmen:7",
+    "Sofia:7",
+    "Dolores:7"
+   ]
+  }
+ },
+ "andean": {
+  "historic": {
+   "male": [
+    "Atahualpa:3",
+    "Huascar:3",
+    "Pachacuti:3",
+    "Tupac Yupanqui:2",
+    "Huayna Capac:2",
+    "Manco Inca:2",
+    "Waman:7",
+    "Amaru:7",
+    "Puma:7",
+    "Titu:7"
+   ],
+   "female": [
+    "Quispe Sisa:3",
+    "Cura Ocllo:3",
+    "Contarhuacho:2",
+    "Chimpu Ocllo:2",
+    "Sisa:7",
+    "Chaska:7",
+    "Wayra:7",
+    "Sumaq:7",
+    "Tika:7",
+    "Cori:7"
+   ]
+  },
+  "modern": {
+   "male": [
+    "Javier:10",
+    "David:10",
+    "Alberto:10",
+    "Jorge:10",
+    "Marcos:10",
+    "Jose:7",
+    "Hugo:7",
+    "Juan:7",
+    "Martin:7",
+    "Antonio:7"
+   ],
+   "female": [
+    "Elena:10",
+    "Marta:10",
+    "Cristina:10",
+    "Silvia:10",
+    "Raquel:10",
+    "Maria:7",
+    "Lucia:7",
+    "Carmen:7",
+    "Sofia:7",
+    "Dolores:7"
+   ]
+  }
+ },
+ "american": {
+  "historic": {
+   "male": [
+    "John:10",
+    "William:10",
+    "Thomas:10",
+    "James:10",
+    "Richard:10",
+    "Robert:7",
+    "George:7",
+    "Samuel:7",
+    "Joseph:7",
+    "Benjamin:7"
+   ],
+   "female": [
+    "Mary:10",
+    "Elizabeth:10",
+    "Sarah:10",
+    "Anne:10",
+    "Hannah:10",
+    "Abigail:7",
+    "Mercy:7",
+    "Prudence:7",
+    "Patience:7",
+    "Priscilla:7"
+   ]
+  },
+  "modern": {
+   "male": [
+    "Michael:10",
+    "David:10",
+    "Richard:10",
+    "Kevin:10",
+    "Brian:10",
+    "John:7",
+    "Liam:7",
+    "William:7",
+    "Noah:7",
+    "James:7"
+   ],
+   "female": [
+    "Linda:10",
+    "Barbara:10",
+    "Susan:10",
+    "Karen:10",
+    "Nancy:10",
+    "Mary:7",
+    "Olivia:7",
+    "Anna:7",
+    "Amelia:7",
+    "Margaret:7"
+   ]
+  }
+ }
+}

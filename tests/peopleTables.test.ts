@@ -105,7 +105,8 @@ test("names are plain letters: no digits, brackets, accents or blanks", () => {
       const t = peopleTable(c, p);
       if (!t) continue;
       for (const k of ["male", "female", "surnames", "regnalMale", "regnalFemale", "holy"] as const) {
-        for (const [name] of t[k] ?? []) assert.match(name, /^[A-Za-z' -]+$/, `${c}/${p}/${k}/${name}`);
+        // Brief 6d B1: the Polynesian names keep their language's marks (Maori macrons, Hawaiian kahako and the okina U+02BB), and only those.
+        for (const [name] of t[k] ?? []) assert.match(name, c === "polynesian" ? /^[A-Za-z\u0100\u0101\u0112\u0113\u012A\u012B\u014C\u014D\u016A\u016B\u02BB' -]+$/ : /^[A-Za-z' -]+$/, `${c}/${p}/${k}/${name}`);
       }
     }
   }
@@ -555,7 +556,8 @@ test("§13.4: Aztec, Maya and Andean have a modern period with Spanish given nam
   for (const c of ["aztec", "maya", "andean"]) {
     const t = peopleTable(c, "modern")!;
     assert.ok(t, c);
-    assert.deepEqual(names(t.male), names(iberian.male), c);
+    // Brief 6d B1: each of the three has a modern list of its own (Spanish Christian given names as its region uses them); the Iberian given names common to both still stand in it.
+    for (const n of ["Juan", "Jose"]) assert.ok(names(t.male).includes(n) && names(iberian.male).includes(n), `${c}/${n}`);
     assert.ok(t.surnames && t.surnames.length >= 30, c);
     assert.ok((t.recentMale?.length ?? 0) >= 12 && (t.recentFemale?.length ?? 0) >= 12, c);
   }
