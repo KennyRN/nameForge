@@ -1634,10 +1634,10 @@
   ],
   "sections": [
    [
-    "Tea Railway Track",
-    "Tea Imperial Track",
     "Tea Granary Track",
-    "Tea Tiger Track"
+    "Tea Track",
+    "Tea Pagoda Track",
+    "Tea Lantern Track"
    ],
    [
     "Inner City",
@@ -1652,7 +1652,7 @@
     "29th Lane",
     "Street of [founder]",
     "Lane of the Tanners",
-    "Tea Railway Track",
+    "Tea Granary Track",
     "Lane of [founder]",
     "Stone Steps of [founder]",
     "Market Lane of [founder]",
@@ -1883,11 +1883,11 @@
   ],
   "sections": [
    [
-    "Spice Railway Track",
-    "Spice Crane Track",
-    "Spice Daimyo's Track",
     "Spice Samurai Track",
-    "Spice Bamboo Track"
+    "Spice Track",
+    "Spice Shrine Track",
+    "Spice Bamboo Track",
+    "Spice Crane Track"
    ],
    [
     "Castle Town",
@@ -1900,27 +1900,27 @@
    ],
    [
     "Long Street",
-    "Stone Steps to Deep Island",
+    "Shrine Steps to Deep Island",
     "Sacred Grove Street",
     "[founder]'s Street",
     "Weavers' Lane",
     "Old Street",
     "[founder]'s Lane",
-    "[founder]'s Stone Steps",
+    "[founder]'s Shrine Steps",
     "[founder]'s Market Lane",
     "Masons' Market Lane",
-    "Stone Steps to Capital of Virtue and Tranquillity",
-    "Glovers' Stone Steps",
+    "Shrine Steps to Capital of Virtue and Tranquillity",
+    "Glovers' Shrine Steps",
     "Street to Capital of Prosperity and Peace",
     "Market Lane to Capital of Tranquillity and Peace",
     "Dyers' Market Lane",
-    "Spice Railway Track"
+    "Spice Samurai Track"
    ],
    [
     "Market Square",
     "[founder]'s Shrine Square",
-    "Capital of Virtue and Tranquillity Gate Square",
-    "[founder]'s Gate Square"
+    "Capital of Virtue and Tranquillity Gate Court",
+    "[founder]'s Gate Court"
    ],
    [
     "[owner]'s Pilgrims' Lodge",
@@ -2001,8 +2001,8 @@
    ],
    [
     "Long Street",
-    "Stone Steps to Bright Slope",
-    "[founder]'s Stone Steps",
+    "Shrine Steps to Bright Slope",
+    "[founder]'s Shrine Steps",
     "Tanners' Lane",
     "[founder]'s Street",
     "Street to Capital of Peace and Tranquillity",
@@ -2011,17 +2011,17 @@
     "[founder]'s Market Lane",
     "Lane to Capital of Brightness and Prosperity",
     "Old Lane",
-    "Old Stone Steps",
+    "Old Shrine Steps",
     "Fan Makers' Street",
-    "Silversmiths' Stone Steps",
-    "Goldsmiths' Stone Steps",
+    "Silversmiths' Shrine Steps",
+    "Goldsmiths' Shrine Steps",
     "Salt Road"
    ],
    [
     "Market Square",
-    "[founder]'s Gate Square",
+    "[founder]'s Gate Court",
     "[founder]'s Shrine Square",
-    "Capital of Longevity and Tranquillity Gate Square"
+    "Capital of Longevity and Tranquillity Gate Court"
    ],
    [
     "Inn of Capital of Virtue and Prosperity",
@@ -2103,7 +2103,7 @@
    [
     "Long Street",
     "Old Street",
-    "Old Stone Steps",
+    "Old Shrine Steps",
     "Fish Track",
     "Market Lane to Capital of Prosperity and Virtue",
     "Street to Narrow Island",
@@ -2112,7 +2112,7 @@
     "Old Lane",
     "Milk Row",
     "Butchers' Lane",
-    "[founder]'s Stone Steps",
+    "[founder]'s Shrine Steps",
     "Shoemakers' Market Lane",
     "[founder]'s Street",
     "Weavers' Lane",
@@ -2122,7 +2122,7 @@
     "Market Square",
     "Capital of Peace and Harmony Square",
     "Great Castle Square",
-    "Cherry Island Gate Square"
+    "Cherry Island Gate Court"
    ],
    [
     "Cherry-Pink Izakaya",

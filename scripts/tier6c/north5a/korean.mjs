@@ -2,8 +2,8 @@
 import { buildCulture } from "./build.mjs";
 export default buildCulture({
   key: "korean", label: "Korean", style: "first",
-  mods: { A: ["Pine", "Tiger", "Hermitage", "Fortress", "Magpie", "Crane"], B: ["Yangban", "Royal", "Ginseng", "Paddy", "Market", "Beacon"], C: ["Railway", "Dam", "Industrial", "Resort"], F: ["Trickster Goblin", "Mountain-Spirit", "Stone Guardian", "Nine-Tailed"] },
-  desertBase: ["Sand Barrens", "Dune", "Volcanic Rock"],
+  mods: { A: ["Pine", "Tiger", "Hermitage", "Fortress", "Magpie", "Ginkgo"], B: ["Yangban", "Royal", "Ginseng", "Paddy", "Market", "Beacon"], C: ["Chaebol", "Armistice", "Industrial", "Resort"], F: ["Trickster Goblin", "Mountain-Spirit", "Stone Guardian", "Nine-Tailed"] },
+  noDesert: true,
   land: {
     B: "Rice|Ginseng|Pine|Silk|Paper|Celadon|Tea|Persimmon|Salt|Hemp",
     C: "Trickster Goblin|Mountain Spirit|Stone Guardian|Nine-Tailed Fox|Maiden Ghost|Sleeping General",

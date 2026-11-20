@@ -272,11 +272,11 @@ export const SIGNS = {
   korean: C(
     "Tiger|Magpie|Stone Guardian|Swallow|Bear|Goose|Hawk|Pheasant|Rooster|Squirrel|Ox|Mountain Goat",
     "Rice Wine Jar|Drum|Paper Fan|Brazier|Stone Pillar|Hearth|Pine Torch|Gourd|Pavilion|Earthen Pot|Wooden Bucket|Millstone",
-    "Rice Merchants|Brewers|Potters|Charcoal Burners|Ginseng Merchants|Basket Weavers|Ironmongers|Noodle Cooks",
+    "Grain Merchants|Brewers|Potters|Charcoal Burners|Ginseng Merchants|Basket Weavers|Ironmongers|Noodle Cooks",
     "Celadon|Indigo|Ink-Black|Pine-Green|Persimmon-Orange|Clay-Brown",
-    "Scholar|Governor|Pilgrim|Merchant|Monk|Pansori Singer|Mask Dancer|Gong Player",
+    "Confucian|Governor|Pilgrim|Merchant|Monk|Pansori Singer|Mask Dancer|Gong Player",
     "Pine-Shaded|Hearth-Warm|Windy|Humble|Hospitable|Hilltop",
-    "Fortress Gate|Stone Steps|Ferry Landing|Temple Steps|Mountain Pass|Pine Hill|Village Well",
+    "Fortress Gate|Stone Stairs|Ferry Landing|Temple Steps|Mountain Pass|Pine Hill|Village Well",
   ),
 };
 
@@ -286,7 +286,7 @@ const COLOURS = {
   "norman-british": "Red|Black|White|Blue|Golden|Silver", "anglo-saxon": "Dun|Iron|Amber|Ash|Gold|Wine", welsh: "Slate|Fern|Rowan|Coal|Honey|Snow", scottish: "Heather|Peat|Loch|Granite|Tartan|Thistle",
   irish: "Emerald|Peat-Brown|Ochre|Cream|Rust|Shamrock", cornish: "Tin|Copper|Pewter|Salt|Gorse|Pilchard-Silver", norse: "Frost|Ember|Steel|Wolf-Grey|Blood|Sea",
   scandinavian: "Birch|Fir|Lingonberry|Snow|Midnight|Copper-Roof", german: "Emerald|Ruby|Onyx|Pewter|Lime|Garnet-Red", french: "Azure|Vermilion|Ivory|Pearl|Lilac|Sable",
-  dutch: "Orange|Cobalt|Chalk|Moss|Delft|Pale", italian: "Scarlet|Verdigris|Gilt|Marble|Terracotta|Indigo", spanish: "Crimson|Saffron|Ebony|Olive|Bronze|Sandy",
+  dutch: "Orange|Cobalt|Chalk|Moss|Delft|Ashen", italian: "Scarlet|Verdigris|Gilt|Marble|Terracotta|Indigo", spanish: "Crimson|Saffron|Ebony|Olive|Bronze|Sandy",
   portuguese: "Cork|Salt|Sea-Green|Coral|Sky|Tile-Blue", roman: "Purple|Alabaster|Laurel|Brass|Terra|Porphyry", greek: "Violet|Wine-Dark|Honey|Aegean|Sunlit-White|Whitewash",
   byzantine: "Gilded|Lapis|Garnet|Mosaic|Enamel|Incense-Grey", slavic: "Cornflower|Beet|Rye|Rowan-Red|Pine|Moonlit",
 };
@@ -294,7 +294,7 @@ const DESCRIPTIONS = {
   "norman-british": "Jolly|Merry|Lucky|Crooked|Old|Little|Royal|Three", "anglo-saxon": "Oaken|Stout|Wary|Hearthside|Wealden|Moot-Hill", welsh: "Hillside|Singing|Rainy|Misty|Stone|Drovers'",
   scottish: "Auld|Braw|Wee|Canty|Bonnie|Lang", irish: "Crooked-Roofed|Lonely|Thatched|Hidden|Rambling|Cosy", cornish: "Windy|Hidden|Salt|Last|Deep|Wrecker's",
   norse: "Bold|Stern|Grim|Sea-Beaten|Oath-Sworn|Wave-Rocked", scandinavian: "Northern|Hushed|Midnight|Snug|Snowy|Lakeside", german: "Imperial|Honest|Stately|Timbered|Hearty|Fine",
-  french: "Gallant|Proud|Brave|Sunny|Elegant|Gay-Hearted", dutch: "Cosy|Tidy|Frugal|Windy|Flat|Brimming", italian: "Gay|Faithful|Sunny|Lively|Gracious|Joyful",
+  french: "Gallant|Proud|Brave|Sunny|Elegant|Gay-Hearted", dutch: "Cosy|Tidy|Sparing|Windy|Flat|Brimming", italian: "Gay|Faithful|Sunny|Lively|Gracious|Joyful",
   spanish: "Valiant|Dusty|Shaded|Sleepy|Noble|Sun-Baked", portuguese: "Distant|Salty|Breezy|Seaward|Harbour-Side|Tidal", roman: "Eternal|Victorious|Seven|Triumphal|Martial|Urbane",
   greek: "Sunlit|Sacred|Swift|Hospitable|Wise|Hearty", byzantine: "Holy|Blessed|Orthodox|Solemn|Lamp-Lit|Courtly", slavic: "Frosty|Birchen|Snowbound|Stout|Cheerful|Hearth-Warm",
 };

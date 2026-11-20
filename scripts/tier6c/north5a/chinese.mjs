@@ -2,7 +2,7 @@
 import { buildCulture } from "./build.mjs";
 export default buildCulture({
   key: "chinese", label: "Chinese", style: "first",
-  mods: { A: ["Jade", "Willow", "Pagoda", "Imperial", "Granary", "Tiger"], B: ["Tea", "Silk", "Canal", "Treaty", "Junk", "Scholars'"], C: ["Railway", "Dam", "Factory", "Tourist"], F: ["Immortal", "Fox", "Dragon King's", "Kylin"] },
+  mods: { A: ["Jade", "Willow", "Pagoda", "Imperial", "Granary", "Lantern"], B: ["Tea", "Silk", "Canal", "Treaty", "Junk", "Scholars'"], C: ["Railway", "Commune", "Factory", "Tourist"], F: ["Immortal", "Fox", "Dragon King's", "Kylin"] },
   land: {
     B: "Tea|Silk|Jade|Porcelain|Rice|Bamboo|Lacquer|Salt|Paper|Ink",
     C: "Dragon King|Immortal|Fox Spirit|Kylin|Jade Maiden|Sleeping Scholar",

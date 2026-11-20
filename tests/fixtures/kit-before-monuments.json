@@ -94,10 +94,10 @@
  },
  "kit chinese city 1": {
   "roads": [
-   "Tea Railway Track",
-   "Tea Imperial Track",
    "Tea Granary Track",
-   "Tea Tiger Track"
+   "Tea Track",
+   "Tea Pagoda Track",
+   "Tea Lantern Track"
   ],
   "groups": [
    "Poor Friars of the Lamb",
@@ -163,11 +163,11 @@
  },
  "kit japanese great 1": {
   "roads": [
-   "Spice Railway Track",
-   "Spice Crane Track",
-   "Spice Daimyo's Track",
    "Spice Samurai Track",
-   "Spice Bamboo Track"
+   "Spice Track",
+   "Spice Shrine Track",
+   "Spice Bamboo Track",
+   "Spice Crane Track"
   ],
   "groups": [
    "Poor Friars of the Lamb",

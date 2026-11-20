@@ -18,7 +18,8 @@ export function buildCulture(def) {
   const out = { key: def.key, label: def.label, style: def.style, land: def.land, water: def.water, route: def.route, sacred: def.sacred, nouns: { land: {}, water: {}, route: [], sacred: [] } };
   let s = 0;
   for (const k of LAND) {
-    const bases = k === "desert" && def.desertBase ? def.desertBase : BASE[k];
+    if (k === "desert" && def.noDesert) { s++; continue; }
+    const bases = BASE[k];
     out.nouns.land[k] = bases.map((b, L) => list(def.mods, b, s * 3 + L));
     s++;
   }
@@ -28,7 +29,8 @@ export function buildCulture(def) {
   }
   // The routes' and the sacred sites' lists: roads, tracks and paths; springs, stones and shrines.
   // Each route list takes two extras of each end of the eras (tagged), so that a kind with few words still gives twenty unique names.
-  const extra = (b, k) => [...[3, 4, 5].map((i) => def.mods.A[(k + i) % 6]), ...[1, 3, 5].map((i) => def.mods.B[(k + i) % 6]), ...[2, 3].map((i) => def.mods.C[(k + i) % 4])].map((x) => `|${x} ${b};AN-IS`).join("");
+  // Each extra carries the tag of its own modifier group (A: ancient to medieval, B: early modern to steam, C: steam to modern), so that no extra stands in a wrong era.
+  const extra = (b, k) => [...[3, 4, 5].map((i) => [def.mods.A[(k + i) % 6], "AN-MD"]), ...[1, 3, 5].map((i) => [def.mods.B[(k + i) % 6], "EM-ST"]), ...[2, 3].map((i) => [def.mods.C[(k + i) % 4], "ST-MO"])].map(([x, t]) => `|${x} ${b};${t}`).join("") + [0, 1, 2, 3].map((i) => `|${def.mods.C[(k + i) % 4]} Link;MO-IS`).join("") + [1, 2, 3].map((i) => `|${def.mods.F[(k + i) % 4]} ${b};h`).join("");
   out.nouns.route = ["Road", "Track", "Path"].map((b, L) => list(def.mods, b, 40 + L) + extra(b, 40 + L));
   out.nouns.sacred = ["Spring", "Stone", "Shrine"].map((b, L) => list(def.mods, b, 50 + L));
   return out;

@@ -2,8 +2,8 @@
 import { buildCulture } from "./build.mjs";
 export default buildCulture({
   key: "japanese", label: "Japanese", style: "lastB",
-  mods: { A: ["Cedar", "Cherry", "Shrine", "Crane", "Samurai", "Bamboo"], B: ["Daimyo's", "Post-Town", "Tea", "Edo", "Rice", "Ferry"], C: ["Railway", "Dam", "Onsen", "Ski"], F: ["Fox Spirit", "Mountain Goblin", "Oni", "River Imp"] },
-  desertBase: ["Sand Barrens", "Dune", "Volcanic Rock"],
+  mods: { A: ["Cedar", "Cherry", "Shrine", "Crane", "Samurai", "Bamboo"], B: ["Daimyo's", "Post-Town", "Tatami", "Edo", "Rice", "Ferry"], C: ["Meiji", "Onsen", "Ski", "Reclaimed"], F: ["Fox Spirit", "Mountain Goblin", "Oni", "River Imp"] },
+  noDesert: true,
   land: {
     B: "Rice|Tea|Silk|Cedar|Sake|Paper|Lacquer|Pearl|Persimmon|Plum",
     C: "Fox Spirit|Mountain Goblin|Oni|River Imp|Snow Woman|Sleeping Samurai",
