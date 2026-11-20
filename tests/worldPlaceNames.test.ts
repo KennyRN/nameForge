@@ -23,10 +23,11 @@ test("world: first and second releases plus the expansion pool: sixteen cultures
       "west-african", "maya", "korean", "ethiopian",
       "welsh", "cornish", "scottish", "irish", "scandinavian", "german",
       "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian",
+      "andean", "polynesian", "american",
     ],
   );
   // Stellar brief §12: every culture gained an Interstellar era.
-  assert.equal(ERAS.length, 43 + 6 * 3 + 7 * 3 + 2 + 14 + 8 + 9, "batches 5b, 6a, 6b and 6c (nine eras for Indian, Chinese, Japanese and Korean): their own eras and the Interstellar era; Roman and Slavic, and Egyptian, Ethiopian, Bantu and West African, gain eras");
+  assert.equal(ERAS.length, 43 + 6 * 3 + 7 * 3 + 2 + 14 + 8 + 9 + 22, "batches 5b, 6a, 6b and 6c (nine eras for Indian, Chinese, Japanese and Korean): their own eras and the Interstellar era; Roman and Slavic, and Egyptian, Ethiopian, Bantu and West African, gain eras");
 });
 
 test("world: every slot in every template and list entry resolves for its era", () => {
@@ -70,7 +71,8 @@ test("world: every era fills a batch of distinct, placeholder-free, capitalised 
     assert.equal(new Set(lower).size, lower.length);
     for (const n of result.names) {
       assert.ok(!/[[\]{}+|~]/.test(n.text), `${culture.id}/${era.id}: "${n.text}"`);
-      assert.match(n.text, /^\p{Lu}/u);
+      // Brief 6d: a Hawaiian name may begin with the okina (U+02BB), which is part of the name.
+      assert.match(n.text, /^\u02BB?\p{Lu}/u);
       assert.ok(!/\s{2}|^\s|\s$/.test(n.text), `spacing: "${n.text}"`);
       assert.ok(n.etymology.length > 0);
     }

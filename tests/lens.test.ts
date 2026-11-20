@@ -246,7 +246,7 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
   for (const c of BYNAME_CULTURES_5C) assert.ok(keysOf("north5c").includes(c.key), c.key);
   // The 22, the 20, the 24 and the 34 are all inside the shared keys or the vehicle extras.
   for (const keys of [routeKeys, BYNAME_CULTURES.map((c) => c.key), MONEY_CULTURES.map((c) => c.key)]) for (const k of keys.filter((k) => !ENGINE_ALIAS[k])) assert.ok(cultureMapping("shared")[k], k);
-  assert.equal(WORLD_CULTURES.length, 33, "the sixteen world cultures, the six of batch 5b, the seven of batch 6a and the four of batch 6b");
+  assert.equal(WORLD_CULTURES.length, 36, "the sixteen world cultures, the six of batch 5b, the seven of batch 6a, the four of batch 6b and the three new ones of batch 6d (Andean, Polynesian, American)");
   for (const c of WORLD_CULTURES) assert.ok(cultureMapping("world")[c.id], `world ${c.id}`);
 });
 

@@ -2506,7 +2506,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 11457,
+   "rowCount": 13958,
    "cultures": {
     "english": {
      "words": 102,
@@ -2852,67 +2852,64 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 77,
+     "words": 420,
+     "shapes": 182,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 53,
+     "words": 530,
+     "shapes": 192,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 265,
+     "shapes": 186,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 265,
+     "shapes": 194,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 260,
+     "shapes": 137,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 519,
-    "MD": 1239,
-    "EM": 836,
-    "ST": 960,
-    "MO": 974,
+    "AN": 624,
+    "MD": 1355,
+    "EM": 988,
+    "ST": 1141,
+    "MO": 1168,
     "NF": 0,
-    "IS": 831
+    "IS": 885
    },
    "styles": {},
    "tones": {
@@ -2965,9 +2962,6 @@
      "iberian",
      "greek-byzantine",
      "steppe",
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -24296,24 +24290,24 @@
     "shapes": 576
    },
    "maya": {
-    "words": 82,
-    "shapes": 82
+    "words": 612,
+    "shapes": 221
    },
    "andean": {
-    "words": 36,
-    "shapes": 10
+    "words": 301,
+    "shapes": 196
    },
    "polynesian": {
-    "words": 43,
-    "shapes": 11
+    "words": 308,
+    "shapes": 205
    },
    "bantu": {
     "words": 2024,
     "shapes": 551
    },
    "aztec": {
-    "words": 139,
-    "shapes": 105
+    "words": 559,
+    "shapes": 210
    },
    "scandinavian": {
     "words": 2191,
@@ -24347,13 +24341,13 @@
     "words": 1960,
     "shapes": 551
    },
+   "american": {
+    "words": 304,
+    "shapes": 139
+   },
    "anglo-saxon": {
     "words": 1144,
     "shapes": 240
-   },
-   "american": {
-    "words": 44,
-    "shapes": 2
    },
    "northAmerican": {
     "words": 12,
@@ -24373,13 +24367,13 @@
    }
   },
   "eras": {
-   "AN": 11035,
-   "MD": 14475,
-   "EM": 15728,
-   "ST": 15128,
-   "MO": 13546,
+   "AN": 11140,
+   "MD": 14591,
+   "EM": 15880,
+   "ST": 15309,
+   "MO": 13740,
    "NF": 819,
-   "IS": 1771
+   "IS": 1825
   },
   "styles": {
    "high-fantasy": {

@@ -262,7 +262,7 @@ const LENS_CULTURES = LENS.cultures as { key: string; keys: string[]; family: st
 /** Northern Europe brief 5a: the Norse and Celtic lens cultures read through Scandinavian and the Celtic nations here, so another culture's nearest-family order is what it was. */
 const FOLDED = new Set(["norse", "celtic"]);
 /** The world cultures whose places come from their own settlement names alone (every one that has them, bar the Celtic nations and the British engine's). */
-const OWN_SETTLEMENT_ONLY = new Set(["roman", "slavic", "egyptian", "bantu", "ethiopian", "west-african", "arabic-persian", "turkic", "mongol", "arabic", "persian", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine", "indian", "chinese", "japanese", "korean", "iberian", "greek-byzantine"]);
+const OWN_SETTLEMENT_ONLY = new Set(["roman", "slavic", "egyptian", "bantu", "ethiopian", "west-african", "arabic-persian", "turkic", "mongol", "arabic", "persian", "french", "dutch", "italian", "spanish", "portuguese", "greek", "byzantine", "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american", "iberian", "greek-byzantine"]);
 /** The cultures whose settlement names fill a place, nearest first: the culture, its lens keys, its family, then General. */
 export function placeCultures(culture: string): string[] {
   // Second pass (brief §12): a culture that has settlement names of its own fills its places from them only, and a mix from its own halves'; the family's names are another culture's.

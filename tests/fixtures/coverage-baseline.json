@@ -3629,72 +3629,78 @@
    "v": 0
   },
   "culture|settlementNames|aztec|words": {
-   "v": 0,
+   "v": 420,
    "t": 12
   },
   "culture|settlementNames|aztec|shapes": {
-   "v": 77,
+   "v": 182,
    "t": 4
   },
   "culture|settlementNames|aztec|profile": {
    "v": 0
   },
   "culture|settlementNames|maya|words": {
-   "v": 0,
+   "v": 530,
    "t": 12
   },
   "culture|settlementNames|maya|shapes": {
-   "v": 53,
+   "v": 192,
    "t": 4
   },
   "culture|settlementNames|maya|profile": {
    "v": 0
   },
   "culture|settlementNames|andean|words": {
-   "v": 0
+   "v": 265,
+   "t": 12
   },
   "culture|settlementNames|andean|shapes": {
-   "v": 0
+   "v": 186,
+   "t": 4
   },
   "culture|settlementNames|andean|profile": {
    "v": 0
   },
   "culture|settlementNames|polynesian|words": {
-   "v": 0
+   "v": 265,
+   "t": 12
   },
   "culture|settlementNames|polynesian|shapes": {
-   "v": 0
+   "v": 194,
+   "t": 4
   },
   "culture|settlementNames|polynesian|profile": {
    "v": 0
   },
   "culture|settlementNames|american|words": {
-   "v": 0
+   "v": 260,
+   "t": 12
   },
   "culture|settlementNames|american|shapes": {
-   "v": 0
+   "v": 137,
+   "t": 4
   },
   "culture|settlementNames|american|profile": {
    "v": 0
   },
   "era|settlementNames|AN": {
-   "v": 519,
+   "v": 624,
    "t": 12
   },
   "era|settlementNames|MD": {
-   "v": 1239,
+   "v": 1355,
    "t": 12
   },
   "era|settlementNames|EM": {
-   "v": 836,
+   "v": 988,
    "t": 12
   },
   "era|settlementNames|ST": {
-   "v": 960,
+   "v": 1141,
    "t": 12
   },
   "era|settlementNames|MO": {
-   "v": 974,
+   "v": 1168,
    "t": 12
   },
   "era|settlementNames|NF": {
@@ -3702,7 +3708,7 @@
    "t": 12
   },
   "era|settlementNames|IS": {
-   "v": 831,
+   "v": 885,
    "t": 12
   },
   "tone|settlementNames|grand": {
@@ -28484,22 +28490,22 @@
    "v": 576
   },
   "total|culture|maya|words": {
-   "v": 82
+   "v": 612
   },
   "total|culture|maya|shapes": {
-   "v": 82
+   "v": 221
   },
   "total|culture|andean|words": {
-   "v": 36
+   "v": 301
   },
   "total|culture|andean|shapes": {
-   "v": 10
+   "v": 196
   },
   "total|culture|polynesian|words": {
-   "v": 43
+   "v": 308
   },
   "total|culture|polynesian|shapes": {
-   "v": 11
+   "v": 205
   },
   "total|culture|bantu|words": {
    "v": 2024
@@ -28508,10 +28514,10 @@
    "v": 551
   },
   "total|culture|aztec|words": {
-   "v": 139
+   "v": 559
   },
   "total|culture|aztec|shapes": {
-   "v": 105
+   "v": 210
   },
   "total|culture|scandinavian|words": {
    "v": 2191
@@ -28561,17 +28567,17 @@
   "total|culture|persian|shapes": {
    "v": 551
   },
+  "total|culture|american|words": {
+   "v": 304
+  },
+  "total|culture|american|shapes": {
+   "v": 139
+  },
   "total|culture|anglo-saxon|words": {
    "v": 1144
   },
   "total|culture|anglo-saxon|shapes": {
    "v": 240
-  },
-  "total|culture|american|words": {
-   "v": 44
-  },
-  "total|culture|american|shapes": {
-   "v": 2
   },
   "total|culture|northAmerican|words": {
    "v": 12
@@ -28598,25 +28604,25 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 11035
+   "v": 11140
   },
   "total|era|MD": {
-   "v": 14475
+   "v": 14591
   },
   "total|era|EM": {
-   "v": 15728
+   "v": 15880
   },
   "total|era|ST": {
-   "v": 15128
+   "v": 15309
   },
   "total|era|MO": {
-   "v": 13546
+   "v": 13740
   },
   "total|era|NF": {
    "v": 819
   },
   "total|era|IS": {
-   "v": 1771
+   "v": 1825
   },
   "total|style|high-fantasy|words": {
    "v": 4826

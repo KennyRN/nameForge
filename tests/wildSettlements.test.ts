@@ -27,8 +27,7 @@ test("terrain modules: no native branch in interstellar, for Greek & Byzantine a
   none({ era: "NF" });
   none({ culture: "greek-byzantine" });
   none({ culture: "steppe" });
-  none({ culture: "polynesian" });
-  none({ culture: "andean" });
+  // Brief 6d: Polynesian and Andean are world cultures now (they have settlement names of their own), so their terrain modules have a native branch like every other culture with one.
   none({ people: "placeholders" });
   // In new country a culture with a colonial tradition has one; one without has none.
   assert.ok(batches((seed) => settlementNames({ module: "forestNames", culture: "roman", where: "new", era: "AN" }, seed), 3).some((n) => n.source === "native"));

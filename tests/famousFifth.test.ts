@@ -8,7 +8,7 @@ import realPlaces from "../src/data/real-places.json";
 import { visitStates } from "./helpers/bracketSweep";
 
 type Entry = [string, number, string, ...string[]];
-const CULTURES = ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean"];
+const CULTURES = ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american"];
 const tables = (people as unknown as { cultures: Record<string, Record<string, Record<string, Entry[]>>> }).cultures;
 const entriesOf = (culture: string): Entry[] =>
   Object.values(tables[culture] ?? {}).flatMap((group) => Object.values(group).flatMap((list) => (Array.isArray(list) ? (list as unknown[]).filter((e): e is Entry => Array.isArray(e) && typeof e[0] === "string") : [])));

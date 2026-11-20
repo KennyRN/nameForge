@@ -17,6 +17,7 @@ const FIRST_ERAS: Record<string, string> = {
   slavic: "rus", "arabic-persian": "arabic", indian: "ancient", japanese: "samurai", "west-african": "sahel-and-forest", maya: "classic", korean: "joseon", ethiopian: "aksum-and-abyssinia",
   welsh: "medieval", cornish: "medieval", scottish: "medieval", irish: "medieval", scandinavian: "early-modern", german: "medieval",
   french: "medieval", dutch: "medieval", italian: "medieval", spanish: "medieval", portuguese: "medieval", greek: "classical", byzantine: "byzantine", turkic: "medieval", mongol: "steppe", arabic: "ancient", persian: "ancient",
+  andean: "inca", polynesian: "voyaging", american: "colonies",
 };
 
 test("§12.2: every culture's last era is Interstellar, and its default era is unchanged", () => {
@@ -48,7 +49,8 @@ test("§12.5–§12.6: 2,000 names per culture: no placeholder, no franchise phr
     assert.deepEqual(batch.notices.filter((n) => !n.startsWith("Only ")), [], c.id);
     for (const n of [...batch.names, ...draws(c.id, 1700, {}, 5000)]) {
       assert.ok(!n.text.includes("[") && !n.text.includes("{"), `${c.id}: ${n.text}`);
-      assert.ok(/^\p{Lu}/u.test(n.text), `${c.id}: ${n.text}`);
+      // Brief 6d: a Hawaiian name may begin with the okina (U+02BB), which is part of the name.
+      assert.ok(/^\u02BB?\p{Lu}/u.test(n.text), `${c.id}: ${n.text}`);
       assert.ok(!hasSpaceBlock(n.text), `${c.id}: ${n.text}`);
       assert.ok(n.scale, c.id);
     }

@@ -5,12 +5,13 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { FILLS as FILLS_6B } from "../scripts/tier6b/fills.mjs";
 import { FILLS as FILLS_6C } from "../scripts/tier6c/fills.mjs";
+import { FILLS as FILLS_6D } from "../scripts/tier6d/fills.mjs";
 import { hasEnglishRank, OWN_FILL_CULTURES } from "../src/tier6a";
 import { measureStates } from "./helpers/probeStates";
 
-const FILLS = { ...FILLS_6B, ...FILLS_6C };
+const FILLS = { ...FILLS_6B, ...FILLS_6C, ...FILLS_6D };
 /** The cultures whose land and water modules are written (6b); the 6c cultures join this list with their land and sea group. */
-const CULTURES = Object.keys({ ...FILLS_6B, ...FILLS_6C });
+const CULTURES = Object.keys({ ...FILLS_6B, ...FILLS_6C }); // the 6d cultures join with their land and sea group
 const MODULES = ["mountainNames", "forestNames", "desertNames", "moorNames", "wetlandNames", "grasslandNames", "seasLakes", "coastsIslands", "seaCharts", "riversInland", "hillsValleys", "farmland", "lands"];
 
 test("fills: every 6b culture has at least twelve own words in each list of plants, trees, birds, beasts and water creatures", () => {

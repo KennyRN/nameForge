@@ -30,6 +30,11 @@ export const tagList = (list) => list.split("|").map(tagWord).join("|");
 
 /** Desert entries added to the desert-offering cultures' lists, so that each has at least eight desert plants (trees and plants) and eight desert animals (birds and beasts), true to its own desert. */
 export const DESERT_ADD = {
+  aztec: { trees: "Mesquite", plants: "Creosote Bush|Palo Verde|Century Plant", birds: "Roadrunner|Vulture|Burrowing Owl", beasts: "Coyote|Jackrabbit|Peccary|Rattlesnake|Horned Lizard|Kangaroo Rat" },
+  maya: { trees: "Acacia", plants: "Cactus|Agave|Prickly Pear|Henequen|Mesquite|Yucca|Century Plant", birds: "Vulture|Burrowing Owl", beasts: "Iguana|Lizard|Rattlesnake|Peccary|Jackrabbit|Spiny-Tailed Iguana" },
+  andean: { trees: "Acacia", plants: "Prickly Pear|Tillandsia|Agave", birds: "Burrowing Owl|Vulture", beasts: "Lizard|Desert Fox|Viper|Tortoise|Guanaco|Vicuña" },
+  american: { trees: "Joshua Tree|Saguaro", plants: "Creosote Bush|Yucca|Cactus|Sagebrush", birds: "Burrowing Owl|Vulture", beasts: "Gila Monster|Desert Tortoise|Kangaroo Rat|Horned Lizard|Jackrabbit|Pronghorn" },
+
   turkic: { trees: "Saxaul|Tamarisk|Desert Poplar", plants: "Camelthorn|Ephedra|Saltwort|Wormwood", birds: "Sandgrouse|Bustard", beasts: "Camel|Wild Ass|Gazelle|Jerboa" },
   mongol: { plants: "Camelthorn|Ephedra|Saltwort|Haloxylon", trees: "Tamarisk", beasts: "Jerboa" },
   persian: { trees: "Tamarisk|Saxaul|Acacia", plants: "Camelthorn|Wormwood|Ephedra|Saltwort|Oleander", birds: "Sandgrouse", beasts: "Camel|Wild Ass|Gazelle|Jerboa|Lizard" },
@@ -46,3 +51,19 @@ export const withDesert = (culture, lists) => Object.fromEntries(Object.entries(
   const more = (DESERT_ADD[culture]?.[kind] ?? "").split("|").filter((w) => w && !have.has(w.toLowerCase()));
   return [kind, more.length ? `${text}|${more.join("|")}` : text];
 }));
+
+// Brief 6d: the tags of the 6d cultures' own lists. Applied only to those cultures, so that no other culture's fills change.
+const D6 = new Map();
+for (const w of "burrowing owl|century plant|creosote bush|iguana|palo verde|sagebrush|tillandsia".split("|")) D6.set(w, "d");
+for (const item of "armadillo:gd|spiny-tailed iguana:d|sagebrush:dg|tree fern:f|pandanus:c|coconut palm:c|breadfruit:fa|banyan:f|ironwood:c|candlenut:f|sandalwood:f|sweet potato:a|sugar cane:a|frangipani:a|gardenia:a|kava:a|taro:aw|yam:a|banana:a|tropicbird:s|petrel:s|shearwater:s|honeycreeper:f|coconut crab:c|monk seal:c|hermit crab:c|skink:f|parrotfish:s|triggerfish:s|lobster:cs|polylepis:t|puna ibis:tw|andean goose:tw|rhea:g|tinamou:g|giant coot:w|giant frog:w|pejerrey:w|spectacled bear:ft|guinea pig:a|puya:t|bunchgrass:tm|lupin:t|pepper tree:ad|eucalyptus:a|potato:a|corn:a|dahlia:a|chili:a|cacao:f|amaranth:a|axolotl:w|salamander:w|water snake:w|dragonfly:w|roseate spoonbill:w|ocellated turkey:f|harpy eagle:f|motmot:f|heliconia:f|breadnut:f|sapodilla:f|spanish cedar:f|logwood:f|allspice:f|henequen:ad|manatee:wc|snook:wc|tarpon:wc|cichlid:w|stingray:c|howler monkey:f|spider monkey:f|coati:f|agouti:f|ocelot:f|cottonwood:wg|sequoia:t|hemlock:f|spruce:ft|goldenrod:g|clover:g|cattail:w|prairie grass:g|milkweed:g|sunflower:g|wild rose:f|cranberry:w|blue jay:f|cardinal:f|robin:a|meadowlark:g|woodpecker:f|raccoon:f|cougar:ft|bighorn:t|prairie dog:g|sturgeon:w|bass:w|salmon:w|crayfish:w".split("|")) { const [w, c] = item.split(":"); if (w && c) D6.set(w, c); }
+/** One fill word of a 6d culture: its own dictionary first, then the shared one. */
+export const tagWord6d = (word) => {
+  const w = word.split("@")[0].toLowerCase();
+  const own = D6.get(w);
+  if (word.includes("@")) return word;
+  if (!own) return tagWord(word);
+  let t = own;
+  if (t.includes("f") && !t.includes("t")) t += "t";
+  return `${word}@${[...new Set(t)].join("")}`;
+};
+export const tagList6d = (list) => list.split("|").map(tagWord6d).join("|");

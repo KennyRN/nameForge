@@ -78,12 +78,14 @@ export const ANDEAN = {
 
 // American (the United States and Canada together): the existing lists, with the French-Canadian and other common Canadian given names and surnames added.
 const keep = (t, k) => names(t[k]).join("|");
+/** The names flagged famous (`^r`) and held last: a plain entry of the same name is dropped. */
+const flagged = (base, more) => { const drop = new Set(more.split("|").map((x) => x.toLowerCase())); return `${base.split("|").filter((x) => !drop.has(x.replace(/\^.*/, "").toLowerCase())).join("|")}|${more.split("|").map((x) => `${x}^r`).join("|")}`; };
 const plus = (base, more) => { const have = new Set(base.split("|").map((x) => x.toLowerCase())); const extra = more.split("|").filter((x) => x && !have.has(x.toLowerCase())); return extra.length ? `${base}|${extra.join("|")}` : base; };
 export const AMERICAN = {
-  historic: { male: keep(old.american.historic, "male"), female: keep(old.american.historic, "female") },
+  historic: { male: flagged(keep(old.american.historic, "male"), "Ulysses|Theodore|Abraham|Woodrow"), female: flagged(keep(old.american.historic, "female"), "Dolley|Harriet|Eleanor|Clara") },
   modern: {
-    male: plus(keep(old.american.modern, "male"), "Pierre|Jean|Luc|Marc|Andre|Jacques"),
-    female: plus(keep(old.american.modern, "female"), "Marie|Nathalie|Julie|Chantal|Sylvie|Josee"),
+    male: flagged(plus(keep(old.american.modern, "male"), "Pierre|Jean|Luc|Marc|Andre|Jacques"), "Dwight|Ronald|Jimmy|Lyndon"),
+    female: flagged(plus(keep(old.american.modern, "female"), "Marie|Nathalie|Julie|Chantal|Sylvie|Josee"), "Rosa|Jacqueline|Coretta|Amelia"),
     recentMale: plus(old.american.modern.recentMale.join("|"), "Mason|Logan|Hudson|Carter|Jackson|Wyatt|Grayson|Easton"),
     recentFemale: plus(old.american.modern.recentFemale.join("|"), "Harper|Evelyn|Avery|Scarlett|Aubrey|Penelope|Hazel|Nora"),
     surnames: plus(keep(old.american.modern, "surnames"), "Tremblay|Gagnon|Roy|Cote|Bouchard|Gauthier|MacDonald|Campbell|Stewart|Wong|Singh|Li"),

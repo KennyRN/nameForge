@@ -4,6 +4,7 @@
 import tier6a from "./data/tier6a.json";
 import tier6b from "./data/tier6b.json";
 import tier6c from "./data/tier6c.json";
+import tier6d from "./data/tier6d.json";
 import type { NorthWorldCulture } from "./northData5b";
 
 interface NewEra {
@@ -30,6 +31,7 @@ interface Tier6a {
 const A = tier6a as unknown as Tier6a;
 const B = tier6b as unknown as Tier6a;
 const C = tier6c as unknown as Tier6a;
+const D = tier6d as unknown as Tier6a;
 type SizeTables = { eras: Record<string, Record<string, string>>; lists: Record<string, Record<string, string>> };
 const mergeAugment = (a: Record<string, SizeTables>, b: Record<string, SizeTables>): Record<string, SizeTables> => {
   const out: Record<string, SizeTables> = { ...a };
@@ -43,14 +45,14 @@ const mergeEras = (a: Record<string, NewEra[]>, b: Record<string, NewEra[]>): Re
 };
 /** Batches 6a and 6b together: the settlement names of both. */
 /** Second pass (brief §12 §3): the 6b cultures' own fills, by culture and kind (trees, plants, birds, beasts, water). */
-export const TIER6B_FILLS: Record<string, Record<string, string[]>> = { ...(tier6b as unknown as { fills: Record<string, Record<string, string[]>> }).fills, ...(tier6c as unknown as { fills: Record<string, Record<string, string[]>> }).fills };
+export const TIER6B_FILLS: Record<string, Record<string, string[]>> = { ...(tier6b as unknown as { fills: Record<string, Record<string, string[]>> }).fills, ...(tier6c as unknown as { fills: Record<string, Record<string, string[]>> }).fills, ...(tier6d as unknown as { fills: Record<string, Record<string, string[]>> }).fills };
 export const TIER6A_DATA: Tier6a = {
   settlement: {
-    cultures: [...A.settlement.cultures, ...B.settlement.cultures, ...C.settlement.cultures],
-    sizes: { ...A.settlement.sizes, ...B.settlement.sizes, ...C.settlement.sizes },
-    newEras: mergeEras(mergeEras(A.settlement.newEras, B.settlement.newEras), C.settlement.newEras),
-    augmentSizes: mergeAugment(mergeAugment(A.settlement.augmentSizes, B.settlement.augmentSizes), C.settlement.augmentSizes),
-    labels: { ...A.settlement.labels, ...B.settlement.labels, ...C.settlement.labels },
-    eraMap: { ...A.settlement.eraMap, ...B.settlement.eraMap },
+    cultures: [...A.settlement.cultures, ...B.settlement.cultures, ...C.settlement.cultures, ...D.settlement.cultures],
+    sizes: { ...A.settlement.sizes, ...B.settlement.sizes, ...C.settlement.sizes, ...D.settlement.sizes },
+    newEras: mergeEras(mergeEras(mergeEras(A.settlement.newEras, B.settlement.newEras), C.settlement.newEras), D.settlement.newEras),
+    augmentSizes: mergeAugment(mergeAugment(mergeAugment(A.settlement.augmentSizes, B.settlement.augmentSizes), C.settlement.augmentSizes), D.settlement.augmentSizes),
+    labels: { ...A.settlement.labels, ...B.settlement.labels, ...C.settlement.labels, ...D.settlement.labels },
+    eraMap: { ...A.settlement.eraMap, ...B.settlement.eraMap, ...D.settlement.eraMap },
   },
 };

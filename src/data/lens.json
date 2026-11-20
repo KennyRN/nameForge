@@ -2528,6 +2528,73 @@
     ],
     "persian:interstellar": [
      "IS"
+    ],
+    "aztec:early-valley": [
+     "AN"
+    ],
+    "aztec:republic": [
+     "ST"
+    ],
+    "aztec:modern-mexico": [
+     "MO"
+    ],
+    "maya:postclassic": [
+     "MD"
+    ],
+    "maya:colonial-yucatan": [
+     "EM"
+    ],
+    "maya:henequen-and-chicle": [
+     "ST"
+    ],
+    "maya:modern-maya": [
+     "MO"
+    ],
+    "andean:inca": [
+     "AN",
+     "MD"
+    ],
+    "andean:viceroyalty": [
+     "EM"
+    ],
+    "andean:republic": [
+     "ST"
+    ],
+    "andean:modern": [
+     "MO"
+    ],
+    "andean:interstellar": [
+     "IS"
+    ],
+    "polynesian:voyaging": [
+     "AN"
+    ],
+    "polynesian:chiefdoms": [
+     "MD"
+    ],
+    "polynesian:mission": [
+     "EM"
+    ],
+    "polynesian:port-and-plantation": [
+     "ST"
+    ],
+    "polynesian:modern": [
+     "MO"
+    ],
+    "polynesian:interstellar": [
+     "IS"
+    ],
+    "american:colonies": [
+     "EM"
+    ],
+    "american:frontier-and-steam": [
+     "ST"
+    ],
+    "american:modern": [
+     "MO"
+    ],
+    "american:interstellar": [
+     "IS"
     ]
    },
    "ships": {
@@ -4268,7 +4335,12 @@
    "indian": 0.02,
    "chinese": 0.02,
    "japanese": 0.02,
-   "korean": 0.02
+   "korean": 0.02,
+   "aztec": 0.02,
+   "maya": 0.02,
+   "andean": 0.02,
+   "polynesian": 0.02,
+   "american": 0.02
   },
   "signatureMix": 0.4,
   "mixes": [

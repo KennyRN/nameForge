@@ -15,7 +15,7 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | inns and taverns | 147/13 | 73/15 | 97/15 | 73/15 | 73/15 | 68/4 | 57/15 | 54/15 | 60/16 | 54/10 | 30/10 | 54/10 | 54/10 | 36/4 | 30/10 | 59/16 | 54/10 | 54/10 | 40/8 | 56/14 | 30/10 | 30/10 | 15/8 | 30/10 | 30/10 | 32/10 | 31/13 | 31/12 | 31/12 | 32/14 | 43/15 | 67/10 | 53/10 | 61/10 | **5/3** | **4/3** | **1/2** | **1/2** | not offered |
 | buildings and landmarks | 145/22 | 71/22 | 95/22 | 71/22 | 71/23 | 66/12 | 57/15 | 54/14 | 60/15 | 57/18 | 30/10 | 57/18 | 57/18 | 39/12 | 30/10 | 79/22 | 57/18 | 57/18 | 41/14 | 57/22 | 30/10 | 30/10 | 14/6 | 30/10 | 30/10 | 41/10 | 33/15 | 31/12 | 32/11 | 31/14 | 56/17 | 76/14 | 71/15 | 73/14 | **8/4** | **6/6** | **0/3** | **1/2** | not offered |
 | monuments and statues | 146/17 | 73/18 | 97/18 | 73/18 | 73/18 | 69/8 | 58/15 | 54/14 | 60/14 | 36/14 | 30/10 | 36/14 | 36/14 | 18/8 | 30/10 | 38/20 | 36/14 | 36/14 | 20/11 | 37/18 | 30/10 | 30/10 | 13/7 | 30/10 | 30/10 | 13/7 | 33/17 | 31/14 | 30/12 | 30/13 | 31/15 | 33/16 | 31/13 | 33/13 | **0/2** | **1/3** | **0/0** | **0/0** | not offered |
-| settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | 230/116 | 225/93 | 280/108 | 245/111 | not offered | 205/111 | 141/160 | 230/103 | 215/97 | not offered | 112/148 | 315/102 | 295/86 | not offered | 340/120 | 295/121 | **0/105** | 355/176 | 167/89 | 266/105 | 215/114 | 350/145 | 225/148 | 278/130 | 273/103 | **0/77** | **0/53** | not offered | not offered | not offered |
+| settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | 230/116 | 225/93 | 280/108 | 245/111 | not offered | 205/111 | 141/160 | 230/103 | 215/97 | not offered | 112/148 | 315/102 | 295/86 | not offered | 340/120 | 295/121 | **0/105** | 355/176 | 167/89 | 266/105 | 215/114 | 350/145 | 225/148 | 278/130 | 273/103 | 420/182 | 530/192 | 265/186 | 265/194 | 260/137 |
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 49/10 | 50/10 | 47/10 | 50/10 | 15/4 | 47/10 | 48/12 | 49/10 | 49/10 | 15/4 | 45/12 | 45/10 | 51/10 | 15/7 | 46/10 | 50/10 | 31/9 | 57/14 | 60/12 | 51/12 | 57/15 | 48/12 | 83/15 | 83/13 | 82/15 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
 | money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 76/12 + profile | 66/10 + profile | 49/11 | 52/11 | 44/6 + profile | 50/10 | 90/12 | 50/11 | 48/11 | 47/6 | 85/13 | 44/10 | 41/10 | 33/5 + profile | 40/10 | 41/10 | 46/4 | 52/10 + profile | 51/10 + profile | 60/10 + profile | 62/10 + profile | 63/11 | 74/11 | 60/11 + profile | 58/11 + profile | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
@@ -103,7 +103,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | inns and taverns | 316 | 326 | 310 | 549 | 211 | 26 | 26 |
 | buildings and landmarks | 321 | 337 | 317 | 560 | 216 | 35 | 35 |
 | monuments and statues | 400 | 392 | 337 | 530 | 226 | 25 | 23 |
-| settlement names | 519 | 1239 | 836 | 960 | 974 | **0** | 831 |
+| settlement names | 624 | 1355 | 988 | 1141 | 1168 | **0** | 885 |
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 | events and eras | 190 | 266 | 267 | 210 | 217 | 28 | 31 |
 | money and coins | 323 | 476 | 495 | 435 | 374 | 165 | 168 |
@@ -971,7 +971,7 @@ The live lens cultures each module doesn't offer, and the keys it offers that ar
 - **inns and taverns**: doesn't offer American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **buildings and landmarks**: doesn't offer American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **monuments and statues**: doesn't offer American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
-- **settlement names**: doesn't offer Iberian, Greek and Byzantine, Turkic and Mongol steppe, Andean, Polynesian, American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
+- **settlement names**: doesn't offer Iberian, Greek and Byzantine, Turkic and Mongol steppe, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **events and eras**: doesn't offer American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **money and coins**: doesn't offer Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
 - **calendars and festivals**: doesn't offer American, Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea.
@@ -1055,11 +1055,11 @@ Distinct entries across the reported modules; a shared pool counts once.
 | Chinese | 2202 | 657 |
 | Japanese | 2177 | 609 |
 | Korean | 2127 | 576 |
-| Aztec | 139 | 105 |
-| Maya | 82 | 82 |
-| Andean | 36 | 10 |
-| Polynesian | 43 | 11 |
-| American | 44 | 2 |
+| Aztec | 559 | 210 |
+| Maya | 612 | 221 |
+| Andean | 301 | 196 |
+| Polynesian | 308 | 205 |
+| American | 304 | 139 |
 | Ottoman & Barbary | 0 | 0 |
 | Swahili & Omani | 0 | 0 |
 | Malay & Indonesian | 0 | 0 |
@@ -1079,13 +1079,13 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 11035 |
-| MD medieval | 14475 |
-| EM early modern | 15728 |
-| ST steam age | 15128 |
-| MO modern | 13546 |
+| AN ancient | 11140 |
+| MD medieval | 14591 |
+| EM early modern | 15880 |
+| ST steam age | 15309 |
+| MO modern | 13740 |
 | NF near future | 819 |
-| IS interstellar | 1771 |
+| IS interstellar | 1825 |
 
 | style | words | shapes |
 | --- | --- | --- |
@@ -1150,7 +1150,7 @@ People lists against brief §3.1 (core 60/60/60/15/15/24, second tier 30/30/30/8
 | maya | historic, modern | 38/37 | 32 | 8/8 | 13 | 8/8 |
 | andean | historic, modern | 33/33 | 35 | 8/8 | 14 | 8/8 |
 | polynesian | historic, modern | 34/34 | – | 8/8 | 12 | 8/8 |
-| american | historic, modern | 32/30 | 42 | 8/8 | 12 | 8/8 |
+| american | historic, modern | 35/34 | 42 | 8/8 | 12 | 8/8 |
 | general | – | – | – | – | – | 30/30 |
 
 Creature lists: 39 cultures.
