@@ -5,7 +5,7 @@ const BOOK_Q = "Black|Red|White|Great|Little|Lost|Secret|Holy|Long|Golden";
 const METALS = "Silver|Gold|Copper|Bronze|Billon|Lead|Pewter|Tin|Iron|Nickel";
 export const CW5D = {
   indian: {
-    moneyNames: `Silver Rupee@AN-EM|Paisa@AN-EM|Anna@AN-EM|Gold Mohur@AN-EM|Pagoda@AN-EM|Fanam|Small Copper|Rupee|Copper Piece|Cowrie;${METALS};Elephant|Lotus|Tiger|Peacock|Star|Sun|Temple|Fort|Crescent|Sword`,
+    moneyNames: `Silver Rupee@AN-EM|Paisa@AN-EM|Anna@AN-EM|Gold Mohur@AN-EM|Pagoda@AN-EM|Fanam|Small Copper|Rupee|Copper Piece|Cowrie;${METALS};Elephant|Lotus|Tiger|Peacock|Star|Sun|Temple|Fort|Crescent|Banyan`,
     eventNames: "War|Revolt|Siege|Campaign|Conquest|Rising|Truce|Peace|Raid|Reign;Famine|Plague|Flood|Drought|Fire|Cyclone|Sickness|Failed Monsoon|Failed Harvest|Earthquake;Faith|Empire|Raj|Frontier|Town|Peasants|Weavers|Cotton|Throne|Reform",
     calendarNames: "Monsoon|Dry Heat|Sowing|Blossom|Harvest|Cool Dew|Fog|Mist|Gale|Rain;Lamp Night|Procession|Spring Festival|Colour Festival|Harvest Thanks|Kite Feast|Pilgrimage Feast|Midsummer|Lantern Night|Market Fair;Harvest|Hunter's|Monsoon|Mango|Rice|Lotus|Jasmine|Cotton|Spice|Banyan",
     skyNames: "Seven Sages|Water Pot|Great Elephant|Archer|Swan|Lotus|Crown|Plough|Wheel|Bridge;Tiger|Elephant|Peacock|Stag|Serpent|Bear|Camel|Lion|Parrot|Bull;Lamp|Beacon|Caravan Star|Pole Star|Candle|Morning Star|Lantern|Torch|Spark|Banner",
@@ -15,7 +15,7 @@ export const CW5D = {
     deityNames: `Sky Father|Earth Mother|Elephant Lord|Tiger Mother|Mountain Smith|River Keeper|Hearth Lady|Wind Rider|Sun Warden|Lotus Lord;River|Wind|Sky|Hearth|Elephant|Monsoon|Mountain|Sun|Forest|Lotus;${ADJ_D}`,
   },
   chinese: {
-    moneyNames: `Cash@AN-EM|Tael@AN-EM|String of Cash@AN-EM|Silver Ingot@AN-EM|Copper Cash@AN-EM|Paper Note|Yuan|Fen|Jiao|Mace;Silver|Gold|Copper|Bronze|Iron|Paper|Jade|Tin|Lead|Nickel;Dragon|Phoenix|Tiger|Crane|Star|Sun|Pagoda|Wall|Lotus|Coin`,
+    moneyNames: `Cash@AN-EM|Tael@AN-EM|String of Cash@AN-EM|Silver Ingot@AN-EM|Copper Cash@AN-EM|Paper Note|Yuan|Fen|Jiao|Mace;Silver|Gold|Copper|Bronze|Iron|Paper|Jade|Tin|Lead|Nickel;Dragon|Phoenix|Tiger|Crane|Star|Sun|Pagoda|Peony|Lotus|Plum`,
     eventNames: "War|Revolt|Siege|Campaign|Conquest|Rebellion|Truce|Peace|Raid|Reign;Famine|Plague|Flood|Drought|Fire|Typhoon|Sickness|Hard Winter|Failed Harvest|Earthquake;Faith|Dynasty|Mandate|Frontier|Town|Peasants|Salt|Tea|Throne|Reform",
     calendarNames: "Frost|Thaw|Sowing|Blossom|Rain|Harvest|Cold Dew|Mist|Gale|Snow;Lantern Night|Procession|Spring Festival|Ancestors' Feast|Harvest Thanks|Dragon Boat Feast|Pilgrimage Feast|Midsummer|Moon Night|Market Fair;Harvest|Hunter's|Dragon|Peach|Rice|Plum|Lotus|Silk|Tea|Bamboo",
     skyNames: "Northern Dipper|Water Jar|Great Dragon|Archer|Swan|Lotus|Crown|Plough|Wheel|Bridge;Tiger|Dragon|Crane|Stag|Tortoise|Bear|Phoenix|Fox|Magpie|Ox;Lamp|Beacon|Silk Road Star|Pole Star|Candle|Morning Star|Lantern|Torch|Spark|Banner",
@@ -35,7 +35,7 @@ export const CW5D = {
     deityNames: `Sky Father|Earth Mother|Fox Lord|Crane Mother|Mountain Smith|River Keeper|Hearth Lady|Wind Rider|Sun Warden|Rice Lord;River|Wind|Sky|Hearth|Fox|Rain|Mountain|Sun|Rice|Sea;${ADJ_D}`,
   },
   korean: {
-    moneyNames: `Brass Coin@AN-EM|Silver Bottle@AN-EM|String of Coins@AN-EM|Large Coin@AN-EM|Small Coin@AN-EM|Won|Jeon|Hwan|Paper Note|Ingot;${METALS};Tiger|Dragon|Crane|Pine|Star|Sun|Pavilion|Wall|Lotus|Magpie`,
+    moneyNames: `Coin@AN-EM|Bottle@AN-EM|String@AN-EM|Piece@AN-EM|Token@AN-EM|Won|Jeon|Hwan|Paper Note|Ingot;${METALS};Tiger|Dragon|Crane|Pine|Star|Sun|Pavilion|Plum|Lotus|Magpie`,
     eventNames: "War|Revolt|Siege|Campaign|Conquest|Rebellion|Truce|Peace|Raid|Reign;Famine|Plague|Flood|Drought|Fire|Typhoon|Sickness|Hard Winter|Failed Harvest|Earthquake;Faith|Dynasty|Confucians|Frontier|Town|Peasants|Rice|Ginseng|Throne|Reform",
     calendarNames: "Frost|Thaw|Rice Planting|Blossom|Rain|Harvest|Cold Dew|Mist|Gale|Snow;Lantern Night|Procession|Spring Festival|Ancestors' Feast|Harvest Thanks|Swing Feast|Pilgrimage Feast|Midsummer|Full Moon Night|Market Fair;Harvest|Hunter's|Tiger|Azalea|Rice|Plum|Maple|Pine|Tea|Bamboo",
     skyNames: "Great Gourd|Water Pot|Great Tiger|Archer|Swan|Lotus|Crown|Plough|Wheel|Bridge;Tiger|Magpie|Crane|Stag|Tortoise|Bear|Dragon|Boar|Heron|Ox;Lamp|Beacon|Fortress Star|Pole Star|Candle|Morning Star|Lantern|Torch|Spark|Banner",

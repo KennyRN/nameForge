@@ -28,7 +28,7 @@ for (const cls of ["deity"]) for (const frames of Object.values(FRAMES[cls] ?? {
   for (const f of frames) {
     if (!/ of \{N1\}(?![\w])/.test(f[0])) continue;
     let p = f[0].replace(/ of \{N1\}(?![\w])/, " of the {N1}");
-    if (patterns.has(p)) p = f[0].replace(/ of \{N1\}(?![\w])/, " beside the {N1}");
+    if (patterns.has(p)) p = f[0].replace(/ of \{N1\}(?![\w])/, " of the {A} {N1}");
     patterns.delete(f[0]); patterns.add(p); f[0] = p;
   }
 }

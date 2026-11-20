@@ -231,9 +231,11 @@ export function fillSlots(name: string, ctx: FillContext): string {
       const tries = seen && seen.size > 0 ? BATCH_AGAIN : guarded ? PLACE_AGAIN : AGAIN;
       // Brief 5b §12.3: a name takes at most one place fill; a second is a single word.
       const placeBefore = place && placeDone > 0;
+      // Brief 6d A3: where a culture's personal name is a common English word or a famous place, a possessive fill ("Park's Tea House", "Fuji's Eating House") takes another.
+      const possessive = POSSESSIVE_GUARD.has(ctx.culture) && /^['’]s\b/.test(name.slice(offset + whole.length));
       for (let attempt = 0; attempt < tries; attempt++) {
         fill = resolver({ label: key, source: info.source, slot, culture: ctx.culture, era, period, region: ctx.region, biome: ctx.biome, mode: ctx.mode, rng: ctx.rng, sex: ctx.sex, ...(plain ? { plain } : {}), ...(place ? { rest: rest.replace(/\[[^\]]*\]/g, " ").replace(/\s+/g, " ").trim(), ...(placeBefore ? { placeBefore } : {}), ...(ctx.settlementPlaces ? { settlementPlaces: true } : {}) } : {}), avoid });
-        if (fill === undefined || (!avoid.has(fill) && !/\[/.test(fill) && !(guarded && repeatsGeneric(fill, rest)))) break;
+        if (fill === undefined || (!avoid.has(fill) && !/\[/.test(fill) && !(guarded && repeatsGeneric(fill, rest)) && !(possessive && READS_AS_WORD.has(fill.toLowerCase())))) break;
       }
       if (fill === undefined) return whole;
       // Brief 6a Part A §2: a fill that is itself a drawn name with a bracket of its own (a realm "of [dynasty]") has that bracket filled once; one that still has a bracket leaves the label as it was.
@@ -275,3 +277,7 @@ function completeTitles(text: string, ctx: FillContext, era: FillEra, period: Fi
     return given ? `${title} ${given}` : whole;
   });
 }
+
+/** Brief 6d A3: the cultures whose personal names read as English words or famous places in a possessive ("Fuji\'s Eating House"), and those names. */
+const POSSESSIVE_GUARD = new Set(["indian", "chinese", "japanese", "korean"]);
+const READS_AS_WORD = new Set(["man", "park", "moon", "song", "sun", "son", "fuji", "hong"]);

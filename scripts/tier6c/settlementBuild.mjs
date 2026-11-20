@@ -10,7 +10,9 @@ const labels = {
 };
 const north5bLabels = JSON.parse(readFileSync(new URL("../../src/data/north5b.json", import.meta.url), "utf8")).settlement.labels;
 /** Famous figures never name a place. */
-const pick = (culture, key, n) => people[culture].historic[key].filter((e) => !e[2]).slice(0, n).map((e) => e[0]);
+/** Brief 6d A3: a personal name that reads as an English word or a famous place is not a place's founder ("Fuji's Eating House", "Park's Tea House"). */
+const READS_AS_WORD = new Set(["man", "park", "moon", "song", "sun", "son", "fuji", "hong"]);
+const pick = (culture, key, n) => people[culture].historic[key].filter((e) => !e[2] && !READS_AS_WORD.has(e[0].toLowerCase())).slice(0, n).map((e) => e[0]);
 const withGreat = (codes) => (codes.includes("c") && !codes.includes("g") ? `${codes}g` : codes);
 const parse = (s) => s.split("|").map((x) => x.trim()).filter(Boolean);
 const listsOf = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, parse(v)]));

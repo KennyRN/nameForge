@@ -1111,7 +1111,7 @@
           "guide": "Ahmad's Abode, Jai's City, Fort of Chandi, the River Market, McLeod's Market, Cantonment.",
           "lists": {
             "founder": ["Ahmad", "Haidar", "Murshid", "Faiz", "Aurangzeb", "Akbar", "Jahangir", "Tipu", "Firoz", "Ghazi", "Shahjahan", "Bahadur"],
-            "raja": ["Jai", "Udai", "Jodha", "Bika", "Raghu", "Man", "Ajit", "Sawai", "Bhoj", "Hari", "Kesari"],
+            "raja": ["Jai", "Udai", "Jodha", "Bika", "Raghu", "Ajit", "Sawai", "Bhoj", "Hari", "Kesari"],
             "abode": ["Wealth", "Victory", "Faith", "Plenty", "Peace"],
             "market": ["River", "Grain", "Salt", "Silk", "Cloth", "Spice", "Horse", "Tuesday", "New", "Old"],
             "surname": ["McLeod", "Fraser", "Daly", "Clive", "Abbott", "Lyall", "Dalhousie", "Hastings", "Wellesley", "Munro", "Elphinstone"],
@@ -1144,7 +1144,7 @@
             "sage": ["Vasishtha", "Vishvamitra", "Agastya", "Bharadvaja", "Valmiki", "Gautama", "Kanva", "Atri", "Bhrigu", "Kapila"],
             "plant": ["Basil", "Lotus", "Sandalwood", "Banyan", "Mango", "Kadamba", "Ashoka", "Teak", "Bamboo"],
             "founder": ["Ahmad", "Haidar", "Murshid", "Faiz", "Aurangzeb", "Akbar", "Jahangir", "Tipu", "Firoz", "Ghazi", "Shahjahan", "Bahadur"],
-            "raja": ["Jai", "Udai", "Jodha", "Bika", "Raghu", "Man", "Ajit", "Sawai", "Bhoj", "Hari", "Kesari"]
+            "raja": ["Jai", "Udai", "Jodha", "Bika", "Raghu", "Ajit", "Sawai", "Bhoj", "Hari", "Kesari"]
           },
           "templates": [
             ["{god:pos} City", 3],

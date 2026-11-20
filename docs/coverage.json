@@ -3501,7 +3501,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2519,
+   "rowCount": 2518,
    "cultures": {
     "general": {
      "words": 0,
@@ -3840,7 +3840,7 @@
      "below": false
     },
     "korean": {
-     "words": 59,
+     "words": 58,
      "shapes": 11,
      "target": {
       "words": 12,
@@ -3914,8 +3914,8 @@
    },
    "eras": {
     "AN": 323,
-    "MD": 477,
-    "EM": 496,
+    "MD": 476,
+    "EM": 495,
     "ST": 435,
     "MO": 374,
     "NF": 165,
@@ -24292,7 +24292,7 @@
     "shapes": 609
    },
    "korean": {
-    "words": 2128,
+    "words": 2127,
     "shapes": 576
    },
    "maya": {
@@ -24374,8 +24374,8 @@
   },
   "eras": {
    "AN": 11035,
-   "MD": 14476,
-   "EM": 15729,
+   "MD": 14475,
+   "EM": 15728,
    "ST": 15128,
    "MO": 13546,
    "NF": 819,

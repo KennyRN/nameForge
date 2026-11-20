@@ -18,7 +18,7 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | 230/116 | 225/93 | 280/108 | 245/111 | not offered | 205/111 | 141/160 | 230/103 | 215/97 | not offered | 112/148 | 315/102 | 295/86 | not offered | 340/120 | 295/121 | **0/105** | 355/176 | 167/89 | 266/105 | 215/114 | 350/145 | 225/148 | 278/130 | 273/103 | **0/77** | **0/53** | not offered | not offered | not offered |
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
 | events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 49/10 | 50/10 | 47/10 | 50/10 | 15/4 | 47/10 | 48/12 | 49/10 | 49/10 | 15/4 | 45/12 | 45/10 | 51/10 | 15/7 | 46/10 | 50/10 | 31/9 | 57/14 | 60/12 | 51/12 | 57/15 | 48/12 | 83/15 | 83/13 | 82/15 | **10/3** | **10/3** | **0/0** | **0/0** | not offered |
-| money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 76/12 + profile | 66/10 + profile | 49/11 | 52/11 | 44/6 + profile | 50/10 | 90/12 | 50/11 | 48/11 | 47/6 | 85/13 | 44/10 | 41/10 | 33/5 + profile | 40/10 | 41/10 | 46/4 | 52/10 + profile | 51/10 + profile | 60/10 + profile | 62/10 + profile | 63/11 | 74/11 | 60/11 + profile | 59/11 + profile | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
+| money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 76/12 + profile | 66/10 + profile | 49/11 | 52/11 | 44/6 + profile | 50/10 | 90/12 | 50/11 | 48/11 | 47/6 | 85/13 | 44/10 | 41/10 | 33/5 + profile | 40/10 | 41/10 | 46/4 | 52/10 + profile | 51/10 + profile | 60/10 + profile | 62/10 + profile | 63/11 | 74/11 | 60/11 + profile | 58/11 + profile | **17/0 + profile** | **12/0 + profile** | excluded | excluded | **44/2 + profile** |
 | calendars and festivals | 98/12 | 88/11 | 88/11 | 85/11 | 84/11 | 35/5 | 75/11 | 106/11 | 55/10 | 52/10 | 52/10 | 56/10 | 46/10 | 15/4 | 55/10 | 88/13 | 55/10 | 43/10 | 40/5 | 87/10 | 45/10 | 49/10 | 25/5 | 47/10 | 46/10 | 25/4 | 64/10 | 56/10 | 58/12 | 54/12 | 53/10 | 112/11 | 117/11 | 103/11 | **37/3** | **2/3** | excluded | excluded | not offered |
 | sky lore | 62/10 | 49/10 | 49/10 | 51/10 | 49/10 | 18/4 | 48/10 | 53/10 | 44/10 | 43/10 | 43/10 | 44/10 | 40/10 | 15/4 | 41/10 | 72/10 | 41/10 | 43/10 | 47/4 | 44/10 | 43/10 | 46/10 | 22/4 | 41/10 | 43/10 | 21/4 | 46/10 | 43/10 | 46/10 | 41/10 | 44/10 | 54/10 | 51/10 | 49/10 | **7/0** | **5/0** | excluded | excluded | not offered |
 | mountains | 64/118 + profile | 34/36 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 33/14 + profile | 30/14 | 30/22 | 34/10 | excluded | 34/10 | 34/10 | 16/10 | 30/10 | 34/10 + profile | 34/10 | 34/10 | 18/10 + profile | 35/10 + profile | 30/10 | 30/10 | 13/10 + profile | 30/10 | 30/10 | 13/10 + profile | 33/10 + profile | 30/10 + profile | 32/10 + profile | 31/10 + profile | 35/12 + profile | 36/12 + profile | 33/12 + profile | 34/12 + profile | **5/0 + profile** | **3/0 + profile** | **4/0 + profile** | **2/0 + profile** | not offered |
@@ -106,7 +106,7 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | settlement names | 519 | 1239 | 836 | 960 | 974 | **0** | 831 |
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 | events and eras | 190 | 266 | 267 | 210 | 217 | 28 | 31 |
-| money and coins | 323 | 477 | 496 | 435 | 374 | 165 | 168 |
+| money and coins | 323 | 476 | 495 | 435 | 374 | 165 | 168 |
 | calendars and festivals | 345 | 374 | 337 | 196 | 203 | **4** | **4** |
 | sky lore | 188 | 188 | 188 | 183 | 259 | **2** | **2** |
 | mountains (land) | 289 | 277 | 467 | 467 | 467 | **6** | **6** |
@@ -1054,7 +1054,7 @@ Distinct entries across the reported modules; a shared pool counts once.
 | Indian | 2124 | 600 |
 | Chinese | 2202 | 657 |
 | Japanese | 2177 | 609 |
-| Korean | 2128 | 576 |
+| Korean | 2127 | 576 |
 | Aztec | 139 | 105 |
 | Maya | 82 | 82 |
 | Andean | 36 | 10 |
@@ -1080,8 +1080,8 @@ Distinct entries across the reported modules; a shared pool counts once.
 | era | entries |
 | --- | --- |
 | AN ancient | 11035 |
-| MD medieval | 14476 |
-| EM early modern | 15729 |
+| MD medieval | 14475 |
+| EM early modern | 15728 |
 | ST steam age | 15128 |
 | MO modern | 13546 |
 | NF near future | 819 |

@@ -1,6 +1,5 @@
 // Generates docs/second-tier-6c.md: the four cultures' entries by module, culture, kind and era, the East Asian shared-word lists, and the notes on the exemptions.
 import fs from "node:fs";
-import { execSync } from "node:child_process";
 import { NOUNS_6C } from "./tier6c/north5a/index.mjs";
 import { INDIAN, CHINESE, JAPANESE, KOREAN } from "./tier6c/north5b-content.mjs";
 import { CW } from "./tier6c/north5c-words.mjs";
@@ -64,16 +63,17 @@ for (const c of CULTURES) {
 P();
 P("## East Asian shared words");
 P();
-P("A word two of the three East Asian cultures share is listed only where it is genuinely common to both (the shared solar terms, festivals, plants and animals, boats and Buddhist words of the Chinese-character cultures). Ordinary English words that any culture's list can hold (archer, baker, bank, bridge) are not counted: a word is *ordinary* when it also stands in the lists of the cultures outside the batch (the data at commit ccfa146, before batch 6c) or in the Indian lists. The distinctness test measures the names; this lists the words.");
-const world = new Set();
-const addW = (s) => { for (const part of s.split(/[|;]/)) { const w = part.replace(/@.*$/, "").trim().toLowerCase(); if (w && w.length < 40) world.add(w); } };
-const walkJ = (x) => { if (typeof x === "string") addW(x); else if (Array.isArray(x)) x.forEach(walkJ); else if (x && typeof x === "object") Object.values(x).forEach(walkJ); };
-for (const f of ["north5a", "north5b", "north5c", "north5d", "tier6b", "tier6a"]) { try { walkJ(JSON.parse(execSync(`git show ccfa146:src/data/${f}.json`, { maxBuffer: 1e9 }).toString())); } catch {} }
+P("Brief 6d A3 definition: a word is *ordinary* only if it is on this fixed list of plain English words (colours, numbers, directions, sizes, ages and the function words), which are not counted. Every other word two of the three East Asian cultures share is listed, whatever its kind.");
+const ORDINARY = new Set(`black white red green blue yellow grey gray brown golden gold silver purple pink orange dark bright pale light
+one two three four five six seven eight nine ten eleven twelve thirteen hundred thousand first second third half
+north south east west northern southern eastern western upper lower central middle inner outer far near
+great little small big large long short high low wide narrow broad deep tall old new young elder eldest ancient
+of the and in on at by to from for with a an beyond beside above below under over new old city town village`.split(/\s+/));
 for (const [a, b] of [["chinese", "japanese"], ["chinese", "korean"], ["japanese", "korean"]]) {
   const both = [...all[a]].filter((w) => all[b].has(w));
-  const genuine = both.filter((w) => !world.has(w) && !all.indian.has(w)).sort();
-  P(); P(`### ${LABEL[a]} and ${LABEL[b]}: ${genuine.length} genuinely common words (${both.length - genuine.length} ordinary words not counted)`); P();
-  P(genuine.join(", ") || "none");
+  const shared = both.filter((w) => !ORDINARY.has(w)).sort();
+  P(); P(`### ${LABEL[a]} and ${LABEL[b]}: ${shared.length} shared words (${both.length - shared.length} ordinary words not counted)`); P();
+  P(shared.join(", ") || "none");
 }
 fs.writeFileSync(new URL("../docs/second-tier-6c.md", import.meta.url), out.join("\n") + "\n");
 console.log("wrote docs/second-tier-6c.md", out.length, "lines");

@@ -39,7 +39,7 @@ for (const cls of ["realm","family"]) for (const frames of Object.values(FRAMES[
   for (const f of frames) {
     if (!/^(The )?\{N0\} of \{N1\}$/.test(f[0])) continue;
     let p = f[0].replace("of {N1}", "of the {N1}");
-    if (patterns.has(p)) p = f[0].replace("of {N1}", "beside the {N1}");
+    if (patterns.has(p)) p = f[0].replace("of {N1}", "of the {A} {N1}");
     patterns.delete(f[0]); patterns.add(p); f[0] = p;
   }
 }

@@ -19,6 +19,8 @@ const FORMS = "Kingdom|Empire|Province|Sultanate|Emirate|Caliphate|Khanate|Khaga
 const ADJECTIVES = "Generous|Swift|Noble|Wise|Bold|Brave|Great|Strong|Fair|Just|Kind|Good|Wild|Fierce|Mighty|Holy|Proud|Gentle|Humble|Clever|Cunning|Valiant|Magnificent|Fearless|Merciful|Bright|Lucky|Old|Young|Pious|Victorious";
 
 const PATTERNS = {
+  // Brief 6d A3: "beside" is lower case in the middle of a name and stands only with a place or feature someone can stand beside, never with wind, sun, hearth or heartland ("Mountain Smith Beside the Wind", "Domain beside the Coast").
+  beside: { modules: null, re: /(?:\bBeside\b|\bbeside (?:the )?(?:[A-Z][a-z\x27-]+ )*(?:Wind|Sun|Moon|Hearth|Heartland|Sky|Storm|Harvest|Night|Dusk|Dawn|Song|Mist|Light|Fire|Winds|Silence)\b)/ },
   // "Spring Keeper of Lake", "Well Lady of Sky", "Warden of Forest", "The Sultanate of Coast", "Nawab of Mountain of Rashid".
   article: { modules: ["deities", "realms", "titles", "epithets", "familyNames"], re: new RegExp(`\\b(?:of|to|in|at|by|from) (?:(?:${COMMON})(?= of\\b| and\\b|,|$)|(?:${PLACE_NOUN}) of )`) },
   // "SunMare Lady", "HerdsEarth Mother", "MountainSky Father" (a Mac or Mc surname is one word by its own rule).

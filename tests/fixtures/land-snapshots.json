@@ -7553,11 +7553,6 @@
    "template": "Fort of {god}"
   },
   {
-   "text": "Jodha's City",
-   "etymology": "[raja: Jodha]'s city",
-   "template": "{raja:pos} City"
-  },
-  {
    "text": "Akbar's Abode",
    "etymology": "[founder: Akbar]'s abode",
    "template": "{founder:pos} Abode"
@@ -7566,6 +7561,11 @@
    "text": "Tuesday Market",
    "etymology": "[market: Tuesday] market",
    "template": "{market} Market"
+  },
+  {
+   "text": "Jodha's City",
+   "etymology": "[raja: Jodha]'s city",
+   "template": "{raja:pos} City"
   },
   {
    "text": "Dalhousie's Market",
@@ -7593,8 +7593,8 @@
    "template": "Fort of {god}"
   },
   {
-   "text": "Sawai's City",
-   "etymology": "[raja: Sawai]'s city",
+   "text": "Bhoj's City",
+   "etymology": "[raja: Bhoj]'s city",
    "template": "{raja:pos} City"
   },
   {
