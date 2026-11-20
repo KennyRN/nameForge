@@ -6,7 +6,7 @@
 import vocabData from "../data/settlement-vocab.json";
 import { CELTIC_MIX, CELTIC_MIX_WEIGHT, NORTH } from "../northData";
 import { NORTH5B } from "../northData5b";
-import { FILL_KIND, FILL_POOLS, MIX_HALF_WEIGHT, MIX_HALVES, OWN_FILL_CULTURES } from "../tier6a";
+import { FILL_KIND, FILL_POOLS, splitFill, MIX_HALF_WEIGHT, MIX_HALVES, OWN_FILL_CULTURES } from "../tier6a";
 import { TIER6B_FILLS } from "../tier6aData";
 import { creaturesFor, type Habitat } from "../creatures";
 import { inCultureGroup, LENS_REGIONS, regionsOfCulture } from "../lens";
@@ -133,6 +133,8 @@ export interface VocabWhere {
   themes?: Record<string, number>;
   /** Stellar brief §2.4: a space scale; entries tagged for other scales are left out. */
   scale?: ScaleChoice;
+  /** Brief 6d A1: the biome code of the land or water module asking (see MODULE_BIOME); a fill tagged for other biomes only is left out. */
+  biome?: string;
 }
 
 /** Streets brief §3.1: the region a culture reads entries for (British cultures only). */
@@ -217,7 +219,12 @@ export function poolEntries(vocab: Vocabulary, name: string, where: VocabWhere):
   const kind = FILL_KIND[name];
   const halvesOf = MIX_HALVES[where.culture];
   const ownWords = OWN_FILL_CULTURES.includes(where.culture) && FILL_POOLS.includes(name) && !pool.entries.some((e) => e.h === true) ? (halvesOf ? halvesOf.flatMap((h) => TIER6B_FILLS[h]?.[kind] ?? []) : TIER6B_FILLS[where.culture]?.[kind] ?? []) : [];
-  if (ownWords.length > 0) for (const w of ownWords) add({ w }, 1);
+  if (ownWords.length > 0) {
+    const fits = (raw: string) => { const { biomes } = splitFill(raw); return !biomes || !where.biome || biomes.includes(where.biome); };
+    // A culture with nothing for this biome reads all its words rather than none.
+    const drawn = ownWords.filter(fits);
+    for (const raw of drawn.length > 0 ? drawn : ownWords) add({ w: splitFill(raw).w }, 1);
+  }
   else for (const e of pool.entries) if (entryAllowed(e, where)) add(e, (e.x ?? 1) * regionX(e, where) * themeX(e, where));
   // Northern Europe brief 5a §3.2: Celtic also draws each nation's signature words at a quarter weight.
   if (where.culture === "celtic") {

@@ -20,7 +20,7 @@ export function buildCulture(def) {
   for (const k of LAND) {
     if (k === "desert" && def.noDesert) { s++; continue; }
     const bases = BASE[k];
-    out.nouns.land[k] = bases.map((b, L) => list(def.mods, b, s * 3 + L));
+    out.nouns.land[k] = bases.map((b, L) => list(k === "desert" && def.desertMods ? def.desertMods : def.mods, b, s * 3 + L));
     s++;
   }
   for (const k of WATER) {

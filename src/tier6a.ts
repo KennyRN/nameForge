@@ -20,6 +20,10 @@ export const TIER6A_KEYS: readonly string[] = [...TIER6A_CULTURES, ...TIER6B_OWN
 export const OWN_FILL_CULTURES: readonly string[] = ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean"];
 /** The kind of fill each shared pool holds, for the 6b cultures' own lists. */
 export const FILL_KIND: Readonly<Record<string, string>> = { wildTree: "trees", streetTree: "trees", wildFuse: "trees", lakeFuse: "trees", wetFlora: "plants", thingFlower: "plants", castleBird: "birds", mtBeast: "beasts", dsrBeast: "beasts", mrBeast: "beasts", wetBeast: "beasts", grsBeast: "beasts", fordBeast: "beasts", figureBeast: "beasts", warAnimal: "beasts", mythBeast: "beasts", fstBeast: "beasts", cultureDivineAnimal: "beasts", seaCreature: "water", lakeCreature: "water" };
+/** Brief 6d A1: the biome code of each land and water module (d desert, f forest, g grassland, w wetland, m moor, t mountain, c coast, s sea, a farmland); the others have none and read every fill. */
+export const MODULE_BIOME: Readonly<Record<string, string>> = { mountainNames: "t", forestNames: "f", desertNames: "d", moorNames: "m", wetlandNames: "w", grasslandNames: "g", farmland: "a", seasLakes: "s", coastsIslands: "c", seaCharts: "s" };
+/** A fill word with its biome tags: "Saxaul@d" is drawn only in a desert module; an untagged word is generic. */
+export const splitFill = (entry: string): { w: string; biomes?: string } => { const i = entry.lastIndexOf("@"); return i < 0 ? { w: entry } : { w: entry.slice(0, i), biomes: entry.slice(i + 1) }; };
 export const FILL_POOLS: readonly string[] = ["wildTree", "streetTree", "wildFuse", "lakeFuse", "wetFlora", "thingFlower", "castleBird", "mtBeast", "dsrBeast", "mrBeast", "wetBeast", "grsBeast", "fordBeast", "figureBeast", "warAnimal", "mythBeast", "fstBeast", "cultureDivineAnimal", "seaCreature", "lakeCreature"];
 
 /** Second pass (brief §12 §3): a 6b culture's names take no English rank or administrative word (a duke, a bishop, a shire, a hundred, a parish). */

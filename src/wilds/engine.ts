@@ -6,7 +6,7 @@
 // fixtures can't move. No Obsidian imports.
 
 import { engineCulture, ENGINE_ALIAS, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
-import { hasEnglishRank, OWN_FILL_CULTURES } from "../tier6a";
+import { hasEnglishRank, MODULE_BIOME, OWN_FILL_CULTURES } from "../tier6a";
 import { isRealTownName } from "../realPlaces";
 import { balanceRegion, balanceSignature, weighLegacyKinds, regionSeed, regionWeighted, combeFor, freshNouns, mergeRegionColumns, NORTH, noteNoun, shapesOf, isOwnSig } from "../northData";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
@@ -514,7 +514,7 @@ function vocabPool(ctx: Ctx, pool: string): [VocabEntry, number][] {
 }
 
 function vocabPoolAll(ctx: Ctx, pool: string): [VocabEntry, number][] {
-  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic })
+  return poolEntries(ctx.vocab, pool, { culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, biome: MODULE_BIOME[ctx.module] })
     .filter(([e]) => !(ctx.culture.sensitive && LIGHT_OR_GRIM(e.t)))
     .map(([e, w]): [VocabEntry, number] => [e, w * toneFactor(e.t ?? [], ctx.tone) * regionMult(ctx, e.rt) * biomeMult(ctx, e.bt)])
     .filter(([, n]) => n > 0);

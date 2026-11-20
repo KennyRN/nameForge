@@ -3,6 +3,8 @@ import { buildCulture } from "./build.mjs";
 export default buildCulture({
   key: "chinese", label: "Chinese", style: "first",
   mods: { A: ["Jade", "Willow", "Pagoda", "Imperial", "Granary", "Lantern"], B: ["Tea", "Silk", "Canal", "Treaty", "Junk", "Scholars'"], C: ["Railway", "Commune", "Factory", "Tourist"], F: ["Immortal", "Fox", "Dragon King's", "Kylin"] },
+  // Brief 6d A1: the modifiers a desert module takes (no granaries or lanterns on the dunes).
+  desertMods: { A: ["Yellow", "Camel", "Stony", "Salt", "Singing", "Windblown"], B: ["Caravan", "Oasis", "Frontier", "Garrison", "Tribute", "Beacon"], C: ["Railway", "Oilfield", "Border", "Highway"], F: ["Immortal", "Fox", "Dragon King's", "Kylin"] },
   land: {
     B: "Tea|Silk|Jade|Porcelain|Rice|Bamboo|Lacquer|Salt|Paper|Ink",
     C: "Dragon King|Immortal|Fox Spirit|Kylin|Jade Maiden|Sleeping Scholar",

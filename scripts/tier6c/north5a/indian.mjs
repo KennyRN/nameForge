@@ -3,6 +3,8 @@ import { buildCulture } from "./build.mjs";
 export default buildCulture({
   key: "indian", label: "Indian", style: "firstB",
   mods: { A: ["Banyan", "Elephant", "Temple", "Pilgrim", "Cobra", "Peacock"], B: ["Mughal", "Garrison", "Caravan", "Tea", "Monsoon", "Cantonment"], C: ["Railway", "Hill-Station", "Dam", "Highway"], F: ["Naga", "Yaksha", "Rakshasa", "Apsara"] },
+  // Brief 6d A1: the modifiers a desert module takes (no banyans or temples on the dunes).
+  desertMods: { A: ["Camel", "Salt", "Stony", "Sandstone", "Mirage", "Thorn"], B: ["Caravan", "Frontier", "Garrison", "Mughal", "Nawab's", "Trade-Route"], C: ["Canal", "Solar", "Border", "Highway"], F: ["Naga", "Yaksha", "Rakshasa", "Apsara"] },
   land: {
     B: "Pepper|Cardamom|Silk|Cotton|Indigo|Tea|Rice|Spice|Sandalwood|Jute",
     C: "Naga|Yaksha|Rakshasa|Apsara|Serpent King|Sleeping Sage",
