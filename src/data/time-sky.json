@@ -1,10 +1,7 @@
 {
  "$comment": "Time and sky (docs/time-and-sky-brief.md): systems, the system table, season cycles, culture names, shapes, themes and safeguards. Read through src/timesky/engine.ts. Eras are strings: all, AN, AN-MD, MD+ (MD on), ST+ …; weights and counts are the brief's.",
  "version": 1,
- "sensitive": [
-  "polynesian",
-  "andean"
- ],
+ "sensitive": [],
  "homeland": {
   "polynesian": "tropical-islands",
   "andean": "highland"
@@ -573,6 +570,13 @@
     "julian-12",
     "julian-12",
     "julian-12"
+   ],
+   "american": [
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12",
+    "julian-12"
    ]
   },
   "monthsFuture": "julian-12 70 · fixed-13 30",
@@ -793,6 +797,14 @@
     "week-7",
     "week-7",
     "week-7"
+   ],
+   "american": [
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7",
+    "week-7"
    ]
   },
   "festivals": {
@@ -822,7 +834,8 @@
    "welsh": "season-starts-4",
    "scottish": "season-starts-4",
    "irish": "season-starts-4",
-   "cornish": "season-starts-4"
+   "cornish": "season-starts-4",
+   "american": "quarters-4"
   },
   "festivalsFuture": "seasons",
   "festivalsSpace": "quarters-4",
@@ -934,6 +947,10 @@
    "cornish": [
     "-",
     "zodiac-12"
+   ],
+   "american": [
+    "zodiac-12",
+    "zodiac-12"
    ]
   },
   "lights": "classical-7"
@@ -1044,7 +1061,8 @@
   "welsh": "winter 0",
   "scottish": "winter 0",
   "irish": "winter 0",
-  "cornish": "winter 0"
+  "cornish": "winter 0",
+  "american": "winter 1"
  },
  "janShift": {
   "slavic": {

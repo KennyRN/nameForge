@@ -2320,9 +2320,9 @@
       "w": "Balsa of the Cold Current"
      }
     ]
-   },
-   "sensitive": true
-  }
+   }
+  },
+  {"key": "polynesian", "label": "Polynesian", "group": "The Pacific", "span": "T1-T7", "roles": {"poetic": 3, "sky": 3, "menace": 0, "leisure": 0, "commerce": 0.3}, "flavour": {"tribal": "polynesian"}, "town": "compound", "holy": "none", "lists": {"poetic": [{"w": "Strength of the Islands"}, {"w": "House upon the Sea"}, {"w": "Chief's Passage"}, {"w": "Strong Hands Together"}, {"w": "Friend of the Western Wind"}, {"w": "The Returning Family"}, {"w": "Shield of the Lagoon"}, {"w": "Voyage of Many Islands"}]}}
  ],
  "technology": {
   "ships": [

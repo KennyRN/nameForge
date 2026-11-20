@@ -2167,8 +2167,8 @@
  ],
  "polynesian 1": [
   {
-   "name": "People of the Lagoon",
-   "inText": "the People of the Lagoon",
+   "name": "Households of the Bay",
+   "inText": "the Households of the Bay",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2194,8 +2194,8 @@
    ]
   },
   {
-   "name": "House of the Kiwi",
-   "inText": "the House of the Kiwi",
+   "name": "Grey Coast Kin",
+   "inText": "the Grey Coast Kin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2222,8 +2222,8 @@
    ]
   },
   {
-   "name": "Taro Planters",
-   "inText": "the Taro Planters",
+   "name": "The Spirit Kin",
+   "inText": "the Spirit Kin",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -2246,8 +2246,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Pale Spear Descendants",
-   "inText": "the Pale Spear Descendants",
+   "name": "Gecko Troll Kin",
+   "inText": "the Gecko Troll Kin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2272,8 +2272,8 @@
    ]
   },
   {
-   "name": "Wanderers by the Reef",
-   "inText": "the Wanderers by the Reef",
+   "name": "Whale Bay Whanau",
+   "inText": "the Whale Bay Whanau",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2299,8 +2299,8 @@
    ]
   },
   {
-   "name": "Mountainward Black Sands Allies",
-   "inText": "the Mountainward Black Sands Allies",
+   "name": "Shark Whanau",
+   "inText": "the Shark Whanau",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2328,8 +2328,8 @@
    ]
   },
   {
-   "name": "Coral Shore People",
-   "inText": "the Coral Shore People",
+   "name": "The Folk of Whale",
+   "inText": "the Folk of Whale",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2357,8 +2357,8 @@
    ]
   },
   {
-   "name": "Kin of the Mist",
-   "inText": "the Kin of the Mist",
+   "name": "Windward Reef Hosts",
+   "inText": "the Windward Reef Hosts",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -2384,8 +2384,8 @@
    ]
   },
   {
-   "name": "Watchful Lords",
-   "inText": "the Watchful Lords",
+   "name": "Line of the River",
+   "inText": "the Line of the River",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2408,8 +2408,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Lizard Keepers",
-   "inText": "the Lizard Keepers",
+   "name": "Highland Brethren",
+   "inText": "the Highland Brethren",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -2436,8 +2436,8 @@
    ]
   },
   {
-   "name": "Folk of the Outer Reef",
-   "inText": "the Folk of the Outer Reef",
+   "name": "Line of the Forest",
+   "inText": "the Line of the Forest",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2463,8 +2463,8 @@
    ]
   },
   {
-   "name": "Spruce Settlers",
-   "inText": "the Spruce Settlers",
+   "name": "Brethren of the Coast",
+   "inText": "the Brethren of the Coast",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -2491,8 +2491,8 @@
    ]
   },
   {
-   "name": "Inland People",
-   "inText": "the Inland People",
+   "name": "Shark Hill Folk",
+   "inText": "the Shark Hill Folk",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2517,8 +2517,8 @@
    ]
   },
   {
-   "name": "Black-Shield People",
-   "inText": "the Black-Shield People",
+   "name": "The Bright Highland Hosts",
+   "inText": "the Bright Highland Hosts",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2541,8 +2541,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Wanderers of the Outer Reef",
-   "inText": "the Wanderers of the Outer Reef",
+   "name": "Lagoon and Serpent Neighbours",
+   "inText": "the Lagoon and Serpent Neighbours",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2569,8 +2569,8 @@
    ]
   },
   {
-   "name": "Yew People",
-   "inText": "the Yew People",
+   "name": "Neighbours of the Hill",
+   "inText": "the Neighbours of the Hill",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -2597,8 +2597,8 @@
    ]
   },
   {
-   "name": "Those Who Spare the Parrot",
-   "inText": "Those Who Spare the Parrot",
+   "name": "The Tribe of Dolphin",
+   "inText": "the Tribe of Dolphin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2624,8 +2624,8 @@
    ]
   },
   {
-   "name": "Dwellers by the Deep Ocean",
-   "inText": "the Dwellers by the Deep Ocean",
+   "name": "Valley Tribe",
+   "inText": "the Valley Tribe",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2651,8 +2651,8 @@
    ]
   },
   {
-   "name": "Rainbow Folk of the Lagoon",
-   "inText": "the Rainbow Folk of the Lagoon",
+   "name": "The Coral Island Troll Kin",
+   "inText": "the Coral Island Troll Kin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2678,8 +2678,8 @@
    ]
   },
   {
-   "name": "Folk of the Ginger",
-   "inText": "the Folk of the Ginger",
+   "name": "Lagoon Households",
+   "inText": "the Lagoon Households",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2707,8 +2707,8 @@
  ],
  "polynesian 2": [
   {
-   "name": "People of the Sacred Spring",
-   "inText": "the People of the Sacred Spring",
+   "name": "Whanau of the Moonlit Hill",
+   "inText": "the Whanau of the Moonlit Hill",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2734,8 +2734,8 @@
    ]
   },
   {
-   "name": "Folk by the Cloud Valley",
-   "inText": "the Folk by the Cloud Valley",
+   "name": "Highland and Dolphin Kin",
+   "inText": "the Highland and Dolphin Kin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2761,8 +2761,8 @@
    ]
   },
   {
-   "name": "Descendants of the Pig",
-   "inText": "the Descendants of the Pig",
+   "name": "River Kin",
+   "inText": "the River Kin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2788,8 +2788,8 @@
    ]
   },
   {
-   "name": "People of the Sorrel",
-   "inText": "the People of the Sorrel",
+   "name": "Coast Brethren",
+   "inText": "the Coast Brethren",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -2816,8 +2816,8 @@
    ]
   },
   {
-   "name": "Lagoon Servants",
-   "inText": "the Lagoon Servants",
+   "name": "The Clan of Dog",
+   "inText": "the Clan of Dog",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2845,8 +2845,8 @@
    ]
   },
   {
-   "name": "Settlers of the Reef",
-   "inText": "the Settlers of the Reef",
+   "name": "Tern Bay Troll Kin",
+   "inText": "the Tern Bay Troll Kin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2872,8 +2872,8 @@
    ]
   },
   {
-   "name": "Inland Allies",
-   "inText": "the Inland Allies",
+   "name": "Bay Folk",
+   "inText": "the Bay Folk",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2898,8 +2898,8 @@
    ]
   },
   {
-   "name": "True People of the Lagoon",
-   "inText": "the True People of the Lagoon",
+   "name": "The Spirit Brethren",
+   "inText": "the Spirit Brethren",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2924,8 +2924,8 @@
    ]
   },
   {
-   "name": "House of the Fire Mountain",
-   "inText": "the House of the Fire Mountain",
+   "name": "Clan of the Valley",
+   "inText": "the Clan of the Valley",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2951,8 +2951,8 @@
    ]
   },
   {
-   "name": "Reef Children",
-   "inText": "the Reef Children",
+   "name": "The Households of Griffin",
+   "inText": "the Households of Griffin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -2980,8 +2980,8 @@
    ]
   },
   {
-   "name": "People of the Amber Lagoon",
-   "inText": "the People of the Amber Lagoon",
+   "name": "Neighbours of the Hill",
+   "inText": "the Neighbours of the Hill",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3009,8 +3009,8 @@
    ]
   },
   {
-   "name": "Proud Hand",
-   "inText": "the Proud Hand",
+   "name": "The Hosts of Stone Giant",
+   "inText": "the Hosts of Stone Giant",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3033,8 +3033,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Friends",
-   "inText": "the Friends",
+   "name": "Heron Folk",
+   "inText": "the Heron Folk",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3057,8 +3057,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Defenders by the Cloud Peak",
-   "inText": "the Defenders by the Cloud Peak",
+   "name": "Neighbours of the Moonlit Island",
+   "inText": "the Neighbours of the Moonlit Island",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3085,8 +3085,8 @@
    ]
   },
   {
-   "name": "Fierce Companions",
-   "inText": "the Fierce Companions",
+   "name": "Gecko Troll Kin",
+   "inText": "the Gecko Troll Kin",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3109,8 +3109,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Flax Dwellers",
-   "inText": "the Flax Dwellers",
+   "name": "Forest Line",
+   "inText": "the Forest Line",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -3137,8 +3137,8 @@
    ]
   },
   {
-   "name": "Settlers of the Amber Pandanus",
-   "inText": "the Settlers of the Amber Pandanus",
+   "name": "Coast Tribe",
+   "inText": "the Coast Tribe",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3165,8 +3165,8 @@
    ]
   },
   {
-   "name": "Descendants of the Wanderer",
-   "inText": "the Descendants of the Wanderer",
+   "name": "Sunlit Valley Line",
+   "inText": "the Sunlit Valley Line",
    "tradition": "polynesian",
    "biome": "cool-rainforest",
    "biomeMode": "homeland",
@@ -3191,8 +3191,8 @@
    ]
   },
   {
-   "name": "Folk Between",
-   "inText": "the Folk Between",
+   "name": "Grey Reef Tribe",
+   "inText": "the Grey Reef Tribe",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",
@@ -3215,8 +3215,8 @@
    "alternativeNames": []
   },
   {
-   "name": "Topknot People",
-   "inText": "the Topknot People",
+   "name": "The Fair Island Households",
+   "inText": "the Fair Island Households",
    "tradition": "polynesian",
    "biome": "tropical-islands",
    "biomeMode": "homeland",

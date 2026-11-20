@@ -105,7 +105,8 @@ test("inns and taverns: Scandinavian reaches the batch target (30 signature word
 });
 // 6c: Japanese gains its own thirty words and ten shapes (its older shapes are retired: 53 words, 10 shapes).
 test("inns and taverns: Japanese 53 words and 10 shapes", () => assert.equal(cell("innNames", "japanese"), "53/10"));
-test("inns and taverns: Polynesian 1 word and 2 shapes", () => assert.equal(cell("innNames", "polynesian"), "1/2"));
+// Brief 6d: Polynesian is a core-depth culture in the inns now (it had one word and two shapes as a sensitive culture).
+test("inns and taverns: Polynesian 31 words and 12 shapes", () => assert.equal(cell("innNames", "polynesian"), "31/12"));
 
 // ── Adapters and the reader table ──────────────────────────────────────────
 
@@ -168,7 +169,7 @@ test("realms: hand-counted cells (words/shapes), counted by hand from realms.jso
   assert.equal(cell("realms", "english"), "53/10", "anglo-saxon tribal 1; norman-british forms 2 + tribal 1 + homeland 1, and the batch's own 30 and 10");
   // Entries confined to an era: the weighted forms (era weights above nought), the modifiers and the
   // ideology words; ST has none because the realms have no steam age (5d: the batch's era words are tagged to the eras the module offers).
-  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 336, MD: 470, EM: 396, ST: 0, MO: 213, NF: 34, IS: 42 }); // Second pass (brief §12): the 6b cultures' timeless words are tagged to the eras they stand in, and Aurora left the Scandinavian orders;  Anglo-Saxon adds its own realms words (sibling-distinctness brief); batch 6b adds its eight cultures' and the mixes' era words
+  assert.deepEqual(moduleCoverage(adapterOf("realms")).eras, { AN: 400, MD: 538, EM: 464, ST: 0, MO: 243, NF: 34, IS: 42 }); // Brief 6d: the five cultures of the batch add their realm words, tagged to their eras. Second pass (brief §12): the 6b cultures' timeless words are tagged to the eras they stand in, and Aurora left the Scandinavian orders;  Anglo-Saxon adds its own realms words (sibling-distinctness brief); batch 6b adds its eight cultures' and the mixes' era words
 });
 
 test("every module in the lens has an adapter and reports, none left 'not yet reported'", () => {
@@ -209,7 +210,9 @@ test("§11.2: a culture with its own row in a per-culture weight table has a pro
   assert.equal(cultureCell("mountainNames", "chinese").profile, true);
   assert.equal(cultureCell("mountainNames", "general")?.profile ?? false, false);
   // A profile is not words: the targets and the counts are unchanged ("6/2" for Chinese mountains before 6c; Polynesian here).
-  assert.equal(cultureCell("mountainNames", "polynesian").below, true);
+  // Brief 6d: Polynesian has its own mountain words now (32 and 10), so it meets the target on its words, not on its profile.
+  assert.equal(cultureCell("mountainNames", "polynesian").profile, true);
+  assert.equal(cultureCell("mountainNames", "polynesian").below, false);
   // waters.json `cultureMult`, peoples-tongues.json `weights`, money-names.json `cultureMult`.
   assert.equal(cultureCell("seasLakes", "roman").profile, true);
   assert.equal(cultureCell("peoplesTongues", "scandinavian").profile, true);

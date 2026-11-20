@@ -4588,7 +4588,12 @@
     "indian",
     "chinese",
     "japanese",
-    "korean"
+    "korean",
+    "aztec",
+    "maya",
+    "andean",
+    "polynesian",
+    "american"
    ]
   }
  },
@@ -4736,9 +4741,16 @@
   "desertNames": {
    "cultures": [
     "japanese",
-    "korean"
+    "korean",
+    "polynesian"
    ],
-   "reason": "Japan and Korea have no deserts of their own, so the desert module carries no Japanese or Korean desert words."
+   "reason": "Japan, Korea and the Polynesian islands have no deserts of their own, so the desert module carries no Japanese, Korean or Polynesian desert words."
+  },
+  "moorNames": {
+   "cultures": [
+    "polynesian"
+   ],
+   "reason": "The Polynesian islands have no moors of their own, so the moor module carries no Polynesian moor words."
   }
  },
  "coverageByDesign": {

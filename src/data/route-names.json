@@ -32,8 +32,8 @@
     {"key": "west-african", "label": "West African", "group": "Middle East, Africa and the Indian Ocean", "kindMult": {"trade": 2}},
     {"key": "aztec", "label": "Aztec", "group": "The Americas"},
     {"key": "maya", "label": "Maya", "group": "The Americas"},
-    {"key": "polynesian", "label": "Polynesian", "group": "the Pacific and the Andes", "sensitive": true, "kindMult": {"sea": 4, "road": 0.5, "drove": 0, "military": 0}, "folk": "polynesian", "figure": ["Chief", "High Chief"]},
-    {"key": "andean", "label": "Andean", "group": "the Pacific and the Andes", "sensitive": true, "kindMult": {"road": 1.5, "military": 0.5, "sea": 0.3}, "folk": "andean", "figure": ["Lord", "Great Lord"]}
+    {"key": "polynesian", "label": "Polynesian", "group": "the Pacific and the Andes", "kindMult": {"sea": 6, "road": 0.5, "drove": 0, "military": 0}, "folk": "polynesian", "figure": ["Chief", "High Chief"]},
+    {"key": "andean", "label": "Andean", "group": "the Pacific and the Andes", "kindMult": {"road": 1.5, "military": 0.5, "sea": 0.3}, "folk": "andean", "figure": ["Lord", "Great Lord"]}
   ],
   "kinds": [
     {"key": "road", "menu": "Roads and ways", "plural": "roads and ways", "description": "Long-distance roads, old ways and highways", "era": {"AN": 30, "MD": 30, "EM": 25, "ST": 15, "MO": 10, "NF": 5, "IS": 0}},

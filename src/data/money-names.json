@@ -32,7 +32,7 @@
     },
     {"key": "american", "label": "American", "group": "The Americas", "town": "britain", "figure": [], "after": "maya", "moneyOnly": true}
   ],
-  "notOffered": ["polynesian", "andean"],
+  "notOffered": [],
   "kinds": [
     {
       "key": "coin",

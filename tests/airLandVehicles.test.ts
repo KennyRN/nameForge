@@ -40,7 +40,7 @@ const norm = normForBlock;
 // ── §16.1 Data ──────────────────────────────────────────────────────────────
 
 test("§16.1: every culture has airSpan and landSpan inside its module's levels", () => {
-  assert.equal(Object.keys(AIR_LAND.spans).length, 34);
+  assert.equal(Object.keys(AIR_LAND.spans).length, 35); // Brief 6d: Polynesian joins the lens keys that had a row of their own
   // Brief 5c: the six newer keys read the legacy key's span (`engineAlias`).
   const NEWER = new Set(["welsh", "scottish", "irish", "cornish", "scandinavian", "german", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"]);
   assert.deepEqual(Object.keys(AIR_LAND.spans).sort(), VESSEL_CULTURES.filter((c) => !NEWER.has(c.key)).map((c) => c.key).sort());
@@ -66,7 +66,12 @@ test("§16.1: every culture has airSpan and landSpan inside its module's levels"
   assert.deepEqual(levels("malay", "landVehicles"), ["L1", "L2", "L3", "L4"]);
   assert.deepEqual(levels("bantu", "landVehicles"), ["L3", "L4", "L5"]);
   assert.deepEqual(levels("korean", "aircraft"), ["A5", "A6"]);
-  for (const k of ["hawaiian", "maori", "w-polynesian", "nw-coast", "aztec", "maya", "andean"]) {
+  // Brief 6d: the Aztec, Maya, Andean and Polynesian cultures have modern states (Mexico, Guatemala, Peru and Bolivia, the island states), so they have the modern aircraft and land vehicles; the north-west coast has none.
+  for (const k of ["aztec", "maya", "andean", "polynesian", "hawaiian", "maori", "w-polynesian"]) {
+    assert.deepEqual(levels(k, "aircraft"), ["A5", "A6"], k);
+    assert.deepEqual(levels(k, "landVehicles"), ["L1", "L2", "L3", "L4", "L5"], k);
+  }
+  for (const k of ["nw-coast"]) {
     assert.deepEqual(levels(k, "aircraft"), []);
     assert.deepEqual(levels(k, "landVehicles"), []);
   }
@@ -217,7 +222,7 @@ test("§4.3: any draws from the culture's native span within the setting's level
   assert.deepEqual(anyLevels("aircraft", norse, "FH"), ["A1", "AF"]);
   assert.deepEqual(anyLevels("aircraft", norse, "MR"), ["A1", "A2", "A3", "A4", "A5", "A6"]);
   assert.deepEqual(anyLevels("landVehicles", norse, "MR"), ["L1"]);
-  assert.deepEqual(anyLevels("aircraft", findVesselCulture("maya")!, "MF"), ["A1", "A2", "A3", "A4", "A5", "A6", "AF"]);
+  assert.deepEqual(anyLevels("aircraft", findVesselCulture("nw-coast")!, "MF"), ["A1", "A2", "A3", "A4", "A5", "A6", "AF"]);
   assert.deepEqual(anyLevels("aircraft", findVesselCulture("general")!, "FH"), ["A1"]);
 });
 
@@ -227,7 +232,7 @@ test("§3.3: customs follow the nearest native level, and a culture with none fo
   assert.equal(customsLevel(roman, "AF", "aircraft"), "A6");
   assert.equal(customsLevel(roman, "A7", "aircraft"), "A6");
   assert.equal(customsLevel(findVesselCulture("ottoman")!, "L5", "landVehicles"), "L3");
-  assert.equal(customsLevel(findVesselCulture("maya")!, "L4", "landVehicles"), "L4");
+  assert.equal(customsLevel(findVesselCulture("nw-coast")!, "L4", "landVehicles"), "L4");
   assert.equal(customsLevel(roman, "T5"), "T5");
   assert.equal(inSpan(roman, "A3", "aircraft"), true);
   assert.equal(inSpan(roman, "A1", "aircraft"), false);
@@ -286,9 +291,9 @@ test("§16.3: bombers never at A1–A2, named trains never at L1, coaches never 
 });
 
 test("§16.3: a Maya locomotive (no native land span): non-hybrid names from Maya's ships lists, hybrids with an L-level word", () => {
-  const maya = findVesselCulture("maya")!;
+  const maya = findVesselCulture("nw-coast")!;
   assert.deepEqual(moduleSpanLevels("landVehicles", maya), []);
-  const batch = run("landVehicles", { culture: "maya", genre: "modern", function: "locomotive", count: 2000, seed: 5, people: "invented" });
+  const batch = run("landVehicles", { culture: "nw-coast", genre: "modern", function: "locomotive", count: 2000, seed: 5, people: "invented" });
   assert.equal(batch.names.length, 2000);
   const techWords = new Set<string>();
   for (const level of ["L2", "L3", "L4", "L5"]) for (const e of [...AIR_LAND.techWords[level].techAdj, ...AIR_LAND.techWords[level].techNoun]) techWords.add(e.w);
@@ -640,7 +645,7 @@ test("§16.6: aircraft codes: G- only for general and norman-british, N only for
   }
   assert.ok(seen > 1000, `${seen}`);
   // In SF any culture's craft show {AA}-{dddd}.
-  const sf = manyBatches("aircraft", { culture: "maya", genre: "scifi", prefixes: true, people: "invented" }, 10, 10);
+  const sf = manyBatches("aircraft", { culture: "nw-coast", genre: "scifi", prefixes: true, people: "invented" }, 10, 10);
   assert.ok(sf.length > 0 && sf.every((n) => /^[A-Z]{2}-\d{4}$/.test(n.code!)));
   // Cultures with no row for a level show none: French, A2; slavic below A6; ottoman has only A3–A4 rows? (no civil row).
   assert.ok(manyBatches("aircraft", { culture: "slavic", genre: "modern", technology: "A4", prefixes: true }, 10, 10).every((n) => n.code === undefined));

@@ -278,6 +278,52 @@ export const SIGNS = {
     "Pine-Shaded|Hearth-Warm|Windy|Humble|Hospitable|Hilltop",
     "Fortress Gate|Stone Stairs|Ferry Landing|Temple Steps|Mountain Pass|Pine Hill|Village Well",
   ),
+  // Second-tier 6d: the five cultures of the batch, each in its own habits.
+  aztec: C(
+    "Eagle|Jaguar|Hummingbird|Turkey|Rabbit|Coyote|Heron|Quetzal|Armadillo|Opossum|Rattlesnake|Butterfly",
+    "Drum|Feather Fan|Obsidian Mirror|Cacao Pod|Maize Cob|Clay Pot|Flute|Shield|Canoe|Marigold|Weaving Loom|Whistle",
+    "Featherworkers|Goldsmiths|Pochteca Traders|Potters|Canoe Men|Cacao Merchants|Scribes|Weavers",
+    "Turquoise|Jade Green|Marigold|Cochineal|Obsidian Black|Quetzal Green",
+    "Warrior|Singer|Merchant|Weaver|Fisherman|Priest|Dancer|Gardener",
+    "Flowered|Feathered|Floating|Painted|Golden|Echoing",
+    "Causeway Gate|Floating Garden|Market Canal|Temple Steps|Lake Shore|Reed Landing|Hill Spring",
+  ),
+  maya: C(
+    "Macaw|Toucan|Ocelot|Tapir|Howler Monkey|Iguana|Manatee|Peccary|Coati|Motmot|Crocodile|Armadillo",
+    "Jade Mask|Cacao Cup|Incense Burner|Reed Mat|Woven Hammock|Ball|Painted Vase|Stela|Calendar Wheel|Obsidian Blade|Canoe Paddle|Rubber Ball",
+    "Scribes|Jade Carvers|Cacao Growers|Salt Traders|Weavers|Beekeepers|Stonecutters|Canoe Men",
+    "Maya Blue|Jungle Green|Red Ochre|Limestone White|Sapphire|Cacao Brown",
+    "Lord|Scribe|Ball Player|Farmer|Healer|Trader|Astronomer|Sculptor",
+    "Sacred|Whispering|Painted|Hidden|Rainy|Starlit",
+    "Sacbe Crossing|Cenote Edge|Ball Court|Plaza Steps|Forest Clearing|Limestone Cave|River Landing",
+  ),
+  andean: C(
+    "Condor|Llama|Alpaca|Vicuña|Viscacha|Guinea Pig|Andean Fox|Spectacled Bear|Puna Ibis|Falcon|Hummingbird|Chinchilla",
+    "Quipu|Panpipe|Woven Poncho|Coca Bag|Terrace Stone|Rope Bridge|Silver Bell|Sling|Potato Basket|Clay Jar|Spindle|Drum",
+    "Weavers|Potato Farmers|Silver Miners|Llama Herders|Stonemasons|Rope Makers|Runners|Potters",
+    "Alpaca White|Mountain Blue|Silver|Red Dye|Potato Purple|Cloud Grey",
+    "Runner|Herder|Weaver|Miner|Mason|Shepherd|Quipu Keeper|Piper",
+    "High|Windy|Snowy|Thin-Aired|Rope-Woven|Terraced",
+    "Mountain Pass|Rope Bridge|Terrace Edge|Mine Mouth|Salt Flat|Lake Shore|Market Plaza",
+  ),
+  polynesian: C(
+    "Turtle|Frigatebird|Shark|Dolphin|Manta Ray|Tern|Octopus|Whale|Parrotfish|Hermit Crab|Gecko|Tropicbird",
+    "Outrigger|Conch Shell|Kava Bowl|Drum|Tapa Cloth|Fishhook|Ukulele|Paddle|Lei|Fan|Woven Basket|Sail",
+    "Canoe Builders|Fishers|Tapa Makers|Navigators|Taro Growers|Carvers|Tattooists|Net Makers",
+    "Lagoon Blue|Coral|Hibiscus Red|Sand|Palm Green|Sunset Gold",
+    "Navigator|Chief|Fisher|Dancer|Carver|Storyteller|Healer|Canoe Builder",
+    "Sunlit|Coral|Windward|Salt-Washed|Starry|Evening",
+    "Beach Landing|Reef Passage|Canoe House|Palm Grove|Lagoon Shore|Meeting Ground|Harbour Mouth",
+  ),
+  american: C(
+    "Bison|Bald Eagle|Moose|Beaver|Raccoon|Mustang|Rattlesnake|Wild Turkey|Black Bear|Coyote|Longhorn|Loon",
+    "Wagon Wheel|Rifle|Pickaxe|Lantern|Stagecoach|Horseshoe|Banjo|Gold Pan|Cowbell|Jukebox|Neon Sign|Anchor",
+    "Blacksmiths|Wheelwrights|Trappers|Prospectors|Ranchers|Railroaders|Millers|Printers",
+    "Prairie Gold|Barn Red|Denim Blue|Chrome|Cactus Green|Diner Pink",
+    "Pioneer|Trapper|Sheriff|Prospector|Drover|Trucker|Homesteader|Voyageur",
+    "Dusty|Lonesome|Lucky|Rusty|Golden|Midnight",
+    "Crossroads|Fork in the Road|Main Street|Depot|Portage|Ghost Town|Interstate Exit",
+  ),
 };
 
 // Colours, metals and descriptions chosen apart from every other culture's, so that no two cultures give the same "Red Tavern" or "the Old Inn" (Part A's 5% limit).

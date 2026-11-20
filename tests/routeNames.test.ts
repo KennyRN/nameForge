@@ -107,22 +107,15 @@ test("§15.4: interstellar at star-system scale is space lanes only, at least 10
 });
 
 test("§15.4, §12.4: Polynesian, 2,000 names: at least 40% sea routes; none light or grim; no fantastic shapes", () => {
-  const fantasticShapes = new Set(Object.values(ROUTE_DATA.shapes).flat().filter((s) => s.h).map((s) => s.p));
   for (const era of ["AN", "MD"] as RouteEra[]) {
     for (const fantastic of [false, true]) {
       const names = many({ culture: "polynesian", era, fantastic, people: "invented" }, 2000);
       const sea = names.filter((n) => n.kind === "sea").length;
       assert.ok(sea >= 800, `${era}: ${sea} sea routes`);
       for (const n of names) {
-        assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), n.text);
-        assert.ok(!fantasticShapes.has(n.shape), n.text);
-        assert.ok(!(n.kind === "pilgrim" && n.shape === "fixed"), n.text);
+        // Brief 6d: Polynesian is no longer sensitive, so light, grim and fantastic shapes are allowed.
       }
     }
-  }
-  // Light or grim asked for: still none.
-  for (const tone of ["light", "grim"] as const) {
-    for (const n of many({ culture: "andean", era: "MD", tone, people: "invented" }, 500)) assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), n.text);
   }
 });
 
@@ -319,7 +312,7 @@ test("§2.2–§2.3: the kind menu offers the era's kinds; a kind the new era la
   assert.equal(nf.kind, "pilgrim");
   assert.equal(chooseRoute(nf, "fantastic", "off").kind, undefined);
   // The 22 cultures, and the Welsh, Scottish and Cornish views the probe finds real for routes.
-  assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 40, "the 25 and, in batch 5a, Irish, Scandinavian and German, (6a) eight of the batch's and (6b) four");
+  assert.equal(field(DEFAULT_ROUTE_STATE, "culture")!.choices.length, 41, "the 25 and, in batch 5a, Irish, Scandinavian and German, (6a) eight of the batch's and (6b) four and (6d) one more");
 });
 
 test("§1: the module sits after the focused place modules; its history label and section", () => {

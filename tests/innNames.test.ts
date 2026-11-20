@@ -143,9 +143,9 @@ test("§15.5: steam-age clubs use the era shapes; interstellar houses are mostly
   assert.ok(is.filter((n) => n.kind === "bar").length >= 1000);
 });
 
-test("§15.5: sensitive cultures draw no light, grim or fantastic entries", () => {
+test("§15.5: sensitive cultures draw no light, grim or fantastic entries (brief 6d: Polynesian and Andean are not sensitive now, so none is)", () => {
   const fantasticShapes = new Set([...INN_DATA.fantastic, ...INN_DATA.eraShapes.filter((s) => s.h)].map((s) => s.p));
-  for (const culture of ["polynesian", "andean"]) {
+  for (const culture of [] as string[]) {
     for (const era of ["MD", "ST", "MO"] as RouteEra[]) {
       for (const n of many({ culture, era, fantastic: true, people: "invented" }, 500)) {
         assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), n.text);

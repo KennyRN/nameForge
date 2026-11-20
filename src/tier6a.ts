@@ -14,9 +14,9 @@ export const MIX_HALF_WEIGHT = 0.5;
 /** Every module culture key the batch adds to a roster (the ones a roster already has are kept as they are). */
 /** Batch 6c: the four East and South Asian cultures (Indian, Chinese, Japanese, Korean), whose group modules read their own content like any other batch culture. */
 export const TIER6C_OWN = ["indian", "chinese", "japanese", "korean"] as const;
-/** Batch 6d: Aztec, Maya, Andean, Polynesian and American (joins TIER6A_KEYS when their module groups are written, so that no roster offers a culture whose module has no content yet). */
+/** Batch 6d: Aztec, Maya, Andean, Polynesian and American, whose module groups are written like any batch culture. */
 export const TIER6D_OWN = ["aztec", "maya", "andean", "polynesian", "american"] as const;
-export const TIER6A_KEYS: readonly string[] = [...TIER6A_CULTURES, ...TIER6B_OWN, ...TIER6C_OWN, ...TIER6A_MIXES];
+export const TIER6A_KEYS: readonly string[] = [...TIER6A_CULTURES, ...TIER6B_OWN, ...TIER6C_OWN, ...TIER6D_OWN, ...TIER6A_MIXES];
 
 /** Second pass (brief §12 §3): the cultures whose plant, tree, bird and beast fills come from their own lists alone (the pools below hold entries for them). */
 export const OWN_FILL_CULTURES: readonly string[] = ["turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "steppe", "arabic-persian", "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american"];

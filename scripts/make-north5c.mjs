@@ -21,17 +21,19 @@ import { MIXES6, NEW6 } from "./tier6a/north5c-words.mjs";
 import { ADJ6B, MIXES6B, NEW6B, RANKS6B, STYLE6B, TAGS6B, WORDS6B } from "./tier6b/north5c-build.mjs";
 // Brief 6c: Indian, Chinese, Japanese and Korean.
 import { ADJ6C, NEW6C, RANKS6C, STYLE6C, TAGS6C, WORDS6C } from "./tier6c/north5c-build.mjs";
+import { ADJ6D, NEW6D, RANKS6D, STYLE6D, TAGS6D, WORDS6D } from "./tier6d/north5c-build.mjs";
 for (const [m, byCulture] of Object.entries(WORDS6)) WORDS[m] = { ...WORDS[m], ...byCulture };
 for (const [m, byCulture] of Object.entries(WORDS6B)) WORDS[m] = { ...WORDS[m], ...byCulture };
 for (const [m, byCulture] of Object.entries(WORDS6C)) WORDS[m] = { ...WORDS[m], ...byCulture };
+for (const [m, byCulture] of Object.entries(WORDS6D)) WORDS[m] = { ...WORDS[m], ...byCulture };
 // Sibling-distinctness, second pass: two cultures drawing the same position of a list with the same frame and the same random stream give the same name, so each of the 6a cultures turns
 // its lists (their order means nothing) by a step of its own, as the 6b cultures do in their build.
 const TURN6A = { french: 1, dutch: 4, italian: 7, spanish: 2, portuguese: 5, roman: 8, greek: 3, byzantine: 6, slavic: 9, "anglo-saxon": 0 };
 const turn6a = (culture, text) => { const t = TURN6A[culture]; if (!t) return text; return text.split(";").map((l, i) => { const w = l.split("|"); if (w.length !== 10) return l; const k = (t + 2 * i) % 10; return [...w.slice(k), ...w.slice(0, k)].join("|"); }).join(";"); };
 for (const byCulture of Object.values(WORDS)) for (const c of Object.keys(TURN6A)) if (byCulture[c]) byCulture[c] = turn6a(c, byCulture[c]);
-for (const [m, byCulture] of [...Object.entries(TAGS6B), ...Object.entries(TAGS6C)]) { TAGS[m] ??= {}; for (const [c, tags] of Object.entries(byCulture)) TAGS[m][c] = { ...(TAGS[m][c] ?? {}), ...tags }; }
-Object.assign(ADJ, ADJ6, ADJ6B, ADJ6C);
-Object.assign(STYLE, STYLE6, STYLE6B, STYLE6C);
+for (const [m, byCulture] of [...Object.entries(TAGS6B), ...Object.entries(TAGS6C), ...Object.entries(TAGS6D)]) { TAGS[m] ??= {}; for (const [c, tags] of Object.entries(byCulture)) TAGS[m][c] = { ...(TAGS[m][c] ?? {}), ...tags }; }
+Object.assign(ADJ, ADJ6, ADJ6B, ADJ6C, ADJ6D);
+Object.assign(STYLE, STYLE6, STYLE6B, STYLE6C, STYLE6D);
 addFrames5c(FRAMES);
 // Second pass (brief §12 §6): a common noun after "of" takes its article ("Spring Keeper of the Lake", not "of Lake"), and the compound style written for the 6b cultures keeps its words apart ("Sun Mare Lady", not "SunMare Lady").
 for (const cls of ["realm","family"]) for (const frames of Object.values(FRAMES[cls] ?? {})) {
@@ -46,7 +48,7 @@ for (const cls of ["realm","family"]) for (const frames of Object.values(FRAMES[
 for (const frames of Object.values(FRAMES.epithet ?? {})) for (const fr of frames) { if (fr[0] === "{N0} the {N2}") fr[0] = "the {N0} and the {N2}"; else if (fr[0] === "{N0} the {N1}") fr[0] = "the {N0} and the {N1}"; }
 for (const [cls, styles] of Object.entries(FRAMES)) if (styles.comp) styles.cp = styles.comp.map(([p, ...rest]) => [p.replace(/\{N([012])\}\{N([012])\}/g, "{N$1} {N$2}"), ...rest]);
 
-Object.assign(RANKS, RANKS6, RANKS6B, RANKS6C);
+Object.assign(RANKS, RANKS6, RANKS6B, RANKS6C, RANKS6D);
 const isMix = (c) => c === "celtic" || MIXES6.includes(c) || MIXES6B.includes(c);
 const ENGLISH_WORD = /^[A-Za-z][A-Za-z' -]*$/;
 
@@ -59,12 +61,12 @@ function fillFromPools(module, culture, lists, nt) {
   if (!pools) return;
   const offer = isMix(culture) ? [] : OFFER[module] ?? OFFER._default;
   // Brief 6b: each of the batch's cultures takes its era words from a place of its own in each pool (so two siblings do not append the same words at the same positions).
-  const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : NEW6C.includes(culture) ? 40 + NEW6C.indexOf(culture) * 2 : NEW6.includes(culture) && culture !== "anglo-saxon" ? 30 + NEW6.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
+  const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : NEW6C.includes(culture) ? 40 + NEW6C.indexOf(culture) * 2 : NEW6D.includes(culture) ? 52 + NEW6D.indexOf(culture) * 2 : NEW6.includes(culture) && culture !== "anglo-saxon" ? 30 + NEW6.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
   // Brief 6b: the shared pools hold English and Christian words (a bishopric, a hundred moot, an abbey); the batch's cultures do not draw them (a Muslim or steppe culture no Christian ones, nor any a feudal English realm).
   const FOREIGN_MONEY = /Pennyweight|Pilgrim Badge|Hoard Piece|Cross-Marked|Pelleted|Hammered|Wrought|Tally/;
   const FOREIGN = /Bishopric|Dukedom|Hundred Moot|Fiefdom|Earldom|Barony|Shire|Palatinate|Dukes?\b|Earl|Baron|Lordship|Chiefdom|Tribal Kingdom|Kingdom of the Plains|Yeomanry|Hanse|Landsknecht|Kirk|Parish|Sunday|Mission Hall|Rosicrucian|Druid|Ovates|Bardic|Pietist|Methodist|Quaker|Puritan|Covenanter|Highlanders|Tinners|Thing Assembly|Longship|Viking|Rune|Wergild|Seer?ess Band|Moot|Witan|Thane|Thegn/;
   const CHRISTIAN = /Abbey|Priory|Chantry|Cloister|Convent|Chapel|Cathedral|Monastery|Hermit Cell|Nuns|Monks|Friar|Pilgrim|Saint|Holy|Church|Bishop|Crusade|Inquisition/;
-  const own = NEW6B.includes(culture) || NEW6C.includes(culture) || MIXES6B.includes(culture);
+  const own = NEW6B.includes(culture) || NEW6C.includes(culture) || NEW6D.includes(culture) || MIXES6B.includes(culture);
   const keepsChurch = ["egyptian", "ethiopian", "bantu", "west-african"].includes(culture);
   const take = (pool, enough) => {
     for (let n = 0; n < pool.length && !enough(); n++) {
@@ -100,7 +102,7 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
   const cls = CLASS[module];
   modules[module] = { kinds: KINDS[module], cultures: {} };
   // Tribes and kin groups keep Celtic as the broad mix it is (brief 5c B1): no Celtic content of its own there.
-  for (const culture of [...CORE, ...NEW6, ...NEW6B, ...(module === "familyNames" ? [] : NEW6C), ...(module === "tribalNames" ? [...MIXES6, ...MIXES6B] : ["celtic", ...MIXES6, ...MIXES6B])]) {
+  for (const culture of [...CORE, ...NEW6, ...NEW6B, ...(module === "familyNames" ? [] : NEW6C), ...NEW6D, ...(module === "tribalNames" ? [...MIXES6, ...MIXES6B] : ["celtic", ...MIXES6, ...MIXES6B])]) {
     const lists = byCulture[culture].split(";").map((l) => l.split("|"));
     const want = isMix(culture) ? 4 : 10;
     if (lists.length !== 3) problems.push(`${module} ${culture}: ${lists.length} lists`);

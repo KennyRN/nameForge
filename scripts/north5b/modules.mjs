@@ -6,6 +6,7 @@ import { REGIONS } from "./regions.mjs";
 import * as C6 from "../tier6a/north5b-content.mjs";
 import * as C6B from "../tier6b/north5b-content.mjs";
 import * as C6C from "../tier6c/north5b-content.mjs";
+import * as C6D from "../tier6d/north5b-content.mjs";
 
 export const CULTURES = [
   { key: "english", keys: ["norman-british"], label: "English", c: ENGLISH },
@@ -27,6 +28,8 @@ for (const [key, label, c] of [["spanish", "Spanish", C6.SPANISH], ["portuguese"
 for (const [key, label, c] of [["turkic", "Turkic", C6B.TURKIC], ["mongol", "Mongol", C6B.MONGOL], ["arabic", "Arabic", C6B.ARABIC], ["persian", "Persian", C6B.PERSIAN], ["egyptian", "Egyptian", C6B.EGYPTIAN], ["ethiopian", "Ethiopian", C6B.ETHIOPIAN], ["bantu", "Bantu", C6B.BANTU], ["west-african", "West African", C6B.WEST_AFRICAN]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
 // Brief 6c: Indian, Chinese, Japanese and Korean.
 for (const [key, label, c] of [["indian", "Indian", C6C.INDIAN], ["chinese", "Chinese", C6C.CHINESE], ["japanese", "Japanese", C6C.JAPANESE], ["korean", "Korean", C6C.KOREAN]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
+// Brief 6d: Aztec, Maya, Andean, Polynesian and American.
+for (const [key, label, c] of [["aztec", "Aztec", C6D.AZTEC], ["maya", "Maya", C6D.MAYA], ["andean", "Andean", C6D.ANDEAN], ["polynesian", "Polynesian", C6D.POLYNESIAN], ["american", "American", C6D.AMERICAN]]) CULTURES.push({ key, keys: [key], label, c, tier6a: true });
 CULTURES.push({ key: "steppe", keys: ["steppe"], label: "Turkic and Mongol steppe", c: mixOf(C6B.TURKIC), tier6a: true, mix: true });
 CULTURES.push({ key: "arabic-persian", keys: ["arabic-persian"], label: "Arabic and Persian", c: mixOf(C6B.ARABIC), tier6a: true, mix: true });
 CULTURES.push({ key: "iberian", keys: ["iberian"], label: "Iberian", c: mixOf(C6.SPANISH), tier6a: true, mix: true });

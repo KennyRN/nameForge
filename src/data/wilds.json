@@ -1501,7 +1501,8 @@
   "west-african": "savannah",
   "maya": "rainforest",
   "korean": "temperate",
-  "ethiopian": "highland"
+  "ethiopian": "highland",
+  "american": "temperate"
  },
  "modules": {
   "mountainNames": {

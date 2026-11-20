@@ -179,14 +179,7 @@ test("§15.4: no cross for a non-christian culture; no statue for Arabic & Persi
       if (c.key !== "arabic-persian" || era === "AN" || era === "MO") assert.ok(kinds.length > 0, `${c.key} ${era}`);
     }
   }
-  for (const c of ["polynesian", "andean"]) {
-    for (const era of ["AN", "MD", "ST"] as RouteEra[]) {
-      for (const n of many({ culture: c, era, people: "invented" }, 120)) {
-        assert.ok(!["stone", "tomb", "figure"].includes(n.kind), `${c}: ${n.text}`);
-        assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), `${c}: ${n.text}`);
-      }
-    }
-  }
+  // Brief 6d: Polynesian and Andean are no longer sensitive cultures, so the stone/tomb/figure and light/grim bans no longer apply to them.
   assert.ok(many({ culture: "arabic-persian", era: "AN", kind: "statue", people: "invented" }, 20).length > 0);
 });
 

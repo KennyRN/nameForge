@@ -169,7 +169,7 @@ test("§6.2: generic land words, with a qualifier, and the Ring only from the ne
 // ── §15.2 Families and endings ──────────────────────────────────────────────
 
 test("§15.2: every culture's weights sum to 100", () => {
-  assert.equal(Object.keys(PEOPLES_DATA.weights).length, 20);
+  assert.equal(Object.keys(PEOPLES_DATA.weights).length, 23) // Brief 6d: andean, polynesian and american join aztec and maya;
   for (const c of PEOPLE_CULTURES) {
     const sum = Object.values(PEOPLES_DATA.weights[engineCulture(c.key)]).reduce((a, b) => a + b, 0);
     assert.equal(sum, 100, c.key);

@@ -20,7 +20,10 @@
     "bantu": { "an": 60, "ese": 25, "ian": 15 },
     "west-african": { "ese": 40, "an": 30, "ian": 25, "i": 5 },
     "aztec": { "an": 50, "ec": 30, "ese": 10, "ian": 10 },
-    "maya": { "an": 60, "ec": 25, "ian": 15 }
+    "maya": { "an": 60, "ec": 25, "ian": 15 },
+    "andean": { "an": 50, "ian": 20, "ese": 20, "i": 10 },
+    "polynesian": { "an": 55, "ese": 25, "ian": 20 },
+    "american": { "ian": 40, "an": 25, "er": 20, "ite": 15 }
   },
   "suffixes": {
     "an": "an", "ian": "ian", "ese": "ese", "i": "i", "ite": "ite", "ine": "ine", "iot": "iot", "ene": "ene", "itan": "itan", "ec": "ec"

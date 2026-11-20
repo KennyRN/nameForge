@@ -5,7 +5,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2134,
+   "rowCount": 2559,
    "cultures": {
     "general": {
      "words": 0,
@@ -354,77 +354,76 @@
      "below": false
     },
     "aztec": {
-     "words": 4,
-     "shapes": 3,
+     "words": 79,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 4,
-     "shapes": 3,
+     "words": 79,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 3,
-     "shapes": 3,
+     "words": 78,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 6,
-     "shapes": 3,
+     "words": 81,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 75,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 366,
-    "MD": 382,
-    "EM": 385,
-    "ST": 570,
-    "MO": 297,
-    "NF": 90,
-    "IS": 108
+    "AN": 456,
+    "MD": 472,
+    "EM": 475,
+    "ST": 720,
+    "MO": 417,
+    "NF": 150,
+    "IS": 168
    },
    "styles": {
     "high-fantasy": {
-     "words": 142,
+     "words": 202,
      "shapes": 11
     },
     "contemporary-fantasy": {
-     "words": 142,
+     "words": 202,
      "shapes": 11
     },
     "space-opera": {
-     "words": 142,
+     "words": 202,
      "shapes": 11
     },
     "steampunk": {
@@ -503,7 +502,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -528,7 +526,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2120,
+   "rowCount": 2320,
    "cultures": {
     "general": {
      "words": 0,
@@ -877,63 +875,62 @@
      "below": false
     },
     "aztec": {
-     "words": 11,
-     "shapes": 6,
+     "words": 41,
+     "shapes": 16,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 9,
-     "shapes": 4,
+     "words": 39,
+     "shapes": 14,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 3,
-     "shapes": 2,
+     "words": 33,
+     "shapes": 12,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 2,
-     "shapes": 3,
+     "words": 32,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 317,
-    "MD": 326,
-    "EM": 303,
-    "ST": 582,
-    "MO": 238,
+    "AN": 362,
+    "MD": 371,
+    "EM": 348,
+    "ST": 657,
+    "MO": 268,
     "NF": 70,
     "IS": 68
    },
@@ -943,15 +940,15 @@
      "shapes": 10
     },
     "high-fantasy": {
-     "words": 93,
+     "words": 108,
      "shapes": 0
     },
     "contemporary-fantasy": {
-     "words": 93,
+     "words": 108,
      "shapes": 0
     },
     "space-opera": {
-     "words": 93,
+     "words": 108,
      "shapes": 0
     }
    },
@@ -993,7 +990,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -1018,7 +1014,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2193,
+   "rowCount": 2393,
    "cultures": {
     "general": {
      "words": 0,
@@ -1367,63 +1363,62 @@
      "below": false
     },
     "aztec": {
-     "words": 5,
-     "shapes": 3,
+     "words": 35,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 4,
-     "shapes": 3,
+     "words": 34,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 1,
-     "shapes": 2,
+     "words": 31,
+     "shapes": 12,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 1,
-     "shapes": 2,
+     "words": 31,
+     "shapes": 12,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 316,
-    "MD": 326,
-    "EM": 310,
-    "ST": 549,
-    "MO": 211,
+    "AN": 361,
+    "MD": 371,
+    "EM": 355,
+    "ST": 624,
+    "MO": 241,
     "NF": 26,
     "IS": 26
    },
@@ -1433,15 +1428,15 @@
      "shapes": 6
     },
     "high-fantasy": {
-     "words": 102,
+     "words": 117,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 102,
+     "words": 117,
      "shapes": 6
     },
     "space-opera": {
-     "words": 102,
+     "words": 117,
      "shapes": 6
     }
    },
@@ -1487,7 +1482,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -1512,7 +1506,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2106,
+   "rowCount": 2316,
    "cultures": {
     "general": {
      "words": 0,
@@ -1861,63 +1855,62 @@
      "below": false
     },
     "aztec": {
-     "words": 8,
-     "shapes": 4,
+     "words": 40,
+     "shapes": 14,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 6,
-     "shapes": 6,
+     "words": 38,
+     "shapes": 16,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 3,
+     "words": 32,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 1,
-     "shapes": 2,
+     "words": 33,
+     "shapes": 12,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 321,
-    "MD": 337,
-    "EM": 317,
-    "ST": 560,
-    "MO": 216,
+    "AN": 366,
+    "MD": 382,
+    "EM": 362,
+    "ST": 635,
+    "MO": 246,
     "NF": 35,
     "IS": 35
    },
@@ -1927,15 +1920,15 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 95,
+     "words": 110,
      "shapes": 0
     },
     "contemporary-fantasy": {
-     "words": 95,
+     "words": 110,
      "shapes": 0
     },
     "space-opera": {
-     "words": 95,
+     "words": 110,
      "shapes": 0
     }
    },
@@ -1984,7 +1977,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -2009,7 +2001,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1859,
+   "rowCount": 2059,
    "cultures": {
     "general": {
      "words": 0,
@@ -2358,63 +2350,62 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 2,
+     "words": 30,
+     "shapes": 12,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 1,
-     "shapes": 3,
+     "words": 31,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 400,
-    "MD": 392,
-    "EM": 337,
-    "ST": 530,
-    "MO": 226,
+    "AN": 445,
+    "MD": 437,
+    "EM": 382,
+    "ST": 605,
+    "MO": 256,
     "NF": 25,
     "IS": 23
    },
@@ -2424,15 +2415,15 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 93,
+     "words": 108,
      "shapes": 9
     },
     "contemporary-fantasy": {
-     "words": 93,
+     "words": 108,
      "shapes": 9
     },
     "space-opera": {
-     "words": 93,
+     "words": 108,
      "shapes": 9
     }
    },
@@ -2481,7 +2472,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -3012,7 +3002,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2217,
+   "rowCount": 2505,
    "cultures": {
     "general": {
      "words": 0,
@@ -3361,53 +3351,52 @@
      "below": false
     },
     "aztec": {
-     "words": 10,
-     "shapes": 3,
+     "words": 58,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 10,
-     "shapes": 3,
+     "words": 58,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -3423,11 +3412,11 @@
     }
    },
    "eras": {
-    "AN": 190,
-    "MD": 266,
-    "EM": 267,
-    "ST": 210,
-    "MO": 217,
+    "AN": 220,
+    "MD": 305,
+    "EM": 306,
+    "ST": 240,
+    "MO": 252,
     "NF": 28,
     "IS": 31
    },
@@ -3437,16 +3426,16 @@
      "shapes": 6
     },
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -3470,7 +3459,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -3495,7 +3483,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2518,
+   "rowCount": 2778,
    "cultures": {
     "general": {
      "words": 0,
@@ -3844,56 +3832,54 @@
      "below": false
     },
     "aztec": {
-     "words": 17,
-     "shapes": 0,
+     "words": 60,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 12,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "excluded": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "excluded": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 44,
-     "shapes": 2,
+     "words": 84,
+     "shapes": 12,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "anglo-saxon": {
      "words": 45,
@@ -3907,26 +3893,26 @@
     }
    },
    "eras": {
-    "AN": 323,
-    "MD": 476,
-    "EM": 495,
-    "ST": 435,
-    "MO": 374,
+    "AN": 363,
+    "MD": 526,
+    "EM": 525,
+    "ST": 465,
+    "MO": 406,
     "NF": 165,
     "IS": 168
    },
    "styles": {
     "high-fantasy": {
-     "words": 131,
-     "shapes": 62
+     "words": 146,
+     "shapes": 72
     },
     "contemporary-fantasy": {
-     "words": 131,
-     "shapes": 62
+     "words": 146,
+     "shapes": 72
     },
     "space-opera": {
-     "words": 131,
-     "shapes": 62
+     "words": 146,
+     "shapes": 72
     },
     "steampunk": {
      "words": 9,
@@ -3976,7 +3962,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2694,
+   "rowCount": 2974,
    "cultures": {
     "general": {
      "words": 0,
@@ -4325,55 +4311,52 @@
      "below": false
     },
     "aztec": {
-     "words": 37,
-     "shapes": 3,
+     "words": 83,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 3,
+     "words": 47,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 6,
-     "shapes": 0,
+     "words": 53,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "excluded": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 10,
-     "shapes": 1,
+     "words": 55,
+     "shapes": 11,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "excluded": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -4389,26 +4372,26 @@
     }
    },
    "eras": {
-    "AN": 345,
-    "MD": 374,
-    "EM": 337,
-    "ST": 196,
-    "MO": 203,
+    "AN": 375,
+    "MD": 412,
+    "EM": 378,
+    "ST": 226,
+    "MO": 235,
     "NF": 4,
     "IS": 4
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 64
+     "words": 120,
+     "shapes": 74
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 64
+     "words": 120,
+     "shapes": 74
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 64
+     "words": 120,
+     "shapes": 74
     },
     "steampunk": {
      "words": 0,
@@ -4431,7 +4414,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -4456,7 +4438,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2006,
+   "rowCount": 2268,
    "cultures": {
     "general": {
      "words": 0,
@@ -4805,55 +4787,52 @@
      "below": false
     },
     "aztec": {
-     "words": 7,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 5,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 6,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "excluded": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 5,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "excluded": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -4869,26 +4848,26 @@
     }
    },
    "eras": {
-    "AN": 188,
-    "MD": 188,
-    "EM": 188,
-    "ST": 183,
-    "MO": 259,
+    "AN": 218,
+    "MD": 218,
+    "EM": 218,
+    "ST": 213,
+    "MO": 301,
     "NF": 2,
     "IS": 2
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 61
+     "words": 120,
+     "shapes": 71
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 61
+     "words": 120,
+     "shapes": 71
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 61
+     "words": 120,
+     "shapes": 71
     }
    },
    "tones": {
@@ -4909,7 +4888,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -4934,7 +4912,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2899,
+   "rowCount": 3099,
    "cultures": {
     "general": {
      "words": 0,
@@ -5284,77 +5262,76 @@
      "below": false
     },
     "aztec": {
-     "words": 5,
-     "shapes": 0,
+     "words": 35,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 3,
-     "shapes": 0,
+     "words": 33,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 4,
-     "shapes": 0,
+     "words": 34,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 289,
-    "MD": 277,
-    "EM": 467,
-    "ST": 467,
-    "MO": 467,
+    "AN": 334,
+    "MD": 322,
+    "EM": 542,
+    "ST": 542,
+    "MO": 542,
     "NF": 6,
     "IS": 6
    },
    "styles": {
     "high-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 13
     },
     "contemporary-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 13
     },
     "space-opera": {
-     "words": 121,
+     "words": 136,
      "shapes": 13
     }
    },
@@ -5405,7 +5382,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -5430,7 +5406,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 3030,
+   "rowCount": 3230,
    "cultures": {
     "general": {
      "words": 0,
@@ -5779,77 +5755,76 @@
      "below": false
     },
     "aztec": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 3,
-     "shapes": 0,
+     "words": 33,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 287,
-    "MD": 288,
-    "EM": 487,
-    "ST": 487,
-    "MO": 487,
+    "AN": 332,
+    "MD": 333,
+    "EM": 562,
+    "ST": 562,
+    "MO": 562,
     "NF": 4,
     "IS": 4
    },
    "styles": {
     "high-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 7
     },
     "contemporary-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 7
     },
     "space-opera": {
-     "words": 121,
+     "words": 136,
      "shapes": 7
     }
    },
@@ -5898,7 +5873,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -5923,7 +5897,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1279,
+   "rowCount": 1439,
    "cultures": {
     "general": {
      "words": 0,
@@ -6285,34 +6259,34 @@
      "below": false
     },
     "aztec": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 3,
-     "shapes": 0,
+     "words": 33,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
      "words": 0,
@@ -6321,41 +6295,41 @@
       "words": 12,
       "shapes": 4
      },
+     "excluded": true,
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 103,
-    "MD": 101,
-    "EM": 177,
-    "ST": 177,
-    "MO": 177,
+    "AN": 139,
+    "MD": 137,
+    "EM": 237,
+    "ST": 237,
+    "MO": 237,
     "NF": 8,
     "IS": 8
    },
    "styles": {
     "high-fantasy": {
-     "words": 58,
+     "words": 70,
      "shapes": 5
     },
     "contemporary-fantasy": {
-     "words": 58,
+     "words": 70,
      "shapes": 5
     },
     "space-opera": {
-     "words": 58,
+     "words": 70,
      "shapes": 5
     }
    },
@@ -6381,7 +6355,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -6406,7 +6379,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2715,
+   "rowCount": 2875,
    "cultures": {
     "general": {
      "words": 0,
@@ -6755,34 +6728,34 @@
      "below": false
     },
     "aztec": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
      "words": 0,
@@ -6791,41 +6764,41 @@
       "words": 12,
       "shapes": 4
      },
+     "excluded": true,
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 286,
-    "MD": 274,
-    "EM": 465,
-    "ST": 465,
-    "MO": 465,
+    "AN": 322,
+    "MD": 310,
+    "EM": 525,
+    "ST": 525,
+    "MO": 525,
     "NF": 5,
     "IS": 5
    },
    "styles": {
     "high-fantasy": {
-     "words": 121,
+     "words": 133,
      "shapes": 3
     },
     "contemporary-fantasy": {
-     "words": 121,
+     "words": 133,
      "shapes": 3
     },
     "space-opera": {
-     "words": 121,
+     "words": 133,
      "shapes": 3
     }
    },
@@ -6873,7 +6846,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -6898,7 +6870,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2885,
+   "rowCount": 3085,
    "cultures": {
     "general": {
      "words": 0,
@@ -7247,77 +7219,76 @@
      "below": false
     },
     "aztec": {
-     "words": 4,
-     "shapes": 0,
+     "words": 34,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 289,
-    "MD": 274,
-    "EM": 466,
-    "ST": 466,
-    "MO": 466,
+    "AN": 334,
+    "MD": 319,
+    "EM": 541,
+    "ST": 541,
+    "MO": 541,
     "NF": 5,
     "IS": 5
    },
    "styles": {
     "high-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 2
     },
     "contemporary-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 2
     },
     "space-opera": {
-     "words": 121,
+     "words": 136,
      "shapes": 2
     }
    },
@@ -7366,7 +7337,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -7391,7 +7361,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 3014,
+   "rowCount": 3214,
    "cultures": {
     "general": {
      "words": 0,
@@ -7740,77 +7710,76 @@
      "below": false
     },
     "aztec": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 3,
-     "shapes": 0,
+     "words": 33,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 286,
-    "MD": 274,
-    "EM": 473,
-    "ST": 473,
-    "MO": 473,
+    "AN": 331,
+    "MD": 319,
+    "EM": 548,
+    "ST": 548,
+    "MO": 548,
     "NF": 4,
     "IS": 4
    },
    "styles": {
     "high-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 4
     },
     "contemporary-fantasy": {
-     "words": 121,
+     "words": 136,
      "shapes": 4
     },
     "space-opera": {
-     "words": 121,
+     "words": 136,
      "shapes": 4
     }
    },
@@ -7859,7 +7828,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -7884,7 +7852,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2817,
+   "rowCount": 3017,
    "cultures": {
     "general": {
      "words": 0,
@@ -8233,77 +8201,76 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 285,
-    "MD": 270,
-    "EM": 467,
-    "ST": 467,
-    "MO": 467,
+    "AN": 330,
+    "MD": 315,
+    "EM": 542,
+    "ST": 542,
+    "MO": 542,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     },
     "space-opera": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     }
    },
@@ -8348,7 +8315,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -8373,7 +8339,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2683,
+   "rowCount": 2883,
    "cultures": {
     "general": {
      "words": 0,
@@ -8722,77 +8688,76 @@
      "below": false
     },
     "aztec": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 288,
-    "MD": 275,
-    "EM": 466,
-    "ST": 466,
-    "MO": 466,
+    "AN": 333,
+    "MD": 320,
+    "EM": 541,
+    "ST": 541,
+    "MO": 541,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 5
     },
     "contemporary-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 5
     },
     "space-opera": {
-     "words": 114,
+     "words": 129,
      "shapes": 5
     }
    },
@@ -8842,7 +8807,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -8867,7 +8831,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2871,
+   "rowCount": 3071,
    "cultures": {
     "general": {
      "words": 0,
@@ -9216,77 +9180,76 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 285,
-    "MD": 270,
-    "EM": 462,
-    "ST": 462,
-    "MO": 462,
+    "AN": 330,
+    "MD": 315,
+    "EM": 537,
+    "ST": 537,
+    "MO": 537,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     },
     "space-opera": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     }
    },
@@ -9335,7 +9298,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -9360,7 +9322,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2922,
+   "rowCount": 3122,
    "cultures": {
     "general": {
      "words": 0,
@@ -9709,77 +9671,76 @@
      "below": false
     },
     "aztec": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 285,
-    "MD": 271,
-    "EM": 464,
-    "ST": 464,
-    "MO": 464,
+    "AN": 330,
+    "MD": 316,
+    "EM": 539,
+    "ST": 539,
+    "MO": 539,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     },
     "contemporary-fantasy": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     },
     "space-opera": {
-     "words": 114,
+     "words": 129,
      "shapes": 6
     }
    },
@@ -9828,7 +9789,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -10246,8 +10206,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
      "words": 2,
@@ -10256,8 +10217,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
      "words": 0,
@@ -10266,8 +10228,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
      "words": 2,
@@ -10276,8 +10239,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
      "words": 0,
@@ -10287,6 +10251,7 @@
       "shapes": 4
      },
      "notOffered": true,
+     "deferred": "styles",
      "profile": false,
      "below": false
     }
@@ -10373,7 +10338,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2119,
+   "rowCount": 2319,
    "cultures": {
     "general": {
      "words": 0,
@@ -10722,77 +10687,76 @@
      "below": false
     },
     "aztec": {
-     "words": 3,
-     "shapes": 0,
+     "words": 33,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 1,
-     "shapes": 0,
+     "words": 31,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 2,
-     "shapes": 0,
+     "words": 32,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 6,
-     "shapes": 0,
+     "words": 36,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 295,
-    "MD": 277,
-    "EM": 462,
-    "ST": 462,
-    "MO": 462,
+    "AN": 340,
+    "MD": 322,
+    "EM": 537,
+    "ST": 537,
+    "MO": 537,
     "NF": 0,
     "IS": 1
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
+     "words": 120,
      "shapes": 2
     },
     "contemporary-fantasy": {
-     "words": 105,
+     "words": 120,
      "shapes": 2
     },
     "space-opera": {
-     "words": 105,
+     "words": 120,
      "shapes": 2
     }
    },
@@ -10837,7 +10801,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -10862,7 +10825,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1806,
+   "rowCount": 2006,
    "cultures": {
     "general": {
      "words": 0,
@@ -11211,77 +11174,76 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 286,
-    "MD": 270,
-    "EM": 464,
-    "ST": 464,
-    "MO": 464,
+    "AN": 331,
+    "MD": 315,
+    "EM": 539,
+    "ST": 539,
+    "MO": 539,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
+     "words": 120,
      "shapes": 1
     },
     "contemporary-fantasy": {
-     "words": 105,
+     "words": 120,
      "shapes": 1
     },
     "space-opera": {
-     "words": 105,
+     "words": 120,
      "shapes": 1
     }
    },
@@ -11326,7 +11288,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -11351,7 +11312,7 @@
    "land": true,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2151,
+   "rowCount": 2351,
    "cultures": {
     "general": {
      "words": 0,
@@ -11700,77 +11661,76 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 286,
-    "MD": 273,
-    "EM": 483,
-    "ST": 483,
-    "MO": 483,
+    "AN": 331,
+    "MD": 318,
+    "EM": 558,
+    "ST": 558,
+    "MO": 558,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
+     "words": 120,
      "shapes": 2
     },
     "contemporary-fantasy": {
-     "words": 105,
+     "words": 120,
      "shapes": 2
     },
     "space-opera": {
-     "words": 105,
+     "words": 120,
      "shapes": 2
     }
    },
@@ -11815,7 +11775,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -12214,8 +12173,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
      "words": 0,
@@ -12224,8 +12184,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
      "words": 0,
@@ -12234,8 +12195,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
      "words": 0,
@@ -12244,8 +12206,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
      "words": 0,
@@ -12254,8 +12217,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     }
    },
    "eras": {
@@ -12292,7 +12256,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2392,
+   "rowCount": 2690,
    "cultures": {
     "general": {
      "words": 0,
@@ -12641,55 +12605,52 @@
      "below": false
     },
     "aztec": {
-     "words": 3,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 4,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -12705,26 +12666,26 @@
     }
    },
    "eras": {
-    "AN": 244,
-    "MD": 322,
-    "EM": 193,
-    "ST": 182,
-    "MO": 191,
+    "AN": 283,
+    "MD": 373,
+    "EM": 225,
+    "ST": 212,
+    "MO": 223,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -12748,9 +12709,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -12775,7 +12733,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2043,
+   "rowCount": 2340,
    "cultures": {
     "general": {
      "words": 0,
@@ -13124,55 +13082,52 @@
      "below": false
     },
     "aztec": {
-     "words": 6,
-     "shapes": 0,
+     "words": 56,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 5,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -13188,26 +13143,26 @@
     }
    },
    "eras": {
-    "AN": 188,
-    "MD": 441,
-    "EM": 338,
-    "ST": 186,
-    "MO": 185,
+    "AN": 219,
+    "MD": 503,
+    "EM": 380,
+    "ST": 216,
+    "MO": 215,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -13225,9 +13180,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -13252,7 +13204,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2363,
+   "rowCount": 2619,
    "cultures": {
     "general": {
      "words": 0,
@@ -13602,55 +13554,52 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 3,
+     "words": 44,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 3,
+     "words": 40,
+     "shapes": 13,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -13666,26 +13615,26 @@
     }
    },
    "eras": {
-    "AN": 169,
-    "MD": 300,
-    "EM": 217,
-    "ST": 157,
-    "MO": 156,
+    "AN": 199,
+    "MD": 336,
+    "EM": 251,
+    "ST": 187,
+    "MO": 186,
     "NF": 0,
     "IS": 0
    },
    "styles": {
     "high-fantasy": {
-     "words": 93,
-     "shapes": 52
+     "words": 108,
+     "shapes": 62
     },
     "contemporary-fantasy": {
-     "words": 93,
-     "shapes": 52
+     "words": 108,
+     "shapes": 62
     },
     "space-opera": {
-     "words": 93,
-     "shapes": 52
+     "words": 108,
+     "shapes": 62
     }
    },
    "tones": {
@@ -13706,9 +13655,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -13733,7 +13679,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2499,
+   "rowCount": 2805,
    "cultures": {
     "general": {
      "words": 0,
@@ -14082,55 +14028,52 @@
      "below": false
     },
     "aztec": {
-     "words": 3,
-     "shapes": 0,
+     "words": 59,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -14146,26 +14089,26 @@
     }
    },
    "eras": {
-    "AN": 197,
-    "MD": 424,
-    "EM": 558,
-    "ST": 293,
-    "MO": 183,
+    "AN": 227,
+    "MD": 481,
+    "EM": 637,
+    "ST": 344,
+    "MO": 213,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 111,
-     "shapes": 60
+     "words": 126,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 111,
-     "shapes": 60
+     "words": 126,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 111,
-     "shapes": 60
+     "words": 126,
+     "shapes": 70
     }
    },
    "tones": {
@@ -14190,9 +14133,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -14217,7 +14157,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2403,
+   "rowCount": 2698,
    "cultures": {
     "general": {
      "words": 0,
@@ -14566,55 +14506,52 @@
      "below": false
     },
     "aztec": {
-     "words": 4,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 3,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -14630,26 +14567,26 @@
     }
    },
    "eras": {
-    "AN": 201,
-    "MD": 394,
-    "EM": 308,
-    "ST": 193,
-    "MO": 200,
+    "AN": 231,
+    "MD": 446,
+    "EM": 350,
+    "ST": 223,
+    "MO": 233,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -14676,9 +14613,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -14703,7 +14637,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2333,
+   "rowCount": 2635,
    "cultures": {
     "general": {
      "words": 0,
@@ -15052,55 +14986,52 @@
      "below": false
     },
     "aztec": {
-     "words": 3,
-     "shapes": 0,
+     "words": 53,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 51,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 54,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -15116,26 +15047,26 @@
     }
    },
    "eras": {
-    "AN": 219,
-    "MD": 464,
-    "EM": 361,
-    "ST": 196,
-    "MO": 186,
+    "AN": 252,
+    "MD": 526,
+    "EM": 403,
+    "ST": 226,
+    "MO": 216,
     "NF": 8,
     "IS": 8
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -15158,9 +15089,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -15185,7 +15113,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2081,
+   "rowCount": 2315,
    "cultures": {
     "general": {
      "words": 0,
@@ -15534,55 +15462,52 @@
      "below": false
     },
     "aztec": {
-     "words": 1,
-     "shapes": 0,
+     "words": 38,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 1,
-     "shapes": 0,
+     "words": 38,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 36,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -15598,26 +15523,26 @@
     }
    },
    "eras": {
-    "AN": 336,
-    "MD": 470,
-    "EM": 396,
+    "AN": 400,
+    "MD": 538,
+    "EM": 464,
     "ST": 0,
-    "MO": 213,
+    "MO": 243,
     "NF": 34,
     "IS": 42
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -15640,9 +15565,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -15667,7 +15589,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2012,
+   "rowCount": 2302,
    "cultures": {
     "general": {
      "words": 0,
@@ -16016,56 +15938,53 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
-     "profile": false,
+     "profile": true,
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
-     "profile": false,
+     "profile": true,
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
-     "profile": false,
+     "profile": true,
      "below": false
     },
     "anglo-saxon": {
@@ -16080,26 +15999,26 @@
     }
    },
    "eras": {
-    "AN": 203,
-    "MD": 220,
-    "EM": 187,
-    "ST": 183,
-    "MO": 256,
+    "AN": 236,
+    "MD": 255,
+    "EM": 219,
+    "ST": 213,
+    "MO": 296,
     "NF": 7,
     "IS": 7
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -16113,9 +16032,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "andean",
-     "polynesian",
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -16140,7 +16056,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2262,
+   "rowCount": 2540,
    "cultures": {
     "general": {
      "words": 0,
@@ -16489,28 +16405,28 @@
      "below": false
     },
     "aztec": {
-     "words": 19,
-     "shapes": 1,
+     "words": 65,
+     "shapes": 11,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 14,
-     "shapes": 1,
+     "words": 59,
+     "shapes": 11,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -16520,8 +16436,8 @@
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -16531,13 +16447,12 @@
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     },
@@ -16553,11 +16468,11 @@
     }
    },
    "eras": {
-    "AN": 180,
-    "MD": 180,
-    "EM": 180,
-    "ST": 183,
-    "MO": 201,
+    "AN": 210,
+    "MD": 210,
+    "EM": 210,
+    "ST": 213,
+    "MO": 234,
     "NF": 14,
     "IS": 14
    },
@@ -16567,16 +16482,16 @@
      "shapes": 3
     },
     "high-fantasy": {
-     "words": 109,
-     "shapes": 60
+     "words": 124,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 109,
-     "shapes": 60
+     "words": 124,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 109,
-     "shapes": 60
+     "words": 124,
+     "shapes": 70
     }
    },
    "tones": {
@@ -16593,7 +16508,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -16618,7 +16532,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1597,
+   "rowCount": 1797,
    "cultures": {
     "general": {
      "words": 0,
@@ -16967,28 +16881,28 @@
      "below": false
     },
     "aztec": {
-     "words": 19,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 14,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -16998,8 +16912,8 @@
      "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -17009,23 +16923,22 @@
      "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 30,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
-     "notOffered": true,
      "profile": false,
      "below": false
     }
    },
    "eras": {
-    "AN": 285,
-    "MD": 270,
-    "EM": 282,
-    "ST": 446,
-    "MO": 180,
+    "AN": 330,
+    "MD": 315,
+    "EM": 327,
+    "ST": 521,
+    "MO": 210,
     "NF": 9,
     "IS": 9
    },
@@ -17035,15 +16948,15 @@
      "shapes": 2
     },
     "high-fantasy": {
-     "words": 109,
+     "words": 124,
      "shapes": 0
     },
     "contemporary-fantasy": {
-     "words": 109,
+     "words": 124,
      "shapes": 0
     },
     "space-opera": {
-     "words": 109,
+     "words": 124,
      "shapes": 0
     }
    },
@@ -17060,7 +16973,6 @@
    "roster": {
     "localKeys": [],
     "notOffered": [
-     "american",
      "ottoman",
      "swahili-omani",
      "malay",
@@ -17085,7 +16997,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 1975,
+   "rowCount": 2190,
    "cultures": {
     "general": {
      "words": 0,
@@ -17434,48 +17346,48 @@
      "below": false
     },
     "aztec": {
-     "words": 7,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 7,
-     "shapes": 0,
+     "words": 40,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 6,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 10,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 33,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -17550,16 +17462,16 @@
    },
    "styles": {
     "high-fantasy": {
-     "words": 102,
-     "shapes": 60
+     "words": 117,
+     "shapes": 70
     },
     "contemporary-fantasy": {
-     "words": 102,
-     "shapes": 60
+     "words": 117,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 102,
-     "shapes": 60
+     "words": 117,
+     "shapes": 70
     }
    },
    "tones": {
@@ -17615,7 +17527,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2660,
+   "rowCount": 2947,
    "cultures": {
     "general": {
      "words": 0,
@@ -17964,48 +17876,48 @@
      "below": false
     },
     "aztec": {
-     "words": 1,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 1,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 3,
-     "shapes": 0,
+     "words": 50,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 1,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -18070,30 +17982,30 @@
     }
    },
    "eras": {
-    "AN": 212,
-    "MD": 315,
-    "EM": 212,
-    "ST": 183,
-    "MO": 270,
+    "AN": 252,
+    "MD": 358,
+    "EM": 242,
+    "ST": 213,
+    "MO": 310,
     "NF": 0,
     "IS": 23
    },
    "styles": {
     "high-fantasy": {
-     "words": 106,
-     "shapes": 97
+     "words": 121,
+     "shapes": 107
     },
     "contemporary-fantasy": {
-     "words": 106,
-     "shapes": 97
+     "words": 121,
+     "shapes": 107
     },
     "low-fantasy": {
      "words": 0,
      "shapes": 14
     },
     "space-opera": {
-     "words": 106,
-     "shapes": 60
+     "words": 121,
+     "shapes": 70
     }
    },
    "tones": {
@@ -18144,7 +18056,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2617,
+   "rowCount": 2888,
    "cultures": {
     "general": {
      "words": 0,
@@ -18493,48 +18405,48 @@
      "below": false
     },
     "aztec": {
-     "words": 2,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 2,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 1,
-     "shapes": 0,
+     "words": 47,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -18599,11 +18511,11 @@
     }
    },
    "eras": {
-    "AN": 199,
-    "MD": 390,
-    "EM": 356,
-    "ST": 232,
-    "MO": 202,
+    "AN": 229,
+    "MD": 446,
+    "EM": 411,
+    "ST": 270,
+    "MO": 232,
     "NF": 0,
     "IS": 12
    },
@@ -18613,16 +18525,16 @@
      "shapes": 12
     },
     "high-fantasy": {
-     "words": 105,
-     "shapes": 72
+     "words": 120,
+     "shapes": 82
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 72
+     "words": 120,
+     "shapes": 82
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -18674,7 +18586,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2447,
+   "rowCount": 2705,
    "cultures": {
     "general": {
      "words": 0,
@@ -19023,48 +18935,48 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -19129,11 +19041,11 @@
     }
    },
    "eras": {
-    "AN": 183,
-    "MD": 404,
-    "EM": 488,
-    "ST": 273,
-    "MO": 235,
+    "AN": 213,
+    "MD": 456,
+    "EM": 549,
+    "ST": 305,
+    "MO": 265,
     "NF": 0,
     "IS": 22
    },
@@ -19143,16 +19055,16 @@
      "shapes": 25
     },
     "high-fantasy": {
-     "words": 105,
-     "shapes": 85
+     "words": 120,
+     "shapes": 95
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 96
+     "words": 120,
+     "shapes": 106
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -19203,7 +19115,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2927,
+   "rowCount": 3215,
    "cultures": {
     "general": {
      "words": 0,
@@ -19552,48 +19464,48 @@
      "below": false
     },
     "aztec": {
-     "words": 1,
-     "shapes": 0,
+     "words": 45,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 1,
-     "shapes": 0,
+     "words": 55,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 52,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -19658,26 +19570,26 @@
     }
    },
    "eras": {
-    "AN": 188,
-    "MD": 419,
-    "EM": 371,
-    "ST": 188,
-    "MO": 204,
+    "AN": 218,
+    "MD": 477,
+    "EM": 422,
+    "ST": 218,
+    "MO": 235,
     "NF": 0,
     "IS": 15
    },
    "styles": {
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 75
+     "words": 120,
+     "shapes": 85
     },
     "high-fantasy": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -19733,7 +19645,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2262,
+   "rowCount": 2541,
    "cultures": {
     "general": {
      "words": 0,
@@ -20082,48 +19994,48 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 46,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 48,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 2,
-     "shapes": 0,
+     "words": 49,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -20188,11 +20100,11 @@
     }
    },
    "eras": {
-    "AN": 182,
-    "MD": 426,
-    "EM": 431,
-    "ST": 216,
-    "MO": 202,
+    "AN": 212,
+    "MD": 489,
+    "EM": 491,
+    "ST": 247,
+    "MO": 232,
     "NF": 0,
     "IS": 19
    },
@@ -20202,16 +20114,16 @@
      "shapes": 19
     },
     "high-fantasy": {
-     "words": 105,
-     "shapes": 79
+     "words": 120,
+     "shapes": 89
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 79
+     "words": 120,
+     "shapes": 89
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -20259,7 +20171,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2522,
+   "rowCount": 2759,
    "cultures": {
     "general": {
      "words": 0,
@@ -20608,48 +20520,48 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 38,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 36,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 37,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -20714,11 +20626,11 @@
     }
    },
    "eras": {
-    "AN": 196,
-    "MD": 364,
-    "EM": 302,
-    "ST": 199,
-    "MO": 197,
+    "AN": 226,
+    "MD": 399,
+    "EM": 336,
+    "ST": 230,
+    "MO": 228,
     "NF": 0,
     "IS": 7
    },
@@ -20728,16 +20640,16 @@
      "shapes": 7
     },
     "high-fantasy": {
-     "words": 105,
-     "shapes": 67
+     "words": 120,
+     "shapes": 77
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 67
+     "words": 120,
+     "shapes": 77
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 60
+     "words": 120,
+     "shapes": 70
     }
    },
    "tones": {
@@ -20789,7 +20701,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2386,
+   "rowCount": 2653,
    "cultures": {
     "general": {
      "words": 0,
@@ -21138,48 +21050,48 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
@@ -21244,11 +21156,11 @@
     }
    },
    "eras": {
-    "AN": 238,
-    "MD": 314,
-    "EM": 180,
-    "ST": 180,
-    "MO": 270,
+    "AN": 273,
+    "MD": 349,
+    "EM": 210,
+    "ST": 210,
+    "MO": 302,
     "NF": 0,
     "IS": 0
    },
@@ -21258,16 +21170,16 @@
      "shapes": 63
     },
     "high-fantasy": {
-     "words": 204,
-     "shapes": 136
+     "words": 259,
+     "shapes": 146
     },
     "contemporary-fantasy": {
-     "words": 204,
-     "shapes": 136
+     "words": 259,
+     "shapes": 146
     },
     "space-opera": {
-     "words": 204,
-     "shapes": 60
+     "words": 259,
+     "shapes": 70
     }
    },
    "tones": {
@@ -21319,7 +21231,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2479,
+   "rowCount": 2744,
    "cultures": {
     "general": {
      "words": 0,
@@ -21668,54 +21580,54 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "maya": {
-     "words": 0,
-     "shapes": 0,
+     "words": 43,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "andean": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "polynesian": {
-     "words": 0,
-     "shapes": 0,
+     "words": 44,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 42,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
     },
     "ottoman": {
      "words": 0,
@@ -21828,22 +21740,22 @@
     }
    },
    "eras": {
-    "AN": 212,
-    "MD": 255,
-    "EM": 379,
-    "ST": 331,
-    "MO": 205,
+    "AN": 242,
+    "MD": 290,
+    "EM": 437,
+    "ST": 381,
+    "MO": 235,
     "NF": 51,
     "IS": 51
    },
    "styles": {
     "high-fantasy": {
-     "words": 210,
-     "shapes": 83
+     "words": 225,
+     "shapes": 93
     },
     "contemporary-fantasy": {
-     "words": 126,
-     "shapes": 63
+     "words": 141,
+     "shapes": 73
     },
     "steampunk": {
      "words": 19,
@@ -21858,8 +21770,8 @@
      "shapes": 7
     },
     "space-opera": {
-     "words": 194,
-     "shapes": 78
+     "words": 209,
+     "shapes": 88
     }
    },
    "tones": {
@@ -22297,8 +22209,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
      "words": 0,
@@ -22307,8 +22220,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
      "words": 0,
@@ -22317,8 +22231,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
      "words": 0,
@@ -22327,8 +22242,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
      "words": 0,
@@ -22337,8 +22253,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "ottoman": {
      "words": 0,
@@ -22532,7 +22449,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2135,
+   "rowCount": 2376,
    "cultures": {
     "general": {
      "words": 0,
@@ -22881,54 +22798,54 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "maya": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "andean": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "polynesian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 39,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
+    },
+    "maya": {
+     "words": 38,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
+    },
+    "andean": {
+     "words": 39,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
+    },
+    "polynesian": {
+     "words": 38,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
+    },
+    "american": {
+     "words": 37,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
     },
     "ottoman": {
      "words": 0,
@@ -23041,22 +22958,22 @@
     }
    },
    "eras": {
-    "AN": 195,
-    "MD": 233,
-    "EM": 233,
-    "ST": 310,
-    "MO": 337,
+    "AN": 225,
+    "MD": 270,
+    "EM": 270,
+    "ST": 354,
+    "MO": 382,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 216,
-     "shapes": 65
+     "words": 253,
+     "shapes": 75
     },
     "contemporary-fantasy": {
-     "words": 216,
-     "shapes": 61
+     "words": 253,
+     "shapes": 71
     },
     "steampunk": {
      "words": 0,
@@ -23071,8 +22988,8 @@
      "shapes": 2
     },
     "space-opera": {
-     "words": 216,
-     "shapes": 64
+     "words": 253,
+     "shapes": 74
     }
    },
    "tones": {
@@ -23130,7 +23047,7 @@
    "land": false,
    "adapter": true,
    "noTables": false,
-   "rowCount": 2300,
+   "rowCount": 2555,
    "cultures": {
     "general": {
      "words": 0,
@@ -23479,54 +23396,54 @@
      "below": false
     },
     "aztec": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "maya": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "andean": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "polynesian": {
-     "words": 0,
-     "shapes": 0,
-     "target": {
-      "words": 12,
-      "shapes": 4
-     },
-     "profile": false,
-     "below": true
-    },
-    "american": {
-     "words": 0,
-     "shapes": 0,
+     "words": 41,
+     "shapes": 10,
      "target": {
       "words": 12,
       "shapes": 4
      },
      "profile": true,
-     "below": true
+     "below": false
+    },
+    "maya": {
+     "words": 42,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
+    },
+    "andean": {
+     "words": 40,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
+    },
+    "polynesian": {
+     "words": 42,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
+    },
+    "american": {
+     "words": 40,
+     "shapes": 10,
+     "target": {
+      "words": 12,
+      "shapes": 4
+     },
+     "profile": true,
+     "below": false
     },
     "ottoman": {
      "words": 0,
@@ -23639,22 +23556,22 @@
     }
    },
    "eras": {
-    "AN": 196,
-    "MD": 231,
-    "EM": 247,
-    "ST": 547,
-    "MO": 493,
+    "AN": 226,
+    "MD": 266,
+    "EM": 289,
+    "ST": 639,
+    "MO": 570,
     "NF": 11,
     "IS": 11
    },
    "styles": {
     "high-fantasy": {
-     "words": 105,
-     "shapes": 65
+     "words": 120,
+     "shapes": 75
     },
     "contemporary-fantasy": {
-     "words": 105,
-     "shapes": 61
+     "words": 120,
+     "shapes": 71
     },
     "steampunk": {
      "words": 0,
@@ -23669,8 +23586,8 @@
      "shapes": 2
     },
     "space-opera": {
-     "words": 105,
-     "shapes": 63
+     "words": 120,
+     "shapes": 73
     }
    },
    "tones": {
@@ -24100,8 +24017,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "maya": {
      "words": 0,
@@ -24110,8 +24028,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "andean": {
      "words": 0,
@@ -24120,8 +24039,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "polynesian": {
      "words": 0,
@@ -24130,8 +24050,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     },
     "american": {
      "words": 0,
@@ -24140,8 +24061,9 @@
       "words": 12,
       "shapes": 4
      },
+     "deferred": "styles",
      "profile": false,
-     "below": true
+     "below": false
     }
    },
    "eras": {
@@ -24290,24 +24212,24 @@
     "shapes": 576
    },
    "maya": {
-    "words": 612,
-    "shapes": 221
+    "words": 2295,
+    "shapes": 651
    },
    "andean": {
-    "words": 301,
-    "shapes": 196
+    "words": 1985,
+    "shapes": 626
    },
    "polynesian": {
-    "words": 308,
-    "shapes": 205
+    "words": 1925,
+    "shapes": 615
    },
    "bantu": {
     "words": 2024,
     "shapes": 551
    },
    "aztec": {
-    "words": 559,
-    "shapes": 210
+    "words": 2244,
+    "shapes": 640
    },
    "scandinavian": {
     "words": 2191,
@@ -24342,8 +24264,8 @@
     "shapes": 551
    },
    "american": {
-    "words": 304,
-    "shapes": 139
+    "words": 1969,
+    "shapes": 569
    },
    "anglo-saxon": {
     "words": 1144,
@@ -24367,26 +24289,26 @@
    }
   },
   "eras": {
-   "AN": 11140,
-   "MD": 14591,
-   "EM": 15880,
-   "ST": 15309,
-   "MO": 13740,
-   "NF": 819,
-   "IS": 1825
+   "AN": 12787,
+   "MD": 16532,
+   "EM": 18139,
+   "ST": 17568,
+   "MO": 15760,
+   "NF": 879,
+   "IS": 1885
   },
   "styles": {
    "high-fantasy": {
-    "words": 4826,
-    "shapes": 1744
+    "words": 5572,
+    "shapes": 1984
    },
    "contemporary-fantasy": {
-    "words": 4742,
-    "shapes": 1742
+    "words": 5488,
+    "shapes": 1982
    },
    "space-opera": {
-    "words": 4878,
-    "shapes": 1575
+    "words": 5624,
+    "shapes": 1815
    },
    "steampunk": {
     "words": 84,

@@ -476,7 +476,7 @@ export function generateDeityNames(options: DeityOptions): DeityBatch {
   const guards = options.safeguards;
   // Brief 6d A2: a shared legacy name this culture may not give is redrawn, except in the one form its own tradition is known for (Egyptian animal-headed names, Norse kennings).
   const ownForms = requested === "egyptian" ? ["F"] : requested === "norse" ? ["G"] : [];
-  const mustChange = (n: { text: string; shape?: string; form?: string }) => n.shape !== "signature" && SHARED_DEITY_NAMES.has(n.text) && !mayGive(requested, n.text) && !(n.form && ownForms.includes(n.form));
+  const mustChange = (n: { text: string; shape?: string; form?: string }) => n.shape !== "signature" && ((SHARED_DEITY_NAMES.has(n.text) && !mayGive(requested, n.text)) || (BATCH_ONLY_NAMES.has(n.text) && !!requested && BATCH_6D.has(requested))) && !(n.form && ownForms.includes(n.form));
   const ok = (text: string) => !deityTitleBlocked(text, guards) && !hasRealDivineName(text) && withinCap(text, DEITY_DATA.cap);
   // Second pass (brief §12 §5): a deity's place ("Sun Lord of [place]") is a settlement of its own culture in the default output too.
   const placed = (text: string, i: number): string => {
@@ -678,9 +678,14 @@ registerResolver("deity", (req) => {
 
 /** Brief 6d A2: a legacy deity name that stood in more than two cultures' lists is given by two cultures only, chosen by the name; the rest draw from their own frames. */
 const SHARED_DEITY_NAMES = new Set((deityShared as { names: string[] }).names);
+/** Brief 6d: names the five batch cultures' lists added; refused to those cultures only, so no other culture's output moves. */
+const BATCH_ONLY_NAMES = new Set((deityShared as { batchNames?: string[] }).batchNames ?? []);
+const BATCH_6D = new Set(["aztec", "maya", "andean", "polynesian", "american"]);
+/** The cultures that took part in the hash pair before 6d: it stays fixed so that no pair moves when a culture joins the roster. */
+const NEW_IN_6D = new Set(["andean", "polynesian", "american"]);
 const hashOf = (text: string): number => { let h = 2166136261; for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 16777619) >>> 0; return h; };
 function mayGive(culture: string | undefined, text: string): boolean {
-  const keys = DEITY_CULTURES.map((c) => (c as { key?: string; id?: string }).key ?? (c as { id?: string }).id ?? "").filter(Boolean).sort();
+  const keys = DEITY_CULTURES.map((c) => (c as { key?: string; id?: string }).key ?? (c as { id?: string }).id ?? "").filter((k) => k && !NEW_IN_6D.has(k)).sort();
   const h = hashOf(text);
   const a = h % keys.length;
   const b = (a + 1 + ((h >>> 8) % (keys.length - 1))) % keys.length;

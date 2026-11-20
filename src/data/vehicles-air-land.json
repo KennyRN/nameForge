@@ -242,32 +242,36 @@
    "landSpan": "L1"
   },
   "hawaiian": {
-   "airSpan": "",
-   "landSpan": ""
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
   },
   "maori": {
-   "airSpan": "",
-   "landSpan": ""
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
   },
   "w-polynesian": {
-   "airSpan": "",
-   "landSpan": ""
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
   },
   "nw-coast": {
    "airSpan": "",
    "landSpan": ""
   },
   "aztec": {
-   "airSpan": "",
-   "landSpan": ""
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
   },
   "maya": {
-   "airSpan": "",
-   "landSpan": ""
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
   },
   "andean": {
-   "airSpan": "",
-   "landSpan": ""
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
+  },
+  "polynesian": {
+   "airSpan": "A5-A6",
+   "landSpan": "L1-L5"
   }
  },
  "techWords": {
@@ -4926,6 +4930,65 @@
      "k": "A2",
      "patterns": [
       "ZR-{d}"
+     ]
+    },
+    {
+     "cultures": [
+      "aztec"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "XA-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "maya"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "TG-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "andean"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "OB-{dddd}"
+     ]
+    },
+    {
+     "cultures": [
+      "polynesian",
+      "hawaiian",
+      "maori",
+      "w-polynesian"
+     ],
+     "kind": "civil",
+     "k": "A3-A7",
+     "patterns": [
+      "ZK-{AAA}"
+     ]
+    },
+    {
+     "cultures": [
+      "polynesian",
+      "hawaiian",
+      "maori",
+      "w-polynesian",
+      "aztec",
+      "maya",
+      "andean"
+     ],
+     "kind": "any",
+     "k": "A2",
+     "patterns": [
+      "R{dd}"
      ]
     }
    ],
