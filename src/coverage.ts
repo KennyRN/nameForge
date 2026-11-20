@@ -86,6 +86,8 @@ export interface CultureCell extends WordShape {
   notOffered?: boolean;
   /** The module deliberately excludes it (§6.3). */
   excluded?: boolean;
+  /** Brief 6c: not held to its target by design (`coverageByDesign` in lens.json); the culture stays in the module. */
+  exempt?: "by design";
   /** Brief 6a §9.6: the cell belongs to another brief (`styles`) and is not counted as short. */
   deferred?: "styles";
   /** The culture has its own non-empty row in a per-culture weight table (§11.2): a profile is not a substitute for words. */
@@ -197,17 +199,20 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
     const lensC = lensCulture(culture);
     const isLive = lensC ? isLiveCulture(lensC) : true;
     // Excluded cultures are matched by key or by the lens culture a module's own key feeds.
-    const excluded = excludedCultures.has(culture) || [...excludedCultures].some((x) => (offeredLensCulturesFor(module, [x]) as string[]).includes(culture));
+    const exempt = (COVERAGE_EXEMPT[module]?.cultures ?? []).includes(culture);
+    const excluded = excludedCultures.has(culture) || exempt || [...excludedCultures].some((x) => (offeredLensCulturesFor(module, [x]) as string[]).includes(culture));
     const notOffered = !!offered && !offered.has(culture) && lensCulture(culture) !== undefined && isLive && !excluded;
     const deferred = DEFERRED.modules.includes(module) && DEFERRED.cultures.includes(culture);
+    const byDesign = (BY_DESIGN[module]?.cultures ?? []).includes(culture);
     const cell: CultureCell = {
       ...counted,
       ...(target ? { target: { ...target } } : {}),
       ...(notOffered ? { notOffered: true } : {}),
       ...(excluded ? { excluded: true } : {}),
       ...(deferred ? { deferred: "styles" as const } : {}),
+      ...(byDesign ? { exempt: "by design" as const } : {}),
       profile: profiled.has(culture),
-      below: !!target && !excluded && !notOffered && !deferred && (counted.words < target.words || counted.shapes < target.shapes),
+      below: !!target && !excluded && !notOffered && !deferred && !byDesign && (counted.words < target.words || counted.shapes < target.shapes),
     };
     cultures[culture] = cell;
   }
@@ -292,3 +297,7 @@ export function buildCoverage(adapters: readonly CoverageAdapter[] = COVERAGE_AD
 }
 
 const DEFERRED = (lensDeferred as unknown as { deferred: { styles: { modules: string[]; cultures: string[] } } }).deferred.styles;
+/** Brief 6c: a module a culture has no content for, because its land has none (`coverageExempt` in lens.json). */
+const COVERAGE_EXEMPT = (lensDeferred as unknown as { coverageExempt: Record<string, { cultures: string[] } | string> }).coverageExempt as Record<string, { cultures: string[] }>;
+/** Brief 6c: cells not held to their target by design (`coverageByDesign` in lens.json). */
+const BY_DESIGN = (lensDeferred as unknown as { coverageByDesign: Record<string, { cultures: string[] } | string> }).coverageByDesign as Record<string, { cultures: string[] }>;

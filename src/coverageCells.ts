@@ -26,7 +26,7 @@ export function coverageCells(report: CoverageReport): Record<string, BaselineCe
   const out: Record<string, BaselineCell> = {};
   for (const m of report.modules) {
     for (const [culture, cell] of Object.entries(m.cultures)) {
-      const targeted = !!cell.target && !cell.excluded && !cell.notOffered;
+      const targeted = !!cell.target && !cell.excluded && !cell.exempt && !cell.notOffered;
       out[`culture|${m.module}|${culture}|words`] = { v: cell.words, ...(targeted ? { t: cell.target!.words } : {}) };
       out[`culture|${m.module}|${culture}|shapes`] = { v: cell.shapes, ...(targeted ? { t: cell.target!.shapes } : {}) };
       out[`culture|${m.module}|${culture}|profile`] = { v: cell.profile ? 1 : 0 };

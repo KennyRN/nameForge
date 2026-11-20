@@ -14,6 +14,7 @@ const styleLabel = (key: string) => LENS_STYLES.find((s) => s.key === key)?.labe
 function cultureCell(cell: CultureCell | undefined): string {
   if (!cell) return "–";
   if (cell.excluded) return "excluded";
+  if (cell.exempt) return "exempt (by design)";
   if (cell.deferred) return `${cell.words}/${cell.shapes} (deferred: ${cell.deferred})`;
   if (cell.notOffered) return "not offered";
   const text = `${cell.words}/${cell.shapes}${cell.profile ? " + profile" : ""}`;

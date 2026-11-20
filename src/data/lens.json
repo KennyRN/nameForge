@@ -4512,7 +4512,11 @@
     "bantu",
     "west-african",
     "steppe",
-    "arabic-persian"
+    "arabic-persian",
+    "indian",
+    "chinese",
+    "japanese",
+    "korean"
    ]
   }
  },
@@ -4654,5 +4658,24 @@
   ],
   "pairLimit": 30,
   "$pairComment": "Second pass (18 November 2026, §12 of the second-tier brief): every pair of distinct cultures in `general`, siblings or not, shares at most `pairLimit` percent in every measured module; listed siblings keep `siblingLimit`."
+ },
+ "coverageExempt": {
+  "$comment": "Brief 6c B2 and B4: a module a culture has no content for. The culture is excluded from that module in the coverage report, its cell is not held to a target, and the module draws from the culture's own other shapes. The reasons are here and in docs/second-tier-6c.md.",
+  "desertNames": {
+   "cultures": [
+    "japanese",
+    "korean"
+   ],
+   "reason": "Japan and Korea have no deserts of their own, so the desert module carries no Japanese or Korean desert words."
+  }
+ },
+ "coverageByDesign": {
+  "$comment": "Brief 6c: a cell that is not held to its target by design, not because the module is excluded: the culture stays in the module's menu and makes names as it does. The reason is here and in docs/second-tier-6c.md.",
+  "familyNames": {
+   "cultures": [
+    "indian"
+   ],
+   "reason": "Indian family names are made from the son-of and daughter-of forms and place forms, so that no caste-marking surname gets in (the caste safeguard); the module has no surname list of its own for Indian."
+  }
  }
 }

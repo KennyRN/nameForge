@@ -52,6 +52,11 @@ function familyRows(): CoverageRow[] {
     }
   }
   out.push(...wordListRows(LISTS, listsUsed(LISTS, bynameData.family), { module }));
+  // Brief 6c: for the family-first cultures the module's own words are the native surnames (the native and mixed settings), counted here.
+  const nativeSurnames = { chinese: LISTS.chineseFamily, japanese: LISTS.japaneseFamily, korean: LISTS.koreanFamily };
+  out.push(...cultureWords(module, nativeSurnames, "family/native"));
+  // Each native surname is also a form of the module for these cultures: the surname written first, then the bearer's name ("Wang [name]").
+  for (const [culture, list] of Object.entries(nativeSurnames)) for (const entry of list) out.push(makeRow(entry as Entry, { module, source: `family/native/${culture}`, type: "shape", kind: "inherited", culture }));
   out.push(...vocabularyRows(module));
   out.push(...north5cRows(module));
   return out;

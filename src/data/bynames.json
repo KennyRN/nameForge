@@ -1,5 +1,20 @@
 {
- "townSelf": {"self": ["Defender of {town}", "Duc de {town}", "Duke of {town}", "Grand Prince of {town}", "Holy Lord of {town}", "K'uhul Ajaw of {town}", "Light of {town}", "Lord of the Lands of {town}", "Lord of {town}", "Tecuhtli of {town}", "Veliky Knyaz of {town}"], "other": []},
+ "townSelf": {
+  "self": [
+   "Defender of {town}",
+   "Duc de {town}",
+   "Duke of {town}",
+   "Grand Prince of {town}",
+   "Holy Lord of {town}",
+   "K'uhul Ajaw of {town}",
+   "Light of {town}",
+   "Lord of the Lands of {town}",
+   "Lord of {town}",
+   "Tecuhtli of {town}",
+   "Veliky Knyaz of {town}"
+  ],
+  "other": []
+ },
  "version": 1,
  "cultures": [
   {
@@ -5417,6 +5432,38 @@
     "n": "Takeda",
     "w": "Bamboofield",
     "x": 0.3
+   },
+   {
+    "n": "Yoshida",
+    "w": "Luckyfield"
+   },
+   {
+    "n": "Yamazaki",
+    "w": "Mountaincape"
+   },
+   {
+    "n": "Maeda",
+    "w": "Frontfield"
+   },
+   {
+    "n": "Hirano",
+    "w": "Flatfield"
+   },
+   {
+    "n": "Nomura",
+    "w": "Fieldvillage"
+   },
+   {
+    "n": "Kikuchi",
+    "w": "Chrysanthemumpond"
+   },
+   {
+    "n": "Fujii",
+    "w": "Wisteriawell"
+   },
+   {
+    "n": "Okamoto",
+    "w": "Hillfoot"
    }
   ],
   "koreanFamily": [
@@ -5511,6 +5558,24 @@
    {
     "n": "Ma",
     "w": "Horse"
+   },
+   {
+    "n": "Bae"
+   },
+   {
+    "n": "Heo"
+   },
+   {
+    "n": "Nam"
+   },
+   {
+    "n": "Sim"
+   },
+   {
+    "n": "Ha"
+   },
+   {
+    "n": "Joo"
    }
   ],
   "bantuFamily": [
