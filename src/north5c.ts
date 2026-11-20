@@ -211,6 +211,8 @@ export function applySignature<T extends { text: string }>(
     ctxOf?: (n: T) => DrawCtx | undefined;
     /** 5d §14.1: tribes and kin groups take exactly their share of the names (rounded up) instead of drawing each name's share. */
     quota?: boolean;
+    /** Brief 6d A2: a name that is always replaced (a legacy fixed name this culture may not give); it takes no share draw. */
+    force?: (n: T) => boolean;
   } = {},
 ): T[] {
   const draw = signatureDrawer(module, culture);
@@ -243,14 +245,17 @@ export function applySignature<T extends { text: string }>(
   return names.map((n, index) => {
     if (opts.keep?.(n)) return n;
     const nativeAll = !!opts.native?.all && opts.native.forms.length > 0;
-    if (chosen) {
-      if (!chosen.has(index)) return n;
-    } else if (!nativeAll && rng() >= share) return n;
+    if (!opts.force?.(n)) {
+      if (chosen) {
+        if (!chosen.has(index)) return n;
+      } else if (!nativeAll && rng() >= share) return n;
+    }
     const native = opts.native && opts.native.forms.length > 0 && rng() < opts.native.share;
     const gender = (n as unknown as { gender?: unknown }).gender;
     const sex: "male" | "female" = gender === "male" || gender === "female" ? gender : rng() < 0.5 ? "female" : "male";
     const ctx: DrawCtx = { ...opts.ctx, ...opts.ctxOf?.(n), sex };
-    for (let attempt = 0; attempt < 6; attempt++) {
+    const tries = opts.force?.(n) ? 30 : 6;
+    for (let attempt = 0; attempt < tries; attempt++) {
       const text = native ? resolveSexed(pick(opts.native!.forms, rng), sex) : draw(rng, ctx);
       if (!text || seen.has(text.toLowerCase()) || !allowed(text)) continue;
       seen.add(text.toLowerCase());

@@ -174,3 +174,21 @@ This section is a dated amendment; earlier sections are as they were. It records
 **Route era tags.** The route extras in the four cultures' lists carry the era of their own modifier group (ancient to medieval, early modern to steam age, steam age to modern), not one catch-all tag.
 
 **Real names.** 196 real names of the four cultures were added to `src/data/real-places.json`; a real name that collides with a word of a list is held out of the lists.
+
+## 14. Amendment, 20 November 2026: batch 6d (Aztec, Maya, Andean, Polynesian, American) and the 6c loose ends
+
+This section is a dated amendment; earlier sections are as they were.
+
+| Topic | Decision |
+|---|---|
+| Aztec, Maya and Andean eras | Each has its own voice in every era |
+| American | Covers the United States and Canada |
+| Polynesian spelling | Native names keep each language's standard marks (Māori macrons, Hawaiian kahakō and ʻokina) |
+| Biome-true fills | Part A1, below |
+| Sibling pairs | Aztec / Maya, Aztec / Andean, Maya / Andean and American / Norman & British, each at 25% |
+
+**A1, fills true to the biome.** The plant, tree, bird, beast and water-creature fills of the 6b and 6c cultures carry biome tags (desert, forest, grassland, wetland, moor, mountain, coast, sea, farmland: `scripts/tier6d/biomes.mjs`). Each land and water module draws only the fills tagged for its own biome plus the untagged generic ones (a culture with nothing for a biome reads all its words). The core and 6a cultures read shared pools that are per biome already (`mtBeast`, `dsrBeast`, `mrBeast` and the rest), so only the own lists needed tags. Each desert-offering culture has at least eight desert plants and eight desert animals, and Indian and Chinese take desert modifiers of their own. `tests/biomeFills.test.ts` sweeps it.
+
+**A2, deities use the culture's own frames.** Every core-depth culture with deity content draws eight of its ten frames from frames of its own (at least 80% of the weight), written in its habits and rendered in English; the other two are the shared fantastic frames (`scripts/tier6d/deity-frames.mjs`). One own frame is ancient to medieval and one early modern to steam age, so the eras still read differently. The five mixes keep their four-frame sets, and English reads the general engine in the deities module.
+
+**Scope decision for the fixed names (the user's, 20 November 2026).** The brief asked that no fixed name stand in more than two core-depth cultures' ten-name lists in any module. Measured over 36 cultures, seeds 1 to 5, medieval and modern, with placeholder people names, 7,632 fixed names stand in more than two cultures' lists across the modules (spacecraft 668, ships 660, aircraft 654, land vehicles 614, arms 466, calendars 433, sky 433, deserts 295, treasures 275, deities 109, and the rest). Passing that everywhere would mean rewriting most modules' fixed names, including the ones the styles brief owns. The decision: **the deity module only.** A legacy deity name that stood in more than two cultures' lists at seeds 1 to 5 (248 names, `src/data/deity-shared.json`, found by `scripts/tier6d/scan-deity-shared.ts`) is given by two cultures only, chosen by the name, and the others draw from their own frames; the Egyptian animal-headed and Norse kenning forms are kept. `tests/deityFrames.test.ts` holds it.

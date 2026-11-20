@@ -3,6 +3,7 @@
 import { writeFileSync } from "node:fs";
 import { KINDS, WORDS } from "./north5d/content-words.mjs";
 import { ADJ, CELTIC_FRAMES, CLASS, FRAMES, STYLE } from "./north5d/content-frames.mjs";
+import { deityFrames } from "./tier6d/deity-frames.mjs";
 import { OFFER, POOLS, TAGS } from "./north5d/content-pools.mjs";
 
 import { ADJ6, STYLE6 } from "./tier6a/north5c-build.mjs";
@@ -134,7 +135,7 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
     const nFantastic = eraWords.filter((x) => x.tag.endsWith("*")).length;
     if (nFantastic < 3) shortfalls.push(`${module} ${culture} fantastic: ${nFantastic}`);
     // Second pass (brief §12 §6): the mixes' bare "{N0} of {N1}" takes its article ("Keeper of the Old Storm", not "Keeper of Storm").
-    const frames = isMix(culture) ? CELTIC_FRAMES[cls].map(([p, ...rest]) => [/ of \{N1\}(?![\w])/.test(p) ? p.replace(/ of \{N1\}(?![\w])/, " of the {A} {N1}") : p, ...rest]) : FRAMES[cls][STYLE[culture]];
+    const frames = isMix(culture) ? CELTIC_FRAMES[cls].map(([p, ...rest]) => [/ of \{N1\}(?![\w])/.test(p) ? p.replace(/ of \{N1\}(?![\w])/, " of the {A} {N1}") : p, ...rest]) : (module === "deityNames" ? deityFrames(culture, FRAMES[cls][STYLE[culture]]) : undefined) ?? FRAMES[cls][STYLE[culture]];
     if (frames.length !== (isMix(culture) ? 4 : 10)) problems.push(`${module} ${culture}: ${frames.length} frames`);
     const patterns = frames.map(([p]) => p);
     for (const [pattern, , tag] of frames) {

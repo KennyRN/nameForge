@@ -9,6 +9,7 @@ import type { BiomeCatalogue } from "../biomes";
 import deityData from "../data/deity-names.json";
 import { BYNAME_CULTURES_5C } from "../bynames/engine";
 import { applySignature } from "../north5c";
+import deityShared from "../data/deity-shared.json";
 import { fillSlots } from "../fill";
 import {
   type GroupSafeguards,
@@ -473,6 +474,9 @@ export function generateDeityNames(options: DeityOptions): DeityBatch {
   const requested = deityCulture(options.culture).culture;
   const era: RouteEra = ROUTE_ERAS.some((e) => e.code === options.era) ? options.era! : "MD";
   const guards = options.safeguards;
+  // Brief 6d A2: a shared legacy name this culture may not give is redrawn, except in the one form its own tradition is known for (Egyptian animal-headed names, Norse kennings).
+  const ownForms = requested === "egyptian" ? ["F"] : requested === "norse" ? ["G"] : [];
+  const mustChange = (n: { text: string; shape?: string; form?: string }) => n.shape !== "signature" && SHARED_DEITY_NAMES.has(n.text) && !mayGive(requested, n.text) && !(n.form && ownForms.includes(n.form));
   const ok = (text: string) => !deityTitleBlocked(text, guards) && !hasRealDivineName(text) && withinCap(text, DEITY_DATA.cap);
   // Second pass (brief §12 §5): a deity's place ("Sun Lord of [place]") is a settlement of its own culture in the default output too.
   const placed = (text: string, i: number): string => {
@@ -487,7 +491,7 @@ export function generateDeityNames(options: DeityOptions): DeityBatch {
   };
   const signed = {
     ...batch,
-    names: applySignature(batch.names, "deityNames", requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic }, keep: (n) => n.kind !== "deity", set: (n, text) => ({ ...n, text: deityCapitals(text), title: deityCapitals(text), shape: "signature" }) }),
+    names: applySignature(batch.names, "deityNames", requested, batch.seed, { allowed: ok, ctx: { eras: [era], fantastic: !!options.fantastic }, keep: (n) => n.kind !== "deity" && !mustChange(n), force: mustChange, set: (n, text) => ({ ...n, text: deityCapitals(text), title: deityCapitals(text), shape: "signature" }) }),
   };
   return { ...signed, names: signed.names.map((n, i) => (/\[(place|holy person)\]/.test(n.text) ? { ...n, text: deityCapitals(placed(n.text, i)), title: deityCapitals(placed(n.title ?? n.text, i)) } : n)) };
 }
@@ -671,3 +675,14 @@ registerResolver("deity", (req) => {
     return undefined;
   }
 });
+
+/** Brief 6d A2: a legacy deity name that stood in more than two cultures' lists is given by two cultures only, chosen by the name; the rest draw from their own frames. */
+const SHARED_DEITY_NAMES = new Set((deityShared as { names: string[] }).names);
+const hashOf = (text: string): number => { let h = 2166136261; for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 16777619) >>> 0; return h; };
+function mayGive(culture: string | undefined, text: string): boolean {
+  const keys = DEITY_CULTURES.map((c) => (c as { key?: string; id?: string }).key ?? (c as { id?: string }).id ?? "").filter(Boolean).sort();
+  const h = hashOf(text);
+  const a = h % keys.length;
+  const b = (a + 1 + ((h >>> 8) % (keys.length - 1))) % keys.length;
+  return culture === keys[a] || culture === keys[b];
+}
