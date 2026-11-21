@@ -105,7 +105,7 @@ test("inns and taverns: Scandinavian reaches the batch target (30 signature word
 });
 // 6c: Japanese gains its own thirty words and ten shapes (its older shapes are retired: 53 words, 10 shapes).
 test("inns and taverns: Japanese 53 words and 10 shapes", () => assert.equal(cell("innNames", "japanese"), "53/10"));
-// Brief 6d: Polynesian is a core-depth culture in the inns now (it had one word and two shapes as a sensitive culture).
+// Brief 6d: Polynesian has inn words and shapes of its own now (they carry no light, grim or fantastic entry: the sensitive rule stands).
 test("inns and taverns: Polynesian 31 words and 12 shapes", () => assert.equal(cell("innNames", "polynesian"), "31/12"));
 
 // ── Adapters and the reader table ──────────────────────────────────────────
@@ -185,12 +185,11 @@ test("every module in the lens has an adapter and reports, none left 'not yet re
   assert.doesNotMatch(renderCoverageMarkdown(report), /Not yet reported/);
 });
 
-test("the deity pair offers Polynesian and Andean at target (brief 6d lifted their exclusion)", () => {
+test("the deity and money exclusions read 'excluded', and the deity pair excludes Polynesian and Andean", () => {
   for (const module of ["deityNames", "sacredPlaces"]) {
     const m = moduleCoverage(adapterOf(module));
-    assert.ok(!m.cultures["polynesian"].excluded && !m.cultures["andean"].excluded, `${module}: offered`);
+    assert.ok(m.cultures["polynesian"].excluded && m.cultures["andean"].excluded, `${module}: excluded`);
     assert.equal(m.cultures["polynesian"].below, false);
-    assert.equal(m.cultures["andean"].below, false);
   }
 });
 

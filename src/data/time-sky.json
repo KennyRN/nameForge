@@ -1,7 +1,10 @@
 {
  "$comment": "Time and sky (docs/time-and-sky-brief.md): systems, the system table, season cycles, culture names, shapes, themes and safeguards. Read through src/timesky/engine.ts. Eras are strings: all, AN, AN-MD, MD+ (MD on), ST+ …; weights and counts are the brief's.",
  "version": 1,
- "sensitive": [],
+ "sensitive": [
+  "polynesian",
+  "andean"
+ ],
  "homeland": {
   "polynesian": "tropical-islands",
   "andean": "highland"

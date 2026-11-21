@@ -147,22 +147,22 @@ test("§15.4: 5,000 names for each non-christian culture: no christian faith wor
   }
 });
 
-test("§15.4: Temple of {god} only for the five cultures (brief 6d: Polynesian and Andean have faith names of their own like the rest, no {god} in them)", () => {
+test("§15.4: Temple of {god} only for the five cultures; Polynesian has no faith names; Andean only its Sun Temple", () => {
   const five = new Set(["egyptian", "norse", "anglo-saxon", "aztec", "maya"]);
   for (const c of ROUTE_CULTURES) {
     const names = many({ culture: c.key, era: "AN", kind: "faith", people: "invented" }, 300);
     if (five.has(c.key)) assert.ok(names.some((n) => n.shape === "Temple of {god}"), c.key);
     else assert.ok(!names.some((n) => n.shape.includes("{god}")), c.key);
   }
-  // Brief 6d: Polynesian and Andean are not sensitive cultures any more; their faith names come from their own lists.
   for (const era of ["AN", "MD", "ST", "MO"] as RouteEra[]) {
-    for (const culture of ["polynesian", "andean"]) assert.ok(many({ culture, era, people: "invented" }, 1000).some((n) => n.kind === "faith"), `${culture} ${era}`);
+    assert.ok(!many({ culture: "polynesian", era, people: "invented" }, 1000).some((n) => n.kind === "faith"));
+    for (const n of many({ culture: "andean", era, people: "invented" }, 1000).filter((x) => x.kind === "faith")) assert.equal(n.shape, "Sun Temple of {town}");
   }
 });
 
-test("§12.4: sensitive cultures draw no light, grim or fantastic entries (brief 6d: no culture is sensitive now)", () => {
+test("§12.4: sensitive cultures draw no light, grim or fantastic entries", () => {
   const fantasticShapes = new Set(BUILDING_DATA.eraShapes.filter((s) => s.h).map((s) => s.p));
-  for (const culture of [] as string[]) {
+  for (const culture of ["polynesian", "andean"]) {
     for (const era of ["MD", "ST", "MO"] as RouteEra[]) {
       for (const n of many({ culture, era, fantastic: true, people: "invented" }, 500)) {
         assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), n.text);

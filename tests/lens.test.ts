@@ -236,10 +236,10 @@ test("each mapping holds exactly its roster: no key the data lacks, none missing
   assert.deepEqual(keysOf("tribal"), TRIBAL_TRADITIONS.map((t) => t.key).sort());
   assert.deepEqual(keysOf("colonial"), COLONIAL_TRADITIONS.map((t) => t.id).sort());
   assert.deepEqual(keysOf("shared"), [...VOCAB_ALL_CULTURES].sort(), "the shared roster is the vocabulary's 26");
-  // The vehicle mapping is the shared roster plus the local extras; the vessel roster has a `polynesian` key of its own since batch 6d (as well as hawaiian, maori and w-polynesian).
+  // The vehicle mapping is the shared roster plus the local extras; the vessel roster has no `polynesian` key of its own (it has hawaiian, maori and w-polynesian): Polynesian stays sensitive.
   const vehicleKeys = keysOf("vehicle");
   for (const c of VESSEL_BASE_CULTURES) assert.ok(vehicleKeys.includes(c.key), c.key);
-  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_BASE_CULTURES.some((c) => c.key === k)), ["arabic", "byzantine", "greek", "italian", "mongol", "persian", "portuguese", "spanish", "turkic"]);
+  assert.deepEqual(vehicleKeys.filter((k) => !VESSEL_BASE_CULTURES.some((c) => c.key === k)), ["arabic", "byzantine", "greek", "italian", "mongol", "persian", "polynesian", "portuguese", "spanish", "turkic"]);
   // Brief 5c: ships, aircraft and land vehicles read `vehicle5c` (the vehicle roster and the six newer cultures); the bynames, realms and peoples read `north5c`.
   const vehicle5c = keysOf("vehicle5c");
   for (const c of VESSEL_CULTURES) assert.ok(vehicle5c.includes(c.key), c.key);

@@ -249,8 +249,10 @@
     "godCultures": ["egyptian", "norse", "anglo-saxon", "aztec", "maya"]
   },
   "sensitive": {
-    "noFaith": [],
-    "faithOnly": {}
+    "noFaith": ["polynesian"],
+    "faithOnly": {
+      "andean": ["Sun Temple of {town}"]
+    }
   },
   "townSelf": {
     "self": ["Sun Temple of {town}"],

@@ -155,9 +155,8 @@ test("§3.1: the money menu is route names' cultures bar Polynesian and Andean, 
   const keys = MONEY_CULTURES.map((c) => c.key);
   // Brief 5d: and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables.
   // Brief 6a: and Italian, Spanish, Portuguese, Greek and Byzantine.
-  // Brief 6d: and Polynesian and Andean, which have money of their own now.
-  assert.equal(keys.length, 41);
-  assert.ok(keys.includes("polynesian") && keys.includes("andean"));
+  assert.equal(keys.length, 39);
+  assert.ok(!keys.includes("polynesian") && !keys.includes("andean"));
   assert.deepEqual(keys.slice(keys.indexOf("greek-byzantine"), keys.indexOf("greek-byzantine") + 4), ["greek-byzantine", "french", "dutch", "iberian"]);
   assert.equal(keys[keys.indexOf("maya") + 1], "american");
   assert.equal(findMoneyCulture("iberian")!.label, "Spanish & Portuguese");
@@ -917,7 +916,7 @@ test("§2.2: the kind link lists the kinds offered for the culture and era", () 
   assert.ok(!labels({ ...DEFAULT_MONEY_STATE, culture: "aztec", era: "MD" }).includes("Coins"));
   assert.equal(field(DEFAULT_MONEY_STATE, "kind")!.choices[1].title, "Struck and cast coins, from gold to copper");
   const culture = field(DEFAULT_MONEY_STATE, "culture")!;
-  assert.equal(culture.choices.length, 41);
+  assert.equal(culture.choices.length, 39);
   assert.equal(culture.choices.find((c) => c.id === "dutch")!.group, undefined);
   assert.ok(culture.choices.some((c) => c.id === "american"));
 });

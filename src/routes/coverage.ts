@@ -23,7 +23,8 @@ function rows(): CoverageRow[] {
 export const routeCoverage: CoverageAdapter = {
   module: MODULE,
   kinds: KINDS, roster: NORTH_ROSTER,
-  // Brief 6d: Polynesian and Andean have pilgrim routes now (their status as sensitive cultures was lifted).
+  // §6.3: no pilgrim routes for Polynesian and Andean.
+  excluded: [{ cultures: ["polynesian", "andean"], kind: "pilgrim" }],
   regions: true,
   rows,
 };

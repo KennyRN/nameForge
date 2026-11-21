@@ -185,7 +185,7 @@ function buildCultures(): MoneyCulture[] {
 }
 
 /** Northern Europe brief 5d: the roster of the money menu: those, and Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy keys' tables (`engineAlias`) beneath their own words. */
-export const MONEY_CULTURES: MoneyCulture[] = addNorth5c(buildCultures(), (c) => ({ key: c.key, label: c.label, group: TIER6A_GROUPS[c.key] ?? "British Isles and northern Europe" }));
+export const MONEY_CULTURES: MoneyCulture[] = addNorth5c(buildCultures(), (c) => ({ key: c.key, label: c.label, group: TIER6A_GROUPS[c.key] ?? "British Isles and northern Europe" })).filter((c) => !MONEY_DATA.notOffered.includes(c.key));
 export const findMoneyCulture = (key: string | undefined) => MONEY_CULTURES.find((c) => c.key === key);
 const DEFAULT_CULTURE = "norman-british";
 

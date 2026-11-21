@@ -480,11 +480,10 @@ test("§16.6: 10,000 names across options: no block-list or banned words, no god
       total++;
       assert.ok(!block.has(normName(n.text)) || (kind === "light" && /Morning Star|Evening Star/.test(n.text)), `blocked ${n.text}`);
       assert.ok(!breaksDeityWords(n.text), n.text);
-      // Brief 6d: Polynesian and Andean are no longer sensitive, so light and grim tones are allowed; the no-god rule stays.
       if (c.key === "polynesian" || c.key === "andean") {
-        // Brief 6d: the shared god pool holds invented titles ("Lord of Wells"), not real gods, so Polynesian and Andean may draw it; real gods stay on the block list and the real-names list.
-        // Brief 6d: a "[god]" placeholder is a blank for the user's own god, not a real one, so it is allowed now.
-        assert.ok(!/\[holy/.test(n.text), n.text);
+        assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), `${c.key}: ${n.text} ${n.tones}`);
+        assert.ok(!n.words.some((w) => w.pool === "god"), n.text);
+        assert.ok(!/\[god\]|\[holy/.test(n.text), n.text);
       }
     }
     if (kind === "sign" && series && b.system === "zodiac-12") {
@@ -552,7 +551,7 @@ test("§16.7: calendarNames and skyNames are the last two entries of advanced, a
   assert.equal(SECTION_LABELS.skyNames, "sky lore");
   assert.equal(historySection("calendars and festivals · medieval · Norse · months"), "calendarNames");
   assert.equal(historySection("sky lore · medieval · Norse · constellations"), "skyNames");
-  // Brief 6d: American has calendars and sky lore of its own now; Polynesian and Andean stay out (the sensitive cultures).
+  // Brief 6d: American has calendars and sky lore of its own.
   assert.ok(TIME_CULTURES.some((c) => c.key === "american"));
 });
 
@@ -578,8 +577,7 @@ test("§16.7: resets as §2.4", () => {
   assert.equal(s.biome, undefined);
   // Polynesian and andean: fantastic and light or grim tones reset.
   s = { ...DEFAULT_CALENDAR_STATE, fantastic: true, tone: "grim" };
-  // Brief 6d: no culture is held to this reset now that Polynesian and Andean are not sensitive.
-  for (const c of [] as string[]) {
+  for (const c of ["polynesian", "andean"]) {
     const r = choose("calendar", s, "culture", c);
     assert.equal(r.fantastic, false);
     assert.equal(r.tone, "any");
@@ -644,9 +642,9 @@ Turkic & Mongol steppe star signs of the medieval era, in a realistic world, see
   assert.equal(k.time?.kind, "sign");
   assert.equal(k.time?.people, "invented");
   assert.deepEqual({ ...parseModulePreset(modulePresetContent(k.time!), "x").time!, description: "" }, { ...k.time!, description: "" });
-  // Fall-backs: a kind the era doesn't offer (Brief 6d: Polynesian keeps a grim tone now).
+  // Fall-backs: a sensitive culture's tone, a kind the era doesn't offer.
   const odd = parseModulePreset(calendar.replace("culture: anglo-saxon", "culture: polynesian").replace("tone: any", "tone: grim").replace("kind: month", "kind: day").replace("era: MD", "era: MD"), "x");
-  assert.equal(odd.time?.tone, "grim");
+  assert.equal(odd.time?.tone, "any");
   const nodays = parseModulePreset(calendar.replace("culture: anglo-saxon", "culture: andean").replace("kind: month", "kind: day").replace("era: MD", "era: AN"), "x");
   assert.equal(nodays.time?.kind, "month");
   assert.ok(nodays.problems.length > 0);

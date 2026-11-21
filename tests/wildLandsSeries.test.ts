@@ -103,8 +103,7 @@ test("safeguards: no blocked phrase and no banned word in 10,000 names per modul
 
 test("safeguards: the sensitive cultures draw no light or grim shapes and no fantastic ones", () => {
   for (const module of WILDS_MODULES)
-    // Brief 6d: Polynesian and Andean are not sensitive cultures any more (their status was lifted in every module), so no culture is held to this check.
-    for (const culture of [] as string[]) {
+    for (const culture of ["polynesian", "andean"]) {
       const names = generateWildsNames({ module, culture, fantastic: true, tone: "any", people: "invented", count: 300, seed: 9 }).names;
       for (const n of names) assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), `${module} ${culture}: ${n.text}`);
     }

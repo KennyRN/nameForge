@@ -46,6 +46,8 @@ export type { CoverageAdapter, CoverageRow, CoverageRowType } from "./coverageRo
  * Every measured module's adapter, in the order the report lists them (the three retired place modules are not measured: place modules split brief §9). A lens module with no adapter here is
  * reported as "no adapter yet", never as empty (a test checks that none is left).
  */
+/** The modules closed to the sensitive cultures (deities, sacred places, calendars, sky lore, money). */
+const SENSITIVE_MODULES = new Set(["deityNames", "sacredPlaces", "calendarNames", "skyNames", "moneyNames"]);
 export const COVERAGE_ADAPTERS: CoverageAdapter[] = [
   routeCoverage,
   streetCoverage,
@@ -87,7 +89,7 @@ export interface CultureCell extends WordShape {
   /** The module deliberately excludes it (§6.3). */
   excluded?: boolean;
   /** Brief 6c: not held to its target by design (`coverageByDesign` in lens.json); the culture stays in the module. */
-  exempt?: "by design";
+  exempt?: "by design" | "sensitive";
   /** Brief 6a §9.6: the cell belongs to another brief (`styles`) and is not counted as short. */
   deferred?: "styles";
   /** The culture has its own non-empty row in a per-culture weight table (§11.2): a profile is not a substitute for words. */
@@ -204,13 +206,15 @@ export function moduleCoverage(adapter: CoverageAdapter, rows: readonly Coverage
     const notOffered = !!offered && !offered.has(culture) && lensCulture(culture) !== undefined && isLive && !excluded;
     const deferred = DEFERRED.modules.includes(module) && DEFERRED.cultures.includes(culture);
     const byDesign = (BY_DESIGN[module]?.cultures ?? []).includes(culture);
+    // Brief 6d §15: Polynesian and Andean are living Indigenous traditions; nothing of their sacred life, calendar, sky or money is invented for them, so these modules are closed to them.
+    const sensitiveGate = excluded && (culture === "polynesian" || culture === "andean") && SENSITIVE_MODULES.has(module);
     const cell: CultureCell = {
       ...counted,
       ...(target ? { target: { ...target } } : {}),
       ...(notOffered ? { notOffered: true } : {}),
       ...(excluded ? { excluded: true } : {}),
       ...(deferred ? { deferred: "styles" as const } : {}),
-      ...(byDesign ? { exempt: "by design" as const } : {}),
+      ...(byDesign ? { exempt: "by design" as const } : sensitiveGate ? { exempt: "sensitive" as const } : {}),
       profile: profiled.has(culture),
       below: !!target && !excluded && !notOffered && !deferred && !byDesign && (counted.words < target.words || counted.shapes < target.shapes),
     };

@@ -349,8 +349,7 @@ test("§11: culture shapes appear for their culture and kind", () => {
 });
 
 test("§12.4: the sensitive cultures never draw light or grim shapes", () => {
-  // Brief 6d: Polynesian and Andean are not sensitive cultures any more (their status was lifted in every module), so no culture is held to this check.
-  for (const culture of [] as string[]) {
+  for (const culture of ["polynesian", "andean"]) {
     for (const module of EARTHLY_MODULES) {
       const names = many({ module, culture }, 1500);
       assert.ok(names.every((n) => !n.tones.includes("light") && !n.tones.includes("grim")), `${culture} ${module}`);

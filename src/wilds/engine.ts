@@ -376,6 +376,8 @@ export function nativeSettlementRequest(
 ): SettlementNamesOptions | undefined {
   const link = WILDS_DATA.settlementLink;
   if (mode === "placeholders" || era === "NF" || era === "IS") return undefined;
+  // The sensitive cultures (Polynesian, Andean) keep their own words: their settlement names are not drawn into the terrain modules.
+  if (ROUTE_CULTURES.find((c) => c.key === culture)?.sensitive) return undefined;
   // Focused place modules delegate their settlements through the sources instead.
   if (isPlaceModule(module)) return undefined;
   const land = link.nativeLand[module];

@@ -4856,23 +4856,19 @@
    "v": 1
   },
   "culture|moneyNames|andean|words": {
-   "v": 42,
-   "t": 30
+   "v": 42
   },
   "culture|moneyNames|andean|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|moneyNames|andean|profile": {
    "v": 0
   },
   "culture|moneyNames|polynesian|words": {
-   "v": 42,
-   "t": 30
+   "v": 42
   },
   "culture|moneyNames|polynesian|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|moneyNames|polynesian|profile": {
    "v": 0
@@ -5412,23 +5408,19 @@
    "v": 0
   },
   "culture|calendarNames|andean|words": {
-   "v": 39,
-   "t": 30
+   "v": 39
   },
   "culture|calendarNames|andean|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|calendarNames|andean|profile": {
    "v": 0
   },
   "culture|calendarNames|polynesian|words": {
-   "v": 43,
-   "t": 30
+   "v": 43
   },
   "culture|calendarNames|polynesian|shapes": {
-   "v": 11,
-   "t": 10
+   "v": 11
   },
   "culture|calendarNames|polynesian|profile": {
    "v": 0
@@ -5956,23 +5948,19 @@
    "v": 0
   },
   "culture|skyNames|andean|words": {
-   "v": 50,
-   "t": 30
+   "v": 50
   },
   "culture|skyNames|andean|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|skyNames|andean|profile": {
    "v": 0
   },
   "culture|skyNames|polynesian|words": {
-   "v": 49,
-   "t": 30
+   "v": 49
   },
   "culture|skyNames|polynesian|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|skyNames|polynesian|profile": {
    "v": 0
@@ -19903,23 +19891,19 @@
    "v": 1
   },
   "culture|deityNames|andean|words": {
-   "v": 45,
-   "t": 30
+   "v": 45
   },
   "culture|deityNames|andean|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|deityNames|andean|profile": {
    "v": 0
   },
   "culture|deityNames|polynesian|words": {
-   "v": 46,
-   "t": 30
+   "v": 46
   },
   "culture|deityNames|polynesian|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|deityNames|polynesian|profile": {
    "v": 0
@@ -20439,23 +20423,19 @@
    "v": 1
   },
   "culture|sacredPlaces|andean|words": {
-   "v": 30,
-   "t": 30
+   "v": 30
   },
   "culture|sacredPlaces|andean|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|sacredPlaces|andean|profile": {
    "v": 0
   },
   "culture|sacredPlaces|polynesian|words": {
-   "v": 30,
-   "t": 30
+   "v": 30
   },
   "culture|sacredPlaces|polynesian|shapes": {
-   "v": 10,
-   "t": 10
+   "v": 10
   },
   "culture|sacredPlaces|polynesian|profile": {
    "v": 0
@@ -26989,7 +26969,7 @@
    "t": 10
   },
   "culture|aircraft|andean|profile": {
-   "v": 1
+   "v": 0
   },
   "culture|aircraft|polynesian|words": {
    "v": 38,
@@ -27000,7 +26980,7 @@
    "t": 10
   },
   "culture|aircraft|polynesian|profile": {
-   "v": 1
+   "v": 0
   },
   "culture|aircraft|american|words": {
    "v": 37,
@@ -27650,7 +27630,7 @@
    "t": 10
   },
   "culture|landVehicles|andean|profile": {
-   "v": 1
+   "v": 0
   },
   "culture|landVehicles|polynesian|words": {
    "v": 42,
@@ -27661,7 +27641,7 @@
    "t": 10
   },
   "culture|landVehicles|polynesian|profile": {
-   "v": 1
+   "v": 0
   },
   "culture|landVehicles|american|words": {
    "v": 41,

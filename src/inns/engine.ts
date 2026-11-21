@@ -291,7 +291,7 @@ function draw(ctx: Ctx, pool: string, items: [Word, number][], use?: string): st
 /** §4.1: creatures: GN beast, bird, fish and heraldic beasts with innCreature (WAL doubles Dragon). */
 function creatureItems(ctx: Ctx): [Word, number][] {
   // Shared tables brief §8: in a fantastic world the culture's mythic creatures join the signs.
-  const mythic: [Word, number][] = ctx.fantastic ? creaturesFor(ctx.culture.key).map((c): [Word, number] => [{ w: c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase()), t: c.tones as never }, 1]) : [];
+  const mythic: [Word, number][] = ctx.fantastic && !ctx.culture.sensitive ? creaturesFor(ctx.culture.key).map((c): [Word, number] => [{ w: c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase()), t: c.tones as never }, 1]) : [];
   const own = ownSigns(ctx);
   const items = own ? merged(ctx, [ownWords(own.creatures), themed(ctx, "innCreature"), mythic]) : merged(ctx, [...INN_DATA.lists.creatureLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innCreature"), mythic]);
   if (ctx.region && INN_DATA.regionRules.dragonDouble.includes(ctx.region)) for (const it of items) if (it[0].w === "Dragon") it[1] *= 2;

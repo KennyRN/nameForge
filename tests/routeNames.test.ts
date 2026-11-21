@@ -107,15 +107,22 @@ test("§15.4: interstellar at star-system scale is space lanes only, at least 10
 });
 
 test("§15.4, §12.4: Polynesian, 2,000 names: at least 40% sea routes; none light or grim; no fantastic shapes", () => {
+  const fantasticShapes = new Set(Object.values(ROUTE_DATA.shapes).flat().filter((s) => s.h).map((s) => s.p));
   for (const era of ["AN", "MD"] as RouteEra[]) {
     for (const fantastic of [false, true]) {
       const names = many({ culture: "polynesian", era, fantastic, people: "invented" }, 2000);
       const sea = names.filter((n) => n.kind === "sea").length;
       assert.ok(sea >= 800, `${era}: ${sea} sea routes`);
       for (const n of names) {
-        // Brief 6d: Polynesian is no longer sensitive, so light, grim and fantastic shapes are allowed.
+        assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), n.text);
+        assert.ok(!fantasticShapes.has(n.shape), n.text);
+        assert.ok(!(n.kind === "pilgrim" && n.shape === "fixed"), n.text);
       }
     }
+  }
+  // Light or grim asked for: still none.
+  for (const tone of ["light", "grim"] as const) {
+    for (const n of many({ culture: "andean", era: "MD", tone, people: "invented" }, 500)) assert.ok(!n.tones.includes("light") && !n.tones.includes("grim"), n.text);
   }
 });
 

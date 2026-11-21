@@ -215,8 +215,8 @@ test("stems: the all-Britain stem pool holds at least 80 names, Norse at least 1
   assert.equal(stemWeight("Moots", true), 0);
   assert.equal(stemWeight("Baths", true), 0);
   for (const bad of ["Badger Edge Hill", "Lord's Ford", "Fort", "Hills", "Moot", "Hartvillage", "Peacock City", "The Ford", "Wide hill", "Overlongname1", "Longestname"]) assert.equal(stemWeight(bad, false), 0, bad);
-  // Greek & Byzantine and steppe have no stem source (brief 6d: Polynesian and Andean read their own settlement names now that they are not sensitive).
-  for (const key of ["greek-byzantine", "steppe"]) assert.equal(stemSourceOf(WILDS_CULTURES.find((c) => c.key === key)!), undefined, key);
+  // Greek & Byzantine, steppe, Polynesian and Andean have no stem source.
+  for (const key of ["greek-byzantine", "steppe", "polynesian", "andean"]) assert.equal(stemSourceOf(WILDS_CULTURES.find((c) => c.key === key)!), undefined, key);
 });
 
 test("stems: no pool holds a duplicate, Moot, Moots, Bath, Baths or Isthmus", () => {

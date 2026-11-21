@@ -179,7 +179,7 @@ const VESSEL_SELF = selfPatterns(vesselData);
 /** The cultures with tables of their own. */
 export const VESSEL_BASE_CULTURES = VESSEL_DATA.cultures;
 /** The roster: those, and (Northern Europe brief 5c) Welsh, Scottish, Irish, Cornish, Scandinavian and German, which read the legacy key's tables (`engineAlias`). */
-export const VESSEL_CULTURES: VesselCulture[] = addNorth5c(VESSEL_BASE_CULTURES, (c) => ({ ...(VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key, "vessels")) ?? VESSEL_BASE_CULTURES.find((b) => b.key === "general")!), key: c.key, label: c.label }));
+export const VESSEL_CULTURES: VesselCulture[] = addNorth5c(VESSEL_BASE_CULTURES, (c) => ({ ...(VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key, "vessels")) ?? VESSEL_BASE_CULTURES.find((b) => b.key === "general")!), key: c.key, label: c.label })).filter((c) => c.key !== "polynesian"); // Polynesian is a sensitive culture: no vessel row of its own, and the batch roster does not add one
 interface AirLandData {
   modules: Record<string, string>;
   technology: Record<string, { code: string; label: string; fantastic?: boolean }[]>;

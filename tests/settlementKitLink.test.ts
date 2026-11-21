@@ -37,7 +37,7 @@ test("kit: the pool is 300 settlement names at seed 1789, by culture, size and p
 });
 
 test("kit: Greek & Byzantine, steppe and the sensitive cultures keep their old path", () => {
-  for (const culture of ["greek-byzantine", "steppe"]) assert.deepEqual(settlementTownPool(culture, "town"), [], culture);
+  for (const culture of ["greek-byzantine", "steppe", "polynesian", "andean"]) assert.deepEqual(settlementTownPool(culture, "town"), [], culture);
   const kit = generateKit({ culture: "greek-byzantine", size: "town", seed: 3 });
   assert.equal(places(kit).length, 7);
 });

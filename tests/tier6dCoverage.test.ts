@@ -24,7 +24,7 @@ test("6d: the five cultures are core tier, and meet their cells in every module 
   assert.ok(short.length === 0, `${short.length} cells below target: ${short.slice(0, 30).join("; ")}`);
 });
 
-test("6d: the only exemptions are Polynesian deserts and moors; Aztec, Maya, Andean and American deserts are written at target", () => {
+test("6d: the only exemptions are Polynesian deserts and moors and the sensitive modules of Polynesian and Andean; Aztec, Maya, Andean and American deserts are written at target", () => {
   const report = buildCoverage();
   for (const [module, culture] of [["desertNames", "polynesian"], ["moorNames", "polynesian"]]) {
     const cell = report.modules.find((x) => x.module === module)!.cultures[culture] as { excluded?: boolean; below?: boolean };
@@ -35,9 +35,13 @@ test("6d: the only exemptions are Polynesian deserts and moors; Aztec, Maya, And
     const cell = desert.cultures[c] as { excluded?: boolean; below?: boolean; words: number };
     assert.ok(!cell.excluded && !cell.below, `desertNames ${c}`);
   }
+  // Brief 6d §15: the sensitive cultures stay closed in deities, sacred places, calendars, sky lore and money (exempt: sensitive).
+  const SENSITIVE = ["deityNames", "sacredPlaces", "calendarNames", "skyNames", "moneyNames"];
   for (const m of report.modules) for (const c of CULTURES) {
     const cell = m.cultures[c] as { excluded?: boolean; exempt?: string } | undefined;
-    const allowed = c === "polynesian" && (m.module === "desertNames" || m.module === "moorNames");
-    if (!allowed) assert.ok(!cell?.excluded && !cell?.exempt, `${m.module} ${c} must not be exempt`);
+    const sensitive = (c === "polynesian" || c === "andean") && SENSITIVE.includes(m.module);
+    const allowed = sensitive || (c === "polynesian" && (m.module === "desertNames" || m.module === "moorNames"));
+    if (sensitive) assert.ok(cell?.excluded && cell.exempt === "sensitive", `${m.module} ${c} is exempt: sensitive`);
+    else if (!allowed) assert.ok(!cell?.excluded && !cell?.exempt, `${m.module} ${c} must not be exempt`);
   }
 });

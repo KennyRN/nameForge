@@ -3858,6 +3858,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -3868,6 +3870,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -4337,6 +4341,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -4347,6 +4353,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -4813,6 +4821,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -4823,6 +4833,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -16431,6 +16443,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -16441,6 +16455,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -16905,6 +16921,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -16915,6 +16933,8 @@
       "words": 30,
       "shapes": 10
      },
+     "excluded": true,
+     "exempt": "sensitive",
      "profile": false,
      "below": false
     },
@@ -22820,7 +22840,7 @@
       "words": 30,
       "shapes": 10
      },
-     "profile": true,
+     "profile": false,
      "below": false
     },
     "polynesian": {
@@ -22830,7 +22850,7 @@
       "words": 30,
       "shapes": 10
      },
-     "profile": true,
+     "profile": false,
      "below": false
     },
     "american": {
@@ -23418,7 +23438,7 @@
       "words": 30,
       "shapes": 10
      },
-     "profile": true,
+     "profile": false,
      "below": false
     },
     "polynesian": {
@@ -23428,7 +23448,7 @@
       "words": 30,
       "shapes": 10
      },
-     "profile": true,
+     "profile": false,
      "below": false
     },
     "american": {

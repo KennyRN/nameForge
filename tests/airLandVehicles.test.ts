@@ -40,7 +40,7 @@ const norm = normForBlock;
 // ── §16.1 Data ──────────────────────────────────────────────────────────────
 
 test("§16.1: every culture has airSpan and landSpan inside its module's levels", () => {
-  assert.equal(Object.keys(AIR_LAND.spans).length, 35); // Brief 6d: Polynesian joins the lens keys that had a row of their own
+  assert.equal(Object.keys(AIR_LAND.spans).length, 34);
   // Brief 5c: the six newer keys read the legacy key's span (`engineAlias`).
   const NEWER = new Set(["welsh", "scottish", "irish", "cornish", "scandinavian", "german", "italian", "spanish", "portuguese", "greek", "byzantine", "turkic", "mongol", "arabic", "persian"]);
   assert.deepEqual(Object.keys(AIR_LAND.spans).sort(), VESSEL_CULTURES.filter((c) => !NEWER.has(c.key)).map((c) => c.key).sort());
@@ -66,12 +66,12 @@ test("§16.1: every culture has airSpan and landSpan inside its module's levels"
   assert.deepEqual(levels("malay", "landVehicles"), ["L1", "L2", "L3", "L4"]);
   assert.deepEqual(levels("bantu", "landVehicles"), ["L3", "L4", "L5"]);
   assert.deepEqual(levels("korean", "aircraft"), ["A5", "A6"]);
-  // Brief 6d: the Aztec, Maya, Andean and Polynesian cultures have modern states (Mexico, Guatemala, Peru and Bolivia, the island states), so they have the modern aircraft and land vehicles; the north-west coast has none.
-  for (const k of ["aztec", "maya", "andean", "polynesian", "hawaiian", "maori", "w-polynesian"]) {
+  // Brief 6d: Aztec and Maya have modern states (Mexico, Guatemala), so they have the modern aircraft and land vehicles; Polynesian and Andean (sensitive) and the north-west coast have none.
+  for (const k of ["aztec", "maya"]) {
     assert.deepEqual(levels(k, "aircraft"), ["A5", "A6"], k);
     assert.deepEqual(levels(k, "landVehicles"), ["L1", "L2", "L3", "L4", "L5"], k);
   }
-  for (const k of ["nw-coast"]) {
+  for (const k of ["hawaiian", "maori", "w-polynesian", "andean", "nw-coast"]) {
     assert.deepEqual(levels(k, "aircraft"), []);
     assert.deepEqual(levels(k, "landVehicles"), []);
   }

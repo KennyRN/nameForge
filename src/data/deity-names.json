@@ -158,7 +158,7 @@
     "genericForms": ["archetype", "A", "B", "C", "D", "H", "I", "fixed", "era"],
     "placeX": {"Well": 2, "Spring": 2, "Hill": 2}
   },
-  "unoffered": [],
+  "unoffered": ["polynesian", "andean"],
   "lists": {
     "kennWord": ["Rider", "Breaker", "Bringer", "Wielder", "Keeper", "Walker", "Singer"],
     "eastHonour": [["Jade", 2], ["Heavenly", 1], ["Celestial", 1], ["August", 1], ["Pearl", 1]],
@@ -172,7 +172,7 @@
   },
   "traditionCulture": {"celtic": "celtic", "germanic": "norse", "mediterranean": "roman", "arabian": "arabic-persian", "southAsian": "indian", "eastAsian": "chinese", "mesoamerican": "aztec", "bantu": "bantu", "westAfrican": "west-african", "steppe": "steppe", "general": "general"},
  "christianTraditions": ["celtic", "germanic", "mediterranean"],
- "sensitiveTraditions": [],
+ "sensitiveTraditions": ["polynesian", "andean"],
  "series": {"from": 6},
   "cap": 9,
   "safeguards": {

@@ -67984,7 +67984,7 @@ var money_names_default = {
     },
     { key: "american", label: "American", group: "The Americas", town: "britain", figure: [], after: "maya", moneyOnly: true }
   ],
-  notOffered: [],
+  notOffered: ["polynesian", "andean"],
   kinds: [
     {
       key: "coin",
@@ -75562,16 +75562,16 @@ var vehicles_air_land_default = {
       landSpan: "L1"
     },
     hawaiian: {
-      airSpan: "A5-A6",
-      landSpan: "L1-L5"
+      airSpan: "",
+      landSpan: ""
     },
     maori: {
-      airSpan: "A5-A6",
-      landSpan: "L1-L5"
+      airSpan: "",
+      landSpan: ""
     },
     "w-polynesian": {
-      airSpan: "A5-A6",
-      landSpan: "L1-L5"
+      airSpan: "",
+      landSpan: ""
     },
     "nw-coast": {
       airSpan: "",
@@ -75586,12 +75586,8 @@ var vehicles_air_land_default = {
       landSpan: "L1-L5"
     },
     andean: {
-      airSpan: "A5-A6",
-      landSpan: "L1-L5"
-    },
-    polynesian: {
-      airSpan: "A5-A6",
-      landSpan: "L1-L5"
+      airSpan: "",
+      landSpan: ""
     }
   },
   techWords: {
@@ -80274,36 +80270,8 @@ var vehicles_air_land_default = {
         },
         {
           cultures: [
-            "andean"
-          ],
-          kind: "civil",
-          k: "A3-A7",
-          patterns: [
-            "OB-{dddd}"
-          ]
-        },
-        {
-          cultures: [
-            "polynesian",
-            "hawaiian",
-            "maori",
-            "w-polynesian"
-          ],
-          kind: "civil",
-          k: "A3-A7",
-          patterns: [
-            "ZK-{AAA}"
-          ]
-        },
-        {
-          cultures: [
-            "polynesian",
-            "hawaiian",
-            "maori",
-            "w-polynesian",
             "aztec",
-            "maya",
-            "andean"
+            "maya"
           ],
           kind: "any",
           k: "A2",
@@ -83245,9 +83213,9 @@ var vessels_default = {
             w: "Balsa of the Cold Current"
           }
         ]
-      }
-    },
-    { key: "polynesian", label: "Polynesian", group: "The Pacific", span: "T1-T7", roles: { poetic: 3, sky: 3, menace: 0, leisure: 0, commerce: 0.3 }, flavour: { tribal: "polynesian" }, town: "compound", holy: "none", lists: { poetic: [{ w: "Strength of the Islands" }, { w: "House upon the Sea" }, { w: "Chief's Passage" }, { w: "Strong Hands Together" }, { w: "Friend of the Western Wind" }, { w: "The Returning Family" }, { w: "Shield of the Lagoon" }, { w: "Voyage of Many Islands" }] } }
+      },
+      sensitive: true
+    }
   ],
   technology: {
     ships: [
@@ -119848,7 +119816,7 @@ var VESSEL_BASE_CULTURES = VESSEL_DATA.cultures;
 var VESSEL_CULTURES = addNorth5c(VESSEL_BASE_CULTURES, (c) => {
   var _a9;
   return { ...(_a9 = VESSEL_BASE_CULTURES.find((b) => b.key === engineCulture(c.key, "vessels"))) != null ? _a9 : VESSEL_BASE_CULTURES.find((b) => b.key === "general"), key: c.key, label: c.label };
-});
+}).filter((c) => c.key !== "polynesian");
 var AIR_LAND = vehicles_air_land_default;
 var VESSEL_MODULE_LABELS = { ...VESSEL_DATA.modules, ...AIR_LAND.modules };
 function findVesselCulture(key2) {
@@ -121805,8 +121773,8 @@ var route_names_default = {
     { key: "west-african", label: "West African", group: "Middle East, Africa and the Indian Ocean", kindMult: { trade: 2 } },
     { key: "aztec", label: "Aztec", group: "The Americas" },
     { key: "maya", label: "Maya", group: "The Americas" },
-    { key: "polynesian", label: "Polynesian", group: "the Pacific and the Andes", kindMult: { sea: 6, road: 0.5, drove: 0, military: 0 }, folk: "polynesian", figure: ["Chief", "High Chief"] },
-    { key: "andean", label: "Andean", group: "the Pacific and the Andes", kindMult: { road: 1.5, military: 0.5, sea: 0.3 }, folk: "andean", figure: ["Lord", "Great Lord"] }
+    { key: "polynesian", label: "Polynesian", group: "the Pacific and the Andes", sensitive: true, kindMult: { sea: 6, road: 0.5, drove: 0, military: 0 }, folk: "polynesian", figure: ["Chief", "High Chief"] },
+    { key: "andean", label: "Andean", group: "the Pacific and the Andes", sensitive: true, kindMult: { road: 1.5, military: 0.5, sea: 0.3 }, folk: "andean", figure: ["Lord", "Great Lord"] }
   ],
   kinds: [
     { key: "road", menu: "Roads and ways", plural: "roads and ways", description: "Long-distance roads, old ways and highways", era: { AN: 30, MD: 30, EM: 25, ST: 15, MO: 10, NF: 5, IS: 0 } },
@@ -121886,8 +121854,8 @@ var route_names_default = {
     pilgrim: [
       { p: "Pilgrims' Road to {holySite}", w: 15 },
       { p: "Sacred Way to {holySite}", w: 10, e: ["AN", "MD", "EM"], t: ["grand"] },
-      { p: "Sacred Way to the {sacredPlace}", w: 8 },
-      { p: "Pilgrims' Road to the {sacredPlace}", w: 8 },
+      { p: "Sacred Way to the {sacredPlace}", w: 8, c: ["!polynesian", "!andean"] },
+      { p: "Pilgrims' Road to the {sacredPlace}", w: 8, c: ["!polynesian", "!andean"] },
       { p: "Road of the {number} {holySitePl}", w: 8, t: ["strange"] },
       { p: "Way of {holy}", w: 8, e: ["MD", "EM", "ST", "MO"], c: ["christian"], t: ["grand"] },
       { p: "Ways of {god}", w: 8, e: ["AN"], c: ["egyptian"], t: ["grand"] },
@@ -128997,7 +128965,7 @@ function buildCultures() {
 var MONEY_CULTURES = addNorth5c(buildCultures(), (c) => {
   var _a9;
   return { key: c.key, label: c.label, group: (_a9 = TIER6A_GROUPS[c.key]) != null ? _a9 : "British Isles and northern Europe" };
-});
+}).filter((c) => !MONEY_DATA.notOffered.includes(c.key));
 var findMoneyCulture = (key2) => MONEY_CULTURES.find((c) => c.key === key2);
 var DEFAULT_CULTURE = "norman-british";
 var ALL_SHAPES = MONEY_DATA.shapes;
@@ -130552,7 +130520,7 @@ var deity_names_default = {
     genericForms: ["archetype", "A", "B", "C", "D", "H", "I", "fixed", "era"],
     placeX: { Well: 2, Spring: 2, Hill: 2 }
   },
-  unoffered: [],
+  unoffered: ["polynesian", "andean"],
   lists: {
     kennWord: ["Rider", "Breaker", "Bringer", "Wielder", "Keeper", "Walker", "Singer"],
     eastHonour: [["Jade", 2], ["Heavenly", 1], ["Celestial", 1], ["August", 1], ["Pearl", 1]],
@@ -130566,7 +130534,7 @@ var deity_names_default = {
   },
   traditionCulture: { celtic: "celtic", germanic: "norse", mediterranean: "roman", arabian: "arabic-persian", southAsian: "indian", eastAsian: "chinese", mesoamerican: "aztec", bantu: "bantu", westAfrican: "west-african", steppe: "steppe", general: "general" },
   christianTraditions: ["celtic", "germanic", "mediterranean"],
-  sensitiveTraditions: [],
+  sensitiveTraditions: ["polynesian", "andean"],
   series: { from: 6 },
   cap: 9,
   safeguards: {
@@ -150992,9 +150960,10 @@ function wildsModulesForTerrain(terrain, biome) {
 }
 var SIZE_LETTER = { any: "any", hamlet: "h", village: "v", town: "t", city: "c", great: "g" };
 function nativeSettlementRequest(module2, culture, era, where2, region, chosenBiome, mode, catalogue = BUILT_IN_BIOMES, rng) {
-  var _a9;
+  var _a9, _b4;
   const link = WILDS_DATA.settlementLink;
   if (mode === "placeholders" || era === "NF" || era === "IS") return void 0;
+  if ((_a9 = ROUTE_CULTURES.find((c) => c.key === culture)) == null ? void 0 : _a9.sensitive) return void 0;
   if (isPlaceModule(module2)) return void 0;
   const land = link.nativeLand[module2];
   const biome = chosenBiome != null ? chosenBiome : land.biomeIfUnset;
@@ -151008,10 +150977,10 @@ function nativeSettlementRequest(module2, culture, era, where2, region, chosenBi
   const worldCulture = WORLD_CULTURES.find((c) => c.id === engineCulture(culture));
   if (!worldCulture) return void 0;
   const eras = worldCulture.eras.filter((e) => e.id !== INTERSTELLAR_ERA);
-  const match = (_a9 = eras.find((e) => {
+  const match = (_b4 = eras.find((e) => {
     var _a10;
     return ((_a10 = link.worldEraToRoute[culture]) == null ? void 0 : _a10[e.id]) === era;
-  })) != null ? _a9 : eras[0];
+  })) != null ? _b4 : eras[0];
   return { ...base, setting: "native", culture: engineCulture(culture), era: match == null ? void 0 : match.id, biome: void 0, customBiome: biome ? catalogue.find(biome) : void 0 };
 }
 function pickTradition(entry, rng) {
@@ -154253,8 +154222,10 @@ var building_names_default = {
     godCultures: ["egyptian", "norse", "anglo-saxon", "aztec", "maya"]
   },
   sensitive: {
-    noFaith: [],
-    faithOnly: {}
+    noFaith: ["polynesian"],
+    faithOnly: {
+      andean: ["Sun Temple of {town}"]
+    }
   },
   townSelf: {
     self: ["Sun Temple of {town}"],
@@ -156326,7 +156297,7 @@ function draw2(ctx, pool3, items, use) {
   return word.w;
 }
 function creatureItems(ctx) {
-  const mythic = ctx.fantastic ? creaturesFor(ctx.culture.key).map((c) => [{ w: c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase()), t: c.tones }, 1]) : [];
+  const mythic = ctx.fantastic && !ctx.culture.sensitive ? creaturesFor(ctx.culture.key).map((c) => [{ w: c.name.replace(/\b[a-z]/g, (ch) => ch.toUpperCase()), t: c.tones }, 1]) : [];
   const own = ownSigns(ctx);
   const items = own ? merged(ctx, [ownWords(own.creatures), themed(ctx, "innCreature"), mythic]) : merged(ctx, [...INN_DATA.lists.creatureLists.map((l) => gnItems(ctx, l)), vocabItems(ctx, "innCreature"), mythic]);
   if (ctx.region && INN_DATA.regionRules.dragonDouble.includes(ctx.region)) {
@@ -157532,7 +157503,10 @@ function moneyHistoryLabel(state) {
 var time_sky_default = {
   $comment: "Time and sky (docs/time-and-sky-brief.md): systems, the system table, season cycles, culture names, shapes, themes and safeguards. Read through src/timesky/engine.ts. Eras are strings: all, AN, AN-MD, MD+ (MD on), ST+ \u2026; weights and counts are the brief's.",
   version: 1,
-  sensitive: [],
+  sensitive: [
+    "polynesian",
+    "andean"
+  ],
   homeland: {
     polynesian: "tropical-islands",
     andean: "highland"
