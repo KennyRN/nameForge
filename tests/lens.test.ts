@@ -62,11 +62,11 @@ const lensJsonAny = lensJson as unknown as Record<string, unknown>;
 test("§3.1: the cultures, tiers and statuses are the brief's", () => {
   const tier = (t: string) => LENS_CULTURES.filter((c) => c.tier === t).map((c) => c.key);
   // Brief 6a: French, Dutch, Spanish, Portuguese, Italian, Roman, Greek, Byzantine and Slavic reach core depth.
-  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "french", "dutch", "spanish", "portuguese", "italian", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african"]);
+  assert.deepEqual(tier("core"), ["english", "welsh", "scottish", "irish", "cornish", "norse", "scandinavian", "german", "french", "dutch", "spanish", "portuguese", "italian", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "andean", "polynesian", "american"]); // Brief 6d: the five reach core depth
   // Brief 6b: Turkic, Mongol, Arabic, Persian, Egyptian, Ethiopian, Bantu and West African reach core depth; the two mixes stay second-tier.
   assert.deepEqual(tier("second"), [
     "celtic", "iberian", "greek-byzantine", "steppe", "arabic-persian",
-    "indian", "chinese", "japanese", "korean", "aztec", "maya", "andean", "polynesian", "american",
+    "indian", "chinese", "japanese", "korean",
   ]);
   assert.deepEqual(tier("local").sort(), [
     "arctic", "belgian", "hawaiian", "hellenistic", "malay", "maori", "maritimeSEA", "na-woodlands", "northAmerican", "northernPacific", "nw-coast", "ottoman", "phoenician", "sahul", "swahili-omani", "w-polynesian",

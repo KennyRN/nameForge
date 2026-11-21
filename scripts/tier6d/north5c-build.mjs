@@ -5,7 +5,10 @@ import { CW, NEW6D } from "./north5c-words.mjs";
 
 // A step of its own for each culture's lists (two siblings drawing the same position of the same list would give the same word).
 const TURN = { aztec: 15, maya: 17, andean: 19, polynesian: 21, american: 23 };
-const turn = (culture, text) => text.split(";").map((l, i) => { const w = l.split("|"); const k = (TURN[culture] + 2 * i) % w.length; return [...w.slice(k), ...w.slice(0, k)].join("|"); }).join(";");
+// A shuffle keyed by culture and list, so that no 6d culture reads its lists in the order of another culture's (the draws at a seed then differ).
+const hash = (t) => { let h = 2166136261; for (let i = 0; i < t.length; i++) h = Math.imul(h ^ t.charCodeAt(i), 16777619) >>> 0; return h; };
+const shuffle = (words, seed) => { const w = [...words]; let x = seed || 1; for (let i = w.length - 1; i > 0; i--) { x = Math.imul(x ^ (x >>> 15), 2246822519) >>> 0; x = (x + 0x9e3779b9) >>> 0; const j = x % (i + 1); [w[i], w[j]] = [w[j], w[i]]; } return w; };
+const turn = (culture, text) => text.split(";").map((l, i) => shuffle(l.split("|"), hash(`${culture}:${i}:${l.length}`)).join("|")).join(";");
 export const WORDS6D = {};
 export const TAGS6D = {};
 const split = (module, culture, text) => {

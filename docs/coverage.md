@@ -17,10 +17,10 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | monuments and statues | 146/17 | 73/18 | 97/18 | 73/18 | 73/18 | 69/8 | 58/15 | 54/14 | 60/14 | 36/14 | 30/10 | 36/14 | 36/14 | 18/8 | 30/10 | 38/20 | 36/14 | 36/14 | 20/11 | 37/18 | 30/10 | 30/10 | 13/7 | 30/10 | 30/10 | 13/7 | 33/17 | 31/14 | 30/12 | 30/13 | 31/15 | 33/16 | 31/13 | 33/13 | 30/12 | 31/13 | 30/10 | 30/10 | 30/10 |
 | settlement names | 102/109 | 205/95 | 247/217 | 170/97 | 195/84 | 25/116 | 199/98 | 302/182 | 350/186 | 230/116 | 225/93 | 280/108 | 245/111 | not offered | 205/111 | 141/160 | 230/103 | 215/97 | not offered | 112/148 | 315/102 | 295/86 | not offered | 340/120 | 295/121 | **0/105** | 355/176 | 167/89 | 266/105 | 215/114 | 350/145 | 225/148 | 278/130 | 273/103 | 420/182 | 530/192 | 265/186 | 265/194 | 260/137 |
 | settlement kit (no tables of its own) | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
-| events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 49/10 | 50/10 | 47/10 | 50/10 | 15/4 | 47/10 | 48/12 | 49/10 | 49/10 | 15/4 | 45/12 | 45/10 | 51/10 | 15/7 | 46/10 | 50/10 | 31/9 | 57/14 | 60/12 | 51/12 | 57/15 | 48/12 | 83/15 | 83/13 | 82/15 | 58/13 | 58/13 | 47/10 | 49/10 | 46/10 |
-| money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 76/12 + profile | 66/10 + profile | 49/11 | 52/11 | 44/6 + profile | 50/10 | 90/12 | 50/11 | 48/11 | 47/6 | 85/13 | 44/10 | 41/10 | 33/5 + profile | 40/10 | 41/10 | 46/4 | 52/10 + profile | 51/10 + profile | 60/10 + profile | 62/10 + profile | 63/11 | 74/11 | 60/11 + profile | 58/11 + profile | 60/10 + profile | 54/10 + profile | 42/10 | 43/10 | 84/12 + profile |
-| calendars and festivals | 98/12 | 88/11 | 88/11 | 85/11 | 84/11 | 35/5 | 75/11 | 106/11 | 55/10 | 52/10 | 52/10 | 56/10 | 46/10 | 15/4 | 55/10 | 88/13 | 55/10 | 43/10 | 40/5 | 87/10 | 45/10 | 49/10 | 25/5 | 47/10 | 46/10 | 25/4 | 64/10 | 56/10 | 58/12 | 54/12 | 53/10 | 112/11 | 117/11 | 103/11 | 83/13 | 47/13 | 53/10 | 55/11 | 47/10 |
-| sky lore | 62/10 | 49/10 | 49/10 | 51/10 | 49/10 | 18/4 | 48/10 | 53/10 | 44/10 | 43/10 | 43/10 | 44/10 | 40/10 | 15/4 | 41/10 | 72/10 | 41/10 | 43/10 | 47/4 | 44/10 | 43/10 | 46/10 | 22/4 | 41/10 | 43/10 | 21/4 | 46/10 | 43/10 | 46/10 | 41/10 | 44/10 | 54/10 | 51/10 | 49/10 | 48/10 | 48/10 | 47/10 | 48/10 | 44/10 |
+| events and eras | 46/11 | 49/12 | 47/12 | 48/12 | 41/12 | 15/6 | 45/12 | 43/12 | 48/10 | 49/10 | 50/10 | 47/10 | 50/10 | 15/4 | 47/10 | 48/12 | 49/10 | 49/10 | 15/4 | 45/12 | 45/10 | 51/10 | 15/7 | 46/10 | 50/10 | 31/9 | 57/14 | 60/12 | 51/12 | 57/15 | 48/12 | 83/15 | 83/13 | 82/15 | 59/13 | 56/13 | 46/10 | 49/10 | 48/10 |
+| money and coins | 141/12 + profile | 63/11 + profile | 62/11 + profile | 62/11 + profile | 61/11 + profile | 30/5 + profile | 68/11 + profile | 67/11 + profile | 46/10 | 76/12 + profile | 66/10 + profile | 49/11 | 52/11 | 44/6 + profile | 50/10 | 90/12 | 50/11 | 48/11 | 47/6 | 85/13 | 44/10 | 41/10 | 33/5 + profile | 40/10 | 41/10 | 46/4 | 52/10 + profile | 51/10 + profile | 60/10 + profile | 62/10 + profile | 63/11 | 74/11 | 60/11 + profile | 58/11 + profile | 59/10 + profile | 54/10 + profile | 42/10 | 42/10 | 84/12 + profile |
+| calendars and festivals | 98/12 | 88/11 | 88/11 | 85/11 | 84/11 | 35/5 | 75/11 | 106/11 | 55/10 | 52/10 | 52/10 | 56/10 | 46/10 | 15/4 | 55/10 | 88/13 | 55/10 | 43/10 | 40/5 | 87/10 | 45/10 | 49/10 | 25/5 | 47/10 | 46/10 | 25/4 | 64/10 | 56/10 | 58/12 | 54/12 | 53/10 | 112/11 | 117/11 | 103/11 | 70/13 | 35/13 | 39/10 | 43/11 | 33/10 |
+| sky lore | 62/10 | 49/10 | 49/10 | 51/10 | 49/10 | 18/4 | 48/10 | 53/10 | 44/10 | 43/10 | 43/10 | 44/10 | 40/10 | 15/4 | 41/10 | 72/10 | 41/10 | 43/10 | 47/4 | 44/10 | 43/10 | 46/10 | 22/4 | 41/10 | 43/10 | 21/4 | 46/10 | 43/10 | 46/10 | 41/10 | 44/10 | 54/10 | 51/10 | 49/10 | 48/10 | 46/10 | 50/10 | 49/10 | 43/10 |
 | mountains | 64/118 + profile | 34/36 | 34/12 | 34/12 | 34/12 | 17/6 + profile | 33/14 + profile | 30/14 | 30/22 | 34/10 | excluded | 34/10 | 34/10 | 16/10 | 30/10 | 34/10 + profile | 34/10 | 34/10 | 18/10 + profile | 35/10 + profile | 30/10 | 30/10 | 13/10 + profile | 30/10 | 30/10 | 13/10 + profile | 33/10 + profile | 30/10 + profile | 32/10 + profile | 31/10 + profile | 35/12 + profile | 36/12 + profile | 33/12 + profile | 34/12 + profile | 35/10 + profile | 33/10 + profile | 34/10 + profile | 32/10 + profile | 30/10 |
 | forests and woods | 64/75 + profile | 34/36 | 34/84 | 34/12 | 34/36 | 17/6 + profile | 31/38 + profile | 30/38 | 30/136 | 34/12 | 30/10 | 34/12 | 34/12 | 16/12 | 30/10 | 35/12 + profile | 34/12 | 34/12 | 16/12 + profile | 35/12 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 + profile | 30/10 + profile | 32/10 + profile | 32/10 + profile | 34/10 + profile | 34/10 + profile | 35/10 + profile | 34/10 + profile | 32/10 + profile | 32/10 + profile | 33/10 + profile | 31/10 + profile | 30/10 |
 | deserts | **4/0 + profile** | **4/0** | **4/0** | **4/0** | **4/0** | **5/0 + profile** | **12/4 + profile** | **12/4** | **0/0** | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | excluded | 30/10 | 30/10 | 13/5 + profile | 30/10 | 30/10 | 12/6 + profile | 31/11 + profile | 30/11 + profile | 30/10 + profile | 31/11 + profile | 34/5 + profile | 36/4 + profile | excluded | excluded | 32/10 + profile | 32/10 + profile | 33/10 + profile | excluded | 30/10 |
@@ -36,28 +36,28 @@ Targets: core 30 words and 10 shapes; second tier 12 and 4; local 4 and 1. Live 
 | coasts and islands | 61/54 + profile | 31/42 | 31/42 | 31/42 | 31/42 | 13/36 + profile | 30/34 + profile | 30/22 | 30/19 | 31/13 | 30/10 | 31/13 | 31/13 | 13/13 | 30/10 | 31/15 + profile | 31/13 | 31/13 | 14/15 + profile | 31/13 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 |
 | sea charts | 60/181 + profile | 30/51 | 30/99 | 30/27 | 30/51 | 14/21 + profile | 31/110 + profile | 30/107 | 30/16 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 30/10 + profile | 30/10 | 30/10 | 13/10 + profile | 30/10 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 | 30/10 | 12/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 33/11 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 + profile | 30/10 |
 | hyperspace charts | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) |
-| epithets and bynames | 70/10 | 54/10 | 53/10 | 49/10 | 50/10 | 19/4 | 56/10 | 51/10 | 49/10 | 52/10 | 48/10 | 52/10 | 48/10 | 15/4 | 49/10 | 57/10 | 48/10 | 52/10 | 26/4 | 52/10 | 47/10 | 52/10 | 28/4 | 48/10 | 51/10 | 23/4 | 56/10 | 50/10 | 57/10 | 52/10 | 56/10 | 52/10 | 56/10 | 52/10 | 52/10 | 55/10 | 49/10 | 48/10 | 51/10 |
-| titles and honourifics | 68/10 | 51/10 | 50/10 | 48/10 | 59/10 | 20/4 | 46/10 | 53/10 | 47/10 | 47/10 | 52/10 | 49/10 | 50/10 | 15/4 | 49/10 | 56/10 | 45/10 | 53/10 | 24/4 | 54/10 | 45/10 | 51/10 | 21/4 | 49/10 | 46/10 | 23/4 | 55/10 | 58/10 | 52/10 | 53/10 | 55/10 | 52/10 | 57/10 | 54/10 | 56/10 | 52/10 | 50/10 | 52/10 | 48/10 |
-| family names | 52/29 | 51/19 | 49/19 | 53/19 | 52/19 | 15/13 | 45/17 | 50/17 | 53/10 | 50/10 | 52/10 | 49/10 | 53/10 | 15/4 | 52/10 | 52/16 | 52/10 | 49/10 | 15/8 | 53/14 | 42/10 | 44/10 | 15/10 | 40/10 | 41/10 | 15/16 | 40/15 | 41/13 | 42/14 | 42/15 | exempt (by design) | 57/58 | 37/38 | 34/35 | 44/13 | 40/13 | 41/10 | 40/10 | 41/10 |
-| arms and armour | 63/10 + profile | 64/10 + profile | 62/10 + profile | 63/10 + profile | 61/10 + profile | 24/4 + profile | 57/10 + profile | 57/10 + profile | 41/10 | 54/10 | 53/10 | 57/10 | 54/10 | 16/4 | 54/10 | 53/10 + profile | 56/10 | 52/10 | 17/4 + profile | 60/10 + profile | 54/10 | 54/10 | 18/4 + profile | 54/10 | 55/10 | 17/4 + profile | 42/10 + profile | 51/10 + profile | 54/10 + profile | 54/10 + profile | 55/10 + profile | 61/10 + profile | 53/10 + profile | 60/10 + profile | 59/10 + profile | 54/10 + profile | 52/10 | 50/10 | 46/10 |
-| treasures and regalia | 61/10 + profile | 64/10 + profile | 61/10 + profile | 62/10 + profile | 62/10 + profile | 27/4 + profile | 51/10 + profile | 55/10 + profile | 52/10 | 53/10 | 51/10 | 52/10 | 52/10 | 17/4 | 51/10 | 55/10 + profile | 53/10 | 51/10 | 18/4 + profile | 56/10 + profile | 50/10 | 51/10 | 18/4 + profile | 49/10 | 51/10 | 17/4 + profile | 52/10 + profile | 49/10 + profile | 55/10 + profile | 50/10 + profile | 52/10 + profile | 57/10 + profile | 50/10 + profile | 55/10 + profile | 52/10 + profile | 52/10 + profile | 48/10 | 50/10 | 50/10 |
-| books and writings | 63/10 + profile | 60/10 + profile | 58/10 + profile | 53/10 + profile | 57/10 + profile | 24/4 + profile | 54/10 + profile | 58/10 + profile | 54/10 | 54/10 | 45/10 | 50/10 | 50/10 | 16/4 | 51/10 | 50/10 + profile | 55/10 | 50/10 | 17/4 + profile | 53/10 + profile | 52/10 | 51/10 | 18/4 + profile | 49/10 | 54/10 | 17/4 + profile | 50/10 + profile | 49/10 + profile | 58/10 + profile | 56/10 + profile | 50/10 + profile | 59/10 + profile | 50/10 + profile | 53/10 + profile | 53/10 + profile | 51/10 + profile | 54/10 | 49/10 | 50/10 |
+| epithets and bynames | 70/10 | 54/10 | 53/10 | 49/10 | 50/10 | 19/4 | 56/10 | 51/10 | 49/10 | 52/10 | 48/10 | 52/10 | 48/10 | 15/4 | 49/10 | 57/10 | 48/10 | 52/10 | 26/4 | 52/10 | 47/10 | 52/10 | 28/4 | 48/10 | 51/10 | 23/4 | 56/10 | 50/10 | 57/10 | 52/10 | 56/10 | 52/10 | 56/10 | 52/10 | 52/10 | 56/10 | 51/10 | 52/10 | 51/10 |
+| titles and honourifics | 68/10 | 51/10 | 50/10 | 48/10 | 59/10 | 20/4 | 46/10 | 53/10 | 47/10 | 47/10 | 52/10 | 49/10 | 50/10 | 15/4 | 49/10 | 56/10 | 45/10 | 53/10 | 24/4 | 54/10 | 45/10 | 51/10 | 21/4 | 49/10 | 46/10 | 23/4 | 55/10 | 58/10 | 52/10 | 53/10 | 55/10 | 52/10 | 57/10 | 54/10 | 53/10 | 58/10 | 51/10 | 53/10 | 47/10 |
+| family names | 52/29 | 51/19 | 49/19 | 53/19 | 52/19 | 15/13 | 45/17 | 50/17 | 53/10 | 50/10 | 52/10 | 49/10 | 53/10 | 15/4 | 52/10 | 52/16 | 52/10 | 49/10 | 15/8 | 53/14 | 42/10 | 44/10 | 15/10 | 40/10 | 41/10 | 15/16 | 40/15 | 41/13 | 42/14 | 42/15 | exempt (by design) | 57/58 | 37/38 | 34/35 | 40/13 | 40/13 | 41/13 | 41/13 | 44/23 |
+| arms and armour | 63/10 + profile | 64/10 + profile | 62/10 + profile | 63/10 + profile | 61/10 + profile | 24/4 + profile | 57/10 + profile | 57/10 + profile | 41/10 | 54/10 | 53/10 | 57/10 | 54/10 | 16/4 | 54/10 | 53/10 + profile | 56/10 | 52/10 | 17/4 + profile | 60/10 + profile | 54/10 | 54/10 | 18/4 + profile | 54/10 | 55/10 | 17/4 + profile | 42/10 + profile | 51/10 + profile | 54/10 + profile | 54/10 + profile | 55/10 + profile | 61/10 + profile | 53/10 + profile | 60/10 + profile | 58/10 + profile | 58/10 + profile | 49/10 | 50/10 | 45/10 |
+| treasures and regalia | 61/10 + profile | 64/10 + profile | 61/10 + profile | 62/10 + profile | 62/10 + profile | 27/4 + profile | 51/10 + profile | 55/10 + profile | 52/10 | 53/10 | 51/10 | 52/10 | 52/10 | 17/4 | 51/10 | 55/10 + profile | 53/10 | 51/10 | 18/4 + profile | 56/10 + profile | 50/10 | 51/10 | 18/4 + profile | 49/10 | 51/10 | 17/4 + profile | 52/10 + profile | 49/10 + profile | 55/10 + profile | 50/10 + profile | 52/10 + profile | 57/10 + profile | 50/10 + profile | 55/10 + profile | 54/10 + profile | 52/10 + profile | 49/10 | 50/10 | 49/10 |
+| books and writings | 63/10 + profile | 60/10 + profile | 58/10 + profile | 53/10 + profile | 57/10 + profile | 24/4 + profile | 54/10 + profile | 58/10 + profile | 54/10 | 54/10 | 45/10 | 50/10 | 50/10 | 16/4 | 51/10 | 50/10 + profile | 55/10 | 50/10 | 17/4 + profile | 53/10 + profile | 52/10 | 51/10 | 18/4 + profile | 49/10 | 54/10 | 17/4 + profile | 50/10 + profile | 49/10 + profile | 58/10 + profile | 56/10 + profile | 50/10 + profile | 59/10 + profile | 50/10 + profile | 53/10 + profile | 55/10 + profile | 56/10 + profile | 50/10 | 49/10 | 54/10 |
 | realms and polities | 53/10 + profile | 52/10 + profile | 50/10 + profile | 47/10 + profile | 50/10 + profile | 18/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | 47/10 | 47/10 | 48/10 | 47/10 | 15/4 | 48/10 | 50/10 + profile | 49/10 | 48/10 | 19/4 + profile | 52/10 + profile | 37/10 | 38/10 | 23/4 + profile | 37/10 | 37/10 | 22/4 + profile | 41/10 + profile | 39/10 + profile | 39/10 + profile | 39/10 + profile | 40/10 + profile | 39/10 + profile | 41/10 + profile | 38/10 + profile | 38/10 + profile | 38/10 + profile | 37/10 | 37/10 | 36/10 |
-| peoples and tongues | 47/10 + profile | 45/10 + profile | 49/10 + profile | 49/10 + profile | 45/10 + profile | 15/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | 49/10 | 49/10 | 47/10 | 49/10 | 15/4 | 49/10 | 48/10 + profile | 49/10 | 49/10 | 15/4 + profile | 49/10 + profile | 48/10 | 49/10 | 15/4 + profile | 48/10 | 48/10 | 15/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 + profile | 48/10 + profile | 48/10 + profile | 49/10 + profile | 49/10 + profile | 49/10 + profile | 47/10 + profile | 49/10 + profile | 47/10 + profile | 49/10 + profile | 48/10 + profile |
-| deities | 75/11 + profile | 62/10 + profile | 62/10 + profile | 61/10 + profile | 62/10 + profile | 31/4 + profile | 63/11 + profile | 62/11 + profile | 46/10 | 46/10 | 46/10 | 45/10 | 46/10 | 15/4 | 45/10 | 58/10 | 45/10 | 46/10 | 22/4 | 58/10 | 46/10 | 46/10 | 25/6 + profile | 45/10 | 46/10 | 28/5 + profile | 57/10 + profile | 55/10 | 64/10 + profile | 61/10 + profile | 59/10 + profile | 57/10 + profile | 60/10 + profile | 57/10 + profile | 65/11 + profile | 59/11 + profile | excluded | excluded | 45/10 |
-| sacred places | 90/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 28/4 + profile | 47/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 42/10 | 30/10 | 30/10 | 19/10 | 42/10 | 30/10 | 30/10 | 22/10 + profile | 30/10 | 30/10 | 25/10 + profile | 41/10 + profile | 40/10 | 48/10 + profile | 45/10 + profile | 43/10 + profile | 42/10 + profile | 44/10 + profile | 41/10 + profile | 49/10 + profile | 44/10 + profile | excluded | excluded | 30/10 |
+| peoples and tongues | 47/10 + profile | 45/10 + profile | 49/10 + profile | 49/10 + profile | 45/10 + profile | 15/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 | 49/10 | 49/10 | 47/10 | 49/10 | 15/4 | 49/10 | 48/10 + profile | 49/10 | 49/10 | 15/4 + profile | 49/10 + profile | 48/10 | 49/10 | 15/4 + profile | 48/10 | 48/10 | 15/4 + profile | 49/10 + profile | 49/10 + profile | 49/10 + profile | 48/10 + profile | 48/10 + profile | 49/10 + profile | 49/10 + profile | 49/10 + profile | 49/10 + profile | 48/10 + profile | 48/10 + profile | 49/10 + profile | 48/10 + profile |
+| deities | 75/11 + profile | 62/10 + profile | 62/10 + profile | 61/10 + profile | 62/10 + profile | 31/4 + profile | 63/11 + profile | 62/11 + profile | 46/10 | 46/10 | 46/10 | 45/10 | 46/10 | 15/4 | 45/10 | 58/10 | 45/10 | 46/10 | 22/4 | 58/10 | 46/10 | 46/10 | 25/6 + profile | 45/10 | 46/10 | 28/5 + profile | 57/10 + profile | 55/10 | 64/10 + profile | 61/10 + profile | 59/10 + profile | 57/10 + profile | 60/10 + profile | 57/10 + profile | 65/11 + profile | 60/11 + profile | 45/10 | 46/10 | 46/10 |
+| sacred places | 90/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 28/4 + profile | 47/10 + profile | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 30/10 | 12/10 | 30/10 | 42/10 | 30/10 | 30/10 | 19/10 | 42/10 | 30/10 | 30/10 | 22/10 + profile | 30/10 | 30/10 | 25/10 + profile | 41/10 + profile | 40/10 | 48/10 + profile | 45/10 + profile | 43/10 + profile | 42/10 + profile | 44/10 + profile | 41/10 + profile | 49/10 + profile | 44/10 + profile | 30/10 | 30/10 | 30/10 |
 | tribes and kin groups | 46/10 | 48/10 | 48/10 | 48/10 | 48/10 | **10/0** | 41/10 | 46/10 | 46/10 | 41/10 | 46/10 | 41/10 | 41/10 | 23/4 | 46/10 | 46/10 | 41/10 | 41/10 | 28/4 | 41/10 | 40/10 | 40/10 | 22/4 | 39/10 | 39/10 | 22/4 | 39/10 | 39/10 | 37/10 | 38/10 | 39/10 | 41/10 | 41/10 | 41/10 | 40/10 | 40/10 | 39/10 | 43/10 | not offered |
-| faiths and mystic orders | 50/10 | 55/10 | 49/10 | 49/10 | 53/10 | 18/4 | 44/10 | 43/10 | 45/10 | 52/10 | 46/10 | 54/10 | 52/10 | 19/4 | 57/10 | 56/10 | 51/10 | 54/10 | 23/4 | 47/10 | 47/10 | 46/10 | 15/4 | 51/10 | 50/10 | 17/4 | 41/10 | 52/10 | 45/10 | 51/10 | 53/10 | 53/12 | 55/12 | 52/12 | 50/10 | 47/10 | 50/10 | 48/10 | not offered |
-| armies and martial orders | 56/10 | 47/10 | 49/10 | 43/10 | 46/10 | 17/4 | 53/10 | 54/10 | 56/10 | 50/10 | 54/10 | 52/10 | 48/10 | 18/4 | 53/10 | 54/10 | 51/10 | 47/10 | 21/4 | 52/10 | 50/10 | 56/10 | 21/4 | 46/10 | 47/10 | 16/4 | 42/10 | 42/10 | 51/10 | 43/10 | 49/10 | 47/10 | 48/10 | 49/10 | 46/10 | 45/10 | 47/10 | 42/10 | not offered |
-| thieves and the underworld | 45/10 | 44/10 | 45/10 | 45/10 | 48/10 | 15/4 | 48/10 | 45/10 | 44/10 | 45/10 | 45/10 | 46/10 | 46/10 | 15/4 | 43/10 | 46/10 | 44/10 | 44/10 | 15/4 | 45/10 | 37/10 | 49/10 | 15/4 | 49/10 | 49/10 | 15/4 | 43/10 | 50/10 | 50/10 | 46/10 | 39/10 | 46/11 | 46/11 | 46/11 | 41/10 | 41/10 | 42/10 | 41/10 | not offered |
-| guilds, companies, and trade | 53/10 | 44/10 | 46/10 | 44/10 | 43/10 | 15/4 | 45/10 | 51/10 | 52/10 | 54/10 | 43/10 | 46/10 | 44/10 | 15/4 | 49/10 | 55/10 | 53/10 | 46/10 | 15/4 | 43/10 | 49/10 | 47/10 | 15/4 | 55/10 | 52/10 | 15/4 | 36/10 | 43/10 | 54/10 | 52/10 | 54/10 | 53/10 | 46/10 | 43/10 | 45/10 | 55/10 | 52/10 | 48/10 | not offered |
-| adventurers and explorers | 51/10 | 52/10 | 54/10 | 52/10 | 49/10 | 17/4 | 43/10 | 48/10 | 50/10 | 46/10 | 48/10 | 45/10 | 46/10 | 15/4 | 45/10 | 45/10 | 46/10 | 48/10 | 15/4 | 48/10 | 45/10 | 47/10 | 15/4 | 49/10 | 47/10 | 16/4 | 47/10 | 49/10 | 49/10 | 50/10 | 46/10 | 46/10 | 47/10 | 47/10 | 46/10 | 48/10 | 44/10 | 49/10 | not offered |
-| powers and factions | 53/10 | 45/10 | 44/10 | 40/10 | 49/10 | 15/4 | 44/10 | 44/10 | 51/10 | 52/10 | 53/10 | 54/10 | 50/10 | 17/4 | 52/10 | 54/10 | 54/10 | 53/10 | 19/4 | 46/10 | 38/10 | 40/10 | 16/4 | 37/10 | 38/10 | 15/4 | 35/10 | 38/10 | 40/10 | 39/10 | 39/10 | 38/10 | 38/10 | 37/10 | 39/10 | 38/10 | 37/10 | 36/10 | not offered |
-| supernatural courts and hosts | 47/10 | 47/10 | 46/10 | 49/10 | 48/10 | 15/4 | 45/10 | 44/10 | 45/10 | 46/10 | 44/10 | 48/10 | 46/10 | 15/4 | 43/10 | 47/10 | 49/10 | 48/10 | 15/4 | 45/10 | 44/10 | 43/10 | 12/4 | 44/10 | 44/10 | 12/4 | 45/10 | 44/10 | 44/10 | 43/10 | 44/10 | 45/10 | 44/10 | 45/10 | 43/10 | 43/10 | 44/10 | 43/10 | not offered |
-| ships and boats | 45/10 + profile | 44/10 + profile | 45/10 + profile | 41/10 + profile | 44/10 + profile | 15/4 + profile | 45/10 + profile | 43/10 + profile | 44/10 | 45/10 + profile | 45/10 + profile | 45/10 | 42/10 | 15/4 + profile | 41/10 | 42/10 + profile | 41/10 | 44/10 | 15/4 + profile | 41/10 + profile | 41/10 | 45/10 | 15/4 + profile | 42/10 | 42/10 | 15/4 + profile | 42/10 + profile | 42/10 + profile | 45/10 + profile | 42/10 + profile | 43/10 + profile | 42/10 + profile | 44/10 + profile | 42/10 + profile | 44/10 + profile | 43/10 + profile | 42/10 + profile | 44/10 + profile | 42/10 + profile |
+| faiths and mystic orders | 50/10 | 55/10 | 49/10 | 49/10 | 53/10 | 18/4 | 44/10 | 43/10 | 45/10 | 52/10 | 46/10 | 54/10 | 52/10 | 19/4 | 57/10 | 56/10 | 51/10 | 54/10 | 23/4 | 47/10 | 47/10 | 46/10 | 15/4 | 51/10 | 50/10 | 17/4 | 41/10 | 52/10 | 45/10 | 51/10 | 53/10 | 53/12 | 55/12 | 52/12 | 48/10 | 48/10 | 52/10 | 50/10 | not offered |
+| armies and martial orders | 56/10 | 47/10 | 49/10 | 43/10 | 46/10 | 17/4 | 53/10 | 54/10 | 56/10 | 50/10 | 54/10 | 52/10 | 48/10 | 18/4 | 53/10 | 54/10 | 51/10 | 47/10 | 21/4 | 52/10 | 50/10 | 56/10 | 21/4 | 46/10 | 47/10 | 16/4 | 42/10 | 42/10 | 51/10 | 43/10 | 49/10 | 47/10 | 48/10 | 49/10 | 44/10 | 45/10 | 43/10 | 46/10 | not offered |
+| thieves and the underworld | 45/10 | 44/10 | 45/10 | 45/10 | 48/10 | 15/4 | 48/10 | 45/10 | 44/10 | 45/10 | 45/10 | 46/10 | 46/10 | 15/4 | 43/10 | 46/10 | 44/10 | 44/10 | 15/4 | 45/10 | 37/10 | 49/10 | 15/4 | 49/10 | 49/10 | 15/4 | 43/10 | 50/10 | 50/10 | 46/10 | 39/10 | 46/11 | 46/11 | 46/11 | 41/10 | 40/10 | 41/10 | 41/10 | not offered |
+| guilds, companies, and trade | 53/10 | 44/10 | 46/10 | 44/10 | 43/10 | 15/4 | 45/10 | 51/10 | 52/10 | 54/10 | 43/10 | 46/10 | 44/10 | 15/4 | 49/10 | 55/10 | 53/10 | 46/10 | 15/4 | 43/10 | 49/10 | 47/10 | 15/4 | 55/10 | 52/10 | 15/4 | 36/10 | 43/10 | 54/10 | 52/10 | 54/10 | 53/10 | 46/10 | 43/10 | 55/10 | 45/10 | 47/10 | 56/10 | not offered |
+| adventurers and explorers | 51/10 | 52/10 | 54/10 | 52/10 | 49/10 | 17/4 | 43/10 | 48/10 | 50/10 | 46/10 | 48/10 | 45/10 | 46/10 | 15/4 | 45/10 | 45/10 | 46/10 | 48/10 | 15/4 | 48/10 | 45/10 | 47/10 | 15/4 | 49/10 | 47/10 | 16/4 | 47/10 | 49/10 | 49/10 | 50/10 | 46/10 | 46/10 | 47/10 | 47/10 | 46/10 | 48/10 | 48/10 | 48/10 | not offered |
+| powers and factions | 53/10 | 45/10 | 44/10 | 40/10 | 49/10 | 15/4 | 44/10 | 44/10 | 51/10 | 52/10 | 53/10 | 54/10 | 50/10 | 17/4 | 52/10 | 54/10 | 54/10 | 53/10 | 19/4 | 46/10 | 38/10 | 40/10 | 16/4 | 37/10 | 38/10 | 15/4 | 35/10 | 38/10 | 40/10 | 39/10 | 39/10 | 38/10 | 38/10 | 37/10 | 42/10 | 37/10 | 38/10 | 36/10 | not offered |
+| supernatural courts and hosts | 47/10 | 47/10 | 46/10 | 49/10 | 48/10 | 15/4 | 45/10 | 44/10 | 45/10 | 46/10 | 44/10 | 48/10 | 46/10 | 15/4 | 43/10 | 47/10 | 49/10 | 48/10 | 15/4 | 45/10 | 44/10 | 43/10 | 12/4 | 44/10 | 44/10 | 12/4 | 45/10 | 44/10 | 44/10 | 43/10 | 44/10 | 45/10 | 44/10 | 45/10 | 43/10 | 44/10 | 43/10 | 44/10 | not offered |
+| ships and boats | 45/10 + profile | 44/10 + profile | 45/10 + profile | 41/10 + profile | 44/10 + profile | 15/4 + profile | 45/10 + profile | 43/10 + profile | 44/10 | 45/10 + profile | 45/10 + profile | 45/10 | 42/10 | 15/4 + profile | 41/10 | 42/10 + profile | 41/10 | 44/10 | 15/4 + profile | 41/10 + profile | 41/10 | 45/10 | 15/4 + profile | 42/10 | 42/10 | 15/4 + profile | 42/10 + profile | 42/10 + profile | 45/10 + profile | 42/10 + profile | 43/10 + profile | 42/10 + profile | 44/10 + profile | 42/10 + profile | 42/10 + profile | 44/10 + profile | 42/10 + profile | 42/10 + profile | 42/10 + profile |
 | spacecraft and stations | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | not offered | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) |
-| aircraft and airships | 44/10 + profile | 38/10 + profile | 38/10 + profile | 36/10 + profile | 37/10 + profile | 13/4 + profile | 39/10 | 38/10 | 36/10 | 37/10 + profile | 37/10 + profile | 37/10 | 38/10 | 15/4 + profile | 38/10 | 38/10 + profile | 36/10 | 39/10 | 15/4 | 36/10 + profile | 37/10 | 38/10 | 15/4 + profile | 37/10 | 38/10 | 15/4 + profile | 37/10 + profile | 39/10 + profile | 36/10 | 39/10 | 38/10 + profile | 37/10 + profile | 39/10 + profile | 36/10 + profile | 39/10 + profile | 38/10 + profile | 39/10 + profile | 38/10 + profile | 37/10 + profile |
-| land vehicles | 41/10 + profile | 42/10 + profile | 43/10 + profile | 41/10 + profile | 40/10 + profile | 15/4 + profile | 47/10 + profile | 42/10 + profile | 42/10 | 40/10 + profile | 40/10 + profile | 40/10 | 43/10 | 15/4 + profile | 42/10 | 41/10 + profile | 40/10 | 41/10 | 15/4 + profile | 42/10 + profile | 40/10 | 41/10 | 15/4 + profile | 40/10 | 40/10 | 15/4 + profile | 39/10 + profile | 41/10 + profile | 42/10 + profile | 42/10 + profile | 41/10 + profile | 41/10 + profile | 41/10 + profile | 41/10 + profile | 41/10 + profile | 42/10 + profile | 40/10 + profile | 42/10 + profile | 40/10 + profile |
+| aircraft and airships | 44/10 + profile | 38/10 + profile | 38/10 + profile | 36/10 + profile | 37/10 + profile | 13/4 + profile | 39/10 | 38/10 | 36/10 | 37/10 + profile | 37/10 + profile | 37/10 | 38/10 | 15/4 + profile | 38/10 | 38/10 + profile | 36/10 | 39/10 | 15/4 | 36/10 + profile | 37/10 | 38/10 | 15/4 + profile | 37/10 | 38/10 | 15/4 + profile | 37/10 + profile | 39/10 + profile | 36/10 | 39/10 | 38/10 + profile | 37/10 + profile | 39/10 + profile | 36/10 + profile | 37/10 + profile | 36/10 + profile | 38/10 + profile | 38/10 + profile | 37/10 + profile |
+| land vehicles | 41/10 + profile | 42/10 + profile | 43/10 + profile | 41/10 + profile | 40/10 + profile | 15/4 + profile | 47/10 + profile | 42/10 + profile | 42/10 | 40/10 + profile | 40/10 + profile | 40/10 | 43/10 | 15/4 + profile | 42/10 | 41/10 + profile | 40/10 | 41/10 | 15/4 + profile | 42/10 + profile | 40/10 | 41/10 | 15/4 + profile | 40/10 | 40/10 | 15/4 + profile | 39/10 + profile | 41/10 + profile | 42/10 + profile | 42/10 + profile | 41/10 + profile | 41/10 + profile | 41/10 + profile | 41/10 + profile | 42/10 + profile | 40/10 + profile | 42/10 + profile | 42/10 + profile | 41/10 + profile |
 | river names | **112/0** | **66/0** | **77/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) | 0/0 (deferred: styles) |
 
 ### Local cultures
@@ -105,10 +105,10 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | monuments and statues | 445 | 437 | 382 | 605 | 256 | 25 | 23 |
 | settlement names | 624 | 1355 | 988 | 1141 | 1168 | **0** | 885 |
 | settlement kit | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| events and eras | 220 | 305 | 306 | 240 | 252 | 28 | 31 |
-| money and coins | 363 | 526 | 525 | 465 | 406 | 165 | 168 |
-| calendars and festivals | 375 | 412 | 378 | 226 | 235 | **4** | **4** |
-| sky lore | 218 | 218 | 218 | 213 | 301 | **2** | **2** |
+| events and eras | 220 | 302 | 304 | 240 | 253 | 28 | 31 |
+| money and coins | 363 | 526 | 525 | 465 | 404 | 165 | 168 |
+| calendars and festivals | 388 | 449 | 394 | 237 | 265 | **4** | **4** |
+| sky lore | 218 | 218 | 218 | 213 | 302 | **2** | **2** |
 | mountains (land) | 334 | 322 | 542 | 542 | 542 | **6** | **6** |
 | forests and woods (land) | 332 | 333 | 562 | 562 | 562 | **4** | **4** |
 | deserts (land) | 139 | 137 | 237 | 237 | 237 | **8** | **8** |
@@ -124,28 +124,28 @@ Era-restricted entries per module (target 12 per era the module offers). Land mo
 | coasts and islands (land) | 331 | 315 | 539 | 539 | 539 | **0** | **0** |
 | sea charts (land) | 331 | 318 | 558 | 558 | 558 | **0** | **0** |
 | hyperspace charts | **0** | **0** | **0** | **0** | **0** | 155 | 155 |
-| epithets and bynames | 283 | 373 | 225 | 212 | 223 | **0** | **0** |
-| titles and honourifics | 219 | 503 | 380 | 216 | 215 | **0** | **0** |
-| family names | 199 | 336 | 251 | 187 | 186 | **0** | **0** |
+| epithets and bynames | 291 | 380 | 223 | 212 | 223 | **0** | **0** |
+| titles and honourifics | 219 | 507 | 385 | 216 | 215 | **0** | **0** |
+| family names | 199 | 336 | 252 | 187 | 186 | **0** | **0** |
 | arms and armour | 227 | 481 | 637 | 344 | 213 | **11** | **11** |
-| treasures and regalia | 231 | 446 | 350 | 223 | 233 | **11** | **11** |
-| books and writings | 252 | 526 | 403 | 226 | 216 | **8** | **8** |
+| treasures and regalia | 231 | 448 | 351 | 223 | 233 | **11** | **11** |
+| books and writings | 251 | 533 | 412 | 226 | 216 | **8** | **8** |
 | realms and polities | 400 | 538 | 464 | **0** | 243 | 34 | 42 |
-| peoples and tongues | 236 | 255 | 219 | 213 | 296 | **7** | **7** |
-| deities | 210 | 210 | 210 | 213 | 234 | 14 | 14 |
+| peoples and tongues | 237 | 255 | 218 | 213 | 298 | **7** | **7** |
+| deities | 210 | 210 | 210 | 213 | 235 | 14 | 14 |
 | sacred places | 330 | 315 | 327 | 521 | 210 | **9** | **9** |
 | tribes and kin groups | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
-| faiths and mystic orders | 252 | 358 | 242 | 213 | 310 | **0** | 23 |
-| armies and martial orders | 229 | 446 | 411 | 270 | 232 | **0** | 12 |
-| thieves and the underworld | 213 | 456 | 549 | 305 | 265 | **0** | 22 |
-| guilds, companies, and trade | 218 | 477 | 422 | 218 | 235 | **0** | 15 |
-| adventurers and explorers | 212 | 489 | 491 | 247 | 232 | **0** | 19 |
-| powers and factions | 226 | 399 | 336 | 230 | 228 | **0** | **7** |
+| faiths and mystic orders | 251 | 356 | 243 | 213 | 312 | **0** | 23 |
+| armies and martial orders | 229 | 441 | 407 | 268 | 232 | **0** | 12 |
+| thieves and the underworld | 213 | 454 | 547 | 305 | 265 | **0** | 22 |
+| guilds, companies, and trade | 219 | 491 | 433 | 218 | 235 | **0** | 15 |
+| adventurers and explorers | 212 | 493 | 495 | 247 | 233 | **0** | 19 |
+| powers and factions | 226 | 402 | 339 | 231 | 227 | **0** | **7** |
 | supernatural courts and hosts | 273 | 349 | 210 | 210 | 302 | **0** | **0** |
-| ships and boats | 242 | 290 | 437 | 381 | 235 | 51 | 51 |
+| ships and boats | 242 | 287 | 434 | 382 | 235 | 51 | 51 |
 | spacecraft and stations | **0** | **0** | **0** | **0** | **0** | 67 | 59 |
-| aircraft and airships | 225 | 270 | 270 | 354 | 382 | **11** | **11** |
-| land vehicles | 226 | 266 | 289 | 639 | 570 | **11** | **11** |
+| aircraft and airships | 225 | 267 | 267 | 353 | 382 | **11** | **11** |
+| land vehicles | 226 | 265 | 292 | 641 | 570 | **11** | **11** |
 | river names (land) | **0** | **0** | **0** | **0** | **0** | **0** | **0** |
 
 Style (words/shapes; target 16 and 4). Realistic is the default and isn't counted.
@@ -198,7 +198,7 @@ Style (words/shapes; target 16 and 4). Realistic is the default and isn't counte
 | supernatural courts and hosts | **0/63** | 259/146 | 259/146 | **0/0** | **0/0** | **0/0** | **0/0** | 259/70 |
 | ships and boats | **0/0** | 225/93 | 141/73 | 19/4 | **17/3** | **0/0** | 35/7 | 209/88 |
 | spacecraft and stations | **0/0** | **21/3** | **21/3** | 19/4 | **17/3** | **0/0** | 35/7 | 89/18 |
-| aircraft and airships | **0/0** | 253/75 | 253/71 | **0/1** | **0/1** | **0/0** | **0/2** | 253/74 |
+| aircraft and airships | **0/0** | 249/75 | 249/71 | **0/1** | **0/1** | **0/0** | **0/2** | 249/74 |
 | land vehicles | **0/0** | 120/75 | 120/71 | **0/1** | **0/1** | **0/0** | **0/2** | 120/73 |
 | river names | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** | **0/0** |
 
@@ -1013,8 +1013,6 @@ The live lens cultures each module doesn't offer, and the keys it offers that ar
 - **aircraft and airships**: doesn't offer Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: ottoman, swahili-omani, malay, arctic, na-woodlands, hawaiian, maori, w-polynesian, nw-coast.
 - **land vehicles**: doesn't offer Ottoman & Barbary, Swahili & Omani, Malay & Indonesian, Hawaiian, Māori, Western Polynesian, Pacific Northwest Coast, Arctic, North American Woodlands & Rivers, Phoenician (and Carthaginian), Hellenistic (Greek and Macedonian), Belgian, North American Woodlands & Plains, Maritime South-East Asian, Pacific Northwest & Arctic, Australia & New Guinea; local: ottoman, swahili-omani, malay, arctic, na-woodlands, hawaiian, maori, w-polynesian, nw-coast.
 
-Excluded by kind: route names has no pilgrim kind for Polynesian or Andean.
-
 ## 8. Totals
 
 Distinct entries across the reported modules; a shared pool counts once.
@@ -1055,11 +1053,11 @@ Distinct entries across the reported modules; a shared pool counts once.
 | Chinese | 2202 | 657 |
 | Japanese | 2177 | 609 |
 | Korean | 2127 | 576 |
-| Aztec | 2244 | 640 |
-| Maya | 2295 | 651 |
-| Andean | 1985 | 626 |
-| Polynesian | 1925 | 615 |
-| American | 1969 | 569 |
+| Aztec | 2235 | 640 |
+| Maya | 2282 | 651 |
+| Andean | 1967 | 629 |
+| Polynesian | 1931 | 618 |
+| American | 1968 | 582 |
 | Ottoman & Barbary | 0 | 0 |
 | Swahili & Omani | 0 | 0 |
 | Malay & Indonesian | 0 | 0 |
@@ -1079,24 +1077,24 @@ Distinct entries across the reported modules; a shared pool counts once.
 
 | era | entries |
 | --- | --- |
-| AN ancient | 12787 |
-| MD medieval | 16532 |
-| EM early modern | 18139 |
-| ST steam age | 17568 |
-| MO modern | 15760 |
+| AN ancient | 12808 |
+| MD medieval | 16591 |
+| EM early modern | 18176 |
+| ST steam age | 17580 |
+| MO modern | 15795 |
 | NF near future | 879 |
 | IS interstellar | 1885 |
 
 | style | words | shapes |
 | --- | --- | --- |
 | historic or low fantasy | 0 | 140 |
-| high or epic fantasy | 5572 | 1984 |
-| contemporary fantasy | 5488 | 1982 |
+| high or epic fantasy | 5568 | 1984 |
+| contemporary fantasy | 5484 | 1982 |
 | steampunk | 84 | 57 |
 | dieselpunk | 34 | 8 |
 | cyberpunk | 0 | 0 |
 | post-apocalyptic | 70 | 18 |
-| space opera | 5624 | 1815 |
+| space opera | 5620 | 1815 |
 
 | tone | entries |
 | --- | --- |
@@ -1146,11 +1144,11 @@ People lists against brief §3.1 (core 60/60/60/15/15/24, second tier 30/30/30/8
 | chinese | historic, modern | 30/30 | 30 | 8/8 | 12 | 8/8 |
 | japanese | historic, modern | 30/30 | 31 | 8/8 | 12 | 8/8 |
 | korean | historic, modern | 30/30 | 30 | 8/8 | 12 | 8/8 |
-| aztec | historic, modern | 41/42 | 36 | 8/8 | 12 | 8/8 |
-| maya | historic, modern | 38/37 | 32 | 8/8 | 13 | 8/8 |
-| andean | historic, modern | 33/33 | 35 | 8/8 | 14 | 8/8 |
-| polynesian | historic, modern | 34/34 | – | 8/8 | 12 | 8/8 |
-| american | historic, modern | 35/34 | 42 | 8/8 | 12 | 8/8 |
+| aztec | historic, modern | 41/42 | 36 | 8/8 | 12 | 8/12 |
+| maya | historic, modern | 38/37 | 32 | 8/8 | 13 | 8/12 |
+| andean | historic, modern | 33/33 | 35 | 8/8 | 14 | 8/12 |
+| polynesian | historic, modern | 34/34 | – | 8/8 | 12 | 8/12 |
+| american | historic, modern | 35/34 | 42 | 8/8 | 12 | 8/12 |
 | general | – | – | – | – | – | 30/30 |
 
 Creature lists: 39 cultures.

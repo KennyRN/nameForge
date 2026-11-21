@@ -356,7 +356,7 @@
   {
    "key": "aztec",
    "label": "Aztec",
-   "tier": "second",
+   "tier": "core",
    "family": "americas",
    "status": "live",
    "keys": [
@@ -366,7 +366,7 @@
   {
    "key": "maya",
    "label": "Maya",
-   "tier": "second",
+   "tier": "core",
    "family": "americas",
    "status": "live",
    "keys": [
@@ -376,7 +376,7 @@
   {
    "key": "andean",
    "label": "Andean",
-   "tier": "second",
+   "tier": "core",
    "family": "americas",
    "status": "live",
    "keys": [
@@ -386,7 +386,7 @@
   {
    "key": "polynesian",
    "label": "Polynesian",
-   "tier": "second",
+   "tier": "core",
    "family": "pacific",
    "status": "live",
    "keys": [
@@ -396,7 +396,7 @@
   {
    "key": "american",
    "label": "American",
-   "tier": "second",
+   "tier": "core",
    "family": "settler",
    "status": "live",
    "keys": [
@@ -4304,7 +4304,17 @@
    "eventNames": 0.8,
    "moneyNames": 0.8,
    "treasureNames": 0.8,
-   "bookNames": 0.8
+   "bookNames": 0.8,
+   "epithets": {
+    "share": 0.9,
+    "only": [
+     "aztec",
+     "maya",
+     "andean",
+     "polynesian",
+     "american"
+    ]
+   }
   },
   "legacy": {
    "$comment": "Sibling-distinctness brief (17 November 2026): a culture that reads a table it shares with a sibling (the nations read Celtic, Scandinavian reads Norse, Spanish and Portuguese read Iberian, Greek and Byzantine read Greek-and-Byzantine, Anglo-Saxon and Norman and British read the English tables) draws that shared table at this weight, the share of its own-shape draws that are not its own entries; its own entries take the rest. Lower it until the pair meets the limits in the distinctness section.",
@@ -4618,7 +4628,9 @@
    "settlementKit",
    "desertNames"
   ],
-  "excludedCells": [],
+  "excludedCells": [
+   "moorNames polynesian"
+  ],
   "siblings": [
    [
     "spanish",
@@ -4699,6 +4711,22 @@
    [
     "japanese",
     "korean"
+   ],
+   [
+    "aztec",
+    "maya"
+   ],
+   [
+    "aztec",
+    "andean"
+   ],
+   [
+    "maya",
+    "andean"
+   ],
+   [
+    "american",
+    "norman-british"
    ]
   ],
   "general": [
@@ -4731,7 +4759,12 @@
    "indian",
    "chinese",
    "japanese",
-   "korean"
+   "korean",
+   "aztec",
+   "maya",
+   "andean",
+   "polynesian",
+   "american"
   ],
   "pairLimit": 30,
   "$pairComment": "Second pass (18 November 2026, §12 of the second-tier brief): every pair of distinct cultures in `general`, siblings or not, shares at most `pairLimit` percent in every measured module; listed siblings keep `siblingLimit`."

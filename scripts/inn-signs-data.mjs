@@ -295,7 +295,7 @@ export const SIGNS = {
     "Maya Blue|Jungle Green|Red Ochre|Limestone White|Sapphire|Cacao Brown",
     "Lord|Scribe|Ball Player|Farmer|Healer|Trader|Astronomer|Sculptor",
     "Sacred|Whispering|Painted|Hidden|Rainy|Starlit",
-    "Sacbe Crossing|Cenote Edge|Ball Court|Plaza Steps|Forest Clearing|Limestone Cave|River Landing",
+    "Causeway Crossing|Cenote Edge|Ball Court|Plaza Steps|Forest Clearing|Limestone Cave|River Landing",
   ),
   andean: C(
     "Condor|Llama|Alpaca|Vicuña|Viscacha|Guinea Pig|Andean Fox|Spectacled Bear|Puna Ibis|Falcon|Hummingbird|Chinchilla",

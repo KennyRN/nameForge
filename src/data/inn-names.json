@@ -144,9 +144,9 @@
       {"p": "Guest House of {town}", "w": 100, "e": ["AN", "MD", "EM", "ST"], "kinds": ["rest"], "self": true}
     ],
     "maya": [
-      {"p": "Merchants' House of the {directionAdj} Ward", "w": 50},
-      {"p": "House of {town}", "w": 30, "self": true},
-      {"p": "the {creature} House", "w": 20}
+      {"p": "Travellers' Rest of the {directionAdj} Plaza", "w": 50},
+      {"p": "Rest House of {town}", "w": 30, "self": true},
+      {"p": "the {creature} Lodge", "w": 20}
     ]
   },
   "cultureKinds": ["inn", "tavern", "rest"],

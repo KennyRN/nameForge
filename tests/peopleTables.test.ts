@@ -13,7 +13,7 @@ import "../src/fill/batch";
 
 const CORE = ["anglo-saxon", "norman-british", "welsh", "scottish", "irish", "cornish", "scandinavian", "german"];
 /** Celtic (Northern Europe brief §3.2) is a mix of the four nations and has no people table of its own: it reads theirs. */
-const TIER6A = new Set(["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african"]);
+const TIER6A = new Set(["french", "dutch", "italian", "spanish", "portuguese", "roman", "greek", "byzantine", "slavic", "turkic", "mongol", "arabic", "persian", "egyptian", "ethiopian", "bantu", "west-african", "aztec", "maya", "andean", "polynesian", "american"]);
 /** Brief 6a: the second-tier cultures promoted to core depth (and the four the splits add) keep the second-tier table sizes of the people tables. */
 const SECOND = (LENS.cultures as { key: string; tier: string }[]).filter((c) => (c.tier === "second" || TIER6A.has(c.key)) && c.key !== "celtic").map((c) => c.key);
 /** Ancient peoples with only a historic table: later they read another culture. */

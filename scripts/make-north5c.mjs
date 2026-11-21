@@ -1,6 +1,7 @@
 // Northern Europe tables brief, batch 5c: writes src/data/north5c.json and docs/northern-europe-5c.md from the authored content in
 // scripts/north5c/. Run with `node scripts/make-north5c.mjs`. The output is generated: edit the content, not the JSON.
 import { readFileSync, writeFileSync } from "node:fs";
+const hashText = (t) => { let h = 2166136261; for (let i = 0; i < t.length; i++) h = Math.imul(h ^ t.charCodeAt(i), 16777619) >>> 0; return h; };
 import * as G from "./north5c/content-groups.mjs";
 import * as N from "./north5c/content-names.mjs";
 import * as V from "./north5c/content-vehicles.mjs";
@@ -61,7 +62,7 @@ function fillFromPools(module, culture, lists, nt) {
   if (!pools) return;
   const offer = isMix(culture) ? [] : OFFER[module] ?? OFFER._default;
   // Brief 6b: each of the batch's cultures takes its era words from a place of its own in each pool (so two siblings do not append the same words at the same positions).
-  const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : NEW6C.includes(culture) ? 40 + NEW6C.indexOf(culture) * 2 : NEW6D.includes(culture) ? 52 + NEW6D.indexOf(culture) * 2 : NEW6.includes(culture) && culture !== "anglo-saxon" ? 30 + NEW6.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
+  const start = (culture === "anglo-saxon" ? 5 : NEW6B.includes(culture) ? 8 + NEW6B.indexOf(culture) * 2 : NEW6C.includes(culture) ? 40 + NEW6C.indexOf(culture) * 2 : NEW6D.includes(culture) ? 11 + (hashText(`${culture}:${module}:v4`) % 997) : NEW6.includes(culture) && culture !== "anglo-saxon" ? 30 + NEW6.indexOf(culture) * 2 : MIXES6B.includes(culture) ? 24 : Math.max(0, CORE.indexOf(culture))) * 3; // Anglo-Saxon draws its era words from a place of its own in each pool, not Norman and British's
   // Brief 6b: the shared pools hold English and Christian words (a bishopric, a hundred moot, an abbey); the batch's cultures do not draw them (a Muslim or steppe culture no Christian ones, nor any a feudal English realm).
   const FOREIGN_MONEY = /Pennyweight|Pilgrim Badge|Hoard Piece|Cross-Marked|Pelleted|Hammered|Wrought|Tally/;
   const FOREIGN = /Bishopric|Dukedom|Hundred Moot|Fiefdom|Earldom|Barony|Shire|Palatinate|Dukes?\b|Earl|Baron|Lordship|Chiefdom|Tribal Kingdom|Kingdom of the Plains|Yeomanry|Hanse|Landsknecht|Kirk|Parish|Sunday|Mission Hall|Rosicrucian|Druid|Ovates|Bardic|Pietist|Methodist|Quaker|Puritan|Covenanter|Highlanders|Tinners|Thing Assembly|Longship|Viking|Rune|Wergild|Seer?ess Band|Moot|Witan|Thane|Thegn/;

@@ -6827,6 +6827,156 @@
       }
      ]
     }
+   },
+   "andean": {
+    "w": {
+     "patronymic": 40,
+     "place": 60
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "self": true,
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "polynesian": {
+    "w": {
+     "patronymic": 50,
+     "place": 50
+    },
+    "forms": {
+     "patronymic": [
+      {
+       "p": "son of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "daughter of {father}",
+       "l": "both",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "place": [
+      {
+       "p": "of {town}",
+       "self": true,
+       "l": "both",
+       "w": 1
+      }
+     ]
+    }
+   },
+   "american": {
+    "w": {
+     "occupational": 25,
+     "place": 25,
+     "descriptive": 15,
+     "patronymic": 20,
+     "inherited": 15
+    },
+    "forms": {
+     "occupational": [
+      {
+       "p": "{trade}",
+       "l": "both",
+       "w": 1
+      },
+      {
+       "p": "le {normanTrade:native}",
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "place": [
+      {
+       "p": "{placeFirst+placeLast}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "{placeWord}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "de {town}",
+       "self": true,
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "descriptive": [
+      {
+       "p": "{nick}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "le {normanNick:native}",
+       "l": "n",
+       "w": 1
+      }
+     ],
+     "patronymic": [
+      {
+       "p": "{father}son",
+       "l": "e",
+       "w": 60
+      },
+      {
+       "p": "{father}s",
+       "l": "e",
+       "w": 40
+      },
+      {
+       "p": "Fitz{father}",
+       "l": "n",
+       "w": 1,
+       "g": "m"
+      },
+      {
+       "p": "de {town}",
+       "self": true,
+       "l": "n",
+       "w": 1,
+       "g": "f"
+      }
+     ],
+     "inherited": [
+      {
+       "p": "{placeFirst+placeLast}",
+       "l": "e",
+       "w": 1
+      },
+      {
+       "p": "de {placeFirst+placeLast}",
+       "l": "n",
+       "w": 1
+      }
+     ]
+    }
    }
   }
  },

@@ -386,55 +386,55 @@
   },
   "culture|routeNames|aztec|words": {
    "v": 79,
-   "t": 12
+   "t": 30
   },
   "culture|routeNames|aztec|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|routeNames|aztec|profile": {
    "v": 0
   },
   "culture|routeNames|maya|words": {
    "v": 79,
-   "t": 12
+   "t": 30
   },
   "culture|routeNames|maya|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|routeNames|maya|profile": {
    "v": 0
   },
   "culture|routeNames|andean|words": {
    "v": 78,
-   "t": 12
+   "t": 30
   },
   "culture|routeNames|andean|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|routeNames|andean|profile": {
    "v": 0
   },
   "culture|routeNames|polynesian|words": {
    "v": 81,
-   "t": 12
+   "t": 30
   },
   "culture|routeNames|polynesian|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|routeNames|polynesian|profile": {
    "v": 0
   },
   "culture|routeNames|american|words": {
    "v": 75,
-   "t": 12
+   "t": 30
   },
   "culture|routeNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|routeNames|american|profile": {
    "v": 0
@@ -1131,55 +1131,55 @@
   },
   "culture|streetNames|aztec|words": {
    "v": 41,
-   "t": 12
+   "t": 30
   },
   "culture|streetNames|aztec|shapes": {
    "v": 16,
-   "t": 4
+   "t": 10
   },
   "culture|streetNames|aztec|profile": {
    "v": 0
   },
   "culture|streetNames|maya|words": {
    "v": 39,
-   "t": 12
+   "t": 30
   },
   "culture|streetNames|maya|shapes": {
    "v": 14,
-   "t": 4
+   "t": 10
   },
   "culture|streetNames|maya|profile": {
    "v": 0
   },
   "culture|streetNames|andean|words": {
    "v": 33,
-   "t": 12
+   "t": 30
   },
   "culture|streetNames|andean|shapes": {
    "v": 12,
-   "t": 4
+   "t": 10
   },
   "culture|streetNames|andean|profile": {
    "v": 0
   },
   "culture|streetNames|polynesian|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|streetNames|polynesian|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|streetNames|polynesian|profile": {
    "v": 0
   },
   "culture|streetNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|streetNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|streetNames|american|profile": {
    "v": 0
@@ -1744,55 +1744,55 @@
   },
   "culture|innNames|aztec|words": {
    "v": 35,
-   "t": 12
+   "t": 30
   },
   "culture|innNames|aztec|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|innNames|aztec|profile": {
    "v": 0
   },
   "culture|innNames|maya|words": {
    "v": 34,
-   "t": 12
+   "t": 30
   },
   "culture|innNames|maya|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|innNames|maya|profile": {
    "v": 0
   },
   "culture|innNames|andean|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|innNames|andean|shapes": {
    "v": 12,
-   "t": 4
+   "t": 10
   },
   "culture|innNames|andean|profile": {
    "v": 0
   },
   "culture|innNames|polynesian|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|innNames|polynesian|shapes": {
    "v": 12,
-   "t": 4
+   "t": 10
   },
   "culture|innNames|polynesian|profile": {
    "v": 0
   },
   "culture|innNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|innNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|innNames|american|profile": {
    "v": 0
@@ -2373,55 +2373,55 @@
   },
   "culture|buildingNames|aztec|words": {
    "v": 40,
-   "t": 12
+   "t": 30
   },
   "culture|buildingNames|aztec|shapes": {
    "v": 14,
-   "t": 4
+   "t": 10
   },
   "culture|buildingNames|aztec|profile": {
    "v": 0
   },
   "culture|buildingNames|maya|words": {
    "v": 38,
-   "t": 12
+   "t": 30
   },
   "culture|buildingNames|maya|shapes": {
    "v": 16,
-   "t": 4
+   "t": 10
   },
   "culture|buildingNames|maya|profile": {
    "v": 0
   },
   "culture|buildingNames|andean|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|buildingNames|andean|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|buildingNames|andean|profile": {
    "v": 0
   },
   "culture|buildingNames|polynesian|words": {
    "v": 33,
-   "t": 12
+   "t": 30
   },
   "culture|buildingNames|polynesian|shapes": {
    "v": 12,
-   "t": 4
+   "t": 10
   },
   "culture|buildingNames|polynesian|profile": {
    "v": 0
   },
   "culture|buildingNames|american|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|buildingNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|buildingNames|american|profile": {
    "v": 0
@@ -3014,55 +3014,55 @@
   },
   "culture|monumentNames|aztec|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|monumentNames|aztec|shapes": {
    "v": 12,
-   "t": 4
+   "t": 10
   },
   "culture|monumentNames|aztec|profile": {
    "v": 0
   },
   "culture|monumentNames|maya|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|monumentNames|maya|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|monumentNames|maya|profile": {
    "v": 0
   },
   "culture|monumentNames|andean|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|monumentNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|monumentNames|andean|profile": {
    "v": 0
   },
   "culture|monumentNames|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|monumentNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|monumentNames|polynesian|profile": {
    "v": 0
   },
   "culture|monumentNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|monumentNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|monumentNames|american|profile": {
    "v": 0
@@ -3640,55 +3640,55 @@
   },
   "culture|settlementNames|aztec|words": {
    "v": 420,
-   "t": 12
+   "t": 30
   },
   "culture|settlementNames|aztec|shapes": {
    "v": 182,
-   "t": 4
+   "t": 10
   },
   "culture|settlementNames|aztec|profile": {
    "v": 0
   },
   "culture|settlementNames|maya|words": {
    "v": 530,
-   "t": 12
+   "t": 30
   },
   "culture|settlementNames|maya|shapes": {
    "v": 192,
-   "t": 4
+   "t": 10
   },
   "culture|settlementNames|maya|profile": {
    "v": 0
   },
   "culture|settlementNames|andean|words": {
    "v": 265,
-   "t": 12
+   "t": 30
   },
   "culture|settlementNames|andean|shapes": {
    "v": 186,
-   "t": 4
+   "t": 10
   },
   "culture|settlementNames|andean|profile": {
    "v": 0
   },
   "culture|settlementNames|polynesian|words": {
    "v": 265,
-   "t": 12
+   "t": 30
   },
   "culture|settlementNames|polynesian|shapes": {
    "v": 194,
-   "t": 4
+   "t": 10
   },
   "culture|settlementNames|polynesian|profile": {
    "v": 0
   },
   "culture|settlementNames|american|words": {
    "v": 260,
-   "t": 12
+   "t": 30
   },
   "culture|settlementNames|american|shapes": {
    "v": 137,
-   "t": 4
+   "t": 10
   },
   "culture|settlementNames|american|profile": {
    "v": 0
@@ -4270,56 +4270,56 @@
    "v": 0
   },
   "culture|eventNames|aztec|words": {
-   "v": 58,
-   "t": 12
+   "v": 59,
+   "t": 30
   },
   "culture|eventNames|aztec|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|eventNames|aztec|profile": {
    "v": 0
   },
   "culture|eventNames|maya|words": {
-   "v": 58,
-   "t": 12
+   "v": 56,
+   "t": 30
   },
   "culture|eventNames|maya|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|eventNames|maya|profile": {
    "v": 0
   },
   "culture|eventNames|andean|words": {
-   "v": 47,
-   "t": 12
+   "v": 46,
+   "t": 30
   },
   "culture|eventNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|eventNames|andean|profile": {
    "v": 0
   },
   "culture|eventNames|polynesian|words": {
    "v": 49,
-   "t": 12
+   "t": 30
   },
   "culture|eventNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|eventNames|polynesian|profile": {
    "v": 0
   },
   "culture|eventNames|american|words": {
-   "v": 46,
-   "t": 12
+   "v": 48,
+   "t": 30
   },
   "culture|eventNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|eventNames|american|profile": {
    "v": 0
@@ -4340,11 +4340,11 @@
    "t": 12
   },
   "era|eventNames|MD": {
-   "v": 305,
+   "v": 302,
    "t": 12
   },
   "era|eventNames|EM": {
-   "v": 306,
+   "v": 304,
    "t": 12
   },
   "era|eventNames|ST": {
@@ -4352,7 +4352,7 @@
    "t": 12
   },
   "era|eventNames|MO": {
-   "v": 252,
+   "v": 253,
    "t": 12
   },
   "era|eventNames|NF": {
@@ -4834,56 +4834,56 @@
    "v": 1
   },
   "culture|moneyNames|aztec|words": {
-   "v": 60,
-   "t": 12
+   "v": 59,
+   "t": 30
   },
   "culture|moneyNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moneyNames|aztec|profile": {
    "v": 1
   },
   "culture|moneyNames|maya|words": {
    "v": 54,
-   "t": 12
+   "t": 30
   },
   "culture|moneyNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moneyNames|maya|profile": {
    "v": 1
   },
   "culture|moneyNames|andean|words": {
    "v": 42,
-   "t": 12
+   "t": 30
   },
   "culture|moneyNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moneyNames|andean|profile": {
    "v": 0
   },
   "culture|moneyNames|polynesian|words": {
-   "v": 43,
-   "t": 12
+   "v": 42,
+   "t": 30
   },
   "culture|moneyNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moneyNames|polynesian|profile": {
    "v": 0
   },
   "culture|moneyNames|american|words": {
    "v": 84,
-   "t": 12
+   "t": 30
   },
   "culture|moneyNames|american|shapes": {
    "v": 12,
-   "t": 4
+   "t": 10
   },
   "culture|moneyNames|american|profile": {
    "v": 1
@@ -4916,7 +4916,7 @@
    "t": 12
   },
   "era|moneyNames|MO": {
-   "v": 406,
+   "v": 404,
    "t": 12
   },
   "era|moneyNames|NF": {
@@ -5390,56 +5390,56 @@
    "v": 0
   },
   "culture|calendarNames|aztec|words": {
-   "v": 83,
-   "t": 12
+   "v": 70,
+   "t": 30
   },
   "culture|calendarNames|aztec|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|calendarNames|aztec|profile": {
    "v": 0
   },
   "culture|calendarNames|maya|words": {
-   "v": 47,
-   "t": 12
+   "v": 35,
+   "t": 30
   },
   "culture|calendarNames|maya|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|calendarNames|maya|profile": {
    "v": 0
   },
   "culture|calendarNames|andean|words": {
-   "v": 53,
-   "t": 12
+   "v": 39,
+   "t": 30
   },
   "culture|calendarNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|calendarNames|andean|profile": {
    "v": 0
   },
   "culture|calendarNames|polynesian|words": {
-   "v": 55,
-   "t": 12
+   "v": 43,
+   "t": 30
   },
   "culture|calendarNames|polynesian|shapes": {
    "v": 11,
-   "t": 4
+   "t": 10
   },
   "culture|calendarNames|polynesian|profile": {
    "v": 0
   },
   "culture|calendarNames|american|words": {
-   "v": 47,
-   "t": 12
+   "v": 33,
+   "t": 30
   },
   "culture|calendarNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|calendarNames|american|profile": {
    "v": 0
@@ -5456,23 +5456,23 @@
    "v": 0
   },
   "era|calendarNames|AN": {
-   "v": 375,
+   "v": 388,
    "t": 12
   },
   "era|calendarNames|MD": {
-   "v": 412,
+   "v": 449,
    "t": 12
   },
   "era|calendarNames|EM": {
-   "v": 378,
+   "v": 394,
    "t": 12
   },
   "era|calendarNames|ST": {
-   "v": 226,
+   "v": 237,
    "t": 12
   },
   "era|calendarNames|MO": {
-   "v": 235,
+   "v": 265,
    "t": 12
   },
   "era|calendarNames|NF": {
@@ -5935,55 +5935,55 @@
   },
   "culture|skyNames|aztec|words": {
    "v": 48,
-   "t": 12
+   "t": 30
   },
   "culture|skyNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|skyNames|aztec|profile": {
    "v": 0
   },
   "culture|skyNames|maya|words": {
-   "v": 48,
-   "t": 12
+   "v": 46,
+   "t": 30
   },
   "culture|skyNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|skyNames|maya|profile": {
    "v": 0
   },
   "culture|skyNames|andean|words": {
-   "v": 47,
-   "t": 12
+   "v": 50,
+   "t": 30
   },
   "culture|skyNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|skyNames|andean|profile": {
    "v": 0
   },
   "culture|skyNames|polynesian|words": {
-   "v": 48,
-   "t": 12
+   "v": 49,
+   "t": 30
   },
   "culture|skyNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|skyNames|polynesian|profile": {
    "v": 0
   },
   "culture|skyNames|american|words": {
-   "v": 44,
-   "t": 12
+   "v": 43,
+   "t": 30
   },
   "culture|skyNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|skyNames|american|profile": {
    "v": 0
@@ -6016,7 +6016,7 @@
    "t": 12
   },
   "era|skyNames|MO": {
-   "v": 301,
+   "v": 302,
    "t": 12
   },
   "era|skyNames|NF": {
@@ -6464,55 +6464,55 @@
   },
   "culture|mountainNames|aztec|words": {
    "v": 35,
-   "t": 12
+   "t": 30
   },
   "culture|mountainNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mountainNames|aztec|profile": {
    "v": 1
   },
   "culture|mountainNames|maya|words": {
    "v": 33,
-   "t": 12
+   "t": 30
   },
   "culture|mountainNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mountainNames|maya|profile": {
    "v": 1
   },
   "culture|mountainNames|andean|words": {
    "v": 34,
-   "t": 12
+   "t": 30
   },
   "culture|mountainNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mountainNames|andean|profile": {
    "v": 1
   },
   "culture|mountainNames|polynesian|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|mountainNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mountainNames|polynesian|profile": {
    "v": 1
   },
   "culture|mountainNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|mountainNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mountainNames|american|profile": {
    "v": 0
@@ -7105,55 +7105,55 @@
   },
   "culture|forestNames|aztec|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|forestNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|forestNames|aztec|profile": {
    "v": 1
   },
   "culture|forestNames|maya|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|forestNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|forestNames|maya|profile": {
    "v": 1
   },
   "culture|forestNames|andean|words": {
    "v": 33,
-   "t": 12
+   "t": 30
   },
   "culture|forestNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|forestNames|andean|profile": {
    "v": 1
   },
   "culture|forestNames|polynesian|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|forestNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|forestNames|polynesian|profile": {
    "v": 1
   },
   "culture|forestNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|forestNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|forestNames|american|profile": {
    "v": 0
@@ -7712,33 +7712,33 @@
   },
   "culture|desertNames|aztec|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|desertNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|desertNames|aztec|profile": {
    "v": 1
   },
   "culture|desertNames|maya|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|desertNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|desertNames|maya|profile": {
    "v": 1
   },
   "culture|desertNames|andean|words": {
    "v": 33,
-   "t": 12
+   "t": 30
   },
   "culture|desertNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|desertNames|andean|profile": {
    "v": 1
@@ -7754,11 +7754,11 @@
   },
   "culture|desertNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|desertNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|desertNames|american|profile": {
    "v": 0
@@ -8259,33 +8259,33 @@
   },
   "culture|moorNames|aztec|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|moorNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moorNames|aztec|profile": {
    "v": 1
   },
   "culture|moorNames|maya|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|moorNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moorNames|maya|profile": {
    "v": 1
   },
   "culture|moorNames|andean|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|moorNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moorNames|andean|profile": {
    "v": 1
@@ -8301,11 +8301,11 @@
   },
   "culture|moorNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|moorNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|moorNames|american|profile": {
    "v": 0
@@ -8886,55 +8886,55 @@
   },
   "culture|wetlandNames|aztec|words": {
    "v": 34,
-   "t": 12
+   "t": 30
   },
   "culture|wetlandNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|wetlandNames|aztec|profile": {
    "v": 1
   },
   "culture|wetlandNames|maya|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|wetlandNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|wetlandNames|maya|profile": {
    "v": 1
   },
   "culture|wetlandNames|andean|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|wetlandNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|wetlandNames|andean|profile": {
    "v": 1
   },
   "culture|wetlandNames|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|wetlandNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|wetlandNames|polynesian|profile": {
    "v": 1
   },
   "culture|wetlandNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|wetlandNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|wetlandNames|american|profile": {
    "v": 0
@@ -9519,55 +9519,55 @@
   },
   "culture|grasslandNames|aztec|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|grasslandNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|grasslandNames|aztec|profile": {
    "v": 1
   },
   "culture|grasslandNames|maya|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|grasslandNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|grasslandNames|maya|profile": {
    "v": 1
   },
   "culture|grasslandNames|andean|words": {
    "v": 33,
-   "t": 12
+   "t": 30
   },
   "culture|grasslandNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|grasslandNames|andean|profile": {
    "v": 1
   },
   "culture|grasslandNames|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|grasslandNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|grasslandNames|polynesian|profile": {
    "v": 1
   },
   "culture|grasslandNames|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|grasslandNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|grasslandNames|american|profile": {
    "v": 0
@@ -10152,55 +10152,55 @@
   },
   "culture|lands|aztec|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|lands|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|lands|aztec|profile": {
    "v": 1
   },
   "culture|lands|maya|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|lands|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|lands|maya|profile": {
    "v": 1
   },
   "culture|lands|andean|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|lands|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|lands|andean|profile": {
    "v": 1
   },
   "culture|lands|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|lands|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|lands|polynesian|profile": {
    "v": 1
   },
   "culture|lands|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|lands|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|lands|american|profile": {
    "v": 0
@@ -10769,55 +10769,55 @@
   },
   "culture|riversInland|aztec|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|riversInland|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|riversInland|aztec|profile": {
    "v": 1
   },
   "culture|riversInland|maya|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|riversInland|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|riversInland|maya|profile": {
    "v": 1
   },
   "culture|riversInland|andean|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|riversInland|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|riversInland|andean|profile": {
    "v": 1
   },
   "culture|riversInland|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|riversInland|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|riversInland|polynesian|profile": {
    "v": 1
   },
   "culture|riversInland|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|riversInland|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|riversInland|american|profile": {
    "v": 0
@@ -11393,55 +11393,55 @@
   },
   "culture|hillsValleys|aztec|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|hillsValleys|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|hillsValleys|aztec|profile": {
    "v": 1
   },
   "culture|hillsValleys|maya|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|hillsValleys|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|hillsValleys|maya|profile": {
    "v": 1
   },
   "culture|hillsValleys|andean|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|hillsValleys|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|hillsValleys|andean|profile": {
    "v": 1
   },
   "culture|hillsValleys|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|hillsValleys|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|hillsValleys|polynesian|profile": {
    "v": 1
   },
   "culture|hillsValleys|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|hillsValleys|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|hillsValleys|american|profile": {
    "v": 0
@@ -12013,55 +12013,55 @@
   },
   "culture|farmland|aztec|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|farmland|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|farmland|aztec|profile": {
    "v": 1
   },
   "culture|farmland|maya|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|farmland|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|farmland|maya|profile": {
    "v": 1
   },
   "culture|farmland|andean|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|farmland|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|farmland|andean|profile": {
    "v": 1
   },
   "culture|farmland|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|farmland|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|farmland|polynesian|profile": {
    "v": 1
   },
   "culture|farmland|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|farmland|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|farmland|american|profile": {
    "v": 0
@@ -12607,44 +12607,44 @@
   },
   "culture|starsSpace|aztec|words": {
    "v": 3,
-   "t": 12
+   "t": 30
   },
   "culture|starsSpace|aztec|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|starsSpace|aztec|profile": {
    "v": 1
   },
   "culture|starsSpace|maya|words": {
    "v": 2,
-   "t": 12
+   "t": 30
   },
   "culture|starsSpace|maya|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|starsSpace|maya|profile": {
    "v": 1
   },
   "culture|starsSpace|andean|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|starsSpace|andean|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|starsSpace|andean|profile": {
    "v": 1
   },
   "culture|starsSpace|polynesian|words": {
    "v": 2,
-   "t": 12
+   "t": 30
   },
   "culture|starsSpace|polynesian|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|starsSpace|polynesian|profile": {
    "v": 1
@@ -13137,55 +13137,55 @@
   },
   "culture|seasLakes|aztec|words": {
    "v": 33,
-   "t": 12
+   "t": 30
   },
   "culture|seasLakes|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seasLakes|aztec|profile": {
    "v": 1
   },
   "culture|seasLakes|maya|words": {
    "v": 31,
-   "t": 12
+   "t": 30
   },
   "culture|seasLakes|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seasLakes|maya|profile": {
    "v": 1
   },
   "culture|seasLakes|andean|words": {
    "v": 32,
-   "t": 12
+   "t": 30
   },
   "culture|seasLakes|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seasLakes|andean|profile": {
    "v": 1
   },
   "culture|seasLakes|polynesian|words": {
    "v": 36,
-   "t": 12
+   "t": 30
   },
   "culture|seasLakes|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seasLakes|polynesian|profile": {
    "v": 1
   },
   "culture|seasLakes|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|seasLakes|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seasLakes|american|profile": {
    "v": 0
@@ -13754,55 +13754,55 @@
   },
   "culture|coastsIslands|aztec|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|coastsIslands|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|coastsIslands|aztec|profile": {
    "v": 1
   },
   "culture|coastsIslands|maya|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|coastsIslands|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|coastsIslands|maya|profile": {
    "v": 1
   },
   "culture|coastsIslands|andean|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|coastsIslands|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|coastsIslands|andean|profile": {
    "v": 1
   },
   "culture|coastsIslands|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|coastsIslands|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|coastsIslands|polynesian|profile": {
    "v": 1
   },
   "culture|coastsIslands|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|coastsIslands|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|coastsIslands|american|profile": {
    "v": 0
@@ -14371,55 +14371,55 @@
   },
   "culture|seaCharts|aztec|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|seaCharts|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seaCharts|aztec|profile": {
    "v": 1
   },
   "culture|seaCharts|maya|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|seaCharts|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seaCharts|maya|profile": {
    "v": 1
   },
   "culture|seaCharts|andean|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|seaCharts|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seaCharts|andean|profile": {
    "v": 1
   },
   "culture|seaCharts|polynesian|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|seaCharts|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seaCharts|polynesian|profile": {
    "v": 1
   },
   "culture|seaCharts|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|seaCharts|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|seaCharts|american|profile": {
    "v": 0
@@ -14979,55 +14979,55 @@
   },
   "culture|hyperspaceCharts|aztec|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|hyperspaceCharts|aztec|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|hyperspaceCharts|aztec|profile": {
    "v": 0
   },
   "culture|hyperspaceCharts|maya|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|hyperspaceCharts|maya|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|hyperspaceCharts|maya|profile": {
    "v": 0
   },
   "culture|hyperspaceCharts|andean|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|hyperspaceCharts|andean|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|hyperspaceCharts|andean|profile": {
    "v": 0
   },
   "culture|hyperspaceCharts|polynesian|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|hyperspaceCharts|polynesian|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|hyperspaceCharts|polynesian|profile": {
    "v": 0
   },
   "culture|hyperspaceCharts|american|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|hyperspaceCharts|american|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|hyperspaceCharts|american|profile": {
    "v": 0
@@ -15500,55 +15500,55 @@
   },
   "culture|epithets|aztec|words": {
    "v": 52,
-   "t": 12
+   "t": 30
   },
   "culture|epithets|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|epithets|aztec|profile": {
    "v": 0
   },
   "culture|epithets|maya|words": {
-   "v": 55,
-   "t": 12
+   "v": 56,
+   "t": 30
   },
   "culture|epithets|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|epithets|maya|profile": {
    "v": 0
   },
   "culture|epithets|andean|words": {
-   "v": 49,
-   "t": 12
+   "v": 51,
+   "t": 30
   },
   "culture|epithets|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|epithets|andean|profile": {
    "v": 0
   },
   "culture|epithets|polynesian|words": {
-   "v": 48,
-   "t": 12
+   "v": 52,
+   "t": 30
   },
   "culture|epithets|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|epithets|polynesian|profile": {
    "v": 0
   },
   "culture|epithets|american|words": {
    "v": 51,
-   "t": 12
+   "t": 30
   },
   "culture|epithets|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|epithets|american|profile": {
    "v": 0
@@ -15565,15 +15565,15 @@
    "v": 0
   },
   "era|epithets|AN": {
-   "v": 283,
+   "v": 291,
    "t": 12
   },
   "era|epithets|MD": {
-   "v": 373,
+   "v": 380,
    "t": 12
   },
   "era|epithets|EM": {
-   "v": 225,
+   "v": 223,
    "t": 12
   },
   "era|epithets|ST": {
@@ -16055,56 +16055,56 @@
    "v": 0
   },
   "culture|titles|aztec|words": {
-   "v": 56,
-   "t": 12
+   "v": 53,
+   "t": 30
   },
   "culture|titles|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|titles|aztec|profile": {
    "v": 0
   },
   "culture|titles|maya|words": {
-   "v": 52,
-   "t": 12
+   "v": 58,
+   "t": 30
   },
   "culture|titles|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|titles|maya|profile": {
    "v": 0
   },
   "culture|titles|andean|words": {
-   "v": 50,
-   "t": 12
+   "v": 51,
+   "t": 30
   },
   "culture|titles|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|titles|andean|profile": {
    "v": 0
   },
   "culture|titles|polynesian|words": {
-   "v": 52,
-   "t": 12
+   "v": 53,
+   "t": 30
   },
   "culture|titles|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|titles|polynesian|profile": {
    "v": 0
   },
   "culture|titles|american|words": {
-   "v": 48,
-   "t": 12
+   "v": 47,
+   "t": 30
   },
   "culture|titles|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|titles|american|profile": {
    "v": 0
@@ -16125,11 +16125,11 @@
    "t": 12
   },
   "era|titles|MD": {
-   "v": 503,
+   "v": 507,
    "t": 12
   },
   "era|titles|EM": {
-   "v": 380,
+   "v": 385,
    "t": 12
   },
   "era|titles|ST": {
@@ -16585,56 +16585,56 @@
    "v": 0
   },
   "culture|familyNames|aztec|words": {
-   "v": 44,
-   "t": 12
+   "v": 40,
+   "t": 30
   },
   "culture|familyNames|aztec|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|familyNames|aztec|profile": {
    "v": 0
   },
   "culture|familyNames|maya|words": {
    "v": 40,
-   "t": 12
+   "t": 30
   },
   "culture|familyNames|maya|shapes": {
    "v": 13,
-   "t": 4
+   "t": 10
   },
   "culture|familyNames|maya|profile": {
    "v": 0
   },
   "culture|familyNames|andean|words": {
    "v": 41,
-   "t": 12
+   "t": 30
   },
   "culture|familyNames|andean|shapes": {
-   "v": 10,
-   "t": 4
+   "v": 13,
+   "t": 10
   },
   "culture|familyNames|andean|profile": {
    "v": 0
   },
   "culture|familyNames|polynesian|words": {
-   "v": 40,
-   "t": 12
+   "v": 41,
+   "t": 30
   },
   "culture|familyNames|polynesian|shapes": {
-   "v": 10,
-   "t": 4
+   "v": 13,
+   "t": 10
   },
   "culture|familyNames|polynesian|profile": {
    "v": 0
   },
   "culture|familyNames|american|words": {
-   "v": 41,
-   "t": 12
+   "v": 44,
+   "t": 30
   },
   "culture|familyNames|american|shapes": {
-   "v": 10,
-   "t": 4
+   "v": 23,
+   "t": 10
   },
   "culture|familyNames|american|profile": {
    "v": 0
@@ -16659,7 +16659,7 @@
    "t": 12
   },
   "era|familyNames|EM": {
-   "v": 251,
+   "v": 252,
    "t": 12
   },
   "era|familyNames|ST": {
@@ -17129,56 +17129,56 @@
    "v": 1
   },
   "culture|armsNames|aztec|words": {
-   "v": 59,
-   "t": 12
+   "v": 58,
+   "t": 30
   },
   "culture|armsNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|armsNames|aztec|profile": {
    "v": 1
   },
   "culture|armsNames|maya|words": {
-   "v": 54,
-   "t": 12
+   "v": 58,
+   "t": 30
   },
   "culture|armsNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|armsNames|maya|profile": {
    "v": 1
   },
   "culture|armsNames|andean|words": {
-   "v": 52,
-   "t": 12
+   "v": 49,
+   "t": 30
   },
   "culture|armsNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|armsNames|andean|profile": {
    "v": 0
   },
   "culture|armsNames|polynesian|words": {
    "v": 50,
-   "t": 12
+   "t": 30
   },
   "culture|armsNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|armsNames|polynesian|profile": {
    "v": 0
   },
   "culture|armsNames|american|words": {
-   "v": 46,
-   "t": 12
+   "v": 45,
+   "t": 30
   },
   "culture|armsNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|armsNames|american|profile": {
    "v": 0
@@ -17689,56 +17689,56 @@
    "v": 1
   },
   "culture|treasureNames|aztec|words": {
-   "v": 52,
-   "t": 12
+   "v": 54,
+   "t": 30
   },
   "culture|treasureNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|treasureNames|aztec|profile": {
    "v": 1
   },
   "culture|treasureNames|maya|words": {
    "v": 52,
-   "t": 12
+   "t": 30
   },
   "culture|treasureNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|treasureNames|maya|profile": {
    "v": 1
   },
   "culture|treasureNames|andean|words": {
-   "v": 48,
-   "t": 12
+   "v": 49,
+   "t": 30
   },
   "culture|treasureNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|treasureNames|andean|profile": {
    "v": 0
   },
   "culture|treasureNames|polynesian|words": {
    "v": 50,
-   "t": 12
+   "t": 30
   },
   "culture|treasureNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|treasureNames|polynesian|profile": {
    "v": 0
   },
   "culture|treasureNames|american|words": {
-   "v": 50,
-   "t": 12
+   "v": 49,
+   "t": 30
   },
   "culture|treasureNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|treasureNames|american|profile": {
    "v": 0
@@ -17759,11 +17759,11 @@
    "t": 12
   },
   "era|treasureNames|MD": {
-   "v": 446,
+   "v": 448,
    "t": 12
   },
   "era|treasureNames|EM": {
-   "v": 350,
+   "v": 351,
    "t": 12
   },
   "era|treasureNames|ST": {
@@ -18257,56 +18257,56 @@
    "v": 1
   },
   "culture|bookNames|aztec|words": {
-   "v": 53,
-   "t": 12
+   "v": 55,
+   "t": 30
   },
   "culture|bookNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|bookNames|aztec|profile": {
    "v": 1
   },
   "culture|bookNames|maya|words": {
-   "v": 51,
-   "t": 12
+   "v": 56,
+   "t": 30
   },
   "culture|bookNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|bookNames|maya|profile": {
    "v": 1
   },
   "culture|bookNames|andean|words": {
-   "v": 54,
-   "t": 12
+   "v": 50,
+   "t": 30
   },
   "culture|bookNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|bookNames|andean|profile": {
    "v": 0
   },
   "culture|bookNames|polynesian|words": {
    "v": 49,
-   "t": 12
+   "t": 30
   },
   "culture|bookNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|bookNames|polynesian|profile": {
    "v": 0
   },
   "culture|bookNames|american|words": {
-   "v": 50,
-   "t": 12
+   "v": 54,
+   "t": 30
   },
   "culture|bookNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|bookNames|american|profile": {
    "v": 0
@@ -18323,15 +18323,15 @@
    "v": 0
   },
   "era|bookNames|AN": {
-   "v": 252,
+   "v": 251,
    "t": 12
   },
   "era|bookNames|MD": {
-   "v": 526,
+   "v": 533,
    "t": 12
   },
   "era|bookNames|EM": {
-   "v": 403,
+   "v": 412,
    "t": 12
   },
   "era|bookNames|ST": {
@@ -18810,55 +18810,55 @@
   },
   "culture|realms|aztec|words": {
    "v": 38,
-   "t": 12
+   "t": 30
   },
   "culture|realms|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|realms|aztec|profile": {
    "v": 1
   },
   "culture|realms|maya|words": {
    "v": 38,
-   "t": 12
+   "t": 30
   },
   "culture|realms|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|realms|maya|profile": {
    "v": 1
   },
   "culture|realms|andean|words": {
    "v": 37,
-   "t": 12
+   "t": 30
   },
   "culture|realms|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|realms|andean|profile": {
    "v": 0
   },
   "culture|realms|polynesian|words": {
    "v": 37,
-   "t": 12
+   "t": 30
   },
   "culture|realms|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|realms|polynesian|profile": {
    "v": 0
   },
   "culture|realms|american|words": {
    "v": 36,
-   "t": 12
+   "t": 30
   },
   "culture|realms|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|realms|american|profile": {
    "v": 0
@@ -19361,56 +19361,56 @@
    "v": 1
   },
   "culture|peoplesTongues|aztec|words": {
-   "v": 47,
-   "t": 12
+   "v": 49,
+   "t": 30
   },
   "culture|peoplesTongues|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|peoplesTongues|aztec|profile": {
    "v": 1
   },
   "culture|peoplesTongues|maya|words": {
-   "v": 49,
-   "t": 12
+   "v": 48,
+   "t": 30
   },
   "culture|peoplesTongues|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|peoplesTongues|maya|profile": {
    "v": 1
   },
   "culture|peoplesTongues|andean|words": {
-   "v": 47,
-   "t": 12
+   "v": 48,
+   "t": 30
   },
   "culture|peoplesTongues|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|peoplesTongues|andean|profile": {
    "v": 1
   },
   "culture|peoplesTongues|polynesian|words": {
    "v": 49,
-   "t": 12
+   "t": 30
   },
   "culture|peoplesTongues|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|peoplesTongues|polynesian|profile": {
    "v": 1
   },
   "culture|peoplesTongues|american|words": {
    "v": 48,
-   "t": 12
+   "t": 30
   },
   "culture|peoplesTongues|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|peoplesTongues|american|profile": {
    "v": 1
@@ -19427,7 +19427,7 @@
    "v": 0
   },
   "era|peoplesTongues|AN": {
-   "v": 236,
+   "v": 237,
    "t": 12
   },
   "era|peoplesTongues|MD": {
@@ -19435,7 +19435,7 @@
    "t": 12
   },
   "era|peoplesTongues|EM": {
-   "v": 219,
+   "v": 218,
    "t": 12
   },
   "era|peoplesTongues|ST": {
@@ -19443,7 +19443,7 @@
    "t": 12
   },
   "era|peoplesTongues|MO": {
-   "v": 296,
+   "v": 298,
    "t": 12
   },
   "era|peoplesTongues|NF": {
@@ -19882,51 +19882,55 @@
   },
   "culture|deityNames|aztec|words": {
    "v": 65,
-   "t": 12
+   "t": 30
   },
   "culture|deityNames|aztec|shapes": {
    "v": 11,
-   "t": 4
+   "t": 10
   },
   "culture|deityNames|aztec|profile": {
    "v": 1
   },
   "culture|deityNames|maya|words": {
-   "v": 59,
-   "t": 12
+   "v": 60,
+   "t": 30
   },
   "culture|deityNames|maya|shapes": {
    "v": 11,
-   "t": 4
+   "t": 10
   },
   "culture|deityNames|maya|profile": {
    "v": 1
   },
   "culture|deityNames|andean|words": {
-   "v": 46
+   "v": 45,
+   "t": 30
   },
   "culture|deityNames|andean|shapes": {
-   "v": 10
+   "v": 10,
+   "t": 10
   },
   "culture|deityNames|andean|profile": {
    "v": 0
   },
   "culture|deityNames|polynesian|words": {
-   "v": 46
+   "v": 46,
+   "t": 30
   },
   "culture|deityNames|polynesian|shapes": {
-   "v": 10
+   "v": 10,
+   "t": 10
   },
   "culture|deityNames|polynesian|profile": {
    "v": 0
   },
   "culture|deityNames|american|words": {
-   "v": 45,
-   "t": 12
+   "v": 46,
+   "t": 30
   },
   "culture|deityNames|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|deityNames|american|profile": {
    "v": 0
@@ -19959,7 +19963,7 @@
    "t": 12
   },
   "era|deityNames|MO": {
-   "v": 234,
+   "v": 235,
    "t": 12
   },
   "era|deityNames|NF": {
@@ -20414,51 +20418,55 @@
   },
   "culture|sacredPlaces|aztec|words": {
    "v": 49,
-   "t": 12
+   "t": 30
   },
   "culture|sacredPlaces|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|sacredPlaces|aztec|profile": {
    "v": 1
   },
   "culture|sacredPlaces|maya|words": {
    "v": 44,
-   "t": 12
+   "t": 30
   },
   "culture|sacredPlaces|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|sacredPlaces|maya|profile": {
    "v": 1
   },
   "culture|sacredPlaces|andean|words": {
-   "v": 30
+   "v": 30,
+   "t": 30
   },
   "culture|sacredPlaces|andean|shapes": {
-   "v": 10
+   "v": 10,
+   "t": 10
   },
   "culture|sacredPlaces|andean|profile": {
    "v": 0
   },
   "culture|sacredPlaces|polynesian|words": {
-   "v": 30
+   "v": 30,
+   "t": 30
   },
   "culture|sacredPlaces|polynesian|shapes": {
-   "v": 10
+   "v": 10,
+   "t": 10
   },
   "culture|sacredPlaces|polynesian|profile": {
    "v": 0
   },
   "culture|sacredPlaces|american|words": {
    "v": 30,
-   "t": 12
+   "t": 30
   },
   "culture|sacredPlaces|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|sacredPlaces|american|profile": {
    "v": 0
@@ -20931,44 +20939,44 @@
   },
   "culture|tribalNames|aztec|words": {
    "v": 40,
-   "t": 12
+   "t": 30
   },
   "culture|tribalNames|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tribalNames|aztec|profile": {
    "v": 0
   },
   "culture|tribalNames|maya|words": {
    "v": 40,
-   "t": 12
+   "t": 30
   },
   "culture|tribalNames|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tribalNames|maya|profile": {
    "v": 0
   },
   "culture|tribalNames|andean|words": {
    "v": 39,
-   "t": 12
+   "t": 30
   },
   "culture|tribalNames|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tribalNames|andean|profile": {
    "v": 0
   },
   "culture|tribalNames|polynesian|words": {
    "v": 43,
-   "t": 12
+   "t": 30
   },
   "culture|tribalNames|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tribalNames|polynesian|profile": {
    "v": 0
@@ -21528,51 +21536,51 @@
    "v": 0
   },
   "culture|mysticOrders|aztec|words": {
-   "v": 50,
-   "t": 12
+   "v": 48,
+   "t": 30
   },
   "culture|mysticOrders|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mysticOrders|aztec|profile": {
    "v": 0
   },
   "culture|mysticOrders|maya|words": {
-   "v": 47,
-   "t": 12
+   "v": 48,
+   "t": 30
   },
   "culture|mysticOrders|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mysticOrders|maya|profile": {
    "v": 0
   },
   "culture|mysticOrders|andean|words": {
-   "v": 50,
-   "t": 12
+   "v": 52,
+   "t": 30
   },
   "culture|mysticOrders|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mysticOrders|andean|profile": {
    "v": 0
   },
   "culture|mysticOrders|polynesian|words": {
-   "v": 48,
-   "t": 12
+   "v": 50,
+   "t": 30
   },
   "culture|mysticOrders|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|mysticOrders|polynesian|profile": {
    "v": 0
   },
   "culture|mysticOrders|american|words": {
-   "v": 48
+   "v": 45
   },
   "culture|mysticOrders|american|shapes": {
    "v": 10
@@ -21628,15 +21636,15 @@
    "v": 0
   },
   "era|mysticOrders|AN": {
-   "v": 252,
+   "v": 251,
    "t": 12
   },
   "era|mysticOrders|MD": {
-   "v": 358,
+   "v": 356,
    "t": 12
   },
   "era|mysticOrders|EM": {
-   "v": 242,
+   "v": 243,
    "t": 12
   },
   "era|mysticOrders|ST": {
@@ -21644,7 +21652,7 @@
    "t": 12
   },
   "era|mysticOrders|MO": {
-   "v": 310,
+   "v": 312,
    "t": 12
   },
   "era|mysticOrders|NF": {
@@ -22114,51 +22122,51 @@
    "v": 0
   },
   "culture|martialOrders|aztec|words": {
-   "v": 46,
-   "t": 12
+   "v": 44,
+   "t": 30
   },
   "culture|martialOrders|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|martialOrders|aztec|profile": {
    "v": 0
   },
   "culture|martialOrders|maya|words": {
    "v": 45,
-   "t": 12
+   "t": 30
   },
   "culture|martialOrders|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|martialOrders|maya|profile": {
    "v": 0
   },
   "culture|martialOrders|andean|words": {
-   "v": 47,
-   "t": 12
+   "v": 43,
+   "t": 30
   },
   "culture|martialOrders|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|martialOrders|andean|profile": {
    "v": 0
   },
   "culture|martialOrders|polynesian|words": {
-   "v": 42,
-   "t": 12
+   "v": 46,
+   "t": 30
   },
   "culture|martialOrders|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|martialOrders|polynesian|profile": {
    "v": 0
   },
   "culture|martialOrders|american|words": {
-   "v": 46
+   "v": 43
   },
   "culture|martialOrders|american|shapes": {
    "v": 10
@@ -22218,15 +22226,15 @@
    "t": 12
   },
   "era|martialOrders|MD": {
-   "v": 446,
+   "v": 441,
    "t": 12
   },
   "era|martialOrders|EM": {
-   "v": 411,
+   "v": 407,
    "t": 12
   },
   "era|martialOrders|ST": {
-   "v": 270,
+   "v": 268,
    "t": 12
   },
   "era|martialOrders|MO": {
@@ -22705,44 +22713,44 @@
   },
   "culture|underworldGroups|aztec|words": {
    "v": 41,
-   "t": 12
+   "t": 30
   },
   "culture|underworldGroups|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|underworldGroups|aztec|profile": {
    "v": 0
   },
   "culture|underworldGroups|maya|words": {
-   "v": 41,
-   "t": 12
+   "v": 40,
+   "t": 30
   },
   "culture|underworldGroups|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|underworldGroups|maya|profile": {
    "v": 0
   },
   "culture|underworldGroups|andean|words": {
-   "v": 42,
-   "t": 12
+   "v": 41,
+   "t": 30
   },
   "culture|underworldGroups|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|underworldGroups|andean|profile": {
    "v": 0
   },
   "culture|underworldGroups|polynesian|words": {
    "v": 41,
-   "t": 12
+   "t": 30
   },
   "culture|underworldGroups|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|underworldGroups|polynesian|profile": {
    "v": 0
@@ -22808,11 +22816,11 @@
    "t": 12
   },
   "era|underworldGroups|MD": {
-   "v": 456,
+   "v": 454,
    "t": 12
   },
   "era|underworldGroups|EM": {
-   "v": 549,
+   "v": 547,
    "t": 12
   },
   "era|underworldGroups|ST": {
@@ -23290,51 +23298,51 @@
    "v": 0
   },
   "culture|tradeGuilds|aztec|words": {
-   "v": 45,
-   "t": 12
+   "v": 55,
+   "t": 30
   },
   "culture|tradeGuilds|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tradeGuilds|aztec|profile": {
    "v": 0
   },
   "culture|tradeGuilds|maya|words": {
-   "v": 55,
-   "t": 12
+   "v": 45,
+   "t": 30
   },
   "culture|tradeGuilds|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tradeGuilds|maya|profile": {
    "v": 0
   },
   "culture|tradeGuilds|andean|words": {
-   "v": 52,
-   "t": 12
+   "v": 47,
+   "t": 30
   },
   "culture|tradeGuilds|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tradeGuilds|andean|profile": {
    "v": 0
   },
   "culture|tradeGuilds|polynesian|words": {
-   "v": 48,
-   "t": 12
+   "v": 56,
+   "t": 30
   },
   "culture|tradeGuilds|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|tradeGuilds|polynesian|profile": {
    "v": 0
   },
   "culture|tradeGuilds|american|words": {
-   "v": 42
+   "v": 53
   },
   "culture|tradeGuilds|american|shapes": {
    "v": 10
@@ -23390,15 +23398,15 @@
    "v": 0
   },
   "era|tradeGuilds|AN": {
-   "v": 218,
+   "v": 219,
    "t": 12
   },
   "era|tradeGuilds|MD": {
-   "v": 477,
+   "v": 491,
    "t": 12
   },
   "era|tradeGuilds|EM": {
-   "v": 422,
+   "v": 433,
    "t": 12
   },
   "era|tradeGuilds|ST": {
@@ -23889,50 +23897,50 @@
   },
   "culture|adventureCompanies|aztec|words": {
    "v": 46,
-   "t": 12
+   "t": 30
   },
   "culture|adventureCompanies|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|adventureCompanies|aztec|profile": {
    "v": 0
   },
   "culture|adventureCompanies|maya|words": {
    "v": 48,
-   "t": 12
+   "t": 30
   },
   "culture|adventureCompanies|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|adventureCompanies|maya|profile": {
    "v": 0
   },
   "culture|adventureCompanies|andean|words": {
-   "v": 44,
-   "t": 12
+   "v": 48,
+   "t": 30
   },
   "culture|adventureCompanies|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|adventureCompanies|andean|profile": {
    "v": 0
   },
   "culture|adventureCompanies|polynesian|words": {
-   "v": 49,
-   "t": 12
+   "v": 48,
+   "t": 30
   },
   "culture|adventureCompanies|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|adventureCompanies|polynesian|profile": {
    "v": 0
   },
   "culture|adventureCompanies|american|words": {
-   "v": 44
+   "v": 46
   },
   "culture|adventureCompanies|american|shapes": {
    "v": 10
@@ -23992,11 +24000,11 @@
    "t": 12
   },
   "era|adventureCompanies|MD": {
-   "v": 489,
+   "v": 493,
    "t": 12
   },
   "era|adventureCompanies|EM": {
-   "v": 491,
+   "v": 495,
    "t": 12
   },
   "era|adventureCompanies|ST": {
@@ -24004,7 +24012,7 @@
    "t": 12
   },
   "era|adventureCompanies|MO": {
-   "v": 232,
+   "v": 233,
    "t": 12
   },
   "era|adventureCompanies|NF": {
@@ -24462,45 +24470,45 @@
    "v": 0
   },
   "culture|powerFactions|aztec|words": {
-   "v": 39,
-   "t": 12
+   "v": 42,
+   "t": 30
   },
   "culture|powerFactions|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|powerFactions|aztec|profile": {
    "v": 0
   },
   "culture|powerFactions|maya|words": {
-   "v": 38,
-   "t": 12
+   "v": 37,
+   "t": 30
   },
   "culture|powerFactions|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|powerFactions|maya|profile": {
    "v": 0
   },
   "culture|powerFactions|andean|words": {
-   "v": 37,
-   "t": 12
+   "v": 38,
+   "t": 30
   },
   "culture|powerFactions|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|powerFactions|andean|profile": {
    "v": 0
   },
   "culture|powerFactions|polynesian|words": {
    "v": 36,
-   "t": 12
+   "t": 30
   },
   "culture|powerFactions|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|powerFactions|polynesian|profile": {
    "v": 0
@@ -24566,19 +24574,19 @@
    "t": 12
   },
   "era|powerFactions|MD": {
-   "v": 399,
+   "v": 402,
    "t": 12
   },
   "era|powerFactions|EM": {
-   "v": 336,
+   "v": 339,
    "t": 12
   },
   "era|powerFactions|ST": {
-   "v": 230,
+   "v": 231,
    "t": 12
   },
   "era|powerFactions|MO": {
-   "v": 228,
+   "v": 227,
    "t": 12
   },
   "era|powerFactions|NF": {
@@ -25053,50 +25061,50 @@
   },
   "culture|supernaturalCourts|aztec|words": {
    "v": 43,
-   "t": 12
+   "t": 30
   },
   "culture|supernaturalCourts|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|supernaturalCourts|aztec|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|maya|words": {
-   "v": 43,
-   "t": 12
+   "v": 44,
+   "t": 30
   },
   "culture|supernaturalCourts|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|supernaturalCourts|maya|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|andean|words": {
-   "v": 44,
-   "t": 12
+   "v": 43,
+   "t": 30
   },
   "culture|supernaturalCourts|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|supernaturalCourts|andean|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|polynesian|words": {
-   "v": 43,
-   "t": 12
+   "v": 44,
+   "t": 30
   },
   "culture|supernaturalCourts|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|supernaturalCourts|polynesian|profile": {
    "v": 0
   },
   "culture|supernaturalCourts|american|words": {
-   "v": 44
+   "v": 43
   },
   "culture|supernaturalCourts|american|shapes": {
    "v": 10
@@ -25642,56 +25650,56 @@
    "v": 1
   },
   "culture|ships|aztec|words": {
-   "v": 44,
-   "t": 12
+   "v": 42,
+   "t": 30
   },
   "culture|ships|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|ships|aztec|profile": {
    "v": 1
   },
   "culture|ships|maya|words": {
-   "v": 43,
-   "t": 12
+   "v": 44,
+   "t": 30
   },
   "culture|ships|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|ships|maya|profile": {
    "v": 1
   },
   "culture|ships|andean|words": {
    "v": 42,
-   "t": 12
+   "t": 30
   },
   "culture|ships|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|ships|andean|profile": {
    "v": 1
   },
   "culture|ships|polynesian|words": {
-   "v": 44,
-   "t": 12
+   "v": 42,
+   "t": 30
   },
   "culture|ships|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|ships|polynesian|profile": {
    "v": 1
   },
   "culture|ships|american|words": {
    "v": 42,
-   "t": 12
+   "t": 30
   },
   "culture|ships|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|ships|american|profile": {
    "v": 1
@@ -25793,15 +25801,15 @@
    "t": 12
   },
   "era|ships|MD": {
-   "v": 290,
+   "v": 287,
    "t": 12
   },
   "era|ships|EM": {
-   "v": 437,
+   "v": 434,
    "t": 12
   },
   "era|ships|ST": {
-   "v": 381,
+   "v": 382,
    "t": 12
   },
   "era|ships|MO": {
@@ -26298,55 +26306,55 @@
   },
   "culture|spacecraft|aztec|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|spacecraft|aztec|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|spacecraft|aztec|profile": {
    "v": 0
   },
   "culture|spacecraft|maya|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|spacecraft|maya|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|spacecraft|maya|profile": {
    "v": 0
   },
   "culture|spacecraft|andean|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|spacecraft|andean|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|spacecraft|andean|profile": {
    "v": 0
   },
   "culture|spacecraft|polynesian|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|spacecraft|polynesian|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|spacecraft|polynesian|profile": {
    "v": 0
   },
   "culture|spacecraft|american|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|spacecraft|american|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|spacecraft|american|profile": {
    "v": 0
@@ -26951,56 +26959,56 @@
    "v": 1
   },
   "culture|aircraft|aztec|words": {
-   "v": 39,
-   "t": 12
+   "v": 37,
+   "t": 30
   },
   "culture|aircraft|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|aircraft|aztec|profile": {
    "v": 1
   },
   "culture|aircraft|maya|words": {
-   "v": 38,
-   "t": 12
+   "v": 36,
+   "t": 30
   },
   "culture|aircraft|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|aircraft|maya|profile": {
    "v": 1
   },
   "culture|aircraft|andean|words": {
-   "v": 39,
-   "t": 12
+   "v": 38,
+   "t": 30
   },
   "culture|aircraft|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|aircraft|andean|profile": {
    "v": 1
   },
   "culture|aircraft|polynesian|words": {
    "v": 38,
-   "t": 12
+   "t": 30
   },
   "culture|aircraft|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|aircraft|polynesian|profile": {
    "v": 1
   },
   "culture|aircraft|american|words": {
    "v": 37,
-   "t": 12
+   "t": 30
   },
   "culture|aircraft|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|aircraft|american|profile": {
    "v": 1
@@ -27102,15 +27110,15 @@
    "t": 12
   },
   "era|aircraft|MD": {
-   "v": 270,
+   "v": 267,
    "t": 12
   },
   "era|aircraft|EM": {
-   "v": 270,
+   "v": 267,
    "t": 12
   },
   "era|aircraft|ST": {
-   "v": 354,
+   "v": 353,
    "t": 12
   },
   "era|aircraft|MO": {
@@ -27126,7 +27134,7 @@
    "t": 12
   },
   "style|aircraft|high-fantasy|words": {
-   "v": 253,
+   "v": 249,
    "t": 16
   },
   "style|aircraft|high-fantasy|shapes": {
@@ -27134,7 +27142,7 @@
    "t": 4
   },
   "style|aircraft|contemporary-fantasy|words": {
-   "v": 253,
+   "v": 249,
    "t": 16
   },
   "style|aircraft|contemporary-fantasy|shapes": {
@@ -27166,7 +27174,7 @@
    "t": 4
   },
   "style|aircraft|space-opera|words": {
-   "v": 253,
+   "v": 249,
    "t": 16
   },
   "style|aircraft|space-opera|shapes": {
@@ -27612,56 +27620,56 @@
    "v": 1
   },
   "culture|landVehicles|aztec|words": {
-   "v": 41,
-   "t": 12
+   "v": 42,
+   "t": 30
   },
   "culture|landVehicles|aztec|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|landVehicles|aztec|profile": {
    "v": 1
   },
   "culture|landVehicles|maya|words": {
-   "v": 42,
-   "t": 12
+   "v": 40,
+   "t": 30
   },
   "culture|landVehicles|maya|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|landVehicles|maya|profile": {
    "v": 1
   },
   "culture|landVehicles|andean|words": {
-   "v": 40,
-   "t": 12
+   "v": 42,
+   "t": 30
   },
   "culture|landVehicles|andean|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|landVehicles|andean|profile": {
    "v": 1
   },
   "culture|landVehicles|polynesian|words": {
    "v": 42,
-   "t": 12
+   "t": 30
   },
   "culture|landVehicles|polynesian|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|landVehicles|polynesian|profile": {
    "v": 1
   },
   "culture|landVehicles|american|words": {
-   "v": 40,
-   "t": 12
+   "v": 41,
+   "t": 30
   },
   "culture|landVehicles|american|shapes": {
    "v": 10,
-   "t": 4
+   "t": 10
   },
   "culture|landVehicles|american|profile": {
    "v": 1
@@ -27763,15 +27771,15 @@
    "t": 12
   },
   "era|landVehicles|MD": {
-   "v": 266,
+   "v": 265,
    "t": 12
   },
   "era|landVehicles|EM": {
-   "v": 289,
+   "v": 292,
    "t": 12
   },
   "era|landVehicles|ST": {
-   "v": 639,
+   "v": 641,
    "t": 12
   },
   "era|landVehicles|MO": {
@@ -28257,55 +28265,55 @@
   },
   "culture|riverNames|aztec|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|riverNames|aztec|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|riverNames|aztec|profile": {
    "v": 0
   },
   "culture|riverNames|maya|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|riverNames|maya|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|riverNames|maya|profile": {
    "v": 0
   },
   "culture|riverNames|andean|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|riverNames|andean|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|riverNames|andean|profile": {
    "v": 0
   },
   "culture|riverNames|polynesian|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|riverNames|polynesian|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|riverNames|polynesian|profile": {
    "v": 0
   },
   "culture|riverNames|american|words": {
    "v": 0,
-   "t": 12
+   "t": 30
   },
   "culture|riverNames|american|shapes": {
    "v": 0,
-   "t": 4
+   "t": 10
   },
   "culture|riverNames|american|profile": {
    "v": 0
@@ -28592,22 +28600,22 @@
    "v": 576
   },
   "total|culture|maya|words": {
-   "v": 2295
+   "v": 2282
   },
   "total|culture|maya|shapes": {
    "v": 651
   },
   "total|culture|andean|words": {
-   "v": 1985
+   "v": 1967
   },
   "total|culture|andean|shapes": {
-   "v": 626
+   "v": 629
   },
   "total|culture|polynesian|words": {
-   "v": 1925
+   "v": 1931
   },
   "total|culture|polynesian|shapes": {
-   "v": 615
+   "v": 618
   },
   "total|culture|bantu|words": {
    "v": 2024
@@ -28616,7 +28624,7 @@
    "v": 551
   },
   "total|culture|aztec|words": {
-   "v": 2244
+   "v": 2235
   },
   "total|culture|aztec|shapes": {
    "v": 640
@@ -28670,10 +28678,10 @@
    "v": 551
   },
   "total|culture|american|words": {
-   "v": 1969
+   "v": 1968
   },
   "total|culture|american|shapes": {
-   "v": 569
+   "v": 582
   },
   "total|culture|anglo-saxon|words": {
    "v": 1144
@@ -28706,19 +28714,19 @@
    "v": 0
   },
   "total|era|AN": {
-   "v": 12787
+   "v": 12808
   },
   "total|era|MD": {
-   "v": 16532
+   "v": 16591
   },
   "total|era|EM": {
-   "v": 18139
+   "v": 18176
   },
   "total|era|ST": {
-   "v": 17568
+   "v": 17580
   },
   "total|era|MO": {
-   "v": 15760
+   "v": 15795
   },
   "total|era|NF": {
    "v": 879
@@ -28727,19 +28735,19 @@
    "v": 1885
   },
   "total|style|high-fantasy|words": {
-   "v": 5572
+   "v": 5568
   },
   "total|style|high-fantasy|shapes": {
    "v": 1984
   },
   "total|style|contemporary-fantasy|words": {
-   "v": 5488
+   "v": 5484
   },
   "total|style|contemporary-fantasy|shapes": {
    "v": 1982
   },
   "total|style|space-opera|words": {
-   "v": 5624
+   "v": 5620
   },
   "total|style|space-opera|shapes": {
    "v": 1815

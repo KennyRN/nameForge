@@ -174,9 +174,10 @@ test("§14.5: 10,000 titles across options: no block-list matches, no banned wor
     }
   }
   assert.ok(n >= 10000, `${n}`);
+  // Brief 6d: Polynesian and Andean are offered now (their status as sensitive cultures was lifted); their deities are invented, as for every culture.
   for (const k of ["polynesian", "andean"]) {
-    assert.ok(!DEITY_CULTURES.some((c) => c.key === k));
-    assert.deepEqual(generateDeityNames({ culture: k, count: 1, seed: 1 }).notices, ["This culture isn't offered for deities."]);
+    assert.ok(DEITY_CULTURES.some((c) => c.key === k));
+    assert.deepEqual(generateDeityNames({ culture: k, count: 1, seed: 1 }).notices, []);
   }
 });
 
@@ -212,7 +213,7 @@ test("§1 (line-up brief): deities last in group names, sacred places last in pl
   assert.equal(historySection(label), "deityNames");
 });
 
-test("§14.6: presets round-trip; Polynesian reports and runs as General", () => {
+test("§14.6: presets round-trip; Polynesian is offered (brief 6d)", () => {
   const preset: DeityPreset = {
     packName: "Storm pantheon",
     setting: "",
@@ -235,8 +236,8 @@ test("§14.6: presets round-trip; Polynesian reports and runs as General", () =>
   const state = [["culture", "norse"], ["fantastic", "on"], ["names", "placeholder"], ["series", "on"]].reduce((s, [f, id]) => chooseDeity(s, f as never, id), DEFAULT_DEITY_STATE);
   assert.equal(deitySentenceText(deitySentence(state)), preset.description);
   const poly = parseModulePreset(modulePresetContent({ ...preset, culture: "polynesian" }), "x");
-  assert.equal(poly.deity?.culture, "general");
-  assert.deepEqual(poly.problems, ["This culture isn't offered for deities."]);
+  assert.equal(poly.deity?.culture, "polynesian");
+  assert.deepEqual(poly.problems, []);
 });
 
 // ── §10.5 Back-links ────────────────────────────────────────────────────────
@@ -257,13 +258,14 @@ test("§10.1: buildings gain temples and shrines of invented deities; not for th
   const general = temples("general", false);
   assert.ok(general.some((n) => n.text.startsWith("Temple of the ")) && general.some((n) => n.text.startsWith("Shrine of the ")));
   for (const n of general) for (const w of deityWords(n.words)) assert.ok(!deityTitleBlocked(w), n.text);
-  for (const c of ["polynesian", "andean"]) for (const f of [false, true]) assert.equal(temples(c, f).length, 0, c);
+  // Brief 6d: Polynesian and Andean are no longer sensitive, so their temples and shrines of invented deities are drawn like any culture's.
+  for (const c of ["polynesian", "andean"]) for (const f of [false, true]) for (const n of temples(c, f)) for (const w of deityWords(n.words)) assert.ok(!deityTitleBlocked(w), n.text);
   assert.equal(temples("norman-british", false).length, 0);
   const christian = temples("norman-british", true);
   assert.ok(christian.length > 0 && christian.every((n) => n.text.startsWith("Temple of the ")));
 });
 
-test("§10.2: pilgrim roads to invented sacred places; never for Polynesian or Andean", () => {
+test("§10.2: pilgrim roads to invented sacred places (brief 6d: Polynesian and Andean included)", () => {
   const roads = (culture: string) => {
     const out: { text: string; words: { pool: string; word: string }[] }[] = [];
     for (let seed = 1; seed <= 200; seed++) out.push(...generateRouteNames({ culture, kind: "pilgrim", people: "invented", count: 5, seed }).names.filter((n) => n.shape.includes("{sacredPlace}")));
@@ -275,7 +277,7 @@ test("§10.2: pilgrim roads to invented sacred places; never for Polynesian or A
     assert.ok(!/ the the /i.test(n.text), n.text);
     for (const w of deityWords(n.words)) assert.ok(!deityTitleBlocked(w), n.text);
   }
-  for (const c of ["polynesian", "andean"]) assert.equal(roads(c).length, 0, c);
+  for (const c of ["polynesian", "andean"]) for (const n of roads(c)) for (const w of deityWords(n.words)) assert.ok(!deityTitleBlocked(w), n.text);
 });
 
 test("§10.3: cults and holy orders devoted to invented deities; holy orders of christian traditions only when fantastic", () => {
@@ -290,7 +292,7 @@ test("§10.3: cults and holy orders devoted to invented deities; holy orders of 
   assert.ok(groups("holy", "general", false).length > 0);
   assert.equal(groups("holy", "celtic", false).length, 0);
   assert.ok(groups("holy", "celtic", true).length > 0);
-  for (const t of ["polynesian", "andean"]) assert.equal(groups("cult", t, true).length, 0, t);
+  // Brief 6d: Polynesian and Andean cults are drawn like any tradition's now.
 });
 
 test("§10.4: the kit's faith group and buildings share one deity; none for christian cultures in a realistic world", () => {
@@ -305,7 +307,6 @@ test("§10.4: the kit's faith group and buildings share one deity; none for chri
   }
   assert.equal(generateKit({ culture: "norman-british", seed: 3 }).context.deity, null);
   assert.ok(generateKit({ culture: "norman-british", fantastic: true, seed: 3 }).context.deity);
-  assert.equal(generateKit({ culture: "polynesian", seed: 3 }).context.deity, null);
   const realistic = generateKit({ culture: "norman-british", seed: 3 }).context;
   assert.equal(generateBuildingNames({ culture: "norman-british", kind: "faith", shape: "Temple of the {deity}", count: 3, seed: 1, context: realistic }).names.length, 0);
 });

@@ -185,11 +185,12 @@ test("every module in the lens has an adapter and reports, none left 'not yet re
   assert.doesNotMatch(renderCoverageMarkdown(report), /Not yet reported/);
 });
 
-test("the deity and money exclusions read 'excluded', and the deity pair excludes Polynesian and Andean", () => {
+test("the deity pair offers Polynesian and Andean at target (brief 6d lifted their exclusion)", () => {
   for (const module of ["deityNames", "sacredPlaces"]) {
     const m = moduleCoverage(adapterOf(module));
-    assert.ok(m.cultures["polynesian"].excluded && m.cultures["andean"].excluded, `${module}: excluded`);
+    assert.ok(!m.cultures["polynesian"].excluded && !m.cultures["andean"].excluded, `${module}: offered`);
     assert.equal(m.cultures["polynesian"].below, false);
+    assert.equal(m.cultures["andean"].below, false);
   }
 });
 

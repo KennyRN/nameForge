@@ -537,3 +537,27 @@ Every loanword new in the 6c lists, looked up on collinsdictionary.com and oed.c
 ### Totals for batch 6c
 
 Found: 16 + 24 + 8 + 19 + 5 = 72 words (Chinese counts Kylin found). Not found and replaced by an English sense: 1 (Vetala) + 2 (Pie, Dam) + 1 (Qilin) + 9 + 5 = 18 words, each swap listed above. Not looked up: none; the number of lookups is 90 words.
+
+## Batch 6d: Aztec, Maya, Andean, Polynesian and American (20 November 2026)
+
+Every loanword new in the 6d lists, looked up on collinsdictionary.com and oed.com, sending only the word (a search restricted to those two sites). A word counts as found when Collins or the OED has an entry for it in the sense the lists use.
+
+**Found (48):** Cenote (Collins), Menehune (OED, a borrowing from Hawaiian, 1895), Taniwha (Collins; OED 1822), Marae (Collins), Posada (Collins; OED 1652), Pulque (Collins), Cantina (Collins), Hacienda (Collins), Pueblo (Collins), Barrio (Collins), Milpa (Collins; OED 1648), Chinampa (Collins; OED 1787), Quipu (Collins), Whanau (Collins; OED 1917), Fale (OED, a borrowing from Samoan, 1902), Colonia (Collins), Oca (Collins, the Andean plant), Algarrobo (Collins), Jackalope (Collins; OED 1950), Sasquatch (Collins), Speakeasy (Collins), Megachurch (Collins), Henequen (Collins; OED 1555), Chicle (Collins), Pa'anga (Collins), Ceiba (Collins), Quetzal (Collins), Ejido (Collins), Kava (Collins), Cassava (Collins), Stela (Collins), Taco (Collins), Atoll (Collins), Mesa (Collins), Corral (Collins), Quinoa (Collins), Alpaca (Collins), Llama (Collins), Puma (Collins; OED 1771), Coca (Collins), Cacao (Collins), Macaw (Collins; OED 1625), Condor (Collins), Jaguar (Collins), Mahogany (Collins), Viscacha (Collins; OED 1604), Vicuña (Collins), Guanaco (Collins; OED 1604).
+
+**Not found, so the English sense stands (8):**
+- Tambo (Collins has only the surname, and the Spanish sense of a wayside inn in its Spanish-English entry) became "Road Hostel" in the modern inn list.
+- Calpulli (nothing found) became "Ward Kin" in the Aztec tribal list.
+- Motu (Collins has the Papuan people and a Latin phrase, not the Polynesian islet) became "Cay" in the Polynesian island list.
+- Sacbe (nothing found) became "White Causeway" in the Maya settlement list and "Causeway Crossing" in the Maya inn signs.
+- Quenua (no entry; "quinoa" is the nearest) became "Paper Tree" in the Andean tree list.
+- Queñua (no entry) became "Highland Pine".
+- Molle (Collins has only an acronym and the Italian adjective) became "Pepper Tree".
+- Tara (Collins has no tree sense) became "Thorn Tree".
+
+**Replaced on the memory check and not looked up:** Polylepis became "Paper Tree" and Puya became "Bromeliad" in the Andean fill lists (a Latin genus name each, not English words).
+
+**Looked up, not used in the 6d lists:** Zapote (Collins has it only in the Spanish-English dictionary; the English word is sapote) and Palo Verde (found, OED 1829, Collins "paloverde").
+
+### Totals for batch 6d
+
+Looked up: 56 words. Found: 48. Not found and replaced by an English sense: 8, each swap listed above. Replaced without a lookup: 2. The names of people, which are in the people tables, are not words and were not looked up.
