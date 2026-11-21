@@ -22,6 +22,7 @@ import {
   groupPlural,
   groupPossessive,
   groupSaint,
+  saintsFit,
   hasBannedWord,
   ordinalText,
   pickWeighted,
@@ -329,7 +330,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "place":
       return isFuture(ctx.era) ? groupStarIn("any", "invented", rng) : routePlace(ctx.culture, ctx.setting, rng, ctx.catalogue);
     case "holy":
-      return groupSaint(ctx.setting, rng);
+      return groupSaint(ctx.setting, rng, ctx.culture);
     case "fixed":
       return fromPool(ctx, `deityFixed:${ctx.shape!.kind}`);
     case "sacredLand":
@@ -404,6 +405,8 @@ function shapeWeight(ctx: Ctx, s: DeityShape): number {
   if (!cultureAllowed(s.c, ctx.culture, ctx.era)) return 0;
   if (s.h !== undefined && s.h !== ctx.fantastic) return 0;
   if (s.christian && !ctx.christian) return 0;
+  // Brief 6d §2: a saint only from the culture's own list and in its Christian eras.
+  if (/\{holy[}:]/.test(s.p) && !saintsFit(ctx.culture, ctx.era)) return 0;
   if (s.domain && s.domain !== ctx.domain.key) return 0;
   if (s.gender && s.gender !== ctx.gender) return 0;
   const form = s.form ?? "";

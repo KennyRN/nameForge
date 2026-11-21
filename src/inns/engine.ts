@@ -24,6 +24,7 @@ import {
   groupPlural,
   groupPossessive,
   groupSaint,
+  saintsFit,
   pickWeighted,
   repeatsContent,
   toneFactor,
@@ -442,7 +443,7 @@ function token(ctx: Ctx, name: string): string | undefined {
       if (ctx.turn) return name === "town" ? ctx.turn.next(rng) : ctx.turn.other(rng);
       return placeholders ? "[place]" : routePlace(ctx.culture.key, ctx.setting, rng, ctx.catalogue);
     case "holy": {
-      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng, ctx.culture.key));
       return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
     }
     case "figure":
@@ -604,7 +605,7 @@ function shapeWeight(ctx: Ctx, s: InnShape): number {
   if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames(ctx).length === 0) return 0;
   if (ctx.mode === "invented" && /\{(patron|founder)/.test(s.p) && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
-  if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
+  if (/\{holy[}:]/.test(s.p) && !(cultureAllowed(["christian"], c.key, ctx.era) && saintsFit(c.key, ctx.era))) return 0;
   if (s.p.includes("{trade") && cultureSet("caste").has(c.key)) return 0;
   return s.w * toneFactor(s.t ?? [], ctx.tone);
 }

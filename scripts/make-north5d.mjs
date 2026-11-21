@@ -92,6 +92,8 @@ function fillFromPools(module, culture, lists, nt) {
       const m = item.match(/^([012]):([^@]+)@(\S+)$/);
       if (!m) throw new Error(`bad pool word ${item}`);
       const [, k, word, tag] = m;
+      // Brief 6d fixes §2: only the cultures with stone circles draw "Stone Circle"; of the batch cultures, none does.
+      if (NEW6D.includes(culture) && /Stone Circle/.test(word)) continue;
       if (own && (FOREIGN.test(word) || (module === "moneyNames" && FOREIGN_MONEY.test(word)) || (!keepsChurch && CHRISTIAN.test(word)))) continue;
       // Second pass (6c Part A §5): peat is cut only where it is (the four nations, English, Dutch, German, Scandinavian, Norse); a month is not a "Time" or a "Fair".
       if (/Peat/i.test(word) && !["welsh", "scottish", "irish", "cornish", "norman-british", "anglo-saxon", "dutch", "german", "scandinavian", "norse", "celtic", "english"].includes(culture)) continue;

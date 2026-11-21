@@ -75,6 +75,8 @@ function fillFromPools(module, culture, lists, nt) {
       const m = item.match(/^([012]):([^@]+)@(\S+)$/);
       if (!m) throw new Error(`bad pool word ${item}`);
       const [, k, word, tag] = m;
+      // Brief 6d fixes §2: only the cultures with stone circles draw "Stone Circle"; of the batch cultures, none does.
+      if (NEW6D.includes(culture) && /Stone Circle/.test(word)) continue;
       if (own && (FOREIGN.test(word) || (module === "moneyNames" && FOREIGN_MONEY.test(word)) || (!keepsChurch && CHRISTIAN.test(word)))) continue;
       if (lists.some((l) => l.some((w) => w.toLowerCase() === word.toLowerCase()))) continue;
       lists[Number(k)].push(word);

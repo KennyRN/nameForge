@@ -901,7 +901,30 @@ export function groupPerson(setting: GroupSetting, surnames: boolean, rng: () =>
 }
 
 /** §8.2: an invented holy person: Saint {saintName}, or the Blessed {saintName} in sci-fi. */
-export function groupSaint(setting: GroupSetting, rng: () => number): string {
+/**
+ * Brief 6d §2: saints come only from the culture's own list, and only in the eras when it was Christian. Aztec, Maya, Andean and Polynesian have the Spanish colonial and mission saints from the
+ * early modern era; American has no saint shapes of its own (its Spanish and French mission names are settlement names). Every other culture reads the shared list, as before.
+ */
+const OWN_SAINTS: Record<string, string[]> = {
+  aztec: ["Michael", "Peter", "Paul", "James", "John", "Francis", "Joseph", "Anthony", "Martin", "Mary", "Anne", "Catherine"],
+  maya: ["Michael", "Peter", "Paul", "James", "John", "Francis", "Joseph", "Anthony", "Martin", "Mary", "Anne", "Catherine"],
+  andean: ["Rose", "Martin", "Peter", "Paul", "James", "Anne", "Francis", "Joseph", "Michael", "John", "Mary", "Toribius"],
+  polynesian: ["John", "Peter", "Paul", "Mary", "Joseph", "Michael", "Francis", "Anne", "James", "Matthew"],
+};
+const SAINTLESS = new Set(["american"]);
+/** Whether a culture draws saints in an era at all (the shared christian gate still applies as well). */
+export function saintsFit(culture: string | undefined, era?: string): boolean {
+  if (!culture) return true;
+  if (SAINTLESS.has(culture)) return false;
+  if (OWN_SAINTS[culture]) return era === undefined || ["EM", "ST", "MO"].includes(era);
+  return true;
+}
+export function groupSaint(setting: GroupSetting, rng: () => number, culture?: string): string {
+  const own = culture ? OWN_SAINTS[culture] : undefined;
+  if (own) {
+    const saint = own[Math.floor(rng() * own.length)];
+    return setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;
+  }
   const { ctx, type } = sharedCtx(setting, rng);
   const saint = pick(ctx, "saintName", type);
   return setting === "SF" ? `the Blessed ${saint}` : `Saint ${saint}`;

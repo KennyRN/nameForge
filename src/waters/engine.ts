@@ -23,6 +23,7 @@ import {
   groupPerson,
   groupPossessive,
   groupSaint,
+  saintsFit,
   hasBannedWord,
   ordinalText,
   pickWeighted,
@@ -472,7 +473,7 @@ function token(ctx: Ctx, name: string): VocabEntry | string | undefined {
     case "kingdom":
       return placeholders ? PLACEHOLDER("kingdom") : routeKingdom(ctx.culture.key, ctx.era, rng, ctx.catalogue);
     case "holy":
-      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng);
+      return placeholders ? "[holy person]" : groupSaint(ctx.setting, rng, ctx.culture.key);
     case "god":
       return placeholders ? "[deity]" : godName(ctx);
     case "river":
@@ -564,7 +565,7 @@ function tokensLive(ctx: Ctx, p: string): boolean {
       if (t === "god" && ctx.mode === "placeholders" && ctx.culture.sensitive) return false;
       if (t === "god" && ctx.mode === "placeholders" && godNames(ctx.culture.key).length === 0 && !deityHooks()?.cultureOffered(ctx.culture.key)) return false;
       if (t === "person" && ctx.mode === "invented" && personNames(ctx.culture.key).length === 0) return false;
-      if (t === "holy" && !cultureAllowed(["christian"], ctx.culture.key, ctx.era)) return false;
+      if (t === "holy" && !(cultureAllowed(["christian"], ctx.culture.key, ctx.era) && saintsFit(ctx.culture.key, ctx.era))) return false;
       continue;
     }
     if (vocabPool(ctx, t).length === 0) return false;

@@ -515,7 +515,7 @@ function token(ctx: Ctx, name: string, shape: RealmShape, kind: string): string 
     }
     case "holy":
       if (ctx.mode === "placeholders") return "[holy person]";
-      return CHRISTIAN.has(ctx.culture) ? groupSaint(ctx.setting, rng) : `the ${gnWord(ctx, "holyTitle")}`;
+      return CHRISTIAN.has(ctx.culture) ? groupSaint(ctx.setting, rng, ctx.culture) : `the ${gnWord(ctx, "holyTitle")}`;
     case "beast": {
       const animals = cultureAnimals(ctx.culture);
       const pool: [string, number][] = [...groupListWords("beast", ctx.setting), ...animals.map((a): [string, number] => [a, 3])];

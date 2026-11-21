@@ -18,6 +18,7 @@ import {
   groupStarIn,
   groupPossessive,
   groupSaint,
+  saintsFit,
   ordinalText,
   pickWeighted,
   repeatsContent,
@@ -488,7 +489,7 @@ function token(ctx: Ctx, name: string, alt: (dialect: string) => void, pattern: 
     case "royal":
       return "[royal]";
     case "holy": {
-      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng, ctx.culture.key));
       return ctx.options.context ? contextSaint(ctx.options.context, other, rng) : other();
     }
     case "founder": {
@@ -625,7 +626,7 @@ function shapeWeight(ctx: Ctx, s: StreetShape): number {
   if (CASTE.has(c.key) && TRADE_TOKENS.test(s.p)) return 0;
   if (ctx.mode === "invented" && s.p.includes("{founder}") && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god") && godNames(c.key).length === 0) return 0;
-  if (s.p.includes("{holy:") && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
+  if (s.p.includes("{holy:") && !(cultureAllowed(["christian"], c.key, ctx.era) && saintsFit(c.key, ctx.era))) return 0;
   if (s.p === "{districtFixed}" && !vocabPool(ctx, "districtFixed").some(([e]) => !e.fn || e.fn.includes("any") || (!!ctx.fn && e.fn.includes(ctx.fn)))) return 0;
   const pool = s.p.match(/^\{(\w+)\}$/)?.[1];
   if (pool && ctx.vocab.pools[pool] && vocabPool(ctx, pool).length === 0) return 0;

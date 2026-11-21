@@ -25,6 +25,7 @@ import {
   groupStarIn,
   groupPossessive,
   groupSaint,
+  saintsFit,
   groupTown,
   hasBannedWord,
   ordinalText,
@@ -459,7 +460,7 @@ function token(ctx: Ctx, name: string): string | undefined {
     case "kingdom":
       return placeholders ? "[kingdom]" : kingdom(ctx);
     case "holy": {
-      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng, ctx.culture.key));
       return ctx.context ? contextSaint(ctx.context, other, rng) : other();
     }
     case "god": {
@@ -635,7 +636,7 @@ function shapeWeight(ctx: Ctx, kind: RouteKind, s: RouteShape, anyEra = false): 
   // §4.2: invented people only where the culture has a name list.
   if (ctx.mode === "invented" && PERSON_TOKENS.test(s.p) && personNames(c.key).length === 0) return 0;
   if (s.p.includes("{god}") && godNames(c.key).length === 0) return 0;
-  if (s.p.includes("{holy}") && !cultureAllowed(["christian"], c.key, ctx.era)) return 0;
+  if (((s.p.includes("{holy}") && !cultureAllowed(["christian"], c.key, ctx.era)) || (/\{holy[}:]/.test(s.p) && !saintsFit(c.key, ctx.era)))) return 0;
   if (s.p === "fixed") {
     const prev = ctx.shape;
     ctx.shape = s;

@@ -15,6 +15,7 @@ import {
   groupPlural,
   groupPossessive,
   groupSaint,
+  saintsFit,
   groupStarIn,
   pickWeighted,
   toneFactor,
@@ -162,7 +163,7 @@ export function commonToken<C extends BaseCtx>(r: Renderer<C>, ctx: C, name: str
     case "dynasty":
       return placeholders || !DYNASTY_CULTURES.includes(ctx.culture.key) ? "[dynasty]" : gnWord(ctx, "house");
     case "holy": {
-      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng));
+      const other = () => (placeholders ? "[holy person]" : groupSaint(ctx.setting, rng, ctx.culture.key));
       return ctx.context ? contextSaint(ctx.context, other, rng) : other();
     }
     case "deity": {
@@ -262,7 +263,7 @@ export function shapeAllowed(ctx: BaseCtx, s: ShapeLike): boolean {
   if (ctx.mode === "invented" && s.p.includes("{patron") && personNames(c.key).length === 0) return false;
   if (ctx.mode === "invented" && s.p.includes("{owner") && ownerNames(ctx).length === 0) return false;
   if (s.p.includes("{god") && (godNames(c.key).length === 0 || !SHARED_LISTS.godCultures.includes(c.key))) return false;
-  if (/\{holy[}:]/.test(s.p) && !cultureAllowed(["christian"], c.key, ctx.era)) return false;
+  if (/\{holy[}:]/.test(s.p) && !(cultureAllowed(["christian"], c.key, ctx.era) && saintsFit(c.key, ctx.era))) return false;
   return true;
 }
 
