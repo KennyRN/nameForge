@@ -4,6 +4,7 @@
 // and reuses its places, peoples, kingdoms and capitals, the group engine's weighted draws and tone
 // factor, the river and vessel engines, the star draw and the space safeguards. No Obsidian imports.
 
+import { SIX_D_TOWNS } from "../sixD";
 import { ENGINE_ALIAS, engineCulture, readCelticView, readsBritishRegionWords, regionsOfCulture, type LensEra } from "../lens";
 import { hasEnglishRank, MODULE_BIOME, OWN_FILL_CULTURES } from "../tier6a";
 import { isRealTownName } from "../realPlaces";
@@ -338,7 +339,8 @@ function drawEntry(ctx: Ctx, pool: string): VocabEntry | undefined {
 
 /** §4: `{god}`: the culture's world gods, else the deities module's titles (never the sensitive cultures). */
 function godName(ctx: Ctx): string | undefined {
-  if (ctx.culture.sensitive) return undefined;
+  // Brief 6d fixes §3: a deity title never owns a place of the five cultures of batch 6d.
+  if (ctx.culture.sensitive || SIX_D_TOWNS.has(ctx.culture.key)) return undefined;
   const world = godNames(ctx.culture.key);
   if (world.length > 0) return pickOne(world, ctx.rng);
   const hooks = deityHooks();
@@ -346,7 +348,7 @@ function godName(ctx: Ctx): string | undefined {
   return hooks.deityTitle({ culture: ctx.culture.key, era: ctx.era, fantastic: ctx.fantastic, tone: ctx.tone, rng: ctx.rng, vocab: ctx.vocab });
 }
 
-const godAvailable = (ctx: Ctx) => !ctx.culture.sensitive && (godNames(ctx.culture.key).length > 0 || !!deityHooks()?.cultureOffered(ctx.culture.key));
+const godAvailable = (ctx: Ctx) => !ctx.culture.sensitive && !SIX_D_TOWNS.has(ctx.culture.key) && (godNames(ctx.culture.key).length > 0 || !!deityHooks()?.cultureOffered(ctx.culture.key));
 
 /** §4: `{river}`: a bare river from the river engine, set by the shore. */
 function riverName(ctx: Ctx): string | undefined {

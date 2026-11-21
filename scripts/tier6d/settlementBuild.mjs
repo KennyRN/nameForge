@@ -6,7 +6,10 @@ import { INTERSTELLAR_LIST_FARM2, INTERSTELLAR_TEMPLATES } from "../north5b/sett
 const people = JSON.parse(readFileSync(new URL("../../src/data/people.json", import.meta.url), "utf8")).cultures;
 const labels = JSON.parse(readFileSync(new URL("../../src/data/world-place-names.json", import.meta.url), "utf8")).labels;
 const north5bLabels = JSON.parse(readFileSync(new URL("../../src/data/north5b.json", import.meta.url), "utf8")).settlement.labels;
-const pick = (culture, key, n) => people[culture].historic[key].filter((e) => !e[2]).slice(0, n).map((e) => e[0]);
+// Brief 6d fixes §3: the 260-day calendar's day signs are calendar words: they are never settlement names, in any era.
+const DAY_SIGNS = new Set("Cipactli Ehecatl Calli Cuetzpalin Coatl Miquiztli Mazatl Tochtli Atl Itzcuintli Itzcuin Ozomatli Malinalli Acatl Ocelotl Cuauhtli Cozcacuauhtli Ollin Tecpatl Quiahuitl Xochitl Matlactli Imix Ik Akbal Kan Chikchan Kimi Manik Lamat Muluk Ok Chuwen Eb Ben Men Kib Kaban Etznab Kawak Ajaw".toLowerCase().split(" "));
+const isDaySign = (name) => name.toLowerCase().replace(/['\u2019]/g, "").split(/[ -]/).some((w) => DAY_SIGNS.has(w));
+const pick = (culture, key, n) => people[culture].historic[key].filter((e) => !e[2] && !(key === "male" && isDaySign(e[0]))).slice(0, n).map((e) => e[0]);
 const TOKEN = /\{(\w+)(?::\w+)?\}/g;
 function check(where, lists, templates) {
   for (const [p] of templates) for (const m of p.matchAll(TOKEN)) if (!(m[1] in lists)) throw new Error(`${where}: "${p}" uses the list {${m[1]}}, which the era does not define`);

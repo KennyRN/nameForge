@@ -6757,13 +6757,13 @@
    "template": "Saint {saint} of {native}"
   },
   {
-   "text": "Saint Joseph of Tochtli's Mountain",
-   "etymology": "saint [holy person: Joseph] of [native name: Tochtli's Mountain]",
+   "text": "Saint Joseph of Yaretzi's Mountain",
+   "etymology": "saint [holy person: Joseph] of [native name: Yaretzi's Mountain]",
    "template": "Saint {saint} of {native}"
   },
   {
-   "text": "Saint Francis of Quiahuitl's Mountain",
-   "etymology": "saint [holy person: Francis] of [native name: Quiahuitl's Mountain]",
+   "text": "Saint Francis of Ixtli's Mountain",
+   "etymology": "saint [holy person: Francis] of [native name: Ixtli's Mountain]",
    "template": "Saint {saint} of {native}"
   },
   {
@@ -7971,8 +7971,8 @@
    "template": "Place of the {animal:pl}"
   },
   {
-   "text": "Seat of Ek Balam",
-   "etymology": "seat of [deity: Ek Balam]",
+   "text": "Seat of Chel",
+   "etymology": "seat of [deity: Chel]",
    "template": "Seat of {god}"
   },
   {

@@ -157,7 +157,7 @@ for (const [module, byCulture] of Object.entries(WORDS)) {
     const nFantastic = eraWords.filter((x) => x.tag.endsWith("*")).length;
     if (nFantastic < 3) shortfalls.push(`${module} ${culture} fantastic: ${nFantastic}`);
     // Second pass (brief §12 §6): the mixes' bare "{N0} of {N1}" takes its article ("Keeper of the Old Storm", not "Keeper of Storm").
-    const frames = isMix(culture) ? CELTIC_FRAMES[cls].map(([p, ...rest]) => [/^(The )?\{N0\} of \{N1\}$/.test(p) ? p.replace("of {N1}", "of the {A} {N1}") : p, ...rest]) : FRAMES[cls][STYLE[culture]];
+    const frames = isMix(culture) ? CELTIC_FRAMES[cls].map(([p, ...rest]) => [/^(The )?\{N0\} of \{N1\}$/.test(p) ? p.replace("of {N1}", "of the {A} {N1}") : p, ...rest]) : FRAMES[cls][STYLE[culture]].map(([p, ...rest]) => [NEW6D.includes(culture) && cls === "realm" && p === "{N1}-{N0}" ? "{N1} {N0}" : p, ...rest]); // brief 6d fixes §3: no stray hyphen in a realm of the batch ("Frontier-League")
     if (frames.length !== (isMix(culture) ? 4 : 10)) problems.push(`${module} ${culture}: ${frames.length} frames`);
     const patterns = frames.map(([p]) => p);
     for (const [, , tag] of frames) if (tag && !TAG.test(tag)) problems.push(`${module} ${culture}: bad frame tag "${tag}"`);

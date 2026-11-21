@@ -5,6 +5,7 @@
 // every roll comes from the stream the module passes in.
 
 import { isRealPlace } from "../realPlaces";
+import { SIX_D_TOWNS, unfitTown } from "../sixD";
 import { legacyWeightOf } from "../northData";
 import { MIX_HALVES } from "../tier6a";
 import { lensErasFor } from "../lens";
@@ -282,12 +283,13 @@ const EARLIER: Record<string, string> = { "norman-british": "anglo-saxon" };
 
 /** A delegated name may carry person brackets of its own ("[personal name]\'s Fleet"): they are filled here. */
 const settled = (name: string | undefined, req: FillRequest): string | undefined => (name ? fillSlots(name, { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng }) : undefined);
+const unfitPlace = (name: string, culture: string): boolean => SIX_D_TOWNS.has(culture) && unfitTown(name);
 /** A drawn place whose own brackets are filled; one that still holds a bracket is drawn again (a few times). */
 const placeFill = (draw: () => string | undefined, req: FillRequest): string | undefined => {
   let last: string | undefined;
   for (let attempt = 0; attempt < (req.settlementPlaces ? 12 : 6); attempt++) {
     last = settled(draw(), req);
-    if (last !== undefined && !/\[/.test(last) && !isRealPlace(last)) return last;
+    if (last !== undefined && !/\[/.test(last) && !isRealPlace(last) && !unfitPlace(last, req.culture)) return last;
   }
   // Brief 5d §14.1 item 3: a place in a title, group, realm or craft name is a settlement's, never a person's: General's settlement names are the last resort.
   if (req.settlementPlaces && (req.mode === "real" || req.mode === "generated")) {
@@ -298,7 +300,7 @@ const placeFill = (draw: () => string | undefined, req: FillRequest): string | u
     return undefined;
   }
   // Northern Europe brief 5c §13.1: no bracket from a fill reaches another module's output in real or generated mode: a drawn name that still holds one gives way to a person's name.
-  if (last !== undefined && /\[/.test(last) && (req.mode === "real" || req.mode === "generated")) {
+  if (last !== undefined && (/\[/.test(last) || unfitPlace(last, req.culture)) && (req.mode === "real" || req.mode === "generated")) {
     const bare = fillSlots(req.rng() < 0.5 ? "[surname]" : "[name]", { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });
     return /\[/.test(bare) ? undefined : bare;
   }

@@ -3,6 +3,7 @@
 // runs through each engine's optional `context` option. Also the small helpers the engines share for
 // it: which `{town}` is this place, and the ×4 weights for the context's words. No Obsidian imports.
 
+import { SIX_D_TOWNS, unfitTown } from "../sixD";
 import { type BiomeCatalogue, BUILT_IN_BIOMES } from "../biomes";
 import {
   type GroupPeople,
@@ -108,6 +109,11 @@ export function settlementTownPool(culture: string, size: Exclude<SizeKey, "any"
   if (!found) {
     // The size's fallback notices are not shown in the kit.
     found = generateSettlementNames({ setting: "native", culture: source, size, region: code, count: 300, seed: 1789, catalogue }).names.map((n) => n.text).filter((n) => !n.includes("["));
+    // Brief 6d fixes §3: no phrase, possessive or day sign for the town of a kit of the five cultures of batch 6d.
+    if (SIX_D_TOWNS.has(source)) {
+      const fit = found.filter((n) => !unfitTown(n));
+      if (fit.length >= 20) found = fit;
+    }
     pools.set(key, found);
   }
   return found;

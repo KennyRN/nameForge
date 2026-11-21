@@ -554,10 +554,10 @@ Every loanword new in the 6d lists, looked up on collinsdictionary.com and oed.c
 - Molle (Collins has only an acronym and the Italian adjective) became "Pepper Tree".
 - Tara (Collins has no tree sense) became "Thorn Tree".
 
-**Replaced on the memory check and not looked up:** Polylepis became "Paper Tree" and Puya became "Bromeliad" in the Andean fill lists (a Latin genus name each, not English words).
+**Replaced on the memory check, then looked up (21 November 2026):** Polylepis (nothing in Collins or the OED; only scientific papers use it) stays replaced by "Paper Tree", and Puya (the OED has only the Spanish word for a goad or a picador's lance, first recorded in 1808; no plant sense) stays replaced by "Bromeliad", both in the Andean fill lists.
 
 **Looked up, not used in the 6d lists:** Zapote (Collins has it only in the Spanish-English dictionary; the English word is sapote) and Palo Verde (found, OED 1829, Collins "paloverde").
 
 ### Totals for batch 6d
 
-Looked up: 56 words. Found: 48. Not found and replaced by an English sense: 8, each swap listed above. Replaced without a lookup: 2. The names of people, which are in the people tables, are not words and were not looked up.
+Looked up: 56 words. Found: 48. Not found and replaced by an English sense: 8, each swap listed above. Replaced without a lookup at first, looked up afterwards, and both replacements confirmed: 2. The names of people, which are in the people tables, are not words and were not looked up.

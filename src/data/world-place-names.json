@@ -688,13 +688,13 @@
       "lists": {
         "animal": ["Deer|Deer", "Coyote", "Jaguar", "Eagle", "Serpent", "Rabbit", "Grasshopper", "Heron", "Hummingbird", "Turkey", "Ocelot", "Dog", "Butterfly|Butterflies", "Fish|Fish", "Frog", "Duck", "Quail|Quail", "Snail", "Owl"],
         "plant": ["Reed", "Avocado", "Cactus|Cacti", "Maguey", "Cypress", "Flower", "Maize Plant", "Cacao Tree", "Chilli|Chillies", "Copal Tree", "Pine", "Willow", "Amaranth", "Squash", "Bean", "Prickly Pear"],
-        "god": ["Yaotl", "Tochtli", "Cuauhtli", "Ocelotl", "Cipactli", "Mazatl", "Itzcuin", "Tecpatl", "Quiahuitl", "Ollin"]
+        "god": ["Citlali", "Yaretzi", "Ameyalli", "Nenetl", "Yolotl", "Tlalli", "Chimalli", "Quetzalli", "Ixtli", "Teyolia"]
       },
       "eras": [
         {
           "id": "mexica",
           "label": "Mexica",
-          "guide": "Place of coyotes, grasshopper hill, where flowers abound, Tochtli's mountain.",
+          "guide": "Place of coyotes, grasshopper hill, where flowers abound, Citlali's mountain.",
           "lists": {
             "near": ["Trees", "Water", "Mountains", "Woods", "Springs", "Reeds", "Rocks", "Lake"],
             "feature": ["Water", "Stone", "Hill", "Ridge", "Sand", "Island", "Lake", "Marsh"],
@@ -745,7 +745,7 @@
         {
           "id": "interstellar",
           "label": "Interstellar",
-          "guide": "Locative names in space: place of eagles, near the rings, in the navel of the moon, Tochtli's well.",
+          "guide": "Locative names in space: place of eagles, near the rings, in the navel of the moon, Citlali's well.",
           "lists": {
             "near": ["{@land:pl}", "{@land:pl}", "Sun", "Stars", "Ice", "Moon"],
             "celestial": ["Moon", "Moon", "Sun", "Sky", "Stars", "Ring"],
@@ -1326,7 +1326,7 @@
       "lists": {
         "animal": ["Jaguar", "Quetzal", "Monkey", "Turtle", "Peccary", "Macaw", "Snake", "Bat", "Deer|Deer", "Owl", "Caiman", "Tapir", "Hummingbird", "Heron"],
         "emblem": ["Snake", "Bat", "Jaguar", "Water-Lily", "Turtle", "Deer", "Smoke", "Sky", "Bone", "Mat"],
-        "god": ["Balam", "Kinich", "Yaxun", "Chan Balam", "Kan Balam", "Ek Balam"],
+        "god": ["Balam", "Yaxun", "Chan Balam", "Kan Balam", "Ek Balam", "Tun", "Chel"],
         "people": ["Itza", "Xiu", "Kokom", "Kaqchikel", "K'iche'", "Tz'utujil", "Ch'orti'", "Lakandon", "Chontal", "Kejache", "Kowoj", "Chel"],
         "colourdir": ["Red", "White", "Black", "Yellow", "Green", "Blue-Green"],
         "feature": ["Water", "Stone", "Cave", "Hill", "Well", "Spring", "Lake", "Island", "Mountain", "Plaza", "Ballcourt", "Causeway"],

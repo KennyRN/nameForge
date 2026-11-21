@@ -2,7 +2,7 @@
 import { buildCulture } from "./build.mjs";
 export default buildCulture({
   key: "american", label: "American", style: "last",
-  mods: { A: ["Buffalo", "Beaver", "Trapper's", "Pioneer", "Wagon", "Fur"], B: ["Railroad", "Homestead", "Cattle", "Gold", "Prairie", "Mill"], C: ["Interstate", "Suburban", "Highway", "Shopping"], F: ["Ghost", "Haunted", "Lumber Giant", "Tall-Tale"] },
+  mods: { A: ["Buffalo", "Beaver", "Trapper", "Pioneer", "Wagon", "Fur"], B: ["Railroad", "Homestead", "Cattle", "Gold", "Prairie", "Mill"], C: ["Interstate", "Suburban", "Highway", "Shopping"], F: ["Ghost", "Haunted", "Lumber Giant", "Tall-Tale"] },
   desertMods: { A: ["Cactus", "Dry", "Rattlesnake", "Salt", "Dust", "Mesa"], B: ["Gold", "Cattle", "Railroad", "Homestead", "Frontier", "Mining"], C: ["Highway", "Solar", "Test Range", "Interstate"], F: ["Ghost", "Haunted", "Lumber Giant", "Tall-Tale"] },
   land: {
     B: "Corn|Wheat|Cotton|Tobacco|Timber|Cattle|Furs|Gold|Coal|Iron",

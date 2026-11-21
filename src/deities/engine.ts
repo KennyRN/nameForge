@@ -4,6 +4,7 @@
 // Words come from the shared settlement pools (settlement/vocab.ts, with vocabulary packs); colours
 // from group names, saints from group names, places from the route engine. No Obsidian imports.
 
+import { SIX_D_TOWNS } from "../sixD";
 import { drawSeed, registerResolver } from "../fill";
 import type { BiomeCatalogue } from "../biomes";
 import deityData from "../data/deity-names.json";
@@ -355,6 +356,11 @@ function renderPattern(ctx: Ctx, pattern: string): string | undefined {
       return "";
     }
     if (name === "colour") colours.push(piece);
+    // Brief 6d fixes §3: a possessive cannot take another ("Barnard's Star's Spring") in the five cultures of batch 6d.
+    if (mod === "poss" && SIX_D_TOWNS.has(ctx.culture) && /'s?\b/.test(piece)) {
+      failed = true;
+      return "";
+    }
     if (mod === "poss") return groupPossessive(piece, false);
     if (mod === "pl") return groupPlural(piece);
     return piece;
@@ -672,6 +678,11 @@ setDeityHooks({
 
 // The filler's deity source (shared tables brief §5.2): "[deity]", "[god]", "[local deity]".
 registerResolver("deity", (req) => {
+  // Brief 6d fixes §3: a deity title never owns a place of the five cultures of batch 6d: the owner is a person.
+  if (SIX_D_TOWNS.has(req.culture)) {
+    const person = fillSlots("[name]", { culture: req.culture, era: req.era, region: req.region, mode: req.mode, rng: req.rng });
+    return /\[/.test(person) ? undefined : person;
+  }
   try {
     return generateDeityNames({ signature: false, culture: req.culture, era: req.era, kind: "deity", count: 1, seed: drawSeed(req.rng) }).names[0]?.text;
   } catch {

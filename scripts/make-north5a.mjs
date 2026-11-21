@@ -204,6 +204,21 @@ for (const [w, where] of [...loanUsed].sort((a, b) => a[0].localeCompare(b[0])))
 md.push("\n### Dictionary check\n\nEvery loanword above was looked up on collinsdictionary.com; the result of each, and every replacement, is in `docs/loanwords.md`.");
 writeFileSync(new URL("../docs/northern-europe-5a.md", import.meta.url), `${md.join("\n")}\n`);
 
+// Brief 6d fixes §3: "beside" is no longer generated for the five cultures of batch 6d, in any module (their frames read "near"), and a deity title never owns a place (their sacred places take a place fill).
+{
+  const SIX_D = new Set(["aztec", "maya", "andean", "polynesian", "american"]);
+  const fix = (o) => {
+    if (Array.isArray(o)) o.forEach(fix);
+    else if (o && typeof o === "object") {
+      if (typeof o.p === "string" && (SIX_D.has(o.culture) || (Array.isArray(o.c) && o.c.length === 1 && SIX_D.has(o.c[0])))) o.p = o.p.replace(/ beside /g, " near ").replace(/\{deityRef(:poss)?\}/g, "{place$1}");
+      for (const v of Object.values(o)) fix(v);
+    }
+  };
+  fix(out);
+  // The sacred places' frames are keyed by culture, not tagged with one.
+  const swap = (o) => { if (Array.isArray(o)) o.forEach(swap); else if (o && typeof o === "object") { if (typeof o.p === "string") o.p = o.p.replace(/ beside /g, " near ").replace(/\{deityRef(:poss)?\}/g, "{place$1}"); Object.values(o).forEach(swap); } };
+  for (const key of SIX_D) if (out.deities.styles[key]) swap(out.deities.styles[key]);
+}
 writeFileSync(new URL("../src/data/north5a.json", import.meta.url), `${JSON.stringify(out)}\n`);
 await import("./north5a/patchPools.mjs");
 console.log("wrote src/data/north5a.json", { pools: Object.keys(out.vocab.pools).length, wilds: out.wilds.cultureShapes.length, waters: out.waters.cultureShapes.length, routes: out.routes.cultureShapes.length });

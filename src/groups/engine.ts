@@ -2,6 +2,7 @@
 // families of organisations for fantasy, modern and sci-fi settings, built from shapes and lists.
 // No Obsidian imports.
 
+import { SIX_D_TOWNS, unfitTown } from "../sixD";
 import "../lexiconWiring";
 import { drawSeed, fillGenre, registerResolver } from "../fill";
 import { fillModeOf, fillPeopleBatch } from "../fill/batch";
@@ -574,7 +575,9 @@ function townPool(key: string, catalogue: BiomeCatalogue = BUILT_IN_BIOMES): str
     key === "britain"
       ? generatePlaceNames({ recipe: britishPlaceNamesRecipe(undefined), slots: {}, count: 300, seed: 1789, catalogue }).names.map((n) => n.text)
       : generateWorldPlaceNames({ culture: key, count: 300, seed: 1789, catalogue }).names.map((n) => n.text);
-  found = names.filter((n) => !n.includes("["));
+  // Brief 6d fixes §3: for the five cultures of batch 6d a settlement name that is a phrase, holds a possessive or is a calendar day sign is not a town inside another name.
+  const fit = SIX_D_TOWNS.has(key) ? names.filter((n) => !unfitTown(n)) : names;
+  found = (fit.length >= 20 ? fit : names).filter((n) => !n.includes("["));
   pools.set(key, found);
   return found;
 }
